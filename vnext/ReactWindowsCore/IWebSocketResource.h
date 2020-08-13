@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -85,7 +85,7 @@ struct IWebSocketResource {
   /// </param>
   static std::shared_ptr<IWebSocketResource> Make(std::string &&url);
 
-  virtual ~IWebSocketResource() {}
+  virtual ~IWebSocketResource() noexcept {}
 
   /// <summary>
   /// Establishes a continuous connection with the remote endpoint.
@@ -97,12 +97,12 @@ struct IWebSocketResource {
   /// HTTP header fields passed by the remote endpoint, to be used in the
   /// handshake process.
   /// </param>
-  virtual void Connect(const Protocols &protocols = {}, const Options &options = {}) = 0;
+  virtual void Connect(const Protocols &protocols = {}, const Options &options = {}) noexcept = 0;
 
   /// <summary>
   /// Sends a ping frame to the remote endpoint.
   /// </summary>
-  virtual void Ping() = 0;
+  virtual void Ping() noexcept = 0;
 
   /// <summary>
   /// Sends a text message to the remote endpoint.
@@ -110,7 +110,7 @@ struct IWebSocketResource {
   /// <param name="message">
   /// UTF8-encoded string of arbitrary length.
   /// </param>
-  virtual void Send(const std::string &message) = 0;
+  virtual void Send(const std::string &message) noexcept = 0;
 
   /// <summary>
   /// Sends a non-plain-text message to the remote endpoint.
@@ -118,7 +118,7 @@ struct IWebSocketResource {
   /// <param name="base64String">
   /// Binary message encoded in Base64 format.
   /// </param>
-  virtual void SendBinary(const std::string &base64String) = 0;
+  virtual void SendBinary(const std::string &base64String) noexcept = 0;
 
   /// <summary>
   /// Terminates this resource's connection to the remote endpoint.
@@ -128,19 +128,19 @@ struct IWebSocketResource {
   /// </param>
   /// <param name="reason">
   /// </param>
-  virtual void Close(CloseCode code = CloseCode::Normal, const std::string &reason = {}) = 0;
+  virtual void Close(CloseCode code = CloseCode::Normal, const std::string &reason = {}) noexcept = 0;
 
   /// <returns>
   /// Current public state as defined in the <c>ReadyState</c> enum.
   /// </returns>
-  virtual ReadyState GetReadyState() const = 0;
+  virtual ReadyState GetReadyState() const noexcept = 0;
 
   /// <summary>
   /// Sets the optional custom behavior on a successful connection.
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnConnect(std::function<void()> &&handler) = 0;
+  virtual void SetOnConnect(std::function<void()> &&handler) noexcept = 0;
 
   /// <summary>
   /// Sets the optional custom behavior on a successful ping to the remote
@@ -148,14 +148,14 @@ struct IWebSocketResource {
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnPing(std::function<void()> &&handler) = 0;
+  virtual void SetOnPing(std::function<void()> &&handler) noexcept = 0;
 
   /// <summary>
   /// Sets the optional custom behavior on a message sending.
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnSend(std::function<void(std::size_t)> &&handler) = 0;
+  virtual void SetOnSend(std::function<void(std::size_t)> &&handler) noexcept = 0;
 
   /// <summary>
   /// Sets the optional custom behavior to run when there is an incoming
@@ -163,21 +163,21 @@ struct IWebSocketResource {
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&handler) = 0;
+  virtual void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&handler) noexcept = 0;
 
   /// <summary>
   /// Sets the optional custom behavior to run when this instance is closed.
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnClose(std::function<void(CloseCode, const std::string &)> &&handler) = 0;
+  virtual void SetOnClose(std::function<void(CloseCode, const std::string &)> &&handler) noexcept = 0;
 
   /// <summary>
   /// Sets the optional custom behavior on an error condition.
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnError(std::function<void(Error &&)> &&handler) = 0;
+  virtual void SetOnError(std::function<void(Error &&)> &&handler) noexcept = 0;
 };
 
 } // namespace Microsoft::React
