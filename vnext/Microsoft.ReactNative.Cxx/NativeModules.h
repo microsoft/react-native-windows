@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include "winrt/Microsoft.ReactNative.h"
-
+#include <winrt/Windows.Foundation.h>
 #include "JSValueReader.h"
 #include "JSValueWriter.h"
 #include "ModuleRegistration.h"
 #include "ReactContext.h"
 #include "ReactNonAbiValue.h"
 #include "ReactPromise.h"
+#include "winrt/Microsoft.ReactNative.h"
 
 #include <functional>
 #include <type_traits>
@@ -1111,19 +1111,20 @@ struct TurboModuleSpec {
 // The default factory for the TModule.
 // It wraps up the TModule into a ReactNonAbiValue to be passed through the ABI boundary.
 template <class TModule>
-inline std::tuple<IInspectable, TModule *> MakeDefaultReactModuleWrapper() noexcept {
+inline std::tuple<winrt::Windows::Foundation::IInspectable, TModule *> MakeDefaultReactModuleWrapper() noexcept {
   ReactNonAbiValue<TModule> moduleWrapper{std::in_place};
   TModule *module = moduleWrapper.GetPtr();
-  return std::tuple<IInspectable, TModule *>{std::move(moduleWrapper), module};
+  return std::tuple<winrt::Windows::Foundation::IInspectable, TModule *>{std::move(moduleWrapper), module};
 }
 
 // The default factory for TModule inherited from enable_shared_from_this<T>.
 // It wraps up the TModule into an  std::shared_ptr before giving it to ReactNonAbiValue.
 template <class TModule>
-inline std::tuple<IInspectable, TModule *> MakeDefaultSharedPtrReactModuleWrapper() noexcept {
+inline std::tuple<winrt::Windows::Foundation::IInspectable, TModule *>
+MakeDefaultSharedPtrReactModuleWrapper() noexcept {
   ReactNonAbiValue<std::shared_ptr<TModule>> moduleWrapper{std::in_place, std::make_shared<TModule>()};
   TModule *module = moduleWrapper.GetPtr()->get();
-  return std::tuple<IInspectable, TModule *>{std::move(moduleWrapper), module};
+  return std::tuple<winrt::Windows::Foundation::IInspectable, TModule *>{std::move(moduleWrapper), module};
 }
 
 namespace Internal {
@@ -1157,7 +1158,7 @@ inline constexpr auto GetReactModuleFactory(TModule * /*moduleNullPtr*/, int * /
 // Type traits for TModule. It defines a factory to create the module and its ABI-safe wrapper.
 template <class TModule>
 struct ReactModuleTraits {
-  using FactoryType = std::tuple<IInspectable, TModule *>() noexcept;
+  using FactoryType = std::tuple<winrt::Windows::Foundation::IInspectable, TModule *>() noexcept;
   static constexpr FactoryType *Factory = GetReactModuleFactory((TModule *)nullptr, 0);
 };
 

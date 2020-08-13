@@ -19,11 +19,10 @@
 
 #ifdef CORE_ABI
 #include <folly/dynamic.h>
-#else
-// When building Desktop, the include below results in
-// fatal error C1083: Cannot open include file: 'CppWinRTIncludes.h': No such file or directory
-#include <IReactInstance.h>
+#undef GetCurrentTime
 #endif
+
+#include <IReactInstance.h>
 
 #include <ViewManagerProvider.h>
 #include <winrt/Microsoft.ReactNative.h>
@@ -34,6 +33,7 @@ namespace Mso::React {
 struct IReactInstance;
 struct IReactViewHost;
 struct ReactOptions;
+struct IReactContext;
 
 enum class LogLevel : int32_t {
   Trace = 0,
@@ -45,9 +45,9 @@ enum class LogLevel : int32_t {
 
 using OnErrorCallback = Mso::Functor<void(const Mso::ErrorCode &)>;
 using OnLoggingCallback = Mso::Functor<void(LogLevel logLevel, const char *message)>;
-using OnReactInstanceCreatedCallback = Mso::Functor<void(IReactInstance &)>;
-using OnReactInstanceLoadedCallback = Mso::Functor<void(IReactInstance &, const Mso::ErrorCode &)>;
-using OnReactInstanceDestroyedCallback = Mso::Functor<void(IReactInstance &)>;
+using OnReactInstanceCreatedCallback = Mso::Functor<void(Mso::CntPtr<IReactContext> &&)>;
+using OnReactInstanceLoadedCallback = Mso::Functor<void(Mso::CntPtr<IReactContext> &&, const Mso::ErrorCode &)>;
+using OnReactInstanceDestroyedCallback = Mso::Functor<void(Mso::CntPtr<IReactContext> &&)>;
 
 //! Returns default OnError handler.
 LIBLET_PUBLICAPI OnErrorCallback GetDefaultOnErrorHandler() noexcept;
@@ -207,9 +207,7 @@ struct ReactOptions {
   std::string ByteCodeFileUri;
   bool EnableByteCodeCaching{true};
   bool UseJsi{true};
-#ifndef CORE_ABI
   react::uwp::JSIEngine JsiEngine{react::uwp::JSIEngine::Chakra};
-#endif
 
   //! Enable function nativePerformanceNow.
   //! Method nativePerformanceNow() returns high resolution time info.

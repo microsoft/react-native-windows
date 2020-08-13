@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <FeatureGate.h>
+#include <RuntimeOptions.h>
 #include "TestRunner.h"
 
 using namespace Microsoft::React::Test;
@@ -18,7 +18,7 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 } // namespace Microsoft::VisualStudio::CppUnitTestFramework
 
 TEST_MODULE_INITIALIZE(InitModule) {
-  Microsoft::React::SetFeatureGate("WebSocket.AcceptSelfSigned", true);
+  Microsoft::React::SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
 }
 
 // None of these tests are runnable

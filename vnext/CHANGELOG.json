@@ -2,6 +2,144 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Aug 2020 05:05:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.138",
+      "version": "0.0.0-canary.138",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Expose instance life cycle events",
+            "author": "email not defined",
+            "commit": "ac620ae2bba544a559506e7d511dd928203f77c0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Implement textTransform",
+            "author": "asklar@microsoft.com",
+            "commit": "4119de0c3881d3722d076a6676801d5dd5004605",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 4/22 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4af6037c9b5bb8f81668dd5b3466b758bae19e6b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove compiler flags disabling FH4",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c4c1c1a9ea97dc8f3fdfe97f989e275fa71d4013",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 11 Aug 2020 07:36:05 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.137",
+      "version": "0.0.0-canary.137",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Get/SetRuntimeOptionInt.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "c69af5e9826330fe98edea188c7448a82a2d5076",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update ChakraCore to 1.11.20",
+            "author": "jthysell@microsoft.com",
+            "commit": "72d01a1e10cba76a71feb27792b20b03ef18a69e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Make C# CodeGen the default",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7a65915e82d6bc6884e267a8c96d0fa7fadb0e9e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Keep dependencies in sync with react-native",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90e219bae44e65a905e6ade3b70727d202444a34",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add transparent background to fix hit-testing issue",
+            "author": "kmelmon@microsoft.com",
+            "commit": "d2a8b9bcfe115209dddd959e5b0032ee35a8d8d8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "change to member as static DOs aren't safe in multi window apps",
+            "author": "kmelmon@microsoft.com",
+            "commit": "bfa32e084cac08c4d1a91b5dfcef27aa0de4f99d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix label of RedBox reload button",
+            "author": "email not defined",
+            "commit": "8f97338eb1f67b32408525d37ac59bd930a02ca1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Disable Hermes by default",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "60e137c319cb6e50a9efd5f7ffc80353cb980123",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 06 Aug 2020 05:05:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.136",
+      "version": "0.0.0-canary.136",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Split IViewManager into core and ui-dependent parts to remove dependency on XAML from Core projects",
+            "author": "asklar@microsoft.com",
+            "commit": "ebba4db6e46e82d7a25c9ebaf09bc31fe7601ed9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 05 Aug 2020 05:05:11 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.135",
+      "version": "0.0.0-canary.135",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use string object for tooltips instead of textblocks since that breaks wordwrap etc",
+            "author": "asklar@microsoft.com",
+            "commit": "0b50503ac662d761d9ba1aab473e251ef208e7b7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Handle MessageWebSocket constructor exceptions",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "3892ec0503ce452be5541480eb83bdb4024680d3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix Crash Using accessibilityValue Without Web Debugging",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4f7250194bd32f087d1d1d89268154633b95d409",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add option to devmenu to configure bundler",
+            "author": "email not defined",
+            "commit": "496a61b9e22007a2d4ed44114782f365e8f20c7c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 31 Jul 2020 05:05:10 GMT",
       "tag": "react-native-windows_v0.0.0-canary.134",
       "version": "0.0.0-canary.134",

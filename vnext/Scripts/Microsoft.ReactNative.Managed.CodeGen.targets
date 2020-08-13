@@ -14,7 +14,6 @@
     <_ReactNativeCodeGenOutFolder>$([MSBuild]::NormalizeDirectory('$(MSBuildProjectDirectory)', '$(IntermediateOutputPath)', '$(_ReactNativeName)'))</_ReactNativeCodeGenOutFolder>
 
     <ReactNativeCodeGenFile>$(_ReactNativeCodeGenOutFolder)$(_ReactNativeName).g.cs</ReactNativeCodeGenFile>
-    <ReactNativeCodeGenDummyFile>$(_ReactNativeCodeGenOutFolder)$(_ReactNativeName).tmp.g.cs</ReactNativeCodeGenDummyFile>
     <_ReactNativeCodeGenResponseFile>$(_ReactNativeCodeGenOutFolder)$(_ReactNativeName).rsp</_ReactNativeCodeGenResponseFile>
     <_ReactNativeCodeGenToolFolder>$([MSBuild]::NormalizeDirectory($(MSBuildThisFileDirectory)\..\tools))</_ReactNativeCodeGenToolFolder>
     <_ReactNativeCodeGenToolExecutable>$(_ReactNativeCodeGenToolFolder)Microsoft.ReactNative.Managed.CodeGen.exe</_ReactNativeCodeGenToolExecutable>
@@ -27,29 +26,7 @@
 
   <ItemGroup>
     <_ReactNativeCodeGenToolFiles Include="$(_ReactNativeCodeGenToolFolder)**" />
-    <Compile Include="$(ReactNativeCodeGenDummyFile)"/>
   </ItemGroup>
-
-  <Target
-    Name="CreateDesignTimeCodeGenFile"
-    BeforeTargets="BeforeBuild"
-  >
-    <ItemGroup>
-      <_DesignTimeCodeGenFile Include="namespace $(RootNamespace)" />
-      <_DesignTimeCodeGenFile Include="{" />
-      <_DesignTimeCodeGenFile Include="    public class ReactPackageProvider : global::Microsoft.ReactNative.IReactPackageProvider" />
-      <_DesignTimeCodeGenFile Include="    {" />
-      <_DesignTimeCodeGenFile Include="        public void CreatePackage(global::Microsoft.ReactNative.IReactPackageBuilder packageBuilder)" />
-      <_DesignTimeCodeGenFile Include="        {" />
-      <_DesignTimeCodeGenFile Include="        }" />
-      <_DesignTimeCodeGenFile Include="    }" />
-      <_DesignTimeCodeGenFile Include="}" />
-    </ItemGroup>
-    <WriteLinesToFile
-        File="$(ReactNativeCodeGenDummyFile)"
-        Lines="@(_DesignTimeCodeGenFile)"
-        WriteOnlyWhenDifferent="true" />
-  </Target>
 
   <Target 
     Name="ReactNativeManagedCodeGen"
@@ -84,7 +61,6 @@
     <Exec Command="$(_ReactNativeCodeGenToolExecutable) @$(_ReactNativeCodeGenResponseFile)" />
 
     <ItemGroup>
-      <Compile Remove="$(ReactNativeCodeGenDummyFile)"/>
       <Compile Include="$(ReactNativeCodeGenFile)"/>
       <FileWrites Include="$(ReactNativeCodeGenFile)" />
       <FileWrites Include="$(_ReactNativeCodeGenResponseFile)" />

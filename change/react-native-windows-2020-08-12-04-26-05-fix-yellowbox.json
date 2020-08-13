@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix Errant \"Nested elements in TextInput are currently unsupported on Windows\" Yellowbox Warnings",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-12T11:26:05.719Z"
+}

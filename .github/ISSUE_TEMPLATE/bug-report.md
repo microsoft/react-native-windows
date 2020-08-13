@@ -12,8 +12,8 @@ Your issue will be triaged by the RNW team according to this process: https://gi
 -->
 ## Environment
 Run the following in your terminal and copy the results here.
-1. `react-native -v`:
-2. `react-native run-windows --info`:
+1. `npx react-native --version`:
+2. `npx react-native run-windows --info`:
 3. `reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"`
 
 <!-- Consider including this information as well:

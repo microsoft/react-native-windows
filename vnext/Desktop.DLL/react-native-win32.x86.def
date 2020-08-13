@@ -50,8 +50,10 @@ EXPORTS
 ?typeName@dynamic@folly@@QBEPBDXZ
 ?updateProperties@ShadowNode@react@facebook@@UAEX$$QBUdynamic@folly@@@Z
 ?Utf16ToUtf8@Unicode@Common@Microsoft@@YG?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
-?SetFeatureGate@React@Microsoft@@YAX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z
-?GetFeatureGate@React@Microsoft@@YA?B_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
+?SetRuntimeOptionBool@React@Microsoft@@YAX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z
+?SetRuntimeOptionInt@React@Microsoft@@YAX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z
+?GetRuntimeOptionBool@React@Microsoft@@YA?B_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
+?GetRuntimeOptionInt@React@Microsoft@@YA?BHABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
 ?makeChakraRuntime@JSI@Microsoft@@YG?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QAUChakraRuntimeArgs@12@@Z
 ?CreateTimingModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ??0WebSocketModule@React@Microsoft@@QAE@XZ

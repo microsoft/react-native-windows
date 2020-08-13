@@ -209,9 +209,6 @@
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Views\CheckboxViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\ConfigureBundlerDlg.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -566,9 +563,6 @@
     <ClInclude Include="Views\ActivityIndicatorViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Views\CheckboxViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
     <ClInclude Include="Views\ControlViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -711,6 +705,9 @@
     <ClInclude Include="Views\Image\Effects.h">
       <Filter>Views\Image</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\TransformableText.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -744,6 +741,7 @@
     <Midl Include="Views\cppwinrt\Effects.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
+    <Midl Include="IViewManagerCore.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />

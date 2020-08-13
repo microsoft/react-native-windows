@@ -1,0 +1,35 @@
+{
+  "name": "@rnw-scripts/integrate-rn",
+  "entries": [
+    {
+      "date": "Wed, 12 Aug 2020 05:05:16 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix integrate-rn bug with dependency syncing added late PR",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4af6037c9b5bb8f81668dd5b3466b758bae19e6b",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 11 Aug 2020 07:36:05 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Initial Version of Automatic React Native Integration Script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90e219bae44e65a905e6ade3b70727d202444a34",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    }
+  ]
+}

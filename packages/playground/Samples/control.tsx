@@ -7,7 +7,6 @@
 import * as React from 'react';
 import {
   AppRegistry,
-  CheckBox,
   ScrollView,
   Switch,
   Text,
@@ -85,15 +84,6 @@ export default class Bootstrap extends React.Component<
           />
         </View>
         <View style={{backgroundColor: 'orange', margin: 5}}>
-          <CheckBox
-            style={{
-              backgroundColor: 'lime',
-              padding: this.state.padding,
-              margin: this.state.margin,
-            }}
-          />
-        </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
           <TextInput
             style={{
               backgroundColor: 'lime',
@@ -159,15 +149,6 @@ export default class Bootstrap extends React.Component<
         </View>
         <View style={{backgroundColor: 'orange', margin: 5}}>
           <Switch
-            style={{
-              backgroundColor: 'lime',
-              padding: this.state.padding,
-              margin: this.state.margin,
-            }}
-          />
-        </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
-          <CheckBox
             style={{
               backgroundColor: 'lime',
               padding: this.state.padding,

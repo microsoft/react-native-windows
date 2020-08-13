@@ -3,9 +3,20 @@
 
 #pragma once
 
+#include <INativeUIManager.h>
+#include <ShadowNodeBase.h>
+#include <UI.Xaml.Documents.h>
+#include <Utils/TransformableText.h>
 #include <Views/FrameworkElementViewManager.h>
 
 namespace react::uwp {
+
+struct VirtualTextShadowNode final : public ShadowNodeBase {
+  using Super = ShadowNodeBase;
+  TransformableText transformableText{};
+
+  void AddView(ShadowNode &child, int64_t index) override;
+};
 
 class VirtualTextViewManager : public ViewManagerBase {
   using Super = ViewManagerBase;
@@ -14,6 +25,9 @@ class VirtualTextViewManager : public ViewManagerBase {
   VirtualTextViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
   const char *GetName() const override;
+  facebook::react::ShadowNode *createShadow() const override {
+    return new VirtualTextShadowNode();
+  }
 
   void AddView(const XamlView &parent, const XamlView &child, int64_t index) override;
   void RemoveAllChildren(const XamlView &parent) override;

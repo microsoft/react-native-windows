@@ -2,15 +2,19 @@
 // Licensed under the MIT License.
 
 using Microsoft.ReactNative;
-using Microsoft.ReactNative.Managed;
 
-namespace TreeDumpLibrary
+namespace ReactUWPTestApp
 {
-    public sealed class ReactPackageProvider : IReactPackageProvider
+    public partial class ReactPackageProvider : IReactPackageProvider
     {
         public void CreatePackage(IReactPackageBuilder packageBuilder)
         {
-            packageBuilder.AddReflectionReactPackageProvider<ReactPackageProvider>();
+            CreatePackageImplementation(packageBuilder);
         }
+
+        /// <summary>
+        /// This method is implemented by the C# code generator
+        /// </summary>
+        partial void CreatePackageImplementation(IReactPackageBuilder packageBuilder);
     }
 }

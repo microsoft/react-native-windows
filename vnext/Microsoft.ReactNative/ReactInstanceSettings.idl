@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import "IReactContext.idl";
 import "IReactDispatcher.idl";
 import "IReactNotificationService.idl";
 import "IReactPackageProvider.idl";
@@ -8,6 +9,31 @@ import "IReactPropertyBag.idl";
 import "RedBoxHandler.idl";
 
 namespace Microsoft.ReactNative {
+
+  // Keep in sync with enum in IReactInstance.h
+  enum JSIEngine {
+    Chakra = 0,
+    Hermes = 1,
+    V8 = 2
+  };
+
+  [webhosthidden]
+  [default_interface]
+  runtimeclass InstanceCreatedEventArgs {
+    IReactContext Context { get; };
+  }
+
+  [webhosthidden]
+  [default_interface]
+  runtimeclass InstanceLoadedEventArgs {
+    IReactContext Context { get; };
+    Boolean Failed { get; };
+  }
+
+  [webhosthidden]
+  [default_interface] runtimeclass InstanceDestroyedEventArgs {
+    IReactContext Context { get; };
+  }
 
   [webhosthidden]
   runtimeclass ReactInstanceSettings 
@@ -38,5 +64,9 @@ namespace Microsoft.ReactNative {
     IReactDispatcher UIDispatcher { get; set; };
     String SourceBundleHost { get; set; };
     UInt16 SourceBundlePort { get; set; };
+    JSIEngine JSIEngineOverride { get; set; };
+    event Windows.Foundation.EventHandler<InstanceCreatedEventArgs> InstanceCreated;
+    event Windows.Foundation.EventHandler<InstanceLoadedEventArgs> InstanceLoaded;
+    event Windows.Foundation.EventHandler<InstanceDestroyedEventArgs> InstanceDestroyed;
   }
 }

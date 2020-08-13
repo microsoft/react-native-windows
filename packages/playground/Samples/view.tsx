@@ -5,7 +5,7 @@
  */
 
 import * as React from 'react';
-import {AppRegistry, CheckBox, StyleSheet, Text, View} from 'react-native';
+import {AppRegistry, StyleSheet, Switch, Text, View} from 'react-native';
 
 export default class Bootstrap extends React.Component<
   {},
@@ -87,7 +87,7 @@ export default class Bootstrap extends React.Component<
           paddingHorizontal: 20,
         }}>
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({focusable: value})}
             value={this.state.focusable}
           />
@@ -95,7 +95,7 @@ export default class Bootstrap extends React.Component<
         </View>
 
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({hasStyle: value})}
             value={this.state.hasStyle}
           />
@@ -103,7 +103,7 @@ export default class Bootstrap extends React.Component<
         </View>
 
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({hasBorder: value})}
             value={this.state.hasBorder}
           />
@@ -111,7 +111,7 @@ export default class Bootstrap extends React.Component<
         </View>
 
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({radius: value})}
             value={this.state.radius}
           />
@@ -119,7 +119,7 @@ export default class Bootstrap extends React.Component<
         </View>
 
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({largeBorder: value})}
             value={this.state.largeBorder}
           />
@@ -128,7 +128,7 @@ export default class Bootstrap extends React.Component<
 
         <View
           style={{flexDirection: 'row', alignSelf: 'flex-start', width: 100}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({alignSelfCenter: value})}
             value={this.state.alignSelfCenter}
           />
@@ -137,7 +137,7 @@ export default class Bootstrap extends React.Component<
 
         <View
           style={{flexDirection: 'row', alignSelf: 'flex-start', width: 100}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({largePadding: value})}
             value={this.state.largePadding}
           />

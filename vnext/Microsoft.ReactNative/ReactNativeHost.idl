@@ -7,9 +7,6 @@ import "ReactInstanceSettings.idl";
 namespace Microsoft.ReactNative {
 
   [webhosthidden]
-  delegate void OnResumeAction();
-
-  [webhosthidden]
   [default_interface]
   runtimeclass ReactNativeHost {
     ReactNativeHost();

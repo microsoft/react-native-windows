@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include <NativeModules.h>
+#include <winrt/Windows.System.h>
 #include "MockReactPackageProvider.h"
-
 using namespace React;
 
 namespace ReactNativeIntegrationTests {

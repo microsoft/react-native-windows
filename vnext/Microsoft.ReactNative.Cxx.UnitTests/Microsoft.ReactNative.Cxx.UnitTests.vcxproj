@@ -76,7 +76,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Microsoft.ReactNative;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </Midl>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
@@ -146,6 +146,7 @@
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageBuilder.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPropertyBag.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IViewManager.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IViewManagerCore.idl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,8 +1,53 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 31 Jul 2020 05:05:10 GMT and should not be manually modified.
+This log was last generated on Wed, 12 Aug 2020 05:05:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.138
+
+Wed, 12 Aug 2020 05:05:16 GMT
+
+### Changes
+
+- Expose instance life cycle events (email not defined)
+- Implement textTransform (asklar@microsoft.com)
+- Integrate 4/22 Nightly Build (ngerlem@microsoft.com)
+- Remove compiler flags disabling FH4 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.137
+
+Tue, 11 Aug 2020 07:36:05 GMT
+
+### Changes
+
+- Add Get/SetRuntimeOptionInt. (julio.rocha@microsoft.com)
+- Update ChakraCore to 1.11.20 (jthysell@microsoft.com)
+- Make C# CodeGen the default (dannyvv@microsoft.com)
+- Keep dependencies in sync with react-native (ngerlem@microsoft.com)
+- add transparent background to fix hit-testing issue (kmelmon@microsoft.com)
+- change to member as static DOs aren't safe in multi window apps (kmelmon@microsoft.com)
+- Fix label of RedBox reload button (email not defined)
+- Disable Hermes by default (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.136
+
+Thu, 06 Aug 2020 05:05:16 GMT
+
+### Changes
+
+- Split IViewManager into core and ui-dependent parts to remove dependency on XAML from Core projects (asklar@microsoft.com)
+
+## 0.0.0-canary.135
+
+Wed, 05 Aug 2020 05:05:11 GMT
+
+### Changes
+
+- Use string object for tooltips instead of textblocks since that breaks wordwrap etc (asklar@microsoft.com)
+- Handle MessageWebSocket constructor exceptions (julio.rocha@microsoft.com)
+- Fix Crash Using accessibilityValue Without Web Debugging (ngerlem@microsoft.com)
+- Add option to devmenu to configure bundler (email not defined)
 
 ## 0.0.0-canary.134
 
