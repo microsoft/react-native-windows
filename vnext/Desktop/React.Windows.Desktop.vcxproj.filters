@@ -138,7 +138,6 @@
     <ClCompile Include="Modules\WebSocketModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="WebSocketResourceFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -159,7 +158,10 @@
     <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
-    <ClCompile Include="FeatureGate.cpp">
+    <ClCompile Include="RuntimeOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -178,6 +180,9 @@
     </ClInclude>
     <ClInclude Include="ABI\TestController.h">
       <Filter>ABI</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -199,7 +204,6 @@
     <ClInclude Include="NativeModuleFactories.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.h">
       <Filter>ABI</Filter>
     </ClInclude>

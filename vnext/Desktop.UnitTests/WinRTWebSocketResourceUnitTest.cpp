@@ -11,6 +11,7 @@ using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Networking::Sockets;
 
 using std::make_shared;
+using std::shared_ptr;
 using std::string;
 using winrt::event_token;
 using winrt::param::hstring;
@@ -32,7 +33,6 @@ IAsyncAction ThrowAsync() {
 } // namespace
 
 namespace Microsoft::React::Test {
-
 TEST_CLASS (WinRTWebSocketResourceUnitTest) {
   TEST_METHOD(ConnectSucceeds) {
     bool connected = true;
@@ -43,10 +43,6 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     auto mws{imws.as<MockMessageWebSocket>()};
     // TODO: Mock Control()
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return DoNothingAsync(); };
-    mws->Mocks.MessageReceivedToken =
-        [](TypedEventHandler<MessageWebSocket, MessageWebSocketMessageReceivedEventArgs> const &) -> event_token {
-      return event_token{};
-    };
     mws->Mocks.Close = [](uint16_t, const hstring &) {};
 
     // Test APIs
@@ -75,10 +71,6 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     // Set up mocks
     auto mws{imws.as<MockMessageWebSocket>()};
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return ThrowAsync(); };
-    mws->Mocks.MessageReceivedToken =
-        [](TypedEventHandler<MessageWebSocket, MessageWebSocketMessageReceivedEventArgs> const &) -> event_token {
-      return event_token{};
-    };
     mws->Mocks.Close = [](uint16_t, const hstring &) {};
 
     // Test APIs
@@ -92,6 +84,18 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
 
     Assert::AreNotEqual({}, errorMessage);
     Assert::IsFalse(connected);
+  }
+
+  TEST_METHOD(InternalSocketThrowsHResult) {
+    shared_ptr<WinRTWebSocketResource> rc;
+
+    auto lambda = [&rc]() mutable {
+      rc = make_shared<WinRTWebSocketResource>(
+          winrt::make<ThrowingMessageWebSocket>(), MockDataWriter{}, Uri{L"ws://host:0"}, CertExceptions{});
+    };
+
+    Assert::ExpectException<winrt::hresult_error>(lambda);
+    Assert::IsTrue(nullptr == rc);
   }
 };
 

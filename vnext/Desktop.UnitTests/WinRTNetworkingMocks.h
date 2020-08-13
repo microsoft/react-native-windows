@@ -9,12 +9,15 @@
 namespace Microsoft::React::Test {
 
 /// <summary>
-//  Mocks winrt::Windows::Networking::Sockets::MessageWebSocket
+//  Mocks winrt::Windows::Networking::Sockets::MessageWebSocket.
+//  Behavior can be mocked per each interface mehtod.
 /// </summary>
 struct MockMessageWebSocket : public winrt::implements<
                                   MockMessageWebSocket,
                                   winrt::Windows::Networking::Sockets::IMessageWebSocket,
                                   winrt::Windows::Networking::Sockets::IWebSocket> {
+  MockMessageWebSocket();
+
   struct Mocks {
     // IWebSocket
     std::function<winrt::Windows::Foundation::IAsyncAction(winrt::Windows::Foundation::Uri const &) /*const*/>
@@ -116,6 +119,10 @@ struct MockMessageWebSocket : public winrt::implements<
 
 }; // MockMessageWebSocket
 
+struct ThrowingMessageWebSocket : public MockMessageWebSocket {
+  ThrowingMessageWebSocket();
+};
+
 struct MockDataWriter : public winrt::Windows::Storage::Streams::IDataWriter {
   struct Mocks {
     std::function<std::uint32_t() /*const*/> UnstoredBufferLength;
@@ -206,7 +213,7 @@ struct MockMessageWebSocketControl : winrt::implements<
 
 #pragma region IMessageWebSocketControl
 
-  uint32_t MaxMessageSize() const;
+  std::uint32_t MaxMessageSize() const;
   void MaxMessageSize(std::uint32_t value) const;
   winrt::Windows::Networking::Sockets::SocketMessageType MessageType() const;
   void MessageType(winrt::Windows::Networking::Sockets::SocketMessageType const &value) const;
