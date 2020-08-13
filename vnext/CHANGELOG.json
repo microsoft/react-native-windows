@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 13 Aug 2020 05:07:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.139",
+      "version": "0.0.0-canary.139",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Errant \"Nested elements in TextInput are currently unsupported on Windows\" Yellowbox Warnings",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b8c063d11dbd1295401f46dc8d3a354d409d1d19",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add licene metadata to nuget package for nuget.org compliance",
+            "author": "dannyvv@microsoft.com",
+            "commit": "af4ecd22cdab083d453cab168f2680486e343ba6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use thread compositor in ReactImage",
+            "author": "asklar@microsoft.com",
+            "commit": "0aa2d123324132785d930bf1231c7483440d2e50",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Aug 2020 05:05:16 GMT",
       "tag": "react-native-windows_v0.0.0-canary.138",
       "version": "0.0.0-canary.138",
