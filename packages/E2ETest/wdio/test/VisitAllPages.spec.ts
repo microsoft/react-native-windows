@@ -27,7 +27,7 @@ let pages = [
   '<Switch>',
   '<Text>',
   '<TextInput>',
-  '<Touchable*> and onPress',
+  //'<Touchable*> and onPress',
   '<TransferProperties>',
   '<TransparentHitTestExample>',
   '<View>',
@@ -71,7 +71,8 @@ let pages = [
 
 class TestPage extends BasePage {
   goToTestPage(page: string) {
-    this.waitForItemLoaded(page);
+    let editBox = By('explorer_search');
+    editBox.setValue(page);
     let pageItem = By(page);
     pageItem.click();
     this.waitForPageLoaded();
