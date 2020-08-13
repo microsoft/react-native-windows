@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-
 #include "ViewViewManager.h"
+#include <cdebug.h>
 
 #include "ViewControl.h"
 
@@ -16,9 +16,11 @@
 #include <INativeUIManager.h>
 #include <IReactInstance.h>
 
+#include <inspectable.h>
 #include <unicode.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
+#include <winstring.h>
 
 #if defined(_DEBUG)
 // Currently only used for tagging controls in debug
@@ -125,9 +127,13 @@ class ViewShadowNode : public ShadowNodeBase {
     // TODO NOW: Why do we do this? Removal of children doesn't seem to imply we
     // tear down the infrastr
     if (IsControl()) {
-      auto control = m_view.as<xaml::Controls::ContentControl>();
-      current = control.Content().as<XamlView>();
-      control.Content(nullptr);
+      if (auto control = m_view.try_as<xaml::Controls::ContentControl>()) {
+        current = control.Content().as<XamlView>();
+        control.Content(nullptr);
+      } else {
+        std::string name = Microsoft::Common::Unicode::Utf16ToUtf8(winrt::get_class_name(current).c_str());
+        cdebug << "Tearing down, IsControl=true but the control is not a ContentControl, it's a " << name << std::endl;
+      }
     }
 
     if (HasOuterBorder()) {
