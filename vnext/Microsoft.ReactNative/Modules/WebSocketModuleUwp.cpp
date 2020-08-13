@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-
+#include <cdebug.h>
+#include <WinInet.h>
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Windows.Storage.Streams.h>
 #include <winrt/Windows.Networking.Sockets.h>
@@ -164,7 +165,24 @@ void WebSocketModule::WebSocket::connect(
 
   if (!SUCCEEDED(hr)) {
     winrt::hresult_error e{hr};
-    OutputDebugString("WebSocket.connect failed (0x%8X) %ls\n", e);
+    std::wstring error;
+#define INET_ERR_OUT_FORMAT_BUFFER_SIZE 256
+    const DWORD err = hr & 0xffff;
+    if (err >= INTERNET_ERROR_BASE && err <= INTERNET_ERROR_LAST) {
+      wchar_t errorStr[INET_ERR_OUT_FORMAT_BUFFER_SIZE] = {};
+      FormatMessageW(
+          FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_HMODULE,
+          GetModuleHandle(L"wininet.dll"),
+          err,
+          0,
+          errorStr,
+          INET_ERR_OUT_FORMAT_BUFFER_SIZE,
+          nullptr);
+      error = errorStr;
+    } else {
+      error = e.message().c_str();
+    }
+    cwdebug << L"WebSocket.connect failed (0x" << std::hex << e.code() << ") " << error << " at " << uri.DisplayUri().c_str() << std::endl;
     onError(id, e.code());
   }
 }
