@@ -2470,14 +2470,6 @@
     js-yaml "~3.13.1"
     resolve "~1.17.0"
 
-"@microsoft/api-extractor-model@7.8.13":
-  version "7.8.13"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.8.13.tgz#1a191db5216b8407d4b55487275bd19f8016c094"
-  integrity sha512-SspJ84pZEZfF5jcVkwtdmgpnxjwMwJxQkK+v868jF6Ue/rJZ7WV/+qFB76gxLXNPsnVhF/xdS8s4AWXL0ePN8g==
-  dependencies:
-    "@microsoft/tsdoc" "0.12.19"
-    "@rushstack/node-core-library" "3.26.1"
-
 "@microsoft/api-extractor-model@7.8.14":
   version "7.8.14"
   resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.8.14.tgz#eaabb0fc9edfc190b707169b4921f1b446d3032c"
@@ -2740,19 +2732,6 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.1.0.tgz#e42b1bef12d2415411519fd528e64b593b1363dc"
   integrity sha512-W/J0fNYVO01tioHjvYWQ9m6RgndVtbElzYozBq1ZPrHO/iCzlqoySHl4gO/fpCl9QEFjvJfjPgtPMTMlsoq5DQ==
 
-"@rushstack/node-core-library@3.26.1":
-  version "3.26.1"
-  resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.26.1.tgz#1ba3e32954e25f1a2b368f1c06bfc1f127d60463"
-  integrity sha512-N2wewcrJS2Jut73qxi711D1OXVKd9+8YmCllcjxEN++88qqqxCQVnn6Iu9ydu79Frm5rV8p/zvHOLCeUm/mLOQ==
-  dependencies:
-    "@types/node" "10.17.13"
-    colors "~1.2.1"
-    fs-extra "~7.0.1"
-    jju "~1.4.0"
-    semver "~7.3.0"
-    timsort "~0.3.0"
-    z-schema "~3.18.3"
-
 "@rushstack/node-core-library@3.26.2":
   version "3.26.2"
   resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.26.2.tgz#74f9ce8f9b7af88e30c52680a50ee71147ee8d04"
@@ -2765,15 +2744,6 @@
     semver "~7.3.0"
     timsort "~0.3.0"
     z-schema "~3.18.3"
-
-"@rushstack/ts-command-line@4.4.6":
-  version "4.4.6"
-  resolved "https://registry.yarnpkg.com/@rushstack/ts-command-line/-/ts-command-line-4.4.6.tgz#7818f19e444274e68564a756ef62a2b4e0ced0f8"
-  integrity sha512-ue3p2m773Yea/s4Ef2Q3gEyLd9T0NDjXCl+PlodGTrJHgxoiRwbROSWHAdYJL/LceGWa6Biqizu9qxUDEWFweQ==
-  dependencies:
-    "@types/argparse" "1.0.38"
-    argparse "~1.0.9"
-    colors "~1.2.1"
 
 "@rushstack/ts-command-line@4.4.7":
   version "4.4.7"
