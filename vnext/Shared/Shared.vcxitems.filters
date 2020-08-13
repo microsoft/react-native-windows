@@ -303,7 +303,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.h">
       <Filter>Header Files\Executors</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)FeatureGate.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

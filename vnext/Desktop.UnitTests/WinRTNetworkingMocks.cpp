@@ -3,6 +3,8 @@
 
 #include "WinRTNetworkingMocks.h"
 
+#include <Windows.h>
+
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Networking::Sockets;
 using namespace winrt::Windows::Storage::Streams;
@@ -15,6 +17,13 @@ using winrt::param::hstring;
 namespace Microsoft::React::Test {
 
 #pragma region MockMessageWebSocket
+
+MockMessageWebSocket::MockMessageWebSocket() {
+  Mocks.MessageReceivedToken =
+      [](TypedEventHandler<MessageWebSocket, MessageWebSocketMessageReceivedEventArgs> const &) -> event_token {
+    return event_token{};
+  };
+}
 
 // IWebSocket
 IOutputStream MockMessageWebSocket::OutputStream() const {
@@ -105,6 +114,14 @@ void MockMessageWebSocket::MessageReceived(event_token const &eventCookie) const
 }
 
 #pragma endregion MockMessageWebSocket
+
+#pragma region ThrowingMessageWebSocket
+
+ThrowingMessageWebSocket::ThrowingMessageWebSocket() : MockMessageWebSocket() {
+  throw winrt::hresult_error(winrt::hresult(E_FAIL), L"Failed to instantiate WinRT class.");
+}
+
+#pragma endregion ThrowingMessageWebSocket
 
 #pragma region MockDataWriter
 
