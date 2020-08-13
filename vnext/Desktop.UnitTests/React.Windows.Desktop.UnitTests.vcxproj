@@ -91,6 +91,7 @@
     <ClCompile Include="BaseWebSocketTests.cpp" />
     <ClCompile Include="BytecodeUnitTests.cpp" />
     <ClCompile Include="EmptyUIManagerModule.cpp" />
+    <ClCompile Include="JsiRuntimeUnitTests.cpp" />
     <ClCompile Include="LayoutAnimationTests.cpp" />
     <ClCompile Include="MemoryMappedBufferTests.cpp" />
     <ClCompile Include="InstanceMocks.cpp" />
