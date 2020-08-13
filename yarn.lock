@@ -2487,14 +2487,14 @@
     "@rushstack/node-core-library" "3.26.2"
 
 "@microsoft/api-extractor@^7.3.8":
-  version "7.9.3"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.9.3.tgz#b44aff3ad17926b83066b304b5f7de1c0acc62ca"
-  integrity sha512-8NXXmL+RhkHbL84lyFcjtqm6/IJxcGCckm2bIQFTyRjH4atshvpkuYy/IsTuRSuQ6XHEPa6QNze8IwEhhV5zPA==
+  version "7.9.4"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.9.4.tgz#d375719200777f8d7b20105cf9f5cb9ab9ff230d"
+  integrity sha512-r4kqFO0unCuEcKQkEVBCw/L4YuU4larQ45iDVRFOyarER03I7FGiGy/iFoTXeN9CSnFGoXOYNokt0MkqzOYjtQ==
   dependencies:
-    "@microsoft/api-extractor-model" "7.8.13"
+    "@microsoft/api-extractor-model" "7.8.14"
     "@microsoft/tsdoc" "0.12.19"
-    "@rushstack/node-core-library" "3.26.1"
-    "@rushstack/ts-command-line" "4.4.6"
+    "@rushstack/node-core-library" "3.26.2"
+    "@rushstack/ts-command-line" "4.4.7"
     colors "~1.2.1"
     lodash "~4.17.15"
     resolve "~1.17.0"
