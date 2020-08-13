@@ -1,10 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "Utils.h"
 #include <regex>
 
-using namespace std;
+using std::string;
 
 namespace Microsoft::React {
 
@@ -18,26 +18,21 @@ Url::Url(string &&source) {
   constexpr int pathIdx = 5;
   constexpr int queryIdx = 7;
 
-  ++index;
-  this->host = string(match[index].first, match[index].second);
+  std::cmatch match;
+  if (std::regex_match(source.c_str(), match, expression)) {
+    this->scheme = string(match[schemeIdx].first, match[schemeIdx].second);
+    this->host = string(match[hostIdx].first, match[hostIdx].second);
+    this->port = string(match[portIdx].first, match[portIdx].second);
+    this->path = string(match[pathIdx].first, match[pathIdx].second);
 
-  ++index;
-  ++index;
-  this->port = string(match[index].first, match[index].second);
+    if (1 > path.length() || '/' != path.at(0))
+      path.insert(0, "/");
 
-  ++index;
-  this->path = string(match[index].first, match[index].second);
-  if (1 > path.length() || '/' != path.at(0))
-    path.insert(0, "/");
-
-  ++index;
-  ++index;
-  this->queryString = string(match[index].first, match[index].second);
+    this->queryString = string(match[queryIdx].first, match[queryIdx].second);
+  } else {
+    throw std::exception("Could not parse URL.");
+  }
 }
-else {
-  throw std::exception("Could not parse URL.");
-}
-} // namespace Microsoft::React
 
 string Url::Target() {
   if (1 > queryString.length())
