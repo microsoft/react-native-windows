@@ -1,0 +1,8 @@
+{
+  "type": "minor",
+  "comment": "Integrate new version of codegen that has changes from react-native",
+  "packageName": "react-native-windows-codegen",
+  "email": "acoates-ms@noreply.github.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-12T22:46:14.777Z"
+}
