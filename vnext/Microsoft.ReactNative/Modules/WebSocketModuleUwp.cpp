@@ -2,17 +2,17 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <cdebug.h>
-#include <WinInet.h>
+#include "WebSocketModuleUwp.h"
 #include <Utils/CppWinrtLessExceptions.h>
+#include <WinInet.h>
 #include <Windows.Storage.Streams.h>
+#include <cdebug.h>
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <future>
 #include "Unicode.h"
 #include "Utilities.h"
-#include "WebSocketModuleUwp.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4146)
@@ -182,7 +182,8 @@ void WebSocketModule::WebSocket::connect(
     } else {
       error = e.message().c_str();
     }
-    cwdebug << L"WebSocket.connect failed (0x" << std::hex << e.code() << ") " << error << " at " << uri.DisplayUri().c_str() << std::endl;
+    cwdebug << L"WebSocket.connect failed (0x" << std::hex << e.code() << ") " << error << " at "
+            << uri.DisplayUri().c_str() << std::endl;
     onError(id, e.code());
   }
 }
