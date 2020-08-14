@@ -589,6 +589,15 @@ export class TextExample extends React.Component<{}> {
             make text look slightly misaligned when centered vertically.
           </Text>
         </RNTesterBlock>
+
+        <RNTesterBlock title="Text With Border">
+          <Text style={styles.borderStyle}>
+            This is a piece of text surrounded by a purple border. Forking
+            components can be a must at times. This is a piece of text
+            surrounded by a purple border. What a nice piece of bordered text.
+            This is a piece of text surrounded by a purple border.
+          </Text>
+        </RNTesterBlock>
       </RNTesterPage>
     );
   }
@@ -606,6 +615,11 @@ export const styles = StyleSheet.create({
     color: '#000000',
     textAlignVertical: 'center',
     alignSelf: 'center',
+  },
+  borderStyle: {
+    borderWidth: 4,
+    borderColor: 'purple',
+    width: 350,
   },
 });
 
