@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <RuntimeOptions.h>
 #include <WinRTWebSocketResource.h>
 #include "BeastWebSocketResource.h"
 
@@ -14,19 +15,18 @@ namespace Microsoft::React {
 #pragma region IWebSocketResource static members
 
 /*static*/
-shared_ptr<IWebSocketResource>
-IWebSocketResource::Make(const string &urlString, bool legacyImplementation, bool acceptSelfSigned) {
-  if (!legacyImplementation) {
+shared_ptr<IWebSocketResource> IWebSocketResource::Make(string &&urlString) {
+  if (!GetRuntimeOptionBool("UseBeastWebSocket")) {
     std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
-    if (acceptSelfSigned) {
+    if (GetRuntimeOptionBool("WebSocket.AcceptSelfSigned")) {
       certExceptions.emplace_back(
           winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult::Untrusted);
       certExceptions.emplace_back(
           winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult::InvalidName);
     }
-    return make_shared<WinRTWebSocketResource>(urlString, certExceptions);
+    return make_shared<WinRTWebSocketResource>(std::move(urlString), std::move(certExceptions));
   } else {
-    Url url(urlString);
+    Url url(std::move(urlString));
 
     if (url.scheme == "ws") {
       if (url.port.empty())
