@@ -31,6 +31,9 @@
     }                                                      \
   } while (false)
 
+// Throw native exception
+#define ChakraThrow(message) ThrowNativeException(message);
+
 // Check condition and throw native exception if it fails.
 #define ChakraVerifyElseThrow(condition, message) \
   do {                                            \

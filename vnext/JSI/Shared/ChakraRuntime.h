@@ -166,7 +166,7 @@ class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExce
   // It is used by the JsiValueView, JsiValueViewArray, and JsiPropNameIDView classes
   // to keep temporary PointerValues on the call stack to avoid extra memory allocations.
   struct ChakraPointerValueView : PointerValue {
-    ChakraPointerValueView(JsRef ref) noexcept : m_ref{ref} {}
+    ChakraPointerValueView(JsRef jsRef) noexcept : m_jsRef{jsRef} {}
 
     ChakraPointerValueView(ChakraPointerValueView const &) = delete;
     ChakraPointerValueView &operator=(ChakraPointerValueView const &) = delete;
@@ -174,11 +174,11 @@ class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExce
     void invalidate() noexcept override {}
 
     JsRef GetRef() const noexcept {
-      return m_ref;
+      return m_jsRef;
     }
 
    private:
-    JsRef m_ref;
+    JsRef m_jsRef;
   };
 
   // ChakraPointerValue is needed for working with Facebook's jsi::Pointer class
@@ -211,7 +211,7 @@ class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExce
       if (JsRef ref = GetRef()) {
         // JSI allows the destructor to be run on a random thread.
         // To handle it correctly we must schedule a task to the thread associated
-        // with the Chakra context. Fir now we just leak the value.
+        // with the Chakra context. For now we just leak the value.
         // TODO: Implement proper ref count release if it is called on a wrong thread.
         JsRelease(ref, nullptr); // We ignore the error until we fix the TODO above.
       }
@@ -258,18 +258,21 @@ class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExce
       JsValueRef *args,
       unsigned short argCount,
       void *callbackState) noexcept;
+
   static JsValueRef CALLBACK HostObjectSetTrap(
       JsValueRef callee,
       bool isConstructCall,
       JsValueRef *args,
       unsigned short argCount,
       void *callbackState) noexcept;
+
   static JsValueRef CALLBACK HostObjectOwnKeysTrap(
       JsValueRef callee,
       bool isConstructCall,
       JsValueRef *args,
       unsigned short argCount,
       void *callbackState) noexcept;
+
   JsValueRef GetHostObjectProxyHandler();
 
   // Evaluate lambda and augment exception messages with the methodName.
@@ -280,9 +283,9 @@ class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExce
     } catch (facebook::jsi::JSError const &) {
       throw; // do not augment the JSError exceptions.
     } catch (std::exception const &ex) {
-      ChakraVerifyElseThrow(false, (std::string{"Exception in "} + methodName + ": " + ex.what()).c_str());
+      ChakraThrow((std::string{"Exception in "} + methodName + ": " + ex.what()).c_str());
     } catch (...) {
-      ChakraVerifyElseThrow(false, (std::string{"Exception in "} + methodName + ": <unknown>").c_str());
+      ChakraThrow((std::string{"Exception in "} + methodName + ": <unknown>").c_str());
     }
   }
 
@@ -369,6 +372,24 @@ class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExce
 
   JsValueRef CreatePropertyDescriptor(JsValueRef value, PropertyAttibutes attrs);
 
+  // The number of arguments that we keep on stack.
+  // We use heap if we have more argument.
+  constexpr static size_t MaxStackArgCount = 8;
+
+  // JsValueArgs helps to optimize passing arguments to Chakra function.
+  // If number of arguments is below or equal to MaxStackArgCount,
+  // then they are kept on call stack, otherwise arguments are allocated on heap.
+  struct JsValueArgs {
+    JsValueArgs(ChakraRuntime &rt, facebook::jsi::Value const &firstArg, Span<facebook::jsi::Value const> args);
+    ~JsValueArgs();
+    operator Span<JsValueRef>();
+
+   private:
+    size_t m_count{};
+    std::array<JsValueRef, MaxStackArgCount> m_stackArgs;
+    std::unique_ptr<JsValueRef[]> m_heapArgs;
+  };
+
   // This type represents a view to Value based on JsValueRef.
   // It avoids extra memory allocation by using an in-place storage.
   // It uses ChakraPointerValueView that does nothing in the invalidate() method.
@@ -385,19 +406,19 @@ class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExce
     facebook::jsi::Value m_value{};
   };
 
-  constexpr static size_t MaxCallArgCount = 32;
-
   // This class helps to use stack storage for passing arguments that must be temporary converted from
   // JsValueRef to facebook::jsi::Value.
-  struct JsiValueViewArray {
-    JsiValueViewArray(JsValueRef *args, size_t argCount) noexcept;
+  struct JsiValueViewArgs {
+    JsiValueViewArgs(JsValueRef *args, size_t argCount) noexcept;
     facebook::jsi::Value const *Data() const noexcept;
     size_t Size() const noexcept;
 
    private:
-    std::array<JsiValueView::StoreType, MaxCallArgCount> m_pointerStoreArray{};
-    std::array<facebook::jsi::Value, MaxCallArgCount> m_valueArray{};
     size_t m_size{};
+    std::array<JsiValueView::StoreType, MaxStackArgCount> m_stackPointerStore{};
+    std::array<facebook::jsi::Value, MaxStackArgCount> m_stackArgs{};
+    std::unique_ptr<JsiValueView::StoreType[]> m_heapPointerStore{};
+    std::unique_ptr<facebook::jsi::Value[]> m_heapArgs{};
   };
 
   // PropNameIDView helps to use the stack storage for temporary conversion from

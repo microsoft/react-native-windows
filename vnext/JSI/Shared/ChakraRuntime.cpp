@@ -537,28 +537,13 @@ facebook::jsi::Value ChakraRuntime::call(
     const facebook::jsi::Value &jsThis,
     const facebook::jsi::Value *args,
     size_t count) {
-  size_t jsArgCount = count + 1; // for 'this' argument.
-  ChakraVerifyElseThrow(jsArgCount <= MaxCallArgCount, "Argument count exceeds MaxCallArgCount");
-  std::array<JsValueRef, MaxCallArgCount> jsArgs;
-  jsArgs[0] = ToJsValueRef(jsThis);
-  for (size_t i = 0; i < count; ++i) {
-    jsArgs[i + 1] = ToJsValueRef(args[i]);
-  }
-
-  return ToJsiValue(CallFunction(GetJsRef(func), Span{jsArgs.data(), jsArgCount}));
+  return ToJsiValue(CallFunction(GetJsRef(func), JsValueArgs(*this, jsThis, Span(args, count))));
 }
 
 facebook::jsi::Value
 ChakraRuntime::callAsConstructor(const facebook::jsi::Function &func, const facebook::jsi::Value *args, size_t count) {
-  size_t jsArgCount = count + 1; // for 'this' argument.
-  ChakraVerifyElseThrow(jsArgCount <= MaxCallArgCount, "Argument count exceeds MaxCallArgCount");
-  std::array<JsValueRef, MaxCallArgCount> jsArgs;
-  jsArgs[0] = m_undefinedValue;
-  for (size_t i = 0; i < count; ++i) {
-    jsArgs[i + 1] = ToJsValueRef(args[i]);
-  }
-
-  return ToJsiValue(ConstructObject(GetJsRef(func), Span{jsArgs.data(), jsArgCount}));
+  return ToJsiValue(
+      ConstructObject(GetJsRef(func), JsValueArgs(*this, facebook::jsi::Value::undefined(), Span(args, count))));
 }
 
 facebook::jsi::Runtime::ScopeState *ChakraRuntime::pushScope() {
@@ -687,7 +672,7 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
 
     ChakraVerifyElseThrow(argCount > 0, "There must be at least 'this' argument.");
     JsiValueView jsiThisArg{*args};
-    JsiValueViewArray jsiArgs{args + 1, argCount - 1u};
+    JsiValueViewArgs jsiArgs{args + 1, argCount - 1u};
 
     const facebook::jsi::HostFunctionType &hostFunc = hostFuncWraper->GetHostFunction();
     return RunInMethodContext("HostFunction", [&]() {
@@ -843,6 +828,45 @@ void ChakraRuntime::setupMemoryTracker() noexcept {
 }
 
 //===========================================================================
+// ChakraRuntime::JsValueArgs implementation
+//===========================================================================
+
+ChakraRuntime::JsValueArgs::JsValueArgs(
+    ChakraRuntime &rt,
+    facebook::jsi::Value const &firstArg,
+    Span<facebook::jsi::Value const> args)
+    : m_count{args.size() + 1},
+      m_heapArgs{m_count > MaxStackArgCount ? std::make_unique<JsValueRef[]>(m_count) : nullptr} {
+  JsValueRef *jsArgs = m_heapArgs ? m_heapArgs.get() : m_stackArgs.data();
+  jsArgs[0] = rt.ToJsValueRef(firstArg);
+  for (size_t i = 1; i < m_count; ++i) {
+    jsArgs[i] = rt.ToJsValueRef(args.begin()[i - 1]);
+  }
+  if (m_heapArgs) {
+    // Chakra GC cannot see values on heap. They must be ref-counted.
+    for (size_t i = 0; i < m_count; ++i) {
+      AddRef(m_heapArgs[i]);
+    }
+  }
+}
+
+ChakraRuntime::JsValueArgs::~JsValueArgs() {
+  if (m_heapArgs) {
+    for (size_t i = 0; i < m_count; ++i) {
+      Release(m_heapArgs[i]);
+    }
+  }
+}
+
+ChakraRuntime::JsValueArgs::operator ChakraApi::Span<JsValueRef>() {
+  if (m_count > MaxStackArgCount) {
+    return Span<JsValueRef>(m_heapArgs.get(), m_count);
+  } else {
+    return Span<JsValueRef>(m_stackArgs.data(), m_count);
+  }
+}
+
+//===========================================================================
 // ChakraRuntime::JsiValueView implementation
 //===========================================================================
 
@@ -886,18 +910,22 @@ ChakraRuntime::JsiValueView::operator facebook::jsi::Value const &() const noexc
 // ChakraRuntime::JsiValueViewArray implementation
 //===========================================================================
 
-ChakraRuntime::JsiValueViewArray::JsiValueViewArray(JsValueRef *args, size_t argCount) noexcept : m_size{argCount} {
-  ChakraVerifyElseThrow(m_size <= MaxCallArgCount, "Argument count must not exceed the MaxCallArgCount");
+ChakraRuntime::JsiValueViewArgs::JsiValueViewArgs(JsValueRef *args, size_t argCount) noexcept
+    : m_size{argCount},
+      m_heapPointerStore{m_size > MaxStackArgCount ? std::make_unique<JsiValueView::StoreType[]>(m_size) : nullptr},
+      m_heapArgs{m_size > MaxStackArgCount ? std::make_unique<facebook::jsi::Value[]>(m_size) : nullptr} {
+  JsiValueView::StoreType *pointerStore = m_heapPointerStore ? m_heapPointerStore.get() : m_stackPointerStore.data();
+  facebook::jsi::Value *jsiArgs = m_heapArgs ? m_heapArgs.get() : m_stackArgs.data();
   for (uint32_t i = 0; i < m_size; ++i) {
-    m_valueArray[i] = JsiValueView::InitValue(args[i], std::addressof(m_pointerStoreArray[i]));
+    jsiArgs[i] = JsiValueView::InitValue(args[i], std::addressof(pointerStore[i]));
   }
 }
 
-facebook::jsi::Value const *ChakraRuntime::JsiValueViewArray::Data() const noexcept {
-  return m_valueArray.data();
+facebook::jsi::Value const *ChakraRuntime::JsiValueViewArgs::Data() const noexcept {
+  return m_heapArgs ? m_heapArgs.get() : m_stackArgs.data();
 }
 
-size_t ChakraRuntime::JsiValueViewArray::Size() const noexcept {
+size_t ChakraRuntime::JsiValueViewArgs::Size() const noexcept {
   return m_size;
 }
 
