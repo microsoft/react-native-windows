@@ -86,5 +86,5 @@ export class BasePage {
   }
 
   // Default timeout for waitForPageLoaded command in PageObject
-  private waitforPageTimeout: number = 10000;
+  private waitforPageTimeout: number = 60000;
 }
