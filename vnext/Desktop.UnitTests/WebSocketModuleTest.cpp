@@ -21,7 +21,7 @@ using std::vector;
 
 namespace Microsoft::React::Test {
 
-TEST_CLASS (WebSocketModuleTest) {
+TEST_CLASS(WebSocketModuleTest) {
   const char *MethodName[static_cast<size_t>(WebSocketModule::MethodId::SIZE)]{
       "connect", "close", "send", "sendBinary", "ping"};
 
