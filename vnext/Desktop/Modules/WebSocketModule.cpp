@@ -8,8 +8,8 @@
 #include <Utils.h>
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
-#include "Unicode.h"
 #include <winrt/base.h>
+#include "Unicode.h"
 
 using namespace facebook::xplat;
 using namespace folly;

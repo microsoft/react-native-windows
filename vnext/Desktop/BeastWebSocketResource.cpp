@@ -443,8 +443,8 @@ void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnError(
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-IWebSocketResource::ReadyState BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::GetReadyState()
-    const noexcept {
+IWebSocketResource::ReadyState BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::GetReadyState() const
+    noexcept {
   return m_readyState;
 }
 
