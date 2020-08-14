@@ -578,10 +578,9 @@ export default class Pressability {
         ? null
         : {
             onMouseEnter: (event: MouseEvent): void => {
-              // [Windows Prefer attached raw mouse event handler for compat
+              // [Windows Add attached raw mouse event handler for compat
               if (this._config.onMouseEnter) {
                 this._config.onMouseEnter(event);
-                return;
               }
               // Windows]
 
@@ -605,10 +604,9 @@ export default class Pressability {
             },
 
             onMouseLeave: (event: MouseEvent): void => {
-              // [Windows Prefer attached raw mouse event handler for compat
+              // [Windows Add attached raw mouse event handler for compat
               if (this._config.onMouseLeave) {
                 this._config.onMouseLeave(event);
-                return;
               }
               // Windows]
 
