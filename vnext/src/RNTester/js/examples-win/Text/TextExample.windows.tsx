@@ -591,12 +591,27 @@ export class TextExample extends React.Component<{}> {
         </RNTesterBlock>
 
         <RNTesterBlock title="Text With Border">
-          <Text style={styles.borderStyle}>
-            This is a piece of text surrounded by a purple border. Forking
-            components can be a must at times. This is a piece of text
-            surrounded by a purple border. What a nice piece of bordered text.
-            This is a piece of text surrounded by a purple border.
-          </Text>
+          <>
+            <Text>
+              This text is
+              <Text
+                style={{color: 'red', borderWidth: 1, borderColor: 'black'}}>
+                outlined
+              </Text>
+              and laid out within the normal text run, so will wrap etc as
+              normal text.
+            </Text>
+
+            <Text style={styles.borderedText}>
+              Igor bordered {'\n'}
+              <Text style={{borderColor: 'red', borderWidth: 5}}>
+                1st nested - border specifcied but ignored.{'\n'}
+                <Text style={{borderColor: 'yellow', borderWidth: 4}}>
+                  2nd Inside text!
+                </Text>
+              </Text>
+            </Text>
+          </>
         </RNTesterBlock>
       </RNTesterPage>
     );
@@ -616,10 +631,14 @@ export const styles = StyleSheet.create({
     textAlignVertical: 'center',
     alignSelf: 'center',
   },
-  borderStyle: {
-    borderWidth: 4,
-    borderColor: 'purple',
-    width: 350,
+  borderedText: {
+    margin: 100,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    borderWidth: 3,
+    borderColor: 'green',
+    padding: 30,
   },
 });
 
