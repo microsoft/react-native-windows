@@ -16,11 +16,9 @@
 #include <INativeUIManager.h>
 #include <IReactInstance.h>
 
-#include <inspectable.h>
 #include <unicode.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
-#include <winstring.h>
 
 #if defined(_DEBUG)
 // Currently only used for tagging controls in debug
