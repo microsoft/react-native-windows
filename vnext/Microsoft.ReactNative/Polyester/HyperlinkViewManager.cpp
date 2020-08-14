@@ -71,7 +71,7 @@ bool HyperlinkViewManager::UpdateProperty(
       button.IsEnabled(!propertyValue.asBool());
   } else if (propertyName == "tooltip") {
     if (propertyValue.isString()) {
-      winrt::ToolTipService::SetToolTip(button, winrt::box_value(asHstring(propertyValue));
+      winrt::ToolTipService::SetToolTip(button, winrt::box_value(asHstring(propertyValue)));
     }
   } else if (propertyName == "url") {
     winrt::Uri myUri(asHstring(propertyValue));
