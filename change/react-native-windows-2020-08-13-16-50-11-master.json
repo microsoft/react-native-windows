@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Bump V8 package version",
+  "packageName": "react-native-windows",
+  "email": "tudor.mihai@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-13T23:50:11.197Z"
+}

@@ -2,6 +2,72 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 14 Aug 2020 05:05:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.140",
+      "version": "0.0.0-canary.140",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 4/29 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f81d2689aa55140f1ff9edd5ec95fd4f658a40",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Print out Wininet error strings",
+            "author": "asklar@microsoft.com",
+            "commit": "ec29934f84d5b19bf876234d4cec8288f69120e0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove reinterpret_cast in DevSupportManager",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "241214d57faafaa31f8b495aa86a41941d067992",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix crash in ViewViewManager",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "0b3df40ecbbfa20a3a6f72328de9436dde768ab4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix teardown crash in WebSocketJSExecutor",
+            "author": "asklar@microsoft.com",
+            "commit": "5f4b99ee20e89fc09e8fd58f9146fd886bfd237f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 13 Aug 2020 05:07:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.139",
+      "version": "0.0.0-canary.139",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Errant \"Nested elements in TextInput are currently unsupported on Windows\" Yellowbox Warnings",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b8c063d11dbd1295401f46dc8d3a354d409d1d19",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add licene metadata to nuget package for nuget.org compliance",
+            "author": "dannyvv@microsoft.com",
+            "commit": "af4ecd22cdab083d453cab168f2680486e343ba6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use thread compositor in ReactImage",
+            "author": "asklar@microsoft.com",
+            "commit": "0aa2d123324132785d930bf1231c7483440d2e50",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Aug 2020 05:05:16 GMT",
       "tag": "react-native-windows_v0.0.0-canary.138",
       "version": "0.0.0-canary.138",

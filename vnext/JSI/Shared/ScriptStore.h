@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 #pragma once
 
 #include <jsi/jsi.h>
@@ -31,7 +33,7 @@ struct JSRuntimeSignature {
 // (through JSI::Runtime implementation's factory method), to enable persistance of the prepared script and retrieval on
 // subsequent evaluation of a script.
 struct PreparedScriptStore {
-  virtual ~PreparedScriptStore() {}
+  virtual ~PreparedScriptStore() = default;
 
   // Try to retrieve the prepared javascript for a given combination of script & runtime.
   // scriptSignature : Javascript url and version
@@ -64,7 +66,7 @@ struct PreparedScriptStore {
 // such as usage of pre-prepared javascript script. Alternatively, this entity can be used to directly provide the
 // Javascript buffer and rich metadata to the JSI::Runtime instance.
 struct ScriptStore {
-  virtual ~ScriptStore() {}
+  virtual ~ScriptStore() = default;
 
   // Return the Javascript buffer and version corresponding to a given url.
   virtual VersionedBuffer getVersionedScript(const std::string &url) noexcept = 0;

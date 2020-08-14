@@ -1,8 +1,8 @@
 {
   "type": "prerelease",
-  "comment": "Use thread compositor in ReactImage",
+  "comment": "remove textbox for tooltips in hyperlinks as that can mess up word-wrapping",
   "packageName": "react-native-windows",
   "email": "asklar@microsoft.com",
   "dependentChangeType": "patch",
-  "date": "2020-08-12T06:19:31.028Z"
+  "date": "2020-08-14T04:08:10.715Z"
 }

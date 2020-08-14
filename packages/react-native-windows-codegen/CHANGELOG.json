@@ -2,6 +2,21 @@
   "name": "react-native-windows-codegen",
   "entries": [
     {
+      "date": "Fri, 14 Aug 2020 05:05:34 GMT",
+      "tag": "react-native-windows-codegen_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Integrate new version of codegen that has changes from react-native",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "68f81d2689aa55140f1ff9edd5ec95fd4f658a40",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Jul 2020 23:11:46 GMT",
       "tag": "react-native-windows-codegen_v0.0.9",
       "version": "0.0.9",
