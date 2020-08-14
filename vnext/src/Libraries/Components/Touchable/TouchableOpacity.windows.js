@@ -148,6 +148,8 @@ class TouchableOpacity extends React.Component<Props, State> {
       delayPressIn: this.props.delayPressIn,
       delayPressOut: this.props.delayPressOut,
       pressRectOffset: this.props.pressRetentionOffset,
+      onMouseEnter: this.props.onMouseEnter, // [Windows]
+      onMouseLeave: this.props.onMouseLeave, // [Windows]
       onBlur: event => {
         if (Platform.isTV) {
           this._opacityInactive(250);

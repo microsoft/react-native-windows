@@ -69,7 +69,6 @@
                     <ComboBoxItem Content="Samples\image" />
                     <ComboBoxItem Content="Samples\index" />
                     <ComboBoxItem Content="Samples\messages" />
-                    <ComboBoxItem Content="Samples\mouse" />
                     <ComboBoxItem Content="Samples\scrollViewSnapSample" />
                     <ComboBoxItem Content="Samples\simple" />
                     <ComboBoxItem Content="Samples\text" />

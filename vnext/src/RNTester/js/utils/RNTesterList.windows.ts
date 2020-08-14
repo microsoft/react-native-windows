@@ -222,6 +222,10 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples/Layout/LayoutExample'),
   },
   {
+    key: 'MouseExample',
+    module: require('./../examples-win/Mouse/MouseExample'),
+  },
+  {
     key: 'NativeAnimationsExample',
     module: require('react-native/RNTester/js/examples/NativeAnimation/NativeAnimationsExample'),
   },

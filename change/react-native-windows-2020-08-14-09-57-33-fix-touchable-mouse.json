@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Restore Previous Behavior Allowing onMouseEnter and onMouseLeave on Touchables",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-14T16:57:33.938Z"
+}
