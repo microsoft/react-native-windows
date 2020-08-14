@@ -42,7 +42,7 @@ BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::BaseWebSocketRes
     : m_url{std::move(url)} {}
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::~BaseWebSocketResource() {
+BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::~BaseWebSocketResource() noexcept {
   if (!m_context.stopped()) {
     if (!m_closeRequested)
       Close(CloseCode::GoingAway, "Terminating instance");
@@ -305,7 +305,7 @@ websocket::close_code BaseWebSocketResource<Protocol, SocketLayer, Stream, Resol
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
 void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Connect(
     const Protocols &protocols,
-    const Options &options) {
+    const Options &options) noexcept {
   // "Cannot call Connect more than once");
   assert(ReadyState::Connecting == m_readyState);
 
@@ -349,7 +349,9 @@ void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Connect(
 } // void Connect
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Close(CloseCode code, const string &reason) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Close(
+    CloseCode code,
+    const string &reason) noexcept {
   if (m_closeRequested)
     return;
 
@@ -366,12 +368,12 @@ void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Close(Close
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Send(const string &message) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Send(const string &message) noexcept {
   EnqueueWrite(std::move(message), false);
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SendBinary(const string &base64String) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SendBinary(const string &base64String) noexcept {
   m_stream->binary(true);
 
   string message;
@@ -393,7 +395,7 @@ void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SendBinary(
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Ping() {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Ping() noexcept {
   if (ReadyState::Closed == m_readyState)
     return;
 
@@ -407,39 +409,42 @@ void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::Ping() {
 #pragma region Handler setters
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnConnect(function<void()> &&handler) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnConnect(function<void()> &&handler) noexcept {
   m_connectHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnPing(function<void()> &&handler) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnPing(function<void()> &&handler) noexcept {
   m_pingHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnSend(function<void(size_t)> &&handler) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnSend(
+    function<void(size_t)> &&handler) noexcept {
   m_writeHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
 void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnMessage(
-    function<void(size_t, const string &)> &&handler) {
+    function<void(size_t, const string &)> &&handler) noexcept {
   m_readHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
 void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnClose(
-    function<void(CloseCode, const string &)> &&handler) {
+    function<void(CloseCode, const string &)> &&handler) noexcept {
   m_closeHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnError(function<void(Error &&)> &&handler) {
+void BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::SetOnError(
+    function<void(Error &&)> &&handler) noexcept {
   m_errorHandler = handler;
 }
 
 template <typename Protocol, typename SocketLayer, typename Stream, typename Resolver>
-IWebSocketResource::ReadyState BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::GetReadyState() const {
+IWebSocketResource::ReadyState BaseWebSocketResource<Protocol, SocketLayer, Stream, Resolver>::GetReadyState() const
+    noexcept {
   return m_readyState;
 }
 

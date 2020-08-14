@@ -95,8 +95,9 @@
     <ClCompile Include="DevSupportManager.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutor.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
-    <ClCompile Include="Modules\NetworkingModule.cpp" />
+    <ClCompile Include="RuntimeOptions.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
+    <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\WebSocketModule.cpp" />
     <ClCompile Include="pch.cpp">
