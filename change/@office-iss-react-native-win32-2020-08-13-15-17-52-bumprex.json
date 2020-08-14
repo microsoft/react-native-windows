@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "[Win32] Bump rex-win32 version",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates-ms@noreply.github.com",
+  "dependentChangeType": "none",
+  "date": "2020-08-13T22:17:52.113Z"
+}
