@@ -132,18 +132,18 @@ struct ChakraApi {
 
    private:
     static thread_local IExceptionThrower *tls_exceptionThrower;
-    IExceptionThrower * const m_previous;
+    IExceptionThrower *const m_previous;
   };
 
   /**
    * @brief Throws JavaScript exception with provided errorCode.
    */
-  static void ThrowJsException(JsErrorCode errorCode);
+  [[noreturn]] static void ThrowJsException(JsErrorCode errorCode);
 
   /**
    * @brief Throws native exception with provided message.
    */
-  static void ThrowNativeException(char const *errorMessage);
+  [[noreturn]] static void ThrowNativeException(char const *errorMessage);
 
   /**
    * @brief Adds a reference to a garbage collected object.
@@ -421,7 +421,7 @@ struct ChakraApi {
     }
 
    private:
-    T * const m_data;
+    T *const m_data;
     size_t const m_size;
   };
 

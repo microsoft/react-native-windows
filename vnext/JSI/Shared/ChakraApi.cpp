@@ -65,7 +65,7 @@ ChakraApi::JsRefHolder::~JsRefHolder() noexcept {
 // ChakraApi implementation
 //=============================================================================
 
-void ChakraApi::ThrowJsException(JsErrorCode errorCode) {
+[[noreturn]] void ChakraApi::ThrowJsException(JsErrorCode errorCode) {
   JsValueRef jsError{JS_INVALID_REFERENCE};
   ChakraVerifyElseCrash(JsGetAndClearException(&jsError) == JsNoError, "Cannot retrieve JS exception.");
   if (auto thrower = ExceptionThrowerHolder::Get()) {
@@ -77,7 +77,7 @@ void ChakraApi::ThrowJsException(JsErrorCode errorCode) {
   }
 }
 
-void ChakraApi::ThrowNativeException(char const *errorMessage) {
+[[noreturn]] void ChakraApi::ThrowNativeException(char const *errorMessage) {
   if (auto thrower = ExceptionThrowerHolder::Get()) {
     thrower->ThrowNativeExceptionOverride(errorMessage);
   } else {

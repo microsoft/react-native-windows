@@ -837,7 +837,7 @@ ChakraRuntime::JsValueArgs::JsValueArgs(
     Span<facebook::jsi::Value const> args)
     : m_count{args.size() + 1},
       m_heapArgs{m_count > MaxStackArgCount ? std::make_unique<JsValueRef[]>(m_count) : nullptr} {
-  JsValueRef * const jsArgs = m_heapArgs ? m_heapArgs.get() : m_stackArgs.data();
+  JsValueRef *const jsArgs = m_heapArgs ? m_heapArgs.get() : m_stackArgs.data();
   jsArgs[0] = rt.ToJsValueRef(firstArg);
   for (size_t i = 1; i < m_count; ++i) {
     jsArgs[i] = rt.ToJsValueRef(args.begin()[i - 1]);
@@ -914,8 +914,9 @@ ChakraRuntime::JsiValueViewArgs::JsiValueViewArgs(JsValueRef *args, size_t argCo
     : m_size{argCount},
       m_heapPointerStore{m_size > MaxStackArgCount ? std::make_unique<JsiValueView::StoreType[]>(m_size) : nullptr},
       m_heapArgs{m_size > MaxStackArgCount ? std::make_unique<facebook::jsi::Value[]>(m_size) : nullptr} {
-  JsiValueView::StoreType * const pointerStore = m_heapPointerStore ? m_heapPointerStore.get() : m_stackPointerStore.data();
-  facebook::jsi::Value * const jsiArgs = m_heapArgs ? m_heapArgs.get() : m_stackArgs.data();
+  JsiValueView::StoreType *const pointerStore =
+      m_heapPointerStore ? m_heapPointerStore.get() : m_stackPointerStore.data();
+  facebook::jsi::Value *const jsiArgs = m_heapArgs ? m_heapArgs.get() : m_stackArgs.data();
   for (uint32_t i = 0; i < m_size; ++i) {
     jsiArgs[i] = JsiValueView::InitValue(args[i], std::addressof(pointerStore[i]));
   }
