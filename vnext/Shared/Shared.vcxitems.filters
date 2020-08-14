@@ -18,5 +18,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.h">
       <Filter>AsyncStorage</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AbiSafe.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorageModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.h" />
   </ItemGroup>
 </Project>
