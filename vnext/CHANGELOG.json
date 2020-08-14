@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 14 Aug 2020 06:35:22 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.170",
+      "version": "0.60.0-vnext.170",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable integer-type native runtime settings. #5669",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "2eae98ae6bbaea41bffdb3037e04bc90f08778c5",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Jun 2020 16:46:49 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.169",
       "version": "0.60.0-vnext.169",
