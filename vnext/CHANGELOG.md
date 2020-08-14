@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 13 Aug 2020 05:07:00 GMT and should not be manually modified.
+This log was last generated on Fri, 14 Aug 2020 05:05:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.140
+
+Fri, 14 Aug 2020 05:05:34 GMT
+
+### Changes
+
+- Integrate 4/29 Nightly Build (ngerlem@microsoft.com)
+- Print out Wininet error strings (asklar@microsoft.com)
+- Remove reinterpret_cast in DevSupportManager (asklar@winse.microsoft.com)
+- Fix crash in ViewViewManager (asklar@winse.microsoft.com)
+- Fix teardown crash in WebSocketJSExecutor (asklar@microsoft.com)
 
 ## 0.0.0-canary.139
 

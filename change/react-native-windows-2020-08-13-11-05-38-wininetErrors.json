@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Print out Wininet error strings",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-13T18:05:37.959Z"
-}
