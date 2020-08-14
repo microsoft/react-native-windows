@@ -151,15 +151,32 @@ export type FocusEvent = SyntheticEvent<
   |}>,
 >;
 
+// [Windows Mouse events on Windows don't match up with the version in core
+// introduced for react-native-web. Replace typings with our values to catch
+// anything dependent on react-native-web specific values
 export type MouseEvent = SyntheticEvent<
   $ReadOnly<{|
-    clientX: number,
-    clientY: number,
+    target: number,
+    identifier: number,
     pageX: number,
     pageY: number,
+    locationX: number,
+    locationY: number,
     timestamp: number,
+    pointerType: string,
+    force: number,
+    isLeftButton: boolean,
+    isRightButton: boolean,
+    isMiddleButton: boolean,
+    isBarrelButtonPressed: boolean,
+    isHorizontalScrollWheel: boolean,
+    isEraser: boolean,
+    shiftKey: boolean,
+    ctrlKey: boolean,
+    altKey: boolean,
   |}>,
 >;
+// Windows]
 
 // [Windows
 export type KeyEvent = SyntheticEvent<
