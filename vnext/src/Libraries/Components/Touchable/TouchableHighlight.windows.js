@@ -176,6 +176,8 @@ class TouchableHighlight extends React.Component<Props, State> {
       getPressOutDelayMS: () => this.props.delayPressOut,
       getPressRectOffset: () => this.props.pressRetentionOffset,
       getTouchSoundDisabled: () => this.props.touchSoundDisabled,
+      onMouseEnter: this.props.onMouseEnter, // [Windows]
+      onMouseLeave: this.props.onMouseLeave, // [Windows]
       onBlur: event => {
         if (Platform.isTV) {
           this._hideUnderlay();
