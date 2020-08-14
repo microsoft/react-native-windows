@@ -21,7 +21,6 @@ let pages = [
   '<PickerWindows>',
   '<Pressable>',
   '<Popup>',
-  /*
   'Keyboard extension Example',
   '<ScrollViewSimpleExample>',
   //  '<SectionList>',
@@ -61,7 +60,6 @@ let pages = [
   'AppTheme',
   'WebSocket',
   'Transforms',
-  */
   //  '<LegacyControlStyleTest>',
   //  '<LegacyTransformTest>',
   //  '<LegacyTextInputTest>',
