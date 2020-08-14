@@ -1,11 +1,8 @@
-// Copyright (c) Microsoft Corporation.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
 
-#include <boost/beast/core/multi_buffer.hpp>
-#include <boost/beast/core/tcp_stream.hpp>
-#include <boost/beast/ssl.hpp>
 #include <boost/beast/websocket.hpp>
 #include <boost/beast/websocket/ssl.hpp>
 #include <queue>
@@ -16,8 +13,10 @@
 namespace Microsoft::React::Beast {
 
 template <
-    typename SocketLayer = boost::beast::tcp_stream,
-    typename Stream = boost::beast::websocket::stream<SocketLayer>>
+    typename Protocol = boost::asio::ip::tcp,
+    typename SocketLayer = boost::asio::basic_stream_socket<Protocol>,
+    typename Stream = boost::beast::websocket::stream<SocketLayer>,
+    typename Resolver = boost::asio::ip::basic_resolver<Protocol>>
 class BaseWebSocketResource : public IWebSocketResource {
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
@@ -93,24 +92,6 @@ class BaseWebSocketResource : public IWebSocketResource {
 
   boost::beast::websocket::close_code ToBeastCloseCode(IWebSocketResource::CloseCode closeCode);
 
-#pragma region Async handlers
-
-  void OnResolve(boost::beast::error_code ec, typename boost::asio::ip::tcp::resolver::results_type results);
-
-  void OnConnect(boost::beast::error_code ec, boost::asio::ip::tcp::resolver::results_type::endpoint_type endpoints);
-
-  void OnHandshake(boost::beast::error_code ec);
-
-  void OnClose(boost::beast::error_code ec);
-
-  void OnRead(boost::beast::error_code ec, std::size_t size);
-
-  void OnWrite(boost::beast::error_code ec, std::size_t size);
-
-  void OnPing(boost::beast::error_code ec);
-
-#pragma endregion Async handlers
-
  protected:
   /// <summary>
   /// See
@@ -144,9 +125,7 @@ class BaseWebSocketResource : public IWebSocketResource {
   /// <param name="options">
   /// Map of HTTP header fields sent by the remote endpoint.
   /// </param>
-  virtual void Handshake();
-
-  virtual std::shared_ptr<BaseWebSocketResource<SocketLayer, Stream>> SharedFromThis() = 0;
+  virtual void Handshake(const IWebSocketResource::Options &options);
 
  public:
   ~BaseWebSocketResource() noexcept override;
@@ -213,31 +192,21 @@ class BaseWebSocketResource : public IWebSocketResource {
 #pragma endregion IWebSocketResource
 };
 
-class WebSocketResource : public BaseWebSocketResource<>, public std::enable_shared_from_this<WebSocketResource> {
-#pragma region BaseWebSocketResource overrides
-
-  std::shared_ptr<BaseWebSocketResource<>> SharedFromThis() override;
-
-#pragma endregion BaseWebSocketResource overrides
-
+class WebSocketResource : public BaseWebSocketResource<> {
  public:
   WebSocketResource(Url &&url);
 };
 
-class SecureWebSocketResource : public BaseWebSocketResource<boost::beast::ssl_stream<boost::beast::tcp_stream>>,
-                                public std::enable_shared_from_this<SecureWebSocketResource> {
+class SecureWebSocket
+    : public BaseWebSocketResource<boost::asio::ip::tcp, boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> {
 #pragma region BaseWebSocketResource overrides
 
-  void Handshake() override;
+  void Handshake(const IWebSocketResource::Options &options) override;
 
-  void OnSslHandshake(boost::beast::error_code ec);
-
-  std::shared_ptr<BaseWebSocketResource<boost::beast::ssl_stream<boost::beast::tcp_stream>>> SharedFromThis() override;
-
-#pragma endregion BaseWebSocketResource overrides
+#pragma endregion
 
  public:
-  SecureWebSocketResource(Url &&url);
+  SecureWebSocket(Url &&url);
 };
 
 namespace Test {
@@ -257,9 +226,9 @@ class MockStream {
 
   boost::asio::io_context::executor_type get_executor() noexcept;
 
-  //  lowest_layer_type &lowest_layer();
+  lowest_layer_type &lowest_layer();
 
-  //  lowest_layer_type const &lowest_layer() const;
+  lowest_layer_type const &lowest_layer() const;
 
   void binary(bool value);
 
@@ -267,33 +236,19 @@ class MockStream {
 
   bool got_text() const;
 
-  void write_buffer_bytes(std::size_t amount);
+  void write_buffer_size(std::size_t amount);
 
-  std::size_t write_buffer_bytes() const;
-
-  void set_option(boost::beast::websocket::stream_base::decorator opt);
-
-  void get_option(boost::beast::websocket::stream_base::timeout &opt);
-
-  void set_option(boost::beast::websocket::stream_base::timeout const &opt);
-
-  void set_option(boost::beast::websocket::permessage_deflate const &o);
-
-  void get_option(boost::beast::websocket::permessage_deflate &o);
-
-#pragma region boost::beast::basic_stream mocks
-
-  template <class RangeConnectHandler>
-  BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(boost::system::error_code, boost::asio::ip::tcp::endpoint))
-  async_connect(boost::asio::ip::tcp::resolver::iterator const &endpoints, RangeConnectHandler &&handler);
-
-#pragma endregion boost::beast::basic_stream mocks
+  std::size_t write_buffer_size() const;
 
 #pragma region boost::beast::websocket::stream mocks
 
-  template <class HandshakeHandler>
+  template <class RequestDecorator, class HandshakeHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(HandshakeHandler, void(boost::system::error_code))
-  async_handshake(boost::beast::string_view host, boost::beast::string_view target, HandshakeHandler &&handler);
+  async_handshake_ex(
+      boost::beast::string_view host,
+      boost::beast::string_view target,
+      RequestDecorator const &decorator,
+      HandshakeHandler &&handler);
 
   template <class DynamicBuffer, class ReadHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(boost::system::error_code, std::size_t))
@@ -321,18 +276,13 @@ class MockStream {
   std::function<boost::system::error_code()> CloseResult;
 };
 
-class TestWebSocketResource : public BaseWebSocketResource<
-                                  std::nullptr_t, // Unused. MockStream works as its own next/lowest layer.
-                                  MockStream>,
-                              public std::enable_shared_from_this<TestWebSocketResource> {
-#pragma region BaseWebSocketResource overrides
-
-  std::shared_ptr<BaseWebSocketResource<std::nullptr_t, MockStream>> SharedFromThis() override;
-
-#pragma endregion BaseWebSocketResource overrides
-
+class TestWebSocket : public BaseWebSocketResource<
+                          boost::asio::ip::tcp, // TODO: Mock this and Resolver.
+                          std::nullptr_t, // Unused. MockStream works as its own
+                                          // next/lowest layer.
+                          MockStream> {
  public:
-  TestWebSocketResource(Url &&url);
+  TestWebSocket(Url &&url);
 
   void SetConnectResult(std::function<boost::system::error_code()> &&resultFunc);
   void SetHandshakeResult(std::function<boost::system::error_code(std::string, std::string)> &&resultFunc);

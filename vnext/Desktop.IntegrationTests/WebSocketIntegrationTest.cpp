@@ -179,7 +179,7 @@ TEST_CLASS (WebSocketIntegrationTest)
   TEST_METHOD(WaitForBundlerResponseNoClose) {
     string url = "ws://localhost:8081/debugger-proxy?role=client";
     // string url = "ws://localhost:5555/";
-    auto ws = IWebSocketResource::Make(url);
+    auto ws = IWebSocketResource::Make(std::move(url));
     string json =
         "{\"inject\":{},\"id\":1,\"method\":\"executeApplicationScript\",\"url\":\"http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=ios&dev=true\"}";
     // string json = "{}";

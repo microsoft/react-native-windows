@@ -76,6 +76,7 @@
     <ClCompile Include="BaseWebSocketTests.cpp" />
     <ClCompile Include="BytecodeUnitTests.cpp" />
     <ClCompile Include="EmptyUIManagerModule.cpp" />
+    <ClCompile Include="InstanceMocks.cpp" />
     <ClCompile Include="LayoutAnimationTests.cpp" />
     <ClCompile Include="MemoryMappedBufferTests.cpp" />
     <ClCompile Include="UnicodeConversionTest.cpp" />
@@ -84,6 +85,7 @@
     <ClCompile Include="UIManagerModuleTest.cpp" />
     <ClCompile Include="UtilsTest.cpp" />
     <ClCompile Include="WebSocketJSExecutorTest.cpp" />
+    <ClCompile Include="WebSocketMocks.cpp" />
     <ClCompile Include="WebSocketModuleTest.cpp" />
     <ClCompile Include="WebSocketTest.cpp" />
   </ItemGroup>
