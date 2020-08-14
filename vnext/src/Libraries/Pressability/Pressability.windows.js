@@ -151,6 +151,22 @@ export type PressabilityConfig = $ReadOnly<{|
    * @deprecated
    */
   onStartShouldSetResponder_DEPRECATED?: ?() => boolean,
+
+  // [Windows
+  /**
+   * Raw handler for onMouseEnter that will be preferred if set over hover
+   * events. This is to preserve compatibility with pre-0.62 behavior which
+   * allowed attaching mouse event handlers to Touchables
+   */
+  onMouseEnter?: ?(event: MouseEvent) => mixed,
+
+  /**
+   * Raw handler for onMouseLeave that will be preferred if set over hover
+   * events. This is to preserve compatibility with pre-0.62 behavior which
+   * allowed attaching mouse event handlers to Touchables
+   */
+  onMouseLeave?: ?(event: MouseEvent) => mixed,
+  // Windows]
 |}>;
 
 export type EventHandlers = $ReadOnly<{|
@@ -569,6 +585,12 @@ export default class Pressability {
         ? null
         : {
             onMouseEnter: (event: MouseEvent): void => {
+              // [Windows Add attached raw mouse event handler for compat
+              if (this._config.onMouseEnter) {
+                this._config.onMouseEnter(event);
+              }
+              // Windows]
+
               if (isHoverEnabled()) {
                 this._isHovered = true;
                 this._cancelHoverOutDelayTimeout();
@@ -589,6 +611,12 @@ export default class Pressability {
             },
 
             onMouseLeave: (event: MouseEvent): void => {
+              // [Windows Add attached raw mouse event handler for compat
+              if (this._config.onMouseLeave) {
+                this._config.onMouseLeave(event);
+              }
+              // Windows]
+
               if (this._isHovered) {
                 this._isHovered = false;
                 this._cancelHoverInDelayTimeout();
