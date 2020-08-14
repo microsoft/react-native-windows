@@ -379,21 +379,21 @@ class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExce
   // JsValueArgs helps to optimize passing arguments to Chakra function.
   // If number of arguments is below or equal to MaxStackArgCount,
   // then they are kept on call stack, otherwise arguments are allocated on heap.
-  struct JsValueArgs {
+  struct JsValueArgs final {
     JsValueArgs(ChakraRuntime &rt, facebook::jsi::Value const &firstArg, Span<facebook::jsi::Value const> args);
     ~JsValueArgs();
-    operator Span<JsValueRef>();
+    operator ChakraApi::Span<JsValueRef>();
 
    private:
-    size_t m_count{};
-    std::array<JsValueRef, MaxStackArgCount> m_stackArgs;
-    std::unique_ptr<JsValueRef[]> m_heapArgs;
+    size_t const m_count{};
+    std::array<JsValueRef, MaxStackArgCount> m_stackArgs{{JS_INVALID_REFERENCE}};
+    std::unique_ptr<JsValueRef[]> const m_heapArgs;
   };
 
   // This type represents a view to Value based on JsValueRef.
   // It avoids extra memory allocation by using an in-place storage.
   // It uses ChakraPointerValueView that does nothing in the invalidate() method.
-  struct JsiValueView {
+  struct JsiValueView final {
     JsiValueView(JsValueRef jsValue);
     ~JsiValueView() noexcept;
     operator facebook::jsi::Value const &() const noexcept;
@@ -403,27 +403,27 @@ class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExce
 
    private:
     StoreType m_pointerStore{};
-    facebook::jsi::Value m_value{};
+    facebook::jsi::Value const m_value{};
   };
 
   // This class helps to use stack storage for passing arguments that must be temporary converted from
   // JsValueRef to facebook::jsi::Value.
-  struct JsiValueViewArgs {
+  struct JsiValueViewArgs final {
     JsiValueViewArgs(JsValueRef *args, size_t argCount) noexcept;
     facebook::jsi::Value const *Data() const noexcept;
     size_t Size() const noexcept;
 
    private:
-    size_t m_size{};
+    size_t const m_size{};
     std::array<JsiValueView::StoreType, MaxStackArgCount> m_stackPointerStore{};
     std::array<facebook::jsi::Value, MaxStackArgCount> m_stackArgs{};
-    std::unique_ptr<JsiValueView::StoreType[]> m_heapPointerStore{};
-    std::unique_ptr<facebook::jsi::Value[]> m_heapArgs{};
+    std::unique_ptr<JsiValueView::StoreType[]> const m_heapPointerStore{};
+    std::unique_ptr<facebook::jsi::Value[]> const m_heapArgs{};
   };
 
   // PropNameIDView helps to use the stack storage for temporary conversion from
   // JsPropertyIdRef to facebook::jsi::PropNameID.
-  struct PropNameIDView {
+  struct PropNameIDView final {
     PropNameIDView(JsPropertyIdRef propertyId) noexcept;
     ~PropNameIDView() noexcept;
     operator facebook::jsi::PropNameID const &() const noexcept;
@@ -432,12 +432,12 @@ class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExce
 
    private:
     StoreType m_pointerStore{};
-    facebook::jsi::PropNameID m_propertyId;
+    facebook::jsi::PropNameID const m_propertyId;
   };
 
  private:
   // Property ID cache to improve execution speed
-  struct PropertyId {
+  struct PropertyId final {
     JsRefHolder Object;
     JsRefHolder Proxy;
     JsRefHolder Symbol;

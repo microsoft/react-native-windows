@@ -71,7 +71,7 @@ struct ChakraApi {
    * JsContextRef, JsValueRef, and JsPropertyIdRef, etc. JsRefHolder ensures
    * that JsAddRef and JsRelease are called to handle the JsRef lifetime.
    */
-  struct JsRefHolder {
+  struct JsRefHolder final {
     JsRefHolder(std::nullptr_t = nullptr) noexcept {}
     explicit JsRefHolder(JsRef ref) noexcept;
 
@@ -118,7 +118,7 @@ struct ChakraApi {
   /**
    * @brief A RAII class to hold IExceptionThrower instance in the thread local variable.
    */
-  struct ExceptionThrowerHolder {
+  struct ExceptionThrowerHolder final {
     ExceptionThrowerHolder(IExceptionThrower *exceptionThrower) noexcept
         : m_previous{std::exchange(tls_exceptionThrower, exceptionThrower)} {}
 
@@ -132,7 +132,7 @@ struct ChakraApi {
 
    private:
     static thread_local IExceptionThrower *tls_exceptionThrower;
-    IExceptionThrower *m_previous;
+    IExceptionThrower * const m_previous;
   };
 
   /**
@@ -404,7 +404,7 @@ struct ChakraApi {
    * For C++20 we should consider to replace it with std::span.
    */
   template <typename T>
-  struct Span {
+  struct Span final {
     constexpr Span(std::initializer_list<T> il) noexcept : m_data{const_cast<T *>(il.begin())}, m_size{il.size()} {}
     constexpr Span(T *data, size_t size) noexcept : m_data{data}, m_size{size} {}
 
@@ -421,8 +421,8 @@ struct ChakraApi {
     }
 
    private:
-    T *m_data;
-    size_t m_size;
+    T * const m_data;
+    size_t const m_size;
   };
 
   /**
