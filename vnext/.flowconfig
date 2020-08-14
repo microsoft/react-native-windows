@@ -43,6 +43,8 @@
 <PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
 <PROJECT_ROOT>/Libraries/StyleSheet/processColorArray.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheetTypes.js
+<PROJECT_ROOT>/Libraries/Pressability/Pressability.js
+<PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 <PROJECT_ROOT>/RNTester/js/components/ListExampleShared.js
 <PROJECT_ROOT>/RNTester/js/components/RNTesterExampleList.js
 <PROJECT_ROOT>/RNTester/js/examples/ScrollView/ScrollViewExample.js

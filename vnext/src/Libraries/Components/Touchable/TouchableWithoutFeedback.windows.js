@@ -27,6 +27,7 @@ import type {
   BlurEvent,
   FocusEvent,
   LayoutEvent,
+  MouseEvent, // [Windows]
   PressEvent,
 } from '../../Types/CoreEventTypes';
 import Platform from '../../Utilities/Platform';
@@ -70,8 +71,8 @@ type Props = $ReadOnly<{|
   accessibilityPosInSet?: ?number, // [Windows]
   accessibilitySetSize?: ?number, // [Windows]
   onAccessibilityTap?: ?() => void, // [Windows]
-  onMouseEnter?: ?(event: SyntheticEvent<{}>) => void, // [Windows]
-  onMouseLeave?: ?(event: SyntheticEvent<{}>) => void, // [Windows]
+  onMouseEnter?: ?(event: MouseEvent) => void, // [Windows]
+  onMouseLeave?: ?(event: MouseEvent) => void, // [Windows]
   tabIndex?: ?number, // [Windows]
   tooltip?: ?Stringish, // [Windows]
 |}>;
@@ -127,6 +128,8 @@ class TouchableWithoutFeedback extends React.Component<Props, State> {
       getPressOutDelayMS: () => this.props.delayPressOut,
       getPressRectOffset: () => this.props.pressRetentionOffset,
       getTouchSoundDisabled: () => this.props.touchSoundDisabled,
+      onMouseEnter: this.props.onMouseEnter, // [Windows]
+      onMouseLeave: this.props.onMouseLeave, // [Windows]
       onBlur: event => {
         if (this.props.onBlur != null) {
           this.props.onBlur(event);
