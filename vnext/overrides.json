@@ -413,7 +413,7 @@
     },
     {
       "type": "patch",
-      "file": "src/Libraries/Types/CoreEventTypes.js",
+      "file": "src/Libraries/Types/CoreEventTypes.windows.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
       "baseVersion": "0.0.0-30a89f30c",
       "baseHash": "83b203d547d9bdc57a8f3346ecee6f6e34b25f5d",
