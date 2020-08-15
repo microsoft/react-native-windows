@@ -6,7 +6,9 @@
     <description>Contains Shared code for React-Native for Windows</description>
     <authors>Microsoft</authors>
     <projectUrl>https://github.com/microsoft/react-native-windows</projectUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
     <repository type="git"
       url="https://github.com/microsoft/react-native-windows.git"
       commit="$CommitId$" />

@@ -42,6 +42,7 @@
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
     <CppWinRTUsePrefixes>true</CppWinRTUsePrefixes>
     <USE_V8>true</USE_V8>
+    <V8AppPlatform>win32</V8AppPlatform>
   </PropertyGroup>
   <PropertyGroup Label="Permissive">
     <ENABLEPermissive>true</ENABLEPermissive>

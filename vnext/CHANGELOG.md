@@ -1,8 +1,41 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 11 Aug 2020 07:36:05 GMT and should not be manually modified.
+This log was last generated on Fri, 14 Aug 2020 05:05:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.140
+
+Fri, 14 Aug 2020 05:05:34 GMT
+
+### Changes
+
+- Integrate 4/29 Nightly Build (ngerlem@microsoft.com)
+- Print out Wininet error strings (asklar@microsoft.com)
+- Remove reinterpret_cast in DevSupportManager (asklar@winse.microsoft.com)
+- Fix crash in ViewViewManager (asklar@winse.microsoft.com)
+- Fix teardown crash in WebSocketJSExecutor (asklar@microsoft.com)
+
+## 0.0.0-canary.139
+
+Thu, 13 Aug 2020 05:07:00 GMT
+
+### Changes
+
+- Fix Errant "Nested elements in TextInput are currently unsupported on Windows" Yellowbox Warnings (ngerlem@microsoft.com)
+- Add licene metadata to nuget package for nuget.org compliance (dannyvv@microsoft.com)
+- Use thread compositor in ReactImage (asklar@microsoft.com)
+
+## 0.0.0-canary.138
+
+Wed, 12 Aug 2020 05:05:16 GMT
+
+### Changes
+
+- Expose instance life cycle events (email not defined)
+- Implement textTransform (asklar@microsoft.com)
+- Integrate 4/22 Nightly Build (ngerlem@microsoft.com)
+- Remove compiler flags disabling FH4 (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.137
 

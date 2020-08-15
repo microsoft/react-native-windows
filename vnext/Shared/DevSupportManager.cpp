@@ -81,9 +81,11 @@ std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std
   uint32_t len = reader.UnconsumedBufferLength();
   std::string result;
   if (len > 0 || response.IsSuccessStatusCode()) {
-    std::vector<uint8_t> data(len);
-    reader.ReadBytes(data);
-    result = std::string(reinterpret_cast<char *>(data.data()), data.size());
+    std::vector<uint8_t> data;
+    data.resize(len);
+    reader.ReadBytes(winrt::array_view(data.data(), data.data() + len));
+    data.resize(len);
+    result = std::string(data.begin(), data.end());
   } else {
     std::ostringstream sstream;
     sstream << "HTTP Error " << static_cast<int>(response.StatusCode()) << " downloading " << url;
