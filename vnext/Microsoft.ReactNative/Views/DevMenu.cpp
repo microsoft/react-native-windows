@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "DevMenu.h"
+#include "DevMenuControl.h"
 #include "IReactDispatcher.h"
 #include "Modules/DevSettingsModule.h"
 #include "UI.Xaml.Controls.Primitives.h"
@@ -13,7 +14,6 @@
 #include "Views/KeyboardEventHandler.h"
 #include "winrt/Windows.UI.Core.h"
 #include "winrt/Windows.UI.Xaml.Interop.h"
-#include "DevMenuControl.h"
 
 namespace Microsoft::ReactNative {
 
@@ -99,9 +99,8 @@ void DevMenuManager::CreateAndShowUI() noexcept {
   devMenu.RemoteDebugText().Text(
       Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()) ? L"Disable Remote JS Debugging"
                                                                         : L"Enable Remote JS Debugging");
-  devMenu.RemoteDebugDesc()
-      .Text(
-          L"When enabled runs the JS remotely in VSCode or Chrome based on what you attach to the packager.  This means that the JS may run with a different JS engine than it runs in on in the real application, in addition synchronous native module calls, and JSI native modules will not work.");
+  devMenu.RemoteDebugDesc().Text(
+      L"When enabled runs the JS remotely in VSCode or Chrome based on what you attach to the packager.  This means that the JS may run with a different JS engine than it runs in on in the real application, in addition synchronous native module calls, and JSI native modules will not work.");
 
   devMenu.FastRefreshText().Text(
       Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ? L"Disable Fast Refresh"
@@ -110,9 +109,8 @@ void DevMenuManager::CreateAndShowUI() noexcept {
   devMenu.DirectDebugText().Text(
       Mso::React::ReactOptions::UseDirectDebugger(m_context->Properties()) ? L"Disable Direct Debugging"
                                                                            : L"Enable Direct Debugging");
-  devMenu.DirectDebugDesc()
-      .Text(
-          L"If using Chakra, this will allow Visual Studio to be attached directly to the application using \"Script Debugging\" to debug the JS running directly in this app.\nIf using V8/Hermes, this will enable standard JS debugging tools such as VSCode to attach to the application.");
+  devMenu.DirectDebugDesc().Text(
+      L"If using Chakra, this will allow Visual Studio to be attached directly to the application using \"Script Debugging\" to debug the JS running directly in this app.\nIf using V8/Hermes, this will enable standard JS debugging tools such as VSCode to attach to the application.");
 
   devMenu.BreakOnNextLineText().Text(
       Mso::React::ReactOptions::DebuggerBreakOnNextLine(m_context->Properties()) ? L"Disable Break on First Line"
@@ -173,7 +171,6 @@ void DevMenuManager::CreateAndShowUI() noexcept {
        Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()))
           ? xaml::Visibility::Visible
           : xaml::Visibility::Collapsed);
-
 
   m_cancelRevoker = devMenu.Cancel().Click(
       winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) { Hide(); });
