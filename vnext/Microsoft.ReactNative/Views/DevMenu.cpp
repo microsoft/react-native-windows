@@ -13,6 +13,7 @@
 #include "Views/KeyboardEventHandler.h"
 #include "winrt/Windows.UI.Core.h"
 #include "winrt/Windows.UI.Xaml.Interop.h"
+#include "DevMenuControl.h"
 
 namespace Microsoft::ReactNative {
 
@@ -93,127 +94,37 @@ void DevMenuManager::CreateAndShowUI() noexcept {
   if (!Mso::React::ReactOptions::UseDeveloperSupport(m_context->Properties()))
     return;
 
-  const winrt::hstring xamlString =
-      LR"(
-  <StackPanel
-    xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
-    xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
-    Background='{ThemeResource ContentDialogBackground}'
-    HorizontalAlignment='Center'
-    MaxWidth='900'
-    Margin='-10'
-  >
-  <StackPanel.Resources>
-    <StaticResource x:Key='ButtonRevealBackground' ResourceKey='AppBarButtonRevealBackground' />
-    <StaticResource x:Key='ButtonRevealBackgroundPointerOver' ResourceKey='AppBarButtonRevealBackgroundPointerOver' />
-    <StaticResource x:Key='ButtonRevealBackgroundPressed' ResourceKey='AppBarButtonRevealBackgroundPressed' />
-    <StaticResource x:Key='ButtonRevealBackgroundDisabled' ResourceKey='AppBarButtonRevealBackgroundDisabled' />
-    <StaticResource x:Key='ButtonForeground' ResourceKey='AppBarButtonForeground' />
-    <StaticResource x:Key='ButtonForegroundPointerOver' ResourceKey='AppBarButtonForegroundPointerOver' />
-    <StaticResource x:Key='ButtonForegroundPressed' ResourceKey='AppBarButtonForegroundPressed' />
-    <StaticResource x:Key='ButtonForegroundDisabled' ResourceKey='AppBarButtonForegroundDisabled' />
-    <StaticResource x:Key='ButtonRevealBorderBrush' ResourceKey='AppBarButtonRevealBorderBrush' />
-    <StaticResource x:Key='ButtonRevealBorderBrushPointerOver' ResourceKey='AppBarButtonRevealBorderBrushPointerOver' />
-    <StaticResource x:Key='ButtonRevealBorderBrushPressed' ResourceKey='AppBarButtonRevealBorderBrushPressed' />
-    <StaticResource x:Key='ButtonRevealBorderBrushDisabled' ResourceKey='AppBarButtonRevealBorderBrushDisabled' />
-  </StackPanel.Resources>
-  <StackPanel.Transitions>
-    <TransitionCollection>
-      <EntranceThemeTransition />
-    </TransitionCollection>
-  </StackPanel.Transitions>
-    <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='Reload' Style='{StaticResource ButtonRevealStyle}'>
-      <Grid HorizontalAlignment='Stretch'><Grid.ColumnDefinitions><ColumnDefinition Width='Auto'/><ColumnDefinition Width='*'/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
-        <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE72C;'/>
-        <TextBlock Grid.Column='1' Grid.Row='0'>Reload Javascript</TextBlock>
-        <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>Restarts the JS instance. Any javascript state will be lost.</TextBlock>
-      </Grid>
-    </Button>
-    <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='RemoteDebug' Style='{StaticResource ButtonRevealStyle}'>
-      <Grid HorizontalAlignment='Stretch'><Grid.ColumnDefinitions><ColumnDefinition Width='Auto'/><ColumnDefinition Width='*'/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
-        <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE8AF;'/>
-        <TextBlock Grid.Column='1' Grid.Row='0' x:Name='RemoteDebugText'/>
-        <TextBlock Grid.Column='1' Grid.Row='1' x:Name='RemoteDebugDesc' FontSize='12' Opacity='0.5' TextWrapping='Wrap'/>
-      </Grid>
-    </Button>
-    <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='DirectDebug' Style='{StaticResource ButtonRevealStyle}'>
-      <Grid HorizontalAlignment='Stretch'><Grid.ColumnDefinitions><ColumnDefinition Width='Auto'/><ColumnDefinition Width='*'/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
-        <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xEBE8;'/>
-        <TextBlock Grid.Column='1' Grid.Row='0' x:Name='DirectDebugText'/>
-        <TextBlock Grid.Column='1' Grid.Row='1' x:Name='DirectDebugDesc' FontSize='12' Opacity='0.5' TextWrapping='Wrap'/>
-      </Grid>
-    </Button>
-    <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='BreakOnNextLine' Style='{StaticResource ButtonRevealStyle}'>
-      <Grid HorizontalAlignment='Stretch'><Grid.ColumnDefinitions><ColumnDefinition Width='Auto'/><ColumnDefinition Width='*'/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
-        <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE769;'/>
-        <TextBlock Grid.Column='1' Grid.Row='0' x:Name='BreakOnNextLineText'/>
-        <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>If using V8/Hermes, the JS engine will break on the first statement, until you attach a debugger to it, and hit continue. (Requires Direct Debugging to be enabled)</TextBlock>
-      </Grid>
-    </Button>
-    <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='FastRefresh' Style='{StaticResource ButtonRevealStyle}'>
-      <Grid HorizontalAlignment='Stretch'><Grid.ColumnDefinitions><ColumnDefinition Width='Auto'/><ColumnDefinition Width='*'/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
-        <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xEC58;'/>
-        <TextBlock Grid.Column='1' Grid.Row='0' x:Name='FastRefreshText'/>
-        <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>When loading a bundle from a bundler server that is watching files, this will cause the instance to be reloaded with new bundles when a file changes.</TextBlock>
-      </Grid>
-    </Button>
-    <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='Inspector' Style='{StaticResource ButtonRevealStyle}'>
-      <Grid HorizontalAlignment='Stretch'><Grid.ColumnDefinitions><ColumnDefinition Width='Auto'/><ColumnDefinition Width='*'/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
-        <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE773;'/>
-        <TextBlock Grid.Column='1' Grid.Row='0' x:Name='InspectorText'>Toggle Inspector</TextBlock>
-        <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>Will bring up an overlay that lets you tap on any UI element and see information about it</TextBlock>
-      </Grid>
-    </Button>
-  <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='ConfigBundler' Style='{StaticResource ButtonRevealStyle}'>
-    <StackPanel Orientation="Horizontal">
-      <FontIcon  VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE713;'/>
-      <StackPanel>
-        <TextBlock>Configure Bundler</TextBlock>
-        <TextBlock FontSize='12' Opacity='0.5' TextWrapping='Wrap'>Provide a custom bundler address, port and entrypoint.</TextBlock>
-      </StackPanel>
-    </StackPanel>
-    </Button>
-    <Button HorizontalAlignment='Stretch' x:Name='Cancel' Style='{StaticResource ButtonRevealStyle}'>Cancel</Button>
-  </StackPanel>)";
-  auto devMenu = winrt::unbox_value<xaml::Controls::Panel>(xaml::Markup::XamlReader::Load(xamlString));
+  winrt::Microsoft::ReactNative::DevMenuControl devMenu{};
 
-  auto remoteDebugJSText = devMenu.FindName(L"RemoteDebugText").as<xaml::Controls::TextBlock>();
-  remoteDebugJSText.Text(
+  devMenu.RemoteDebugText().Text(
       Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()) ? L"Disable Remote JS Debugging"
                                                                         : L"Enable Remote JS Debugging");
-  devMenu.FindName(L"RemoteDebugDesc")
-      .as<xaml::Controls::TextBlock>()
+  devMenu.RemoteDebugDesc()
       .Text(
           L"When enabled runs the JS remotely in VSCode or Chrome based on what you attach to the packager.  This means that the JS may run with a different JS engine than it runs in on in the real application, in addition synchronous native module calls, and JSI native modules will not work.");
 
-  auto fastRefreshText = devMenu.FindName(L"FastRefreshText").as<xaml::Controls::TextBlock>();
-  fastRefreshText.Text(
+  devMenu.FastRefreshText().Text(
       Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ? L"Disable Fast Refresh"
                                                                         : L"Enable Fast Refresh");
 
-  auto directDebugText = devMenu.FindName(L"DirectDebugText").as<xaml::Controls::TextBlock>();
-  directDebugText.Text(
+  devMenu.DirectDebugText().Text(
       Mso::React::ReactOptions::UseDirectDebugger(m_context->Properties()) ? L"Disable Direct Debugging"
                                                                            : L"Enable Direct Debugging");
-  devMenu.FindName(L"DirectDebugDesc")
-      .as<xaml::Controls::TextBlock>()
+  devMenu.DirectDebugDesc()
       .Text(
           L"If using Chakra, this will allow Visual Studio to be attached directly to the application using \"Script Debugging\" to debug the JS running directly in this app.\nIf using V8/Hermes, this will enable standard JS debugging tools such as VSCode to attach to the application.");
 
-  auto breakOnNextLineText = devMenu.FindName(L"BreakOnNextLineText").as<xaml::Controls::TextBlock>();
-  breakOnNextLineText.Text(
+  devMenu.BreakOnNextLineText().Text(
       Mso::React::ReactOptions::DebuggerBreakOnNextLine(m_context->Properties()) ? L"Disable Break on First Line"
                                                                                  : L"Enable Break on First Line");
 
-  auto reloadJSButton = devMenu.FindName(L"Reload").as<xaml::Controls::Button>();
-  m_reloadJSRevoker = reloadJSButton.Click(
+  m_reloadJSRevoker = devMenu.Reload().Click(
       winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
         Hide();
         DevSettings::Reload(React::ReactPropertyBag(m_context->Properties()));
       });
 
-  auto remoteDebugJSButton = devMenu.FindName(L"RemoteDebug").as<xaml::Controls::Button>();
-  m_remoteDebugJSRevoker = remoteDebugJSButton.Click(
+  m_remoteDebugJSRevoker = devMenu.RemoteDebug().Click(
       winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
         Hide();
         Mso::React::ReactOptions::SetUseWebDebugger(
@@ -221,8 +132,7 @@ void DevMenuManager::CreateAndShowUI() noexcept {
         DevSettings::Reload(React::ReactPropertyBag(m_context->Properties()));
       });
 
-  auto directDebugButton = devMenu.FindName(L"DirectDebug").as<xaml::Controls::Button>();
-  m_directDebuggingRevoker = directDebugButton.Click(
+  m_directDebuggingRevoker = devMenu.DirectDebug().Click(
       winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
         Hide();
         Mso::React::ReactOptions::SetUseDirectDebugger(
@@ -230,8 +140,7 @@ void DevMenuManager::CreateAndShowUI() noexcept {
         DevSettings::Reload(React::ReactPropertyBag(m_context->Properties()));
       });
 
-  auto breakOnNextLineButton = devMenu.FindName(L"BreakOnNextLine").as<xaml::Controls::Button>();
-  m_breakOnNextLineRevoker = breakOnNextLineButton.Click(
+  m_breakOnNextLineRevoker = devMenu.BreakOnNextLine().Click(
       winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
         Hide();
         Mso::React::ReactOptions::SetDebuggerBreakOnNextLine(
@@ -239,8 +148,7 @@ void DevMenuManager::CreateAndShowUI() noexcept {
         DevSettings::Reload(React::ReactPropertyBag(m_context->Properties()));
       });
 
-  auto fastRefreshButton = devMenu.FindName(L"FastRefresh").as<xaml::Controls::Button>();
-  m_fastRefreshRevoker = fastRefreshButton.Click(
+  m_fastRefreshRevoker = devMenu.FastRefresh().Click(
       winrt::auto_revoke, [this](auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
         Hide();
         Mso::React::ReactOptions::SetUseFastRefresh(
@@ -248,28 +156,26 @@ void DevMenuManager::CreateAndShowUI() noexcept {
         DevSettings::Reload(React::ReactPropertyBag(m_context->Properties()));
       });
 
-  auto toggleInspector = devMenu.FindName(L"Inspector").as<xaml::Controls::Button>();
-  m_toggleInspectorRevoker = toggleInspector.Click(
+  m_toggleInspectorRevoker = devMenu.Inspector().Click(
       winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
         Hide();
         DevSettings::ToggleElementInspector(*m_context);
       });
 
-  auto configBundler = devMenu.FindName(L"ConfigBundler").as<xaml::Controls::Button>();
-  m_configBundlerRevoker = configBundler.Click(
+  m_configBundlerRevoker = devMenu.ConfigBundler().Click(
       winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
         Hide();
         React::ReactPropertyBag(m_context->Properties()).Get(ConfigureBundlerProperty())();
       });
   // Only show Configure Bundler when connected to a bundler
-  configBundler.Visibility(
+  devMenu.ConfigBundler().Visibility(
       (Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ||
        Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()))
           ? xaml::Visibility::Visible
           : xaml::Visibility::Collapsed);
 
-  auto cancelButton = devMenu.FindName(L"Cancel").as<xaml::Controls::Button>();
-  m_cancelRevoker = cancelButton.Click(
+
+  m_cancelRevoker = devMenu.Cancel().Click(
       winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) { Hide(); });
 
   m_flyout = xaml::Controls::Flyout{};
