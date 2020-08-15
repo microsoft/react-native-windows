@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 15 Aug 2020 05:05:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.141",
+      "version": "0.0.0-canary.141",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump V8 package version",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "a0a8b886451f78abbc159a7044e8c720e5e5d666",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "remove textbox for tooltips in hyperlinks as that can mess up word-wrapping",
+            "author": "asklar@microsoft.com",
+            "commit": "e215f4e30e1fcbf2c0bfa5fb93a9185cd72f3bb2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Restore Previous Behavior Allowing onMouseEnter and onMouseLeave on Touchables",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d120be146102a117c4fc779dc9b21bb0fa75b4b6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 5/4 nightly build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "5052b36d138ec845a4382b34b18d2cb45eb977a7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Aug 2020 05:05:34 GMT",
       "tag": "react-native-windows_v0.0.0-canary.140",
       "version": "0.0.0-canary.140",

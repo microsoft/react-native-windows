@@ -52,6 +52,7 @@ let pages = [
   'Layout Events',
   'Linking',
   'Layout - Flexbox',
+  'Mouse Events',
   'Native Animated Example',
   'PanResponder Sample',
   'PlatformColor',
