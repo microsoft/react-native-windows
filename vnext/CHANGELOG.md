@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 14 Aug 2020 05:05:34 GMT and should not be manually modified.
+This log was last generated on Sat, 15 Aug 2020 05:05:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.141
+
+Sat, 15 Aug 2020 05:05:18 GMT
+
+### Changes
+
+- Bump V8 package version (tudor.mihai@microsoft.com)
+- remove textbox for tooltips in hyperlinks as that can mess up word-wrapping (asklar@microsoft.com)
+- Restore Previous Behavior Allowing onMouseEnter and onMouseLeave on Touchables (ngerlem@microsoft.com)
+- Integrate 5/4 nightly build. (igklemen@microsoft.com)
 
 ## 0.0.0-canary.140
 
