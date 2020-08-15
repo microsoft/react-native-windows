@@ -14,7 +14,7 @@
     HorizontalAlignment='Center'
     MaxWidth='900'
     MinHeight='480'
-    Margin='0,0,0,0'
+    Margin='-10'
   >
         <StackPanel.Resources>
             <StaticResource x:Key='ButtonRevealBackground' ResourceKey='AppBarButtonRevealBackground' />
