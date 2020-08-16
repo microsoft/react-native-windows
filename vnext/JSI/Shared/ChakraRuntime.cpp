@@ -47,7 +47,7 @@ ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::mo
         JsRuntimeAttributeDisableExecutablePageAllocation);
   }
 
-  ChakraVerifyJsErrorElseThrow(JsCreateRuntime(runtimeAttributes, nullptr, &m_runtime));
+  m_runtime = CreateRuntime(runtimeAttributes, nullptr);
 
   setupMemoryTracker();
 
@@ -99,7 +99,7 @@ ChakraRuntime::~ChakraRuntime() noexcept {
   SetCurrentContext(m_prevContext);
   m_prevContext = {};
 
-  ChakraVerifyJsErrorElseThrow(JsDisposeRuntime(m_runtime));
+  DisposeRuntime(m_runtime);
 }
 
 JsValueRef ChakraRuntime::CreatePropertyDescriptor(JsValueRef value, PropertyAttibutes attrs) {

@@ -85,45 +85,58 @@ ChakraApi::JsRefHolder::~JsRefHolder() noexcept {
   }
 }
 
-uint32_t ChakraApi::AddRef(JsRef ref) {
+/*static*/ JsRuntimeHandle ChakraApi::CreateRuntime(
+    JsRuntimeAttributes attributes,
+    JsThreadServiceCallback threadService) {
+  JsRuntimeHandle runtime{JS_INVALID_REFERENCE};
+  ChakraVerifyElseThrow(
+      JsCreateRuntime(attributes, threadService, &runtime) == JsErrorCode::JsNoError, "Cannot create Chakra runtime.");
+  return runtime;
+}
+
+/*static*/ void ChakraApi::DisposeRuntime(JsRuntimeHandle runtime) {
+  ChakraVerifyElseThrow(JsDisposeRuntime(runtime) == JsErrorCode::JsNoError, "Cannot dispaose Chakra runtime.");
+}
+
+/*static*/ uint32_t ChakraApi::AddRef(JsRef ref) {
   uint32_t result{0};
   ChakraVerifyJsErrorElseThrow(JsAddRef(ref, &result));
   return result;
 }
 
-uint32_t ChakraApi::Release(JsRef ref) {
+/*static*/ uint32_t ChakraApi::Release(JsRef ref) {
   uint32_t result{0};
   ChakraVerifyJsErrorElseThrow(JsRelease(ref, &result));
   return result;
 }
 
-JsContextRef ChakraApi::CreateContext(JsRuntimeHandle runtime) {
+/*static*/ JsContextRef ChakraApi::CreateContext(JsRuntimeHandle runtime) {
   JsContextRef context{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsCreateContext(runtime, &context));
   return context;
 }
 
-JsContextRef ChakraApi::GetCurrentContext() {
+/*static*/ JsContextRef ChakraApi::GetCurrentContext() {
   JsContextRef context{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsGetCurrentContext(&context));
   return context;
 }
 
-void ChakraApi::SetCurrentContext(JsContextRef context) {
+/*static*/ void ChakraApi::SetCurrentContext(JsContextRef context) {
   ChakraVerifyJsErrorElseThrow(JsSetCurrentContext(context));
 }
 
-JsPropertyIdRef ChakraApi::GetPropertyIdFromName(wchar_t const *name) {
+/*static*/ JsPropertyIdRef ChakraApi::GetPropertyIdFromName(wchar_t const *name) {
   JsPropertyIdRef propertyId{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsGetPropertyIdFromName(name, &propertyId));
   return propertyId;
 }
 
-JsPropertyIdRef ChakraApi::GetPropertyIdFromString(JsValueRef value) {
+/*static*/ JsPropertyIdRef ChakraApi::GetPropertyIdFromString(JsValueRef value) {
   return GetPropertyIdFromName(StringToPointer(value).data());
 }
 
-JsPropertyIdRef ChakraApi::GetPropertyIdFromName(std::string_view name) {
+/*static*/ JsPropertyIdRef ChakraApi::GetPropertyIdFromName(std::string_view name) {
   ChakraVerifyElseThrow(name.data(), "Property name cannot be a nullptr.");
   ChakraVerifyElseThrow(name.size(), "Property name cannot be empty.");
 
@@ -139,7 +152,7 @@ JsPropertyIdRef ChakraApi::GetPropertyIdFromName(std::string_view name) {
   return propertyId;
 }
 
-wchar_t const *ChakraApi::GetPropertyNameFromId(JsPropertyIdRef propertyId) {
+/*static*/ wchar_t const *ChakraApi::GetPropertyNameFromId(JsPropertyIdRef propertyId) {
   ChakraVerifyElseThrow(
       GetPropertyIdType(propertyId) == JsPropertyIdTypeString,
       "It is illegal to retrieve the name associated with a property symbol.");
@@ -149,11 +162,11 @@ wchar_t const *ChakraApi::GetPropertyNameFromId(JsPropertyIdRef propertyId) {
   return name;
 }
 
-JsValueRef ChakraApi::GetPropertyStringFromId(JsPropertyIdRef propertyId) {
+/*static*/ JsValueRef ChakraApi::GetPropertyStringFromId(JsPropertyIdRef propertyId) {
   return PointerToString(GetPropertyNameFromId(propertyId));
 }
 
-JsValueRef ChakraApi::GetSymbolFromPropertyId(JsPropertyIdRef propertyId) {
+/*static*/ JsValueRef ChakraApi::GetSymbolFromPropertyId(JsPropertyIdRef propertyId) {
   ChakraVerifyElseThrow(
       GetPropertyIdType(propertyId) == JsPropertyIdTypeSymbol,
       "It is illegal to retrieve the symbol associated with a property name.");
@@ -163,89 +176,89 @@ JsValueRef ChakraApi::GetSymbolFromPropertyId(JsPropertyIdRef propertyId) {
   return symbol;
 }
 
-JsPropertyIdType ChakraApi::GetPropertyIdType(JsPropertyIdRef propertyId) {
+/*static*/ JsPropertyIdType ChakraApi::GetPropertyIdType(JsPropertyIdRef propertyId) {
   JsPropertyIdType type{JsPropertyIdType::JsPropertyIdTypeString};
   ChakraVerifyJsErrorElseThrow(JsGetPropertyIdType(propertyId, &type));
   return type;
 }
 
-JsPropertyIdRef ChakraApi::GetPropertyIdFromSymbol(JsValueRef symbol) {
+/*static*/ JsPropertyIdRef ChakraApi::GetPropertyIdFromSymbol(JsValueRef symbol) {
   JsPropertyIdRef propertyId{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsGetPropertyIdFromSymbol(symbol, &propertyId));
   return propertyId;
 }
 
-JsPropertyIdRef ChakraApi::GetPropertyIdFromSymbol(std::wstring_view symbolDescription) {
+/*static*/ JsPropertyIdRef ChakraApi::GetPropertyIdFromSymbol(std::wstring_view symbolDescription) {
   JsPropertyIdRef propertyId{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsGetPropertyIdFromSymbol(CreateSymbol(symbolDescription), &propertyId));
   return propertyId;
 }
 
-JsValueRef ChakraApi::CreateSymbol(JsValueRef symbolDescription) {
+/*static*/ JsValueRef ChakraApi::CreateSymbol(JsValueRef symbolDescription) {
   JsValueRef symbol{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsCreateSymbol(symbolDescription, &symbol));
   return symbol;
 }
 
-JsValueRef ChakraApi::CreateSymbol(std::wstring_view symbolDescription) {
+/*static*/ JsValueRef ChakraApi::CreateSymbol(std::wstring_view symbolDescription) {
   return CreateSymbol(PointerToString(symbolDescription));
 }
 
-JsValueRef ChakraApi::GetUndefinedValue() {
+/*static*/ JsValueRef ChakraApi::GetUndefinedValue() {
   JsValueRef undefinedValue{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsGetUndefinedValue(&undefinedValue));
   return undefinedValue;
 }
 
-JsValueRef ChakraApi::GetNullValue() {
+/*static*/ JsValueRef ChakraApi::GetNullValue() {
   JsValueRef nullValue{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsGetNullValue(&nullValue));
   return nullValue;
 }
 
-JsValueRef ChakraApi::BoolToBoolean(bool value) {
+/*static*/ JsValueRef ChakraApi::BoolToBoolean(bool value) {
   JsValueRef booleanValue{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsBoolToBoolean(value, &booleanValue));
   return booleanValue;
 }
 
-bool ChakraApi::BooleanToBool(JsValueRef value) {
+/*static*/ bool ChakraApi::BooleanToBool(JsValueRef value) {
   bool boolValue{false};
   ChakraVerifyJsErrorElseThrow(JsBooleanToBool(value, &boolValue));
   return boolValue;
 }
 
-JsValueType ChakraApi::GetValueType(JsValueRef value) {
+/*static*/ JsValueType ChakraApi::GetValueType(JsValueRef value) {
   JsValueType type{JsValueType::JsUndefined};
   ChakraVerifyJsErrorElseThrow(JsGetValueType(value, &type));
   return type;
 }
 
-JsValueRef ChakraApi::DoubleToNumber(double value) {
+/*static*/ JsValueRef ChakraApi::DoubleToNumber(double value) {
   JsValueRef result{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsDoubleToNumber(value, &result));
   return result;
 }
 
-JsValueRef ChakraApi::IntToNumber(int32_t value) {
+/*static*/ JsValueRef ChakraApi::IntToNumber(int32_t value) {
   JsValueRef numberValue{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsIntToNumber(value, &numberValue));
   return numberValue;
 }
 
-double ChakraApi::NumberToDouble(JsValueRef value) {
+/*static*/ double ChakraApi::NumberToDouble(JsValueRef value) {
   double doubleValue{0};
   ChakraVerifyJsErrorElseThrow(JsNumberToDouble(value, &doubleValue));
   return doubleValue;
 }
 
-int32_t ChakraApi::NumberToInt(JsValueRef value) {
+/*static*/ int32_t ChakraApi::NumberToInt(JsValueRef value) {
   int intValue{0};
   ChakraVerifyJsErrorElseThrow(JsNumberToInt(value, &intValue));
   return intValue;
 }
 
-JsValueRef ChakraApi::PointerToString(std::wstring_view value) {
+/*static*/ JsValueRef ChakraApi::PointerToString(std::wstring_view value) {
   ChakraVerifyElseThrow(value.data(), "Cannot convert a nullptr to a JS string.");
 
   JsValueRef result{JS_INVALID_REFERENCE};
@@ -253,7 +266,7 @@ JsValueRef ChakraApi::PointerToString(std::wstring_view value) {
   return result;
 }
 
-JsValueRef ChakraApi::PointerToString(std::string_view value) {
+/*static*/ JsValueRef ChakraApi::PointerToString(std::string_view value) {
   ChakraVerifyElseThrow(value.data(), "Cannot convert a nullptr to a JS string.");
 
   // ChakraCore  API helps to reduce cost of UTF-8 to UTF-16 conversion.
@@ -266,14 +279,14 @@ JsValueRef ChakraApi::PointerToString(std::string_view value) {
 #endif
 }
 
-std::wstring_view ChakraApi::StringToPointer(JsValueRef string) {
+/*static*/ std::wstring_view ChakraApi::StringToPointer(JsValueRef string) {
   wchar_t const *utf16{nullptr};
   size_t length{0};
   ChakraVerifyJsErrorElseThrow(JsStringToPointer(string, &utf16, &length));
   return {utf16, length};
 }
 
-std::string ChakraApi::StringToStdString(JsValueRef string) {
+/*static*/ std::string ChakraApi::StringToStdString(JsValueRef string) {
   ChakraVerifyElseThrow(
       GetValueType(string) == JsString, "Cannot convert a non JS string ChakraObjectRef to a std::string.");
 
@@ -293,137 +306,139 @@ std::string ChakraApi::StringToStdString(JsValueRef string) {
 #endif
 }
 
-JsValueRef ChakraApi::ConvertValueToString(JsValueRef value) {
+/*static*/ JsValueRef ChakraApi::ConvertValueToString(JsValueRef value) {
   JsValueRef stringValue{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsConvertValueToString(value, &stringValue));
   return stringValue;
 }
 
-JsValueRef ChakraApi::GetGlobalObject() {
+/*static*/ JsValueRef ChakraApi::GetGlobalObject() {
   JsValueRef globalObject{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsGetGlobalObject(&globalObject));
   return globalObject;
 }
 
-JsValueRef ChakraApi::CreateObject() {
+/*static*/ JsValueRef ChakraApi::CreateObject() {
   JsValueRef object{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsCreateObject(&object));
   return object;
 }
 
-JsValueRef ChakraApi::CreateExternalObject(void *data, JsFinalizeCallback finalizeCallback) {
+/*static*/ JsValueRef ChakraApi::CreateExternalObject(void *data, JsFinalizeCallback finalizeCallback) {
   JsValueRef object{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsCreateExternalObject(data, finalizeCallback, &object));
   return object;
 }
 
-JsValueRef ChakraApi::GetPrototype(JsValueRef object) {
+/*static*/ JsValueRef ChakraApi::GetPrototype(JsValueRef object) {
   JsValueRef prototype{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsGetPrototype(object, &prototype));
   return prototype;
 }
 
-bool ChakraApi::InstanceOf(JsValueRef object, JsValueRef constructor) {
+/*static*/ bool ChakraApi::InstanceOf(JsValueRef object, JsValueRef constructor) {
   bool result{false};
   ChakraVerifyJsErrorElseThrow(JsInstanceOf(object, constructor, &result));
   return result;
 }
 
-JsValueRef ChakraApi::GetProperty(JsValueRef object, JsPropertyIdRef propertyId) {
+/*static*/ JsValueRef ChakraApi::GetProperty(JsValueRef object, JsPropertyIdRef propertyId) {
   JsValueRef result{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsGetProperty(object, propertyId, &result));
   return result;
 }
 
-JsValueRef ChakraApi::GetOwnPropertyNames(JsValueRef object) {
+/*static*/ JsValueRef ChakraApi::GetOwnPropertyNames(JsValueRef object) {
   JsValueRef propertyNames{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsGetOwnPropertyNames(object, &propertyNames));
   return propertyNames;
 }
 
-void ChakraApi::SetProperty(JsValueRef object, JsPropertyIdRef propertyId, JsValueRef value) {
+/*static*/ void ChakraApi::SetProperty(JsValueRef object, JsPropertyIdRef propertyId, JsValueRef value) {
   ChakraVerifyJsErrorElseThrow(JsSetProperty(object, propertyId, value, /*useStringRules:*/ true));
 }
 
-bool ChakraApi::HasProperty(JsValueRef object, JsPropertyIdRef propertyId) {
+/*static*/ bool ChakraApi::HasProperty(JsValueRef object, JsPropertyIdRef propertyId) {
   bool hasProperty{false};
   ChakraVerifyJsErrorElseThrow(JsHasProperty(object, propertyId, &hasProperty));
   return hasProperty;
 }
 
-bool ChakraApi::DefineProperty(JsValueRef object, JsPropertyIdRef propertyId, JsValueRef propertyDescriptor) {
+/*static*/ bool
+ChakraApi::DefineProperty(JsValueRef object, JsPropertyIdRef propertyId, JsValueRef propertyDescriptor) {
   bool isSucceeded{false};
   ChakraVerifyJsErrorElseThrow(JsDefineProperty(object, propertyId, propertyDescriptor, &isSucceeded));
   return isSucceeded;
 }
 
-JsValueRef ChakraApi::GetIndexedProperty(JsValueRef object, int32_t index) {
+/*static*/ JsValueRef ChakraApi::GetIndexedProperty(JsValueRef object, int32_t index) {
   JsValueRef result{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsGetIndexedProperty(object, IntToNumber(index), &result));
   return result;
 }
 
-void ChakraApi::SetIndexedProperty(JsValueRef object, int32_t index, JsValueRef value) {
+/*static*/ void ChakraApi::SetIndexedProperty(JsValueRef object, int32_t index, JsValueRef value) {
   ChakraVerifyJsErrorElseThrow(JsSetIndexedProperty(object, IntToNumber(index), value));
 }
 
-bool ChakraApi::StrictEquals(JsValueRef object1, JsValueRef object2) {
+/*static*/ bool ChakraApi::StrictEquals(JsValueRef object1, JsValueRef object2) {
   bool result{false};
   ChakraVerifyJsErrorElseThrow(JsStrictEquals(object1, object2, &result));
   return result;
 }
 
-void *ChakraApi::GetExternalData(JsValueRef object) {
+/*static*/ void *ChakraApi::GetExternalData(JsValueRef object) {
   void *data{nullptr};
   ChakraVerifyJsErrorElseThrow(JsGetExternalData(object, &data));
   return data;
 }
 
-JsValueRef ChakraApi::CreateArray(size_t length) {
+/*static*/ JsValueRef ChakraApi::CreateArray(size_t length) {
   JsValueRef result{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsCreateArray(static_cast<unsigned int>(length), &result));
   return result;
 }
 
-JsValueRef ChakraApi::CreateArrayBuffer(size_t byteLength) {
+/*static*/ JsValueRef ChakraApi::CreateArrayBuffer(size_t byteLength) {
   JsValueRef result{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsCreateArrayBuffer(static_cast<unsigned int>(byteLength), &result));
   return result;
 }
 
-ChakraApi::Span<std::byte> ChakraApi::GetArrayBufferStorage(JsValueRef arrayBuffer) {
+/*static*/ ChakraApi::Span<std::byte> ChakraApi::GetArrayBufferStorage(JsValueRef arrayBuffer) {
   BYTE *buffer{nullptr};
   unsigned int bufferLength{0};
   ChakraVerifyJsErrorElseThrow(JsGetArrayBufferStorage(arrayBuffer, &buffer, &bufferLength));
   return {reinterpret_cast<std::byte *>(buffer), bufferLength};
 }
 
-JsValueRef ChakraApi::CallFunction(JsValueRef function, Span<JsValueRef> args) {
+/*static*/ JsValueRef ChakraApi::CallFunction(JsValueRef function, Span<JsValueRef> args) {
   JsValueRef result{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(
       JsCallFunction(function, args.begin(), static_cast<unsigned short>(args.size()), &result));
   return result;
 }
 
-JsValueRef ChakraApi::ConstructObject(JsValueRef function, Span<JsValueRef> args) {
+/*static*/ JsValueRef ChakraApi::ConstructObject(JsValueRef function, Span<JsValueRef> args) {
   JsValueRef result{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(
       JsConstructObject(function, args.begin(), static_cast<unsigned short>(args.size()), &result));
   return result;
 }
 
-JsValueRef ChakraApi::CreateNamedFunction(JsValueRef name, JsNativeFunction nativeFunction, void *callbackState) {
+/*static*/ JsValueRef
+ChakraApi::CreateNamedFunction(JsValueRef name, JsNativeFunction nativeFunction, void *callbackState) {
   JsValueRef function{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsCreateNamedFunction(name, nativeFunction, callbackState, &function));
   return function;
 }
 
-bool ChakraApi::SetException(JsValueRef error) noexcept {
+/*static*/ bool ChakraApi::SetException(JsValueRef error) noexcept {
   // This method must not throw. We return false in case of error.
   return JsSetException(error) == JsNoError;
 }
 
-bool ChakraApi::SetException(std::string_view message) noexcept try {
+/*static*/ bool ChakraApi::SetException(std::string_view message) noexcept try {
   JsValueRef error{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsCreateError(PointerToString(message), &error));
   return SetException(error);
@@ -432,7 +447,7 @@ bool ChakraApi::SetException(std::string_view message) noexcept try {
   return false;
 }
 
-bool ChakraApi::SetException(std::wstring_view message) noexcept try {
+/*static*/ bool ChakraApi::SetException(std::wstring_view message) noexcept try {
   JsValueRef error{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsCreateError(PointerToString(message), &error));
   return SetException(error);

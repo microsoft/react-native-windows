@@ -146,6 +146,16 @@ struct ChakraApi {
   [[noreturn]] static void ThrowNativeException(char const *errorMessage);
 
   /**
+   * @brief Creates a new runtime.
+   */
+  static JsRuntimeHandle CreateRuntime(JsRuntimeAttributes attributes, JsThreadServiceCallback threadService);
+
+  /**
+   * @brief Disposes a runtime.
+   */
+  static void DisposeRuntime(JsRuntimeHandle runtime);
+
+  /**
    * @brief Adds a reference to a garbage collected object.
    */
   static uint32_t AddRef(JsRef ref);
