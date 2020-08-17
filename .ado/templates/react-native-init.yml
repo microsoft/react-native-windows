@@ -70,12 +70,12 @@ steps:
     inputs:
       versionSpec: ">=4.6.0"
 
-- ${{ if eq(parameters.useNuGet, true) }}:
-  - template: templates/prep-and-pack-nuget.yml
-    parameters:
-      npmVersion: $(npmVersion)
-      packDesktop: false
-      slices: '("${{ parameters.platform }}.${{ parameters.configuration }}")'
+  - ${{ if eq(parameters.useNuGet, true) }}:
+    - template: templates/prep-and-pack-nuget.yml
+      parameters:
+        npmVersion: $(npmVersion)
+        packDesktop: false
+        slices: '("${{ parameters.platform }}.${{ parameters.configuration }}")'
 
   # We force the usage of npm instead of yarn becuase yarn has fragility issues when redirected to a different server (such as verdaccio)
   - task: CmdLine@2
