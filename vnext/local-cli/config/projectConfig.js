@@ -3,6 +3,10 @@ const path = require('path');
 const glob = require('glob');
 
 function projectConfigWindows(folder, userConfig = {}) {
+  if (userConfig === null) {
+    return null;
+  }
+  
   const sourceDir = userConfig.sourceDir || findWindowsAppFolder(folder);
 
   if (!sourceDir) {

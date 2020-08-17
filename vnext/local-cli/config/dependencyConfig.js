@@ -4,6 +4,10 @@ const glob = require('glob');
 const xmldoc = require('xmldoc');
 
 function dependencyConfigWindows(folder, userConfig = {}) {
+  if (userConfig === null) {
+    return null;
+  }
+  
   const sourceDir = userConfig.sourceDir || findWindowsAppFolder(folder);
 
   if (!sourceDir) {
