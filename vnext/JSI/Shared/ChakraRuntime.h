@@ -248,13 +248,13 @@ class ChakraRuntime : public facebook::jsi::Runtime {
 
   // Since the function
   //   Object::getProperty(Runtime& runtime, const char* name)
-  // causes mulitple copies of name, we do not want to use it when implementing
+  // causes multiple copies of name, we do not want to use it when implementing
   // ChakraRuntime methods. This function does the same thing as
   // Object::getProperty, but without the extra overhead. This function is
   // declared as const so that it can be used when implementing
   // isHostFunction and isHostObject.
   inline facebook::jsi::Value GetProperty(const facebook::jsi::Object &obj, const char *const name) const {
-    // We have to use const_casts here because ToJsiValue and GetProperty cannnot
+    // We have to use const_casts here because ToJsiValue and GetProperty cannot
     // be marked as const.
     return const_cast<ChakraRuntime *>(this)->ToJsiValue(
         const_cast<ChakraRuntime *>(this)->GetProperty(GetChakraObjectRef(obj), name));
