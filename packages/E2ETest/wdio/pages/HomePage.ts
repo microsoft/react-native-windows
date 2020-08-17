@@ -11,7 +11,7 @@ import {
 
 class HomePage extends BasePage {
   goToTestPage(page: string) {
-    // Filter the list down to the one test, to improve stability of selectors
+    // Filter the list down to the one test, to improve the stability of selectors
     this.waitForElementLoaded(SEARCH_BOX);
     let editBox = By(SEARCH_BOX);
     editBox.setValue(page);
