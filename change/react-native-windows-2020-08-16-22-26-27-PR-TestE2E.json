@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed comment spelling",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-17T05:26:27.705Z"
+}
