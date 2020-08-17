@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 03 Aug 2020 19:10:14 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Aug 2020 15:06:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.5
+
+Mon, 17 Aug 2020 15:06:31 GMT
+
+### Patches
+
+- Enable integer-type native runtime settings. (#5669) (julio.rocha@microsoft.com)
+- Restore Previous Behavior Allowing onMouseEnter and onMouseLeave on Touchables (ngerlem@microsoft.com)
 
 ## 0.62.4
 

@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 17 Aug 2020 15:06:31 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.0",
+      "version": "0.62.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "[Win32] Bump rex-win32 version",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "5038d317595eb392fc9499d1cd7c599932c998ce",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Jun 2020 06:37:28 GMT",
       "tag": "@office-iss/react-native-win32_v0.62.0",
       "version": "0.62.0",

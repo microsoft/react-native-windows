@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 17 Aug 2020 15:06:31 GMT",
+      "tag": "react-native-windows_v0.62.5",
+      "version": "0.62.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Enable integer-type native runtime settings. (#5669)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "1360794f39c81087467e126c7f2a24116bedce6d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Restore Previous Behavior Allowing onMouseEnter and onMouseLeave on Touchables",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6ccb77c1de9c3587d580eb336b2318ffcb09449b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Aug 2020 19:10:14 GMT",
       "tag": "react-native-windows_v0.62.4",
       "version": "0.62.4",
