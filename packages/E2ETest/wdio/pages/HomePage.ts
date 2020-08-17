@@ -4,86 +4,24 @@
  */
 
 import { BasePage, By } from './BasePage';
-import TextInputTestPage from './TextInputTestPage';
 import {
-  TEXTINPUT_TESTPAGE,
-  LOGIN_TESTPAGE,
-  DIRECT_MANIPULATION_TESTPAGE,
-  IMAGE_TESTPAGE,
-  CONTROL_STYLE_TESTPAGE,
-  TRANSFORM_TESTPAGE,
+  SEARCH_BOX,
+  BACK_BUTTON,
 } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
-import LoginPage from './LoginPage';
-import DirectManipulationPage from './DirectManipulationPage';
-import ImageTestPage from './ImageTestPage';
-import ControlStyleTestPage from './ControlStylePage';
 
 class HomePage extends BasePage {
+  goToTestPage(page: string) {
+    // Filter the list down to the one test, to improve stability of selectors
+    this.waitForElementLoaded(SEARCH_BOX);
+    let editBox = By(SEARCH_BOX);
+    editBox.setValue(page);
+    let pageItem = By(page);
+    pageItem.click();
+    super.waitForElementLoaded(BACK_BUTTON);
+  }
+
   backToHomePage() {
     this.homeButton.click();
-    this.waitForPageLoaded();
-  }
-
-  isPageLoaded() {
-    return super.isPageLoaded() && this.testInputTestPageButton.isDisplayed();
-  }
-
-  clickAndGoToTextInputPage() {
-    this.testInputTestPageButton.click();
-    TextInputTestPage.waitForPageLoaded();
-  }
-
-  clickAndGotoLoginPage() {
-    this.loginTestPageButton.click();
-    LoginPage.waitForPageLoaded();
-  }
-
-  clickAndGotoDirectManipulationPage() {
-    this.directManipulationPageButton.click();
-    DirectManipulationPage.waitForPageLoaded();
-  }
-
-  clickAndGotoImagePage() {
-    this.ImagePageButton.click();
-    ImageTestPage.waitForPageLoaded();
-  }
-
-  clickControlStylePageButton() {
-    this.ControlStylePageButton.click();
-  }
-
-  clickAndGotoControlStylePage() {
-    this.ControlStylePageButton.click();
-    ControlStyleTestPage.waitForPageLoaded();
-  }
-
-  clickAndGotoTransformTestPage() {
-    this.TransformTestPageButton.click();
-    ControlStyleTestPage.waitForPageLoaded();
-  }
-
-  private get testInputTestPageButton() {
-    return By(TEXTINPUT_TESTPAGE);
-  }
-
-  private get loginTestPageButton() {
-    return By(LOGIN_TESTPAGE);
-  }
-
-  private get directManipulationPageButton() {
-    return By(DIRECT_MANIPULATION_TESTPAGE);
-  }
-
-  private get ImagePageButton() {
-    return By(IMAGE_TESTPAGE);
-  }
-
-  private get ControlStylePageButton() {
-    return By(CONTROL_STYLE_TESTPAGE);
-  }
-
-  private get TransformTestPageButton() {
-    return By(TRANSFORM_TESTPAGE);
   }
 }
 

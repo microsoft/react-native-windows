@@ -1,4 +1,5 @@
 // Framework
+export const SEARCH_BOX = 'explorer_search';
 export const BACK_BUTTON = 'BackButton';
 export const REACT_CONTROL_ERROR_TEST_ID = 'ReactControlErrorMessage';
 export const TREE_DUMP_RESULT = 'TreeDump';

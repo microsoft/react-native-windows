@@ -21,18 +21,18 @@ export function wait(timeout: number) {
 }
 
 export class BasePage {
-  isPageLoaded(): boolean {
-    return this.homeButton.isDisplayed();
+  isElementLoaded(element: string): boolean {
+    return By(element).isDisplayed();
   }
 
-  waitForPageLoaded(timeout?: number) {
+  waitForElementLoaded(element: string, timeout?: number) {
     // eslint-disable-next-line no-undef
     browser.waitUntil(
       () => {
-        return this.isPagedLoadedOrLoadBundleError();
+        return this.isElementLoadedOrLoadBundleError(element);
       },
       this.timeoutForPageLoaded(timeout),
-      'Wait for page ' + this.constructor.name + ' timeout'
+      'Wait for element ' + element + ' timeout'
     );
   }
 
@@ -73,12 +73,12 @@ export class BasePage {
     return By(REACT_CONTROL_ERROR_TEST_ID);
   }
 
-  private isPagedLoadedOrLoadBundleError(): boolean {
+  private isElementLoadedOrLoadBundleError(element: string): boolean {
     if (this.reactControlErrorMessage.isDisplayed()) {
       throw "ReactControl doesn't load bundle successfully: " +
         this.reactControlErrorMessage.getText();
     }
-    return this.isPageLoaded();
+    return this.isElementLoaded(element);
   }
 
   private get treeDumpResult() {

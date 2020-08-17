@@ -6,9 +6,10 @@
 import TextInputTestPage from '../pages/TextInputTestPage';
 import HomePage from '../pages/HomePage';
 import assert from 'assert';
+import { TEXTINPUT_TESTPAGE } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 beforeAll(() => {
-  HomePage.clickAndGoToTextInputPage();
+  HomePage.goToTestPage(TEXTINPUT_TESTPAGE);
 });
 
 function assertLogContains(text: string) {

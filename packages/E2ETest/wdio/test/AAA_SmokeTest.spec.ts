@@ -2,7 +2,8 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
-import HomePage from '../pages/HomePage';
+import { By } from '../pages/BasePage';
+import { CONTROL_STYLE_TESTPAGE } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 describe('SmokeTest', () => {
   it('SmokeTest', () => {
@@ -10,6 +11,6 @@ describe('SmokeTest', () => {
     // to workaround an instability in WinAppDriver (?) on first test launch,
     // which causes the click to not actually work if the control needs to
     // first be scrolled into view.
-    HomePage.clickControlStylePageButton();
+    By(CONTROL_STYLE_TESTPAGE).click();
   });
 });
