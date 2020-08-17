@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 17 Aug 2020 15:05:03 GMT",
+      "tag": "react-native-windows_v0.63.0-preview.3",
+      "version": "0.63.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Get/SetRuntimeOptionInt.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "d73d228392dd622a4873f4998b49c86035ed1e4e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add licene metadata to nuget package for nuget.org compliance",
+            "author": "dannyvv@microsoft.com",
+            "commit": "263a2105790ace3f260a3cfad933a33eab8e39b9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.63] Use thread compositor in ReactImage",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "18e4af7fca442f44fc6777c5d3b432aaec63500c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.63] Fix teardown crash in WebSocketJSExecutor",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "8362239cf4bdf6945aed0fb315a05a107cdbd542",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.63] Fix crash in ViewViewManager",
+            "author": "asklar@microsoft.com",
+            "commit": "2f3b5c9fae2f6a4b728d15e7eae11c840c2dfa89",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Restore Previous Behavior Allowing onMouseEnter and onMouseLeave on Touchables",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c95408e6a96337511c50e5565fec875917a1cff4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Handle MessageWebSocket constructor exceptions",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "d73d228392dd622a4873f4998b49c86035ed1e4e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Make C# CodeGen the default",
+            "author": "dannyvv@microsoft.com",
+            "commit": "462c1dbc22238b5e2bb62025ed24e1a5731cd9c4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 10 Aug 2020 15:04:54 GMT",
       "tag": "react-native-windows_v0.63.0-preview.2",
       "version": "0.63.0-preview.2",

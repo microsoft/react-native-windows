@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[0.63] Fix teardown crash in WebSocketJSExecutor",
-  "packageName": "react-native-windows",
-  "email": "asklar@winse.microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-13T18:55:12.371Z"
-}

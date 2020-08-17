@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 10 Aug 2020 15:04:54 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Aug 2020 15:05:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.0-preview.3
+
+Mon, 17 Aug 2020 15:05:03 GMT
+
+### Changes
+
+- Add Get/SetRuntimeOptionInt. (julio.rocha@microsoft.com)
+- Add licene metadata to nuget package for nuget.org compliance (dannyvv@microsoft.com)
+- [0.63] Use thread compositor in ReactImage (asklar@winse.microsoft.com)
+- [0.63] Fix teardown crash in WebSocketJSExecutor (asklar@winse.microsoft.com)
+- [0.63] Fix crash in ViewViewManager (asklar@microsoft.com)
+- Restore Previous Behavior Allowing onMouseEnter and onMouseLeave on Touchables (ngerlem@microsoft.com)
+- Handle MessageWebSocket constructor exceptions (julio.rocha@microsoft.com)
+- Make C# CodeGen the default (dannyvv@microsoft.com)
 
 ## 0.63.0-preview.2
 
