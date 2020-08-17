@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 17 Aug 2020 15:05:35 GMT",
+      "tag": "react-native-windows_v0.61.15",
+      "version": "0.61.15",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Enable integer-type native runtime settings. (#5669)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "462dbca888fde8ea8f44417f5fb209391c14a36b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 18 Jun 2020 08:02:42 GMT",
       "tag": "react-native-windows_v0.61.14",
       "version": "0.61.14",

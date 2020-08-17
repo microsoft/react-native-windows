@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 18 Jun 2020 08:02:42 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Aug 2020 15:05:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.61.15
+
+Mon, 17 Aug 2020 15:05:35 GMT
+
+### Patches
+
+- Enable integer-type native runtime settings. (#5669) (julio.rocha@microsoft.com)
 
 ## 0.61.14
 
