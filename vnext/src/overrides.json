@@ -800,6 +800,10 @@
     },
     {
       "type": "platform",
+      "file": "RNTester\\js\\examples-win\\Mouse\\MouseExample.windows.js"
+    },
+    {
+      "type": "platform",
       "file": "RNTester\\js\\examples-win\\Picker\\PickerWindowsExample.tsx"
     },
     {
