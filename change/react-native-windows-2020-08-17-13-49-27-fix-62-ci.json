@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Fix CI for 0.62-stable",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-08-17T20:49:27.634Z"
+}
