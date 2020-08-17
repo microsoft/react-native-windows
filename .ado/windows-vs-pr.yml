@@ -678,33 +678,3 @@ jobs:
     parameters:
       name: E2ETest
       BuildPlatform: x64
-
-  - job: RNWNugetPR
-    displayName: Build and Pack NuGet
-    dependsOn:
-      - Setup
-      - RNWUniversalPR
-      - RNWDesktopPR
-    condition: |
-      and
-      (
-        ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ),
-        in(dependencies.RNWUniversalPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
-        in(dependencies.RNWDesktopPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
-      )
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 30
-    cancelTimeoutInMinutes: 5
-    steps:
-      - checkout: none
-
-      # The commit tag in the nuspec requires that we use at least NuGet 4.6
-      - task: NuGetToolInstaller@0
-        inputs:
-          versionSpec: ">=4.6.0"
-
-      - template: templates/prep-and-pack-nuget.yml
-        parameters:
-          slices: '("x64.Release", "x86.Debug", "ARM.Release")'
-
