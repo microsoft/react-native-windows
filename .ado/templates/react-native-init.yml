@@ -71,7 +71,7 @@ steps:
       versionSpec: ">=4.6.0"
 
   - ${{ if eq(parameters.useNuGet, true) }}:
-    - template: templates/prep-and-pack-nuget.yml
+    - template: prep-and-pack-nuget.yml
       parameters:
         npmVersion: $(npmVersion)
         packDesktop: false
