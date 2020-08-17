@@ -51,7 +51,13 @@ void MainPage::OnLoadClick(
   }
   host.InstanceSettings().JavaScriptBundleFile(bundleFile);
 
-  auto mainComponentName = unbox_value<hstring>(x_rootComponentNameCombo().SelectedItem().as<ComboBoxItem>().Content());
+  auto item = x_rootComponentNameCombo().SelectedItem();
+  winrt::hstring mainComponentName;
+  if (auto selected = item.try_as<ComboBoxItem>()) {
+    mainComponentName = unbox_value<hstring>(selected.Content());
+  } else {
+    mainComponentName = unbox_value<hstring>(item);
+  }
   ReactRootView().ComponentName(mainComponentName);
   ReactRootView().ReactNativeHost(host);
 

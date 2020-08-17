@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 14 Aug 2020 05:05:34 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.3",
+      "version": "0.0.0-canary.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Disable autolinking check in msbuild when using `react-native run-windows`",
+            "author": "jthysell@microsoft.com",
+            "commit": "917b8585d4d8ac94140ad2dff538de6c5b1bddc8",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 11 Aug 2020 07:36:05 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.2",
       "version": "0.0.0-canary.2",
