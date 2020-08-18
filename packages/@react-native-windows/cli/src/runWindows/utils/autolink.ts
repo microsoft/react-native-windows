@@ -382,8 +382,6 @@ async function updateAutoLink(
       changesNecessary =
         updateFile(destCppFile, cppContents, verbose, checkMode) ||
         changesNecessary;
-    } else {
-
     }
 
     // Generating targets for app project consumption

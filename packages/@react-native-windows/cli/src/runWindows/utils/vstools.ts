@@ -94,7 +94,7 @@ export function addProjectToSolution(
   if (project.projectLang === null) {
     throw new Error('Unable to add project to solution, projectLang is null');
   }
-  
+
   if (project.projectGuid === null) {
     throw new Error('Unable to add project to solution, projectGuid is null');
   }

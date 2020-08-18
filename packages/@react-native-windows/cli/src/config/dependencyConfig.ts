@@ -146,37 +146,45 @@ export function dependencyConfigWindows(
     sourceDir = configUtils.findWindowsFolder(folder);
   }
 
-  if (
-    sourceDir === null && 
-    result.projects.length === 0
-    && result.nugetPackages.length === 0
-  ) {
-    // Nothing to look for here, bail
-    return null;
-  } else if (sourceDir !== null && sourceDir.startsWith('Error: ')) {
+  if (sourceDir === null) {
+    // Try to salvage the missing sourceDir
+    if (result.projects.length === 0 && result.nugetPackages.length > 0) {
+      // Only nuget packages, no sourceDir required
+      return result;
+    } else if (result.projects.length > 0) {
+      // Projects overridden but no sourceDir, assume the sourceDir === folder
+      sourceDir = folder;
+    }
+  } else if (sourceDir.startsWith('Error: ')) {
     // Source dir error, bail with error
     result.sourceDir = sourceDir;
     return result;
   }
 
-  result.sourceDir = sourceDir!.substr(folder.length + 1);
+  if (sourceDir === null) {
+    // After everything above, if sourceDir is still null,
+    // there's nothing more to look for here, bail
+    return null;
+  }
+
+  result.sourceDir = sourceDir.substr(folder.length + 1);
 
   const usingManualSolutionFile = 'solutionFile' in userConfig;
 
   var solutionFile = null;
   if (usingManualSolutionFile && userConfig.solutionFile !== null) {
     // Manually provided solutionFile, so extract it
-    solutionFile = path.join(sourceDir!, userConfig.solutionFile!);
+    solutionFile = path.join(sourceDir, userConfig.solutionFile!);
   } else if (!usingManualSolutionFile) {
     // No manually provided solutionFile, try to find it
-    const foundSolutions = configUtils.findSolutionFiles(sourceDir!);
+    const foundSolutions = configUtils.findSolutionFiles(sourceDir);
     if (foundSolutions.length === 1) {
-      solutionFile = path.join(sourceDir!, foundSolutions[0]);
+      solutionFile = path.join(sourceDir, foundSolutions[0]);
     }
   }
 
   result.solutionFile =
-    solutionFile !== null ? solutionFile.substr(sourceDir!.length + 1) : null;
+    solutionFile !== null ? solutionFile.substr(sourceDir.length + 1) : null;
 
   if (usingManualProjectsOverride) {
     // react-native.config used, fill out (auto) items for each provided project, verify (req) items are present
@@ -202,18 +210,14 @@ export function dependencyConfigWindows(
         break;
       }
 
-      const projectFile = path.join(sourceDir!, project.projectFile);
+      const projectFile = path.join(sourceDir, project.projectFile);
 
       const projectContents = configUtils.readProjectFile(projectFile);
 
       // Calculating (auto) items
-      project.projectName = configUtils.getProjectName(
-        projectContents,
-      );
+      project.projectName = configUtils.getProjectName(projectContents);
       project.projectLang = configUtils.getProjectLanguage(projectFile);
-      project.projectGuid = configUtils.getProjectGuid(
-        projectContents,
-      );
+      project.projectGuid = configUtils.getProjectGuid(projectContents);
 
       if (project.directDependency) {
         // Calculating more (auto) items
@@ -240,47 +244,40 @@ export function dependencyConfigWindows(
   } else {
     // No react-native.config, try to heurestically find any projects
 
-    const foundProjects = configUtils.findDependencyProjectFiles(sourceDir!);
+    const foundProjects = configUtils.findDependencyProjectFiles(sourceDir);
 
     for (const foundProject of foundProjects) {
-      const projectFile = path.join(sourceDir!, foundProject);
+      const projectFile = path.join(sourceDir, foundProject);
 
       const projectLang = configUtils.getProjectLanguage(projectFile);
 
       const projectContents = configUtils.readProjectFile(projectFile);
 
-      const projectName = configUtils.getProjectName(
-        projectContents,
-      );
+      const projectName = configUtils.getProjectName(projectContents);
 
-      const projectGuid = configUtils.getProjectGuid(
-        projectContents,
-      );
+      const projectGuid = configUtils.getProjectGuid(projectContents);
 
-      const projectNamespace = configUtils.getProjectNamespace(
-        projectContents,
-      );
+      const projectNamespace = configUtils.getProjectNamespace(projectContents);
 
       const directDependency = true;
 
-      let cppHeaders : string[] = [];
-      let cppPackageProviders : string[]= [];
-      let csNamespaces : string[]= [];
-      let csPackageProviders : string[] = [];
+      let cppHeaders: string[] = [];
+      let cppPackageProviders: string[] = [];
+      let csNamespaces: string[] = [];
+      let csPackageProviders: string[] = [];
 
       if (projectNamespace !== null) {
         const cppNamespace = projectNamespace.replace(/\./g, '::');
         const csNamespace = projectNamespace.replace(/::/g, '.');
-  
+
         cppHeaders.push(`winrt/${csNamespace}.h`);
         cppPackageProviders.push(`${cppNamespace}::ReactPackageProvider`);
         csNamespaces.push(`${csNamespace}`);
         csPackageProviders.push(`${csNamespace}.ReactPackageProvider`);
       }
-      
 
       result.projects.push({
-        projectFile: projectFile.substr(sourceDir!.length + 1),
+        projectFile: projectFile.substr(sourceDir.length + 1),
         projectName,
         projectLang,
         projectGuid,

@@ -273,12 +273,11 @@ export function importProjectExists(
  * @param projectContents The XML project contents.
  * @return The project name.
  */
-export function getProjectName(
-  projectContents: Node,
-): string {
+export function getProjectName(projectContents: Node): string {
   const name =
     findPropertyValue(projectContents, 'ProjectName') ||
-    findPropertyValue(projectContents, 'AssemblyName') || '';
+    findPropertyValue(projectContents, 'AssemblyName') ||
+    '';
 
   return name;
 }
@@ -288,9 +287,7 @@ export function getProjectName(
  * @param projectContents The XML project contents.
  * @return The project namespace.
  */
-export function getProjectNamespace(
-  projectContents: Node,
-): string | null {
+export function getProjectNamespace(projectContents: Node): string | null {
   return findPropertyValue(projectContents, 'RootNamespace');
 }
 
@@ -299,8 +296,6 @@ export function getProjectNamespace(
  * @param projectContents The XML project contents.
  * @return The project guid.
  */
-export function getProjectGuid(
-  projectContents: Node,
-): string | null {
+export function getProjectGuid(projectContents: Node): string | null {
   return findPropertyValue(projectContents, 'ProjectGuid');
 }
