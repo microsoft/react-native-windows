@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 18 Aug 2020 05:06:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.142",
+      "version": "0.0.0-canary.142",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix instability in VisitAllPages test",
+            "author": "kmelmon@microsoft.com",
+            "commit": "4174941b071bb5ec65c74d88c474564be62c38f8",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Aug 2020 05:05:18 GMT",
       "tag": "react-native-windows_v0.0.0-canary.141",
       "version": "0.0.0-canary.141",

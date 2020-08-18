@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 15 Aug 2020 05:05:18 GMT and should not be manually modified.
+This log was last generated on Tue, 18 Aug 2020 05:06:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.142
+
+Tue, 18 Aug 2020 05:06:49 GMT
+
+### Changes
+
+- fix instability in VisitAllPages test (kmelmon@microsoft.com)
 
 ## 0.0.0-canary.141
 

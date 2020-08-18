@@ -6,9 +6,10 @@
 import LoginPage from '../pages/LoginPage';
 import HomePage from '../pages/HomePage';
 import assert from 'assert';
+import { LOGIN_TESTPAGE } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 beforeAll(() => {
-  HomePage.clickAndGotoLoginPage();
+  HomePage.goToTestPage(LOGIN_TESTPAGE);
 });
 
 describe('LoginTest', () => {
