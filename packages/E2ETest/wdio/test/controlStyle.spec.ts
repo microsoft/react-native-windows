@@ -6,9 +6,10 @@
 import HomePage from '../pages/HomePage';
 import ControlStyleTestPage from '../pages/ControlStylePage';
 import assert from 'assert';
+import { CONTROL_STYLE_TESTPAGE } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 beforeAll(() => {
-  HomePage.clickAndGotoControlStylePage();
+  HomePage.goToTestPage(CONTROL_STYLE_TESTPAGE);
 });
 
 describe('ControlStyleTest', () => {
