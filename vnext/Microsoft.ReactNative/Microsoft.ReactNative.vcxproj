@@ -110,7 +110,9 @@
         $(JSI_SourcePath);
         $(ReactNativeDir)ReactCommon;
         $(ReactNativeDir)ReactCommon\callinvoker;
-        $(ReactNativeDir)ReactCommon\jsi;
+        $(ReactNativeDir)ReactCommon\jsiexecutor;
+        $(ReactNativeDir)ReactCommon\reactperflogger;
+        $(ReactNativeDir)ReactCommon\runtimeexecutor;
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)stubs;
