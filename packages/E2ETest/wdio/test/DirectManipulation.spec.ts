@@ -6,9 +6,10 @@
 import HomePage from '../pages/HomePage';
 import DirectManipulationPage from '../pages/DirectManipulationPage';
 import assert from 'assert';
+import { DIRECT_MANIPULATION_TESTPAGE } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 beforeAll(() => {
-  HomePage.clickAndGotoDirectManipulationPage();
+  HomePage.goToTestPage(DIRECT_MANIPULATION_TESTPAGE);
 });
 
 describe('DirectManipulationTest', () => {

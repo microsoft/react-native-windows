@@ -11,15 +11,6 @@ import {
 } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 class DirectManipulationPage extends BasePage {
-  backToHomePage() {
-    this.homeButton.click();
-    this.waitForPageLoaded();
-  }
-
-  isPageLoaded() {
-    return super.isPageLoaded() && this.measureLayoutButton.isDisplayed();
-  }
-
   clickApplyScaleTransform() {
     this.applyScaleTransformButton.click();
   }
