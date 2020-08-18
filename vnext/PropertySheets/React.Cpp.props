@@ -33,8 +33,9 @@
     <HERMES_ARCH Condition="'$(HERMES_ARCH)' == ''">uwp</HERMES_ARCH>
 
     <USE_V8 Condition="('$(USE_V8)' == '') Or ('$(Platform)' == 'ARM' OR '$(Platform)' == 'ARM64')">false</USE_V8>
-    <V8_Version Condition="'$(V8_Version)' == ''">0.3.3</V8_Version>
-    <V8_Package Condition="'$(V8_Package)' == ''">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8_Version)</V8_Package>
+    <V8_Version Condition="'$(V8_Version)' == ''">0.3.4</V8_Version>
+    <V8_Package Condition="'$(V8_Package)' == '' AND '$(V8AppPlatform)' == 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8_Version)</V8_Package>
+    <V8_Package Condition="'$(V8_Package)' == '' AND '$(V8AppPlatform)' != 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.UWP.$(V8_Version)</V8_Package>
 
     <!-- Enables React-Native-Windows ETW Provider : React-Native-Windows-Provider  -->
     <ENABLE_ETW_TRACING Condition="'$(ENABLE_ETW_TRACING)' == ''">true</ENABLE_ETW_TRACING>
