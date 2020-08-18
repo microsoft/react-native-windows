@@ -61,7 +61,12 @@ WebSocketJSExecutor::WebSocketJSExecutor(
     }
   });
 
-  m_closed = m_socket.Closed(winrt::auto_revoke, [this](auto &&, auto &&args) { SetState(State::Disconnected); });
+  auto weakThis = weak_from_this();
+  m_closed = m_socket.Closed(winrt::auto_revoke, [weakThis](auto &&, auto &&args) {
+    if (auto _this = weakThis.lock()) {
+      _this->SetState(State::Disconnected);
+    }
+  });
 }
 
 WebSocketJSExecutor::~WebSocketJSExecutor() {

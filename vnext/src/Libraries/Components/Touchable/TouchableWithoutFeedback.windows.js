@@ -27,6 +27,7 @@ import type {
   BlurEvent,
   FocusEvent,
   LayoutEvent,
+  MouseEvent, // [Windows]
   PressEvent,
 } from '../../Types/CoreEventTypes';
 import Platform from '../../Utilities/Platform';
@@ -70,8 +71,8 @@ type Props = $ReadOnly<{|
   accessibilityPosInSet?: ?number, // [Windows]
   accessibilitySetSize?: ?number, // [Windows]
   onAccessibilityTap?: ?() => void, // [Windows]
-  onMouseEnter?: ?(event: SyntheticEvent<{}>) => void, // [Windows]
-  onMouseLeave?: ?(event: SyntheticEvent<{}>) => void, // [Windows]
+  onMouseEnter?: ?(event: MouseEvent) => void, // [Windows]
+  onMouseLeave?: ?(event: MouseEvent) => void, // [Windows]
   tabIndex?: ?number, // [Windows]
   tooltip?: ?Stringish, // [Windows]
 |}>;
@@ -206,6 +207,8 @@ function createPressabilityConfig(props: Props): PressabilityConfig {
     onPress: props.onPress,
     onPressIn: props.onPressIn,
     onPressOut: props.onPressOut,
+    onMouseEnter: props.onMouseEnter, // [Windows]
+    onMouseLeave: props.onMouseLeave, // [Windows]
   };
 }
 

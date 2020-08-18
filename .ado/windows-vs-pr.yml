@@ -581,14 +581,12 @@ jobs:
     displayName: Verify react-native init experimental
     dependsOn:
      - Setup
-     - RNWNugetPR
+     - RNWUniversalPR
     condition: |
       and
       (
         ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ),
-        in(dependencies.RNWNugetPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
-        in(dependencies.RNWUniversalPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
-        in(dependencies.RNWDesktopPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+        in(dependencies.RNWUniversalPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
       )
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
@@ -608,8 +606,8 @@ jobs:
           platform: x86
           useNuGet: true
 
-  - job: JSTasks
-    displayName: JavaScript Tasks
+  - job: JSChecks
+    displayName: JavaScript Checks
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
@@ -676,54 +674,7 @@ jobs:
         inputs:
           script: yarn api
 
-      - script: |
-          npx --no-install beachball bump --branch origin/$(System.PullRequest.TargetBranch)
-        displayName: Bump packages
-
-      - template: templates/set-version-vars.yml
-
-      - template: templates/publish-version-vars.yml
-
   - template: templates/e2e-test-job.yml # Template reference
     parameters:
       name: E2ETest
       BuildPlatform: x64
-
-  - job: RNWNugetPR
-    displayName: Build and Pack NuGet
-    dependsOn:
-      - Setup
-      - RNWUniversalPR
-      - RNWDesktopPR
-      - JSTasks
-    condition: |
-      and
-      (
-        ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ),
-        in(dependencies.RNWUniversalPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'),
-        in(dependencies.RNWDesktopPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
-      )
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 30
-    cancelTimeoutInMinutes: 5
-    steps:
-      - checkout: none
-
-      - template: templates/apply-published-version-vars.yml
-
-      # The commit tag in the nuspec requires that we use at least NuGet 4.6
-      - task: NuGetToolInstaller@0
-        inputs:
-          versionSpec: ">=4.6.0"
-
-      - template: templates/prep-and-pack-nuget.yml
-        parameters:
-          slices: '("x64.Release", "x86.Debug", "ARM.Release")'
-          npmVersion: $(npmVersion)
-
-      - task: PublishBuildArtifacts@1
-        displayName: Upload PR NuGet Test feed
-        inputs:
-          pathtoPublish: $(System.DefaultWorkingDirectory)/NuGetTestFeed
-          artifactName: NuGetTestFeed

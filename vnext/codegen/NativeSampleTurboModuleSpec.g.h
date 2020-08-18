@@ -21,7 +21,7 @@ struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       SyncMethod<std::string(std::string) noexcept>{3, L"getString"},
       SyncMethod<React::JSValueArray(React::JSValueArray) noexcept>{4, L"getArray"},
       SyncMethod<React::JSValueObject(React::JSValueObject) noexcept>{5, L"getObject"},
-      SyncMethod<React::JSValueObject(React::JSValueObject) noexcept>{6, L"getRootTag"},
+      SyncMethod<double(double) noexcept>{6, L"getRootTag"},
       SyncMethod<React::JSValueObject(double, std::string, React::JSValueObject) noexcept>{7, L"getValue"},
       Method<void(Callback<React::JSValue>) noexcept>{8, L"getValueWithCallback"},
       Method<void(bool, Promise<React::JSValue>) noexcept>{9, L"getValueWithPromise"},
@@ -64,8 +64,8 @@ struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           6,
           "getRootTag",
-          "    REACT_SYNC_METHOD(getRootTag) React::JSValueObject getRootTag(React::JSValueObject && arg) noexcept { /* implementation */ }}\n"
-          "    REACT_SYNC_METHOD(getRootTag) static React::JSValueObject getRootTag(React::JSValueObject && arg) noexcept { /* implementation */ }}\n");
+          "    REACT_SYNC_METHOD(getRootTag) double getRootTag(double arg) noexcept { /* implementation */ }}\n"
+          "    REACT_SYNC_METHOD(getRootTag) static double getRootTag(double arg) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           7,
           "getValue",
