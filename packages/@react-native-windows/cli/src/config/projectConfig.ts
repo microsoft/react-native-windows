@@ -53,8 +53,8 @@ module.exports = {
 export interface Project {
   projectFile: string;
   projectName: string;
-  projectLang: 'cpp' | 'cs';
-  projectGuid: string;
+  projectLang: 'cpp' | 'cs' | null;
+  projectGuid: string | null;
 }
 
 export interface WindowsProjectConfig {
@@ -176,12 +176,10 @@ export function projectConfigWindows(
 
     // Add missing (auto) items
     result.project.projectName = configUtils.getProjectName(
-      projectFile,
       projectContents,
     );
     result.project.projectLang = configUtils.getProjectLanguage(projectFile);
     result.project.projectGuid = configUtils.getProjectGuid(
-      projectFile,
       projectContents,
     );
   }

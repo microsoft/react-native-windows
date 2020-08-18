@@ -168,9 +168,9 @@ async function updateAutoLink(
           path.join(windowsAppConfig.folder, windowsAppConfig.sourceDir),
           projFile,
         ),
-        projectName: configUtils.getProjectName(projFile, projectContents),
+        projectName: configUtils.getProjectName(projectContents),
         projectLang: configUtils.getProjectLanguage(projFile),
-        projectGuid: configUtils.getProjectGuid(projFile, projectContents),
+        projectGuid: configUtils.getProjectGuid(projectContents),
       };
     }
 
@@ -222,7 +222,7 @@ async function updateAutoLink(
         );
       } else if (
         typeof windowsAppProjectConfig[item] === 'string' &&
-        windowsAppProjectConfig[item].startsWith('Error: ')
+        windowsAppProjectConfig[item]!.startsWith('Error: ')
       ) {
         throw new Error(
           `project.${item} invalid. ${windowsAppProjectConfig[item]}`,
@@ -237,7 +237,7 @@ async function updateAutoLink(
     );
 
     const projectDir = path.dirname(projectFile);
-    const projectLang = windowsAppConfig.project.projectLang;
+    const projectLang = windowsAppConfig.project.projectLang!;
 
     verboseMessage('Parsing dependencies...', verbose);
 
@@ -382,6 +382,8 @@ async function updateAutoLink(
       changesNecessary =
         updateFile(destCppFile, cppContents, verbose, checkMode) ||
         changesNecessary;
+    } else {
+
     }
 
     // Generating targets for app project consumption

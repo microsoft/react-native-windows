@@ -76,8 +76,8 @@ export interface ProjectDependency {
   projectFile: string;
   directDependency: boolean;
   projectName: string;
-  projectLang: 'cpp' | 'cs';
-  projectGuid: string;
+  projectLang: 'cpp' | 'cs' | null;
+  projectGuid: string | null;
   cppHeaders: string[];
   cppPackageProviders: string[];
   csNamespaces: string[];
@@ -96,7 +96,7 @@ export interface NuGetPackageDependency {
 export interface WindowsDependencyConfig {
   folder: string;
   sourceDir?: string;
-  solutionFile: string | null;
+  solutionFile?: string | null;
   projects: ProjectDependency[];
   nugetPackages: NuGetPackageDependency[];
 }
@@ -131,7 +131,7 @@ export function dependencyConfigWindows(
 
   let sourceDir: string | null = null;
   if (usingManualProjectsOverride && result.projects.length > 0) {
-    // Manaully provided projects, so extract the sourceDir
+    // Manually provided projects, so extract the sourceDir
     if (!('sourceDir' in userConfig)) {
       sourceDir =
         'Error: Source dir is required if projects are specified, but it is not specified in react-native.config.';
@@ -147,35 +147,36 @@ export function dependencyConfigWindows(
   }
 
   if (
-    sourceDir === null ||
-    (result.projects.length === 0 && result.nugetPackages.length === 0)
+    sourceDir === null && 
+    result.projects.length === 0
+    && result.nugetPackages.length === 0
   ) {
     // Nothing to look for here, bail
     return null;
-  } else if (sourceDir.startsWith('Error: ')) {
+  } else if (sourceDir !== null && sourceDir.startsWith('Error: ')) {
     // Source dir error, bail with error
     result.sourceDir = sourceDir;
     return result;
   }
 
-  result.sourceDir = sourceDir.substr(folder.length + 1);
+  result.sourceDir = sourceDir!.substr(folder.length + 1);
 
   const usingManualSolutionFile = 'solutionFile' in userConfig;
 
   var solutionFile = null;
   if (usingManualSolutionFile && userConfig.solutionFile !== null) {
     // Manually provided solutionFile, so extract it
-    solutionFile = path.join(sourceDir, userConfig.solutionFile!);
+    solutionFile = path.join(sourceDir!, userConfig.solutionFile!);
   } else if (!usingManualSolutionFile) {
     // No manually provided solutionFile, try to find it
-    const foundSolutions = configUtils.findSolutionFiles(sourceDir);
+    const foundSolutions = configUtils.findSolutionFiles(sourceDir!);
     if (foundSolutions.length === 1) {
-      solutionFile = path.join(sourceDir, foundSolutions[0]);
+      solutionFile = path.join(sourceDir!, foundSolutions[0]);
     }
   }
 
   result.solutionFile =
-    solutionFile !== null ? solutionFile.substr(sourceDir.length + 1) : null;
+    solutionFile !== null ? solutionFile.substr(sourceDir!.length + 1) : null;
 
   if (usingManualProjectsOverride) {
     // react-native.config used, fill out (auto) items for each provided project, verify (req) items are present
@@ -201,18 +202,16 @@ export function dependencyConfigWindows(
         break;
       }
 
-      const projectFile = path.join(sourceDir, project.projectFile);
+      const projectFile = path.join(sourceDir!, project.projectFile);
 
       const projectContents = configUtils.readProjectFile(projectFile);
 
       // Calculating (auto) items
       project.projectName = configUtils.getProjectName(
-        projectFile,
         projectContents,
       );
       project.projectLang = configUtils.getProjectLanguage(projectFile);
       project.projectGuid = configUtils.getProjectGuid(
-        projectFile,
         projectContents,
       );
 
@@ -220,61 +219,68 @@ export function dependencyConfigWindows(
         // Calculating more (auto) items
 
         const projectNamespace = configUtils.getProjectNamespace(
-          projectFile,
           projectContents,
         );
-        const cppNamespace = projectNamespace.replace(/\./g, '::');
-        const csNamespace = projectNamespace.replace(/::/g, '.');
 
-        project.cppHeaders = project.cppHeaders || [`winrt/${csNamespace}.h`];
-        project.cppPackageProviders = project.cppPackageProviders || [
-          `${cppNamespace}::ReactPackageProvider`,
-        ];
-        project.csNamespaces = project.csNamespaces || [`${csNamespace}`];
-        project.csPackageProviders = project.csPackageProviders || [
-          `${csNamespace}.ReactPackageProvider`,
-        ];
+        if (projectNamespace !== null) {
+          const cppNamespace = projectNamespace!.replace(/\./g, '::');
+          const csNamespace = projectNamespace!.replace(/::/g, '.');
+
+          project.cppHeaders = project.cppHeaders || [`winrt/${csNamespace}.h`];
+          project.cppPackageProviders = project.cppPackageProviders || [
+            `${cppNamespace}::ReactPackageProvider`,
+          ];
+          project.csNamespaces = project.csNamespaces || [`${csNamespace}`];
+          project.csPackageProviders = project.csPackageProviders || [
+            `${csNamespace}.ReactPackageProvider`,
+          ];
+        }
       }
     }
   } else {
     // No react-native.config, try to heurestically find any projects
 
-    const foundProjects = configUtils.findDependencyProjectFiles(sourceDir);
+    const foundProjects = configUtils.findDependencyProjectFiles(sourceDir!);
 
     for (const foundProject of foundProjects) {
-      const projectFile = path.join(sourceDir, foundProject);
+      const projectFile = path.join(sourceDir!, foundProject);
 
       const projectLang = configUtils.getProjectLanguage(projectFile);
 
       const projectContents = configUtils.readProjectFile(projectFile);
 
       const projectName = configUtils.getProjectName(
-        projectFile,
         projectContents,
       );
 
       const projectGuid = configUtils.getProjectGuid(
-        projectFile,
         projectContents,
       );
 
       const projectNamespace = configUtils.getProjectNamespace(
-        projectFile,
         projectContents,
       );
 
       const directDependency = true;
 
-      const cppNamespace = projectNamespace.replace(/\./g, '::');
-      const csNamespace = projectNamespace.replace(/::/g, '.');
+      let cppHeaders : string[] = [];
+      let cppPackageProviders : string[]= [];
+      let csNamespaces : string[]= [];
+      let csPackageProviders : string[] = [];
 
-      const cppHeaders = [`winrt/${csNamespace}.h`];
-      const cppPackageProviders = [`${cppNamespace}::ReactPackageProvider`];
-      const csNamespaces = [`${csNamespace}`];
-      const csPackageProviders = [`${csNamespace}.ReactPackageProvider`];
+      if (projectNamespace !== null) {
+        const cppNamespace = projectNamespace.replace(/\./g, '::');
+        const csNamespace = projectNamespace.replace(/::/g, '.');
+  
+        cppHeaders.push(`winrt/${csNamespace}.h`);
+        cppPackageProviders.push(`${cppNamespace}::ReactPackageProvider`);
+        csNamespaces.push(`${csNamespace}`);
+        csPackageProviders.push(`${csNamespace}.ReactPackageProvider`);
+      }
+      
 
       result.projects.push({
-        projectFile: projectFile.substr(sourceDir.length + 1),
+        projectFile: projectFile.substr(sourceDir!.length + 1),
         projectName,
         projectLang,
         projectGuid,
