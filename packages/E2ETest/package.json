@@ -24,7 +24,7 @@
   "dependencies": {
     "prompt-sync": "^4.2.0",
     "react": "16.13.1",
-    "react-native": "0.0.0-30a89f30c",
+    "react-native": "0.0.0-6a96a9f65",
     "react-native-windows": "0.0.0-canary.143"
   },
   "devDependencies": {

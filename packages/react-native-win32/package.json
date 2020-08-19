@@ -38,9 +38,10 @@
     "metro-react-native-babel-transformer": "0.59.0",
     "metro-source-map": "0.59.0",
     "nullthrows": "^1.1.1",
-    "pretty-format": "^25.4.0",
+    "pretty-format": "^26.0.1",
     "promise": "^8.0.3",
     "prop-types": "^15.7.2",
+    "qs": "^6.5.1",
     "react-clone-referenced-element": "^1.0.1",
     "react-devtools-core": "^4.6.0",
     "react-refresh": "^0.4.0",
@@ -61,17 +62,17 @@
     "@types/react-native": "^0.62.10",
     "babel-eslint": "10.0.1",
     "eslint": "6.7.0",
-    "flow-bin": "^0.123.0",
+    "flow-bin": "^0.124.0",
     "jscodeshift": "^0.9.0",
     "just-scripts": "^0.36.1",
     "react": "16.13.1",
-    "react-native": "0.0.0-30a89f30c",
+    "react-native": "0.0.0-6a96a9f65",
     "react-native-platform-override": "^0.2.1",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "0.0.0-30a89f30c"
+    "react-native": "0.0.0-6a96a9f65"
   },
   "beachball": {
     "defaultNpmTag": "canary",

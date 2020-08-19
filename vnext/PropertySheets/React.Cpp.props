@@ -111,6 +111,17 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+
+      <!-- Add include directories expected by React Native C++ code and headers -->
+      <AdditionalIncludeDirectories>
+        $(FollyDir);
+        $(ReactNativeDir)\ReactCommon;
+        $(ReactNativeDir)\ReactCommon\callinvoker;
+        $(ReactNativeDir)\ReactCommon\jsiexecutor;
+        $(ReactNativeDir)\ReactCommon\reactperflogger;
+        $(ReactNativeDir)\ReactCommon\runtimeexecutor;
+        %(AdditionalIncludeDirectories);
+      </AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
 
