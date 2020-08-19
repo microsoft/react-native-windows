@@ -41,7 +41,8 @@
     <CppWinRTProjectLanguage>C++/WinRT</CppWinRTProjectLanguage>
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
     <CppWinRTUsePrefixes>true</CppWinRTUsePrefixes>
-    <USE_V8>true</USE_V8>
+    <!-- Disabled until we reconcile JSI interface versions -->
+    <USE_V8>false</USE_V8>
     <V8AppPlatform>win32</V8AppPlatform>
   </PropertyGroup>
   <PropertyGroup Label="Permissive">
@@ -72,7 +73,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\Shared\tracing;$(ReactNativeWindowsDir)include\Shared;$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)JSI\Shared;$(JSI_Source);$(ReactNativeDir)\ReactCommon\callinvoker;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\Shared\tracing;$(ReactNativeWindowsDir)include\Shared;$(ReactNativeWindowsDir)JSI\Shared;$(JSI_Source);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

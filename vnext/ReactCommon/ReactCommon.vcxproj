@@ -69,13 +69,9 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>
-        $(ReactNativeDir)\ReactCommon;
-        $(JSI_SourcePath);$(JSI_Source);
-        $(ReactNativeDir)\ReactCommon\callinvoker;
-        $(ReactNativeDir)\ReactCommon\jsiexecutor;
-        $(ReactNativeDir)\ReactCommon\reactperflogger;
-        $(ReactNativeDir)\ReactCommon\runtimeexecutor;
-        $(FollyDir);$(ReactNativeWindowsDir)stubs;
+        $(JSI_SourcePath);
+        $(JSI_Source);
+        $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)\Shared\tracing;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>

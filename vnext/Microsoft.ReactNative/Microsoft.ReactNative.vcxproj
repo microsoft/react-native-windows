@@ -106,16 +106,9 @@
         $(ReactNativeWindowsDir)Microsoft.ReactNative\Pch;
         $(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost;
         $(ReactNativeWindowsDir)Microsoft.ReactNative\Views;
-        $(FollyDir);
         $(JSI_SourcePath);
-        $(ReactNativeDir)ReactCommon;
-        $(ReactNativeDir)ReactCommon\callinvoker;
-        $(ReactNativeDir)ReactCommon\jsiexecutor;
-        $(ReactNativeDir)ReactCommon\reactperflogger;
-        $(ReactNativeDir)ReactCommon\runtimeexecutor;
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
-        $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)include;
         $(ReactNativeWindowsDir)Shared;
         $(ReactNativeWindowsDir)Shared\tracing;
