@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Publish TS files in src as they are references in sourcemaps",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates-ms@noreply.github.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-19T22:43:35.472Z"
+}
