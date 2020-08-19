@@ -6,7 +6,7 @@
 /lib/tester/index.win32.bundle*
 /lib/tester/index.win32.dev.bundle*
 /scripts
-/src
+/src/**/*.js
 /temp
 /ts-api.json
 /tsconfig.json
