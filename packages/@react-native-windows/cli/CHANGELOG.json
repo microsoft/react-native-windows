@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 19 Aug 2020 05:04:41 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.4",
+      "version": "0.0.0-canary.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixing config and autolinking",
+            "author": "jthysell@microsoft.com",
+            "commit": "286f393305bb13cf5982545d4e6b7de68e9a35c9",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Aug 2020 05:05:34 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.3",
       "version": "0.0.0-canary.3",

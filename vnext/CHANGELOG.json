@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 19 Aug 2020 05:04:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.143",
+      "version": "0.0.0-canary.143",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update nuspec copyright header to use xml entity as some of the powershell processing we do messed up the encoding",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d0e6cf27604c59d502f76f6eb4450c1f7ce634df",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 package version",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "08e452bf1d021992f611407b10a6002cf52a3093",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 18 Aug 2020 05:06:49 GMT",
       "tag": "react-native-windows_v0.0.0-canary.142",
       "version": "0.0.0-canary.142",
