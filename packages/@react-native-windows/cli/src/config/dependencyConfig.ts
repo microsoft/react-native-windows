@@ -76,8 +76,8 @@ export interface ProjectDependency {
   projectFile: string;
   directDependency: boolean;
   projectName: string;
-  projectLang: 'cpp' | 'cs';
-  projectGuid: string;
+  projectLang: 'cpp' | 'cs' | null;
+  projectGuid: string | null;
   cppHeaders: string[];
   cppPackageProviders: string[];
   csNamespaces: string[];
@@ -96,7 +96,7 @@ export interface NuGetPackageDependency {
 export interface WindowsDependencyConfig {
   folder: string;
   sourceDir?: string;
-  solutionFile: string | null;
+  solutionFile?: string | null;
   projects: ProjectDependency[];
   nugetPackages: NuGetPackageDependency[];
 }
@@ -131,7 +131,7 @@ export function dependencyConfigWindows(
 
   let sourceDir: string | null = null;
   if (usingManualProjectsOverride && result.projects.length > 0) {
-    // Manaully provided projects, so extract the sourceDir
+    // Manually provided projects, so extract the sourceDir
     if (!('sourceDir' in userConfig)) {
       sourceDir =
         'Error: Source dir is required if projects are specified, but it is not specified in react-native.config.';
@@ -146,16 +146,25 @@ export function dependencyConfigWindows(
     sourceDir = configUtils.findWindowsFolder(folder);
   }
 
-  if (
-    sourceDir === null ||
-    (result.projects.length === 0 && result.nugetPackages.length === 0)
-  ) {
-    // Nothing to look for here, bail
-    return null;
+  if (sourceDir === null) {
+    // Try to salvage the missing sourceDir
+    if (result.projects.length === 0 && result.nugetPackages.length > 0) {
+      // Only nuget packages, no sourceDir required
+      return result;
+    } else if (result.projects.length > 0) {
+      // Projects overridden but no sourceDir, assume the sourceDir === folder
+      sourceDir = folder;
+    }
   } else if (sourceDir.startsWith('Error: ')) {
     // Source dir error, bail with error
     result.sourceDir = sourceDir;
     return result;
+  }
+
+  if (sourceDir === null) {
+    // After everything above, if sourceDir is still null,
+    // there's nothing more to look for here, bail
+    return null;
   }
 
   result.sourceDir = sourceDir.substr(folder.length + 1);
@@ -206,34 +215,30 @@ export function dependencyConfigWindows(
       const projectContents = configUtils.readProjectFile(projectFile);
 
       // Calculating (auto) items
-      project.projectName = configUtils.getProjectName(
-        projectFile,
-        projectContents,
-      );
+      project.projectName = configUtils.getProjectName(projectContents);
       project.projectLang = configUtils.getProjectLanguage(projectFile);
-      project.projectGuid = configUtils.getProjectGuid(
-        projectFile,
-        projectContents,
-      );
+      project.projectGuid = configUtils.getProjectGuid(projectContents);
 
       if (project.directDependency) {
         // Calculating more (auto) items
 
         const projectNamespace = configUtils.getProjectNamespace(
-          projectFile,
           projectContents,
         );
-        const cppNamespace = projectNamespace.replace(/\./g, '::');
-        const csNamespace = projectNamespace.replace(/::/g, '.');
 
-        project.cppHeaders = project.cppHeaders || [`winrt/${csNamespace}.h`];
-        project.cppPackageProviders = project.cppPackageProviders || [
-          `${cppNamespace}::ReactPackageProvider`,
-        ];
-        project.csNamespaces = project.csNamespaces || [`${csNamespace}`];
-        project.csPackageProviders = project.csPackageProviders || [
-          `${csNamespace}.ReactPackageProvider`,
-        ];
+        if (projectNamespace !== null) {
+          const cppNamespace = projectNamespace!.replace(/\./g, '::');
+          const csNamespace = projectNamespace!.replace(/::/g, '.');
+
+          project.cppHeaders = project.cppHeaders || [`winrt/${csNamespace}.h`];
+          project.cppPackageProviders = project.cppPackageProviders || [
+            `${cppNamespace}::ReactPackageProvider`,
+          ];
+          project.csNamespaces = project.csNamespaces || [`${csNamespace}`];
+          project.csPackageProviders = project.csPackageProviders || [
+            `${csNamespace}.ReactPackageProvider`,
+          ];
+        }
       }
     }
   } else {
@@ -248,30 +253,28 @@ export function dependencyConfigWindows(
 
       const projectContents = configUtils.readProjectFile(projectFile);
 
-      const projectName = configUtils.getProjectName(
-        projectFile,
-        projectContents,
-      );
+      const projectName = configUtils.getProjectName(projectContents);
 
-      const projectGuid = configUtils.getProjectGuid(
-        projectFile,
-        projectContents,
-      );
+      const projectGuid = configUtils.getProjectGuid(projectContents);
 
-      const projectNamespace = configUtils.getProjectNamespace(
-        projectFile,
-        projectContents,
-      );
+      const projectNamespace = configUtils.getProjectNamespace(projectContents);
 
       const directDependency = true;
 
-      const cppNamespace = projectNamespace.replace(/\./g, '::');
-      const csNamespace = projectNamespace.replace(/::/g, '.');
+      let cppHeaders: string[] = [];
+      let cppPackageProviders: string[] = [];
+      let csNamespaces: string[] = [];
+      let csPackageProviders: string[] = [];
 
-      const cppHeaders = [`winrt/${csNamespace}.h`];
-      const cppPackageProviders = [`${cppNamespace}::ReactPackageProvider`];
-      const csNamespaces = [`${csNamespace}`];
-      const csPackageProviders = [`${csNamespace}.ReactPackageProvider`];
+      if (projectNamespace !== null) {
+        const cppNamespace = projectNamespace.replace(/\./g, '::');
+        const csNamespace = projectNamespace.replace(/::/g, '.');
+
+        cppHeaders.push(`winrt/${csNamespace}.h`);
+        cppPackageProviders.push(`${cppNamespace}::ReactPackageProvider`);
+        csNamespaces.push(`${csNamespace}`);
+        csPackageProviders.push(`${csNamespace}.ReactPackageProvider`);
+      }
 
       result.projects.push({
         projectFile: projectFile.substr(sourceDir.length + 1),

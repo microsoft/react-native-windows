@@ -177,6 +177,10 @@
     <ClInclude Include="Base\CoreNativeModules.h" />
     <ClInclude Include="Base\CxxReactIncludes.h" />
     <ClInclude Include="Base\FollyIncludes.h" />
+    <ClInclude Include="DevMenuControl.h">
+      <DependentUpon>DevMenuControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="DynamicReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClInclude>
@@ -377,6 +381,10 @@
     <ClCompile Include="Base\CoreNativeModules.cpp" />
     <ClCompile Include="Base\CoreUIManagers.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
+    <ClCompile Include="DevMenuControl.cpp">
+      <DependentUpon>DevMenuControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="DynamicReader.cpp">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClCompile>
@@ -556,6 +564,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="DevMenuControl.idl">
+      <DependentUpon>DevMenuControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
     <Midl Include="IReactNonAbiValue.idl" />
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
@@ -634,6 +646,11 @@
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DevMenuControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Move DevMenu to use XAML markup file",
+  "packageName": "react-native-windows",
+  "email": "asklar@winse.microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-15T03:30:19.532Z"
+}

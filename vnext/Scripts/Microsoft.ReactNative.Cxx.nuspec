@@ -8,7 +8,7 @@
     <projectUrl>https://github.com/microsoft/react-native-windows</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <copyright>&#169; Microsoft Corporation. All rights reserved.</copyright>
     <repository type="git"
       url="https://github.com/microsoft/react-native-windows.git"
       commit="$CommitId$" />

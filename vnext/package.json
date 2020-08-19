@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.142",
+  "version": "0.0.0-canary.143",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
     "@react-native-community/cli": "^4.7.0",
     "@react-native-community/cli-platform-android": "^4.7.0",
     "@react-native-community/cli-platform-ios": "^4.7.0",
-    "@react-native-windows/cli": "0.0.0-canary.3",
+    "@react-native-windows/cli": "0.0.0-canary.4",
     "abort-controller": "^3.0.0",
     "anser": "^1.4.9",
     "base64-js": "^1.1.2",
