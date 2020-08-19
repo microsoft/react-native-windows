@@ -14,6 +14,7 @@ export type BuildConfig = 'Debug' | 'DebugBundle' | 'Release' | 'ReleaseBundle';
  *    release: Boolean - Specifies release build
  *    root: String - The root of the application
  *    arch: String - The build architecture (x86, x64, ARM, Any CPU)
+ *    singleproc: Boolean - opt out of multi-proc builds
  *    emulator: Boolean - Deploy to the emulator
  *    device: Boolean - Deploy to a device
  *    target: String - Device GUID to deploy to
@@ -32,6 +33,7 @@ export interface RunWindowsOptions {
   release?: boolean;
   root: string;
   arch: BuildArch;
+  singleproc?: boolean;
   emulator?: boolean;
   device?: boolean;
   target?: string;
@@ -67,6 +69,10 @@ export const runWindowsOptions: CommandOption[] = [
     description: 'The build architecture (ARM, ARM64, x86, x64)',
     default: 'x86',
     parse: parseBuildArch,
+  },
+  {
+    name: '--singleproc',
+    description: 'Disables multi-proc build',
   },
   {
     name: '--emulator',
