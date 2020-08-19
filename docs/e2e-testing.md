@@ -90,25 +90,13 @@ export function LoginTestPage() {
 
 ```
 
-## Add the new page to TestPages.ts
+## Add the new page to RNTesterList.windows.ts
 
 ```
-// TestPages.ts
-const TestPages: ITestPage[] = [
-…
   {
-    testId: LOGIN_TESTPAGE,
-    description: 'Login Test Page',
-    content: LoginTestPage,
+    key: 'LegacyAccessibilityTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/AccessibilityTestPage'),
   },
-
-```
-
-## Put new testIDs in Consts.ts
-
-```
-//Consts.ts
-export const USERNAME_ON_LOGIN = 'UserName';
 ```
 
 ## Create a Page Object to match with the page in test app
