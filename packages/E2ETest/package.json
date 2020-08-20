@@ -25,7 +25,7 @@
     "prompt-sync": "^4.2.0",
     "react": "16.13.1",
     "react-native": "0.0.0-3b7679bd3",
-    "react-native-windows": "0.0.0-canary.143"
+    "react-native-windows": "0.0.0-canary.144"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

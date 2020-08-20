@@ -106,6 +106,7 @@ async function runWindows(
         verbose,
         undefined, // build the default target
         options.buildLogDirectory,
+        options.singleproc,
       );
     } catch (e) {
       newError(

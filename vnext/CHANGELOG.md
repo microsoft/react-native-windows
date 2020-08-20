@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 19 Aug 2020 05:04:41 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Aug 2020 05:05:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.144
+
+Thu, 20 Aug 2020 05:05:23 GMT
+
+### Changes
+
+- Move DevMenu to use XAML markup file (asklar@winse.microsoft.com)
+- Integrate 5/16 Nightly RN Build (ngerlem@microsoft.com)
+- Export IWebSocketResource::Make as __cdecl (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.143
 

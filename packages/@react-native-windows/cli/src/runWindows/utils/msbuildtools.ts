@@ -56,6 +56,7 @@ export default class MSBuildTools {
     verbose: boolean,
     target: string | undefined,
     buildLogDirectory: string | undefined,
+    singleproc?: boolean,
   ) {
     newSuccess(`Found Solution: ${slnFile}`);
     newInfo(`Build configuration: ${buildType}`);
@@ -78,7 +79,6 @@ export default class MSBuildTools {
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
-      '/maxCpuCount',
       `/p:Configuration=${buildType}`,
       `/p:Platform=${buildArch}`,
       '/p:AppxBundle=Never',
@@ -86,6 +86,10 @@ export default class MSBuildTools {
       `/flp1:errorsonly;logfile=${errorLog}`,
       `/flp2:warningsonly;logfile=${warnLog}`,
     ];
+
+    if (!singleproc) {
+      args.push('/maxCpuCount');
+    }
 
     if (target) {
       args.push(`/t:${target}`);

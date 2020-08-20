@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 19 Aug 2020 05:04:41 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Aug 2020 05:05:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.5
+
+Thu, 20 Aug 2020 05:05:23 GMT
+
+### Changes
+
+- Add --singleproc to run-windows (asklar@microsoft.com)
 
 ## 0.0.0-canary.4
 

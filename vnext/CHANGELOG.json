@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 20 Aug 2020 05:05:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.144",
+      "version": "0.0.0-canary.144",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move DevMenu to use XAML markup file",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "58d31741d878b1f3aae4e5159296ca84005559e9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 5/16 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90613e4008217389284978e52026a6422917b6e6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Export IWebSocketResource::Make as __cdecl",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "517fd0c8c558a7b8f786a735442bf42f6b3bc4c4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Aug 2020 05:04:41 GMT",
       "tag": "react-native-windows_v0.0.0-canary.143",
       "version": "0.0.0-canary.143",
