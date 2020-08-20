@@ -556,13 +556,13 @@ jobs:
           configuration: Debug
           platform: x86
           additionalInitArguments: --useWinUI3 true
-          additionalRunArguments: --singleproc
+          additionalRunArguments:
         WinUI3_X86DebugCs:
           language: cs
           configuration: Debug
           platform: x86
           additionalInitArguments: --useWinUI3 true
-          additionalRunArguments: --singleproc
+          additionalRunArguments:
 
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them

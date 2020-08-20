@@ -4,7 +4,7 @@
  * @format
  */
 
-import {EOL} from 'os';
+import {totalmem, EOL} from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as child_process from 'child_process';
@@ -87,7 +87,13 @@ export default class MSBuildTools {
       `/flp2:warningsonly;logfile=${warnLog}`,
     ];
 
-    if (!singleproc) {
+    // Building projects in parallel increases compiler memory usage and
+    // doesn't lead to dramatic performance gains (See #4739). Only enable
+    // parallel builds on machines with >16GB of memory to avoid OOM errors
+    const highMemory = totalmem() > 16 * 1024 * 1024 * 1024;
+    const enableParallelBuilds = singleproc === false || highMemory;
+
+    if (enableParallelBuilds) {
       args.push('/maxCpuCount');
     }
 
