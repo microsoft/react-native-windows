@@ -58,3 +58,9 @@ steps:
       targetType: inline # filePath | inline
       script: |
         Get-WmiObject Win32_LogicalDisk
+
+  - task: CmdLine@2
+    displayName: Set LocalDumps for cl.exe
+    inputs:
+      script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd cl
+      workingDirectory: $(Build.SourcesDirectory)
