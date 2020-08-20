@@ -144,7 +144,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\NativeModulePerfLogger.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\log.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <!-- We should ideally upstream a fix for missing stdexcept, but Yoga hasn't been accepting PRs as of May 2020 -->
     <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" ForcedIncludeFiles="stdexcept" />

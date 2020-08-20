@@ -80,6 +80,11 @@ export type PressabilityConfig = $ReadOnly<{|
   delayPressOut?: ?number,
 
   /**
+   * Minimum duration to wait between calling `onPressIn` and `onPressOut`.
+   */
+  minPressDuration?: ?number,
+
+  /**
    * Called after the element loses focus.
    */
   onBlur?: ?(event: BlurEvent) => mixed,
@@ -300,6 +305,7 @@ const DEFAULT_PRESS_RECT_OFFSETS = {
   right: 20,
   top: 20,
 };
+const DEFAULT_MIN_PRESS_DURATION = 130;
 
 /**
  * Pressability implements press handling capabilities.
@@ -414,6 +420,7 @@ export default class Pressability {
     pageX: number,
     pageY: number,
   |}>;
+  _touchActivateTime: ?number;
   _touchState: TouchState = 'NOT_RESPONDER';
 
   constructor(config: PressabilityConfig) {
@@ -593,6 +600,7 @@ export default class Pressability {
                     this._config.delayHoverIn,
                   );
                   if (delayHoverIn > 0) {
+                    event.persist();
                     this._hoverInDelayTimeout = setTimeout(() => {
                       onHoverIn(event);
                     }, delayHoverIn);
@@ -619,6 +627,7 @@ export default class Pressability {
                     this._config.delayHoverOut,
                   );
                   if (delayHoverOut > 0) {
+                    event.persist();
                     this._hoverInDelayTimeout = setTimeout(() => {
                       onHoverOut(event);
                     }, delayHoverOut);
@@ -767,6 +776,7 @@ export default class Pressability {
       pageX: touch.pageX,
       pageY: touch.pageY,
     };
+    this._touchActivateTime = Date.now();
     if (onPressIn != null) {
       onPressIn(event);
     }
@@ -775,8 +785,18 @@ export default class Pressability {
   _deactivate(event: PressEvent): void {
     const {onPressOut} = this._config;
     if (onPressOut != null) {
-      const delayPressOut = normalizeDelay(this._config.delayPressOut);
+      const minPressDuration = normalizeDelay(
+        this._config.minPressDuration,
+        0,
+        DEFAULT_MIN_PRESS_DURATION,
+      );
+      const pressDuration = Date.now() - (this._touchActivateTime ?? 0);
+      const delayPressOut = Math.max(
+        minPressDuration - pressDuration,
+        normalizeDelay(this._config.delayPressOut),
+      );
       if (delayPressOut > 0) {
+        event.persist();
         this._pressOutDelayTimeout = setTimeout(() => {
           onPressOut(event);
         }, delayPressOut);
@@ -784,6 +804,7 @@ export default class Pressability {
         onPressOut(event);
       }
     }
+    this._touchActivateTime = null;
   }
 
   _measureResponderRegion(): void {
@@ -799,16 +820,7 @@ export default class Pressability {
   }
 
   _measureCallback = (left, top, width, height, pageX, pageY) => {
-    if (
-      !(
-        left > 0 ||
-        top > 0 ||
-        width > 0 ||
-        height > 0 ||
-        pageX > 0 ||
-        pageY > 0
-      )
-    ) {
+    if (!left && !top && !width && !height && !pageX && !pageY) {
       return;
     }
     this._responderRegion = {

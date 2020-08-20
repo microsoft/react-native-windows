@@ -147,6 +147,7 @@ class TouchableOpacity extends React.Component<Props, State> {
       delayLongPress: this.props.delayLongPress,
       delayPressIn: this.props.delayPressIn,
       delayPressOut: this.props.delayPressOut,
+      minPressDuration: 0,
       pressRectOffset: this.props.pressRetentionOffset,
       onMouseEnter: this.props.onMouseEnter, // [Windows]
       onMouseLeave: this.props.onMouseLeave, // [Windows]
