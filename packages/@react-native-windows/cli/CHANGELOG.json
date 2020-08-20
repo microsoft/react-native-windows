@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 20 Aug 2020 05:05:23 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.5",
+      "version": "0.0.0-canary.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add --singleproc to run-windows",
+            "author": "asklar@microsoft.com",
+            "commit": "82bf0682e141a3cf8c53db9bc69edc44411d00a7",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Aug 2020 05:04:41 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.4",
       "version": "0.0.0-canary.4",

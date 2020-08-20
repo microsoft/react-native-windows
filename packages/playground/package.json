@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "16.13.1",
     "react-native": "0.0.0-6a96a9f65",
-    "react-native-windows": "0.0.0-canary.143"
+    "react-native-windows": "0.0.0-canary.144"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
