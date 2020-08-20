@@ -13,21 +13,21 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories Condition="'$(Platform)' != 'Win32'">
-        $(MSBuildThisFileDirectory)..\..\lib\$(Platform)\$(Configuration);
+        $(MSBuildThisFileDirectory)..\..\lib\win8-$(Platform)\$(Configuration);
         %(AdditionalLibraryDirectories)
       </AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="'$(Platform)' == 'Win32'">
-        $(MSBuildThisFileDirectory)..\..\lib\x86\$(Configuration);
+        $(MSBuildThisFileDirectory)..\..\lib\win8-x86\$(Configuration);
         %(AdditionalLibraryDirectories)
       </AdditionalLibraryDirectories>
       <!--
-        libcrypto.lib - Provided by this package
-        libssl.lib    - Provided by this package
+        libeay32.lib  - Provided by this package
+        ssleay32.lib  - Provided by this package
         Crypt32.lib   - Provided by Windows API
       -->
       <AdditionalDependencies>
-        libcrypto.lib;
-        libssl.lib;
+        libeay32.lib;
+        ssleay32.lib;
         Crypt32.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
