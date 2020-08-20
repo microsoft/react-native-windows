@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Publish TS files in src as they are references in sourcemaps",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates-ms@noreply.github.com",
+  "dependentChangeType": "prerelease",
+  "date": "2020-08-18T23:33:02.199Z"
+}
