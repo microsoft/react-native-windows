@@ -13,6 +13,7 @@
       <group targetFramework="Windows8-ARM64" />
     </dependencies>
     <repository type="git" url="$repoUrl$" branch="$repoBranch$" commit="$repoCommit$" />
+    <license type="expression">OpenSSL</license>
   </metadata>
   <files>
     <file src="OpenSSL.targets" target="build\native\$id$.targets" />
