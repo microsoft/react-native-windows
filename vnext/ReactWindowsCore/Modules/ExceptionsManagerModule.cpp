@@ -12,13 +12,15 @@ namespace facebook {
 namespace react {
 
 namespace {
-std::string RetrieveStringFromMap(const folly::dynamic &map, const std::string &key) noexcept {
+std::string RetrieveOptionalStringFromMap(const folly::dynamic &map, const std::string &key) noexcept {
   assert(map.type() == folly::dynamic::OBJECT);
   auto iterator = map.find(key);
   if (iterator != map.items().end()) {
+    if (iterator->second.isNull()) {
+      return {};
+    }
     return iterator->second.asString();
   }
-  assert(false);
   return {};
 }
 
@@ -35,6 +37,20 @@ int RetrieveIntFromMap(const folly::dynamic &map, const std::string &key) noexce
   }
   assert(false);
   return -1;
+}
+
+bool RetrieveOptionalBoolFromMap(const folly::dynamic &map, const std::string &key) noexcept {
+  assert(map.type() == folly::dynamic::OBJECT);
+
+  auto iterator = map.find(key);
+  if (iterator != map.items().end()) {
+    if (iterator->second.isNull()) {
+      return false;
+    }
+    assert(iterator->second.isBool());
+    return iterator->second.asBool();
+  }
+  return false;
 }
 
 Mso::React::ErrorInfo CreateErrorInfo(const folly::dynamic &args) noexcept {
@@ -64,10 +80,60 @@ Mso::React::ErrorInfo CreateErrorInfo(const folly::dynamic &args) noexcept {
     assert(stackFrame.isObject());
     assert(stackFrame.size() >= 4); // 4 in 0.57, 5 in 0.58+ (arguments added)
 
-    errorInfo.Callstack.push_back(Mso::React::ErrorFrameInfo{RetrieveStringFromMap(stackFrame, "file"),
-                                                             RetrieveStringFromMap(stackFrame, "methodName"),
+    errorInfo.Callstack.push_back(Mso::React::ErrorFrameInfo{RetrieveOptionalStringFromMap(stackFrame, "file"),
+                                                             RetrieveOptionalStringFromMap(stackFrame, "methodName"),
                                                              RetrieveIntFromMap(stackFrame, "lineNumber"),
                                                              RetrieveIntFromMap(stackFrame, "column")});
+  }
+
+  return errorInfo;
+}
+
+Mso::React::ErrorInfo CreateErrorInfo2(const folly::dynamic &args) noexcept {
+  /*
+   Parameter args is an object:
+      message: string,
+      originalMessage: ?string,
+      name: ?string,
+      componentStack: ?string,
+      stack: Array<StackFrame>,
+      id: number,
+      isFatal: boolean,
+      // flowlint-next-line unclear-type:off
+      extraData?: Object,
+  */
+  assert(args.isObject());
+
+  Mso::React::ErrorInfo errorInfo;
+
+  errorInfo.Message = RetrieveOptionalStringFromMap(args, "message");
+  errorInfo.Id = RetrieveIntFromMap(args, "id");
+
+  auto iterator = args.find("extraData");
+  if (iterator != args.items().end()) {
+    if (iterator->second.isObject()) {
+      errorInfo.ExtraData = iterator->second;
+    }
+  }
+
+  iterator = args.find("stack");
+  if (iterator != args.items().end()) {
+    if (iterator->second.isArray()) {
+      auto stackAsFolly = iterator->second;
+      for (const auto &stackFrame : stackAsFolly) {
+        // Each dynamic object is a map containing information about the stack
+        // frame: method (string), arguments (array), filename(string), line number
+        // (int) and column number (int).
+        assert(stackFrame.isObject());
+        assert(stackFrame.size() >= 4); // 4 in 0.57, 5 in 0.58+ (arguments added)
+
+        errorInfo.Callstack.push_back(
+            Mso::React::ErrorFrameInfo{RetrieveOptionalStringFromMap(stackFrame, "file"),
+                                       RetrieveOptionalStringFromMap(stackFrame, "methodName"),
+                                       RetrieveIntFromMap(stackFrame, "lineNumber"),
+                                       RetrieveIntFromMap(stackFrame, "column")});
+      }
+    }
   }
 
   return errorInfo;
@@ -105,6 +171,17 @@ std::vector<facebook::xplat::module::CxxModule::Method> ExceptionsManagerModule:
               [this](folly::dynamic args) noexcept {
                 if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
                   m_redboxHandler->showNewError(std::move(CreateErrorInfo(args)), Mso::React::ErrorType::JSSoft);
+                }
+              }),
+
+          Method(
+              "reportException",
+              [this](folly::dynamic args) noexcept {
+                if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
+                  auto isFatal = RetrieveOptionalBoolFromMap(args[0], "isFatal");
+                  m_redboxHandler->showNewError(
+                      std::move(CreateErrorInfo2(args[0])),
+                      isFatal ? Mso::React::ErrorType::JSFatal : Mso::React::ErrorType::JSSoft);
                 }
               }),
 

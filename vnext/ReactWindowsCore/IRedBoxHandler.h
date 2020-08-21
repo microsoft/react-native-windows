@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 #pragma once
+#include <folly/dynamic.h>
 #include <string>
 #include <vector>
 
@@ -24,6 +25,7 @@ struct ErrorInfo {
   std::string Message;
   uint32_t Id;
   std::vector<ErrorFrameInfo> Callstack;
+  folly::dynamic ExtraData;
 };
 
 struct IRedBoxHandler {
