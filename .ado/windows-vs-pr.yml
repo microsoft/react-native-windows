@@ -188,6 +188,13 @@ jobs:
             /p:AppxPackageSigningEnabled=false
             /p:UseWinUI3=true
 
+      - task: PublishBuildArtifacts@1
+        displayName: Upload crash dumps
+        inputs:
+          pathtoPublish: '$(Build.StagingDirectory)/CrashDumps/*'
+          artifactName: 'Crash dumps - $(Agent.JobName)-$(System.JobAttempt)'
+          condition: failed()
+
 
   - job: RNWUniversalOtherProjectsPR
     displayName: Universal Other Projects PR
