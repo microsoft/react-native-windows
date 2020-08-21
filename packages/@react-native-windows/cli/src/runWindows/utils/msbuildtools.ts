@@ -27,7 +27,7 @@ import {findLatestVsInstall} from './vsInstalls';
 export default class MSBuildTools {
   /**
    * @param version is something like 16.0 for 2019
-   * @param msbuildPath  Path to MSBuild.exe (x86)
+   * @param msbuildPath  Path to MSBuild.exe
    * @param installationVersion is the full version e.g. 16.3.29411.108
    */
   constructor(
@@ -167,7 +167,7 @@ export default class MSBuildTools {
 
     const toolsPath = path.join(
       vsInstallation.installationPath,
-      'MSBuild/Current/Bin',
+      'MSBuild/Current/Bin/amd64',
     );
 
     if (fs.existsSync(toolsPath)) {
