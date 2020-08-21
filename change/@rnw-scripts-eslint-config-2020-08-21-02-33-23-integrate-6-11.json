@@ -1,0 +1,8 @@
+{
+  "type": "minor",
+  "comment": "Integrate 6/11 Nightly Build",
+  "packageName": "@rnw-scripts/eslint-config",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-21T09:33:21.137Z"
+}

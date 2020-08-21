@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@react-native-community/cli": "^4.7.0",
-    "@react-native-community/cli-platform-android": "^4.7.0",
-    "@react-native-community/cli-platform-ios": "^4.7.0",
+    "@react-native-community/cli": "^4.10.0",
+    "@react-native-community/cli-platform-android": "^4.10.0",
+    "@react-native-community/cli-platform-ios": "^4.10.0",
     "abort-controller": "^3.0.0",
     "anser": "^1.4.9",
     "art": "^0.10.0",
@@ -66,13 +66,13 @@
     "jscodeshift": "^0.9.0",
     "just-scripts": "^0.36.1",
     "react": "16.13.1",
-    "react-native": "0.0.0-851d01b0a",
+    "react-native": "0.0.0-3346ac7f9",
     "react-native-platform-override": "^0.2.1",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "0.0.0-851d01b0a"
+    "react-native": "0.0.0-3346ac7f9"
   },
   "beachball": {
     "defaultNpmTag": "canary",
