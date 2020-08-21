@@ -31,7 +31,7 @@
     "@types/ora": "^3.2.0",
     "@types/semver": "^7.3.1",
     "@types/yargs": "^15.0.5",
-    "eslint": "6.7.0",
+    "eslint": "6.8.0",
     "just-scripts": "^0.36.1",
     "typescript": "^3.8.3"
   },

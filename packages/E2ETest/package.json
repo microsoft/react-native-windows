@@ -24,7 +24,7 @@
   "dependencies": {
     "prompt-sync": "^4.2.0",
     "react": "16.13.1",
-    "react-native": "0.0.0-3b7679bd3",
+    "react-native": "0.0.0-851d01b0a",
     "react-native-windows": "0.0.0-canary.144"
   },
   "devDependencies": {
@@ -44,7 +44,7 @@
     "@wdio/local-runner": "5.12.1",
     "@wdio/sync": "5.12.1",
     "appium": "1.14.1",
-    "eslint": "6.7.0",
+    "eslint": "6.8.0",
     "just-scripts": "^0.36.1",
     "metro-react-native-babel-preset": "^0.56.0",
     "prettier": "^1.18.2",
