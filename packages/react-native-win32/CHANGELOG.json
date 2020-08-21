@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.40",
+      "version": "0.0.0-canary.40",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 5/28 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9bf968a5f85888ea1d12796d1aa5dffc14f1d2ba",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 6/4 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 20 Aug 2020 05:05:23 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.39",
       "version": "0.0.0-canary.39",

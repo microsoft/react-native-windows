@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Upgrade to eslint 6.8.0",
-  "packageName": "@rnw-scripts/create-github-releases",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none",
-  "date": "2020-08-21T03:21:19.021Z"
-}

@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.145",
+      "version": "0.0.0-canary.145",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 6/4 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Upgrade to OpenSSL 1.0.2p.5",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a140e9f0044908d97b7ae44d3d6dc72859ba2a03",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Revert \"Use explicit calling convention for IWebSocketResource::Make (#5778)\"",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "0217d07d84c09507c1219048d62d07d3e5566796",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 5/28 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9bf968a5f85888ea1d12796d1aa5dffc14f1d2ba",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 20 Aug 2020 05:05:23 GMT",
       "tag": "react-native-windows_v0.0.0-canary.144",
       "version": "0.0.0-canary.144",

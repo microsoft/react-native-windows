@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 20 Aug 2020 05:05:23 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Aug 2020 05:04:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.145
+
+Fri, 21 Aug 2020 05:04:58 GMT
+
+### Changes
+
+- Integrate 6/4 Nightly RN Build (ngerlem@microsoft.com)
+- Upgrade to OpenSSL 1.0.2p.5 (julio.rocha@microsoft.com)
+- Revert "Use explicit calling convention for IWebSocketResource::Make (#5778)" (asklar@winse.microsoft.com)
+- Integrate 5/28 Nightly RN Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.144
 
