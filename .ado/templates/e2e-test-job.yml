@@ -46,10 +46,6 @@ jobs:
           script: yarn windows --no-launch --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/E2ETest
 
-      - template: upload-build-logs.yml
-        parameters:
-          buildLogDirectory: '$(BuildLogDirectory)'
-
       - task: CopyFiles@2
         displayName: Copy ReactUWPTestApp artifacts
         inputs:
@@ -134,3 +130,8 @@ jobs:
           script: |
             Get-WmiObject Win32_LogicalDisk
         condition: succeededOrFailed()
+
+      - template: upload-build-logs.yml
+        parameters:
+          buildLogDirectory: '$(BuildLogDirectory)'
+          condition: succeededOrFailed()
