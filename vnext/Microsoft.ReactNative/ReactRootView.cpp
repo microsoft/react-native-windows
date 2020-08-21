@@ -3,9 +3,9 @@
 #include "pch.h"
 #include "ReactRootView.h"
 #include "ReactRootView.g.cpp"
+#include <UI.Xaml.Media.Media3D.h>
 #include "DynamicWriter.h"
 #include "ReactNativeHost.h"
-#include <UI.Xaml.Media.Media3D.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
