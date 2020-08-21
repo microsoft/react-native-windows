@@ -144,6 +144,10 @@ export type OmittedAccessibilityPropsWin32 = {
   accessibilityState?: RN.AccessibilityState;
 };
 
+export type Win32AndroidSharedProps = {
+  focusable?: boolean;
+};
+
 export type BasePropsWin32 = {
   /**
    * Tells a person using a screen reader the type of element they are focused on.
@@ -169,7 +173,7 @@ export type BasePropsWin32 = {
  accessibilityLabeledBy?: React.RefObject<any>;
 };
 
-export type ViewWin32OmitTypes = RN.ViewPropsAndroid &
+export type ViewWin32OmitTypes = Omit<RN.ViewPropsAndroid, Win32AndroidSharedProps> &
   RN.ViewPropsIOS &
   RN.AccessibilityPropsAndroid &
   Omit<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> &
@@ -182,8 +186,6 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
   // tslint:disable-next-line no-reserved-keywords -- type name matching facebook implementation
   type?: React.ElementType;
   children?: React.ReactNode;
-  /** @Deprecated Use focusable instead.*/
-  acceptsKeyboardFocus?: boolean;
   accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
   /**
    * Tells a person using a screen reader what kind of annotation they
@@ -198,7 +200,6 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
 
   accessibilitySetSize?: number;
   animationClass?: string;
-  focusable?: boolean;
 
   /**
    * The onBlur event occurs when an element loses focus.  The opposite of onBlur is onFocus.  Note that in React

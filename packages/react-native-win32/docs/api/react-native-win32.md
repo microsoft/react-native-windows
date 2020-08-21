@@ -82,4 +82,5 @@ This package provides Win32 specific components and provides JS implementations 
 |  [UseFrom](./react-native-win32.usefrom.md) | All of TOrigin except Key from TUse |
 |  [ViewWin32](./react-native-win32.viewwin32.md) |  |
 |  [ViewWin32OmitTypes](./react-native-win32.viewwin32omittypes.md) |  |
+|  [Win32AndroidSharedProps](./react-native-win32.win32androidsharedprops.md) |  |
 

@@ -21,9 +21,7 @@ Extends: [IKeyboardProps](./react-native-windows.ikeyboardprops.md) and [react-n
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [acceptsKeyboardFocus](./react-native-windows.iviewwindowsprops.acceptskeyboardfocus.md) | boolean |  |
 |  [accessibilityPosInSet](./react-native-windows.iviewwindowsprops.accessibilityposinset.md) | number | Indicates to accessibility services that the UI Component is within a set and has the given numbered position.<!-- -->See https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md |
 |  [accessibilitySetSize](./react-native-windows.iviewwindowsprops.accessibilitysetsize.md) | number | Indicates to accessibility services that the UI Component is within a set with the given size.<!-- -->See https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md |
 |  [children](./react-native-windows.iviewwindowsprops.children.md) | any |  |
-|  [focusable](./react-native-windows.iviewwindowsprops.focusable.md) | boolean |  |
 

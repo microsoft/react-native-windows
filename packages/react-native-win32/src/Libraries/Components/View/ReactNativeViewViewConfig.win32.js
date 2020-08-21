@@ -360,7 +360,7 @@ const ReactNativeViewConfig = {
     width: true,
     zIndex: true,
     // [Windows
-    acceptsKeyboardFocus: true,
+    acceptsKeyboardFocus: true, // Can be removed once we're on RN 0.65
     onBlur: true,
     accessibilityPositionInSet: true,
     accessibilityAnnotation: true,

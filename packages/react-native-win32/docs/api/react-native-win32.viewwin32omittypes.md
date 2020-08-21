@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type ViewWin32OmitTypes = RN.ViewPropsAndroid & RN.ViewPropsIOS & RN.AccessibilityPropsAndroid & Omit<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> & OmittedAccessibilityPropsWin32;
+export declare type ViewWin32OmitTypes = Omit<RN.ViewPropsAndroid, Win32AndroidSharedProps> & RN.ViewPropsIOS & RN.AccessibilityPropsAndroid & Omit<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> & OmittedAccessibilityPropsWin32;
 ```

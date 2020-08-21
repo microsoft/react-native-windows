@@ -342,8 +342,6 @@ export interface IViewWin32 {
 //
 // @public
 export interface IViewWin32Props extends Omit_2<RN.ViewProps, ViewWin32OmitTypes>, BasePropsWin32 {
-    // @deprecated (undocumented)
-    acceptsKeyboardFocus?: boolean;
     // (undocumented)
     accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
     accessibilityAnnotation?: AccessibilityAnnotationInfo;
@@ -359,8 +357,6 @@ export interface IViewWin32Props extends Omit_2<RN.ViewProps, ViewWin32OmitTypes
     children?: React_2.ReactNode;
     // (undocumented)
     cursor?: Cursor;
-    // (undocumented)
-    focusable?: boolean;
     // (undocumented)
     keyDownEvents?: IHandledKeyboardEvent[];
     // (undocumented)
@@ -475,7 +471,12 @@ export const ViewWin32: React_2.ForwardRefExoticComponent<IViewWin32Props & Reac
 export type ViewWin32 = ViewWin32Type;
 
 // @public (undocumented)
-export type ViewWin32OmitTypes = RN.ViewPropsAndroid & RN.ViewPropsIOS & RN.AccessibilityPropsAndroid & Omit_2<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> & OmittedAccessibilityPropsWin32;
+export type ViewWin32OmitTypes = Omit_2<RN.ViewPropsAndroid, Win32AndroidSharedProps> & RN.ViewPropsIOS & RN.AccessibilityPropsAndroid & Omit_2<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> & OmittedAccessibilityPropsWin32;
+
+// @public (undocumented)
+export type Win32AndroidSharedProps = {
+    focusable?: boolean;
+};
 
 
 ```
