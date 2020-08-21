@@ -2481,14 +2481,6 @@
     js-yaml "~3.13.1"
     resolve "~1.17.0"
 
-"@microsoft/api-extractor-model@7.8.15":
-  version "7.8.15"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.8.15.tgz#a9ade86180157aead2e63e5edb439c4d8f158049"
-  integrity sha512-z81RLrvZdCxPMDBH6JVtZAMMrxDsDGz4mW7GM6OGxPlooTtSVtPH9RNhZFbA6zp7/4ANgBlqURl8zIsxvFeppA==
-  dependencies:
-    "@microsoft/tsdoc" "0.12.19"
-    "@rushstack/node-core-library" "3.27.0"
-
 "@microsoft/api-extractor-model@7.8.16":
   version "7.8.16"
   resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.8.16.tgz#0d4eb2ca65a62db2c2e0db3ee1ba04af74afef55"
@@ -2751,19 +2743,6 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.1.0.tgz#e42b1bef12d2415411519fd528e64b593b1363dc"
   integrity sha512-W/J0fNYVO01tioHjvYWQ9m6RgndVtbElzYozBq1ZPrHO/iCzlqoySHl4gO/fpCl9QEFjvJfjPgtPMTMlsoq5DQ==
 
-"@rushstack/node-core-library@3.27.0":
-  version "3.27.0"
-  resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.27.0.tgz#474446d29dcb5166946af2cd9ec86d58e1444b58"
-  integrity sha512-6fS7wqcxL4XGVFkhECMCqsqXouPRDWKMgNpyrmXJRS0PPumRMW+9m2knVK/kgTrMwcnbGysqxX/77PiFErw8wg==
-  dependencies:
-    "@types/node" "10.17.13"
-    colors "~1.2.1"
-    fs-extra "~7.0.1"
-    jju "~1.4.0"
-    semver "~7.3.0"
-    timsort "~0.3.0"
-    z-schema "~3.18.3"
-
 "@rushstack/node-core-library@3.28.0":
   version "3.28.0"
   resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.28.0.tgz#e52b4171cb2a62fc347b3ca18a408f53281f6ae0"
@@ -2777,15 +2756,6 @@
     semver "~7.3.0"
     timsort "~0.3.0"
     z-schema "~3.18.3"
-
-"@rushstack/ts-command-line@4.4.8":
-  version "4.4.8"
-  resolved "https://registry.yarnpkg.com/@rushstack/ts-command-line/-/ts-command-line-4.4.8.tgz#46559932c7e9a70ea071c3ce376a2e7ad0d2e9b1"
-  integrity sha512-giyVXuyI2BAID0BINp8TbxcTf5MEao+UPadAMfCuuS64mSE1E76S8wzhjqEy3WaTSpgyRDi7dMlEegNnD/97Gw==
-  dependencies:
-    "@types/argparse" "1.0.38"
-    argparse "~1.0.9"
-    colors "~1.2.1"
 
 "@rushstack/ts-command-line@4.5.0":
   version "4.5.0"
@@ -7085,10 +7055,10 @@ flatted@^2.0.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.2.tgz#4575b21e2bcee7434aa9be662f4b7b5f9c2b5138"
   integrity sha512-r5wGx7YeOwNWNlCA0wQ86zKyDLMQr+/RB8xy74M4hTphfmjlijTSSXGuH8rnvKZnfT9i+75zmd8jcKdMR4O6jA==
 
-flow-bin@^0.125.1:
-  version "0.125.1"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.125.1.tgz#7edbc71e7dc39ddef18086ef75c714bbf1c5917f"
-  integrity sha512-jEury9NTXylxQEOAXLWEE945BjBwYcMwwKVnb+5XORNwMQE7i5hQYF0ysYfsaaYOa7rW/U16rHBfwLuaZfWV7A==
+flow-bin@^0.126.1:
+  version "0.126.1"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.126.1.tgz#2726595e1891dc35b379b5994627432df4ead52c"
+  integrity sha512-RI05x7rVzruRVJQN3M4vLEjZMwUHJKhGz9FmL8HN7WiSo66/131EyJS6Vo8PkKyM2pgT9GRWfGP/tXlqS54XUg==
 
 flow-parser@0.*:
   version "0.113.0"
@@ -11849,10 +11819,10 @@ react-native-tscodegen@0.66.1:
     nullthrows "1.1.1"
     typescript "^3.5.3"
 
-react-native@0.0.0-3b7679bd3:
-  version "0.0.0-3b7679bd3"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-3b7679bd3.tgz#557981e56c8ab24aff9b1c5d11f3f54c02720e22"
-  integrity sha512-xtMS2S/mrG8ouA0G92npKnCh1WjXzNIHC5LVbhSdXISffQsHBze8/89LOJfzUSNxNbaig7iGn2f2kouUztxoCw==
+react-native@0.0.0-851d01b0a:
+  version "0.0.0-851d01b0a"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-851d01b0a.tgz#19df5150980f5f120f136c3b8f7478673730d90c"
+  integrity sha512-JhwM4ysn4eVbwA/jayeGNPpXUZgDdCpzTacioePLweTR/PAxeKTwt002NyhQ+CVhWPowJDubWtSrxWfJjHksPg==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@react-native-community/cli" "^4.7.0"
