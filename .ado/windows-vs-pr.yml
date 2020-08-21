@@ -193,7 +193,7 @@ jobs:
         inputs:
           pathtoPublish: '$(Build.StagingDirectory)/CrashDumps/*'
           artifactName: 'Crash dumps - $(Agent.JobName)-$(System.JobAttempt)'
-          condition: failed()
+        condition: failed()
 
 
   - job: RNWUniversalOtherProjectsPR
