@@ -44,7 +44,7 @@ struct ReactRootView : ReactRootViewT<ReactRootView> {
   hstring m_componentName;
   ReactNative::JSValueArgWriter m_initialPropsWriter;
   folly::dynamic m_initialProps;
-  bool m_isPerspectiveEnabled;
+  bool m_isPerspectiveEnabled{true};
   std::shared_ptr<react::uwp::ReactRootControl> m_rootControl;
 
   void UpdatePerspective();
