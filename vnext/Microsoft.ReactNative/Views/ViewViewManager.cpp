@@ -345,9 +345,7 @@ folly::dynamic ViewViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
   props.update(folly::dynamic::object("pointerEvents", "string")("onClick", "function")("onMouseEnter", "function")(
-      "onMouseLeave", "function")
-               //("onMouseMove", "function")
-               ("acceptsKeyboardFocus", "boolean") // deprecated in 63, remove in 64.
+      "onMouseLeave", "function")("acceptsKeyboardFocus", "boolean") // deprecated in 63, remove in 64.
                ("focusable", "boolean")("enableFocusRing", "boolean")("tabIndex", "number"));
 
   return props;

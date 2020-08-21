@@ -154,8 +154,6 @@ void TouchEventHandler::OnPointerMoved(
   } else {
     // Move with no buttons pressed
     UpdatePointersInViews(instance, args, tag, sourceElement);
-    // MouseMove support: (Not yet enabled, requires adding to ViewPropTypes.js)
-    // SendPointerMove(args, tag, sourceElement);
   }
 }
 

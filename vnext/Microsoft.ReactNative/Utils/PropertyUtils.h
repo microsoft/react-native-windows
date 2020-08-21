@@ -491,8 +491,6 @@ TryUpdateMouseEvents(ShadowNodeBase *node, const std::string &propertyName, cons
     node->m_onMouseEnterRegistered = !propertyValue.isNull() && propertyValue.asBool();
   else if (propertyName == "onMouseLeave")
     node->m_onMouseLeaveRegistered = !propertyValue.isNull() && propertyValue.asBool();
-  else if (propertyName == "onMouseMove")
-    node->m_onMouseMoveRegistered = !propertyValue.isNull() && propertyValue.asBool();
   else
     return false;
 
