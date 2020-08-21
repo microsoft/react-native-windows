@@ -13,8 +13,9 @@ steps:
     displayName: dir CrashDumps
     inputs:
       script: dir $(Build.StagingDirectory)\CrashDumps /s
+      failOnStderr: false
     condition:  failed()
-    failOnStderr: false
+
 
   - task: PublishBuildArtifacts@1
     displayName: Upload crash dumps
