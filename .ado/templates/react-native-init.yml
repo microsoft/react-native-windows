@@ -131,6 +131,7 @@ steps:
   # Work around issue of parameters not getting expanded in conditions properly
   - powershell: |
       Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.configuration}}"
+      Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(Build.StagingDirectory)\CrashDumps"
 
   - task: CmdLine@2
     displayName: Build project (Release)
