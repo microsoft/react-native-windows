@@ -64,3 +64,9 @@ steps:
     inputs:
       script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd cl
       workingDirectory: $(Build.SourcesDirectory)
+
+  - task: CmdLine@2
+    displayName: Set LocalDumps for link.exe
+    inputs:
+      script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd link
+      workingDirectory: $(Build.SourcesDirectory)
