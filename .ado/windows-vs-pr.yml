@@ -169,7 +169,7 @@ jobs:
           command: restore
           restoreSolution: packages/playground/windows/Playground.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
-
+        
       - task: VSBuild@1
         displayName: VSBuild - Playground
         inputs:
@@ -191,7 +191,7 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: Upload crash dumps
         inputs:
-          pathtoPublish: '$(Build.StagingDirectory)/CrashDumps/*'
+          pathtoPublish: '$(Build.StagingDirectory)/CrashDumps/'
           artifactName: 'Crash dumps - $(Agent.JobName)-$(System.JobAttempt)'
         condition: failed()
 

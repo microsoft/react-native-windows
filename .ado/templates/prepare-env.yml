@@ -70,3 +70,12 @@ steps:
     inputs:
       script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd link
       workingDirectory: $(Build.SourcesDirectory)
+
+  - task: CmdLine@2
+    displayName: Set LocalDumps for msbuild.exe
+    inputs:
+      script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd msbuild
+      workingDirectory: $(Build.SourcesDirectory)
+
+  - powershell: |
+        Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(Build.StagingDirectory)\CrashDumps"
