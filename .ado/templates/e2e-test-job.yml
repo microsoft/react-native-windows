@@ -32,6 +32,12 @@ jobs:
           script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd ReactUWPTestApp
           workingDirectory: $(Build.SourcesDirectory)
 
+      - task: CmdLine@2
+        displayName: Set up AppVerifer on ReactUWPTestApp
+        inputs:
+          script: regedit /S $(Build.SourcesDirectory)\.ado\ReactUWPTestApp.reg
+          workingDirectory: $(Build.SourcesDirectory)
+
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp
         inputs:
