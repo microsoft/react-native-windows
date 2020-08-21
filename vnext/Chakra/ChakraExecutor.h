@@ -106,7 +106,6 @@ class ChakraExecutor final : public JSExecutor {
   folly::Optional<ChakraObject> m_invokeCallbackAndReturnFlushedQueueJS;
   folly::Optional<ChakraObject> m_callFunctionReturnFlushedQueueJS;
   folly::Optional<ChakraObject> m_flushedQueueJS;
-  folly::Optional<ChakraObject> m_callFunctionReturnResultAndFlushedQueueJS;
 
   /**
    * WebWorker constructor. Must be invoked from thread this Executor will run

@@ -28,6 +28,14 @@
       "issue": "LEGACY_FIXME"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/BatchedBridge/MessageQueue.win32.js",
+      "baseFile": "Libraries/BatchedBridge/MessageQueue.js",
+      "baseVersion": "0.0.0-3346ac7f9",
+      "baseHash": "2971684d702beed9825dca81523731c1852ba388",
+      "issue": 5807
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
