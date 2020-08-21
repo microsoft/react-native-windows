@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "use x64 msbuild.exe to hopefully avoid out of memory errors",
+  "packageName": "@react-native-windows/cli",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-21T08:38:32.924Z"
+}
