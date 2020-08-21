@@ -9,9 +9,15 @@ steps:
       pathtoPublish: '${{ parameters.buildLogDirectory }}'
       artifactName: 'Build logs - $(Agent.JobName)-$(System.JobAttempt)'
 
+  - task: CmdLine@2
+    displayName: dir CrashDumps
+    inputs:
+      script: dir $(Build.StagingDirectory)\CrashDumps /s
+    condition:  succeededOrFailed()
+
   - task: PublishBuildArtifacts@1
     displayName: Upload crash dumps
     condition:  succeededOrFailed()
     inputs:
-      pathtoPublish: '$(Build.StagingDirectory)/CrashDumps'
+      pathtoPublish: '$(Build.StagingDirectory)/CrashDumps/*'
       artifactName: 'Crash dumps - $(Agent.JobName)-$(System.JobAttempt)'
