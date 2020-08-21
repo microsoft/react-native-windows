@@ -20,6 +20,6 @@ steps:
   - task: PublishBuildArtifacts@1
     displayName: Upload crash dumps
     inputs:
-      pathtoPublish: '$(Build.StagingDirectory)/CrashDumps'
+      pathtoPublish: '$(Build.StagingDirectory)/CrashDumps/*'
       artifactName: 'Crash dumps - $(Agent.JobName)-$(System.JobAttempt)'
     condition: failed()
