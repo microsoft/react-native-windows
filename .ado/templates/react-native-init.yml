@@ -115,9 +115,29 @@ steps:
         -Cleanup:$true
     condition: and(succeeded(), ${{ parameters.installVsComponents }})
 
+
+  - task: CmdLine@2
+    displayName: Set LocalDumps for cl.exe
+    inputs:
+      script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd cl
+      workingDirectory: $(Build.SourcesDirectory)
+
+  - task: CmdLine@2
+    displayName: Set LocalDumps for link.exe
+    inputs:
+      script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd link
+      workingDirectory: $(Build.SourcesDirectory)
+
+  - task: CmdLine@2
+    displayName: Set LocalDumps for msbuild.exe
+    inputs:
+      script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd msbuild
+      workingDirectory: $(Build.SourcesDirectory)
+
   # Work around issue of parameters not getting expanded in conditions properly
   - powershell: |
       Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.configuration}}"
+      Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(Build.StagingDirectory)\CrashDumps"
 
   - task: CmdLine@2
     displayName: Build project (Release)

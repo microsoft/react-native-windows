@@ -10,5 +10,4 @@ if not exist %CRASHDUMPS_FOLDER% (
     md %CRASHDUMPS_FOLDER%
 )
 
-regedit /S %~dp0%\ReactUWPTestApp.reg
 endlocal
