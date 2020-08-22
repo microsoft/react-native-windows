@@ -31,7 +31,8 @@ if ($tagsToInclude.Contains('rnwDev')) {
 $vsComponents = @('Microsoft.Component.MSBuild', 
     'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
-    'Microsoft.VisualStudio.ComponentGroup.UWP.VC');
+    'Microsoft.VisualStudio.ComponentGroup.UWP.VC',
+    'Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core');
 
 $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
     'Microsoft.VisualStudio.Workload.NativeDesktop',
@@ -54,10 +55,7 @@ function CheckVS {
         return $false;
     }
     $output = & $vsWhere -version 16 -requires $vsComponents -property productPath
-    $vsComponents | % {
-        Write-Output "Checking VS component $_";
-        & $vsWhere -version 16 -requires $_ -property productPath;
-    }
+
     return ($output -ne $null) -and (Test-Path $output);
 }
 
@@ -77,7 +75,7 @@ function InstallVS {
     $productId = & $vsWhere -version 16 -property productId
     $vsInstaller = "$installerPath\vs_installer.exe"
     $addWorkloads = ($vsWorkloads + $vsComponents) | % { '--add', $_ };
-    $p = Start-Process -PassThru -Wait  -FilePath $vsInstaller -ArgumentList ("modify --channelId $channelId --productId $productId $addWorkloads --quiet" -split ' ')
+    $p = Start-Process -PassThru -Wait  -FilePath $vsInstaller -ArgumentList ("modify --channelId $channelId --productId $productId $addWorkloads --quiet --includeRecommended" -split ' ')
     return $p.ExitCode
 }
 
