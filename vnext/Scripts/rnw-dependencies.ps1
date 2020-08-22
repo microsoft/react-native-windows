@@ -288,8 +288,8 @@ foreach ($req in $filteredRequirements)
         if ($req.Install) {
             if ($Install -or (!$NoPrompt -and (Read-Host "Do you want to install? [y/N]").ToUpperInvariant() -eq 'Y')) {
                 $LASTEXITCODE = 0;
-                Invoke-Command $req.Install -ErrorAction Stop;
-                if ($LASTEXITCODE -ne 0) { throw "Last exit code was non-zero: $LASTEXITCODE"; }
+                $outputFromInstall = Invoke-Command $req.Install -ErrorAction Stop;
+                if ($LASTEXITCODE -ne 0) { throw "Last exit code was non-zero: $LASTEXITCODE - $outputFromInstall"; }
                 else { $Installed++; }
             } else {
                 $NeedsRerun += !($req.Optional); # don't let failures from optional components fail the script 
