@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.5",
+  "version": "0.0.0-canary.6",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@react-native-community/cli-types": "^4.10.1",
-    "@rnw-scripts/eslint-config": "0.0.2",
+    "@rnw-scripts/eslint-config": "0.1.0",
     "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/chalk": "^2.2.0",

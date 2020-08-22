@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/integrate-rn",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -13,17 +13,17 @@
     "integrate-rn": "./bin.js"
   },
   "dependencies": {
-    "@rnw-scripts/find-repo-root": "^0.0.4",
-    "@rnw-scripts/package-utils": "^0.0.1",
+    "@rnw-scripts/find-repo-root": "^0.0.5",
+    "@rnw-scripts/package-utils": "^0.0.2",
     "async": "^3.2.0",
     "lodash": "^4.17.15",
     "ora": "^4.0.3",
-    "react-native-platform-override": "^0.2.1",
+    "react-native-platform-override": "^0.2.2",
     "semver": "^7.3.2",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "0.0.2",
+    "@rnw-scripts/eslint-config": "0.1.0",
     "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/async": "^3.2.3",

@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/find-repo-root",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -14,7 +14,7 @@
     "find-up": "^4.1.0"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "0.0.2",
+    "@rnw-scripts/eslint-config": "0.1.0",
     "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/find-up": "^4.0.0",

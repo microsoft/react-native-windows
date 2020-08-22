@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 22 Aug 2020 05:07:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.146",
+      "version": "0.0.0-canary.146",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove dead mousemove code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9a39505b8d7f4da4564a09c494e97acc84f409e6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 6/11 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b142ec14b704efb03dfe118486404002600cab4b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Aug 2020 05:04:58 GMT",
       "tag": "react-native-windows_v0.0.0-canary.145",
       "version": "0.0.0-canary.145",

@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove dead mousemove code",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-21T07:49:50.359Z"
-}
