@@ -55,6 +55,11 @@ function CheckVS {
         return $false;
     }
     $output = & $vsWhere -version 16 -requires $vsComponents -property productPath
+    Write-Host "Output is $output"
+    $unused = $vsComponents | % {
+        Write-Host $_
+        & $vsWhere -version 16 -requires $_ -property productPath | Write-Host
+    }
 
     return ($output -ne $null) -and (Test-Path $output);
 }
