@@ -2490,14 +2490,14 @@
     "@rushstack/node-core-library" "3.28.0"
 
 "@microsoft/api-extractor@^7.3.8":
-  version "7.9.6"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.9.6.tgz#1804cad9ae963cd9539eeac7d69b35201b015e41"
-  integrity sha512-pwi7wn0vmdWmdbzaV5OTeagRtcBltECkjMAWweAXNbEcjkUlxEpTaxt1dqEtN53Cg//kzwmvkbpHf3bJL3XSTA==
+  version "7.9.8"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.9.8.tgz#03fe8843fd64e7d59bd0231e392c2c121b657c24"
+  integrity sha512-D0de6ms5WAa2Kemfw6ICyFWuaKsV2REGgbojLGRxhBy07ybX/8Rv6oe/SK8EBxUSyhunawYTX/4D1raNCN0HsA==
   dependencies:
     "@microsoft/api-extractor-model" "7.8.16"
     "@microsoft/tsdoc" "0.12.19"
     "@rushstack/node-core-library" "3.28.0"
-    "@rushstack/ts-command-line" "4.5.0"
+    "@rushstack/ts-command-line" "4.6.1"
     colors "~1.2.1"
     lodash "~4.17.15"
     resolve "~1.17.0"
@@ -2761,6 +2761,16 @@
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@rushstack/ts-command-line/-/ts-command-line-4.5.0.tgz#835e4cc9382b27f8e44db3f7a2398dc5a0786724"
   integrity sha512-6HCt30yOQix5jvEzjMSkyO/52TTvo2D9UYdWJ3fjEecQimIIQOrBvhjGjcnu2bvYmb89+RLMzw+ibRYBxkFFmg==
+  dependencies:
+    "@types/argparse" "1.0.38"
+    argparse "~1.0.9"
+    colors "~1.2.1"
+    string-argv "~0.3.1"
+
+"@rushstack/ts-command-line@4.6.1":
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/@rushstack/ts-command-line/-/ts-command-line-4.6.1.tgz#201dfa81d78acb31fb7d329f665e743dc0fef8f6"
+  integrity sha512-Vzi9gVZiv0iA+vLp48ddvyjR7XpkrBgF2X/BEEPtapNkQMkOA1Z01QTtsCWBK0xc1k59R3L6VaM+ilHpPaMpHA==
   dependencies:
     "@types/argparse" "1.0.38"
     argparse "~1.0.9"
