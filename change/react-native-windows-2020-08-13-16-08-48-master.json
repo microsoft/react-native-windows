@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate 5/4 nightly build.",
-  "packageName": "react-native-windows",
-  "email": "igklemen@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-13T23:08:48.555Z"
-}

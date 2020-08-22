@@ -1,0 +1,25 @@
+#include <NamespaceRedirect.h>
+
+namespace Microsoft.ReactNative
+{
+    [default_interface]
+    runtimeclass DevMenuControl : XAML_NAMESPACE.Controls.UserControl
+    {
+      DevMenuControl();
+      XAML_NAMESPACE.Controls.Button Cancel { get; };
+      XAML_NAMESPACE.Controls.Button ConfigBundler { get; };
+      XAML_NAMESPACE.Controls.Button Inspector { get; };
+      XAML_NAMESPACE.Controls.Button FastRefresh { get; };
+      XAML_NAMESPACE.Controls.Button BreakOnNextLine { get; };
+      XAML_NAMESPACE.Controls.Button DirectDebug { get; };
+      XAML_NAMESPACE.Controls.Button RemoteDebug { get; };
+      XAML_NAMESPACE.Controls.Button Reload { get; };
+
+      XAML_NAMESPACE.Controls.TextBlock RemoteDebugText { get; };
+      XAML_NAMESPACE.Controls.TextBlock RemoteDebugDesc { get; };
+      XAML_NAMESPACE.Controls.TextBlock FastRefreshText { get; };
+      XAML_NAMESPACE.Controls.TextBlock DirectDebugText { get; };
+      XAML_NAMESPACE.Controls.TextBlock DirectDebugDesc { get; };
+      XAML_NAMESPACE.Controls.TextBlock BreakOnNextLineText { get; };
+    }
+}

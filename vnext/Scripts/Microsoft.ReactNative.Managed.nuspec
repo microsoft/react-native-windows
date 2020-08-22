@@ -8,7 +8,7 @@
     <projectUrl>https://github.com/microsoft/react-native-windows</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <copyright>&#169; Microsoft Corporation. All rights reserved.</copyright>
     <repository type="git"
       url="https://github.com/microsoft/react-native-windows.git"
       commit="$CommitId$" />
@@ -57,6 +57,12 @@
     <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" target="runtimes\win10-x64\native" />
     <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pdb" target="runtimes\win10-x64\native" />
     <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pri" target="runtimes\win10-x64\native" />
+
+    <!-- XBF files need to be included for Debug since they are not embedded in the PRI -->
+    <file src="$nugetroot$\ARM\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-arm\native" />
+    <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-arm64\native" />
+    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-x86\native" />
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-x64\native" />
 
   </files>
 </package>

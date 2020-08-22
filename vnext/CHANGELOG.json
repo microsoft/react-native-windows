@@ -2,6 +2,135 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.145",
+      "version": "0.0.0-canary.145",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 6/4 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Upgrade to OpenSSL 1.0.2p.5",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a140e9f0044908d97b7ae44d3d6dc72859ba2a03",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Revert \"Use explicit calling convention for IWebSocketResource::Make (#5778)\"",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "0217d07d84c09507c1219048d62d07d3e5566796",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 5/28 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9bf968a5f85888ea1d12796d1aa5dffc14f1d2ba",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 20 Aug 2020 05:05:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.144",
+      "version": "0.0.0-canary.144",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move DevMenu to use XAML markup file",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "58d31741d878b1f3aae4e5159296ca84005559e9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 5/16 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90613e4008217389284978e52026a6422917b6e6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Export IWebSocketResource::Make as __cdecl",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "517fd0c8c558a7b8f786a735442bf42f6b3bc4c4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Aug 2020 05:04:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.143",
+      "version": "0.0.0-canary.143",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update nuspec copyright header to use xml entity as some of the powershell processing we do messed up the encoding",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d0e6cf27604c59d502f76f6eb4450c1f7ce634df",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 package version",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "08e452bf1d021992f611407b10a6002cf52a3093",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 18 Aug 2020 05:06:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.142",
+      "version": "0.0.0-canary.142",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix instability in VisitAllPages test",
+            "author": "kmelmon@microsoft.com",
+            "commit": "4174941b071bb5ec65c74d88c474564be62c38f8",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 15 Aug 2020 05:05:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.141",
+      "version": "0.0.0-canary.141",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump V8 package version",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "a0a8b886451f78abbc159a7044e8c720e5e5d666",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "remove textbox for tooltips in hyperlinks as that can mess up word-wrapping",
+            "author": "asklar@microsoft.com",
+            "commit": "e215f4e30e1fcbf2c0bfa5fb93a9185cd72f3bb2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Restore Previous Behavior Allowing onMouseEnter and onMouseLeave on Touchables",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d120be146102a117c4fc779dc9b21bb0fa75b4b6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 5/4 nightly build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "5052b36d138ec845a4382b34b18d2cb45eb977a7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Aug 2020 05:05:34 GMT",
       "tag": "react-native-windows_v0.0.0-canary.140",
       "version": "0.0.0-canary.140",

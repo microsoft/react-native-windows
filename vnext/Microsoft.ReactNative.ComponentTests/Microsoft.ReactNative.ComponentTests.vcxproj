@@ -86,15 +86,10 @@
       <AdditionalIncludeDirectories>
         $(ProjectDir)pch;
         $(VCInstallDir)UnitTest\include;
-        $(FollyDir);
         $(JSI_SourcePath);
-        $(ReactNativeDir)ReactCommon;
-        $(ReactNativeDir)\ReactCommon\callinvoker;
-        $(ReactNativeDir)ReactCommon\jsi;
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)stubs;
-        $(ReactNativeWindowsDir)Shared;
         $(ReactNativeWindowsDir)Shared\tracing;
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
         $(YogaDir);
@@ -166,6 +161,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ReactNativeWindowsDir)Shared\tracing\fbsystrace.h" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\JSI\ChakraJsiRuntime_edgemode.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Shared\JSI\ChakraObjectRef.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Shared\JSI\ChakraRuntime.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Shared\tracing\tracing.cpp" />
   </ItemGroup>
   <ItemGroup>

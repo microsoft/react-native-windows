@@ -1,8 +1,57 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 14 Aug 2020 05:05:34 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Aug 2020 05:04:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.145
+
+Fri, 21 Aug 2020 05:04:58 GMT
+
+### Changes
+
+- Integrate 6/4 Nightly RN Build (ngerlem@microsoft.com)
+- Upgrade to OpenSSL 1.0.2p.5 (julio.rocha@microsoft.com)
+- Revert "Use explicit calling convention for IWebSocketResource::Make (#5778)" (asklar@winse.microsoft.com)
+- Integrate 5/28 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.144
+
+Thu, 20 Aug 2020 05:05:23 GMT
+
+### Changes
+
+- Move DevMenu to use XAML markup file (asklar@winse.microsoft.com)
+- Integrate 5/16 Nightly RN Build (ngerlem@microsoft.com)
+- Export IWebSocketResource::Make as __cdecl (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.143
+
+Wed, 19 Aug 2020 05:04:41 GMT
+
+### Changes
+
+- Update nuspec copyright header to use xml entity as some of the powershell processing we do messed up the encoding (dannyvv@microsoft.com)
+- Update V8 package version (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.142
+
+Tue, 18 Aug 2020 05:06:49 GMT
+
+### Changes
+
+- fix instability in VisitAllPages test (kmelmon@microsoft.com)
+
+## 0.0.0-canary.141
+
+Sat, 15 Aug 2020 05:05:18 GMT
+
+### Changes
+
+- Bump V8 package version (tudor.mihai@microsoft.com)
+- remove textbox for tooltips in hyperlinks as that can mess up word-wrapping (asklar@microsoft.com)
+- Restore Previous Behavior Allowing onMouseEnter and onMouseLeave on Touchables (ngerlem@microsoft.com)
+- Integrate 5/4 nightly build. (igklemen@microsoft.com)
 
 ## 0.0.0-canary.140
 

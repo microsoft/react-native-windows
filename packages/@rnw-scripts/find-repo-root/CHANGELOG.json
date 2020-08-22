@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/find-repo-root",
   "entries": [
     {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "@rnw-scripts/find-repo-root_v0.0.4",
+      "version": "0.0.4",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to eslint 6.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "@rnw-scripts/find-repo-root"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Jul 2020 23:11:46 GMT",
       "tag": "@rnw-scripts/find-repo-root_v0.0.3",
       "version": "0.0.3",

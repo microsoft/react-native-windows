@@ -165,11 +165,7 @@ dynamic ViewManagerBase::GetExportedCustomDirectEventTypeConstants() const {
   eventTypes.update(folly::dynamic::object("topLayout", folly::dynamic::object("registrationName", "onLayout"))(
       "topMouseEnter", folly::dynamic::object("registrationName", "onMouseEnter"))(
       "topMouseLeave", folly::dynamic::object("registrationName", "onMouseLeave"))(
-      "topAccessibilityAction", folly::dynamic::object("registrationName", "onAccessibilityAction"))
-                    //    ("topMouseMove",
-                    //    folly::dynamic::object("registrationName",
-                    //    "onMouseMove"))
-  );
+      "topAccessibilityAction", folly::dynamic::object("registrationName", "onAccessibilityAction")));
   return eventTypes;
 }
 

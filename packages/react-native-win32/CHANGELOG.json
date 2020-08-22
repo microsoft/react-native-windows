@@ -2,6 +2,63 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.40",
+      "version": "0.0.0-canary.40",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 5/28 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9bf968a5f85888ea1d12796d1aa5dffc14f1d2ba",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 6/4 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 20 Aug 2020 05:05:23 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.39",
+      "version": "0.0.0-canary.39",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 5/16 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90613e4008217389284978e52026a6422917b6e6",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Publish TS files in src as they are references in sourcemaps",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "3db9796c9478f7339feb9894479eca4ab54b4ec8",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 15 Aug 2020 05:05:18 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.38",
+      "version": "0.0.0-canary.38",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 5/4 nightly build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "5052b36d138ec845a4382b34b18d2cb45eb977a7",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Aug 2020 05:05:34 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.37",
       "version": "0.0.0-canary.37",

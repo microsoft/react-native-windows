@@ -801,4 +801,7 @@
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="DevMenuControl.xaml" />
+  </ItemGroup>
 </Project>
