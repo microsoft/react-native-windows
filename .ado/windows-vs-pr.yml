@@ -67,7 +67,7 @@ jobs:
         inputs:
           targetType: filePath
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
-          arguments: -NoPrompt
+          arguments: -NoPrompt -Tags buildLab
 
       - template: templates/build-rnw.yml
         parameters:
