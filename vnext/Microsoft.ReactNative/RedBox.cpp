@@ -385,16 +385,6 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
   }
 
   virtual void showNewError(ErrorInfo &&info, ErrorType /*exceptionType*/) override {
-    // Check if the rebox has been suppressed
-    if (!info.ExtraData.isNull()) {
-      auto iterator = info.ExtraData.find("suppressRedBox");
-      if (iterator != info.ExtraData.items().end()) {
-        if (iterator->second.asBool()) {
-          return;
-        }
-      }
-    }
-
     std::shared_ptr<RedBox> redbox(std::make_shared<RedBox>(
         m_weakReactHost,
         [wkthis = std::weak_ptr(shared_from_this())](uint32_t id) {
