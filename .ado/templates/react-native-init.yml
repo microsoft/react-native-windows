@@ -138,6 +138,8 @@ steps:
   - powershell: |
       Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.configuration}}"
       Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(Build.StagingDirectory)\CrashDumps"
+      Write-Host "##vso[task.setvariable variable=EnforceProcessCountAcrossBuilds]true"
+      Write-Host "##vso[task.setvariable variable=UseMultiToolTask]true"
 
   - task: CmdLine@2
     displayName: Build project (Release)
