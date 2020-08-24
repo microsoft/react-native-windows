@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 24 Aug 2020 15:05:38 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.1",
+      "version": "0.62.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Publish TS files in src as they are references in sourcemaps",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "f32d842fac5f7a036670bc60cc0b1b8db4a169d9",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Aug 2020 15:06:31 GMT",
       "tag": "@office-iss/react-native-win32_v0.62.0",
       "version": "0.62.0",

@@ -2,6 +2,29 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Aug 2020 15:05:38 GMT",
+      "tag": "react-native-windows_v0.62.6",
+      "version": "0.62.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.62] Update react-native config to handle ( userConfig === null)",
+            "author": "jthysell@microsoft.com",
+            "commit": "8e84eb225fe724e16673393ba2386a1bf736e7ea",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix CI for 0.62-stable",
+            "author": "ngerlem@microsoft.com",
+            "commit": "79f8202449522d87954084aba1e7f8ed3b769107",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Aug 2020 15:06:31 GMT",
       "tag": "react-native-windows_v0.62.5",
       "version": "0.62.5",
