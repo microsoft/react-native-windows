@@ -316,6 +316,10 @@
       "issue": "LEGACY_FIXME"
     },
     {
+      "type": "platform",
+      "file": "src/Libraries/Components/View/View.windows.js"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
