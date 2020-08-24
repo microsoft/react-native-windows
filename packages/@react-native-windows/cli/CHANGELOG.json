@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 24 Aug 2020 15:05:26 GMT",
+      "tag": "@react-native-windows/cli_v0.63.0-preview.3",
+      "version": "0.63.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixing config and autolinking",
+            "author": "jthysell@microsoft.com",
+            "commit": "b7a281cd866744f10f1e182d55f7ed88f8b4c57d",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Aug 2020 15:05:03 GMT",
       "tag": "@react-native-windows/cli_v0.63.0-preview.2",
       "version": "0.63.0-preview.2",

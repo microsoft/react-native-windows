@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 10 Aug 2020 15:04:54 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Aug 2020 15:05:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.0-preview.3
+
+Mon, 24 Aug 2020 15:05:26 GMT
+
+### Changes
+
+- Publish TS files in src as they are references in sourcemaps (acoates-ms@noreply.github.com)
 
 ## 0.63.0-preview.2
 

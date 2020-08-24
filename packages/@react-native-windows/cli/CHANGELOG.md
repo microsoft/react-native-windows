@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 17 Aug 2020 15:05:03 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Aug 2020 15:05:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.0-preview.3
+
+Mon, 24 Aug 2020 15:05:26 GMT
+
+### Changes
+
+- Fixing config and autolinking (jthysell@microsoft.com)
 
 ## 0.63.0-preview.2
 

@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update nuspec copyright header to use xml entity as some of the powershell processing we do messed up the encoding",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-18T19:19:10.241Z"
-}

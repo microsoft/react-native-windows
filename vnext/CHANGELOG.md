@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 17 Aug 2020 15:05:03 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Aug 2020 15:05:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.0-preview.4
+
+Mon, 24 Aug 2020 15:05:26 GMT
+
+### Changes
+
+- Update nuspec copyright header to use xml entity as some of the powershell processing we do messed up the encoding (dannyvv@microsoft.com)
 
 ## 0.63.0-preview.3
 

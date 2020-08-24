@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Aug 2020 15:05:26 GMT",
+      "tag": "react-native-windows_v0.63.0-preview.4",
+      "version": "0.63.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update nuspec copyright header to use xml entity as some of the powershell processing we do messed up the encoding",
+            "author": "dannyvv@microsoft.com",
+            "commit": "1ccfb1dab701a1a809b194dba08bfac3ac9f1132",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Aug 2020 15:05:03 GMT",
       "tag": "react-native-windows_v0.63.0-preview.3",
       "version": "0.63.0-preview.3",
