@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Ensure install of VS desktop/C++ workload",
-  "packageName": "react-native-windows",
-  "email": "asklar@winse.microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-22T22:51:30.344Z"
-}
