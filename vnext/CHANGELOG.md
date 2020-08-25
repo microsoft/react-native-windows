@@ -1,8 +1,25 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 21 Aug 2020 05:04:58 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Aug 2020 05:04:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.147
+
+Mon, 24 Aug 2020 05:04:58 GMT
+
+### Changes
+
+- Ensure install of VS desktop/C++ workload (asklar@winse.microsoft.com)
+
+## 0.0.0-canary.146
+
+Sat, 22 Aug 2020 05:07:27 GMT
+
+### Changes
+
+- Remove dead mousemove code (ngerlem@microsoft.com)
+- Integrate 6/11 Nightly Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.145
 

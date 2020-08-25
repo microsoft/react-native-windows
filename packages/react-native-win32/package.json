@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-canary.40",
+  "version": "0.0.0-canary.41",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@office-iss/rex-win32": "0.62.0-preview.17-tenantreactnativewin-13114",
-    "@rnw-scripts/eslint-config": "0.0.2",
+    "@rnw-scripts/eslint-config": "0.1.0",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
     "@types/node": "^12.11.2",
@@ -67,7 +67,7 @@
     "just-scripts": "^0.36.1",
     "react": "16.13.1",
     "react-native": "0.0.0-3346ac7f9",
-    "react-native-platform-override": "^0.2.1",
+    "react-native-platform-override": "^0.2.2",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {

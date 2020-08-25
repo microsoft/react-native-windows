@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Mon, 06 Jul 2020 23:11:46 GMT and should not be manually modified.
+This log was last generated on Sat, 22 Aug 2020 05:07:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.0
+
+Sat, 22 Aug 2020 05:07:27 GMT
+
+### Minor changes
+
+- Integrate 6/11 Nightly Build (ngerlem@microsoft.com)
 
 ## 0.0.2
 
