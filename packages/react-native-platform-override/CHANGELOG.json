@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "react-native-platform-override_v0.2.1",
+      "version": "0.2.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to eslint 6.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Aug 2020 05:05:16 GMT",
       "tag": "react-native-platform-override_v0.2.1",
       "version": "0.2.1",

@@ -564,8 +564,6 @@ void ChakraExecutor::bindBridge() noexcept {
   m_callFunctionReturnFlushedQueueJS = batchedBridge.getProperty("callFunctionReturnFlushedQueue").asObject();
   m_invokeCallbackAndReturnFlushedQueueJS = batchedBridge.getProperty("invokeCallbackAndReturnFlushedQueue").asObject();
   m_flushedQueueJS = batchedBridge.getProperty("flushedQueue").asObject();
-  m_callFunctionReturnResultAndFlushedQueueJS =
-      batchedBridge.getProperty("callFunctionReturnResultAndFlushedQueue").asObject();
   m_bridgeEstablished = true;
 }
 

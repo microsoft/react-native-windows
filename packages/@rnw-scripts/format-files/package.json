@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/format-files",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -17,11 +17,11 @@
     "clang-format": "1.2.4"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "0.0.2",
+    "@rnw-scripts/eslint-config": "0.1.0",
     "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/async": "^3.2.3",
-    "eslint": "6.7.0",
+    "eslint": "6.8.0",
     "just-scripts": "^0.36.1",
     "typescript": "^3.8.3"
   },

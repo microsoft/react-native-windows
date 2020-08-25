@@ -174,6 +174,7 @@ class TouchableHighlight extends React.Component<Props, State> {
       delayLongPress: this.props.delayLongPress,
       delayPressIn: this.props.delayPressIn,
       delayPressOut: this.props.delayPressOut,
+      minPressDuration: 0,
       pressRectOffset: this.props.pressRetentionOffset,
       android_disableSound: this.props.touchSoundDisabled,
       onMouseEnter: this.props.onMouseEnter, // [Windows]
@@ -396,4 +397,4 @@ class TouchableHighlight extends React.Component<Props, State> {
 
 module.exports = (React.forwardRef((props, hostRef) => (
   <TouchableHighlight {...props} hostRef={hostRef} />
-)): React.ComponentType<$ReadOnly<$Diff<Props, {|hostRef: mixed|}>>>);
+)): React.AbstractComponent<$ReadOnly<$Diff<Props, {|hostRef: mixed|}>>>);

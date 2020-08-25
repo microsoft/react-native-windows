@@ -67,7 +67,7 @@ jobs:
         inputs:
           targetType: filePath
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
-          arguments: -NoPrompt
+          arguments: -NoPrompt -Tags buildLab
 
       - template: templates/build-rnw.yml
         parameters:
@@ -169,7 +169,7 @@ jobs:
           command: restore
           restoreSolution: packages/playground/windows/Playground.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
-
+        
       - task: VSBuild@1
         displayName: VSBuild - Playground
         inputs:
@@ -187,6 +187,13 @@ jobs:
             /p:BaseIntDir=$(BaseIntDir)
             /p:AppxPackageSigningEnabled=false
             /p:UseWinUI3=true
+
+      - task: PublishBuildArtifacts@1
+        displayName: Upload crash dumps
+        inputs:
+          pathtoPublish: '$(Build.StagingDirectory)/CrashDumps/'
+          artifactName: 'Crash dumps - $(Agent.JobName)-$(System.JobAttempt)'
+        condition: failed()
 
 
   - job: RNWUniversalOtherProjectsPR

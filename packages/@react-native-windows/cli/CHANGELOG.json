@@ -2,6 +2,66 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 25 Aug 2020 05:05:08 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.7",
+      "version": "0.0.0-canary.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Default run-windows to disabling parallel MSBuild When Machine Has < 16GB of Memory",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c144d4a27abcdc6f7402578be8b7ad7f39310dff",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.5",
+      "version": "0.0.0-canary.5",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to eslint 6.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 20 Aug 2020 05:05:23 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.5",
+      "version": "0.0.0-canary.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add --singleproc to run-windows",
+            "author": "asklar@microsoft.com",
+            "commit": "82bf0682e141a3cf8c53db9bc69edc44411d00a7",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Aug 2020 05:04:41 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.4",
+      "version": "0.0.0-canary.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixing config and autolinking",
+            "author": "jthysell@microsoft.com",
+            "commit": "286f393305bb13cf5982545d4e6b7de68e9a35c9",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Aug 2020 05:05:34 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.3",
       "version": "0.0.0-canary.3",

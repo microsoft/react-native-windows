@@ -49,10 +49,6 @@ steps:
         start-process npx -ArgumentList @('verdaccio', '--config', './.ado/verdaccio/config.yaml')
 
   - script: |
-      npm set registry http://localhost:4873
-    displayName: Modify default npm config to point to local verdaccio server
-
-  - script: |
       node .ado/waitForVerdaccio.js
     displayName: Wait for verdaccio server to boot
 
@@ -83,6 +79,10 @@ steps:
     inputs:
       script: npx react-native init testcli --npm --template react-native@$(reactNativeDevDependency)
       workingDirectory: $(Agent.BuildDirectory)
+
+  - script: |
+      npm set registry http://localhost:4873
+    displayName: Modify default npm config to point to local verdaccio server
 
   - task: CmdLine@2
     displayName: Apply windows template (with nuget)
@@ -115,9 +115,29 @@ steps:
         -Cleanup:$true
     condition: and(succeeded(), ${{ parameters.installVsComponents }})
 
+
+  - task: CmdLine@2
+    displayName: Set LocalDumps for cl.exe
+    inputs:
+      script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd cl
+      workingDirectory: $(Build.SourcesDirectory)
+
+  - task: CmdLine@2
+    displayName: Set LocalDumps for link.exe
+    inputs:
+      script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd link
+      workingDirectory: $(Build.SourcesDirectory)
+
+  - task: CmdLine@2
+    displayName: Set LocalDumps for msbuild.exe
+    inputs:
+      script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd msbuild
+      workingDirectory: $(Build.SourcesDirectory)
+
   # Work around issue of parameters not getting expanded in conditions properly
   - powershell: |
       Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.configuration}}"
+      Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(Build.StagingDirectory)\CrashDumps"
 
   - task: CmdLine@2
     displayName: Build project (Release)

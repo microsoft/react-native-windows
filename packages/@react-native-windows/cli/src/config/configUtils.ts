@@ -206,14 +206,14 @@ export function findAppProjectFiles(winFolder: string): string[] {
  * @param projectPath The project file path to check.
  * @return The language string: cpp, cs, or null if unknown.
  */
-export function getProjectLanguage(projectPath: string): 'cpp' | 'cs' {
+export function getProjectLanguage(projectPath: string): 'cpp' | 'cs' | null {
   if (projectPath.endsWith('.vcxproj')) {
     return 'cpp';
   } else if (projectPath.endsWith('.csproj')) {
     return 'cs';
   }
 
-  throw new Error(`Cannot determine langauge for project '${projectPath}'`);
+  return null;
 }
 
 /**
@@ -273,53 +273,29 @@ export function importProjectExists(
  * @param projectContents The XML project contents.
  * @return The project name.
  */
-export function getProjectName(
-  projectPath: string,
-  projectContents: Node,
-): string {
+export function getProjectName(projectContents: Node): string {
   const name =
     findPropertyValue(projectContents, 'ProjectName') ||
-    findPropertyValue(projectContents, 'AssemblyName');
-
-  if (name === null) {
-    throw new Error(`Could not determine name of project ${projectPath}`);
-  }
+    findPropertyValue(projectContents, 'AssemblyName') ||
+    '';
 
   return name;
 }
 
 /**
  * Gets the namespace of the project from the project contents.
- * @param projectPath The project file path to check.
  * @param projectContents The XML project contents.
  * @return The project namespace.
  */
-export function getProjectNamespace(
-  projectPath: string,
-  projectContents: Node,
-): string {
-  const namespace = findPropertyValue(projectContents, 'RootNamespace');
-  if (namespace === null) {
-    throw new Error(`Could not determine namespace of project ${projectPath}`);
-  }
-
-  return namespace;
+export function getProjectNamespace(projectContents: Node): string | null {
+  return findPropertyValue(projectContents, 'RootNamespace');
 }
 
 /**
  * Gets the guid of the project from the project contents.
- * @param projectPath The project file path to check.
  * @param projectContents The XML project contents.
  * @return The project guid.
  */
-export function getProjectGuid(
-  projectPath: string,
-  projectContents: Node,
-): string {
-  const guid = findPropertyValue(projectContents, 'ProjectGuid');
-  if (guid === null) {
-    throw new Error(`Could not determine GUID of project ${projectPath}`);
-  }
-
-  return guid;
+export function getProjectGuid(projectContents: Node): string | null {
+  return findPropertyValue(projectContents, 'ProjectGuid');
 }
