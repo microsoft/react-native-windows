@@ -437,16 +437,13 @@ export default class Bootstrap extends React.Component<
             <View style={{flexDirection: 'column', alignItems: 'center'}}>
               <Text>circle</Text>
               <View
+                focusable
                 style={{
                   backgroundColor: 'orange',
                   borderRadius: 30,
                   width: 60,
                   height: 60,
                   margin: 10,
-                }}
-                {...{
-                  // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-                  acceptsKeyboardFocus: true,
                 }}>
                 <View
                   style={{backgroundColor: 'magenta', width: 60, height: 60}}
