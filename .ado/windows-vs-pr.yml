@@ -153,7 +153,7 @@ jobs:
           BuildPlatform: x86
     pool:
       vmImage: $(VmImage)
-    timeoutInMinutes: 60
+    timeoutInMinutes: 120
     cancelTimeoutInMinutes: 5
 
     steps:
@@ -571,7 +571,7 @@ jobs:
           additionalInitArguments: --useWinUI3 true
           additionalRunArguments:
 
-    timeoutInMinutes: 40 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:
       vmImage: $(VmImage)
