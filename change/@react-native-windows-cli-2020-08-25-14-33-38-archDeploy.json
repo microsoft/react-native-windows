@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix deploy bug where a framework package is installed for one arch but not the one that we are building for",
+  "packageName": "@react-native-windows/cli",
+  "email": "asklar@winse.microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-25T21:33:38.306Z"
+}
