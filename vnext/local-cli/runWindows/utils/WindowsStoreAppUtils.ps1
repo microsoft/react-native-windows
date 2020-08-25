@@ -242,7 +242,7 @@ function Install-AppDependencies {
     $xml=[xml] (gc $AppxManifestPath);
     $packageNamesToInstall = $xml.Package.Dependencies.PackageDependency | 
         Where-Object { 
-            $installed = Get-AppxPackage $_.Name;
+            $installed = Get-AppxPackage $_.Name  | Where-Object -Property Architecture -EQ -Value $Architecture;
             $installed -eq $null -or $installed.Version -lt $_.MinVersion 
         } | 
         % { $_.Name };
