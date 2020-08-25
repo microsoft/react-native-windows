@@ -138,12 +138,23 @@ class TouchableWithoutFeedback extends React.Component<Props, State> {
     const elementProps: {[string]: mixed, ...} = {
       ...eventHandlersWithoutBlurAndFocus,
       accessible: this.props.accessible !== false,
-      acceptsKeyboardFocus:
-        (this.props.acceptsKeyboardFocus === undefined ||
-          this.props.acceptsKeyboardFocus === true) &&
-        !this.props.disabled, // [Windows]
-      focusable:
-        this.props.focusable !== false && this.props.onPress !== undefined,
+      // [Windows We need to reconcile between focusable and acceptsKeyboardFocus
+      // (e.g. if one is explictly disabled, we shouldn't implicitly enable the
+      // other on the underlying view). Prefer passing acceptsKeyboardFocus if
+      // passed explicitly to preserve original behavior, and trigger view warnings.
+      ...(this.props.acceptsKeyboardFocus !== undefined
+        ? {
+            acceptsKeyboardFocus:
+              (this.props.acceptsKeyboardFocus === undefined ||
+                this.props.acceptsKeyboardFocus === true) &&
+              !this.props.disabled,
+          }
+        : {
+            focusable:
+              this.props.focusable !== false &&
+              this.props.onPress !== undefined,
+          }),
+      // Windows]
     };
     for (const prop of PASSTHROUGH_PROPS) {
       if (this.props[prop] !== undefined) {
