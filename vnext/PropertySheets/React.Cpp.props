@@ -101,7 +101,6 @@
       </PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DebugInformationFormat Condition="'$(AGENT_BUILDDIRECTORY)'!=''">OldStyle</DebugInformationFormat>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
 
