@@ -81,4 +81,4 @@ steps:
         Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(Build.StagingDirectory)\CrashDumps"
         Write-Host "##vso[task.setvariable variable=EnforceProcessCountAcrossBuilds]true"
         Write-Host "##vso[task.setvariable variable=UseMultiToolTask]true"
-        Write-Host "##vso[task.setvariable variable=MultiProcMaxCount]6"
+        Write-Host "##vso[task.setvariable variable=MultiProcMaxCount]3"
