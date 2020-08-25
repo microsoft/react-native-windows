@@ -41,7 +41,7 @@ Today we support the following projects as a NuGet package:
    1. `npx react-native init MyProj`
    1. cd `MyProj`
    1. Apply the react-native-windows template:
-      1. `node z:\src\r3\packages\react-native-windows-init\lib-commonjs\Cli.js --version 0.0.0 --useDevMode --overwrite  --language cs --experimentalNuGetDependency --nuGetTestFeed c:\temp\RnWNuGetTesting\feed --nuGetTestVersion 0.0.1-MyTest001 `
+      1. `node z:\src\r3\packages\react-native-windows-init\lib-commonjs\Cli.js --useDevMode --overwrite  --language cs --experimentalNuGetDependency --nuGetTestFeed c:\temp\RnWNuGetTesting\feed --nuGetTestVersion 0.0.1-MyTest001 `
          > See below for a breakdown of the arguments:
 1. Do your testing
 

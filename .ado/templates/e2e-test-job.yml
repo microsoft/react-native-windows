@@ -33,14 +33,16 @@ jobs:
           workingDirectory: $(Build.SourcesDirectory)
 
       - task: CmdLine@2
+        displayName: Set up AppVerifer on ReactUWPTestApp
+        inputs:
+          script: regedit /S $(Build.SourcesDirectory)\.ado\ReactUWPTestApp.reg
+          workingDirectory: $(Build.SourcesDirectory)
+
+      - task: CmdLine@2
         displayName: run-windows
         inputs:
           script: yarn windows --no-launch --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/E2ETest
-
-      - template: upload-build-logs.yml
-        parameters:
-          buildLogDirectory: '$(BuildLogDirectory)'
 
       - task: CopyFiles@2
         displayName: Copy ReactUWPTestApp artifacts
@@ -126,3 +128,8 @@ jobs:
           script: |
             Get-WmiObject Win32_LogicalDisk
         condition: succeededOrFailed()
+
+      - template: upload-build-logs.yml
+        parameters:
+          buildLogDirectory: '$(BuildLogDirectory)'
+          condition: succeededOrFailed()
