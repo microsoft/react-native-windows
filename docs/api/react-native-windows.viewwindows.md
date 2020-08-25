@@ -4,7 +4,7 @@
 
 ## ViewWindows variable
 
-Same as [react-native's View](https://facebook.github.io/react-native/docs/view)<!-- -->, but with extra windows specific functionality
+Same as [react-native's View](https://facebook.github.io/react-native/docs/view)<!-- -->, but with extra Windows specific functionality
 
 <b>Signature:</b>
 

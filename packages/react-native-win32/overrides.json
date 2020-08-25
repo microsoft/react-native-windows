@@ -232,6 +232,10 @@
     },
     {
       "type": "platform",
+      "file": "src/Libraries/Components/View/View.win32.js"
+    },
+    {
+      "type": "platform",
       "file": "src/Libraries/Components/View/ViewWin32.Props.ts"
     },
     {
