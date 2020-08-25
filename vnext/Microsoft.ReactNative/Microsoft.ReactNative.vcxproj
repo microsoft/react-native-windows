@@ -95,7 +95,6 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <DiagnosticsFormat>Classic</DiagnosticsFormat>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
