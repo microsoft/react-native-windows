@@ -15,6 +15,7 @@ namespace Microsoft.ReactNative {
     ReactNativeHost ReactNativeHost { get; set; };
     String ComponentName { get; set; };
     JSValueArgWriter InitialProps { get; set; };
+    Boolean IsPerspectiveEnabled { get; set; };
 
     void ReloadView();
   }

@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add API to turn off 3D perspective to enable controls that don't work in 3D",
+  "packageName": "react-native-windows",
+  "email": "asklar@winse.microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-21T01:09:50.688Z"
+}
