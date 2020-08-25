@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 17 Aug 2020 15:06:31 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Aug 2020 15:05:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.6
+
+Mon, 24 Aug 2020 15:05:38 GMT
+
+### Patches
+
+- [0.62] Update react-native config to handle ( userConfig === null) (jthysell@microsoft.com)
 
 ## 0.62.5
 
