@@ -138,7 +138,7 @@
       </PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -168,7 +168,7 @@
       <PreprocessorDefinitions>PROJECT_ROOT_NAMESPACE=$(RootNamespace);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
