@@ -20,6 +20,10 @@ steps:
       artifact: ReactWindows
       path: $(System.DefaultWorkingDirectory)/ReactWindows
 
+  - powershell: |
+      (Get-Content -Path $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets
+    displayName: Patch version check file with version ${{parameters.npmVersion}}
+
   - ${{ if eq(parameters.packDesktop, true) }}:
     - template: prep-and-pack-single.yml
       parameters:
