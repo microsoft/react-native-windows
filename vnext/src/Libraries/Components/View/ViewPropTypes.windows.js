@@ -407,12 +407,6 @@ type WindowsViewProps = $ReadOnly<{|
 
   tabIndex?: ?number,
 
-  /**
-   * Specifies whether the view participates in the key view loop as user tabs
-   * through different controls.
-   */
-  acceptsKeyboardFocus?: ?boolean,
-
   accessibilityPosInSet?: ?number,
   accessibilitySetSize?: ?number,
 
