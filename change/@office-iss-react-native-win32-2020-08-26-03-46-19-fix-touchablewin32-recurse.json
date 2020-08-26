@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix TouchableWin32 Infinite Recursion on Click",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-26T10:46:19.635Z"
+}
