@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add verification to ensure nuget and npm version match.",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-26T21:38:45.526Z"
+}

@@ -95,6 +95,6 @@
       Text="Expected to find npm package 'react-native-windows' in '$(_ReactNativeWindowsVersionCheckPackageJsonPath)', encountered '$(_ReactNativeWindowsVersionCheckNpmName)'" />
     <Error 
       Condition="'$(_ReactNativeWindowsVersionCheckNpmVersion)' != '$(_ReactNativeWindowsVersionCheckNugetVersion)'"
-      Text="Mismatch detected between npm package versions and nuget package version.%0a    Npm:   '$(_ReactNativeWindowsVersionCheckNpmVersion)' - $(_ReactNativeWindowsVersionCheckPackageJsonPath)%0a    NuGet: '$(_ReactNativeWindowsVersionCheckNugetVersion)' - $(MSBuildProjectFile)%0aUpdate either to match the version." />
+      Text="Mismatch detected between npm package versions and nuget package version.%0a    Npm:   '$(_ReactNativeWindowsVersionCheckNpmVersion)' - $(_ReactNativeWindowsVersionCheckPackageJsonPath)%0a    NuGet: '$(_ReactNativeWindowsVersionCheckNugetVersion)' - $(MSBuildProjectFile)%0aTo update the nuget version, please see https://microsoft.github.io/react-native-windows/docs/nuget-update for instructions." />
   </Target>
 </Project>
