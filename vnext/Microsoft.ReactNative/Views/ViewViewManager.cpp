@@ -345,8 +345,7 @@ folly::dynamic ViewViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
   props.update(folly::dynamic::object("pointerEvents", "string")("onClick", "function")("onMouseEnter", "function")(
-      "onMouseLeave", "function")("acceptsKeyboardFocus", "boolean") // deprecated in 63, remove in 64.
-               ("focusable", "boolean")("enableFocusRing", "boolean")("tabIndex", "number"));
+      "onMouseLeave", "function")("focusable", "boolean")("enableFocusRing", "boolean")("tabIndex", "number"));
 
   return props;
 }
@@ -377,7 +376,7 @@ bool ViewViewManager::UpdateProperty(
         bool hitTestable = propertyValue.getString() != "none";
         pPanel.IsHitTestVisible(hitTestable);
       }
-    } else if (propertyName == "focusable" || propertyName == "acceptsKeyboardFocus") {
+    } else if (propertyName == "focusable") {
       if (propertyValue.isBool())
         pViewShadowNode->IsFocusable(propertyValue.getBool());
     } else if (propertyName == "enableFocusRing") {

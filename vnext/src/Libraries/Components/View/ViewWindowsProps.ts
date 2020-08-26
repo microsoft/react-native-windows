@@ -14,8 +14,6 @@ import {ViewProps} from 'react-native';
  * Extends: {@link IKeyboardProps} and {@link https://facebook.github.io/react-native/docs/view | react-native's ViewProps}
  */
 export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
-  /** @Deprecated Use focusable instead.*/
-  acceptsKeyboardFocus?: boolean;
   // tslint:disable-next-line:no-any
   children?: any;
 
