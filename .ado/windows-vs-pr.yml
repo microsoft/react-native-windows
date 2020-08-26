@@ -163,6 +163,11 @@ jobs:
 
       - template: templates/prepare-env.yml
 
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '12.18.3' 
+          checkLatest: false # Optional
+
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
         inputs:
