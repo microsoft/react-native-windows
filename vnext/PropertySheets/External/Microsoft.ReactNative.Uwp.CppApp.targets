@@ -40,4 +40,6 @@
     <Exec Command="powershell -NonInteractive -NoProfile -Command Add-AppxPackage -Register $(OutputPath)Appx\AppxManifest.xml"
           ContinueOnError="false" />
   </Target>
+
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\CppAppConsumeCSharpModule.targets" />
 </Project>
