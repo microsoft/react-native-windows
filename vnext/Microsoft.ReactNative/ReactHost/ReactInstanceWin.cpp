@@ -735,7 +735,10 @@ void ReactInstanceWin::DispatchEvent(int64_t viewTag, std::string &&eventName, f
 }
 
 facebook::react::INativeUIManager *ReactInstanceWin::NativeUIManager() noexcept {
-  return m_uiManager.LoadWithLock()->getNativeUIManager();
+  if (auto uimanger = m_uiManager.LoadWithLock()) {
+    return uimanger->getNativeUIManager();
+  }
+  return nullptr;
 }
 
 std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() noexcept {
