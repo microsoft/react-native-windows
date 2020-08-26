@@ -50,7 +50,7 @@ class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentSta
         </TouchableHighlight>
         <ViewWin32
           ref={this._setRef}
-          acceptsKeyboardFocus
+          focusable
           style={this.state.hasFocus ? { backgroundColor: '#aee8fcff' } : { backgroundColor: '#00000000' }}
           onFocus={this._onFocus}
           onBlur={this._onBlur}
