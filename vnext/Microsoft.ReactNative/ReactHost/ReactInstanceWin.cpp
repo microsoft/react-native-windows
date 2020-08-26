@@ -14,6 +14,7 @@
 #include "Microsoft.ReactNative/IReactNotificationService.h"
 #include "Microsoft.ReactNative/Threading/MessageQueueThreadFactory.h"
 
+#include "../../codegen/NativeAccessibilityInfoSpec.g.h"
 #include "../../codegen/NativeAppStateSpec.g.h"
 #include "../../codegen/NativeClipboardSpec.g.h"
 #include "../../codegen/NativeDevSettingsSpec.g.h"
@@ -31,6 +32,7 @@
 #include "DevMenu.h"
 #include "IReactContext.h"
 #include "IReactDispatcher.h"
+#include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
 #include "Modules/AppStateModule.h"
 #include "Modules/ClipboardModule.h"
@@ -150,6 +152,12 @@ void ReactInstanceWin::LoadModules(
       turboModulesProvider->AddModuleProvider(name, provider);
     }
   };
+  
+  registerTurboModule(
+      L"AccessibilityInfo",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::AccessibilityInfo,
+          ::Microsoft::ReactNativeSpecs::AccessibilityInfoSpec>());
 
   registerTurboModule(L"Alert", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Alert>());
 

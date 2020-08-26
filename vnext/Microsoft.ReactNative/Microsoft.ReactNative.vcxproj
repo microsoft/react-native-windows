@@ -204,6 +204,7 @@
     <ClInclude Include="JsiWriter.h">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Modules\AccessibilityInfoModule.h" />
     <ClInclude Include="Modules\AlertModule.h" />
     <ClInclude Include="Modules\Animated\AdditionAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\AnimatedNode.h" />
@@ -407,6 +408,7 @@
     <ClCompile Include="JsiWriter.cpp">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="Modules\AccessibilityInfoModule.cpp" />
     <ClCompile Include="Modules\AlertModule.cpp" />
     <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp" />
     <ClCompile Include="Modules\Animated\AnimatedNode.cpp" />
