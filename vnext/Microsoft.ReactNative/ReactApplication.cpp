@@ -104,6 +104,8 @@ void ReactApplication::OnActivated(Windows::ApplicationModel::Activation::IActiv
     auto protocolActivatedEventArgs{e.as<Windows::ApplicationModel::Activation::ProtocolActivatedEventArgs>()};
     react::uwp::LinkingManagerModule::OpenUri(protocolActivatedEventArgs.Uri());
     this->OnCreate(e);
+  } else if (e.Kind() == ActivationKind::ToastNotification) {
+    this->OnCreate(e);
   }
 }
 
