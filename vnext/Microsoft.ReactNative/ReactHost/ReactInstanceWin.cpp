@@ -152,7 +152,7 @@ void ReactInstanceWin::LoadModules(
       turboModulesProvider->AddModuleProvider(name, provider);
     }
   };
-  
+
   registerTurboModule(
       L"AccessibilityInfo",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<

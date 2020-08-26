@@ -3,11 +3,11 @@
 
 #include "pch.h"
 #include "AccessibilityInfoModule.h"
+#include <UI.Xaml.Automation.Peers.h>
+#include <UI.Xaml.Controls.h>
 #include <XamlUtils.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include <winrt/Windows.UI.ViewManagement.h>
-#include <UI.Xaml.Automation.Peers.h>
-#include <UI.Xaml.Controls.h>
 #include "Unicode.h"
 #include "Utils/Helpers.h"
 
@@ -17,8 +17,7 @@ void AccessibilityInfo::Initialize(winrt::Microsoft::ReactNative::ReactContext c
   m_context = reactContext;
 }
 
-void AccessibilityInfo::isReduceMotionEnabled(std::function<void(React::JSValue const &)> const & onSuccess) noexcept {
-
+void AccessibilityInfo::isReduceMotionEnabled(std::function<void(React::JSValue const &)> const &onSuccess) noexcept {
   auto jsDispatcher = m_context.JSDispatcher();
   m_context.UIDispatcher().Post([weakThis = weak_from_this(), jsDispatcher, onSuccess] {
     if (auto strongThis = weakThis.lock()) {
@@ -29,7 +28,8 @@ void AccessibilityInfo::isReduceMotionEnabled(std::function<void(React::JSValue 
   });
 }
 
-void AccessibilityInfo::isTouchExplorationEnabled(std::function<void(React::JSValue const &)> const & onSuccess) noexcept {
+void AccessibilityInfo::isTouchExplorationEnabled(
+    std::function<void(React::JSValue const &)> const &onSuccess) noexcept {
   onSuccess(false);
 }
 
@@ -38,7 +38,6 @@ void AccessibilityInfo::setAccessibilityFocus(double reactTag) noexcept {
 }
 
 void AccessibilityInfo::announceForAccessibility(std::string announcement) noexcept {
-
   m_context.UIDispatcher().Post([context = m_context, announcement = std::move(announcement)] {
     xaml::UIElement element{nullptr};
 
