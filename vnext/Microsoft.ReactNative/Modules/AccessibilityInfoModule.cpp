@@ -44,7 +44,7 @@ void AccessibilityInfo::announceForAccessibility(std::string announcement) noexc
     // Windows requires a specific element to announce from.  Unfortunately the react-native API does not provide a tag
     // So we need to find something to try to raise the notification event from
 
-    if (auto window = winrt::Windows::UI::Xaml::Window::Current()) {
+    if (auto window = xaml::Window::Current()) {
       element = window.Content();
     }
 
