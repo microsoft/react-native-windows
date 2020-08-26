@@ -31,8 +31,8 @@ const View: React.AbstractComponent<
   React.ElementRef<typeof ViewNativeComponent>,
 > = React.forwardRef((props: ViewProps, forwardedRef) => {
   // [Win32
-  // $FlowFixMe Wanting to catch untyped usages
   invariant(
+    // $FlowFixMe Wanting to catch untyped usages
     props.acceptsKeyboardFocus === undefined,
     'Support for the "acceptsKeyboardFocus" property has been removed in favor of "focusable"',
   );
