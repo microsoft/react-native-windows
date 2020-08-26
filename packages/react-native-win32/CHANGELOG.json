@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 26 Aug 2020 05:07:06 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.42",
+      "version": "0.0.0-canary.42",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix bugs from acceptsKeyboardFocus to focusable deprecation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f332ab59b0732f4c7386632b105ee7090f8a51f9",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 22 Aug 2020 05:07:27 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.41",
       "version": "0.0.0-canary.41",

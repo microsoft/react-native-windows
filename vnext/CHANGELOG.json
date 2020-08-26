@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 26 Aug 2020 05:07:06 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.149",
+      "version": "0.0.0-canary.149",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix C# interop serialization for JsValueObject",
+            "author": "dannyvv@microsoft.com",
+            "commit": "f9deb92222d72effa73320556e342ab300ea7d0f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add API to turn off 3D perspective to enable controls that don't work in 3D",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "4e775b9a59c55996d7598aadaeb82c93c40cbb6f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix bugs from acceptsKeyboardFocus to focusable deprecation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f332ab59b0732f4c7386632b105ee7090f8a51f9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Aug 2020 05:04:58 GMT",
       "tag": "react-native-windows_v0.0.0-canary.147",
       "version": "0.0.0-canary.147",
