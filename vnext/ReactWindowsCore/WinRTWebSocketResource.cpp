@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 // clang-format off
@@ -8,6 +8,7 @@
 #include <Utilities.h>
 
 // Windows API
+#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <RestrictedErrorInfo.h>
 
@@ -85,7 +86,7 @@ namespace
 namespace Microsoft::React
 {
 
-WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, IDataWriter&& writer, Uri&& uri, vector<ChainValidationResult> &&certExeptions)
+WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, IDataWriter&& writer, Uri&& uri, vector<ChainValidationResult> &&certExeptions) noexcept
   : m_uri{ std::move(uri) }
   , m_socket{ std::move(socket) }
   , m_writer{ std::move(writer) }
@@ -98,17 +99,17 @@ WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, IData
   }
 }
 
-WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, Uri&& uri, vector<ChainValidationResult> certExeptions)
+WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, Uri&& uri, vector<ChainValidationResult> certExeptions) noexcept
   : WinRTWebSocketResource(std::move(socket), DataWriter{ socket.OutputStream() }, std::move(uri), std::move(certExeptions))
 {
 }
 
-WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<ChainValidationResult> &&certExeptions)
+WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<ChainValidationResult> &&certExeptions) noexcept
   : WinRTWebSocketResource(MessageWebSocket{}, Uri{ Utf8ToUtf16(urlString) }, std::move(certExeptions))
 {
 }
 
-WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
+WinRTWebSocketResource::~WinRTWebSocketResource() noexcept /*override*/
 {
   Close(CloseCode::GoingAway, "Disposed");
 
@@ -117,7 +118,7 @@ WinRTWebSocketResource::~WinRTWebSocketResource() /*override*/
 
 #pragma region Private members
 
-IAsyncAction WinRTWebSocketResource::PerformConnect()
+IAsyncAction WinRTWebSocketResource::PerformConnect() noexcept
 {
   auto self = shared_from_this();
   try
@@ -145,7 +146,7 @@ IAsyncAction WinRTWebSocketResource::PerformConnect()
   self->m_connectRequested = false;
 }
 
-fire_and_forget WinRTWebSocketResource::PerformPing()
+fire_and_forget WinRTWebSocketResource::PerformPing() noexcept
 {
   auto self = shared_from_this();
   try
@@ -184,7 +185,7 @@ fire_and_forget WinRTWebSocketResource::PerformPing()
   }
 }
 
-fire_and_forget WinRTWebSocketResource::PerformWrite()
+fire_and_forget WinRTWebSocketResource::PerformWrite() noexcept
 {
   auto self = shared_from_this();
   if (self->m_writeQueue.empty())
@@ -252,7 +253,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite()
   }
 }
 
-fire_and_forget WinRTWebSocketResource::PerformClose()
+fire_and_forget WinRTWebSocketResource::PerformClose() noexcept
 {
   co_await resume_background();
 
@@ -344,7 +345,7 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, IMessag
   }
 }
 
-void WinRTWebSocketResource::Synchronize()
+void WinRTWebSocketResource::Synchronize() noexcept
 {
   // Ensure sequence of other operations
   if (m_connectRequested)
@@ -357,7 +358,7 @@ void WinRTWebSocketResource::Synchronize()
 
 #pragma region IWebSocketResource
 
-void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& options)
+void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& options) noexcept
 {
   m_readyState = ReadyState::Connecting;
 
@@ -377,26 +378,26 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
   PerformConnect();
 }
 
-void WinRTWebSocketResource::Ping()
+void WinRTWebSocketResource::Ping() noexcept
 {
   PerformPing();
 }
 
-void WinRTWebSocketResource::Send(const string& message)
+void WinRTWebSocketResource::Send(const string& message) noexcept
 {
   m_writeQueue.push({ message, false });
 
   PerformWrite();
 }
 
-void WinRTWebSocketResource::SendBinary(const string& base64String)
+void WinRTWebSocketResource::SendBinary(const string& base64String) noexcept
 {
   m_writeQueue.push({ base64String, true });
 
   PerformWrite();
 }
 
-void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
+void WinRTWebSocketResource::Close(CloseCode code, const string& reason) noexcept
 {
   if (m_readyState == ReadyState::Closing || m_readyState == ReadyState::Closed)
     return;
@@ -409,37 +410,37 @@ void WinRTWebSocketResource::Close(CloseCode code, const string& reason)
   PerformClose();
 }
 
-IWebSocketResource::ReadyState WinRTWebSocketResource::GetReadyState() const
+IWebSocketResource::ReadyState WinRTWebSocketResource::GetReadyState() const noexcept
 {
   return m_readyState;
 }
 
-void WinRTWebSocketResource::SetOnConnect(function<void()>&& handler)
+void WinRTWebSocketResource::SetOnConnect(function<void()>&& handler) noexcept
 {
   m_connectHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnPing(function<void()>&& handler)
+void WinRTWebSocketResource::SetOnPing(function<void()>&& handler) noexcept
 {
   m_pingHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnSend(function<void(size_t)>&& handler)
+void WinRTWebSocketResource::SetOnSend(function<void(size_t)>&& handler) noexcept
 {
   m_writeHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&)>&& handler)
+void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&)>&& handler) noexcept
 {
   m_readHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnClose(function<void(CloseCode, const string&)>&& handler)
+void WinRTWebSocketResource::SetOnClose(function<void(CloseCode, const string&)>&& handler) noexcept
 {
   m_closeHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnError(function<void(Error&&)>&& handler)
+void WinRTWebSocketResource::SetOnError(function<void(Error&&)>&& handler) noexcept
 {
   m_errorHandler = std::move(handler);
 }

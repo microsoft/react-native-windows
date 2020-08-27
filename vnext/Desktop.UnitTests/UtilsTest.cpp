@@ -4,7 +4,6 @@
 #include <CppUnitTest.h>
 #include <Utils.h>
 
-using namespace facebook::react;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::string;
@@ -25,7 +24,7 @@ TEST_CLASS(UtilsTest) {
       string path = "/",
       string query = "") {
 
-    Url url(urlString);
+    Url url(std::move(urlString));
 
     Assert::AreEqual(protocol, url.scheme);
     Assert::AreEqual(host, url.host);
