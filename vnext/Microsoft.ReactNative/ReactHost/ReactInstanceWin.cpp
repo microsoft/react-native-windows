@@ -734,6 +734,7 @@ facebook::react::INativeUIManager *ReactInstanceWin::NativeUIManager() noexcept 
   if (auto uimanager = m_uiManager.LoadWithLock()) {
     return uimanager->getNativeUIManager();
   }
+  return nullptr;
 }
 
 std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() noexcept {
