@@ -2,14 +2,24 @@
 // Licensed under the MIT License.
 
 #include <jsi/jsi.h>
+#include <JSI/ChakraRuntimeArgs.h>
 #include <CppUnitTest.h>
 
 #include <functional>
 #include <map>
 #include <thread>
 
+// TODO (yicyao): #2730 Introduces a vcxitem for shared test code and move this
+// there.
+//#include <IntegrationTests/TestMessageQueueThread.h>
+
 using namespace facebook::jsi;
+using namespace Microsoft::JSI;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+using std::make_shared;
+using std::unique_ptr;
+using std::vector;
 
 using RuntimeFactory = std::function<std::unique_ptr<facebook::jsi::Runtime>()>;
 
@@ -27,9 +37,25 @@ unsigned countOccurences(const std::string &of, const std::string &in) {
 }
 #pragma warning(pop)
 
+//vector<RuntimeFactory> runtimeGenerators()
+//{
+//  return {[]() -> unique_ptr<Runtime> {
+//    ChakraRuntimeArgs args{};
+//
+//  }};
+//}
+
 } // namespace
 
 TEST_CLASS(JsiRuntimeUnitTests) {
+
+  public:
+  JsiRuntimeUnitTests()
+  {
+    
+  }
+
+  private:
 
   // The order of these member variable declarations is important because they
   // need to be initialized in this order.
