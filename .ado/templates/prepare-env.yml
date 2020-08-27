@@ -27,13 +27,6 @@ steps:
     inputs:
       versionSpec: ">=4.6.0"
 
-  - template: yarn-install.yml
-
-  - task: CmdLine@2
-    displayName: yarn ${{ parameters.yarnBuildCmd }}
-    inputs:
-      script: yarn ${{ parameters.yarnBuildCmd }}
-
   - task: PowerShell@2
     displayName: List Visual Studio Components
     inputs:
