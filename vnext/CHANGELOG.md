@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 24 Aug 2020 05:04:58 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Aug 2020 05:07:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.149
+
+Wed, 26 Aug 2020 05:07:06 GMT
+
+### Changes
+
+- Fix C# interop serialization for JsValueObject (dannyvv@microsoft.com)
+- Add API to turn off 3D perspective to enable controls that don't work in 3D (asklar@winse.microsoft.com)
+- Fix bugs from acceptsKeyboardFocus to focusable deprecation (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.147
 

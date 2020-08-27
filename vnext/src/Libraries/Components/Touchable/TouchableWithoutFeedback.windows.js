@@ -67,7 +67,6 @@ type Props = $ReadOnly<{|
   rejectResponderTermination?: ?boolean,
   testID?: ?string,
   touchSoundDisabled?: ?boolean,
-  acceptsKeyboardFocus?: ?boolean, // [Windows]
   accessibilityPosInSet?: ?number, // [Windows]
   accessibilitySetSize?: ?number, // [Windows]
   onAccessibilityTap?: ?() => void, // [Windows]
@@ -138,10 +137,6 @@ class TouchableWithoutFeedback extends React.Component<Props, State> {
     const elementProps: {[string]: mixed, ...} = {
       ...eventHandlersWithoutBlurAndFocus,
       accessible: this.props.accessible !== false,
-      acceptsKeyboardFocus:
-        (this.props.acceptsKeyboardFocus === undefined ||
-          this.props.acceptsKeyboardFocus === true) &&
-        !this.props.disabled, // [Windows]
       focusable:
         this.props.focusable !== false && this.props.onPress !== undefined,
     };

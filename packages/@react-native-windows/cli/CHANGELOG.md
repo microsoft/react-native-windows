@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 25 Aug 2020 05:05:08 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Aug 2020 05:07:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.8
+
+Wed, 26 Aug 2020 05:07:06 GMT
+
+### Changes
+
+- Fix deploy bug where a framework package is installed for one arch but not the one that we are building for (asklar@winse.microsoft.com)
 
 ## 0.0.0-canary.7
 

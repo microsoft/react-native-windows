@@ -369,7 +369,6 @@ const ReactNativeViewConfig = {
     enableFocusRing: true,
     onClick: true,
     onMouseLeave: true,
-    acceptsKeyboardFocus: true,
     tabIndex: true,
     // Windows]
   },

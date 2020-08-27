@@ -317,6 +317,14 @@
     },
     {
       "type": "patch",
+      "file": "src/Libraries/Components/View/View.windows.js",
+      "baseFile": "Libraries/Components/View/View.js",
+      "baseVersion": "0.63.2",
+      "baseHash": "147459dc889f04f2405db051445833f791726895",
+      "issue": 5843
+    },
+    {
+      "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
       "baseVersion": "0.0.0-3346ac7f9",
@@ -447,19 +455,11 @@
     },
     {
       "type": "patch",
-      "file": "src/RNTester/js/components/ListExampleShared.windows.js",
-      "baseFile": "RNTester/js/components/ListExampleShared.js",
-      "baseVersion": "0.0.0-3346ac7f9",
-      "baseHash": "d7be07e3fd8d9c1df8e23d5674ce3eb067d00865",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
       "file": "src/RNTester/js/components/RNTesterExampleList.windows.js",
       "baseFile": "RNTester/js/components/RNTesterExampleList.js",
       "baseVersion": "0.0.0-3346ac7f9",
       "baseHash": "fc507321dc5cb53be93df517ba5c4b1acd0074f4",
-      "issue": "LEGACY_FIXME"
+      "issue": 5834
     },
     {
       "type": "derived",

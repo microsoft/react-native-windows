@@ -231,6 +231,14 @@
       "file": "src/Libraries/Components/View/Tests/ViewWin32Test.tsx"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Components/View/View.win32.js",
+      "baseFile": "Libraries/Components/View/View.js",
+      "baseVersion": "0.63.2",
+      "baseHash": "147459dc889f04f2405db051445833f791726895",
+      "issue": 5843
+    },
+    {
       "type": "platform",
       "file": "src/Libraries/Components/View/ViewWin32.Props.ts"
     },

@@ -61,11 +61,12 @@ class RowComponent extends React.PureComponent<{
         {theme => {
           return (
             <TouchableHighlight
+              // [Windows Add testID for e2etest
               testID={item.module.title}
+              // Windows]
               onShowUnderlay={this.props.onShowUnderlay}
               onHideUnderlay={this.props.onHideUnderlay}
               onAccessibilityTap={this._onPress}
-              focusable={false} // TODO(macOS ISS#2323203)
               onPress={this._onPress}>
               <View
                 style={[
@@ -154,7 +155,6 @@ class RNTesterExampleList extends React.Component<Props, $FlowFixMeState> {
                     sections={filteredSections}
                     renderItem={this._renderItem}
                     keyboardShouldPersistTaps="handled"
-                    focusable={true} // TODO(macOS ISS#2323203)
                     automaticallyAdjustContentInsets={false}
                     keyboardDismissMode="on-drag"
                     renderSectionHeader={renderSectionHeader}

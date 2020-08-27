@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Remove acceptsKeyboardFocus (for real this time)",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-26T07:13:25.470Z"
+}

@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 22 Aug 2020 05:07:27 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Aug 2020 05:07:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.42
+
+Wed, 26 Aug 2020 05:07:06 GMT
+
+### Changes
+
+- Fix bugs from acceptsKeyboardFocus to focusable deprecation (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.41
 

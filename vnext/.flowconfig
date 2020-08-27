@@ -23,6 +23,7 @@
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
+<PROJECT_ROOT>/Libraries/Components/View/View.js
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
@@ -30,7 +31,6 @@
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
-<PROJECT_ROOT>/RNTester/js/components/ListExampleShared.js
 <PROJECT_ROOT>/RNTester/js/components/RNTesterExampleList.js
 <PROJECT_ROOT>/RNTester/js/examples/ScrollView/ScrollViewExample.js
 <PROJECT_ROOT>/RNTester/js/examples/View/ViewExample.js

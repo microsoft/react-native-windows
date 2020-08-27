@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 26 Aug 2020 05:07:06 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.8",
+      "version": "0.0.0-canary.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix deploy bug where a framework package is installed for one arch but not the one that we are building for",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "3d857e5dfc8b6191793e8c9cf7d8044fa18d8d9f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Aug 2020 05:05:08 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.7",
       "version": "0.0.0-canary.7",

@@ -56,6 +56,18 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
     }
 
     [TestMethod]
+    public void PromiseStructParamReturnVoid()
+    {
+      TestMethod("public void Method(ReactPromise<int> promise) {}", ReactMethod.MethodReturnStyle.Promise);
+    }
+
+    [TestMethod]
+    public void PromiseStructOneArgParamReturnVoid()
+    {
+      TestMethod("public void Method(string s, ReactPromise<int> promise) {}", ReactMethod.MethodReturnStyle.Promise);
+    }
+
+    [TestMethod]
     public void IntParamAndPromiseParamReturnVoid()
     {
       TestMethod("public void Method(int x, IReactPromise<int> promise) {}", ReactMethod.MethodReturnStyle.Promise);
