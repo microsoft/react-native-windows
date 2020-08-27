@@ -12,39 +12,56 @@ variables:
   - template: variables/vs2019.yml
 
 jobs:
-  - job: CliInit
-    displayName: Verify react-native init
+  - job: RNW_WinUI3
+    displayName: WinUI3 Playground
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        WinUI3_X86DebugCpp:
-          language: cpp
-          configuration: Debug
-          platform: x86
-          additionalInitArguments: --useWinUI3 true
-          additionalRunArguments:
-        WinUI3_X86DebugCs:
-          language: cs
-          configuration: Debug
-          platform: x86
-          additionalInitArguments: --useWinUI3 true
-          additionalRunArguments:
-
-    timeoutInMinutes: 40 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        X86:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
     pool:
       name: 'winuibuildagents'
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 5
+
     steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '12.18.3' 
-          checkLatest: false # Optional
+      - checkout: self
+        clean: false
+        submodules: false
 
       - template: templates/prepare-env.yml
 
-      - template: templates/react-native-init.yml
-        parameters:
-          language: $(language)
-          configuration: $(configuration)
-          platform: $(platform)
-          additionalInitArguments: $(additionalInitArguments)
-          additionalRunArguments: $(additionalRunArguments)
+      - task: NuGetCommand@2
+        displayName: NuGet restore - Playground
+        inputs:
+          command: restore
+          restoreSolution: packages/playground/windows/Playground.sln
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+        
+      - task: VSBuild@1
+        displayName: VSBuild - Playground
+        inputs:
+          solution: packages/playground/windows/Playground.sln
+          vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          clean: true # Optional
+          maximumCpuCount: false # Optional
+          restoreNugetPackages: false # Optional
+          msbuildArgs:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
+            /p:BaseIntDir=$(BaseIntDir)
+            /p:AppxPackageSigningEnabled=false
+            /p:UseWinUI3=true
+
+      - task: PublishBuildArtifacts@1
+        displayName: Upload crash dumps
+        inputs:
+          pathtoPublish: '$(Build.StagingDirectory)/CrashDumps/'
+          artifactName: 'Crash dumps - $(Agent.JobName)-$(System.JobAttempt)'
+        condition: failed()
+
