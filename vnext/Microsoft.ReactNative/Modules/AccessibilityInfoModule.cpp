@@ -33,7 +33,7 @@ void AccessibilityInfo::isTouchExplorationEnabled(
   onSuccess(false);
 }
 
-void AccessibilityInfo::setAccessibilityFocus(double reactTag) noexcept {
+void AccessibilityInfo::setAccessibilityFocus(double /*reactTag*/) noexcept {
   // no-op
 }
 
