@@ -39,6 +39,13 @@ jobs:
           versionSpec: '12.18.3' 
           checkLatest: false # Optional
 
+      - task: geeklearningio.gl-vsts-tasks-yarn-dev.yarn-installer-task.YarnInstaller@3
+        displayName: 'Use Yarn 1.19.1'
+        inputs:
+          versionSpec: 1.19.1
+          checkLatest: false
+          includePrerelease: false
+
       - template: templates/react-native-init.yml
         parameters:
           language: $(language)
