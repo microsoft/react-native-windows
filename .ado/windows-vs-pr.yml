@@ -14,8 +14,6 @@ variables:
 jobs:
   - job: CliInit
     displayName: Verify react-native init
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         WinUI3_X86DebugCpp:
