@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Launch application for all ActivationKinds",
+  "packageName": "react-native-windows",
+  "email": "ryan.fowler@singlewire.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-27T13:37:21.576Z"
+}
