@@ -50,7 +50,7 @@ Today we support the following projects as a NuGet package:
       error : Mismatch detected between npm package versions and nuget package version.
       error :     Npm:   '0.0.0-canary.148' - Z:\Temp\tst2\node_modules\react-native-windows\package.json
       error :     NuGet: '0.0.1-MyTest010' - Z:\Temp\tst2\windows\tst2\tsts2.csproj
-      error : Update either to match the version.
+      error : To update the nuget version, please see https://microsoft.github.io/react-native-windows/docs/nuget-update for instructions
       ```
       
       You can disable the check by setting the environment variable:
