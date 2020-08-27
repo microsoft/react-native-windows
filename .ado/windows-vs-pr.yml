@@ -29,6 +29,11 @@ jobs:
         clean: false
         submodules: false
 
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '12.18.3' 
+          checkLatest: false # Optional
+
       - template: templates/prepare-env.yml
 
       - task: NuGetCommand@2
