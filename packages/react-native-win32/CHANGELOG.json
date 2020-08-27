@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 27 Aug 2020 05:05:29 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.43",
+      "version": "0.0.0-canary.43",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix TouchableWin32 Infinite Recursion on Click",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7b9852208f014d3382aab28c19ecb13ae707a11f",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Remove acceptsKeyboardFocus (for real this time)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "443f76a03724d0b456e4422499a768d4d02657d3",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Aug 2020 05:07:06 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.42",
       "version": "0.0.0-canary.42",

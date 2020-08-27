@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 26 Aug 2020 05:07:06 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Aug 2020 05:05:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.150
+
+Thu, 27 Aug 2020 05:05:29 GMT
+
+### Changes
+
+- Remove acceptsKeyboardFocus (for real this time) (ngerlem@microsoft.com)
+- Harden ReactInstanceWin::NativeUIManager to return null when instance is being torn down (acoates-ms@noreply.github.com)
 
 ## 0.0.0-canary.149
 

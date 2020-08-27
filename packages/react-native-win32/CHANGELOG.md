@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 26 Aug 2020 05:07:06 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Aug 2020 05:05:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.43
+
+Thu, 27 Aug 2020 05:05:29 GMT
+
+### Changes
+
+- Fix TouchableWin32 Infinite Recursion on Click (ngerlem@microsoft.com)
+- Remove acceptsKeyboardFocus (for real this time) (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.42
 
