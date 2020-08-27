@@ -54,7 +54,7 @@ std::unordered_set<int64_t> &ShadowNodeRegistry::getAllRoots() {
   return m_roots;
 }
 
-std::map<int64_t, shadow_ptr>& ShadowNodeRegistry::getAllNodes() {
+std::map<int64_t, shadow_ptr> &ShadowNodeRegistry::getAllNodes() {
   return m_allNodes;
 }
 
