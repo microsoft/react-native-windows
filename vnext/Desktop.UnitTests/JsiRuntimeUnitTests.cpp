@@ -3,7 +3,9 @@
 
 #include <jsi/jsi.h>
 #include <JSI/ChakraRuntimeArgs.h>
+#include <JSI/ChakraRuntimeFactory.h>
 #include <CppUnitTest.h>
+#include <MemoryTracker.h>
 
 #include <functional>
 #include <map>
@@ -11,14 +13,20 @@
 
 // TODO (yicyao): #2730 Introduces a vcxitem for shared test code and move this
 // there.
-//#include <IntegrationTests/TestMessageQueueThread.h>
+#include "../IntegrationTests/TestMessageQueueThread.h"
 
 using namespace facebook::jsi;
-using namespace Microsoft::JSI;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+using facebook::react::CreateMemoryTracker;
+using facebook::react::MessageQueueThread;
+using Microsoft::JSI::ChakraRuntimeArgs;
+using Microsoft::JSI::makeChakraRuntime;
+using Microsoft::React::Test::TestMessageQueueThread;
 using std::make_shared;
+using std::shared_ptr;
 using std::unique_ptr;
+using std::vector;
 using std::vector;
 
 using RuntimeFactory = std::function<std::unique_ptr<facebook::jsi::Runtime>()>;
@@ -37,49 +45,50 @@ unsigned countOccurences(const std::string &of, const std::string &in) {
 }
 #pragma warning(pop)
 
-//vector<RuntimeFactory> runtimeGenerators()
-//{
-//  return {[]() -> unique_ptr<Runtime> {
-//    ChakraRuntimeArgs args{};
-//
-//  }};
-//}
+vector<RuntimeFactory> runtimeGenerators()
+{
+  return {[]() -> unique_ptr<Runtime> {
+    ChakraRuntimeArgs args{};
+
+    args.jsQueue = std::make_shared<TestMessageQueueThread>();
+
+    shared_ptr<MessageQueueThread> memoryTrackerCallbackQueue = make_shared<TestMessageQueueThread>();
+
+    args.memoryTracker = CreateMemoryTracker(std::move(memoryTrackerCallbackQueue));
+
+    return makeChakraRuntime(std::move(args));
+  }};
+}
 
 } // namespace
 
 TEST_CLASS(JsiRuntimeUnitTests) {
 
+  private:
+  // The order of these member variable declarations is important because they
+  // need to be initialized in this order.
+  RuntimeFactory m_factory;
+  unique_ptr<Runtime> m_runtimePtr;
+  Runtime &rt;
+
   public:
-  JsiRuntimeUnitTests()
+  JsiRuntimeUnitTests() : m_factory{runtimeGenerators()[0]}, m_runtimePtr{m_factory()}, rt{*m_runtimePtr}
   {
-    
   }
 
   private:
 
-  // The order of these member variable declarations is important because they
-  // need to be initialized in this order.
-  RuntimeFactory m_factory;
-  //std::unique_ptr<facebook::jsi::Runtime> runtime;
-  //facebook::jsi::Runtime &rt;
-
   Value eval(const char* code)
   {
-    auto &rt = *m_factory();
-
     return rt.global().getPropertyAsFunction(rt, "eval").call(rt, code);
   }
 
   Function function(const std::string& code) {
-    auto &rt = *m_factory();
-
     return eval(("(" + code + ")").c_str()).getObject(rt).getFunction(rt);
   }
 
   bool checkValue(const Value& value, const std::string& jsValue)
   {
-    auto &rt = *m_factory();
-
     // TODO (yicyao): Should we use === instead of == here?
     return function("function(value) { return value == " + jsValue + "; }").call(rt, value).getBool();
   }
@@ -89,7 +98,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
     // in JS yet.  All I can do is create them, compare them, and
     // receive one as an argument to a HostObject.
 
-    auto &rt = *m_factory();
     PropNameID quux = PropNameID::forAscii(rt, "quux1", 4);
     PropNameID movedQuux = std::move(quux);
     Assert::AreEqual(movedQuux.utf8(rt), {"quux"});
@@ -120,8 +128,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
 
   TEST_METHOD(JsiRuntimeUnitTests_StringTest)
   {
-    auto &rt = *m_factory();
-
     Assert::IsTrue(checkValue(String::createFromAscii(rt, "foobar", 3), "'foo'"));
     Assert::IsTrue(checkValue(String::createFromAscii(rt, "foobar"), "'foobar'"));
 
@@ -143,8 +149,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
 
   TEST_METHOD(JsiRuntimeUnitTests_ObjectTest)
   {
-    auto &rt = *m_factory();
-
     eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
     Object x = rt.global().getPropertyAsObject(rt, "x");
     Assert::AreEqual(static_cast<size_t>(4), x.getPropertyNames(rt).size(rt));
@@ -226,8 +230,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
 
   TEST_METHOD(JsiRuntimeUnitTests_FunctionTest)
   {
-    auto &rt = *m_factory();
-
     // test move ctor
     Function fmove = function("function() { return 1 }");
     {
@@ -292,8 +294,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
 
   TEST_METHOD(JsiRuntimeUnitTests_FunctionThisTest)
   {
-    auto &rt = *m_factory();
-
     Function checkPropertyFunction = function("function() { return this.a === 'a_property' }");
 
     Object jsObject = Object(rt);
@@ -317,8 +317,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
 
   TEST_METHOD(JsiRuntimeUnitTests_FunctionConstructorTest)
   {
-    auto &rt = *m_factory();
-
     Function ctor = function(
         "function (a) {"
         "  if (typeof a !== 'undefined') {"
@@ -353,8 +351,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
 
   TEST_METHOD(JsiRuntimeUnitTests_InstanceOfTest)
   {
-    auto &rt = *m_factory();
-
     auto ctor = function("function Rick() { this.say = 'wubalubadubdub'; }");
     auto newObj = function("function (ctor) { return new ctor(); }");
     auto instance = newObj.call(rt, ctor).getObject(rt);
@@ -366,8 +362,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
 
   TEST_METHOD(JsiRuntimeUnitTests_ValueTest)
   {
-    auto &rt = *m_factory();
-
     Assert::IsTrue(checkValue(Value::undefined(), "undefined"));
     Assert::IsTrue(checkValue(Value(), "undefined"));
     Assert::IsTrue(checkValue(Value::null(), "null"));
@@ -453,8 +447,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
 
   TEST_METHOD(JsiRuntimeUnitTests_EqualsTest)
   {
-    auto &rt = *m_factory();
-
     Assert::IsTrue(Object::strictEquals(rt, rt.global(), rt.global()));
     Assert::IsTrue(Value::strictEquals(rt, 1, 1));
     Assert::IsFalse(Value::strictEquals(rt, true, 1));
@@ -496,8 +488,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
 
   TEST_METHOD(JsiRuntimeUnitTests_ExceptionStackTraceTest)
   {
-    auto &rt = *m_factory();
-
       static const char invokeUndefinedScript[] =
         "function hello() {"
         "  var a = {}; a.log(); }"
@@ -515,8 +505,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
   //TODO
   TEST_METHOD(JsiRuntimeUnitTests_JSErrorsArePropagatedNicely)
   {
-    auto &rt = *m_factory();
-
     //unsigned callsBeforeError = 5;
 
     //Function sometimesThrows = function(
@@ -549,8 +537,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
 
   TEST_METHOD(JsiRuntimeUnitTests_JSErrorsCanBeConstructedWithStack)
   {
-    auto &rt = *m_factory();
-
     auto err = JSError(rt, "message", "stack");
     Assert::AreEqual(err.getMessage(), {"message"});
     Assert::AreEqual(err.getStack(), {"stack"});
@@ -558,16 +544,12 @@ TEST_CLASS(JsiRuntimeUnitTests) {
 
   TEST_METHOD(JsiRuntimeUnitTests_ScopeDoesNotCrashTest)
   {
-    auto &rt = *m_factory();
-
     Scope scope(rt);
     Object o(rt);
   }
 
   TEST_METHOD(JsiRuntimeUnitTests_ScopeDoesNotCrashWhenValueEscapes)
   {
-    auto &rt = *m_factory();
-
     Value v;
     Scope::callInNewScope(rt, [&]() {
       Object o(rt);
@@ -580,8 +562,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
   // Verifies you can have a host object that emulates a normal object
   TEST_METHOD(JsiRuntimeUnitTests_HostObjectWithValueMembers)
   {
-    auto &rt = *m_factory();
-
     class Bag : public HostObject {
      public:
       Bag() = default;
