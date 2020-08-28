@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Remove ShadowNodes left in UIManager dtor",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch",
+  "date": "2020-08-28T00:58:46.515Z"
+}
