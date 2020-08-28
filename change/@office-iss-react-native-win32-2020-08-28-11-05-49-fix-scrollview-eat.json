@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Promote 0.63 to latest",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-28T18:05:49.303Z"
+}
