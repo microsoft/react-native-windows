@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 28 Aug 2020 01:35:52 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.0-preview.4",
+      "version": "0.63.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix bugs from acceptsKeyboardFocus to focusable deprecation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fc504755f0658f66d49c54b8b435b32e2780ae90",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Aug 2020 15:05:26 GMT",
       "tag": "@office-iss/react-native-win32_v0.63.0-preview.3",
       "version": "0.63.0-preview.3",
