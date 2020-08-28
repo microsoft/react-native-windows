@@ -592,16 +592,6 @@ export class TextExample extends React.Component<{}> {
 
         <RNTesterBlock title="Text With Border">
           <>
-            <Text>
-              This text is
-              <Text
-                style={{color: 'red', borderWidth: 1, borderColor: 'black'}}>
-                outlined
-              </Text>
-              and laid out within the normal text run, so will wrap etc as
-              normal text.
-            </Text>
-
             <Text style={styles.borderedText}>
               Igor bordered {'\n'}
               <Text style={{borderColor: 'red', borderWidth: 5}}>
@@ -610,6 +600,26 @@ export class TextExample extends React.Component<{}> {
                   2nd Inside text!
                 </Text>
               </Text>
+            </Text>
+
+            <Text style={styles.borderedText}>
+              This text is{' '}
+              <Text
+                style={{color: 'red', borderWidth: 1, borderColor: 'black'}}>
+                outlined
+              </Text>
+              and laid out within the normal text run, so will wrap etc as
+              normal text.
+            </Text>
+
+            <Text>
+              This text is{' '}
+              <Text
+                style={{color: 'red', borderWidth: 1, borderColor: 'black'}}>
+                outlined
+              </Text>
+              and laid out within the normal text run, so will wrap etc as
+              normal text.
             </Text>
           </>
         </RNTesterBlock>
