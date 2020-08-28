@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 27 Aug 2020 05:05:29 GMT and should not be manually modified.
+This log was last generated on Fri, 28 Aug 2020 05:06:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.151
+
+Fri, 28 Aug 2020 05:06:54 GMT
+
+### Changes
+
+- Launch application for all ActivationKinds (ryan.fowler@singlewire.com)
+- Fixed templates so C++ apps can consume C# native modules (jthysell@microsoft.com)
+- Add verification to ensure nuget and npm version match. (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.150
 

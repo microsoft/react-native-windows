@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 28 Aug 2020 05:06:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.151",
+      "version": "0.0.0-canary.151",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Launch application for all ActivationKinds",
+            "author": "ryan.fowler@singlewire.com",
+            "commit": "d3114e031ad23170861d85e66d4f311ea4355326",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixed templates so C++ apps can consume C# native modules",
+            "author": "jthysell@microsoft.com",
+            "commit": "db6213f3b9ec6553068e54809c72fceeeb7f0731",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add verification to ensure nuget and npm version match.",
+            "author": "dannyvv@microsoft.com",
+            "commit": "1e1299e3f1bd2afd2e18d8240985874eca026da2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Aug 2020 05:05:29 GMT",
       "tag": "react-native-windows_v0.0.0-canary.150",
       "version": "0.0.0-canary.150",
