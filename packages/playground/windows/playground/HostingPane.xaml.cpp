@@ -12,6 +12,8 @@
 #include <ReactUWP/ReactUwp.h>
 #include <ViewManager.h>
 
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <wrl.h>
@@ -113,7 +115,8 @@ class SampleNativeModuleProvider final : public facebook::react::NativeModulePro
     std::vector<facebook::react::NativeModuleDescription> modules;
     std::shared_ptr<facebook::react::MessageQueueThread> queue = defaultQueueThread;
 
-    modules.emplace_back(SampleCxxModule::Name, []() { return std::make_unique<SampleCxxModule>(); }, queue);
+    modules.emplace_back(
+        SampleCxxModule::Name, []() { return std::make_unique<SampleCxxModule>(); }, queue);
 
     return modules;
   }
