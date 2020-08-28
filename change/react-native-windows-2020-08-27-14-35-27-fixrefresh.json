@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix fast refresh",
+  "packageName": "react-native-windows",
+  "email": "acoates-ms@noreply.github.com",
+  "dependentChangeType": "patch",
+  "date": "2020-08-27T21:35:27.726Z"
+}
