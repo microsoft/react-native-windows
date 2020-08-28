@@ -3,6 +3,7 @@
 
 #pragma once
 #include <ShadowNode.h>
+#include <functional/functorref.h>
 #include <map>
 
 namespace facebook {
@@ -32,6 +33,8 @@ struct ShadowNodeRegistry {
   std::map<int64_t, shadow_ptr> &getAllNodes();
 
   ShadowNode *getParentRootShadowNode(int64_t nodeTag);
+
+  void ForAllNodes(const Mso::FunctorRef<void(int64_t, shadow_ptr const &)> &fnDo) noexcept;
 
  private:
   std::unordered_set<int64_t> m_roots;

@@ -26,9 +26,9 @@ UIManager::UIManager(std::vector<std::unique_ptr<IViewManager>> &&viewManagers, 
 
 UIManager::~UIManager() {
   m_nodeRegistry.removeAllRootViews([this](int64_t rootViewTag) { removeRootView(rootViewTag); });
-  for (auto it = m_nodeRegistry.getAllNodes().begin(); it != m_nodeRegistry.getAllNodes().end(); it++) {
-    DropView(it->first, false, true);
-  }
+  m_nodeRegistry.ForAllNodes([this](int64_t tag, shadow_ptr const &shadowNode) noexcept {
+    DropView(tag, false, true);
+  });
   m_nativeUIManager->setHost(nullptr);
   m_nativeUIManager->destroy();
 }
