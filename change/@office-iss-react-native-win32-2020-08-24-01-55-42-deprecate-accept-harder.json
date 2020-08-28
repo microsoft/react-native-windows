@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix bugs from acceptsKeyboardFocus to focusable deprecation",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-24T08:55:40.764Z"
-}

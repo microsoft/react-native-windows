@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation. All rights reserved.
+ Licensed under the MIT License.. 
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Add a workaround to make sure the .NET framework libraries are correctly copied to the AppX folder in Debug (CoreCLR) mode -->
+  <Target Name="AfterInjectNetCoreFramework" AfterTargets="InjectNetCoreFramework" Condition="'$(ConsumeCSharpModules)' == 'true'">
+    <ItemGroup>
+      <PackagingOutputs Include="@(_InjectNetCoreFrameworkPayload)" Condition="'%(_InjectNetCoreFrameworkPayload.NuGetPackageId)' == '$(_CoreRuntimePackageId)' and '$(UseDotNetNativeToolchain)' != 'true'">
+        <TargetPath>%(Filename)%(Extension)</TargetPath>
+        <ProjectName>$(ProjectName)</ProjectName>
+        <OutputGroup>CopyLocalFilesOutputGroup</OutputGroup>
+      </PackagingOutputs>
+    </ItemGroup>
+  </Target>
+
+  <ImportGroup Condition="'$(ConsumeCSharpModules)' == 'true'">
+    <!-- Start Custom .NET Native targets -->
+    <!-- Import all of the .NET Native / CoreCLR targets at the end of the project -->
+    <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets" />
+    <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets" />
+    <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk\$(UWPCoreRuntimeSdkVersion)\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets" />
+    <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\Microsoft.Net.Native.Compiler.targets" />
+    <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-x86.Microsoft.Net.Native.Compiler.targets" />
+    <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-x64.Microsoft.Net.Native.Compiler.targets" />
+    <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-arm.Microsoft.Net.Native.Compiler.targets" />
+    <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm64.Microsoft.Net.Native.Compiler\$(DotNetNativeVersion)\build\runtime.win10-arm64.Microsoft.Net.Native.Compiler.targets" />
+    <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeRuntimeVersion)\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.targets" />
+    <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeRuntimeVersion)\build\runtime.win10-x64.Microsoft.Net.Native.SharedLibrary.targets" />
+    <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeRuntimeVersion)\build\runtime.win10-arm.Microsoft.Net.Native.SharedLibrary.targets" />
+    <Import Project="$(ProgramFiles)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary\$(DotNetNativeRuntimeVersion)\build\runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary.targets" />
+    <!-- End Custom .NET Native targets -->
+  </ImportGroup>
+
+</Project>
