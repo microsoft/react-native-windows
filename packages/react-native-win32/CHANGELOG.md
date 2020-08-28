@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 28 Aug 2020 01:35:52 GMT and should not be manually modified.
+This log was last generated on Fri, 28 Aug 2020 17:58:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.0-preview.5
+
+Fri, 28 Aug 2020 17:58:04 GMT
+
+### Changes
+
+- Fix TouchableWin32 Infinite Recursion on Click (ngerlem@microsoft.com)
 
 ## 0.63.0-preview.4
 

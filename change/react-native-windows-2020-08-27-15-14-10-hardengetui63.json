@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Harden ReactInstanceWin::NativeUIManager to return null when instance is being torn down",
-  "packageName": "react-native-windows",
-  "email": "acoates-ms@noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-27T22:14:10.532Z"
-}

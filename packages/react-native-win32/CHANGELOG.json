@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 28 Aug 2020 17:58:04 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.0-preview.5",
+      "version": "0.63.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix TouchableWin32 Infinite Recursion on Click",
+            "author": "ngerlem@microsoft.com",
+            "commit": "343101063320310f665f83b5652db8eeab4baf9c",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Aug 2020 01:35:52 GMT",
       "tag": "@office-iss/react-native-win32_v0.63.0-preview.4",
       "version": "0.63.0-preview.4",
