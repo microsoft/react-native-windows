@@ -30,7 +30,6 @@ struct ShadowNodeRegistry {
   void removeAllRootViews(const std::function<void(int64_t rootViewTag)> &);
 
   std::unordered_set<int64_t> &getAllRoots();
-  std::map<int64_t, shadow_ptr> &getAllNodes();
 
   ShadowNode *getParentRootShadowNode(int64_t nodeTag);
 

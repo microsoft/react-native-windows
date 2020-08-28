@@ -54,10 +54,6 @@ std::unordered_set<int64_t> &ShadowNodeRegistry::getAllRoots() {
   return m_roots;
 }
 
-std::map<int64_t, shadow_ptr> &ShadowNodeRegistry::getAllNodes() {
-  return m_allNodes;
-}
-
 // iterate its parent to get the root shadow node
 ShadowNode *ShadowNodeRegistry::getParentRootShadowNode(int64_t nodeTag) {
   auto node = findNode(nodeTag);
