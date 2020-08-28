@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Promote 0.62 to legacy",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-08-28T09:39:06.965Z"
+}
