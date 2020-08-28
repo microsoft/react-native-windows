@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Drop shadownodes still in registry in uimanager dtor",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch",
+  "date": "2020-08-28T22:53:56.541Z"
+}
