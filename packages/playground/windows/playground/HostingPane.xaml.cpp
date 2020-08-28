@@ -12,6 +12,8 @@
 #include <ReactUWP/ReactUwp.h>
 #include <ViewManager.h>
 
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <wrl.h>
