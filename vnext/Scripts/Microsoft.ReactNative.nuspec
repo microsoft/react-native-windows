@@ -17,6 +17,7 @@
   <files>
 
     <file src="$nugetroot$\Microsoft.ReactNative.targets" target="build\native"/>
+    <file src="$nugetroot$\Microsoft.ReactNative.VersionCheck.targets" target="build\native"/>
 
     <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd"   target="lib\uap10.0"/>
     <!-- 

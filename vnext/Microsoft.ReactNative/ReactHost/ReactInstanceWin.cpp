@@ -224,9 +224,15 @@ void ReactInstanceWin::Initialize() noexcept {
 
           auto devSettings = std::make_shared<facebook::react::DevSettings>();
           devSettings->useJITCompilation = m_options.EnableJITCompilation;
-          devSettings->sourceBundleHost = m_options.DeveloperSettings.SourceBundleHost;
-          devSettings->sourceBundlePort = m_options.DeveloperSettings.SourceBundlePort;
-          devSettings->debugBundlePath = m_options.DeveloperSettings.SourceBundleName;
+          devSettings->sourceBundleHost = m_options.DeveloperSettings.SourceBundleHost.empty()
+              ? facebook::react::DevServerHelper::DefaultPackagerHost
+              : m_options.DeveloperSettings.SourceBundleHost;
+          devSettings->sourceBundlePort = m_options.DeveloperSettings.SourceBundlePort
+              ? m_options.DeveloperSettings.SourceBundlePort
+              : facebook::react::DevServerHelper::DefaultPackagerPort;
+          devSettings->debugBundlePath = m_options.DeveloperSettings.SourceBundleName.empty()
+              ? m_options.Identity
+              : m_options.DeveloperSettings.SourceBundleName;
           devSettings->liveReloadCallback = GetLiveReloadCallback();
           devSettings->errorCallback = GetErrorCallback();
           devSettings->loggingCallback = GetLoggingCallback();
@@ -735,7 +741,10 @@ void ReactInstanceWin::DispatchEvent(int64_t viewTag, std::string &&eventName, f
 }
 
 facebook::react::INativeUIManager *ReactInstanceWin::NativeUIManager() noexcept {
-  return m_uiManager.LoadWithLock()->getNativeUIManager();
+  if (auto uimanager = m_uiManager.LoadWithLock()) {
+    return uimanager->getNativeUIManager();
+  }
+  return nullptr;
 }
 
 std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() noexcept {

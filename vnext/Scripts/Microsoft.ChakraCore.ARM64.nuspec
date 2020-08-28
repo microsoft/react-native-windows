@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  Sample usage:
+
+nuget pack Microsoft.ChakraCore.ARM64.nuspec `
+  -Properties "id=ReactWindows.ChakraCore.ARM64;targetRoot=D:\chakra;repoUrl=https://github.com/microsoft/ChakraCore;repoBranch=master;repoCommit=$(git rev-parse HEAD)" `
+  -Version 1.11.20.0
+ -->
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <!-- i.e.: Microsoft.ChakraCore.vc140.ARM64 -->
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>Chakra Team</owners>
+    <licenseUrl>https://github.com/Microsoft/ChakraCore/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/Microsoft/ChakraCore</projectUrl>
+    <repository type="git" url="$repoUrl$" branch="$repoBranch$" commit="$repoCommit$" />
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <developmentDependency>true</developmentDependency>
+    <description>ChakraCore is the core part of the Chakra Javascript engine that powers Microsoft Edge.</description>
+    <releaseNotes>https://github.com/Microsoft/ChakraCore/wiki/Roadmap#release-notes</releaseNotes>
+    <copyright>&#169; Microsoft Corporation. All rights reserved.</copyright>
+    <language>en-US</language>
+    <tags>Chakra,ChakraCore,javascript,js,ecmascript,compiler,platform,oss,opensource,native,nativepackage,C++,vc140</tags>
+    <dependencies>
+      <group targetFramework="native" />
+    </dependencies>
+  </metadata>
+  <files>
+    <!--Build-->
+    <file src="Microsoft.ChakraCore.ARM64.targets" target="build\native\$id$.targets"/>
+
+     <!--Lib-->
+    <file src="$targetroot$\arm64_release\ChakraCore.dll" target="lib\native\v140\arm64\release\ChakraCore.dll" />
+    <file src="$targetroot$\arm64_release\ChakraCore.lib" target="lib\native\v140\arm64\release\ChakraCore.lib" />
+    <file src="$targetroot$\arm64_release\ChakraCore.pdb" target="lib\native\v140\arm64\release\ChakraCore.pdb" />
+    <file src="$targetroot$\arm64_release\ch.exe"         target="lib\native\v140\arm64\release\ch.exe" />
+    <file src="$targetroot$\arm64_release\ch.pdb"         target="lib\native\v140\arm64\release\ch.pdb" />
+
+    <!--Copying Release to Debug for now-->
+    <file src="$targetroot$\arm64_release\ChakraCore.dll" target="lib\native\v140\arm64\debug\ChakraCore.dll" />
+    <file src="$targetroot$\arm64_release\ChakraCore.lib" target="lib\native\v140\arm64\debug\ChakraCore.lib" />
+    <file src="$targetroot$\arm64_release\ChakraCore.pdb" target="lib\native\v140\arm64\debug\ChakraCore.pdb" />
+    <file src="$targetroot$\arm64_release\ch.exe"         target="lib\native\v140\arm64\debug\ch.exe" />
+    <file src="$targetroot$\arm64_release\ch.pdb"         target="lib\native\v140\arm64\debug\ch.pdb" />
+
+  </files>
+</package>

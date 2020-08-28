@@ -23,6 +23,9 @@
     </dependencies>
   </metadata>
   <files>
+    <file src="$nugetroot$\Microsoft.ReactNative.Managed.targets" target="build"/>
+    <file src="$nugetroot$\Microsoft.ReactNative.VersionCheck.targets" target="build"/>
+
     <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref\Microsoft.ReactNative.Managed.dll" target="ref\uap10.0"/>
     <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.xml" target="ref\uap10.0"/> 
 
