@@ -1,8 +1,8 @@
 {
-  "type": "prerelease",
-  "comment": "Fix TouchableWin32 Infinite Recursion on Click",
+  "type": "patch",
+  "comment": "Promote 0.63 to latest",
   "packageName": "@office-iss/react-native-win32",
   "email": "ngerlem@microsoft.com",
   "dependentChangeType": "patch",
-  "date": "2020-08-26T10:46:19.635Z"
+  "date": "2020-08-28T18:05:49.303Z"
 }

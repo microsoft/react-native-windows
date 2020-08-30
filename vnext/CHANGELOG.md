@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 28 Aug 2020 01:35:52 GMT and should not be manually modified.
+This log was last generated on Fri, 28 Aug 2020 17:58:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.0-preview.6
+
+Fri, 28 Aug 2020 17:58:04 GMT
+
+### Changes
+
+- Fix fast refresh (acoates-ms@noreply.github.com)
+- Harden ReactInstanceWin::NativeUIManager to return null when instance is being torn down (acoates-ms@noreply.github.com)
 
 ## 0.63.0-preview.5
 

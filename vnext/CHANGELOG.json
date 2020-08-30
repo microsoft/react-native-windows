@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 28 Aug 2020 17:58:04 GMT",
+      "tag": "react-native-windows_v0.63.0-preview.6",
+      "version": "0.63.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix fast refresh",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "489059ce2c3919cdb7ad60f81e864d9fe050ab69",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Harden ReactInstanceWin::NativeUIManager to return null when instance is being torn down",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "ca445e874558c876b75573bb0c140e06827fc9e0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Aug 2020 01:35:52 GMT",
       "tag": "react-native-windows_v0.63.0-preview.5",
       "version": "0.63.0-preview.5",
