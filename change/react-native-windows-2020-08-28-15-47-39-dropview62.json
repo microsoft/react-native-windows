@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Drop remaining ShadowNodes in UIManager dtor",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch",
+  "date": "2020-08-28T22:47:39.486Z"
+}
