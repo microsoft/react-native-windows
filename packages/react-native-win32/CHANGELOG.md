@@ -1,8 +1,32 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 24 Aug 2020 15:05:26 GMT and should not be manually modified.
+This log was last generated on Mon, 31 Aug 2020 15:05:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.0
+
+Mon, 31 Aug 2020 15:05:16 GMT
+
+### Patches
+
+- Promote 0.63 to latest (ngerlem@microsoft.com)
+
+## 0.63.0-preview.5
+
+Fri, 28 Aug 2020 17:58:04 GMT
+
+### Changes
+
+- Fix TouchableWin32 Infinite Recursion on Click (ngerlem@microsoft.com)
+
+## 0.63.0-preview.4
+
+Fri, 28 Aug 2020 01:35:52 GMT
+
+### Changes
+
+- Fix bugs from acceptsKeyboardFocus to focusable deprecation (ngerlem@microsoft.com)
 
 ## 0.63.0-preview.3
 

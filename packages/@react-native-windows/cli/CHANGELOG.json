@@ -2,6 +2,42 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 31 Aug 2020 15:05:16 GMT",
+      "tag": "@react-native-windows/cli_v0.63.0",
+      "version": "0.63.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Promote 0.63 to latest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f6ffff2a2ccc9b5ac9cdb42fcbd3b7c659a39d20",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 28 Aug 2020 01:35:52 GMT",
+      "tag": "@react-native-windows/cli_v0.63.0-preview.4",
+      "version": "0.63.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[0.63] Fix deploy bug where a framework package is installed for one arch but not the one that we are building for",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "c272b1aa35856a3ceb3f1e127360f3b8886bda58",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Fixed templates so C++ apps can consume C# native modules",
+            "author": "jthysell@microsoft.com",
+            "commit": "8cec3d311e145bf7faad62b6e80f80e5691c0c12",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Aug 2020 15:05:26 GMT",
       "tag": "@react-native-windows/cli_v0.63.0-preview.3",
       "version": "0.63.0-preview.3",

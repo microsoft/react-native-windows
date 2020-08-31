@@ -320,20 +320,29 @@ class TouchableHighlight extends React.Component<Props, State> {
         nextFocusLeft={this.props.nextFocusLeft}
         nextFocusRight={this.props.nextFocusRight}
         nextFocusUp={this.props.nextFocusUp}
-        focusable={
-          this.props.focusable !== false && this.props.onPress !== undefined
-        }
+        // [Windows We need to reconcile between focusable and acceptsKeyboardFocus
+        // (e.g. if one is explictly disabled, we shouldn't implicitly enable the
+        // other on the underlying view). Prefer passing acceptsKeyboardFocus if
+        // passed explicitly to preserve original behavior, and trigger view warnings.
+        {...(this.props.acceptsKeyboardFocus !== undefined
+          ? {
+              acceptsKeyboardFocus:
+                (this.props.acceptsKeyboardFocus === undefined ||
+                  this.props.acceptsKeyboardFocus === true) &&
+                !this.props.disabled,
+            }
+          : {
+              focusable:
+                this.props.focusable !== false &&
+                this.props.onPress !== undefined,
+            })}
+        // Windows]
         nativeID={this.props.nativeID}
         testID={this.props.testID}
         ref={this.props.hostRef}
         accessibilityPosInSet={this.props.accessibilityPosInSet} // [Windows]
         accessibilitySetSize={this.props.accessibilitySetSize} // [Windows]
         onAccessibilityTap={this.props.onAccessibilityTap} // [Windows]
-        acceptsKeyboardFocus={
-          (this.props.acceptsKeyboardFocus === undefined ||
-            this.props.acceptsKeyboardFocus === true) &&
-          !this.props.disabled
-        } // [Windows]
         tabIndex={this.props.tabIndex} // [Windows]
         tooltip={this.props.tooltip} // [Windows]
         onMouseEnter={this.props.onMouseEnter} // [Windows]

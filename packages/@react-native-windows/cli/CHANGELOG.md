@@ -1,8 +1,25 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 24 Aug 2020 15:05:26 GMT and should not be manually modified.
+This log was last generated on Mon, 31 Aug 2020 15:05:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.0
+
+Mon, 31 Aug 2020 15:05:16 GMT
+
+### Patches
+
+- Promote 0.63 to latest (ngerlem@microsoft.com)
+
+## 0.63.0-preview.4
+
+Fri, 28 Aug 2020 01:35:52 GMT
+
+### Changes
+
+- [0.63] Fix deploy bug where a framework package is installed for one arch but not the one that we are building for (asklar@winse.microsoft.com)
+- Fixed templates so C++ apps can consume C# native modules (jthysell@microsoft.com)
 
 ## 0.63.0-preview.3
 

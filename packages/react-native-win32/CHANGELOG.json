@@ -2,6 +2,51 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 31 Aug 2020 15:05:16 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.0",
+      "version": "0.63.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Promote 0.63 to latest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f6ffff2a2ccc9b5ac9cdb42fcbd3b7c659a39d20",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 28 Aug 2020 17:58:04 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.0-preview.5",
+      "version": "0.63.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix TouchableWin32 Infinite Recursion on Click",
+            "author": "ngerlem@microsoft.com",
+            "commit": "343101063320310f665f83b5652db8eeab4baf9c",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 28 Aug 2020 01:35:52 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.0-preview.4",
+      "version": "0.63.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix bugs from acceptsKeyboardFocus to focusable deprecation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fc504755f0658f66d49c54b8b435b32e2780ae90",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Aug 2020 15:05:26 GMT",
       "tag": "@office-iss/react-native-win32_v0.63.0-preview.3",
       "version": "0.63.0-preview.3",

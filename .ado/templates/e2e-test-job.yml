@@ -32,14 +32,6 @@ jobs:
           script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd
           workingDirectory: $(Build.SourcesDirectory)
 
-      - task: NuGetCommand@2
-        displayName: NuGet restore - ReactUWPTestApp
-        inputs:
-          command: restore
-          noCache: true
-          restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-         
       - task: CmdLine@2
         displayName: run-windows
         inputs:

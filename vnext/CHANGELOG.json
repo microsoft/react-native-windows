@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 31 Aug 2020 15:05:16 GMT",
+      "tag": "react-native-windows_v0.63.0",
+      "version": "0.63.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Promote 0.63 to latest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f6ffff2a2ccc9b5ac9cdb42fcbd3b7c659a39d20",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 28 Aug 2020 17:58:04 GMT",
+      "tag": "react-native-windows_v0.63.0-preview.6",
+      "version": "0.63.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix fast refresh",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "489059ce2c3919cdb7ad60f81e864d9fe050ab69",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Harden ReactInstanceWin::NativeUIManager to return null when instance is being torn down",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "ca445e874558c876b75573bb0c140e06827fc9e0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 28 Aug 2020 01:35:52 GMT",
+      "tag": "react-native-windows_v0.63.0-preview.5",
+      "version": "0.63.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix bugs from acceptsKeyboardFocus to focusable deprecation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fc504755f0658f66d49c54b8b435b32e2780ae90",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix C# interop serialization for JsValueObject",
+            "author": "dannyvv@microsoft.com",
+            "commit": "db50a83acb6a4027f975e2c43ca3fe9c14dc0eea",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixed templates so C++ apps can consume C# native modules",
+            "author": "jthysell@microsoft.com",
+            "commit": "8cec3d311e145bf7faad62b6e80f80e5691c0c12",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Aug 2020 15:05:26 GMT",
       "tag": "react-native-windows_v0.63.0-preview.4",
       "version": "0.63.0-preview.4",
