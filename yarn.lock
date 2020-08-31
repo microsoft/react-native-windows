@@ -2529,10 +2529,10 @@
     universal-user-agent "^3.0.0"
     url-template "^2.0.8"
 
-"@office-iss/rex-win32@0.0.33":
-  version "0.0.33"
-  resolved "https://registry.yarnpkg.com/@office-iss/rex-win32/-/rex-win32-0.0.33.tgz#960ed52275c827df58aede4819d39927bdf2ae70"
-  integrity sha512-Eh4orZ3F4P03IJAn509H7rXPcA8/6iXIEJbBTrNdO0RK6gVIRQ/5GVVPg3BA3QrFN7GDJeXOqjN1/9daV4O8ag==
+"@office-iss/rex-win32@0.62.7-tenantreactnativewin-13222":
+  version "0.62.7-tenantreactnativewin-13222"
+  resolved "https://registry.yarnpkg.com/@office-iss/rex-win32/-/rex-win32-0.62.7-tenantreactnativewin-13222.tgz#32bf141552588e7e71d87a8276aa67f4ebdb0017"
+  integrity sha512-D15B9H9e96C9aovfuC3V9A4Wy1fwLf8R5nEDcpn3nObdePT1Zwm02/yvrND6Jpmf3bcxHPikKcCwF6d1TQI31A==
   dependencies:
     command-line-args "^5.0.2"
     command-line-usage "^5.0.5"
