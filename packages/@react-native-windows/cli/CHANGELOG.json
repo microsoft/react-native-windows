@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 31 Aug 2020 15:05:16 GMT",
+      "tag": "@react-native-windows/cli_v0.63.0",
+      "version": "0.63.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Promote 0.63 to latest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f6ffff2a2ccc9b5ac9cdb42fcbd3b7c659a39d20",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Aug 2020 01:35:52 GMT",
       "tag": "@react-native-windows/cli_v0.63.0-preview.4",
       "version": "0.63.0-preview.4",
