@@ -130,7 +130,6 @@ class TouchableText extends React.Component<Props, State> {
   }
 
   static viewConfig = viewConfig;
-  //static contextType = TextAncestor;
 
   render(): React.Node {
     let props = this.props;
@@ -159,42 +158,66 @@ class TouchableText extends React.Component<Props, State> {
     // [Windows]
     // Due to XAML limitations, wrapping  Text with a View in order to display borders.
     // Like other platforms, ignoring borders for nested Text (using the Context API to detect nesting).
-    let {margin, padding, ...rest} =
-      props.style != undefined
-        ? Array.isArray(props.style)
-          ? StyleSheet.flatten(props.style)
-          : props.style
-        : {};
-
-    let {style, ...textPropsLessStyle} = props;
-
     return (
       <TextAncestor.Consumer>
-        {hasTextAncestor =>
-          hasTextAncestor ? (
-            <RCTVirtualText {...props} ref={props.forwardedRef} />
-          ) : props.style &&
-            props.style.borderWidth &&
-            props.style.borderColor ? (
-            <TextAncestor.Provider value={true}>
-              <View style={props.style}>
-                <RCTText
-                  style={rest}
-                  {...textPropsLessStyle}
-                  ref={props.forwardedRef}
-                />
-              </View>
-            </TextAncestor.Provider>
-          ) : (
-            <TextAncestor.Provider value={true}>
-              <RCTText {...props} ref={props.forwardedRef} />
-            </TextAncestor.Provider>
-          )
-        }
+        {hasTextAncestor => {
+          if (hasTextAncestor) {
+            return <RCTVirtualText {...props} ref={props.forwardedRef} />;
+          } else {
+            // View.js resets the TextAncestor, as a reportedly temporary change,
+            // in order to properly handle nested images inside <Text> on Android/iOS:
+            // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c.
+            // Windows doesn't currently support nesting a <View> in a <Text>, so overriding this behavior here
+            // by seting the Provider inside View, doesn't affect us functionally.
+            if (
+              props.style &&
+              props.style.borderWidth &&
+              props.style.borderColor
+            ) {
+              let {
+                margin,
+                marginBottom,
+                marginEnd,
+                marginHorizontal,
+                marginLeft,
+                marginRight,
+                marginStart,
+                marginTop,
+                marginVertical,
+                padding,
+                ...rest
+              } =
+                props.style != undefined
+                  ? Array.isArray(props.style)
+                    ? StyleSheet.flatten(props.style)
+                    : props.style
+                  : {};
+
+              let {style, ...textPropsLessStyle} = props;
+
+              return (
+                <View style={props.style}>
+                  <TextAncestor.Provider value={true}>
+                    <RCTText
+                      style={rest}
+                      {...textPropsLessStyle}
+                      ref={props.forwardedRef}
+                    />
+                  </TextAncestor.Provider>
+                </View>
+              );
+            } else {
+              return (
+                <TextAncestor.Provider value={true}>
+                  <RCTText {...props} ref={props.forwardedRef} />
+                </TextAncestor.Provider>
+              );
+            }
+          }
+        }}
       </TextAncestor.Consumer>
     );
-    // [/Windows]
-  }
+  } // [/Windows]
 
   _createResponseHandlers(): ResponseHandlers {
     return {
@@ -285,8 +308,6 @@ class TouchableText extends React.Component<Props, State> {
         : this.props.pressRetentionOffset;
   }
 }
-
-//TouchableText.contextType = TextAncestor;
 
 const isTouchable = (props: Props): boolean =>
   props.onPress != null ||

@@ -592,8 +592,12 @@ export class TextExample extends React.Component<{}> {
 
         <RNTesterBlock title="Text With Border">
           <>
+            <Text style={styles.borderedTextSimple}>
+              Sample bordered text with default styling.
+            </Text>
+
             <Text style={styles.borderedText}>
-              Igor bordered {'\n'}
+              Some more bordered text + a tad of CSS.{'\n'}
               <Text style={{borderColor: 'red', borderWidth: 5}}>
                 1st nested - border specifcied but ignored.{'\n'}
                 <Text style={{borderColor: 'yellow', borderWidth: 4}}>
@@ -602,21 +606,11 @@ export class TextExample extends React.Component<{}> {
               </Text>
             </Text>
 
-            <Text style={styles.borderedText}>
-              This text is{' '}
-              <Text
-                style={{color: 'red', borderWidth: 1, borderColor: 'black'}}>
-                outlined
-              </Text>
-              and laid out within the normal text run, so will wrap etc as
-              normal text.
-            </Text>
-
             <Text>
               This text is{' '}
               <Text
                 style={{color: 'red', borderWidth: 1, borderColor: 'black'}}>
-                outlined
+                outlined{' '}
               </Text>
               and laid out within the normal text run, so will wrap etc as
               normal text.
@@ -649,6 +643,12 @@ export const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: 'green',
     padding: 30,
+  },
+  borderedTextSimple: {
+    fontSize: 18,
+    borderWidth: 2,
+    borderColor: 'black',
+    width: 400,
   },
 });
 
