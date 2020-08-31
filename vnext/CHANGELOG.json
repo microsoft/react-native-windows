@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 31 Aug 2020 15:06:25 GMT",
+      "tag": "react-native-windows_v0.62.7",
+      "version": "0.62.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[Internal] Changes to ExceptionManager to allow experimental logbox",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "a2797b3a78b025f85ea371e9050ce600de2ba5a5",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.62] Fix deploy bug when framework packages are installed but not for all archs",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "7feb8bbcd87647816320d26b2265ad1e31a8cb98",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Disable test disabled in master which tests logging capabilities of stub instance",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fde66ec5e5a43dabf00f252359a16b7a228dc5d2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Promote 0.62 to legacy",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c435902f0f55e4bb5d8e72ecefa9b7ff4fd8792c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Aug 2020 15:05:38 GMT",
       "tag": "react-native-windows_v0.62.6",
       "version": "0.62.6",

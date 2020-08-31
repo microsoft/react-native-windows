@@ -39,7 +39,7 @@ TEST_CLASS (RNTesterIntegrationTests) {
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(Logging)
-  // TEST_IGNORE()
+  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(Logging) {
     int logCalls{0};

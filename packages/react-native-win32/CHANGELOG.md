@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 24 Aug 2020 15:05:38 GMT and should not be manually modified.
+This log was last generated on Mon, 31 Aug 2020 15:06:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.2
+
+Mon, 31 Aug 2020 15:06:25 GMT
+
+### Patches
+
+- Fix Inspector in react-native-win32 0.62 (ngerlem@microsoft.com)
 
 ## 0.62.1
 
