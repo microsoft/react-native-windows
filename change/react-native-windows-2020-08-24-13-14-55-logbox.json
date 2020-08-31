@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[Internal] Changes to ExceptionManager to allow experimental logbox",
-  "packageName": "react-native-windows",
-  "email": "acoates-ms@noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-24T20:14:55.887Z"
-}

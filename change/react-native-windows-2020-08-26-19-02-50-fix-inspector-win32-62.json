@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Disable test disabled in master which tests logging capabilities of stub instance",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none",
-  "date": "2020-08-27T02:02:50.574Z"
-}

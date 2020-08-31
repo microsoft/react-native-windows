@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 24 Aug 2020 15:05:38 GMT and should not be manually modified.
+This log was last generated on Mon, 31 Aug 2020 15:06:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.7
+
+Mon, 31 Aug 2020 15:06:25 GMT
+
+### Patches
+
+- [Internal] Changes to ExceptionManager to allow experimental logbox (acoates-ms@noreply.github.com)
+- [0.62] Fix deploy bug when framework packages are installed but not for all archs (asklar@winse.microsoft.com)
 
 ## 0.62.6
 

@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.62] Fix deploy bug when framework packages are installed but not for all archs",
-  "packageName": "react-native-windows",
-  "email": "asklar@winse.microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-25T21:42:13.886Z"
-}
