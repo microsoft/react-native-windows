@@ -6,23 +6,23 @@
 
 import React = require('react');
 import {Text, View, Button} from 'react-native';
-import {AppTheme} from '../../../../Libraries/AppTheme/AppTheme';
-import {IAppThemeChangedEvent} from '../../../../Libraries/AppTheme/AppThemeTypes';
+import {Appearance} from 'react-native';
+
 class ThemeExample extends React.Component {
   state = {
-    currentTheme: AppTheme.currentTheme,
+    currentTheme: Appearance.getColorScheme(),
   };
 
   componentDidMount() {
-    AppTheme.addListener('appThemeChanged', this.onAppThemeChanged);
+    Appearance.addChangeListener(this.onAppThemeChanged);
   }
 
   componentWillUnmount() {
-    AppTheme.removeListener('appThemeChanged', this.onAppThemeChanged);
+    Appearance.addChangeListener(this.onAppThemeChanged);
   }
 
-  onAppThemeChanged = (event: IAppThemeChangedEvent) => {
-    const currentTheme = event.currentTheme;
+  onAppThemeChanged = (theme: any) => {
+    const currentTheme = theme;
     this.setState({currentTheme});
   };
 
@@ -36,7 +36,7 @@ class ThemeExample extends React.Component {
         </Text>
         <Button
           onPress={this._onPress}
-          title={this.state.currentTheme}
+          title="click me"
           color={this.state.currentTheme === 'dark' ? 'grey' : 'orange'}
         />
       </View>
