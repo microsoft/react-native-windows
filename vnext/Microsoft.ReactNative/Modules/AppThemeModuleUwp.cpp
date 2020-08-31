@@ -29,7 +29,6 @@ AppTheme::AppTheme(
     const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
     : m_wkReactInstance(reactInstance), m_queueThread(defaultQueueThread) {
   if (auto currentApp = xaml::TryGetCurrentApplication()) {
-    m_currentTheme = currentApp.RequestedTheme();
     m_isHighContrast = m_accessibilitySettings.HighContrast();
     m_highContrastColors = getHighContrastColors();
 
@@ -40,25 +39,7 @@ AppTheme::AppTheme(
 
           fireEvent("highContrastChanged", std::move(eventData));
         });
-
-    m_colorValuesChangedRevoker =
-        m_uiSettings.ColorValuesChanged(winrt::auto_revoke, [this](const auto &, const auto &) {
-          m_queueThread->runOnQueue([this]() {
-            if (m_currentTheme != winrt::Application::Current().RequestedTheme() &&
-                !m_accessibilitySettings.HighContrast()) {
-              m_currentTheme = winrt::Application::Current().RequestedTheme();
-
-              folly::dynamic eventData = folly::dynamic::object("currentTheme", getCurrentTheme());
-
-              fireEvent("appThemeChanged", std::move(eventData));
-            }
-          });
-        });
   }
-}
-
-std::string AppTheme::getCurrentTheme() {
-  return m_currentTheme == winrt::ApplicationTheme::Light ? AppTheme::Light : AppTheme::Dark;
 }
 
 bool AppTheme::getIsHighContrast() {
@@ -100,8 +81,7 @@ void AppTheme::fireEvent(std::string const &eventName, folly::dynamic &&eventDat
 AppThemeModule::AppThemeModule(std::shared_ptr<AppTheme> &&appTheme) : m_appTheme(std::move(appTheme)) {}
 
 auto AppThemeModule::getConstants() -> std::map<std::string, folly::dynamic> {
-  return {{"initialAppTheme", folly::dynamic{m_appTheme->getCurrentTheme()}},
-          {"initialHighContrast", folly::dynamic{m_appTheme->getIsHighContrast()}},
+  return {{"initialHighContrast", folly::dynamic{m_appTheme->getIsHighContrast()}},
           {"initialHighContrastColors", folly::dynamic{m_appTheme->getHighContrastColors()}}};
 }
 
