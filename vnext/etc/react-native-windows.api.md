@@ -23,9 +23,6 @@ export type AppTheme = AppThemeModule;
 export const AppTheme: AppThemeModule | MissingNativeAppThemeShim;
 
 // @public (undocumented)
-export type AppThemeTypes = 'light' | 'dark';
-
-// @public (undocumented)
 export class DatePicker extends React_2.Component<IDatePickerProps> {
     constructor(props: IDatePickerProps);
     // (undocumented)
@@ -87,12 +84,6 @@ export enum HandledEventPhase {
     Bubbling = 3,
     // (undocumented)
     Capturing = 1
-}
-
-// @public (undocumented)
-export interface IAppThemeChangedEvent {
-    // (undocumented)
-    currentTheme: AppThemeTypes;
 }
 
 // @public (undocumented)

@@ -28,7 +28,6 @@ This package provides Windows specific components and provides JS implementation
 
 |  Interface | Description |
 |  --- | --- |
-|  [IAppThemeChangedEvent](./react-native-windows.iappthemechangedevent.md) |  |
 |  [IDatePickerChangeEvent](./react-native-windows.idatepickerchangeevent.md) |  |
 |  [IDatePickerProps](./react-native-windows.idatepickerprops.md) |  |
 |  [IFlyoutProps](./react-native-windows.iflyoutprops.md) |  |
@@ -56,7 +55,6 @@ This package provides Windows specific components and provides JS implementation
 |  Type Alias | Description |
 |  --- | --- |
 |  [AppTheme](./react-native-windows.apptheme.md) |  |
-|  [AppThemeTypes](./react-native-windows.appthemetypes.md) |  |
 |  [IKeyboardEvent](./react-native-windows.ikeyboardevent.md) |  |
 |  [Placement](./react-native-windows.placement.md) |  |
 |  [ViewWindows](./react-native-windows.viewwindows.md) |  |
