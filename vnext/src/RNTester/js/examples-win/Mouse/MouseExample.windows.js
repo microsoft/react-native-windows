@@ -3,16 +3,31 @@
  * Licensed under the MIT License.
  * @format
  */
-import * as React from 'react';
-import {
-  AppRegistry,
+
+'use strict';
+
+const React = require('react');
+
+const {
   StyleSheet,
   View,
   Text,
   GestureResponderEvent,
   TouchableHighlight,
   BackHandler,
-} from 'react-native';
+} = require('react-native');
+
+exports.displayName = 'MouseExample';
+exports.title = 'Mouse Events';
+exports.description = 'Tests that mouse events can be observed';
+exports.examples = [
+  {
+    title: 'onMouseEnter and onMouseLeave affect style\n',
+    render: function(): React.Node {
+      return <ExampleComponent />;
+    },
+  },
+];
 
 const styles = StyleSheet.create({
   page: {
@@ -68,16 +83,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Bootstrap extends React.Component<
+export default class ExampleComponent extends React.Component<
   {},
   {
-    clicked: number;
-    pageHover: boolean;
-    contentHover: boolean;
-    contentChildHover: boolean;
-    overlayHover: boolean;
-    overlayChildHover: boolean;
-  }
+    clicked: number,
+    pageHover: boolean,
+    contentHover: boolean,
+    contentChildHover: boolean,
+    overlayHover: boolean,
+    overlayChildHover: boolean,
+  },
 > {
   constructor(props: {}) {
     super(props);
@@ -225,5 +240,3 @@ export default class Bootstrap extends React.Component<
     return true;
   };
 }
-
-AppRegistry.registerComponent('Bootstrap', () => Bootstrap);

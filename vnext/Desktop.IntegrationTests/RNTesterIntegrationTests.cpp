@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
+#include <RuntimeOptions.h>
 #include "TestRunner.h"
 
 using namespace Microsoft::React::Test;
@@ -16,6 +17,11 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 
 } // namespace Microsoft::VisualStudio::CppUnitTestFramework
 
+TEST_MODULE_INITIALIZE(InitModule) {
+  Microsoft::React::SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
+}
+
+// None of these tests are runnable
 TEST_CLASS (RNTesterIntegrationTests) {
   TestRunner m_runner;
 
@@ -33,7 +39,7 @@ TEST_CLASS (RNTesterIntegrationTests) {
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(Logging)
-  // TEST_IGNORE()
+  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(Logging) {
     int logCalls{0};

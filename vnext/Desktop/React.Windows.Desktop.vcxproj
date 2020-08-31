@@ -119,6 +119,7 @@
     <ClCompile Include="..\ReactWindowsCore\DevSupportManager.cpp" />
     <ClCompile Include="..\ReactWindowsCore\Executors\WebSocketJSExecutor.cpp" />
     <ClCompile Include="..\ReactWindowsCore\Executors\WebSocketJSExecutorFactory.cpp" />
+    <ClCompile Include="RuntimeOptions.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
