@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "react": "16.13.1",
-    "react-native": "0.0.0-b095432e6",
+    "react-native": "0.0.0-e75557b48",
     "react-native-windows": "0.0.0-canary.153"
   },
   "devDependencies": {
