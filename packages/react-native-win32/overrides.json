@@ -328,6 +328,22 @@
     },
     {
       "type": "derived",
+      "file": "src/Libraries/LogBox/UI/LogBoxInspectorStackFrame.win32.js",
+      "baseFile": "Libraries/LogBox/UI/LogBoxInspectorStackFrame.js",
+      "baseVersion": "0.0.0-3346ac7f9",
+      "baseHash": "a1f75145b083be2bc83ddc240cadbcdf93931e0d",
+      "issue": 5885
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/LogBox/UI/LogBoxStyle.win32.js",
+      "baseFile": "Libraries/LogBox/UI/LogBoxStyle.js",
+      "baseVersion": "0.0.0-3346ac7f9",
+      "baseHash": "118cad1437e07c7cb6c5c1fc3bb927b0c4dd1d52",
+      "issue": 5886
+    },
+    {
+      "type": "derived",
       "file": "src/Libraries/Network/RCTNetworking.win32.js",
       "baseFile": "Libraries/Network/RCTNetworking.android.js",
       "baseVersion": "0.0.0-b095432e6",
