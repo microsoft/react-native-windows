@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 01 Sep 2020 05:05:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.153",
+      "version": "0.0.0-canary.153",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix 5870: Dont check for inheritance, but do explicit type check",
+            "author": "dannyvv@microsoft.com",
+            "commit": "630240a4cbfe62c63132a64ee732ee6a215ba3c6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 29 Aug 2020 05:06:29 GMT",
       "tag": "react-native-windows_v0.0.0-canary.152",
       "version": "0.0.0-canary.152",
