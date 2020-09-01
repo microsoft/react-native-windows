@@ -320,6 +320,14 @@
       "issue": "LEGACY_FIXME"
     },
     {
+      "type": "patch",
+      "file": "Libraries\\Components\\ScrollResponder.windows.js",
+      "baseFile": "Libraries\\Components\\ScrollResponder.js",
+      "baseVersion": "0.62.2",
+      "baseHash": "7c4e19a291fb2df2614b4e68aa5cd4bc1b566aea",
+      "issue": "LEGACY_FIXME"
+    },
+    {
       "type": "derived",
       "file": "Libraries\\Components\\ScrollView\\ScrollView.windesktop.js",
       "baseFile": "Libraries\\Components\\ScrollView\\ScrollView.js",
