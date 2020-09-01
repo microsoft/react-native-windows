@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 14 Aug 2020 06:35:22 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Sep 2020 03:32:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.60.0-vnext.171
+
+Tue, 01 Sep 2020 03:32:19 GMT
+
+### Changes
+
+- DropViews still in the Registry in UIManager dtor (email not defined)
 
 ## 0.60.0-vnext.170
 

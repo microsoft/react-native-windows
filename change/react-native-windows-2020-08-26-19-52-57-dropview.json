@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "DropViews still in the Registry in UIManager dtor",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch",
-  "date": "2020-08-27T02:52:57.094Z"
-}
