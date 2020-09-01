@@ -2604,10 +2604,10 @@
     universal-user-agent "^3.0.0"
     url-template "^2.0.8"
 
-"@office-iss/rex-win32@0.62.0-preview.17-tenantreactnativewin-13114":
-  version "0.62.0-preview.17-tenantreactnativewin-13114"
-  resolved "https://registry.yarnpkg.com/@office-iss/rex-win32/-/rex-win32-0.62.0-preview.17-tenantreactnativewin-13114.tgz#e5c5ad0acbb4ec126307baa9fd5be171b41a2500"
-  integrity sha512-DQx7VS49T9I3Qh7EoA4VSe6cDzKWo2gZH4VXNzZwVu444pg+4nLP3/xTBcCltedXqmoH821YEdpXzHdgsKj4ww==
+"@office-iss/rex-win32@0.62.7-tenantreactnativewin-13222":
+  version "0.62.7-tenantreactnativewin-13222"
+  resolved "https://registry.yarnpkg.com/@office-iss/rex-win32/-/rex-win32-0.62.7-tenantreactnativewin-13222.tgz#32bf141552588e7e71d87a8276aa67f4ebdb0017"
+  integrity sha512-D15B9H9e96C9aovfuC3V9A4Wy1fwLf8R5nEDcpn3nObdePT1Zwm02/yvrND6Jpmf3bcxHPikKcCwF6d1TQI31A==
   dependencies:
     command-line-args "^5.0.2"
     command-line-usage "^5.0.5"
@@ -7074,10 +7074,10 @@ flatted@^2.0.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.2.tgz#4575b21e2bcee7434aa9be662f4b7b5f9c2b5138"
   integrity sha512-r5wGx7YeOwNWNlCA0wQ86zKyDLMQr+/RB8xy74M4hTphfmjlijTSSXGuH8rnvKZnfT9i+75zmd8jcKdMR4O6jA==
 
-flow-bin@^0.126.1:
-  version "0.126.1"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.126.1.tgz#2726595e1891dc35b379b5994627432df4ead52c"
-  integrity sha512-RI05x7rVzruRVJQN3M4vLEjZMwUHJKhGz9FmL8HN7WiSo66/131EyJS6Vo8PkKyM2pgT9GRWfGP/tXlqS54XUg==
+flow-bin@^0.127.0:
+  version "0.127.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.127.0.tgz#0614cff4c1b783beef1feeb7108d536e09d77632"
+  integrity sha512-ywvCCdV4NJWzrqjFrMU5tAiVGyBiXjsJQ1+/kj8thXyX15V17x8BFvNwoAH97NrUU8T1HzmFBjLzWc0l2319qg==
 
 flow-parser@0.*:
   version "0.113.0"
@@ -11838,10 +11838,10 @@ react-native-tscodegen@0.66.1:
     nullthrows "1.1.1"
     typescript "^3.5.3"
 
-react-native@0.0.0-3346ac7f9:
-  version "0.0.0-3346ac7f9"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-3346ac7f9.tgz#7c82ec49e21ccedc812cc5bc9b949df84aa93683"
-  integrity sha512-LcGBiI5H0mB2h6XYo1lOG7AwxNRKzWzQbJSmreYIDupi/gTRejGWNZY6ysMzrM55QBp5LaTLAzK1dBvbhFj6uw==
+react-native@0.0.0-b095432e6:
+  version "0.0.0-b095432e6"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-b095432e6.tgz#d318f6746244bbdbaabd1af6b8eca61374995dda"
+  integrity sha512-Ss4UfZf9+rHV8L40R11DMXGh4XXwKXGOiJN38sGD6Gn3BvPEaQd2tbprTc6IONEUgNubM+TCrN36GqPaE18i5w==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@react-native-community/cli" "^4.10.0"
