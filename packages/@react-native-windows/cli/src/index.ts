@@ -63,8 +63,9 @@ export async function generateWindows(
 
   installDependencies(options);
 
+  const templateRoot = require.resolve('react-native-windows/template', {paths:[projectDir]})
   await copyProjectTemplateAndReplace(
-    path.join(__dirname, '..', 'templates'),
+    templateRoot,
     projectDir,
     name,
     ns,

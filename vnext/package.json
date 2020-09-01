@@ -105,6 +105,7 @@
     "/Scripts",
     "/Shared",
     "/stubs",
+    "/template",
     "/.flowconfig",
     "/Directory.Build.props",
     "/Directory.Build.targets",

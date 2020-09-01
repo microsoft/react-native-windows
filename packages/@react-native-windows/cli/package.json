@@ -52,8 +52,7 @@
   },
   "files": [
     "lib-commonjs",
-    "powershell",
-    "templates"
+    "powershell"
   ],
   "beachball": {
     "defaultNpmTag": "canary",
