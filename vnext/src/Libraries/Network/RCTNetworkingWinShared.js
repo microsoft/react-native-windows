@@ -8,14 +8,14 @@
 
 'use strict';
 
-const NativeEventEmitter = require('../EventEmitter/NativeEventEmitter');
+import NativeEventEmitter from '../EventEmitter/NativeEventEmitter';
+import type {NativeResponseType} from './XMLHttpRequest';
+import convertRequestBody from './convertRequestBody';
+
 const RCTNetworkingNative = require('../BatchedBridge/NativeModules')
-  .Networking;
-const convertRequestBody = require('./convertRequestBody');
+  .Networking; // [Windows]
 
 import type {RequestBody} from './convertRequestBody';
-
-import type {NativeResponseType} from './XMLHttpRequest';
 
 class RCTNetworking extends NativeEventEmitter {
   constructor() {

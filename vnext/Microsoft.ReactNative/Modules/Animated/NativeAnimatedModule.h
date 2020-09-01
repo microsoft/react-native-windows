@@ -68,6 +68,7 @@ class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
   auto getMethods() -> std::vector<Method> override;
 
   void CreateAnimatedNode(int64_t tag, const folly::dynamic &config);
+  void GetValue(int64_t tag, const Callback &endCallback);
   void ConnectAnimatedNodeToView(int64_t animatedNodeTag, int64_t viewTag);
   void DisconnectAnimatedNodeFromView(int64_t animatedNodeTag, int64_t viewTag);
   void ConnectAnimatedNodes(int64_t parentNodeTag, int64_t childNodeTag);
@@ -95,6 +96,7 @@ class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
   std::weak_ptr<IReactInstance> m_wkReactInstance;
 
   static const char *s_createAnimatedNodeName;
+  static const char *s_getValueName;
   static const char *s_connectAnimatedNodeToViewName;
   static const char *s_disconnectAnimatedNodeFromViewName;
   static const char *s_connectAnimatedNodesName;

@@ -74,6 +74,7 @@ const viewConfig = {
     onTextLayout: true,
     onInlineViewLayout: true,
     dataDetectorType: true,
+    android_hyphenationFrequency: true,
   },
   directEventTypes: {
     topTextLayout: {
