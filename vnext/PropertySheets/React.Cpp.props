@@ -27,13 +27,13 @@
 
   <PropertyGroup>
     <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
-    <HERMES_Version Condition="'$(HERMES_Version)' == ''">0.5.0-f56606a8</HERMES_Version>
+    <HERMES_Version Condition="'$(HERMES_Version)' == ''">0.6.0</HERMES_Version>
     <HERMES_Package Condition="'$(HERMES_Package)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HERMES_Version)</HERMES_Package>
     <!-- TODO: Can we automatically distinguish between uwp and win32 here? -->
     <HERMES_ARCH Condition="'$(HERMES_ARCH)' == ''">uwp</HERMES_ARCH>
 
-    <USE_V8 Condition="('$(USE_V8)' == '') Or ('$(Platform)' == 'ARM' OR '$(Platform)' == 'ARM64')">false</USE_V8>
-    <V8_Version Condition="'$(V8_Version)' == ''">0.3.4</V8_Version>
+    <USE_V8 Condition="('$(USE_V8)' == '') OR ('$(Platform)' == 'ARM')">false</USE_V8>
+    <V8_Version Condition="'$(V8_Version)' == ''">0.64.2</V8_Version>
     <V8_Package Condition="'$(V8_Package)' == '' AND '$(V8AppPlatform)' == 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8_Version)</V8_Package>
     <V8_Package Condition="'$(V8_Package)' == '' AND '$(V8AppPlatform)' != 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.UWP.$(V8_Version)</V8_Package>
 
