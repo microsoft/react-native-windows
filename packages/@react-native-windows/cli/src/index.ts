@@ -5,6 +5,7 @@
  */
 
 import * as fs from 'fs';
+import * as path from 'path';
 import {
   copyProjectTemplateAndReplace,
   installDependencies,
@@ -62,7 +63,10 @@ export async function generateWindows(
 
   installDependencies(options);
 
-  const templateRoot = require.resolve('react-native-windows/template', {paths:[projectDir]})
+  const rnwPackage = path.dirname(
+    require.resolve('react-native-windows/package.json', {paths: [projectDir]}),
+  );
+  const templateRoot = path.join(rnwPackage, 'template');
   await copyProjectTemplateAndReplace(
     templateRoot,
     projectDir,

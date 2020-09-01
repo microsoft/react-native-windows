@@ -26,7 +26,12 @@ import {Project, WindowsProjectConfig} from '../../config/projectConfig';
  * @param config project configuration
  */
 function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
-  return require.resolve('react-native-windows/template', {paths: [projectConfig.folder]})
+  const rnwPackage = path.dirname(
+    require.resolve('react-native-windows/package.json', {
+      paths: [projectConfig.folder],
+    }),
+  );
+  return path.join(rnwPackage, 'template');
 }
 
 /**
