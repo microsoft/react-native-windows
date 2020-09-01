@@ -1,8 +1,51 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 13 Jul 2020 15:05:25 GMT and should not be manually modified.
+This log was last generated on Mon, 31 Aug 2020 15:06:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.7
+
+Mon, 31 Aug 2020 15:06:25 GMT
+
+### Patches
+
+- [Internal] Changes to ExceptionManager to allow experimental logbox (acoates-ms@noreply.github.com)
+- [0.62] Fix deploy bug when framework packages are installed but not for all archs (asklar@winse.microsoft.com)
+
+## 0.62.6
+
+Mon, 24 Aug 2020 15:05:38 GMT
+
+### Patches
+
+- [0.62] Update react-native config to handle ( userConfig === null) (jthysell@microsoft.com)
+
+## 0.62.5
+
+Mon, 17 Aug 2020 15:06:31 GMT
+
+### Patches
+
+- Enable integer-type native runtime settings. (#5669) (julio.rocha@microsoft.com)
+- Restore Previous Behavior Allowing onMouseEnter and onMouseLeave on Touchables (ngerlem@microsoft.com)
+
+## 0.62.4
+
+Mon, 03 Aug 2020 19:10:14 GMT
+
+### Patches
+
+- Fixed external targets for apps and libs (jthysell@microsoft.com)
+- undefined (asklar@winse.microsoft.com)
+
+## 0.62.3
+
+Mon, 27 Jul 2020 15:06:12 GMT
+
+### Patches
+
+- Update V8 package version (0.62) (tudorm@microsoft.com)
 
 ## 0.62.2
 

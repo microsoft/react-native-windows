@@ -2,6 +2,59 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 31 Aug 2020 15:06:25 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.2",
+      "version": "0.62.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Inspector in react-native-win32 0.62",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fde66ec5e5a43dabf00f252359a16b7a228dc5d2",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Promote 0.62 to legacy",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c435902f0f55e4bb5d8e72ecefa9b7ff4fd8792c",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 Aug 2020 15:05:38 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.1",
+      "version": "0.62.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Publish TS files in src as they are references in sourcemaps",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "f32d842fac5f7a036670bc60cc0b1b8db4a169d9",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 Aug 2020 15:06:31 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.0",
+      "version": "0.62.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "[Win32] Bump rex-win32 version",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "5038d317595eb392fc9499d1cd7c599932c998ce",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Jun 2020 06:37:28 GMT",
       "tag": "@office-iss/react-native-win32_v0.62.0",
       "version": "0.62.0",

@@ -261,6 +261,15 @@ async function deployToDesktop(options, verbose, slnFile) {
     );
   } else {
     const realAppxManifestPath = fs.realpathSync(appxManifestPath);
+    // Install the app package's dependencies before attempting to deploy.
+    await runPowerShellScriptFunction(
+      'Installing dependent framework packages',
+      windowsStoreAppUtils,
+      `Install-AppDependencies ${realAppxManifestPath} ${appPackageFolder} ${
+        options.arch
+      }`,
+      verbose,
+    );
     await runPowerShellScriptFunction(
       'Installing new version of the app from layout',
       windowsStoreAppUtils,
