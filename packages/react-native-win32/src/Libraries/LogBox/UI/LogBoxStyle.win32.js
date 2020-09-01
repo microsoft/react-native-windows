@@ -63,6 +63,5 @@ export function getHighlightColor(opacity?: number): string {
 }
 
 export function getTextColor(opacity?: number): string {
-  opacity = 1; // RN-Win32 doesn't support alpha on text colors
-  return `rgba(255, 255, 255, ${opacity == null ? 1 : opacity})`;
+  return `rgba(255, 255, 255, 1)`; // RN-Win32 doesn't support alpha on text colors
 }
