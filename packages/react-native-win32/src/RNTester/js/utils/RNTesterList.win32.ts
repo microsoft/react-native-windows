@@ -82,12 +82,16 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/examples/PointerEvents/PointerEventsExample'),
   },
   {
+    key: 'CrashExample',
+    module: require('react-native/RNTester/js/examples/Crash/CrashExample'),
+  },
+  {
     key: 'ThemingExample',
     module: require('../../APIExamples/ThemingModuleAPI'),
   },
 ];
 
-const Modules: {[key: string]: IRNTesterModule} = {};
+const Modules: { [key: string]: IRNTesterModule } = {};
 
 APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
   Modules[Example.key] = Example.module;
