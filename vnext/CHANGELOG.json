@@ -2,6 +2,255 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 01 Sep 2020 05:05:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.153",
+      "version": "0.0.0-canary.153",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix 5870: Dont check for inheritance, but do explicit type check",
+            "author": "dannyvv@microsoft.com",
+            "commit": "630240a4cbfe62c63132a64ee732ee6a215ba3c6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 29 Aug 2020 05:06:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.152",
+      "version": "0.0.0-canary.152",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Desktop ARM64 support",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "c4812b18ef4687aa4acc4b8b1ac4d6611526d534",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix fast refresh",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "3abf3ede6adb5a4da7d764fb4e257ec3555abad9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove ShadowNodes left in UIManager dtor",
+            "author": "email not defined",
+            "commit": "77e17acd885911c85e457a4a85f47002e5d08ba1",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 28 Aug 2020 05:06:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.151",
+      "version": "0.0.0-canary.151",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Launch application for all ActivationKinds",
+            "author": "ryan.fowler@singlewire.com",
+            "commit": "d3114e031ad23170861d85e66d4f311ea4355326",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixed templates so C++ apps can consume C# native modules",
+            "author": "jthysell@microsoft.com",
+            "commit": "db6213f3b9ec6553068e54809c72fceeeb7f0731",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add verification to ensure nuget and npm version match.",
+            "author": "dannyvv@microsoft.com",
+            "commit": "1e1299e3f1bd2afd2e18d8240985874eca026da2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Aug 2020 05:05:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.150",
+      "version": "0.0.0-canary.150",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove acceptsKeyboardFocus (for real this time)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "443f76a03724d0b456e4422499a768d4d02657d3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Harden ReactInstanceWin::NativeUIManager to return null when instance is being torn down",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "81d0152a0c674b7f31a02e3f4316721ab7d826fb",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Aug 2020 05:07:06 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.149",
+      "version": "0.0.0-canary.149",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix C# interop serialization for JsValueObject",
+            "author": "dannyvv@microsoft.com",
+            "commit": "f9deb92222d72effa73320556e342ab300ea7d0f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add API to turn off 3D perspective to enable controls that don't work in 3D",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "4e775b9a59c55996d7598aadaeb82c93c40cbb6f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix bugs from acceptsKeyboardFocus to focusable deprecation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f332ab59b0732f4c7386632b105ee7090f8a51f9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 Aug 2020 05:04:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.147",
+      "version": "0.0.0-canary.147",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Ensure install of VS desktop/C++ workload",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "0f95f9c251b69e4e6b760d3b0484ba1aa2c566a6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 22 Aug 2020 05:07:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.146",
+      "version": "0.0.0-canary.146",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove dead mousemove code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9a39505b8d7f4da4564a09c494e97acc84f409e6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 6/11 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b142ec14b704efb03dfe118486404002600cab4b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.145",
+      "version": "0.0.0-canary.145",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 6/4 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Upgrade to OpenSSL 1.0.2p.5",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a140e9f0044908d97b7ae44d3d6dc72859ba2a03",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Revert \"Use explicit calling convention for IWebSocketResource::Make (#5778)\"",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "0217d07d84c09507c1219048d62d07d3e5566796",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 5/28 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9bf968a5f85888ea1d12796d1aa5dffc14f1d2ba",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 20 Aug 2020 05:05:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.144",
+      "version": "0.0.0-canary.144",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move DevMenu to use XAML markup file",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "58d31741d878b1f3aae4e5159296ca84005559e9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 5/16 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90613e4008217389284978e52026a6422917b6e6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Export IWebSocketResource::Make as __cdecl",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "517fd0c8c558a7b8f786a735442bf42f6b3bc4c4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Aug 2020 05:04:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.143",
+      "version": "0.0.0-canary.143",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update nuspec copyright header to use xml entity as some of the powershell processing we do messed up the encoding",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d0e6cf27604c59d502f76f6eb4450c1f7ce634df",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 package version",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "08e452bf1d021992f611407b10a6002cf52a3093",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 18 Aug 2020 05:06:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.142",
+      "version": "0.0.0-canary.142",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix instability in VisitAllPages test",
+            "author": "kmelmon@microsoft.com",
+            "commit": "4174941b071bb5ec65c74d88c474564be62c38f8",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Aug 2020 05:05:18 GMT",
       "tag": "react-native-windows_v0.0.0-canary.141",
       "version": "0.0.0-canary.141",

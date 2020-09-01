@@ -49,7 +49,7 @@ This package provides Windows specific components and provides JS implementation
 |  --- | --- |
 |  [AppTheme](./react-native-windows.apptheme.md) |  |
 |  [supportKeyboard](./react-native-windows.supportkeyboard.md) |  |
-|  [ViewWindows](./react-native-windows.viewwindows.md) | Same as [react-native's View](https://facebook.github.io/react-native/docs/view)<!-- -->, but with extra windows specific functionality |
+|  [ViewWindows](./react-native-windows.viewwindows.md) | Same as [react-native's View](https://facebook.github.io/react-native/docs/view)<!-- -->, but with extra Windows specific functionality |
 
 ## Type Aliases
 

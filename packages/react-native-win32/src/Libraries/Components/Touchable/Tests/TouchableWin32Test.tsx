@@ -203,9 +203,6 @@ class TouchableWin32HighlightComponent extends React.Component<ITouchableWin32Hi
     return (
       <TouchableWin32
         focusable
-        // there are versions of rex-win32 that do not seem to respect focusable
-        // using the deprecated acceptsKeyboardFocus is a workaround
-        acceptsKeyboardFocus
         rejectResponderTermination={this.props.rejectResponderTermination}
         disabled={false}
         touchableHandleActivePressIn={this._touchableHandleActivePressIn}

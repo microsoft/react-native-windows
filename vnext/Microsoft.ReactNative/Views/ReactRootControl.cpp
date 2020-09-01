@@ -33,7 +33,6 @@
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Markup.h>
-#include <UI.Xaml.Media.Media3D.h>
 
 #include "DevMenu.h"
 #include "Modules/DevSettingsModule.h"
@@ -341,13 +340,6 @@ void ReactRootControl::PrepareXamlRootView(XamlView const &rootView) noexcept {
     children.Clear();
 
     auto newRootView = winrt::Grid{};
-    // Xaml's default projection in 3D is orthographic (all lines are parallel)
-    // However React Native's default projection is a one-point perspective.
-    // Set a default perspective projection on the main control to mimic this.
-    auto perspectiveTransform3D = xaml::Media::Media3D::PerspectiveTransform3D();
-    perspectiveTransform3D.Depth(850);
-    xaml::Media::Media3D::Transform3D t3d(perspectiveTransform3D);
-    newRootView.Transform3D(t3d);
     children.Append(newRootView);
     m_weakXamlRootView = newRootView.try_as<XamlView>();
   } else {

@@ -10,15 +10,6 @@ import {
 } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 class ImageTestPage extends BasePage {
-  backToHomePage() {
-    this.homeButton.click();
-    this.waitForPageLoaded();
-  }
-
-  isPageLoaded() {
-    return super.isPageLoaded();
-  }
-
   toggleImageBorder() {
     this._imageBorder.click();
   }

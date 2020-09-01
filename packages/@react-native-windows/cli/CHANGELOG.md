@@ -1,8 +1,48 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 14 Aug 2020 05:05:34 GMT and should not be manually modified.
+This log was last generated on Fri, 28 Aug 2020 05:06:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.9
+
+Fri, 28 Aug 2020 05:06:54 GMT
+
+### Changes
+
+- Fixed templates so C++ apps can consume C# native modules (jthysell@microsoft.com)
+
+## 0.0.0-canary.8
+
+Wed, 26 Aug 2020 05:07:06 GMT
+
+### Changes
+
+- Fix deploy bug where a framework package is installed for one arch but not the one that we are building for (asklar@winse.microsoft.com)
+
+## 0.0.0-canary.7
+
+Tue, 25 Aug 2020 05:05:08 GMT
+
+### Changes
+
+- Default run-windows to disabling parallel MSBuild When Machine Has < 16GB of Memory (ngerlem@microsoft.com)
+
+## 0.0.0-canary.5
+
+Thu, 20 Aug 2020 05:05:23 GMT
+
+### Changes
+
+- Add --singleproc to run-windows (asklar@microsoft.com)
+
+## 0.0.0-canary.4
+
+Wed, 19 Aug 2020 05:04:41 GMT
+
+### Changes
+
+- Fixing config and autolinking (jthysell@microsoft.com)
 
 ## 0.0.0-canary.3
 

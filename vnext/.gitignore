@@ -99,3 +99,6 @@ temp
 
 # Copied from root as part of build
 /README.md
+
+# Keep the template certificates
+!template/**/*.pfx
