@@ -281,6 +281,14 @@
       "issue": "LEGACY_FIXME"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Components/ScrollResponder.windows.js",
+      "baseFile": "Libraries/Components/ScrollResponder.js",
+      "baseVersion": "0.63.2",
+      "baseHash": "993c00a97a8cad9b565780cbe4fc9d00a89516d0",
+      "issue": "LEGACY_FIXME"
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.windows.js",
       "baseFile": "Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.android.js",
