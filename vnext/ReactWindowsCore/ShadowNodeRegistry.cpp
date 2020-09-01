@@ -66,7 +66,7 @@ ShadowNode *ShadowNodeRegistry::getParentRootShadowNode(int64_t nodeTag) {
   return nullptr;
 }
 
-void ShadowNodeRegistry::ForAllNodes(const Mso::FunctorRef<void(int64_t, shadow_ptr const &) noexcept> &fnDo) noexcept {
+void ShadowNodeRegistry::ForAllNodes(const std::function<void(int64_t, shadow_ptr const &)> &fnDo) noexcept {
   for (auto &kvp : m_allNodes) {
     fnDo(kvp.first, kvp.second);
   }
