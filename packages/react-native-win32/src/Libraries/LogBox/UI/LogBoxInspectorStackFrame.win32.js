@@ -49,7 +49,7 @@ function LogBoxInspectorStackFrame(props: Props): React.Node {
           {frame.methodName}
         </Text>
         <Text
-          ellipsizeMode="end" // Win32 doesn't support middle
+          ellipsizeMode="tail" // Win32 doesn't support middle
           numberOfLines={2} // Win32 extend to two lines to help mitigate lack of middle ellipsize.
           style={[styles.location, frame.collapse === true && styles.dim]}>
           {location}
