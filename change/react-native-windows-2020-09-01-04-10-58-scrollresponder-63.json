@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Prevent Clicks/Taps From TextInput to Touchables in ScrollView From Being Eaten",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-01T11:10:58.000Z"
+}
