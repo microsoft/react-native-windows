@@ -523,12 +523,6 @@ module.exports = {
     return require('./Libraries/Components/View/ViewWindows').ViewWindows;
   },
   get AppTheme(): any {
-    warnOnce(
-      'AppTheme-deprecated',
-      'AppTheme has been deprecated and will be removed in a future release. ' +
-        'Please use Appearance and PlatformColor instead ' +
-        'See https://microsoft.github.io/react-native-windows/docs/windowsbrush-and-theme',
-    );
     return require('./Libraries/AppTheme/AppTheme').AppTheme;
   },
 };

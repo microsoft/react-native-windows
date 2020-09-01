@@ -13,7 +13,7 @@ import {
   IHighContrastChangedEvent,
 } from './AppThemeTypes';
 const invariant = require('invariant');
-
+const warnOnce = require('../Utilities/warnOnce');
 const NativeAppTheme = NativeModules.RTCAppTheme;
 
 class AppThemeModule extends NativeEventEmitter {
@@ -40,12 +40,24 @@ class AppThemeModule extends NativeEventEmitter {
     this.addListener(
       'appThemeChanged',
       ({currentTheme}: {currentTheme: AppThemeTypes}) => {
+        warnOnce(
+          'appThemeChanged-deprecated',
+          'AppTheme.appThemeChanged() has been deprecated and will be removed in a future release. ' +
+            'Please use Appearance instead ' +
+            'See https://microsoft.github.io/react-native-windows/docs/windowsbrush-and-theme',
+        );
         this._currentTheme = currentTheme;
       },
     );
   }
 
   get currentTheme(): AppThemeTypes {
+    warnOnce(
+      'currentTheme-deprecated',
+      'AppTheme.currentTheme() has been deprecated and will be removed in a future release. ' +
+        'Please use Appearance instead ' +
+        'See https://microsoft.github.io/react-native-windows/docs/windowsbrush-and-theme',
+    );
     return this._currentTheme;
   }
 
