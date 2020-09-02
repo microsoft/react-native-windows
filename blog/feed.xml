@@ -4,7 +4,7 @@
         <title>React Native for Windows + macOS Blog</title>
         <link>https://microsoft.github.io/react-native-windows/blog</link>
         <description>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</description>
-        <lastBuildDate>Tue, 01 Sep 2020 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 02 Sep 2020 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -14,9 +14,9 @@
         </image>
         <item>
             <title><![CDATA[Windows & macOS version 0.63 updates, Hermes, and more]]></title>
-            <link>https://microsoft.github.io/react-native-windows/blog/2020/09/01/63updates.html</link>
-            <guid>https://microsoft.github.io/react-native-windows/blog/2020/09/01/63updates.html</guid>
-            <pubDate>Tue, 01 Sep 2020 06:00:00 GMT</pubDate>
+            <link>https://microsoft.github.io/react-native-windows/blog/2020/09/02/63updates.html</link>
+            <guid>https://microsoft.github.io/react-native-windows/blog/2020/09/02/63updates.html</guid>
+            <pubDate>Wed, 02 Sep 2020 06:00:00 GMT</pubDate>
             <description><![CDATA[<p>React Native for Windows is now on a <a href="https://www.npmjs.com/package/react-native-windows">0.63</a> stable release with React Native core, lighting up some fun new APIs.</p>
 ]]></description>
         </item>
