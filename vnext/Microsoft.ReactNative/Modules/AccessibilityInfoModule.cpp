@@ -6,12 +6,12 @@
 #include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Controls.h>
 #include <XamlUtils.h>
+#include <uiautomationcore.h>
+#include <uiautomationcoreapi.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "Unicode.h"
 #include "Utils/Helpers.h"
-#include <uiautomationcore.h>
-#include <uiautomationcoreapi.h>
 
 namespace Microsoft::ReactNative {
 

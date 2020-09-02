@@ -7,13 +7,7 @@
 'use strict';
 
 const React = require('react');
-const {
-  AccessibilityInfo,
-  Button,
-  Text,
-  View,
-  findNodeHandle,
-} = require('react-native');
+const {AccessibilityInfo, Button, Text, View} = require('react-native');
 
 function announceSomething() {
   AccessibilityInfo.announceForAccessibility('Something!');
