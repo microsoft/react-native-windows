@@ -50,6 +50,12 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
     }
 
     [TestMethod]
+    public void ReadOnlyListOfStringParamReturnReadOnlyList()
+    {
+      TestMethod("public string Method(IReadOnlyList<string> values) { return string.Empty; }", ReactMethod.MethodReturnStyle.ReturnValue);
+    }
+
+    [TestMethod]
     public void PromiseParamReturnVoid()
     {
       TestMethod("public void Method(IReactPromise<int> promise) {}", ReactMethod.MethodReturnStyle.Promise);
@@ -74,6 +80,12 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
     }
 
     [TestMethod]
+    public void ReadOnlyListOfStringPromiseReturnVoid()
+    {
+      TestMethod("public void Method(string s, IReactPromise<IReadOnlyList<string>> p2) {}", ReactMethod.MethodReturnStyle.Promise);
+    }
+
+    [TestMethod]
     public void DoublePromiseParamReturnVoid()
     {
       TestMethod("public void Method(IReactPromise<string> p1, IReactPromise<int> p2) {}", ReactMethod.MethodReturnStyle.Promise);
@@ -89,6 +101,12 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
     public void SingleArgCallbackParamReturnVoid()
     {
       TestMethod("public void Method(Action<int> cb1) { }", ReactMethod.MethodReturnStyle.Callback);
+    }
+
+    [TestMethod]
+    public void SingleArgCallbackWithReadOnlyListParamReturnVoid()
+    {
+      TestMethod("public void Method(Action<IReadOnlyList<string>> cb1) { }", ReactMethod.MethodReturnStyle.Callback);
     }
 
     [TestMethod]
@@ -131,6 +149,12 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
     public void TwoArgsTaskOfInt()
     {
       TestMethod("public Task<int> Method(int x, int y) { return Task.FromResult(42); }", ReactMethod.MethodReturnStyle.Task, isSynchronous: false);
+    }
+
+    [TestMethod]
+    public void ZeroArgTaskOfReadOnlyListOfString()
+    {
+      TestMethod("public Task<IReadOnlyList<string>> Method() { return Task.FromResult<IReadOnlyList<string>>(new string[] { \"s1\", \"s2\" }); }", ReactMethod.MethodReturnStyle.Task, isSynchronous: false);
     }
 
     private void TestMethod(string methodDecl, ReactMethod.MethodReturnStyle returnStyle)

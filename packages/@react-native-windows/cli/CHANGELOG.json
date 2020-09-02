@@ -2,6 +2,36 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 02 Sep 2020 05:05:16 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.10",
+      "version": "0.0.0-canary.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Keep Templates in react-native-windows Package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aad763dd75ffe79e21495a87efbf0e2e583d66eb",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 28 Aug 2020 05:06:54 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.9",
+      "version": "0.0.0-canary.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed templates so C++ apps can consume C# native modules",
+            "author": "jthysell@microsoft.com",
+            "commit": "db6213f3b9ec6553068e54809c72fceeeb7f0731",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Aug 2020 05:07:06 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.8",
       "version": "0.0.0-canary.8",

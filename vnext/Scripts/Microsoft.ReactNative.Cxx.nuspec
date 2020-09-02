@@ -21,6 +21,8 @@
   </metadata>
   <files>
     <file src="$nugetroot$\Microsoft.ReactNative.Cxx.targets" target="build\native"/>
+    <file src="$nugetroot$\Microsoft.ReactNative.VersionCheck.targets" target="build\native"/>
+    
     <file src="$nugetroot$\Microsoft.ReactNative.Cxx\**" target ="tools\Microsoft.ReactNative.Cxx"/>
   </files>
 </package>

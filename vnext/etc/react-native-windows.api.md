@@ -270,8 +270,6 @@ export interface IPopupTargetState {
 
 // @public (undocumented)
 export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
-    // @deprecated (undocumented)
-    acceptsKeyboardFocus?: boolean;
     accessibilityPosInSet?: number;
     accessibilitySetSize?: number;
     // (undocumented)

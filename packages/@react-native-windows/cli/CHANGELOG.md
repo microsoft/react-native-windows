@@ -1,8 +1,24 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 26 Aug 2020 05:07:06 GMT and should not be manually modified.
+This log was last generated on Wed, 02 Sep 2020 05:05:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.10
+
+Wed, 02 Sep 2020 05:05:16 GMT
+
+### Changes
+
+- Keep Templates in react-native-windows Package (ngerlem@microsoft.com)
+
+## 0.0.0-canary.9
+
+Fri, 28 Aug 2020 05:06:54 GMT
+
+### Changes
+
+- Fixed templates so C++ apps can consume C# native modules (jthysell@microsoft.com)
 
 ## 0.0.0-canary.8
 

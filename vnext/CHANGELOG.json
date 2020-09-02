@@ -2,6 +2,123 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 02 Sep 2020 05:05:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.154",
+      "version": "0.0.0-canary.154",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Keep Templates in react-native-windows Package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aad763dd75ffe79e21495a87efbf0e2e583d66eb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 6-18 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fba4d2d0659fd38bef2cca8816382f0e76bb4197",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 6/25 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "1fd39022f17b0fe4bb3694d0ac7112295b9d57c2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Sep 2020 05:05:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.153",
+      "version": "0.0.0-canary.153",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix 5870: Dont check for inheritance, but do explicit type check",
+            "author": "dannyvv@microsoft.com",
+            "commit": "630240a4cbfe62c63132a64ee732ee6a215ba3c6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 29 Aug 2020 05:06:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.152",
+      "version": "0.0.0-canary.152",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Desktop ARM64 support",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "c4812b18ef4687aa4acc4b8b1ac4d6611526d534",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix fast refresh",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "3abf3ede6adb5a4da7d764fb4e257ec3555abad9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove ShadowNodes left in UIManager dtor",
+            "author": "email not defined",
+            "commit": "77e17acd885911c85e457a4a85f47002e5d08ba1",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 28 Aug 2020 05:06:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.151",
+      "version": "0.0.0-canary.151",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Launch application for all ActivationKinds",
+            "author": "ryan.fowler@singlewire.com",
+            "commit": "d3114e031ad23170861d85e66d4f311ea4355326",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixed templates so C++ apps can consume C# native modules",
+            "author": "jthysell@microsoft.com",
+            "commit": "db6213f3b9ec6553068e54809c72fceeeb7f0731",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add verification to ensure nuget and npm version match.",
+            "author": "dannyvv@microsoft.com",
+            "commit": "1e1299e3f1bd2afd2e18d8240985874eca026da2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Aug 2020 05:05:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.150",
+      "version": "0.0.0-canary.150",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove acceptsKeyboardFocus (for real this time)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "443f76a03724d0b456e4422499a768d4d02657d3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Harden ReactInstanceWin::NativeUIManager to return null when instance is being torn down",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "81d0152a0c674b7f31a02e3f4316721ab7d826fb",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Aug 2020 05:07:06 GMT",
       "tag": "react-native-windows_v0.0.0-canary.149",
       "version": "0.0.0-canary.149",
