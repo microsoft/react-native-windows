@@ -16,11 +16,12 @@
 const DeprecatedTextPropTypes = require('../DeprecatedPropTypes/DeprecatedTextPropTypes');
 const React = require('react');
 const ReactNativeViewAttributes = require('../Components/View/ReactNativeViewAttributes');
-import StyleSheet from '../../StyleSheet/StyleSheet';
+const StyleSheet = require('../StyleSheet/StyleSheet');
+import type {____ViewStyle_Internal} from '../StyleSheet/StyleSheetTypes';
 const TextAncestor = require('./TextAncestor');
 const Touchable = require('../Components/Touchable/Touchable');
 const UIManager = require('../ReactNative/UIManager');
-const View = require('../../Components/View/View');
+const View = require('../Components/View/View');
 
 const createReactNativeComponentClass = require('../Renderer/shims/createReactNativeComponentClass');
 const nullthrows = require('nullthrows');
@@ -169,11 +170,21 @@ class TouchableText extends React.Component<Props, State> {
             // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c.
             // Windows doesn't currently support nesting a <View> in a <Text>, so overriding this behavior here
             // by seting the Provider inside View, doesn't affect us functionally.
+            let styleProps: ____ViewStyle_Internal = (props.style: any);
             if (
-              props.style &&
-              props.style.borderWidth &&
-              props.style.borderColor
+              styleProps &&
+              styleProps.borderColor &&
+              (styleProps.borderWidth ||
+                styleProps.borderBottomWidth ||
+                styleProps.borderEndWidth ||
+                styleProps.borderLeftWidth ||
+                styleProps.borderRightWidth ||
+                styleProps.borderStartWidth ||
+                styleProps.borderTopWidth)
             ) {
+              let textStyleProps = Array.isArray(styleProps)
+                ? StyleSheet.flatten(styleProps)
+                : styleProps;
               let {
                 margin,
                 marginBottom,
@@ -185,18 +196,21 @@ class TouchableText extends React.Component<Props, State> {
                 marginTop,
                 marginVertical,
                 padding,
+                paddingBottom,
+                paddingEnd,
+                paddingHorizontal,
+                paddingLeft,
+                paddingRight,
+                paddingStart,
+                paddingTop,
+                paddingVertical,
                 ...rest
-              } =
-                props.style != undefined
-                  ? Array.isArray(props.style)
-                    ? StyleSheet.flatten(props.style)
-                    : props.style
-                  : {};
+              } = textStyleProps != null ? textStyleProps : {};
 
               let {style, ...textPropsLessStyle} = props;
 
               return (
-                <View style={props.style}>
+                <View style={styleProps}>
                   <TextAncestor.Provider value={true}>
                     <RCTText
                       style={rest}
