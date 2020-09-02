@@ -10,6 +10,8 @@
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "Unicode.h"
 #include "Utils/Helpers.h"
+#include <uiautomationcore.h>
+#include <uiautomationcoreapi.h>
 
 namespace Microsoft::ReactNative {
 
@@ -30,11 +32,11 @@ void AccessibilityInfo::isReduceMotionEnabled(std::function<void(React::JSValue 
 
 void AccessibilityInfo::isTouchExplorationEnabled(
     std::function<void(React::JSValue const &)> const &onSuccess) noexcept {
-  onSuccess(false);
+  onSuccess(UiaClientsAreListening());
 }
 
 void AccessibilityInfo::setAccessibilityFocus(double /*reactTag*/) noexcept {
-  // no-op
+  // no-op - This appears to be unused in RN
 }
 
 void AccessibilityInfo::announceForAccessibility(std::string announcement) noexcept {

@@ -7,40 +7,42 @@
 'use strict';
 
 const React = require('react');
-const {AccessibilityInfo, Button, Text, View} = require('react-native');
+const {
+  AccessibilityInfo,
+  Button,
+  Text,
+  View,
+  findNodeHandle,
+} = require('react-native');
 
 function announceSomething() {
   AccessibilityInfo.announceForAccessibility('Something!');
 }
 
-class AccessibilityInfoExample extends React.Component {
-  state = {
-    isReduceMotionEnabled: 'unknown',
-    isScreenReaderEnabled: 'unknown',
-  };
+function AccessibilityInfoExample(props): React.Node {
+  const [isReduceMotionEnabled, setIsReduceMotionEnabled] = React.useState(
+    'unknown',
+  );
+  const [isScreenReaderEnabled, setIsScreenReaderEnabled] = React.useState(
+    'unknown',
+  );
 
-  componentDidMount() {
+  React.useEffect(() => {
     AccessibilityInfo.isReduceMotionEnabled().done(isEnabled => {
-      this.setState({isReduceMotionEnabled: isEnabled});
+      setIsReduceMotionEnabled(isEnabled);
     });
     AccessibilityInfo.isScreenReaderEnabled().done(isEnabled => {
-      this.setState({isScreenReaderEnabled: isEnabled});
+      setIsScreenReaderEnabled(isEnabled);
     });
-  }
+  }, [setIsReduceMotionEnabled, setIsScreenReaderEnabled]);
 
-  render() {
-    return (
-      <View>
-        <Text>{`AccessibilityInfo.isReduceMotionEnabled: ${
-          this.state.isReduceMotionEnabled
-        }`}</Text>
-        <Text>{`AccessibilityInfo.isScreenReaderEnabled: ${
-          this.state.isScreenReaderEnabled
-        }`}</Text>
-        <Button onPress={announceSomething} title="Announce something" />
-      </View>
-    );
-  }
+  return (
+    <View>
+      <Text>{`AccessibilityInfo.isReduceMotionEnabled: ${isReduceMotionEnabled}`}</Text>
+      <Text>{`AccessibilityInfo.isScreenReaderEnabled: ${isScreenReaderEnabled}`}</Text>
+      <Button onPress={announceSomething} title="Announce something" />
+    </View>
+  );
 }
 
 exports.title = 'AccessibilityInfo';
