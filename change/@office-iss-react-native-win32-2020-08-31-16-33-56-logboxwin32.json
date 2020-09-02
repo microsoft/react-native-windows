@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "A couple of minor style changes in logbox to avoid win32 asserts.",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "acoates-ms@noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-31T23:33:56.533Z"
-}
