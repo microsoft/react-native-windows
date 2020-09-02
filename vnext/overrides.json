@@ -454,6 +454,10 @@
       "issue": 5834
     },
     {
+      "type": "platform",
+      "file": "src/RNTester/js/examples/Accessibility/AccessibilityInfoExample.js"
+    },
+    {
       "type": "derived",
       "file": "src/RNTester/js/examples/PlatformColor/PlatformColorExample.windows.js",
       "baseFile": "RNTester/js/examples/PlatformColor/PlatformColorExample.js",
