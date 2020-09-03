@@ -5,7 +5,11 @@
  */
 'use strict';
 
-import {NativeEventEmitter, NativeModules} from 'react-native';
+import {
+  NativeEventEmitter,
+  EmitterSubscription,
+  NativeModules,
+} from 'react-native';
 import {
   AppThemeTypes,
   IAppThemeChangedEvent,
@@ -37,18 +41,28 @@ class AppThemeModule extends NativeEventEmitter {
     );
 
     this._currentTheme = NativeAppTheme.initialAppTheme;
-    this.addListener(
+    super.addListener(
       'appThemeChanged',
       ({currentTheme}: {currentTheme: AppThemeTypes}) => {
-        warnOnce(
-          'appThemeChanged-deprecated',
-          'AppTheme.appThemeChanged() has been deprecated and will be removed in a future release. ' +
-            'Please use Appearance instead ' +
-            'See https://microsoft.github.io/react-native-windows/docs/windowsbrush-and-theme',
-        );
         this._currentTheme = currentTheme;
       },
     );
+  }
+
+  addListener(
+    eventType: string,
+    listener: (...args: any[]) => any,
+    context?: any,
+  ): EmitterSubscription {
+    if (eventType === 'appThemeChanged') {
+      warnOnce(
+        'appThemeChanged-deprecated',
+        'AppTheme.appThemeChanged() has been deprecated and will be removed in a future release. ' +
+          'Please use Appearance instead ' +
+          'See https://microsoft.github.io/react-native-windows/docs/windowsbrush-and-theme',
+      );
+    }
+    return super.addListener(eventType, listener, context);
   }
 
   get currentTheme(): AppThemeTypes {
