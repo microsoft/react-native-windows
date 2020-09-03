@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 03 Sep 2020 05:05:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.155",
+      "version": "0.0.0-canary.155",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Initial AccessibilityInfo implementation",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "d3918796dc50807f4f7a40f64cea37b4ad189d03",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 02 Sep 2020 05:05:16 GMT",
       "tag": "react-native-windows_v0.0.0-canary.154",
       "version": "0.0.0-canary.154",

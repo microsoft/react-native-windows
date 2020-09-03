@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 02 Sep 2020 05:05:16 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Sep 2020 05:05:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.155
+
+Thu, 03 Sep 2020 05:05:02 GMT
+
+### Changes
+
+- Initial AccessibilityInfo implementation (acoates-ms@noreply.github.com)
 
 ## 0.0.0-canary.154
 

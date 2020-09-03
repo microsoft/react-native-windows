@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Initial AccessibilityInfo implementation",
-  "packageName": "react-native-windows",
-  "email": "acoates-ms@noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2020-08-26T18:33:49.434Z"
-}
