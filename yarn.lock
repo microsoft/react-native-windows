@@ -2469,9 +2469,9 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.8.36"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.8.36.tgz#531997cc61860800eb7c540bd312e1d789874b9d"
-  integrity sha512-je2ZuJvaN9DHUju0CdABPzA3r13mUv59pC24kYg4Mj6CSclKYpTarCpiJzFeoYV6e2MBXkzYYMuUwSvyqWTljg==
+  version "7.8.38"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.8.38.tgz#fcd94f7f1371e06a5f0624d81f09e21222f494c2"
+  integrity sha512-ITiS5NoADLFO8WvNqtz7LUuxVtOCXreowMxRPsu91UuZWdgumQTxMiy6NOqw+FgeG1Ad7v3GpjoKEJ5jxEnGRg==
   dependencies:
     "@microsoft/api-extractor-model" "7.8.19"
     "@microsoft/tsdoc" "0.12.19"
@@ -2923,9 +2923,9 @@
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
 "@types/lodash@^4.14.149", "@types/lodash@^4.14.157":
-  version "4.14.160"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.160.tgz#2f1bba6500bc3cb9a732c6d66a083378fb0b0b29"
-  integrity sha512-aP03BShJoO+WVndoVj/WNcB/YBPt+CIU1mvaao2GRAHy2yg4pT/XS4XnVHEQBjPJGycWf/9seKEO9vopTJGkvA==
+  version "4.14.161"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.161.tgz#a21ca0777dabc6e4f44f3d07f37b765f54188b18"
+  integrity sha512-EP6O3Jkr7bXvZZSZYlsgt5DIjiGr0dXP1/jVEwVLTFgg0d+3lWVQkRavYVQszV7dYUwvg0B8R0MBDpcmXg7XIA==
 
 "@types/minimatch@*", "@types/minimatch@^3.0.3":
   version "3.0.3"
@@ -4620,9 +4620,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.32.0:
-  version "1.35.3"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.35.3.tgz#8039db5b37990aa11c491cd75ec2b53672330230"
-  integrity sha512-m/XAKBYO3MzOv96j6omxaSQaHAV9YT5n5zSfeu8yiiXh5MaP1fYXkK5SKOazi0eUO+tLRamWNuWQFXIl6Jz2Ag==
+  version "1.35.4"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.35.4.tgz#f3ae69c5a7bd884931861c232fe4e0d2b46fc852"
+  integrity sha512-c9jK9WF7NNQhy5F5uKDY8qfuMVSF4ImGpNNM8IcgP4U9j8wHeKHBXQeAk0QmZVlhQn8cQeAEWe87tVH+h8TlVw==
   dependencies:
     cosmiconfig "^6.0.0"
     execa "^4.0.3"
@@ -11838,10 +11838,10 @@ react-native-tscodegen@0.66.1:
     nullthrows "1.1.1"
     typescript "^3.5.3"
 
-react-native@0.0.0-b095432e6:
-  version "0.0.0-b095432e6"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-b095432e6.tgz#d318f6746244bbdbaabd1af6b8eca61374995dda"
-  integrity sha512-Ss4UfZf9+rHV8L40R11DMXGh4XXwKXGOiJN38sGD6Gn3BvPEaQd2tbprTc6IONEUgNubM+TCrN36GqPaE18i5w==
+react-native@0.0.0-e75557b48:
+  version "0.0.0-e75557b48"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-e75557b48.tgz#e23cf24130827eae5caec8008df2a7d656f7c644"
+  integrity sha512-0KlFnhD/NVK4ZtezwAjM1wmFjl/pzJ4EiRH8hrtTdqyeOSvnZoRGcYAaiWfDhKWukGOC/Y6GUxhmXw553Ub+4Q==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@react-native-community/cli" "^4.10.0"

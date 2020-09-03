@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Keep Templates in react-native-windows Package",
-  "packageName": "@react-native-windows/cli",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-01T10:47:06.637Z"
-}
