@@ -8,21 +8,17 @@
 const path = require('path');
 const {
   task,
-  cleanTask,
   series,
   condition,
   option,
   argv,
   tscTask,
-  tscWatchTask,
   eslintTask,
   apiExtractorVerifyTask,
   apiExtractorUpdateTask,
-  parallel,
 } = require('just-scripts');
 const {execSync} = require('child_process');
 const fs = require('fs');
-const srcPath = path.resolve(process.cwd(), 'src');
 const copyRNLibaries = require('./Scripts/copyRNLibraries');
 
 option('production');

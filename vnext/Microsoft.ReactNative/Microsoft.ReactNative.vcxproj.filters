@@ -65,6 +65,9 @@
     <ClCompile Include="CxxReactUWP\JSBigString.cpp">
       <Filter>CxxReactUWP</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\AccessibilityInfoModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
@@ -406,6 +409,9 @@
     <ClInclude Include="ViewManagersProvider.h" />
     <ClInclude Include="Base\CoreNativeModules.h">
       <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\AccessibilityInfoModule.h">
+      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\Animated\AdditionAnimatedNode.h">
       <Filter>Modules\Animated</Filter>

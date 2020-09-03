@@ -1,8 +1,44 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 28 Aug 2020 05:06:54 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Sep 2020 05:05:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.155
+
+Thu, 03 Sep 2020 05:05:02 GMT
+
+### Changes
+
+- Initial AccessibilityInfo implementation (acoates-ms@noreply.github.com)
+
+## 0.0.0-canary.154
+
+Wed, 02 Sep 2020 05:05:16 GMT
+
+### Changes
+
+- Keep Templates in react-native-windows Package (ngerlem@microsoft.com)
+- Integrate 6-18 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/25 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.153
+
+Tue, 01 Sep 2020 05:05:10 GMT
+
+### Changes
+
+- Fix 5870: Dont check for inheritance, but do explicit type check (dannyvv@microsoft.com)
+
+## 0.0.0-canary.152
+
+Sat, 29 Aug 2020 05:06:29 GMT
+
+### Changes
+
+- Add Desktop ARM64 support (julio.rocha@microsoft.com)
+- Fix fast refresh (acoates-ms@noreply.github.com)
+- Remove ShadowNodes left in UIManager dtor (email not defined)
 
 ## 0.0.0-canary.151
 
