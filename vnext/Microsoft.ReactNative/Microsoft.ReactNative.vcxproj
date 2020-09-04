@@ -106,7 +106,7 @@
         $(ReactNativeWindowsDir)Microsoft.ReactNative\Pch;
         $(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost;
         $(ReactNativeWindowsDir)Microsoft.ReactNative\Views;
-        $(JSI_SourcePath);
+        $(JSI_Source);
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)include;
