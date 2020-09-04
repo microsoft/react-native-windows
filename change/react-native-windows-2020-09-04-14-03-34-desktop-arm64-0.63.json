@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Add ARM64 Desktop support (#5864)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-04T21:03:34.675Z"
+}
