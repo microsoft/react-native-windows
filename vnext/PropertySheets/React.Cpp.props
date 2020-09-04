@@ -58,9 +58,6 @@
   </ItemDefinitionGroup>
 
   <PropertyGroup>
-    <!-- This prop is used for shared JSI code and headers -->
-    <JSI_Source Condition="'$(JSI_Source)' == ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_Source>
-
     <!-- This disables copying the v8 DLL to outputs; it is re-enabled locally in win32 projects -->
     <V8JSI_NODLLCOPY>true</V8JSI_NODLLCOPY>
   </PropertyGroup>
@@ -112,6 +109,7 @@
         $(FollyDir);
         $(ReactNativeDir)\ReactCommon;
         $(ReactNativeDir)\ReactCommon\callinvoker;
+        $(ReactNativeDir)\ReactCommon\jsi;
         $(ReactNativeDir)\ReactCommon\jsiexecutor;
         $(ReactNativeDir)\ReactCommon\reactperflogger;
         $(ReactNativeDir)\ReactCommon\runtimeexecutor;
