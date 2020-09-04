@@ -2469,9 +2469,9 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.8.38"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.8.38.tgz#fcd94f7f1371e06a5f0624d81f09e21222f494c2"
-  integrity sha512-ITiS5NoADLFO8WvNqtz7LUuxVtOCXreowMxRPsu91UuZWdgumQTxMiy6NOqw+FgeG1Ad7v3GpjoKEJ5jxEnGRg==
+  version "7.8.39"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.8.39.tgz#41d6676fb0d4bdffcdc78479d02a35e4ab9b93a1"
+  integrity sha512-+VKt25AVEAHZXP5nc0jRZ6RImYdlqkSFwkFcFgnQtuWppC19rRHu78QhKWq2hK4d3VlaicexkwxQTe68SV+FMg==
   dependencies:
     "@microsoft/api-extractor-model" "7.8.19"
     "@microsoft/tsdoc" "0.12.19"
@@ -4620,9 +4620,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.32.0:
-  version "1.35.4"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.35.4.tgz#f3ae69c5a7bd884931861c232fe4e0d2b46fc852"
-  integrity sha512-c9jK9WF7NNQhy5F5uKDY8qfuMVSF4ImGpNNM8IcgP4U9j8wHeKHBXQeAk0QmZVlhQn8cQeAEWe87tVH+h8TlVw==
+  version "1.35.3"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.35.3.tgz#8039db5b37990aa11c491cd75ec2b53672330230"
+  integrity sha512-m/XAKBYO3MzOv96j6omxaSQaHAV9YT5n5zSfeu8yiiXh5MaP1fYXkK5SKOazi0eUO+tLRamWNuWQFXIl6Jz2Ag==
   dependencies:
     cosmiconfig "^6.0.0"
     execa "^4.0.3"
