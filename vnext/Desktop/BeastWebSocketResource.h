@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -332,7 +332,7 @@ class TestWebSocketResource : public BaseWebSocketResource<
 #pragma endregion BaseWebSocketResource overrides
 
  public:
-  TestWebSocketResource(facebook::react::Url &&url);
+  TestWebSocketResource(Url &&url);
 
   void SetConnectResult(std::function<boost::system::error_code()> &&resultFunc);
   void SetHandshakeResult(std::function<boost::system::error_code(std::string, std::string)> &&resultFunc);
