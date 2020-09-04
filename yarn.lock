@@ -2469,9 +2469,9 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.8.38"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.8.38.tgz#fcd94f7f1371e06a5f0624d81f09e21222f494c2"
-  integrity sha512-ITiS5NoADLFO8WvNqtz7LUuxVtOCXreowMxRPsu91UuZWdgumQTxMiy6NOqw+FgeG1Ad7v3GpjoKEJ5jxEnGRg==
+  version "7.8.39"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.8.39.tgz#41d6676fb0d4bdffcdc78479d02a35e4ab9b93a1"
+  integrity sha512-+VKt25AVEAHZXP5nc0jRZ6RImYdlqkSFwkFcFgnQtuWppC19rRHu78QhKWq2hK4d3VlaicexkwxQTe68SV+FMg==
   dependencies:
     "@microsoft/api-extractor-model" "7.8.19"
     "@microsoft/tsdoc" "0.12.19"
