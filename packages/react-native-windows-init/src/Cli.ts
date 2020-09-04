@@ -47,7 +47,7 @@ const argv = yargs
     },
     language: {
       type: 'string',
-      describe: 'Which language the app is written in.',
+      describe: 'The language the project is written in.',
       choices: ['cs', 'cpp'],
       default: 'cpp',
     },
@@ -55,6 +55,12 @@ const argv = yargs
       type: 'boolean',
       describe: 'Overwrite any existing files without prompting',
       default: false,
+    },
+    projectType: {
+      type: 'string',
+      describe: 'The type of project to initialize.',
+      choices: ['app', 'lib'],
+      default: 'app',
     },
     experimentalNuGetDependency: {
       type: 'boolean',
@@ -109,6 +115,7 @@ const EXITCODE_NO_LATEST_RNW = 8;
 const EXITCODE_NO_AUTO_MATCHING_RNW = 9;
 const EXITCODE_INCOMPATIBLE_OPTIONS = 10;
 const EXITCODE_DEVMODE_VERSION_MISMATCH = 11;
+const EXITCODE_NO_REACTNATIVE_DEPENDENCIES = 12;
 
 function getReactNativeAppName(): string {
   console.log('Reading application name from package.json...');
@@ -319,10 +326,30 @@ function installReactNativeWindows(
   }
 
   let pkgJson = require(pkgJsonPath);
-  let deps = pkgJson.dependencies || {};
-  deps['react-native-windows'] = version;
-  fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
-  execSync(isProjectUsingYarn(cwd) ? 'yarn' : 'npm install', execOptions);
+
+  // check how react-native is installed
+  if ('dependencies' in pkgJson && 'react-native' in pkgJson.dependencies) {
+    // regular dependency (probably an app), inject into json and run install
+    pkgJson.dependencies['react-native-windows'] = version;
+    fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
+    execSync(isProjectUsingYarn(cwd) ? 'yarn' : 'npm install', execOptions);
+  } else if (
+    'devDependencies' in pkgJson &&
+    'react-native' in pkgJson.devDependencies
+  ) {
+    // only a dev dependency (probably a native module),
+    execSync(
+      isProjectUsingYarn(cwd)
+        ? `yarn add react-native-windows@${version} --dev`
+        : `npm install react-native-windows@${version} --save-dev`,
+      execOptions,
+    );
+  } else {
+    userError(
+      "Unable to find 'react-native' in packcage.json's dependencies or devDepenencies. This should be run from within an existing react-native app or lib.",
+      EXITCODE_NO_REACTNATIVE_DEPENDENCIES,
+    );
+  }
 
   console.log(
     chalk.green(
@@ -466,6 +493,7 @@ function isProjectUsingYarn(cwd: string): boolean {
       language: argv.language as 'cs' | 'cpp',
       overwrite: argv.overwrite,
       verbose: argv.verbose,
+      projectType: argv.projectType as 'lib' | 'app',
       experimentalNuGetDependency: argv.experimentalNuGetDependency,
       useWinUI3: argv.useWinUI3,
       nuGetTestVersion: argv.nuGetTestVersion,

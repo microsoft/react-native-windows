@@ -327,7 +327,12 @@ async function updateAutoLink(
 
       const csFileName = 'AutolinkedNativeModules.g.cs';
 
-      const srcCsFile = path.join(templateRoot, projectLang, 'src', csFileName);
+      const srcCsFile = path.join(
+        templateRoot,
+        `${projectLang}-app`,
+        'src',
+        csFileName,
+      );
 
       const destCsFile = path.join(projectDir, csFileName);
 
@@ -374,7 +379,7 @@ async function updateAutoLink(
 
       const srcCppFile = path.join(
         templateRoot,
-        projectLang,
+        `${projectLang}-app`,
         'src',
         cppFileName,
       );
@@ -425,7 +430,7 @@ async function updateAutoLink(
 
     const srcTargetFile = path.join(
       templateRoot,
-      projectLang,
+      `${projectLang}-app`,
       'src',
       targetFileName,
     );
