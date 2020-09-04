@@ -143,6 +143,10 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('./../examples-win/Accessibility/AccessibilityExampleWindows'),
   },
   {
+    key: 'AccessibilityInfo',
+    module: require('react-native/RNTester/js/examples/Accessibility/AccessibilityInfoExample'),
+  },
+  {
     key: 'AsyncStorageExampleWindows',
     module: require('./../examples-win/AsyncStorage/AsyncStorageExampleWindows'),
   },

@@ -21,7 +21,18 @@ import {
 } from '../../config/dependencyConfig';
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
 
-const templateRoot = path.join(__dirname, '../../../templates');
+/**
+ * Locates the react-native-windows directory containing template files
+ * @param config project configuration
+ */
+function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
+  const rnwPackage = path.dirname(
+    require.resolve('react-native-windows/package.json', {
+      paths: [projectConfig.folder],
+    }),
+  );
+  return path.join(rnwPackage, 'template');
+}
 
 /**
  * Logs the given message if verbose is True.
@@ -147,7 +158,8 @@ async function updateAutoLink(
       );
     }
 
-    var windowsAppConfig: WindowsProjectConfig = projectConfig.windows;
+    const windowsAppConfig: WindowsProjectConfig = projectConfig.windows;
+    const templateRoot = resolveTemplateRoot(windowsAppConfig);
 
     if (options.sln) {
       const slnFile = path.join(windowsAppConfig.folder, options.sln);

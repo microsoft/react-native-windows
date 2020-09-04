@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 03 Sep 2020 05:05:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.155",
+      "version": "0.0.0-canary.155",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Initial AccessibilityInfo implementation",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "d3918796dc50807f4f7a40f64cea37b4ad189d03",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 02 Sep 2020 05:05:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.154",
+      "version": "0.0.0-canary.154",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Keep Templates in react-native-windows Package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aad763dd75ffe79e21495a87efbf0e2e583d66eb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 6-18 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fba4d2d0659fd38bef2cca8816382f0e76bb4197",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 6/25 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "1fd39022f17b0fe4bb3694d0ac7112295b9d57c2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Sep 2020 05:05:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.153",
+      "version": "0.0.0-canary.153",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix 5870: Dont check for inheritance, but do explicit type check",
+            "author": "dannyvv@microsoft.com",
+            "commit": "630240a4cbfe62c63132a64ee732ee6a215ba3c6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 29 Aug 2020 05:06:29 GMT",
       "tag": "react-native-windows_v0.0.0-canary.152",
       "version": "0.0.0-canary.152",
