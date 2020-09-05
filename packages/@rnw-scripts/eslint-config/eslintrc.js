@@ -6,13 +6,24 @@
  * @ts-check
  */
 
+const path = require('path');
+
 module.exports = {
-  extends: ['@react-native-community', 'prettier'],
-  rules: {
-    'react-native/no-inline-styles': 'off',
-  },
-  env: {
-    node: true,
-  },
-  ignorePatterns: ['lib/**', 'lib-commonjs/**'],
+  extends: require.resolve('@rnw-scripts/eslint-root-config'),
+  overrides: [
+    {
+      files: ['**/*(!.d).ts', '*.tsx'],
+      parser: '@typescript-eslint/parser',
+      plugins: ['@typescript-eslint/eslint-plugin'],
+      parserOptions: {
+        project: path.join(process.cwd(), 'tsconfig.json'),
+      },
+      rules: {
+        '@typescript-eslint/no-floating-promises': [
+          'error',
+          {ignoreIIFE: true},
+        ],
+      },
+    },
+  ],
 };
