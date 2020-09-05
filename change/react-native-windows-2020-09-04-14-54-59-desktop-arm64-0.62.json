@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Backport arm64 support from master.",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-04T21:54:58.991Z"
+}
