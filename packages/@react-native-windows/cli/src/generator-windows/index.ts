@@ -336,21 +336,23 @@ export async function copyProjectTemplateAndReplace(
   }
 
   // Once we are publishing to nuget.org, this shouldn't be needed anymore
-  const nugetMappings = [
-    {
-      from: path.join(sharedPath, projDir, 'NuGet.Config'),
-      to: path.join(windowsDir, 'NuGet.Config'),
-    },
-  ];
+  if (options.experimentalNuGetDependency) {
+    const nugetMappings = [
+      {
+        from: path.join(sharedPath, projDir, 'NuGet.Config'),
+        to: path.join(windowsDir, 'NuGet.Config'),
+      },
+    ];
 
-  for (const mapping of nugetMappings) {
-    await copyAndReplaceWithChangedCallback(
-      mapping.from,
-      destPath,
-      mapping.to,
-      templateVars,
-      options.overwrite,
-    );
+    for (const mapping of nugetMappings) {
+      await copyAndReplaceWithChangedCallback(
+        mapping.from,
+        destPath,
+        mapping.to,
+        templateVars,
+        options.overwrite,
+      );
+    }
   }
 
   await copyAndReplaceAll(
