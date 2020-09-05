@@ -36,7 +36,6 @@ class BaseWebSocketSession : public IWebSocketSession
 
   boost::beast::multi_buffer m_buffer;
   std::string m_message;
-  WebSocketServiceCallbacks &m_callbacks;
   State m_state;
 
   std::function<void(IWebSocketResource::Error&&)> m_errorHandler;
@@ -50,6 +49,7 @@ class BaseWebSocketSession : public IWebSocketSession
 
  protected:
   std::shared_ptr<boost::beast::websocket::stream<SocketLayer>> m_stream;
+  WebSocketServiceCallbacks &m_callbacks;
 
   void Accept();
 

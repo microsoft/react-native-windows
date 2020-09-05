@@ -28,32 +28,45 @@ TEST_CLASS (WebSocketIntegrationTest)
 {
   void SendReceiveCloseBase(bool isSecure)
   {
+    promise<size_t> sentSizePromise;
+    promise<string> receivedPromise;
+
     auto server = make_shared<Test::WebSocketServer>(5556, isSecure);
     server->SetMessageFactory([](string&& message)
     {
       return message + "_response";
     });
+    string serverError;
+    server->SetOnError([&serverError, &sentSizePromise, &receivedPromise](Error&& err)
+    {
+      serverError = err.Message;
+      sentSizePromise.set_value(0);
+      receivedPromise.set_value("");
+    });
+
     string scheme = "ws";
     if (isSecure)
       scheme += "s";
     auto ws = IWebSocketResource::Make(scheme + "://localhost:5556/");
-    promise<size_t> sentSizePromise;
     ws->SetOnSend([&sentSizePromise](size_t size)
     {
       sentSizePromise.set_value(size);
     });
-    promise<string> receivedPromise;
     ws->SetOnMessage([&receivedPromise](size_t size, const string& message)
     {
       receivedPromise.set_value(message);
     });
-    string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
+    string clientError;
+    ws->SetOnError([&clientError, &sentSizePromise, &receivedPromise](IWebSocketResource::Error err)
     {
-      errorMessage = err.Message;
+      clientError = err.Message;
+      sentSizePromise.set_value(0);
+      receivedPromise.set_value("");
     });
 
     server->Start();
+
+    Assert::AreEqual({}, serverError);
     string sent = "prefix";
     ws->Connect();
     ws->Send(sent);
@@ -65,12 +78,13 @@ TEST_CLASS (WebSocketIntegrationTest)
     auto receivedFuture = receivedPromise.get_future();
     receivedFuture.wait();
     string received = receivedFuture.get();
-    Assert::AreEqual({}, errorMessage);
+    Assert::AreEqual({}, clientError);
 
     ws->Close(CloseCode::Normal, "Closing after reading");
     server->Stop();
 
-    Assert::AreEqual({}, errorMessage);
+    Assert::AreEqual({}, serverError);
+    Assert::AreEqual({}, clientError);
     Assert::AreEqual(sent.length(), sentSize);
     Assert::AreEqual({"prefix_response"}, received);
   }

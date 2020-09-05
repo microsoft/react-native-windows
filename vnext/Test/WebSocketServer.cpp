@@ -6,6 +6,8 @@
 
 using namespace boost::asio;
 
+namespace websocket = boost::beast::websocket;
+
 using boost::beast::bind_front_handler;
 using boost::beast::ssl_stream;
 using boost::beast::tcp_stream;
@@ -13,7 +15,8 @@ using boost::system::error_code;
 using std::function;
 using std::string;
 
-namespace websocket = boost::beast::websocket;
+using Error = Microsoft::React::IWebSocketResource::Error;
+using ErrorType = Microsoft::React::IWebSocketResource::ErrorType;
 
 namespace Microsoft::React::Test
 {
@@ -63,7 +66,12 @@ template <typename SocketLayer>
 void BaseWebSocketSession<SocketLayer>::OnAccept(error_code ec)
 {
   if (ec)
-    return; // TODO: fail
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
+    return;
+  }
 
   m_state = State::Started;
 
@@ -92,7 +100,12 @@ void BaseWebSocketSession<SocketLayer>::OnRead(error_code ec, size_t /*transferr
     return;
 
   if (ec)
-    return; // TODO: fail instead
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
+    return;
+  }
 
   if (!m_callbacks.MessageFactory)
   {
@@ -114,7 +127,12 @@ template <typename SocketLayer>
 void BaseWebSocketSession<SocketLayer>::OnWrite(error_code ec, size_t /*transferred*/)
 {
   if (ec)
-    return; // TODO: fail
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
+    return;
+  }
 
   // Clear outgoing message contents.
   m_message.clear();
@@ -250,7 +268,12 @@ void SecureWebSocketSession::Start() /*override*/
 void SecureWebSocketSession::OnSslHandshake(error_code ec)
 {
   if (ec)
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
     return;
+  }
 
   Accept();
 }
@@ -268,23 +291,39 @@ WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
   error_code ec;
 
   m_acceptor.open(ep.protocol(), ec);
-  if (ec) {
-    return; // TODO: handle
+  if (ec)
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
+    return;
   }
 
   m_acceptor.set_option(socket_base::reuse_address(true), ec);
-  if (ec) {
-    return; // TODO: handle
+  if (ec)
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
+    return;
   }
 
   m_acceptor.bind(ep, ec);
-  if (ec) {
-    return; // TODO: handle
+  if (ec)
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
+    return;
   }
 
   m_acceptor.listen(socket_base::max_listen_connections, ec);
-  if (ec) {
-    return; // TODO: handle
+  if (ec)
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
+    return;
   }
 }
 
@@ -321,8 +360,12 @@ void WebSocketServer::Stop()
 
 void WebSocketServer::OnAccept(error_code ec, ip::tcp::socket socket)
 {
-  if (ec) {
-    // TODO: fail
+  if (ec)
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
+    return;
   }
   else
   {
@@ -360,7 +403,7 @@ void WebSocketServer::SetMessageFactory(function<string(string&&)>&& func)
   m_callbacks.MessageFactory = std::move(func);
 }
 
-void WebSocketServer::SetOnError(function<void(IWebSocketResource::Error&&)>&& func)
+void WebSocketServer::SetOnError(function<void(Error&&)>&& func)
 {
   m_callbacks.OnError = std::move(func);
 }
