@@ -23,6 +23,7 @@ module.exports = {
           'error',
           {ignoreIIFE: true},
         ],
+        '@typescript-eslint/no-misused-promises': 'error',
       },
     },
   ],
