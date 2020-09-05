@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 03 Sep 2020 05:05:02 GMT and should not be manually modified.
+This log was last generated on Sat, 05 Sep 2020 05:06:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.156
+
+Sat, 05 Sep 2020 05:06:01 GMT
+
+### Changes
+
+- yellowbox AppTheme (email not defined)
+- Update V8 and Hermes package versions (tudor.mihai@microsoft.com)
 
 ## 0.0.0-canary.155
 
