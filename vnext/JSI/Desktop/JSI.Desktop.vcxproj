@@ -29,9 +29,6 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{17DD1B17-3094-40DD-9373-AC2497932ECA}</ProjectGuid>
     <ProjectName>JSI.Desktop</ProjectName>
-    <!-- Disabled until we reconcile JSI interface versions -->
-    <USE_V8>false</USE_V8>
-    <V8AppPlatform>win32</V8AppPlatform>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -54,7 +51,7 @@
   <PropertyGroup>
     <!-- We need $(ReactNativeWindowsDir)Chakra for ChakraCoreDebugger.h.
     We should remove it from IncludePath once we retire the ChakraExecutor stack. -->
-    <IncludePath>$(ReactNativeWindowsDir);$(JSI_SourcePath);$(JSI_Source);$(ReactNativeWindowsDir)Chakra;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Shared;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Chakra;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Shared;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -88,16 +85,13 @@
   <ImportGroup Label="ExtensionTargets" Condition="'$(CHAKRACOREUWP)'!='true'">
     <Import Project="$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.20\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.20\build\native\Microsoft.ChakraCore.vc140.targets')" />
     <Import Project="$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.44\build\native\ChakraCore.Debugger.targets" Condition="Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.44\build\native\ChakraCore.Debugger.targets')" />
-    <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild" Condition="'$(CHAKRACOREUWP)'!='true'">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Warning Condition="'$(USE_V8)' != 'true'" Text="Building desktop project without USE_V8 (value is '$(USE_V8)')" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.20\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.20\build\native\Microsoft.ChakraCore.vc140.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.44\build\native\ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.44\build\native\ChakraCore.Debugger.targets'))" />
-    <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
     <Error Condition="'$(Platform)' == 'ARM64' AND !Exists('$(SolutionDir)packages\ReactWindows.ChakraCore.ARM64.1.11.20\build\native\ReactWindows.ChakraCore.ARM64.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactWindows.ChakraCore.ARM64.1.11.20\build\native\ReactWindows.ChakraCore.ARM64.targets'))" />
   </Target>
 </Project>
