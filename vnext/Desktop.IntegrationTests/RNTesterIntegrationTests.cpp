@@ -19,6 +19,7 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 
 TEST_MODULE_INITIALIZE(InitModule) {
   Microsoft::React::SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
+  Microsoft::React::SetRuntimeOptionBool("UseBeastWebSocket", true);
 }
 
 // None of these tests are runnable

@@ -23,7 +23,7 @@ namespace Microsoft::React::Test
 template <typename SocketLayer>
 BaseWebSocketSession<SocketLayer>::BaseWebSocketSession(WebSocketServiceCallbacks& callbacks)
   : m_callbacks{callbacks}
-  , m_state{State::Stopped} {}
+  , m_state{State::Stopped}{}
 
 template <typename SocketLayer>
 BaseWebSocketSession<SocketLayer>::~BaseWebSocketSession() {}
@@ -149,6 +149,7 @@ std::shared_ptr<BaseWebSocketSession<boost::beast::tcp_stream>> WebSocketSession
 
 SecureWebSocketSession::SecureWebSocketSession(ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks)
   : BaseWebSocketSession(callbacks)
+  , m_context{ssl::context::tlsv12}
 {
   // Initialize SSL context.
   string const cert =
@@ -213,17 +214,15 @@ SecureWebSocketSession::SecureWebSocketSession(ip::tcp::socket socket, WebSocket
       "XgdewtScX7P5ltOMhhcWS4Og+qZn18a3kwIBAg==\n"
       "-----END DH PARAMETERS-----\n";
 
-  auto context = ssl::context(ssl::context::sslv23);
-
   // TODO: Remove if not used.
-  context.set_password_callback([](size_t, ssl::context_base::password_purpose) { return "test"; });
+  m_context.set_password_callback([](size_t, ssl::context_base::password_purpose) { return "test"; });
 
-  context.set_options(ssl::context::default_workarounds | ssl::context::no_sslv2 | ssl::context::single_dh_use);
-  context.use_certificate_chain(buffer(cert.data(), cert.size()));
-  context.use_private_key(buffer(key.data(), key.size()), ssl::context::file_format::pem);
-  context.use_tmp_dh(buffer(dh.data(), dh.size()));
+  m_context.set_options(ssl::context::default_workarounds | ssl::context::no_sslv2 | ssl::context::single_dh_use);
+  m_context.use_certificate_chain(buffer(cert.data(), cert.size()));
+  m_context.use_private_key(buffer(key.data(), key.size()), ssl::context::file_format::pem);
+  m_context.use_tmp_dh(buffer(dh.data(), dh.size()));
 
-  m_stream = std::make_shared<websocket::stream<ssl_stream<tcp_stream>>>(std::move(socket), context);
+  m_stream = std::make_shared<websocket::stream<ssl_stream<tcp_stream>>>(std::move(socket), m_context);
 }
 
 SecureWebSocketSession::~SecureWebSocketSession() {}

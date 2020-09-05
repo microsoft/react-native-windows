@@ -77,6 +77,8 @@ class SecureWebSocketSession :
   public std::enable_shared_from_this<SecureWebSocketSession>,
   public BaseWebSocketSession<boost::beast::ssl_stream<boost::beast::tcp_stream>>
 {
+  boost::asio::ssl::context m_context;
+
   std::shared_ptr<BaseWebSocketSession<boost::beast::ssl_stream<boost::beast::tcp_stream>>> SharedFromThis() override;
 
  public:
