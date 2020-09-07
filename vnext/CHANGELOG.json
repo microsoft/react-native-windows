@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Sep 2020 15:05:49 GMT",
+      "tag": "react-native-windows_v0.62.8",
+      "version": "0.62.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Drop remaining ShadowNodes in UIManager dtor",
+            "author": "email not defined",
+            "commit": "348d927359f310bd2556b79d6e4248b3caf46d3b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Backport arm64 support from master.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a70171cdfa4bc22009c4d0c7a30f51421effe75a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 Aug 2020 15:06:25 GMT",
       "tag": "react-native-windows_v0.62.7",
       "version": "0.62.7",

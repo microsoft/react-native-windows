@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 31 Aug 2020 15:06:25 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Sep 2020 15:05:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.8
+
+Mon, 07 Sep 2020 15:05:49 GMT
+
+### Patches
+
+- Drop remaining ShadowNodes in UIManager dtor (email not defined)
+- Backport arm64 support from master. (julio.rocha@microsoft.com)
 
 ## 0.62.7
 
