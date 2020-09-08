@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Build fix",
-  "packageName": "react-native-windows",
-  "email": "acoates-ms@noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-08T19:00:06.531Z"
-}

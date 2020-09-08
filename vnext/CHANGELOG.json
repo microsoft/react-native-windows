@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 08 Sep 2020 21:06:51 GMT",
+      "tag": "react-native-windows_v0.62.9",
+      "version": "0.62.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Build fix",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "aac8da194c34112a1f3e097dd0d51539d7844762",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Sep 2020 15:05:49 GMT",
       "tag": "react-native-windows_v0.62.8",
       "version": "0.62.8",
