@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Deprecate AppTheme by adding yellowbox warning (#5889)",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch",
+  "date": "2020-09-08T22:37:07.426Z"
+}
