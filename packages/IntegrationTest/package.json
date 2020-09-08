@@ -1,0 +1,14 @@
+{
+  "name": "integration-test",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "windows": "react-native run-windows",
+    "start": "react-native start"
+  },
+  "dependencies": {
+    "react": "16.13.1",
+    "react-native": "0.0.0-e75557b48",
+    "react-native-windows": "0.0.0-canary.155"
+  }
+}
