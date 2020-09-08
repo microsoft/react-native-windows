@@ -120,6 +120,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.ByteCodeFileUri = to_string(m_instanceSettings.ByteCodeFileUri());
   reactOptions.EnableByteCodeCaching = m_instanceSettings.EnableByteCodeCaching();
   reactOptions.UseJsi = m_instanceSettings.UseJsi();
+  reactOptions.JsiEngine = static_cast<react::uwp::JSIEngine>(m_instanceSettings.JSIEngineOverride());
 
   reactOptions.ModuleProvider = modulesProvider;
 #ifndef CORE_ABI
