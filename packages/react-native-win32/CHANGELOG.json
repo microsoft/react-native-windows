@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 07 Sep 2020 15:05:16 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.1",
+      "version": "0.63.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "A couple of minor style changes in LogBox to avoid win32 asserts.",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "7312a65674d2c59b4e97b4c6a7dec214c9355843",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 Aug 2020 15:05:16 GMT",
       "tag": "@office-iss/react-native-win32_v0.63.0",
       "version": "0.63.0",

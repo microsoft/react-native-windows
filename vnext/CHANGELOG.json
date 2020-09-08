@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Sep 2020 15:05:16 GMT",
+      "tag": "react-native-windows_v0.63.1",
+      "version": "0.63.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add ARM64 Desktop support (#5864)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "0cd8e68b09deec2c6364804e5308814ec785a55a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Drop shadownodes still in registry in uimanager dtor",
+            "author": "email not defined",
+            "commit": "f200edb5624fb2f4513ec9d3f678839922ef7ea7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 Aug 2020 15:05:16 GMT",
       "tag": "react-native-windows_v0.63.0",
       "version": "0.63.0",
