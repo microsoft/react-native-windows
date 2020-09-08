@@ -33,7 +33,7 @@ EXPORTS
 ?CreateMemoryTracker@react@facebook@@YG?AV?$shared_ptr@VMemoryTracker@react@facebook@@@std@@$$QAV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?CreateTimingModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?CreateWorkerMessageQueue@uwp@react@@YG?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
-?GetJavaScriptFromServer@DevSupportManager@uwp@react@@UAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV45@00@Z
+?GetJavaScriptFromServer@DevSupportManager@uwp@react@@UAE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV45@00_N@Z
 ?InitializeLogging@react@facebook@@YGX$$QAV?$function@$$A6GXW4RCTLogLevel@react@facebook@@PBD@Z@std@@@Z
 ?InitializeTracing@react@facebook@@YGXPAUINativeTraceHandler@12@@Z
 ?JsPointerToStringUtf8@react@facebook@@YG?AW4_JsErrorCode@@PBDIPAPAX@Z

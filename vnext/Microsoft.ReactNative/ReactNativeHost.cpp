@@ -103,6 +103,8 @@ void ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.ModuleProvider = modulesProvider;
   reactOptions.ViewManagerProvider = viewManagersProvider;
 
+  reactOptions.JsiEngine = static_cast<react::uwp::JSIEngine>(m_instanceSettings.JSIEngineOverride());
+
   std::string jsBundleFile = to_string(m_instanceSettings.JavaScriptBundleFile());
   std::string jsMainModuleName = to_string(m_instanceSettings.JavaScriptMainModuleName());
   if (jsBundleFile.empty()) {

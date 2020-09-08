@@ -214,6 +214,8 @@ struct ReactOptions {
   //! It is not safe to expose to Custom Function. Add this flag so we can turn it off for Custom Function.
   bool EnableNativePerformanceNow{true};
 
+  react::uwp::JSIEngine JsiEngine{react::uwp::JSIEngine::Chakra};
+
   ReactDevOptions DeveloperSettings = {};
 
   //! Adds registered JS bundle to JSBundles.

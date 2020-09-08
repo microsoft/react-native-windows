@@ -32,7 +32,8 @@ class DevSupportManager : public facebook::react::IDevSupportManager {
   virtual std::string GetJavaScriptFromServer(
       const std::string &debugHost,
       const std::string &jsBundleName,
-      const std::string &platform) override;
+      const std::string &platform,
+      bool inlineSourceMap) override;
   virtual void StartPollingLiveReload(const std::string &debugHost, std::function<void()> onChangeCallback) override;
   virtual void StopPollingLiveReload() override;
   virtual bool HasException() override {

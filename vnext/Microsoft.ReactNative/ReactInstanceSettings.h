@@ -86,6 +86,8 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   IReactDispatcher UIDispatcher() noexcept;
   void UIDispatcher(IReactDispatcher const &value) noexcept;
 
+  JSIEngine JSIEngineOverride() noexcept;
+  void JSIEngineOverride(JSIEngine value) noexcept;
  private:
   IReactPropertyBag m_properties{ReactPropertyBagHelper::CreatePropertyBag()};
   hstring m_mainComponentName{};
@@ -107,6 +109,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   hstring m_bundleRootPath{};
   uint16_t m_debuggerPort{9229};
   IRedBoxHandler m_redBoxHandler{nullptr};
+  JSIEngine m_jSIEngineOverride{JSIEngine::Chakra};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
@@ -277,6 +280,14 @@ inline IRedBoxHandler ReactInstanceSettings::RedBoxHandler() noexcept {
 
 inline void ReactInstanceSettings::RedBoxHandler(IRedBoxHandler const &value) noexcept {
   m_redBoxHandler = value;
+}
+
+inline JSIEngine ReactInstanceSettings::JSIEngineOverride() noexcept {
+  return m_jSIEngineOverride;
+}
+
+inline void ReactInstanceSettings::JSIEngineOverride(JSIEngine value) noexcept {
+  m_jSIEngineOverride = value;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
