@@ -96,6 +96,9 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   uint16_t SourceBundlePort() noexcept;
   void SourceBundlePort(uint16_t value) noexcept;
 
+  JSIEngine JSIEngineOverride() noexcept;
+  void JSIEngineOverride(JSIEngine value) noexcept;
+
  private:
   IReactPropertyBag m_properties{ReactPropertyBagHelper::CreatePropertyBag()};
   IReactNotificationService m_notifications{ReactNotificationServiceHelper::CreateNotificationService()};
@@ -113,6 +116,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   IRedBoxHandler m_redBoxHandler{nullptr};
   hstring m_sourceBundleHost{};
   uint16_t m_sourceBundlePort{0};
+  JSIEngine m_jSIEngineOverride{JSIEngine::Chakra};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
@@ -236,6 +240,14 @@ inline uint16_t ReactInstanceSettings::SourceBundlePort() noexcept {
 
 inline void ReactInstanceSettings::SourceBundlePort(uint16_t value) noexcept {
   m_sourceBundlePort = value;
+}
+
+inline JSIEngine ReactInstanceSettings::JSIEngineOverride() noexcept {
+  return m_jSIEngineOverride;
+}
+
+inline void ReactInstanceSettings::JSIEngineOverride(JSIEngine value) noexcept {
+  m_jSIEngineOverride = value;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
