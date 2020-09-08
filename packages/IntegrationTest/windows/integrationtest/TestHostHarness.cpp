@@ -18,12 +18,12 @@ TestHostHarness::TestHostHarness() noexcept {
   m_redboxHandler = winrt::make<TestHostHarnessRedboxHandler>(get_weak());
   m_commandListener = winrt::make_self<TestCommandListener>();
 
-  m_commandListener->OnTestCommand(
-      [weakThis{get_weak()}](const TestCommand &command, TestCommandResponse response) noexcept {
-        if (auto strongThis = weakThis.get()) {
-          strongThis->OnTestCommand(command, std::move(response));
-        }
-      });
+  m_commandListener->OnTestCommand([weakThis{get_weak()}](
+      const TestCommand &command, TestCommandResponse response) noexcept {
+    if (auto strongThis = weakThis.get()) {
+      strongThis->OnTestCommand(command, std::move(response));
+    }
+  });
 }
 
 void TestHostHarness::SetRootView(ReactRootView &&rootView) noexcept {
@@ -34,26 +34,29 @@ void TestHostHarness::SetReactHost(ReactNativeHost &&reactHost) noexcept {
   reactHost.InstanceSettings().RedBoxHandler(m_redboxHandler);
   m_instanceLoadedRevoker = reactHost.InstanceSettings().InstanceLoaded(
       winrt::auto_revoke, [weakThis{get_weak()}](const auto & /*sender*/, const auto &args) noexcept {
-        if (auto strongThis = weakThis.get()) {
-          strongThis->m_context = args.Context();
-          strongThis->StartListening();
+        auto strongThis = weakThis.get();
+        if (!strongThis) {
+          return;
         }
 
-        ReactNotificationService notifications(args.Context().Notifications());
+        ReactContext context(args.Context());
 
-        notifications.Subscribe(
+        strongThis->m_context = context;
+        strongThis->StartListening();
+
+        context.Notifications().Subscribe(
             TestModule::TestCompletedEvent(),
-            ReactDispatcher(args.Context().UIDispatcher()),
-            [weakThis](const auto &/*sender*/, ReactNotificationArgs<void> /*args*/) noexcept {
+            context.UIDispatcher(),
+            [weakThis](const auto & /*sender*/, ReactNotificationArgs<void> /*args*/) noexcept {
               if (auto strongThis = weakThis.get()) {
                 strongThis->OnTestCompleted();
               }
             });
 
-        notifications.Subscribe(
+        context.Notifications().Subscribe(
             TestModule::TestPassedEvent(),
-            ReactDispatcher(args.Context().UIDispatcher()),
-            [weakThis](const auto &/*sender*/, ReactNotificationArgs<bool> args) noexcept {
+            context.UIDispatcher(),
+            [weakThis](const auto & /*sender*/, ReactNotificationArgs<bool> args) noexcept {
               if (auto strongThis = weakThis.get()) {
                 strongThis->OnTestPassed(*args.Data());
               }

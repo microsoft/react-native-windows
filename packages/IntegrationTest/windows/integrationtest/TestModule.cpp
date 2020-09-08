@@ -42,7 +42,9 @@ void TestModule::shouldReject(ReactPromise<void> promise) noexcept {
   promise.Resolve();
 }
 
-void TestModule::sendAppEvent(const std::string eventName, const winrt::Microsoft::ReactNative::JSValueObject &event) noexcept {
+void TestModule::sendAppEvent(
+    const std::string eventName,
+    const winrt::Microsoft::ReactNative::JSValueObject &event) noexcept {
   m_context.EmitJSEvent(L"RCTNativeAppEventEmitter", winrt::to_hstring(eventName), event);
 }
 

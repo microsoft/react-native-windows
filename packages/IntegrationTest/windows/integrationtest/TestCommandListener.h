@@ -21,8 +21,7 @@ struct TestCommand {
 
 class TestCommandResponse {
  public:
-  TestCommandResponse(const winrt::Windows::Networking::Sockets::StreamSocket &socket) noexcept
-      : m_socketServer(socket) {}
+  TestCommandResponse(const winrt::Windows::Networking::Sockets::StreamSocket &socket) noexcept : m_socket(socket) {}
 
   winrt::Windows::Foundation::IAsyncAction TestPassed(bool passed) noexcept;
   winrt::Windows::Foundation::IAsyncAction Exception(
@@ -32,7 +31,7 @@ class TestCommandResponse {
  private:
   winrt::Windows::Foundation::IAsyncAction SendJson(const winrt::Windows::Data::Json::JsonObject &payload) noexcept;
 
-  winrt::Windows::Networking::Sockets::StreamSocket m_socketServer;
+  winrt::Windows::Networking::Sockets::StreamSocket m_socket;
 };
 
 using TestCommandDelegate = winrt::delegate<TestCommand, TestCommandResponse>;

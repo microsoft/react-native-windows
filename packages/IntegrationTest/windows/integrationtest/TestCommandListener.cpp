@@ -62,13 +62,23 @@ IAsyncAction TestCommandResponse::SendJson(const JsonObject &payload) noexcept {
   winrt::array_view<byte> utf8Bytes(
       reinterpret_cast<byte *>(utf8Str.data()), reinterpret_cast<byte *>(utf8Str.data() + utf8Str.size()));
 
-  DataWriter streamWriter(m_socketServer.OutputStream());
-  streamWriter.ByteOrder(ByteOrder::LittleEndian);
-  streamWriter.WriteUInt32(static_cast<uint32_t>(utf8Str.size()));
-  streamWriter.WriteBytes(utf8Bytes);
+  try {
+    DataWriter streamWriter(m_socket.OutputStream());
+    streamWriter.ByteOrder(ByteOrder::LittleEndian);
+    streamWriter.WriteUInt32(static_cast<uint32_t>(utf8Str.size()));
+    streamWriter.WriteBytes(utf8Bytes);
 
-  co_await streamWriter.StoreAsync();
-  co_await streamWriter.FlushAsync();
+    co_await streamWriter.StoreAsync();
+    co_await streamWriter.FlushAsync();
+  } catch (const winrt::hresult_error &ex) {
+    auto status = SocketError::GetStatus(ex.code());
+
+    // We don't care if something happens to the socket while we're responding.
+    // Only throw if there was a non-socket error.
+    if (status == SocketErrorStatus::Unknown) {
+      throw ex;
+    }
+  }
 }
 
 IAsyncOperation<ListenResult> TestCommandListener::StartListening(int32_t port) noexcept {
