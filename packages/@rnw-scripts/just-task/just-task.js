@@ -6,9 +6,13 @@
  * @ts-check
  */
 
+const fs = require('fs');
+const path = require('path');
+
 const {
   cleanTask,
   eslintTask,
+  logger,
   jestTask,
   series,
   task,
@@ -24,7 +28,6 @@ task('jest', jestTask());
 task('jest:watch', jestTask({watch: true}));
 
 task('build', series('ts'));
-task('test', series('jest'));
 
 task('rebuild', series('clean', 'build'));
 
@@ -35,3 +38,32 @@ task('lint', series('eslint'));
 task('lint:fix', series('eslint:fix'));
 
 task('watch', tscWatchTask({outDir: 'lib-commonjs'}));
+
+task(
+  'unitTest',
+  jestTask({
+    config: require.resolve('@rnw-scripts/jest-unittest-config'),
+    _: ['--verbose'],
+  }),
+);
+task(
+  'endToEndTest',
+  jestTask({
+    config: require.resolve('@rnw-scripts/jest-e2e-config'),
+    runInBand: true,
+    _: ['--verbose'],
+  }),
+);
+
+const hasE2eTests = fs.existsSync(path.join(process.cwd(), 'src', 'e2etest'));
+const hasUnitTests = fs.existsSync(path.join(process.cwd(), 'src', 'test'));
+
+if (hasE2eTests && hasUnitTests) {
+  task('test', series('unitTest', 'endToEndTest'));
+} else if (hasE2eTests) {
+  task('test', 'endToEndTest');
+} else if (hasUnitTests) {
+  task('test', 'unitTest');
+} else {
+  logger.info('No tests found');
+}
