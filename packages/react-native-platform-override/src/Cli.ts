@@ -21,7 +21,7 @@ import {ValidationError} from './ValidationStrategy';
 import {findManifest} from './FileSearch';
 import {getNpmPackage} from './PackageUtils';
 
-doMain(async () => {
+void doMain(async () => {
   const npmPackage = await getNpmPackage();
 
   return new Promise((resolve, _reject) => {
@@ -355,5 +355,5 @@ async function doMain(fn: () => Promise<void>): Promise<void> {
   }
 
   await fn();
-  lock.unlock();
+  await lock.unlock();
 }
