@@ -5,15 +5,16 @@
 
 #include "TestModule.h"
 
+using namespace std::chrono;
 using namespace winrt::Microsoft::ReactNative;
 
 namespace IntegrationTest {
 
-/*static*/ ReactNotificationId<void> TestModule::TestCompletedEvent() noexcept {
+/*static*/ TestCompletedEventId TestModule::TestCompletedEvent() noexcept {
   return {L"TestModule", L"TestCompleted"};
 }
 
-/*static*/ ReactNotificationId<bool> TestModule::TestPassedEvent() noexcept {
+/*static*/ TestPassedEventId TestModule::TestPassedEvent() noexcept {
   return {L"TestModule", L"TestPassed"};
 }
 
@@ -22,11 +23,11 @@ void TestModule::Init(const ReactContext &ctx) noexcept {
 }
 
 void TestModule::markTestCompleted() noexcept {
-  m_context.Notifications().SendNotification(TestCompletedEvent());
+  m_context.Notifications().SendNotification(TestCompletedEvent(), std::chrono::steady_clock::now());
 }
 
 void TestModule::markTestPassed(bool passed) noexcept {
-  m_context.Notifications().SendNotification(TestPassedEvent(), passed);
+  m_context.Notifications().SendNotification(TestPassedEvent(), std::pair{std::chrono::steady_clock::now(), passed});
 }
 
 void TestModule::verifySnapshot(std::function<void(bool)> callback) noexcept {
@@ -39,13 +40,13 @@ void TestModule::shouldResolve(ReactPromise<void> promise) noexcept {
 }
 
 void TestModule::shouldReject(ReactPromise<void> promise) noexcept {
-  promise.Resolve();
+  promise.Reject(ReactError{"", "", {}});
 }
 
 void TestModule::sendAppEvent(
     const std::string eventName,
     const winrt::Microsoft::ReactNative::JSValueObject &event) noexcept {
-  m_context.EmitJSEvent(L"RCTNativeAppEventEmitter", winrt::to_hstring(eventName), event);
+  m_context.CallJSFunction(L"RCTNativeAppEventEmitter", L"emit", winrt::to_hstring(eventName), event);
 }
 
 } // namespace IntegrationTest

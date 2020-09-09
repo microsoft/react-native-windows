@@ -7,6 +7,9 @@
 
 #include <JSValue.h>
 
+using namespace std::chrono;
+using namespace std::chrono_literals;
+
 using namespace winrt::integrationtest;
 using namespace winrt::Microsoft::ReactNative;
 using namespace winrt::Windows::Foundation;
@@ -18,12 +21,12 @@ TestHostHarness::TestHostHarness() noexcept {
   m_redboxHandler = winrt::make<TestHostHarnessRedboxHandler>(get_weak());
   m_commandListener = winrt::make_self<TestCommandListener>();
 
-  m_commandListener->OnTestCommand([weakThis{get_weak()}](
-      const TestCommand &command, TestCommandResponse response) noexcept {
-    if (auto strongThis = weakThis.get()) {
-      strongThis->OnTestCommand(command, std::move(response));
-    }
-  });
+  m_commandListener->OnTestCommand(
+      [weakThis{get_weak()}](const TestCommand &command, TestCommandResponse response) noexcept {
+        if (auto strongThis = weakThis.get()) {
+          strongThis->OnTestCommand(command, std::move(response));
+        }
+      });
 }
 
 void TestHostHarness::SetRootView(ReactRootView &&rootView) noexcept {
@@ -47,18 +50,18 @@ void TestHostHarness::SetReactHost(ReactNativeHost &&reactHost) noexcept {
         context.Notifications().Subscribe(
             TestModule::TestCompletedEvent(),
             context.UIDispatcher(),
-            [weakThis](const auto & /*sender*/, ReactNotificationArgs<void> /*args*/) noexcept {
+            [weakThis](const auto & /*sender*/, ReactNotificationArgs<TestCompletedEventArgs> args) noexcept {
               if (auto strongThis = weakThis.get()) {
-                strongThis->OnTestCompleted();
+                strongThis->OnTestCompleted(*args.Data());
               }
             });
 
         context.Notifications().Subscribe(
             TestModule::TestPassedEvent(),
             context.UIDispatcher(),
-            [weakThis](const auto & /*sender*/, ReactNotificationArgs<bool> args) noexcept {
+            [weakThis](const auto & /*sender*/, ReactNotificationArgs<TestPassedEventArgs> args) noexcept {
               if (auto strongThis = weakThis.get()) {
-                strongThis->OnTestPassed(*args.Data());
+                strongThis->OnTestPassed(args.Data()->first, args.Data()->second);
               }
             });
       });
@@ -87,31 +90,71 @@ winrt::fire_and_forget TestHostHarness::StartListening() noexcept {
 
 void TestHostHarness::OnTestCommand(const TestCommand &command, TestCommandResponse &&response) noexcept {
   m_pendingResponse = std::move(response);
+  m_commandStartTime = std::chrono::steady_clock::now();
 
   switch (command.Id) {
     case TestCommandId::RunTestComponent: {
       auto componentName = command.payload.GetString();
       m_rootView.ComponentName(componentName);
+      m_timeoutAction = TimeoutIfNoResponse();
+      break;
+    }
+
+    case TestCommandId::GoToComponent: {
+      auto componentName = command.payload.GetString();
+      m_rootView.ComponentName(componentName);
+      m_pendingResponse->Okay();
+      CompletePendingResponse();
       break;
     }
 
     default: {
       ShowJSError("Unexpected command ID from test runner");
       m_pendingResponse->UnknownError("Unexpected command ID from test runner");
-      m_pendingResponse.reset();
+      CompletePendingResponse();
       break;
     }
   }
 }
 
-void TestHostHarness::OnTestCompleted() noexcept {
-  OnTestPassed(true);
+void TestHostHarness::OnTestCompleted(steady_clock::time_point eventTime) noexcept {
+  OnTestPassed(eventTime, true);
 }
 
-void TestHostHarness::OnTestPassed(bool passed) noexcept {
+void TestHostHarness::OnTestPassed(steady_clock::time_point eventTime, bool passed) noexcept {
+  // Some tests like AppEventsTest can misbehave and fire many events at once
+  // if reloaded. We don't have corelation IDs, so just try to filter out
+  // events the JS thread saw before we started the current command.
+  if (eventTime < m_commandStartTime) {
+    return;
+  }
+
   if (m_pendingResponse) {
     m_pendingResponse->TestPassed(passed);
+    CompletePendingResponse();
+  }
+}
+
+IAsyncAction TestHostHarness::TimeoutIfNoResponse() noexcept {
+  constexpr auto CommandTimeout = 20s;
+
+  auto weakThis = get_weak();
+  co_await CommandTimeout;
+
+  auto cancellationToken = co_await winrt::get_cancellation_token();
+  if (auto strongThis = weakThis.get() && m_pendingResponse && !cancellationToken()) {
+    m_pendingResponse->Timeout();
+    CompletePendingResponse();
+  }
+}
+
+void TestHostHarness::CompletePendingResponse() noexcept {
+  if (m_pendingResponse) {
     m_pendingResponse.reset();
+
+    if (m_timeoutAction) {
+      m_timeoutAction.Cancel();
+    }
   }
 }
 
@@ -123,7 +166,7 @@ void TestHostHarnessRedboxHandler::ShowNewError(IRedBoxErrorInfo info, RedBoxErr
   if (auto strongHarness = m_weakHarness.get()) {
     if (strongHarness->m_pendingResponse) {
       strongHarness->m_pendingResponse->Exception(info);
-      strongHarness->m_pendingResponse.reset();
+      strongHarness->CompletePendingResponse();
     }
   }
 }

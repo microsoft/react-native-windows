@@ -12,6 +12,7 @@ namespace IntegrationTest {
 //! Command id from the test runner
 enum class TestCommandId {
   RunTestComponent,
+  GoToComponent,
 };
 
 struct TestCommand {
@@ -23,6 +24,8 @@ class TestCommandResponse {
  public:
   TestCommandResponse(const winrt::Windows::Networking::Sockets::StreamSocket &socket) noexcept : m_socket(socket) {}
 
+  winrt::Windows::Foundation::IAsyncAction Okay() noexcept;
+  winrt::Windows::Foundation::IAsyncAction Timeout() noexcept;
   winrt::Windows::Foundation::IAsyncAction TestPassed(bool passed) noexcept;
   winrt::Windows::Foundation::IAsyncAction Exception(
       const winrt::Microsoft::ReactNative::IRedBoxErrorInfo &err) noexcept;

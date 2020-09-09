@@ -16,6 +16,18 @@ using namespace winrt::Windows::Storage::Streams;
 
 namespace IntegrationTest {
 
+IAsyncAction TestCommandResponse::Okay() noexcept {
+  JsonObject responseJson;
+  responseJson.SetNamedValue(L"status", JsonValue::CreateStringValue(L"okay"));
+  co_await SendJson(responseJson);
+}
+
+IAsyncAction TestCommandResponse::Timeout() noexcept {
+  JsonObject responseJson;
+  responseJson.SetNamedValue(L"status", JsonValue::CreateStringValue(L"timeout"));
+  co_await SendJson(responseJson);
+}
+
 IAsyncAction TestCommandResponse::TestPassed(bool passed) noexcept {
   JsonObject responseJson;
   responseJson.SetNamedValue(L"status", JsonValue::CreateStringValue(L"okay"));
@@ -62,14 +74,16 @@ IAsyncAction TestCommandResponse::SendJson(const JsonObject &payload) noexcept {
   winrt::array_view<byte> utf8Bytes(
       reinterpret_cast<byte *>(utf8Str.data()), reinterpret_cast<byte *>(utf8Str.data() + utf8Str.size()));
 
+  DataWriter streamWriter(m_socket.OutputStream());
+
   try {
-    DataWriter streamWriter(m_socket.OutputStream());
     streamWriter.ByteOrder(ByteOrder::LittleEndian);
     streamWriter.WriteUInt32(static_cast<uint32_t>(utf8Str.size()));
     streamWriter.WriteBytes(utf8Bytes);
 
     co_await streamWriter.StoreAsync();
     co_await streamWriter.FlushAsync();
+
   } catch (const winrt::hresult_error &ex) {
     auto status = SocketError::GetStatus(ex.code());
 
@@ -79,6 +93,10 @@ IAsyncAction TestCommandResponse::SendJson(const JsonObject &payload) noexcept {
       throw ex;
     }
   }
+
+  // The DataWriter being destroyed will close the underlying socket stream.
+  // Detach it before existing.
+  streamWriter.DetachStream();
 }
 
 IAsyncOperation<ListenResult> TestCommandListener::StartListening(int32_t port) noexcept {
@@ -148,8 +166,11 @@ winrt::fire_and_forget TestCommandListener::ListenForInput(IInputStream socketIn
 void TestCommandListener::DispatchTestCommand(const JsonObject message) noexcept {
   auto commandId = message.GetNamedString(L"command");
   if (commandId == L"RunTestComponent") {
-    auto payload = message.GetNamedValue(L"payload");
+    auto payload = message.GetNamedValue(L"component");
     m_testCommandEvent(TestCommand{TestCommandId::RunTestComponent, payload}, TestCommandResponse(m_currentSocket));
+  } else if (commandId == L"GoToComponent") {
+    auto payload = message.GetNamedValue(L"component");
+    m_testCommandEvent(TestCommand{TestCommandId::GoToComponent, payload}, TestCommandResponse(m_currentSocket));
   } else {
     // Unimplemented
     std::terminate();
