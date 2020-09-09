@@ -111,7 +111,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
-
+      <AdditionalOptions>/fastfail %(AdditionalOptions)</AdditionalOptions>
       <!-- Add include directories expected by React Native C++ code and headers -->
       <AdditionalIncludeDirectories>
         $(FollyDir);
@@ -128,6 +128,7 @@
   <ItemDefinitionGroup Condition="'$(ConfigurationType)' == 'Application' OR '$(ConfigurationType)' == 'DynamicLibrary'">
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalOptions>/fastfail %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
 
