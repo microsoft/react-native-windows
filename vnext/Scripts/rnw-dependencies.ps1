@@ -314,9 +314,6 @@ if ($Installed -ne 0) {
 
 if ($NeedsRerun -ne 0) {
     Write-Error "Some dependencies are not met. Re-run with -Install to install them.";
-    if (!$NoPrompt) {
-        [System.Console]::ReadKey();
-    }
     throw;
 } else {
     Write-Output "All mandatory requirements met";
