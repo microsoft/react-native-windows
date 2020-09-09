@@ -65,7 +65,7 @@
 <p>For information around how to set up React Native, see the <a href="https://reactnative.dev/docs/getting-started">React Native Getting Started Guide</a>.</p>
 <h2><a class="anchor" aria-hidden="true" id="install-react-native-for-windows"></a><a href="#install-react-native-for-windows" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install React Native for Windows</h2>
 <p>Remember to call <code>react-native init</code> from the place you want your project directory to live.</p>
-<pre><code class="hljs">npx react-native init &lt;projectName&gt; --template react-<span class="hljs-symbol">native@</span>^<span class="hljs-number">0.63</span><span class="hljs-number">.2</span>
+<pre><code class="hljs css language-bat">npx react-native init &lt;projectName&gt; --template react-native@^<span class="hljs-number">0</span>.<span class="hljs-number">63</span>.<span class="hljs-number">2</span>
 </code></pre>
 <blockquote>
 <p>To create TypeScript template, run <code>npx react-native init &lt;projectName&gt; --template react-native-template-typescript@6.5.*</code>.<br><br>
@@ -74,26 +74,38 @@ If you've installed react native globally in the past, via <code>npm install -g 
 </blockquote>
 <h3><a class="anchor" aria-hidden="true" id="navigate-into-this-newly-created-directory"></a><a href="#navigate-into-this-newly-created-directory" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Navigate into this newly created directory</h3>
 <p>Once your project has been initialized, React Native will have created a new sub directory where all your generated files live.</p>
-<pre><code class="hljs"><span class="hljs-keyword">cd</span> <span class="hljs-symbol">&lt;projectName&gt;</span>
+<pre><code class="hljs css language-bat"><span class="hljs-built_in">cd</span> projectName
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="install-the-windows-extension"></a><a href="#install-the-windows-extension" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install the Windows extension</h3>
 <p>Lastly, install the React Native for Windows packages.</p>
-<pre><code class="hljs">npx react-<span class="hljs-keyword">native</span>-windows-<span class="hljs-keyword">init</span> --overwrite
+<pre><code class="hljs css language-bat">npx react-native-windows-init --overwrite
 </code></pre>
 <blockquote>
 <p>The --overwrite flag is a temporary measure that ensures the correct files are copied to metro.config.js for the metro bundler to work with Windows. If you are starting a new app, this should have no impact. If you are adding Windows to your existing app and you have modified the metro.config.js file, please back up your changes, run the command and copy over to take effect. We are tracking <a href="https://github.com/microsoft/react-native-windows/issues/4698">this issue here</a>.</p>
 </blockquote>
 <p>Here are the options that <code>react-native-windows-init</code> takes:</p>
-<pre><code class="hljs css language-none">Option<span class="hljs-variable">s:</span>
-  --<span class="hljs-keyword">help</span>       Show <span class="hljs-keyword">help</span>                                               [boolean]
-  --<span class="hljs-keyword">version</span>    The <span class="hljs-keyword">version</span> of react-native-windows <span class="hljs-keyword">to</span> use.              [<span class="hljs-built_in">string</span>]
-  --namespace  The native project namespace.                            [<span class="hljs-built_in">string</span>]
-  --<span class="hljs-keyword">verbose</span>    Enables logging.                                        [boolean]
-  --<span class="hljs-keyword">language</span>   Which <span class="hljs-keyword">language</span> the app <span class="hljs-keyword">is</span> written in.
-                                [<span class="hljs-built_in">string</span>] [choice<span class="hljs-variable">s:</span> <span class="hljs-string">"cs"</span>, <span class="hljs-string">"cpp"</span>] [defaul<span class="hljs-variable">t:</span> <span class="hljs-string">"cpp"</span>]
-  --overwrite  Overwrite any existing <span class="hljs-keyword">files</span> without prompting          [boolean]
-  --useWinUI3  Targets WinUI <span class="hljs-number">3.0</span> (Preview) instead of UWP XAML         [boolean]
-</code></pre>
+<table>
+<thead>
+<tr><th>Option</th><th>Input Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>--help</td><td>boolean</td><td>Show help.</td></tr>
+<tr><td>--version</td><td>string</td><td>The version of react-native-windows to use.</td></tr>
+<tr><td>--namespace</td><td>string</td><td>The native project namespace.</td></tr>
+<tr><td>--verbose</td><td>boolean</td><td>Enables logging.</td></tr>
+<tr><td>--language</td><td>string [&quot;cs&quot;,&quot;cpp&quot;] [default: &quot;cpp&quot;]</td><td>Which language the app is written in.</td></tr>
+<tr><td>--overwrite</td><td>boolean</td><td>Overwrite any existing files without prompting.</td></tr>
+<tr><td>Option</td><td>Input Type</td><td>Description</td></tr>
+<tr><td>-------------</td><td>--------------------------------------</td><td>--------------------------------------------------</td></tr>
+<tr><td><code>--help</code></td><td>boolean</td><td>Show help.</td></tr>
+<tr><td><code>--version</code></td><td>string</td><td>The version of react-native-windows to use.</td></tr>
+<tr><td><code>--namespace</code></td><td>string</td><td>The native project namespace.</td></tr>
+<tr><td><code>--verbose</code></td><td>boolean</td><td>Enables logging.</td></tr>
+<tr><td><code>--language</code></td><td>string [&quot;cs&quot;,&quot;cpp&quot;] [default: &quot;cpp&quot;]</td><td>Which language the app is written in.</td></tr>
+<tr><td><code>--overwrite</code></td><td>boolean</td><td>Overwrite any existing files without prompting.</td></tr>
+<tr><td><code>--useWinUI3</code></td><td>boolean</td><td>Targets WinUI 3.0 (Preview) instead of UWP XAML.</td></tr>
+</tbody>
+</table>
 <h2><a class="anchor" aria-hidden="true" id="running-a-react-native-windows-app"></a><a href="#running-a-react-native-windows-app" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Running a React Native Windows App</h2>
 <blockquote>
 <p>Make sure a browser is launched and running before running a React Native Windows app.
@@ -102,7 +114,7 @@ Also ensure your system meets all the <a href="/react-native-windows/docs/next/r
 <ul>
 <li><p>Without Using Visual Studio</p>
 <p>In your React Native Windows project directory, run:</p>
-<pre><code class="hljs">npx react-native <span class="hljs-keyword">run</span><span class="bash">-windows</span>
+<pre><code class="hljs css language-bat">npx react-native run-windows
 </code></pre>
 <p>A new Command Prompt window will open with the React packager as well as a <code>react-native-windows</code> app. This step may take a while during first run since it involves building the entire project and all dependencies. You can now start developing! :tada:</p></li>
 <li><p>Using Visual Studio</p>
@@ -118,18 +130,18 @@ Also ensure your system meets all the <a href="/react-native-windows/docs/next/r
 <li>Install the <a href="https://marketplace.visualstudio.com/items?itemName=msjsdiag.vscode-react-native">React Native Tools</a> plugin for VS Code.</li>
 <li>Create a new file in the applications root directory, <code>.vscode/launch.json</code> and paste the following configuration:</li>
 </ul>
-<pre><code class="hljs">{
-    <span class="hljs-attr">"version"</span>: <span class="hljs-string">"0.2.0"</span>,
-    <span class="hljs-attr">"configurations"</span>: [
-        {
-            <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Debug Windows"</span>,
-            <span class="hljs-attr">"cwd"</span>: <span class="hljs-string">"${workspaceFolder}"</span>,
-            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"reactnative"</span>,
-            <span class="hljs-attr">"request"</span>: <span class="hljs-string">"launch"</span>,
-            <span class="hljs-attr">"platform"</span>: <span class="hljs-string">"windows"</span>
-        }
-    ]
-}
+<pre><code class="hljs css language-json"><span class="token punctuation">{</span>
+    <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"0.2.0"</span><span class="token punctuation">,</span>
+    <span class="token property">"configurations"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Debug Windows"</span><span class="token punctuation">,</span>
+            <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnative"</span><span class="token punctuation">,</span>
+            <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span>
+            <span class="token property">"platform"</span><span class="token operator">:</span> <span class="token string">"windows"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <ul>
 <li>Press <code>F5</code> or navigate to the debug menu (alternatively press <code>Ctrl+Shift+D</code>) and in the Debug dropdown select &quot;Debug Windows&quot; and press the green arrow to run the application.</li>
