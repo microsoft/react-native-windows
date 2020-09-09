@@ -9,7 +9,8 @@ import {Socket} from 'net';
 import {execSync} from 'child_process';
 
 import * as psList from 'ps-list';
-import * as ws from 'ws';
+
+import TestWebSocketServer from './TestWebSocketServer';
 
 async function connectToHarness(): Promise<Socket> {
   return new Promise((resolve, reject) => {
@@ -81,20 +82,12 @@ async function loadTestComponent(socket: Socket, componentName: string) {
 }
 
 let socket: Socket;
-let websocketServer: ws.Server;
+let websocketServer: TestWebSocketServer;
 
 beforeAll(async () => {
   await startLoopbackServerExemption();
   socket = await connectToHarness();
-  websocketServer = new ws.Server({port: 5555});
-
-  websocketServer.on('connection', webSocket => {
-    webSocket.on('message', message => {
-      webSocket.send(message + '_response');
-    });
-
-    webSocket.send('hello');
-  });
+  websocketServer = new TestWebSocketServer();
 
   // Go to a component away from tests so that everything gets correctly
   // reloaded.
