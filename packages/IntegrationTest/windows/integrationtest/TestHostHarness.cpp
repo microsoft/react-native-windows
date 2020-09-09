@@ -21,12 +21,12 @@ TestHostHarness::TestHostHarness() noexcept {
   m_redboxHandler = winrt::make<TestHostHarnessRedboxHandler>(get_weak());
   m_commandListener = winrt::make_self<TestCommandListener>();
 
-  m_commandListener->OnTestCommand(
-      [weakThis{get_weak()}](const TestCommand &command, TestCommandResponse response) noexcept {
-        if (auto strongThis = weakThis.get()) {
-          strongThis->OnTestCommand(command, std::move(response));
-        }
-      });
+  m_commandListener->OnTestCommand([weakThis{get_weak()}](
+      const TestCommand &command, TestCommandResponse response) noexcept {
+    if (auto strongThis = weakThis.get()) {
+      strongThis->OnTestCommand(command, std::move(response));
+    }
+  });
 }
 
 void TestHostHarness::SetRootView(ReactRootView &&rootView) noexcept {
