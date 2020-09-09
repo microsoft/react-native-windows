@@ -182,6 +182,7 @@ $requirements = @(
         Valid = try { ((Get-Item (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe' -ErrorAction Stop).'(Default)').VersionInfo).ProductMajorPart
         } catch { $false } ;
         Install = { choco install -y GoogleChrome };
+        Optional = $true;
     },
     @{
         Name = 'Yarn';
