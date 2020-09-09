@@ -6,6 +6,7 @@
 #include "TestModule.h"
 
 #include <JSValue.h>
+#include <ppltasks.h>
 
 using namespace std::chrono;
 using namespace std::chrono_literals;
@@ -50,18 +51,18 @@ void TestHostHarness::SetReactHost(ReactNativeHost &&reactHost) noexcept {
         context.Notifications().Subscribe(
             TestModule::TestCompletedEvent(),
             context.UIDispatcher(),
-            [weakThis](const auto & /*sender*/, ReactNotificationArgs<TestCompletedEventArgs> args) noexcept {
+            [weakThis](const auto & /*sender*/, ReactNotificationArgs<void> /*args*/) noexcept {
               if (auto strongThis = weakThis.get()) {
-                strongThis->OnTestCompleted(*args.Data());
+                strongThis->OnTestCompleted();
               }
             });
 
         context.Notifications().Subscribe(
             TestModule::TestPassedEvent(),
             context.UIDispatcher(),
-            [weakThis](const auto & /*sender*/, ReactNotificationArgs<TestPassedEventArgs> args) noexcept {
+            [weakThis](const auto & /*sender*/, ReactNotificationArgs<bool> args) noexcept {
               if (auto strongThis = weakThis.get()) {
-                strongThis->OnTestPassed(args.Data()->first, args.Data()->second);
+                strongThis->OnTestPassed(*args.Data());
               }
             });
       });
@@ -88,14 +89,21 @@ winrt::fire_and_forget TestHostHarness::StartListening() noexcept {
   }
 }
 
-void TestHostHarness::OnTestCommand(const TestCommand &command, TestCommandResponse &&response) noexcept {
-  m_pendingResponse = std::move(response);
-  m_commandStartTime = std::chrono::steady_clock::now();
+winrt::fire_and_forget TestHostHarness::OnTestCommand(TestCommand command, TestCommandResponse response) noexcept {
+  // Keep ourselves alive while we have a test command
+  auto strongThis = get_strong();
 
   switch (command.Id) {
     case TestCommandId::RunTestComponent: {
       auto componentName = command.payload.GetString();
       m_rootView.ComponentName(componentName);
+
+      // We might see multiple JS events for exceptions, failing tests, etc.
+      // Flush everything pending from the JS thread to UI thread before
+      // continuing to ensure all events from the past command are handled.
+      co_await FlushJSQueue();
+
+      m_pendingResponse = std::move(response);
       m_timeoutAction = TimeoutIfNoResponse();
       break;
     }
@@ -103,35 +111,27 @@ void TestHostHarness::OnTestCommand(const TestCommand &command, TestCommandRespo
     case TestCommandId::GoToComponent: {
       auto componentName = command.payload.GetString();
       m_rootView.ComponentName(componentName);
-      m_pendingResponse->Okay();
-      CompletePendingResponse();
+      co_await FlushJSQueue();
+      response.Okay();
       break;
     }
 
     default: {
       ShowJSError("Unexpected command ID from test runner");
-      m_pendingResponse->UnknownError("Unexpected command ID from test runner");
-      CompletePendingResponse();
+      response.UnknownError("Unexpected command ID from test runner");
       break;
     }
   }
 }
 
-void TestHostHarness::OnTestCompleted(steady_clock::time_point eventTime) noexcept {
-  OnTestPassed(eventTime, true);
+void TestHostHarness::OnTestCompleted() noexcept {
+  OnTestPassed(true);
 }
 
-void TestHostHarness::OnTestPassed(steady_clock::time_point eventTime, bool passed) noexcept {
-  // Some tests like AppEventsTest can misbehave and fire many events at once
-  // if reloaded. We don't have corelation IDs, so just try to filter out
-  // events the JS thread saw before we started the current command.
-  if (eventTime < m_commandStartTime) {
-    return;
-  }
-
+void TestHostHarness::OnTestPassed(bool passed) noexcept {
   if (m_pendingResponse) {
     m_pendingResponse->TestPassed(passed);
-    CompletePendingResponse();
+    m_pendingResponse.reset();
   }
 }
 
@@ -144,18 +144,18 @@ IAsyncAction TestHostHarness::TimeoutIfNoResponse() noexcept {
   auto cancellationToken = co_await winrt::get_cancellation_token();
   if (auto strongThis = weakThis.get() && m_pendingResponse && !cancellationToken()) {
     m_pendingResponse->Timeout();
-    CompletePendingResponse();
+    m_pendingResponse.reset();
   }
 }
 
-void TestHostHarness::CompletePendingResponse() noexcept {
-  if (m_pendingResponse) {
-    m_pendingResponse.reset();
+IAsyncAction TestHostHarness::FlushJSQueue() noexcept {
+  winrt::handle signal(CreateEvent(nullptr, false, false, nullptr));
 
-    if (m_timeoutAction) {
-      m_timeoutAction.Cancel();
-    }
-  }
+  // This will resume once:
+  // 1. The JS Queue is done with everything already scheduled
+  // 2. Anything sent from the JS queue to the UI queue as remaining work has been handled
+  m_context.JSDispatcher().Post([&signal]() noexcept { SetEvent(signal.get()); });
+  co_await winrt::resume_on_signal(signal.get());
 }
 
 void TestHostHarness::ShowJSError(std::string_view err) noexcept {
@@ -164,10 +164,12 @@ void TestHostHarness::ShowJSError(std::string_view err) noexcept {
 
 void TestHostHarnessRedboxHandler::ShowNewError(IRedBoxErrorInfo info, RedBoxErrorType /*type*/) {
   if (auto strongHarness = m_weakHarness.get()) {
-    if (strongHarness->m_pendingResponse) {
-      strongHarness->m_pendingResponse->Exception(info);
-      strongHarness->CompletePendingResponse();
-    }
+    strongHarness->m_context.UIDispatcher().Post([info{std::move(info)}, strongHarness{std::move(strongHarness)}]() {
+      if (strongHarness->m_pendingResponse) {
+        strongHarness->m_pendingResponse->Exception(info);
+        strongHarness->m_pendingResponse.reset();
+      }
+    });
   }
 }
 bool TestHostHarnessRedboxHandler::IsDevSupportEnabled() {
