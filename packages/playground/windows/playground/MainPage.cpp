@@ -27,6 +27,13 @@ MainPage::MainPage() {
     x_rootComponentNameCombo().IsEditable(true);
     x_entryPointCombo().IsEditable(true);
   }
+
+  // TODO: a way to determine which engines are actually available
+  x_engineChakra().IsEnabled(true);
+  x_engineHermes().IsEnabled(true);
+  x_engineV8().IsEnabled(true);
+
+  x_JsEngine().SelectedIndex(0);
 }
 
 void MainPage::OnLoadClick(
@@ -42,6 +49,8 @@ void MainPage::OnLoadClick(
   host.InstanceSettings().DebuggerBreakOnNextLine(x_BreakOnFirstLineCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseFastRefresh(x_UseFastRefreshCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().DebuggerPort(static_cast<uint16_t>(std::stoi(std::wstring(x_DebuggerPort().Text()))));
+  host.InstanceSettings().JSIEngineOverride(
+      static_cast<Microsoft::ReactNative::JSIEngine>(x_JsEngine().SelectedIndex()));
 
   // Nudge the ReactNativeHost to create the instance and wrapping context
   host.ReloadInstance();

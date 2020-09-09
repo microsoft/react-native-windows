@@ -244,6 +244,7 @@ void ReactInstanceWin::Initialize() noexcept {
               case react::uwp::JSIEngine::Hermes:
 #if defined(USE_HERMES)
                 devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
+                devSettings->inlineSourceMap = false;
                 break;
 #endif
               case react::uwp::JSIEngine::V8:

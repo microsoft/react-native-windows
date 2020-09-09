@@ -132,6 +132,22 @@
                 VerticalAlignment="Center"
                 InputScope="Number"
                 MaxLength="5" />
+            <TextBlock
+                Margin="4"
+                VerticalAlignment="Center"
+                Text="JS Engine:"/>
+            <ComboBox
+                x:Name="x_JsEngine"
+                Margin="4"
+                MinWidth="150"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center">
+                <ComboBox.Items>
+                    <ComboBoxItem Content="Chakra" x:Name="x_engineChakra" />
+                    <ComboBoxItem Content="Hermes" x:Name="x_engineHermes" />
+                    <ComboBoxItem Content="V8" x:Name="x_engineV8" />
+                </ComboBox.Items>
+            </ComboBox>
         </StackPanel>
 
         <Grid x:Name="x_rootElement"

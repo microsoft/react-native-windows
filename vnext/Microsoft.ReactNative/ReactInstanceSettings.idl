@@ -7,6 +7,13 @@ import "RedBoxHandler.idl";
 
 namespace Microsoft.ReactNative {
 
+  // Keep in sync with enum in IReactInstance.h
+  enum JSIEngine {
+    Chakra = 0,
+    Hermes = 1,
+    V8 = 2
+  };
+
   [webhosthidden]
   runtimeclass ReactInstanceSettings 
   {
@@ -33,5 +40,6 @@ namespace Microsoft.ReactNative {
     UInt16 DebuggerPort { get; set; };
     IRedBoxHandler RedBoxHandler { get; set; };
     IReactDispatcher UIDispatcher { get; set; };
+    JSIEngine JSIEngineOverride { get; set; };
   }
 }
