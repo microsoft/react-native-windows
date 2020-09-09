@@ -139,7 +139,6 @@
       </PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -168,9 +167,6 @@
       <!-- Custom XAML types must be in the project namespace to be usable by XAML -->
       <PreprocessorDefinitions>PROJECT_ROOT_NAMESPACE=$(RootNamespace);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
-    <ClCompile>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -653,6 +649,11 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <DebugInformationFormat Condition="'$(AGENT_BUILDDIRECTORY)'!=''">OldStyle</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)\packages\boost.1.72.0.0\build\boost.targets')" />
