@@ -7,7 +7,6 @@
 
 namespace IntegrationTest {
 
-using TestStartedEventId = winrt::Microsoft::ReactNative::ReactNotificationId<void>;
 using TestCompletedEventId = winrt::Microsoft::ReactNative::ReactNotificationId<void>;
 using TestPassedEventId = winrt::Microsoft::ReactNative::ReactNotificationId<bool>;
 

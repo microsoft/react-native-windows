@@ -87,7 +87,7 @@ let websocketServer: TestWebSocketServer;
 beforeAll(async () => {
   await startLoopbackServerExemption();
   socket = await connectToHarness();
-  websocketServer = new TestWebSocketServer();
+  websocketServer = await TestWebSocketServer.start();
 
   // Go to a component away from tests so that everything gets correctly
   // reloaded.

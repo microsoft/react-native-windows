@@ -13,15 +13,23 @@ import {Server} from 'ws';
 export default class TestWebSocketServer {
   private server: Server;
 
-  constructor() {
-    this.server = new Server({port: 5555});
+  private constructor(server: Server) {
+    this.server = server;
+  }
 
-    this.server.on('connection', socket => {
+  public static async start(): Promise<TestWebSocketServer> {
+    const server = new Server({port: 5555});
+    server.on('connection', socket => {
       socket.on('message', message => {
         socket.send(message + '_response');
       });
 
       socket.send('hello');
+    });
+
+    return new Promise((resolve, reject) => {
+      server.on('listening', () => resolve(new TestWebSocketServer(server)));
+      server.on('error', err => reject(err));
     });
   }
 
