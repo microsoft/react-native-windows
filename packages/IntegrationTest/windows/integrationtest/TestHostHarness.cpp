@@ -130,7 +130,7 @@ void TestHostHarness::OnTestCompleted() noexcept {
 void TestHostHarness::OnTestPassed(bool passed) noexcept {
   if (m_pendingResponse) {
     m_pendingResponse->TestPassed(passed);
-    m_pendingResponse.reset();
+    CompletePendingResponse();
   }
 }
 
@@ -143,17 +143,17 @@ IAsyncAction TestHostHarness::TimeoutIfNoResponse() noexcept {
   auto cancellationToken = co_await winrt::get_cancellation_token();
   if (auto strongThis = weakThis.get() && m_pendingResponse && !cancellationToken()) {
     m_pendingResponse->Timeout();
-    m_pendingResponse.reset();
+    CompletePendingResponse();
   }
 }
 
 IAsyncAction TestHostHarness::FlushJSQueue() noexcept {
   winrt::handle signal(CreateEvent(nullptr, false, false, nullptr));
 
-  // This will resume once:
-  // 1. The JS Queue is done with everything already scheduled
-  // 2. Anything sent from the JS queue to the UI queue as remaining work has been handled
-  m_context.JSDispatcher().Post([&signal]() noexcept { SetEvent(signal.get()); });
+  m_context.JSDispatcher().Post([&signal, uiDispatcher{m_context.UIDispatcher()} ]() noexcept {
+    uiDispatcher.Post([&signal]() noexcept { SetEvent(signal.get()); });
+  });
+
   co_await winrt::resume_on_signal(signal.get());
 }
 
@@ -161,12 +161,22 @@ void TestHostHarness::ShowJSError(std::string_view err) noexcept {
   m_context.CallJSFunction(L"RCTLog", L"logToConsole", "error", err);
 }
 
+void TestHostHarness::CompletePendingResponse() noexcept {
+  if (m_pendingResponse) {
+    m_pendingResponse.reset();
+  }
+
+  if (m_timeoutAction) {
+    m_timeoutAction.Cancel();
+  }
+}
+
 void TestHostHarnessRedboxHandler::ShowNewError(IRedBoxErrorInfo info, RedBoxErrorType /*type*/) {
   if (auto strongHarness = m_weakHarness.get()) {
     strongHarness->m_context.UIDispatcher().Post([info{std::move(info)}, strongHarness{std::move(strongHarness)}]() {
       if (strongHarness->m_pendingResponse) {
         strongHarness->m_pendingResponse->Exception(info);
-        strongHarness->m_pendingResponse.reset();
+        strongHarness->CompletePendingResponse();
       }
     });
   }
