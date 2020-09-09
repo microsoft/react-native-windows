@@ -12,12 +12,12 @@
   "dependencies": {
     "react": "16.13.1",
     "react-native": "0.0.0-e75557b48",
-    "react-native-windows": "0.0.0-canary.156"
+    "react-native-windows": "0.0.0-canary.157"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
-    "@rnw-scripts/eslint-config": "0.1.0",
+    "@rnw-scripts/eslint-config": "0.1.1",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/react": "16.9.0",
     "@types/react-native": "^0.62.10",

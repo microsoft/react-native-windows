@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 05 Sep 2020 05:06:01 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Sep 2020 05:06:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.157
+
+Wed, 09 Sep 2020 05:06:35 GMT
+
+### Changes
+
+- Enable @typescript-eslint/no-floating-promises (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.156
 
