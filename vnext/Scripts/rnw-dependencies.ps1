@@ -320,6 +320,6 @@ if ($NeedsRerun -ne 0) {
     throw;
 } else {
     Write-Output "All mandatory requirements met";
-    exit 0;
+    return;
 }
 
