@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 05 Sep 2020 05:06:01 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.156",
+      "version": "0.0.0-canary.156",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "yellowbox AppTheme",
+            "author": "email not defined",
+            "commit": "42c84b85f086135e53d68747d2200981aa5f3f06",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 and Hermes package versions",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "8a8f22f02c42ca1799d3fb0812dcb7aa38e36bc6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Sep 2020 05:05:02 GMT",
       "tag": "react-native-windows_v0.0.0-canary.155",
       "version": "0.0.0-canary.155",
