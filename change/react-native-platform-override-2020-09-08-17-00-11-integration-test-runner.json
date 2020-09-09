@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Start Sharing Test Configuration Between Node Projects",
+  "packageName": "react-native-platform-override",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-09T00:00:10.950Z"
+}
