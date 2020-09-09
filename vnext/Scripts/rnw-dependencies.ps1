@@ -182,6 +182,7 @@ $requirements = @(
         Valid = try { ((Get-Item (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe' -ErrorAction Stop).'(Default)').VersionInfo).ProductMajorPart
         } catch { $false } ;
         Install = { choco install -y GoogleChrome };
+        Optional = $true;
     },
     @{
         Name = 'Yarn';
@@ -313,12 +314,9 @@ if ($Installed -ne 0) {
 
 if ($NeedsRerun -ne 0) {
     Write-Error "Some dependencies are not met. Re-run with -Install to install them.";
-    if (!$NoPrompt) {
-        [System.Console]::ReadKey();
-    }
     throw;
 } else {
     Write-Output "All mandatory requirements met";
-    exit 0;
+    return;
 }
 
