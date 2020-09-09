@@ -7,11 +7,8 @@
 
 namespace IntegrationTest {
 
-using TestCompletedEventArgs = winrt::Microsoft::ReactNative::ReactNonAbiValue<std::chrono::steady_clock::time_point>;
-using TestCompletedEventId = winrt::Microsoft::ReactNative::ReactNotificationId<TestCompletedEventArgs>;
-using TestPassedEventArgs =
-    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::pair<std::chrono::steady_clock::time_point, bool>>;
-using TestPassedEventId = winrt::Microsoft::ReactNative::ReactNotificationId<TestPassedEventArgs>;
+using TestCompletedEventId = winrt::Microsoft::ReactNative::ReactNotificationId<void>;
+using TestPassedEventId = winrt::Microsoft::ReactNative::ReactNotificationId<bool>;
 
 REACT_MODULE(TestModule)
 struct TestModule {

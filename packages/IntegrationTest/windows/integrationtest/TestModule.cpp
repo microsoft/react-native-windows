@@ -5,7 +5,6 @@
 
 #include "TestModule.h"
 
-using namespace std::chrono;
 using namespace winrt::Microsoft::ReactNative;
 
 namespace IntegrationTest {
@@ -23,11 +22,11 @@ void TestModule::Init(const ReactContext &ctx) noexcept {
 }
 
 void TestModule::markTestCompleted() noexcept {
-  m_context.Notifications().SendNotification(TestCompletedEvent(), std::chrono::steady_clock::now());
+  m_context.Notifications().SendNotification(TestCompletedEvent());
 }
 
 void TestModule::markTestPassed(bool passed) noexcept {
-  m_context.Notifications().SendNotification(TestPassedEvent(), std::pair{std::chrono::steady_clock::now(), passed});
+  m_context.Notifications().SendNotification(TestPassedEvent(), passed);
 }
 
 void TestModule::verifySnapshot(std::function<void(bool)> callback) noexcept {

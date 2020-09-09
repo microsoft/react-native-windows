@@ -25,11 +25,11 @@ class TestHostHarness : public winrt::implements<TestHostHarness, winrt::Windows
  private:
   void ShowJSError(std::string_view err) noexcept;
   winrt::fire_and_forget StartListening() noexcept;
-  void OnTestCommand(const TestCommand &command, TestCommandResponse &&response) noexcept;
-  void OnTestCompleted(std::chrono::steady_clock::time_point eventTime) noexcept;
-  void OnTestPassed(std::chrono::steady_clock::time_point eventTime, bool passed) noexcept;
+  winrt::fire_and_forget OnTestCommand(TestCommand command, TestCommandResponse response) noexcept;
+  void OnTestCompleted() noexcept;
+  void OnTestPassed(bool passed) noexcept;
   winrt::Windows::Foundation::IAsyncAction TimeoutIfNoResponse() noexcept;
-  void CompletePendingResponse() noexcept;
+  winrt::Windows::Foundation::IAsyncAction FlushJSQueue() noexcept;
 
   winrt::Microsoft::ReactNative::ReactRootView m_rootView;
   winrt::Microsoft::ReactNative::ReactContext m_context;
@@ -39,7 +39,6 @@ class TestHostHarness : public winrt::implements<TestHostHarness, winrt::Windows
   winrt::Microsoft::ReactNative::IRedBoxHandler m_redboxHandler;
   std::optional<TestCommandResponse> m_pendingResponse;
   winrt::Windows::Foundation::IAsyncAction m_timeoutAction;
-  std::chrono::steady_clock::time_point m_commandStartTime;
 };
 
 //! Redbox handler which feeds into the TestHostHarness to communicate exceptions to the test runner
