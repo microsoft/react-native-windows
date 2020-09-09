@@ -30,6 +30,7 @@ class TestHostHarness : public winrt::implements<TestHostHarness, winrt::Windows
   void OnTestPassed(bool passed) noexcept;
   winrt::Windows::Foundation::IAsyncAction TimeoutIfNoResponse() noexcept;
   winrt::Windows::Foundation::IAsyncAction FlushJSQueue() noexcept;
+  void CompletePendingResponse() noexcept;
 
   winrt::Microsoft::ReactNative::ReactRootView m_rootView;
   winrt::Microsoft::ReactNative::ReactContext m_context;

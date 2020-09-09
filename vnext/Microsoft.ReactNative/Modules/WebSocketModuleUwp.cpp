@@ -297,7 +297,12 @@ auto WebSocketModule::getMethods() -> std::vector<Method> {
       Method(
           "close",
           [webSocket](folly::dynamic args) // iint64_t code, std::string_view reason, int64_t id
-          { webSocket->close(facebook::xplat::jsArgAsInt(args, 0), facebook::xplat::jsArgAsString(args, 1), facebook::xplat::jsArgAsInt(args, 2)); }),
+          {
+            webSocket->close(
+                facebook::xplat::jsArgAsInt(args, 0),
+                facebook::xplat::jsArgAsString(args, 1),
+                facebook::xplat::jsArgAsInt(args, 2));
+          }),
       Method(
           "send",
           [webSocket](folly::dynamic args) // const std::string& message, int64_t id
