@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 10 Sep 2020 05:05:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.158",
+      "version": "0.0.0-canary.158",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Text borders not rendering.",
+            "author": "igklemen@microsoft.com",
+            "commit": "946ba7fd7c6304a5bc6d4a1e69375e290ea10eef",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Make Chrome optional in rnw-deps",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "d783c83332f360b8ae2b7869f14656d3325549e7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix Closing a UWP Websocket",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f29cd468b52ffe7e95264a26bbe206e0ced26aa9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Sep 2020 05:06:35 GMT",
       "tag": "react-native-windows_v0.0.0-canary.157",
       "version": "0.0.0-canary.157",

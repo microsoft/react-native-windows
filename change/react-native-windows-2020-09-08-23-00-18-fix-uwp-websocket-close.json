@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix Closing a UWP Websocket",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-09T06:00:18.192Z"
-}
