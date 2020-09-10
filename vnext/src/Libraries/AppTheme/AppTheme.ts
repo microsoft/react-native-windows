@@ -9,7 +9,6 @@ import {NativeEventEmitter, NativeModules} from 'react-native';
 import {IHighContrastColors, IHighContrastChangedEvent} from './AppThemeTypes';
 
 const invariant = require('invariant');
-const warnOnce = require('../Utilities/warnOnce');
 const NativeAppTheme = NativeModules.RTCAppTheme;
 
 class AppThemeModule extends NativeEventEmitter {
