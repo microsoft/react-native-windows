@@ -87,7 +87,6 @@
       <AdditionalIncludeDirectories>
         $(ProjectDir)pch;
         $(VCInstallDir)UnitTest\include;
-        $(JSI_SourcePath);
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)stubs;

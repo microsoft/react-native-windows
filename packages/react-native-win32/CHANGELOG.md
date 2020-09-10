@@ -1,8 +1,26 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 27 Aug 2020 05:05:29 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Sep 2020 05:06:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.45
+
+Wed, 09 Sep 2020 05:06:35 GMT
+
+### Changes
+
+- Enable @typescript-eslint/no-floating-promises (ngerlem@microsoft.com)
+
+## 0.0.0-canary.44
+
+Wed, 02 Sep 2020 05:05:16 GMT
+
+### Changes
+
+- Integrate 6-18 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/25 Nightly RN Build (ngerlem@microsoft.com)
+- A couple of minor style changes in logbox to avoid win32 asserts. (acoates-ms@noreply.github.com)
 
 ## 0.0.0-canary.43
 

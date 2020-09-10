@@ -4,6 +4,7 @@
 
 ```ts
 
+import { EmitterSubscription } from 'react-native';
 import { NativeEventEmitter } from 'react-native';
 import * as React_2 from 'react';
 import * as RN from 'react-native';

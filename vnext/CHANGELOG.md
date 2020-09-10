@@ -1,8 +1,61 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 29 Aug 2020 05:06:29 GMT and should not be manually modified.
+This log was last generated on Thu, 10 Sep 2020 05:05:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.158
+
+Thu, 10 Sep 2020 05:05:10 GMT
+
+### Changes
+
+- Fix Text borders not rendering. (igklemen@microsoft.com)
+- Make Chrome optional in rnw-deps (asklar@winse.microsoft.com)
+- Fix Closing a UWP Websocket (ngerlem@microsoft.com)
+
+## 0.0.0-canary.157
+
+Wed, 09 Sep 2020 05:06:35 GMT
+
+### Changes
+
+- Enable @typescript-eslint/no-floating-promises (ngerlem@microsoft.com)
+
+## 0.0.0-canary.156
+
+Sat, 05 Sep 2020 05:06:01 GMT
+
+### Changes
+
+- yellowbox AppTheme (email not defined)
+- Update V8 and Hermes package versions (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.155
+
+Thu, 03 Sep 2020 05:05:02 GMT
+
+### Changes
+
+- Initial AccessibilityInfo implementation (acoates-ms@noreply.github.com)
+
+## 0.0.0-canary.154
+
+Wed, 02 Sep 2020 05:05:16 GMT
+
+### Changes
+
+- Keep Templates in react-native-windows Package (ngerlem@microsoft.com)
+- Integrate 6-18 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/25 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.153
+
+Tue, 01 Sep 2020 05:05:10 GMT
+
+### Changes
+
+- Fix 5870: Dont check for inheritance, but do explicit type check (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.152
 

@@ -1,5 +1,2 @@
 lib/
 lib-commonjs/
-
-# Keep the template certificate
-!*.pfx
