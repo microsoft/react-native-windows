@@ -28,36 +28,33 @@ TEST_CLASS (WebSocketIntegrationTest)
 {
   void SendReceiveCloseBase(bool isSecure)
   {
-    promise<size_t> sentSizePromise;
-    promise<string> receivedPromise;
-
-    auto server = make_shared<Test::WebSocketServer>(5557, isSecure);
+    auto server = make_shared<Test::WebSocketServer>(5556, isSecure);
     server->SetMessageFactory([](string&& message)
     {
       return message + "_response";
     });
-    //string serverError;
-    //server->SetOnError([&serverError, &sentSizePromise, &receivedPromise](Error&& err)
-    //{
-    //  serverError = err.Message;
-    //  sentSizePromise.set_value(0);
-    //  receivedPromise.set_value("");
-    //});
+    string serverError;
+    server->SetOnError([&serverError](Error&& err)
+    {
+      serverError = err.Message;
+    });
 
     string scheme = "ws";
     if (isSecure)
       scheme += "s";
-    auto ws = IWebSocketResource::Make(scheme + "://localhost:5557/");
+    auto ws = IWebSocketResource::Make(scheme + "://localhost:5556/");
+    promise<size_t> sentSizePromise;
     ws->SetOnSend([&sentSizePromise](size_t size)
     {
       sentSizePromise.set_value(size);
     });
+    promise<string> receivedPromise;
     ws->SetOnMessage([&receivedPromise](size_t size, const string& message)
     {
       receivedPromise.set_value(message);
     });
     string clientError{};
-    ws->SetOnError([&clientError, &sentSizePromise, &receivedPromise](IWebSocketResource::Error err)
+    ws->SetOnError([&clientError, &sentSizePromise, &receivedPromise](Error err)
     {
       clientError = err.Message;
       sentSizePromise.set_value(0);
@@ -81,7 +78,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Close(CloseCode::Normal, "Closing after reading");
     server->Stop();
 
-    //Assert::AreEqual({}, serverError);
+    Assert::AreEqual({}, serverError);
     Assert::AreEqual({}, clientError);
     Assert::AreEqual(sent.length(), sentSize);
     Assert::AreEqual({"prefix_response"}, received);
@@ -137,7 +134,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       {
         closed = true;
       });
-      ws->SetOnError([&errorMessage](IWebSocketResource::Error && error)
+      ws->SetOnError([&errorMessage](Error && error)
       {
         errorMessage = error.Message;
       });
@@ -167,7 +164,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       pingPromise.set_value(true);
     });
     string errorString;
-    ws->SetOnError([&errorString](IWebSocketResource::Error err)
+    ws->SetOnError([&errorString](Error err)
     {
       errorString = err.Message;
     });
@@ -197,7 +194,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     promise<string> response;
     ws->SetOnMessage([&response](size_t size, const string &message) { response.set_value(message); });
     string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err) { errorMessage = err.Message; });
+    ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
 
     server->Start();
     ws->Connect();
@@ -310,7 +307,7 @@ TEST_CLASS (WebSocketIntegrationTest)
 
       responsePromise.set_value(messageIn);
     });
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error error) { errorMessage = error.Message; });
+    ws->SetOnError([&errorMessage](Error error) { errorMessage = error.Message; });
 
     ws->Connect();
 
@@ -349,7 +346,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       response.set_value(message);
     });
     string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
+    ws->SetOnError([&errorMessage](Error err)
     {
       errorMessage = err.Message;
     });

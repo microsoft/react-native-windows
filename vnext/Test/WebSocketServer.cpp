@@ -105,14 +105,10 @@ void BaseWebSocketSession<SocketLayer>::OnRead(error_code ec, size_t /*transferr
 
   if (ec)
   {
-    if (m_callbacks.OnError)
-      m_callbacks.OnError({ec.message(), ErrorType::Connection});
-
-    //if (ec.value() == 335544539 /*short read*/)               // handshake
-    //if (ec.value() == boost::asio::error::connection_reset)   // read
-    //if (ec.value() == boost::asio::error::operation_aborted)  // write
-    //if (ec.value() == 10053 ??
-    //  return;
+    if (ec.value() != error::connection_reset &&
+        ec.value() != error::connection_aborted)
+      if (m_callbacks.OnError)
+        m_callbacks.OnError({ec.message(), ErrorType::Connection});
   }
 
   if (!m_callbacks.MessageFactory)
@@ -136,8 +132,9 @@ void BaseWebSocketSession<SocketLayer>::OnWrite(error_code ec, size_t /*transfer
 {
   if (ec)
   {
-    if (m_callbacks.OnError)
-      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+    if (ec.value() != error::operation_aborted)
+      if (m_callbacks.OnError)
+        m_callbacks.OnError({ec.message(), ErrorType::Connection});
 
     return;
   }
@@ -277,8 +274,9 @@ void SecureWebSocketSession::OnSslHandshake(error_code ec)
 {
   if (ec)
   {
-    if (m_callbacks.OnError)
-      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+    if (ec.value() != 335544539 /*short read*/) // See https://github.com/boostorg/beast/issues/1123
+      if (m_callbacks.OnError)
+        m_callbacks.OnError({ec.message(), ErrorType::Connection});
 
     return;
   }
@@ -304,7 +302,7 @@ WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
     if (m_callbacks.OnError)
       m_callbacks.OnError({ec.message(), ErrorType::Connection});
 
-    //return;
+    return;
   }
 
   m_acceptor.set_option(socket_base::reuse_address(true), ec);
@@ -313,7 +311,7 @@ WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
     if (m_callbacks.OnError)
       m_callbacks.OnError({ec.message(), ErrorType::Connection});
 
-    //return;
+    return;
   }
 
   m_acceptor.bind(ep, ec);
@@ -322,7 +320,7 @@ WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
     if (m_callbacks.OnError)
       m_callbacks.OnError({ec.message(), ErrorType::Connection});
 
-    //return;
+    return;
   }
 
   m_acceptor.listen(socket_base::max_listen_connections, ec);
@@ -331,7 +329,7 @@ WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
     if (m_callbacks.OnError)
       m_callbacks.OnError({ec.message(), ErrorType::Connection});
 
-    //return;
+    return;
   }
 }
 
@@ -370,8 +368,9 @@ void WebSocketServer::OnAccept(error_code ec, ip::tcp::socket socket)
 {
   if (ec)
   {
-    if (m_callbacks.OnError)
-      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+    if (ec.value() != error::operation_aborted)
+      if (m_callbacks.OnError)
+        m_callbacks.OnError({ec.message(), ErrorType::Connection});
 
     return;
   }
