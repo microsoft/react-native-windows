@@ -191,7 +191,7 @@ void TestHostHarness::CompletePendingResponse() noexcept {
 void TestHostHarnessRedboxHandler::ShowNewError(IRedBoxErrorInfo info, RedBoxErrorType /*type*/) {
   if (auto strongHarness = m_weakHarness.get()) {
     if (strongHarness->m_context) {
-      strongHarness->m_context.UIDispatcher().Post([info{std::move(info)}, strongHarness{std::move(strongHarness)}]() {
+      strongHarness->m_context.UIDispatcher().Post([info{std::move(info)}, strongHarness]() {
         if (strongHarness->m_pendingResponse) {
           strongHarness->m_pendingResponse->Exception(info);
           strongHarness->CompletePendingResponse();
@@ -204,7 +204,7 @@ bool TestHostHarnessRedboxHandler::IsDevSupportEnabled() {
   // We always want errors
   return true;
 }
-void TestHostHarnessRedboxHandler::UpdateError(IRedBoxErrorInfo) {
+void TestHostHarnessRedboxHandler::UpdateError(IRedBoxErrorInfo /*info*/) {
   // Nothing to do
 }
 void TestHostHarnessRedboxHandler::DismissRedBox() {

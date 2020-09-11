@@ -53,7 +53,7 @@ class TestHostHarnessRedboxHandler
       winrt::Microsoft::ReactNative::IRedBoxErrorInfo info,
       winrt::Microsoft::ReactNative::RedBoxErrorType type);
   bool IsDevSupportEnabled();
-  void UpdateError(winrt::Microsoft::ReactNative::IRedBoxErrorInfo);
+  void UpdateError(winrt::Microsoft::ReactNative::IRedBoxErrorInfo /*info*/);
   void DismissRedBox();
 
  private:
