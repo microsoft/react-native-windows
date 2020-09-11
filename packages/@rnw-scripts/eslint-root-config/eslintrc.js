@@ -16,5 +16,5 @@ module.exports = {
   env: {
     node: true,
   },
-  ignorePatterns: ['lib/**', 'lib-commonjs/**'],
+  ignorePatterns: ['/lib/**', '/lib-commonjs/**'],
 };

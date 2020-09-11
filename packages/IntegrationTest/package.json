@@ -7,7 +7,7 @@
     "start": "react-native start",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
-    "integrationtest": "just-scripts test"
+    "integrationtest": "jest --runInBand --verbose"
   },
   "dependencies": {
     "react": "16.13.1",
@@ -22,11 +22,13 @@
     "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/jest": "^24.9.1",
+    "@types/ora": "^3.2.0",
     "@types/ws": "^7.2.6",
     "babel-jest": "^24.9.0",
     "eslint": "6.8.0",
     "jest": "^24.9.0",
     "just-scripts": "^0.36.1",
+    "ora": "^5.1.0",
     "ps-list": "^7.2.0",
     "typescript": "^3.8.3",
     "ws": "^7.3.1"
