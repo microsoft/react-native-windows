@@ -28,10 +28,15 @@ IAsyncAction TestCommandResponse::Timeout() noexcept {
   co_await SendJson(responseJson);
 }
 
-IAsyncAction TestCommandResponse::TestPassed(bool passed) noexcept {
+IAsyncAction TestCommandResponse::TestPassed() noexcept {
   JsonObject responseJson;
-  responseJson.SetNamedValue(L"status", JsonValue::CreateStringValue(L"okay"));
-  responseJson.SetNamedValue(L"passed", JsonValue::CreateBooleanValue(passed));
+  responseJson.SetNamedValue(L"status", JsonValue::CreateStringValue(L"passed"));
+  co_await SendJson(responseJson);
+}
+
+IAsyncAction TestCommandResponse::TestFailed() noexcept {
+  JsonObject responseJson;
+  responseJson.SetNamedValue(L"status", JsonValue::CreateStringValue(L"failed"));
   co_await SendJson(responseJson);
 }
 
@@ -61,10 +66,10 @@ IAsyncAction TestCommandResponse::Exception(const IRedBoxErrorInfo &err) noexcep
   co_await SendJson(responseJson);
 }
 
-IAsyncAction TestCommandResponse::UnknownError(std::string_view err) noexcept {
+IAsyncAction TestCommandResponse::Error(std::string_view message) noexcept {
   JsonObject responseJson;
   responseJson.SetNamedValue(L"status", JsonValue::CreateStringValue(L"error"));
-  responseJson.SetNamedValue(L"message", JsonValue::CreateStringValue(winrt::to_hstring(err)));
+  responseJson.SetNamedValue(L"message", JsonValue::CreateStringValue(winrt::to_hstring(message)));
   co_await SendJson(responseJson);
 }
 
@@ -95,7 +100,7 @@ IAsyncAction TestCommandResponse::SendJson(const JsonObject &payload) noexcept {
   }
 
   // The DataWriter being destroyed will close the underlying socket stream.
-  // Detach it before existing.
+  // Detach it before exiting.
   streamWriter.DetachStream();
 }
 
@@ -111,6 +116,8 @@ IAsyncOperation<ListenResult> TestCommandListener::StartListening(int32_t port) 
             m_currentSocket = args.Socket();
             ListenForInput(m_currentSocket.InputStream());
           });
+
+      m_isListening = true;
     }
 
     co_return ListenResult::Success;
@@ -122,6 +129,10 @@ IAsyncOperation<ListenResult> TestCommandListener::StartListening(int32_t port) 
       co_return ListenResult::OtherError;
     }
   }
+}
+
+bool TestCommandListener::IsListening() const noexcept {
+  return m_isListening;
 }
 
 winrt::fire_and_forget TestCommandListener::ListenForInput(IInputStream socketInput) noexcept {

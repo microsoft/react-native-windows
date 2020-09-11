@@ -28,7 +28,7 @@ class TestHostHarness : public winrt::implements<TestHostHarness, winrt::Windows
   winrt::fire_and_forget OnTestCommand(TestCommand command, TestCommandResponse response) noexcept;
   void OnTestCompleted() noexcept;
   void OnTestPassed(bool passed) noexcept;
-  winrt::Windows::Foundation::IAsyncAction TimeoutIfNoResponse() noexcept;
+  winrt::Windows::Foundation::IAsyncAction TimeoutOnInactivty() noexcept;
   winrt::Windows::Foundation::IAsyncAction FlushJSQueue() noexcept;
   void CompletePendingResponse() noexcept;
 
