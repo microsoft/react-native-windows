@@ -2,7 +2,6 @@
 #pragma once
 
 #include <IWebSocketResource.h>
-#include <boost/asio/strand.hpp>
 #include <boost/beast/core/multi_buffer.hpp>
 #include <boost/beast/core/tcp_stream.hpp>
 #include <boost/beast/ssl/ssl_stream.hpp>

@@ -2,6 +2,7 @@
 #include "WebSocketServer.h"
 
 #include <boost/asio/bind_executor.hpp>
+#include <boost/asio/strand.hpp>
 #include <boost/beast/core/buffers_to_string.hpp>
 
 using namespace boost::asio;
@@ -291,7 +292,7 @@ void SecureWebSocketSession::OnSslHandshake(error_code ec)
 #pragma region WebSocketServer
 
 WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
-  : m_acceptor{m_context}, m_sessions{}, m_isSecure{isSecure}
+  : m_acceptor{make_strand(m_context)}, m_sessions{}, m_isSecure{isSecure}
 {
   ip::tcp::endpoint ep{ip::make_address("0.0.0.0"), port};
   error_code ec;
