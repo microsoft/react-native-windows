@@ -59,7 +59,6 @@ let pages = [
   'RTLExample',
   'Share',
   'Timers',
-  'AppTheme',
   'WebSocket',
   'Transforms',
   //  '<LegacyControlStyleTest>',

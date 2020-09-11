@@ -771,7 +771,7 @@ export default class Bootstrap extends React.Component<
     Linking.canOpenURL('https://www.microsoft.com')
       .then(canOpen => {
         if (canOpen) {
-          Linking.openURL('https://www.microsoft.com');
+          void Linking.openURL('https://www.microsoft.com');
         }
       })
       .catch(() => {

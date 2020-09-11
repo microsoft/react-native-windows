@@ -93,6 +93,12 @@ void NativeAnimatedNodeManager::CreateAnimatedNode(
   }
 }
 
+void NativeAnimatedNodeManager::GetValue(int64_t animatedNodeTag, const Callback &saveValueCallback) {
+  if (const auto valueNode = m_valueNodes.at(animatedNodeTag).get()) {
+    saveValueCallback(std::vector<folly::dynamic>{folly::dynamic(valueNode->Value())});
+  }
+}
+
 void NativeAnimatedNodeManager::ConnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag) {
   m_propsNodes.at(propsNodeTag)->ConnectToView(viewTag);
 }

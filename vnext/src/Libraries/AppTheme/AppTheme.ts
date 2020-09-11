@@ -5,25 +5,15 @@
  */
 'use strict';
 
-import {
-  NativeEventEmitter,
-  EmitterSubscription,
-  NativeModules,
-} from 'react-native';
-import {
-  AppThemeTypes,
-  IAppThemeChangedEvent,
-  IHighContrastColors,
-  IHighContrastChangedEvent,
-} from './AppThemeTypes';
+import {NativeEventEmitter, NativeModules} from 'react-native';
+import {IHighContrastColors, IHighContrastChangedEvent} from './AppThemeTypes';
+
 const invariant = require('invariant');
-const warnOnce = require('../Utilities/warnOnce');
 const NativeAppTheme = NativeModules.RTCAppTheme;
 
 class AppThemeModule extends NativeEventEmitter {
   public isAvailable: boolean;
   private _isHighContrast: boolean;
-  private _currentTheme: AppThemeTypes;
   private _highContrastColors: IHighContrastColors;
 
   constructor() {
@@ -39,40 +29,6 @@ class AppThemeModule extends NativeEventEmitter {
         this._highContrastColors = nativeEvent.highContrastColors;
       },
     );
-
-    this._currentTheme = NativeAppTheme.initialAppTheme;
-    super.addListener(
-      'appThemeChanged',
-      ({currentTheme}: {currentTheme: AppThemeTypes}) => {
-        this._currentTheme = currentTheme;
-      },
-    );
-  }
-
-  addListener(
-    eventType: string,
-    listener: (...args: any[]) => any,
-    context?: any,
-  ): EmitterSubscription {
-    if (eventType === 'appThemeChanged') {
-      warnOnce(
-        'appThemeChanged-deprecated',
-        'AppTheme.appThemeChanged() has been deprecated and will be removed in a future release. ' +
-          'Please use Appearance instead ' +
-          'See https://microsoft.github.io/react-native-windows/docs/windowsbrush-and-theme',
-      );
-    }
-    return super.addListener(eventType, listener, context);
-  }
-
-  get currentTheme(): AppThemeTypes {
-    warnOnce(
-      'currentTheme-deprecated',
-      'AppTheme.currentTheme() has been deprecated and will be removed in a future release. ' +
-        'Please use Appearance instead ' +
-        'See https://microsoft.github.io/react-native-windows/docs/windowsbrush-and-theme',
-    );
-    return this._currentTheme;
   }
 
   get isHighContrast(): boolean {
@@ -96,7 +52,6 @@ function throwMissingNativeModule() {
 // `AppTheme.isAvailable` will return `false`, and any method calls will throw.
 class MissingNativeAppThemeShim {
   public isAvailable = false;
-  public currentTheme = '';
   public isHighContrast = false;
   public currentHighContrastColors = {} as IHighContrastColors;
 
@@ -111,9 +66,7 @@ class MissingNativeAppThemeShim {
   // EventEmitter
   addListener(
     _eventType: string,
-    _listener: (
-      nativeEvent: IAppThemeChangedEvent & IHighContrastChangedEvent,
-    ) => void,
+    _listener: (nativeEvent: IHighContrastChangedEvent) => void,
   ): any {
     throwMissingNativeModule();
   }
@@ -124,9 +77,7 @@ class MissingNativeAppThemeShim {
 
   removeListener(
     _eventType: string,
-    _listener: (
-      nativeEvent: IAppThemeChangedEvent & IHighContrastChangedEvent,
-    ) => void,
+    _listener: (nativeEvent: IHighContrastChangedEvent) => void,
   ) {
     throwMissingNativeModule();
   }

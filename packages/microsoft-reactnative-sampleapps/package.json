@@ -12,19 +12,19 @@
   },
   "dependencies": {
     "react": "16.13.1",
-    "react-native": "0.0.0-e75557b48",
-    "react-native-windows": "0.0.0-canary.155"
+    "react-native": "0.0.0-a36d9cd7e",
+    "react-native-windows": "0.0.0-canary.158"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
-    "@rnw-scripts/eslint-config": "0.1.0",
+    "@rnw-scripts/eslint-config": "0.1.1",
     "@types/react": "16.9.0",
     "@types/react-native": "^0.62.10",
     "eslint": "6.8.0",
     "just-scripts": "^0.36.1",
     "metro-react-native-babel-preset": "^0.56.0",
-    "react-native-windows-codegen": "0.1.1",
+    "react-native-windows-codegen": "0.1.2",
     "react-test-renderer": "16.9.0"
   }
 }

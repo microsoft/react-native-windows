@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.155",
+  "version": "0.0.0-canary.158",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
     "@react-native-community/cli": "^4.10.0",
     "@react-native-community/cli-platform-android": "^4.10.0",
     "@react-native-community/cli-platform-ios": "^4.10.0",
-    "@react-native-windows/cli": "0.0.0-canary.10",
+    "@react-native-windows/cli": "0.0.0-canary.11",
     "abort-controller": "^3.0.0",
     "anser": "^1.4.9",
     "base64-js": "^1.1.2",
@@ -35,9 +35,9 @@
     "hermes-engine": "~0.5.0",
     "invariant": "^2.2.4",
     "jsc-android": "^245459.0.0",
-    "metro-babel-register": "0.59.0",
-    "metro-react-native-babel-transformer": "0.59.0",
-    "metro-source-map": "0.59.0",
+    "metro-babel-register": "0.60.0",
+    "metro-react-native-babel-transformer": "0.60.0",
+    "metro-source-map": "0.60.0",
     "nullthrows": "^1.1.1",
     "pretty-format": "^26.0.1",
     "promise": "^8.0.3",
@@ -54,25 +54,25 @@
   "devDependencies": {
     "@microsoft/api-documenter": "^7.3.8",
     "@microsoft/api-extractor": "^7.3.8",
-    "@rnw-scripts/eslint-config": "0.1.0",
+    "@rnw-scripts/eslint-config": "0.1.1",
     "@types/react": "16.9.0",
     "@types/react-native": "^0.62.10",
     "eslint": "6.8.0",
     "eslint-plugin-prettier": "2.6.2",
-    "flow-bin": "^0.127.0",
+    "flow-bin": "^0.128.0",
     "jscodeshift": "^0.9.0",
     "just-scripts": "^0.36.1",
     "prettier": "1.17.0",
     "react": "16.13.1",
-    "react-native": "0.0.0-e75557b48",
-    "react-native-platform-override": "^0.2.2",
-    "react-native-windows-codegen": "0.1.1",
+    "react-native": "0.0.0-a36d9cd7e",
+    "react-native-platform-override": "^0.2.3",
+    "react-native-windows-codegen": "0.1.2",
     "react-refresh": "^0.4.0",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "0.0.0-e75557b48"
+    "react-native": "0.0.0-a36d9cd7e"
   },
   "beachball": {
     "defaultNpmTag": "canary",
