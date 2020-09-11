@@ -17,7 +17,7 @@
     "@rnw-scripts/package-utils": "^0.0.2",
     "async": "^3.2.0",
     "lodash": "^4.17.15",
-    "ora": "^4.0.3",
+    "ora": "^3.4.0",
     "react-native-platform-override": "^0.2.2",
     "semver": "^7.3.2",
     "yargs": "^15.3.1"
@@ -27,10 +27,10 @@
     "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/async": "^3.2.3",
-    "@types/lodash": "^4.14.157",
+    "@types/lodash": "4.14.161",
     "@types/ora": "^3.2.0",
-    "@types/semver": "^7.3.1",
-    "@types/yargs": "^15.0.5",
+    "@types/semver": "7.3.3",
+    "@types/yargs": "15.0.5",
     "eslint": "6.8.0",
     "just-scripts": "^0.36.1",
     "typescript": "^3.8.3"
