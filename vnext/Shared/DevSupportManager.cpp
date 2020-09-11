@@ -107,15 +107,14 @@ void LaunchDevTools(const facebook::react::DevSettings &settings) {
   httpClient.SendRequestAsync(request);
 }
 
-facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(const facebook::react::DevSettings &settings) {
-  // Reset exception state since client is requesting new service
-  m_exceptionCaught = false;
-
+facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(
+    const facebook::react::DevSettings &settings,
+    std::function<void()> &&errorCallback) {
   try {
     LaunchDevTools(settings);
     Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(settings);
 
-    return [this, settings](
+    return [this, settings, errorCallback](
                std::shared_ptr<facebook::react::ExecutorDelegate> delegate,
                std::shared_ptr<facebook::react::MessageQueueThread> jsQueue) {
       auto websocketJSE = std::make_unique<react::uwp::WebSocketJSExecutor>(delegate, jsQueue);
@@ -129,13 +128,13 @@ facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(const f
                 settings.debuggerAttachCallback)
             .get();
       } catch (...) {
-        m_exceptionCaught = true;
+        errorCallback();
       }
 
       return websocketJSE;
     };
   } catch (winrt::hresult_error const &e) {
-    m_exceptionCaught = true;
+    errorCallback();
     throw std::exception(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()).c_str());
   }
 }
@@ -220,7 +219,6 @@ void DevSupportManager::StartPollingLiveReload(
         std::string errorMessage =
             "Live Reload Stopped:" + Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size());
         OutputDebugStringA(errorMessage.c_str());
-        m_exceptionCaught = true;
         break;
       }
     }
