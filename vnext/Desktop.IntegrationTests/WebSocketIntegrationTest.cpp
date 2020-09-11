@@ -67,7 +67,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     auto receivedFuture = receivedPromise.get_future();
     receivedFuture.wait();
     string received = receivedFuture.get();
-    //Assert::AreEqual({}, clientError);
+    Assert::AreEqual({}, clientError);
 
     ws->Close(CloseCode::Normal, "Closing after reading");
     server->Stop();

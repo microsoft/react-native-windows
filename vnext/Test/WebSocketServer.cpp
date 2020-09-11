@@ -384,7 +384,6 @@ void WebSocketServer::OnAccept(error_code ec, ip::tcp::socket socket)
   m_sessions.push_back(session);
   session->Start();
 
-  // TODO: Accept again.
   Accept();
 }
 
