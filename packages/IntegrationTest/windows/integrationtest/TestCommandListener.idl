@@ -1,0 +1,9 @@
+namespace integrationtest
+{
+    // Result of trying to create a test server to listen for connections
+    enum ListenResult {
+        Success,
+        AddressInUse,
+        OtherError,
+    };
+}
