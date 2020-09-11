@@ -44,6 +44,7 @@ class NativeAnimatedNodeManager {
       const folly::dynamic &config,
       const std::weak_ptr<IReactInstance> &instance,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
+  void GetValue(int64_t animatedNodeTag, const Callback &endCallback);
   void ConnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag);
   void DisconnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag);
   void ConnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag);
