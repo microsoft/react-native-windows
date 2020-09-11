@@ -5,20 +5,14 @@
 #include <CppUnitTest.h>
 #include <IWebSocketResource.h>
 #include <Test/WebSocketServer.h>
-
-#include <condition_variable>
 #include <future>
-#include <mutex>
 
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-using std::condition_variable;
-using std::lock_guard;
 using std::make_shared;
 using std::promise;
 using std::string;
-using std::unique_lock;
 using std::chrono::milliseconds;
 
 using CloseCode = IWebSocketResource::CloseCode;
@@ -267,7 +261,6 @@ TEST_CLASS (WebSocketIntegrationTest)
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(SendReceiveSsl)
-    //TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SendReceiveSsl)
   {
