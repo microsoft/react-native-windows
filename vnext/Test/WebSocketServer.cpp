@@ -40,9 +40,9 @@ void BaseWebSocketSession<SocketLayer>::Start()
 template <typename SocketLayer>
 void BaseWebSocketSession<SocketLayer>::Accept()
 {
-  //// Turn off the timeout on the tcp_stream, because
-  //// the websocket stream has its own timeout system.
-  //beast::get_lowest_layer(ws_).expires_never();
+  // Turn off the timeout on the tcp_stream, because
+  // the websocket stream has its own timeout system.
+  boost::beast::get_lowest_layer(*m_stream).expires_never();
 
   m_stream->set_option(
     websocket::stream_base::timeout::suggested(boost::beast::role_type::server)
@@ -152,14 +152,14 @@ void BaseWebSocketSession<SocketLayer>::OnWrite(error_code ec, size_t /*transfer
 WebSocketSession::WebSocketSession(ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks)
   : BaseWebSocketSession(callbacks)
 {
-  m_stream = std::make_shared<websocket::stream<boost::beast::tcp_stream>>(std::move(socket));
+  m_stream = std::make_shared<websocket::stream<tcp_stream>>(std::move(socket));
 }
 
 WebSocketSession::~WebSocketSession() {}
 
 #pragma region BaseWebSocketSession
 
-std::shared_ptr<BaseWebSocketSession<boost::beast::tcp_stream>> WebSocketSession::SharedFromThis() /*override*/
+std::shared_ptr<BaseWebSocketSession<tcp_stream>> WebSocketSession::SharedFromThis() /*override*/
 {
   return this->shared_from_this();
 }
