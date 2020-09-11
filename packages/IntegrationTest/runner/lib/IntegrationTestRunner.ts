@@ -5,10 +5,11 @@
  * @format
  */
 
-import {execSync} from 'child_process';
-
 import * as ora from 'ora';
 import * as psList from 'ps-list';
+
+import {execSync} from 'child_process';
+
 import IntegrationTestClient from './IntegrationTestClient';
 
 export default class IntegrationTestRunner {
@@ -113,14 +114,14 @@ async function ensureLoopbackServerExemption(): Promise<void> {
   }
 }
 
-function failWithoutContext(message: string): never {
+function failWithoutContext(message: string) {
   const err = new Error(message);
   err.stack = '\n';
   fail(err);
 }
 
 // "Borrowed" from LogBoxInspectorStackFrame
-function prettifyFile(location: string) {
+function prettifyFile(location: string): string {
   const queryIndex = location.indexOf('?');
   return location.substring(
     location.lastIndexOf('/') + 1,

@@ -67,7 +67,10 @@ export default class IntegrationTestClient {
     return new Promise((resolve, reject) => {
       let receiveBuffer = Buffer.alloc(0);
 
-      const onError = (err: Error) => reject(err);
+      const onError = (err: Error) => {
+        this.socket.off('data', onData);
+        reject(err);
+      };
 
       const onData = (chunk: Buffer) => {
         receiveBuffer = Buffer.concat([receiveBuffer, chunk]);
@@ -88,12 +91,12 @@ export default class IntegrationTestClient {
       this.socket.on('data', onData);
       this.socket.once('error', onError);
 
-      const payload = JSON.stringify(command);
+      const payload = Buffer.from(JSON.stringify(command), 'utf8');
       const sizeBuffer = Buffer.alloc(4);
       sizeBuffer.writeUInt32LE(payload.length);
 
       this.socket.write(sizeBuffer);
-      this.socket.write(Buffer.from(payload));
+      this.socket.write(payload);
     });
   }
 
