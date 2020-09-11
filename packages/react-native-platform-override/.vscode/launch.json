@@ -13,7 +13,7 @@
         "../../node_modules/jest/bin/jest.js",
         "--runInBand",
         "--config",
-        "./jest.debug.config.js",
+        "../@rnw-scripts/jest-debug-config/jest.debug.config.js",
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",

@@ -24,6 +24,7 @@
   "dependencies": {
     "async": "^3.2.0",
     "chalk": "^3.0.0",
+    "fp-ts": "^2.5.0",
     "globby": "^9.2.0",
     "inquirer": "^7.1.0",
     "io-ts": "^2.1.1",
@@ -40,6 +41,7 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@rnw-scripts/eslint-config": "0.1.1",
+    "@rnw-scripts/jest-unittest-config": "0.0.0",
     "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/async": "^3.2.3",
@@ -58,7 +60,6 @@
     "babel-jest": "^24.9.0",
     "diff-match-patch": "^1.0.4",
     "eslint": "6.8.0",
-    "fp-ts": "^2.5.0",
     "jest": "^24.9.0",
     "just-scripts": "^0.36.1",
     "minimatch": "^3.0.4",
