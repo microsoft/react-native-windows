@@ -107,9 +107,10 @@ void BaseWebSocketSession<SocketLayer>::OnRead(error_code ec, size_t /*transferr
   if (ec)
   {
     if (ec.value() != error::connection_reset &&
-        ec.value() != error::connection_aborted)
+        ec.value() != error::connection_aborted &&
+        ec.value() != 335544539 /*short read*/)
       if (m_callbacks.OnError)
-        m_callbacks.OnError({ec.message(), ErrorType::Connection});
+        m_callbacks.OnError({ec.message(), ErrorType::Receive});
   }
 
   if (!m_callbacks.MessageFactory)
@@ -135,7 +136,7 @@ void BaseWebSocketSession<SocketLayer>::OnWrite(error_code ec, size_t /*transfer
   {
     if (ec.value() != error::operation_aborted)
       if (m_callbacks.OnError)
-        m_callbacks.OnError({ec.message(), ErrorType::Connection});
+        m_callbacks.OnError({ec.message(), ErrorType::Send});
 
     return;
   }
@@ -277,7 +278,7 @@ void SecureWebSocketSession::OnSslHandshake(error_code ec)
   {
     if (ec.value() != 335544539 /*short read*/) // See https://github.com/boostorg/beast/issues/1123
       if (m_callbacks.OnError)
-        m_callbacks.OnError({ec.message(), ErrorType::Connection});
+        m_callbacks.OnError({ec.message(), ErrorType::Handshake});
 
     return;
   }
