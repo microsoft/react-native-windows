@@ -6,7 +6,6 @@
 #include "TestModule.h"
 
 #include <JSValue.h>
-#include <ppltasks.h>
 
 using namespace std::chrono;
 using namespace std::chrono_literals;

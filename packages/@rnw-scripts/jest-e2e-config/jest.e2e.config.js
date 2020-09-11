@@ -14,13 +14,13 @@ module.exports = {
   rootDir: process.cwd(),
 
   // A list of paths to directories that Jest should use to search for files in
-  roots: ['<rootDir>/src/'],
+  roots: ['<rootDir>/runner/'],
 
   // The test environment that will be used for testing
   testEnvironment: 'node',
 
   // The pattern or patterns Jest uses to detect test files
-  testRegex: '/e2etest/.*\\.test',
+  testRegex: '.*\\.test',
 
   // Default timeout of a test in milliseconds
   testTimeout: 300000,
