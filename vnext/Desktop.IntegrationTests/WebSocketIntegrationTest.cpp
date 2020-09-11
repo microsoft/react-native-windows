@@ -56,7 +56,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     server->Start();
     string sent = "prefix";
     ws->Connect();
-    ws->Send(sent);
+    ws->Send(string{sent});
 
     // Block until response is received. Fail in case of a remote endpoint failure.
     auto sentSizeFuture = sentSizePromise.get_future();
@@ -197,8 +197,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       chars[i] = digits[i % 16];
     }
     chars[LEN] = '\0';
-    string large(chars);
-    ws->Send(large);
+    ws->Send(string{chars});
 
     // Block until response is received. Fail in case of a remote endpoint failure.
     auto future = response.get_future();
@@ -303,7 +302,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Connect();
 
     for (size_t i = 0; i < messages.size(); i++) {
-      ws->SendBinary(messages[i]);
+      ws->SendBinary(string{messages[i]});
       auto future = responsePromise.get_future();
       future.wait();
       string response = future.get();

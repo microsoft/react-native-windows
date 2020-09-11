@@ -22,16 +22,16 @@ void MockWebSocketResource::Ping() noexcept /*override*/
     return Mocks.Ping();
 }
 
-void MockWebSocketResource::Send(const string &message) noexcept /*override*/
+void MockWebSocketResource::Send(string &&message) noexcept /*override*/
 {
   if (Mocks.Send)
-    return Mocks.Send(message);
+    return Mocks.Send(std::move(message));
 }
 
-void MockWebSocketResource::SendBinary(const string &message) noexcept /*override*/
+void MockWebSocketResource::SendBinary(string &&message) noexcept /*override*/
 {
   if (Mocks.SendBinary)
-    return Mocks.SendBinary(message);
+    return Mocks.SendBinary(std::move(message));
 }
 
 void MockWebSocketResource::Close(CloseCode code, const string &reason) noexcept /*override*/

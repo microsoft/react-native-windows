@@ -89,12 +89,12 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
   /// <summary>
   /// <see cref="IWebSocketResource::Send" />
   /// </summary>
-  void Send(const std::string &message) noexcept override;
+  void Send(std::string &&message) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::SendBinary" />
   /// </summary>
-  void SendBinary(const std::string &base64String) noexcept override;
+  void SendBinary(std::string &&base64String) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::Close" />

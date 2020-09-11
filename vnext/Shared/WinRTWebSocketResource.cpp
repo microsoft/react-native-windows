@@ -383,16 +383,16 @@ void WinRTWebSocketResource::Ping() noexcept
   PerformPing();
 }
 
-void WinRTWebSocketResource::Send(const string& message) noexcept
+void WinRTWebSocketResource::Send(string&& message) noexcept
 {
-  m_writeQueue.push({ message, false });
+  m_writeQueue.push({ std::move(message), false });
 
   PerformWrite();
 }
 
-void WinRTWebSocketResource::SendBinary(const string& base64String) noexcept
+void WinRTWebSocketResource::SendBinary(string&& base64String) noexcept
 {
-  m_writeQueue.push({ base64String, true });
+  m_writeQueue.push({ std::move(base64String), true });
 
   PerformWrite();
 }

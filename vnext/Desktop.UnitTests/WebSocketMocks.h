@@ -29,9 +29,9 @@ struct MockWebSocketResource : public IWebSocketResource {
 
   void Ping() noexcept override;
 
-  void Send(const std::string &) noexcept override;
+  void Send(std::string &&) noexcept override;
 
-  void SendBinary(const std::string &) noexcept override;
+  void SendBinary(std::string &&) noexcept override;
 
   void Close(CloseCode, const std::string &) noexcept override;
 
