@@ -40,6 +40,10 @@ void BaseWebSocketSession<SocketLayer>::Start()
 template <typename SocketLayer>
 void BaseWebSocketSession<SocketLayer>::Accept()
 {
+  //// Turn off the timeout on the tcp_stream, because
+  //// the websocket stream has its own timeout system.
+  //beast::get_lowest_layer(ws_).expires_never();
+
   m_stream->set_option(
     websocket::stream_base::timeout::suggested(boost::beast::role_type::server)
   );
@@ -104,7 +108,11 @@ void BaseWebSocketSession<SocketLayer>::OnRead(error_code ec, size_t /*transferr
     if (m_callbacks.OnError)
       m_callbacks.OnError({ec.message(), ErrorType::Connection});
 
-    return;
+    //if (ec.value() == 335544539 /*short read*/)               // handshake
+    //if (ec.value() == boost::asio::error::connection_reset)   // read
+    //if (ec.value() == boost::asio::error::operation_aborted)  // write
+    //if (ec.value() == 10053 ??
+    //  return;
   }
 
   if (!m_callbacks.MessageFactory)
@@ -296,7 +304,7 @@ WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
     if (m_callbacks.OnError)
       m_callbacks.OnError({ec.message(), ErrorType::Connection});
 
-    return;
+    //return;
   }
 
   m_acceptor.set_option(socket_base::reuse_address(true), ec);
@@ -305,7 +313,7 @@ WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
     if (m_callbacks.OnError)
       m_callbacks.OnError({ec.message(), ErrorType::Connection});
 
-    return;
+    //return;
   }
 
   m_acceptor.bind(ep, ec);
@@ -314,7 +322,7 @@ WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
     if (m_callbacks.OnError)
       m_callbacks.OnError({ec.message(), ErrorType::Connection});
 
-    return;
+    //return;
   }
 
   m_acceptor.listen(socket_base::max_listen_connections, ec);
@@ -323,7 +331,7 @@ WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
     if (m_callbacks.OnError)
       m_callbacks.OnError({ec.message(), ErrorType::Connection});
 
-    return;
+    //return;
   }
 }
 
@@ -367,20 +375,18 @@ void WebSocketServer::OnAccept(error_code ec, ip::tcp::socket socket)
 
     return;
   }
-  else
-  {
-    std::shared_ptr<IWebSocketSession> session;
-    if (m_isSecure)
-      session = std::shared_ptr<IWebSocketSession>(new SecureWebSocketSession(std::move(socket), m_callbacks));
-    else
-      session = std::shared_ptr<IWebSocketSession>(new WebSocketSession(std::move(socket), m_callbacks));
 
-    m_sessions.push_back(session);
-    session->Start();
-  }
+  std::shared_ptr<IWebSocketSession> session;
+  if (m_isSecure)
+    session = std::shared_ptr<IWebSocketSession>(new SecureWebSocketSession(std::move(socket), m_callbacks));
+  else
+    session = std::shared_ptr<IWebSocketSession>(new WebSocketSession(std::move(socket), m_callbacks));
+
+  m_sessions.push_back(session);
+  session->Start();
 
   // TODO: Accept again.
-  // Accept();
+  Accept();
 }
 
 void WebSocketServer::SetOnConnection(function<void()>&& func)
