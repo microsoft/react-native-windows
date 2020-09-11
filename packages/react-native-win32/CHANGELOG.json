@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 09 Sep 2020 05:06:35 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.45",
+      "version": "0.0.0-canary.45",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable @typescript-eslint/no-floating-promises",
+            "author": "ngerlem@microsoft.com",
+            "commit": "62f3bb771a129f9cb81bd826827bf4001821a684",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 02 Sep 2020 05:05:16 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.44",
       "version": "0.0.0-canary.44",

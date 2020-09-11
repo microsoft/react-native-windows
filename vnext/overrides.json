@@ -412,6 +412,13 @@
       "file": "src/Libraries/StyleSheet/PlatformColorValueTypes.windows.js"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Text/Text.windows.js",
+      "baseFile": "Libraries/Text/Text.js",
+      "baseVersion": "0.0.0-30a89f30c",
+      "baseHash": "47b5745aff3f5c3fc6f3295e769746b2c40532a6"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.windows.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
