@@ -32,9 +32,9 @@ WebSocketModule::WebSocketModule()
     : m_resourceFactory{[](string &&url) { return IWebSocketResource::Make(std::move(url)); }} {}
 
 WebSocketModule::~WebSocketModule() {
-  if (!GetRuntimeOptionBool("WebSocket.LazyCloseSockets")) {
+  if (!GetRuntimeOptionBool("WebSocketModule.LazyClose")) {
     auto it = m_webSockets.begin();
-    while(it != m_webSockets.end()) {
+    while (it != m_webSockets.end()) {
       it->second->Close(IWebSocketResource::CloseCode::Normal, "WebSocketModule closing");
       m_webSockets.erase(it->first);
       it = m_webSockets.begin();
