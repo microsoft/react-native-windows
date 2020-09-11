@@ -26,10 +26,11 @@ class TestCommandResponse {
 
   winrt::Windows::Foundation::IAsyncAction Okay() noexcept;
   winrt::Windows::Foundation::IAsyncAction Timeout() noexcept;
-  winrt::Windows::Foundation::IAsyncAction TestPassed(bool passed) noexcept;
+  winrt::Windows::Foundation::IAsyncAction TestPassed() noexcept;
+  winrt::Windows::Foundation::IAsyncAction TestFailed() noexcept;
   winrt::Windows::Foundation::IAsyncAction Exception(
       const winrt::Microsoft::ReactNative::IRedBoxErrorInfo &err) noexcept;
-  winrt::Windows::Foundation::IAsyncAction UnknownError(std::string_view error) noexcept;
+  winrt::Windows::Foundation::IAsyncAction Error(std::string_view message) noexcept;
 
  private:
   winrt::Windows::Foundation::IAsyncAction SendJson(const winrt::Windows::Data::Json::JsonObject &payload) noexcept;
@@ -45,6 +46,8 @@ class TestCommandListener : public winrt::implements<TestCommandListener, winrt:
   winrt::Windows::Foundation::IAsyncOperation<winrt::integrationtest::ListenResult> StartListening(
       int32_t port = 30977) noexcept;
 
+  bool IsListening() const noexcept;
+
   winrt::event_token OnTestCommand(TestCommandDelegate &&delegate) noexcept;
 
  private:
@@ -54,6 +57,7 @@ class TestCommandListener : public winrt::implements<TestCommandListener, winrt:
   winrt::Windows::Networking::Sockets::StreamSocketListener m_socketServer;
   winrt::Windows::Networking::Sockets::StreamSocket m_currentSocket;
   winrt::Windows::Networking::Sockets::IStreamSocketListener::ConnectionReceived_revoker m_connectionReceivedRevoker;
+  bool m_isListening{false};
   winrt::event<TestCommandDelegate> m_testCommandEvent;
 };
 

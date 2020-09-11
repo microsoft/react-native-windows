@@ -42,10 +42,12 @@ void TestHostHarness::SetReactHost(ReactNativeHost &&reactHost) noexcept {
           return;
         }
 
-        ReactContext context(args.Context());
+        if (!strongThis->m_commandListener->IsListening()) {
+          strongThis->StartListening();
+        }
 
+        ReactContext context(args.Context());
         strongThis->m_context = context;
-        strongThis->StartListening();
 
         context.Notifications().Subscribe(
             TestModule::TestCompletedEvent(),
@@ -92,6 +94,11 @@ winrt::fire_and_forget TestHostHarness::OnTestCommand(TestCommand command, TestC
   // Keep ourselves alive while we have a test command
   auto strongThis = get_strong();
 
+  if (m_pendingResponse) {
+    response.Error("Received a test command while still processing the previous");
+    co_return;
+  }
+
   switch (command.Id) {
     case TestCommandId::RunTestComponent: {
       auto componentName = command.payload.GetString();
@@ -100,10 +107,14 @@ winrt::fire_and_forget TestHostHarness::OnTestCommand(TestCommand command, TestC
       // We might see multiple JS events for exceptions, failing tests, etc.
       // Flush everything pending from the JS thread to UI thread before
       // continuing to ensure all events from the past command are handled.
+
+      // TODO: This only handles a subset of synchronization issues. We should
+      // expose lifetime events so that we can wait until the root component is
+      // loaded/unloaded before continuing
       co_await FlushJSQueue();
 
       m_pendingResponse = std::move(response);
-      m_timeoutAction = TimeoutIfNoResponse();
+      m_timeoutAction = TimeoutOnInactivty();
       break;
     }
 
@@ -117,7 +128,7 @@ winrt::fire_and_forget TestHostHarness::OnTestCommand(TestCommand command, TestC
 
     default: {
       ShowJSError("Unexpected command ID from test runner");
-      response.UnknownError("Unexpected command ID from test runner");
+      response.Error("Unexpected command ID from test runner");
       break;
     }
   }
@@ -129,12 +140,17 @@ void TestHostHarness::OnTestCompleted() noexcept {
 
 void TestHostHarness::OnTestPassed(bool passed) noexcept {
   if (m_pendingResponse) {
-    m_pendingResponse->TestPassed(passed);
+    if (passed) {
+      m_pendingResponse->TestPassed();
+    } else {
+      m_pendingResponse->TestFailed();
+    }
+
     CompletePendingResponse();
   }
 }
 
-IAsyncAction TestHostHarness::TimeoutIfNoResponse() noexcept {
+IAsyncAction TestHostHarness::TimeoutOnInactivty() noexcept {
   constexpr auto CommandTimeout = 20s;
 
   auto weakThis = get_weak();
@@ -173,12 +189,14 @@ void TestHostHarness::CompletePendingResponse() noexcept {
 
 void TestHostHarnessRedboxHandler::ShowNewError(IRedBoxErrorInfo info, RedBoxErrorType /*type*/) {
   if (auto strongHarness = m_weakHarness.get()) {
-    strongHarness->m_context.UIDispatcher().Post([info{std::move(info)}, strongHarness{std::move(strongHarness)}]() {
-      if (strongHarness->m_pendingResponse) {
-        strongHarness->m_pendingResponse->Exception(info);
-        strongHarness->CompletePendingResponse();
-      }
-    });
+    if (strongHarness->m_context) {
+      strongHarness->m_context.UIDispatcher().Post([info{std::move(info)}, strongHarness{std::move(strongHarness)}]() {
+        if (strongHarness->m_pendingResponse) {
+          strongHarness->m_pendingResponse->Exception(info);
+          strongHarness->CompletePendingResponse();
+        }
+      });
+    }
   }
 }
 bool TestHostHarnessRedboxHandler::IsDevSupportEnabled() {
