@@ -185,13 +185,10 @@ fire_and_forget WinRTWebSocketResource::PerformPing() noexcept
   }
 }
 
-fire_and_forget WinRTWebSocketResource::PerformWrite() noexcept
+fire_and_forget WinRTWebSocketResource::PerformWrite(string&& message, bool isBinary) noexcept
 {
   auto self = shared_from_this();
-  if (self->m_writeQueue.empty())
-  {
-    co_return;
-  }
+  auto messageLocal = std::move(message); // Persist message through coroutine resumptions
 
   try
   {
@@ -208,20 +205,11 @@ fire_and_forget WinRTWebSocketResource::PerformWrite() noexcept
     }
 
     size_t length;
-    std::pair<string, bool> front;
-    bool popped = self->m_writeQueue.try_pop(front);
-    if (!popped)
-    {
-      throw hresult_error(E_FAIL, L"Could not retrieve outgoing message.");
-    }
-
-    auto [message, isBinary] = std::move(front);
-
     if (isBinary)
     {
       self->m_socket.Control().MessageType(SocketMessageType::Binary);
 
-      auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(std::move(message)));
+      auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(messageLocal));
       length = buffer.Length();
       self->m_writer.WriteBuffer(buffer);
     }
@@ -230,11 +218,11 @@ fire_and_forget WinRTWebSocketResource::PerformWrite() noexcept
       self->m_socket.Control().MessageType(SocketMessageType::Utf8);
 
       //TODO: Use char_t instead of uint8_t?
-      length = message.size();
-      winrt::array_view<const uint8_t> arr(
-        CheckedReinterpretCast<const uint8_t*>(message.c_str()),
-        CheckedReinterpretCast<const uint8_t*>(message.c_str()) + message.length());
-      self->m_writer.WriteBytes(arr);
+      length = messageLocal.size();
+      winrt::array_view<const uint8_t> view(
+        CheckedReinterpretCast<const uint8_t*>(messageLocal.c_str()),
+        CheckedReinterpretCast<const uint8_t*>(messageLocal.c_str()) + messageLocal.length());
+      self->m_writer.WriteBytes(view);
     }
 
     co_await self->m_writer.StoreAsync();
@@ -385,16 +373,12 @@ void WinRTWebSocketResource::Ping() noexcept
 
 void WinRTWebSocketResource::Send(string&& message) noexcept
 {
-  m_writeQueue.push({ std::move(message), false });
-
-  PerformWrite();
+  PerformWrite(std::move(message), false);
 }
 
 void WinRTWebSocketResource::SendBinary(string&& base64String) noexcept
 {
-  m_writeQueue.push({ std::move(base64String), true });
-
-  PerformWrite();
+  PerformWrite(std::move(base64String), true);
 }
 
 void WinRTWebSocketResource::Close(CloseCode code, const string& reason) noexcept

@@ -9,9 +9,6 @@
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Storage.Streams.h>
 
-// PPL
-#include <concurrent_queue.h>
-
 // Standard Library
 #include <future>
 #include <queue>
@@ -35,7 +32,6 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
 
   CloseCode m_closeCode{CloseCode::Normal};
   std::string m_closeReason;
-  concurrency::concurrent_queue<std::pair<std::string, bool>> m_writeQueue;
 
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
@@ -51,7 +47,7 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
 
   winrt::Windows::Foundation::IAsyncAction PerformConnect() noexcept;
   winrt::fire_and_forget PerformPing() noexcept;
-  winrt::fire_and_forget PerformWrite() noexcept;
+  winrt::fire_and_forget PerformWrite(std::string &&message, bool isBinary) noexcept;
   winrt::fire_and_forget PerformClose() noexcept;
 
   void OnMessageReceived(
