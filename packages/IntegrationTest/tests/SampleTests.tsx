@@ -19,27 +19,10 @@ functionTest('SampleFunctionTest', () => {
 });
 
 /**
- * An example of a failing test using ".skip" not to run
- */
-functionTest.skip('SampleFailingFunctionTest', () => {
-  if (2 + 2 === 4) {
-    throw new Error('Math is hard');
-  }
-});
-
-/**
  * Test methods can also be async
  */
 functionTest('SampleAsyncFunctionTest', async () => {
   await new Promise(resolve => setTimeout(resolve, 10));
-});
-
-/**
- * Async components can throw and have their exceptions propagated as well
- */
-functionTest.skip('SampleFailingAsyncFunctionTest', async () => {
-  await new Promise(resolve => setTimeout(resolve, 10));
-  throw new Error('This should fail');
 });
 
 /**
@@ -59,9 +42,9 @@ componentTest('SampleComponentTest', ({pass, fail}) => {
 });
 
 /**
- * Component tests can fail with an error
+ * Failing tests can be marked as skipped
  */
-componentTest.skip('SampleFailingComponentTest', ({pass, fail}) => {
+componentTest.skip('SampleSkippedTest', ({pass, fail}) => {
   return (
     <Image
       source={{uri: 'https://google.com'}}

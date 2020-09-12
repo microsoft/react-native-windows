@@ -6,6 +6,7 @@
  */
 
 import * as ora from 'ora';
+import * as prettyFormat from 'pretty-format';
 import * as psList from 'ps-list';
 
 import {execSync} from 'child_process';
@@ -29,7 +30,9 @@ export default class IntegrationTestRunner {
     });
 
     if (res.status !== 'okay') {
-      throw new Error(`Unexpected response going to initial test page: ${res}`);
+      throw new Error(
+        `Unexpected response going to initial test page: ${prettyFormat(res)}`,
+      );
     }
 
     return new IntegrationTestRunner(testClient);

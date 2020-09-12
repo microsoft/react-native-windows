@@ -31,21 +31,15 @@ registerTestComponents([
   // ref.measure returns bad results for us (#5934)
   skip('LayoutEventsTest'),
 
-  // Native snapshot checks not implemented
-  skip('SimpleSnapshotTest'),
-  skip('ImageSnapshotTest'),
-
-  // Image cache control is currently iOS only
-  skip('ImageCachePolicyTest'),
-
   // Skip SyncMethodTest because we don't implement RNTesterTestModule and want
   // to allow web debugging
   skip('SyncMethodTest'),
 
-  // We implement the Android AccessibilityInfo instead of AccessibilityManager
-  skip('AccessibilityManagerTest'),
-
   // globalEvalWithSourceUrl is only set when using JSIExecutor in debug. I.e. it
   // will not work when web debugging
   skip('GlobalEvalWithSourceUrlTest'),
+
+  // Don't bother marking SimpleSnapshotTest, ImageSnapshotTest,
+  // ImageCachePolicyTest, or AccessibilityManagerTest as skipped since they're
+  // iOS specific and won't be enabled
 ]);
