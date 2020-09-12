@@ -3052,7 +3052,7 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
-"@types/lodash@4.14.161", "@types/lodash@^4.14.161":
+"@types/lodash@^4.14.161":
   version "4.14.161"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.161.tgz#a21ca0777dabc6e4f44f3d07f37b765f54188b18"
   integrity sha512-EP6O3Jkr7bXvZZSZYlsgt5DIjiGr0dXP1/jVEwVLTFgg0d+3lWVQkRavYVQszV7dYUwvg0B8R0MBDpcmXg7XIA==
@@ -3319,7 +3319,7 @@
     yargs "^13.2.4"
     yarn-install "^1.0.0"
 
-"@wdio/config@^5.12.1":
+"@wdio/config@5.12.1", "@wdio/config@^5.12.1":
   version "5.12.1"
   resolved "https://registry.yarnpkg.com/@wdio/config/-/config-5.12.1.tgz#e7a1158302d49378de0b47d465dc441525590148"
   integrity sha512-8pZOA0yInNlztcixftf9U4Cc/GSC5b8X2VfWhdhlr0IWekJ5HJ4l6UsLaIRaxGjIHsRsv4Zt2/dc52Q4f3SVrw==
@@ -3366,7 +3366,7 @@
     async-exit-hook "^2.0.1"
     stream-buffers "^3.0.2"
 
-"@wdio/logger@^5.12.1":
+"@wdio/logger@5.12.1", "@wdio/logger@^5.12.1":
   version "5.12.1"
   resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-5.12.1.tgz#1f753b0fa0c1dae455c2a485553890661150fc01"
   integrity sha512-KUmdS0Scj0T5UQGtcWFiQRqc0NpFLQ/vSvRxlDzzkoeGwwPINqTRkLT103KL7Lyitlm9uLfaFfYc2KSzynTung==
@@ -3376,7 +3376,7 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^5.2.0"
 
-"@wdio/repl@^5.12.1":
+"@wdio/repl@5.12.1", "@wdio/repl@^5.12.1":
   version "5.12.1"
   resolved "https://registry.yarnpkg.com/@wdio/repl/-/repl-5.12.1.tgz#af5b556ac26de397ec6f83cfd649d9f973f369b9"
   integrity sha512-/f8bWdqoSOYiZ3MJyiAmXrf9ezi6KTA3wHrpltRYJHFsni+LWEKprAoEhPROkj7OijRuSQqWHLLLYg/BOjOClg==
@@ -3390,7 +3390,7 @@
   dependencies:
     fs-extra "^8.0.1"
 
-"@wdio/runner@^5.12.1":
+"@wdio/runner@5.12.1", "@wdio/runner@^5.12.1":
   version "5.12.1"
   resolved "https://registry.yarnpkg.com/@wdio/runner/-/runner-5.12.1.tgz#6c357a28cde9a06f3418e6c58d24e822d234b8cc"
   integrity sha512-ZgplqHlajHliarzPG2YqKiw5V+KYhgi3CkMMePo8vzQX37wRTQ0RuagwDQy9YQYVXFtsWSr8SFSV6GyQhdeYKw==
@@ -3411,7 +3411,7 @@
     "@wdio/logger" "^5.12.1"
     "@wdio/utils" "^5.12.1"
 
-"@wdio/utils@^5.12.1":
+"@wdio/utils@5.12.1", "@wdio/utils@^5.12.1":
   version "5.12.1"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-5.12.1.tgz#077602989a0060198ea7ec0a13c3b69c76221115"
   integrity sha512-LrUPEdINyWHrPYY3mXfsrEzEtgB+xXvIKPj6y9P3sVk90cw6FUHHbkZOiMiBkcPaCmIyf8bFwQCiLHxIQzhHiQ==
@@ -5182,7 +5182,7 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-chalk@*, chalk@4.1.0, chalk@^4.0.0, chalk@^4.1.0:
+chalk@*, chalk@^4.0.0, chalk@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.0.tgz#4e14870a618d9e2edd97dd8345fd9d9dc315646a"
   integrity sha512-qwx12AxXe2Q5xQ43Ac//I6v5aXTipYrSESdOgzrN+9XjgEpyjpKuvSGaN4qE93f7TQTlerQQ8S+EQ0EyDoVL1A==
@@ -6606,10 +6606,10 @@ eslint-plugin-prettier@3.1.2:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-react-hooks@^4.0.4:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.1.2.tgz#2eb53731d11c95826ef7a7272303eabb5c9a271e"
-  integrity sha512-ykUeqkGyUGgwTtk78C0o8UG2fzwmgJ0qxBGPp2WqRKsTwcLuVf01kTDRAtOsd4u6whX2XOC8749n2vPydP82fg==
+eslint-plugin-react-hooks@3.0.0, eslint-plugin-react-hooks@^4.0.4:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-3.0.0.tgz#9e80c71846eb68dd29c3b21d832728aa66e5bd35"
+  integrity sha512-EjxTHxjLKIBWFgDJdhKKzLh5q+vjTFrqNZX36uIxWS4OfyXe5DawqPj3U5qeJ1ngLwatjzQnmR0Lz0J0YH3kxw==
 
 eslint-plugin-react-native-globals@^0.1.1:
   version "0.1.2"
@@ -6624,7 +6624,7 @@ eslint-plugin-react-native@^3.8.1:
     "@babel/traverse" "^7.7.4"
     eslint-plugin-react-native-globals "^0.1.1"
 
-eslint-plugin-react@^7.20.0:
+eslint-plugin-react@^7.14.1, eslint-plugin-react@^7.20.0:
   version "7.20.6"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.20.6.tgz#4d7845311a93c463493ccfa0a19c9c5d0fd69f60"
   integrity sha512-kidMTE5HAEBSLu23CUDvj8dc3LdBU0ri1scwHBZjI41oDv4tjsWZKU7MQccFzH1QYPYhsnTF2ovh7JlcIcmxgg==
