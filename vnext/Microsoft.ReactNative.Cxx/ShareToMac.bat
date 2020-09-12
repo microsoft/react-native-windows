@@ -17,4 +17,8 @@ copy ReactNonAbiValue.h         ..\..\..\react-native-macos\RNTester\RNTester-ma
 copy ReactDispatcher.h          ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
 copy ReactNotificationService.h ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
 copy ReactContext.h             ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
+copy ReactError.h               ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
+copy ReactPromise.h             ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
+copy ReactPromise.cpp           ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
+copy NativeModules.h            ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
 popd

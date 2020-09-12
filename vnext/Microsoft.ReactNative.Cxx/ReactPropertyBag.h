@@ -281,6 +281,7 @@ struct ReactPropertyBag {
     // empty std::optional in case if obj is null or has a wrong type.
     if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T>) {
       return obj.try_as<T>();
+#ifndef __APPLE__
     } else if constexpr (impl::has_category_v<T>) {
       if (obj) {
 #ifdef WINRT_IMPL_IUNKNOWN_DEFINED
@@ -302,6 +303,7 @@ struct ReactPropertyBag {
       }
 
       return std::optional<T>{};
+#endif
     }
   }
 

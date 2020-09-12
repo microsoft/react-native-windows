@@ -1,6 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+///////////////////////////////////////////////////////////////////////////////
+//                              IMPORTANT
+//
+// This file is used in both react-native-windows and react-native-macos
+//     windows: vntext/Microsoft.ReactNative.Cxx
+//     macOS:   RNTester/RNTester-macOS/TurboModuleCxx
+// You are required to commit exactly the same content to both repo
+// A decision will be made in the near future to prevent from duplicating files
+///////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include <winrt/Windows.Foundation.h>
 #include "JSValueReader.h"
@@ -272,9 +282,15 @@ constexpr bool IsVoidResultCheck() noexcept {
 template <class TResult, class TArg>
 constexpr void ValidateCoroutineArg() noexcept {
   if constexpr (std::is_same_v<TResult, fire_and_forget>) {
+    // unfortunately __PRETTY_FUNCTION__ is not able to be put after a string literal
+    // so no detail information is provided for macOS
     static_assert(
         !std::is_reference_v<TArg> && !std::is_pointer_v<TArg>,
-        "Coroutine parameter must be passed by value for safe access: " __FUNCSIG__);
+        "Coroutine parameter must be passed by value for safe access"
+#ifndef __APPLE__
+        ": " __FUNCSIG__
+#endif
+        );
   }
 }
 
@@ -1009,9 +1025,9 @@ struct ReactMethodVerifier {
     return verifier.m_result;
   }
 
-  template <class TMember, class TAttribute, int I>
+  template <class TMember, class TAttribute, int I2>
   constexpr void
-  Visit([[maybe_unused]] TMember member, ReactAttributeId<I> /*attributeId*/, TAttribute /*attributeInfo*/) noexcept {
+  Visit([[maybe_unused]] TMember member, ReactAttributeId<I2> /*attributeId*/, TAttribute /*attributeInfo*/) noexcept {
     m_result = ModuleMethodInfo<TMember>::template Match<TMethodSpec>();
   }
 
@@ -1027,9 +1043,9 @@ struct ReactSyncMethodVerifier {
     return verifier.m_result;
   }
 
-  template <class TMember, class TAttribute, int I>
+  template <class TMember, class TAttribute, int I2>
   constexpr void
-  Visit([[maybe_unused]] TMember member, ReactAttributeId<I> /*attributeId*/, TAttribute /*attributeInfo*/) noexcept {
+  Visit([[maybe_unused]] TMember member, ReactAttributeId<I2> /*attributeId*/, TAttribute /*attributeInfo*/) noexcept {
     m_result = ModuleSyncMethodInfo<TMember>::template Match<TMethodSpec>();
   }
 
