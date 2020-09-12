@@ -10,10 +10,10 @@
 
 'use strict';
 
-const RCTDeviceEventEmitter = require('../../EventEmitter/RCTDeviceEventEmitter');
+import RCTDeviceEventEmitter from '../../EventEmitter/RCTDeviceEventEmitter';
 
 // [Win32
-//const UIManager = require('../../ReactNative/UIManager');
+// import UIManager from '../../ReactNative/UIManager';
 
 const SCREEN_READER_CHANGED_EVENT = 'screenReaderChanged';
 // Win32]

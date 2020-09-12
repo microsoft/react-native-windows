@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 10 Sep 2020 05:05:10 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Sep 2020 05:08:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.159
+
+Sat, 12 Sep 2020 05:08:52 GMT
+
+### Changes
+
+- Integrate nightly 7/1 RN build (igklemen@microsoft.com)
+- Increase WebSocketJSExecutor Retry Count (ngerlem@microsoft.com)
+- Re-enable WebSocket SSL test (julio.rocha@microsoft.com)
+- remove deprecated AppTheme code (email not defined)
 
 ## 0.0.0-canary.158
 

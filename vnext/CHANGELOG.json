@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 12 Sep 2020 05:08:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.159",
+      "version": "0.0.0-canary.159",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate nightly 7/1 RN build",
+            "author": "igklemen@microsoft.com",
+            "commit": "8922cf2873e3c5ae8dd2fa88c506d43df92dc908",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Increase WebSocketJSExecutor Retry Count",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4d8af0cd90be62c43d1b99fcbc37c1418e13bbaa",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Re-enable WebSocket SSL test",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "ce3b6970f026b73c7a6ffacb38d281985f7a758c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "remove deprecated AppTheme code",
+            "author": "email not defined",
+            "commit": "7945dc60e15fc5ef0e4c478e42a3d1553204cdaf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Sep 2020 05:05:10 GMT",
       "tag": "react-native-windows_v0.0.0-canary.158",
       "version": "0.0.0-canary.158",
