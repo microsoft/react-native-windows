@@ -84,4 +84,4 @@ steps:
         Write-Host "##vso[task.setvariable variable=MultiProcMaxCount]1"
         Write-Host "##vso[task.setvariable variable=npm_config_cache_value]$(NPM_CONFIG_CACHE)"
         Write-Host "##vso[task.setvariable variable=NPM_CONFIG_CACHE]"
-        Write-Host "##vso[task.setvariable variable=npm_config_cache]$(npm_config_cache_value)"
+        Write-Host "##vso[task.setvariable variable=npm_config_cache]{{ npm_config_cache_value }}"
