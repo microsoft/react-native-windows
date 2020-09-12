@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
+    "@babel/parser": "^7.11.5",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@rnw-scripts/eslint-config": "^0.1.1",
@@ -31,6 +32,7 @@
     "ora": "^3.4.0",
     "ps-list": "^7.2.0",
     "typescript": "^3.8.3",
+    "walkdir": "^0.4.1",
     "ws": "^7.3.1"
   }
 }

@@ -5,13 +5,21 @@
  * @format
  */
 
-import {registerTestComponents, skip} from './lib/BaseTest';
+import * as path from 'path';
+
+import {skip} from './lib/SkipTest';
+import {registerTestComponents} from './lib/BaseTest';
+import discoverTests from './lib/discoverTests';
 
 registerTestComponents([
+  // Add working upstream tests
   'IntegrationTestHarnessTest',
   'AppEventsTest',
   'PromiseTest',
   'WebSocketTest',
+
+  // Add our own auto-registered tests
+  ...discoverTests(path.join(__dirname, '..', 'tests')),
 
   // This one is seemingly broken upstream since
   // https://github.com/facebook/react-native/commit/61346d303a44b643b6029835018518d48c285a69

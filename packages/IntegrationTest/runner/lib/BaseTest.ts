@@ -7,6 +7,7 @@
 
 import {afterAll, beforeAll, test} from '@jest/globals';
 
+import {SkipTest} from './SkipTest';
 import IntegrationTestRunner from './IntegrationTestRunner';
 import TestWebSocketServer from './TestWebSocketServer';
 
@@ -27,9 +28,7 @@ afterAll(async () => {
   }
 });
 
-export function registerTestComponents(
-  components: Array<string | {skip: string}>,
-) {
+export function registerTestComponents(components: Array<string | SkipTest>) {
   components.forEach(component => {
     if (typeof component === 'string') {
       test(component, async () => await testRunner.runTestComponent(component));
@@ -40,8 +39,4 @@ export function registerTestComponents(
       );
     }
   });
-}
-
-export function skip(component: string) {
-  return {skip: component};
 }
