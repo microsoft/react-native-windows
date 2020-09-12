@@ -1,11 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+///////////////////////////////////////////////////////////////////////////////
+//                              IMPORTANT
+//
+// This file is used in both react-native-windows and react-native-macos
+//     windows: vntext/Microsoft.ReactNative.Cxx
+//     macOS:   RNTester/RNTester-macOS/TurboModuleCxx
+// You are required to commit exactly the same content to both repo
+// A decision will be made in the near future to prevent from duplicating files
+///////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #ifndef MICROSOFT_REACTNATIVE_REACTCONTEXT
 #define MICROSOFT_REACTNATIVE_REACTCONTEXT
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(__APPLE__)
 #include <CppWinRTIncludes.h>
 #endif
 #include <string_view>
@@ -62,7 +72,7 @@ struct ReactContext {
     m_handle.EmitJSEvent(eventEmitterName, eventName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
   }
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(__APPLE__)
   // Dispatch eventName event to the view.
   // args are either function arguments or a single lambda with 'IJSValueWriter const&' argument.
   template <class... TArgs>

@@ -11,4 +11,10 @@ copy JSValueReader.h            ..\..\..\react-native-macos\RNTester\RNTester-ma
 copy JSValueWriter.h            ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
 copy ModuleRegistration.h       ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
 copy ModuleRegistration.cpp     ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
+copy ReactPropertyBag.h         ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
+copy ReactHandleHelper.h        ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
+copy ReactNonAbiValue.h         ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
+copy ReactDispatcher.h          ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
+copy ReactNotificationService.h ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
+copy ReactContext.h             ..\..\..\react-native-macos\RNTester\RNTester-macOS\TurboModuleCxx
 popd

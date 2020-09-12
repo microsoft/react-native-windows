@@ -8,7 +8,7 @@
 //     windows: vntext/Microsoft.ReactNative.Cxx
 //     macOS:   RNTester/RNTester-macOS/TurboModuleCxx
 // You are required to commit exactly the same content to both repo
-// It will be eventually moved to a shared repo
+// A decision will be made in the near future to prevent from duplicating files
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "pch.h"
