@@ -1,0 +1,8 @@
+{
+  "type": "minor",
+  "comment": "Upgrade Jest",
+  "packageName": "@rnw-scripts/jest-unittest-config",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-12T12:27:36.790Z"
+}
