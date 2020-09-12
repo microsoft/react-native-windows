@@ -76,11 +76,15 @@ async function runWindows(
   try {
     buildTools = MSBuildTools.findAvailableVersion(options.arch, verbose);
   } catch (error) {
-    newWarn("No public VS release found");
+    newWarn('No public VS release found');
     // Try prerelease
     try {
-      newInfo("Trying pre-release VS");
-      buildTools = MSBuildTools.findAvailableVersion(options.arch, verbose, true);
+      newInfo('Trying pre-release VS');
+      buildTools = MSBuildTools.findAvailableVersion(
+        options.arch,
+        verbose,
+        true,
+      );
     } catch {
       throw error;
     }

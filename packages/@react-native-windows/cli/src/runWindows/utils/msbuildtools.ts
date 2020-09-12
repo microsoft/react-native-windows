@@ -148,7 +148,7 @@ export default class MSBuildTools {
   static findAvailableVersion(
     buildArch: BuildArch,
     verbose: boolean,
-    prerelease?: boolean
+    prerelease?: boolean,
   ): MSBuildTools {
     // https://aka.ms/vs/workloads
     const requires = [
@@ -156,7 +156,12 @@ export default class MSBuildTools {
       getVCToolsByArch(buildArch),
     ];
     const version = process.env.VisualStudioVersion || '16.0';
-    const vsInstallation = findLatestVsInstall({requires, version, verbose, prerelease});
+    const vsInstallation = findLatestVsInstall({
+      requires,
+      version,
+      verbose,
+      prerelease,
+    });
 
     if (!vsInstallation) {
       if (process.env.VisualStudioVersion != null) {
