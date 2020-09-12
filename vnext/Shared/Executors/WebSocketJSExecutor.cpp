@@ -228,9 +228,7 @@ bool WebSocketJSExecutor::PrepareJavaScriptRuntime(int milliseconds) {
 
 void WebSocketJSExecutor::PollPrepareJavaScriptRuntime() {
   m_messageQueueThread->runOnQueue([this]() {
-    auto timeout = std::chrono::milliseconds(750);
-
-    for (uint32_t retries = 20; retries > 0; --retries) {
+    for (uint32_t retries = 50; retries > 0; --retries) {
       if (PrepareJavaScriptRuntime(750)) {
         OnDebuggerAttach();
         return;
