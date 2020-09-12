@@ -15,6 +15,7 @@ interface VisualStudioInstallation {
   instanceId: string;
   installationPath: string;
   installationVersion: string;
+  prerelease: string;
 }
 
 /**
@@ -38,11 +39,18 @@ function vsWhere(args: string[], verbose?: boolean): any[] {
     throw new Error(`Unable to find vswhere at ${vsWherePath}`);
   }
 
-  return JSON.parse(
-    execSync(`"${vsWherePath}" ${args.join(' ')} -format json -utf8`).toString(
+  const cmdline = `"${vsWherePath}" ${args.join(' ')} -format json -utf8`;
+  const json = JSON.parse(
+    execSync(cmdline).toString(
       'utf8',
     ),
   );
+  
+  for (const entry of json) {
+    entry.prerelease = entry.catalog.productMilestoneIsPreRelease;
+  }
+
+  return json;
 }
 
 /**
@@ -53,6 +61,7 @@ export function enumerateVsInstalls(opts: {
   version?: string;
   verbose?: boolean;
   latest?: boolean;
+  prerelease?: boolean;
 }): VisualStudioInstallation[] {
   const args: string[] = [];
 
@@ -68,6 +77,10 @@ export function enumerateVsInstalls(opts: {
     args.push('-latest');
   }
 
+  if (opts.prerelease) {
+    args.push('-prerelease');
+  }
+
   return vsWhere(args, opts.verbose);
 }
 
@@ -78,8 +91,14 @@ export function findLatestVsInstall(opts: {
   requires?: string[];
   version?: string;
   verbose?: boolean;
+  prerelease?: boolean;
 }): VisualStudioInstallation | null {
-  const installs = enumerateVsInstalls({...opts, latest: true});
+  let installs = enumerateVsInstalls({...opts, latest: true});
+
+  if (opts.prerelease && installs.length > 0) {
+    installs = installs.filter((x) => x.prerelease === "True");
+  }
+
   if (installs.length > 0) {
     return installs[0];
   } else {
