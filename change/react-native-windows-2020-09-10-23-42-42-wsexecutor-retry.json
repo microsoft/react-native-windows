@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Increase WebSocketJSExecutor Retry Count",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-11T06:42:42.678Z"
-}
