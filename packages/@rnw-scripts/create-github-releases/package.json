@@ -28,10 +28,10 @@
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/chalk": "^2.2.0",
     "@types/glob": "^7.1.0",
-    "@types/lodash": "4.14.161",
+    "@types/lodash": "^4.14.161",
     "@types/node-fetch": "^2.5.7",
     "@types/semver": "7.3.3",
-    "@types/yargs": "15.0.5",
+    "@types/yargs": "^15.0.5",
     "eslint": "6.8.0",
     "just-scripts": "^0.36.1",
     "typescript": "^3.8.3"

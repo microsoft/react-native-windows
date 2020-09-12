@@ -16,7 +16,7 @@
     "watch": "just-scripts watch"
   },
   "dependencies": {
-    "chalk": "4.1.0",
+    "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
     "envinfo": "^7.5.0",
     "glob": "^7.1.1",
@@ -41,7 +41,7 @@
     "@types/inquirer": "^6.5.0",
     "@types/mustache": "^4.0.1",
     "@types/ora": "^3.2.0",
-    "@types/semver": "7.3.3",
+    "@types/semver": "^7.3.3",
     "@types/shelljs": "^0.8.8",
     "@types/uuid": "^8.0.0",
     "@types/xml-parser": "^1.2.29",

@@ -10,9 +10,12 @@ import * as psList from 'ps-list';
 
 import {execSync} from 'child_process';
 
-import IntegrationTestClient from './IntegrationTestClient';
+import IntegrationTestClient, {
+  TestCommandResponse,
+} from './IntegrationTestClient';
 
 export default class IntegrationTestRunner {
+  private connectionReset: boolean = false;
   private constructor(private testClient: IntegrationTestClient) {}
 
   static async initialize(
@@ -33,10 +36,24 @@ export default class IntegrationTestRunner {
   }
 
   async runTestComponent(componentName: string): Promise<void> {
-    const res = await this.testClient.sendTestCommand({
-      command: 'RunTestComponent',
-      component: componentName,
-    });
+    let res: TestCommandResponse;
+
+    try {
+      res = await this.testClient.sendTestCommand({
+        command: 'RunTestComponent',
+        component: componentName,
+      });
+    } catch (ex) {
+      if (this.connectionReset || ex.code === 'ECONNRESET') {
+        this.connectionReset = true;
+        failWithoutContext(
+          'Connection to the test host was reset. This usually means the application has crashed.',
+        );
+        return;
+      } else {
+        throw ex;
+      }
+    }
 
     switch (res.status) {
       case 'error':
