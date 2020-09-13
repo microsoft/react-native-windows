@@ -35,7 +35,8 @@ steps:
         Write-Host 8
         $env:npm_config_prefix = $npm_config_prefix 
         Write-Host 10
-        setx npm_config_cache $npm_config_cache /M
+        #setx npm_config_cache $npm_config_cache /M
+        setx npm_config_cache NEWVALUE /M
         Write-Host 11
         setx npm_config_prefix $npm_config_prefix /M
         Write-Host 12
