@@ -16,6 +16,7 @@ steps:
     inputs:
       targetType: "inline"
       script: |
+        gci "${env:ProgramFiles(x86)}\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.UWPCoreRuntimeSdk\Microsoft.Net.UWPCoreRuntimeSdk.props" -Recurse
         Write-Host 1
         $npm_config_cache=$env:NPM_CONFIG_CACHE
         Write-Host 2
