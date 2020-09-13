@@ -21,7 +21,7 @@ steps:
         Write-Host 2
         $env:NPM_CONFIG_CACHE=''
         Write-Host 3
-        reg delete "HKCU\Environment" /v NPM_CONFIG_CACHE /f
+        reg delete "HKLM\Environment" /v NPM_CONFIG_CACHE /f
         Write-Host 4
         $env:npm_config_cache = $npm_config_cache
         Write-Host 5
