@@ -16,12 +16,28 @@ steps:
     inputs:
       targetType: "inline"
       script: |
+        Write-Host 1
         $npm_config_cache=$env:NPM_CONFIG_CACHE
+        Write-Host 2
         $env:NPM_CONFIG_CACHE=''
+        Write-Host 3
         reg delete "HKCU\Environment" /v NPM_CONFIG_CACHE
+        Write-Host 4
         $env:npm_config_cache = $npm_config_cache
+        Write-Host 5
+        $npm_config_prefix=$env:NPM_CONFIG_PREFIX
+        Write-Host 6
+        $env:NPM_CONFIG_PREFIX=''
+        Write-Host 7
+        reg delete "HKCU\Environment" /v NPM_CONFIG_PREFIX
+        Write-Host 8
+        $env:npm_config_prefix = $npm_config_prefix 
+        Write-Host 9
         Get-ChildItem Env:
+        Write-Host 10
         setx npm_config_cache $npm_config_cache /M
+        Write-Host 11
+        set npm_config_prefix $npm_config_prefix /M
 
   - task: PowerShell@2
     displayName: Display env
