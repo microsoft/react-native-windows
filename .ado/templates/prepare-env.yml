@@ -30,7 +30,7 @@ steps:
         Write-Host 6
         $env:NPM_CONFIG_PREFIX=''
         Write-Host 7
-        reg delete "HKCU\Environment" /v NPM_CONFIG_PREFIX /f
+        # reg delete "HKCU\Environment" /v NPM_CONFIG_PREFIX /f
         reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v NPM_CONFIG_PREFIX /f
         Write-Host 8
         $env:npm_config_prefix = $npm_config_prefix 
