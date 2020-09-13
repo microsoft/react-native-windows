@@ -25,19 +25,19 @@ steps:
         Write-Host 4
         $env:npm_config_cache = $npm_config_cache
         Write-Host 5
-        $npm_config_prefix=$env:NPM_CONFIG_PREFIX
-        Write-Host 6
-        $env:NPM_CONFIG_PREFIX=''
-        Write-Host 7
-        reg delete "HKCU\Environment" /v NPM_CONFIG_PREFIX /f
-        Write-Host 8
-        $env:npm_config_prefix = $npm_config_prefix 
+        # $npm_config_prefix=$env:NPM_CONFIG_PREFIX
+        # Write-Host 6
+        # $env:NPM_CONFIG_PREFIX=''
+        # Write-Host 7
+        # reg delete "HKCU\Environment" /v NPM_CONFIG_PREFIX /f
+        # Write-Host 8
+        # $env:npm_config_prefix = $npm_config_prefix 
         Write-Host 9
         Get-ChildItem Env:
         Write-Host 10
         setx npm_config_cache $npm_config_cache /M
-        Write-Host 11
-        setx npm_config_prefix $npm_config_prefix /M
+        # Write-Host 11
+        # setx npm_config_prefix $npm_config_prefix /M
         Write-Host 12
         exit 0
 
