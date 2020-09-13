@@ -37,7 +37,8 @@ steps:
         Write-Host 10
         setx npm_config_cache $npm_config_cache /M
         Write-Host 11
-        set npm_config_prefix $npm_config_prefix /M
+        setx npm_config_prefix $npm_config_prefix /M
+        Write-Host 12
 
   - task: PowerShell@2
     displayName: Display env
