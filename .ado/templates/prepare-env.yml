@@ -34,13 +34,13 @@ steps:
         reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v NPM_CONFIG_PREFIX /f
         Write-Host 8
         $env:npm_config_prefix = $npm_config_prefix 
-        Write-Host 9
-        Get-ChildItem Env:
         Write-Host 10
         setx npm_config_cache $npm_config_cache /M
         Write-Host 11
         setx npm_config_prefix $npm_config_prefix /M
         Write-Host 12
+        Write-Host 9
+        Get-ChildItem Env:
         exit 0
 
   - task: PowerShell@2
