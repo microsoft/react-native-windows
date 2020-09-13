@@ -32,6 +32,7 @@ export const functionTest = Object.assign(
             // Need to force a redbox instead of YellowBox for unhandled
             // promise rejection
             ErrorUtils.getGlobalHandler()(ex);
+            return;
           }
 
           TestModule.markTestPassed(true);
