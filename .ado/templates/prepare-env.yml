@@ -41,13 +41,19 @@ steps:
         Write-Host 12
         Write-Host 9
         Get-ChildItem Env:
+        gci $HOME\Document\Profile.ps1
+        Write-Host a
+        gci $PsHome\Microsoft.PowerShell_profile.ps1
+        Write-Host b
+        gci $PsHome\Profile.ps1
+
         exit 0
 
   - task: PowerShell@2
     displayName: NPM_CONFIG_CACHE
     inputs:
       targetType: "inline"
-      script:  $env:npm_config_cache
+      script:  gci env:npm_config*
 
   - task: PowerShell@2
     displayName: Display env
