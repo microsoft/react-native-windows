@@ -18,10 +18,9 @@ steps:
       script: |
         $npm_config_cache=$env:NPM_CONFIG_CACHE
         $env:NPM_CONFIG_CACHE=''
-        setx NPM_CONFIG_CACHE '""' /M
+        reg delete "HKCU\Environment" /v NPM_CONFIG_CACHE 
         $env:npm_config_cache = $npm_config_cache
         setx npm_config_cache $npm_config_cache /M
-        Write-Host "##vso[task.setvariable variable=NPM_CONFIG_CACHE]"
         Get-ChildItem Env:
 
   - task: PowerShell@2
