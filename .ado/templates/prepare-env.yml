@@ -41,6 +41,8 @@ steps:
         Write-Host 12
         Write-Host 9
         Get-ChildItem Env:
+        Write-Host Profile: $PROFILE
+        gc $PROFILE
         exit 0
 
   - task: PowerShell@2
