@@ -41,7 +41,7 @@ void doMain(async () => {
             },
           }),
         cmdArgv =>
-          validateManifest({
+          void validateManifest({
             manifestPath: cmdArgv.manifest,
             reactNativeVersion: cmdArgv.version,
           }),
@@ -53,7 +53,7 @@ void doMain(async () => {
           cmdYargs.options({
             override: {type: 'string', describe: 'The override to add'},
           }),
-        cmdArgv => addOverride(cmdArgv.override!),
+        cmdArgv => void addOverride(cmdArgv.override!),
       )
       .command(
         'remove <override>',
@@ -62,7 +62,7 @@ void doMain(async () => {
           cmdYargs.options({
             override: {type: 'string', describe: 'The override to remove'},
           }),
-        cmdArgv => removeOverride(cmdArgv.override!),
+        cmdArgv => void removeOverride(cmdArgv.override!),
       )
       .command(
         'upgrade',
@@ -84,7 +84,7 @@ void doMain(async () => {
             },
           }),
         cmdArgv =>
-          upgrade({
+          void upgrade({
             manifestPath: cmdArgv.manifest,
             reactNativeVersion: cmdArgv.version,
             allowConflicts: cmdArgv.conflicts,

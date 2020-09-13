@@ -36,7 +36,7 @@ export class BasePage {
     );
   }
 
-  getTreeDumpResult(): boolean {
+  async getTreeDumpResult(): Promise<boolean> {
     var testResult = false;
     const maxWait = 20;
     var waitCount = 1;
@@ -50,7 +50,7 @@ export class BasePage {
             maxWait +
             '...####'
         );
-        wait(100);
+        await wait(100);
         waitCount += 1;
       }
     } while (waitCount <= maxWait && !testResult);
