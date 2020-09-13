@@ -41,11 +41,10 @@ steps:
         Write-Host 12
         Write-Host 9
         Get-ChildItem Env:
-        gci $HOME\Document\Profile.ps1
         Write-Host a
-        gci $PsHome\Microsoft.PowerShell_profile.ps1
+        gci $PsHome\Microsoft.PowerShell_profile*
         Write-Host b
-        gci $PsHome\Profile.ps1
+        gci $PsHome\Profile*
 
         exit 0
 
