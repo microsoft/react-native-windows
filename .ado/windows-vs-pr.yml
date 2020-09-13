@@ -334,14 +334,14 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows (Debug)
         inputs:
-          script: set NPM_CONFIG_CACHE= && yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
+          script: set NPM_CONFIG_CACHE= && set && yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/microsoft-reactnative-sampleapps
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'))
 
       - task: CmdLine@2
         displayName: run-windows (Release)
         inputs:
-          script: set NPM_CONFIG_CACHE= && yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --release --msbuildprops BaseIntDir=$(BaseIntDir)
+          script: set NPM_CONFIG_CACHE= && set && yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --release --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/microsoft-reactnative-sampleapps
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'))
 
