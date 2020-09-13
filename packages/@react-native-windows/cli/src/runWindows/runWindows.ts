@@ -15,7 +15,6 @@ import {Command, Config} from '@react-native-community/cli-types';
 import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
 
 import {autoLinkCommand} from './utils/autolink';
-import { env } from 'shelljs';
 
 function ExitProcessWithError(loggingWasEnabled: boolean): never {
   if (!loggingWasEnabled) {
