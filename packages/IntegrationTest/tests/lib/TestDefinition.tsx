@@ -13,10 +13,6 @@ const TestModule: {markTestPassed: (passed: boolean) => void} =
   NativeModules.TestModule;
 
 type TestFunction = (() => void) | (() => Promise<void>);
-type TestComponent = React.ComponentType<{
-  pass: () => void;
-  fail: (err: Error) => void;
-}>;
 
 /**
  * Define a new synchronus or asynchronus test function. The test may be failed
@@ -50,17 +46,22 @@ export const functionTest = Object.assign(
   {skip: (_name: string, _fn: TestFunction) => {}},
 );
 
+type TestComponentType = React.ComponentType<{
+  pass: () => void;
+  fail: (err: string) => void;
+}>;
+
 /**
  * Define a new test component which is responsible for passing/failing a test
  */
 export const componentTest = Object.assign(
-  (name: string, Component: TestComponent) => {
+  (name: string, Component: TestComponentType) => {
     const BoundComponent: React.FunctionComponent = () => {
       return (
         <Component
           pass={() => TestModule.markTestPassed(true)}
           fail={err => {
-            throw err;
+            throw new Error(err);
           }}
         />
       );
@@ -68,5 +69,5 @@ export const componentTest = Object.assign(
 
     AppRegistry.registerComponent(name, () => BoundComponent);
   },
-  {skip: (_name: string, _Component: TestComponent) => {}},
+  {skip: (_name: string, _Component: TestComponentType) => {}},
 );

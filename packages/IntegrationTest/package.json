@@ -7,9 +7,10 @@
     "start": "react-native start",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
-    "integrationtest": "jest --runInBand --verbose --color"
+    "integrationtest": "jest --config jest.integration.config.js --runInBand --verbose --color"
   },
   "dependencies": {
+    "chai": "^4.2.0",
     "react": "16.13.1",
     "react-native": "0.0.0-e75557b48",
     "react-native-windows": "^0.0.0-canary.159"
@@ -22,6 +23,7 @@
     "@rnw-scripts/eslint-config": "^0.1.1",
     "@rnw-scripts/just-task": "^0.0.3",
     "@rnw-scripts/ts-config": "^0.1.0",
+    "@types/chai": "^4.2.12",
     "@types/jest": "^26.0.13",
     "@types/ora": "^3.2.0",
     "@types/ws": "^7.2.6",

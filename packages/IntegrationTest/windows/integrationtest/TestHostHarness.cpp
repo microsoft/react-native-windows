@@ -187,27 +187,73 @@ void TestHostHarness::CompletePendingResponse() noexcept {
   }
 }
 
-void TestHostHarnessRedboxHandler::ShowNewError(IRedBoxErrorInfo info, RedBoxErrorType /*type*/) {
+void TestHostHarnessRedboxHandler::ShowNewError(const IRedBoxErrorInfo &info, RedBoxErrorType /*type*/) noexcept {
+  m_pendingException = std::make_unique<ExceptionInfo>();
+
+  m_pendingException->Message = info.Message();
+  m_pendingException->OriginalMessage = info.OriginalMessage();
+  m_pendingException->Name = info.Name();
+
+  for (const auto &frame : info.Callstack()) {
+    m_pendingException->Callstack.push_back({frame.File(), frame.Method(), frame.Line(), frame.Column()});
+  }
+
+  // In dev-mode bundles we will see an initial call to ShowNewError with a
+  // raw stack from a bundle, then a second call to UpdateError with the
+  // prettified stack using a source map. We can't send both over, so store the
+  // first until we get the second and merge them.
+#if !_DEBUG
+  HandleException();
+#endif
+}
+
+bool TestHostHarnessRedboxHandler::IsDevSupportEnabled() noexcept {
+  // We always want errors
+  return true;
+}
+
+void TestHostHarnessRedboxHandler::UpdateError(const IRedBoxErrorInfo &info) noexcept {
+  if (!m_pendingException) {
+    return;
+  }
+
+  // Not all properties are updated. Only copy over non-empty bits
+  if (!info.Message().empty()) {
+    m_pendingException->Message = info.Message();
+  }
+  if (!info.OriginalMessage().empty()) {
+    m_pendingException->OriginalMessage = info.OriginalMessage();
+  }
+  if (!info.Name().empty()) {
+    m_pendingException->Name = info.Name();
+  }
+  if (info.Callstack().Size() > 0) {
+    m_pendingException->Callstack.clear();
+    for (const auto &frame : info.Callstack()) {
+      m_pendingException->Callstack.push_back({frame.File(), frame.Method(), frame.Line(), frame.Column()});
+    }
+  }
+
+  HandleException();
+}
+
+void TestHostHarnessRedboxHandler::DismissRedBox() noexcept {
+  // Nothing to do
+}
+
+void TestHostHarnessRedboxHandler::HandleException() noexcept {
+  VerifyElseCrash(m_pendingException);
+
   if (auto strongHarness = m_weakHarness.get()) {
     if (strongHarness->m_context) {
-      strongHarness->m_context.UIDispatcher().Post([info{std::move(info)}, strongHarness]() {
+      strongHarness->m_context.UIDispatcher().Post([exInfo{std::move(m_pendingException)}, strongHarness]() {
         if (strongHarness->m_pendingResponse) {
-          strongHarness->m_pendingResponse->Exception(info);
+          strongHarness->m_pendingResponse->Exception(*exInfo);
           strongHarness->CompletePendingResponse();
         }
       });
     }
   }
-}
-bool TestHostHarnessRedboxHandler::IsDevSupportEnabled() {
-  // We always want errors
-  return true;
-}
-void TestHostHarnessRedboxHandler::UpdateError(IRedBoxErrorInfo /*info*/) {
-  // Nothing to do
-}
-void TestHostHarnessRedboxHandler::DismissRedBox() {
-  // Nothing to do
 }
 
 } // namespace IntegrationTest

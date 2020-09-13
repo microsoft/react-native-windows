@@ -5,6 +5,7 @@
  * @format
  */
 
-require('./lib/SetupGlobals');
+import * as chai from 'chai';
 
-require('./SampleTests');
+chai.config.truncateThreshold = 0;
+chai.should();
