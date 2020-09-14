@@ -83,7 +83,7 @@ async function runWindows(
       buildTools = MSBuildTools.findAvailableVersion(
         options.arch,
         verbose,
-        true,
+        true, // preRelease
       );
     } catch {
       throw error;
