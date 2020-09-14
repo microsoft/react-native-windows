@@ -109,7 +109,7 @@ async function runWindows(
             .toString();
           const fixedFile = targetsFileContent.replace(
             '            $(ComputeCompileInputsTargets);CppWinRTComputeXamlGeneratedCompileInputs;CppWinRTHeapEnforcementOptOut;',
-            '            CppWinRTComputeXamlGeneratedCompileInputs;CppWinRTHeapEnforcementOptOut;$(ComputeCompileInputsTargets);',
+            '            CppWinRTComputeXamlGeneratedCompileInputs;$(ComputeCompileInputsTargets);CppWinRTHeapEnforcementOptOut;',
           );
           fs.writeFileSync(targetsFilePath, fixedFile);
         }
