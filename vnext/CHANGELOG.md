@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 07 Sep 2020 15:05:16 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Sep 2020 21:58:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.2
+
+Mon, 14 Sep 2020 21:58:15 GMT
+
+### Patches
+
+- Deprecate AppTheme by adding yellowbox warning (#5889) (email not defined)
+- Fix 5870: Dont check for inheritance, but do explicit type check (dannyvv@microsoft.com)
+- Update V8 and Hermes pacakge versions (tudor.mihai@microsoft.com)
 
 ## 0.63.1
 

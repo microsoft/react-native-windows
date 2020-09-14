@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 14 Sep 2020 21:58:15 GMT",
+      "tag": "react-native-windows_v0.63.2",
+      "version": "0.63.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Deprecate AppTheme by adding yellowbox warning (#5889)",
+            "author": "email not defined",
+            "commit": "4e52e629bc3a019ab09458f48f31133e4ec80311",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix 5870: Dont check for inheritance, but do explicit type check",
+            "author": "dannyvv@microsoft.com",
+            "commit": "aa55914f35c182d84e67a9ee2fbbd0da28f73b28",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 and Hermes pacakge versions",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "6d6a927552700f433a9687422f3ab29ad86e50e6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Sep 2020 15:05:16 GMT",
       "tag": "react-native-windows_v0.63.1",
       "version": "0.63.1",
