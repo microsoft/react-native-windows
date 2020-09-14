@@ -13,10 +13,10 @@ if anyone want to update these files,
 please ensure that the same change to these files must be committed to both
 `react-native-windows` repo and `react-native-macos` repo.
 
-It is important to **keep these files sync between the two repos**.
+It is important to **keep these files in sync between the two repos**.
 
 After finishing the porting work,
-files will be shared in a certain way,
+files will be shared in some way,
 and manual sync will be no longer needed.
 
 ## Affected Files
