@@ -17,6 +17,7 @@
       The PR (windows-vs-pr.yml) and CI (publish.yml() turn it back on.
     -->
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">false</EnableSourceLink>
+    <FollyVersion>2020.09.14.00</FollyVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
@@ -49,7 +50,7 @@
 
     <YogaDir Condition="'$(YogaDir)' == ''">$(ReactNativeDir)ReactCommon\yoga</YogaDir>
 
-    <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativePackageDir)..\..\node_modules))')">$(ReactNativePackageDir)..\..\node_modules\.folly\folly-2019.09.30.00</FollyDir>
+    <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativePackageDir)..\..\node_modules))')">$(ReactNativePackageDir)..\..\node_modules\.folly\folly-$(FollyVersion)</FollyDir>
     <FollyDir>$([MSBuild]::NormalizeDirectory($(FollyDir)))</FollyDir>
   </PropertyGroup>
 
