@@ -283,7 +283,7 @@ constexpr void ValidateCoroutineArg() noexcept {
 #ifndef __APPLE__
         ": " __FUNCSIG__
 #endif
-        );
+    );
   }
 }
 
