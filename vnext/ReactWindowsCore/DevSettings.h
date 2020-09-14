@@ -103,6 +103,8 @@ struct DevSettings {
   /// Superseded by PreparedScriptStore on the JSI stack, and will be removed
   /// soon. (See #3603)
   ChakraBundleUrlMetadataMap chakraBundleUrlMetadataMap;
+
+  bool inlineSourceMap{true};
 };
 
 } // namespace react

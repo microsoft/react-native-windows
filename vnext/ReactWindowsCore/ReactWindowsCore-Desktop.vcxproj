@@ -6,6 +6,7 @@
   <PropertyGroup>
     <USE_V8>true</USE_V8>
     <USE_HERMES>false</USE_HERMES>
+    <V8AppPlatform>win32</V8AppPlatform>
   </PropertyGroup>
   <Import Project="ReactWindowsCore.vcxitems" Label="Shared" />
 </Project>

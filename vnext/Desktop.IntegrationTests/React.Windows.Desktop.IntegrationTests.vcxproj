@@ -24,6 +24,7 @@
     <ProjectName>React.Windows.Desktop.IntegrationTests</ProjectName>
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <USE_V8>true</USE_V8>
+    <V8AppPlatform>win32</V8AppPlatform>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />

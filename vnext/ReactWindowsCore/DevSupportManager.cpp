@@ -251,12 +251,13 @@ void DevSupportManager::StopPollingLiveReload() {
 std::string DevSupportManager::GetJavaScriptFromServer(
     const std::string &debugHost,
     const std::string &jsBundleName,
-    const std::string &platform) {
+    const std::string &platform,
+    bool inlineSourceMap) {
   // Reset exception state since client is requesting new service
   m_exceptionCaught = false;
 
   auto bundleUrl = facebook::react::DevServerHelper::get_BundleUrl(
-      debugHost, jsBundleName, platform, "true" /*dev*/, "false" /*hot*/);
+      debugHost, jsBundleName, platform, true /*dev*/, false /*hot*/, inlineSourceMap);
   try {
     std::string s;
     bool success;

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 07 Sep 2020 15:05:49 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Sep 2020 21:06:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.9
+
+Tue, 08 Sep 2020 21:06:51 GMT
+
+### Patches
+
+- Build fix (acoates-ms@noreply.github.com)
 
 ## 0.62.8
 
