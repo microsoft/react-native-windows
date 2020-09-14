@@ -134,7 +134,7 @@ function getAppxManifestPath(
   if (globs.length === 1 || !projectName) {
     appxPath = globs[0];
   } else {
-    const filteredGlobs = globs.filter(x => x.indexOf(projectName) != -1);
+    const filteredGlobs = globs.filter(x => x.indexOf(projectName) !== -1);
     if (filteredGlobs.length > 1) {
       newWarn(
         `More than one appxmanifest for ${projectName}: ${filteredGlobs.join(
