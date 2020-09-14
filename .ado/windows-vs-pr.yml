@@ -383,7 +383,7 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
-          otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=600000'
+          otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=1600000'
         condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
 
       - task: VSTest@2
@@ -415,7 +415,7 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
-          otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=600000'
+          otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=1600000'
         condition: failed()
 
       - task: PowerShell@2
