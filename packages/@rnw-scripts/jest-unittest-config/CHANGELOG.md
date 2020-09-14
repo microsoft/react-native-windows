@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/jest-unittest-config
 
-This log was last generated on Sat, 12 Sep 2020 05:08:52 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Sep 2020 22:03:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.0
+
+Mon, 14 Sep 2020 22:03:37 GMT
+
+### Minor changes
+
+- Upgrade Jest (ngerlem@microsoft.com)
 
 ## 0.0.1
 

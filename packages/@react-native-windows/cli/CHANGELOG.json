@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 14 Sep 2020 22:03:37 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.13",
+      "version": "0.0.0-canary.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Reconcile package versions",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8adedcfb2ce6492a4a7ede59e0f9188dc205d659",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Sep 2020 05:06:35 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.11",
       "version": "0.0.0-canary.11",

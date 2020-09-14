@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 09 Sep 2020 05:06:35 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Sep 2020 22:03:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.13
+
+Mon, 14 Sep 2020 22:03:37 GMT
+
+### Changes
+
+- Reconcile package versions (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.11
 

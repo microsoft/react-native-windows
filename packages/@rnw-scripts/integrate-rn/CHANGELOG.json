@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Mon, 14 Sep 2020 22:03:37 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.6",
+      "version": "0.0.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Reconcile package versions",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8adedcfb2ce6492a4a7ede59e0f9188dc205d659",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Aug 2020 05:04:58 GMT",
       "tag": "@rnw-scripts/integrate-rn_v0.0.2",
       "version": "0.0.2",
