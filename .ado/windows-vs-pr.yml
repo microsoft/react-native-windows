@@ -169,7 +169,7 @@ jobs:
           command: restore
           restoreSolution: packages/playground/windows/Playground.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
-        
+
       - task: VSBuild@1
         displayName: VSBuild - Playground
         inputs:
@@ -334,14 +334,14 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows (Debug)
         inputs:
-          script: yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
+          script: set NPM_CONFIG_CACHE= && set && yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/microsoft-reactnative-sampleapps
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'))
 
       - task: CmdLine@2
         displayName: run-windows (Release)
         inputs:
-          script: yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --release --msbuildprops BaseIntDir=$(BaseIntDir)
+          script: set NPM_CONFIG_CACHE= && set && yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --release --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/microsoft-reactnative-sampleapps
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'))
 
@@ -365,15 +365,21 @@ jobs:
         X64Debug:
           BuildConfiguration: Debug
           BuildPlatform: x64
-        X86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
+        ARM64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM64
+        ARM64Release:
+          BuildConfiguration: Release
+          BuildPlatform: ARM64
 
     pool:
       vmImage: $(VmImage)
@@ -385,7 +391,6 @@ jobs:
       #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
       #5412 - Disable XHRSample due to intermittedly crashing the test process
       Desktop.IntegrationTests.Filter: >
-        (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&
         (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
         (FullyQualifiedName!=RNTesterIntegrationTests::Dummy)&
         (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
@@ -563,13 +568,13 @@ jobs:
           configuration: Debug
           platform: x86
           additionalInitArguments: --useWinUI3 true
-          additionalRunArguments: --singleproc
+          additionalRunArguments:
         WinUI3_X86DebugCs:
           language: cs
           configuration: Debug
           platform: x86
           additionalInitArguments: --useWinUI3 true
-          additionalRunArguments: --singleproc
+          additionalRunArguments:
 
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them

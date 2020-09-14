@@ -52,12 +52,23 @@ echo Invoking publish nuget packages with: %0 %*
     set publishArgs=/p:Configuration=%baseConfiguration% /p:Platform=x64 /p:DeployOnBuild=true /p:PublishProfile=DeployAsTool-%baseConfiguration% /p:NoWarn=1023
     msbuild %ScriptFolder%..\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj /t:Publish /v:m %publishArgs%
     if ERRORLEVEL 1 (
-        Failed to publish Managed CodeGen 
-        exti /b 1
+        echo Failed to publish Managed CodeGen 
+        exit /b 1
     )
 
 :PrepFiles
-    powershell %ScriptFolder%tfs\Layout-Headers.ps1
+    powershell %ScriptFolder%tfs\Layout-Headers.ps1 -NuGetPackageVersion %version%
+    if ERRORLEVEL 1 (
+        echo Failed to layout files for nuget packing
+        exit /b 1
+    )
+
+    powershell -Command "(Get-Content -Path %ScriptFolder%..\target\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '%version%' | Set-Content -Path  %ScriptFolder%..\target\Microsoft.ReactNative.VersionCheck.targets"
+    if ERRORLEVEL 1 (
+        echo Failed to path version check file for nuget packing
+        exit /b 1
+    )
+
 
 call :ProcessNuget Microsoft.ReactNative                 strip
 call :ProcessNuget Microsoft.ReactNative.Cxx             nostrip

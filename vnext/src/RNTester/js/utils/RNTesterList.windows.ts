@@ -143,6 +143,10 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('./../examples-win/Accessibility/AccessibilityExampleWindows'),
   },
   {
+    key: 'AccessibilityInfo',
+    module: require('react-native/RNTester/js/examples/Accessibility/AccessibilityInfoExample'),
+  },
+  {
     key: 'AsyncStorageExampleWindows',
     module: require('./../examples-win/AsyncStorage/AsyncStorageExampleWindows'),
   },
@@ -252,10 +256,6 @@ const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'TimerExample',
     module: require('react-native/RNTester/js/examples/Timer/TimerExample'),
-  },
-  {
-    key: 'ThemingExample',
-    module: require('./../examples-win/Theming/ThemingExample'),
   },
   {
     key: 'TransformExample',

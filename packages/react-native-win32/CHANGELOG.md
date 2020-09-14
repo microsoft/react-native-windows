@@ -1,8 +1,51 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 22 Aug 2020 05:07:27 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Sep 2020 05:08:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.46
+
+Sat, 12 Sep 2020 05:08:52 GMT
+
+### Changes
+
+- Integrate 7/1 nightly RN build (igklemen@microsoft.com)
+
+## 0.0.0-canary.45
+
+Wed, 09 Sep 2020 05:06:35 GMT
+
+### Changes
+
+- Enable @typescript-eslint/no-floating-promises (ngerlem@microsoft.com)
+
+## 0.0.0-canary.44
+
+Wed, 02 Sep 2020 05:05:16 GMT
+
+### Changes
+
+- Integrate 6-18 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/25 Nightly RN Build (ngerlem@microsoft.com)
+- A couple of minor style changes in logbox to avoid win32 asserts. (acoates-ms@noreply.github.com)
+
+## 0.0.0-canary.43
+
+Thu, 27 Aug 2020 05:05:29 GMT
+
+### Changes
+
+- Fix TouchableWin32 Infinite Recursion on Click (ngerlem@microsoft.com)
+- Remove acceptsKeyboardFocus (for real this time) (ngerlem@microsoft.com)
+
+## 0.0.0-canary.42
+
+Wed, 26 Aug 2020 05:07:06 GMT
+
+### Changes
+
+- Fix bugs from acceptsKeyboardFocus to focusable deprecation (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.41
 

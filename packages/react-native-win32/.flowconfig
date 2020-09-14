@@ -17,6 +17,7 @@
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewAttributes.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
+<PROJECT_ROOT>/Libraries/Components/View/View.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
 <PROJECT_ROOT>/Libraries/Inspector/Inspector.js
 <PROJECT_ROOT>/Libraries/Inspector/InspectorOverlay.js
@@ -94,8 +95,8 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
-experimental.well_formed_exports=true
-experimental.types_first=true
+well_formed_exports=true
+types_first=true
 experimental.abstract_locations=true
 
 [lints]
@@ -121,4 +122,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.126.1
+^0.128.0

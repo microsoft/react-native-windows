@@ -2,6 +2,36 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Sat, 12 Sep 2020 05:08:52 GMT",
+      "tag": "react-native-platform-override_v0.2.4",
+      "version": "0.2.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Start Sharing Test Configuration Between Node Projects",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cf5770eaaaa2906c7d04f0e03749942fe44055d0",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Sep 2020 05:06:35 GMT",
+      "tag": "react-native-platform-override_v0.2.3",
+      "version": "0.2.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Enable @typescript-eslint/no-floating-promises",
+            "author": "ngerlem@microsoft.com",
+            "commit": "62f3bb771a129f9cb81bd826827bf4001821a684",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Aug 2020 05:04:58 GMT",
       "tag": "react-native-platform-override_v0.2.1",
       "version": "0.2.1",

@@ -1,0 +1,17 @@
+{
+  "name": "@rnw-scripts/babel-node-config",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "babel.config.js",
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-typescript": "^7.8.3",
+    "eslint": "6.8.0"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.8.0",
+    "@babel/preset-env": "^7.8.0",
+    "@babel/preset-typescript": "^7.8.0"
+  }
+}

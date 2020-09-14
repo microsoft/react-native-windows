@@ -1,8 +1,48 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 20 Aug 2020 05:05:23 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Sep 2020 05:06:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.11
+
+Wed, 09 Sep 2020 05:06:35 GMT
+
+### Changes
+
+- Enable @typescript-eslint/no-floating-promises (ngerlem@microsoft.com)
+
+## 0.0.0-canary.10
+
+Wed, 02 Sep 2020 05:05:16 GMT
+
+### Changes
+
+- Keep Templates in react-native-windows Package (ngerlem@microsoft.com)
+
+## 0.0.0-canary.9
+
+Fri, 28 Aug 2020 05:06:54 GMT
+
+### Changes
+
+- Fixed templates so C++ apps can consume C# native modules (jthysell@microsoft.com)
+
+## 0.0.0-canary.8
+
+Wed, 26 Aug 2020 05:07:06 GMT
+
+### Changes
+
+- Fix deploy bug where a framework package is installed for one arch but not the one that we are building for (asklar@winse.microsoft.com)
+
+## 0.0.0-canary.7
+
+Tue, 25 Aug 2020 05:05:08 GMT
+
+### Changes
+
+- Default run-windows to disabling parallel MSBuild When Machine Has < 16GB of Memory (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.5
 

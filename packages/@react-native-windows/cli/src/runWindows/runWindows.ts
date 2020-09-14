@@ -46,6 +46,9 @@ async function runWindows(
     newInfo('Verbose: ON');
   }
 
+  delete process.env.NPM_CONFIG_CACHE;
+  delete process.env.NPM_CONFIG_PREFIX;
+
   if (options.info) {
     try {
       const output = await info.getEnvironmentInfo();

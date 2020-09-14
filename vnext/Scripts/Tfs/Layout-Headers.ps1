@@ -103,11 +103,17 @@ Copy-Item -Force -Path $ReactWindowsRoot\Scripts\*.nuspec -Destination $TargetRo
 #Copy StripAdditionalPlatformsFromNuspec.ps1 for use by publish task
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\StripAdditionalPlatformsFromNuspec.ps1 -Destination $TargetRoot
 
+# Microsoft.ReactNative.VersionCheck.targets
+Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.VersionCheck.targets -Destination $TargetRoot
+
 # Microsoft.ReactNative.targets
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.targets -Destination $TargetRoot
 
 # Microsoft.ReactNative.Cxx.targets
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.Cxx.targets -Destination $TargetRoot
+
+# Microsoft.ReactNative.Managed.targets
+Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.Managed.targets -Destination $TargetRoot
 
 # Microsoft.ReactNative.Managed.CodeGen.targets
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.Managed.CodeGen.targets -Destination $TargetRoot

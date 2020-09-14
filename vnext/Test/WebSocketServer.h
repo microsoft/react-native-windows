@@ -2,7 +2,6 @@
 #pragma once
 
 #include <IWebSocketResource.h>
-#include <boost/asio/strand.hpp>
 #include <boost/beast/core/multi_buffer.hpp>
 #include <boost/beast/core/tcp_stream.hpp>
 #include <boost/beast/ssl/ssl_stream.hpp>
@@ -36,7 +35,6 @@ class BaseWebSocketSession : public IWebSocketSession
 
   boost::beast::multi_buffer m_buffer;
   std::string m_message;
-  WebSocketServiceCallbacks &m_callbacks;
   State m_state;
 
   std::function<void(IWebSocketResource::Error&&)> m_errorHandler;
@@ -50,6 +48,7 @@ class BaseWebSocketSession : public IWebSocketSession
 
  protected:
   std::shared_ptr<boost::beast::websocket::stream<SocketLayer>> m_stream;
+  WebSocketServiceCallbacks &m_callbacks;
 
   void Accept();
 
@@ -77,6 +76,8 @@ class SecureWebSocketSession :
   public std::enable_shared_from_this<SecureWebSocketSession>,
   public BaseWebSocketSession<boost::beast::ssl_stream<boost::beast::tcp_stream>>
 {
+  boost::asio::ssl::context m_context;
+
   std::shared_ptr<BaseWebSocketSession<boost::beast::ssl_stream<boost::beast::tcp_stream>>> SharedFromThis() override;
 
  public:

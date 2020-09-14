@@ -46,7 +46,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir)\Mso;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include\Shared;$(JSI_Source);$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir)\Mso;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include\Shared;$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

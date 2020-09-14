@@ -11,14 +11,10 @@ namespace react::uwp {
 
 class AppTheme {
  public:
-  static constexpr const char *Dark = "dark";
-  static constexpr const char *Light = "light";
-
   AppTheme(
       const std::shared_ptr<IReactInstance> &reactInstance,
       const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread);
 
-  std::string getCurrentTheme();
   bool getIsHighContrast();
   folly::dynamic getHighContrastColors();
 
@@ -30,14 +26,12 @@ class AppTheme {
 
   std::weak_ptr<IReactInstance> m_wkReactInstance;
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
-  xaml::ApplicationTheme m_currentTheme{xaml::ApplicationTheme::Light};
   bool m_isHighContrast{false};
   folly::dynamic m_highContrastColors;
 
   winrt::Windows::UI::ViewManagement::AccessibilitySettings m_accessibilitySettings{};
   winrt::Windows::UI::ViewManagement::AccessibilitySettings::HighContrastChanged_revoker m_highContrastChangedRevoker{};
   winrt::Windows::UI::ViewManagement::UISettings m_uiSettings{};
-  winrt::Windows::UI::ViewManagement::UISettings::ColorValuesChanged_revoker m_colorValuesChangedRevoker{};
 };
 
 class AppThemeModule : public facebook::xplat::module::CxxModule {
