@@ -9,6 +9,7 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <FollyVersion>2020.09.14.00</FollyVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -267,14 +268,14 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets'))" />
-  </Target>
+  </Target>  
   <Target Name="DownloadFolly" BeforeTargets="PrepareForBuild">
-    <Message Importance="High" Text="Downloading folly..." Condition="!Exists('$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip')" />
-    <DownloadFile Condition="!Exists('$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip')" SourceUrl="https://github.com/facebook/folly/archive/v2019.09.30.00.zip" DestinationFileName="folly-2019.09.30.00.zip" DestinationFolder="$(FollyDir)..\.follyzip" />
+    <Message Importance="High" Text="Downloading folly..." Condition="!Exists('$(FollyDir)..\.follyzip\folly-$(FollyVersion).zip')" />
+    <DownloadFile Condition="!Exists('$(FollyDir)..\.follyzip\folly-$(FollyVersion).zip')" SourceUrl="https://github.com/facebook/folly/archive/v$(FollyVersion).zip" DestinationFileName="folly-$(FollyVersion).zip" DestinationFolder="$(FollyDir)..\.follyzip" />
   </Target>
   <Target Name="UnzipFolly" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFolly">
     <Message Importance="High" Text="Unzipping folly to $([MSBuild]::NormalizePath($(FollyDir)..))." Condition="!Exists('$(FollyDir)folly\dynamic.h')" />
-    <Unzip Condition="!Exists('$(FollyDir)')" SourceFiles="$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip" DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))" OverwriteReadOnlyFiles="true" />
+    <Unzip Condition="!Exists('$(FollyDir)')" SourceFiles="$(FollyDir)..\.follyzip\folly-$(FollyVersion).zip" DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))" OverwriteReadOnlyFiles="true" />
   </Target>
   <ItemGroup>
     <TemporaryFollyPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFollyUpdate\**\*.*" />
