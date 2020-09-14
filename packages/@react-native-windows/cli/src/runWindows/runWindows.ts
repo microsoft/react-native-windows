@@ -14,6 +14,10 @@ import MSBuildTools from './utils/msbuildtools';
 import {Command, Config} from '@react-native-community/cli-types';
 import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
 
+import * as fs from 'fs';
+import * as path from 'path';
+import * as glob from 'glob';
+
 import {autoLinkCommand} from './utils/autolink';
 
 function ExitProcessWithError(loggingWasEnabled: boolean): never {
@@ -84,6 +88,21 @@ async function runWindows(
 
     try {
       await build.restoreNuGetPackages(slnFile, buildTools, verbose);
+
+      // Replace Microsoft.Windows.CppWinRT.targets due to https://github.com/microsoft/cppwinrt/issues/741
+      const packagesDirectory = path.join(path.dirname(slnFile), 'packages');
+      if (fs.statSync(packagesDirectory)) {
+        const cppWinRTDirectories = glob.sync(`${packagesDirectory}/Microsoft.Windows.CppWinRT.*/`);
+        if (cppWinRTDirectories.length == 1) {
+          const nativeDirectory = path.join(cppWinRTDirectories[0], 'build/native');
+          const targetsFilePath = `${nativeDirectory}/Microsoft.Windows.CppWinRT.targets`;
+          const targetsFileContent = fs.readFileSync(targetsFilePath).toString();
+          const fixedFile = targetsFileContent.replace('            $(ComputeCompileInputsTargets);CppWinRTComputeXamlGeneratedCompileInputs;CppWinRTHeapEnforcementOptOut;',
+          '            CppWinRTComputeXamlGeneratedCompileInputs;CppWinRTHeapEnforcementOptOut;$(ComputeCompileInputsTargets);');
+          fs.writeFileSync(targetsFilePath, fixedFile);
+        }
+      }
+      
     } catch (e) {
       newError('Failed to restore the NuGet packages: ' + e.toString());
       ExitProcessWithError(options.logging);
