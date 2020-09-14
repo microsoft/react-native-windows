@@ -7,7 +7,7 @@
 // This is a port of TextExample.android.js
 // Image inline in Text removed
 
-import React = require('react');
+import * as React from 'react';
 import {/*Image,*/ StyleSheet, Text, View, TextStyle} from 'react-native';
 const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');

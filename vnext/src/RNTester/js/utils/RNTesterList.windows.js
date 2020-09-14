@@ -2,31 +2,15 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
+ * @flow
  */
 
 'use strict';
-import React = require('react');
+import * as React from 'react';
 
-interface IRNTesterExample {
-  key: string;
-  // tslint:disable-next-line no-reserved-keywords
-  module: IRNTesterModule;
-}
+import type {RNTesterExample} from '../types/RNTesterTypes';
 
-interface IRNTesterModule {
-  title: string;
-  description: string;
-  external: boolean;
-  examples: [IRNTesterModuleExample];
-}
-
-interface IRNTesterModuleExample {
-  title: string;
-  description: string;
-  render(): React.Component;
-}
-
-const ComponentExamples: Array<IRNTesterExample> = [
+const ComponentExamples: Array<RNTesterExample> = [
   {
     key: 'ActivityIndicatorExample',
     module: require('react-native/RNTester/js/examples/ActivityIndicator/ActivityIndicatorExample'),
@@ -129,7 +113,7 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
 ];
 
-const APIExamples: Array<IRNTesterExample> = [
+const APIExamples: Array<RNTesterExample> = [
   {
     key: 'KeyboardFocusExample',
     module: require('./../examples-win/Keyboard/KeyboardFocusExample'),
@@ -305,9 +289,9 @@ const APIExamples: Array<IRNTesterExample> = [
   },*/
 ];
 
-const Modules: {[key: string]: IRNTesterModule} = {};
+const Modules: any = {};
 
-APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
+APIExamples.concat(ComponentExamples).forEach(Example => {
   Modules[Example.key] = Example.module;
 });
 
@@ -317,4 +301,4 @@ const RNTesterList = {
   Modules,
 };
 
-export = RNTesterList;
+module.exports = RNTesterList;
