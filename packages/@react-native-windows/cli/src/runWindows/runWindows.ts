@@ -111,6 +111,8 @@ async function runWindows(
             '            $(ComputeCompileInputsTargets);CppWinRTComputeXamlGeneratedCompileInputs;CppWinRTHeapEnforcementOptOut;',
             '            CppWinRTComputeXamlGeneratedCompileInputs;CppWinRTHeapEnforcementOptOut;$(ComputeCompileInputsTargets);',
           );
+          console.log(`fixed cppwinrt targets ${targetsFilePath}: ${fixedFile === targetsFileContent}`);
+          console.log(fixedFile);
           fs.writeFileSync(targetsFilePath, fixedFile);
         }
       }
