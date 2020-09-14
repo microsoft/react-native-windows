@@ -66,7 +66,6 @@
     <ClCompile Include="$(FollyDir)\folly\ScopeGuard.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Unicode.cpp" />
     <ClCompile Include="$(FollyDir)\folly\memory\detail\MallocImpl.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\lang\ColdClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(FollyDir)\folly\AtomicBitSet.h" />
@@ -251,7 +250,7 @@
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)stubs;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
-      <DisableSpecificWarnings>4018;4146;4244;4251;4267;4293;4305;4800;4804;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4018;4146;4244;4251;4267;4293;4305;4800;4804;4310;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
