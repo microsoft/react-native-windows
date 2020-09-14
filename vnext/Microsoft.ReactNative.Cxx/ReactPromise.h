@@ -1,5 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+// IMPORTANT: Before updating this file
+// please read react-native-windows repo:
+// vnext/Microsoft.ReactNative.Cxx/README.md
 
 #pragma once
 #include "ReactError.h"
