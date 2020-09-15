@@ -34,11 +34,6 @@ TEST_CLASS (RNTesterIntegrationTests) {
 
 #pragma region Prototype tests
 
-  TEST_METHOD(Dummy) {
-    auto result = m_runner.RunTest("IntegrationTests/DummyTest", "DummyTest");
-    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
-  }
-
   BEGIN_TEST_METHOD_ATTRIBUTE(Logging)
   // TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
@@ -190,4 +185,20 @@ TEST_CLASS (RNTesterIntegrationTests) {
   TEST_METHOD(AccessibilityManager) {
     TestComponent("AccessibilityManagerTest");
   }
+
+  #pragma region Extended Tests
+
+  TEST_METHOD(Dummy) {
+    auto result = m_runner.RunTest("IntegrationTests/DummyTest", "DummyTest");
+    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
+  }
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(WebSocketBinary)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(WebSocketBinary) {
+    auto result = m_runner.RunTest("IntegrationTests/WebSocketBinaryTest", "WebSocketBinaryTest");
+    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
+  }
+
+  #pragma endregion Extended Tests
 };

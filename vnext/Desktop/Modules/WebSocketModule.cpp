@@ -204,7 +204,7 @@ shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id,
       if (!strongInstance)
         return;
 
-      auto args = dynamic::object("id", id)("data", message)("type", "text");
+      auto args = dynamic::object("id", id)("data", message)("type", "binary");//TODO: parameterize type.
       this->SendEvent("websocketMessage", std::move(args));
     });
     ws->SetOnClose([this, id, weakInstance](IWebSocketResource::CloseCode code, const string& reason)
