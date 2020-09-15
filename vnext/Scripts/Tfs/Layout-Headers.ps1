@@ -9,8 +9,8 @@ param(
 	[string[]] $Extensions = ('h', 'hpp', 'def')
 )
 
-[xml]$props = gc $PSScriptRoot\..\..\Directory.Build.props
-[string] $FollyVersion = $props.Project.PropertyGroup.FollyVersion;
+[xml] $props = gc $PSScriptRoot\..\..\Directory.Build.props
+[string] $FollyVersion=($props.Project.PropertyGroup  | where FollyVersion -ne $null).FollyVersion
 [System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}";
 
 if (!$ReactNativeRoot) {
