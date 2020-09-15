@@ -104,7 +104,8 @@ auto EmptyUIManagerModule::getMethods() -> std::vector<Method> {
                 jsArgAsInt(args, 0), jsArgAsString(args, 1), jsArgAsInt(args, 2), jsArgAsDynamic(args, 3));
           }),
       Method(
-          "setChildren", [this](folly::dynamic args) { m_manager->setChildren(jsArgAsInt(args, 0), jsArgAsArray(args, 1)); }),
+          "setChildren",
+          [this](folly::dynamic args) { m_manager->setChildren(jsArgAsInt(args, 0), jsArgAsArray(args, 1)); }),
   };
 }
 
