@@ -186,7 +186,7 @@ TEST_CLASS (RNTesterIntegrationTests) {
     TestComponent("AccessibilityManagerTest");
   }
 
-  #pragma region Extended Tests
+#pragma region Extended Tests
 
   TEST_METHOD(Dummy) {
     auto result = m_runner.RunTest("IntegrationTests/DummyTest", "DummyTest");
@@ -201,5 +201,5 @@ TEST_CLASS (RNTesterIntegrationTests) {
     Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
   }
 
-  #pragma endregion Extended Tests
+#pragma endregion Extended Tests
 };
