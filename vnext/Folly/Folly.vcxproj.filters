@@ -33,9 +33,6 @@
     <ClCompile Include="$(FollyDir)\folly\lang\Assume.cpp">
       <Filter>Source Files\lang</Filter>
     </ClCompile>
-    <ClCompile Include="$(FollyDir)\folly\lang\ColdClass.cpp">
-      <Filter>Source Files\lang</Filter>
-    </ClCompile>
     <ClCompile Include="$(FollyDir)\folly\Conv.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -74,6 +71,12 @@
     </ClCompile>
     <ClCompile Include="$(FollyDir)\folly\Unicode.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\lang\SafeAssert.cpp">
+      <Filter>Source Files\lang</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\portability\unistd.cpp">
+      <Filter>Source Files\portability</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

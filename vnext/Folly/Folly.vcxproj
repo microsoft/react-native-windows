@@ -51,6 +51,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="$(FollyDir)\folly\lang\Assume.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\lang\SafeAssert.cpp" />
     <ClCompile Include="$(FollyDir)\folly\json_pointer.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Format.cpp" />
     <ClCompile Include="$(FollyDir)\folly\String.cpp" />
@@ -59,6 +60,8 @@
     <ClCompile Include="$(FollyDir)\folly\portability\string.cpp">
       <ObjectFileName>$(IntDir)\potabilityString.obj</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\portability\unistd.cpp" />
+    
     <ClCompile Include="$(FollyDir)\folly\Demangle.cpp" />
     <ClCompile Include="$(FollyDir)\folly\dynamic.cpp" />
     <ClCompile Include="$(FollyDir)\folly\json.cpp" />
@@ -248,7 +251,7 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)stubs;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4018;4146;4244;4251;4267;4293;4305;4800;4804;4310;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
