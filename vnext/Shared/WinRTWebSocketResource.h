@@ -40,7 +40,7 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
   std::function<void(std::size_t)> m_writeHandler;
-  std::function<void(std::size_t, const std::string &)> m_readHandler;
+  std::function<void(std::size_t, const std::string &, bool)> m_readHandler;
   std::function<void(CloseCode, const std::string &)> m_closeHandler;
   std::function<void(Error &&)> m_errorHandler;
 
@@ -121,7 +121,7 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
   /// <summary>
   /// <see cref="IWebSocketResource::SetOnMessage" />
   /// </summary>
-  void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&handler) noexcept override;
+  void SetOnMessage(std::function<void(std::size_t, const std::string &, bool isBinary)> &&handler) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::SetOnClose" />

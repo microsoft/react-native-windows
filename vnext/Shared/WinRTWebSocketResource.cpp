@@ -333,7 +333,7 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, IMessag
 
     if (m_readHandler)
     {
-      m_readHandler(response.length(), response);
+      m_readHandler(response.length(), response, args.MessageType() != SocketMessageType::Utf8);
     }
   }
   catch (hresult_error const& e)
@@ -430,7 +430,7 @@ void WinRTWebSocketResource::SetOnSend(function<void(size_t)>&& handler) noexcep
   m_writeHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&)>&& handler) noexcept
+void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&, bool isBinary)>&& handler) noexcept
 {
   m_readHandler = std::move(handler);
 }

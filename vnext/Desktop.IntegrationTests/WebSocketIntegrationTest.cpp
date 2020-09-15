@@ -43,7 +43,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       sentSizePromise.set_value(size);
     });
     promise<string> receivedPromise;
-    ws->SetOnMessage([&receivedPromise](size_t size, const string& message)
+    ws->SetOnMessage([&receivedPromise](size_t size, const string& message, bool isBinary)
     {
       receivedPromise.set_value(message);
     });
@@ -186,7 +186,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     server->SetMessageFactory([](string &&message) { return message + "_response"; });
     auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     promise<string> response;
-    ws->SetOnMessage([&response](size_t size, const string &message) { response.set_value(message); });
+    ws->SetOnMessage([&response](size_t size, const string &message, bool isBinary) { response.set_value(message); });
     string errorMessage;
     ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
 
@@ -244,7 +244,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     });
     auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     promise<string> response;
-    ws->SetOnMessage([&response](size_t size, const string &message) { response.set_value(message); });
+    ws->SetOnMessage([&response](size_t size, const string &message, bool isBinary) { response.set_value(message); });
 
     server->Start();
     ws->Connect({}, {{L"Cookie", "JSESSIONID=AD9A320CC4034641997FF903F1D10906"}});
@@ -293,7 +293,7 @@ TEST_CLASS (WebSocketIntegrationTest)
 
     string errorMessage;
     promise<string> responsePromise;
-    ws->SetOnMessage([&responsePromise](size_t size, const string &messageIn) {
+    ws->SetOnMessage([&responsePromise](size_t size, const string &messageIn, bool isBinary) {
       // Ignore on-connect greeting.
       if (messageIn == "hello")
         return;
@@ -331,7 +331,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     promise<string> response;
     const int writes = 10;
     int count = 0;
-    ws->SetOnMessage([&response, &count, writes](size_t size, const string& message)
+    ws->SetOnMessage([&response, &count, writes](size_t size, const string& message, bool isBinary)
     {
       if (++count < writes)
         return;
