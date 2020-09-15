@@ -25,7 +25,7 @@ type State = {
   socket: ?WebSocket,
   socketState: ?number,
   lastSocketEvent: ?string,
-  lastMessage: ?string | ?ArrayBuffer,
+  lastMessage: ?ArrayBuffer,
   testMessage: ArrayBuffer,
   testExpectedResponse: ArrayBuffer,
   ...
@@ -62,7 +62,7 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
 
   _connect = () => {
     const socket = new WebSocket(this.state.url);
-    socket.binaryType = "arraybuffer";
+    socket.binaryType = 'arraybuffer';
     WS_EVENTS.forEach(ev => socket.addEventListener(ev, this._onSocketEvent));
     this.setState({
       socket,
@@ -108,15 +108,22 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
   };
 
   _receivedTestExpectedResponse = () => {
-    if (this.state.lastMessage.length !== this.state.testExpectedResponse.length)
+    console.log(this.state.lastMessage);
+    if (
+      this.state.lastMessage?.byteLength !==
+      this.state.testExpectedResponse.byteLength
+    ) {
       return false;
+    }
 
-    let result = new Uint8Array(this.state.lastMessage);
-    let expected = new Uint8Array(this.state.testExpectedResponse);
+    var expected = new Uint8Array(this.state.testExpectedResponse);
+    var result = this.state.lastMessage ? new Uint8Array(this.state.lastMessage)
+      : new Uint8Array(expected.length);
 
-    for(var i=0; i<expected.length; i++) {
-      if (expected[i] != result[i])
+    for (var i = 0; i < expected.length; i++) {
+      if (expected[i] !== result[i]) {
         return false;
+      }
     }
 
     return true;

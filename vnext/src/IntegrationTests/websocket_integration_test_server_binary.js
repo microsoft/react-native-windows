@@ -25,6 +25,7 @@ An incoming message of 'exit' will shut down the server.
 
 const server = new WebSocket.Server({port: 5555});
 server.on('connection', ws => {
+  ws.binaryType = "arraybuffer";
   ws.on('message', message => {
     // console.log('Received message:', message);
     // if (message === 'exit') {
@@ -35,7 +36,6 @@ server.on('connection', ws => {
 
     console.log(message);
 
-    ws.binaryType = "arraybuffer";
     ws.send(new Uint8Array([4, 5, 6, 7]).buffer);
   });
 
