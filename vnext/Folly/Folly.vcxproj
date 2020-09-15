@@ -58,10 +58,8 @@
     <ClCompile Include="$(FollyDir)\folly\container\detail\F14Table.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Conv.cpp" />
     <ClCompile Include="$(FollyDir)\folly\portability\string.cpp">
-      <ObjectFileName>$(IntDir)\potabilityString.obj</ObjectFileName>
+      <ObjectFileName>$(IntDir)\portabilityString.obj</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="$(FollyDir)\folly\portability\unistd.cpp" />
-    
     <ClCompile Include="$(FollyDir)\folly\Demangle.cpp" />
     <ClCompile Include="$(FollyDir)\folly\dynamic.cpp" />
     <ClCompile Include="$(FollyDir)\folly\json.cpp" />
@@ -251,7 +249,7 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)stubs;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;_CRT_SECURE_NO_WARNINGS;WINAPI_PARTITION_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4018;4146;4244;4251;4267;4293;4305;4800;4804;4310;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -282,10 +280,10 @@
     <TemporaryFollyPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFollyUpdate\**\*.*" />
   </ItemGroup>
   <Target Name="Deploy" />
+
   <!-- Reenable this task if we need to temporarily replace any folly files for fixes, while we wait for PRs to land in folly -->
-  <!--
   <Target Name="ApplyFollyTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFolly">
     <Copy DestinationFiles="@(TemporaryFollyPatchFiles->'$(FollyDir)folly\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryFollyPatchFiles)" />
   </Target>
-  -->
+ 
 </Project>

@@ -75,9 +75,6 @@
     <ClCompile Include="$(FollyDir)\folly\lang\SafeAssert.cpp">
       <Filter>Source Files\lang</Filter>
     </ClCompile>
-    <ClCompile Include="$(FollyDir)\folly\portability\unistd.cpp">
-      <Filter>Source Files\portability</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(FollyDir)\folly\portability\Asm.h">
