@@ -189,7 +189,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string&& message, bool isBi
   auto self = shared_from_this();
   {
     auto guard = lock_guard<mutex>{m_writeQueueMutex};
-    m_writeQueue.emplace(std::move(message), false);
+    m_writeQueue.emplace(std::move(message), isBinary);
   }
 
   try
