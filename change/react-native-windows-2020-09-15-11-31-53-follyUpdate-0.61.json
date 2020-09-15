@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Port Folly update to 0.61",
+  "packageName": "react-native-windows",
+  "email": "asklar@winse.microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-15T18:31:53.649Z"
+}
