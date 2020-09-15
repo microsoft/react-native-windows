@@ -194,6 +194,7 @@ TEST_CLASS (RNTesterIntegrationTests) {
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(WebSocketBinary)
+  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(WebSocketBinary) {
     auto result = m_runner.RunTest("IntegrationTests/WebSocketBinaryTest", "WebSocketBinaryTest");
