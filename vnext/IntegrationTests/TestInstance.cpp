@@ -147,4 +147,3 @@ void TestShadowNode::createView() {}
 #pragma endregion
 
 } // namespace Microsoft::React::Test
-
