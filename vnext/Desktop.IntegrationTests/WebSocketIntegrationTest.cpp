@@ -331,7 +331,7 @@ TEST_CLASS (WebSocketIntegrationTest)
 
     string expected = "ABCDEFGHIJ";
     string result(expected.size(), '0');
-    int index = 0;
+    size_t index = 0;
     promise<void> responsesReceived;
     ws->SetOnMessage([&result, &index, &responsesReceived, count=expected.size()](size_t size, const string& message)
     {
