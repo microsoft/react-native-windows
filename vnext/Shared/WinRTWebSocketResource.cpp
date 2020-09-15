@@ -331,7 +331,7 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, IMessag
 
     if (m_readHandler)
     {
-      m_readHandler(response.length(), response, args.MessageType() != SocketMessageType::Utf8);
+      m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
     }
   }
   catch (hresult_error const& e)
