@@ -12,14 +12,13 @@
 #include <winrt/Windows.Security.Cryptography.h>
 #include <RestrictedErrorInfo.h>
 
-// Standard Library
-#include <future>
-
 using Microsoft::Common::Unicode::Utf8ToUtf16;
 using Microsoft::Common::Unicode::Utf16ToUtf8;
 using Microsoft::Common::Utilities::CheckedReinterpretCast;
 
 using std::function;
+using std::lock_guard;
+using std::mutex;
 using std::size_t;
 using std::string;
 using std::vector;
@@ -189,7 +188,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string&& message, bool isBi
 {
   auto self = shared_from_this();
   {
-    auto guard = std::lock_guard<std::mutex>{m_writeQueueMutex};
+    auto guard = lock_guard<mutex>{m_writeQueueMutex};
     m_writeQueue.emplace(std::move(message), false);
   }
 
@@ -211,7 +210,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string&& message, bool isBi
     string messageLocal;
     bool isBinaryLocal;
     {
-      auto guard = std::lock_guard<std::mutex>{m_writeQueueMutex};
+      auto guard = lock_guard<mutex>{m_writeQueueMutex};
       std::tie(messageLocal, isBinaryLocal) = m_writeQueue.front();
       m_writeQueue.pop();
     }
