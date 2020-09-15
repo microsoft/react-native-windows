@@ -72,9 +72,6 @@
     <ClCompile Include="$(FollyDir)\folly\Unicode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(FollyDir)\folly\lang\SafeAssert.cpp">
-      <Filter>Source Files\lang</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(FollyDir)\folly\portability\Asm.h">

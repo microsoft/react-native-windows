@@ -51,7 +51,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="$(FollyDir)\folly\lang\Assume.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\lang\SafeAssert.cpp" />
     <ClCompile Include="$(FollyDir)\folly\json_pointer.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Format.cpp" />
     <ClCompile Include="$(FollyDir)\folly\String.cpp" />
