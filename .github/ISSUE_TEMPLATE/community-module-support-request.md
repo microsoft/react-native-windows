@@ -2,7 +2,7 @@
 name: Community Module support request
 about: Suggest that Windows support be added to a community module
 title: Support react-native-foo
-labels: Extensions, Proposal
+labels: Extensions, enhancement
 assignees: ''
 
 ---
