@@ -117,7 +117,8 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
     }
 
     var expected = new Uint8Array(this.state.testExpectedResponse);
-    var result = this.state.lastMessage ? new Uint8Array(this.state.lastMessage)
+    var result = this.state.lastMessage
+      ? new Uint8Array(this.state.lastMessage)
       : new Uint8Array(expected.length);
 
     for (var i = 0; i < expected.length; i++) {
