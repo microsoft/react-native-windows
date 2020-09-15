@@ -188,7 +188,10 @@ fire_and_forget WinRTWebSocketResource::PerformPing() noexcept
 fire_and_forget WinRTWebSocketResource::PerformWrite(string&& message, bool isBinary) noexcept
 {
   auto self = shared_from_this();
-  auto messageLocal = std::move(message); // Persist message through coroutine resumptions
+  {
+    auto guard = std::lock_guard<std::mutex>{m_writeQueueMutex};
+    m_writeQueue.emplace(std::move(message), false);
+  }
 
   try
   {
@@ -205,7 +208,15 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string&& message, bool isBi
     }
 
     size_t length;
-    if (isBinary)
+    string messageLocal;
+    bool isBinaryLocal;
+    {
+      auto guard = std::lock_guard<std::mutex>{m_writeQueueMutex};
+      std::tie(messageLocal, isBinaryLocal) = m_writeQueue.front();
+      m_writeQueue.pop();
+    }
+
+    if (isBinaryLocal)
     {
       self->m_socket.Control().MessageType(SocketMessageType::Binary);
 

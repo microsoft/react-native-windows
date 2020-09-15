@@ -11,6 +11,7 @@
 
 // Standard Library
 #include <future>
+#include <mutex>
 #include <queue>
 
 namespace Microsoft::React {
@@ -32,6 +33,8 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
 
   CloseCode m_closeCode{CloseCode::Normal};
   std::string m_closeReason;
+  std::queue<std::pair<std::string, bool>> m_writeQueue;
+  std::mutex m_writeQueueMutex;
 
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
