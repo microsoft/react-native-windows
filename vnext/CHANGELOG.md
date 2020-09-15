@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 14 Sep 2020 22:03:37 GMT and should not be manually modified.
+This log was last generated on Tue, 15 Sep 2020 05:05:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.161
+
+Tue, 15 Sep 2020 05:05:15 GMT
+
+### Changes
+
+- Fix issue loading offline bundle after failing to load from packager (acoates-ms@noreply.github.com)
+- Use x86 program files to locate UWP SDK (asklar@microsoft.com)
+- Port REACT_MODULE() from react-native-windows to react-native-macos (1/4) (zihanc@microsoft.com)
 
 ## 0.0.0-canary.160
 

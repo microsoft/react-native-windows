@@ -498,7 +498,7 @@
     },
     {
       "type": "derived",
-      "file": "src/RNTester/js/utils/RNTesterList.windows.ts",
+      "file": "src/RNTester/js/utils/RNTesterList.windows.js",
       "baseFile": "RNTester/js/utils/RNTesterList.android.js",
       "baseVersion": "0.0.0-a36d9cd7e",
       "baseHash": "20a6f5c42266beb017dccc7f22d45bde02907d89",

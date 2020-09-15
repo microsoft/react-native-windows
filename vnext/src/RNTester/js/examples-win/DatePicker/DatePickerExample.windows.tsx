@@ -4,7 +4,7 @@
  * @format
  */
 
-import React = require('react');
+import * as React from 'react';
 import {Text, View} from 'react-native';
 import {DatePicker} from '../../../../Libraries/Components/DatePicker/DatePicker';
 import {DayOfWeek} from '../../../../Libraries/Components/DatePicker/DatePickerProps';

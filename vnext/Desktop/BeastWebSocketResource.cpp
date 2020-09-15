@@ -391,12 +391,12 @@ void BaseWebSocketResource<SocketLayer, Stream>::Close(CloseCode code, const str
 }
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::Send(const string &message) noexcept {
+void BaseWebSocketResource<SocketLayer, Stream>::Send(string &&message) noexcept {
   EnqueueWrite(std::move(message), false);
 }
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::SendBinary(const string &base64String) noexcept {
+void BaseWebSocketResource<SocketLayer, Stream>::SendBinary(string &&base64String) noexcept {
   m_stream->binary(true);
 
   string message;
