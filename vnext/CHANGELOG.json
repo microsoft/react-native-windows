@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 15 Sep 2020 05:05:15 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.161",
+      "version": "0.0.0-canary.161",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix issue loading offline bundle after failing to load from packager",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "5700a7c54235138d9dc04301d6c2f38e644b9813",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use x86 program files to locate UWP SDK",
+            "author": "asklar@microsoft.com",
+            "commit": "2840a7dad5078f36666e82e059ddcdd689d7d4ac",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Port REACT_MODULE() from react-native-windows to react-native-macos (1/4)",
+            "author": "zihanc@microsoft.com",
+            "commit": "f93613246f5fb9a992213213a985dafbfa8191e2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Sep 2020 22:03:37 GMT",
       "tag": "react-native-windows_v0.0.0-canary.160",
       "version": "0.0.0-canary.160",

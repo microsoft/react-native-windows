@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix issue loading offline bundle after failing to load from packager",
-  "packageName": "react-native-windows",
-  "email": "acoates-ms@noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-11T23:46:06.899Z"
-}

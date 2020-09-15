@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 14 Sep 2020 22:03:37 GMT and should not be manually modified.
+This log was last generated on Tue, 15 Sep 2020 05:05:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.14
+
+Tue, 15 Sep 2020 05:05:15 GMT
+
+### Changes
+
+- fix ts warning (asklar@microsoft.com)
 
 ## 0.0.0-canary.13
 
