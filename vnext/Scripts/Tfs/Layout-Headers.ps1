@@ -6,10 +6,12 @@ param(
 	[string] $TargetRoot = "$SourceRoot\vnext\target",
 	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\vnext",
 	[System.IO.DirectoryInfo] $ReactNativeRoot,
-	[string] $FollyVersion = '2019.09.30.00',
-	[System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}",
 	[string[]] $Extensions = ('h', 'hpp', 'def')
 )
+
+[xml]$props = gc $PSScriptRoot\..\..\Directory.Build.props
+[string] $FollyVersion = $props.Project.PropertyGroup.FollyVersion;
+[System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}";
 
 if (!$ReactNativeRoot) {
     $intermediateBuildDir = if ($env:BaseIntDir) { $env:BaseIntDir } else { "$SourceRoot\vnext\build" }
