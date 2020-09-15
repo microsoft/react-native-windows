@@ -14,8 +14,6 @@
 #include <Views/ShadowNodeBase.h>
 #include <winrt/Windows.UI.Xaml.h>
 
-using namespace folly;
-
 namespace winrt {
 using namespace Windows::UI::Xaml;
 }
@@ -80,21 +78,21 @@ YGSize DefaultYogaSelfMeasureFunc(
 ViewManagerBase::ViewManagerBase(const std::shared_ptr<IReactInstance> &reactInstance)
     : m_wkReactInstance(reactInstance) {}
 
-dynamic ViewManagerBase::GetExportedViewConstants() const {
-  return dynamic::object();
+folly::dynamic ViewManagerBase::GetExportedViewConstants() const {
+  return folly::dynamic::object();
 }
 
-dynamic ViewManagerBase::GetCommands() const {
-  return dynamic::object();
+folly::dynamic ViewManagerBase::GetCommands() const {
+  return folly::dynamic::object();
 }
 
-dynamic ViewManagerBase::GetNativeProps() const {
+folly::dynamic ViewManagerBase::GetNativeProps() const {
   folly::dynamic props = folly::dynamic::object();
   props.update(folly::dynamic::object("onLayout", "function")("keyDownEvents", "array")("keyUpEvents", "array"));
   return props;
 }
 
-dynamic ViewManagerBase::GetConstants() const {
+folly::dynamic ViewManagerBase::GetConstants() const {
   folly::dynamic constants = folly::dynamic::object("Constants", GetExportedViewConstants())("Commands", GetCommands())(
       "NativeProps", GetNativeProps());
 
@@ -120,7 +118,7 @@ void ViewManagerBase::destroyShadow(facebook::react::ShadowNode *node) const {
   delete node;
 }
 
-dynamic ViewManagerBase::GetExportedCustomBubblingEventTypeConstants() const {
+folly::dynamic ViewManagerBase::GetExportedCustomBubblingEventTypeConstants() const {
   const PCSTR standardEventBaseNames[] = {
       // Generic events
       "Press",
@@ -159,7 +157,7 @@ dynamic ViewManagerBase::GetExportedCustomBubblingEventTypeConstants() const {
   return bubblingEvents;
 }
 
-dynamic ViewManagerBase::GetExportedCustomDirectEventTypeConstants() const {
+folly::dynamic ViewManagerBase::GetExportedCustomDirectEventTypeConstants() const {
   folly::dynamic eventTypes = folly::dynamic::object();
   eventTypes.update(folly::dynamic::object("topLayout", folly::dynamic::object("registrationName", "onLayout"))(
       "topMouseEnter", folly::dynamic::object("registrationName", "onMouseEnter"))(
@@ -212,7 +210,7 @@ void ViewManagerBase::ReplaceChild(XamlView parent, XamlView oldChild, XamlView 
   assert(false);
 }
 
-void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const dynamic &reactDiffMap) {
+void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   // Directly dirty this node since non-layout changes like the text property do
   // not trigger relayout
   //  There isn't actually a yoga node for RawText views, but it will invalidate
