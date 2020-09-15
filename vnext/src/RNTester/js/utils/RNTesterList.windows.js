@@ -143,6 +143,8 @@ const APIExamples: Array<RNTesterExample> = [
         .AlertExample.description,
       examples: [
         {
+          title: require('react-native/RNTester/js/examples/Alert/AlertExample')
+            .AlertExample.title,
           render: () => {
             return React.createElement(
               require('react-native/RNTester/js/examples/Alert/AlertExample')
