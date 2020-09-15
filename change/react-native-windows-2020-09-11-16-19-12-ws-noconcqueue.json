@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "WinRTWebSocket: Drop concurrent_queue.",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-11T23:19:12.796Z"
+}
