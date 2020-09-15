@@ -55,8 +55,9 @@ TEST_CLASS (WebSocketIntegrationTest)
 
     server->Start();
     string sent = "prefix";
+    auto expectedSize = sent.size();
     ws->Connect();
-    ws->Send(sent);
+    ws->Send(std::move(sent));
 
     // Block until response is received. Fail in case of a remote endpoint failure.
     auto sentSizeFuture = sentSizePromise.get_future();
@@ -70,8 +71,9 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Close(CloseCode::Normal, "Closing after reading");
     server->Stop();
 
-    Assert::AreEqual({}, errorMessage);
-    Assert::AreEqual(sent.length(), sentSize);
+    Assert::AreEqual({}, serverError);
+    Assert::AreEqual({}, clientError);
+    Assert::AreEqual(expectedSize, sentSize);
     Assert::AreEqual({"prefix_response"}, received);
   }
 
@@ -197,8 +199,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       chars[i] = digits[i % 16];
     }
     chars[LEN] = '\0';
-    string large(chars);
-    ws->Send(large);
+    ws->Send(string{chars});
 
     // Block until response is received. Fail in case of a remote endpoint failure.
     auto future = response.get_future();
@@ -303,7 +304,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Connect();
 
     for (size_t i = 0; i < messages.size(); i++) {
-      ws->SendBinary(messages[i]);
+      ws->SendBinary(string{messages[i]});
       auto future = responsePromise.get_future();
       future.wait();
       string response = future.get();
@@ -323,18 +324,20 @@ TEST_CLASS (WebSocketIntegrationTest)
     auto server = make_shared<Test::WebSocketServer>(5556);
     server->SetMessageFactory([](string&& message)
     {
-      return message + "_response";
+      return message;
     });
     auto ws = IWebSocketResource::Make("ws://localhost:5556/");
-    promise<string> response;
-    const int writes = 10;
-    int count = 0;
-    ws->SetOnMessage([&response, &count, writes](size_t size, const string& message)
-    {
-      if (++count < writes)
-        return;
 
-      response.set_value(message);
+    string expected = "ABCDEFGHIJ";
+    string result(expected.size(), '0');
+    size_t index = 0;
+    promise<void> responsesReceived;
+    ws->SetOnMessage([&result, &index, &responsesReceived, count=expected.size()](size_t size, const string& message)
+    {
+      result[index++] = message[0];
+
+      if (index == count)
+        responsesReceived.set_value();
     });
     string errorMessage;
     ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
@@ -346,23 +349,20 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Connect();
 
     // Consecutive immediate writes should be enqueued.
-    // The WebSocket implementation can't handle multiple write operations
+    // The WebSocket library (WinRT or Beast) can't handle multiple write operations
     // concurrently.
-    for (int i = 0; i < writes; i++)
+    for (size_t i = 0; i < expected.size(); i++)
     {
-      ws->Send("suffixme");
+      ws->Send(string{expected[i]});
     }
 
     // Block until response is received. Fail in case of a remote endpoint failure.
-    auto future = response.get_future();
-    future.wait();
-    string result = future.get();
+    responsesReceived.get_future().wait();
 
     ws->Close(CloseCode::Normal, "Closing");
     server->Stop();
 
     Assert::AreEqual({}, errorMessage);
-    Assert::AreEqual(writes, count);
-    Assert::AreEqual({"suffixme_response"}, result);
+    Assert::AreEqual(expected, result);
   }
 };
