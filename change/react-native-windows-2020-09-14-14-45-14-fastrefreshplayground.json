@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Enable reload while editing of files in vnext/src",
+  "packageName": "react-native-windows",
+  "email": "acoates-ms@noreply.github.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-14T21:45:14.669Z"
+}
