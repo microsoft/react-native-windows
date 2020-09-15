@@ -295,7 +295,7 @@ void ViewManagerBase::TestHook::NotifyUnimplementedProperty(
     } else {
       value = propertyValue.asString();
     }
-  } catch (const TypeError &e) {
+  } catch (const folly::TypeError &e) {
     value = e.what();
   }
 
