@@ -352,7 +352,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     // Consecutive immediate writes should be enqueued.
     // The WebSocket library (WinRT or Beast) can't handle multiple write operations
     // concurrently.
-    for (int i = 0; i < expected.size(); i++)
+    for (size_t i = 0; i < expected.size(); i++)
     {
       ws->Send(string{expected[i]});
     }
