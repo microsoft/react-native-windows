@@ -42,6 +42,15 @@ async function runWindows(
     newInfo('Verbose: ON');
   }
 
+  // https://github.com/yarnpkg/yarn/issues/8334 - Yarn on Windows breaks apps that read from the environment variables
+  // Yarn will run node via CreateProcess and pass npm_config_* variables in lowercase without unifying their value
+  // with their possibly existing uppercase counterparts. This breaks programs that read from the environment block
+  // and write to a case-insensitive dictionary since they expect to encounter each variable only once.
+  // The values of the lowercase variables are the one npm actually wants to use, plus they are seeded from the
+  // uppercase variable values one if there are no overrides.
+  delete process.env.NPM_CONFIG_CACHE;
+  delete process.env.NPM_CONFIG_PREFIX;
+
   if (options.info) {
     try {
       const output = await info.getEnvironmentInfo();
