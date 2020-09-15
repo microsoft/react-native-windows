@@ -506,7 +506,9 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
           AsyncTag),
       Method(
           "setChildren",
-          [manager](folly::dynamic args) { manager->setChildren(jsArgAsInt(args, 0), std::move(jsArgAsArray(args, 1))); }),
+          [manager](folly::dynamic args) {
+            manager->setChildren(jsArgAsInt(args, 0), std::move(jsArgAsArray(args, 1)));
+          }),
       Method(
           "updateView",
           [manager](folly::dynamic args) {
@@ -528,7 +530,9 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
           }),
       Method(
           "replaceExistingNonRootView",
-          [manager](folly::dynamic args) { manager->replaceExistingNonRootView(jsArgAsInt(args, 0), jsArgAsInt(args, 1)); }),
+          [manager](folly::dynamic args) {
+            manager->replaceExistingNonRootView(jsArgAsInt(args, 0), jsArgAsInt(args, 1));
+          }),
       Method(
           "dispatchViewManagerCommand",
           [manager](folly::dynamic args) {

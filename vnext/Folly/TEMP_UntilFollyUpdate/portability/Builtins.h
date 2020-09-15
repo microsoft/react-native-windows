@@ -30,19 +30,19 @@
 namespace folly {
 namespace portability {
 namespace detail {
-void call_flush_instruction_cache_self_pid(void* begin, size_t size);
+void call_flush_instruction_cache_self_pid(void *begin, size_t size);
 }
 } // namespace portability
 } // namespace folly
 
-FOLLY_ALWAYS_INLINE void __builtin___clear_cache(char* begin, char* end) {
+FOLLY_ALWAYS_INLINE void __builtin___clear_cache(char *begin, char *end) {
   if (folly::kIsArchAmd64) {
     // x86_64 doesn't require the instruction cache to be flushed after
     // modification.
   } else {
     // Default to flushing it for everything else, such as ARM.
     folly::portability::detail::call_flush_instruction_cache_self_pid(
-        static_cast<void*>(begin), static_cast<size_t>(end - begin));
+        static_cast<void *>(begin), static_cast<size_t>(end - begin));
   }
 }
 
@@ -135,8 +135,7 @@ FOLLY_ALWAYS_INLINE int __builtin_popcountl(unsigned long x) {
 #if !defined(_MSC_VER) || !defined(_MSC_BUILTIN_SUPPORT)
 #if defined(_M_IX86)
 FOLLY_ALWAYS_INLINE int __builtin_popcountll(unsigned long long x) {
-  return int(__popcnt((unsigned int)(x >> 32))) +
-      int(__popcnt((unsigned int)x));
+  return int(__popcnt((unsigned int)(x >> 32))) + int(__popcnt((unsigned int)x));
 }
 #elif defined(_M_X64)
 FOLLY_ALWAYS_INLINE int __builtin_popcountll(unsigned long long x) {
@@ -145,7 +144,7 @@ FOLLY_ALWAYS_INLINE int __builtin_popcountll(unsigned long long x) {
 #endif
 #endif // !defined(_MSC_VER) || !defined(_MSC_BUILTIN_SUPPORT)
 
-FOLLY_ALWAYS_INLINE void* __builtin_return_address(unsigned int frame) {
+FOLLY_ALWAYS_INLINE void *__builtin_return_address(unsigned int frame) {
   // I really hope frame is zero...
   (void)frame;
   assert(frame == 0);
