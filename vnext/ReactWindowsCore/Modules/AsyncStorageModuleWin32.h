@@ -19,7 +19,7 @@ class AsyncStorageModuleWin32 : public facebook::xplat::module::CxxModule {
   AsyncStorageModuleWin32();
   ~AsyncStorageModuleWin32();
   std::string getName() override;
-  std::map<std::string, dynamic> getConstants() override;
+  std::map<std::string, folly::dynamic> getConstants() override;
   std::vector<facebook::xplat::module::CxxModule::Method> getMethods() override;
 
   using ExecCallback = int(SQLITE_CALLBACK *)(void *, int, char **, char **);
