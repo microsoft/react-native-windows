@@ -141,7 +141,3 @@ void TestShadowNode::createView() {}
 #pragma endregion
 
 } // namespace Microsoft::React::Test
-
-namespace folly {
-char const *const dynamic::TypeInfo<dynamic::ObjectImpl>::name = "object";
-}
