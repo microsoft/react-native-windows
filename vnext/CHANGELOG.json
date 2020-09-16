@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 14 Sep 2020 22:00:08 GMT",
+      "tag": "react-native-windows_v0.62.10",
+      "version": "0.62.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update V8 and Hermes package versions",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "12074d2e9db90384551420df3ac2405731eda890",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Sep 2020 21:06:51 GMT",
       "tag": "react-native-windows_v0.62.9",
       "version": "0.62.9",
