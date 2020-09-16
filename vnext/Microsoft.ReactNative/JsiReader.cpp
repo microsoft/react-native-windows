@@ -1,9 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+// IMPORTANT: Before updating this file
+// please read react-native-windows repo:
+// vnext/Microsoft.ReactNative.Cxx/README.md
 
 #include "pch.h"
 #include "JsiReader.h"
+#ifdef __APPLE__
+#include "Crash.h"
+#else
 #include <crash/verifyElseCrash.h>
+#endif
 
 namespace winrt::Microsoft::ReactNative {
 

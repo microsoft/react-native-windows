@@ -44,3 +44,12 @@ and manual sync will be no longer needed.
   - ReactPromise.h
   - ReactPromise.cpp
   - NativeModules.h
+- vnext\Microsoft.ReactNative
+  - JsiReader.h
+  - JsiReader.cpp
+  - JsiWriter.h
+  - JsiWriter.cpp
+  - TurboModulesProvider.h
+  - TurboModulesProvider.cpp
+- vnext\Shared
+  - TurboModuleRegistry

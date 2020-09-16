@@ -1,12 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+// IMPORTANT: Before updating this file
+// please read react-native-windows repo:
+// vnext/Microsoft.ReactNative.Cxx/README.md
 
 #include "pch.h"
 #include "TurboModulesProvider.h"
 #include <ReactCommon/TurboModuleUtils.h>
-#include <crash/verifyElseCrash.h>
 #include "JsiReader.h"
 #include "JsiWriter.h"
+#ifdef __APPLE__
+#include "Crash.h"
+#else
+#include <crash/verifyElseCrash.h>
+#endif
 
 using namespace winrt;
 using namespace Windows::Foundation;
@@ -181,12 +188,14 @@ class TurboModuleImpl : public facebook::react::TurboModule {
 
                   auto makeCallback = [&runtime](
                                           const facebook::jsi::Value &callbackValue) noexcept->MethodResultCallback {
-                    return [&runtime, callbackFunction = callbackValue.asObject(runtime).asFunction(runtime) ](
-                        const IJSValueWriter &writer) noexcept {
+                    // workaround: xcode doesn't accept a captured value with only rvalue copy constructor
+                    auto functionObject =
+                        std::make_shared<facebook::jsi::Function>(callbackValue.asObject(runtime).asFunction(runtime));
+                    return [&runtime, callbackFunction = functionObject ](const IJSValueWriter &writer) noexcept {
                       const facebook::jsi::Value *resultArgs = nullptr;
                       size_t resultCount = 0;
                       writer.as<JsiWriter>()->AccessResultAsArgs(resultArgs, resultCount);
-                      callbackFunction.call(runtime, resultArgs, resultCount);
+                      callbackFunction->call(runtime, resultArgs, resultCount);
                     };
                   };
 
