@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 16 Sep 2020 05:05:28 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.15",
+      "version": "0.0.0-canary.15",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable trying Previews of VS as a fallback",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "c30f54a8ba3a605910b43613825b386b62b1675d",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Yarn on Windows breaks apps that read from the environment variables",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "2018f3132087b1f76c48474c8df0b4e7f3b62501",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Sep 2020 05:05:15 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.14",
       "version": "0.0.0-canary.14",

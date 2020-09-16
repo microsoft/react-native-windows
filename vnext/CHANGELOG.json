@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 16 Sep 2020 05:05:28 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.162",
+      "version": "0.0.0-canary.162",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "WinRTWebSocket: Drop concurrent_queue.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "77e2912521a42574645ac8c12f83b61b1b38feef",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update folly",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "0d60111c089aafaf59c6d4513fad5aca110101be",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Enable reload while editing of files in vnext/src",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "1f2049d2dfc6f3398f71bb176e14911efb780643",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Sep 2020 05:05:15 GMT",
       "tag": "react-native-windows_v0.0.0-canary.161",
       "version": "0.0.0-canary.161",
