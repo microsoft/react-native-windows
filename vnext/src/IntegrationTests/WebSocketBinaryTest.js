@@ -15,7 +15,7 @@ const ReactNative = require('react-native');
 const {AppRegistry, View} = ReactNative;
 const {TestModule} = ReactNative.NativeModules;
 
-const DEFAULT_WS_URL = 'ws://localhost:5555/';
+const DEFAULT_WS_URL = 'ws://localhost:5557/';
 
 const WS_EVENTS = ['close', 'error', 'message', 'open'];
 
