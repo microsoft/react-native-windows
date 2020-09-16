@@ -170,8 +170,23 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                             },
                             [promise, &runtime](const IJSValueWriter &writer) {
                               auto result = writer.as<JsiWriter>()->MoveResult();
-                              VerifyElseCrash(result.isString());
-                              promise->reject(result.getString(runtime).utf8(runtime));
+                              if (result.isString()) {
+                                promise->reject(result.getString(runtime).utf8(runtime));
+                              } else if (result.isObject()) {
+                                auto errorArrayObject = result.getObject(runtime);
+                                VerifyElseCrash(errorArrayObject.isArray(runtime));
+                                auto errorArray = errorArrayObject.getArray(runtime);
+                                VerifyElseCrash(errorArray.length(runtime) == 1);
+                                auto errorObjectValue = errorArray.getValueAtIndex(runtime, 0);
+                                VerifyElseCrash(errorObjectValue.isObject());
+                                auto errorObject = errorObjectValue.getObject(runtime);
+                                VerifyElseCrash(errorObject.hasProperty(runtime, "message"));
+                                auto errorMessage = errorObject.getProperty(runtime, "message");
+                                VerifyElseCrash(errorMessage.isString());
+                                promise->reject(errorMessage.getString(runtime).utf8(runtime));
+                              } else {
+                                VerifyElseCrash(false);
+                              }
                             });
                       });
                 }
