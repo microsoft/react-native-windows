@@ -8,6 +8,9 @@
 using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+using facebook::react::RCTLogLevel;
+using std::string;
+
 namespace Microsoft::VisualStudio::CppUnitTestFramework {
 
 template <>
@@ -35,39 +38,40 @@ TEST_CLASS (RNTesterIntegrationTests) {
 #pragma region Prototype tests
 
   BEGIN_TEST_METHOD_ATTRIBUTE(Logging)
-  // TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(Logging) {
     int logCalls{0};
     auto result = m_runner.RunTest(
         "IntegrationTests/LoggingTest",
         "LoggingTest",
-        [&logCalls](facebook::react::RCTLogLevel logLevel, const char *message) {
-          if ((strcmp(message, "This is from console.trace") == 0) &&
-              (logLevel == facebook::react::RCTLogLevel::Trace)) {
+        [&logCalls](RCTLogLevel logLevel, const char *message) {
+          // trace, warn and error print stack traces rather than a single-line message.
+          // https://developer.mozilla.org/en-US/docs/Web/API/Console/trace
+          if (string{message}.find("This is from console.trace") != string::npos &&
+              (logLevel == RCTLogLevel::Trace)) {
             logCalls++;
           }
 
           if ((strcmp(message, "This is from console.debug") == 0) &&
-              (logLevel == facebook::react::RCTLogLevel::Trace)) {
+              (logLevel == RCTLogLevel::Trace)) {
             logCalls++;
           }
 
-          if ((strcmp(message, "This is from console.info") == 0) && (logLevel == facebook::react::RCTLogLevel::Info)) {
+          if ((strcmp(message, "This is from console.info") == 0) && (logLevel == RCTLogLevel::Info)) {
             logCalls++;
           }
 
-          if ((strcmp(message, "This is from console.log") == 0) && (logLevel == facebook::react::RCTLogLevel::Info)) {
+          if ((strcmp(message, "This is from console.log") == 0) && (logLevel == RCTLogLevel::Info)) {
             logCalls++;
           }
 
-          if ((strcmp(message, "This is from console.warn") == 0) &&
-              (logLevel == facebook::react::RCTLogLevel::Warning)) {
+          if (string{message}.find("This is from console.warn") != string::npos &&
+              (logLevel == RCTLogLevel::Warning)) {
             logCalls++;
           }
 
-          if ((strcmp(message, "This is from console.error") == 0) &&
-              (logLevel == facebook::react::RCTLogLevel::Error)) {
+          if (string{message}.find("This is from console.error") != string::npos &&
+              (logLevel == RCTLogLevel::Error)) {
             logCalls++;
           }
         });
