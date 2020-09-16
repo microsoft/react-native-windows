@@ -183,7 +183,7 @@ std::string AsyncStorageModuleWin32::getName() {
   return "AsyncLocalStorage";
 }
 
-std::map<std::string, dynamic> AsyncStorageModuleWin32::getConstants() {
+std::map<std::string, folly::dynamic> AsyncStorageModuleWin32::getConstants() {
   return {};
 }
 
