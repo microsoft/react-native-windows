@@ -11,6 +11,16 @@
 
 namespace winrt::Microsoft::ReactNative {
 
+// workaround: in macOS 10.13, optional<T>::value is not available
+
+#ifndef __APPLE__
+template<typename T>
+decltype(auto) ReadOptional(std::optional<T>& opt)
+{
+  return opt.value();
+}
+#endif
+
 struct JsiReader : implements<JsiReader, IJSValueReader> {
   JsiReader(facebook::jsi::Runtime &runtime, const facebook::jsi::Value &root) noexcept;
   JsiReader(facebook::jsi::Runtime &runtime, const facebook::jsi::Value *args, size_t count) noexcept;
@@ -42,7 +52,7 @@ struct JsiReader : implements<JsiReader, IJSValueReader> {
 
     Container(facebook::jsi::Runtime &runtime, facebook::jsi::Object &&value) noexcept
         : Type(ContainerType::Object), CurrentObject(std::make_optional<facebook::jsi::Object>(std::move(value))) {
-      PropertyNames = CurrentObject.value().getPropertyNames(runtime);
+      PropertyNames = ReadOptional(CurrentObject).getPropertyNames(runtime);
     }
 
     Container(facebook::jsi::Array &&value) noexcept
