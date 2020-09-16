@@ -8,15 +8,14 @@
 #include <folly/dynamic.h>
 
 using namespace std;
-using namespace folly;
 using namespace facebook::xplat;
 
 namespace facebook {
 namespace react {
 class FollyDynamicConverter {
  public:
-  static std::vector<string> jsArgAsStringVector(const dynamic &args) noexcept;
-  static std::vector<tuple<string, string>> jsArgAsTupleStringVector(const dynamic &args) noexcept;
+  static std::vector<string> jsArgAsStringVector(const folly::dynamic &args) noexcept;
+  static std::vector<tuple<string, string>> jsArgAsTupleStringVector(const folly::dynamic &args) noexcept;
   static folly::dynamic stringVectorAsRetVal(const std::vector<string> &vec) noexcept;
   static folly::dynamic tupleStringVectorAsRetVal(const std::vector<tuple<string, string>> &vec) noexcept;
 };
