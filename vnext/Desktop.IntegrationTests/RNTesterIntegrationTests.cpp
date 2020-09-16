@@ -42,18 +42,14 @@ TEST_CLASS (RNTesterIntegrationTests) {
   TEST_METHOD(Logging) {
     int logCalls{0};
     auto result = m_runner.RunTest(
-        "IntegrationTests/LoggingTest",
-        "LoggingTest",
-        [&logCalls](RCTLogLevel logLevel, const char *message) {
+        "IntegrationTests/LoggingTest", "LoggingTest", [&logCalls](RCTLogLevel logLevel, const char *message) {
           // trace, warn and error print stack traces rather than a single-line message.
           // https://developer.mozilla.org/en-US/docs/Web/API/Console/trace
-          if (string{message}.find("This is from console.trace") != string::npos &&
-              (logLevel == RCTLogLevel::Trace)) {
+          if (string{message}.find("This is from console.trace") != string::npos && (logLevel == RCTLogLevel::Trace)) {
             logCalls++;
           }
 
-          if ((strcmp(message, "This is from console.debug") == 0) &&
-              (logLevel == RCTLogLevel::Trace)) {
+          if ((strcmp(message, "This is from console.debug") == 0) && (logLevel == RCTLogLevel::Trace)) {
             logCalls++;
           }
 
@@ -65,13 +61,11 @@ TEST_CLASS (RNTesterIntegrationTests) {
             logCalls++;
           }
 
-          if (string{message}.find("This is from console.warn") != string::npos &&
-              (logLevel == RCTLogLevel::Warning)) {
+          if (string{message}.find("This is from console.warn") != string::npos && (logLevel == RCTLogLevel::Warning)) {
             logCalls++;
           }
 
-          if (string{message}.find("This is from console.error") != string::npos &&
-              (logLevel == RCTLogLevel::Error)) {
+          if (string{message}.find("This is from console.error") != string::npos && (logLevel == RCTLogLevel::Error)) {
             logCalls++;
           }
         });
