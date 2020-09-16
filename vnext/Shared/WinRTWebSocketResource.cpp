@@ -189,7 +189,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string&& message, bool isBi
   auto self = shared_from_this();
   {
     auto guard = lock_guard<mutex>{m_writeQueueMutex};
-    m_writeQueue.emplace(std::move(message), false);
+    m_writeQueue.emplace(std::move(message), isBinary);
   }
 
   try
@@ -331,7 +331,7 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, IMessag
 
     if (m_readHandler)
     {
-      m_readHandler(response.length(), response);
+      m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
     }
   }
   catch (hresult_error const& e)
@@ -424,7 +424,7 @@ void WinRTWebSocketResource::SetOnSend(function<void(size_t)>&& handler) noexcep
   m_writeHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&)>&& handler) noexcept
+void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&, bool isBinary)>&& handler) noexcept
 {
   m_readHandler = std::move(handler);
 }

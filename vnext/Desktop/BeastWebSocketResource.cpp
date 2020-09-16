@@ -122,7 +122,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::OnRead(error_code ec, size_t si
     }
 
     if (m_readHandler)
-      m_readHandler(size, std::move(message));
+      m_readHandler(size, std::move(message), m_stream->got_binary());
 
     m_bufferIn.consume(size);
   } // if (ec)
@@ -448,7 +448,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::SetOnSend(function<void(size_t)
 
 template <typename SocketLayer, typename Stream>
 void BaseWebSocketResource<SocketLayer, Stream>::SetOnMessage(
-    function<void(size_t, const string &)> &&handler) noexcept {
+    function<void(size_t, const string &, bool isBinary)> &&handler) noexcept {
   m_readHandler = handler;
 }
 

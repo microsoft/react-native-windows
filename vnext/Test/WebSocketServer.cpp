@@ -15,6 +15,7 @@ using boost::beast::tcp_stream;
 using boost::system::error_code;
 using std::function;
 using std::string;
+using std::vector;
 
 using Error = Microsoft::React::IWebSocketResource::Error;
 using ErrorType = Microsoft::React::IWebSocketResource::ErrorType;
@@ -113,20 +114,44 @@ void BaseWebSocketSession<SocketLayer>::OnRead(error_code ec, size_t /*transferr
         m_callbacks.OnError({ec.message(), ErrorType::Receive});
   }
 
-  if (!m_callbacks.MessageFactory)
+  if (m_stream->got_binary())
   {
+    if (!m_callbacks.BinaryMessageFactory)
+    {
+      m_buffer.consume(m_buffer.size());
+      return Read();
+    }
+
+    // Obtain raw pointer to underlying buffer memory.
+    // multi_buffer -> ConstBufferSequence -> const_buffer -> void* data()
+    // https://stackoverflow.com/questions/9510684
+    auto data = boost::asio::buffer_cast<uint8_t*>(*boost::asio::buffer_sequence_begin(m_buffer.data()));
+    m_binaryMessage = m_callbacks.BinaryMessageFactory({data, data + m_buffer.size()});
     m_buffer.consume(m_buffer.size());
-    return Read();
+
+    m_stream->binary(true);
+    m_stream->async_write(
+      buffer(m_binaryMessage),
+      bind_front_handler(&BaseWebSocketSession<SocketLayer>::OnWrite, this->SharedFromThis())
+    );
   }
+  else
+  {
+    if (!m_callbacks.MessageFactory)
+    {
+      m_buffer.consume(m_buffer.size());
+      return Read();
+    }
 
-  m_message = m_callbacks.MessageFactory(buffers_to_string(m_buffer.data()));
-  m_buffer.consume(m_buffer.size());
+    m_message = m_callbacks.MessageFactory(buffers_to_string(m_buffer.data()));
+    m_buffer.consume(m_buffer.size());
 
-  m_stream->text(m_stream->got_text());
-  m_stream->async_write(
-    buffer(m_message),
-    bind_front_handler(&BaseWebSocketSession<SocketLayer>::OnWrite, this->SharedFromThis())
-  );
+    m_stream->text(true);
+    m_stream->async_write(
+      buffer(m_message),
+      bind_front_handler(&BaseWebSocketSession<SocketLayer>::OnWrite, this->SharedFromThis())
+    );
+  }
 }
 
 template <typename SocketLayer>
@@ -407,6 +432,11 @@ void WebSocketServer::SetOnMessage(function<void(string)>&& func)
 void WebSocketServer::SetMessageFactory(function<string(string&&)>&& func)
 {
   m_callbacks.MessageFactory = std::move(func);
+}
+
+void WebSocketServer::SetMessageFactory(function<vector<uint8_t>(vector<uint8_t>&&)>&& func)
+{
+  m_callbacks.BinaryMessageFactory = std::move(func);
 }
 
 void WebSocketServer::SetOnError(function<void(Error&&)>&& func)

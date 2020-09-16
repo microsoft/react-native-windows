@@ -72,7 +72,7 @@ void MockWebSocketResource::SetOnSend(function<void(size_t)> &&handler) noexcept
   m_writeHandler = std::move(handler);
 }
 
-void MockWebSocketResource::SetOnMessage(function<void(size_t, const string &)> &&handler) noexcept /*override*/
+void MockWebSocketResource::SetOnMessage(function<void(size_t, const string &, bool)> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnMessage)
     return Mocks.SetOnMessage(std::move(handler));
@@ -113,9 +113,9 @@ void MockWebSocketResource::OnSend(size_t size) {
     m_writeHandler(size);
 }
 
-void MockWebSocketResource::OnMessage(size_t size, const string &message) {
+void MockWebSocketResource::OnMessage(size_t size, const string &message, bool isBinary) {
   if (m_readHandler)
-    m_readHandler(size, message);
+    m_readHandler(size, message, isBinary);
 }
 
 void MockWebSocketResource::OnClose(CloseCode code, const string &reason) {
