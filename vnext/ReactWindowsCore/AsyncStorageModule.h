@@ -15,7 +15,7 @@ class AsyncStorageModule : public facebook::xplat::module::CxxModule {
  public:
   AsyncStorageModule(const WCHAR *storageFileName);
   std::string getName() override;
-  std::map<std::string, dynamic> getConstants() override;
+  std::map<std::string, folly::dynamic> getConstants() override;
   std::vector<facebook::xplat::module::CxxModule::Method> getMethods() override;
 
  private:
