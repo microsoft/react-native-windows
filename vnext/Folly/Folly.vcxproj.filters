@@ -33,9 +33,6 @@
     <ClCompile Include="$(FollyDir)\folly\lang\Assume.cpp">
       <Filter>Source Files\lang</Filter>
     </ClCompile>
-    <ClCompile Include="$(FollyDir)\folly\lang\ColdClass.cpp">
-      <Filter>Source Files\lang</Filter>
-    </ClCompile>
     <ClCompile Include="$(FollyDir)\folly\Conv.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
