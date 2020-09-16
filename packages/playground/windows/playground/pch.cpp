@@ -6,7 +6,7 @@
 //
 
 #include "pch.h"
-
+#include <folly/dynamic.h>
 namespace folly {
 const char *const dynamic::TypeInfo<dynamic::ObjectImpl>::name = "object";
 }
