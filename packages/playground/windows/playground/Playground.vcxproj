@@ -139,6 +139,9 @@
     <ProjectReference Include="$(ReactNativeWindowsDir)\ReactUWP\ReactUWP.vcxproj">
       <Project>{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}</Project>
     </ProjectReference>
+    <ProjectReference Include="$(ReactNativeWindowsDir)\Folly\Folly.vcxproj">
+      <Project>{a990658c-ce31-4bcc-976f-0fc6b1af693d}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\seguiemj.ttf" />
