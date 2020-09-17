@@ -5,6 +5,7 @@
 
 #include <Modules/WebSocketModule.h>
 
+#include <RuntimeOptions.h>
 #include <Utils.h>
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
@@ -29,6 +30,17 @@ namespace Microsoft::React {
 
 WebSocketModule::WebSocketModule()
     : m_resourceFactory{[](string &&url) { return IWebSocketResource::Make(std::move(url)); }} {}
+
+WebSocketModule::~WebSocketModule() {
+  if (!GetRuntimeOptionBool("WebSocketModule.LazyClose")) {
+    auto it = m_webSockets.begin();
+    while (it != m_webSockets.end()) {
+      it->second->Close(IWebSocketResource::CloseCode::Normal, "WebSocketModule closing");
+      m_webSockets.erase(it->first);
+      it = m_webSockets.begin();
+    }
+  }
+}
 
 void WebSocketModule::SetResourceFactory(
     std::function<shared_ptr<IWebSocketResource>(const string &)> &&resourceFactory) {

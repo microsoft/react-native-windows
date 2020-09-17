@@ -315,7 +315,15 @@ jobs:
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     variables:
-      Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocket)
+      Desktop.IntegrationTests.Filter: |
+        (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::Dummy)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::Logging)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
+        (FullyQualifiedName!=RNTesterIntegrationTests::XHRSample)&
+        (FullyQualifiedName!~WebSocketModule_)&
+        (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
 
     steps:
       - checkout: self
