@@ -169,7 +169,7 @@ $requirements = @(
         Name = 'git';
         Tags = @('appDev');
         Valid = try { (Get-Command git.exe -ErrorAction Stop) -ne $null } catch { $false };
-        Install = { choco install git };
+        Install = { choco install -y git };
     },
     @{
         Name = 'VS 2019 with UWP and Desktop/C++';
