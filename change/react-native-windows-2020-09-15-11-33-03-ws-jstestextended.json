@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enable Desktop binary WS messages",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-15T18:33:03.756Z"
-}

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 17 Sep 2020 05:05:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.163",
+      "version": "0.0.0-canary.163",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable Desktop binary WS messages",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a5b726d647ab9826d726f0d9cd8a68efcb3af933",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Re-enable RNTesterIntegrationTests::Logging",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "162f109c0df7048f3fce7c285f44db62907ffc89",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 16 Sep 2020 05:05:28 GMT",
       "tag": "react-native-windows_v0.0.0-canary.162",
       "version": "0.0.0-canary.162",

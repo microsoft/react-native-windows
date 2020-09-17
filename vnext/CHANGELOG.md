@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 16 Sep 2020 05:05:28 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Sep 2020 05:05:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.163
+
+Thu, 17 Sep 2020 05:05:02 GMT
+
+### Changes
+
+- Enable Desktop binary WS messages (julio.rocha@microsoft.com)
+- Re-enable RNTesterIntegrationTests::Logging (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.162
 
