@@ -1,9 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+// IMPORTANT: Before updating this file
+// please read react-native-windows repo:
+// vnext/Microsoft.ReactNative.Cxx/README.md
 
 #include "pch.h"
 #include "JsiReader.h"
+#ifdef __APPLE__
+#include "Crash.h"
+#else
 #include <crash/verifyElseCrash.h>
+#endif
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -22,12 +29,12 @@ JsiReader::JsiReader(facebook::jsi::Runtime &runtime, const facebook::jsi::Value
 
 JSValueType JsiReader::ValueType() noexcept {
   if (m_currentPrimitiveValue) {
-    if (m_currentPrimitiveValue.value().isString()) {
+    if (ReadOptional(m_currentPrimitiveValue).isString()) {
       return JSValueType::String;
-    } else if (m_currentPrimitiveValue.value().isBool()) {
+    } else if (ReadOptional(m_currentPrimitiveValue).isBool()) {
       return JSValueType::Boolean;
-    } else if (m_currentPrimitiveValue.value().isNumber()) {
-      double number = m_currentPrimitiveValue.value().getNumber();
+    } else if (ReadOptional(m_currentPrimitiveValue).isNumber()) {
+      double number = ReadOptional(m_currentPrimitiveValue).getNumber();
 
       // unfortunately JSI doesn't differentiate int and double
       // here we test if the double value can be converted to int without data loss
@@ -57,11 +64,11 @@ bool JsiReader::GetNextObjectProperty(hstring &propertyName) noexcept {
   }
 
   top.Index++;
-  if (top.Index < static_cast<int>(top.PropertyNames.value().size(m_runtime))) {
+  if (top.Index < static_cast<int>(ReadOptional(top.PropertyNames).size(m_runtime))) {
     auto propertyId =
-        top.PropertyNames.value().getValueAtIndex(m_runtime, static_cast<size_t>(top.Index)).getString(m_runtime);
+        ReadOptional(top.PropertyNames).getValueAtIndex(m_runtime, static_cast<size_t>(top.Index)).getString(m_runtime);
     propertyName = winrt::to_hstring(propertyId.utf8(m_runtime));
-    SetValue(top.CurrentObject.value().getProperty(m_runtime, propertyId));
+    SetValue(ReadOptional(top.CurrentObject).getProperty(m_runtime, propertyId));
     return true;
   } else {
     m_containers.pop_back();
@@ -84,8 +91,8 @@ bool JsiReader::GetNextArrayItem() noexcept {
 
   switch (top.Type) {
     case ContainerType::Array: {
-      if (top.Index < static_cast<int>(top.CurrentArray.value().size(m_runtime))) {
-        SetValue(top.CurrentArray.value().getValueAtIndex(m_runtime, static_cast<size_t>(top.Index)));
+      if (top.Index < static_cast<int>(ReadOptional(top.CurrentArray).size(m_runtime))) {
+        SetValue(ReadOptional(top.CurrentArray).getValueAtIndex(m_runtime, static_cast<size_t>(top.Index)));
         return true;
       }
       break;
@@ -111,21 +118,21 @@ hstring JsiReader::GetString() noexcept {
   if (ValueType() != JSValueType::String) {
     return {};
   }
-  return winrt::to_hstring(m_currentPrimitiveValue.value().getString(m_runtime).utf8(m_runtime));
+  return winrt::to_hstring(ReadOptional(m_currentPrimitiveValue).getString(m_runtime).utf8(m_runtime));
 }
 
 bool JsiReader::GetBoolean() noexcept {
   if (ValueType() != JSValueType::Boolean) {
     return false;
   }
-  return m_currentPrimitiveValue.value().getBool();
+  return ReadOptional(m_currentPrimitiveValue).getBool();
 }
 
 int64_t JsiReader::GetInt64() noexcept {
   if (ValueType() != JSValueType::Int64) {
     return 0;
   }
-  return static_cast<int64_t>(m_currentPrimitiveValue.value().getNumber());
+  return static_cast<int64_t>(ReadOptional(m_currentPrimitiveValue).getNumber());
 }
 
 double JsiReader::GetDouble() noexcept {
@@ -133,7 +140,7 @@ double JsiReader::GetDouble() noexcept {
   if (valueType != JSValueType::Int64 && valueType != JSValueType::Double) {
     return 0;
   }
-  return m_currentPrimitiveValue.value().getNumber();
+  return ReadOptional(m_currentPrimitiveValue).getNumber();
 }
 
 void JsiReader::SetValue(const facebook::jsi::Value &value) noexcept {
