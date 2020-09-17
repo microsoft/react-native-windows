@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Re-enable RNTesterIntegrationTests::Logging",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-16T23:20:52.292Z"
+}
