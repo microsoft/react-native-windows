@@ -4,7 +4,6 @@
 #include "TestInstance.h"
 
 using namespace facebook::react;
-using namespace folly;
 
 using std::make_unique;
 using std::map;
@@ -22,15 +21,16 @@ const char *TestViewManager::GetName() const {
   return m_name.c_str();
 }
 
-dynamic TestViewManager::GetExportedViewConstants() const {
-  return dynamic();
+folly::dynamic TestViewManager::GetExportedViewConstants() const {
+  return folly::dynamic();
 }
 
-dynamic TestViewManager::GetCommands() const {
-  return dynamic();
+folly::dynamic TestViewManager::GetCommands() const {
+  return folly::dynamic();
 }
 
-dynamic TestViewManager::GetNativeProps() const {
+folly::dynamic TestViewManager::GetNativeProps() const {
+  // TODO: RCTView generated view config for validAttributes does not match native, missing: dummyprop
   return folly::dynamic::object("dummyprop", "string");
 }
 
@@ -40,7 +40,7 @@ ShadowNode *TestViewManager::createShadow() const {
 
 void TestViewManager::destroyShadow(ShadowNode *) const {}
 
-dynamic TestViewManager::GetConstants() const {
+folly::dynamic TestViewManager::GetConstants() const {
   folly::dynamic constants = folly::dynamic::object("Constants", GetExportedViewConstants())("Commands", GetCommands())(
       "NativeProps", GetNativeProps());
 
@@ -54,12 +54,12 @@ dynamic TestViewManager::GetConstants() const {
   return constants;
 }
 
-dynamic TestViewManager::GetExportedCustomBubblingEventTypeConstants() const {
-  return dynamic::object();
+folly::dynamic TestViewManager::GetExportedCustomBubblingEventTypeConstants() const {
+  return folly::dynamic::object();
 }
 
-dynamic TestViewManager::GetExportedCustomDirectEventTypeConstants() const {
-  return dynamic::object();
+folly::dynamic TestViewManager::GetExportedCustomDirectEventTypeConstants() const {
+  return folly::dynamic::object();
 }
 
 #pragma endregion TestViewManager members
@@ -148,3 +148,7 @@ void TestShadowNode::createView() {}
 #pragma endregion
 
 } // namespace Microsoft::React::Test
+
+namespace folly {
+char const *const dynamic::TypeInfo<dynamic::ObjectImpl>::name = "object";
+}

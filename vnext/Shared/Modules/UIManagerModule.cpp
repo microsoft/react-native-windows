@@ -18,7 +18,6 @@ using namespace std;
 #include <cdebug.h>
 #include <winrt/base.h>
 
-using namespace folly;
 using namespace facebook::xplat;
 
 namespace facebook {
@@ -45,7 +44,7 @@ folly::dynamic UIManager::getConstantsForViewManager(const std::string &classNam
   return nullptr;
 }
 
-void UIManager::populateViewManagerConstants(std::map<std::string, dynamic> &constants) {
+void UIManager::populateViewManagerConstants(std::map<std::string, folly::dynamic> &constants) {
   for (auto &&vm : m_viewManagers)
     constants.emplace(vm->GetName(), vm->GetConstants());
 }
@@ -480,8 +479,8 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
   return {
       Method(
           "getConstantsForViewManager",
-          [manager](dynamic argsJson) -> dynamic {
-            dynamic args;
+          [manager](folly::dynamic argsJson) -> folly::dynamic {
+            folly::dynamic args;
             if (argsJson.isString()) {
               args = folly::parseJson(argsJson.asString());
             } else {
@@ -492,33 +491,35 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
             return manager->getConstantsForViewManager(jsArgAsString(args, 0));
           },
           SyncTag),
-      Method("removeRootView", [manager](dynamic args) { manager->removeRootView(jsArgAsInt(args, 0)); }),
+      Method("removeRootView", [manager](folly::dynamic args) { manager->removeRootView(jsArgAsInt(args, 0)); }),
       Method(
           "createView",
-          [manager](dynamic args) {
+          [manager](folly::dynamic args) {
             manager->createView(
                 jsArgAsInt(args, 0), jsArgAsString(args, 1), jsArgAsInt(args, 2), std::move(jsArgAsDynamic(args, 3)));
           }),
       Method(
           "configureNextLayoutAnimation",
-          [manager](dynamic args, Callback cbSuccess, Callback cbError) {
+          [manager](folly::dynamic args, Callback cbSuccess, Callback cbError) {
             manager->configureNextLayoutAnimation(std::move(jsArgAsDynamic(args, 0)), cbSuccess, cbError);
           },
           AsyncTag),
       Method(
           "setChildren",
-          [manager](dynamic args) { manager->setChildren(jsArgAsInt(args, 0), std::move(jsArgAsArray(args, 1))); }),
+          [manager](folly::dynamic args) {
+            manager->setChildren(jsArgAsInt(args, 0), std::move(jsArgAsArray(args, 1)));
+          }),
       Method(
           "updateView",
-          [manager](dynamic args) {
+          [manager](folly::dynamic args) {
             manager->updateView(jsArgAsInt(args, 0), jsArgAsString(args, 1), std::move(jsArgAsDynamic(args, 2)));
           }),
       Method(
           "removeSubviewsFromContainerWithID",
-          [manager](dynamic args) { manager->removeSubviewsFromContainerWithID(jsArgAsInt(args, 0)); }),
+          [manager](folly::dynamic args) { manager->removeSubviewsFromContainerWithID(jsArgAsInt(args, 0)); }),
       Method(
           "manageChildren",
-          [manager](dynamic args) {
+          [manager](folly::dynamic args) {
             manager->manageChildren(
                 jsArgAsInt(args, 0),
                 jsArgAsDynamic(args, 1),
@@ -529,36 +530,38 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
           }),
       Method(
           "replaceExistingNonRootView",
-          [manager](dynamic args) { manager->replaceExistingNonRootView(jsArgAsInt(args, 0), jsArgAsInt(args, 1)); }),
+          [manager](folly::dynamic args) {
+            manager->replaceExistingNonRootView(jsArgAsInt(args, 0), jsArgAsInt(args, 1));
+          }),
       Method(
           "dispatchViewManagerCommand",
-          [manager](dynamic args) {
+          [manager](folly::dynamic args) {
             // 0.61 allows directly dispatching command names instead of querying the ViewManager for the command ID.
             // In stock React Native, integer commands are deprecated but not yet removed. RNW APIs only allow strings,
             // and provide command constants as their literal string.
             manager->dispatchViewManagerCommand(
                 jsArgAsInt(args, 0), jsArgAsString(args, 1), std::move(jsArgAsDynamic(args, 2)));
           }),
-      Method("measure", [manager](dynamic args, Callback cb) { manager->measure(jsArgAsInt(args, 0), cb); }),
+      Method("measure", [manager](folly::dynamic args, Callback cb) { manager->measure(jsArgAsInt(args, 0), cb); }),
       Method(
           "measureInWindow",
-          [manager](dynamic args, Callback cb) { manager->measureInWindow(jsArgAsInt(args, 0), cb); }),
+          [manager](folly::dynamic args, Callback cb) { manager->measureInWindow(jsArgAsInt(args, 0), cb); }),
       Method(
           "measureLayout",
-          [manager](dynamic args, Callback cbError, Callback cbSuccess) {
+          [manager](folly::dynamic args, Callback cbError, Callback cbSuccess) {
             manager->measureLayout(jsArgAsInt(args, 0), jsArgAsInt(args, 1), cbError, cbSuccess);
           },
           AsyncTag),
       Method(
           "findSubviewIn",
-          [manager](dynamic args, Callback cb) {
+          [manager](folly::dynamic args, Callback cb) {
             manager->findSubviewIn(jsArgAsInt(args, 0), std::move(jsArgAsDynamic(args, 1)), cb);
           }),
-      Method("focus", [manager](dynamic args) { manager->focus(jsArgAsInt(args, 0)); }),
-      Method("blur", [manager](dynamic args) { manager->blur(jsArgAsInt(args, 0)); }),
+      Method("focus", [manager](folly::dynamic args) { manager->focus(jsArgAsInt(args, 0)); }),
+      Method("blur", [manager](folly::dynamic args) { manager->blur(jsArgAsInt(args, 0)); }),
       Method(
           "setJSResponder",
-          [manager](dynamic args) {
+          [manager](folly::dynamic args) {
             // TODO: Implement?
             // manager->setJSResponder(jsArgAsInt(args, 0), jsArgAsBool(args,
             // 1));

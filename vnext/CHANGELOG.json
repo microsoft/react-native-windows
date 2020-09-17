@@ -2,6 +2,54 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 17 Sep 2020 05:05:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.163",
+      "version": "0.0.0-canary.163",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable Desktop binary WS messages",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a5b726d647ab9826d726f0d9cd8a68efcb3af933",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Re-enable RNTesterIntegrationTests::Logging",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "162f109c0df7048f3fce7c285f44db62907ffc89",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Sep 2020 05:05:28 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.162",
+      "version": "0.0.0-canary.162",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "WinRTWebSocket: Drop concurrent_queue.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "77e2912521a42574645ac8c12f83b61b1b38feef",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update folly",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "0d60111c089aafaf59c6d4513fad5aca110101be",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Enable reload while editing of files in vnext/src",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "1f2049d2dfc6f3398f71bb176e14911efb780643",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Sep 2020 05:05:15 GMT",
       "tag": "react-native-windows_v0.0.0-canary.161",
       "version": "0.0.0-canary.161",

@@ -394,7 +394,6 @@ jobs:
         (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
         (FullyQualifiedName!=RNTesterIntegrationTests::Dummy)&
         (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
-        (FullyQualifiedName!=RNTesterIntegrationTests::Logging)&
         (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
         (FullyQualifiedName!=RNTesterIntegrationTests::XHRSample)&
         (FullyQualifiedName!~WebSocketModule_)&

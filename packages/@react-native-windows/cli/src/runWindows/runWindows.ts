@@ -7,7 +7,7 @@
 import * as build from './utils/build';
 import * as chalk from 'chalk';
 import * as deploy from './utils/deploy';
-import {newError, newInfo} from './utils/commandWithProgress';
+import {newError, newInfo, newWarn} from './utils/commandWithProgress';
 import * as info from './utils/info';
 import MSBuildTools from './utils/msbuildtools';
 
@@ -81,7 +81,23 @@ async function runWindows(
     newInfo('Autolink step is skipped');
   }
 
-  const buildTools = MSBuildTools.findAvailableVersion(options.arch, verbose);
+  let buildTools;
+  try {
+    buildTools = MSBuildTools.findAvailableVersion(options.arch, verbose);
+  } catch (error) {
+    newWarn('No public VS release found');
+    // Try prerelease
+    try {
+      newInfo('Trying pre-release VS');
+      buildTools = MSBuildTools.findAvailableVersion(
+        options.arch,
+        verbose,
+        true, // preRelease
+      );
+    } catch {
+      throw error;
+    }
+  }
 
   if (options.build) {
     if (!slnFile) {
