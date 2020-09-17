@@ -66,7 +66,12 @@ function CheckVS {
 function InstallVS {
     $installerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer";
     $vsWhere = "$installerPath\vswhere.exe"
-    if (!(Test-Path $vsWhere)) {
+    if (Test-Path $vsWhere) {
+        $channelId = & $vsWhere -version 16 -property channelId
+        $productId = & $vsWhere -version 16 -property productId
+    }
+
+    if (!(Test-Path $vsWhere) -or ($channelId -eq $null) -or ($productId -eq $null)) {
         # No VSWhere / VS_Installer
         if ($Enterprise) {
             # The CI machines need the enterprise version of VS as that is what is hardcoded in all the scripts
@@ -74,10 +79,12 @@ function InstallVS {
         } else {
             & choco install -y visualstudio2019community
         }
+        $channelId = & $vsWhere -version 16 -property channelId
+        $productId = & $vsWhere -version 16 -property productId
     }
-    $channelId = & $vsWhere -version 16 -property channelId
-    $productId = & $vsWhere -version 16 -property productId
+
     $vsInstaller = "$installerPath\vs_installer.exe"
+
     $addWorkloads = ($vsWorkloads + $vsComponents) | % { '--add', $_ };
     $p = Start-Process -PassThru -Wait  -FilePath $vsInstaller -ArgumentList ("modify --channelId $channelId --productId $productId $addWorkloads --quiet --includeRecommended" -split ' ')
     return $p.ExitCode
