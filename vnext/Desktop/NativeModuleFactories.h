@@ -18,5 +18,7 @@ extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
 
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept;
 
+extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule() noexcept;
+
 } // namespace react
 } // namespace facebook
