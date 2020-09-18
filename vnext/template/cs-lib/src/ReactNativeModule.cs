@@ -1,4 +1,10 @@
-﻿using Microsoft.ReactNative;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Microsoft.ReactNative;
 using Microsoft.ReactNative.Managed;
 
 namespace {{ namespace }}
