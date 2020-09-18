@@ -6,6 +6,8 @@ parameters:
     type: string
   - name: configuration
     type: string
+  - name: projectType
+    type: string
   - name: additionalRunArguments
     type: string
     default: ''
@@ -72,13 +74,35 @@ steps:
         npmVersion: $(npmVersion)
         packDesktop: false
         slices: '("${{ parameters.platform }}.${{ parameters.configuration }}")'
+  
+  # Work around issue of parameters not getting expanded in conditions properly
+  - powershell: |
+      Write-Host "##vso[task.setvariable variable=localProjectType]${{ parameters.projectType}}"
 
   # We force the usage of npm instead of yarn becuase yarn has fragility issues when redirected to a different server (such as verdaccio)
   - task: CmdLine@2
-    displayName: Init new project
+    displayName: Init new app project
     inputs:
       script: npx react-native init testcli --npm --template react-native@$(reactNativeDevDependency)
       workingDirectory: $(Agent.BuildDirectory)
+    condition: and(succeeded(), eq(variables['localProjectType'], 'app'))
+  
+  - task: CmdLine@2
+    displayName: Init new lib project
+    inputs:
+      script: npx create-react-native-module --module-name "testcli" testcli
+      workingDirectory: $(Agent.BuildDirectory)
+    condition: and(succeeded(), eq(variables['localProjectType'], 'lib'))
+  
+  - task: CmdLine@2
+    displayName: Update lib project react and react-native dev versions
+    inputs:
+      script: |
+        call yarn install
+        call yarn upgrade react@$(reactDevDependency) --dev
+        call yarn upgrade react-native@$(reactNativeDevDependency) --dev
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+    condition: and(succeeded(), eq(variables['localProjectType'], 'lib'))
 
   - script: |
       npm set registry http://localhost:4873
@@ -87,14 +111,14 @@ steps:
   - task: CmdLine@2
     displayName: Apply windows template (with nuget)
     inputs:
-      script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+      script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), ${{ parameters.useNuGet }})
 
   - task: CmdLine@2
     displayName: Apply windows template (without nuget)
     inputs:
-      script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} ${{ parameters.additionalInitArguments }}
+      script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), ${{ not(parameters.useNuGet) }})
 
@@ -114,7 +138,6 @@ steps:
         -Components ${{ parameters.vsComponents }}
         -Cleanup:$true
     condition: and(succeeded(), ${{ parameters.installVsComponents }})
-
 
   - task: CmdLine@2
     displayName: Set LocalDumps for cl.exe
@@ -139,6 +162,13 @@ steps:
       Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.configuration}}"
       Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(Build.StagingDirectory)\CrashDumps"
 
+  # Useful info to have in the log, but also a necessary workaround to make sure the cli is cached by npx
+  - task: CmdLine@2
+    displayName: React Native Info
+    inputs:
+      script: npx react-native info
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+
   - task: CmdLine@2
     displayName: Build project (Release)
     inputs:
@@ -162,6 +192,7 @@ steps:
     inputs:
       script: npx --no-install react-native bundle --entry-file index.js --platform windows --bundle-output test.bundle
       workingDirectory: $(Agent.BuildDirectory)\testcli
+    condition: and(succeeded(), eq(variables['localProjectType'], 'app'))
 
   # We are experiencing random package restore failures.
   # We want to uploading the vedaccio logs to aid in diagnosing if it is verdaccio or npmjs.org
