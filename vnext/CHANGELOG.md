@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 17 Sep 2020 05:05:02 GMT and should not be manually modified.
+This log was last generated on Fri, 18 Sep 2020 05:05:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.164
+
+Fri, 18 Sep 2020 05:05:24 GMT
+
+### Changes
+
+- Update Nuget packages (dannyvv@microsoft.com)
+- Port REACT_MODULE() from react-native-windows to react-native-macos (2/4) (zihanc@microsoft.com)
+- Fix rnw-dependencies for cases where the installer is installed but not VS itself (asklar@winse.microsoft.com)
 
 ## 0.0.0-canary.163
 

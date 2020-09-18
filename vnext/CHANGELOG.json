@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 18 Sep 2020 05:05:24 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.164",
+      "version": "0.0.0-canary.164",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update Nuget packages",
+            "author": "dannyvv@microsoft.com",
+            "commit": "be3ac116ada55babce0193250500aebf23fcfd34",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Port REACT_MODULE() from react-native-windows to react-native-macos (2/4)",
+            "author": "zihanc@microsoft.com",
+            "commit": "0dfe9decb4390c4b77e0837e69c4a25878034960",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix rnw-dependencies for cases where the installer is installed but not VS itself",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "197111b7fff4d7dae7088d48293adfeab61ccf5b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Sep 2020 05:05:02 GMT",
       "tag": "react-native-windows_v0.0.0-canary.163",
       "version": "0.0.0-canary.163",
