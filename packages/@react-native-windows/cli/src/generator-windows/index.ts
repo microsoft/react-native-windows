@@ -12,6 +12,7 @@ import * as childProcess from 'child_process';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as semver from 'semver';
+import * as _ from 'lodash';
 import {readProjectFile, findPropertyValue} from '../config/configUtils';
 
 import {
@@ -124,6 +125,16 @@ export async function copyProjectTemplateAndReplace(
   }
 
   const projectType = options.projectType;
+
+  // React-native init only allows alphanumerics in project names, but other
+  // new project tools (like create-react-native-module) are less strict.
+  newProjectName = _.camelCase(newProjectName);
+
+  // Similar to the above, but we want to retain namespace separators
+  namespace = namespace
+    .split(/[\.\:]+/)
+    .map(_.camelCase)
+    .join('.');
 
   createDir(path.join(destPath, windowsDir));
   createDir(path.join(destPath, windowsDir, newProjectName));

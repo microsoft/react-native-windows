@@ -117,13 +117,13 @@ const EXITCODE_INCOMPATIBLE_OPTIONS = 10;
 const EXITCODE_DEVMODE_VERSION_MISMATCH = 11;
 const EXITCODE_NO_REACTNATIVE_DEPENDENCIES = 12;
 
-function getReactNativeAppName(): string {
-  console.log('Reading application name from package.json...');
+function getReactNativeProjectName(): string {
+  console.log('Reading project name from package.json...');
   const cwd = process.cwd();
   const pkgJsonPath = findUp.sync('package.json', {cwd});
   if (!pkgJsonPath) {
     userError(
-      'Unable to find package.json.  This should be run from within an existing react-native app.',
+      'Unable to find package.json.  This should be run from within an existing react-native project.',
       EXITCODE_NO_PACKAGE_JSON,
     );
   }
@@ -131,7 +131,7 @@ function getReactNativeAppName(): string {
   if (!name) {
     const appJsonPath = findUp.sync('app.json', {cwd});
     if (appJsonPath) {
-      console.log('Reading application name from app.json...');
+      console.log('Reading project name from app.json...');
       name = JSON.parse(fs.readFileSync(appJsonPath, 'utf8')).name;
     }
   }
@@ -346,7 +346,7 @@ function installReactNativeWindows(
     );
   } else {
     userError(
-      "Unable to find 'react-native' in packcage.json's dependencies or devDepenencies. This should be run from within an existing react-native app or lib.",
+      "Unable to find 'react-native' in package.json's dependencies or devDepenencies. This should be run from within an existing react-native app or lib.",
       EXITCODE_NO_REACTNATIVE_DEPENDENCIES,
     );
   }
@@ -386,7 +386,7 @@ function isProjectUsingYarn(cwd: string): boolean {
 
 (async () => {
   try {
-    const name = getReactNativeAppName();
+    const name = getReactNativeProjectName();
     const ns = argv.namespace || name;
     const useDevMode = argv.useDevMode;
     let version = argv.version;
