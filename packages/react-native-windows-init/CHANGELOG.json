@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Sat, 19 Sep 2020 05:05:08 GMT",
+      "tag": "react-native-windows-init_v0.1.27",
+      "version": "0.1.27",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Adding new native module template support to react-native-windows-init",
+            "author": "jthysell@microsoft.com",
+            "commit": "c7a42af99fb614652d446ebaee12ea689ade4458",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Sep 2020 22:03:37 GMT",
       "tag": "react-native-windows-init_v0.1.26",
       "version": "0.1.26",

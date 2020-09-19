@@ -2,6 +2,28 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 19 Sep 2020 05:05:08 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.165",
+      "version": "0.0.0-canary.165",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding new native module template support to react-native-windows-init",
+            "author": "jthysell@microsoft.com",
+            "commit": "c7a42af99fb614652d446ebaee12ea689ade4458",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "author": "dannyvv@microsoft.com",
+            "commit": "64e9d82711d1c751854c9a00917f663463dafd93",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Sep 2020 05:05:24 GMT",
       "tag": "react-native-windows_v0.0.0-canary.164",
       "version": "0.0.0-canary.164",

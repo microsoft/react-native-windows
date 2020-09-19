@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 19 Sep 2020 05:05:08 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.16",
+      "version": "0.0.0-canary.16",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding new native module template support to react-native-windows-init",
+            "author": "jthysell@microsoft.com",
+            "commit": "c7a42af99fb614652d446ebaee12ea689ade4458",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 16 Sep 2020 05:05:28 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.15",
       "version": "0.0.0-canary.15",
