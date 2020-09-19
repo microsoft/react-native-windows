@@ -251,6 +251,7 @@
       <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;_CRT_SECURE_NO_WARNINGS;WINAPI_PARTITION_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4018;4146;4244;4251;4267;4293;4305;4800;4804;4310;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
