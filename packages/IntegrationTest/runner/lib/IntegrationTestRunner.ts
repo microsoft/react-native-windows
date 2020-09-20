@@ -64,6 +64,14 @@ export default class IntegrationTestRunner {
         break;
 
       case 'exception':
+        // Jest will special case exceptions named "AssertionError" to be Node
+        // AssertionErrors with extra information on them. Rewrite the name so
+        // that Jest doesn't try to pull extra information from Chai assertions.
+        if (res.name === 'AssertionError') {
+          res.name = 'Error';
+          res.message = res.message.replace('AssertionError', 'Error');
+        }
+
         const err = new Error(res.originalMessage);
         err.name = res.name;
         err.stack =

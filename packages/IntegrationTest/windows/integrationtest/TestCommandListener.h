@@ -20,6 +20,20 @@ struct TestCommand {
   winrt::Windows::Data::Json::JsonValue payload;
 };
 
+struct CallStackFrame {
+  winrt::hstring File;
+  winrt::hstring Method;
+  uint32_t Line{};
+  uint32_t Column{};
+};
+
+struct ExceptionInfo {
+  winrt::hstring Message;
+  winrt::hstring OriginalMessage;
+  winrt::hstring Name;
+  std::vector<CallStackFrame> Callstack;
+};
+
 class TestCommandResponse {
  public:
   TestCommandResponse(const winrt::Windows::Networking::Sockets::StreamSocket &socket) noexcept : m_socket(socket) {}
@@ -28,8 +42,7 @@ class TestCommandResponse {
   winrt::Windows::Foundation::IAsyncAction Timeout() noexcept;
   winrt::Windows::Foundation::IAsyncAction TestPassed() noexcept;
   winrt::Windows::Foundation::IAsyncAction TestFailed() noexcept;
-  winrt::Windows::Foundation::IAsyncAction Exception(
-      const winrt::Microsoft::ReactNative::IRedBoxErrorInfo &err) noexcept;
+  winrt::Windows::Foundation::IAsyncAction Exception(const ExceptionInfo &err) noexcept;
   winrt::Windows::Foundation::IAsyncAction Error(std::string_view message) noexcept;
 
  private:
@@ -51,12 +64,15 @@ class TestCommandListener : public winrt::implements<TestCommandListener, winrt:
   winrt::event_token OnTestCommand(TestCommandDelegate &&delegate) noexcept;
 
  private:
-  winrt::fire_and_forget ListenForInput(winrt::Windows::Storage::Streams::IInputStream socketInput) noexcept;
-  void DispatchTestCommand(const winrt::Windows::Data::Json::JsonObject message) noexcept;
+  winrt::Windows::Foundation::IAsyncAction ListenToSocket(
+      winrt::Windows::Networking::Sockets::StreamSocket socket) noexcept;
+  void DispatchTestCommand(
+      const winrt::Windows::Networking::Sockets::StreamSocket &socket,
+      const winrt::Windows::Data::Json::JsonObject message) noexcept;
 
   winrt::Windows::Networking::Sockets::StreamSocketListener m_socketServer;
-  winrt::Windows::Networking::Sockets::StreamSocket m_currentSocket;
   winrt::Windows::Networking::Sockets::IStreamSocketListener::ConnectionReceived_revoker m_connectionReceivedRevoker;
+  winrt::Windows::Foundation::IAsyncAction m_socketListenAction;
   bool m_isListening{false};
   winrt::event<TestCommandDelegate> m_testCommandEvent;
 };

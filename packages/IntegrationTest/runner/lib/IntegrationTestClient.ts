@@ -23,7 +23,6 @@ export type TestCommandResponse =
       message: string;
       originalMessage: string;
       name: string;
-      componentStack: string;
       callstack: CallStackFrame[];
     };
 
@@ -32,7 +31,6 @@ export type CallStackFrame = {
   method: string;
   line: number;
   column: number;
-  collapse: boolean;
 };
 
 export default class IntegrationTestClient {
