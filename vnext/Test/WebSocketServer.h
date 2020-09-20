@@ -2,12 +2,16 @@
 #pragma once
 
 #include <IWebSocketResource.h>
+
 #include <boost/beast/core/multi_buffer.hpp>
 #include <boost/beast/core/tcp_stream.hpp>
 #include <boost/beast/ssl/ssl_stream.hpp>
 #include <boost/beast/websocket.hpp>
 #include <boost/beast/websocket/ssl.hpp>
+
+// Standard Library
 #include <thread>
+#include <vector>
 
 namespace Microsoft::React::Test
 {
@@ -18,6 +22,7 @@ struct WebSocketServiceCallbacks
   std::function<void(boost::beast::websocket::response_type&)> OnHandshake;
   std::function<void(std::string)> OnMessage;
   std::function<std::string(std::string&&)> MessageFactory;
+  std::function<std::vector<std::uint8_t>(std::vector<std::uint8_t>&&)> BinaryMessageFactory;
   std::function<void(IWebSocketResource::Error&&)> OnError;
 };
 
@@ -35,6 +40,7 @@ class BaseWebSocketSession : public IWebSocketSession
 
   boost::beast::multi_buffer m_buffer;
   std::string m_message;
+  std::vector<std::uint8_t> m_binaryMessage;
   State m_state;
 
   std::function<void(IWebSocketResource::Error&&)> m_errorHandler;
@@ -117,6 +123,7 @@ class WebSocketServer : public std::enable_shared_from_this<WebSocketServer>
   void SetOnHandshake(std::function<void(boost::beast::websocket::response_type&)>&& func);
   void SetOnMessage(std::function<void(std::string)>&& func);
   void SetMessageFactory(std::function<std::string(std::string&&)>&& func);
+  void SetMessageFactory(std::function<std::vector<std::uint8_t>(std::vector<std::uint8_t>&&)>&& func);
   void SetOnError(std::function<void(IWebSocketResource::Error&&)>&& func);
 };
 

@@ -31,7 +31,7 @@ export interface IDatePickerChangeEvent {
   };
 }
 
-export const enum DayOfWeek {
+export enum DayOfWeek {
   Sunday = 0,
   Monday = 1,
   Tuesday = 2,

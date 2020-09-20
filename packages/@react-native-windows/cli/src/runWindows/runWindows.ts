@@ -7,7 +7,7 @@
 import * as build from './utils/build';
 import * as chalk from 'chalk';
 import * as deploy from './utils/deploy';
-import {newError, newInfo} from './utils/commandWithProgress';
+import {newError, newInfo, newWarn} from './utils/commandWithProgress';
 import * as info from './utils/info';
 import MSBuildTools from './utils/msbuildtools';
 
@@ -42,6 +42,15 @@ async function runWindows(
     newInfo('Verbose: ON');
   }
 
+  // https://github.com/yarnpkg/yarn/issues/8334 - Yarn on Windows breaks apps that read from the environment variables
+  // Yarn will run node via CreateProcess and pass npm_config_* variables in lowercase without unifying their value
+  // with their possibly existing uppercase counterparts. This breaks programs that read from the environment block
+  // and write to a case-insensitive dictionary since they expect to encounter each variable only once.
+  // The values of the lowercase variables are the one npm actually wants to use, plus they are seeded from the
+  // uppercase variable values one if there are no overrides.
+  delete process.env.NPM_CONFIG_CACHE;
+  delete process.env.NPM_CONFIG_PREFIX;
+
   if (options.info) {
     try {
       const output = await info.getEnvironmentInfo();
@@ -72,7 +81,23 @@ async function runWindows(
     newInfo('Autolink step is skipped');
   }
 
-  const buildTools = MSBuildTools.findAvailableVersion(options.arch, verbose);
+  let buildTools;
+  try {
+    buildTools = MSBuildTools.findAvailableVersion(options.arch, verbose);
+  } catch (error) {
+    newWarn('No public VS release found');
+    // Try prerelease
+    try {
+      newInfo('Trying pre-release VS');
+      buildTools = MSBuildTools.findAvailableVersion(
+        options.arch,
+        verbose,
+        true, // preRelease
+      );
+    } catch {
+      throw error;
+    }
+  }
 
   if (options.build) {
     if (!slnFile) {

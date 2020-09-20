@@ -2,6 +2,72 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 19 Sep 2020 05:05:08 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.16",
+      "version": "0.0.0-canary.16",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding new native module template support to react-native-windows-init",
+            "author": "jthysell@microsoft.com",
+            "commit": "c7a42af99fb614652d446ebaee12ea689ade4458",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Sep 2020 05:05:28 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.15",
+      "version": "0.0.0-canary.15",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable trying Previews of VS as a fallback",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "c30f54a8ba3a605910b43613825b386b62b1675d",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Yarn on Windows breaks apps that read from the environment variables",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "2018f3132087b1f76c48474c8df0b4e7f3b62501",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Sep 2020 05:05:15 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.14",
+      "version": "0.0.0-canary.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix ts warning",
+            "author": "asklar@microsoft.com",
+            "commit": "61a641820532b42034f2ad4a670bdc43b817adac",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Sep 2020 22:03:37 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.13",
+      "version": "0.0.0-canary.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Reconcile package versions",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8adedcfb2ce6492a4a7ede59e0f9188dc205d659",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Sep 2020 05:06:35 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.11",
       "version": "0.0.0-canary.11",

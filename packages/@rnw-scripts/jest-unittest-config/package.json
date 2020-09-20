@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/jest-unittest-config",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "MIT",
   "main": "jest.unittest.config.js",
   "dependencies": {

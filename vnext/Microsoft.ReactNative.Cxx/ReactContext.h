@@ -1,11 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+// IMPORTANT: Before updating this file
+// please read react-native-windows repo:
+// vnext/Microsoft.ReactNative.Cxx/README.md
 
 #pragma once
 #ifndef MICROSOFT_REACTNATIVE_REACTCONTEXT
 #define MICROSOFT_REACTNATIVE_REACTCONTEXT
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(__APPLE__)
 #include <CppWinRTIncludes.h>
 #endif
 #include <string_view>
@@ -62,7 +65,7 @@ struct ReactContext {
     m_handle.EmitJSEvent(eventEmitterName, eventName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
   }
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(__APPLE__)
   // Dispatch eventName event to the view.
   // args are either function arguments or a single lambda with 'IJSValueWriter const&' argument.
   template <class... TArgs>

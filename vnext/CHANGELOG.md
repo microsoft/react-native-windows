@@ -1,8 +1,71 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 12 Sep 2020 05:08:52 GMT and should not be manually modified.
+This log was last generated on Sun, 20 Sep 2020 05:05:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.166
+
+Sun, 20 Sep 2020 05:05:06 GMT
+
+### Changes
+
+- use string_view in folly (asklar@winse.microsoft.com)
+
+## 0.0.0-canary.165
+
+Sat, 19 Sep 2020 05:05:08 GMT
+
+### Changes
+
+- Adding new native module template support to react-native-windows-init (jthysell@microsoft.com)
+
+## 0.0.0-canary.164
+
+Fri, 18 Sep 2020 05:05:24 GMT
+
+### Changes
+
+- Update Nuget packages (dannyvv@microsoft.com)
+- Port REACT_MODULE() from react-native-windows to react-native-macos (2/4) (zihanc@microsoft.com)
+- Fix rnw-dependencies for cases where the installer is installed but not VS itself (asklar@winse.microsoft.com)
+
+## 0.0.0-canary.163
+
+Thu, 17 Sep 2020 05:05:02 GMT
+
+### Changes
+
+- Enable Desktop binary WS messages (julio.rocha@microsoft.com)
+- Re-enable RNTesterIntegrationTests::Logging (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.162
+
+Wed, 16 Sep 2020 05:05:28 GMT
+
+### Changes
+
+- WinRTWebSocket: Drop concurrent_queue. (julio.rocha@microsoft.com)
+- Update folly (asklar@winse.microsoft.com)
+- Enable reload while editing of files in vnext/src (acoates-ms@noreply.github.com)
+
+## 0.0.0-canary.161
+
+Tue, 15 Sep 2020 05:05:15 GMT
+
+### Changes
+
+- Fix issue loading offline bundle after failing to load from packager (acoates-ms@noreply.github.com)
+- Use x86 program files to locate UWP SDK (asklar@microsoft.com)
+- Port REACT_MODULE() from react-native-windows to react-native-macos (1/4) (zihanc@microsoft.com)
+
+## 0.0.0-canary.160
+
+Mon, 14 Sep 2020 22:03:37 GMT
+
+### Changes
+
+- Reconcile package versions (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.159
 

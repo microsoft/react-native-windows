@@ -4,7 +4,7 @@
  * @format
  */
 
-import React = require('react');
+import * as React from 'react';
 import {Text, View} from 'react-native';
 import {Glyph} from '../../../../Libraries/Components/Glyph/Glyph';
 

@@ -12,15 +12,15 @@
   "dependencies": {
     "react": "16.13.1",
     "react-native": "0.0.0-e75557b48",
-    "react-native-windows": "^0.0.0-canary.159"
+    "react-native-windows": "^0.0.0-canary.166"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/parser": "^7.11.5",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
-    "@rnw-scripts/eslint-config": "^0.1.1",
-    "@rnw-scripts/just-task": "^0.0.3",
+    "@rnw-scripts/eslint-config": "^0.1.2",
+    "@rnw-scripts/just-task": "^0.0.4",
     "@rnw-scripts/ts-config": "^0.1.0",
     "@types/jest": "^26.0.13",
     "@types/ora": "^3.2.0",

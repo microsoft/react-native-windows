@@ -1,8 +1,41 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 09 Sep 2020 05:06:35 GMT and should not be manually modified.
+This log was last generated on Sat, 19 Sep 2020 05:05:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.16
+
+Sat, 19 Sep 2020 05:05:08 GMT
+
+### Changes
+
+- Adding new native module template support to react-native-windows-init (jthysell@microsoft.com)
+
+## 0.0.0-canary.15
+
+Wed, 16 Sep 2020 05:05:28 GMT
+
+### Changes
+
+- Enable trying Previews of VS as a fallback (asklar@winse.microsoft.com)
+- Yarn on Windows breaks apps that read from the environment variables (asklar@winse.microsoft.com)
+
+## 0.0.0-canary.14
+
+Tue, 15 Sep 2020 05:05:15 GMT
+
+### Changes
+
+- fix ts warning (asklar@microsoft.com)
+
+## 0.0.0-canary.13
+
+Mon, 14 Sep 2020 22:03:37 GMT
+
+### Changes
+
+- Reconcile package versions (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.11
 
