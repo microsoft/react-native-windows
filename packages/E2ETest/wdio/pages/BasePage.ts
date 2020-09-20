@@ -10,7 +10,6 @@ import {
 } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 export function By(testId: string): WebdriverIO.Element {
-  // eslint-disable-next-line no-undef
   return $('~' + testId);
 }
 
@@ -26,7 +25,6 @@ export class BasePage {
   }
 
   waitForElementLoaded(element: string, timeout?: number) {
-    // eslint-disable-next-line no-undef
     browser.waitUntil(
       () => {
         return this.isElementLoadedOrLoadBundleError(element);
@@ -36,7 +34,7 @@ export class BasePage {
     );
   }
 
-  async getTreeDumpResult(): Promise<boolean> {
+  getTreeDumpResult(): boolean {
     var testResult = false;
     const maxWait = 20;
     var waitCount = 1;
@@ -50,7 +48,10 @@ export class BasePage {
             maxWait +
             '...####'
         );
-        await wait(100);
+        // #6041 this line doesn't do anything because of missing await, but
+        // adding the await causes test failures.
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        wait(100);
         waitCount += 1;
       }
     } while (waitCount <= maxWait && !testResult);
