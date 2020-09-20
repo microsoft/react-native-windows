@@ -40,23 +40,21 @@ IAsyncAction TestCommandResponse::TestFailed() noexcept {
   co_await SendJson(responseJson);
 }
 
-IAsyncAction TestCommandResponse::Exception(const IRedBoxErrorInfo &err) noexcept {
+IAsyncAction TestCommandResponse::Exception(const ExceptionInfo &err) noexcept {
   JsonObject responseJson;
   responseJson.SetNamedValue(L"status", JsonValue::CreateStringValue(L"exception"));
-  responseJson.SetNamedValue(L"message", JsonValue::CreateStringValue(err.Message()));
-  responseJson.SetNamedValue(L"originalMessage", JsonValue::CreateStringValue(err.OriginalMessage()));
-  responseJson.SetNamedValue(L"name", JsonValue::CreateStringValue(err.Name()));
-  responseJson.SetNamedValue(L"componentStack", JsonValue::CreateStringValue(err.ComponentStack()));
+  responseJson.SetNamedValue(L"message", JsonValue::CreateStringValue(err.Message));
+  responseJson.SetNamedValue(L"originalMessage", JsonValue::CreateStringValue(err.OriginalMessage));
+  responseJson.SetNamedValue(L"name", JsonValue::CreateStringValue(err.Name));
 
   JsonArray callstack;
 
-  for (const auto &frame : err.Callstack()) {
+  for (const auto &frame : err.Callstack) {
     JsonObject frameJson;
-    frameJson.SetNamedValue(L"file", JsonValue::CreateStringValue(frame.File()));
-    frameJson.SetNamedValue(L"method", JsonValue::CreateStringValue(frame.Method()));
-    frameJson.SetNamedValue(L"line", JsonValue::CreateNumberValue(frame.Line()));
-    frameJson.SetNamedValue(L"column", JsonValue::CreateNumberValue(frame.Column()));
-    frameJson.SetNamedValue(L"collapse", JsonValue::CreateBooleanValue(frame.Collapse()));
+    frameJson.SetNamedValue(L"file", JsonValue::CreateStringValue(frame.File));
+    frameJson.SetNamedValue(L"method", JsonValue::CreateStringValue(frame.Method));
+    frameJson.SetNamedValue(L"line", JsonValue::CreateNumberValue(frame.Line));
+    frameJson.SetNamedValue(L"column", JsonValue::CreateNumberValue(frame.Column));
 
     callstack.Append(frameJson);
   }
@@ -113,8 +111,12 @@ IAsyncOperation<ListenResult> TestCommandListener::StartListening(int32_t port) 
     if (auto strongThis = weakThis.get()) {
       m_connectionReceivedRevoker = m_socketServer.ConnectionReceived(
           winrt::auto_revoke, [this](const auto & /*sender*/, const auto &args) noexcept {
-            m_currentSocket = args.Socket();
-            ListenForInput(m_currentSocket.InputStream());
+            if (m_socketListenAction && m_socketListenAction.Status() == AsyncStatus::Started) {
+              TestCommandResponse(args.Socket()).Error("Connection already in progress");
+              return;
+            }
+
+            m_socketListenAction = ListenToSocket(args.Socket());
           });
 
       m_isListening = true;
@@ -135,10 +137,10 @@ bool TestCommandListener::IsListening() const noexcept {
   return m_isListening;
 }
 
-winrt::fire_and_forget TestCommandListener::ListenForInput(IInputStream socketInput) noexcept {
+IAsyncAction TestCommandListener::ListenToSocket(StreamSocket socket) noexcept {
   auto weakThis = get_weak();
 
-  DataReader socketReader(socketInput);
+  DataReader socketReader(socket.InputStream());
   socketReader.UnicodeEncoding(UnicodeEncoding::Utf8);
   socketReader.ByteOrder(ByteOrder::LittleEndian);
 
@@ -159,7 +161,7 @@ winrt::fire_and_forget TestCommandListener::ListenForInput(IInputStream socketIn
       auto messageObject = JsonObject::Parse(messageStr);
 
       if (auto strongThis = weakThis.get()) {
-        strongThis->DispatchTestCommand(messageObject);
+        strongThis->DispatchTestCommand(socket, messageObject);
       }
     }
   } catch (const winrt::hresult_error &ex) {
@@ -174,14 +176,16 @@ winrt::fire_and_forget TestCommandListener::ListenForInput(IInputStream socketIn
   }
 }
 
-void TestCommandListener::DispatchTestCommand(const JsonObject message) noexcept {
+void TestCommandListener::DispatchTestCommand(
+    const winrt::Windows::Networking::Sockets::StreamSocket &socket,
+    const JsonObject message) noexcept {
   auto commandId = message.GetNamedString(L"command");
   if (commandId == L"RunTestComponent") {
     auto payload = message.GetNamedValue(L"component");
-    m_testCommandEvent(TestCommand{TestCommandId::RunTestComponent, payload}, TestCommandResponse(m_currentSocket));
+    m_testCommandEvent(TestCommand{TestCommandId::RunTestComponent, payload}, TestCommandResponse(socket));
   } else if (commandId == L"GoToComponent") {
     auto payload = message.GetNamedValue(L"component");
-    m_testCommandEvent(TestCommand{TestCommandId::GoToComponent, payload}, TestCommandResponse(m_currentSocket));
+    m_testCommandEvent(TestCommand{TestCommandId::GoToComponent, payload}, TestCommandResponse(socket));
   } else {
     // Unimplemented
     std::terminate();

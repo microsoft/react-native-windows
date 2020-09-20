@@ -6,23 +6,37 @@
  */
 
 import * as React from 'react';
-import {Image} from 'react-native';
+import {assert} from 'chai';
+import {AsyncStorage, Image, Platform} from 'react-native';
 import {functionTest, componentTest} from './lib/TestDefinition';
 
 /**
  * An example of a passing test
  */
 functionTest('SampleFunctionTest', () => {
-  if (2 + 2 !== 4) {
-    throw new Error('Math is hard');
-  }
+  assert.equal(Platform.OS, 'windows', 'Platform.OS should be windows');
+});
+
+/**
+ * An example of a failing test using ".skip" not to run
+ */
+functionTest.skip('SampleFailingTest', () => {
+  assert.ok(Platform.Version, 'Platform should define a version');
 });
 
 /**
  * Test methods can also be async
  */
 functionTest('SampleAsyncFunctionTest', async () => {
-  await new Promise(resolve => setTimeout(resolve, 10));
+  await AsyncStorage.clear();
+  await AsyncStorage.setItem('foo', 'bar');
+
+  const storedItem = await AsyncStorage.getItem('foo');
+  assert.equal(
+    storedItem,
+    'bar',
+    'AsyncStorage should store return what we just stored',
+  );
 });
 
 /**
@@ -31,25 +45,12 @@ functionTest('SampleAsyncFunctionTest', async () => {
 componentTest('SampleComponentTest', ({pass, fail}) => {
   return (
     <Image
-      source={{
-        uri:
-          'https://github.com/microsoft/react-native-windows/blob/0.63-stable/packages/react-native-platform-override/src/e2etest/collateral/0.59.9/Icon-60@2x.conflict.png?raw=true',
+      source={require('react-native-windows/IntegrationTests/blue_square.png')}
+      onLoad={evt => {
+        assert.ok(evt.nativeEvent.source);
+        pass();
       }}
-      onLoad={() => pass()}
-      onError={() => fail(new Error("Couldn't load image"))}
-    />
-  );
-});
-
-/**
- * Failing tests can be marked as skipped
- */
-componentTest.skip('SampleSkippedTest', ({pass, fail}) => {
-  return (
-    <Image
-      source={{uri: 'https://google.com'}}
-      onLoad={() => pass()}
-      onError={() => fail(new Error("Couldn't load image"))}
+      onError={() => fail("Couldn't load image")}
     />
   );
 });
