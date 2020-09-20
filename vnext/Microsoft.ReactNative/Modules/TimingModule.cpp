@@ -112,8 +112,6 @@ void Timing::OnRendering() {
         params.push_back(folly::dynamic(readyTimers[i]));
 
       instance->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(params));
-    } else {
-      assert(false && "getInstance().lock failed");
     }
   }
 }
