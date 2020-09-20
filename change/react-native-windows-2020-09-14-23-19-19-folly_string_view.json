@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "use string_view in folly",
-  "packageName": "react-native-windows",
-  "email": "asklar@winse.microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-15T06:19:19.713Z"
-}

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 19 Sep 2020 05:05:08 GMT and should not be manually modified.
+This log was last generated on Sun, 20 Sep 2020 05:05:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.166
+
+Sun, 20 Sep 2020 05:05:06 GMT
+
+### Changes
+
+- use string_view in folly (asklar@winse.microsoft.com)
 
 ## 0.0.0-canary.165
 
