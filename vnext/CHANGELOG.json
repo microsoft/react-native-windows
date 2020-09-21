@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Sep 2020 15:04:59 GMT",
+      "tag": "react-native-windows_v0.63.3",
+      "version": "0.63.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Port update folly to 0.63",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "24b82db4ed7d121ca50f233915114ff883b4c3f6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Sep 2020 21:58:15 GMT",
       "tag": "react-native-windows_v0.63.2",
       "version": "0.63.2",
