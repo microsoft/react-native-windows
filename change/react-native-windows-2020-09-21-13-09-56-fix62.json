@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Rename ReactWindowsCore.vcxitems -> ReactWindowsCore-Items.vcxitems",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "none",
+  "date": "2020-09-21T20:09:56.723Z"
+}
