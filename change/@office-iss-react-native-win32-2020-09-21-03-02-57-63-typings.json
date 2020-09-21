@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Upgrade react-native Typings",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-21T10:02:55.102Z"
+}
