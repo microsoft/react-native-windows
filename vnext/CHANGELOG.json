@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.167",
+      "version": "0.0.0-canary.167",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove Sporaddic Assert on Instance Reload from TimingModule",
+            "author": "ngerlem@microsoft.com",
+            "commit": "29312d65b716201cbd1183d8731b2436a000eb29",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 20 Sep 2020 05:05:06 GMT",
       "tag": "react-native-windows_v0.0.0-canary.166",
       "version": "0.0.0-canary.166",

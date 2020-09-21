@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 20 Sep 2020 05:05:06 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Sep 2020 05:06:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.167
+
+Mon, 21 Sep 2020 05:06:22 GMT
+
+### Changes
+
+- Fixup eslint config (ngerlem@microsoft.com)
+- Remove Sporaddic Assert on Instance Reload from TimingModule (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.166
 

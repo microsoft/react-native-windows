@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/format-files",
   "entries": [
     {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "@rnw-scripts/format-files_v0.0.9",
+      "version": "0.0.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "@rnw-scripts/format-files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Aug 2020 05:04:58 GMT",
       "tag": "@rnw-scripts/format-files_v0.0.4",
       "version": "0.0.4",

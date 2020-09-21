@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "@rnw-scripts/promote-release_v0.2.5",
+      "version": "0.2.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Aug 2020 05:04:58 GMT",
       "tag": "@rnw-scripts/promote-release_v0.2.0",
       "version": "0.2.0",

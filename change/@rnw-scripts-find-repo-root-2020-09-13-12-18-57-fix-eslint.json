@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fixup eslint config",
-  "packageName": "@rnw-scripts/find-repo-root",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-13T19:18:52.535Z"
-}

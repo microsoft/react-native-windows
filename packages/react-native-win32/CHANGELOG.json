@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.48",
+      "version": "0.0.0-canary.48",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Sep 2020 05:08:52 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.46",
       "version": "0.0.0-canary.46",

@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 12 Sep 2020 05:08:52 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Sep 2020 05:06:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.48
+
+Mon, 21 Sep 2020 05:06:22 GMT
+
+### Changes
+
+- Fixup eslint config (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.46
 
