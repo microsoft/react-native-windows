@@ -52,6 +52,7 @@ EXPORTS
 ?hash@dynamic@folly@@QEBA_KXZ
 ?logTaggedMarker@ReactMarker@react@facebook@@3P6AXW4ReactMarkerId@123@PEBD@ZEA
 ?makeConversionError@folly@@YA?AVConversionError@1@W4ConversionCode@1@V?$Range@PEBD@1@@Z
+?name@?$TypeInfo@UObjectImpl@dynamic@folly@@@dynamic@folly@@2QEBDEB
 ?parseJson@folly@@YA?AUdynamic@1@V?$Range@PEBD@1@@Z
 ?print_as_pseudo_json@dynamic@folly@@AEBAXAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@@Z
 ?size@dynamic@folly@@QEBA_KXZ
