@@ -34,7 +34,7 @@
     "@types/jasmine": "^3.3.0",
     "@types/node": "^10.14.8",
     "@types/react": "16.9.0",
-    "@types/react-native": "^0.62.10",
+    "@types/react-native": "^0.63.18",
     "@wdio/appium-service": "5.12.1",
     "@wdio/cli": "5.12.1",
     "@wdio/dot-reporter": "5.12.1",
