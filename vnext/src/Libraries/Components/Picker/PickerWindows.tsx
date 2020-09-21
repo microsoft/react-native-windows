@@ -31,7 +31,7 @@ export interface IPickerItemData {
   label: string;
   // tslint:disable-next-line:no-any
   value?: any;
-  textColor?: ProcessedColorValue;
+  textColor?: ProcessedColorValue | null;
 }
 
 // tslint:disable-next-line:interface-name
@@ -72,7 +72,7 @@ export class Picker extends React.Component<IPickerProps, State> {
         items.push({
           value: child.props.value,
           label: child.props.label,
-          textColor: processColor(child.props.color) || undefined,
+          textColor: processColor(child.props.color),
         });
       },
     );
