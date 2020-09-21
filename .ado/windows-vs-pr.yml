@@ -490,90 +490,122 @@ jobs:
           language: cpp
           configuration: Debug
           platform: x86
+          projectType: app
           additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
           additionalRunArguments:
         X86DebugCs:
           language: cs
           configuration: Debug
           platform: x86
+          projectType: app
           additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
           additionalRunArguments:
         #X86ReleaseCpp:
         #  language: cpp
         #  configuration: Release
         #  platform: x86
+        #  projectType: app
         #X86ReleaseCs:
         #  language: cs
         #  configuration: Release
         #  platform: x86
+        #  projectType: app
         #X64DebugCpp:
         #  language: cpp
         #  configuration: Debug
         #  platform: x64
+        #  projectType: app
         #X64DebugCs:
         #  language: cs
         #  configuration: Debug
         #  platform: x64
+        #  projectType: app
         X64ReleaseCpp:
           language: cpp
           configuration: Release
           platform: x64
+          projectType: app
           additionalInitArguments:
           additionalRunArguments:
         X64ReleaseCs:
           language: cs
           configuration: Release
           platform: x64
+          projectType: app
           additionalInitArguments:
           additionalRunArguments:
         #ArmDebugCpp:
         #  language: cpp
         #  configuration: Debug
         #  platform: arm
+        #  projectType: app
         #ArmDebugCs:
         #  language: cs
         #  configuration: Debug
         #  platform: arm
+        #  projectType: app
         ArmReleaseCpp:
           language: cpp
           configuration: Release
           platform: arm
+          projectType: app
           additionalInitArguments:
           additionalRunArguments: --no-deploy
         ArmReleaseCs:
           language: cs
           configuration: Release
           platform: arm
+          projectType: app
           additionalInitArguments:
           additionalRunArguments: --no-deploy
         #Arm64DebugCpp:
         #  language: cpp
         #  configuration: Debug
         #  platform: arm64
+        #  projectType: app
         #Arm64DebugCs:
         #  language: cs
         #  configuration: Debug
         #  platform: arm64
+        #  projectType: app
         #Arm64ReleaseCpp:
         #  language: cpp
         #  configuration: Release
         #  platform: arm64
+        #  projectType: app
         #Arm64ReleaseCs:
         #  language: cs
         #  configuration: Release
         #  platform: arm64
+        #  projectType: app
         WinUI3_X86DebugCpp:
           language: cpp
           configuration: Debug
           platform: x86
+          projectType: app
           additionalInitArguments: --useWinUI3 true
           additionalRunArguments:
         WinUI3_X86DebugCs:
           language: cs
           configuration: Debug
           platform: x86
+          projectType: app
           additionalInitArguments: --useWinUI3 true
           additionalRunArguments:
+        X86DebugCppLib:
+          language: cpp
+          configuration: Debug
+          platform: x86
+          projectType: lib
+          additionalInitArguments:
+          additionalRunArguments: --no-autolink --no-deploy
+        X86DebugCsLib:
+          language: cs
+          configuration: Debug
+          platform: x86
+          projectType: lib
+          additionalInitArguments:
+          additionalRunArguments: --no-autolink --no-deploy
 
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
@@ -587,6 +619,7 @@ jobs:
           platform: $(platform)
           additionalInitArguments: $(additionalInitArguments)
           additionalRunArguments: $(additionalRunArguments)
+          projectType: $(projectType)
 
   - job: CliInitExperimental
     displayName: Verify react-native init experimental
@@ -615,6 +648,7 @@ jobs:
           language: $(Language)
           configuration: Debug
           platform: x86
+          projectType: app
           useNuGet: true
 
   - job: JSChecks

@@ -46,17 +46,20 @@ class TestHostHarness : public winrt::implements<TestHostHarness, winrt::Windows
 class TestHostHarnessRedboxHandler
     : public winrt::implements<TestHostHarnessRedboxHandler, winrt::Microsoft::ReactNative::IRedBoxHandler> {
  public:
-  TestHostHarnessRedboxHandler(winrt::weak_ref<TestHostHarness> &&weakHarness)
+  TestHostHarnessRedboxHandler(winrt::weak_ref<TestHostHarness> &&weakHarness) noexcept
       : m_weakHarness(std::move(weakHarness)) {}
 
   void ShowNewError(
-      winrt::Microsoft::ReactNative::IRedBoxErrorInfo info,
-      winrt::Microsoft::ReactNative::RedBoxErrorType type);
-  bool IsDevSupportEnabled();
-  void UpdateError(winrt::Microsoft::ReactNative::IRedBoxErrorInfo /*info*/);
-  void DismissRedBox();
+      const winrt::Microsoft::ReactNative::IRedBoxErrorInfo &info,
+      winrt::Microsoft::ReactNative::RedBoxErrorType type) noexcept;
+  bool IsDevSupportEnabled() noexcept;
+  void UpdateError(const winrt::Microsoft::ReactNative::IRedBoxErrorInfo &info) noexcept;
+  void DismissRedBox() noexcept;
 
  private:
+  void HandleException() noexcept;
+
   winrt::weak_ref<TestHostHarness> m_weakHarness;
+  std::unique_ptr<ExceptionInfo> m_pendingException;
 };
 } // namespace IntegrationTest

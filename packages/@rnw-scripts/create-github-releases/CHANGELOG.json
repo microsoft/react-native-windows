@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v0.0.10",
+      "version": "0.0.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Sep 2020 22:03:37 GMT",
       "tag": "@rnw-scripts/create-github-releases_v0.0.9",
       "version": "0.0.9",

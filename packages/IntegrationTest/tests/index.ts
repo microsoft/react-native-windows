@@ -5,4 +5,6 @@
  * @format
  */
 
+require('./lib/SetupGlobals');
+
 require('./SampleTests');

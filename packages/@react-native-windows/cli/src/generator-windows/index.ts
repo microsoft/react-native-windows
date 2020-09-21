@@ -12,6 +12,7 @@ import * as childProcess from 'child_process';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as semver from 'semver';
+import * as _ from 'lodash';
 import {readProjectFile, findPropertyValue} from '../config/configUtils';
 
 import {
@@ -123,10 +124,25 @@ export async function copyProjectTemplateAndReplace(
     throw new Error('Need a project name');
   }
 
+  const projectType = options.projectType;
+
+  // React-native init only allows alphanumerics in project names, but other
+  // new project tools (like create-react-native-module) are less strict.
+  newProjectName = _.camelCase(newProjectName);
+
+  // Similar to the above, but we want to retain namespace separators
+  namespace = namespace
+    .split(/[\.\:]+/)
+    .map(_.camelCase)
+    .join('.');
+
   createDir(path.join(destPath, windowsDir));
   createDir(path.join(destPath, windowsDir, newProjectName));
-  createDir(path.join(destPath, windowsDir, newProjectName, bundleDir));
-  createDir(path.join(destPath, windowsDir, newProjectName, 'BundleBuilder'));
+
+  if (projectType === 'app') {
+    createDir(path.join(destPath, windowsDir, newProjectName, bundleDir));
+    createDir(path.join(destPath, windowsDir, newProjectName, 'BundleBuilder'));
+  }
 
   const language = options.language;
   const namespaceCpp = toCppNamespace(namespace);
@@ -138,19 +154,23 @@ export async function copyProjectTemplateAndReplace(
     fs.writeFileSync(path.join(destPath, windowsDir, 'UseWinUI3'), '');
   }
   const projDir = 'proj';
-  const srcPath = path.join(srcRootPath, language);
-  const sharedPath = path.join(srcRootPath, 'shared');
+  const srcPath = path.join(srcRootPath, `${language}-${projectType}`);
+  const sharedPath = path.join(srcRootPath, `shared-${projectType}`);
   const projectGuid = uuid.v4();
   const rnwVersion = require('react-native-windows/package.json').version;
   const nugetVersion = options.nuGetTestVersion || rnwVersion;
   const packageGuid = uuid.v4();
   const currentUser = username.sync()!; // Gets the current username depending on the platform.
-  const certificateThumbprint = await generateCertificate(
-    srcPath,
-    destPath,
-    newProjectName,
-    currentUser,
-  );
+
+  const certificateThumbprint =
+    projectType === 'app'
+      ? await generateCertificate(
+          srcPath,
+          destPath,
+          newProjectName,
+          currentUser,
+        )
+      : null;
 
   const xamlNamespace = options.useWinUI3
     ? 'Microsoft.UI.Xaml'
@@ -252,30 +272,47 @@ export async function copyProjectTemplateAndReplace(
       '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: vnext\local-cli\runWindows\utils\autolink.js
   };
 
-  const commonMappings = [
-    {from: path.join(srcRootPath, 'metro.config.js'), to: 'metro.config.js'},
-    {
-      from: path.join(srcRootPath, '_gitignore'),
-      to: path.join(windowsDir, '.gitignore'),
-    },
-    {
-      from: path.join(srcRootPath, 'b_gitignore'),
-      to: path.join(windowsDir, newProjectName, '.gitignore'),
-    },
-    {
-      from: path.join(srcRootPath, 'index.windows.bundle'),
-      to: path.join(
-        windowsDir,
-        newProjectName,
-        bundleDir,
-        'index.windows.bundle',
-      ),
-    },
-    {
-      from: path.join(srcPath, projDir, 'MyApp.sln'),
-      to: path.join(windowsDir, newProjectName + '.sln'),
-    },
-  ];
+  const commonMappings =
+    projectType === 'app'
+      ? [
+          // app common mappings
+          {
+            from: path.join(srcRootPath, 'metro.config.js'),
+            to: 'metro.config.js',
+          },
+          {
+            from: path.join(srcRootPath, '_gitignore'),
+            to: path.join(windowsDir, '.gitignore'),
+          },
+          {
+            from: path.join(srcRootPath, 'b_gitignore'),
+            to: path.join(windowsDir, newProjectName, '.gitignore'),
+          },
+          {
+            from: path.join(srcRootPath, 'index.windows.bundle'),
+            to: path.join(
+              windowsDir,
+              newProjectName,
+              bundleDir,
+              'index.windows.bundle',
+            ),
+          },
+          {
+            from: path.join(srcPath, projDir, 'MyApp.sln'),
+            to: path.join(windowsDir, newProjectName + '.sln'),
+          },
+        ]
+      : [
+          // lib common mappings
+          {
+            from: path.join(srcRootPath, '_gitignore'),
+            to: path.join(windowsDir, '.gitignore'),
+          },
+          {
+            from: path.join(srcPath, projDir, 'MyLib.sln'),
+            to: path.join(windowsDir, newProjectName + '.sln'),
+          },
+        ];
 
   for (const mapping of commonMappings) {
     await copyAndReplaceWithChangedCallback(
@@ -288,12 +325,30 @@ export async function copyProjectTemplateAndReplace(
   }
 
   if (language === 'cs') {
-    const csMappings = [
-      {
-        from: path.join(srcPath, projDir, 'MyApp.csproj'),
-        to: path.join(windowsDir, newProjectName, newProjectName + '.csproj'),
-      },
-    ];
+    const csMappings =
+      projectType === 'app'
+        ? [
+            // cs app mappings
+            {
+              from: path.join(srcPath, projDir, 'MyApp.csproj'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.csproj',
+              ),
+            },
+          ]
+        : [
+            // cs lib mappings
+            {
+              from: path.join(srcPath, projDir, 'MyLib.csproj'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.csproj',
+              ),
+            },
+          ];
 
     for (const mapping of csMappings) {
       await copyAndReplaceWithChangedCallback(
@@ -305,24 +360,62 @@ export async function copyProjectTemplateAndReplace(
       );
     }
   } else {
-    const cppMappings = [
-      {
-        from: path.join(srcPath, projDir, 'MyApp.vcxproj'),
-        to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj'),
-      },
-      {
-        from: path.join(srcPath, projDir, 'MyApp.vcxproj.filters'),
-        to: path.join(
-          windowsDir,
-          newProjectName,
-          newProjectName + '.vcxproj.filters',
-        ),
-      },
-      {
-        from: path.join(srcPath, projDir, 'packages.config'),
-        to: path.join(windowsDir, newProjectName, 'packages.config'),
-      },
-    ];
+    const cppMappings =
+      projectType === 'app'
+        ? [
+            // cpp app mappings
+            {
+              from: path.join(srcPath, projDir, 'MyApp.vcxproj'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.vcxproj',
+              ),
+            },
+            {
+              from: path.join(srcPath, projDir, 'MyApp.vcxproj.filters'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.vcxproj.filters',
+              ),
+            },
+            {
+              from: path.join(srcPath, projDir, 'packages.config'),
+              to: path.join(windowsDir, newProjectName, 'packages.config'),
+            },
+          ]
+        : [
+            // cpp lib mappings
+            {
+              from: path.join(srcPath, projDir, 'MyLib.vcxproj'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.vcxproj',
+              ),
+            },
+            {
+              from: path.join(srcPath, projDir, 'MyLib.vcxproj.filters'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.vcxproj.filters',
+              ),
+            },
+            {
+              from: path.join(srcPath, projDir, 'MyLib.def'),
+              to: path.join(
+                windowsDir,
+                newProjectName,
+                newProjectName + '.def',
+              ),
+            },
+            {
+              from: path.join(srcPath, projDir, 'packages.config'),
+              to: path.join(windowsDir, newProjectName, 'packages.config'),
+            },
+          ];
 
     for (const mapping of cppMappings) {
       await copyAndReplaceWithChangedCallback(
@@ -335,50 +428,66 @@ export async function copyProjectTemplateAndReplace(
     }
   }
 
-  // Once we are publishing to nuget.org, this shouldn't be needed anymore
-  if (options.experimentalNuGetDependency) {
-    const nugetMappings = [
-      {
-        from: path.join(sharedPath, projDir, 'NuGet.Config'),
-        to: path.join(windowsDir, 'NuGet.Config'),
-      },
-    ];
+  // shared proj
+  if (fs.existsSync(path.join(sharedPath, projDir))) {
+    // Once we are publishing to nuget.org, this shouldn't be needed anymore
+    if (options.experimentalNuGetDependency) {
+      const nugetMappings = [
+        {
+          from: path.join(sharedPath, projDir, 'NuGet.Config'),
+          to: path.join(windowsDir, 'NuGet.Config'),
+        },
+      ];
 
-    for (const mapping of nugetMappings) {
-      await copyAndReplaceWithChangedCallback(
-        mapping.from,
-        destPath,
-        mapping.to,
-        templateVars,
-        options.overwrite,
-      );
+      for (const mapping of nugetMappings) {
+        await copyAndReplaceWithChangedCallback(
+          mapping.from,
+          destPath,
+          mapping.to,
+          templateVars,
+          options.overwrite,
+        );
+      }
     }
   }
 
-  await copyAndReplaceAll(
-    path.join(sharedPath, 'assets'),
-    destPath,
-    path.join(windowsDir, newProjectName, 'Assets'),
-    templateVars,
-    options.overwrite,
-  );
-  await copyAndReplaceAll(
-    path.join(sharedPath, 'src'),
-    destPath,
-    path.join(windowsDir, newProjectName),
-    templateVars,
-    options.overwrite,
-  );
-  await copyAndReplaceAll(
-    path.join(srcPath, 'src'),
-    destPath,
-    path.join(windowsDir, newProjectName),
-    templateVars,
-    options.overwrite,
-  );
+  // shared assets
+  if (fs.existsSync(path.join(sharedPath, 'assets'))) {
+    await copyAndReplaceAll(
+      path.join(sharedPath, 'assets'),
+      destPath,
+      path.join(windowsDir, newProjectName, 'Assets'),
+      templateVars,
+      options.overwrite,
+    );
+  }
 
-  console.log(chalk.white.bold('To run your app on UWP:'));
-  console.log(chalk.white('   npx react-native run-windows'));
+  // shared src
+  if (fs.existsSync(path.join(sharedPath, 'src'))) {
+    await copyAndReplaceAll(
+      path.join(sharedPath, 'src'),
+      destPath,
+      path.join(windowsDir, newProjectName),
+      templateVars,
+      options.overwrite,
+    );
+  }
+
+  // src
+  if (fs.existsSync(path.join(srcPath, 'src'))) {
+    await copyAndReplaceAll(
+      path.join(srcPath, 'src'),
+      destPath,
+      path.join(windowsDir, newProjectName),
+      templateVars,
+      options.overwrite,
+    );
+  }
+
+  if (projectType === 'app') {
+    console.log(chalk.white.bold('To run your app on UWP:'));
+    console.log(chalk.white('   npx react-native run-windows'));
+  }
 }
 
 function toCppNamespace(namespace: string) {
@@ -422,7 +531,9 @@ export function installDependencies(options: {verbose: boolean}) {
       fs.readFileSync(projectPackageJsonPath, {encoding: 'UTF8'}),
     );
     projectPackageJson.scripts.windows = 'react-native run-windows';
-    projectPackageJson.dependencies['react-native'] = rnPeerDependency;
+    if (projectPackageJson.hasOwnProperty('dependencies')) {
+      projectPackageJson.dependencies['react-native'] = rnPeerDependency;
+    }
     fs.writeFileSync(
       projectPackageJsonPath,
       JSON.stringify(projectPackageJson, null, 2),
