@@ -239,7 +239,6 @@
     <ClInclude Include="Modules\I18nManagerModule.h" />
     <ClInclude Include="Modules\ImageViewManagerModule.h" />
     <ClInclude Include="Modules\LinkingManagerModule.h" />
-    <ClInclude Include="Modules\LocationObserverModule.h" />
     <ClInclude Include="Modules\LogBoxModule.h" />
     <ClInclude Include="Modules\NativeUIManager.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
@@ -439,7 +438,6 @@
     <ClCompile Include="Modules\I18nManagerModule.cpp" />
     <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
-    <ClCompile Include="Modules\LocationObserverModule.cpp" />
     <ClCompile Include="Modules\LogBoxModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />

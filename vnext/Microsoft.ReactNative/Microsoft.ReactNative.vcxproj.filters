@@ -161,9 +161,6 @@
     <ClCompile Include="Modules\LinkingManagerModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\LocationObserverModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\LogBoxModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -513,9 +510,6 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\LinkingManagerModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\LocationObserverModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\LogBoxModule.h">
