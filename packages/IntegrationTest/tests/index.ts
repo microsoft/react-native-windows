@@ -7,4 +7,5 @@
 
 require('./lib/SetupGlobals');
 
+require('./MountComponentTests');
 require('./SampleTests');
