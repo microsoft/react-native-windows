@@ -13,21 +13,21 @@ import {functionTest, componentTest} from './lib/TestDefinition';
 /**
  * An example of a passing test
  */
-functionTest('SampleFunctionTest', () => {
+functionTest('NativeModuleExample', () => {
   assert.equal(Platform.OS, 'windows', 'Platform.OS should be windows');
 });
 
 /**
  * An example of a failing test using ".skip" not to run
  */
-functionTest.skip('SampleFailingTest', () => {
+functionTest.skip('FailingExample', () => {
   assert.ok(Platform.Version, 'Platform should define a version');
 });
 
 /**
  * Test methods can also be async
  */
-functionTest('SampleAsyncFunctionTest', async () => {
+functionTest('AsyncNativeModuleExample', async () => {
   await AsyncStorage.clear();
   await AsyncStorage.setItem('foo', 'bar');
 
@@ -42,7 +42,7 @@ functionTest('SampleAsyncFunctionTest', async () => {
 /**
  * Tests can be written as React Components which call callbacks
  */
-componentTest('SampleComponentTest', ({pass, fail}) => {
+componentTest('ComponentExample', ({pass, fail}) => {
   return (
     <Image
       source={require('react-native-windows/IntegrationTests/blue_square.png')}

@@ -5,38 +5,44 @@
  * @format
  */
 
-import * as babelParser from '@babel/parser';
+import * as parser from '@babel/parser';
 import * as fs from 'fs';
+import * as path from 'path';
 import * as walkdir from 'walkdir';
 
-import {Program} from '@babel/types';
+import traverse from '@babel/traverse';
+import {File} from '@babel/types';
 
-import {skip, SkipTest} from './SkipTest';
+import {block, skip, TestComponent, TestBlock} from './TestDescription';
 
 const AUTO_REGISTER_FUNCS = ['componentTest', 'functionTest'];
 
 /**
  * Searches for test components defined using special function designated for
- * automatic registration. Tests are discovered if:
- *
- * 1. They are called using a string literal for their compoent name
- * 2. They're defined at top-level scope for the module
+ * automatic registration. Tests are discovered if they are called using a
+ * string literal for their test name
  *
  * @param rootPath path to a directory containing files to search
  * @returns the names of components to register
  */
-export default (rootPath: string): Array<string | SkipTest> => {
+export default (rootPath: string): TestBlock[] => {
   const typeScriptFiles = enumerateTypeScriptFiles(rootPath);
 
   return typeScriptFiles.flatMap(file => {
     const fileContents = fs.readFileSync(file);
 
-    const ast = babelParser.parse(fileContents.toString(), {
+    const ast = parser.parse(fileContents.toString(), {
       plugins: ['typescript', 'jsx'],
       sourceType: 'module',
     });
 
-    return extractComponents(ast.program);
+    const tests = extractComponents(ast);
+    if (tests.length > 0) {
+      const filename = path.parse(file).name;
+      return [block(filename, tests)];
+    } else {
+      return [];
+    }
   });
 };
 
@@ -46,9 +52,12 @@ export default (rootPath: string): Array<string | SkipTest> => {
  */
 function enumerateTypeScriptFiles(rootPath: string): string[] {
   const files = walkdir.sync(rootPath, {return_object: true});
-  return Object.entries(files).flatMap(([path, stat]) => {
-    if ((stat.isFile && path.endsWith('.ts')) || path.endsWith('.tsx')) {
-      return [path];
+  return Object.entries(files).flatMap(([filePath, stat]) => {
+    if (
+      (stat.isFile && filePath.endsWith('.ts')) ||
+      filePath.endsWith('.tsx')
+    ) {
+      return [filePath];
     } else {
       return [];
     }
@@ -57,35 +66,33 @@ function enumerateTypeScriptFiles(rootPath: string): string[] {
 
 /**
  * Finds declared components within an AST
- * @param program a babel AST program
+ * @param file a babel AST
  */
-function extractComponents(program: Program): Array<string | SkipTest> {
-  return program.body.flatMap(
-    (node): Array<string | SkipTest> => {
+function extractComponents(file: File): TestComponent[] {
+  const components: TestComponent[] = [];
+
+  traverse(file, {
+    CallExpression: nodePath => {
       if (
-        node.type === 'ExpressionStatement' &&
-        node.expression.type === 'CallExpression' &&
-        node.expression.callee.type === 'Identifier' &&
-        AUTO_REGISTER_FUNCS.includes(node.expression.callee.name) &&
-        node.expression.arguments.length > 0 &&
-        node.expression.arguments[0].type === 'StringLiteral'
+        nodePath.node.callee.type === 'Identifier' &&
+        AUTO_REGISTER_FUNCS.includes(nodePath.node.callee.name) &&
+        nodePath.node.arguments.length > 0 &&
+        nodePath.node.arguments[0].type === 'StringLiteral'
       ) {
-        return [node.expression.arguments[0].value];
+        components.push(nodePath.node.arguments[0].value);
       } else if (
-        node.type === 'ExpressionStatement' &&
-        node.expression.type === 'CallExpression' &&
-        node.expression.callee.type === 'MemberExpression' &&
-        node.expression.callee.object.type === 'Identifier' &&
-        AUTO_REGISTER_FUNCS.includes(node.expression.callee.object.name) &&
-        node.expression.callee.property.type === 'Identifier' &&
-        node.expression.callee.property.name === 'skip' &&
-        node.expression.arguments.length > 0 &&
-        node.expression.arguments[0].type === 'StringLiteral'
+        nodePath.node.callee.type === 'MemberExpression' &&
+        nodePath.node.callee.object.type === 'Identifier' &&
+        AUTO_REGISTER_FUNCS.includes(nodePath.node.callee.object.name) &&
+        nodePath.node.callee.property.type === 'Identifier' &&
+        nodePath.node.callee.property.name === 'skip' &&
+        nodePath.node.arguments.length > 0 &&
+        nodePath.node.arguments[0].type === 'StringLiteral'
       ) {
-        return [skip(node.expression.arguments[0].value)];
-      } else {
-        return [];
+        components.push(skip(nodePath.node.arguments[0].value));
       }
     },
-  );
+  });
+
+  return components;
 }
