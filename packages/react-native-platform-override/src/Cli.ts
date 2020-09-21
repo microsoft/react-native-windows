@@ -40,8 +40,9 @@ void doMain(async () => {
               describe: 'Optional React Native version to check against',
             },
           }),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         cmdArgv =>
-          void validateManifest({
+          validateManifest({
             manifestPath: cmdArgv.manifest,
             reactNativeVersion: cmdArgv.version,
           }),
@@ -53,7 +54,8 @@ void doMain(async () => {
           cmdYargs.options({
             override: {type: 'string', describe: 'The override to add'},
           }),
-        cmdArgv => void addOverride(cmdArgv.override!),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        cmdArgv => addOverride(cmdArgv.override!),
       )
       .command(
         'remove <override>',
@@ -62,7 +64,8 @@ void doMain(async () => {
           cmdYargs.options({
             override: {type: 'string', describe: 'The override to remove'},
           }),
-        cmdArgv => void removeOverride(cmdArgv.override!),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        cmdArgv => removeOverride(cmdArgv.override!),
       )
       .command(
         'upgrade',
@@ -83,8 +86,9 @@ void doMain(async () => {
               describe: 'Optional React Native version to check against',
             },
           }),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         cmdArgv =>
-          void upgrade({
+          upgrade({
             manifestPath: cmdArgv.manifest,
             reactNativeVersion: cmdArgv.version,
             allowConflicts: cmdArgv.conflicts,
