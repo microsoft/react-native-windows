@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix for intermittent shutdown crash from websockets",
-  "packageName": "react-native-windows",
-  "email": "acoates-ms@noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-11T19:35:08.423Z"
-}

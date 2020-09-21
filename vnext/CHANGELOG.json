@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Sep 2020 15:06:34 GMT",
+      "tag": "react-native-windows_v0.62.11",
+      "version": "0.62.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix for intermittent shutdown crash from websockets",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "504ba7da5a9424f8bf74873cb0e46e2cf0d661bc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Port update folly to 0.62",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "3a17ca6e818dac01124de4d40fde1e624deb7e74",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Sep 2020 22:00:08 GMT",
       "tag": "react-native-windows_v0.62.10",
       "version": "0.62.10",

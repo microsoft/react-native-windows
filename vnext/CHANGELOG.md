@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 14 Sep 2020 22:00:08 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Sep 2020 15:06:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.11
+
+Mon, 21 Sep 2020 15:06:34 GMT
+
+### Patches
+
+- Fix for intermittent shutdown crash from websockets (acoates-ms@noreply.github.com)
+- Port update folly to 0.62 (asklar@winse.microsoft.com)
 
 ## 0.62.10
 
