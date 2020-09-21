@@ -16,6 +16,7 @@
     <ClCompile Include="TestModule.cpp" />
     <ClCompile Include="TestHostHarness.cpp" />
     <ClCompile Include="TestCommandListener.cpp" />
+    <ClCompile Include="TestTransaction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -25,6 +26,8 @@
     <ClInclude Include="TestModule.h" />
     <ClInclude Include="TestHostHarness.h" />
     <ClInclude Include="TestCommandListener.h" />
+    <ClInclude Include="TestTransaction.h" />
+    <ClInclude Include="ExceptionInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

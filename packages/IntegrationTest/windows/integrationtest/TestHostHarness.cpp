@@ -54,7 +54,9 @@ void TestHostHarness::SetReactHost(ReactNativeHost &&reactHost) noexcept {
             context.UIDispatcher(),
             [weakThis](const auto & /*sender*/, ReactNotificationArgs<void> /*args*/) noexcept {
               if (auto strongThis = weakThis.get()) {
-                strongThis->OnTestCompleted();
+                if (strongThis->m_currentTransaction) {
+                  strongThis->HandleHostAction(strongThis->m_currentTransaction->OnTestModuleTestCompleted());
+                }
               }
             });
 
@@ -63,7 +65,9 @@ void TestHostHarness::SetReactHost(ReactNativeHost &&reactHost) noexcept {
             context.UIDispatcher(),
             [weakThis](const auto & /*sender*/, ReactNotificationArgs<bool> args) noexcept {
               if (auto strongThis = weakThis.get()) {
-                strongThis->OnTestPassed(*args.Data());
+                if (strongThis->m_currentTransaction) {
+                  strongThis->HandleHostAction(strongThis->m_currentTransaction->OnTestModuleTestPassed(*args.Data()));
+                }
               }
             });
       });
@@ -99,30 +103,25 @@ winrt::fire_and_forget TestHostHarness::OnTestCommand(TestCommand command, TestC
     co_return;
   }
 
+  m_pendingResponse = std::move(response);
+
   switch (command.Id) {
     case TestCommandId::RunTestComponent: {
       auto componentName = command.payload.GetString();
       m_rootView.ComponentName(componentName);
 
-      // We might see multiple JS events for exceptions, failing tests, etc.
-      // Flush everything pending from the JS thread to UI thread before
-      // continuing to ensure all events from the past command are handled.
-
-      // TODO: This only handles a subset of synchronization issues. We should
-      // expose lifetime events so that we can wait until the root component is
-      // loaded/unloaded before continuing
-      co_await FlushJSQueue();
-
-      m_pendingResponse = std::move(response);
-      m_timeoutAction = TimeoutOnInactivty();
+      m_currentTransaction = winrt::make_self<TestTransaction>();
+      TimeoutOnInactivty(m_currentTransaction->get_weak());
       break;
     }
 
     case TestCommandId::GoToComponent: {
       auto componentName = command.payload.GetString();
       m_rootView.ComponentName(componentName);
+
       co_await FlushJSQueue();
-      response.Okay();
+      m_pendingResponse->Okay();
+      m_pendingResponse.reset();
       break;
     }
 
@@ -134,32 +133,42 @@ winrt::fire_and_forget TestHostHarness::OnTestCommand(TestCommand command, TestC
   }
 }
 
-void TestHostHarness::OnTestCompleted() noexcept {
-  OnTestPassed(true);
-}
-
-void TestHostHarness::OnTestPassed(bool passed) noexcept {
-  if (m_pendingResponse) {
-    if (passed) {
-      m_pendingResponse->TestPassed();
-    } else {
-      m_pendingResponse->TestFailed();
-    }
-
-    CompletePendingResponse();
-  }
-}
-
-IAsyncAction TestHostHarness::TimeoutOnInactivty() noexcept {
+winrt::fire_and_forget TestHostHarness::TimeoutOnInactivty(winrt::weak_ref<TestTransaction> transaction) noexcept {
   constexpr auto CommandTimeout = 20s;
 
   auto weakThis = get_weak();
   co_await CommandTimeout;
 
-  auto cancellationToken = co_await winrt::get_cancellation_token();
-  if (auto strongThis = weakThis.get() && m_pendingResponse && !cancellationToken()) {
-    m_pendingResponse->Timeout();
-    CompletePendingResponse();
+  if (auto strongTransaction = transaction.get()) {
+    if (auto strongThis = weakThis.get()) {
+      if (m_currentTransaction == strongTransaction) {
+        HandleHostAction(m_currentTransaction->OnTimeout());
+      }
+    }
+  }
+}
+
+winrt::fire_and_forget TestHostHarness::HandleHostAction(HostAction action) noexcept {
+  switch (action) {
+    case HostAction::Continue:
+      break;
+
+    case HostAction::FlushEvents:
+      // TODO: This only handles a subset of synchronization issues. We should
+      // expose lifetime events so that we can wait until the root component is
+      // loaded/unloaded before continuing
+      co_await FlushJSQueue();
+      HandleHostAction(m_currentTransaction->OnEventsFlushed());
+      break;
+
+    case HostAction::SubmitResult:
+      m_currentTransaction->SubmitResult(*m_pendingResponse);
+      m_pendingResponse.reset();
+      m_currentTransaction = nullptr;
+      break;
+
+    default:
+      VerifyElseCrash(false);
   }
 }
 
@@ -177,34 +186,12 @@ void TestHostHarness::ShowJSError(std::string_view err) noexcept {
   m_context.CallJSFunction(L"RCTLog", L"logToConsole", "error", err);
 }
 
-void TestHostHarness::CompletePendingResponse() noexcept {
-  if (m_pendingResponse) {
-    m_pendingResponse.reset();
-  }
-
-  if (m_timeoutAction) {
-    m_timeoutAction.Cancel();
-  }
-}
-
 void TestHostHarnessRedboxHandler::ShowNewError(const IRedBoxErrorInfo &info, RedBoxErrorType /*type*/) noexcept {
-  m_pendingException = std::make_unique<ExceptionInfo>();
-
-  m_pendingException->Message = info.Message();
-  m_pendingException->OriginalMessage = info.OriginalMessage();
-  m_pendingException->Name = info.Name();
-
-  for (const auto &frame : info.Callstack()) {
-    m_pendingException->Callstack.push_back({frame.File(), frame.Method(), frame.Line(), frame.Column()});
-  }
-
-  // In dev-mode bundles we will see an initial call to ShowNewError with a
-  // raw stack from a bundle, then a second call to UpdateError with the
-  // prettified stack using a source map. We can't send both over, so store the
-  // first until we get the second and merge them.
-#if !_DEBUG
-  HandleException();
-#endif
+  QueueToUI([info](TestHostHarness & harness) noexcept {
+    if (harness.m_currentTransaction) {
+      harness.HandleHostAction(harness.m_currentTransaction->OnNewError(info));
+    }
+  });
 }
 
 bool TestHostHarnessRedboxHandler::IsDevSupportEnabled() noexcept {
@@ -213,45 +200,23 @@ bool TestHostHarnessRedboxHandler::IsDevSupportEnabled() noexcept {
 }
 
 void TestHostHarnessRedboxHandler::UpdateError(const IRedBoxErrorInfo &info) noexcept {
-  if (!m_pendingException) {
-    return;
-  }
-
-  // Not all properties are updated. Only copy over non-empty bits
-  if (!info.Message().empty()) {
-    m_pendingException->Message = info.Message();
-  }
-  if (!info.OriginalMessage().empty()) {
-    m_pendingException->OriginalMessage = info.OriginalMessage();
-  }
-  if (!info.Name().empty()) {
-    m_pendingException->Name = info.Name();
-  }
-  if (info.Callstack().Size() > 0) {
-    m_pendingException->Callstack.clear();
-    for (const auto &frame : info.Callstack()) {
-      m_pendingException->Callstack.push_back({frame.File(), frame.Method(), frame.Line(), frame.Column()});
+  QueueToUI([info](TestHostHarness & harness) noexcept {
+    if (harness.m_currentTransaction) {
+      harness.HandleHostAction(harness.m_currentTransaction->OnUpdateError(info));
     }
-  }
-
-  HandleException();
+  });
 }
 
 void TestHostHarnessRedboxHandler::DismissRedBox() noexcept {
   // Nothing to do
 }
 
-void TestHostHarnessRedboxHandler::HandleException() noexcept {
-  VerifyElseCrash(m_pendingException);
-
+template <typename TFunc>
+void TestHostHarnessRedboxHandler::QueueToUI(TFunc &&func) noexcept {
   if (auto strongHarness = m_weakHarness.get()) {
     if (strongHarness->m_context) {
-      strongHarness->m_context.UIDispatcher().Post([exInfo{std::move(m_pendingException)}, strongHarness]() {
-        if (strongHarness->m_pendingResponse) {
-          strongHarness->m_pendingResponse->Exception(*exInfo);
-          strongHarness->CompletePendingResponse();
-        }
-      });
+      strongHarness->m_context.UIDispatcher().Post(
+          [ strongHarness, func{std::move(func)} ]() noexcept { func(*strongHarness); });
     }
   }
 }
