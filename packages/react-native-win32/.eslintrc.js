@@ -4,5 +4,6 @@ module.exports = {
       // Not clean
       "react-hooks/exhaustive-deps": "warn",
       "react-hooks/rules-of-hooks": "warn",
-    }
-  };
+    },
+    parserOptions: {tsconfigRootDir : __dirname},
+};

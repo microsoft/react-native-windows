@@ -23,7 +23,7 @@ export default class SerialQueue {
       });
 
       if (this.actions.length === 1) {
-        this.pumpQueue();
+        void this.pumpQueue();
       }
     });
   }

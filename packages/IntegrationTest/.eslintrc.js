@@ -1,11 +1,7 @@
 module.exports = {
   extends: ['@rnw-scripts'],
+  parserOptions: {tsconfigRootDir : __dirname},
   overrides: [
-    // Jest rules get confused with chai "expect"
-    {
-      files: ["tests/**"],
-      rules: {"jest/valid-expect": 'off'}
-    },
     // Let the runner access Jest Globals
     {
       files: ['runner/**'],
@@ -15,6 +11,11 @@ module.exports = {
         "fail": 'readonly',
         "test": 'readonly',
       }
-    }
+    },
+    // Jest rules get confused with chai "expect"
+    {
+      files: ["tests/**"],
+      rules: {"jest/valid-expect": 'off'}
+    },
   ],
 };

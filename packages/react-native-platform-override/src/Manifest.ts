@@ -86,6 +86,7 @@ export default class Manifest {
       ovr.validationStrategies(),
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     await eachLimit(validationTasks, 30, async task => {
       errors.push(...(await task.validate(overrideRepo, reactRepo)));
     });
