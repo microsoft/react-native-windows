@@ -6,7 +6,11 @@
 'use strict';
 
 import * as React from 'react';
-import {requireNativeComponent, processColor} from 'react-native';
+import {
+  requireNativeComponent,
+  processColor,
+  ProcessedColorValue,
+} from 'react-native';
 import {
   IPickerItemProps,
   IPickerProps,
@@ -27,7 +31,7 @@ export interface IPickerItemData {
   label: string;
   // tslint:disable-next-line:no-any
   value?: any;
-  textColor?: number;
+  textColor?: ProcessedColorValue | null;
 }
 
 // tslint:disable-next-line:interface-name

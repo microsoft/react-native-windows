@@ -8,6 +8,8 @@
 #include <winrt/Windows.Networking.Sockets.h>
 #include "winrt/integrationtest.h"
 
+#include "ExceptionInfo.h"
+
 namespace IntegrationTest {
 //! Command id from the test runner
 enum class TestCommandId {
@@ -18,20 +20,6 @@ enum class TestCommandId {
 struct TestCommand {
   TestCommandId Id{};
   winrt::Windows::Data::Json::JsonValue payload;
-};
-
-struct CallStackFrame {
-  winrt::hstring File;
-  winrt::hstring Method;
-  uint32_t Line{};
-  uint32_t Column{};
-};
-
-struct ExceptionInfo {
-  winrt::hstring Message;
-  winrt::hstring OriginalMessage;
-  winrt::hstring Name;
-  std::vector<CallStackFrame> Callstack;
 };
 
 class TestCommandResponse {

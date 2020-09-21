@@ -12,8 +12,6 @@ std::shared_ptr<facebook::react::MessageQueueThread> MakeJSQueueThread() noexcep
 
 std::shared_ptr<facebook::react::MessageQueueThread> MakeUIQueueThread() noexcept;
 
-std::shared_ptr<facebook::react::MessageQueueThread> MakeSerialQueueThread() noexcept;
-
 std::shared_ptr<facebook::react::BatchingMessageQueueThread> MakeBatchingQueueThread(
     std::shared_ptr<facebook::react::MessageQueueThread> const &queueThread) noexcept;
 
