@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Fix react-native-platform-override CLI",
+  "packageName": "react-native-platform-override",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-21T21:32:23.569Z"
+}
