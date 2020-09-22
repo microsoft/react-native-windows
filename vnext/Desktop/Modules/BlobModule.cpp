@@ -3,8 +3,12 @@
 
 #include "BlobModule.h"
 
+// React Native
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
+
+// Windows API
+#include <winrt/Windows.Foundation.h>
 
 using namespace facebook::xplat;
 
@@ -14,6 +18,7 @@ using std::mutex;
 using std::shared_ptr;
 using std::string;
 using std::vector;
+using winrt::Windows::Foundation::GuidHelper;
 
 namespace {
 constexpr char moduleName[] = "BlobModule";
@@ -104,8 +109,9 @@ void BlobModule::ProcessMessage(vector<uint8_t>&& message, dynamic &params) /*ov
   blob("offset", 0);
   blob("size", message.size());
 
-  // Equivalent to store()...
-  string blobId = "F2A3D3C2-BAFA-4298-A8FF-5A35F35FADB8";//TODO: Generate
+  // Equivalent to store()
+  // substr(1, 36) strips curly braces in a GUID.
+  string blobId = winrt::to_string(winrt::to_hstring(GuidHelper::CreateNewGuid())).substr(1, 36);
   {
     lock_guard<mutex> lock{m_blobsMutex};
     m_blobs.insert_or_assign(blobId, std::move(message));
