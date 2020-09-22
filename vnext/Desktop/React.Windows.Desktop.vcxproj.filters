@@ -190,9 +190,6 @@
     <ClInclude Include="Modules\BlobModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="IWebSocketContentHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BeastWebSocketResource.h">

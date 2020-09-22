@@ -285,7 +285,6 @@
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.h" />
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorInfo.h" />
-    <ClInclude Include="IWebSocketContentHandler.h" />
     <ClInclude Include="Modules\BlobModule.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />

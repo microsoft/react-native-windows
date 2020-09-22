@@ -6,6 +6,7 @@
 // React Native
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
+#include <cxxreact/ModuleRegistry.h>
 
 // Windows API
 #include <winrt/Windows.Foundation.h>
@@ -45,7 +46,6 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
       "addNetworkingHandler",
       [this](dynamic args)
       {
-
       }
     ),
 
@@ -96,7 +96,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
 
 #pragma endregion CxxModule overrides
 
-#pragma region IWebSocketContentHandler overrides
+#pragma region IWebSocketModule::ContentHandler overrides
 
 void BlobModule::ProcessMessage(string&& message, dynamic& params) /*override*/
 {
@@ -110,7 +110,7 @@ void BlobModule::ProcessMessage(vector<uint8_t>&& message, dynamic &params) /*ov
   blob("size", message.size());
 
   // Equivalent to store()
-  // substr(1, 36) strips curly braces in a GUID.
+  // substr(1, 36) strips curly braces from a GUID.
   string blobId = winrt::to_string(winrt::to_hstring(GuidHelper::CreateNewGuid())).substr(1, 36);
   {
     lock_guard<mutex> lock{m_blobsMutex};
@@ -121,7 +121,7 @@ void BlobModule::ProcessMessage(vector<uint8_t>&& message, dynamic &params) /*ov
   params["type"] = "blob";
 }
 
-#pragma endregion IWebSocketContentHandler overrides
+#pragma endregion IWebSocketModule::ContentHandler overrides
 
 /*extern*/ std::unique_ptr<module::CxxModule> CreateBlobModule() noexcept
 {

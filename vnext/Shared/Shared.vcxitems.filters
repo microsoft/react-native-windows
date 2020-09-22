@@ -306,6 +306,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModule.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)etw\build.bat">
