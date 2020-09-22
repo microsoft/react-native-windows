@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 22 Sep 2020 15:35:50 GMT",
+      "tag": "react-native-windows_v0.62.11",
+      "version": "0.62.11",
+      "comments": {
+        "none": [
+          {
+            "comment": "Rename ReactWindowsCore.vcxitems -> ReactWindowsCore-Items.vcxitems",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "a5d0e35ddb11fb950153b91e32ec8f8dc3d7c58d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Sep 2020 19:32:05 GMT",
       "tag": "react-native-windows_v0.62.11",
       "version": "0.62.11",
