@@ -104,10 +104,11 @@ void BlobModule::ProcessMessage(vector<uint8_t>&& message, dynamic &params) /*ov
   blob("offset", 0);
   blob("size", message.size());
 
+  // Equivalent to store()...
   string blobId = "F2A3D3C2-BAFA-4298-A8FF-5A35F35FADB8";//TODO: Generate
   {
     lock_guard<mutex> lock{m_blobsMutex};
-    //m_blobs.insert_or_assign(std::move(blobId), )
+    m_blobs.insert_or_assign(blobId, std::move(message));
   }
 
   params["data"] = std::move(blob);
