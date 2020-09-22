@@ -6,7 +6,7 @@
 
 import React = require('react');
 import {Text, View} from 'react-native';
-import {DatePicker} from '../../../../Libraries/Components/DatePicker/DatePicker';
+const {DatePicker} = require('react-native-windows');
 import {DayOfWeek} from '../../../../Libraries/Components/DatePicker/DatePickerProps';
 import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
 

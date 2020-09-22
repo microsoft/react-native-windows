@@ -102,6 +102,7 @@ import typeof DeprecatedPointPropType from './Libraries/DeprecatedPropTypes/Depr
 import typeof DeprecatedViewPropTypes from './Libraries/DeprecatedPropTypes/DeprecatedViewPropTypes';
 
 import type {HostComponent as _HostComponentInternal} from './Libraries/Renderer/shims/ReactNativeTypes';
+import {DatePicker} from './Libraries/Components/DatePicker/DatePicker';
 
 export type HostComponent<T> = _HostComponentInternal<T>;
 
@@ -491,7 +492,13 @@ module.exports = {
   },
 
   // Additional windows exports (Typescript components exported as flow any)
-  get DatePicker(): any {
+  get DatePicker(): DatePicker {
+    warnOnce(
+      'DatePicker-moved',
+      'DatePicker has been extracted from react-native core and will be removed in a future release. ' +
+        "It can now be installed and imported from '@react-native-community/datetimepicker' instead of 'react-native-windows'. " +
+        'See https://github.com/react-native-community/datetimepicker',
+    );
     return (require('./Libraries/Components/DatePicker/DatePicker'): any)
       .DatePicker;
   },
