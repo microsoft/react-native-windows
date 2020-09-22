@@ -3127,13 +3127,6 @@
   integrity sha1-Hs9SYhKZ5luFU3Qzf7Ef0tEGb8E=
 
 "@types/react-native@^0.63.18":
-  version "0.63.20"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.20.tgz#15ccf000bf849d867b15d14d2b4acc364fb7fa27"
-  integrity sha512-APnxRTDxbWw/IYjvwvXkhYJiz1gahyVA579pJqAVsEfZ+ZUwUHZpWKnexobyH5NmRJHuA/8LrThyps/BW3SYXA==
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-native@^0.63.18":
   version "0.63.18"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.18.tgz#748d82c6453befe97285393ad9530472d8de56af"
   integrity sha512-WwEWqmHiqFn61M1FZR/+frj+E8e2o8i5cPqu9mjbjtZS/gBfCKVESF2ai/KAlaQECkkWkx/nMJeCc5eHMmLQgw==
@@ -4785,9 +4778,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.32.0:
-  version "1.36.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.36.0.tgz#646bc89b1d212f896fc5f4ca55ad10f0cb85357a"
-  integrity sha512-l5qB/tJ+jZwwHtAQT2j3cAJ+iRifDIBUY6iDoGA4at/cyY5g1TDfp+A6MXushMZ/HWg+Xbh7+Ro9rjzEXjriJQ==
+  version "1.36.1"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.36.1.tgz#546f40488286cc66324c1f68aea06a4678e4d3e0"
+  integrity sha512-97CfaripYAFW0FQsbxF0HhBvgSxJmENJ2IviUcWeDpj8gBzwkGqychwLvaVAuM58dn2lhY3ujclT+Gp39azeLw==
   dependencies:
     cosmiconfig "^6.0.0"
     execa "^4.0.3"
