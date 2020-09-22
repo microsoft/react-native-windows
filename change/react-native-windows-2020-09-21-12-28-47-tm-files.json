@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Handle ReactPromise correctly",
+  "packageName": "react-native-windows",
+  "email": "zihanc@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-21T19:28:47.449Z"
+}

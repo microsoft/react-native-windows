@@ -166,7 +166,16 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                             argWriter,
                             [promise, &runtime](const IJSValueWriter &writer) {
                               auto result = writer.as<JsiWriter>()->MoveResult();
-                              promise->resolve(result);
+                              if (result.isObject()) {
+                                auto resultArrayObject = result.getObject(runtime);
+                                VerifyElseCrash(resultArrayObject.isArray(runtime));
+                                auto resultArray = resultArrayObject.getArray(runtime);
+                                VerifyElseCrash(resultArray.length(runtime) == 1);
+                                auto resultItem = resultArray.getValueAtIndex(runtime, 0);
+                                promise->resolve(resultItem);
+                              } else {
+                                VerifyElseCrash(false);
+                              }
                             },
                             [promise, &runtime](const IJSValueWriter &writer) {
                               auto result = writer.as<JsiWriter>()->MoveResult();
