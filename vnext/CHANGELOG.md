@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 21 Sep 2020 05:06:22 GMT and should not be manually modified.
+This log was last generated on Tue, 22 Sep 2020 04:46:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.168
+
+Tue, 22 Sep 2020 04:46:10 GMT
+
+### Changes
+
+- Make Alert track its xamlroot's size changes (asklar@winse.microsoft.com)
+- Run Non-UI-Thread Core Modules on the JS Thread (ngerlem@microsoft.com)
+- Don't Elongate Frame-Based Timers (ngerlem@microsoft.com)
+- Upgrade react-native Typings (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.167
 
