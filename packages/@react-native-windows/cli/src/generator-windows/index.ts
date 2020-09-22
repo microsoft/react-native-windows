@@ -133,13 +133,17 @@ export async function copyProjectTemplateAndReplace(
 
   // React-native init only allows alphanumerics in project names, but other
   // new project tools (like create-react-native-module) are less strict.
-  newProjectName = pascalCase(newProjectName);
+  if (projectType === 'lib') {
+    newProjectName = pascalCase(newProjectName);
+  }
 
   // Similar to the above, but we want to retain namespace separators
-  namespace = namespace
-    .split(/[\.\:]+/)
-    .map(pascalCase)
-    .join('.');
+  if (projectType === 'lib') {
+    namespace = namespace
+      .split(/[\.\:]+/)
+      .map(pascalCase)
+      .join('.');
+  }
 
   createDir(path.join(destPath, windowsDir));
   createDir(path.join(destPath, windowsDir, newProjectName));
