@@ -2574,15 +2574,23 @@
     "@microsoft/tsdoc" "0.12.19"
     "@rushstack/node-core-library" "3.33.3"
 
-"@microsoft/api-extractor@^7.3.8":
-  version "7.9.19"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.9.19.tgz#35428ce15081d1277ffcda084d0e799938256861"
-  integrity sha512-oYY5sgsS01NK5/fk34qv9V0tbX4KR9Hw9kVt2lwHMg6seDNq3cO9dcQdroybJfoWYRN0FFvHFVRlY2WqN4afMQ==
+"@microsoft/api-extractor-model@7.9.6":
+  version "7.9.6"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.9.6.tgz#04a84ffaa51d7b5b2c2cf119326447b4be6fb768"
+  integrity sha512-npGZSgOk1iDre5DbmIZpxAeppsYDCwaRmxNZy8afVOKh0PPiOmnZEUzEyvGCNIQBdHC8B7f8L7qLgLlkm2dq8A==
   dependencies:
-    "@microsoft/api-extractor-model" "7.9.4"
     "@microsoft/tsdoc" "0.12.19"
-    "@rushstack/node-core-library" "3.33.3"
-    "@rushstack/ts-command-line" "4.6.7"
+    "@rushstack/node-core-library" "3.33.5"
+
+"@microsoft/api-extractor@^7.3.8":
+  version "7.9.21"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.9.21.tgz#14f00b4fbbd755b3c5ea61a15824fd1584e1a507"
+  integrity sha512-Fdg4zKmE2wgwiiyK39pEVveC2XSYLZLexXwSx+giCe/gNQH1XyLVCP4r+JrubxL3hIPgfbnV1tcYdgtfuEvaCA==
+  dependencies:
+    "@microsoft/api-extractor-model" "7.9.6"
+    "@microsoft/tsdoc" "0.12.19"
+    "@rushstack/node-core-library" "3.33.5"
+    "@rushstack/ts-command-line" "4.6.9"
     colors "~1.2.1"
     lodash "~4.17.15"
     resolve "~1.17.0"
@@ -2855,10 +2863,35 @@
     timsort "~0.3.0"
     z-schema "~3.18.3"
 
+"@rushstack/node-core-library@3.33.5":
+  version "3.33.5"
+  resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.33.5.tgz#c751e3e11c29dd4aa407937e847a6b17302d2086"
+  integrity sha512-eUTjIbXuWctD5hULyHn2tIm/SqXNagjqlMfGg28ZeQkcPx4gpNTvJSv2Cau8b8Nco+yblbWVOi/BNCh3+ai3bA==
+  dependencies:
+    "@types/node" "10.17.13"
+    colors "~1.2.1"
+    fs-extra "~7.0.1"
+    import-lazy "~4.0.0"
+    jju "~1.4.0"
+    resolve "~1.17.0"
+    semver "~7.3.0"
+    timsort "~0.3.0"
+    z-schema "~3.18.3"
+
 "@rushstack/ts-command-line@4.6.7":
   version "4.6.7"
   resolved "https://registry.yarnpkg.com/@rushstack/ts-command-line/-/ts-command-line-4.6.7.tgz#d16eeb529694b01a17cdf621e908903a5e71a001"
   integrity sha512-UOEMp3cRPrrNF2yBHBM6uROmkJRrK9NfFS+tOq7jmJTjfoWSS7Esnn+XwFsnBOW7VVmQeLhL+4rKbx6EdXsejg==
+  dependencies:
+    "@types/argparse" "1.0.38"
+    argparse "~1.0.9"
+    colors "~1.2.1"
+    string-argv "~0.3.1"
+
+"@rushstack/ts-command-line@4.6.9":
+  version "4.6.9"
+  resolved "https://registry.yarnpkg.com/@rushstack/ts-command-line/-/ts-command-line-4.6.9.tgz#dc5e2d002c31e7c5163594d655565191fa9b5989"
+  integrity sha512-HrwXkKAHMj14ZTH/70AbrR7vpA5CMiE1oKC1F+hDnnyi94bvOGKLRf3mpiynHKWMPJAJrwREP1Lcf3/UBfGWGg==
   dependencies:
     "@types/argparse" "1.0.38"
     argparse "~1.0.9"
@@ -3125,13 +3158,6 @@
   version "15.5.1"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.1.tgz#1ecf52621299e65b855374337fb11fd2d1066fc1"
   integrity sha1-Hs9SYhKZ5luFU3Qzf7Ef0tEGb8E=
-
-"@types/react-native@^0.63.18":
-  version "0.63.20"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.20.tgz#15ccf000bf849d867b15d14d2b4acc364fb7fa27"
-  integrity sha512-APnxRTDxbWw/IYjvwvXkhYJiz1gahyVA579pJqAVsEfZ+ZUwUHZpWKnexobyH5NmRJHuA/8LrThyps/BW3SYXA==
-  dependencies:
-    "@types/react" "*"
 
 "@types/react-native@^0.63.18":
   version "0.63.18"
