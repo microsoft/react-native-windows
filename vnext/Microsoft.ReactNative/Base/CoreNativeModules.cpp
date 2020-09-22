@@ -13,7 +13,6 @@
 #include <Modules/ClipboardModule.h>
 #include <Modules/ImageViewManagerModule.h>
 #include <Modules/LinkingManagerModule.h>
-#include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/UIManagerModule.h>
@@ -82,11 +81,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       ImageViewManagerModule::name,
       []() { return std::make_unique<ImageViewManagerModule>(); },
       batchingUIMessageQueue);
-
-  modules.emplace_back(
-      LocationObserverModule::name,
-      [batchingUIMessageQueue]() { return std::make_unique<LocationObserverModule>(batchingUIMessageQueue); },
-      jsMessageQueue); // TODO: figure out threading
 
   modules.emplace_back(
       react::uwp::AppThemeModule::Name,
