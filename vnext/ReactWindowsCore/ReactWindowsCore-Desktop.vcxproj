@@ -8,5 +8,5 @@
     <USE_HERMES>false</USE_HERMES>
     <V8AppPlatform>win32</V8AppPlatform>
   </PropertyGroup>
-  <Import Project="ReactWindowsCore.vcxitems" Label="Shared" />
+  <Import Project="ReactWindowsCore-Items.vcxitems" Label="Shared" />
 </Project>
