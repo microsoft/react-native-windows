@@ -3,11 +3,23 @@
 
 #pragma once
 
+#include <IWebSocketContentHandler.h>
+
+// React Native
 #include <cxxreact/CxxModule.h>
+
+// Standard Library
+#include <unordered_map>
+#include <mutex>
+#include <string>
+#include <vector>
 
 namespace Microsoft::React {
 
-class BlobModule : public facebook::xplat::module::CxxModule {
+class BlobModule : public facebook::xplat::module::CxxModule, IWebSocketContentHandler {
+  std::unordered_map<std::string, std::vector<std::uint8_t>> m_blobs;
+  std::mutex m_blobsMutex;
+
  public:
   enum MethodId {
     AddNetworkingHandler = 0,
@@ -38,6 +50,14 @@ class BlobModule : public facebook::xplat::module::CxxModule {
   std::vector<Method> getMethods() override;
 
 #pragma endregion CxxModule overrides
+
+#pragma region IWebSocketContentHandler overrides
+
+  void ProcessMessage(std::string&& message, folly::dynamic &params) override;
+
+  void ProcessMessage(std::vector<std::uint8_t>&& message, folly::dynamic &params) override;
+
+#pragma endregion IWebSocketContentHandler overrides
 };
 
 } // namespace Microsoft::React
