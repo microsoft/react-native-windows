@@ -15,7 +15,7 @@ MainPage::MainPage() {
   InitializeComponent();
   auto app = Application::Current().as<App>();
 
-  ReactRootView().ComponentName(L"IntegrationTestsApp");
+  ReactRootView().ComponentName(L"TestInstructions");
 
   app->TestHarness().SetRootView(ReactRootView());
   ReactRootView().ReactNativeHost(app->Host());

@@ -13,7 +13,7 @@ let testRunner: IntegrationTestRunner;
 let websocketServer: TestWebSocketServer;
 
 beforeAll(async () => {
-  testRunner = await IntegrationTestRunner.initialize('IntegrationTestsApp');
+  testRunner = await IntegrationTestRunner.initialize('TestInstructions');
   websocketServer = await TestWebSocketServer.start();
 });
 
