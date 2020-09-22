@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/windows:1809
+FROM mcr.microsoft.com/windows:2004
 RUN mkdir c:\\setup
 WORKDIR c:\\setup
 COPY rnw-dependencies.ps1 .

@@ -15,7 +15,10 @@ jobs:
         value: $(Build.BinariesDirectory)\$(BuildPlatform)\BuildLogs
 
     pool:
-      vmImage: $(VmImage)
+      vmImage: $(vmImage)
+    container: 
+      image: $(containerImage)
+      endpoint: rnw-ci-containers
 
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them

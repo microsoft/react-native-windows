@@ -56,7 +56,10 @@ jobs:
         #  BuildConfiguration: Release
         #  BuildPlatform: ARM64
     pool:
-      vmImage: $(VmImage)
+      vmImage: $(vmImage)
+    container: 
+      image: $(containerImage)
+      endpoint: rnw-ci-containers
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
 
@@ -157,7 +160,11 @@ jobs:
           BuildConfiguration: Debug
           BuildPlatform: x86
     pool:
-      vmImage: $(VmImage)
+      vmImage: $(vmImage)
+    container: 
+      image: $(containerImage)
+      endpoint: rnw-ci-containers
+
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
 
@@ -216,7 +223,11 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: x64
     pool:
-      vmImage: $(VmImage)
+      vmImage: $(vmImage)
+    container: 
+      image: $(containerImage)
+      endpoint: rnw-ci-containers
+
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
 
@@ -325,6 +336,10 @@ jobs:
     pool:
       vmImage: $(VmImage)
 
+    container: 
+      image: $(containerImage)
+      endpoint: rnw-ci-containers
+
     steps:
       - checkout: self
         clean: false
@@ -401,7 +416,11 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: ARM64
     pool:
-      vmImage: $(VmImage)
+      vmImage: $(vmImage)
+    container: 
+      image: $(containerImage)
+      endpoint: rnw-ci-containers
+
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
@@ -618,7 +637,11 @@ jobs:
     timeoutInMinutes: 50 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:
-      vmImage: $(VmImage)
+      vmImage: $(vmImage)
+    container: 
+      image: $(containerImage)
+      endpoint: rnw-ci-containers
+
     steps:
       - template: templates/react-native-init.yml
         parameters:
@@ -645,7 +668,11 @@ jobs:
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:
-      vmImage: $(VmImage)
+      vmImage: $(vmImage)
+    container: 
+      image: $(containerImage)
+      endpoint: rnw-ci-containers
+
     strategy:
       matrix:
         cpp:
@@ -669,6 +696,11 @@ jobs:
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
+    
+    container: 
+      image: $(containerImage)
+      endpoint: rnw-ci-containers
+    
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
