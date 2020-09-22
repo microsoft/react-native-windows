@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add yellowbox warning for DatePicker",
+  "packageName": "react-native-windows",
+  "email": "igklemen@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-22T21:45:39.671Z"
+}
