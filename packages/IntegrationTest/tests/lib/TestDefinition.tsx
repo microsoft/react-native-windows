@@ -20,16 +20,7 @@ export type TestFunction = (() => void) | (() => Promise<void>);
  */
 export const functionTest = Object.assign(
   (name: string, fn: TestFunction) => {
-    if (AppRegistry.getRunnable(name)) {
-      console.error(`Multiple components named "${name}" were registered`);
-      const BoundTest = createFailFastTestComponent(
-        `Multiple components named "${name}" were registered`,
-      );
-      AppRegistry.registerComponent(name, () => BoundTest);
-    } else {
-      const BoundTest = createImperativeTestComponent(fn);
-      AppRegistry.registerComponent(name, () => BoundTest);
-    }
+    registerRootComponent(name, createImperativeTestComponent(fn));
   },
   {skip: (_name: string, _fn: TestFunction) => {}},
 );
@@ -44,19 +35,28 @@ export type TestComponentType = React.ComponentType<{
  */
 export const componentTest = Object.assign(
   (name: string, Component: TestComponentType) => {
-    if (AppRegistry.getRunnable(name)) {
-      console.error(`Multiple components named "${name}" were registered`);
-      const BoundTest = createFailFastTestComponent(
-        `Multiple components named "${name}" were registered`,
-      );
-      AppRegistry.registerComponent(name, () => BoundTest);
-    } else {
-      const BoundTest = wrapTestComponent(Component);
-      AppRegistry.registerComponent(name, () => BoundTest);
-    }
+    registerRootComponent(name, wrapTestComponent(Component));
   },
   {skip: (_name: string, _Component: TestComponentType) => {}},
 );
+
+/**
+ * Helper to register a test component while checking for collisions
+ */
+function registerRootComponent(
+  name: string,
+  TestComponent: React.ComponentType,
+) {
+  if (AppRegistry.getRunnable(name)) {
+    const errorMessage = `Multiple components named "${name}" were registered`;
+    console.error(errorMessage);
+
+    const ErrorComponent = createFailFastTestComponent(errorMessage);
+    AppRegistry.registerComponent(name, () => ErrorComponent);
+  } else {
+    AppRegistry.registerComponent(name, () => TestComponent);
+  }
+}
 
 /**
  * Create a root component which runs the passed test function

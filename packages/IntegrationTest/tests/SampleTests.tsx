@@ -21,7 +21,7 @@ functionTest('NativeModuleExample', () => {
  * An example of a failing test using ".skip" not to run
  */
 functionTest.skip('FailingExample', () => {
-  assert.ok(Platform.Version, 'Platform should define a version');
+  assert.isTrue(false, 'This test should fail');
 });
 
 /**
