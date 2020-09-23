@@ -65,8 +65,7 @@ void assertionFailure(
     const char *msg,
     const char *file,
     unsigned int line,
-    const char *function,
-    int error) {
+    const char *function) {
   // nyi
   std::terminate();
 }
