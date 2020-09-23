@@ -23,7 +23,8 @@ using winrt::Windows::Foundation::GuidHelper;
 
 namespace {
 constexpr char moduleName[] = "BlobModule";
-}
+constexpr char blobURIScheme[] = "blob";
+} // namespace
 
 namespace Microsoft::React {
 
@@ -35,7 +36,7 @@ string BlobModule::getName()
 }
 
 std::map<string, dynamic> BlobModule::getConstants() {
-  return {};
+  return {{"BLOB_URI_SCHEME", blobURIScheme}, {"BLOB_URI_HOST", {}}};
 }
 
 // clang-format off

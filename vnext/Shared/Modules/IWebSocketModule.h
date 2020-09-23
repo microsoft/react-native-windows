@@ -14,7 +14,6 @@ namespace Microsoft::React {
 
 struct IWebSocketModule
 {
-
   /// <summary>
   /// See https://github.com/facebook/react-native/blob/v0.63.2/React/CoreModules/RCTWebSocketModule.h#L12
   /// </summary>
