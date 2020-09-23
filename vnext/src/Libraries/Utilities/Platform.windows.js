@@ -20,6 +20,9 @@ export type PlatformSelectSpec<A, N, D> = {
 const Platform = {
   __constants: null,
   OS: 'windows',
+  get Version(): number {
+    return this.constants.osVersion;
+  },
   get constants(): {|
     isTesting: boolean,
     reactNativeVersion: {|
@@ -28,6 +31,7 @@ const Platform = {
       patch: number,
       prerelease: ?number,
     |},
+    osVersion: number,
   |} {
     if (this.__constants == null) {
       this.__constants = NativePlatformConstantsWin.getConstants();
