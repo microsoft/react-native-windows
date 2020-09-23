@@ -60,12 +60,7 @@ void writeStderr(const char *s) {
 } // namespace
 
 // \node_modules\.folly\folly-2020.09.14.00\folly\lang\SafeAssert.h
-void assertionFailure(
-    const char *expr,
-    const char *msg,
-    const char *file,
-    unsigned int line,
-    const char *function) {
+void assertionFailure(const char *expr, const char *msg, const char *file, unsigned int line, const char *function) {
   // nyi
   std::terminate();
 }
