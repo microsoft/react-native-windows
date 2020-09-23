@@ -25,7 +25,7 @@ namespace {
 constexpr char moduleName[] = "BlobModule";
 constexpr char blobURIScheme[] = "blob";
 
-//TODO: Check for leaks.
+//TODO: Check for memory leaks.
 shared_ptr<Microsoft::React::IWebSocketModuleContentHandler> wsContentHandler;
 } // namespace
 
@@ -104,33 +104,6 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
 // clang-format on
 
 #pragma endregion CxxModule overrides
-
-#pragma region IWebSocketModule::ContentHandler overrides
-
-void BlobModule::ProcessMessage(string&& message, dynamic& params) /*override*/
-{
-  params["data"] = std::move(message);
-}
-
-void BlobModule::ProcessMessage(vector<uint8_t>&& message, dynamic &params) /*override*/
-{
-  auto blob = dynamic::object();
-  blob("offset", 0);
-  blob("size", message.size());
-
-  // Equivalent to store()
-  // substr(1, 36) strips curly braces from a GUID.
-  string blobId = winrt::to_string(winrt::to_hstring(GuidHelper::CreateNewGuid())).substr(1, 36);
-  {
-    lock_guard<mutex> lock{m_blobsMutex};
-    m_blobs.insert_or_assign(blobId, std::move(message));
-  }
-
-  params["data"] = std::move(blob);
-  params["type"] = "blob";
-}
-
-#pragma endregion IWebSocketModule::ContentHandler overrides
 
 #pragma region IWebSocketModuleContentHandler overrides
 
