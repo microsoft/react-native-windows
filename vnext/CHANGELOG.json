@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 23 Sep 2020 20:30:07 GMT",
+      "tag": "react-native-windows_v0.62.12",
+      "version": "0.62.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Revert folly back to 2019.09.30.00 with patch file for compiler fix",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "2cc1a8b57b7d9799695b1b8a232da451a60e986a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Sep 2020 15:35:50 GMT",
       "tag": "react-native-windows_v0.62.11",
       "version": "0.62.11",

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 21 Sep 2020 15:06:34 GMT and should not be manually modified.
+This log was last generated on Wed, 23 Sep 2020 20:30:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.12
+
+Wed, 23 Sep 2020 20:30:07 GMT
+
+### Patches
+
+- Revert folly back to 2019.09.30.00 with patch file for compiler fix (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.62.11
 
