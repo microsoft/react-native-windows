@@ -25,8 +25,9 @@ struct ViewManagerProvider;
 
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::IUIManager> &uiManager,
-    const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
+    const std::shared_ptr<facebook::react::MessageQueueThread> &batchingUIMessageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread> &uiMessageQueue,
+    const std::shared_ptr<facebook::react::MessageQueueThread> &jsMessageQueue,
     std::shared_ptr<react::uwp::AppTheme> &&appTheme,
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     const std::shared_ptr<IReactInstance> &uwpInstance) noexcept;

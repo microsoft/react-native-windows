@@ -273,11 +273,13 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->debuggerConsoleRedirection =
               false; // JSHost::ChangeGate::ChakraCoreDebuggerConsoleRedirection();
 
-          // Acquire default modules and then populate with custom modules
+          // Acquire default modules and then populate with custom modules.
+          // Note that some of these have custom thread affinity.
           std::vector<facebook::react::NativeModuleDescription> cxxModules = react::uwp::GetCoreModules(
               m_uiManager.Load(),
               m_batchingUIThread,
               m_uiMessageThread.Load(),
+              m_jsMessageThread.Load(),
               std::move(m_appTheme),
               std::move(m_appearanceListener),
               m_legacyReactInstance);

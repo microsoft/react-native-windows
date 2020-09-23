@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Ignore filemode for Scratch Repository",
+  "packageName": "react-native-platform-override",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-23T10:59:58.784Z"
+}

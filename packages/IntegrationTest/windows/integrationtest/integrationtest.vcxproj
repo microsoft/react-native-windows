@@ -105,6 +105,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ExceptionInfo.h" />
     <ClInclude Include="MainPage.h">
       <DependentUpon>MainPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -118,6 +119,7 @@
     <ClInclude Include="TestCommandListener.h" />
     <ClInclude Include="TestHostHarness.h" />
     <ClInclude Include="TestModule.h" />
+    <ClInclude Include="TestTransaction.h" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -155,6 +157,7 @@
     <ClCompile Include="TestCommandListener.cpp" />
     <ClCompile Include="TestHostHarness.cpp" />
     <ClCompile Include="TestModule.cpp" />
+    <ClCompile Include="TestTransaction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl">

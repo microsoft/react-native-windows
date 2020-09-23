@@ -13,7 +13,6 @@
 #include <Modules/ClipboardModule.h>
 #include <Modules/ImageViewManagerModule.h>
 #include <Modules/LinkingManagerModule.h>
-#include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/UIManagerModule.h>
@@ -46,12 +45,14 @@ bool HasPackageIdentity() noexcept {
 
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::IUIManager> &uiManager,
-    const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
-    const std::shared_ptr<facebook::react::MessageQueueThread> &uiMessageQueue,
+    const std::shared_ptr<facebook::react::MessageQueueThread> &batchingUIMessageQueue,
+    const std::shared_ptr<facebook::react::MessageQueueThread>
+        &uiMessageQueue, // UI queue without batching or affinity limitations
+    const std::shared_ptr<facebook::react::MessageQueueThread>
+        &jsMessageQueue, // JS engine thread (what we use for external modules)
     std::shared_ptr<react::uwp::AppTheme> &&appTheme,
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     const std::shared_ptr<IReactInstance> &uwpInstance) noexcept {
-  // Modules
   std::vector<facebook::react::NativeModuleDescription> modules;
 
   modules.emplace_back(
@@ -59,52 +60,48 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       [uiManager, uiMessageQueue]() {
         return facebook::react::createUIManagerModule(std::shared_ptr(uiManager), std::shared_ptr(uiMessageQueue));
       },
-      messageQueue);
+      batchingUIMessageQueue);
 
   modules.emplace_back(
       react::uwp::WebSocketModule::Name,
       []() { return std::make_unique<react::uwp::WebSocketModule>(); },
-      MakeSerialQueueThread());
+      jsMessageQueue);
+
+  modules.emplace_back(NetworkingModule::Name, []() { return std::make_unique<NetworkingModule>(); }, jsMessageQueue);
 
   modules.emplace_back(
-      NetworkingModule::Name, []() { return std::make_unique<NetworkingModule>(); }, MakeSerialQueueThread());
+      "Timing",
+      [batchingUIMessageQueue]() { return facebook::react::CreateTimingModule(batchingUIMessageQueue); },
+      batchingUIMessageQueue);
 
   modules.emplace_back(
-      "Timing", [messageQueue]() { return facebook::react::CreateTimingModule(messageQueue); }, messageQueue);
-
-  modules.emplace_back(
-      LinkingManagerModule::name, []() { return std::make_unique<LinkingManagerModule>(); }, messageQueue);
+      LinkingManagerModule::name, []() { return std::make_unique<LinkingManagerModule>(); }, batchingUIMessageQueue);
 
   modules.emplace_back(
       ImageViewManagerModule::name,
-      [messageQueue]() { return std::make_unique<ImageViewManagerModule>(); },
-      messageQueue);
-
-  modules.emplace_back(
-      LocationObserverModule::name,
-      [messageQueue]() { return std::make_unique<LocationObserverModule>(messageQueue); },
-      MakeSerialQueueThread()); // TODO: figure out threading
+      []() { return std::make_unique<ImageViewManagerModule>(); },
+      batchingUIMessageQueue);
 
   modules.emplace_back(
       react::uwp::AppThemeModule::Name,
       [appTheme = std::move(appTheme)]() mutable {
         return std::make_unique<react::uwp::AppThemeModule>(std::move(appTheme));
       },
-      messageQueue);
+      batchingUIMessageQueue);
 
   modules.emplace_back(
       NativeAnimatedModule::name,
       [wpUwpInstance = std::weak_ptr(uwpInstance)]() mutable {
         return std::make_unique<NativeAnimatedModule>(std::move(wpUwpInstance));
       },
-      messageQueue);
+      batchingUIMessageQueue);
 
   modules.emplace_back(
       AppearanceModule::Name,
       [appearanceListener = std::move(appearanceListener)]() mutable {
         return std::make_unique<AppearanceModule>(std::move(appearanceListener));
       },
-      messageQueue);
+      jsMessageQueue);
 
   // AsyncStorageModule doesn't work without package identity (it indirectly depends on
   // Windows.Storage.StorageFile), so check for package identity before adding it.
@@ -117,7 +114,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
           return std::make_unique<facebook::react::AsyncStorageModuleWin32>();
         }
       },
-      MakeSerialQueueThread());
+      jsMessageQueue);
 
   return modules;
 }

@@ -2,6 +2,60 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 23 Sep 2020 05:04:55 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.169",
+      "version": "0.0.0-canary.169",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Handle ReactPromise correctly",
+            "author": "zihanc@microsoft.com",
+            "commit": "d9077991441889ddaa18a8af6a2cc8514ca7714d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove LocationObserverModule",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d0aa86ea652fcd99f3c30dfe3f42a9acb5af6dcf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Sep 2020 04:46:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.168",
+      "version": "0.0.0-canary.168",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make Alert track its xamlroot's size changes",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "38c66094c66f4e4ec555c27a91ca67180e7770ed",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Run Non-UI-Thread Core Modules on the JS Thread",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cbd1362bf7984e5889186cf1d84ce7fbca498f5c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Don't Elongate Frame-Based Timers",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aded6481ae728e6e7b5789a709c3a32ec3564670",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Upgrade react-native Typings",
+            "author": "ngerlem@microsoft.com",
+            "commit": "967d499846e8953c74c0f62a1463fb8e182a9b75",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Sep 2020 05:06:22 GMT",
       "tag": "react-native-windows_v0.0.0-canary.167",
       "version": "0.0.0-canary.167",

@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Tue, 22 Sep 2020 04:46:10 GMT",
+      "tag": "react-native-platform-override_v0.2.7",
+      "version": "0.2.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix react-native-platform-override CLI",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5a62827572de5b1ea9fd27183260151b5c98404a",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Sep 2020 05:06:22 GMT",
       "tag": "react-native-platform-override_v0.2.6",
       "version": "0.2.6",

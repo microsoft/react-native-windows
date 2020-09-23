@@ -5,7 +5,7 @@
  * @format
  */
 
-import {SkipTest} from './SkipTest';
+import {TestBlock} from './TestDescription';
 import IntegrationTestRunner from './IntegrationTestRunner';
 import TestWebSocketServer from './TestWebSocketServer';
 
@@ -13,7 +13,7 @@ let testRunner: IntegrationTestRunner;
 let websocketServer: TestWebSocketServer;
 
 beforeAll(async () => {
-  testRunner = await IntegrationTestRunner.initialize('IntegrationTestsApp');
+  testRunner = await IntegrationTestRunner.initialize('TestInstructions');
   websocketServer = await TestWebSocketServer.start();
 });
 
@@ -26,15 +26,22 @@ afterAll(async () => {
   }
 });
 
-export function registerTestComponents(components: Array<string | SkipTest>) {
-  components.forEach(component => {
-    if (typeof component === 'string') {
-      test(component, async () => await testRunner.runTestComponent(component));
-    } else {
-      test.skip(
-        component.skip,
-        async () => await testRunner.runTestComponent(component.skip),
-      );
-    }
+export function registerTests(blocks: TestBlock[]) {
+  blocks.forEach(block => {
+    describe(block.name, () => {
+      block.tests.forEach(component => {
+        if (typeof component === 'string') {
+          test(
+            component,
+            async () => await testRunner.runTestComponent(component),
+          );
+        } else {
+          test.skip(
+            component.skip,
+            async () => await testRunner.runTestComponent(component.skip),
+          );
+        }
+      });
+    });
   });
 }

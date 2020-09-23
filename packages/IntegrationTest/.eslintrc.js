@@ -8,6 +8,7 @@ module.exports = {
       globals: {
         "afterAll": 'readonly',
         "beforeAll": 'readonly',
+        "describe": 'readonly',
         "fail": 'readonly',
         "test": 'readonly',
       }
