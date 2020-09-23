@@ -4,16 +4,16 @@
   "private": true,
   "scripts": {
     "build": "lerna run build --stream -- --color",
-    "lint": "lerna run lint --stream -- --color",
-    "lint:fix": "lerna run lint:fix --stream -- --color",
-    "api": "lerna run api --stream -- --color",
+    "lint": "lerna run lint --parallel -- --color",
+    "lint:fix": "lerna run lint:fix --parallel -- --color",
+    "api": "lerna run api --parallel -- --color",
     "buildci": "lerna run build --stream -- --ci",
     "change": "beachball change",
-    "clean": "lerna run clean --stream -- --color",
+    "clean": "lerna run clean --parallel -- --color",
     "format": "format-files -i -style=file -assume-filename=../.clang-format",
     "format:verify": "format-files -i -style=file -assume-filename=../.clang-format -verify",
-    "test": "lerna run test --stream -- --color",
-    "validate-overrides": "lerna run validate-overrides --stream -- --color"
+    "test": "lerna run test --parallel -- --color",
+    "validate-overrides": "lerna run validate-overrides --parallel -- --color"
   },
   "repository": {
     "type": "git",
