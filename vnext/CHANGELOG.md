@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 22 Sep 2020 04:46:10 GMT and should not be manually modified.
+This log was last generated on Wed, 23 Sep 2020 05:04:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.169
+
+Wed, 23 Sep 2020 05:04:55 GMT
+
+### Changes
+
+- Handle ReactPromise correctly (zihanc@microsoft.com)
+- Remove LocationObserverModule (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.168
 
