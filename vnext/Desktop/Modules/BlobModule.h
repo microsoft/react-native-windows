@@ -4,6 +4,7 @@
 #pragma once
 
 #include <Modules/IWebSocketModule.h>
+#include <Modules/IWebSocketModuleContentHandler.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
@@ -30,6 +31,8 @@ class BlobModule : public facebook::xplat::module::CxxModule, IWebSocketModule::
     Release = 5,
     SIZE = 6
   };
+
+  BlobModule() noexcept;
 
 #pragma region CxxModule overrides
 
@@ -58,6 +61,23 @@ class BlobModule : public facebook::xplat::module::CxxModule, IWebSocketModule::
   void ProcessMessage(std::vector<std::uint8_t>&& message, folly::dynamic &params) override;
 
 #pragma endregion IWebSocketModule::ContentHandler overrides
+};
+
+class BlobWebSocketModuleContentHandler : public IWebSocketModuleContentHandler {
+
+  std::unordered_map<std::string, std::vector<std::uint8_t>> m_blobs;
+  std::mutex m_blobsMutex;
+
+public:
+
+#pragma region IWebSocketModuleContentHandler overrides
+
+  void ProcessMessage(std::string &&message, folly::dynamic &params) override;
+
+  void ProcessMessage(std::vector<std::uint8_t> &&message, folly::dynamic &params) override;
+
+#pragma endregion IWebSocketModuleContentHandler overrides
+
 };
 
 } // namespace Microsoft::React

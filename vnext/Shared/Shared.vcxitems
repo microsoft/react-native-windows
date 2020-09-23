@@ -65,6 +65,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleContentHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.h" />
