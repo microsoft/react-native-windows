@@ -55,7 +55,7 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// Keeps <c>IWebSocketResource</c> instances identified by <c>id</c>.
   /// As defined in WebSocket.js.
   /// </summary>
-  std::map<int64_t, std::shared_ptr<IWebSocketResource>> m_webSockets;
+  std::map<std::int64_t, std::shared_ptr<IWebSocketResource>> m_webSockets;
 
   /// <summary>
   /// Generates IWebSocketResource instances, defaulting to IWebSocketResource::Make.

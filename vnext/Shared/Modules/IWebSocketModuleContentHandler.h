@@ -17,11 +17,20 @@ namespace Microsoft::React {
 /// </summary>
 struct IWebSocketModuleContentHandler {
 
-  //static void SetInstance(std::shared_ptr<IWebSocketModuleContentHandler>);
-
   static std::shared_ptr<IWebSocketModuleContentHandler> GetInstance() noexcept;
 
   virtual ~IWebSocketModuleContentHandler() noexcept {}
+
+  virtual void Register(std::int64_t socketID) noexcept = 0;
+
+  virtual void Unregister(std::int64_t socketID) noexcept = 0;
+
+  virtual bool IsRegistered(std::int64_t socketID) noexcept = 0;
+
+  virtual std::vector<std::uint8_t>
+  ResolveMessage(std::string &&blobId, std::int64_t offset, std::int64_t size) noexcept = 0;
+
+  virtual void RemoveMessage(std::string &&blobId) noexcept = 0;
 
   virtual void ProcessMessage(std::string &&message, folly::dynamic &params) = 0;
 

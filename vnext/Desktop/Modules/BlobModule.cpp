@@ -3,6 +3,8 @@
 
 #include "BlobModule.h"
 
+#include <unicode.h>
+
 // React Native
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
@@ -10,6 +12,7 @@
 
 // Windows API
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Security.Cryptography.h>
 
 using namespace facebook::xplat;
 
@@ -20,6 +23,7 @@ using std::shared_ptr;
 using std::string;
 using std::vector;
 using winrt::Windows::Foundation::GuidHelper;
+using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace {
 constexpr char moduleName[] = "BlobModule";
@@ -32,8 +36,7 @@ shared_ptr<Microsoft::React::IWebSocketModuleContentHandler> wsContentHandler;
 namespace Microsoft::React {
 
 BlobModule::BlobModule() noexcept {
-  if (!wsContentHandler)
-    wsContentHandler = std::make_shared<BlobWebSocketModuleContentHandler>();
+  wsContentHandler = std::make_shared<BlobWebSocketModuleContentHandler>();
 }
 
 #pragma region CxxModule overrides
@@ -63,6 +66,8 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
       [this](dynamic args)
       {
         auto id = jsArgAsInt(args, 0);
+
+        IWebSocketModuleContentHandler::GetInstance()->Register(id);
       }
     ),
 
@@ -71,6 +76,8 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
       [this](dynamic args)
       {
         auto id = jsArgAsInt(args, 0);
+
+        IWebSocketModuleContentHandler::GetInstance()->Unregister(id);
       }
     ),
 
@@ -79,7 +86,22 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
       [this](dynamic args)
       {
         auto blob = jsArgAsObject(args, 0);
+        auto blobId = blob["blobId"].getString();
+        auto offset = blob["offset"].getInt();
+        auto size = blob["size"].getInt();
         auto socketID = jsArgAsInt(args, 1);
+
+        auto data = IWebSocketModuleContentHandler::GetInstance()->ResolveMessage(std::move(blobId), offset, size);
+
+        if (auto instance = getInstance().lock())
+        {
+          auto buffer = CryptographicBuffer::CreateFromByteArray(data);
+          auto winrtString = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
+          auto base64String = Common::Unicode::Utf16ToUtf8(std::move(winrtString));
+
+          auto sendArgs = dynamic::array(std::move(base64String), socketID);
+          instance->callJSFunction("WebSocketModule", "sendBinary", std::move(sendArgs));
+        }
       }
     ),
 
@@ -97,6 +119,8 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
       [this](dynamic args)  // blobId: string
       {
         auto blobId = jsArgAsString(args, 0);
+
+        IWebSocketModuleContentHandler::GetInstance()->RemoveMessage(std::move(blobId));
       }
     )
   };
@@ -106,6 +130,44 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
 #pragma endregion CxxModule overrides
 
 #pragma region IWebSocketModuleContentHandler overrides
+
+void BlobWebSocketModuleContentHandler::Register(int64_t socketID) noexcept /*override*/
+{
+  lock_guard<mutex> lock{m_socketIDsMutex};
+  m_socketIDs.insert(socketID);
+}
+
+void BlobWebSocketModuleContentHandler::Unregister(int64_t socketID) noexcept /*override*/
+{
+  lock_guard<mutex> lock{m_socketIDsMutex};
+  if (m_socketIDs.find(socketID) != m_socketIDs.end())
+    m_socketIDs.erase(socketID);
+}
+
+bool BlobWebSocketModuleContentHandler::IsRegistered(int64_t socketID) noexcept /*override*/
+{
+  lock_guard<mutex> lock{m_socketIDsMutex};
+  return m_socketIDs.find(socketID) != m_socketIDs.end();
+}
+
+vector<uint8_t> BlobWebSocketModuleContentHandler::ResolveMessage(string &&blobId, int64_t offset, int64_t size) noexcept
+/*override*/
+{
+  lock_guard<mutex> lock{m_blobsMutex};
+
+  auto data = m_blobs.at(std::move(blobId));
+  auto start = data.cbegin() + offset;
+  auto end = start + size;
+
+  return vector(start, end);
+}
+
+void BlobWebSocketModuleContentHandler::RemoveMessage(string&& blobId) noexcept
+{
+  lock_guard<mutex> lock{m_blobsMutex};
+
+  m_blobs.erase(std::move(blobId));
+}
 
 void BlobWebSocketModuleContentHandler::ProcessMessage(string&& message, dynamic& params) /*override*/
 {
