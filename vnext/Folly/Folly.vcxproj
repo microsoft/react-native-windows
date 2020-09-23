@@ -66,6 +66,7 @@
     <ClCompile Include="$(FollyDir)\folly\ScopeGuard.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Unicode.cpp" />
     <ClCompile Include="$(FollyDir)\folly\memory\detail\MallocImpl.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\lang\ColdClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(FollyDir)\folly\AtomicBitSet.h" />
