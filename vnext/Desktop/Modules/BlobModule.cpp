@@ -19,9 +19,9 @@ using namespace facebook::xplat;
 using folly::dynamic;
 using std::lock_guard;
 using std::mutex;
-using std::shared_ptr;
 using std::string;
 using std::vector;
+using std::weak_ptr;
 using winrt::Windows::Foundation::GuidHelper;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
@@ -29,14 +29,14 @@ namespace {
 constexpr char moduleName[] = "BlobModule";
 constexpr char blobURIScheme[] = "blob";
 
-//TODO: Check for memory leaks.
-shared_ptr<Microsoft::React::IWebSocketModuleContentHandler> wsContentHandler;
+weak_ptr<Microsoft::React::IWebSocketModuleContentHandler> s_contentHandler;
 } // namespace
 
 namespace Microsoft::React {
 
 BlobModule::BlobModule() noexcept {
-  wsContentHandler = std::make_shared<BlobWebSocketModuleContentHandler>();
+  m_contentHandler = std::make_shared<BlobWebSocketModuleContentHandler>();
+  s_contentHandler = m_contentHandler;
 }
 
 #pragma region CxxModule overrides
@@ -58,6 +58,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
       "addNetworkingHandler",
       [this](dynamic args)
       {
+        //TODO: Implement
       }
     ),
 
@@ -67,7 +68,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
       {
         auto id = jsArgAsInt(args, 0);
 
-        IWebSocketModuleContentHandler::GetInstance()->Register(id);
+        m_contentHandler->Register(id);
       }
     ),
 
@@ -77,7 +78,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
       {
         auto id = jsArgAsInt(args, 0);
 
-        IWebSocketModuleContentHandler::GetInstance()->Unregister(id);
+        m_contentHandler->Unregister(id);
       }
     ),
 
@@ -91,7 +92,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
         auto size = blob["size"].getInt();
         auto socketID = jsArgAsInt(args, 1);
 
-        auto data = IWebSocketModuleContentHandler::GetInstance()->ResolveMessage(std::move(blobId), offset, size);
+        auto data = m_contentHandler->ResolveMessage(std::move(blobId), offset, size);
 
         if (auto instance = getInstance().lock())
         {
@@ -110,7 +111,38 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
       [this](dynamic args)
       {
         auto parts = jsArgAsArray(args, 0);   // Array<Object>
-        auto withId = jsArgAsString(args, 1);
+        auto blobId = jsArgAsString(args, 1);
+        vector<uint8_t> buffer{};
+
+        for(auto& part : parts)
+        {
+          auto type = part["type"];
+          if (type == "blob")
+          {
+            auto blob = part["data"];
+            auto blobId = blob["blobId"].asString();
+
+            auto bufferPart = m_contentHandler->ResolveMessage(blob["blobId"].asString(), blob["offset"].asInt(), blob["size"].asInt());
+            buffer.reserve(buffer.size() + bufferPart.size());
+            buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
+          }
+          else if (type == "string")
+          {
+            auto data = part["data"].asString();
+            auto bufferPart = vector<uint8_t>(data.begin(), data.end());
+
+            buffer.reserve(buffer.size() + bufferPart.size());
+            buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
+          }
+          else// if (auto instance = getInstance().lock())
+          {
+            //TODO: Error?
+            //instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array("eventName", dynamic{}));
+            return;
+          }
+
+          m_contentHandler->StoreMessage(std::move(buffer), std::move(blobId));
+        }
       }
     ),
 
@@ -120,7 +152,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
       {
         auto blobId = jsArgAsString(args, 0);
 
-        IWebSocketModuleContentHandler::GetInstance()->RemoveMessage(std::move(blobId));
+        m_contentHandler->RemoveMessage(std::move(blobId));
       }
     )
   };
@@ -180,22 +212,25 @@ void BlobWebSocketModuleContentHandler::ProcessMessage(vector<uint8_t> &&message
   blob("offset", 0);
   blob("size", message.size());
 
-  // Equivalent to store()
   // substr(1, 36) strips curly braces from a GUID.
   string blobId = winrt::to_string(winrt::to_hstring(GuidHelper::CreateNewGuid())).substr(1, 36);
-  {
-    lock_guard<mutex> lock{m_blobsMutex};
-    m_blobs.insert_or_assign(blobId, std::move(message));
-  }
+  StoreMessage(std::move(message), std::move(blobId));
 
   params["data"] = std::move(blob);
   params["type"] = "blob";
 }
 
+void BlobWebSocketModuleContentHandler::StoreMessage(vector<uint8_t>&& message, std::string&& blobId) noexcept
+/*override*/
+{
+  lock_guard<mutex> lock{m_blobsMutex};
+  m_blobs.insert_or_assign(std::move(blobId), std::move(message));
+}
+
 #pragma endregion IWebSocketModuleContentHandler overrides
 
-/*static*/ shared_ptr<IWebSocketModuleContentHandler> IWebSocketModuleContentHandler::GetInstance() noexcept {
-  return wsContentHandler;
+/*static*/ weak_ptr<IWebSocketModuleContentHandler> IWebSocketModuleContentHandler::GetInstance() noexcept {
+  return s_contentHandler;
 }
 
 /*extern*/ std::unique_ptr<module::CxxModule> CreateBlobModule() noexcept

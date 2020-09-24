@@ -18,6 +18,8 @@
 namespace Microsoft::React {
 
 class BlobModule : public facebook::xplat::module::CxxModule {
+  std::shared_ptr<IWebSocketModuleContentHandler> m_contentHandler;
+
  public:
   enum MethodId {
     AddNetworkingHandler = 0,
@@ -76,6 +78,8 @@ public:
   void ProcessMessage(std::string &&message, folly::dynamic &params) override;
 
   void ProcessMessage(std::vector<std::uint8_t> &&message, folly::dynamic &params) override;
+
+  void StoreMessage(std::vector<std::uint8_t> &&message, std::string&& blobId) noexcept override;
 
 #pragma endregion IWebSocketModuleContentHandler overrides
 

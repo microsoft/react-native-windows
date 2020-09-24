@@ -17,7 +17,7 @@ namespace Microsoft::React {
 /// </summary>
 struct IWebSocketModuleContentHandler {
 
-  static std::shared_ptr<IWebSocketModuleContentHandler> GetInstance() noexcept;
+  static std::weak_ptr<IWebSocketModuleContentHandler> GetInstance() noexcept;
 
   virtual ~IWebSocketModuleContentHandler() noexcept {}
 
@@ -35,6 +35,8 @@ struct IWebSocketModuleContentHandler {
   virtual void ProcessMessage(std::string &&message, folly::dynamic &params) = 0;
 
   virtual void ProcessMessage(std::vector<std::uint8_t> &&message, folly::dynamic &params) = 0;
+
+  virtual void StoreMessage(std::vector<std::uint8_t> &&message, std::string&& blobId) noexcept = 0;
 };
 
 } // namespace Microsoft::React

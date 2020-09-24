@@ -5,10 +5,17 @@
 
 #include <Modules/WebSocketModule.h>
 
+#include <Modules/IWebSocketModuleContentHandler.h>
 #include <Utils.h>
+#include "Unicode.h"
+
+// React Native
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
-#include "Unicode.h"
+
+// Windows API
+#include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Security.Cryptography.h>
 
 using namespace facebook::xplat;
 using namespace folly;
@@ -16,9 +23,11 @@ using namespace folly;
 using Microsoft::Common::Unicode::Utf16ToUtf8;
 using Microsoft::Common::Unicode::Utf8ToUtf16;
 
+// Standard Library
 using std::shared_ptr;
 using std::string;
 using std::weak_ptr;
+using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace {
 constexpr char moduleName[] = "WebSocketModule";
@@ -204,7 +213,29 @@ shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id,
       if (!strongInstance)
         return;
 
-      auto args = dynamic::object("id", id)("data", message)("type", isBinary ? "binary" : "text");
+      dynamic args = dynamic::object("id", id)("data", message)("type", isBinary ? "binary" : "text");
+
+      auto contentHandler = IWebSocketModuleContentHandler::GetInstance().lock();
+      if (isBinary)
+      {
+        auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(message));
+        winrt::com_array<uint8_t> arr;
+        CryptographicBuffer::CopyToByteArray(buffer, arr);
+        auto data = std::vector<uint8_t>(arr.begin(), arr.end());
+
+        if (contentHandler)
+          contentHandler->ProcessMessage(std::move(data), args);
+        else
+          args["data"] = message;
+      }
+      else
+      {
+        if (contentHandler)
+          contentHandler->ProcessMessage(string{message}, args);
+        else
+          args["data"] = message;
+      }
+
       this->SendEvent("websocketMessage", std::move(args));
     });
     ws->SetOnClose([this, id, weakInstance](IWebSocketResource::CloseCode code, const string& reason)
