@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Build fixes from folly update",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-23T20:32:51.510Z"
+}

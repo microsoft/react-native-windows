@@ -114,7 +114,7 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
     'powershell',
     'WindowsStoreAppUtils.ps1',
   );
-  execSync(`powershell Unblock-File "${windowsStoreAppUtilsPath}"`);
+  execSync(`powershell -NoProfile Unblock-File "${windowsStoreAppUtilsPath}"`);
   popd();
   return windowsStoreAppUtilsPath;
 }
@@ -328,7 +328,7 @@ export async function deployToDesktop(
   }
 
   const appFamilyName = execSync(
-    `powershell -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+    `powershell -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
   )
     .toString()
     .trim();

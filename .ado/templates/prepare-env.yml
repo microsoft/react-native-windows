@@ -79,3 +79,4 @@ steps:
 
   - powershell: |
         Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(Build.StagingDirectory)\CrashDumps"
+    displayName: Set MSBUILDDEBUGPATH

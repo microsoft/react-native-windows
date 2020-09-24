@@ -56,7 +56,7 @@ console.log(`Selected tests: ${opts}`);
 
 function ensureRunningInHyperV() {
   const baseboardMfr = child_process
-    .execSync('powershell.exe (gwmi Win32_BaseBoard).Manufacturer')
+    .execSync('powershell.exe -NoProfile (gwmi Win32_BaseBoard).Manufacturer')
     .toString()
     .replace(/[\r\n]/, '');
   if (!baseboardMfr.startsWith('Microsoft Corporation')) {

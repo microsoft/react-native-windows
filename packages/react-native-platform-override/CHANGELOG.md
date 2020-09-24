@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Tue, 22 Sep 2020 04:46:10 GMT and should not be manually modified.
+This log was last generated on Thu, 24 Sep 2020 05:06:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.8
+
+Thu, 24 Sep 2020 05:06:21 GMT
+
+### Patches
+
+- Ignore filemode for Scratch Repository (ngerlem@microsoft.com)
 
 ## 0.2.7
 

@@ -6,7 +6,6 @@
  */
 
 import * as ora from 'ora';
-import * as prettyFormat from 'pretty-format';
 import * as psList from 'ps-list';
 
 import {execSync} from 'child_process';
@@ -29,12 +28,15 @@ export default class IntegrationTestRunner {
       component: startingComponent,
     });
 
-    if (res.status !== 'okay') {
-      throw new Error(
-        `Unexpected response going to initial test page: ${prettyFormat(res)}`,
+    if (res.status === 'error') {
+      failWithoutContext(`Error going to initial component: "${res.message}"`);
+    } else if (res.status !== 'okay') {
+      failWithoutContext(
+        `Unexpected response going to initial component: ${JSON.stringify(
+          res,
+        )}`,
       );
     }
-
     return new IntegrationTestRunner(testClient);
   }
 
@@ -60,7 +62,7 @@ export default class IntegrationTestRunner {
 
     switch (res.status) {
       case 'error':
-        failWithoutContext(`Error from test host: ${res.message}`);
+        failWithoutContext(`Error from test host: "${res.message}"`);
         break;
 
       case 'exception':
@@ -92,7 +94,9 @@ export default class IntegrationTestRunner {
         break;
 
       case 'timeout':
-        failWithoutContext('The test timed out without providing a result');
+        failWithoutContext(
+          'The test timed out without seeing an exception or TestModule result',
+        );
         break;
 
       case 'passed':
@@ -100,7 +104,9 @@ export default class IntegrationTestRunner {
         break;
 
       default:
-        throw new Error(`Unexpected response to test command: ${res}`);
+        throw new Error(
+          `Unexpected response to test command: ${JSON.stringify(res)}`,
+        );
     }
   }
 

@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Thu, 24 Sep 2020 05:06:21 GMT",
+      "tag": "react-native-platform-override_v0.2.8",
+      "version": "0.2.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Ignore filemode for Scratch Repository",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0ccff665e77368362e717eaa1957361d0e5217b8",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Sep 2020 04:46:10 GMT",
       "tag": "react-native-platform-override_v0.2.7",
       "version": "0.2.7",

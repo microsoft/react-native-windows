@@ -38,7 +38,7 @@ async function generateCertificate(
       const timeout = 10000; // 10 seconds;
       const thumbprint = childProcess
         .execSync(
-          `powershell -command "Write-Output (New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject 'CN=${currentUser}' -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3', '2.5.29.19={text}Subject Type:End Entity') -CertStoreLocation 'Cert:\\CurrentUser\\My').Thumbprint"`,
+          `powershell -NoProfile -Command "Write-Output (New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject 'CN=${currentUser}' -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3', '2.5.29.19={text}Subject Type:End Entity') -CertStoreLocation 'Cert:\\CurrentUser\\My').Thumbprint"`,
           {timeout},
         )
         .toString()
@@ -47,7 +47,7 @@ async function generateCertificate(
         fs.mkdirSync(path.join(windowsDir, newProjectName));
       }
       childProcess.execSync(
-        `powershell -command "$pwd = (ConvertTo-SecureString -String password -Force -AsPlainText); Export-PfxCertificate -Cert 'cert:\\CurrentUser\\My\\${thumbprint}' -FilePath ${path.join(
+        `powershell -NoProfile -Command "$pwd = (ConvertTo-SecureString -String password -Force -AsPlainText); Export-PfxCertificate -Cert 'cert:\\CurrentUser\\My\\${thumbprint}' -FilePath ${path.join(
           windowsDir,
           newProjectName,
           newProjectName,
@@ -105,6 +105,11 @@ interface CppNugetPackage extends NugetPackage {
   hasTargets: boolean;
 }
 
+function pascalCase(str: string) {
+  const camelCase = _.camelCase(str);
+  return camelCase[0].toUpperCase() + camelCase.substr(1);
+}
+
 export async function copyProjectTemplateAndReplace(
   srcRootPath: string,
   destPath: string,
@@ -128,13 +133,17 @@ export async function copyProjectTemplateAndReplace(
 
   // React-native init only allows alphanumerics in project names, but other
   // new project tools (like create-react-native-module) are less strict.
-  newProjectName = _.camelCase(newProjectName);
+  if (projectType === 'lib') {
+    newProjectName = pascalCase(newProjectName);
+  }
 
   // Similar to the above, but we want to retain namespace separators
-  namespace = namespace
-    .split(/[\.\:]+/)
-    .map(_.camelCase)
-    .join('.');
+  if (projectType === 'lib') {
+    namespace = namespace
+      .split(/[\.\:]+/)
+      .map(pascalCase)
+      .join('.');
+  }
 
   createDir(path.join(destPath, windowsDir));
   createDir(path.join(destPath, windowsDir, newProjectName));
