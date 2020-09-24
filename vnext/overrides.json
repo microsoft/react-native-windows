@@ -10,7 +10,8 @@
     "DeforkingPatches/README.md",
     "src/tsconfig.json",
     "**/*.windesktop.js",
-    "src/RNTester/js/examples-win/**"
+    "src/RNTester/js/examples-win/**",
+    "src/IntegrationTests/*Test.js"
   ],
   "overrides": [
     {
@@ -86,7 +87,15 @@
     },
     {
       "type": "platform",
+      "file": "src/IntegrationTests/websocket_integration_test_server_blob.js"
+    },
+    {
+      "type": "platform",
       "file": "src/IntegrationTests/websocket_integration_test_server_binary.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/IntegrationTests/WebSocketBlobTest.js"
     },
     {
       "type": "platform",

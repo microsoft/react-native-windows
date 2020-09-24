@@ -108,29 +108,22 @@ class WebSocketBlobTest extends React.Component<{}, State> {
   };
 
   _receivedTestExpectedResponse = () => {
-      console.warn(this.state.lastMessage?.size);
-      console.warn('bat');
-      console.warn(this.state.testExpectedResponse.length);
+    if (
+      this.state.lastMessage?.size !== this.state.testExpectedResponse.length
+    ) {
+      return false;
+    }
 
-     if (
-       this.state.lastMessage?.size !==
-       this.state.testExpectedResponse.length
-     ) {
-       return false;
-     }
+    //for (var i = 0; i < expected.length; i++) {
+    //  if (expected[i] !== result[i]) {
+    //    return false;
+    //  }
+    //}
 
-//     for (var i = 0; i < expected.length; i++) {
-//       if (expected[i] !== result[i]) {
-//         return false;
-//       }
-//     }
-//
     return true;
   };
 
   componentDidMount() {
-    console.log('mounted')
-    console.warn('mounted')
     this.testConnect();
   }
 
