@@ -7,7 +7,7 @@
 
 import * as React from 'react';
 import {assert} from 'chai';
-import {AsyncStorage, Image, Platform} from 'react-native';
+import {AsyncStorage, Image, Platform, View} from 'react-native';
 import {functionTest, componentTest} from './lib/TestDefinition';
 
 /**
@@ -41,8 +41,15 @@ functionTest('AsyncNativeModuleExample', async () => {
 
 /**
  * Tests can be written as React Components which call callbacks
+ *
+ * Disabled on pre-1903 due to image load crashes (#6085)
  */
 componentTest('ComponentExample', ({pass, fail}) => {
+  if ((Platform.Version as number) < 8) {
+    pass();
+    return <View />;
+  }
+
   return (
     <Image
       source={require('react-native-windows/IntegrationTests/blue_square.png')}

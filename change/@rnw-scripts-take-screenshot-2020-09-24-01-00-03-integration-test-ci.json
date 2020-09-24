@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Add Script to Screenshot Desktop",
+  "packageName": "@rnw-scripts/take-screenshot",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-24T08:00:03.515Z"
+}
