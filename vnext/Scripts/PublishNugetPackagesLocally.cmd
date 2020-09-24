@@ -57,13 +57,13 @@ echo Invoking publish nuget packages with: %0 %*
     )
 
 :PrepFiles
-    powershell %ScriptFolder%tfs\Layout-Headers.ps1 -NuGetPackageVersion %version%
+    powershell -NoProfile %ScriptFolder%tfs\Layout-Headers.ps1 -NuGetPackageVersion %version%
     if ERRORLEVEL 1 (
         echo Failed to layout files for nuget packing
         exit /b 1
     )
 
-    powershell -Command "(Get-Content -Path %ScriptFolder%..\target\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '%version%' | Set-Content -Path  %ScriptFolder%..\target\Microsoft.ReactNative.VersionCheck.targets"
+    powershell -NoProfile -Command "(Get-Content -Path %ScriptFolder%..\target\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '%version%' | Set-Content -Path  %ScriptFolder%..\target\Microsoft.ReactNative.VersionCheck.targets"
     if ERRORLEVEL 1 (
         echo Failed to path version check file for nuget packing
         exit /b 1
@@ -89,7 +89,7 @@ exit /b 0
     echo Processing %packageId%
     echo --------------------------------
     if '%strip%' == 'strip' (
-        powershell %ScriptFolder%StripAdditionalPlatformsFromNuspec.ps1 -nuspec %scriptFolder%%nuspecFile% -outFile %targetNuspec% -slices %slices% %3 %4 %5 %6
+        powershell -NoProfile %ScriptFolder%StripAdditionalPlatformsFromNuspec.ps1 -nuspec %scriptFolder%%nuspecFile% -outFile %targetNuspec% -slices %slices% %3 %4 %5 %6
     ) else (
         copy %scriptFolder%%nuspecFile% %targetNuspec% /y
     )
