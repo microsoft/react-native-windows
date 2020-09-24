@@ -10,9 +10,6 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{63472e53-239b-4816-af09-ed2789b8fa95}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Executors">
-      <UniqueIdentifier>{57577307-7ee7-4a55-8d17-c142b3f6f9cb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Modules">
       <UniqueIdentifier>{ae049213-3bdf-4cbe-83f4-39625a414539}</UniqueIdentifier>
     </Filter>
@@ -21,9 +18,6 @@
     </Filter>
     <Filter Include="Source Files\CxxReactWin32">
       <UniqueIdentifier>{13b0d9c2-9c50-4245-b23f-e120dc6442cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Executors">
-      <UniqueIdentifier>{fe8806a2-f72f-4dc3-9996-3a0ee66101ef}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Modules">
       <UniqueIdentifier>{56988676-220f-43a7-b8b1-8ecc51158498}</UniqueIdentifier>
