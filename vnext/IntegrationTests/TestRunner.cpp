@@ -6,10 +6,14 @@
 
 #include <DevSettings.h>
 #include <InstanceManager.h>
-#include <cxxreact/Instance.h>
+#include <RuntimeOptions.h>
 #include "TestInstance.h"
 #include "TestModule.h"
 
+// React Native
+#include <cxxreact/Instance.h>
+
+// Windows API
 #include <objbase.h>
 #include <locale>
 
@@ -69,7 +73,8 @@ TestResult TestRunner::RunTest(string &&bundlePath, string &&appName, NativeLogg
     // Note, further configuration should be done in each Windows variant's
     // TestRunner implementation.
     shared_ptr<DevSettings> devSettings = make_shared<DevSettings>();
-    devSettings->useWebDebugger = true; // WebSocketJSExecutor can't register native log hooks.//TODO: Revert!
+    // WebSocketJSExecutor can't register native log hooks. Default to false.
+    devSettings->useWebDebugger = GetRuntimeOptionBool("TestRunner.UseWebDebugger");
     devSettings->liveReloadCallback = []() {}; // Enables ChakraExecutor
     devSettings->errorCallback = [&result](string message) {
       result.Message = Microsoft::Common::Unicode::Utf8ToUtf16(message);
