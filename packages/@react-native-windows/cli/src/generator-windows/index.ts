@@ -105,6 +105,11 @@ interface CppNugetPackage extends NugetPackage {
   hasTargets: boolean;
 }
 
+function pascalCase(str: string) {
+  const camelCase = _.camelCase(str);
+  return camelCase[0].toUpperCase() + camelCase.substr(1);
+}
+
 export async function copyProjectTemplateAndReplace(
   srcRootPath: string,
   destPath: string,
@@ -128,13 +133,17 @@ export async function copyProjectTemplateAndReplace(
 
   // React-native init only allows alphanumerics in project names, but other
   // new project tools (like create-react-native-module) are less strict.
-  newProjectName = _.camelCase(newProjectName);
+  if (projectType === 'lib') {
+    newProjectName = pascalCase(newProjectName);
+  }
 
   // Similar to the above, but we want to retain namespace separators
-  namespace = namespace
-    .split(/[\.\:]+/)
-    .map(_.camelCase)
-    .join('.');
+  if (projectType === 'lib') {
+    namespace = namespace
+      .split(/[\.\:]+/)
+      .map(pascalCase)
+      .join('.');
+  }
 
   createDir(path.join(destPath, windowsDir));
   createDir(path.join(destPath, windowsDir, newProjectName));
