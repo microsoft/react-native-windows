@@ -16,9 +16,13 @@ extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateAsyncStorageMod
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
     const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread) noexcept;
 
+} // namespace react
+} // namespace facebook
+
+namespace Microsoft::React {
+
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept;
 
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule() noexcept;
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React

@@ -55,14 +55,12 @@ class BlobModule : public facebook::xplat::module::CxxModule {
 };
 
 class BlobWebSocketModuleContentHandler : public IWebSocketModuleContentHandler {
-
   std::unordered_map<std::string, std::vector<std::uint8_t>> m_blobs;
   std::mutex m_blobsMutex;
   std::unordered_set<std::int64_t> m_socketIDs;
   std::mutex m_socketIDsMutex;
 
-public:
-
+ public:
 #pragma region IWebSocketModuleContentHandler overrides
 
   void Register(std::int64_t socketID) noexcept override;
@@ -71,7 +69,8 @@ public:
 
   bool IsRegistered(std::int64_t socketID) noexcept override;
 
-  std::vector<std::uint8_t> ResolveMessage(std::string &&blobId, std::int64_t offset, std::int64_t size) noexcept override;
+  std::vector<std::uint8_t>
+  ResolveMessage(std::string &&blobId, std::int64_t offset, std::int64_t size) noexcept override;
 
   void RemoveMessage(std::string &&blobId) noexcept override;
 
@@ -79,10 +78,9 @@ public:
 
   void ProcessMessage(std::vector<std::uint8_t> &&message, folly::dynamic &params) override;
 
-  void StoreMessage(std::vector<std::uint8_t> &&message, std::string&& blobId) noexcept override;
+  void StoreMessage(std::vector<std::uint8_t> &&message, std::string &&blobId) noexcept override;
 
 #pragma endregion IWebSocketModuleContentHandler overrides
-
 };
 
 } // namespace Microsoft::React

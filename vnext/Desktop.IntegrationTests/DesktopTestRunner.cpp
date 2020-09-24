@@ -72,7 +72,8 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
       make_tuple(
           TestDeviceInfoModule::name,
           []() -> unique_ptr<CxxModule> { return make_unique<TestDeviceInfoModule>(); },
-          nativeQueue)};
+          nativeQueue),
+      make_tuple("BlobModule", []() -> unique_ptr<CxxModule> { return CreateBlobModule(); }, nativeQueue)};
 
   // <0> string
   // <1> CxxModule::Provider

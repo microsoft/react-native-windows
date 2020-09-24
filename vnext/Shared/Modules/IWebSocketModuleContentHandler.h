@@ -16,7 +16,6 @@ namespace Microsoft::React {
 /// See https://github.com/facebook/react-native/blob/v0.63.2/React/CoreModules/RCTWebSocketModule.h#L12
 /// </summary>
 struct IWebSocketModuleContentHandler {
-
   static std::weak_ptr<IWebSocketModuleContentHandler> GetInstance() noexcept;
 
   virtual ~IWebSocketModuleContentHandler() noexcept {}
@@ -36,7 +35,7 @@ struct IWebSocketModuleContentHandler {
 
   virtual void ProcessMessage(std::vector<std::uint8_t> &&message, folly::dynamic &params) = 0;
 
-  virtual void StoreMessage(std::vector<std::uint8_t> &&message, std::string&& blobId) noexcept = 0;
+  virtual void StoreMessage(std::vector<std::uint8_t> &&message, std::string &&blobId) noexcept = 0;
 };
 
 } // namespace Microsoft::React

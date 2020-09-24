@@ -41,8 +41,7 @@ BlobModule::BlobModule() noexcept {
 
 #pragma region CxxModule overrides
 
-string BlobModule::getName()
-{
+string BlobModule::getName() {
   return moduleName;
 }
 
@@ -182,26 +181,26 @@ bool BlobWebSocketModuleContentHandler::IsRegistered(int64_t socketID) noexcept 
   return m_socketIDs.find(socketID) != m_socketIDs.end();
 }
 
-vector<uint8_t> BlobWebSocketModuleContentHandler::ResolveMessage(string &&blobId, int64_t offset, int64_t size) noexcept
+vector<uint8_t>
+BlobWebSocketModuleContentHandler::ResolveMessage(string &&blobId, int64_t offset, int64_t size) noexcept
 /*override*/
 {
   lock_guard<mutex> lock{m_blobsMutex};
 
   auto data = m_blobs.at(std::move(blobId));
-  auto start = data.cbegin() + offset;
-  auto end = start + size;
+  auto start = data.cbegin() + static_cast<size_t>(offset);
+  auto end = start + static_cast<size_t>(size);
 
   return vector(start, end);
 }
 
-void BlobWebSocketModuleContentHandler::RemoveMessage(string&& blobId) noexcept
-{
+void BlobWebSocketModuleContentHandler::RemoveMessage(string &&blobId) noexcept {
   lock_guard<mutex> lock{m_blobsMutex};
 
   m_blobs.erase(std::move(blobId));
 }
 
-void BlobWebSocketModuleContentHandler::ProcessMessage(string&& message, dynamic& params) /*override*/
+void BlobWebSocketModuleContentHandler::ProcessMessage(string &&message, dynamic &params) /*override*/
 {
   params["data"] = std::move(message);
 }
@@ -220,7 +219,7 @@ void BlobWebSocketModuleContentHandler::ProcessMessage(vector<uint8_t> &&message
   params["type"] = "blob";
 }
 
-void BlobWebSocketModuleContentHandler::StoreMessage(vector<uint8_t>&& message, std::string&& blobId) noexcept
+void BlobWebSocketModuleContentHandler::StoreMessage(vector<uint8_t> &&message, std::string &&blobId) noexcept
 /*override*/
 {
   lock_guard<mutex> lock{m_blobsMutex};
@@ -233,8 +232,7 @@ void BlobWebSocketModuleContentHandler::StoreMessage(vector<uint8_t>&& message, 
   return s_contentHandler;
 }
 
-/*extern*/ std::unique_ptr<module::CxxModule> CreateBlobModule() noexcept
-{
+/*extern*/ std::unique_ptr<module::CxxModule> CreateBlobModule() noexcept {
   return std::make_unique<BlobModule>();
 }
 

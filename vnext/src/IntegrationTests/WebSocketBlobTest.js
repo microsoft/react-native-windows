@@ -12,7 +12,7 @@
 
 const React = require('react');
 const ReactNative = require('react-native');
-const {View} = ReactNative;
+const {AppRegistry, View} = ReactNative;
 const {TestModule} = ReactNative.NativeModules;
 
 const DEFAULT_WS_URL = 'ws://localhost:5557/';
@@ -31,7 +31,7 @@ type State = {
   ...
 };
 
-class WebSocketBinaryTest extends React.Component<{}, State> {
+class WebSocketBlobTest extends React.Component<{}, State> {
   state: State = {
     url: DEFAULT_WS_URL,
     fetchStatus: null,
@@ -111,7 +111,7 @@ class WebSocketBinaryTest extends React.Component<{}, State> {
       console.warn(this.state.lastMessage?.size);
       console.warn('bat');
       console.warn(this.state.testExpectedResponse.length);
-      
+
      if (
        this.state.lastMessage?.size !==
        this.state.testExpectedResponse.length
@@ -168,6 +168,8 @@ class WebSocketBinaryTest extends React.Component<{}, State> {
   }
 }
 
-WebSocketBinaryTest.displayName = 'WebSocketBinaryTest';
+WebSocketBlobTest.displayName = 'WebSocketBlobTest';
 
-module.exports = WebSocketBinaryTest;
+AppRegistry.registerComponent('WebSocketBlobTest', () => WebSocketBlobTest);
+
+module.exports = WebSocketBlobTest;
