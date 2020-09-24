@@ -719,7 +719,12 @@ jobs:
         inputs:
           script: yarn api
 
-  - template: templates/e2e-test-job.yml # Template reference
+  - template: templates/e2e-test-job.yml
     parameters:
       name: E2ETest
+      BuildPlatform: x64
+
+  - template: templates/integration-test-job.yml
+    parameters:
+      name: IntegrationTest
       BuildPlatform: x64

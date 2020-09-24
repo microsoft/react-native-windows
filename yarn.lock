@@ -11785,7 +11785,7 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
-pinkie-promise@^2.0.0:
+pinkie-promise@^2.0.0, pinkie-promise@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/pinkie-promise/-/pinkie-promise-2.0.1.tgz#2135d6dfa7a358c069ac9b178776288228450ffa"
   integrity sha1-ITXW36ejWMBprJsXh3YogihFD/o=
@@ -12871,6 +12871,14 @@ scheduler@^0.15.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
+screenshot-desktop@^1.12.2:
+  version "1.12.2"
+  resolved "https://registry.yarnpkg.com/screenshot-desktop/-/screenshot-desktop-1.12.2.tgz#7f45f247ee14fc31a11cd027967b278aaee74f07"
+  integrity sha512-0MdHZgWsojyJ5NzCPISrNqArfuygkrZuhpcqisYg/6JqoqV7qoDFLP5ZNqH1TpZoLbFDTqjZwuIMI+0dsHLRdg==
+  dependencies:
+    pinkie-promise "^2.0.1"
+    temp "^0.9.0"
+
 sec@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/sec/-/sec-1.0.0.tgz#033d60a3ad20ecf2e00940d14f97823465774335"
@@ -13783,6 +13791,13 @@ temp@^0.8.1:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/temp/-/temp-0.8.4.tgz#8c97a33a4770072e0a05f919396c7665a7dd59f2"
   integrity sha512-s0ZZzd0BzYv5tLSptZooSjK8oj6C+c19p7Vqta9+6NPOf7r+fxq0cJe6/oN4LTC79sy5NY8ucOJNgwsKCSbfqg==
+  dependencies:
+    rimraf "~2.6.2"
+
+temp@^0.9.0:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/temp/-/temp-0.9.1.tgz#2d666114fafa26966cd4065996d7ceedd4dd4697"
+  integrity sha512-WMuOgiua1xb5R56lE0eH6ivpVmg/lq2OHm4+LtT/xtEtPQ+sz6N3bBM6WZ5FvO1lO4IKIOb43qnhoc4qxP5OeA==
   dependencies:
     rimraf "~2.6.2"
 

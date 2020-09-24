@@ -39,8 +39,7 @@ App::App() noexcept {
 
   PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
 
-  m_harness = winrt::make_self<IntegrationTest::TestHostHarness>();
-  m_harness->SetReactHost(Host());
+  m_harness = winrt::make_self<IntegrationTest::TestHostHarness>(Host());
 
   InitializeComponent();
 }
