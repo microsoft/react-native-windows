@@ -17,6 +17,7 @@
     "watch": "just-scripts watch"
   },
   "dependencies": {
+    "applicationinsights": "^1.8.7",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
     "envinfo": "^7.5.0",

@@ -6,6 +6,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import * as findUp from 'find-up';
 import {
   copyProjectTemplateAndReplace,
   installDependencies,
@@ -15,6 +16,13 @@ import {autoLinkCommand} from './runWindows/utils/autolink';
 import {runWindowsCommand} from './runWindows/runWindows';
 import {dependencyConfigWindows} from './config/dependencyConfig';
 import {projectConfigWindows} from './config/projectConfig';
+
+import * as appInsights from 'applicationinsights';
+
+console.log('setting up telemetry client');
+appInsights.setup('a7b9ed40-e2a4-4166-bf80-230540f4dcff').start();
+let client = appInsights.defaultClient;
+console.log('done');
 
 /**
  * Project generation options
@@ -59,24 +67,53 @@ export async function generateWindows(
   ns: string,
   options: GenerateOptions,
 ) {
-  if (!fs.existsSync(projectDir)) {
-    fs.mkdirSync(projectDir);
+  let success = false;
+  try {
+    if (!fs.existsSync(projectDir)) {
+      fs.mkdirSync(projectDir);
+    }
+
+    installDependencies(options);
+
+    const rnwPackage = path.dirname(
+      require.resolve('react-native-windows/package.json', {
+        paths: [projectDir],
+      }),
+    );
+    const templateRoot = path.join(rnwPackage, 'template');
+    await copyProjectTemplateAndReplace(
+      templateRoot,
+      projectDir,
+      name,
+      ns,
+      options,
+    );
+    success = true;
+  } finally {
+    const cwd = process.cwd();
+    const pkgJsonPath = findUp.sync('package.json', {cwd});
+    let rnVersion = '';
+    if (pkgJsonPath) {
+      let pkgJson = require(pkgJsonPath);
+      // check how react-native is installed
+      if ('dependencies' in pkgJson && 'react-native' in pkgJson.dependencies) {
+        // regular dependency (probably an app), inject into json and run install
+        rnVersion = pkgJson.dependencies['react-native'];
+      }
+    }
+    client.trackEvent({
+      name: 'generate-windows',
+      properties: {
+        success: success,
+        ...options,
+        'react-native': rnVersion,
+      },
+    });
+
+    client.flush();
   }
-
-  installDependencies(options);
-
-  const rnwPackage = path.dirname(
-    require.resolve('react-native-windows/package.json', {paths: [projectDir]}),
-  );
-  const templateRoot = path.join(rnwPackage, 'template');
-  await copyProjectTemplateAndReplace(
-    templateRoot,
-    projectDir,
-    name,
-    ns,
-    options,
-  );
 }
+
 
 // Assert the interface here doesn't change for the reasons above
 const assertStableInterface: typeof generateWindows extends (
