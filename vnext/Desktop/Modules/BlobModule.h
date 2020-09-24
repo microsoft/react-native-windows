@@ -21,7 +21,7 @@ class BlobModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<IWebSocketModuleContentHandler> m_contentHandler;
 
  public:
-  enum MethodId {
+  enum class MethodId {
     AddNetworkingHandler = 0,
     AddWebSocketHandler = 1,
     RemoveWebSocketHandler = 2,
@@ -54,7 +54,7 @@ class BlobModule : public facebook::xplat::module::CxxModule {
 #pragma endregion CxxModule overrides
 };
 
-class BlobWebSocketModuleContentHandler : public IWebSocketModuleContentHandler {
+class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHandler {
   std::unordered_map<std::string, std::vector<std::uint8_t>> m_blobs;
   std::mutex m_blobsMutex;
   std::unordered_set<std::int64_t> m_socketIDs;
@@ -67,7 +67,7 @@ class BlobWebSocketModuleContentHandler : public IWebSocketModuleContentHandler 
 
   void Unregister(std::int64_t socketID) noexcept override;
 
-  bool IsRegistered(std::int64_t socketID) noexcept override;
+  const bool IsRegistered(std::int64_t socketID) noexcept override;
 
   std::vector<std::uint8_t>
   ResolveMessage(std::string &&blobId, std::int64_t offset, std::int64_t size) noexcept override;

@@ -35,8 +35,10 @@ weak_ptr<Microsoft::React::IWebSocketModuleContentHandler> s_contentHandler;
 namespace Microsoft::React {
 
 BlobModule::BlobModule() noexcept {
-  m_contentHandler = std::make_shared<BlobWebSocketModuleContentHandler>();
-  s_contentHandler = m_contentHandler;
+  if (!m_contentHandler) {
+    m_contentHandler = std::make_shared<BlobWebSocketModuleContentHandler>();
+    s_contentHandler = m_contentHandler;
+  }
 }
 
 #pragma region CxxModule overrides
@@ -49,114 +51,89 @@ std::map<string, dynamic> BlobModule::getConstants() {
   return {{"BLOB_URI_SCHEME", blobURIScheme}, {"BLOB_URI_HOST", {}}};
 }
 
-// clang-format off
 std::vector<module::CxxModule::Method> BlobModule::getMethods() {
-  return
-  {
-    Method(
-      "addNetworkingHandler",
-      [this](dynamic args)
-      {
-        //TODO: Implement
-      }
-    ),
+  return {Method(
+              "addNetworkingHandler",
+              [this](dynamic args) {
+                // TODO: Implement #6081
+              }),
 
-    Method(
-      "addWebSocketHandler",
-      [this](dynamic args)
-      {
-        auto id = jsArgAsInt(args, 0);
+          Method(
+              "addWebSocketHandler",
+              [this](dynamic args) {
+                auto id = jsArgAsInt(args, 0);
 
-        m_contentHandler->Register(id);
-      }
-    ),
+                m_contentHandler->Register(id);
+              }),
 
-    Method(
-      "removeWebSocketHandler",
-      [this](dynamic args)
-      {
-        auto id = jsArgAsInt(args, 0);
+          Method(
+              "removeWebSocketHandler",
+              [this](dynamic args) {
+                auto id = jsArgAsInt(args, 0);
 
-        m_contentHandler->Unregister(id);
-      }
-    ),
+                m_contentHandler->Unregister(id);
+              }),
 
-    Method(
-      "sendOverSocket",
-      [this](dynamic args)
-      {
-        auto blob = jsArgAsObject(args, 0);
-        auto blobId = blob["blobId"].getString();
-        auto offset = blob["offset"].getInt();
-        auto size = blob["size"].getInt();
-        auto socketID = jsArgAsInt(args, 1);
+          Method(
+              "sendOverSocket",
+              [this](dynamic args) {
+                auto blob = jsArgAsObject(args, 0);
+                auto blobId = blob["blobId"].getString();
+                auto offset = blob["offset"].getInt();
+                auto size = blob["size"].getInt();
+                auto socketID = jsArgAsInt(args, 1);
 
-        auto data = m_contentHandler->ResolveMessage(std::move(blobId), offset, size);
+                auto data = m_contentHandler->ResolveMessage(std::move(blobId), offset, size);
 
-        if (auto instance = getInstance().lock())
-        {
-          auto buffer = CryptographicBuffer::CreateFromByteArray(data);
-          auto winrtString = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
-          auto base64String = Common::Unicode::Utf16ToUtf8(std::move(winrtString));
+                if (auto instance = getInstance().lock()) {
+                  auto buffer = CryptographicBuffer::CreateFromByteArray(data);
+                  auto winrtString = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
+                  auto base64String = Common::Unicode::Utf16ToUtf8(std::move(winrtString));
 
-          auto sendArgs = dynamic::array(std::move(base64String), socketID);
-          instance->callJSFunction("WebSocketModule", "sendBinary", std::move(sendArgs));
-        }
-      }
-    ),
+                  auto sendArgs = dynamic::array(std::move(base64String), socketID);
+                  instance->callJSFunction("WebSocketModule", "sendBinary", std::move(sendArgs));
+                }
+              }),
 
-    Method(
-      "createFromParts",
-      [this](dynamic args)
-      {
-        auto parts = jsArgAsArray(args, 0);   // Array<Object>
-        auto blobId = jsArgAsString(args, 1);
-        vector<uint8_t> buffer{};
+          Method(
+              "createFromParts",
+              [this](dynamic args) {
+                auto parts = jsArgAsArray(args, 0); // Array<Object>
+                auto blobId = jsArgAsString(args, 1);
+                vector<uint8_t> buffer{};
 
-        for(auto& part : parts)
-        {
-          auto type = part["type"];
-          if (type == "blob")
-          {
-            auto blob = part["data"];
-            auto blobId = blob["blobId"].asString();
+                for (const auto &part : parts) {
+                  auto type = part["type"];
+                  if (type == "blob") {
+                    auto blob = part["data"];
+                    auto bufferPart = m_contentHandler->ResolveMessage(
+                        blob["blobId"].asString(), blob["offset"].asInt(), blob["size"].asInt());
+                    buffer.reserve(buffer.size() + bufferPart.size());
+                    buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
+                  } else if (type == "string") {
+                    auto data = part["data"].asString();
+                    auto bufferPart = vector<uint8_t>(data.begin(), data.end());
 
-            auto bufferPart = m_contentHandler->ResolveMessage(blob["blobId"].asString(), blob["offset"].asInt(), blob["size"].asInt());
-            buffer.reserve(buffer.size() + bufferPart.size());
-            buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
-          }
-          else if (type == "string")
-          {
-            auto data = part["data"].asString();
-            auto bufferPart = vector<uint8_t>(data.begin(), data.end());
+                    buffer.reserve(buffer.size() + bufferPart.size());
+                    buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
+                  } else {
+                    // TODO: Send error message to instance?
+                    return;
+                  }
 
-            buffer.reserve(buffer.size() + bufferPart.size());
-            buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
-          }
-          else// if (auto instance = getInstance().lock())
-          {
-            //TODO: Error?
-            //instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array("eventName", dynamic{}));
-            return;
-          }
+                  m_contentHandler->StoreMessage(std::move(buffer), std::move(blobId));
+                }
+              }),
 
-          m_contentHandler->StoreMessage(std::move(buffer), std::move(blobId));
-        }
-      }
-    ),
+          Method(
+              "release",
+              [this](dynamic args) // blobId: string
+              {
+                auto blobId = jsArgAsString(args, 0);
 
-    Method(
-      "release",
-      [this](dynamic args)  // blobId: string
-      {
-        auto blobId = jsArgAsString(args, 0);
-
-        m_contentHandler->RemoveMessage(std::move(blobId));
-      }
-    )
-  };
+                m_contentHandler->RemoveMessage(std::move(blobId));
+              })};
 }
-// clang-format on
 
 #pragma endregion CxxModule overrides
 
@@ -175,7 +152,7 @@ void BlobWebSocketModuleContentHandler::Unregister(int64_t socketID) noexcept /*
     m_socketIDs.erase(socketID);
 }
 
-bool BlobWebSocketModuleContentHandler::IsRegistered(int64_t socketID) noexcept /*override*/
+const bool BlobWebSocketModuleContentHandler::IsRegistered(int64_t socketID) noexcept /*override*/
 {
   lock_guard<mutex> lock{m_socketIDsMutex};
   return m_socketIDs.find(socketID) != m_socketIDs.end();

@@ -35,7 +35,7 @@ void HttpResource::SendRequest(
     int64_t timeout,
     std::function<void(int64_t)> &&callback) noexcept {
   // Enforce supported args
-  assert(responseType == "text" || responseType == "base64" || "blob");
+  assert(responseType == "text" || responseType == "base64" || responseType == "blob");
   assert(!useIncrementalUpdates);
 
   // ISS:2306365 - Callback with the requestId

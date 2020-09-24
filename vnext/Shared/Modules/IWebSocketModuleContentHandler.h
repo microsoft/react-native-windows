@@ -24,7 +24,7 @@ struct IWebSocketModuleContentHandler {
 
   virtual void Unregister(std::int64_t socketID) noexcept = 0;
 
-  virtual bool IsRegistered(std::int64_t socketID) noexcept = 0;
+  virtual const bool IsRegistered(std::int64_t socketID) noexcept = 0;
 
   virtual std::vector<std::uint8_t>
   ResolveMessage(std::string &&blobId, std::int64_t offset, std::int64_t size) noexcept = 0;
