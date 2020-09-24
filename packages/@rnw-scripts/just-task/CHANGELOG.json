@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Thu, 24 Sep 2020 05:06:21 GMT",
+      "tag": "@rnw-scripts/just-task_v0.0.5",
+      "version": "0.0.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix test task when no tests present",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5a96480f422aa7c731d7febb900a3962e1265c08",
+            "package": "@rnw-scripts/just-task"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Sep 2020 05:08:52 GMT",
       "tag": "@rnw-scripts/just-task_v0.0.3",
       "version": "0.0.3",

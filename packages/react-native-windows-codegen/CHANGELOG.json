@@ -2,6 +2,21 @@
   "name": "react-native-windows-codegen",
   "entries": [
     {
+      "date": "Thu, 24 Sep 2020 05:06:21 GMT",
+      "tag": "react-native-windows-codegen_v0.1.6",
+      "version": "0.1.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Zero-Config Tests for CLI, react-native-windows-init, react-native-windows-codegen",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5a96480f422aa7c731d7febb900a3962e1265c08",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Sep 2020 05:06:22 GMT",
       "tag": "react-native-windows-codegen_v0.1.5",
       "version": "0.1.5",

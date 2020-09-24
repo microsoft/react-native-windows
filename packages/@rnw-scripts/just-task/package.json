@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/just-task",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "main": "just-task.js",
   "dependencies": {
