@@ -47,5 +47,24 @@ namespace {{ namespace }}
             frame.Navigate(typeof(MainPage));
             Window.Current.Activate();
         }
+
+        /// <summary>
+        /// Invoked when the application is launched by something other than normally by the
+        /// end user. The list of activation types is specified in the
+        ///  Windows.ApplicationModel.Activation.ActivationKind enum.
+        ///  </summary> 
+        ///  <param name="e">Details about the activation event.</param>
+        protected override void OnActivated(IActivatedEventArgs e)
+        {
+            base.OnActivated(e);
+            var frame = Window.Current.Content as Frame;
+            // If the application is activating from a not running state,
+            // we want to navigate to the main page and activate the window.
+            if (frame.GetNavigationState().Equals("1,0"))
+            {
+                frame.Navigate(typeof(MainPage));
+                Window.Current.Activate();
+            }
+        }
     }
 }
