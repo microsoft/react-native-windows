@@ -11,7 +11,9 @@
     "src/tsconfig.json",
     "**/*.windesktop.js",
     "src/RNTester/js/examples-win/**",
-    "src/IntegrationTests/*Test.js"
+    "src/IntegrationTests/WebSocketBlobTest.js",
+    "src/IntegrationTests/websocket_integration_test_server_binary.js",
+    "src/IntegrationTests/websocket_integration_test_server_blob.js"
   ],
   "overrides": [
     {
