@@ -41,8 +41,10 @@ functionTest('AsyncNativeModuleExample', async () => {
 
 /**
  * Tests can be written as React Components which call callbacks
+ *
+ * Disabled due to pre-1903 image load crashes hitting CI (#6085)
  */
-componentTest('ComponentExample', ({pass, fail}) => {
+componentTest.skip('ComponentExample', ({pass, fail}) => {
   return (
     <Image
       source={require('react-native-windows/IntegrationTests/blue_square.png')}
