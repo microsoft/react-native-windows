@@ -452,7 +452,7 @@ jobs:
         displayName: Check the metro bundle server
         inputs:
           targetType: 'inline'
-          script: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
+          script: Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests

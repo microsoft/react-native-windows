@@ -49,7 +49,7 @@ jobs:
       - powershell: |
           while ($true) {
             try {
-              Invoke-WebRequest -Uri "http://localhost:8081/index.bundle?platform=windows&dev=true"
+              Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/index.bundle?platform=windows&dev=true"
               break
             } catch [Exception] {
               echo $_.Exception
