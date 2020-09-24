@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Fix test task when no tests present",
+  "packageName": "@rnw-scripts/just-task",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-23T11:17:16.539Z"
+}

@@ -65,5 +65,5 @@ if (hasE2eTests && hasUnitTests) {
 } else if (hasUnitTests) {
   task('test', 'unitTest');
 } else {
-  logger.info('No tests found');
+  task('test', () => logger.info('No tests found'));
 }
