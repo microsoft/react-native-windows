@@ -28,6 +28,12 @@ functionTest.skip('FailingExample', () => {
  * Test methods can also be async
  */
 functionTest('AsyncNativeModuleExample', async () => {
+  // Using AsyncStorage will YellowBox, which crashes on pre-1903 (including
+  // CI) trying to load an image (#6085)
+  if (Platform.Version < 8) {
+    return;
+  }
+
   await AsyncStorage.clear();
   await AsyncStorage.setItem('foo', 'bar');
 
@@ -41,10 +47,8 @@ functionTest('AsyncNativeModuleExample', async () => {
 
 /**
  * Tests can be written as React Components which call callbacks
- *
- * Disabled due to pre-1903 image load crashes hitting CI (#6085)
  */
-componentTest.skip('ComponentExample', ({pass, fail}) => {
+componentTest('ComponentExample', ({pass, fail}) => {
   return (
     <Image
       source={require('react-native-windows/IntegrationTests/blue_square.png')}

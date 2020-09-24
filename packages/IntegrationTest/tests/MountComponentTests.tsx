@@ -95,6 +95,8 @@ componentTest(
 componentTest.skip('Modal', mountAndMeasure(RN.Modal));
 
 componentTest('Picker', props => {
+  // Using AsyncStorage will YellowBox, which crashes on pre-1903 (including
+  // CI) trying to load an image (#6085)
   if ((RN.Platform.Version as number) < 8) {
     props.pass();
     return <RN.View />;
