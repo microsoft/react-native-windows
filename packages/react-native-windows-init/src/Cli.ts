@@ -316,7 +316,7 @@ function installReactNativeWindows(
     }
   } else if (!version) {
     internalError(
-      'Unexpected error ecountered. If you are able, please file an issue on: https://github.com/microsoft/react-native-windows/issues/new/choose',
+      'Unexpected error encountered. If you are able, please file an issue on: https://github.com/microsoft/react-native-windows/issues/new/choose',
     );
   }
 
