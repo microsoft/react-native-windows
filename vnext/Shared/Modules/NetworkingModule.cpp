@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <Utils/CppWinrtLessExceptions.h>
+#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
@@ -25,7 +26,7 @@
 #pragma optimize("", off)
 #endif
 
-namespace react::uwp {
+namespace Microsoft::React {
 
 //
 // NetworkingModule::NetworkingHelper
@@ -423,4 +424,4 @@ auto NetworkingModule::getMethods() -> std::vector<Method> {
   };
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::React

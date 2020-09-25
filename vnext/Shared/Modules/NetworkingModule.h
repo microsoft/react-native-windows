@@ -11,7 +11,7 @@
 #include <memory>
 #include <vector>
 
-namespace react::uwp {
+namespace Microsoft::React {
 
 class NetworkingModule : public facebook::xplat::module::CxxModule {
  public:
@@ -31,4 +31,4 @@ class NetworkingModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<NetworkingHelper> m_networking;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::React
