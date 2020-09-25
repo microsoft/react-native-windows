@@ -18,6 +18,7 @@
     "react-native-windows-init": "./bin.js"
   },
   "dependencies": {
+    "applicationinsights": "^1.8.7",
     "chalk": "^4.1.0",
     "mustache": "^4.0.1",
     "npm-registry": "^0.1.13",
