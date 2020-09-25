@@ -390,6 +390,7 @@ jobs:
       #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage,WebSocket,Logging).
       #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
       Desktop.IntegrationTests.Filter: >
+        (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
         (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
         (FullyQualifiedName!~WebSocketModule_)&
         (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
