@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Let Toast actions open URIs in the application",
+  "packageName": "react-native-windows",
+  "email": "ryan.fowler@singlewire.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-25T20:24:25.120Z"
+}
