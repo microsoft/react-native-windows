@@ -102,7 +102,6 @@ class FlyoutShadowNode : public ShadowNodeBase {
   winrt::Popup GetFlyoutParentPopup() const;
   winrt::FlyoutPresenter GetFlyoutPresenter() const;
   void OnShowFlyout();
-  void EnsureXamlRootChangedRevoker();
   xaml::FrameworkElement m_targetElement = nullptr;
   winrt::Flyout m_flyout = nullptr;
   bool m_isLightDismissEnabled = true;
@@ -239,6 +238,11 @@ void FlyoutShadowNode::createView() {
     if (auto instance = wkinstance.lock()) {
       if (auto xamlRoot = static_cast<NativeUIManager *>(instance->NativeUIManager())->tryGetXamlRoot()) {
         flyoutBase6.XamlRoot(xamlRoot);
+        m_xamlRootChangedRevoker = xamlRoot.Changed(winrt::auto_revoke, [this](auto &&, auto &&) {
+          if (m_isLightDismissEnabled) {
+            onDropViewInstance();
+          }
+        });
       }
     }
   }
@@ -290,11 +294,6 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
         if (popup != nullptr) {
           popup.IsLightDismissEnabled(m_isLightDismissEnabled);
         }
-      }
-      if (m_xamlRootChangedRevoker && !m_isLightDismissEnabled) {
-        m_xamlRootChangedRevoker.revoke();
-      } else if (m_isLightDismissEnabled) {
-        EnsureXamlRootChangedRevoker();
       }
     } else if (propertyName == "isOpen") {
       if (propertyValue.isBool()) {
@@ -369,25 +368,6 @@ void FlyoutShadowNode::OnShowFlyout() {
   auto popup = GetFlyoutParentPopup();
   if (popup != nullptr) {
     popup.IsLightDismissEnabled(m_isLightDismissEnabled);
-  }
-
-  if (m_isLightDismissEnabled) {
-    EnsureXamlRootChangedRevoker();
-  }
-}
-
-void FlyoutShadowNode::EnsureXamlRootChangedRevoker() {
-  if (m_xamlRootChangedRevoker) {
-    return;
-  }
-  if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
-    auto wkinstance = GetViewManager()->GetReactInstance();
-    if (auto instance = wkinstance.lock()) {
-      if (auto xamlRoot = static_cast<NativeUIManager *>(instance->NativeUIManager())->tryGetXamlRoot()) {
-        m_xamlRootChangedRevoker =
-            xamlRoot.Changed(winrt::auto_revoke, [this](auto &&, auto &&) { onDropViewInstance(); });
-      }
-    }
   }
 }
 
