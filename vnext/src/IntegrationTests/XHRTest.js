@@ -88,19 +88,18 @@ class XHRTest extends React.Component<{}, Object> {
           Alert.alert('Error', xhr.responseText);
         }
       };
-      xhr.open('GET', 'https://github.com/microsoft/react-native-windows/raw/master/.github/hero2.png');
+      xhr.open('GET', 'https://en.wikipedia.org/favicon.ico');
       // Avoid gzip so we can actually show progress
       xhr.setRequestHeader('Accept-Encoding', '');
       xhr.send();
 
       this.setState({downloading: true});
     });
-
   };
 
   componentDidMount() {
     try {
-      async () => await this._download();
+      (async () => await this._download())();
       TestModule.markTestPassed(true);
       return;
     } catch (e) {
