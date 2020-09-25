@@ -241,7 +241,6 @@
     <ClInclude Include="Modules\LinkingManagerModule.h" />
     <ClInclude Include="Modules\LogBoxModule.h" />
     <ClInclude Include="Modules\NativeUIManager.h" />
-    <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="NativeModulesProvider.h" />

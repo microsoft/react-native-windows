@@ -518,9 +518,6 @@
     <ClInclude Include="Modules\NativeUIManager.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\NetworkingModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\TimingModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
