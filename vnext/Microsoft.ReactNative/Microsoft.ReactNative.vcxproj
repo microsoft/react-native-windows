@@ -439,7 +439,6 @@
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
     <ClCompile Include="Modules\LogBoxModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
-    <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />

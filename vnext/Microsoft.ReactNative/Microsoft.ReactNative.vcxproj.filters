@@ -167,9 +167,6 @@
     <ClCompile Include="Modules\NativeUIManager.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\NetworkingModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\TimingModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
