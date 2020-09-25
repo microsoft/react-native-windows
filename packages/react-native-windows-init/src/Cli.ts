@@ -21,10 +21,13 @@ import requireGenerateWindows from './requireGenerateWindows';
 
 import * as appInsights from 'applicationinsights';
 
-appInsights.setup('a7b9ed40-e2a4-4166-bf80-230540f4dcff')
-  .setInternalLogging(true, true)
-  .start();
-appInsights.defaultClient.config.maxBatchSize = 0;;
+/**
+ * Important:
+ * Do not use process.exit() in this script as it will prevent telemetry from being sent.
+ * See https://github.com/microsoft/ApplicationInsights-node.js/issues/580
+ */
+
+appInsights.setup('a7b9ed40-e2a4-4166-bf80-230540f4dcff');
 const telClient = appInsights.defaultClient;
 
 const npmConfReg = execSync('npm config get registry')
@@ -47,6 +50,15 @@ enum ExitCode {
   INCOMPATIBLE_OPTIONS = 10,
   DEVMODE_VERSION_MISMATCH = 11,
   NO_REACTNATIVE_DEPENDENCIES = 12,  
+}
+
+class UserError extends Error {
+  exitCode: ExitCode;
+
+  constructor(exitCode: ExitCode, message?: string) {
+    super(message);
+    this.exitCode = exitCode;
+  }
 }
 
 const argv = yargs
@@ -363,7 +375,7 @@ function installReactNativeWindows(
     );
   } else {
     userError(
-      "Unable to find 'react-native' in package.json's dependencies or devDepenencies. This should be run from within an existing react-native app or lib.",
+      "Unable to find 'react-native' in package.json's dependencies or devDependencies. This should be run from within an existing react-native app or lib.",
       ExitCode.NO_REACTNATIVE_DEPENDENCIES,
     );
   }
@@ -379,9 +391,8 @@ function installReactNativeWindows(
   );
 }
 
-function exit(exitCode: ExitCode, error?: String) : never {
-  try {
-    console.log(`Logging event with exit code ${ExitCode[exitCode]}`);
+function setExit(exitCode: ExitCode, error?: String) : void {
+  if (!process.exitCode || process.exitCode == ExitCode.SUCCESS) {
     telClient.trackEvent({
       name: 'init-exit',
       properties: {
@@ -390,18 +401,15 @@ function exit(exitCode: ExitCode, error?: String) : never {
         errorMessage: error,
       }
     });
-    telClient.flush();
-  } finally {
-    process.exit(exitCode);
+    process.exitCode = exitCode;
   }
 }
 
 /**
- * Prints error message for a user error and exits the process with the given exitcode
+ * Throws a user or setup error
  */
-function userError(text: string, exitCode: number): never {
-  console.error(chalk.redBright('[Error] ' + text));
-  exit(exitCode);
+function userError(text: string, exitCode: ExitCode): never {
+  throw new UserError(exitCode, text);
 }
 
 /**
@@ -528,7 +536,7 @@ function isProjectUsingYarn(cwd: string): boolean {
           ).confirm;
 
           if (!confirm) {
-            exit(ExitCode.USER_CANCEL);
+            userError('User canceled', ExitCode.USER_CANCEL);
           }
         }
       }
@@ -548,10 +556,18 @@ function isProjectUsingYarn(cwd: string): boolean {
       nuGetTestVersion: argv.nuGetTestVersion,
       nuGetTestFeed: argv.nuGetTestFeed,
     });
-    exit(ExitCode.SUCCESS);
+    return setExit(ExitCode.SUCCESS);
   } catch (error) {
-    console.error(chalk.red(error.message));
-    console.error(error);
-    exit(ExitCode.UNKNOWN_ERROR, error.message);
+    const exitCode = (error instanceof UserError) ? (error as UserError).exitCode : ExitCode.UNKNOWN_ERROR;
+    if (exitCode != ExitCode.SUCCESS) 
+    {
+      console.error(chalk.red(error.message));
+      console.error(error);
+    }
+    setExit(exitCode, error.message);
+  } finally {
+    telClient.flush();
   }
 })();
+
+

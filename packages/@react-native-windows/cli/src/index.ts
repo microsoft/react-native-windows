@@ -19,10 +19,8 @@ import {projectConfigWindows} from './config/projectConfig';
 
 import * as appInsights from 'applicationinsights';
 
-console.log('setting up telemetry client');
 appInsights.setup('a7b9ed40-e2a4-4166-bf80-230540f4dcff').start();
-let client = appInsights.defaultClient;
-console.log('done');
+const telClient = appInsights.defaultClient;
 
 /**
  * Project generation options
@@ -67,7 +65,7 @@ export async function generateWindows(
   ns: string,
   options: GenerateOptions,
 ) {
-  let success = false;
+  let error;
   try {
     if (!fs.existsSync(projectDir)) {
       fs.mkdirSync(projectDir);
@@ -88,7 +86,9 @@ export async function generateWindows(
       ns,
       options,
     );
-    success = true;
+  } catch (e) {
+    error = e;
+    throw e;
   } finally {
     const cwd = process.cwd();
     const pkgJsonPath = findUp.sync('package.json', {cwd});
@@ -101,16 +101,16 @@ export async function generateWindows(
         rnVersion = pkgJson.dependencies['react-native'];
       }
     }
-    client.trackEvent({
+    telClient.trackEvent({
       name: 'generate-windows',
       properties: {
-        success: success,
+        error: error,
         ...options,
         'react-native': rnVersion,
       },
     });
 
-    client.flush();
+    telClient.flush();
   }
 }
 
