@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "chai": "^4.2.0",
+    "lodash": "^4.17.15",
     "react": "16.13.1",
     "react-native": "0.0.0-a36d9cd7e",
     "react-native-windows": "^0.0.0-canary.170"
@@ -26,6 +27,7 @@
     "@rnw-scripts/ts-config": "^0.1.0",
     "@types/chai": "^4.2.12",
     "@types/jest": "^26.0.13",
+    "@types/lodash": "^4.14.161",
     "@types/ora": "^3.2.0",
     "@types/react-native": "^0.63.18",
     "@types/ws": "^7.2.6",

@@ -191,6 +191,13 @@ bool TryUpdateBorderProperties(
   return isBorderProperty;
 }
 
+inline folly::dynamic GetBorderProperties() {
+  return folly::dynamic::object("borderColor", "color")("borderBottomEndRadius", "number")(
+      "borderBottomLeftRadius", "number")("borderBottomRightRadius", "number")("borderBottomStartRadius", "number")(
+      "borderColor", "Color")("borderRadius", "number")("borderTopEndRadius", "number")(
+      "borderTopLeftRadius", "number")("borderTopRightRadius", "number")("borderTopStartRadius", "number");
+}
+
 template <class T>
 bool TryUpdatePadding(
     ShadowNodeBase *node,

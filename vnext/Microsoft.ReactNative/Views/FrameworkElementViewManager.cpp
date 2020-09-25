@@ -165,7 +165,7 @@ folly::dynamic FrameworkElementViewManager::GetNativeProps() const {
       "accessibilityState", GetAccessibilityStateProps())("accessibilityHint", "string")(
       "accessibilityLabel", "string")("accessibilityPosInSet", "number")("accessibilitySetSize", "number")(
       "testID", "string")("tooltip", "string")("accessibilityActions", "array")("accessibilityLiveRegion", "string")(
-      "accessibilityValue", GetAccessibilityValueProps()));
+      "accessibilityValue", GetAccessibilityValueProps())("opacity", "number")("transform", "array"));
   return props;
 }
 

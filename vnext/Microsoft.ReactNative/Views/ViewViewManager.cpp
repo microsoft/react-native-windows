@@ -344,8 +344,11 @@ XamlView ViewViewManager::CreateViewCore(int64_t /*tag*/) {
 folly::dynamic ViewViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(folly::dynamic::object("pointerEvents", "string")("onClick", "function")("onMouseEnter", "function")(
-      "onMouseLeave", "function")("focusable", "boolean")("enableFocusRing", "boolean")("tabIndex", "number"));
+  props.update(folly::dynamic::object("backgroundColor", "Color")("pointerEvents", "string")("onClick", "function")(
+      "onMouseEnter", "function")("onMouseLeave", "function")("focusable", "boolean")("enableFocusRing", "boolean")(
+      "tabIndex", "number"));
+
+  props.update(GetBorderProperties());
 
   return props;
 }
