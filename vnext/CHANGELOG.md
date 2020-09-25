@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 23 Sep 2020 05:04:55 GMT and should not be manually modified.
+This log was last generated on Fri, 25 Sep 2020 05:05:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.171
+
+Fri, 25 Sep 2020 05:05:40 GMT
+
+### Changes
+
+- Supply UniversalApiContract for Platform.Version (ngerlem@microsoft.com)
+- Build fixes from folly update (30809111+acoates-ms@users.noreply.github.com)
+- Add -NoProfile to powershell invocations to ensure deterministic script execution where user profiles do not have the ability to break or change the build outputs (dannyvv@microsoft.com)
+- Add -UseBasicParsing to all powershell Invoke-WebRequest calls to avoid dependency on IE (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.169
 

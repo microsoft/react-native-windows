@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add -NoProfile to powershell invocations to ensure deterministic script execution where user profiles do not have the ability to break or change the build outputs",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-24T02:35:29.097Z"
-}

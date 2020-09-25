@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 25 Sep 2020 05:05:40 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.51",
+      "version": "0.0.0-canary.51",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Supply UniversalApiContract for Platform.Version",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8d7e61941ba4b655edd13b92e7b4dde68f24d007",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Sep 2020 04:46:10 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.49",
       "version": "0.0.0-canary.49",

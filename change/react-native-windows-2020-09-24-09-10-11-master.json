@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add -UseBasicParsing to all powershell Invoke-WebRequest calls to avoid dependency on IE",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-24T16:10:11.701Z"
-}

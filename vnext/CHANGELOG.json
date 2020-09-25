@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 25 Sep 2020 05:05:40 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.171",
+      "version": "0.0.0-canary.171",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Supply UniversalApiContract for Platform.Version",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8d7e61941ba4b655edd13b92e7b4dde68f24d007",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Build fixes from folly update",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "23567627c97a3471e60b50cbef16230d3e785845",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add -NoProfile to powershell invocations to ensure deterministic script execution where user profiles do not have the ability to break or change the build outputs",
+            "author": "dannyvv@microsoft.com",
+            "commit": "34204f8e56810882b1f66fa247f075499a76022d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add -UseBasicParsing to all powershell Invoke-WebRequest calls to avoid dependency on IE",
+            "author": "dannyvv@microsoft.com",
+            "commit": "38077f7ea4c421a08f52835fa7f2f8db07b7cb5c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 23 Sep 2020 05:04:55 GMT",
       "tag": "react-native-windows_v0.0.0-canary.169",
       "version": "0.0.0-canary.169",

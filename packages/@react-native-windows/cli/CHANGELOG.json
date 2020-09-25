@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 25 Sep 2020 05:05:40 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.19",
+      "version": "0.0.0-canary.19",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix casing rules for new projects names for `react-native-windows-init`",
+            "author": "jthysell@microsoft.com",
+            "commit": "9bc6c559fc350480d6d014644c3fbf4882d5a39a",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Add -NoProfile to powershell invocations to ensure deterministic script execution where user profiles do not have the ability to break or change the build outputs",
+            "author": "dannyvv@microsoft.com",
+            "commit": "34204f8e56810882b1f66fa247f075499a76022d",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Sep 2020 05:06:21 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.18",
       "version": "0.0.0-canary.18",
