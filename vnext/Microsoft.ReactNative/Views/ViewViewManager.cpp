@@ -64,6 +64,20 @@ class ViewShadowNode : public ShadowNodeBase {
         });
   }
 
+  void dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) override {
+    if (commandId == "focus") {
+      if (auto uiManager = GetViewManager()->GetReactContext().NativeUIManager()) {
+        uiManager->focus(m_tag);
+      }
+    } else if (commandId == "blur") {
+      if (auto uiManager = GetViewManager()->GetReactContext().NativeUIManager()) {
+        uiManager->blur(m_tag);
+      }
+    } else {
+      Super::dispatchCommand(commandId, commandArgs);
+    }
+  }
+
   bool IsControl() {
     return m_isControl;
   }

@@ -19,6 +19,7 @@ const Platform = require('../../Utilities/Platform');
 const {findNodeHandle} = require('../../Renderer/shims/ReactNative');
 import {Commands as AndroidTextInputCommands} from '../../Components/TextInput/AndroidTextInputNativeComponent';
 import {Commands as iOSTextInputCommands} from '../../Components/TextInput/RCTSingelineTextInputNativeComponent';
+import {Commands as WindowsTextInputCommands} from '../../Components/TextInput/WindowsTextInputNativeCommands';
 
 import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
 import {UIManager} from 'react-native';
@@ -103,7 +104,7 @@ function focusTextInput(textField: ?ComponentRef) {
     }
     // [Windows
     else if (Platform.OS === 'windows') {
-      UIManager.focus(findNodeHandle(textField));
+      WindowsTextInputCommands.focus(textField);
     }
     // Windows]
   }
@@ -139,7 +140,7 @@ function blurTextInput(textField: ?ComponentRef) {
     }
     // [Windows
     else if (Platform.OS === 'windows') {
-      UIManager.blur(findNodeHandle(textField));
+      WindowsTextInputCommands.blur(textField);
     }
     // Windows]
   }

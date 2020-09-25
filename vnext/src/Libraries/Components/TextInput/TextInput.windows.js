@@ -21,7 +21,6 @@ const TouchableWithoutFeedback = require('../Touchable/TouchableWithoutFeedback'
 
 // [Windows
 const requireNativeComponent = require('../../ReactNative/requireNativeComponent');
-import codegenNativeCommands from '../../Utilities/codegenNativeCommands';
 // Windows]
 
 const invariant = require('invariant');
@@ -67,9 +66,8 @@ if (Platform.OS === 'android') {
 // [Windows
 else if (Platform.OS === 'windows') {
   WindowsTextInput = requireNativeComponent('RCTTextInput');
-  WindowsTextInputCommands = codegenNativeCommands<
-    TextInputNativeCommands<HostComponent<any>>,
-  >({supportedCommands: ['focus', 'blur', 'setTextAndSelection']});
+  WindowsTextInputCommands = require('./WindowsTextInputNativeCommands')
+    .Commands;
 }
 // Windows]
 
@@ -978,12 +976,10 @@ function InternalTextInput(props: Props): React.Node {
 
       /*
         Hi reader from the future. I'm sorry for this.
-
         This is a hack. Ideally we would forwardRef to the underlying
         host component. However, since TextInput has it's own methods that can be
         called as well, if we used the standard forwardRef then these
         methods wouldn't be accessible and thus be a breaking change.
-
         We have a couple of options of how to handle this:
         - Return a new ref with everything we methods from both. This is problematic
           because we need React to also know it is a host component which requires
@@ -1123,7 +1119,7 @@ function InternalTextInput(props: Props): React.Node {
 
     textInput = (
       /* $FlowFixMe the types for AndroidTextInput don't match up exactly with
-        the props for TextInput. This will need to get fixed */
+      the props for TextInput. This will need to get fixed */
       <AndroidTextInput
         ref={_setNativeRef}
         {...props}
