@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 26 Sep 2020 05:04:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.172",
+      "version": "0.0.0-canary.172",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use WinRT HTTP module",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "5d543f09a207241e4cd38b5b84e1fe07e519673c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "resizing the xaml island should dismiss any flyouts in it",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "e7d516c7a19b5a8a5c97f9d9df1b2444d21b419d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 25 Sep 2020 05:05:40 GMT",
       "tag": "react-native-windows_v0.0.0-canary.171",
       "version": "0.0.0-canary.171",

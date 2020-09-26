@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 25 Sep 2020 05:05:40 GMT and should not be manually modified.
+This log was last generated on Sat, 26 Sep 2020 05:04:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.172
+
+Sat, 26 Sep 2020 05:04:21 GMT
+
+### Changes
+
+- Use WinRT HTTP module (julio.rocha@microsoft.com)
+- resizing the xaml island should dismiss any flyouts in it (asklar@winse.microsoft.com)
 
 ## 0.0.0-canary.171
 
