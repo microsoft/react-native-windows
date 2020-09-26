@@ -49,7 +49,7 @@ enum ExitCode {
   NO_AUTO_MATCHING_RNW = 9,
   INCOMPATIBLE_OPTIONS = 10,
   DEVMODE_VERSION_MISMATCH = 11,
-  NO_REACTNATIVE_DEPENDENCIES = 12,  
+  NO_REACTNATIVE_DEPENDENCIES = 12,
 }
 
 class UserError extends Error {
@@ -77,6 +77,12 @@ const argv = yargs
     verbose: {
       type: 'boolean',
       describe: 'Enables logging.',
+      default: false,
+    },
+    noTelemetry: {
+      type: 'boolean',
+      describe:
+        'Disables sending telemetry that allows analysis of failures of the react-native-windows CLI',
       default: false,
     },
     language: {
@@ -144,6 +150,10 @@ const argv = yargs
 
 if (argv.verbose) {
   console.log(argv);
+}
+
+if (argv.noTelemetry || process.env.AGENT_JOBID) {
+  telClient.config.disableAppInsights = true;
 }
 
 function getReactNativeProjectName(): string {
@@ -391,7 +401,7 @@ function installReactNativeWindows(
   );
 }
 
-function setExit(exitCode: ExitCode, error?: String) : void {
+function setExit(exitCode: ExitCode, error?: String): void {
   if (!process.exitCode || process.exitCode == ExitCode.SUCCESS) {
     telClient.trackEvent({
       name: 'init-exit',
@@ -399,7 +409,7 @@ function setExit(exitCode: ExitCode, error?: String) : void {
         argv: argv,
         exitCode: ExitCode[exitCode],
         errorMessage: error,
-      }
+      },
     });
     process.exitCode = exitCode;
   }
@@ -555,12 +565,15 @@ function isProjectUsingYarn(cwd: string): boolean {
       useHermes: argv.useHermes,
       nuGetTestVersion: argv.nuGetTestVersion,
       nuGetTestFeed: argv.nuGetTestFeed,
+      noTelemetry: argv.noTelemetry,
     });
     return setExit(ExitCode.SUCCESS);
   } catch (error) {
-    const exitCode = (error instanceof UserError) ? (error as UserError).exitCode : ExitCode.UNKNOWN_ERROR;
-    if (exitCode != ExitCode.SUCCESS) 
-    {
+    const exitCode =
+      error instanceof UserError
+        ? (error as UserError).exitCode
+        : ExitCode.UNKNOWN_ERROR;
+    if (exitCode != ExitCode.SUCCESS) {
       console.error(chalk.red(error.message));
       console.error(error);
     }
@@ -569,5 +582,3 @@ function isProjectUsingYarn(cwd: string): boolean {
     telClient.flush();
   }
 })();
-
-
