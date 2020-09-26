@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 #include "TurboModuleManager.h"
-#include "turbomodule/samples/SampleTurboCxxModule.h"
 #include <unicode.h>
+#include "turbomodule/samples/SampleTurboCxxModule.h"
 
 namespace facebook {
 namespace react {
 
-inline std::shared_ptr<facebook::react::TurboModule> TryLoadAndCreateDynamicTurboModule(std::string moduleName,
+inline std::shared_ptr<facebook::react::TurboModule> TryLoadAndCreateDynamicTurboModule(
+    std::string moduleName,
     const std::shared_ptr<facebook::react::CallInvoker> &invoker) {
   std::wstring moduleNameDll = ::Microsoft::Common::Unicode::Utf8ToUtf16(moduleName) + L".dll";
   if (const auto module = LoadPackagedLibrary(moduleNameDll.c_str(), 0 /*reserved*/)) {
