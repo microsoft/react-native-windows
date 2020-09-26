@@ -98,16 +98,15 @@ class XHRTest extends React.Component<{}, Object> {
   };
 
   componentDidMount() {
-
-    this._download()
-      .then(function (data) {
-
-      }, function err(e) {
-          console.log(e);
+    this._download().then(
+      function(data) {},
+      function(e) {
+        console.log(e);
         TestModule.markTestPassed(false);
-    });
+      },
+    );
 
-  TestModule.markTestPassed(true);
+    TestModule.markTestPassed(true);
   }
 
   render(): React.Node {
