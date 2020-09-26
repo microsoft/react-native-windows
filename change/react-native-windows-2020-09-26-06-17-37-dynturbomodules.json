@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add dynamic turbomodule which allows loading modules from packaged DLLs",
+  "packageName": "react-native-windows",
+  "email": "asklar@winse.microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-26T13:17:36.988Z"
+}
