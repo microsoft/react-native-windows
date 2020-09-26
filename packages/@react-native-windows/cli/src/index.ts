@@ -19,7 +19,7 @@ import {projectConfigWindows} from './config/projectConfig';
 
 import * as appInsights from 'applicationinsights';
 
-appInsights.setup('a7b9ed40-e2a4-4166-bf80-230540f4dcff').start();
+appInsights.setup('a7b9ed40-e2a4-4166-bf80-230540f4dcff');
 const telClient = appInsights.defaultClient;
 
 /**
@@ -91,7 +91,7 @@ export async function generateWindows(
     error = e;
     throw e;
   } finally {
-    if (!options.noTelemetry || process.env.AGENT_NAME) {
+    if (!options.noTelemetry && !process.env.AGENT_NAME) {
       const cwd = process.cwd();
       const pkgJsonPath = findUp.sync('package.json', {cwd});
       let rnVersion = '';
