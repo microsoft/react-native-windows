@@ -91,7 +91,7 @@ export async function generateWindows(
     error = e;
     throw e;
   } finally {
-    if (!options.noTelemetry || process.env.AGENT_JOBID) {
+    if (!options.noTelemetry || process.env.AGENT_NAME) {
       const cwd = process.cwd();
       const pkgJsonPath = findUp.sync('package.json', {cwd});
       let rnVersion = '';
