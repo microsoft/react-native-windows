@@ -33,6 +33,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Share
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mso", "..\..\..\vnext\Mso\Mso.vcxitems", "{84E05BFA-CBAF-4F0D-BFB6-4CE85742A57E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleTurboModule", "..\..\..\vnext\SampleTurboModule\SampleTurboModule.vcxproj", "{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\vnext\JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
@@ -161,6 +163,23 @@ Global
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|x64.Build.0 = Release|x64
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|x86.ActiveCfg = Release|Win32
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|x86.Build.0 = Release|Win32
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Debug|ARM.ActiveCfg = Debug|ARM
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Debug|ARM.Build.0 = Debug|ARM
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Debug|ARM64.Build.0 = Debug|ARM64
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Debug|x64.ActiveCfg = Debug|x64
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Debug|x64.Build.0 = Debug|x64
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Debug|x86.ActiveCfg = Debug|Win32
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Debug|x86.Build.0 = Debug|Win32
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Release|ARM.ActiveCfg = Release|ARM
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Release|ARM.Build.0 = Release|ARM
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Release|ARM64.ActiveCfg = Release|ARM64
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Release|ARM64.Build.0 = Release|ARM64
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Release|x64.ActiveCfg = Release|x64
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Release|x64.Build.0 = Release|x64
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Release|x86.ActiveCfg = Release|Win32
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Release|x86.Build.0 = Release|Win32
+		{7A2D2055-7E9C-4AB8-A3F7-F901558C5347}.Release|x86.Deploy.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

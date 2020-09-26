@@ -7,6 +7,9 @@
 #include <ReactCommon/TurboModule.h>
 #include "TurboModuleRegistry.h"
 
+extern "C" facebook::react::TurboModule *CreateDynamicTurboModule(
+    const std::shared_ptr<facebook::react::CallInvoker> &invoker);
+
 namespace facebook {
 namespace react {
 

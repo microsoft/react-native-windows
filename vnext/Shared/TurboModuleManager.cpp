@@ -3,9 +3,23 @@
 
 #include "TurboModuleManager.h"
 #include "turbomodule/samples/SampleTurboCxxModule.h"
+#include <unicode.h>
 
 namespace facebook {
 namespace react {
+
+inline std::shared_ptr<facebook::react::TurboModule> TryLoadAndCreateDynamicTurboModule(std::string moduleName,
+    const std::shared_ptr<facebook::react::CallInvoker> &invoker) {
+  std::wstring moduleNameDll = ::Microsoft::Common::Unicode::Utf8ToUtf16(moduleName) + L".dll";
+  if (const auto module = LoadPackagedLibrary(moduleNameDll.c_str(), 0 /*reserved*/)) {
+    if (const auto fn =
+            reinterpret_cast<decltype(&CreateDynamicTurboModule)>(GetProcAddress(module, "CreateDynamicTurboModule"))) {
+      std::shared_ptr<facebook::react::TurboModule> ret(fn(invoker));
+      return ret;
+    }
+  }
+  return nullptr;
+}
 
 TurboModuleManager::TurboModuleManager(
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
@@ -28,6 +42,10 @@ std::shared_ptr<TurboModule> TurboModuleManager::getModule(const std::string &mo
       m_modules.emplace(moduleName, module);
       return module;
     }
+  }
+
+  if (auto module = TryLoadAndCreateDynamicTurboModule(moduleName, m_callInvoker)) {
+    return m_modules.emplace(moduleName, std::move(module)).first->second;
   }
 
   if (moduleName.compare("SampleTurboModule") == 0) {

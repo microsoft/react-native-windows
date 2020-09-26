@@ -1,0 +1,3 @@
+LIBRARY SampleTurboModule
+EXPORTS
+  CreateDynamicTurboModule
