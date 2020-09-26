@@ -152,7 +152,7 @@ if (argv.verbose) {
   console.log(argv);
 }
 
-if (argv.noTelemetry || process.env.AGENT_JOBID) {
+if (argv.noTelemetry || process.env.AGENT_NAME) {
   telClient.config.disableAppInsights = true;
 }
 
