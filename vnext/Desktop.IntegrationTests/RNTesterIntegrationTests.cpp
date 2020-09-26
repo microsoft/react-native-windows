@@ -88,6 +88,8 @@ TEST_CLASS (RNTesterIntegrationTests) {
     Assert::AreEqual(L"This is from console.error", result.Message.c_str());
   }
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(XHRSample)
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(XHRSample) {
     auto result = m_runner.RunTest("IntegrationTests/XHRTest", "XHRTest");
     Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
