@@ -49,6 +49,7 @@ export interface GenerateOptions {
   useWinUI3: boolean;
   useHermes: boolean;
   verbose: boolean;
+  noTelemetry: boolean;
 }
 
 /**
@@ -90,30 +91,38 @@ export async function generateWindows(
     error = e;
     throw e;
   } finally {
-    const cwd = process.cwd();
-    const pkgJsonPath = findUp.sync('package.json', {cwd});
-    let rnVersion = '';
-    if (pkgJsonPath) {
-      let pkgJson = require(pkgJsonPath);
-      // check how react-native is installed
-      if ('dependencies' in pkgJson && 'react-native' in pkgJson.dependencies) {
-        // regular dependency (probably an app), inject into json and run install
-        rnVersion = pkgJson.dependencies['react-native'];
+    if (!options.noTelemetry || process.env.AGENT_JOBID) {
+      const cwd = process.cwd();
+      const pkgJsonPath = findUp.sync('package.json', {cwd});
+      let rnVersion = '';
+      if (pkgJsonPath) {
+        const pkgJson = require(pkgJsonPath);
+        // check how react-native is installed
+        if (
+          'dependencies' in pkgJson &&
+          'react-native' in pkgJson.dependencies
+        ) {
+          // regular dependency (probably an app), inject into json and run install
+          rnVersion = pkgJson.dependencies['react-native'];
+        }
       }
-    }
-    telClient.trackEvent({
-      name: 'generate-windows',
-      properties: {
-        error: error,
-        ...options,
-        'react-native': rnVersion,
-      },
-    });
 
-    telClient.flush();
+      const rnwPkgJson = require('../package.json');
+
+      telClient.trackEvent({
+        name: 'generate-windows',
+        properties: {
+          error: error,
+          ...options,
+          'react-native': rnVersion,
+          'cli-version': rnwPkgJson.version,
+        },
+      });
+
+      telClient.flush();
+    }
   }
 }
-
 
 // Assert the interface here doesn't change for the reasons above
 const assertStableInterface: typeof generateWindows extends (
