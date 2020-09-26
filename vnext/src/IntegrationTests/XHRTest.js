@@ -9,7 +9,7 @@
 const React = require('react');
 const ReactNative = require('react-native');
 
-const {Alert, AppRegistry, View} = ReactNative;
+const {AppRegistry, View} = ReactNative;
 
 const {TestModule} = ReactNative.NativeModules;
 
@@ -78,14 +78,14 @@ class XHRTest extends React.Component<{}, Object> {
               xhr.response.byteLength
             } bytes long.`;
           }
-          Alert.alert('Download complete!', responseType);
+          console.log('Download complete!', responseType);
         } else if (xhr.status !== 0) {
-          Alert.alert(
+          console.error(
             'Error',
             `Server returned HTTP status of ${xhr.status}: ${xhr.responseText}`,
           );
         } else {
-          Alert.alert('Error', xhr.responseText);
+          console.error('Error', xhr.responseText);
         }
       };
       xhr.open('GET', 'https://en.wikipedia.org/favicon.ico');
@@ -98,15 +98,16 @@ class XHRTest extends React.Component<{}, Object> {
   };
 
   componentDidMount() {
-    try {
-      (async () => await this._download())();
-      TestModule.markTestPassed(true);
-      return;
-    } catch (e) {
-      console.error(e);
-    }
 
-    TestModule.markTestPassed(false);
+    this._download()
+      .then(function (data) {
+
+      }, function err(e) {
+          console.log(e);
+        TestModule.markTestPassed(false);
+    });
+
+  TestModule.markTestPassed(true);
   }
 
   render(): React.Node {
