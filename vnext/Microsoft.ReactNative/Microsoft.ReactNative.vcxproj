@@ -702,7 +702,5 @@
         <ForcedIncludeFiles>%(ForcedIncludeFiles);winrt/Microsoft.UI.Xaml.Controls.h;winrt/Microsoft.UI.Xaml.XamlTypeInfo.h</ForcedIncludeFiles>
       </ClCompile>
     </ItemGroup>
-
-    <Message Importance="High" Text="Test"/>
   </Target>
 </Project>
