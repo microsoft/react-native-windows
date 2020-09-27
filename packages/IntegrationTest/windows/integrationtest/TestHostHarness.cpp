@@ -169,7 +169,7 @@ winrt::fire_and_forget TestHostHarness::TimeoutOnInactivty(winrt::weak_ref<TestT
     if (auto strongTransaction = weakTransaction.get()) {
       if (auto strongThis = weakThis.get()) {
         if (strongThis->m_currentTransaction == strongTransaction) {
-          strongThis->HandleHostAction(strongThis->m_currentTransaction->OnTimeout());
+          strongThis->HandleHostAction(strongTransaction->OnTimeout());
         }
       }
     }
