@@ -699,7 +699,6 @@
   <Target Name="InjecForcedXamlIncludes" BeforeTargets="CompileXamlGeneratedFiles" >
     <ItemGroup>
       <ClCompile Condition="'%(ClCompile.CompilerIteration)' == 'XamlGenerated'">
-        <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         <ForcedIncludeFiles>%(ForcedIncludeFiles);winrt/Microsoft.UI.Xaml.Controls.h;winrt/Microsoft.UI.Xaml.XamlTypeInfo.h</ForcedIncludeFiles>
       </ClCompile>
     </ItemGroup>
