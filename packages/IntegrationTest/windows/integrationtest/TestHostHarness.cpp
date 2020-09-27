@@ -154,26 +154,22 @@ winrt::fire_and_forget TestHostHarness::OnTestCommand(TestCommand command, TestC
   }
 }
 
-winrt::fire_and_forget TestHostHarness::TimeoutOnInactivty(winrt::weak_ref<TestTransaction> weakTransaction) noexcept {
+winrt::fire_and_forget TestHostHarness::TimeoutOnInactivty(winrt::weak_ref<TestTransaction> transaction) noexcept {
   VerifyElseCrash(m_dispatcher.HasThreadAccess());
 
-  constexpr auto CommandTimeout = 20s;
-
-  auto dispatcher = m_dispatcher;
+  winrt::apartment_context harnessContext;
   auto weakThis = get_weak();
-  co_await CommandTimeout;
 
-  // co_awaiting a timespan calls winrt::resume_after, which uses
-  // CreateThreadPoolTimer and will not resume us back on the same thread.
-  dispatcher.Post([ weakTransaction, weakThis ]() noexcept {
-    if (auto strongTransaction = weakTransaction.get()) {
-      if (auto strongThis = weakThis.get()) {
-        if (strongThis->m_currentTransaction == strongTransaction) {
-          strongThis->HandleHostAction(strongTransaction->OnTimeout());
-        }
+  co_await 20s;
+  co_await harnessContext;
+
+  if (auto strongTransaction = transaction.get()) {
+    if (auto strongThis = weakThis.get()) {
+      if (m_currentTransaction == strongTransaction) {
+        HandleHostAction(m_currentTransaction->OnTimeout());
       }
     }
-  });
+  }
 }
 
 winrt::fire_and_forget TestHostHarness::HandleHostAction(HostAction action) noexcept {

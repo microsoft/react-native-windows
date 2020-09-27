@@ -28,7 +28,7 @@ class TestHostHarness : public winrt::implements<TestHostHarness, winrt::Windows
   void OnInstanceLoaded(const winrt::Microsoft::ReactNative::InstanceLoadedEventArgs &args) noexcept;
   winrt::fire_and_forget StartListening() noexcept;
   winrt::fire_and_forget OnTestCommand(TestCommand command, TestCommandResponse response) noexcept;
-  winrt::fire_and_forget TimeoutOnInactivty(winrt::weak_ref<TestTransaction> weakTransaction) noexcept;
+  winrt::fire_and_forget TimeoutOnInactivty(winrt::weak_ref<TestTransaction> transaction) noexcept;
   winrt::fire_and_forget HandleHostAction(HostAction action) noexcept;
 
   winrt::Windows::Foundation::IAsyncAction FlushJSQueue() noexcept;
