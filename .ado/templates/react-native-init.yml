@@ -122,6 +122,10 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), ${{ not(parameters.useNuGet) }})
 
+  # Reclaim memory used by Verdaccio to reduce the chance of build OOM issues
+  - script: tskill node
+    displayName: Kill Verdaccio
+
   - task: PowerShell@2
     displayName: List Visual Studio Components
     inputs:
