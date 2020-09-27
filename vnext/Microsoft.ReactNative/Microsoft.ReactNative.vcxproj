@@ -696,7 +696,7 @@
   </Target>
 
   <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/3133 -->
-  <Target Name="InjecForcedXamlIncludes" BeforeTargets="CompileXamlGeneratedFiles" >
+  <Target Name="InjectForcedXamlIncludes" BeforeTargets="CompileXamlGeneratedFiles" >
     <ItemGroup>
       <ClCompile Condition="'%(ClCompile.CompilerIteration)' == 'XamlGenerated'">
         <ForcedIncludeFiles>%(ForcedIncludeFiles);winrt/Microsoft.UI.Xaml.Controls.h;winrt/Microsoft.UI.Xaml.XamlTypeInfo.h</ForcedIncludeFiles>
