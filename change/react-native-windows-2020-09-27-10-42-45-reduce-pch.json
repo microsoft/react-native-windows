@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Reduce Microsoft.ReactNative PCH By 155MB-260MB",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-27T17:42:45.125Z"
+}
