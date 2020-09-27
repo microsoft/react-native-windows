@@ -402,7 +402,7 @@ function installReactNativeWindows(
 }
 
 function setExit(exitCode: ExitCode, error?: String): void {
-  if (!process.exitCode || process.exitCode == ExitCode.SUCCESS) {
+  if (!process.exitCode || process.exitCode === ExitCode.SUCCESS) {
     telClient.trackEvent({
       name: 'init-exit',
       properties: {
@@ -573,7 +573,7 @@ function isProjectUsingYarn(cwd: string): boolean {
       error instanceof UserError
         ? (error as UserError).exitCode
         : ExitCode.UNKNOWN_ERROR;
-    if (exitCode != ExitCode.SUCCESS) {
+    if (exitCode !== ExitCode.SUCCESS) {
       console.error(chalk.red(error.message));
       console.error(error);
     }
