@@ -6,7 +6,8 @@
  */
 
 import * as net from 'net';
-import {platform} from 'os';
+import * as path from 'path';
+import {platform, tmpdir} from 'os';
 
 /**
  * CrossProcessLock implements a non-polling cross-process asynchronous barrier.
@@ -34,7 +35,7 @@ export default class CrossProcessLock {
     if (platform() === 'win32') {
       this.ipcPath = `\\\\.\\pipe\\${lockName}`;
     } else {
-      this.ipcPath = `/tmp/${lockName}`;
+      this.ipcPath = path.join(tmpdir(), `${lockName}`);
     }
 
     this.server = net.createServer();
