@@ -14,6 +14,7 @@ import {ReactFileRepository, WritableFileRepository} from './FileRepository';
 import OverrideFactory from './OverrideFactory';
 import {ValidationError} from './ValidationStrategy';
 import {eachLimit} from 'async';
+import {normalizePath} from './PathUtils';
 
 /**
  * Represents a collection of overrides listed in an on-disk manifest. Allows
@@ -111,7 +112,9 @@ export default class Manifest {
    * Whether the manifest contains a given override
    */
   hasOverride(overrideName: string): boolean {
-    return this.overrides.some(ovr => ovr.name() === overrideName);
+    return this.overrides.some(
+      ovr => ovr.name() === normalizePath(overrideName),
+    );
   }
 
   /**
@@ -182,6 +185,8 @@ export default class Manifest {
    * @returns -1 if it cannot be found
    */
   private findOverrideIndex(overrideName: string): number {
-    return this.overrides.findIndex(ovr => ovr.name() === overrideName);
+    return this.overrides.findIndex(
+      ovr => ovr.name() === normalizePath(overrideName),
+    );
   }
 }

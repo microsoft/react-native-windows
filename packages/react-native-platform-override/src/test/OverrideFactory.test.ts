@@ -5,12 +5,12 @@
  * @format
  */
 
-import * as path from 'path';
 import MockFileRepository, {
   MockReactFileRepository,
 } from './MockFileRepository';
 
 import {OverrideFactoryImpl} from '../OverrideFactory';
+import {normalizePath} from '../PathUtils';
 
 const factory = new OverrideFactoryImpl(
   new MockReactFileRepository([
@@ -91,7 +91,7 @@ test('createDirectoryCopyOverride', async () => {
     'bar',
     1245,
   );
-  expect(override.name()).toBe(path.normalize('src/bar'));
+  expect(override.name()).toBe(normalizePath('src/bar'));
 
   expect(override.serialize().type).toBe('copy');
   expect(override.serialize().directory).toBe('src/bar');

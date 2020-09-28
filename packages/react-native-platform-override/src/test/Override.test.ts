@@ -5,7 +5,6 @@
  * @format
  */
 
-import * as path from 'path';
 import Override, {
   CopyOverride,
   DerivedOverride,
@@ -14,6 +13,7 @@ import Override, {
   PlatformOverride,
   deserializeOverride,
 } from '../Override';
+import {normalizePath} from '../PathUtils';
 
 type OverrideConstructor = new (...args: any[]) => Override;
 
@@ -103,7 +103,7 @@ test.each(fileOverrides)('name - %s', (_, ovrClass, args) => {
 
 test.each(directoryOverrides)('name - %s', (_, ovrClass, args) => {
   const override = new ovrClass({...args, directory: 'src/foo/abc'});
-  expect(override.name()).toBe(path.normalize('src/foo/abc'));
+  expect(override.name()).toBe(normalizePath('src/foo/abc'));
 });
 
 test.each(fileOverrides)(

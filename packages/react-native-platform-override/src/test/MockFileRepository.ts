@@ -6,12 +6,13 @@
  */
 
 import * as minimatch from 'minimatch';
-import * as path from 'path';
 
 import FileRepository, {
   ReactFileRepository,
   WritableFileRepository,
 } from '../FileRepository';
+
+import {normalizePath} from '../PathUtils';
 
 export interface MockFile {
   filename: string;
@@ -29,11 +30,11 @@ export default class MockFileRepository implements FileRepository {
   constructor(files: MockFile[], directories?: MockEmptyDirectory[]) {
     this.files = files.map(file => ({
       ...file,
-      filename: path.normalize(file.filename),
+      filename: normalizePath(file.filename),
     }));
 
     this.directories = (directories || []).map(dir => ({
-      dirname: path.normalize(dir.dirname),
+      dirname: normalizePath(dir.dirname),
     }));
   }
 
@@ -49,13 +50,13 @@ export default class MockFileRepository implements FileRepository {
   }
 
   async readFile(filename: string): Promise<Buffer | null> {
-    const normalizedName = path.normalize(filename);
+    const normalizedName = normalizePath(filename);
     const file = this.files.find(f => f.filename === normalizedName);
     return file ? Buffer.from(file.content) : null;
   }
 
   async stat(filename: string): Promise<'file' | 'directory' | 'none'> {
-    const normalizedName = path.normalize(filename);
+    const normalizedName = normalizePath(filename);
 
     if (this.directories.find(dir => dir.dirname === normalizedName)) {
       return 'directory';
