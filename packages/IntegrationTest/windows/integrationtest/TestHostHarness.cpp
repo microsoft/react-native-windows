@@ -157,10 +157,11 @@ winrt::fire_and_forget TestHostHarness::OnTestCommand(TestCommand command, TestC
 winrt::fire_and_forget TestHostHarness::TimeoutOnInactivty(winrt::weak_ref<TestTransaction> transaction) noexcept {
   VerifyElseCrash(m_dispatcher.HasThreadAccess());
 
-  constexpr auto CommandTimeout = 20s;
-
+  winrt::apartment_context harnessContext;
   auto weakThis = get_weak();
-  co_await CommandTimeout;
+
+  co_await 20s;
+  co_await harnessContext;
 
   if (auto strongTransaction = transaction.get()) {
     if (auto strongThis = weakThis.get()) {
