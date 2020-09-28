@@ -285,7 +285,8 @@ jobs:
   - job: RNWSampleAppsPR
     variables:
       - template: variables/vs2019.yml
-      - BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
+      - name: BuildLogDirectory
+        value: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
     displayName: Sample Apps PR
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
@@ -368,7 +369,8 @@ jobs:
       - template: variables/vs2019.yml
       #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage,WebSocket,Logging).
       #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
-      - Desktop.IntegrationTests.Filter: >
+      - name: Desktop.IntegrationTests.Filter
+        value: >
           (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
           (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
           (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
