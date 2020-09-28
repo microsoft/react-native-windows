@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Sep 2020 15:04:34 GMT",
+      "tag": "react-native-windows_v0.63.3",
+      "version": "0.63.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add missing exports",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "39f589411ad47ee7bca0bfe7fb34b8003cdb8da6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Sep 2020 15:04:59 GMT",
       "tag": "react-native-windows_v0.63.3",
       "version": "0.63.3",
