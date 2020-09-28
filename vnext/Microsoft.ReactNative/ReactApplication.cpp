@@ -182,7 +182,8 @@ void ReactApplication::OnCreate(Windows::ApplicationModel::Activation::IActivate
 
   // Do not repeat app initialization when the Window already has content,
   // just ensure that the window is active
-  if (rootFrame == nullptr) {
+  bool previouslyInitialized = (rootFrame != nullptr);
+  if (!previouslyInitialized) {
     // Create a Frame to act as the navigation context and associate it with
     // a SuspensionManager key
     rootFrame = Frame();
@@ -198,8 +199,10 @@ void ReactApplication::OnCreate(Windows::ApplicationModel::Activation::IActivate
 
   ApplyArguments(Host(), args.c_str());
 
-  // Nudge the ReactNativeHost to create the instance and wrapping context
-  Host().ReloadInstance();
+  if (!previouslyInitialized) {
+    // Nudge the ReactNativeHost to create the instance and wrapping context
+    Host().ReloadInstance();
+  }
 
   Window::Current().Activate();
 }
