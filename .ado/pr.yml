@@ -737,3 +737,7 @@ jobs:
     parameters:
       name: IntegrationTest
       BuildPlatform: x64
+
+  - template: templates/macos-tests-job.yml
+    parameters:
+      name: macOS Tests
