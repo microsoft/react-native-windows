@@ -10,3 +10,4 @@ require('./lib/SetupGlobals');
 require('./MountComponentTests');
 require('./PlatformTests');
 require('./SampleTests');
+require('./InteropCSModuleTests');
