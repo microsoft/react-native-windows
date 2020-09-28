@@ -237,7 +237,11 @@ export default class GitReactFileRepository
     // for it.
     const commitInfo = await fetch(`${RN_COMMIT_ENDPOINT}/${shortHash}`);
     if (!commitInfo.ok) {
-      throw new Error(`Unable to query Github for commit '${shortHash}`);
+      throw new Error(
+        `Unable to query Github for commit '${shortHash}' Status: '${
+          commitInfo.statusText
+        }'`,
+      );
     }
 
     return (await commitInfo.json()).sha;
