@@ -234,9 +234,17 @@ export default class GitReactFileRepository
   }
 
   private async longCommitHash(shortHash: string): Promise<string> {
+    const gitHubToken = process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN;
+
     // We cannot get long hash directly from a remote, so query Github's API
     // for it.
-    const commitInfo = await fetch(`${RN_COMMIT_ENDPOINT}/${shortHash}`);
+    const commitInfo = await fetch(`${RN_COMMIT_ENDPOINT}/${shortHash}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'react-native-platform-override',
+        ...(gitHubToken ? {Authorization: `Token ${gitHubToken}`} : {}),
+      },
+    });
     if (!commitInfo.ok) {
       throw new Error(
         `Unable to query Github for commit '${shortHash}' Status: '${

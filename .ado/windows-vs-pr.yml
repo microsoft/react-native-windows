@@ -7,6 +7,7 @@ pr:
   - "*-stable"
 
 variables:
+  - template: variables/github.yml
   - template: variables/msbuild.yml
 
 jobs:
