@@ -742,4 +742,4 @@ jobs:
 
   - template: templates/macos-tests-job.yml
     parameters:
-      name: macOS Tests
+      name: MacTests
