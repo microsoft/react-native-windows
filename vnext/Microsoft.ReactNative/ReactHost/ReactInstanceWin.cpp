@@ -8,11 +8,12 @@
 #include <Base/CoreNativeModules.h>
 #include <IUIManager.h>
 #include <Threading/MessageDispatchQueue.h>
+#include <Threading/MessageQueueThreadFactory.h>
+
 #include <XamlUIService.h>
 #include "ReactErrorProvider.h"
 
 #include "Microsoft.ReactNative/IReactNotificationService.h"
-#include "Microsoft.ReactNative/Threading/MessageQueueThreadFactory.h"
 
 #include "../../codegen/NativeAccessibilityInfoSpec.g.h"
 #include "../../codegen/NativeAppStateSpec.g.h"
@@ -544,7 +545,7 @@ void ReactInstanceWin::InitUIMessageThread() noexcept {
   m_uiMessageThread.Exchange(
       std::make_shared<MessageDispatchQueue>(m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
-  m_batchingUIThread = react::uwp::MakeBatchingQueueThread(m_uiMessageThread.Load());
+  m_batchingUIThread = Microsoft::React::MakeBatchingQueueThread(m_uiMessageThread.Load());
 }
 
 void ReactInstanceWin::InitUIManager() noexcept {

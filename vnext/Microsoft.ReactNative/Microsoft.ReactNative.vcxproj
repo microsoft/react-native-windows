@@ -359,9 +359,6 @@
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="TestHook.h" />
-    <ClInclude Include="Threading\BatchingQueueThread.h" />
-    <ClInclude Include="Threading\MessageDispatchQueue.h" />
-    <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
     <ClInclude Include="QuirkSettings.h">
       <DependentUpon>QuirkSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -547,9 +544,6 @@
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="TestHook.cpp" />
-    <ClCompile Include="Threading\BatchingQueueThread.cpp" />
-    <ClCompile Include="Threading\MessageDispatchQueue.cpp" />
-    <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="QuirkSettings.cpp">
       <DependentUpon>QuirkSettings.idl</DependentUpon>
       <SubType>Code</SubType>
