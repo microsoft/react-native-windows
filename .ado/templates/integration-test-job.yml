@@ -12,7 +12,7 @@ jobs:
       vmImage: $(VmImage)
 
     variables:
-      - template: variables/vs2019.yml
+      - template: ../variables/vs2019.yml
       - name: BuildLogDirectory
         value: $(Build.BinariesDirectory)\$(BuildPlatform)\BuildLogs
 
