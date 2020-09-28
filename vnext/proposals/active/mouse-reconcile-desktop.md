@@ -55,6 +55,7 @@ There are some outstanding issues that need to be address specifically for deskt
 - Prevent mouse input from being 'eaten' in ScrollView scenarios [issue #5867](https://github.com/microsoft/react-native-windows/issues/5867)
 - Mouse leave event not firing correctly in Scrollable FlatList scenarios [issue #4614](https://github.com/microsoft/react-native-windows/issues/4614)
 - The hover events/indication for overlapping content prioritizes items "closer" in z-order [issue #5901](https://github.com/microsoft/react-native-windows/issues/5901)
+- Remove the tapped event handler on the `View` component [issue #2349](https://github.com/microsoft/react-native-windows/issues/2349)
 
 ## onPointerXX callbacks
 The following callbacks are available on `View` component (and get passed through to Pressable) in Windows and macOS to cover the most common use cases where mouse handling would occur.
