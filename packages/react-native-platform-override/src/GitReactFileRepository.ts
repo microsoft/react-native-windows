@@ -53,9 +53,10 @@ export default class GitReactFileRepository
 
     if (!(await gitClient.checkIsRepo())) {
       await gitClient.init();
+      await gitClient.addConfig('core.filemode', 'false');
+      await gitClient.addConfig('core.autocrlf', 'input');
     }
 
-    await gitClient.addConfig('core.filemode', 'false');
     return new GitReactFileRepository(dir, gitClient);
   }
 
