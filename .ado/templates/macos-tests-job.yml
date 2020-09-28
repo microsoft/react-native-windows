@@ -22,7 +22,7 @@ jobs:
         fetchDepth: 1 # the depth of commits to ask Git to fetch
         submodules: false
             
-      - template: templates/yarn-install.yml
+      - template: yarn-install.yml
 
       - script: yarn build
         displayName: yarn build
