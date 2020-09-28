@@ -34,12 +34,14 @@ jobs:
       - script: yarn validate-overrides
         displayName: yarn validate-overrides
 
-      - script: git config --list
-        workingDirectory: $TMPDIR/react-native-platform-override/git
+      - script: |
+          cd $TMPDIR/react-native-platform-override/git
+          git config --list
         displayName: Print scratch repository config
         condition: failed()
 
-      - script: git status
-        workingDirectory: $TMPDIR/react-native-platform-override/git
+      - script: |
+          cd $TMPDIR/react-native-platform-override/git
+          git status
         displayName: Print scratch repository status
         condition: failed()
