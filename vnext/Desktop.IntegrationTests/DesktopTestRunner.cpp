@@ -47,7 +47,9 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
           []() -> unique_ptr<CxxModule> { return CreateAsyncStorageModule(L"ReactNativeAsyncStorage"); },
           nativeQueue),
       std::make_tuple(
-          "WebSocketModule", []() -> unique_ptr<CxxModule> { return std::make_unique<WebSocketModule>(); }, nativeQueue),
+          "WebSocketModule",
+          []() -> unique_ptr<CxxModule> { return std::make_unique<WebSocketModule>(); },
+          nativeQueue),
       std::make_tuple(
           "Networking",
           []() -> unique_ptr<CxxModule> { return std::make_unique<Microsoft::React::NetworkingModule>(); },
