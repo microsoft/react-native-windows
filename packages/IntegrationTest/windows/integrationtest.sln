@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.ReactNative.Manag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.ReactNative.Managed.CodeGen", "..\..\..\vnext\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj", "{ADED4FBE-887D-4271-AF24-F0823BCE7961}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteropTestModuleCS", "InteropTestModuleCS\InteropTestModuleCS.csproj", "{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\vnext\JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
@@ -200,6 +202,22 @@ Global
 		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Release|x64.Build.0 = Release|x64
 		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Release|x86.ActiveCfg = Release|x86
 		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Release|x86.Build.0 = Release|x86
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Debug|ARM.ActiveCfg = Debug|ARM
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Debug|ARM.Build.0 = Debug|ARM
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Debug|ARM64.Build.0 = Debug|ARM64
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Debug|x64.ActiveCfg = Debug|x64
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Debug|x64.Build.0 = Debug|x64
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Debug|x86.ActiveCfg = Debug|x86
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Debug|x86.Build.0 = Debug|x86
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Release|ARM.ActiveCfg = Release|ARM
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Release|ARM.Build.0 = Release|ARM
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Release|ARM64.ActiveCfg = Release|ARM64
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Release|ARM64.Build.0 = Release|ARM64
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Release|x64.ActiveCfg = Release|x64
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Release|x64.Build.0 = Release|x64
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Release|x86.ActiveCfg = Release|x86
+		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
