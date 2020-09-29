@@ -34,6 +34,7 @@
     "ora": "^3.4.0",
     "semver": "^7.3.2",
     "simple-git": "^1.131.0",
+    "upath": "^1.2.0",
     "yargs": "^15.3.1"
   },
   "devDependencies": {

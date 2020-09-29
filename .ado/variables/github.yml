@@ -1,6 +1,0 @@
-variables:
-  # react-native-platform-override calls GitHub's API, and may be rate-limited
-  # if unauthenticated. This is run during PRs, so it it unsafe to use a token
-  # with private permissions. The below PAT has access to only public information
-  Platform.Override.Github.Token: 9006d7c9a9dda0a33d475aefba41ebfee2169396
- 

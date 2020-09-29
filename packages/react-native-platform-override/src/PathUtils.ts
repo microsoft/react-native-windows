@@ -6,16 +6,17 @@
  */
 
 import * as path from 'path';
+import * as upath from 'upath';
 
 /**
  * Convert a path to use Unix-style slashes
  */
 export function unixPath(filepath: string): string {
-  return filepath.replace(/\\/g, '/');
+  return upath.toUnix(filepath);
 }
 
 /**
- * Normalize a path and convert to use Platform-specific line-endings
+ * Normalize a path and convert to use platform-specific slashes
  */
 export function normalizePath(filepath: string): string {
   // path.normalize will convert unix paths to win32, but not the other way

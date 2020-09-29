@@ -7,8 +7,8 @@ pr:
   - "*-stable"
 
 variables:
-  - template: variables/github.yml
   - template: variables/msbuild.yml
+  - group: platform-override-zero-permission-token
 
 jobs:
   - job: Setup

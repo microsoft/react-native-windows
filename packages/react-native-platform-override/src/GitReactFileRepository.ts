@@ -30,6 +30,7 @@ export default class GitReactFileRepository
   private fileRepo: FileSystemRepository;
   private gitClient: simplegit.SimpleGit;
   private checkedOutVersion?: string;
+  private static githubToken?: string;
 
   // We need to ensure it is impossible to check out a new React Native
   // version while an operation hasn't yet finished. We queue each operation to
@@ -42,6 +43,10 @@ export default class GitReactFileRepository
     this.gitClient = gitClient;
   }
 
+  /**
+   * Asynchronusly initialize the scratch repository, creating a new Git repo is needed
+   * @param gitDirectory optional repo directory
+   */
   static async createAndInit(
     gitDirectory?: string,
   ): Promise<GitReactFileRepository> {
@@ -60,7 +65,16 @@ export default class GitReactFileRepository
     return new GitReactFileRepository(dir, gitClient);
   }
 
-  async listFiles(
+  /**
+   * Set a GitHub API token for all instances of GitReactFileRepository to use
+   * when making requests.
+   * @param token a GitHub PAT
+   */
+  static setGithubToken(token: string) {
+    GitReactFileRepository.githubToken = token;
+  }
+
+  static async listFiles(
     globs: string[] | undefined,
     reactNativeVersion: string,
   ): Promise<string[]> {
@@ -234,15 +248,17 @@ export default class GitReactFileRepository
   }
 
   private async longCommitHash(shortHash: string): Promise<string> {
-    const gitHubToken = process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN;
+    const githubToken =
+      GitReactFileRepository.githubToken ||
+      process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN;
 
-    // We cannot get long hash directly from a remote, so query Github's API
-    // for it.
+    // We cannot get abbreviated hash directly from a remote, so query Github's
+    // API for it.
     const commitInfo = await fetch(`${RN_COMMIT_ENDPOINT}/${shortHash}`, {
       headers: {
         'Content-Type': 'application/json',
         'User-Agent': 'react-native-platform-override',
-        ...(gitHubToken ? {Authorization: `Token ${gitHubToken}`} : {}),
+        ...(githubToken && {Authorization: `Token ${githubToken}`}),
       },
     });
     if (!commitInfo.ok) {
