@@ -156,14 +156,6 @@ void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
 void ReactApplication::OnCreate(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
-#if defined _DEBUG
-  if (IsDebuggerPresent()) {
-    this->DebugSettings().EnableFrameRateCounter(TRUE);
-
-    SystemNavigationManager::GetForCurrentView().AppViewBackButtonVisibility(AppViewBackButtonVisibility::Visible);
-  }
-#endif
-
   bool isPrelaunchActivated = false;
   if (auto prelauchActivatedArgs = e.try_as<Windows::ApplicationModel::Activation::IPrelaunchActivatedEventArgs>()) {
     isPrelaunchActivated = prelauchActivatedArgs.PrelaunchActivated();
