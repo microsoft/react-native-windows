@@ -7,6 +7,7 @@
 #include <IUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/WebSocketModule.h>
+#include <Threading/MessageQueueThreadFactory.h>
 #include <NativeModuleFactories.h>
 #include "ChakraRuntimeHolder.h"
 #include "DesktopTestInstance.h"
@@ -20,7 +21,6 @@ using namespace facebook::xplat::module;
 using std::make_shared;
 using std::make_tuple;
 using std::make_unique;
-using std::move;
 using std::shared_ptr;
 using std::string;
 using std::tuple;
@@ -39,9 +39,9 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   viewManagers.push_back(unique_ptr<IViewManager>(new TestViewManager("RCTRawText")));
   viewManagers.push_back(unique_ptr<IViewManager>(new TestViewManager("RCTScrollView")));
 
-  auto uiManager = createIUIManager(move(viewManagers), new TestNativeUIManager());
-  auto nativeQueue = make_shared<TestMessageQueueThread>();
-  auto jsQueue = make_shared<TestMessageQueueThread>();
+  auto uiManager = createIUIManager(std::move(viewManagers), new TestNativeUIManager());
+  auto nativeQueue = MakeJSQueueThread();
+  auto jsQueue = MakeJSQueueThread();
 
   devSettings->jsiRuntimeHolder = std::make_shared<ChakraRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
 
@@ -93,7 +93,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
       std::move(devSettings));
   instanceWrapper->loadBundle(std::move(jsBundleFile));
 
-  return shared_ptr<ITestInstance>(new DesktopTestInstance(move(instanceWrapper)));
+  return shared_ptr<ITestInstance>(new DesktopTestInstance(std::move(instanceWrapper)));
 }
 
 } // namespace Microsoft::React::Test
