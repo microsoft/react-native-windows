@@ -6,6 +6,7 @@
 #include <UI.Composition.Effects.h>
 #include "Effects.h"
 #include "ReactImageBrush.h"
+#include "XamlView.h"
 
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.Graphics.Effects.h>
@@ -161,7 +162,7 @@ comp::CompositionStretch ReactImageBrush::ResizeModeToStretch() {
 comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
   // If it doesn't exist, create it
   if (!CompositionBrush()) {
-    comp::CompositionSurfaceBrush surfaceBrush{m_compositor.CreateSurfaceBrush()};
+    comp::CompositionSurfaceBrush surfaceBrush{GetCompositor().CreateSurfaceBrush()};
     surfaceBrush.Surface(m_loadedImageSurface);
 
     return surfaceBrush;
@@ -231,7 +232,7 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
       effect = compositeEffect;
     }
 
-    comp::CompositionEffectFactory effectFactory{m_compositor.CreateEffectFactory(effect, animatedProperties)};
+    comp::CompositionEffectFactory effectFactory{GetCompositor().CreateEffectFactory(effect, animatedProperties)};
 
     m_effectBrush = effectFactory.CreateBrush();
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);

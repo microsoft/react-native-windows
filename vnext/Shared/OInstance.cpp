@@ -312,6 +312,10 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
   return instance;
 }
 
+void InstanceImpl::SetInError() noexcept {
+  m_isInError = true;
+}
+
 InstanceImpl::InstanceImpl(
     std::string &&jsBundleBasePath,
     std::vector<
@@ -353,9 +357,13 @@ InstanceImpl::InstanceImpl(
   std::shared_ptr<JSExecutorFactory> jsef;
   if (m_devSettings->useWebDebugger) {
     try {
-      auto jseFunc = m_devManager->LoadJavaScriptInProxyMode(*m_devSettings);
+      auto jseFunc = m_devManager->LoadJavaScriptInProxyMode(*m_devSettings, [weakthis = weak_from_this()]() {
+        if (auto strongThis = weakthis.lock()) {
+          strongThis->SetInError();
+        }
+      });
 
-      if ((jseFunc == nullptr) || m_devManager->HasException()) {
+      if ((jseFunc == nullptr) || m_isInError) {
         m_devSettings->errorCallback("Failed to create JavaScript Executor.");
         return;
       }
@@ -383,6 +391,7 @@ InstanceImpl::InstanceImpl(
         case JSIEngineOverride::Hermes:
 #if defined(USE_HERMES)
           m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>();
+          m_devSettings->inlineSourceMap = false;
           break;
 #else
           assert(false); // Hermes is not available in this build, fallthrough
@@ -501,7 +510,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           m_devSettings->sourceBundleHost,
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
-          m_devSettings->platformName);
+          m_devSettings->platformName,
+          m_devSettings->inlineSourceMap);
 
       if (!success) {
         m_devSettings->errorCallback(jsBundleString);
@@ -513,8 +523,9 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName,
-          /*dev*/ "true",
-          /*hot*/ "false");
+          /*dev*/ true,
+          /*hot*/ false,
+          m_devSettings->inlineSourceMap);
 
       // Remote debug executor loads script from a Uri, rather than taking the actual bundle string
       m_innerInstance->loadScriptFromString(
@@ -559,7 +570,7 @@ InstanceImpl::~InstanceImpl() {
 }
 
 void InstanceImpl::AttachMeasuredRootView(IReactRootView *rootView, folly::dynamic &&initProps) noexcept {
-  if (m_devManager->HasException()) {
+  if (m_isInError) {
     return;
   }
 
@@ -575,7 +586,7 @@ void InstanceImpl::AttachMeasuredRootView(IReactRootView *rootView, folly::dynam
 }
 
 void InstanceImpl::DetachRootView(IReactRootView *rootView) noexcept {
-  if (m_devManager->HasException()) {
+  if (m_isInError) {
     return;
   }
 
@@ -620,8 +631,9 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
             m_devSettings->sourceBundlePort,
             m_devSettings->debugBundlePath,
             m_devSettings->platformName,
-            "true" /*dev*/,
-            "false" /*hot*/)
+            true /*dev*/,
+            false /*hot*/,
+            m_devSettings->inlineSourceMap)
       : std::string();
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
@@ -656,14 +668,14 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
 
 void InstanceImpl::RegisterForReloadIfNecessary() noexcept {
   // setup polling for live reload
-  if (!m_devManager->HasException() && !m_devSettings->useFastRefresh && m_devSettings->liveReloadCallback != nullptr) {
+  if (!m_isInError && !m_devSettings->useFastRefresh && m_devSettings->liveReloadCallback != nullptr) {
     m_devManager->StartPollingLiveReload(
         m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort, m_devSettings->liveReloadCallback);
   }
 }
 
 void InstanceImpl::DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic &&eventData) {
-  if (m_devManager->HasException()) {
+  if (m_isInError) {
     return;
   }
 
@@ -672,7 +684,7 @@ void InstanceImpl::DispatchEvent(int64_t viewTag, std::string eventName, folly::
 }
 
 void InstanceImpl::invokeCallback(const int64_t callbackId, folly::dynamic &&params) {
-  if (m_devManager->HasException()) {
+  if (m_isInError) {
     return;
   }
 

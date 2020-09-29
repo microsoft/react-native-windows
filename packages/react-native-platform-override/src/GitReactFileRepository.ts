@@ -55,6 +55,7 @@ export default class GitReactFileRepository
       await gitClient.init();
     }
 
+    await gitClient.addConfig('core.filemode', 'false');
     return new GitReactFileRepository(dir, gitClient);
   }
 
@@ -101,6 +102,8 @@ export default class GitReactFileRepository
           '--patch',
           '--ignore-space-at-eol',
           '--binary',
+          '--',
+          filename,
         ]);
 
         if (patch.length === 0) {

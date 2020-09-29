@@ -21,7 +21,18 @@ import {
 } from '../../config/dependencyConfig';
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
 
-const templateRoot = path.join(__dirname, '../../../templates');
+/**
+ * Locates the react-native-windows directory containing template files
+ * @param config project configuration
+ */
+function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
+  const rnwPackage = path.dirname(
+    require.resolve('react-native-windows/package.json', {
+      paths: [projectConfig.folder],
+    }),
+  );
+  return path.join(rnwPackage, 'template');
+}
 
 /**
  * Logs the given message if verbose is True.
@@ -147,7 +158,8 @@ async function updateAutoLink(
       );
     }
 
-    var windowsAppConfig: WindowsProjectConfig = projectConfig.windows;
+    const windowsAppConfig: WindowsProjectConfig = projectConfig.windows;
+    const templateRoot = resolveTemplateRoot(windowsAppConfig);
 
     if (options.sln) {
       const slnFile = path.join(windowsAppConfig.folder, options.sln);
@@ -168,9 +180,9 @@ async function updateAutoLink(
           path.join(windowsAppConfig.folder, windowsAppConfig.sourceDir),
           projFile,
         ),
-        projectName: configUtils.getProjectName(projFile, projectContents),
+        projectName: configUtils.getProjectName(projectContents),
         projectLang: configUtils.getProjectLanguage(projFile),
-        projectGuid: configUtils.getProjectGuid(projFile, projectContents),
+        projectGuid: configUtils.getProjectGuid(projectContents),
       };
     }
 
@@ -222,7 +234,7 @@ async function updateAutoLink(
         );
       } else if (
         typeof windowsAppProjectConfig[item] === 'string' &&
-        windowsAppProjectConfig[item].startsWith('Error: ')
+        windowsAppProjectConfig[item]!.startsWith('Error: ')
       ) {
         throw new Error(
           `project.${item} invalid. ${windowsAppProjectConfig[item]}`,
@@ -237,7 +249,7 @@ async function updateAutoLink(
     );
 
     const projectDir = path.dirname(projectFile);
-    const projectLang = windowsAppConfig.project.projectLang;
+    const projectLang = windowsAppConfig.project.projectLang!;
 
     verboseMessage('Parsing dependencies...', verbose);
 
@@ -315,7 +327,12 @@ async function updateAutoLink(
 
       const csFileName = 'AutolinkedNativeModules.g.cs';
 
-      const srcCsFile = path.join(templateRoot, projectLang, 'src', csFileName);
+      const srcCsFile = path.join(
+        templateRoot,
+        `${projectLang}-app`,
+        'src',
+        csFileName,
+      );
 
       const destCsFile = path.join(projectDir, csFileName);
 
@@ -362,7 +379,7 @@ async function updateAutoLink(
 
       const srcCppFile = path.join(
         templateRoot,
-        projectLang,
+        `${projectLang}-app`,
         'src',
         cppFileName,
       );
@@ -413,7 +430,7 @@ async function updateAutoLink(
 
     const srcTargetFile = path.join(
       templateRoot,
-      projectLang,
+      `${projectLang}-app`,
       'src',
       targetFileName,
     );

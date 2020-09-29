@@ -75,6 +75,14 @@ function translateSpecFunctionParam(
     case 'ObjectTypeAnnotation':
       // TODO we have more information here, and could create a more specific type
       return 'React::JSValueObject';
+    case 'ReservedFunctionValueTypeAnnotation':
+      if (param.typeAnnotation.name !== 'RootTag')
+        throw new Error(
+          `Unknown reserved function: ${
+            param.typeAnnotation.name
+          } in translateSpecFunctionParam`,
+        );
+      return 'double';
     default:
       throw new Error(
         `Unhandled type in translateSpecFunctionParam: ${
@@ -109,11 +117,19 @@ function translateFunctionParam(param: FunctionTypeAnnotationParam): string {
     case 'ObjectTypeAnnotation':
       // TODO we have more information here, and could create a more specific type
       return 'React::JSValueObject &&';
+    case 'ReservedFunctionValueTypeAnnotation':
+      if (param.typeAnnotation.name !== 'RootTag')
+        throw new Error(
+          `Unknown reserved function: ${
+            param.typeAnnotation.name
+          } in translateFunctionParam`,
+        );
+      return 'double';
     default:
       throw new Error(
         `Unhandled type in translateFunctionParam: ${
           param.typeAnnotation.type
-        }`,
+        } in translateFunctionParam`,
       );
   }
 }
@@ -143,8 +159,16 @@ function translateSpecReturnType(
       return 'React::JSValueArray';
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValueObject';
+    case 'ReservedFunctionValueTypeAnnotation':
+      if (type.name !== 'RootTag')
+        throw new Error(
+          `Unknown reserved function: ${type.name} in translateSpecReturnType`,
+        );
+      return 'double';
     default:
-      throw new Error(`Unhandled type: ${type.type}`);
+      throw new Error(
+        `Unhandled type in translateSpecReturnType: ${type.type}`,
+      );
   }
 }
 
@@ -173,6 +197,12 @@ function translateImplReturnType(
       return 'React::JSValueArray';
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValueObject';
+    case 'ReservedFunctionValueTypeAnnotation':
+      if (type.name !== 'RootTag')
+        throw new Error(
+          `Unknown reserved function: ${type.name} in translateSpecReturnType`,
+        );
+      return 'double';
     default:
       throw new Error(
         `Unhandled type in translateImplReturnType: ${type.type}`,

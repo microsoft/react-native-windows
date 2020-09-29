@@ -41,8 +41,21 @@ Today we support the following projects as a NuGet package:
    1. `npx react-native init MyProj`
    1. cd `MyProj`
    1. Apply the react-native-windows template:
-      1. `node z:\src\r3\packages\react-native-windows-init\lib-commonjs\Cli.js --version 0.0.0 --useDevMode --overwrite  --language cs --experimentalNuGetDependency --nuGetTestFeed c:\temp\RnWNuGetTesting\feed --nuGetTestVersion 0.0.1-MyTest001 `
+      1. `node z:\src\r3\packages\react-native-windows-init\lib-commonjs\Cli.js --useDevMode --overwrite  --language cs --experimentalNuGetDependency --nuGetTestFeed c:\temp\RnWNuGetTesting\feed --nuGetTestVersion 0.0.1-MyTest001 `
          > See below for a breakdown of the arguments:
+1. Deal with npm / nuget version mismatch
+   1. The nuget package checks to see if there is a version match between the nuget package and the npm package.
+      In testing these likely don't line up. You'll get the following error:
+      ```
+      error : Mismatch detected between npm package versions and nuget package version.
+      error :     Npm:   '0.0.0-canary.148' - Z:\Temp\tst2\node_modules\react-native-windows\package.json
+      error :     NuGet: '0.0.1-MyTest010' - Z:\Temp\tst2\windows\tst2\tsts2.csproj
+      error : To update the nuget version, please see https://microsoft.github.io/react-native-windows/docs/nuget-update for instructions
+      ```
+      
+      You can disable the check by setting the environment variable:
+
+      `set ReactNativeWindowsAllowNugetNpmMismatch=true`
 1. Do your testing
 
 ## Changes:

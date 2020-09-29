@@ -27,8 +27,8 @@
 
   <ItemGroup>
     <PackageReference Include="Humanizer" Version="2.8.11" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.5.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.5.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.7.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.7.0" />
     <PackageReference Include="RuntimeContracts" Version="0.3.0" />
   </ItemGroup>
 

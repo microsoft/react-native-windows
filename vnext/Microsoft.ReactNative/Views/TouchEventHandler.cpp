@@ -154,8 +154,6 @@ void TouchEventHandler::OnPointerMoved(
   } else {
     // Move with no buttons pressed
     UpdatePointersInViews(instance, args, tag, sourceElement);
-    // MouseMove support: (Not yet enabled, requires adding to ViewPropTypes.js)
-    // SendPointerMove(args, tag, sourceElement);
   }
 }
 
@@ -306,7 +304,7 @@ void TouchEventHandler::UpdatePointersInViews(
       }
 
       ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(existingTag));
-      if (node != nullptr && node->m_onMouseLeave)
+      if (node != nullptr && node->m_onMouseLeaveRegistered)
         instance->DispatchEvent(existingTag, "topMouseLeave", GetPointerJson(pointer, existingTag));
     }
   }
@@ -319,7 +317,7 @@ void TouchEventHandler::UpdatePointersInViews(
     }
 
     ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(newTag));
-    if (node != nullptr && node->m_onMouseEnter)
+    if (node != nullptr && node->m_onMouseEnterRegistered)
       instance->DispatchEvent(newTag, "topMouseEnter", GetPointerJson(pointer, newTag));
   }
 

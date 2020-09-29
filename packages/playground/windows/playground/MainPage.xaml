@@ -69,7 +69,6 @@
                     <ComboBoxItem Content="Samples\image" />
                     <ComboBoxItem Content="Samples\index" />
                     <ComboBoxItem Content="Samples\messages" />
-                    <ComboBoxItem Content="Samples\mouse" />
                     <ComboBoxItem Content="Samples\scrollViewSnapSample" />
                     <ComboBoxItem Content="Samples\simple" />
                     <ComboBoxItem Content="Samples\text" />
@@ -134,6 +133,22 @@
                 VerticalAlignment="Center"
                 InputScope="Number"
                 MaxLength="5" />
+            <TextBlock
+                Margin="4"
+                VerticalAlignment="Center"
+                Text="JS Engine:"/>
+            <ComboBox
+                x:Name="x_JsEngine"
+                Margin="4"
+                MinWidth="150"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center">
+                <ComboBox.Items>
+                    <ComboBoxItem Content="Chakra" x:Name="x_engineChakra" />
+                    <ComboBoxItem Content="Hermes" x:Name="x_engineHermes" />
+                    <ComboBoxItem Content="V8" x:Name="x_engineV8" />
+                </ComboBox.Items>
+            </ComboBox>
         </StackPanel>
         <react:ReactRootView x:Name="ReactRootView"
             BorderThickness="0,1,0,0"

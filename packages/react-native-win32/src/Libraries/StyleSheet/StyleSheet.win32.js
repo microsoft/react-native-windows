@@ -18,6 +18,7 @@ const Platform = require('../Utilities/Platform'); // [Win32]
 const flatten = require('./flattenStyle');
 
 import type {
+  ____ColorValue_Internal,
   ____Styles_Internal,
   ____DangerouslyImpreciseStyle_Internal,
   ____DangerouslyImpreciseStyleProp_Internal,
@@ -28,6 +29,15 @@ import type {
   ____ImageStyle_Internal,
   ____ImageStyleProp_Internal,
 } from './StyleSheetTypes';
+
+/**
+ * This type should be used as the type for anything that is a color. It is
+ * most useful when using DynamicColorIOS which can be a string or a dynamic
+ * color object.
+ *
+ * type props = {backgroundColor: ColorValue};
+ */
+export type ColorValue = ____ColorValue_Internal;
 
 /**
  * This type should be used as the type for a prop that is passed through

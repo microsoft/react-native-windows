@@ -62,7 +62,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
   virtual void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap);
 
   virtual void
-  DispatchCommand(const XamlView &viewToUpdatee, const std::string &commandId, const folly::dynamic &commandArgs);
+  DispatchCommand(const XamlView &viewToUpdate, const std::string &commandId, const folly::dynamic &commandArgs);
 
   // Yoga Layout
   virtual void SetLayoutProps(
@@ -84,13 +84,14 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
 
  protected:
   virtual XamlView CreateViewCore(int64_t tag) = 0;
-  virtual void OnViewCreated(XamlView view){};
+  virtual void OnViewCreated(XamlView view) {}
   virtual bool
   UpdateProperty(ShadowNodeBase *nodeToUpdate, const std::string &propertyName, const folly::dynamic &propertyValue);
   virtual void NotifyUnimplementedProperty(
       ShadowNodeBase *nodeToUpdate,
       const std::string &propertyName,
       const folly::dynamic &value);
+  virtual void OnPropertiesUpdated(ShadowNodeBase *node) {}
 
  protected:
   std::weak_ptr<IReactInstance> m_wkReactInstance;

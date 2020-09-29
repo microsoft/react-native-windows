@@ -7,7 +7,6 @@
 #include "Utilities.h"
 
 #include <MemoryTracker.h>
-#include <ScriptStore.h>
 #include <cxxreact/MessageQueueThread.h>
 
 #include <cstring>
@@ -481,7 +480,7 @@ facebook::jsi::WeakObject ChakraRuntime::createWeakObject(const facebook::jsi::O
   return make<facebook::jsi::WeakObject>(CloneChakraPointerValue(getPointerValue(object)));
 }
 
-facebook::jsi::Value ChakraRuntime::lockWeakObject(const facebook::jsi::WeakObject &weakObject) {
+facebook::jsi::Value ChakraRuntime::lockWeakObject(facebook::jsi::WeakObject &weakObject) {
   // We need to make a copy of the ChakraObjectRef held within weakObj's
   // member PointerValue for the returned jsi::Value here.
   ChakraObjectRef ref = GetChakraObjectRef(weakObject);

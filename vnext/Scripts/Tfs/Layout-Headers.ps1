@@ -6,10 +6,12 @@ param(
 	[string] $TargetRoot = "$SourceRoot\vnext\target",
 	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\vnext",
 	[System.IO.DirectoryInfo] $ReactNativeRoot,
-	[string] $FollyVersion = '2019.09.30.00',
-	[System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}",
 	[string[]] $Extensions = ('h', 'hpp', 'def')
 )
+
+[xml]$props = gc $PSScriptRoot\..\..\Directory.Build.props
+[string] $FollyVersion = $props.Project.PropertyGroup.FollyVersion;
+[System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}";
 
 if (!$ReactNativeRoot) {
     $intermediateBuildDir = if ($env:BaseIntDir) { $env:BaseIntDir } else { "$SourceRoot\vnext\build" }
@@ -111,11 +113,17 @@ Copy-Item -Force -Path $ReactWindowsRoot\Scripts\*.nuspec -Destination $TargetRo
 #Copy StripAdditionalPlatformsFromNuspec.ps1 for use by publish task
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\StripAdditionalPlatformsFromNuspec.ps1 -Destination $TargetRoot
 
+# Microsoft.ReactNative.VersionCheck.targets
+Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.VersionCheck.targets -Destination $TargetRoot
+
 # Microsoft.ReactNative.targets
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.targets -Destination $TargetRoot
 
 # Microsoft.ReactNative.Cxx.targets
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.Cxx.targets -Destination $TargetRoot
+
+# Microsoft.ReactNative.Managed.targets
+Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.Managed.targets -Destination $TargetRoot
 
 # Microsoft.ReactNative.Managed.CodeGen.targets
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\Microsoft.ReactNative.Managed.CodeGen.targets -Destination $TargetRoot

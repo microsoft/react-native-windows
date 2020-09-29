@@ -101,7 +101,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   void SetTargetFrameworkElement();
   winrt::Popup GetFlyoutParentPopup() const;
   winrt::FlyoutPresenter GetFlyoutPresenter() const;
-
+  void OnShowFlyout();
   xaml::FrameworkElement m_targetElement = nullptr;
   winrt::Flyout m_flyout = nullptr;
   bool m_isLightDismissEnabled = true;
@@ -119,6 +119,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   winrt::Flyout::Closed_revoker m_flyoutClosedRevoker{};
   int64_t m_tokenContentPropertyChangeCallback{0};
   winrt::Flyout::Opened_revoker m_flyoutOpenedRevoker{};
+  winrt::XamlRoot::Changed_revoker m_xamlRootChangedRevoker{};
 };
 
 FlyoutShadowNode::~FlyoutShadowNode() {
@@ -180,6 +181,7 @@ void FlyoutShadowNode::createView() {
       }
 
       OnFlyoutClosed(*instance, m_tag, false);
+      m_xamlRootChangedRevoker.revoke();
     }
   });
 
@@ -236,6 +238,11 @@ void FlyoutShadowNode::createView() {
     if (auto instance = wkinstance.lock()) {
       if (auto xamlRoot = static_cast<NativeUIManager *>(instance->NativeUIManager())->tryGetXamlRoot()) {
         flyoutBase6.XamlRoot(xamlRoot);
+        m_xamlRootChangedRevoker = xamlRoot.Changed(winrt::auto_revoke, [this](auto &&, auto &&) {
+          if (m_isLightDismissEnabled) {
+            onDropViewInstance();
+          }
+        });
       }
     }
   }
@@ -284,8 +291,9 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
         m_isLightDismissEnabled = true;
       if (m_isOpen) {
         auto popup = GetFlyoutParentPopup();
-        if (popup != nullptr)
+        if (popup != nullptr) {
           popup.IsLightDismissEnabled(m_isLightDismissEnabled);
+        }
       }
     } else if (propertyName == "isOpen") {
       if (propertyValue.isBool()) {
@@ -333,16 +341,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
 
   if (updateIsOpen) {
     if (m_isOpen) {
-      AdjustDefaultFlyoutStyle(50000, 50000);
-      if (m_isFlyoutShowOptionsSupported) {
-        m_flyout.ShowAt(m_targetElement, m_showOptions);
-      } else {
-        winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
-      }
-
-      auto popup = GetFlyoutParentPopup();
-      if (popup != nullptr)
-        popup.IsLightDismissEnabled(m_isLightDismissEnabled);
+      OnShowFlyout();
     } else {
       m_flyout.Hide();
     }
@@ -356,6 +355,20 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
 
 winrt::Flyout FlyoutShadowNode::GetFlyout() {
   return m_flyout;
+}
+
+void FlyoutShadowNode::OnShowFlyout() {
+  AdjustDefaultFlyoutStyle(50000, 50000);
+  if (m_isFlyoutShowOptionsSupported) {
+    m_flyout.ShowAt(m_targetElement, m_showOptions);
+  } else {
+    winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
+  }
+
+  auto popup = GetFlyoutParentPopup();
+  if (popup != nullptr) {
+    popup.IsLightDismissEnabled(m_isLightDismissEnabled);
+  }
 }
 
 void FlyoutShadowNode::SetTargetFrameworkElement() {

@@ -1,23 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import "IReactModuleBuilder.idl";
-import "IReactContext.idl";
+import "IViewManagerCore.idl";
 
 #include "NamespaceRedirect.h"
 
 namespace Microsoft.ReactNative
 {
-  [webhosthidden]
-  enum ViewManagerPropertyType
-  {
-    Boolean,
-    Number,
-    String,
-    Array,
-    Map,
-    Color,
-  };
 
   [webhosthidden]
   interface IViewManager
@@ -25,18 +14,6 @@ namespace Microsoft.ReactNative
     String Name { get; };
 
     XAML_NAMESPACE.FrameworkElement CreateView();
-  }
-
-  [webhosthidden]
-  interface IViewManagerWithReactContext
-  {
-    IReactContext ReactContext { get; set; };
-  }
-
-  [webhosthidden]
-  interface IViewManagerWithExportedViewConstants
-  {
-    ConstantProviderDelegate ExportedViewConstants { get; };
   }
 
   [webhosthidden]
@@ -53,14 +30,6 @@ namespace Microsoft.ReactNative
     IVectorView<String> Commands { get; };
 
     void DispatchCommand(XAML_NAMESPACE.FrameworkElement view, String commandId, IJSValueReader commandArgsReader);
-  }
-
-  [webhosthidden]
-  interface IViewManagerWithExportedEventTypeConstants
-  {
-    ConstantProviderDelegate ExportedCustomBubblingEventTypeConstants { get; };
-
-    ConstantProviderDelegate ExportedCustomDirectEventTypeConstants { get; };
   }
 
   [webhosthidden]

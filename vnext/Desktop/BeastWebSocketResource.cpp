@@ -122,7 +122,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::OnRead(error_code ec, size_t si
     }
 
     if (m_readHandler)
-      m_readHandler(size, std::move(message));
+      m_readHandler(size, std::move(message), m_stream->got_binary());
 
     m_bufferIn.consume(size);
   } // if (ec)
@@ -391,12 +391,12 @@ void BaseWebSocketResource<SocketLayer, Stream>::Close(CloseCode code, const str
 }
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::Send(const string &message) noexcept {
+void BaseWebSocketResource<SocketLayer, Stream>::Send(string &&message) noexcept {
   EnqueueWrite(std::move(message), false);
 }
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::SendBinary(const string &base64String) noexcept {
+void BaseWebSocketResource<SocketLayer, Stream>::SendBinary(string &&base64String) noexcept {
   m_stream->binary(true);
 
   string message;
@@ -448,7 +448,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::SetOnSend(function<void(size_t)
 
 template <typename SocketLayer, typename Stream>
 void BaseWebSocketResource<SocketLayer, Stream>::SetOnMessage(
-    function<void(size_t, const string &)> &&handler) noexcept {
+    function<void(size_t, const string &, bool isBinary)> &&handler) noexcept {
   m_readHandler = handler;
 }
 

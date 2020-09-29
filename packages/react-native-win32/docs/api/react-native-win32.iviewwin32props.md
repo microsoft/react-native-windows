@@ -17,7 +17,6 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [acceptsKeyboardFocus](./react-native-win32.iviewwin32props.acceptskeyboardfocus.md) | boolean |  |
 |  [accessibilityActions](./react-native-win32.iviewwin32props.accessibilityactions.md) | ReadonlyArray&lt;[AccessibilityActionInfo](./react-native-win32.accessibilityactioninfo.md)<!-- -->&gt; |  |
 |  [accessibilityAnnotation](./react-native-win32.iviewwin32props.accessibilityannotation.md) | [AccessibilityAnnotationInfo](./react-native-win32.accessibilityannotationinfo.md) | Tells a person using a screen reader what kind of annotation they have selected. If available, it will also tell a person the author of the annotation and the date and time the annotation was posted.<!-- -->Note: If typeID is 'Unknown', a typeName must be provided. |
 |  [accessibilityLevel](./react-native-win32.iviewwin32props.accessibilitylevel.md) | number |  |

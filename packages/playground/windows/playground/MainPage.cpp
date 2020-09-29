@@ -28,6 +28,13 @@ MainPage::MainPage() {
     x_rootComponentNameCombo().IsEditable(true);
     x_entryPointCombo().IsEditable(true);
   }
+
+  // TODO: a way to determine which engines are actually available
+  x_engineChakra().IsEnabled(true);
+  x_engineHermes().IsEnabled(true);
+  x_engineV8().IsEnabled(true);
+
+  x_JsEngine().SelectedIndex(0);
 }
 
 void MainPage::OnLoadClick(
@@ -44,7 +51,13 @@ void MainPage::OnLoadClick(
   }
   host.InstanceSettings().JavaScriptBundleFile(bundleFile);
 
-  auto mainComponentName = unbox_value<hstring>(x_rootComponentNameCombo().SelectedItem().as<ComboBoxItem>().Content());
+  auto item = x_rootComponentNameCombo().SelectedItem();
+  winrt::hstring mainComponentName;
+  if (auto selected = item.try_as<ComboBoxItem>()) {
+    mainComponentName = unbox_value<hstring>(selected.Content());
+  } else {
+    mainComponentName = unbox_value<hstring>(item);
+  }
   ReactRootView().ComponentName(mainComponentName);
   ReactRootView().ReactNativeHost(host);
 
@@ -54,6 +67,8 @@ void MainPage::OnLoadClick(
   host.InstanceSettings().DebuggerBreakOnNextLine(x_BreakOnFirstLineCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseFastRefresh(x_UseFastRefreshCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().DebuggerPort(static_cast<uint16_t>(std::stoi(std::wstring(x_DebuggerPort().Text()))));
+  host.InstanceSettings().JSIEngineOverride(
+      static_cast<Microsoft::ReactNative::JSIEngine>(x_JsEngine().SelectedIndex()));
   if (!m_bundlerHostname.empty()) {
     host.InstanceSettings().DebugHost(m_bundlerHostname);
   }

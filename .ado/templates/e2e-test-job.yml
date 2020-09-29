@@ -29,26 +29,20 @@ jobs:
       - task: CmdLine@2
         displayName: Set LocalDumps
         inputs:
-          script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd
+          script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd ReactUWPTestApp
           workingDirectory: $(Build.SourcesDirectory)
 
-      - task: NuGetCommand@2
-        displayName: NuGet restore - ReactUWPTestApp
+      - task: CmdLine@2
+        displayName: Set up AppVerifer on ReactUWPTestApp
         inputs:
-          command: restore
-          noCache: true
-          restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-         
+          script: regedit /S $(Build.SourcesDirectory)\.ado\ReactUWPTestApp.reg
+          workingDirectory: $(Build.SourcesDirectory)
+
       - task: CmdLine@2
         displayName: run-windows
         inputs:
           script: yarn windows --no-launch --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/E2ETest
-
-      - template: upload-build-logs.yml
-        parameters:
-          buildLogDirectory: '$(BuildLogDirectory)'
 
       - task: CopyFiles@2
         displayName: Copy ReactUWPTestApp artifacts
@@ -61,7 +55,7 @@ jobs:
       - task: PublishPipelineArtifact@1
         displayName: "Publish Artifact:ReactUWPTestApp"
         inputs:
-          artifactName: ReactUWPTestApp
+          artifactName: ReactUWPTestApp-$(System.JobAttempt)
           targetPath: $(Build.StagingDirectory)/ReactUWPTestApp
         condition: succeededOrFailed()
 
@@ -110,7 +104,7 @@ jobs:
       - task: PublishPipelineArtifact@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
         inputs:
-          artifactName: ReactUWPTestAppTreeDump
+          artifactName: ReactUWPTestAppTreeDump-$(System.JobAttempt)
           targetPath: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
         condition: succeededOrFailed()
 
@@ -134,3 +128,8 @@ jobs:
           script: |
             Get-WmiObject Win32_LogicalDisk
         condition: succeededOrFailed()
+
+      - template: upload-build-logs.yml
+        parameters:
+          buildLogDirectory: '$(BuildLogDirectory)'
+          condition: succeededOrFailed()

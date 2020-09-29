@@ -79,6 +79,11 @@ namespace Microsoft.ReactNative.Managed
       value.WriteTo(writer);
     }
 
+    public static void WriteValue(this IJSValueWriter writer, JSValueObject value)
+    {
+      JSValue.WriteObject(writer, value);
+    }
+
     public static void WriteValue(this IJSValueWriter writer, JSValue.Void _)
     {
       writer.WriteNull();

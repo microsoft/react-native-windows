@@ -5,6 +5,7 @@
 ```ts
 
 import { NativeEventEmitter } from 'react-native';
+import { ProcessedColorValue } from 'react-native';
 import * as React_2 from 'react';
 import * as RN from 'react-native';
 import { StyleProp } from 'react-native';
@@ -23,9 +24,6 @@ export type AppTheme = AppThemeModule;
 export const AppTheme: AppThemeModule | MissingNativeAppThemeShim;
 
 // @public (undocumented)
-export type AppThemeTypes = 'light' | 'dark';
-
-// @public (undocumented)
 export class DatePicker extends React_2.Component<IDatePickerProps> {
     constructor(props: IDatePickerProps);
     // (undocumented)
@@ -35,7 +33,7 @@ export class DatePicker extends React_2.Component<IDatePickerProps> {
     }
 
 // @public (undocumented)
-export const enum DayOfWeek {
+export enum DayOfWeek {
     // (undocumented)
     Friday = 5,
     // (undocumented)
@@ -87,12 +85,6 @@ export enum HandledEventPhase {
     Bubbling = 3,
     // (undocumented)
     Capturing = 1
-}
-
-// @public (undocumented)
-export interface IAppThemeChangedEvent {
-    // (undocumented)
-    currentTheme: AppThemeTypes;
 }
 
 // @public (undocumented)
@@ -240,7 +232,7 @@ export interface IPickerItemData {
     // (undocumented)
     label: string;
     // (undocumented)
-    textColor?: number;
+    textColor?: ProcessedColorValue | null;
     // (undocumented)
     value?: any;
 }
@@ -270,8 +262,6 @@ export interface IPopupTargetState {
 
 // @public (undocumented)
 export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
-    // @deprecated (undocumented)
-    acceptsKeyboardFocus?: boolean;
     accessibilityPosInSet?: number;
     accessibilitySetSize?: number;
     // (undocumented)

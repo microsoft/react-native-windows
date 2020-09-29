@@ -8,7 +8,7 @@ using std::string;
 
 namespace Microsoft::React {
 
-Url::Url(const string &source) {
+Url::Url(string &&source) {
   //                           ( 1 )              ( 2 )   ( 3 (4) )   ( 5 )    ( 6 (7) )
   std::regex expression("(http|https|ws|wss)://([^:/\\?]+)(:(\\d+))?(/[^\\?]*)?(\\?(.*))?$");
   //                          scheme              host       port      path      query
@@ -59,7 +59,14 @@ void writeStderr(const char *s) {
 }
 } // namespace
 
-void assertionFailure(const char *expr, const char *msg, const char *file, unsigned int line, const char *function) {
+// \node_modules\.folly\folly-2020.09.14.00\folly\lang\SafeAssert.h
+void assertionFailure(
+    const char *expr,
+    const char *msg,
+    const char *file,
+    unsigned int line,
+    const char *function,
+    int error) {
   // nyi
   std::terminate();
 }

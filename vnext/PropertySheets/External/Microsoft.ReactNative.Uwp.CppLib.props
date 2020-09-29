@@ -9,4 +9,5 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
 </Project>

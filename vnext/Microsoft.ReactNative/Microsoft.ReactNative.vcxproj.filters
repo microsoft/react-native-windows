@@ -46,15 +46,6 @@
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="TestHook.cpp" />
-    <ClCompile Include="Threading\BatchingQueueThread.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="Threading\MessageDispatchQueue.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="Threading\MessageQueueThreadFactory.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
     <ClCompile Include="ViewManagersProvider.cpp" />
     <ClCompile Include="Base\CoreNativeModules.cpp">
       <Filter>Base</Filter>
@@ -64,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="CxxReactUWP\JSBigString.cpp">
       <Filter>CxxReactUWP</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\AccessibilityInfoModule.cpp">
+      <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
@@ -158,16 +152,10 @@
     <ClCompile Include="Modules\LinkingManagerModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\LocationObserverModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\LogBoxModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\NativeUIManager.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\NetworkingModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\TimingModule.cpp">
@@ -207,9 +195,6 @@
       <Filter>Views\Impl</Filter>
     </ClCompile>
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\CheckboxViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\ConfigureBundlerDlg.cpp">
@@ -395,18 +380,12 @@
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="TestHook.h" />
-    <ClInclude Include="Threading\BatchingQueueThread.h">
-      <Filter>Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="Threading\MessageDispatchQueue.h">
-      <Filter>Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="Threading\MessageQueueThreadFactory.h">
-      <Filter>Threading</Filter>
-    </ClInclude>
     <ClInclude Include="ViewManagersProvider.h" />
     <ClInclude Include="Base\CoreNativeModules.h">
       <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\AccessibilityInfoModule.h">
+      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\Animated\AdditionAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
@@ -513,16 +492,10 @@
     <ClInclude Include="Modules\LinkingManagerModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\LocationObserverModule.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\LogBoxModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\NativeUIManager.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\NetworkingModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\TimingModule.h">
@@ -565,9 +538,6 @@
       <Filter>Views\Impl</Filter>
     </ClInclude>
     <ClInclude Include="Views\ActivityIndicatorViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\CheckboxViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\ControlViewManager.h">
@@ -713,6 +683,9 @@
     <ClInclude Include="Views\Image\Effects.h">
       <Filter>Views\Image</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\TransformableText.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -746,6 +719,7 @@
     <Midl Include="Views\cppwinrt\Effects.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
+    <Midl Include="IViewManagerCore.idl" />
     <Midl Include="JsiApi.idl" />
   </ItemGroup>
   <ItemGroup>
@@ -778,9 +752,6 @@
     <Filter Include="ReactHost">
       <UniqueIdentifier>{323742e5-5542-43fd-9b79-7914b708b9a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Threading">
-      <UniqueIdentifier>{72fbc00f-4a01-4363-8807-378641b7a17c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{7d98959f-0655-4d14-b73a-68f001ff9d12}</UniqueIdentifier>
     </Filter>
@@ -799,5 +770,8 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DevMenuControl.xaml" />
   </ItemGroup>
 </Project>

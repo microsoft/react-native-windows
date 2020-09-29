@@ -12,10 +12,6 @@ import {
 } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 class TextInputTestPage extends BasePage {
-  isPageLoaded() {
-    return super.isPageLoaded() && this.textInput.isDisplayed();
-  }
-
   clickTextInput() {
     this.textInput.click();
   }

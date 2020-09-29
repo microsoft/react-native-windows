@@ -832,8 +832,12 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             if (type != null &&
                 type is INamedTypeSymbol namedType &&
                 namedType.IsGenericType &&
-                namedType.ConstructUnboundGenericType()
-                  .Equals(m_reactTypes.IReactPromise.ConstructUnboundGenericType(), SymbolEqualityComparer.Default))
+                (
+                   namedType.ConstructUnboundGenericType().Equals(
+                       m_reactTypes.IReactPromise.ConstructUnboundGenericType(), SymbolEqualityComparer.Default) ||
+                    namedType.ConstructUnboundGenericType().Equals(
+                       m_reactTypes.ReactPromise.ConstructUnboundGenericType(), SymbolEqualityComparer.Default)
+                ))
             {
                 typeParameter = namedType.TypeArguments[0];
                 return true;

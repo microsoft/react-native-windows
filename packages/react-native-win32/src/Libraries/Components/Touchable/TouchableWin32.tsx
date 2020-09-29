@@ -31,6 +31,8 @@ import { IKeyboardEvent } from '../View/ViewWin32.Props';
 const BoundingDimensions = require('./BoundingDimensions');
 const Position = require('./Position');
 
+const {findNodeHandle} = require('../../Renderer/shims/ReactNative');
+
 /**
  * Extracts a single touch, generally this is the active touch or touch that
  * has just ended
@@ -290,7 +292,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
    * On responder being granted, state and local data need to be set
    */
   private _touchableHandleResponderGrant = (e: IPressEvent): void => {
-    const dispatchID = e.currentTarget;
+    const dispatchID = findNodeHandle(e.currentTarget);
     e.persist();
 
     this._pressOutDelayTimeout && clearTimeout(this._pressOutDelayTimeout);

@@ -61,7 +61,12 @@ WebSocketJSExecutor::WebSocketJSExecutor(
     }
   });
 
-  m_closed = m_socket.Closed(winrt::auto_revoke, [this](auto &&, auto &&args) { SetState(State::Disconnected); });
+  auto weakThis = weak_from_this();
+  m_closed = m_socket.Closed(winrt::auto_revoke, [weakThis](auto &&, auto &&args) {
+    if (auto _this = weakThis.lock()) {
+      _this->SetState(State::Disconnected);
+    }
+  });
 }
 
 WebSocketJSExecutor::~WebSocketJSExecutor() {
@@ -223,9 +228,7 @@ bool WebSocketJSExecutor::PrepareJavaScriptRuntime(int milliseconds) {
 
 void WebSocketJSExecutor::PollPrepareJavaScriptRuntime() {
   m_messageQueueThread->runOnQueue([this]() {
-    auto timeout = std::chrono::milliseconds(750);
-
-    for (uint32_t retries = 20; retries > 0; --retries) {
+    for (uint32_t retries = 50; retries > 0; --retries) {
       if (PrepareJavaScriptRuntime(750)) {
         OnDebuggerAttach();
         return;

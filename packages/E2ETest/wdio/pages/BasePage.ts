@@ -10,7 +10,6 @@ import {
 } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 export function By(testId: string): WebdriverIO.Element {
-  // eslint-disable-next-line no-undef
   return $('~' + testId);
 }
 
@@ -21,18 +20,17 @@ export function wait(timeout: number) {
 }
 
 export class BasePage {
-  isPageLoaded(): boolean {
-    return this.homeButton.isDisplayed();
+  isElementLoaded(element: string): boolean {
+    return By(element).isDisplayed();
   }
 
-  waitForPageLoaded(timeout?: number) {
-    // eslint-disable-next-line no-undef
+  waitForElementLoaded(element: string, timeout?: number) {
     browser.waitUntil(
       () => {
-        return this.isPagedLoadedOrLoadBundleError();
+        return this.isElementLoadedOrLoadBundleError(element);
       },
       this.timeoutForPageLoaded(timeout),
-      'Wait for page ' + this.constructor.name + ' timeout'
+      'Wait for element ' + element + ' timeout'
     );
   }
 
@@ -50,6 +48,9 @@ export class BasePage {
             maxWait +
             '...####'
         );
+        // #6041 this line doesn't do anything because of missing await, but
+        // adding the await causes test failures.
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         wait(100);
         waitCount += 1;
       }
@@ -73,12 +74,12 @@ export class BasePage {
     return By(REACT_CONTROL_ERROR_TEST_ID);
   }
 
-  private isPagedLoadedOrLoadBundleError(): boolean {
+  private isElementLoadedOrLoadBundleError(element: string): boolean {
     if (this.reactControlErrorMessage.isDisplayed()) {
       throw "ReactControl doesn't load bundle successfully: " +
         this.reactControlErrorMessage.getText();
     }
-    return this.isPageLoaded();
+    return this.isElementLoaded(element);
   }
 
   private get treeDumpResult() {
@@ -86,5 +87,5 @@ export class BasePage {
   }
 
   // Default timeout for waitForPageLoaded command in PageObject
-  private waitforPageTimeout: number = 10000;
+  private waitforPageTimeout: number = 60000;
 }

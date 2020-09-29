@@ -251,18 +251,6 @@ type AndroidViewProps = $ReadOnly<{|
   renderToHardwareTextureAndroid?: ?boolean,
 
   /**
-   * Views that are only used to layout their children or otherwise don't draw
-   * anything may be automatically removed from the native hierarchy as an
-   * optimization. Set this property to `false` to disable this optimization and
-   * ensure that this `View` exists in the native view hierarchy.
-   *
-   * @platform android
-   *
-   * See https://reactnative.dev/docs/view.html#collapsable
-   */
-  collapsable?: ?boolean,
-
-  /**
    * Whether this `View` needs to rendered offscreen and composited with an
    * alpha in order to preserve 100% correct colors and blending behavior.
    *
@@ -419,12 +407,6 @@ type WindowsViewProps = $ReadOnly<{|
 
   tabIndex?: ?number,
 
-  /**
-   * Specifies whether the view participates in the key view loop as user tabs
-   * through different controls.
-   */
-  acceptsKeyboardFocus?: ?boolean,
-
   accessibilityPosInSet?: ?number,
   accessibilitySetSize?: ?number,
 
@@ -435,8 +417,8 @@ type WindowsViewProps = $ReadOnly<{|
 
   onFocus?: ?(event: FocusEvent) => mixed,
   onBlur?: ?(event: FocusEvent) => mixed,
-  onMouseLeave?: ?(event: SyntheticEvent<{}>) => mixed,
-  onMouseEnter?: ?(event: SyntheticEvent<{}>) => mixed,
+  onMouseLeave?: ?(event: MouseEvent) => mixed,
+  onMouseEnter?: ?(event: MouseEvent) => mixed,
 |}>;
 // Windows]
 
@@ -496,6 +478,19 @@ export type ViewProps = $ReadOnly<{|
    *
    */
   accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
+
+  /**
+   * Views that are only used to layout their children or otherwise don't draw
+   * anything may be automatically removed from the native hierarchy as an
+   * optimization. Set this property to `false` to disable this optimization and
+   * ensure that this `View` exists in the native view hierarchy.
+   *
+   * @platform android
+   * In Fabric, this prop is used in ios as well.
+   *
+   * See https://reactnative.dev/docs/view.html#collapsable
+   */
+  collapsable?: ?boolean,
 
   /**
    * Used to locate this view in end-to-end tests.

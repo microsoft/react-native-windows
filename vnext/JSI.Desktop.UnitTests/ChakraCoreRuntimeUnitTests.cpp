@@ -9,7 +9,7 @@
 
 // TODO (yicyao): #2730 Introduces a vcxitem for shared test code and move this
 // there.
-#include <IntegrationTests/TestMessageQueueThread.h>
+#include <Threading/MessageQueueThreadFactory.h>
 
 #include <gtest/gtest.h>
 
@@ -23,7 +23,7 @@ using facebook::react::CreateMemoryTracker;
 using facebook::react::MessageQueueThread;
 using Microsoft::JSI::ChakraRuntimeArgs;
 using Microsoft::JSI::makeChakraRuntime;
-using Microsoft::React::Test::TestMessageQueueThread;
+using react::uwp::MakeJSQueueThread;
 
 // TODO (yicyao): #2729 We need to add tests for ChakraCoreRuntime specific
 // behaviors such as ScriptStore. This may require us to bring back JSITestBase.
@@ -32,9 +32,9 @@ std::vector<RuntimeFactory> runtimeGenerators() {
   return {[]() -> std::unique_ptr<Runtime> {
     ChakraRuntimeArgs args{};
 
-    args.jsQueue = std::make_shared<TestMessageQueueThread>();
+    args.jsQueue = MakeJSQueueThread();
 
-    std::shared_ptr<MessageQueueThread> memoryTrackerCallbackQueue = std::make_shared<TestMessageQueueThread>();
+    std::shared_ptr<MessageQueueThread> memoryTrackerCallbackQueue = MakeJSQueueThread();
 
     args.memoryTracker = CreateMemoryTracker(std::move(memoryTrackerCallbackQueue));
 

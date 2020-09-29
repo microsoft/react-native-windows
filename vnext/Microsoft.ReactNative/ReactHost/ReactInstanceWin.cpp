@@ -8,12 +8,14 @@
 #include <Base/CoreNativeModules.h>
 #include <IUIManager.h>
 #include <Threading/MessageDispatchQueue.h>
+#include <Threading/MessageQueueThreadFactory.h>
+
 #include <XamlUIService.h>
 #include "ReactErrorProvider.h"
 
 #include "Microsoft.ReactNative/IReactNotificationService.h"
-#include "Microsoft.ReactNative/Threading/MessageQueueThreadFactory.h"
 
+#include "../../codegen/NativeAccessibilityInfoSpec.g.h"
 #include "../../codegen/NativeAppStateSpec.g.h"
 #include "../../codegen/NativeClipboardSpec.g.h"
 #include "../../codegen/NativeDevSettingsSpec.g.h"
@@ -31,6 +33,7 @@
 #include "DevMenu.h"
 #include "IReactContext.h"
 #include "IReactDispatcher.h"
+#include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
 #include "Modules/AppStateModule.h"
 #include "Modules/ClipboardModule.h"
@@ -151,6 +154,12 @@ void ReactInstanceWin::LoadModules(
     }
   };
 
+  registerTurboModule(
+      L"AccessibilityInfo",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::AccessibilityInfo,
+          ::Microsoft::ReactNativeSpecs::AccessibilityInfoSpec>());
+
   registerTurboModule(L"Alert", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Alert>());
 
   registerTurboModule(
@@ -224,9 +233,15 @@ void ReactInstanceWin::Initialize() noexcept {
 
           auto devSettings = std::make_shared<facebook::react::DevSettings>();
           devSettings->useJITCompilation = m_options.EnableJITCompilation;
-          devSettings->sourceBundleHost = m_options.DeveloperSettings.SourceBundleHost;
-          devSettings->sourceBundlePort = m_options.DeveloperSettings.SourceBundlePort;
-          devSettings->debugBundlePath = m_options.DeveloperSettings.SourceBundleName;
+          devSettings->sourceBundleHost = m_options.DeveloperSettings.SourceBundleHost.empty()
+              ? facebook::react::DevServerHelper::DefaultPackagerHost
+              : m_options.DeveloperSettings.SourceBundleHost;
+          devSettings->sourceBundlePort = m_options.DeveloperSettings.SourceBundlePort
+              ? m_options.DeveloperSettings.SourceBundlePort
+              : facebook::react::DevServerHelper::DefaultPackagerPort;
+          devSettings->debugBundlePath = m_options.DeveloperSettings.SourceBundleName.empty()
+              ? m_options.Identity
+              : m_options.DeveloperSettings.SourceBundleName;
           devSettings->liveReloadCallback = GetLiveReloadCallback();
           devSettings->errorCallback = GetErrorCallback();
           devSettings->loggingCallback = GetLoggingCallback();
@@ -259,11 +274,13 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->debuggerConsoleRedirection =
               false; // JSHost::ChangeGate::ChakraCoreDebuggerConsoleRedirection();
 
-          // Acquire default modules and then populate with custom modules
+          // Acquire default modules and then populate with custom modules.
+          // Note that some of these have custom thread affinity.
           std::vector<facebook::react::NativeModuleDescription> cxxModules = react::uwp::GetCoreModules(
               m_uiManager.Load(),
               m_batchingUIThread,
               m_uiMessageThread.Load(),
+              m_jsMessageThread.Load(),
               std::move(m_appTheme),
               std::move(m_appearanceListener),
               m_legacyReactInstance);
@@ -296,6 +313,7 @@ void ReactInstanceWin::Initialize() noexcept {
               case react::uwp::JSIEngine::Hermes:
 #if defined(USE_HERMES)
                 devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
+                devSettings->inlineSourceMap = false;
                 break;
 #endif
               case react::uwp::JSIEngine::V8:
@@ -336,7 +354,7 @@ void ReactInstanceWin::Initialize() noexcept {
             m_instanceWrapper.Exchange(std::move(instanceWrapper));
 
             if (auto onCreated = m_options.OnInstanceCreated.Get()) {
-              onCreated->Invoke(*this);
+              onCreated->Invoke(Mso::CntPtr<Mso::React::IReactContext>(m_reactContext));
             }
 
             LoadJSBundles();
@@ -448,7 +466,7 @@ void ReactInstanceWin::OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) no
           }
 
           if (auto onLoaded = strongThis->m_options.OnInstanceLoaded.Get()) {
-            onLoaded->Invoke(*strongThis, errorCode);
+            onLoaded->Invoke(Mso::CntPtr<IReactContext>(strongThis->m_reactContext), errorCode);
           }
 
           strongThis->m_whenLoaded.SetValue();
@@ -475,7 +493,7 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
   }
 
   if (auto onDestroyed = m_options.OnInstanceDestroyed.Get()) {
-    onDestroyed->Invoke(*this);
+    onDestroyed->Invoke(Mso::CntPtr<Mso::React::IReactContext>(m_reactContext));
   }
 
   // Make sure that the instance is not destroyed yet
@@ -734,7 +752,10 @@ void ReactInstanceWin::DispatchEvent(int64_t viewTag, std::string &&eventName, f
 }
 
 facebook::react::INativeUIManager *ReactInstanceWin::NativeUIManager() noexcept {
-  return m_uiManager.LoadWithLock()->getNativeUIManager();
+  if (auto uimanager = m_uiManager.LoadWithLock()) {
+    return uimanager->getNativeUIManager();
+  }
+  return nullptr;
 }
 
 std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() noexcept {

@@ -46,10 +46,6 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
 
   void Source(xaml::Media::LoadedImageSurface const &value);
 
-  void Compositor(comp::Compositor const &compositor) {
-    m_compositor = compositor;
-  }
-
  private:
   static constexpr auto TintColorColor{L"TintColor.Color"};
   static constexpr auto BlurBlurAmount{L"Blur.BlurAmount"};
@@ -62,7 +58,6 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
       comp::CompositionSurfaceBrush const &surfaceBrush,
       bool forceEffectBrush = false);
 
-  comp::Compositor m_compositor;
   float m_blurRadius{0};
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
   winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};

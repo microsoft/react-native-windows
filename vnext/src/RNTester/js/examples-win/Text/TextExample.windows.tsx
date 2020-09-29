@@ -7,7 +7,7 @@
 // This is a port of TextExample.android.js
 // Image inline in Text removed
 
-import React = require('react');
+import * as React from 'react';
 import {/*Image,*/ StyleSheet, Text, View, TextStyle} from 'react-native';
 const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');
@@ -79,6 +79,39 @@ export class TextExample extends React.Component<{}> {
 
     return (
       <RNTesterPage>
+        <RNTesterBlock title="textTransform">
+          <View>
+            <Text style={{textTransform: 'uppercase'}}>
+              This text should be uppercased.
+            </Text>
+            <Text style={{textTransform: 'lowercase'}}>
+              This TEXT SHOULD be lowercased.
+            </Text>
+            <Text style={{textTransform: 'capitalize'}}>
+              This text should be CAPITALIZED.
+            </Text>
+            <Text style={{textTransform: 'capitalize'}}>
+              Mixed:{' '}
+              <Text style={{textTransform: 'uppercase'}}>uppercase </Text>
+              <Text style={{textTransform: 'lowercase'}}>LoWeRcAsE </Text>
+              <Text style={{textTransform: 'capitalize'}}>
+                capitalize each word
+              </Text>
+            </Text>
+            <Text>
+              Should be "ABC":
+              <Text style={{textTransform: 'uppercase'}}>
+                a<Text>b</Text>c
+              </Text>
+            </Text>
+            <Text>
+              Should be "XyZ":
+              <Text style={{textTransform: 'uppercase'}}>
+                x<Text style={{textTransform: 'none'}}>y</Text>z
+              </Text>
+            </Text>
+          </View>
+        </RNTesterBlock>
         <RNTesterBlock title="Wrap">
           <Text>
             The text should wrap if it goes on multiple lines. See, this is
@@ -556,6 +589,34 @@ export class TextExample extends React.Component<{}> {
             make text look slightly misaligned when centered vertically.
           </Text>
         </RNTesterBlock>
+
+        <RNTesterBlock title="Text With Border">
+          <>
+            <Text style={styles.borderedTextSimple}>
+              Sample bordered text with default styling.
+            </Text>
+
+            <Text style={styles.borderedText}>
+              Some more bordered text + a tad of CSS.{'\n'}
+              <Text style={{borderColor: 'red', borderWidth: 5}}>
+                1st nested - border specifcied but ignored.{'\n'}
+                <Text style={{borderColor: 'yellow', borderWidth: 4}}>
+                  2nd Inside text!
+                </Text>
+              </Text>
+            </Text>
+
+            <Text>
+              This text is{' '}
+              <Text
+                style={{color: 'red', borderWidth: 1, borderColor: 'black'}}>
+                outlined{' '}
+              </Text>
+              and laid out within the normal text run, so will wrap etc as
+              normal text.
+            </Text>
+          </>
+        </RNTesterBlock>
       </RNTesterPage>
     );
   }
@@ -573,6 +634,21 @@ export const styles = StyleSheet.create({
     color: '#000000',
     textAlignVertical: 'center',
     alignSelf: 'center',
+  },
+  borderedText: {
+    margin: 100,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    borderWidth: 3,
+    borderColor: 'green',
+    padding: 30,
+  },
+  borderedTextSimple: {
+    fontSize: 18,
+    borderWidth: 2,
+    borderColor: 'black',
+    width: 400,
   },
 });
 

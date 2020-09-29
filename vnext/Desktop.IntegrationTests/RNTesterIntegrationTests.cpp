@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <FeatureGate.h>
+#include <RuntimeOptions.h>
 #include "TestRunner.h"
 
 using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+using facebook::react::RCTLogLevel;
+using std::string;
 
 namespace Microsoft::VisualStudio::CppUnitTestFramework {
 
@@ -18,7 +21,8 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 } // namespace Microsoft::VisualStudio::CppUnitTestFramework
 
 TEST_MODULE_INITIALIZE(InitModule) {
-  Microsoft::React::SetFeatureGate("UseWinRTWebSocket", true);
+  Microsoft::React::SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
+  Microsoft::React::SetRuntimeOptionBool("UseBeastWebSocket", false);
 }
 
 // None of these tests are runnable
@@ -33,45 +37,35 @@ TEST_CLASS (RNTesterIntegrationTests) {
 
 #pragma region Prototype tests
 
-  TEST_METHOD(Dummy) {
-    auto result = m_runner.RunTest("IntegrationTests/DummyTest", "DummyTest");
-    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
-  }
-
   BEGIN_TEST_METHOD_ATTRIBUTE(Logging)
-  // TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(Logging) {
     int logCalls{0};
     auto result = m_runner.RunTest(
-        "IntegrationTests/LoggingTest",
-        "LoggingTest",
-        [&logCalls](facebook::react::RCTLogLevel logLevel, const char *message) {
-          if ((strcmp(message, "This is from console.trace") == 0) &&
-              (logLevel == facebook::react::RCTLogLevel::Trace)) {
+        "IntegrationTests/LoggingTest", "LoggingTest", [&logCalls](RCTLogLevel logLevel, const char *message) {
+          // trace, warn and error print stack traces rather than a single-line message.
+          // https://developer.mozilla.org/en-US/docs/Web/API/Console/trace
+          if (string{message}.find("This is from console.trace") != string::npos && (logLevel == RCTLogLevel::Trace)) {
             logCalls++;
           }
 
-          if ((strcmp(message, "This is from console.debug") == 0) &&
-              (logLevel == facebook::react::RCTLogLevel::Trace)) {
+          if ((strcmp(message, "This is from console.debug") == 0) && (logLevel == RCTLogLevel::Trace)) {
             logCalls++;
           }
 
-          if ((strcmp(message, "This is from console.info") == 0) && (logLevel == facebook::react::RCTLogLevel::Info)) {
+          if ((strcmp(message, "This is from console.info") == 0) && (logLevel == RCTLogLevel::Info)) {
             logCalls++;
           }
 
-          if ((strcmp(message, "This is from console.log") == 0) && (logLevel == facebook::react::RCTLogLevel::Info)) {
+          if ((strcmp(message, "This is from console.log") == 0) && (logLevel == RCTLogLevel::Info)) {
             logCalls++;
           }
 
-          if ((strcmp(message, "This is from console.warn") == 0) &&
-              (logLevel == facebook::react::RCTLogLevel::Warning)) {
+          if (string{message}.find("This is from console.warn") != string::npos && (logLevel == RCTLogLevel::Warning)) {
             logCalls++;
           }
 
-          if ((strcmp(message, "This is from console.error") == 0) &&
-              (logLevel == facebook::react::RCTLogLevel::Error)) {
+          if (string{message}.find("This is from console.error") != string::npos && (logLevel == RCTLogLevel::Error)) {
             logCalls++;
           }
         });
@@ -94,6 +88,8 @@ TEST_CLASS (RNTesterIntegrationTests) {
     Assert::AreEqual(L"This is from console.error", result.Message.c_str());
   }
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(XHRSample)
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(XHRSample) {
     auto result = m_runner.RunTest("IntegrationTests/XHRTest", "XHRTest");
     Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
@@ -189,4 +185,21 @@ TEST_CLASS (RNTesterIntegrationTests) {
   TEST_METHOD(AccessibilityManager) {
     TestComponent("AccessibilityManagerTest");
   }
+
+#pragma region Extended Tests
+
+  TEST_METHOD(Dummy) {
+    auto result = m_runner.RunTest("IntegrationTests/DummyTest", "DummyTest");
+    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
+  }
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(WebSocketBinary)
+  TEST_IGNORE()
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(WebSocketBinary) {
+    auto result = m_runner.RunTest("IntegrationTests/WebSocketBinaryTest", "WebSocketBinaryTest");
+    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
+  }
+
+#pragma endregion Extended Tests
 };

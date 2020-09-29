@@ -83,8 +83,7 @@ struct IWebSocketResource {
   /// WebSocket URL address the instance will connect to.
   /// The address's scheme can be either ws:// or wss://.
   /// </param>
-  static std::shared_ptr<IWebSocketResource>
-  Make(const std::string &url, bool legacyImplementation = false, bool acceptSelfSigned = false);
+  static std::shared_ptr<IWebSocketResource> Make(std::string &&url);
 
   virtual ~IWebSocketResource() noexcept {}
 
@@ -111,7 +110,7 @@ struct IWebSocketResource {
   /// <param name="message">
   /// UTF8-encoded string of arbitrary length.
   /// </param>
-  virtual void Send(const std::string &message) noexcept = 0;
+  virtual void Send(std::string &&message) noexcept = 0;
 
   /// <summary>
   /// Sends a non-plain-text message to the remote endpoint.
@@ -119,7 +118,7 @@ struct IWebSocketResource {
   /// <param name="base64String">
   /// Binary message encoded in Base64 format.
   /// </param>
-  virtual void SendBinary(const std::string &base64String) noexcept = 0;
+  virtual void SendBinary(std::string &&base64String) noexcept = 0;
 
   /// <summary>
   /// Terminates this resource's connection to the remote endpoint.
@@ -164,7 +163,8 @@ struct IWebSocketResource {
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&handler) noexcept = 0;
+  virtual void SetOnMessage(
+      std::function<void(std::size_t, const std::string &, bool isBinary)> &&handler) noexcept = 0;
 
   /// <summary>
   /// Sets the optional custom behavior to run when this instance is closed.

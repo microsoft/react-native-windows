@@ -15,6 +15,7 @@
 #include <Utils/ValueUtils.h>
 
 #include <IReactInstance.h>
+#include <Shared/INativeUIManager.h>
 
 #ifdef USE_WINUI3
 namespace winrt::Microsoft::UI::Xaml::Controls {
@@ -31,20 +32,9 @@ using namespace xaml::Shapes;
 
 namespace react::uwp {
 struct Selection {
-  int start = -1;
-  int end = -1;
-  bool isValid();
+  int64_t start = -1;
+  int64_t end = -1;
 };
-
-bool Selection::isValid() {
-  if (start < 0)
-    return false;
-  if (end < 0)
-    return false;
-  if (start > end)
-    return false;
-  return true;
-}
 } // namespace react::uwp
 
 // Such code is better to move to a seperate parser layer
@@ -54,13 +44,13 @@ struct json_type_traits<react::uwp::Selection> {
     react::uwp::Selection selection;
     for (auto &item : json.items()) {
       if (item.first == "start") {
-        auto start = item.second.asDouble();
-        if (start == static_cast<int>(start))
-          selection.start = static_cast<int>(start);
+        auto start = item.second.asInt();
+        if (start == start)
+          selection.start = start;
       } else if (item.first == "end") {
-        auto end = item.second.asDouble();
-        if (end == static_cast<int>(end))
-          selection.end = static_cast<int>(end);
+        auto end = item.second.asInt();
+        if (end == end)
+          selection.end = end;
       }
     }
     return selection;
@@ -103,6 +93,21 @@ class TextInputShadowNode : public ShadowNodeBase {
   void createView() override;
   void updateProperties(const folly::dynamic &&props) override;
 
+  void dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) override;
+
+  void AddView(ShadowNode & /*child*/, int64_t /*index*/) override {
+    // NYI #5689
+    YellowBox("Nested elements in TextInput are currently unsupported on Windows");
+  }
+  void RemoveChildAt(int64_t /*indexToRemove*/) override {
+    // NYI #5689
+    YellowBox("Nested elements in TextInput are currently unsupported on Windows");
+  }
+  void ReplaceChild(const XamlView & /*oldChildView*/, const XamlView & /*newChildView*/) override {
+    // NYI #5689
+    YellowBox("Nested elements in TextInput are currently unsupported on Windows");
+  }
+
   bool ImplementsPadding() override {
     return true;
   }
@@ -112,6 +117,8 @@ class TextInputShadowNode : public ShadowNodeBase {
   void registerEvents();
   void HideCaretIfNeeded();
   void setPasswordBoxPlaceholderForeground(xaml::Controls::PasswordBox passwordBox, folly::dynamic color);
+  void SetText(const folly::dynamic &text);
+  void SetSelection(int64_t start, int64_t end);
   winrt::Shape FindCaret(xaml::DependencyObject element);
 
   bool m_shouldClearTextOnFocus = false;
@@ -544,9 +551,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
         } else if (propertyName == "selection") {
           if (propertyValue.isObject()) {
             auto selection = json_type_traits<Selection>::parseJson(propertyValue);
-
-            if (selection.isValid())
-              textBox.Select(selection.start, selection.end - selection.start);
+            SetSelection(selection.start, selection.end);
           }
         } else if (propertyName == "spellCheck") {
           if (propertyValue.isBool())
@@ -554,16 +559,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
           else if (propertyValue.isNull())
             textBox.ClearValue(xaml::Controls::TextBox::IsSpellCheckEnabledProperty());
         } else if (propertyName == "text") {
-          if (m_mostRecentEventCount == m_nativeEventCount) {
-            if (propertyValue.isString()) {
-              auto oldValue = textBox.Text();
-              auto newValue = asHstring(propertyValue);
-              if (oldValue != newValue) {
-                textBox.Text(newValue);
-              }
-            } else if (propertyValue.isNull())
-              textBox.ClearValue(xaml::Controls::TextBox::TextProperty());
-          }
+          SetText(propertyValue);
         } else if (propertyName == "autoCapitalize") {
           if (textBox.try_as<xaml::Controls::ITextBox6>()) {
             if (propertyValue.isString()) {
@@ -579,16 +575,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
         }
       } else { // Applicable properties for PasswordBox
         if (propertyName == "text" && !m_isTextBox) {
-          if (m_mostRecentEventCount == m_nativeEventCount) {
-            if (propertyValue.isString()) {
-              auto oldValue = passwordBox.Password();
-              auto newValue = asHstring(propertyValue);
-              if (oldValue != newValue) {
-                passwordBox.Password(newValue);
-              }
-            } else if (propertyValue.isNull())
-              passwordBox.ClearValue(xaml::Controls::PasswordBox::PasswordProperty());
-          }
+          SetText(propertyValue);
         }
       }
     }
@@ -596,6 +583,61 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
 
   Super::updateProperties(std::move(props));
   m_updating = false;
+}
+
+void TextInputShadowNode::SetText(const folly::dynamic &text) {
+  auto textBox = this->GetView().try_as<xaml::Controls::TextBox>();
+  auto passwordBox = this->GetView().try_as<xaml::Controls::PasswordBox>();
+
+  if (m_mostRecentEventCount == m_nativeEventCount) {
+    if (textBox) {
+      if (text.isString()) {
+        auto oldValue = textBox.Text();
+        auto newValue = asHstring(text);
+        if (oldValue != newValue) {
+          textBox.Text(newValue);
+        }
+      } else if (text.isNull())
+        textBox.ClearValue(xaml::Controls::TextBox::TextProperty());
+    } else {
+      if (text.isString()) {
+        auto oldValue = passwordBox.Password();
+        auto newValue = asHstring(text);
+        if (oldValue != newValue) {
+          passwordBox.Password(newValue);
+        }
+      } else if (text.isNull())
+        passwordBox.ClearValue(xaml::Controls::PasswordBox::PasswordProperty());
+    }
+  }
+}
+
+void TextInputShadowNode::SetSelection(int64_t start, int64_t end) {
+  if (start < 0 || end < 0 || start > end) {
+    return;
+  }
+
+  if (auto textBox = this->GetView().try_as<xaml::Controls::TextBox>()) {
+    textBox.Select(static_cast<int32_t>(start), static_cast<int32_t>(end - start));
+  }
+}
+
+void TextInputShadowNode::dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) {
+  if (commandId == "focus") {
+    if (auto reactInstance = GetViewManager()->GetReactInstance().lock()) {
+      reactInstance->NativeUIManager()->focus(m_tag);
+    }
+  } else if (commandId == "blur") {
+    if (auto reactInstance = GetViewManager()->GetReactInstance().lock()) {
+      reactInstance->NativeUIManager()->blur(m_tag);
+    }
+  } else if (commandId == "setTextAndSelection") {
+    m_mostRecentEventCount = static_cast<uint32_t>(commandArgs[0].asInt());
+    SetText(commandArgs[1]);
+    SetSelection(commandArgs[2].asInt(), commandArgs[3].asInt());
+  } else {
+    Super::dispatchCommand(commandId, commandArgs);
+  }
 }
 
 TextInputViewManager::TextInputViewManager(const std::shared_ptr<IReactInstance> &reactInstance)

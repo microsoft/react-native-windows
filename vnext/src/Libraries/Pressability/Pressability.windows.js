@@ -80,6 +80,11 @@ export type PressabilityConfig = $ReadOnly<{|
   delayPressOut?: ?number,
 
   /**
+   * Minimum duration to wait between calling `onPressIn` and `onPressOut`.
+   */
+  minPressDuration?: ?number,
+
+  /**
    * Called after the element loses focus.
    */
   onBlur?: ?(event: BlurEvent) => mixed,
@@ -146,6 +151,22 @@ export type PressabilityConfig = $ReadOnly<{|
    * @deprecated
    */
   onStartShouldSetResponder_DEPRECATED?: ?() => boolean,
+
+  // [Windows
+  /**
+   * Raw handler for onMouseEnter that will be preferred if set over hover
+   * events. This is to preserve compatibility with pre-0.62 behavior which
+   * allowed attaching mouse event handlers to Touchables
+   */
+  onMouseEnter?: ?(event: MouseEvent) => mixed,
+
+  /**
+   * Raw handler for onMouseLeave that will be preferred if set over hover
+   * events. This is to preserve compatibility with pre-0.62 behavior which
+   * allowed attaching mouse event handlers to Touchables
+   */
+  onMouseLeave?: ?(event: MouseEvent) => mixed,
+  // Windows]
 |}>;
 
 export type EventHandlers = $ReadOnly<{|
@@ -284,6 +305,7 @@ const DEFAULT_PRESS_RECT_OFFSETS = {
   right: 20,
   top: 20,
 };
+const DEFAULT_MIN_PRESS_DURATION = 130;
 
 /**
  * Pressability implements press handling capabilities.
@@ -398,6 +420,7 @@ export default class Pressability {
     pageX: number,
     pageY: number,
   |}>;
+  _touchActivateTime: ?number;
   _touchState: TouchState = 'NOT_RESPONDER';
 
   constructor(config: PressabilityConfig) {
@@ -562,6 +585,12 @@ export default class Pressability {
         ? null
         : {
             onMouseEnter: (event: MouseEvent): void => {
+              // [Windows Add attached raw mouse event handler for compat
+              if (this._config.onMouseEnter) {
+                this._config.onMouseEnter(event);
+              }
+              // Windows]
+
               if (isHoverEnabled()) {
                 this._isHovered = true;
                 this._cancelHoverOutDelayTimeout();
@@ -571,6 +600,7 @@ export default class Pressability {
                     this._config.delayHoverIn,
                   );
                   if (delayHoverIn > 0) {
+                    event.persist();
                     this._hoverInDelayTimeout = setTimeout(() => {
                       onHoverIn(event);
                     }, delayHoverIn);
@@ -582,6 +612,12 @@ export default class Pressability {
             },
 
             onMouseLeave: (event: MouseEvent): void => {
+              // [Windows Add attached raw mouse event handler for compat
+              if (this._config.onMouseLeave) {
+                this._config.onMouseLeave(event);
+              }
+              // Windows]
+
               if (this._isHovered) {
                 this._isHovered = false;
                 this._cancelHoverInDelayTimeout();
@@ -591,6 +627,7 @@ export default class Pressability {
                     this._config.delayHoverOut,
                   );
                   if (delayHoverOut > 0) {
+                    event.persist();
                     this._hoverInDelayTimeout = setTimeout(() => {
                       onHoverOut(event);
                     }, delayHoverOut);
@@ -739,6 +776,7 @@ export default class Pressability {
       pageX: touch.pageX,
       pageY: touch.pageY,
     };
+    this._touchActivateTime = Date.now();
     if (onPressIn != null) {
       onPressIn(event);
     }
@@ -747,8 +785,18 @@ export default class Pressability {
   _deactivate(event: PressEvent): void {
     const {onPressOut} = this._config;
     if (onPressOut != null) {
-      const delayPressOut = normalizeDelay(this._config.delayPressOut);
+      const minPressDuration = normalizeDelay(
+        this._config.minPressDuration,
+        0,
+        DEFAULT_MIN_PRESS_DURATION,
+      );
+      const pressDuration = Date.now() - (this._touchActivateTime ?? 0);
+      const delayPressOut = Math.max(
+        minPressDuration - pressDuration,
+        normalizeDelay(this._config.delayPressOut),
+      );
       if (delayPressOut > 0) {
+        event.persist();
         this._pressOutDelayTimeout = setTimeout(() => {
           onPressOut(event);
         }, delayPressOut);
@@ -756,6 +804,7 @@ export default class Pressability {
         onPressOut(event);
       }
     }
+    this._touchActivateTime = null;
   }
 
   _measureResponderRegion(): void {

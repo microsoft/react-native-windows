@@ -57,7 +57,7 @@
     <ClCompile Include="$(FollyDir)\folly\container\detail\F14Table.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Conv.cpp" />
     <ClCompile Include="$(FollyDir)\folly\portability\string.cpp">
-      <ObjectFileName>$(IntDir)\potabilityString.obj</ObjectFileName>
+      <ObjectFileName>$(IntDir)\portabilityString.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="$(FollyDir)\folly\Demangle.cpp" />
     <ClCompile Include="$(FollyDir)\folly\dynamic.cpp" />
@@ -66,7 +66,6 @@
     <ClCompile Include="$(FollyDir)\folly\ScopeGuard.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Unicode.cpp" />
     <ClCompile Include="$(FollyDir)\folly\memory\detail\MallocImpl.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\lang\ColdClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(FollyDir)\folly\AtomicBitSet.h" />
@@ -249,9 +248,10 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)stubs;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;_CRT_SECURE_NO_WARNINGS;WINAPI_PARTITION_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
-      <DisableSpecificWarnings>4018;4146;4244;4251;4267;4293;4305;4800;4804;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4018;4146;4244;4251;4267;4293;4305;4800;4804;4310;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -267,23 +267,23 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets'))" />
-  </Target>
+  </Target>  
   <Target Name="DownloadFolly" BeforeTargets="PrepareForBuild">
-    <Message Importance="High" Text="Downloading folly..." Condition="!Exists('$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip')" />
-    <DownloadFile Condition="!Exists('$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip')" SourceUrl="https://github.com/facebook/folly/archive/v2019.09.30.00.zip" DestinationFileName="folly-2019.09.30.00.zip" DestinationFolder="$(FollyDir)..\.follyzip" />
+    <Message Importance="High" Text="Downloading folly..." Condition="!Exists('$(FollyDir)..\.follyzip\folly-$(FollyVersion).zip')" />
+    <DownloadFile Condition="!Exists('$(FollyDir)..\.follyzip\folly-$(FollyVersion).zip')" SourceUrl="https://github.com/facebook/folly/archive/v$(FollyVersion).zip" DestinationFileName="folly-$(FollyVersion).zip" DestinationFolder="$(FollyDir)..\.follyzip" />
   </Target>
   <Target Name="UnzipFolly" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFolly">
     <Message Importance="High" Text="Unzipping folly to $([MSBuild]::NormalizePath($(FollyDir)..))." Condition="!Exists('$(FollyDir)folly\dynamic.h')" />
-    <Unzip Condition="!Exists('$(FollyDir)')" SourceFiles="$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip" DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))" OverwriteReadOnlyFiles="true" />
+    <Unzip Condition="!Exists('$(FollyDir)')" SourceFiles="$(FollyDir)..\.follyzip\folly-$(FollyVersion).zip" DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))" OverwriteReadOnlyFiles="true" />
   </Target>
   <ItemGroup>
     <TemporaryFollyPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFollyUpdate\**\*.*" />
   </ItemGroup>
   <Target Name="Deploy" />
+
   <!-- Reenable this task if we need to temporarily replace any folly files for fixes, while we wait for PRs to land in folly -->
-  <!--
   <Target Name="ApplyFollyTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFolly">
     <Copy DestinationFiles="@(TemporaryFollyPatchFiles->'$(FollyDir)folly\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryFollyPatchFiles)" />
   </Target>
-  -->
+ 
 </Project>

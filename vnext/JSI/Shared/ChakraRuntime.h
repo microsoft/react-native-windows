@@ -111,7 +111,7 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   facebook::jsi::Array getPropertyNames(const facebook::jsi::Object &obj) override;
 
   facebook::jsi::WeakObject createWeakObject(const facebook::jsi::Object &obj) override;
-  facebook::jsi::Value lockWeakObject(const facebook::jsi::WeakObject &weakObj) override;
+  facebook::jsi::Value lockWeakObject(facebook::jsi::WeakObject &weakObj) override;
 
   facebook::jsi::Array createArray(size_t length) override;
   size_t size(const facebook::jsi::Array &arr) override;

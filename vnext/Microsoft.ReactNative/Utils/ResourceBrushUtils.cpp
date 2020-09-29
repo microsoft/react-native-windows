@@ -53,21 +53,6 @@ void UpdateTextControlBackgroundResourceBrushes(const xaml::FrameworkElement &el
   UpdateResourceBrush(element, c_textControlButtonForegroundPressed, brush);
 }
 
-void UpdateCheckBoxBackgroundResourceBrushes(const xaml::FrameworkElement &element, const xaml::Media::Brush brush) {
-  UpdateResourceBrush(element, c_checkBoxBackgroundUnchecked, brush);
-  UpdateResourceBrush(element, c_checkBoxBackgroundUncheckedPointerOver, brush);
-  UpdateResourceBrush(element, c_checkBoxBackgroundUncheckedPressed, brush);
-  UpdateResourceBrush(element, c_checkBoxBackgroundUncheckedDisabled, brush);
-  UpdateResourceBrush(element, c_checkBoxBackgroundChecked, brush);
-  UpdateResourceBrush(element, c_checkBoxBackgroundCheckedPointerOver, brush);
-  UpdateResourceBrush(element, c_checkBoxBackgroundCheckedPressed, brush);
-  UpdateResourceBrush(element, c_checkBoxBackgroundCheckedDisabled, brush);
-  UpdateResourceBrush(element, c_checkBoxBackgroundIndeterminate, brush);
-  UpdateResourceBrush(element, c_checkBoxBackgroundIndeterminatePointerOver, brush);
-  UpdateResourceBrush(element, c_checkBoxBackgroundIndeterminatePressed, brush);
-  UpdateResourceBrush(element, c_checkBoxBackgroundIndeterminateDisabled, brush);
-}
-
 void UpdateTextControlForegroundResourceBrushes(const xaml::FrameworkElement element, const xaml::Media::Brush brush) {
   UpdateResourceBrush(element, c_textControlForeground, brush);
   UpdateResourceBrush(element, c_textControlForegroundPointerOver, brush);
@@ -104,21 +89,6 @@ void UpdateToggleSwitchBorderResourceBrushes(
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnPointerOver, brush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnPressed, brush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnDisabled, brush);
-}
-
-void UpdateCheckBoxBorderResourceBrushes(const xaml::Controls::CheckBox &checkBox, const xaml::Media::Brush brush) {
-  UpdateResourceBrush(checkBox, c_checkBoxBorderBrushUnchecked, brush);
-  UpdateResourceBrush(checkBox, c_checkBoxBorderBrushUncheckedPointerOver, brush);
-  UpdateResourceBrush(checkBox, c_checkBoxBorderBrushUncheckedPressed, brush);
-  UpdateResourceBrush(checkBox, c_checkBoxBorderBrushUncheckedDisabled, brush);
-  UpdateResourceBrush(checkBox, c_checkBoxBorderBrushChecked, brush);
-  UpdateResourceBrush(checkBox, c_checkBoxBorderBrushCheckedPointerOver, brush);
-  UpdateResourceBrush(checkBox, c_checkBoxBorderBrushCheckedPressed, brush);
-  UpdateResourceBrush(checkBox, c_checkBoxBorderBrushCheckedDisabled, brush);
-  UpdateResourceBrush(checkBox, c_checkBoxBorderBrushIndeterminate, brush);
-  UpdateResourceBrush(checkBox, c_checkBoxBorderBrushIndeterminatePointerOver, brush);
-  UpdateResourceBrush(checkBox, c_checkBoxBorderBrushIndeterminatePressed, brush);
-  UpdateResourceBrush(checkBox, c_checkBoxBorderBrushIndeterminateDisabled, brush);
 }
 
 void UpdateToggleSwitchThumbResourceBrushes(
@@ -159,8 +129,6 @@ bool IsObjectATextControl(const xaml::DependencyObject &object) {
 void UpdateControlBackgroundResourceBrushes(const xaml::FrameworkElement &element, const xaml::Media::Brush brush) {
   if (IsObjectATextControl(element)) {
     UpdateTextControlBackgroundResourceBrushes(element, brush);
-  } else if (const auto checkBox = element.try_as<xaml::Controls::CheckBox>()) {
-    UpdateCheckBoxBackgroundResourceBrushes(checkBox, brush);
   }
 }
 
@@ -176,8 +144,6 @@ void UpdateControlBorderResourceBrushes(const xaml::FrameworkElement &element, c
     UpdateTextControlBorderResourceBrushes(element, brush);
   } else if (const auto toggleSwitch = element.try_as<xaml::Controls::ToggleSwitch>()) {
     UpdateToggleSwitchBorderResourceBrushes(toggleSwitch, brush);
-  } else if (const auto checkBox = element.try_as<xaml::Controls::CheckBox>()) {
-    UpdateCheckBoxBorderResourceBrushes(checkBox, brush);
   }
 }
 

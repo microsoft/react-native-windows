@@ -2,16 +2,17 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-
+#include "WebSocketModuleUwp.h"
 #include <Utils/CppWinrtLessExceptions.h>
+#include <WinInet.h>
 #include <Windows.Storage.Streams.h>
+#include <cdebug.h>
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <future>
 #include "Unicode.h"
 #include "Utilities.h"
-#include "WebSocketModuleUwp.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4146)
@@ -53,7 +54,7 @@ class WebSocketModule::WebSocket {
       folly::dynamic /* @Nullable final ReadableArray */ protocols,
       folly::dynamic /* @Nullable final ReadableArray */ headers,
       int64_t id);
-  void close(int64_t id);
+  void close(int64_t code, std::string &&reason, int64_t id);
   void send(const std::string &message, int64_t id);
   void sendBinary(const std::string &base64String, int64_t id);
   void ping(int64_t id);
@@ -164,14 +165,33 @@ void WebSocketModule::WebSocket::connect(
 
   if (!SUCCEEDED(hr)) {
     winrt::hresult_error e{hr};
-    OutputDebugString("WebSocket.connect failed (0x%8X) %ls\n", e);
+    std::wstring error;
+#define INET_ERR_OUT_FORMAT_BUFFER_SIZE 256
+    const DWORD err = hr & 0xffff;
+    if (err >= INTERNET_ERROR_BASE && err <= INTERNET_ERROR_LAST) {
+      wchar_t errorStr[INET_ERR_OUT_FORMAT_BUFFER_SIZE] = {};
+      FormatMessageW(
+          FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_HMODULE,
+          GetModuleHandle(L"wininet.dll"),
+          err,
+          0,
+          errorStr,
+          INET_ERR_OUT_FORMAT_BUFFER_SIZE,
+          nullptr);
+      error = errorStr;
+    } else {
+      error = e.message().c_str();
+    }
+    cwdebug << L"WebSocket.connect failed (0x" << std::hex << e.code() << ") " << error << " at "
+            << uri.DisplayUri().c_str() << std::endl;
     onError(id, e.code());
   }
 }
 
-void WebSocketModule::WebSocket::close(int64_t id) {
+void WebSocketModule::WebSocket::close(int64_t code, std::string &&reason, int64_t id) {
   auto socket = m_ws_clients[id];
   socket.Close();
+  sendEvent("websocketClosed", folly::dynamic::object("id", id)("code", code)("reason", std::move(reason)));
 }
 
 void WebSocketModule::WebSocket::send(const std::string &message, int64_t id) {
@@ -276,8 +296,13 @@ auto WebSocketModule::getMethods() -> std::vector<Method> {
           }),
       Method(
           "close",
-          [webSocket](folly::dynamic args) // int64_t id
-          { webSocket->close(facebook::xplat::jsArgAsInt(args, 0)); }),
+          [webSocket](folly::dynamic args) // iint64_t code, std::string_view reason, int64_t id
+          {
+            webSocket->close(
+                facebook::xplat::jsArgAsInt(args, 0),
+                facebook::xplat::jsArgAsString(args, 1),
+                facebook::xplat::jsArgAsInt(args, 2));
+          }),
       Method(
           "send",
           [webSocket](folly::dynamic args) // const std::string& message, int64_t id

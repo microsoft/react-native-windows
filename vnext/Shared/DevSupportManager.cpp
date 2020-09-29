@@ -81,9 +81,11 @@ std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std
   uint32_t len = reader.UnconsumedBufferLength();
   std::string result;
   if (len > 0 || response.IsSuccessStatusCode()) {
-    std::vector<uint8_t> data(len);
-    reader.ReadBytes(data);
-    result = std::string(reinterpret_cast<char *>(data.data()), data.size());
+    std::vector<uint8_t> data;
+    data.resize(len);
+    reader.ReadBytes(winrt::array_view(data.data(), data.data() + len));
+    data.resize(len);
+    result = std::string(data.begin(), data.end());
   } else {
     std::ostringstream sstream;
     sstream << "HTTP Error " << static_cast<int>(response.StatusCode()) << " downloading " << url;
@@ -105,15 +107,14 @@ void LaunchDevTools(const facebook::react::DevSettings &settings) {
   httpClient.SendRequestAsync(request);
 }
 
-facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(const facebook::react::DevSettings &settings) {
-  // Reset exception state since client is requesting new service
-  m_exceptionCaught = false;
-
+facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(
+    const facebook::react::DevSettings &settings,
+    std::function<void()> &&errorCallback) {
   try {
     LaunchDevTools(settings);
     Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(settings);
 
-    return [this, settings](
+    return [this, settings, errorCallback](
                std::shared_ptr<facebook::react::ExecutorDelegate> delegate,
                std::shared_ptr<facebook::react::MessageQueueThread> jsQueue) {
       auto websocketJSE = std::make_unique<react::uwp::WebSocketJSExecutor>(delegate, jsQueue);
@@ -127,13 +128,13 @@ facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(const f
                 settings.debuggerAttachCallback)
             .get();
       } catch (...) {
-        m_exceptionCaught = true;
+        errorCallback();
       }
 
       return websocketJSE;
     };
   } catch (winrt::hresult_error const &e) {
-    m_exceptionCaught = true;
+    errorCallback();
     throw std::exception(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()).c_str());
   }
 }
@@ -218,7 +219,6 @@ void DevSupportManager::StartPollingLiveReload(
         std::string errorMessage =
             "Live Reload Stopped:" + Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size());
         OutputDebugStringA(errorMessage.c_str());
-        m_exceptionCaught = true;
         break;
       }
     }
@@ -236,9 +236,10 @@ std::pair<std::string, bool> GetJavaScriptFromServer(
     const std::string &sourceBundleHost,
     const uint16_t sourceBundlePort,
     const std::string &jsBundleName,
-    const std::string &platform) {
+    const std::string &platform,
+    bool inlineSourceMap) {
   auto bundleUrl = facebook::react::DevServerHelper::get_BundleUrl(
-      sourceBundleHost, sourceBundlePort, jsBundleName, platform, "true" /*dev*/, "false" /*hot*/);
+      sourceBundleHost, sourceBundlePort, jsBundleName, platform, true /*dev*/, false /*hot*/, inlineSourceMap);
   try {
     return GetJavaScriptFromServerAsync(bundleUrl).get();
   } catch (winrt::hresult_error const &e) {
