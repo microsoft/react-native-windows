@@ -7,6 +7,7 @@
 #pragma once
 
 #include <TurboModuleRegistry.h>
+#include "Base/FollyIncludes.h"
 #include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::Microsoft::ReactNative {

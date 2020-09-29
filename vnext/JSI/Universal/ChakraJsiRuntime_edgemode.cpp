@@ -62,26 +62,25 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
   return ToJsiValue(ChakraObjectRef(result));
 }
 
-// TODO :: Return result
 bool ChakraRuntime::evaluateSerializedScript(
     const facebook::jsi::Buffer &scriptBuffer,
     const facebook::jsi::Buffer &serializedScriptBuffer,
-    const std::string &sourceURL) {
+    const std::string &sourceURL,
+    JsValueRef *result) {
   std::wstring script16 =
       Microsoft::Common::Unicode::Utf8ToUtf16(reinterpret_cast<const char *>(scriptBuffer.data()), scriptBuffer.size());
   std::wstring url16 = Microsoft::Common::Unicode::Utf8ToUtf16(sourceURL);
 
   // Note:: Bytecode caching on UWP is untested yet.
-  JsValueRef result;
-  JsErrorCode ret = JsRunSerializedScript(
-      script16.c_str(), const_cast<uint8_t *>(serializedScriptBuffer.data()), 0, url16.c_str(), &result);
+  JsErrorCode errorCode = JsRunSerializedScript(
+      script16.c_str(), const_cast<uint8_t *>(serializedScriptBuffer.data()), 0, url16.c_str(), result);
 
-  if (ret == JsNoError) {
+  if (errorCode == JsNoError) {
     return true;
-  } else if (ret == JsErrorBadSerializedScript) {
+  } else if (errorCode == JsErrorBadSerializedScript) {
     return false;
   } else {
-    VerifyChakraErrorElseThrow(ret);
+    VerifyJsErrorElseThrow(errorCode);
     return true;
   }
 }

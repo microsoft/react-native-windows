@@ -3,6 +3,7 @@
 
 #pragma once
 #include "XamlHelper.g.h"
+#include "Base/FollyIncludes.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
