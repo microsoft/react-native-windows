@@ -8,11 +8,12 @@
 #include <Base/CoreNativeModules.h>
 #include <IUIManager.h>
 #include <Threading/MessageDispatchQueue.h>
+#include <Threading/MessageQueueThreadFactory.h>
+
 #include <XamlUIService.h>
 #include "ReactErrorProvider.h"
 
 #include "Microsoft.ReactNative/IReactNotificationService.h"
-#include "Microsoft.ReactNative/Threading/MessageQueueThreadFactory.h"
 
 #include "../../codegen/NativeAccessibilityInfoSpec.g.h"
 #include "../../codegen/NativeAppStateSpec.g.h"
