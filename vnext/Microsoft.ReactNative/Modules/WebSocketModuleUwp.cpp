@@ -54,7 +54,7 @@ class WebSocketModule::WebSocket {
       folly::dynamic /* @Nullable final ReadableArray */ protocols,
       folly::dynamic /* @Nullable final ReadableArray */ headers,
       int64_t id);
-  void close(int64_t id);
+  void close(int64_t code, std::string &&reason, int64_t id);
   void send(const std::string &message, int64_t id);
   void sendBinary(const std::string &base64String, int64_t id);
   void ping(int64_t id);
@@ -188,9 +188,10 @@ void WebSocketModule::WebSocket::connect(
   }
 }
 
-void WebSocketModule::WebSocket::close(int64_t id) {
+void WebSocketModule::WebSocket::close(int64_t code, std::string &&reason, int64_t id) {
   auto socket = m_ws_clients[id];
   socket.Close();
+  sendEvent("websocketClosed", folly::dynamic::object("id", id)("code", code)("reason", std::move(reason)));
 }
 
 void WebSocketModule::WebSocket::send(const std::string &message, int64_t id) {
@@ -295,8 +296,13 @@ auto WebSocketModule::getMethods() -> std::vector<Method> {
           }),
       Method(
           "close",
-          [webSocket](folly::dynamic args) // int64_t id
-          { webSocket->close(facebook::xplat::jsArgAsInt(args, 0)); }),
+          [webSocket](folly::dynamic args) // iint64_t code, std::string_view reason, int64_t id
+          {
+            webSocket->close(
+                facebook::xplat::jsArgAsInt(args, 0),
+                facebook::xplat::jsArgAsString(args, 1),
+                facebook::xplat::jsArgAsInt(args, 2));
+          }),
       Method(
           "send",
           [webSocket](folly::dynamic args) // const std::string& message, int64_t id

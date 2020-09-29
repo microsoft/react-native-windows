@@ -6,20 +6,17 @@
 #include <IWebSocketResource.h>
 #include <Test/WebSocketServer.h>
 
-#include <condition_variable>
+// Standard Library
 #include <future>
-#include <mutex>
 
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-using std::condition_variable;
-using std::lock_guard;
+using std::chrono::milliseconds;
 using std::make_shared;
 using std::promise;
 using std::string;
-using std::unique_lock;
-using std::chrono::milliseconds;
+using std::vector;
 
 using CloseCode = IWebSocketResource::CloseCode;
 using Error = IWebSocketResource::Error;
@@ -33,6 +30,12 @@ TEST_CLASS (WebSocketIntegrationTest)
     {
       return message + "_response";
     });
+    string serverError;
+    server->SetOnError([&serverError](Error&& err)
+    {
+      serverError = err.Message;
+    });
+
     string scheme = "ws";
     if (isSecure)
       scheme += "s";
@@ -43,20 +46,23 @@ TEST_CLASS (WebSocketIntegrationTest)
       sentSizePromise.set_value(size);
     });
     promise<string> receivedPromise;
-    ws->SetOnMessage([&receivedPromise](size_t size, const string& message)
+    ws->SetOnMessage([&receivedPromise](size_t size, const string& message, bool isBinary)
     {
       receivedPromise.set_value(message);
     });
-    string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
+    string clientError{};
+    ws->SetOnError([&clientError, &sentSizePromise, &receivedPromise](Error err)
     {
-      errorMessage = err.Message;
+      clientError = err.Message;
+      sentSizePromise.set_value(0);
+      receivedPromise.set_value("");
     });
 
     server->Start();
     string sent = "prefix";
+    auto expectedSize = sent.size();
     ws->Connect();
-    ws->Send(sent);
+    ws->Send(std::move(sent));
 
     // Block until response is received. Fail in case of a remote endpoint failure.
     auto sentSizeFuture = sentSizePromise.get_future();
@@ -65,13 +71,14 @@ TEST_CLASS (WebSocketIntegrationTest)
     auto receivedFuture = receivedPromise.get_future();
     receivedFuture.wait();
     string received = receivedFuture.get();
-    Assert::AreEqual({}, errorMessage);
+    Assert::AreEqual({}, clientError);
 
     ws->Close(CloseCode::Normal, "Closing after reading");
     server->Stop();
 
-    Assert::AreEqual({}, errorMessage);
-    Assert::AreEqual(sent.length(), sentSize);
+    Assert::AreEqual({}, serverError);
+    Assert::AreEqual({}, clientError);
+    Assert::AreEqual(expectedSize, sentSize);
     Assert::AreEqual({"prefix_response"}, received);
   }
 
@@ -125,7 +132,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       {
         closed = true;
       });
-      ws->SetOnError([&errorMessage](IWebSocketResource::Error && error)
+      ws->SetOnError([&errorMessage](Error && error)
       {
         errorMessage = error.Message;
       });
@@ -155,7 +162,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       pingPromise.set_value(true);
     });
     string errorString;
-    ws->SetOnError([&errorString](IWebSocketResource::Error err)
+    ws->SetOnError([&errorString](Error err)
     {
       errorString = err.Message;
     });
@@ -183,9 +190,9 @@ TEST_CLASS (WebSocketIntegrationTest)
     server->SetMessageFactory([](string &&message) { return message + "_response"; });
     auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     promise<string> response;
-    ws->SetOnMessage([&response](size_t size, const string &message) { response.set_value(message); });
+    ws->SetOnMessage([&response](size_t size, const string &message, bool isBinary) { response.set_value(message); });
     string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err) { errorMessage = err.Message; });
+    ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
 
     server->Start();
     ws->Connect();
@@ -197,8 +204,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       chars[i] = digits[i % 16];
     }
     chars[LEN] = '\0';
-    string large(chars);
-    ws->Send(large);
+    ws->Send(string{chars});
 
     // Block until response is received. Fail in case of a remote endpoint failure.
     auto future = response.get_future();
@@ -241,7 +247,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     });
     auto ws = IWebSocketResource::Make("ws://localhost:5556/");
     promise<string> response;
-    ws->SetOnMessage([&response](size_t size, const string &message) { response.set_value(message); });
+    ws->SetOnMessage([&response](size_t size, const string &message, bool isBinary) { response.set_value(message); });
 
     server->Start();
     ws->Connect({}, {{L"Cookie", "JSESSIONID=AD9A320CC4034641997FF903F1D10906"}});
@@ -258,62 +264,66 @@ TEST_CLASS (WebSocketIntegrationTest)
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(SendReceiveSsl)
-    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SendReceiveSsl)
   {
     SendReceiveCloseBase(/*isSecure*/ true);
   }
 
-  // TODO: Use Test::WebSocketServer!!!
   BEGIN_TEST_METHOD_ATTRIBUTE(SendBinary)
-  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SendBinary) {
-    auto ws = IWebSocketResource::Make("ws://localhost:5555/");
+
+    auto server = make_shared<Test::WebSocketServer>(5556);
+
+    // The result should be the message "grown" by one element which value is the result's size.
+    server->SetMessageFactory([](vector<uint8_t>&& message)
+    {
+      message.push_back(static_cast<uint8_t>(message.size() + 1));
+
+      return message;
+    });
+
+    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
 
     std::vector<string> messages{
-        // Empty
-        "", // []
-
-        // Text
-        "MQ==", // "1"
-        "MTI=", // "12"
-        "MTIz", // "123"
-        "MTIzNA==", // "1230"
-
-        // Binary
-        "AQ==", // [ 01 ]
-        "AQI=", // [ 01 02 ]
-        "AQID", // [ 01 02 03 ]
-        "AQIDAA==" // [ 00, 01, 02, 03, 00 ]
+        "AQ==",     // [ 01 ]
+        "AQI=",     // [ 01 02 ]
+        "AQID",     // [ 01 02 03 ]
+        "AQIDBA==", // [ 01, 02, 03, 04 ]
+        "AQIDBAU="  // [ 01, 02, 03, 04, 05 ]
     };
 
     string errorMessage;
     promise<string> responsePromise;
-    ws->SetOnMessage([&responsePromise](size_t size, const string &messageIn) {
-      // Ignore on-connect greeting.
-      if (messageIn == "hello")
-        return;
-
+    ws->SetOnMessage([&responsePromise](size_t size, const string &messageIn, bool isBinary)
+    {
       responsePromise.set_value(messageIn);
     });
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error error) { errorMessage = error.Message; });
+    ws->SetOnError([&errorMessage](Error error)
+    {
+      errorMessage = error.Message;
+    });
 
+    server->Start();
     ws->Connect();
 
-    for (size_t i = 0; i < messages.size(); i++) {
-      ws->SendBinary(messages[i]);
+    // Send all but the last message.
+    // Compare result with the next message in the sequence.
+    for (size_t i = 0; i < messages.size() - 1; i++)
+    {
+      ws->SendBinary(string{messages[i]});
       auto future = responsePromise.get_future();
       future.wait();
       string response = future.get();
       responsePromise = promise<string>(); // Reset promise.
 
-      // Expect same message.
-      Assert::AreEqual(messages[i], response);
+      // Expect the encoded value of the next element.
+      Assert::AreEqual(messages[i+1], response);
     }
 
     ws->Close(CloseCode::Normal, "Closing after reading");
+    server->Stop();
 
     Assert::AreEqual({}, errorMessage);
   }
@@ -323,21 +333,23 @@ TEST_CLASS (WebSocketIntegrationTest)
     auto server = make_shared<Test::WebSocketServer>(5556);
     server->SetMessageFactory([](string&& message)
     {
-      return message + "_response";
+      return message;
     });
     auto ws = IWebSocketResource::Make("ws://localhost:5556/");
-    promise<string> response;
-    const int writes = 10;
-    int count = 0;
-    ws->SetOnMessage([&response, &count, writes](size_t size, const string& message)
-    {
-      if (++count < writes)
-        return;
 
-      response.set_value(message);
+    string expected = "ABCDEFGHIJ";
+    string result(expected.size(), '0');
+    size_t index = 0;
+    promise<void> responsesReceived;
+    ws->SetOnMessage([&result, &index, &responsesReceived, count=expected.size()](size_t size, const string& message, bool isBinary)
+    {
+      result[index++] = message[0];
+
+      if (index == count)
+        responsesReceived.set_value();
     });
     string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
+    ws->SetOnError([&errorMessage](Error err)
     {
       errorMessage = err.Message;
     });
@@ -346,23 +358,20 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Connect();
 
     // Consecutive immediate writes should be enqueued.
-    // The WebSocket implementation can't handle multiple write operations
+    // The WebSocket library (WinRT or Beast) can't handle multiple write operations
     // concurrently.
-    for (int i = 0; i < writes; i++)
+    for (size_t i = 0; i < expected.size(); i++)
     {
-      ws->Send("suffixme");
+      ws->Send(string{expected[i]});
     }
 
     // Block until response is received. Fail in case of a remote endpoint failure.
-    auto future = response.get_future();
-    future.wait();
-    string result = future.get();
+    responsesReceived.get_future().wait();
 
     ws->Close(CloseCode::Normal, "Closing");
     server->Stop();
 
     Assert::AreEqual({}, errorMessage);
-    Assert::AreEqual(writes, count);
-    Assert::AreEqual({"suffixme_response"}, result);
+    Assert::AreEqual(expected, result);
   }
 };

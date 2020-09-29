@@ -342,8 +342,6 @@ export interface IViewWin32 {
 //
 // @public
 export interface IViewWin32Props extends Omit_2<RN.ViewProps, ViewWin32OmitTypes>, BasePropsWin32 {
-    // @deprecated (undocumented)
-    acceptsKeyboardFocus?: boolean;
     // (undocumented)
     accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
     accessibilityAnnotation?: AccessibilityAnnotationInfo;

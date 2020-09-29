@@ -1,8 +1,289 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 15 Aug 2020 05:05:18 GMT and should not be manually modified.
+This log was last generated on Tue, 29 Sep 2020 05:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.173
+
+Tue, 29 Sep 2020 05:05:53 GMT
+
+### Changes
+
+- Remove Special UI When Debugger Attached (ngerlem@microsoft.com)
+- Reduce Microsoft.ReactNative PCH By 155MB-260MB (ngerlem@microsoft.com)
+- Remove TestMessageQueueThread. (julio.rocha@microsoft.com)
+- Don't reload the ReactNativeHost multiple times (ryan.fowler@singlewire.com)
+
+## 0.0.0-canary.172
+
+Sat, 26 Sep 2020 05:04:21 GMT
+
+### Changes
+
+- Use WinRT HTTP module (julio.rocha@microsoft.com)
+- resizing the xaml island should dismiss any flyouts in it (asklar@winse.microsoft.com)
+
+## 0.0.0-canary.171
+
+Fri, 25 Sep 2020 05:05:40 GMT
+
+### Changes
+
+- Supply UniversalApiContract for Platform.Version (ngerlem@microsoft.com)
+- Build fixes from folly update (30809111+acoates-ms@users.noreply.github.com)
+- Add -NoProfile to powershell invocations to ensure deterministic script execution where user profiles do not have the ability to break or change the build outputs (dannyvv@microsoft.com)
+- Add -UseBasicParsing to all powershell Invoke-WebRequest calls to avoid dependency on IE (dannyvv@microsoft.com)
+
+## 0.0.0-canary.169
+
+Wed, 23 Sep 2020 05:04:55 GMT
+
+### Changes
+
+- Handle ReactPromise correctly (zihanc@microsoft.com)
+- Remove LocationObserverModule (ngerlem@microsoft.com)
+
+## 0.0.0-canary.168
+
+Tue, 22 Sep 2020 04:46:10 GMT
+
+### Changes
+
+- Make Alert track its xamlroot's size changes (asklar@winse.microsoft.com)
+- Run Non-UI-Thread Core Modules on the JS Thread (ngerlem@microsoft.com)
+- Don't Elongate Frame-Based Timers (ngerlem@microsoft.com)
+- Upgrade react-native Typings (ngerlem@microsoft.com)
+
+## 0.0.0-canary.167
+
+Mon, 21 Sep 2020 05:06:22 GMT
+
+### Changes
+
+- Fixup eslint config (ngerlem@microsoft.com)
+- Remove Sporaddic Assert on Instance Reload from TimingModule (ngerlem@microsoft.com)
+
+## 0.0.0-canary.166
+
+Sun, 20 Sep 2020 05:05:06 GMT
+
+### Changes
+
+- use string_view in folly (asklar@winse.microsoft.com)
+
+## 0.0.0-canary.165
+
+Sat, 19 Sep 2020 05:05:08 GMT
+
+### Changes
+
+- Adding new native module template support to react-native-windows-init (jthysell@microsoft.com)
+
+## 0.0.0-canary.164
+
+Fri, 18 Sep 2020 05:05:24 GMT
+
+### Changes
+
+- Update Nuget packages (dannyvv@microsoft.com)
+- Port REACT_MODULE() from react-native-windows to react-native-macos (2/4) (zihanc@microsoft.com)
+- Fix rnw-dependencies for cases where the installer is installed but not VS itself (asklar@winse.microsoft.com)
+
+## 0.0.0-canary.163
+
+Thu, 17 Sep 2020 05:05:02 GMT
+
+### Changes
+
+- Enable Desktop binary WS messages (julio.rocha@microsoft.com)
+- Re-enable RNTesterIntegrationTests::Logging (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.162
+
+Wed, 16 Sep 2020 05:05:28 GMT
+
+### Changes
+
+- WinRTWebSocket: Drop concurrent_queue. (julio.rocha@microsoft.com)
+- Update folly (asklar@winse.microsoft.com)
+- Enable reload while editing of files in vnext/src (acoates-ms@noreply.github.com)
+
+## 0.0.0-canary.161
+
+Tue, 15 Sep 2020 05:05:15 GMT
+
+### Changes
+
+- Fix issue loading offline bundle after failing to load from packager (acoates-ms@noreply.github.com)
+- Use x86 program files to locate UWP SDK (asklar@microsoft.com)
+- Port REACT_MODULE() from react-native-windows to react-native-macos (1/4) (zihanc@microsoft.com)
+
+## 0.0.0-canary.160
+
+Mon, 14 Sep 2020 22:03:37 GMT
+
+### Changes
+
+- Reconcile package versions (ngerlem@microsoft.com)
+
+## 0.0.0-canary.159
+
+Sat, 12 Sep 2020 05:08:52 GMT
+
+### Changes
+
+- Integrate nightly 7/1 RN build (igklemen@microsoft.com)
+- Increase WebSocketJSExecutor Retry Count (ngerlem@microsoft.com)
+- Re-enable WebSocket SSL test (julio.rocha@microsoft.com)
+- remove deprecated AppTheme code (email not defined)
+
+## 0.0.0-canary.158
+
+Thu, 10 Sep 2020 05:05:10 GMT
+
+### Changes
+
+- Fix Text borders not rendering. (igklemen@microsoft.com)
+- Make Chrome optional in rnw-deps (asklar@winse.microsoft.com)
+- Fix Closing a UWP Websocket (ngerlem@microsoft.com)
+
+## 0.0.0-canary.157
+
+Wed, 09 Sep 2020 05:06:35 GMT
+
+### Changes
+
+- Enable @typescript-eslint/no-floating-promises (ngerlem@microsoft.com)
+
+## 0.0.0-canary.156
+
+Sat, 05 Sep 2020 05:06:01 GMT
+
+### Changes
+
+- yellowbox AppTheme (email not defined)
+- Update V8 and Hermes package versions (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.155
+
+Thu, 03 Sep 2020 05:05:02 GMT
+
+### Changes
+
+- Initial AccessibilityInfo implementation (acoates-ms@noreply.github.com)
+
+## 0.0.0-canary.154
+
+Wed, 02 Sep 2020 05:05:16 GMT
+
+### Changes
+
+- Keep Templates in react-native-windows Package (ngerlem@microsoft.com)
+- Integrate 6-18 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/25 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.153
+
+Tue, 01 Sep 2020 05:05:10 GMT
+
+### Changes
+
+- Fix 5870: Dont check for inheritance, but do explicit type check (dannyvv@microsoft.com)
+
+## 0.0.0-canary.152
+
+Sat, 29 Aug 2020 05:06:29 GMT
+
+### Changes
+
+- Add Desktop ARM64 support (julio.rocha@microsoft.com)
+- Fix fast refresh (acoates-ms@noreply.github.com)
+- Remove ShadowNodes left in UIManager dtor (email not defined)
+
+## 0.0.0-canary.151
+
+Fri, 28 Aug 2020 05:06:54 GMT
+
+### Changes
+
+- Launch application for all ActivationKinds (ryan.fowler@singlewire.com)
+- Fixed templates so C++ apps can consume C# native modules (jthysell@microsoft.com)
+- Add verification to ensure nuget and npm version match. (dannyvv@microsoft.com)
+
+## 0.0.0-canary.150
+
+Thu, 27 Aug 2020 05:05:29 GMT
+
+### Changes
+
+- Remove acceptsKeyboardFocus (for real this time) (ngerlem@microsoft.com)
+- Harden ReactInstanceWin::NativeUIManager to return null when instance is being torn down (acoates-ms@noreply.github.com)
+
+## 0.0.0-canary.149
+
+Wed, 26 Aug 2020 05:07:06 GMT
+
+### Changes
+
+- Fix C# interop serialization for JsValueObject (dannyvv@microsoft.com)
+- Add API to turn off 3D perspective to enable controls that don't work in 3D (asklar@winse.microsoft.com)
+- Fix bugs from acceptsKeyboardFocus to focusable deprecation (ngerlem@microsoft.com)
+
+## 0.0.0-canary.147
+
+Mon, 24 Aug 2020 05:04:58 GMT
+
+### Changes
+
+- Ensure install of VS desktop/C++ workload (asklar@winse.microsoft.com)
+
+## 0.0.0-canary.146
+
+Sat, 22 Aug 2020 05:07:27 GMT
+
+### Changes
+
+- Remove dead mousemove code (ngerlem@microsoft.com)
+- Integrate 6/11 Nightly Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.145
+
+Fri, 21 Aug 2020 05:04:58 GMT
+
+### Changes
+
+- Integrate 6/4 Nightly RN Build (ngerlem@microsoft.com)
+- Upgrade to OpenSSL 1.0.2p.5 (julio.rocha@microsoft.com)
+- Revert "Use explicit calling convention for IWebSocketResource::Make (#5778)" (asklar@winse.microsoft.com)
+- Integrate 5/28 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.144
+
+Thu, 20 Aug 2020 05:05:23 GMT
+
+### Changes
+
+- Move DevMenu to use XAML markup file (asklar@winse.microsoft.com)
+- Integrate 5/16 Nightly RN Build (ngerlem@microsoft.com)
+- Export IWebSocketResource::Make as __cdecl (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.143
+
+Wed, 19 Aug 2020 05:04:41 GMT
+
+### Changes
+
+- Update nuspec copyright header to use xml entity as some of the powershell processing we do messed up the encoding (dannyvv@microsoft.com)
+- Update V8 package version (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.142
+
+Tue, 18 Aug 2020 05:06:49 GMT
+
+### Changes
+
+- fix instability in VisitAllPages test (kmelmon@microsoft.com)
 
 ## 0.0.0-canary.141
 

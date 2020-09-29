@@ -89,6 +89,7 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
   std::vector<std::unique_ptr<NativeModule>> GetDefaultNativeModules(std::shared_ptr<MessageQueueThread> nativeQueue);
   void RegisterForReloadIfNecessary() noexcept;
   void loadBundleInternal(std::string &&jsBundleRelativePath, bool synchronously);
+  void SetInError() noexcept;
 
  private:
   std::shared_ptr<Instance> m_innerInstance;
@@ -102,6 +103,7 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
 
   std::shared_ptr<IDevSupportManager> m_devManager;
   std::shared_ptr<DevSettings> m_devSettings;
+  bool m_isInError{false};
 };
 
 } // namespace react

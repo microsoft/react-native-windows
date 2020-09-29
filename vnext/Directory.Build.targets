@@ -43,8 +43,6 @@
     <Message Text="=> UnmergedWinmdDirectory  [$(UnmergedWinmdDirectory)]" />
     <Message Text="=> MergedWinmdDirectory    [$(MergedWinmdDirectory)]" />
     <Message Text="=> FollyDir                [$(FollyDir)]" />
-    <Message Text="=> JSI_Source              [$(JSI_Source)]" />
-    <Message Text="=> JSI_SourcePath          [$(JSI_SourcePath)]" />
     <Message Text="=> ReactNativeWindowsDir   [$(ReactNativeWindowsDir)]" />
     <Message Text="=> ReactNativeDir          [$(ReactNativeDir)]" />
     <Message Text="=> YogaDir                 [$(YogaDir)]" />

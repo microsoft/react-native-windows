@@ -21,7 +21,7 @@ const {
   Switch,
 } = require('react-native');
 
-const TextInputSharedExamples = require('./TextInputSharedExamples.js');
+const TextInputSharedExamples = require('./TextInputSharedExamples');
 
 import type {RNTesterExampleModuleItem} from '../../types/RNTesterTypes';
 

@@ -4,7 +4,7 @@
  * @format
  */
 
-import React = require('react');
+import * as React from 'react';
 import {
   FlatList,
   Text,
@@ -14,10 +14,7 @@ import {
 } from 'react-native';
 
 import {AppTheme} from '../../../../Libraries/AppTheme/AppTheme';
-import {
-  IAppThemeChangedEvent,
-  IHighContrastChangedEvent,
-} from '../../../../Libraries/AppTheme/AppThemeTypes';
+import {IHighContrastChangedEvent} from '../../../../Libraries/AppTheme/AppThemeTypes';
 
 class AccessibilityBaseExample extends React.Component {
   public render() {
@@ -44,17 +41,14 @@ class HighContrastExample extends React.Component {
   state = {
     isHighContrast: AppTheme.isHighContrast,
     highContrastColorValues: AppTheme.currentHighContrastColors,
-    currentTheme: AppTheme.currentTheme,
   };
 
   componentDidMount() {
     AppTheme.addListener('highContrastChanged', this.onHighContrastChanged);
-    AppTheme.addListener('appThemeChanged', this.onAppThemeChanged);
   }
 
   componenetWillUnmount() {
     AppTheme.removeListener('highContrastChanged', this.onHighContrastChanged);
-    AppTheme.removeListener('appThemeChanged', this.onAppThemeChanged);
   }
 
   // TODO: Make args props
@@ -63,10 +57,6 @@ class HighContrastExample extends React.Component {
       isHighContrast: event.isHighContrast,
       highContrastColorValues: event.highContrastColors,
     });
-  };
-
-  onAppThemeChanged = (event: IAppThemeChangedEvent) => {
-    this.setState({currentTheme: event.currentTheme});
   };
 
   public render() {

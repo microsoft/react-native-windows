@@ -20,6 +20,7 @@ export interface Spec extends TurboModule {
       patch: number,
       prerelease: ?number,
     |},
+    osVersion: number,
   |};
 }
 

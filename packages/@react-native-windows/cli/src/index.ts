@@ -36,6 +36,7 @@ import {projectConfigWindows} from './config/projectConfig';
 export interface GenerateOptions {
   overwrite: boolean;
   language: 'cpp' | 'cs';
+  projectType: 'app' | 'lib';
   experimentalNuGetDependency: boolean;
   nuGetTestVersion?: string;
   nuGetTestFeed?: string;
@@ -63,8 +64,12 @@ export async function generateWindows(
 
   installDependencies(options);
 
+  const rnwPackage = path.dirname(
+    require.resolve('react-native-windows/package.json', {paths: [projectDir]}),
+  );
+  const templateRoot = path.join(rnwPackage, 'template');
   await copyProjectTemplateAndReplace(
-    path.join(__dirname, '..', 'templates'),
+    templateRoot,
     projectDir,
     name,
     ns,

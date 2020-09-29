@@ -69,7 +69,7 @@ export default class Bootstrap extends React.Component<{}, any> {
 
   onRefresh = () => {
     this.setState({refreshing: true});
-    wait(2000).then(() => this.setState({refreshing: false}));
+    void wait(2000).then(() => this.setState({refreshing: false}));
   };
 
   makeItems = (nItems: number, styles: Object): Array<any> => {

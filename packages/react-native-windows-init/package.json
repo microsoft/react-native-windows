@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-init",
-  "version": "0.1.22",
+  "version": "0.1.29",
   "description": "CLI to add react-native-windows to an existing react-native project",
   "main": "index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -11,31 +11,36 @@
     "clean": "just-scripts clean",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
+    "test": "just-scripts test",
     "watch": "just-scripts watch"
   },
   "bin": {
     "react-native-windows-init": "./bin.js"
   },
   "dependencies": {
-    "chalk": "^3",
+    "chalk": "^4.1.0",
     "mustache": "^4.0.1",
     "npm-registry": "^0.1.13",
     "prompts": "^2.3.0",
-    "semver": "^7.1.3",
+    "semver": "^7.3.2",
     "valid-url": "^1.0.9",
-    "yargs": "^15.1.0"
+    "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "@react-native-windows/cli": "0.0.0-canary.3",
-    "@rnw-scripts/eslint-config": "0.0.2",
-    "@rnw-scripts/just-task": "0.0.2",
+    "@react-native-windows/cli": "0.0.0-canary.20",
+    "@rnw-scripts/eslint-config": "0.1.3",
+    "@rnw-scripts/jest-unittest-config": "0.1.0",
+    "@rnw-scripts/just-task": "0.0.5",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/chalk": "^2.2.0",
+    "@types/jest": "^26.0.13",
     "@types/prompts": "^2.0.3",
-    "@types/semver": "^7.1.0",
+    "@types/semver": "7.3.3",
     "@types/valid-url": "^1.0.2",
-    "@types/yargs": "^15.0.3",
-    "eslint": "6.7.0",
+    "@types/yargs": "15.0.5",
+    "babel-jest": "^26.3.0",
+    "eslint": "6.8.0",
+    "jest": "^26.4.2",
     "just-scripts": "^0.36.1",
     "typescript": "^3.8.3"
   },

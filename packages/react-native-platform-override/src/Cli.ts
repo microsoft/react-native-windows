@@ -21,7 +21,7 @@ import {ValidationError} from './ValidationStrategy';
 import {findManifest} from './FileSearch';
 import {getNpmPackage} from './PackageUtils';
 
-doMain(async () => {
+void doMain(async () => {
   const npmPackage = await getNpmPackage();
 
   return new Promise((resolve, _reject) => {
@@ -40,6 +40,7 @@ doMain(async () => {
               describe: 'Optional React Native version to check against',
             },
           }),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         cmdArgv =>
           validateManifest({
             manifestPath: cmdArgv.manifest,
@@ -53,6 +54,7 @@ doMain(async () => {
           cmdYargs.options({
             override: {type: 'string', describe: 'The override to add'},
           }),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         cmdArgv => addOverride(cmdArgv.override!),
       )
       .command(
@@ -62,6 +64,7 @@ doMain(async () => {
           cmdYargs.options({
             override: {type: 'string', describe: 'The override to remove'},
           }),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         cmdArgv => removeOverride(cmdArgv.override!),
       )
       .command(
@@ -83,6 +86,7 @@ doMain(async () => {
               describe: 'Optional React Native version to check against',
             },
           }),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         cmdArgv =>
           upgrade({
             manifestPath: cmdArgv.manifest,
@@ -355,5 +359,5 @@ async function doMain(fn: () => Promise<void>): Promise<void> {
   }
 
   await fn();
-  lock.unlock();
+  await lock.unlock();
 }

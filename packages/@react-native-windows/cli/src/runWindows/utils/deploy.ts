@@ -114,7 +114,7 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
     'powershell',
     'WindowsStoreAppUtils.ps1',
   );
-  execSync(`powershell Unblock-File "${windowsStoreAppUtilsPath}"`);
+  execSync(`powershell -NoProfile Unblock-File "${windowsStoreAppUtilsPath}"`);
   popd();
   return windowsStoreAppUtilsPath;
 }
@@ -134,7 +134,7 @@ function getAppxManifestPath(
   if (globs.length === 1 || !projectName) {
     appxPath = globs[0];
   } else {
-    const filteredGlobs = globs.filter(x => x.indexOf(projectName) != -1);
+    const filteredGlobs = globs.filter(x => x.indexOf(projectName) !== -1);
     if (filteredGlobs.length > 1) {
       newWarn(
         `More than one appxmanifest for ${projectName}: ${filteredGlobs.join(
@@ -328,7 +328,7 @@ export async function deployToDesktop(
   }
 
   const appFamilyName = execSync(
-    `powershell -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+    `powershell -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
   )
     .toString()
     .trim();

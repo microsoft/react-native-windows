@@ -2,6 +2,51 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v0.0.10",
+      "version": "0.0.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Sep 2020 22:03:37 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v0.0.9",
+      "version": "0.0.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Reconcile package versions",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8adedcfb2ce6492a4a7ede59e0f9188dc205d659",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v0.0.5",
+      "version": "0.0.5",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to eslint 6.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Jul 2020 05:04:59 GMT",
       "tag": "@rnw-scripts/create-github-releases_v0.0.5",
       "version": "0.0.5",

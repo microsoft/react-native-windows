@@ -1,0 +1,7 @@
+moduleBuilder.AddMethod("MyMethod", global::Microsoft.ReactNative.MethodReturnType.Callback, (global::Microsoft.ReactNative.IJSValueReader reader, global::Microsoft.ReactNative.IJSValueWriter writer, global::Microsoft.ReactNative.MethodResultCallback resolve, global::Microsoft.ReactNative.MethodResultCallback reject) =>
+{
+    global::Microsoft.ReactNative.Managed.JSValueReader.ReadArgs(reader);
+    module.Method((value) => resolve(global::Microsoft.ReactNative.Managed.JSValueWriter.WriteArgs(writer, value)));
+}
+
+);

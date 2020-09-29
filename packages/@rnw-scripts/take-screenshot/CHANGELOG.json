@@ -1,0 +1,20 @@
+{
+  "name": "@rnw-scripts/take-screenshot",
+  "entries": [
+    {
+      "date": "Fri, 25 Sep 2020 05:05:40 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add Script to Screenshot Desktop",
+            "author": "ngerlem@microsoft.com",
+            "commit": "906b4d44833927cbccefdcb7304845d87c7a586b",
+            "package": "@rnw-scripts/take-screenshot"
+          }
+        ]
+      }
+    }
+  ]
+}

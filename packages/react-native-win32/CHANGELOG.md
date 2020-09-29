@@ -1,8 +1,101 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 15 Aug 2020 05:05:18 GMT and should not be manually modified.
+This log was last generated on Fri, 25 Sep 2020 05:05:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.51
+
+Fri, 25 Sep 2020 05:05:40 GMT
+
+### Changes
+
+- Supply UniversalApiContract for Platform.Version (ngerlem@microsoft.com)
+
+## 0.0.0-canary.49
+
+Tue, 22 Sep 2020 04:46:10 GMT
+
+### Changes
+
+- Upgrade react-native Typings (ngerlem@microsoft.com)
+
+## 0.0.0-canary.48
+
+Mon, 21 Sep 2020 05:06:22 GMT
+
+### Changes
+
+- Fixup eslint config (ngerlem@microsoft.com)
+
+## 0.0.0-canary.46
+
+Sat, 12 Sep 2020 05:08:52 GMT
+
+### Changes
+
+- Integrate 7/1 nightly RN build (igklemen@microsoft.com)
+
+## 0.0.0-canary.45
+
+Wed, 09 Sep 2020 05:06:35 GMT
+
+### Changes
+
+- Enable @typescript-eslint/no-floating-promises (ngerlem@microsoft.com)
+
+## 0.0.0-canary.44
+
+Wed, 02 Sep 2020 05:05:16 GMT
+
+### Changes
+
+- Integrate 6-18 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/25 Nightly RN Build (ngerlem@microsoft.com)
+- A couple of minor style changes in logbox to avoid win32 asserts. (acoates-ms@noreply.github.com)
+
+## 0.0.0-canary.43
+
+Thu, 27 Aug 2020 05:05:29 GMT
+
+### Changes
+
+- Fix TouchableWin32 Infinite Recursion on Click (ngerlem@microsoft.com)
+- Remove acceptsKeyboardFocus (for real this time) (ngerlem@microsoft.com)
+
+## 0.0.0-canary.42
+
+Wed, 26 Aug 2020 05:07:06 GMT
+
+### Changes
+
+- Fix bugs from acceptsKeyboardFocus to focusable deprecation (ngerlem@microsoft.com)
+
+## 0.0.0-canary.41
+
+Sat, 22 Aug 2020 05:07:27 GMT
+
+### Changes
+
+- Integrate 6/11 Nightly Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.40
+
+Fri, 21 Aug 2020 05:04:58 GMT
+
+### Changes
+
+- Integrate 5/28 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/4 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.39
+
+Thu, 20 Aug 2020 05:05:23 GMT
+
+### Changes
+
+- Integrate 5/16 Nightly RN Build (ngerlem@microsoft.com)
+- Publish TS files in src as they are references in sourcemaps (acoates-ms@noreply.github.com)
 
 ## 0.0.0-canary.38
 

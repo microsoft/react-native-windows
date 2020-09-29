@@ -17,6 +17,7 @@ const versionEnvVars = {
   RNW_PKG_VERSION_PATCH: semver.patch(pkgJson.version),
   npmVersion: pkgJson.version,
   publishCommitId: commitId,
+  reactDevDependency: pkgJson.devDependencies['react'],
   reactNativeDevDependency: pkgJson.devDependencies['react-native'],
 }
 
@@ -33,6 +34,7 @@ console.log(`##vso[task.setvariable variable=RNW_PKG_VERSION_PATCH]${versionEnvV
 // Set other version related variables used by CI
 console.log(`##vso[task.setvariable variable=npmVersion]${versionEnvVars.npmVersion}`);
 console.log(`##vso[task.setvariable variable=publishCommitId]${versionEnvVars.publishCommitId}`);
+console.log(`##vso[task.setvariable variable=reactDevDependency]${versionEnvVars.reactDevDependency}`);
 console.log(`##vso[task.setvariable variable=reactNativeDevDependency]${versionEnvVars.reactNativeDevDependency}`);
 
 const dirPath = path.resolve(process.env.RUNNER_TEMP, 'versionEnvVars');
@@ -46,5 +48,6 @@ console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_MINOR]${versionEnvV
 console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_PATCH]${versionEnvVars.RNW_PKG_VERSION_PATCH}");
 console.log("##vso[task.setvariable variable=npmVersion]${versionEnvVars.npmVersion}");
 console.log("##vso[task.setvariable variable=publishCommitId]${versionEnvVars.publishCommitId}");
+console.log("##vso[task.setvariable variable=reactDevDependency]${versionEnvVars.reactDevDependency}");
 console.log("##vso[task.setvariable variable=reactNativeDevDependency]${versionEnvVars.reactNativeDevDependency}");
 `);

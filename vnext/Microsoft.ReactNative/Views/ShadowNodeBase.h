@@ -108,7 +108,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   void UpdateTransformPS();
 
   bool IsRegisteredForMouseEvents() const {
-    return m_onMouseEnterRegistered || m_onMouseLeaveRegistered || m_onMouseMoveRegistered;
+    return m_onMouseEnterRegistered || m_onMouseLeaveRegistered;
   }
 
  protected:
@@ -125,7 +125,6 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   bool m_onLayoutRegistered = false;
   bool m_onMouseEnterRegistered = false;
   bool m_onMouseLeaveRegistered = false;
-  bool m_onMouseMoveRegistered = false;
 
   // Support Keyboard
  public:

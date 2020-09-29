@@ -1,5 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+// IMPORTANT: Before updating this file
+// please read react-native-windows repo:
+// vnext/Microsoft.ReactNative.Cxx/README.md
 
 #pragma once
 #include <winrt/Windows.Foundation.h>
@@ -211,7 +214,7 @@ struct CallbackCreator<TCallback<void(TArgs...)>> {
   static TCallback<void(TArgs...)> Create(
       IJSValueWriter const &argWriter,
       MethodResultCallback const &callback) noexcept {
-    return TCallback([ callback, argWriter ](TArgs... args) noexcept {
+    return TCallback<void(TArgs...)>([ callback, argWriter ](TArgs... args) noexcept {
       WriteArgs(argWriter, std::move(args)...);
       callback(argWriter);
     });
@@ -224,7 +227,7 @@ struct CallbackCreator<TCallback<void(TArgs...) noexcept>> {
   static TCallback<void(TArgs...)> Create(
       IJSValueWriter const &argWriter,
       MethodResultCallback const &callback) noexcept {
-    return TCallback([ callback, argWriter ](TArgs... args) noexcept {
+    return TCallback<void(TArgs...)>([ callback, argWriter ](TArgs... args) noexcept {
       WriteArgs(argWriter, std::move(args)...);
       callback(argWriter);
     });
@@ -272,9 +275,15 @@ constexpr bool IsVoidResultCheck() noexcept {
 template <class TResult, class TArg>
 constexpr void ValidateCoroutineArg() noexcept {
   if constexpr (std::is_same_v<TResult, fire_and_forget>) {
+    // unfortunately __PRETTY_FUNCTION__ is not able to be put after a string literal
+    // so no detail information is provided for macOS
     static_assert(
         !std::is_reference_v<TArg> && !std::is_pointer_v<TArg>,
-        "Coroutine parameter must be passed by value for safe access: " __FUNCSIG__);
+        "Coroutine parameter must be passed by value for safe access"
+#ifndef __APPLE__
+        ": " __FUNCSIG__
+#endif
+    );
   }
 }
 
@@ -1009,9 +1018,9 @@ struct ReactMethodVerifier {
     return verifier.m_result;
   }
 
-  template <class TMember, class TAttribute, int I>
+  template <class TMember, class TAttribute, int I2>
   constexpr void
-  Visit([[maybe_unused]] TMember member, ReactAttributeId<I> /*attributeId*/, TAttribute /*attributeInfo*/) noexcept {
+  Visit([[maybe_unused]] TMember member, ReactAttributeId<I2> /*attributeId*/, TAttribute /*attributeInfo*/) noexcept {
     m_result = ModuleMethodInfo<TMember>::template Match<TMethodSpec>();
   }
 
@@ -1027,9 +1036,9 @@ struct ReactSyncMethodVerifier {
     return verifier.m_result;
   }
 
-  template <class TMember, class TAttribute, int I>
+  template <class TMember, class TAttribute, int I2>
   constexpr void
-  Visit([[maybe_unused]] TMember member, ReactAttributeId<I> /*attributeId*/, TAttribute /*attributeInfo*/) noexcept {
+  Visit([[maybe_unused]] TMember member, ReactAttributeId<I2> /*attributeId*/, TAttribute /*attributeInfo*/) noexcept {
     m_result = ModuleSyncMethodInfo<TMember>::template Match<TMethodSpec>();
   }
 

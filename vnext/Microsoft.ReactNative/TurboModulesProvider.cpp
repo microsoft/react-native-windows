@@ -1,12 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+// IMPORTANT: Before updating this file
+// please read react-native-windows repo:
+// vnext/Microsoft.ReactNative.Cxx/README.md
 
 #include "pch.h"
 #include "TurboModulesProvider.h"
 #include <ReactCommon/TurboModuleUtils.h>
-#include <crash/verifyElseCrash.h>
 #include "JsiReader.h"
 #include "JsiWriter.h"
+#ifdef __APPLE__
+#include "Crash.h"
+#else
+#include <crash/verifyElseCrash.h>
+#endif
 
 using namespace winrt;
 using namespace Windows::Foundation;
@@ -159,12 +166,36 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                             argWriter,
                             [promise, &runtime](const IJSValueWriter &writer) {
                               auto result = writer.as<JsiWriter>()->MoveResult();
-                              promise->resolve(result);
+                              if (result.isObject()) {
+                                auto resultArrayObject = result.getObject(runtime);
+                                VerifyElseCrash(resultArrayObject.isArray(runtime));
+                                auto resultArray = resultArrayObject.getArray(runtime);
+                                VerifyElseCrash(resultArray.length(runtime) == 1);
+                                auto resultItem = resultArray.getValueAtIndex(runtime, 0);
+                                promise->resolve(resultItem);
+                              } else {
+                                VerifyElseCrash(false);
+                              }
                             },
                             [promise, &runtime](const IJSValueWriter &writer) {
                               auto result = writer.as<JsiWriter>()->MoveResult();
-                              VerifyElseCrash(result.isString());
-                              promise->reject(result.getString(runtime).utf8(runtime));
+                              if (result.isString()) {
+                                promise->reject(result.getString(runtime).utf8(runtime));
+                              } else if (result.isObject()) {
+                                auto errorArrayObject = result.getObject(runtime);
+                                VerifyElseCrash(errorArrayObject.isArray(runtime));
+                                auto errorArray = errorArrayObject.getArray(runtime);
+                                VerifyElseCrash(errorArray.length(runtime) == 1);
+                                auto errorObjectValue = errorArray.getValueAtIndex(runtime, 0);
+                                VerifyElseCrash(errorObjectValue.isObject());
+                                auto errorObject = errorObjectValue.getObject(runtime);
+                                VerifyElseCrash(errorObject.hasProperty(runtime, "message"));
+                                auto errorMessage = errorObject.getProperty(runtime, "message");
+                                VerifyElseCrash(errorMessage.isString());
+                                promise->reject(errorMessage.getString(runtime).utf8(runtime));
+                              } else {
+                                VerifyElseCrash(false);
+                              }
                             });
                       });
                 }
@@ -181,12 +212,14 @@ class TurboModuleImpl : public facebook::react::TurboModule {
 
                   auto makeCallback = [&runtime](
                                           const facebook::jsi::Value &callbackValue) noexcept->MethodResultCallback {
-                    return [&runtime, callbackFunction = callbackValue.asObject(runtime).asFunction(runtime) ](
-                        const IJSValueWriter &writer) noexcept {
+                    // workaround: xcode doesn't accept a captured value with only rvalue copy constructor
+                    auto functionObject =
+                        std::make_shared<facebook::jsi::Function>(callbackValue.asObject(runtime).asFunction(runtime));
+                    return [&runtime, callbackFunction = functionObject ](const IJSValueWriter &writer) noexcept {
                       const facebook::jsi::Value *resultArgs = nullptr;
                       size_t resultCount = 0;
                       writer.as<JsiWriter>()->AccessResultAsArgs(resultArgs, resultCount);
-                      callbackFunction.call(runtime, resultArgs, resultCount);
+                      callbackFunction->call(runtime, resultArgs, resultCount);
                     };
                   };
 

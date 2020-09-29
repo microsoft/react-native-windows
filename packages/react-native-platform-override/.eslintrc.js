@@ -12,4 +12,5 @@ module.exports = {
     "sort-imports": "error",
   },
   ignorePatterns: ['src/e2etest/collateral/**'],
+  parserOptions: {tsconfigRootDir : __dirname},
 };

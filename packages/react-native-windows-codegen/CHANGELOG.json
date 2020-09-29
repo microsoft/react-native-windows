@@ -2,6 +2,66 @@
   "name": "react-native-windows-codegen",
   "entries": [
     {
+      "date": "Thu, 24 Sep 2020 05:06:21 GMT",
+      "tag": "react-native-windows-codegen_v0.1.6",
+      "version": "0.1.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Zero-Config Tests for CLI, react-native-windows-init, react-native-windows-codegen",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5a96480f422aa7c731d7febb900a3962e1265c08",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "react-native-windows-codegen_v0.1.5",
+      "version": "0.1.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Sep 2020 22:03:37 GMT",
+      "tag": "react-native-windows-codegen_v0.1.4",
+      "version": "0.1.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Reconcile package versions",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8adedcfb2ce6492a4a7ede59e0f9188dc205d659",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "react-native-windows-codegen_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to eslint 6.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Aug 2020 05:05:34 GMT",
       "tag": "react-native-windows-codegen_v0.1.0",
       "version": "0.1.0",

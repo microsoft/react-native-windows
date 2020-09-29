@@ -4,6 +4,9 @@
 #include "PlatformConstantsModule.h"
 #include <VersionHelpers.h>
 #include <cxxreact/ReactNativeVersion.h>
+#include <winrt/Windows.Foundation.Metadata.h>
+
+using namespace winrt::Windows::Foundation::Metadata;
 
 using Method = facebook::xplat::module::CxxModule::Method;
 
@@ -45,17 +48,23 @@ std::map<std::string, folly::dynamic> PlatformConstantsModule::getConstants() {
       // the version of react-native we are built from
       {"reactNativeWindowsVersion",
        folly::dynamic::object("major", RNW_PKG_VERSION_MAJOR)("minor", RNW_PKG_VERSION_MINOR)(
-           "patch", RNW_PKG_VERSION_PATCH)}
+           "patch", RNW_PKG_VERSION_PATCH)},
 
-      // We don't provide the typical OS version here. Windows make it hard to
-      // get an exact version by-design. In the future we should consider
-      // exposing something here like a facility to check Universal API
-      // Contract.
+      // Provide the universal API contract as an OS version
+      {"osVersion", OsVersion()},
   };
 }
 
-folly::dynamic PlatformConstantsModule::StringOrNull(std::string_view str) noexcept {
+/*static*/ folly::dynamic PlatformConstantsModule::StringOrNull(std::string_view str) noexcept {
   return str.empty() ? folly::dynamic(nullptr) : folly::dynamic(str);
+}
+
+/*static*/ int32_t PlatformConstantsModule::OsVersion() noexcept {
+  for (uint16_t i = 1;; ++i) {
+    if (!ApiInformation::IsApiContractPresent(L"Windows.Foundation.UniversalApiContract", i)) {
+      return i - 1;
+    }
+  }
 }
 
 } // namespace facebook::react

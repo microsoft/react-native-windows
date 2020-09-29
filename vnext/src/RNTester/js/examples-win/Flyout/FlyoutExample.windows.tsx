@@ -4,7 +4,7 @@
  * @format
  */
 
-import React = require('react');
+import * as React from 'react';
 import {Button, Switch, Text, TextInput, View} from 'react-native';
 import {Flyout} from '../../../../Libraries/Components/Flyout/Flyout';
 import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';

@@ -28,7 +28,7 @@ export default class BatchingQueue<TKey> {
 
       if (!this.currentKey) {
         this.currentKey = key;
-        this.pumpQueue();
+        void this.pumpQueue();
       }
     });
   }
