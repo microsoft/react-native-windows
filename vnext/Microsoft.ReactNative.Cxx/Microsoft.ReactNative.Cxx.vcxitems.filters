@@ -106,6 +106,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.h">
       <Filter>JSI</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Hosting.DesktopWindowXamlSource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Hosting.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="JSI">

@@ -83,8 +83,8 @@ static facebook::jsi::Function const &AsFunction(facebook::jsi::Runtime::Pointer
   return *reinterpret_cast<facebook::jsi::Function const *>(ptr);
 }
 
-static facebook::jsi::WeakObject const &AsWeakObject(facebook::jsi::Runtime::PointerValue const **ptr) noexcept {
-  return *reinterpret_cast<facebook::jsi::WeakObject const *>(ptr);
+static facebook::jsi::WeakObject &AsWeakObject(facebook::jsi::Runtime::PointerValue **ptr) noexcept {
+  return *reinterpret_cast<facebook::jsi::WeakObject *>(ptr);
 }
 
 static facebook::jsi::Array const &AsArray(facebook::jsi::Runtime::PointerValue const **ptr) noexcept {
@@ -646,7 +646,7 @@ JsiWeakObjectRef JsiRuntime::CreateWeakObject(JsiObjectRef obj) try {
 }
 
 JsiValueRef JsiRuntime::LockWeakObject(JsiWeakObjectRef weakObject) try {
-  auto weakObjectPtr = AsPointerValue(weakObject);
+  auto weakObjectPtr = reinterpret_cast<facebook::jsi::Runtime::PointerValue *>(weakObject.Data);
   return MakeJsiValueData(m_runtime->lockWeakObject(AsWeakObject(&weakObjectPtr)));
 } catch (JSI_SET_ERROR) {
   throw;

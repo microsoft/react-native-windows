@@ -558,7 +558,7 @@ WeakObject JsiAbiRuntime::createWeakObject(const Object &obj) try {
   throw;
 }
 
-Value JsiAbiRuntime::lockWeakObject(const WeakObject &weakObj) try {
+Value JsiAbiRuntime::lockWeakObject(WeakObject &weakObj) try {
   return MakeValue(m_runtime.LockWeakObject(AsJsiWeakObjectRef(weakObj)));
 } catch (hresult_error const &) {
   RethrowJsiError();

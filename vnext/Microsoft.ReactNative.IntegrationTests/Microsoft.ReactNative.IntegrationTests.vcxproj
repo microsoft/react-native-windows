@@ -118,7 +118,16 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(JSI_SourcePath)\jsi\test\testlib.cpp" />
+    <ClCompile Include="$(JSI_SourcePath)\jsi\test\testlib.cpp">
+      <!--
+        The JSI tests have a number of violations that we must suppress to avoid chaning the code.
+        C4100 - unreferenced formal parameter
+        C4245 - 'initializing': conversion from 'int' to 'unsigned __int64', signed/unsigned mismatch
+        C4389 - '==': signed/unsigned mismatch
+        C4458 - declaration of '<varname>' hides class member
+      -->
+      <DisableSpecificWarnings>4100;4245;4389;4458;$(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MockReactPackageProvider.h" />
