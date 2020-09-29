@@ -130,9 +130,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   const Mso::Promise<void> m_whenCreated;
   const Mso::Promise<void> m_whenLoaded;
   const Mso::Promise<void> m_whenDestroyed;
-#ifndef CORE_ABI
-  const std::shared_ptr<react::uwp::UwpReactInstanceProxy> m_legacyInstance;
-#endif
+
   const Mso::VoidFunctor m_updateUI;
   const bool m_debuggerBreakOnNextLine : 1;
   const bool m_isFastReloadEnabled : 1;
@@ -165,7 +163,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
 
   std::shared_ptr<facebook::react::MessageQueueThread> m_batchingUIThread;
 
-  std::shared_ptr<react::uwp::IReactInstance> m_legacyReactInstance;
+  std::shared_ptr<react::uwp::IReactInstance> m_legacyInstance;
   std::shared_ptr<IRedBoxHandler> m_redboxHandler;
 #ifndef CORE_ABI
   std::shared_ptr<react::uwp::AppTheme> m_appTheme;
