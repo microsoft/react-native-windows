@@ -16,7 +16,3 @@ std::shared_ptr<facebook::react::BatchingMessageQueueThread> MakeBatchingQueueTh
     std::shared_ptr<facebook::react::MessageQueueThread> const &queueThread) noexcept;
 
 } // namespace react::uwp
-
-namespace Microsoft::React {
-using namespace react::uwp;
-}

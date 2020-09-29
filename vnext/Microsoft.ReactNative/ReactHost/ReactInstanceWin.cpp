@@ -545,7 +545,7 @@ void ReactInstanceWin::InitUIMessageThread() noexcept {
   m_uiMessageThread.Exchange(
       std::make_shared<MessageDispatchQueue>(m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
-  m_batchingUIThread = Microsoft::React::MakeBatchingQueueThread(m_uiMessageThread.Load());
+  m_batchingUIThread = react::uwp::MakeBatchingQueueThread(m_uiMessageThread.Load());
 }
 
 void ReactInstanceWin::InitUIManager() noexcept {

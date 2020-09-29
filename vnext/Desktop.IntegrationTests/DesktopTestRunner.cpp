@@ -36,8 +36,8 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   viewManagers.push_back(unique_ptr<IViewManager>(new TestViewManager("RCTScrollView")));
 
   auto uiManager = createIUIManager(std::move(viewManagers), new TestNativeUIManager());
-  auto nativeQueue = MakeJSQueueThread();
-  auto jsQueue = MakeJSQueueThread();
+  auto nativeQueue = react::uwp::MakeJSQueueThread();
+  auto jsQueue = react::uwp::MakeJSQueueThread();
 
   devSettings->jsiRuntimeHolder = std::make_shared<ChakraRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
 

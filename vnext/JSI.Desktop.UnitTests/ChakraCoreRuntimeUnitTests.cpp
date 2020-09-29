@@ -23,7 +23,7 @@ using facebook::react::CreateMemoryTracker;
 using facebook::react::MessageQueueThread;
 using Microsoft::JSI::ChakraRuntimeArgs;
 using Microsoft::JSI::makeChakraRuntime;
-using Microsoft::React::MakeJSQueueThread;
+using react::uwp::MakeJSQueueThread;
 
 // TODO (yicyao): #2729 We need to add tests for ChakraCoreRuntime specific
 // behaviors such as ScriptStore. This may require us to bring back JSITestBase.
