@@ -74,7 +74,7 @@ export default class GitReactFileRepository
     GitReactFileRepository.githubToken = token;
   }
 
-  static async listFiles(
+  async listFiles(
     globs: string[] | undefined,
     reactNativeVersion: string,
   ): Promise<string[]> {
