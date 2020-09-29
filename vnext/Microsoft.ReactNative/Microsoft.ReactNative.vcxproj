@@ -359,9 +359,6 @@
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="TestHook.h" />
-    <ClInclude Include="Threading\BatchingQueueThread.h" />
-    <ClInclude Include="Threading\MessageDispatchQueue.h" />
-    <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
     <ClInclude Include="QuirkSettings.h">
       <DependentUpon>QuirkSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -547,9 +544,6 @@
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="TestHook.cpp" />
-    <ClCompile Include="Threading\BatchingQueueThread.cpp" />
-    <ClCompile Include="Threading\MessageDispatchQueue.cpp" />
-    <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="QuirkSettings.cpp">
       <DependentUpon>QuirkSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -693,5 +687,14 @@
     <Message Condition="'$(Source)'!=''" Text="Preprocessing: $(Source)" />
     <Error Condition="'$(Source)'==''" Text="To generate a pre-processed file, please specify a source file with msbuild /p:Source=nameOfTheSource.cpp" />
     <CL PreprocessToFile="true" Sources="$(Source)" AdditionalIncludeDirectories="%(ClCompile.AdditionalIncludeDirectories)" PreprocessorDefinitions="%(ClCompile.PreprocessorDefinitions)" AdditionalOptions="%(ClCompile.AdditionalOptions) /d1PP" PreprocessKeepComments="true" PreprocessOutputPath="$(Source.Replace('.cpp', '.pp'))" />
+  </Target>
+
+  <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/3133 -->
+  <Target Name="InjectForcedXamlIncludes" BeforeTargets="CompileXamlGeneratedFiles" >
+    <ItemGroup>
+      <ClCompile Condition="'%(ClCompile.CompilerIteration)' == 'XamlGenerated'">
+        <ForcedIncludeFiles>%(ForcedIncludeFiles);winrt/Microsoft.UI.Xaml.Controls.h;winrt/Microsoft.UI.Xaml.XamlTypeInfo.h</ForcedIncludeFiles>
+      </ClCompile>
+    </ItemGroup>
   </Target>
 </Project>

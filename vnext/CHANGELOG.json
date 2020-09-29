@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 29 Sep 2020 05:05:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.173",
+      "version": "0.0.0-canary.173",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Special UI When Debugger Attached",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3a41737a788f7ded7e4675d4539ebf619e500156",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Reduce Microsoft.ReactNative PCH By 155MB-260MB",
+            "author": "ngerlem@microsoft.com",
+            "commit": "31563b93287b3a5849f956cce73019a36ee4a1e6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove TestMessageQueueThread.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "c10720bde2f53ba3ed50ab93048a585a8377e46b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Don't reload the ReactNativeHost multiple times",
+            "author": "ryan.fowler@singlewire.com",
+            "commit": "7baf74ec48b7d8d7ab78d9349f95a13272311eb2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 26 Sep 2020 05:04:21 GMT",
       "tag": "react-native-windows_v0.0.0-canary.172",
       "version": "0.0.0-canary.172",
