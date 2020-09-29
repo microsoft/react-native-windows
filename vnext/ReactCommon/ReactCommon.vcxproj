@@ -69,11 +69,8 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>
-        $(ReactNativeDir)\ReactCommon;
-        $(JSI_SourcePath);$(JSI_Source);
-        $(ReactNativeDir)\ReactCommon\callinvoker;
-        $(ReactNativeDir)\ReactCommon\jsiexecutor;
-        $(FollyDir);$(ReactNativeWindowsDir)stubs;
+        $(ReactNativeDir)\ReactCommon\jsi;
+        $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)\Shared\tracing;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
@@ -92,9 +89,9 @@
     <Import Project="$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" />
   </ImportGroup>
   <ItemGroup>
-    <ClInclude Include="$(JSI_SourcePath)\jsi\instrumentation.h" />
-    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h" />
-    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h" />
     <ClInclude Include="..\stubs\sys\mman.h" />
     <ClInclude Include="..\stubs\sys\time.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxModule.h" />
@@ -139,15 +136,17 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\RAMBundleRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.cpp" />
-    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp" />
-    <ClCompile Include="$(JSI_Source)\jsi\JSIDynamic.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\log.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <!-- We should ideally upstream a fix for missing stdexcept, but Yoga hasn't been accepting PRs as of May 2020 -->
+    <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" ForcedIncludeFiles="stdexcept" />
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
@@ -168,8 +167,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.cpp" DisableSpecificWarnings="4267;%(DisableSpecificWarnings)" />
-    <!-- Forced include only necessary until we get https://github.com/facebook/react-native/pull/28023  back from upstream. -->
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.cpp" ForcedIncludeFiles="stdexcept" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\NativeSampleTurboCxxModuleSpecJSI.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\samples\SampleTurboCxxModule.cpp" />

@@ -6,20 +6,14 @@
 'use strict';
 
 import {NativeEventEmitter, NativeModules} from 'react-native';
-import {
-  AppThemeTypes,
-  IAppThemeChangedEvent,
-  IHighContrastColors,
-  IHighContrastChangedEvent,
-} from './AppThemeTypes';
-const invariant = require('invariant');
+import {IHighContrastColors, IHighContrastChangedEvent} from './AppThemeTypes';
 
+const invariant = require('invariant');
 const NativeAppTheme = NativeModules.RTCAppTheme;
 
 class AppThemeModule extends NativeEventEmitter {
   public isAvailable: boolean;
   private _isHighContrast: boolean;
-  private _currentTheme: AppThemeTypes;
   private _highContrastColors: IHighContrastColors;
 
   constructor() {
@@ -35,18 +29,6 @@ class AppThemeModule extends NativeEventEmitter {
         this._highContrastColors = nativeEvent.highContrastColors;
       },
     );
-
-    this._currentTheme = NativeAppTheme.initialAppTheme;
-    this.addListener(
-      'appThemeChanged',
-      ({currentTheme}: {currentTheme: AppThemeTypes}) => {
-        this._currentTheme = currentTheme;
-      },
-    );
-  }
-
-  get currentTheme(): AppThemeTypes {
-    return this._currentTheme;
   }
 
   get isHighContrast(): boolean {
@@ -70,7 +52,6 @@ function throwMissingNativeModule() {
 // `AppTheme.isAvailable` will return `false`, and any method calls will throw.
 class MissingNativeAppThemeShim {
   public isAvailable = false;
-  public currentTheme = '';
   public isHighContrast = false;
   public currentHighContrastColors = {} as IHighContrastColors;
 
@@ -85,9 +66,7 @@ class MissingNativeAppThemeShim {
   // EventEmitter
   addListener(
     _eventType: string,
-    _listener: (
-      nativeEvent: IAppThemeChangedEvent & IHighContrastChangedEvent,
-    ) => void,
+    _listener: (nativeEvent: IHighContrastChangedEvent) => void,
   ): any {
     throwMissingNativeModule();
   }
@@ -98,9 +77,7 @@ class MissingNativeAppThemeShim {
 
   removeListener(
     _eventType: string,
-    _listener: (
-      nativeEvent: IAppThemeChangedEvent & IHighContrastChangedEvent,
-    ) => void,
+    _listener: (nativeEvent: IHighContrastChangedEvent) => void,
   ) {
     throwMissingNativeModule();
   }

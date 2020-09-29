@@ -72,7 +72,7 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
       vector<shared_ptr<IWebSocketResource>> resources;
       for (int i = 0; i < resourceTotal; i++) {
         auto ws = IWebSocketResource::Make("ws://localhost:5555/"); // TODO: Switch to port 5556
-        ws->SetOnMessage([this, &threadCount, &errorFound](size_t size, const string &message) {
+        ws->SetOnMessage([this, &threadCount, &errorFound](size_t size, const string &message, bool isBinary) {
           if (errorFound)
             return;
 

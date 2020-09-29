@@ -91,6 +91,14 @@ export function addProjectToSolution(
   verbose: boolean = false,
   checkMode: boolean = false,
 ): boolean {
+  if (project.projectLang === null) {
+    throw new Error('Unable to add project to solution, projectLang is null');
+  }
+
+  if (project.projectGuid === null) {
+    throw new Error('Unable to add project to solution, projectGuid is null');
+  }
+
   if (verbose) {
     console.log(
       `Processing ${chalk.bold(path.basename(project.projectFile))}...`,

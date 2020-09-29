@@ -2,6 +2,111 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Thu, 24 Sep 2020 05:06:21 GMT",
+      "tag": "react-native-platform-override_v0.2.8",
+      "version": "0.2.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Ignore filemode for Scratch Repository",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0ccff665e77368362e717eaa1957361d0e5217b8",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Sep 2020 04:46:10 GMT",
+      "tag": "react-native-platform-override_v0.2.7",
+      "version": "0.2.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix react-native-platform-override CLI",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5a62827572de5b1ea9fd27183260151b5c98404a",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "react-native-platform-override_v0.2.6",
+      "version": "0.2.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Sep 2020 22:03:37 GMT",
+      "tag": "react-native-platform-override_v0.2.5",
+      "version": "0.2.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Reconcile package versions",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8adedcfb2ce6492a4a7ede59e0f9188dc205d659",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Sep 2020 05:08:52 GMT",
+      "tag": "react-native-platform-override_v0.2.4",
+      "version": "0.2.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Start Sharing Test Configuration Between Node Projects",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cf5770eaaaa2906c7d04f0e03749942fe44055d0",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Sep 2020 05:06:35 GMT",
+      "tag": "react-native-platform-override_v0.2.3",
+      "version": "0.2.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Enable @typescript-eslint/no-floating-promises",
+            "author": "ngerlem@microsoft.com",
+            "commit": "62f3bb771a129f9cb81bd826827bf4001821a684",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "react-native-platform-override_v0.2.1",
+      "version": "0.2.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to eslint 6.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Aug 2020 05:05:16 GMT",
       "tag": "react-native-platform-override_v0.2.1",
       "version": "0.2.1",

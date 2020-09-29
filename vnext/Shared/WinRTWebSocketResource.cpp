@@ -12,14 +12,13 @@
 #include <winrt/Windows.Security.Cryptography.h>
 #include <RestrictedErrorInfo.h>
 
-// Standard Library
-#include <future>
-
 using Microsoft::Common::Unicode::Utf8ToUtf16;
 using Microsoft::Common::Unicode::Utf16ToUtf8;
 using Microsoft::Common::Utilities::CheckedReinterpretCast;
 
 using std::function;
+using std::lock_guard;
+using std::mutex;
 using std::size_t;
 using std::string;
 using std::vector;
@@ -185,12 +184,12 @@ fire_and_forget WinRTWebSocketResource::PerformPing() noexcept
   }
 }
 
-fire_and_forget WinRTWebSocketResource::PerformWrite() noexcept
+fire_and_forget WinRTWebSocketResource::PerformWrite(string&& message, bool isBinary) noexcept
 {
   auto self = shared_from_this();
-  if (self->m_writeQueue.empty())
   {
-    co_return;
+    auto guard = lock_guard<mutex>{m_writeQueueMutex};
+    m_writeQueue.emplace(std::move(message), isBinary);
   }
 
   try
@@ -208,20 +207,19 @@ fire_and_forget WinRTWebSocketResource::PerformWrite() noexcept
     }
 
     size_t length;
-    std::pair<string, bool> front;
-    bool popped = self->m_writeQueue.try_pop(front);
-    if (!popped)
+    string messageLocal;
+    bool isBinaryLocal;
     {
-      throw hresult_error(E_FAIL, L"Could not retrieve outgoing message.");
+      auto guard = lock_guard<mutex>{m_writeQueueMutex};
+      std::tie(messageLocal, isBinaryLocal) = m_writeQueue.front();
+      m_writeQueue.pop();
     }
 
-    auto [message, isBinary] = std::move(front);
-
-    if (isBinary)
+    if (isBinaryLocal)
     {
       self->m_socket.Control().MessageType(SocketMessageType::Binary);
 
-      auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(std::move(message)));
+      auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(messageLocal));
       length = buffer.Length();
       self->m_writer.WriteBuffer(buffer);
     }
@@ -230,11 +228,11 @@ fire_and_forget WinRTWebSocketResource::PerformWrite() noexcept
       self->m_socket.Control().MessageType(SocketMessageType::Utf8);
 
       //TODO: Use char_t instead of uint8_t?
-      length = message.size();
-      winrt::array_view<const uint8_t> arr(
-        CheckedReinterpretCast<const uint8_t*>(message.c_str()),
-        CheckedReinterpretCast<const uint8_t*>(message.c_str()) + message.length());
-      self->m_writer.WriteBytes(arr);
+      length = messageLocal.size();
+      winrt::array_view<const uint8_t> view(
+        CheckedReinterpretCast<const uint8_t*>(messageLocal.c_str()),
+        CheckedReinterpretCast<const uint8_t*>(messageLocal.c_str()) + messageLocal.length());
+      self->m_writer.WriteBytes(view);
     }
 
     co_await self->m_writer.StoreAsync();
@@ -333,7 +331,7 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, IMessag
 
     if (m_readHandler)
     {
-      m_readHandler(response.length(), response);
+      m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
     }
   }
   catch (hresult_error const& e)
@@ -383,18 +381,14 @@ void WinRTWebSocketResource::Ping() noexcept
   PerformPing();
 }
 
-void WinRTWebSocketResource::Send(const string& message) noexcept
+void WinRTWebSocketResource::Send(string&& message) noexcept
 {
-  m_writeQueue.push({ message, false });
-
-  PerformWrite();
+  PerformWrite(std::move(message), false);
 }
 
-void WinRTWebSocketResource::SendBinary(const string& base64String) noexcept
+void WinRTWebSocketResource::SendBinary(string&& base64String) noexcept
 {
-  m_writeQueue.push({ base64String, true });
-
-  PerformWrite();
+  PerformWrite(std::move(base64String), true);
 }
 
 void WinRTWebSocketResource::Close(CloseCode code, const string& reason) noexcept
@@ -430,7 +424,7 @@ void WinRTWebSocketResource::SetOnSend(function<void(size_t)>&& handler) noexcep
   m_writeHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&)>&& handler) noexcept
+void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&, bool isBinary)>&& handler) noexcept
 {
   m_readHandler = std::move(handler);
 }

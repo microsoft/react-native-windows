@@ -1,8 +1,8 @@
 # Troubleshoot RNW dependencies
 param(
-    [switch]$Install = $false, 
-    [switch]$NoPrompt = $false, 
-    [switch]$Clone = $false, 
+    [switch]$Install = $false,
+    [switch]$NoPrompt = $false,
+    [switch]$Clone = $false,
 
     [Parameter(ValueFromRemainingArguments)]
     [ValidateSet('appDev', 'rnwDev', 'buildLab', 'vs2019', 'clone')]
@@ -28,10 +28,15 @@ if ($tagsToInclude.Contains('rnwDev')) {
     $tagsToInclude.Add('appDev') | Out-null;
 }
 
-$vsComponents = @('Microsoft.Component.MSBuild', 
+$vsComponents = @('Microsoft.Component.MSBuild',
     'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
-    'Microsoft.VisualStudio.ComponentGroup.UWP.VC');
+    'Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core');
+
+# UWP.VC is not needed to build the projects with msbuild, but the VS IDE requires it.
+if (!($tagsToInclude.Contains('buildLab'))) {
+    $vsComponents += 'Microsoft.VisualStudio.ComponentGroup.UWP.VC';
+}
 
 $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
     'Microsoft.VisualStudio.Workload.NativeDesktop',
@@ -54,17 +59,19 @@ function CheckVS {
         return $false;
     }
     $output = & $vsWhere -version 16 -requires $vsComponents -property productPath
-    $vsComponents | % {
-        Write-Output "Checking VS component $_";
-        & $vsWhere -version 16 -requires $_ -property productPath;
-    }
+
     return ($output -ne $null) -and (Test-Path $output);
 }
 
 function InstallVS {
     $installerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer";
     $vsWhere = "$installerPath\vswhere.exe"
-    if (!(Test-Path $vsWhere)) {
+    if (Test-Path $vsWhere) {
+        $channelId = & $vsWhere -version 16 -property channelId
+        $productId = & $vsWhere -version 16 -property productId
+    }
+
+    if (!(Test-Path $vsWhere) -or ($channelId -eq $null) -or ($productId -eq $null)) {
         # No VSWhere / VS_Installer
         if ($Enterprise) {
             # The CI machines need the enterprise version of VS as that is what is hardcoded in all the scripts
@@ -72,12 +79,14 @@ function InstallVS {
         } else {
             & choco install -y visualstudio2019community
         }
+        $channelId = & $vsWhere -version 16 -property channelId
+        $productId = & $vsWhere -version 16 -property productId
     }
-    $channelId = & $vsWhere -version 16 -property channelId
-    $productId = & $vsWhere -version 16 -property productId
+
     $vsInstaller = "$installerPath\vs_installer.exe"
+
     $addWorkloads = ($vsWorkloads + $vsComponents) | % { '--add', $_ };
-    $p = Start-Process -PassThru -Wait  -FilePath $vsInstaller -ArgumentList ("modify --channelId $channelId --productId $productId $addWorkloads --quiet" -split ' ')
+    $p = Start-Process -PassThru -Wait  -FilePath $vsInstaller -ArgumentList ("modify --channelId $channelId --productId $productId $addWorkloads --quiet --includeRecommended" -split ' ')
     return $p.ExitCode
 }
 
@@ -92,7 +101,7 @@ function CheckNode {
 
 function EnableDevmode {
     $RegistryKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
-    
+
     if (-not(Test-Path -Path $RegistryKeyPath)) {
         New-Item -Path $RegistryKeyPath -ItemType Directory -Force
     }
@@ -122,12 +131,12 @@ $requirements = @(
         Name = "Free space on $drive`: > $requiredFreeSpaceGB GB";
         Tags = @('appDev');
         Valid = $drive.Free/1GB -gt $requiredFreeSpaceGB;
-        Optional = $true; # this requirement is fuzzy 
+        Optional = $true; # this requirement is fuzzy
     },
     @{
         Name = "Installed memory >= 16 GB";
         Tags = @('appDev');
-        Valid = (Get-WmiObject -Class win32_computersystem).TotalPhysicalMemory -ge 15GB;
+        Valid = (Get-CimInstance -ClassName win32_computersystem).TotalPhysicalMemory -ge 15GB;
         Optional = $true;
     },
     @{
@@ -152,7 +161,7 @@ $requirements = @(
         Tags = @('appDev');
         Valid = try { (Get-Command choco -ErrorAction Stop) -ne $null } catch { $false };
         Install = {
-            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; 
+            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
             iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
         };
     },
@@ -160,7 +169,7 @@ $requirements = @(
         Name = 'git';
         Tags = @('appDev');
         Valid = try { (Get-Command git.exe -ErrorAction Stop) -ne $null } catch { $false };
-        Install = { choco install git };
+        Install = { choco install -y git };
     },
     @{
         Name = 'VS 2019 with UWP and Desktop/C++';
@@ -180,6 +189,7 @@ $requirements = @(
         Valid = try { ((Get-Item (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe' -ErrorAction Stop).'(Default)').VersionInfo).ProductMajorPart
         } catch { $false } ;
         Install = { choco install -y GoogleChrome };
+        Optional = $true;
     },
     @{
         Name = 'Yarn';
@@ -198,11 +208,11 @@ $requirements = @(
         Name = 'WinAppDriver';
         Tags = @('rnwDev');
         Valid = (Test-Path "${env:ProgramFiles(x86)}\Windows Application Driver\WinAppDriver.exe");
-        Install = { 
+        Install = {
             # don't install from choco as we need an exact version match. appium-windows-driver checks the checksum of WAD.
             # See \node_modules\appium-windows-driver\build\lib\installer.js
             $ProgressPreference = 'Ignore';
-            Invoke-WebRequest https://github.com/microsoft/WinAppDriver/releases/download/v1.1/WindowsApplicationDriver.msi  -OutFile $env:TEMP\WindowsApplicationDriver.msi 
+            Invoke-WebRequest -UseBasicParsing https://github.com/microsoft/WinAppDriver/releases/download/v1.1/WindowsApplicationDriver.msi -OutFile $env:TEMP\WindowsApplicationDriver.msi
             & $env:TEMP\WindowsApplicationDriver.msi /q
         };
         Optional = $true;
@@ -223,8 +233,8 @@ $requirements = @(
         # The 64-bit version of MsBuild does not support long paths. A temp fix for v16 is: https://github.com/microsoft/msbuild/issues/5331
         Name = "MSBuild 64-bit Long Path Support"
         Tags = @('buildLab');
-        Valid = try { 
-            [System.IO.File]::ReadAllText( (GetMsBuild64BitConfigFile) ).Contains("Switch.System.Security.Cryptography.UseLegacyFipsThrow=false;Switch.System.IO.UseLegacyPathHandling=false;Switch.System.IO.BlockLongPaths=false") 
+        Valid = try {
+            [System.IO.File]::ReadAllText( (GetMsBuild64BitConfigFile) ).Contains("Switch.System.Security.Cryptography.UseLegacyFipsThrow=false;Switch.System.IO.UseLegacyPathHandling=false;Switch.System.IO.BlockLongPaths=false")
             } catch { $false };
         Install = {
             [ xml ]$msbExeConfig = Get-Content -Path (GetMsBuild64BitConfigFile)
@@ -243,7 +253,7 @@ $requirements = @(
     @{
         Name = "React-Native-Windows clone"
         Tags = @('clone')
-        Valid = try { 
+        Valid = try {
             Test-Path -Path react-native-windows
             } catch { $false };
         Install = {
@@ -265,9 +275,9 @@ if (!(IsElevated)) {
 $NeedsRerun = 0;
 $Installed = 0;
 $filteredRequirements = New-Object System.Collections.Generic.List[object]
-foreach ($req in $requirements) 
+foreach ($req in $requirements)
 {
-    foreach ($tag in $req.Tags) 
+    foreach ($tag in $req.Tags)
     {
         if ($tagsToInclude.Contains($tag))
         {
@@ -290,11 +300,11 @@ foreach ($req in $filteredRequirements)
         if ($req.Install) {
             if ($Install -or (!$NoPrompt -and (Read-Host "Do you want to install? [y/N]").ToUpperInvariant() -eq 'Y')) {
                 $LASTEXITCODE = 0;
-                Invoke-Command $req.Install -ErrorAction Stop;
-                if ($LASTEXITCODE -ne 0) { throw "Last exit code was non-zero: $LASTEXITCODE"; }
+                $outputFromInstall = Invoke-Command $req.Install -ErrorAction Stop;
+                if ($LASTEXITCODE -ne 0) { throw "Last exit code was non-zero: $LASTEXITCODE - $outputFromInstall"; }
                 else { $Installed++; }
             } else {
-                $NeedsRerun += !($req.Optional); # don't let failures from optional components fail the script 
+                $NeedsRerun += !($req.Optional); # don't let failures from optional components fail the script
             }
         } else {
             $NeedsRerun += !($req.Optional);
@@ -311,12 +321,9 @@ if ($Installed -ne 0) {
 
 if ($NeedsRerun -ne 0) {
     Write-Error "Some dependencies are not met. Re-run with -Install to install them.";
-    if (!$NoPrompt) {
-        [System.Console]::ReadKey();
-    }
     throw;
 } else {
     Write-Output "All mandatory requirements met";
-    exit 0;
+    return;
 }
 

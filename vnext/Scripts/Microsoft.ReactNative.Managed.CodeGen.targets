@@ -4,6 +4,7 @@
  Licensed under the MIT License.. 
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.VersionCheck.targets" />
 
   <PropertyGroup>
     <ReactNativeCodeGenEnabled Condition="'$(ReactNativeCodeGenEnabled)' == ''">false</ReactNativeCodeGenEnabled>

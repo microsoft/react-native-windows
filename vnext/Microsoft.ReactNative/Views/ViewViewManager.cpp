@@ -220,10 +220,10 @@ class ViewShadowNode : public ShadowNodeBase {
     return contentControl.try_as<XamlView>();
   }
 
-  void DispatchEvent(std::string eventName, folly::dynamic &&eventData) {
+  void DispatchEvent(std::string &&eventName, folly::dynamic &&eventData) {
     auto instance = GetViewManager()->GetReactInstance().lock();
     if (instance != nullptr)
-      instance->DispatchEvent(m_tag, eventName, std::move(eventData));
+      instance->DispatchEvent(m_tag, std::move(eventName), std::move(eventData));
   }
 
  private:
@@ -345,10 +345,7 @@ folly::dynamic ViewViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
   props.update(folly::dynamic::object("pointerEvents", "string")("onClick", "function")("onMouseEnter", "function")(
-      "onMouseLeave", "function")
-               //("onMouseMove", "function")
-               ("acceptsKeyboardFocus", "boolean") // deprecated in 63, remove in 64.
-               ("focusable", "boolean")("enableFocusRing", "boolean")("tabIndex", "number"));
+      "onMouseLeave", "function")("focusable", "boolean")("enableFocusRing", "boolean")("tabIndex", "number"));
 
   return props;
 }
@@ -379,7 +376,7 @@ bool ViewViewManager::UpdateProperty(
         bool hitTestable = propertyValue.getString() != "none";
         pPanel.IsHitTestVisible(hitTestable);
       }
-    } else if (propertyName == "focusable" || propertyName == "acceptsKeyboardFocus") {
+    } else if (propertyName == "focusable") {
       if (propertyValue.isBool())
         pViewShadowNode->IsFocusable(propertyValue.getBool());
     } else if (propertyName == "enableFocusRing") {

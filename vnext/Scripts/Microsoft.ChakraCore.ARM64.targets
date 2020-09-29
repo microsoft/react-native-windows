@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)..\..\lib\native\v140\$(Platform)\$(Configuration)\ChakraCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <!-- <ClCompile>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile> -->
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\lib\native\v140\$(Platform)\$(Configuration)\ChakraCore.dll" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\lib\native\v140\$(Platform)\$(Configuration)\ChakraCore.pdb" />
+  </ItemGroup>
+</Project>

@@ -5,6 +5,9 @@
  * @format
  */
 
+// Typings for "async" confuse this rule
+/* eslint-disable @typescript-eslint/no-misused-promises */
+
 import * as Serialized from './Serialized';
 import * as _ from 'lodash';
 import * as fs from 'fs';

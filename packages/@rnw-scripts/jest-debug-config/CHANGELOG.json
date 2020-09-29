@@ -1,0 +1,35 @@
+{
+  "name": "@rnw-scripts/jest-debug-config",
+  "entries": [
+    {
+      "date": "Mon, 14 Sep 2020 22:03:37 GMT",
+      "tag": "@rnw-scripts/jest-debug-config_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Upgrade Jest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8adedcfb2ce6492a4a7ede59e0f9188dc205d659",
+            "package": "@rnw-scripts/jest-debug-config"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Sep 2020 05:08:52 GMT",
+      "tag": "@rnw-scripts/jest-debug-config_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Start Sharing Test Configuration Between Node Projects",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cf5770eaaaa2906c7d04f0e03749942fe44055d0",
+            "package": "@rnw-scripts/jest-debug-config"
+          }
+        ]
+      }
+    }
+  ]
+}

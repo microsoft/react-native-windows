@@ -23,6 +23,7 @@
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
+<PROJECT_ROOT>/Libraries/Components/View/View.js
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
@@ -30,7 +31,6 @@
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
-<PROJECT_ROOT>/RNTester/js/components/ListExampleShared.js
 <PROJECT_ROOT>/RNTester/js/components/RNTesterExampleList.js
 <PROJECT_ROOT>/RNTester/js/examples/ScrollView/ScrollViewExample.js
 <PROJECT_ROOT>/RNTester/js/examples/View/ViewExample.js
@@ -40,6 +40,7 @@
 
 ; Ignore react-native-windows' target folder. Flow is not compiled with long path support and after running unittests these folders have long paths
 .*/node_modules/react-native-windows/target/.*
+.*/node_modules/react-native-windows/Microsoft.ReactNative.Managed.CodeGen.UnitTests/.*
 .target/.*
 
 ; These files dont need to be checked and just increase the build time
@@ -106,14 +107,8 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
-suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_ios\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)
-suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_ios\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)?:? #[0-9]+
-suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_android\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)
-suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_android\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)?:? #[0-9]+
-suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
-
-experimental.well_formed_exports=true
-experimental.types_first=true
+well_formed_exports=true
+types_first=true
 experimental.abstract_locations=true
 
 [lints]
@@ -139,4 +134,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.123.0
+^0.128.0

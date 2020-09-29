@@ -87,6 +87,7 @@ async function updatePackages(newVersion: string) {
   const localPackages = await enumerateLocalPackages();
   const platformPackages = await async.filter(
     localPackages,
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     isOutOfTreePlatform,
   );
 

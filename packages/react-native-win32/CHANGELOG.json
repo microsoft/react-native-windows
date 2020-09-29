@@ -2,6 +2,201 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 25 Sep 2020 05:05:40 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.51",
+      "version": "0.0.0-canary.51",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Supply UniversalApiContract for Platform.Version",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8d7e61941ba4b655edd13b92e7b4dde68f24d007",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Sep 2020 04:46:10 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.49",
+      "version": "0.0.0-canary.49",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade react-native Typings",
+            "author": "ngerlem@microsoft.com",
+            "commit": "967d499846e8953c74c0f62a1463fb8e182a9b75",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.48",
+      "version": "0.0.0-canary.48",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Sep 2020 05:08:52 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.46",
+      "version": "0.0.0-canary.46",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 7/1 nightly RN build",
+            "author": "igklemen@microsoft.com",
+            "commit": "8922cf2873e3c5ae8dd2fa88c506d43df92dc908",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Sep 2020 05:06:35 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.45",
+      "version": "0.0.0-canary.45",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable @typescript-eslint/no-floating-promises",
+            "author": "ngerlem@microsoft.com",
+            "commit": "62f3bb771a129f9cb81bd826827bf4001821a684",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 02 Sep 2020 05:05:16 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.44",
+      "version": "0.0.0-canary.44",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 6-18 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fba4d2d0659fd38bef2cca8816382f0e76bb4197",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 6/25 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "1fd39022f17b0fe4bb3694d0ac7112295b9d57c2",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "A couple of minor style changes in logbox to avoid win32 asserts.",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "ed820a5004614f70421f519c5248ff1ed1427eeb",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Aug 2020 05:05:29 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.43",
+      "version": "0.0.0-canary.43",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix TouchableWin32 Infinite Recursion on Click",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7b9852208f014d3382aab28c19ecb13ae707a11f",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Remove acceptsKeyboardFocus (for real this time)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "443f76a03724d0b456e4422499a768d4d02657d3",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Aug 2020 05:07:06 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.42",
+      "version": "0.0.0-canary.42",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix bugs from acceptsKeyboardFocus to focusable deprecation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f332ab59b0732f4c7386632b105ee7090f8a51f9",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 22 Aug 2020 05:07:27 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.41",
+      "version": "0.0.0-canary.41",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 6/11 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b142ec14b704efb03dfe118486404002600cab4b",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.40",
+      "version": "0.0.0-canary.40",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 5/28 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9bf968a5f85888ea1d12796d1aa5dffc14f1d2ba",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 6/4 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 20 Aug 2020 05:05:23 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.39",
+      "version": "0.0.0-canary.39",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 5/16 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90613e4008217389284978e52026a6422917b6e6",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Publish TS files in src as they are references in sourcemaps",
+            "author": "acoates-ms@noreply.github.com",
+            "commit": "3db9796c9478f7339feb9894479eca4ab54b4ec8",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Aug 2020 05:05:18 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.38",
       "version": "0.0.0-canary.38",

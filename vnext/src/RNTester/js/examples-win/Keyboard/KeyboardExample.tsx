@@ -4,7 +4,7 @@
  * @format
  */
 
-import React = require('react');
+import * as React from 'react';
 import {Text, TouchableHighlight, View, ViewStyle} from 'react-native';
 import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
 

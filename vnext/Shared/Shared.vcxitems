@@ -41,6 +41,7 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\I18nModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\PlatformConstantsModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\SourceCodeModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.cpp" />
@@ -49,6 +50,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ShadowNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)tracing\tracing.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utils.cpp" />
@@ -64,6 +68,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.h" />
@@ -103,6 +108,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)targetver.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracing.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)tracing\fbsystrace.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleManager.h" />

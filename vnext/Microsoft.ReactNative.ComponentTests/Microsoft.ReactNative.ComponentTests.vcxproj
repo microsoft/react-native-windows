@@ -87,11 +87,6 @@
       <AdditionalIncludeDirectories>
         $(ProjectDir)pch;
         $(VCInstallDir)UnitTest\include;
-        $(FollyDir);
-        $(JSI_SourcePath);
-        $(ReactNativeDir)ReactCommon;
-        $(ReactNativeDir)\ReactCommon\callinvoker;
-        $(ReactNativeDir)ReactCommon\jsi;
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)stubs;
@@ -188,6 +183,7 @@
   <ItemGroup>
     <ClInclude Include="$(ReactNativeWindowsDir)Shared\tracing\fbsystrace.h" />
     <ClCompile Include="$(ReactNativeWindowsDir)Shared\tracing\tracing.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Shared\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Base\FollyIncludes.h" />

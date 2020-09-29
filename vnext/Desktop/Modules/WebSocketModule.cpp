@@ -198,13 +198,13 @@ shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id,
       auto args = dynamic::object("id", id);
       this->SendEvent("websocketOpen", std::move(args));
     });
-    ws->SetOnMessage([this, id, weakInstance](size_t length, const string& message)
+    ws->SetOnMessage([this, id, weakInstance](size_t length, const string& message, bool isBinary)
     {
       auto strongInstance = weakInstance.lock();
       if (!strongInstance)
         return;
 
-      auto args = dynamic::object("id", id)("data", message)("type", "text");
+      auto args = dynamic::object("id", id)("data", message)("type", isBinary ? "binary" : "text");
       this->SendEvent("websocketMessage", std::move(args));
     });
     ws->SetOnClose([this, id, weakInstance](IWebSocketResource::CloseCode code, const string& reason)

@@ -26,6 +26,13 @@ class ReactContext final : public Mso::UnknownObject<IReactContext> {
   winrt::Microsoft::ReactNative::IReactNotificationService Notifications() noexcept override;
   void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept override;
   void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept override;
+#ifndef CORE_ABI
+  ReactInstanceState State() const noexcept override;
+  bool IsLoaded() const noexcept override;
+  std::string GetBundleRootPath() const noexcept override;
+  facebook::react::INativeUIManager *NativeUIManager() const noexcept override;
+  std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override;
+#endif
 
  private:
   Mso::WeakPtr<ReactInstanceWin> m_reactInstance;

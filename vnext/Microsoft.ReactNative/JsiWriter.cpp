@@ -1,9 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+// IMPORTANT: Before updating this file
+// please read react-native-windows repo:
+// vnext/Microsoft.ReactNative.Cxx/README.md
 
 #include "pch.h"
 #include "JsiWriter.h"
+#ifdef __APPLE__
+#include "Crash.h"
+#else
 #include <crash/verifyElseCrash.h>
+#include "JsiReader.h"
+#endif
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -18,15 +26,15 @@ JsiWriter::JsiWriter(facebook::jsi::Runtime &runtime) noexcept : m_runtime(runti
 facebook::jsi::Value JsiWriter::MoveResult() noexcept {
   VerifyElseCrash(m_containers.size() == 0);
   if (m_resultAsContainer.has_value()) {
-    m_resultAsValue = ContainerToValue(std::move(m_resultAsContainer.value()));
+    m_resultAsValue = ContainerToValue(std::move(ReadOptional(m_resultAsContainer)));
     m_resultAsContainer.reset();
   }
-  return std::move(m_resultAsValue.value());
+  return std::move(ReadOptional(m_resultAsValue));
 }
 
 void JsiWriter::AccessResultAsArgs(const facebook::jsi::Value *&args, size_t &count) noexcept {
   VerifyElseCrash(m_resultAsContainer.has_value());
-  auto &container = m_resultAsContainer.value();
+  auto &container = ReadOptional(m_resultAsContainer);
   if (container.CurrentArrayElements.size() == 0) {
     args = nullptr;
     count = 0;
@@ -91,7 +99,7 @@ void JsiWriter::WriteArrayEnd() noexcept {
 facebook::jsi::Value JsiWriter::ContainerToValue(Container &&container) noexcept {
   switch (container.State) {
     case ContainerState::AcceptPropertyName: {
-      return std::move(container.CurrentObject.value());
+      return std::move(ReadOptional(container.CurrentObject));
     }
     case ContainerState::AcceptArrayElement: {
       facebook::jsi::Array createdArray(m_runtime, container.CurrentArrayElements.size());
@@ -129,7 +137,7 @@ void JsiWriter::WriteValue(facebook::jsi::Value &&value) noexcept {
       break;
     }
     case ContainerState::AcceptPropertyValue: {
-      auto &createdObject = top.CurrentObject.value();
+      auto &createdObject = ReadOptional(top.CurrentObject);
       createdObject.setProperty(m_runtime, top.PropertyName.c_str(), std::move(value));
       top.State = ContainerState::AcceptPropertyName;
       top.PropertyName = {};

@@ -84,6 +84,9 @@
     <Midl Include="..\Microsoft.ReactNative\IReactNonAbiValue.idl">
       <Filter>ABI</Filter>
     </Midl>
+    <Midl Include="..\Microsoft.ReactNative\JsiApi.idl">
+      <Filter>ABI</Filter>
+    </Midl>
     <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl">
       <Filter>ABI</Filter>
     </Midl>
@@ -128,9 +131,6 @@
     </ClCompile>
     <ClCompile Include="module.g.cpp">
       <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\NetworkingModule.cpp">
-      <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\TimingModule.cpp">
       <Filter>Source Files\Modules</Filter>
@@ -194,9 +194,6 @@
     </ClInclude>
     <ClInclude Include="JSBigStringResourceDll.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\NetworkingModule.h">
-      <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\TimingModule.h">
       <Filter>Header Files\Modules</Filter>

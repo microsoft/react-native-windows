@@ -1,5 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+// IMPORTANT: Before updating this file
+// please read react-native-windows repo:
+// vnext/Microsoft.ReactNative.Cxx/README.md
 
 #pragma once
 #ifndef MICROSOFT_REACTNATIVE_REACTNONABIVALUE
@@ -114,6 +117,7 @@ constexpr bool IsReactNonAbiValueV = IsReactNonAbiValue<T>::value;
 
 } // namespace winrt::Microsoft::ReactNative
 
+#ifndef __APPLE__
 namespace winrt::impl {
 // C++/WinRT binding to connect ReactNonAbiValue with the IReactNonAbiValue interface.
 template <class T>
@@ -121,5 +125,6 @@ struct default_interface<Microsoft::ReactNative::ReactNonAbiValue<T>> {
   using type = Microsoft::ReactNative::IReactNonAbiValue;
 };
 } // namespace winrt::impl
+#endif
 
 #endif // MICROSOFT_REACTNATIVE_REACTNONABIVALUE
