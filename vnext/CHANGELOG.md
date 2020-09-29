@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 26 Sep 2020 05:04:21 GMT and should not be manually modified.
+This log was last generated on Tue, 29 Sep 2020 05:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.173
+
+Tue, 29 Sep 2020 05:05:53 GMT
+
+### Changes
+
+- Remove Special UI When Debugger Attached (ngerlem@microsoft.com)
+- Reduce Microsoft.ReactNative PCH By 155MB-260MB (ngerlem@microsoft.com)
+- Remove TestMessageQueueThread. (julio.rocha@microsoft.com)
+- Don't reload the ReactNativeHost multiple times (ryan.fowler@singlewire.com)
 
 ## 0.0.0-canary.172
 
