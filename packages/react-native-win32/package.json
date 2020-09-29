@@ -66,13 +66,13 @@
     "jscodeshift": "^0.9.0",
     "just-scripts": "^0.36.1",
     "react": "16.13.1",
-    "react-native": "0.0.0-a36d9cd7e",
+    "react-native": "0.0.0-e96f1e1d8",
     "react-native-platform-override": "^0.2.8",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "0.0.0-a36d9cd7e"
+    "react-native": "0.0.0-e96f1e1d8"
   },
   "beachball": {
     "defaultNpmTag": "canary",

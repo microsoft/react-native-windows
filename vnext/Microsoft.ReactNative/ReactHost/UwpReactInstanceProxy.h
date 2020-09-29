@@ -21,39 +21,25 @@ namespace react::uwp {
 struct ViewManagerProvider;
 
 struct UwpReactInstanceProxy : IReactInstance, std::enable_shared_from_this<UwpReactInstanceProxy> {
-  UwpReactInstanceProxy(Mso::WeakPtr<Mso::React::IReactInstance> &&weakReactInstance) noexcept;
+  UwpReactInstanceProxy(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
 
  public: // IReactInstance
-  void AttachMeasuredRootView(IXamlRootView *pRootView, folly::dynamic &&initProps) override;
-  void DetachRootView(IXamlRootView *pRootView) override;
-  LiveReloadCallbackCookie RegisterLiveReloadCallback(std::function<void()> callback) override;
-  void UnregisterLiveReloadCallback(LiveReloadCallbackCookie &cookie) override;
-  ErrorCallbackCookie RegisterErrorCallback(std::function<void()> callback) override;
-  void UnregisterErrorCallback(ErrorCallbackCookie &cookie) override;
-  DebuggerAttachCallbackCookie RegisterDebuggerAttachCallback(std::function<void()> callback) override;
-  void UnRegisterDebuggerAttachCallback(DebuggerAttachCallbackCookie &cookie) override;
-  void DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic &&eventData) override;
+  void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept override;
   void CallJsFunction(std::string &&moduleName, std::string &&method, folly::dynamic &&params) noexcept override;
-  const std::shared_ptr<facebook::react::MessageQueueThread> &JSMessageQueueThread() const noexcept override;
-  const std::shared_ptr<facebook::react::MessageQueueThread> &DefaultNativeMessageQueueThread() const noexcept override;
   facebook::react::INativeUIManager *NativeUIManager() const noexcept override;
-  bool NeedsReload() const noexcept override;
-  void SetAsNeedsReload() noexcept override;
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override;
   bool IsInError() const noexcept override;
   bool IsWaitingForDebugger() const noexcept override;
-  const std::string &LastErrorMessage() const noexcept override;
-  void loadBundle(std::string &&jsBundleRelativePath) override;
-  ExpressionAnimationStore &GetExpressionAnimationStore() override;
+  ExpressionAnimationStore &GetExpressionAnimationStore() noexcept override;
   std::string GetBundleRootPath() const noexcept override;
   bool IsLoaded() const noexcept override;
 
   // Test hooks
-  void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) override;
-  void CallXamlViewCreatedTestHook(react::uwp::XamlView view) override;
+  void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> &&testHook) noexcept override;
+  void CallXamlViewCreatedTestHook(react::uwp::XamlView const &view) noexcept override;
 
  private:
-  Mso::WeakPtr<Mso::React::IReactInstance> m_weakReactInstance;
+  Mso::CntPtr<Mso::React::IReactContext> m_context;
   ExpressionAnimationStore m_expressionAnimationStore;
   std::function<void(XamlView)> m_xamlViewCreatedTestHook;
 };

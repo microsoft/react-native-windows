@@ -66,7 +66,7 @@ isolated JavaScript execution environment.*/
 MSO_GUID(IReactInstance, "085d524a-af3b-4839-8056-e5d0e6fc64bc")
 struct IReactInstance : IUnknown {
   //! Returns ReactOptions associated with the IReactInstance
-  //! The ReactOptions are meant to immutable and give to IReactInstance at its creation.
+  //! The ReactOptions are meant to be immutable and given to IReactInstance at its creation.
   virtual const ReactOptions &Options() const noexcept = 0;
 
   virtual ReactInstanceState State() const noexcept = 0;
@@ -78,6 +78,13 @@ struct IReactContext : IUnknown {
   virtual winrt::Microsoft::ReactNative::IReactPropertyBag Properties() noexcept = 0;
   virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept = 0;
   virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept = 0;
+#ifndef CORE_ABI
+  virtual ReactInstanceState State() const noexcept = 0;
+  virtual bool IsLoaded() const noexcept = 0;
+  virtual std::string GetBundleRootPath() const noexcept = 0;
+  virtual facebook::react::INativeUIManager *NativeUIManager() const noexcept = 0;
+  virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept = 0;
+#endif
 };
 
 //! Settings per each IReactViewHost associated with an IReactHost instance.
