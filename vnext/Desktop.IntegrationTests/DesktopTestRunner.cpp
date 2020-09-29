@@ -17,9 +17,6 @@
 using namespace facebook::react;
 using namespace facebook::xplat::module;
 
-using std::make_shared;
-using std::make_tuple;
-using std::make_unique;
 using std::shared_ptr;
 using std::string;
 using std::tuple;
@@ -45,32 +42,32 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   devSettings->jsiRuntimeHolder = std::make_shared<ChakraRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
 
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
-      make_tuple(
+      std::make_tuple(
           "AsyncLocalStorage",
           []() -> unique_ptr<CxxModule> { return CreateAsyncStorageModule(L"ReactNativeAsyncStorage"); },
           nativeQueue),
-      make_tuple(
-          "WebSocketModule", []() -> unique_ptr<CxxModule> { return make_unique<WebSocketModule>(); }, nativeQueue),
-      make_tuple(
+      std::make_tuple(
+          "WebSocketModule", []() -> unique_ptr<CxxModule> { return std::make_unique<WebSocketModule>(); }, nativeQueue),
+      std::make_tuple(
           "Networking",
-          []() -> unique_ptr<CxxModule> { return make_unique<Microsoft::React::NetworkingModule>(); },
+          []() -> unique_ptr<CxxModule> { return std::make_unique<Microsoft::React::NetworkingModule>(); },
           nativeQueue),
-      make_tuple(
+      std::make_tuple(
           "Timing", [nativeQueue]() -> unique_ptr<CxxModule> { return CreateTimingModule(nativeQueue); }, nativeQueue),
       // Apparently mandatory for /IntegrationTests
-      make_tuple(
+      std::make_tuple(
           TestAppStateModule::name,
-          []() -> unique_ptr<CxxModule> { return make_unique<TestAppStateModule>(); },
+          []() -> unique_ptr<CxxModule> { return std::make_unique<TestAppStateModule>(); },
           nativeQueue),
       // Apparently mandatory for /IntegrationTests
-      make_tuple(
+      std::make_tuple(
           "UIManager",
           [uiManager]() -> unique_ptr<CxxModule> { return createUIManagerModule(uiManager); },
           nativeQueue),
       // Apparently mandatory for /IntegrationTests
-      make_tuple(
+      std::make_tuple(
           TestDeviceInfoModule::name,
-          []() -> unique_ptr<CxxModule> { return make_unique<TestDeviceInfoModule>(); },
+          []() -> unique_ptr<CxxModule> { return std::make_unique<TestDeviceInfoModule>(); },
           nativeQueue)};
 
   // <0> string
