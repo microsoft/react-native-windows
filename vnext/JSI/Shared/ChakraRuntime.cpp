@@ -468,7 +468,7 @@ facebook::jsi::WeakObject ChakraRuntime::createWeakObject(const facebook::jsi::O
   return make<facebook::jsi::WeakObject>(CloneChakraPointerValue(getPointerValue(object)));
 }
 
-facebook::jsi::Value ChakraRuntime::lockWeakObject(const facebook::jsi::WeakObject &weakObject) {
+facebook::jsi::Value ChakraRuntime::lockWeakObject(facebook::jsi::WeakObject &weakObject) {
   // We need to make a copy of the ChakraObjectRef held within weakObj's
   // member PointerValue for the returned jsi::Value here.
   return ToJsiValue(GetJsRef(weakObject));
