@@ -8,14 +8,14 @@
 
   <Identity
     Name="7889084a-58b3-490f-9d1c-2abf27e2edb4"
-    Publisher="CN=nickg"
+    Publisher="CN=react-native-windows-testing"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="7889084a-58b3-490f-9d1c-2abf27e2edb4" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>integrationtest</DisplayName>
-    <PublisherDisplayName>nickg</PublisherDisplayName>
+    <PublisherDisplayName>react-native-windows-testing</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

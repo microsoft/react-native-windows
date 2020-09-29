@@ -8,14 +8,14 @@
 
   <Identity
     Name="ReactUWPTestApp"
-    Publisher="CN=RNWTest"
+    Publisher="CN=react-native-windows-testing"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="87fc81ab-83a8-412b-bec2-37f8f47d4b06" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>ReactUWPTestApp</DisplayName>
-    <PublisherDisplayName>RNWTest</PublisherDisplayName>
+    <PublisherDisplayName>react-native-windows-testing</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
