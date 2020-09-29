@@ -11,7 +11,6 @@
 #include <NativeModuleFactories.h>
 #include "ChakraRuntimeHolder.h"
 #include "DesktopTestInstance.h"
-#include "TestMessageQueueThread.h"
 #include "TestModule.h"
 #include "TestRootView.h"
 
