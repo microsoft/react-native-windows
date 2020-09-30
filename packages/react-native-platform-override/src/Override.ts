@@ -10,10 +10,11 @@ import * as path from 'path';
 
 import UpgradeStrategy, {UpgradeStrategies} from './UpgradeStrategy';
 import ValidationStrategy, {ValidationStrategies} from './ValidationStrategy';
+import {normalizePath, unixPath} from './PathUtils';
 import OverrideFactory from './OverrideFactory';
 
 /**
- * Immmutable programatic representation of an override. This should remain
+ * Immutable programmatic representation of an override. This should remain
  * generic to files vs directories, different representations, different
  * validation rules, etc.
  */
@@ -57,7 +58,7 @@ export class PlatformOverride implements Override {
   private overrideFile: string;
 
   constructor(args: {file: string}) {
-    this.overrideFile = path.normalize(args.file);
+    this.overrideFile = normalizePath(args.file);
   }
 
   static fromSerialized(
@@ -75,7 +76,7 @@ export class PlatformOverride implements Override {
   }
 
   includesFile(filename: string): boolean {
-    return path.normalize(filename) === this.overrideFile;
+    return normalizePath(filename) === this.overrideFile;
   }
 
   async createUpdated(factory: OverrideFactory): Promise<Override> {
@@ -108,8 +109,8 @@ abstract class BaseFileOverride implements Override {
     baseHash: string;
     issue?: number | 'LEGACY_FIXME';
   }) {
-    this.overrideFile = path.normalize(args.file);
-    this.baseFile = path.normalize(args.baseFile);
+    this.overrideFile = normalizePath(args.file);
+    this.baseFile = normalizePath(args.baseFile);
     this.baseVersion = args.baseVersion;
     this.baseHash = args.baseHash;
     this.issueNumber = args.issue || null;
@@ -120,7 +121,7 @@ abstract class BaseFileOverride implements Override {
   }
 
   includesFile(filename: string): boolean {
-    return path.normalize(filename) === this.overrideFile;
+    return normalizePath(filename) === this.overrideFile;
   }
 
   abstract serialize(): Serialized.Override;
@@ -306,7 +307,7 @@ export class PatchOverride extends BaseFileOverride {
  * DirectoryCopy overrides copy files from an upstream directory
  */
 export class DirectoryCopyOverride implements Override {
-  private diretory: string;
+  private directory: string;
   private baseDirectory: string;
   private baseVersion: string;
   private baseHash: string;
@@ -319,8 +320,8 @@ export class DirectoryCopyOverride implements Override {
     baseHash: string;
     issue: number;
   }) {
-    this.diretory = path.normalize(args.directory);
-    this.baseDirectory = path.normalize(args.baseDirectory);
+    this.directory = normalizePath(args.directory);
+    this.baseDirectory = normalizePath(args.baseDirectory);
     this.baseVersion = args.baseVersion;
     this.baseHash = args.baseHash;
     this.issue = args.issue;
@@ -335,7 +336,7 @@ export class DirectoryCopyOverride implements Override {
   serialize(): Serialized.DirectoryCopyOverride {
     return {
       type: 'copy',
-      directory: unixPath(this.diretory),
+      directory: unixPath(this.directory),
       baseDirectory: unixPath(this.baseDirectory),
       baseVersion: this.baseVersion,
       baseHash: this.baseHash,
@@ -344,13 +345,13 @@ export class DirectoryCopyOverride implements Override {
   }
 
   name(): string {
-    return this.diretory;
+    return this.directory;
   }
 
   includesFile(filename: string): boolean {
     const relativeToDir = path.relative(
-      this.diretory,
-      path.normalize(filename),
+      this.directory,
+      normalizePath(filename),
     );
 
     return relativeToDir.split(path.sep)[0] !== '..';
@@ -358,30 +359,30 @@ export class DirectoryCopyOverride implements Override {
 
   async createUpdated(factory: OverrideFactory): Promise<Override> {
     return factory.createDirectoryCopyOverride(
-      this.diretory,
+      this.directory,
       this.baseDirectory,
       this.issue,
     );
   }
 
   upgradeStrategy(): UpgradeStrategy {
-    return UpgradeStrategies.copyDirectory(this.diretory, this.baseDirectory);
+    return UpgradeStrategies.copyDirectory(this.directory, this.baseDirectory);
   }
 
   validationStrategies(): ValidationStrategy[] {
     return [
-      ValidationStrategies.overrideDirectoryExists(this.diretory),
+      ValidationStrategies.overrideDirectoryExists(this.directory),
       ValidationStrategies.baseDirectoryExists(
-        this.diretory,
+        this.directory,
         this.baseDirectory,
       ),
       ValidationStrategies.baseUpToDate(
-        this.diretory,
+        this.directory,
         this.baseDirectory,
         this.baseHash,
       ),
       ValidationStrategies.overrideCopyOfBase(
-        this.diretory,
+        this.directory,
         this.baseDirectory,
       ),
     ];
@@ -401,8 +402,4 @@ export function deserializeOverride(ovr: Serialized.Override): Override {
     case 'patch':
       return PatchOverride.fromSerialized(ovr);
   }
-}
-
-function unixPath(dir: string): string {
-  return dir.replace(/\\/g, '/');
 }

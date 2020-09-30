@@ -6,20 +6,22 @@
  */
 
 import * as net from 'net';
+import * as path from 'path';
+import {platform, tmpdir} from 'os';
 
 /**
- * CrossProcessLock implements a non-polling cross-process asynchronus barrier.
+ * CrossProcessLock implements a non-polling cross-process asynchronous barrier.
  *
  * - The lock is acquired by creating a named pipe
  *
  * - If named pipe creation fails due to an existing pipe, the process
- *   subscribes to the pipe, waiting asynchronusly until it dies.
+ *   subscribes to the pipe, waiting asynchronously until it dies.
  *
  * - Once the pipe dies, any subscribers will race to acquire the lock (create
  *   the pipe server)
  */
 export default class CrossProcessLock {
-  private pipeName: string;
+  private ipcPath: string;
   private server: net.Server;
   private connections: Set<net.Socket>;
 
@@ -30,7 +32,12 @@ export default class CrossProcessLock {
    * chars and not use special characters.
    */
   constructor(lockName: string) {
-    this.pipeName = `\\\\.\\pipe\\${lockName}`;
+    if (platform() === 'win32') {
+      this.ipcPath = `\\\\.\\pipe\\${lockName}`;
+    } else {
+      this.ipcPath = path.join(tmpdir(), `${lockName}`);
+    }
+
     this.server = net.createServer();
 
     this.connections = new Set();
@@ -58,7 +65,7 @@ export default class CrossProcessLock {
 
       const onError = (err: Error) => {
         this.server.off('listening', onListening);
-        // @ts-ignore Typings for EventEmmiter only know about generic JS errors
+        // @ts-ignore Typings for EventEmitter only know about generic JS errors
         if (err.code === 'EADDRINUSE') {
           resolve(false);
         } else {
@@ -71,7 +78,7 @@ export default class CrossProcessLock {
 
       try {
         this.server.listen({
-          path: this.pipeName,
+          path: this.ipcPath,
           exclusive: true,
           readableAll: true,
         });
@@ -107,7 +114,7 @@ export default class CrossProcessLock {
       // between the time to create a server and attempting to connect to the
       // existing.
       socket.once('error', err => {
-        // @ts-ignore Typings for EventEmmiter only know about generic JS errors
+        // @ts-ignore Typings for EventEmitter only know about generic JS errors
         if (err.code === 'ECONNREFUSED' || err.code === 'ECONNRESET') {
           resolve();
         } else {
@@ -118,7 +125,7 @@ export default class CrossProcessLock {
       socket.once('close', () => resolve());
 
       socket.setTimeout(0);
-      socket.connect({path: this.pipeName});
+      socket.connect({path: this.ipcPath});
     });
   }
 

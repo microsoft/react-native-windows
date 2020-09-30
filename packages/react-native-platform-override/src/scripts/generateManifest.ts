@@ -10,6 +10,7 @@ import * as Serialized from '../Serialized';
 
 import * as ora from 'ora';
 import * as path from 'path';
+import * as yargs from 'yargs';
 
 import FileSystemRepository from '../FileSystemRepository';
 import GitReactFileRepository from '../GitReactFileRepository';
@@ -19,19 +20,30 @@ import {getInstalledRNVersion} from '../PackageUtils';
 import {hashContent} from '../Hash';
 import isutf8 from 'isutf8';
 
-const WIN_PLATFORM_EXT = /\.win32|\.windows|\.windesktop/;
+const {extensions, directory} = yargs
+  .options({
+    directory: {
+      description:
+        'The directory containing files that should be in the manifest',
+      type: 'string',
+      demandOption: true,
+    },
+    extensions: {
+      description: 'A list of platform specific JS extensions to include',
+      type: 'array',
+      demandOption: true,
+    },
+  })
+  .version(false).argv;
+
+const extensionsRegex = new RegExp(extensions.map(e => `\\.${e}`).join('|'));
 
 (async () => {
-  const ovrPath = process.argv[2];
-  if (!ovrPath) {
-    throw new Error('Expected ovrPath to be provided');
-  }
-
   const spinner = ora();
   spinner.start('Creating manifest');
 
   const version = await getInstalledRNVersion();
-  const [overrides, reactSources] = await getFileRepos(ovrPath, version);
+  const [overrides, reactSources] = await getFileRepos(directory, version);
   const manifest: Serialized.Manifest = {
     includePatterns: undefined,
     excludePatterns: undefined,
@@ -50,7 +62,7 @@ const WIN_PLATFORM_EXT = /\.win32|\.windows|\.windesktop/;
       addUnknown(file, version, manifest);
   }
 
-  const ovrFile = path.join(ovrPath, 'overrides.json');
+  const ovrFile = path.join(directory, 'overrides.json');
   await Serialized.writeManifestToFile(manifest, ovrFile);
 
   spinner.succeed();
@@ -91,7 +103,7 @@ async function tryAddPatch(
   reactSources: FileRepository.ReactFileRepository,
   manifest: Serialized.Manifest,
 ): Promise<boolean> {
-  const baseFile = filename.replace(WIN_PLATFORM_EXT, '');
+  const baseFile = filename.replace(extensionsRegex, '');
   const baseContent = await reactSources.readFile(baseFile);
 
   if (!baseContent) {
@@ -124,7 +136,7 @@ async function tryAddDerived(
 ): Promise<boolean> {
   const matches: Array<{file: string; contents: Buffer; dist: number}> = [];
 
-  const droidFile = filename.replace(WIN_PLATFORM_EXT, '.android');
+  const droidFile = filename.replace(extensionsRegex, '.android');
   const droidContents = await reactSources.readFile(droidFile);
   const droidSim =
     droidContents && computeSimilarity(overrideContent, droidContents);
@@ -136,7 +148,7 @@ async function tryAddDerived(
     });
   }
 
-  const iosFile = filename.replace(WIN_PLATFORM_EXT, '.ios');
+  const iosFile = filename.replace(extensionsRegex, '.ios');
   const iosContents = await reactSources.readFile(iosFile);
   const iosSim = iosContents && computeSimilarity(overrideContent, iosContents);
   if (iosSim && iosSim.similar) {
