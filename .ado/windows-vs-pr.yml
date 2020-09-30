@@ -594,7 +594,7 @@ jobs:
           projectType: app
           additionalInitArguments: --useWinUI3 true
           additionalRunArguments:
-          continueOnBuildFailure: 'true' # See issue #6129
+          continueOnBuildFailure: true # See issue #6129
         WinUI3_X86DebugCs:
           language: cs
           configuration: Debug
@@ -602,7 +602,7 @@ jobs:
           projectType: app
           additionalInitArguments: --useWinUI3 true
           additionalRunArguments:
-          continueOnBuildFailure: 'true' # See issue #6129
+          continueOnBuildFailure: true # See issue #6129
         X86DebugCppLib:
           language: cpp
           configuration: Debug
@@ -630,7 +630,7 @@ jobs:
           platform: $(platform)
           additionalInitArguments: $(additionalInitArguments)
           additionalRunArguments: $(additionalRunArguments)
-          continueOnBuildFailure: true
+          continueOnBuildFailure: $(continueOnBuildFailure)
           projectType: $(projectType)
 
   - job: CliInitExperimental
