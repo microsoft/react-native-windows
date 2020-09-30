@@ -246,33 +246,25 @@ async function printValidationErrors(validationErrors: Array<ValidationError>) {
   printErrorType(
     'missingFromManifest',
     errors,
-    `Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'npx ${
-      npmPackage.name
-    } add <override>':`,
+    `Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'npx ${npmPackage.name} add <override>':`,
   );
 
   printErrorType(
     'overrideNotFound',
     errors,
-    `Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'npx ${
-      npmPackage.name
-    } remove <override>':`,
+    `Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'npx ${npmPackage.name} remove <override>':`,
   );
 
   printErrorType(
     'baseNotFound',
     errors,
-    `Found overrides whose base files do not exist. Remove existing overrides using 'npx ${
-      npmPackage.name
-    } remove <override>':`,
+    `Found overrides whose base files do not exist. Remove existing overrides using 'npx ${npmPackage.name} remove <override>':`,
   );
 
   printErrorType(
     'outOfDate',
     errors,
-    `Found overrides whose original files have changed. Upgrade overrides using 'npx ${
-      npmPackage.name
-    } upgrade:`,
+    `Found overrides whose original files have changed. Upgrade overrides using 'npx ${npmPackage.name} upgrade:`,
   );
 
   printErrorType(

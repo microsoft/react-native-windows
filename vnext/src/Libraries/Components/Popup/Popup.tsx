@@ -39,11 +39,13 @@ export class Popup extends React.Component<IPopupProps, IPopupTargetState> {
     if (prevState.targetRef !== nextProps.target) {
       // Map the 'target' property to a node tag to use in the native layer
       /* tslint:disable-next-line no-any */
-      const newTarget: number | null = findNodeHandle(nextProps.target as
-        | null
-        | number
-        | React.Component<IPopupProps, IPopupTargetState>
-        | React.ComponentClass<Popup>);
+      const newTarget: number | null = findNodeHandle(
+        nextProps.target as
+          | null
+          | number
+          | React.Component<IPopupProps, IPopupTargetState>
+          | React.ComponentClass<Popup>,
+      );
 
       return {
         target: newTarget,
