@@ -614,7 +614,6 @@ jobs:
           platform: $(platform)
           additionalInitArguments: $(additionalInitArguments)
           additionalRunArguments: $(additionalRunArguments)
-          continueOnBuildFailure: $(continueOnBuildFailure)
           projectType: $(projectType)
 
   - job: CliInitWinUI3
