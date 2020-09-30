@@ -7,8 +7,7 @@
 #include "AdditionAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 AdditionAnimatedNode::AdditionAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -19,7 +18,7 @@ AdditionAnimatedNode::AdditionAnimatedNode(
   }
 
   m_propertySet.StartAnimation(s_valueName, [nodes = m_inputNodes, manager]() {
-    const auto anim = xaml::Window::Current().Compositor().CreateExpressionAnimation();
+    const auto anim = react::uwp::GetCompositor().CreateExpressionAnimation();
 
     anim.Expression([nodes, manager, anim]() {
       winrt::hstring expr = L"0";
@@ -33,5 +32,4 @@ AdditionAnimatedNode::AdditionAnimatedNode(
     return anim;
   }());
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

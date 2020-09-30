@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "resource.h"
 
+#include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
+
 #include <shlobj.h>
 #include <shobjidl.h>
 #include <windows.h>
@@ -14,17 +16,20 @@
 
 #include <winrt/Microsoft.ReactNative.h>
 
-#include <Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
-
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Hosting.h>
 #include <winrt/Windows.Foundation.Collections.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Hosting.h>
 
 #pragma pop_macro("GetCurrentTime")
 
-namespace WUX = winrt::Windows::UI::Xaml;
-namespace WUXC = WUX::Controls;
-namespace WUXH = WUX::Hosting;
+#ifndef USE_WINUI3
+namespace xaml = winrt::Windows::UI::Xaml;
+#else
+namespace xaml = winrt::Microsoft::UI::Xaml;
+#endif
+
+namespace controls = xaml::Controls;
+namespace hosting = xaml::Hosting;
 
 int RunPlayground(int showCmd, bool useWebDebugger);
 
@@ -33,7 +38,7 @@ struct WindowData {
   static constexpr uint16_t defaultDebuggerPort = 9229;
 
   std::wstring m_bundleFile;
-  WUXH::DesktopWindowXamlSource m_desktopWindowXamlSource;
+  hosting::DesktopWindowXamlSource m_desktopWindowXamlSource;
 
   winrt::Microsoft::ReactNative::ReactRootView m_reactRootView;
   winrt::Microsoft::ReactNative::ReactNativeHost m_host;
@@ -46,7 +51,7 @@ struct WindowData {
   bool m_breakOnNextLine{false};
   uint16_t m_debuggerPort{defaultDebuggerPort};
 
-  WindowData(const WUXH::DesktopWindowXamlSource &desktopWindowXamlSource)
+  WindowData(const hosting::DesktopWindowXamlSource &desktopWindowXamlSource)
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
 
   static WindowData *GetFromWindow(HWND hwnd) {
@@ -92,7 +97,7 @@ struct WindowData {
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
           host.InstanceSettings().UseDeveloperSupport(true);
 
-          auto rootElement = m_desktopWindowXamlSource.Content().as<WUXC::Panel>();
+          auto rootElement = m_desktopWindowXamlSource.Content().as<controls::Panel>();
           winrt::Microsoft::ReactNative::XamlUIService::SetXamlRoot(
               host.InstanceSettings().Properties(), rootElement.XamlRoot());
 
@@ -153,7 +158,15 @@ struct WindowData {
     HWND interopHwnd;
     winrt::check_hresult(interop->get_WindowHandle(&interopHwnd));
 
-    MoveWindow(interopHwnd, 0, 0, windowPosition->cx, windowPosition->cy, TRUE);
+    constexpr int logBoxHeight = 100;
+    constexpr int scrollbarWidth = 24;
+    MoveWindow(
+        interopHwnd,
+        0,
+        0,
+        windowPosition->cx > scrollbarWidth ? windowPosition->cx - scrollbarWidth : windowPosition->cx,
+        windowPosition->cy > logBoxHeight ? windowPosition->cy - logBoxHeight : windowPosition->cy,
+        TRUE);
 
     return 0;
   }
@@ -320,15 +333,19 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
 constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_WIN32";
 
 int RunPlayground(int showCmd, bool useWebDebugger) {
+#ifdef USE_WINUI3
+  constexpr PCWSTR appName = L"React Native Playground (Win32 WinUI3)";
+#else
   constexpr PCWSTR appName = L"React Native Playground (Win32)";
+#endif
 
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 
-  WUXH::DesktopWindowXamlSource desktopXamlSource;
+  hosting::DesktopWindowXamlSource desktopXamlSource;
   auto windowData = std::make_unique<WindowData>(desktopXamlSource);
   windowData->m_useWebDebugger = useWebDebugger;
 
-  auto xamlContent = WUXC::Grid();
+  auto xamlContent = controls::Grid();
   desktopXamlSource.Content(xamlContent);
 
   HWND hwnd = CreateWindow(
@@ -346,6 +363,7 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 
   WINRT_VERIFY(hwnd);
   winrt::check_win32(!hwnd);
+
   windowData.release();
 
   ShowWindow(hwnd, showCmd);
@@ -374,7 +392,7 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
   return (int)msg.wParam;
 }
 
-_Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int showCmd) {
+_Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
   WNDCLASSEXW wcex = {};
   wcex.cbSize = sizeof(WNDCLASSEX);
   wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -386,6 +404,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE /* instance */, HINSTANCE,
   wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
   wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_PLAYGROUND_WIN32);
   wcex.lpszClassName = c_windowClassName;
+  wcex.hIcon = LoadIconW(instance, MAKEINTRESOURCEW(IDI_ICON1));
   ATOM classId = RegisterClassEx(&wcex);
   WINRT_VERIFY(classId);
   winrt::check_win32(!classId);

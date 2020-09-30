@@ -6,8 +6,7 @@
 #include <math.h>
 #include "DecayAnimationDriver.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 DecayAnimationDriver::DecayAnimationDriver(
     int64_t id,
     int64_t animatedValueTag,
@@ -44,5 +43,4 @@ double DecayAnimationDriver::ToValue() {
   return m_startValue + m_velocity / (1 - m_deceleration);
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

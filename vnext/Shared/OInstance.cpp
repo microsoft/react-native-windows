@@ -38,11 +38,12 @@
 #include <BatchingMessageQueueThread.h>
 #include <CreateModules.h>
 #include <DevSettings.h>
-#include <IDevSupportManager.h>
+#include <DevSupportManager.h>
 #include <IReactRootView.h>
 #include <IUIManager.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
+#include "PackagerConnection.h"
 
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
@@ -160,21 +161,6 @@ void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
 #endif
 }
 
-class BridgeCallInvoker : public CallInvoker {
- public:
-  BridgeCallInvoker(std::weak_ptr<MessageQueueThread> messageQueueThread)
-      : messageQueueThread_(std::move(messageQueueThread)) {}
-
-  void invokeAsync(std::function<void()> &&func) override {
-    if (auto queue = messageQueueThread_.lock()) {
-      queue->runOnQueue(std::move(func));
-    }
-  }
-
- private:
-  std::weak_ptr<MessageQueueThread> messageQueueThread_;
-};
-
 class OJSIExecutorFactory : public JSExecutorFactory {
  public:
   std::unique_ptr<JSExecutor> createJSExecutor(
@@ -191,8 +177,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     }
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
-    auto turboModuleManager =
-        std::make_shared<TurboModuleManager>(turboModuleRegistry_, std::make_shared<BridgeCallInvoker>(jsQueue));
+    auto turboModuleManager = std::make_shared<TurboModuleManager>(turboModuleRegistry_, jsCallInvoker_);
 
     // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
     auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
@@ -213,14 +198,17 @@ class OJSIExecutorFactory : public JSExecutorFactory {
   OJSIExecutorFactory(
       std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
-      std::shared_ptr<TurboModuleRegistry> turboModuleRegistry) noexcept
+      std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+      std::shared_ptr<CallInvoker> jsCallInvoker) noexcept
       : runtimeHolder_{std::move(runtimeHolder)},
         loggingHook_{std::move(loggingHook)},
-        turboModuleRegistry_{std::move(turboModuleRegistry)} {}
+        turboModuleRegistry_{std::move(turboModuleRegistry)},
+        jsCallInvoker_{std::move(jsCallInvoker)} {}
 
  private:
   std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
   std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
+  std::shared_ptr<CallInvoker> jsCallInvoker_;
   NativeLoggingHook loggingHook_;
 };
 
@@ -324,6 +312,10 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
   return instance;
 }
 
+void InstanceImpl::SetInError() noexcept {
+  m_isInError = true;
+}
+
 InstanceImpl::InstanceImpl(
     std::string &&jsBundleBasePath,
     std::vector<
@@ -365,9 +357,13 @@ InstanceImpl::InstanceImpl(
   std::shared_ptr<JSExecutorFactory> jsef;
   if (m_devSettings->useWebDebugger) {
     try {
-      auto jseFunc = m_devManager->LoadJavaScriptInProxyMode(*m_devSettings);
+      auto jseFunc = m_devManager->LoadJavaScriptInProxyMode(*m_devSettings, [weakthis = weak_from_this()]() {
+        if (auto strongThis = weakthis.lock()) {
+          strongThis->SetInError();
+        }
+      });
 
-      if ((jseFunc == nullptr) || m_devManager->HasException()) {
+      if ((jseFunc == nullptr) || m_isInError) {
         m_devSettings->errorCallback("Failed to create JavaScript Executor.");
         return;
       }
@@ -378,19 +374,28 @@ InstanceImpl::InstanceImpl(
       return;
     }
   } else {
+    if (m_devSettings->useFastRefresh || m_devSettings->liveReloadCallback) {
+      Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*m_devSettings);
+    }
+
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
       jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleRegistry);
+          m_devSettings->jsiRuntimeHolder,
+          m_devSettings->loggingCallback,
+          m_turboModuleRegistry,
+          m_innerInstance->getJSCallInvoker());
     } else if (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default) {
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
 #if defined(USE_HERMES)
           m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>();
+          m_devSettings->inlineSourceMap = false;
           break;
 #else
           assert(false); // Hermes is not available in this build, fallthrough
+          [[fallthrough]];
 #endif
         case JSIEngineOverride::V8: {
 #if defined(USE_V8)
@@ -407,6 +412,7 @@ InstanceImpl::InstanceImpl(
           break;
 #else
           assert(false); // V8 is not available in this build, fallthrough
+          [[fallthrough]];
 #endif
         }
         case JSIEngineOverride::Chakra:
@@ -417,7 +423,10 @@ InstanceImpl::InstanceImpl(
           break;
       }
       jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleRegistry);
+          m_devSettings->jsiRuntimeHolder,
+          m_devSettings->loggingCallback,
+          m_turboModuleRegistry,
+          m_innerInstance->getJSCallInvoker());
     } else {
       // We use the older non-JSI ChakraExecutor pipeline as a fallback as of
       // now. This will go away once we completely move to JSI flow.
@@ -496,13 +505,15 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
         m_devSettings->useFastRefresh) {
       // First attempt to get download the Js locally, to catch any bundling
       // errors before attempting to load the actual script.
-      auto jsBundleString = m_devManager->GetJavaScriptFromServer(
+
+      auto [jsBundleString, success] = Microsoft::ReactNative::GetJavaScriptFromServer(
           m_devSettings->sourceBundleHost,
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
-          m_devSettings->platformName);
+          m_devSettings->platformName,
+          m_devSettings->inlineSourceMap);
 
-      if (m_devManager->HasException()) {
+      if (!success) {
         m_devSettings->errorCallback(jsBundleString);
         return;
       }
@@ -512,8 +523,9 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName,
-          /*dev*/ "true",
-          /*hot*/ "false");
+          /*dev*/ true,
+          /*hot*/ false,
+          m_devSettings->inlineSourceMap);
 
       // Remote debug executor loads script from a Uri, rather than taking the actual bundle string
       m_innerInstance->loadScriptFromString(
@@ -558,7 +570,7 @@ InstanceImpl::~InstanceImpl() {
 }
 
 void InstanceImpl::AttachMeasuredRootView(IReactRootView *rootView, folly::dynamic &&initProps) noexcept {
-  if (m_devManager->HasException()) {
+  if (m_isInError) {
     return;
   }
 
@@ -574,7 +586,7 @@ void InstanceImpl::AttachMeasuredRootView(IReactRootView *rootView, folly::dynam
 }
 
 void InstanceImpl::DetachRootView(IReactRootView *rootView) noexcept {
-  if (m_devManager->HasException()) {
+  if (m_isInError) {
     return;
   }
 
@@ -619,8 +631,9 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
             m_devSettings->sourceBundlePort,
             m_devSettings->debugBundlePath,
             m_devSettings->platformName,
-            "true" /*dev*/,
-            "false" /*hot*/)
+            true /*dev*/,
+            false /*hot*/,
+            m_devSettings->inlineSourceMap)
       : std::string();
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
@@ -655,14 +668,14 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
 
 void InstanceImpl::RegisterForReloadIfNecessary() noexcept {
   // setup polling for live reload
-  if (!m_devManager->HasException() && !m_devSettings->useFastRefresh && m_devSettings->liveReloadCallback != nullptr) {
+  if (!m_isInError && !m_devSettings->useFastRefresh && m_devSettings->liveReloadCallback != nullptr) {
     m_devManager->StartPollingLiveReload(
         m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort, m_devSettings->liveReloadCallback);
   }
 }
 
 void InstanceImpl::DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic &&eventData) {
-  if (m_devManager->HasException()) {
+  if (m_isInError) {
     return;
   }
 
@@ -671,7 +684,7 @@ void InstanceImpl::DispatchEvent(int64_t viewTag, std::string eventName, folly::
 }
 
 void InstanceImpl::invokeCallback(const int64_t callbackId, folly::dynamic &&params) {
-  if (m_devManager->HasException()) {
+  if (m_isInError) {
     return;
   }
 

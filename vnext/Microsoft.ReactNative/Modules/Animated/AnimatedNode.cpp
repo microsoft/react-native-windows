@@ -6,8 +6,7 @@
 #include "AnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 AnimatedNode::AnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : m_tag(tag), m_manager(manager) {}
@@ -37,5 +36,4 @@ AnimatedNode *AnimatedNode::GetChildNode(int64_t tag) {
 
   return static_cast<AnimatedNode *>(nullptr);
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

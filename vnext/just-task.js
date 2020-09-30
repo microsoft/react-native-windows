@@ -8,21 +8,17 @@
 const path = require('path');
 const {
   task,
-  cleanTask,
   series,
   condition,
   option,
   argv,
   tscTask,
-  tscWatchTask,
   eslintTask,
   apiExtractorVerifyTask,
   apiExtractorUpdateTask,
-  parallel,
 } = require('just-scripts');
 const {execSync} = require('child_process');
 const fs = require('fs');
-const srcPath = path.resolve(process.cwd(), 'src');
 const copyRNLibaries = require('./Scripts/copyRNLibraries');
 
 option('production');
@@ -64,7 +60,6 @@ task('copyReadmeFromRoot', () => {
 task(
   'compileTsPlatformOverrides',
   tscTask({
-    project: path.join(srcPath, 'tsconfig.json'),
     pretty: true,
     ...(argv().production && {
       inlineSources: true,
@@ -74,29 +69,21 @@ task(
   }),
 );
 
-task('compileLocalCli', tscTask({project: './local-cli/tsconfig.json'}));
-
-task('watch', tscWatchTask({project: './local-cli/tsconfig.json'}));
-
 task('cleanRnLibraries', copyRNLibaries.cleanTask(__dirname));
-task('cleanLocalCli', cleanTask(['local-cli/lib-commonjs']));
 
 task(
   'build',
-  parallel(
-    series(
-      condition('clean', () => argv().clean),
-      'copyRNLibraries',
-      'copyReadmeFromRoot',
-      'compileTsPlatformOverrides',
-      'codegen',
-      condition('apiExtractorVerify', () => argv().ci),
-    ),
-    'compileLocalCli',
+  series(
+    condition('clean', () => argv().clean),
+    'copyRNLibraries',
+    'copyReadmeFromRoot',
+    'compileTsPlatformOverrides',
+    'codegen',
+    condition('apiExtractorVerify', () => argv().ci),
   ),
 );
 
-task('clean', series('cleanRnLibraries', 'cleanLocalCli'));
+task('clean', series('cleanRnLibraries'));
 
 task('lint', series('eslint', 'flow-check'));
 task('lint:fix', series('eslint:fix'));

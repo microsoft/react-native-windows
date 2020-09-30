@@ -22,7 +22,7 @@ class BaseWebSocketResource : public IWebSocketResource {
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
   std::function<void(std::size_t)> m_writeHandler;
-  std::function<void(std::size_t, const std::string &)> m_readHandler;
+  std::function<void(std::size_t, const std::string &, bool)> m_readHandler;
   std::function<void(CloseCode, const std::string &)> m_closeHandler;
 
   Url m_url;
@@ -149,66 +149,66 @@ class BaseWebSocketResource : public IWebSocketResource {
   virtual std::shared_ptr<BaseWebSocketResource<SocketLayer, Stream>> SharedFromThis() = 0;
 
  public:
-  ~BaseWebSocketResource() override;
+  ~BaseWebSocketResource() noexcept override;
 
 #pragma region IWebSocketResource
 
   /// <summary>
   /// <see cref="IWebSocketResource::Connect" />
   /// </summary>
-  void Connect(const Protocols &protocols, const Options &options) override;
+  void Connect(const Protocols &protocols, const Options &options) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::Ping" />
   /// </summary>
-  void Ping() override;
+  void Ping() noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::Send" />
   /// </summary>
-  void Send(const std::string &message) override;
+  void Send(std::string &&message) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::SendBinary" />
   /// </summary>
-  void SendBinary(const std::string &base64String) override;
+  void SendBinary(std::string &&base64String) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::Close" />
   /// </summary>
-  void Close(CloseCode code, const std::string &reason) override;
+  void Close(CloseCode code, const std::string &reason) noexcept override;
 
-  ReadyState GetReadyState() const override;
+  ReadyState GetReadyState() const noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::SetOnConnect" />
   /// </summary>
-  void SetOnConnect(std::function<void()> &&handler) override;
+  void SetOnConnect(std::function<void()> &&handler) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::SetOnPing" />
   /// </summary>
-  void SetOnPing(std::function<void()> &&handler) override;
+  void SetOnPing(std::function<void()> &&handler) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::SetOnSend" />
   /// </summary>
-  void SetOnSend(std::function<void(std::size_t)> &&handler) override;
+  void SetOnSend(std::function<void(std::size_t)> &&handler) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::SetOnMessage" />
   /// </summary>
-  void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&handler) override;
+  void SetOnMessage(std::function<void(std::size_t, const std::string &, bool isBinary)> &&handler) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::SetOnClose" />
   /// </summary>
-  void SetOnClose(std::function<void(CloseCode, const std::string &)> &&handler) override;
+  void SetOnClose(std::function<void(CloseCode, const std::string &)> &&handler) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::SetOnError" />
   /// </summary>
-  void SetOnError(std::function<void(Error &&)> &&handler) override;
+  void SetOnError(std::function<void(Error &&)> &&handler) noexcept override;
 
 #pragma endregion IWebSocketResource
 };
@@ -332,7 +332,7 @@ class TestWebSocketResource : public BaseWebSocketResource<
 #pragma endregion BaseWebSocketResource overrides
 
  public:
-  TestWebSocketResource(facebook::react::Url &&url);
+  TestWebSocketResource(Url &&url);
 
   void SetConnectResult(std::function<boost::system::error_code()> &&resultFunc);
   void SetHandshakeResult(std::function<boost::system::error_code(std::string, std::string)> &&resultFunc);

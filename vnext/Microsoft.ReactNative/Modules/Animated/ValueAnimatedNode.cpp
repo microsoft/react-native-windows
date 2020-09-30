@@ -6,14 +6,15 @@
 #include "NativeAnimatedNodeManager.h"
 #include "ValueAnimatedNode.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 ValueAnimatedNode::ValueAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : AnimatedNode(tag, manager) {
-  m_propertySet = xaml::Window::Current().Compositor().CreatePropertySet();
+  // TODO: Islands - need to get the XamlView associated with this animation in order to
+  // use the compositor react::uwp::GetCompositor(xamlView)
+  m_propertySet = react::uwp::GetCompositor().CreatePropertySet();
   m_propertySet.InsertScalar(
       s_valueName, static_cast<float>(config.find(s_jsValueName).dereference().second.asDouble()));
   m_propertySet.InsertScalar(
@@ -22,7 +23,9 @@ ValueAnimatedNode::ValueAnimatedNode(
 
 ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : AnimatedNode(tag, manager) {
-  m_propertySet = xaml::Window::Current().Compositor().CreatePropertySet();
+  // TODO: Islands - need to get the XamlView associated with this animation in order to
+  // use the compositor react::uwp::GetCompositor(xamlView)
+  m_propertySet = react::uwp::GetCompositor().CreatePropertySet();
   m_propertySet.InsertScalar(s_valueName, 0.0);
   m_propertySet.InsertScalar(s_offsetName, 0.0);
 }
@@ -121,5 +124,4 @@ void ValueAnimatedNode::UpdateTrackingNodes() {
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

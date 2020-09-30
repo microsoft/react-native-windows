@@ -8,12 +8,14 @@
 #include <Base/CoreNativeModules.h>
 #include <IUIManager.h>
 #include <Threading/MessageDispatchQueue.h>
+#include <Threading/MessageQueueThreadFactory.h>
+
 #include <XamlUIService.h>
 #include "ReactErrorProvider.h"
 
 #include "Microsoft.ReactNative/IReactNotificationService.h"
-#include "Microsoft.ReactNative/Threading/MessageQueueThreadFactory.h"
 
+#include "../../codegen/NativeAccessibilityInfoSpec.g.h"
 #include "../../codegen/NativeAppStateSpec.g.h"
 #include "../../codegen/NativeClipboardSpec.g.h"
 #include "../../codegen/NativeDevSettingsSpec.g.h"
@@ -27,9 +29,11 @@
 #include <Shared/DevServerHelper.h>
 #include <Shared/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
+#include "ConfigureBundlerDlg.h"
 #include "DevMenu.h"
 #include "IReactContext.h"
 #include "IReactDispatcher.h"
+#include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
 #include "Modules/AppStateModule.h"
 #include "Modules/ClipboardModule.h"
@@ -75,42 +79,6 @@ std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
 using namespace winrt::Microsoft::ReactNative;
 
 namespace Mso::React {
-
-//=============================================================================================
-// ReactContext implementation
-//=============================================================================================
-
-ReactContext::ReactContext(
-    Mso::WeakPtr<ReactInstanceWin> &&reactInstance,
-    IReactPropertyBag const &properties,
-    IReactNotificationService const &notifications) noexcept
-    : m_reactInstance{std::move(reactInstance)}, m_properties{properties}, m_notifications{notifications} {}
-
-void ReactContext::Destroy() noexcept {
-  if (auto notificationService = winrt::get_self<implementation::ReactNotificationService>(m_notifications)) {
-    notificationService->UnsubscribeAll();
-  }
-}
-
-IReactPropertyBag ReactContext::Properties() noexcept {
-  return m_properties;
-}
-
-IReactNotificationService ReactContext::Notifications() noexcept {
-  return m_notifications;
-}
-
-void ReactContext::CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    instance->CallJsFunction(std::move(module), std::move(method), std::move(params));
-  }
-}
-
-void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    instance->DispatchEvent(viewTag, std::move(eventName), std::move(eventData));
-  }
-}
 
 //=============================================================================================
 // LoadedCallbackGuard ensures that the OnReactInstanceLoaded is always called.
@@ -162,8 +130,7 @@ ReactInstanceWin::ReactInstanceWin(
           this,
           options.Properties,
           winrt::make<implementation::ReactNotificationService>(options.Notifications))},
-      m_legacyInstance{
-          std::make_shared<react::uwp::UwpReactInstanceProxy>(Mso::WeakPtr<Mso::React::IReactInstance>{this})} {
+      m_legacyInstance{std::make_shared<react::uwp::UwpReactInstanceProxy>(Mso::Copy(m_reactContext))} {
   m_whenCreated.SetValue();
 }
 
@@ -185,6 +152,12 @@ void ReactInstanceWin::LoadModules(
       turboModulesProvider->AddModuleProvider(name, provider);
     }
   };
+
+  registerTurboModule(
+      L"AccessibilityInfo",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::AccessibilityInfo,
+          ::Microsoft::ReactNativeSpecs::AccessibilityInfoSpec>());
 
   registerTurboModule(L"Alert", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Alert>());
 
@@ -228,19 +201,19 @@ void ReactInstanceWin::Initialize() noexcept {
   InitNativeMessageThread();
   InitUIMessageThread();
 
-  m_legacyReactInstance = std::make_shared<react::uwp::UwpReactInstanceProxy>(this);
-
   // InitUIManager uses m_legacyReactInstance
   InitUIManager();
 
-  Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext);
+  Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext, [weakReactHost = m_weakReactHost]() noexcept {
+    Microsoft::ReactNative::ShowConfigureBundlerDialog(weakReactHost);
+  });
 
   Mso::PostFuture(
       m_uiQueue,
       [weakThis = Mso::WeakPtr{this}]() noexcept {
         // Objects that must be created on the UI thread
         if (auto strongThis = weakThis.GetStrongPtr()) {
-          auto const &legacyInstance = strongThis->m_legacyReactInstance;
+          auto const &legacyInstance = strongThis->m_legacyInstance;
           strongThis->m_appTheme =
               std::make_shared<react::uwp::AppTheme>(legacyInstance, strongThis->m_uiMessageThread.LoadWithLock());
           Microsoft::ReactNative::I18nManager::InitI18nInfo(
@@ -257,9 +230,15 @@ void ReactInstanceWin::Initialize() noexcept {
 
           auto devSettings = std::make_shared<facebook::react::DevSettings>();
           devSettings->useJITCompilation = m_options.EnableJITCompilation;
-          devSettings->sourceBundleHost = m_options.DeveloperSettings.SourceBundleHost;
-          devSettings->sourceBundlePort = m_options.DeveloperSettings.SourceBundlePort;
-          devSettings->debugBundlePath = m_options.DeveloperSettings.SourceBundleName;
+          devSettings->sourceBundleHost = m_options.DeveloperSettings.SourceBundleHost.empty()
+              ? facebook::react::DevServerHelper::DefaultPackagerHost
+              : m_options.DeveloperSettings.SourceBundleHost;
+          devSettings->sourceBundlePort = m_options.DeveloperSettings.SourceBundlePort
+              ? m_options.DeveloperSettings.SourceBundlePort
+              : facebook::react::DevServerHelper::DefaultPackagerPort;
+          devSettings->debugBundlePath = m_options.DeveloperSettings.SourceBundleName.empty()
+              ? m_options.Identity
+              : m_options.DeveloperSettings.SourceBundleName;
           devSettings->liveReloadCallback = GetLiveReloadCallback();
           devSettings->errorCallback = GetErrorCallback();
           devSettings->loggingCallback = GetLoggingCallback();
@@ -277,6 +256,13 @@ void ReactInstanceWin::Initialize() noexcept {
 
           devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
           devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
+          devSettings->showDevMenuCallback = [weakThis]() noexcept {
+            if (auto strongThis = weakThis.GetStrongPtr()) {
+              strongThis->m_uiQueue.Post([context = strongThis->m_reactContext]() {
+                Microsoft::ReactNative::DevMenuManager::Show(context->Properties());
+              });
+            }
+          };
 
           // Now that ReactNativeWindows is building outside devmain, it is missing
           // fix given by PR https://github.com/microsoft/react-native-windows/pull/2624 causing
@@ -285,14 +271,16 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->debuggerConsoleRedirection =
               false; // JSHost::ChangeGate::ChakraCoreDebuggerConsoleRedirection();
 
-          // Acquire default modules and then populate with custom modules
+          // Acquire default modules and then populate with custom modules.
+          // Note that some of these have custom thread affinity.
           std::vector<facebook::react::NativeModuleDescription> cxxModules = react::uwp::GetCoreModules(
               m_uiManager.Load(),
               m_batchingUIThread,
               m_uiMessageThread.Load(),
+              m_jsMessageThread.Load(),
               std::move(m_appTheme),
               std::move(m_appearanceListener),
-              m_legacyReactInstance);
+              m_legacyInstance);
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
 
@@ -322,6 +310,7 @@ void ReactInstanceWin::Initialize() noexcept {
               case react::uwp::JSIEngine::Hermes:
 #if defined(USE_HERMES)
                 devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
+                devSettings->inlineSourceMap = false;
                 break;
 #endif
               case react::uwp::JSIEngine::V8:
@@ -362,7 +351,7 @@ void ReactInstanceWin::Initialize() noexcept {
             m_instanceWrapper.Exchange(std::move(instanceWrapper));
 
             if (auto onCreated = m_options.OnInstanceCreated.Get()) {
-              onCreated->Invoke(*this);
+              onCreated->Invoke(Mso::CntPtr<Mso::React::IReactContext>(m_reactContext));
             }
 
             LoadJSBundles();
@@ -474,7 +463,7 @@ void ReactInstanceWin::OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) no
           }
 
           if (auto onLoaded = strongThis->m_options.OnInstanceLoaded.Get()) {
-            onLoaded->Invoke(*strongThis, errorCode);
+            onLoaded->Invoke(Mso::CntPtr<IReactContext>(strongThis->m_reactContext), errorCode);
           }
 
           strongThis->m_whenLoaded.SetValue();
@@ -501,7 +490,7 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
   }
 
   if (auto onDestroyed = m_options.OnInstanceDestroyed.Get()) {
-    onDestroyed->Invoke(*this);
+    onDestroyed->Invoke(Mso::CntPtr<Mso::React::IReactContext>(m_reactContext));
   }
 
   // Make sure that the instance is not destroyed yet
@@ -561,11 +550,11 @@ void ReactInstanceWin::InitUIManager() noexcept {
 
   // Custom view managers
   if (m_options.ViewManagerProvider) {
-    viewManagers = m_options.ViewManagerProvider->GetViewManagers(m_reactContext, m_legacyReactInstance);
+    viewManagers = m_options.ViewManagerProvider->GetViewManagers(m_reactContext, m_legacyInstance);
   }
 
-  react::uwp::AddStandardViewManagers(viewManagers, m_legacyReactInstance);
-  react::uwp::AddPolyesterViewManagers(viewManagers, m_legacyReactInstance);
+  react::uwp::AddStandardViewManagers(viewManagers, m_legacyInstance);
+  react::uwp::AddPolyesterViewManagers(viewManagers, m_legacyInstance);
 
   auto uiManager = react::uwp::CreateUIManager2(m_reactContext.Get(), std::move(viewManagers));
   auto wkUIManger = std::weak_ptr<facebook::react::IUIManager>(uiManager);
@@ -760,7 +749,10 @@ void ReactInstanceWin::DispatchEvent(int64_t viewTag, std::string &&eventName, f
 }
 
 facebook::react::INativeUIManager *ReactInstanceWin::NativeUIManager() noexcept {
-  return m_uiManager.LoadWithLock()->getNativeUIManager();
+  if (auto uimanager = m_uiManager.LoadWithLock()) {
+    return uimanager->getNativeUIManager();
+  }
+  return nullptr;
 }
 
 std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() noexcept {

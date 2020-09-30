@@ -5,8 +5,7 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 namespace polyester {
 
 class IconViewManager : public FrameworkElementViewManager {
@@ -24,5 +23,4 @@ class IconViewManager : public FrameworkElementViewManager {
 };
 
 } // namespace polyester
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

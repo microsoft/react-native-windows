@@ -6,16 +6,15 @@
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/ValueUtils.h>
 
+#include <UI.Text.h>
 #include <folly/dynamic.h>
 #include <stdint.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Text.h>
 
 #include <Views/ShadowNodeBase.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 struct ShadowNodeBase;
 
@@ -33,41 +32,43 @@ static const std::unordered_map<std::string, ShadowEdges> edgeTypeMap = {
     {"borderWidth", ShadowEdges::AllEdges},
 };
 
-inline xaml::Thickness GetThickness(double thicknesses[ShadowEdges::CountEdges]) {
-  const double defaultWidth = std::max<double>(0, thicknesses[ShadowEdges::AllEdges]);
-  double startWidth = DefaultOrOverride(thicknesses[ShadowEdges::Left], thicknesses[ShadowEdges::Start]);
-  double endWidth = DefaultOrOverride(thicknesses[ShadowEdges::Right], thicknesses[ShadowEdges::End]);
+inline xaml::Thickness GetThickness(double thicknesses[(int)ShadowEdges::CountEdges]) {
+  const double defaultWidth = std::max<double>(0, thicknesses[(int)ShadowEdges::AllEdges]);
+  double startWidth = DefaultOrOverride(thicknesses[(int)ShadowEdges::Left], thicknesses[(int)ShadowEdges::Start]);
+  double endWidth = DefaultOrOverride(thicknesses[(int)ShadowEdges::Right], thicknesses[(int)ShadowEdges::End]);
 
   // Compute each edge.  Most specific setting wins, so fill from broad to
   // narrow: all, horiz/vert, start/end, left/right
   xaml::Thickness thickness = {defaultWidth, defaultWidth, defaultWidth, defaultWidth};
 
-  if (thicknesses[ShadowEdges::Horizontal] != c_UndefinedEdge)
-    thickness.Left = thickness.Right = thicknesses[ShadowEdges::Horizontal];
-  if (thicknesses[ShadowEdges::Vertical] != c_UndefinedEdge)
-    thickness.Top = thickness.Bottom = thicknesses[ShadowEdges::Vertical];
+  if (thicknesses[(int)ShadowEdges::Horizontal] != c_UndefinedEdge)
+    thickness.Left = thickness.Right = thicknesses[(int)ShadowEdges::Horizontal];
+  if (thicknesses[(int)ShadowEdges::Vertical] != c_UndefinedEdge)
+    thickness.Top = thickness.Bottom = thicknesses[(int)ShadowEdges::Vertical];
 
   if (startWidth != c_UndefinedEdge)
     thickness.Left = startWidth;
   if (endWidth != c_UndefinedEdge)
     thickness.Right = endWidth;
-  if (thicknesses[ShadowEdges::Top] != c_UndefinedEdge)
-    thickness.Top = thicknesses[ShadowEdges::Top];
-  if (thicknesses[ShadowEdges::Bottom] != c_UndefinedEdge)
-    thickness.Bottom = thicknesses[ShadowEdges::Bottom];
+  if (thicknesses[(int)ShadowEdges::Top] != c_UndefinedEdge)
+    thickness.Top = thicknesses[(int)ShadowEdges::Top];
+  if (thicknesses[(int)ShadowEdges::Bottom] != c_UndefinedEdge)
+    thickness.Bottom = thicknesses[(int)ShadowEdges::Bottom];
 
   return thickness;
 }
 
-inline xaml::CornerRadius GetCornerRadius(double cornerRadii[ShadowCorners::CountCorners]) {
+inline xaml::CornerRadius GetCornerRadius(double cornerRadii[(int)ShadowCorners::CountCorners]) {
   xaml::CornerRadius cornerRadius;
-  const double defaultRadius = std::max<double>(0, cornerRadii[ShadowCorners::AllCorners]);
-  double topStartRadius = DefaultOrOverride(cornerRadii[ShadowCorners::TopLeft], cornerRadii[ShadowCorners::TopStart]);
-  double topEndRadius = DefaultOrOverride(cornerRadii[ShadowCorners::TopRight], cornerRadii[ShadowCorners::TopEnd]);
+  const double defaultRadius = std::max<double>(0, cornerRadii[(int)ShadowCorners::AllCorners]);
+  double topStartRadius =
+      DefaultOrOverride(cornerRadii[(int)ShadowCorners::TopLeft], cornerRadii[(int)ShadowCorners::TopStart]);
+  double topEndRadius =
+      DefaultOrOverride(cornerRadii[(int)ShadowCorners::TopRight], cornerRadii[(int)ShadowCorners::TopEnd]);
   double bottomStartRadius =
-      DefaultOrOverride(cornerRadii[ShadowCorners::BottomLeft], cornerRadii[ShadowCorners::BottomStart]);
+      DefaultOrOverride(cornerRadii[(int)ShadowCorners::BottomLeft], cornerRadii[(int)ShadowCorners::BottomStart]);
   double bottomEndRadius =
-      DefaultOrOverride(cornerRadii[ShadowCorners::BottomRight], cornerRadii[ShadowCorners::BottomEnd]);
+      DefaultOrOverride(cornerRadii[(int)ShadowCorners::BottomRight], cornerRadii[(int)ShadowCorners::BottomEnd]);
 
   cornerRadius.TopLeft = DefaultOrOverride(defaultRadius, topStartRadius);
   cornerRadius.TopRight = DefaultOrOverride(defaultRadius, topEndRadius);
@@ -79,14 +80,14 @@ inline xaml::CornerRadius GetCornerRadius(double cornerRadii[ShadowCorners::Coun
 
 template <class T>
 void UpdatePadding(ShadowNodeBase *node, const T &element, ShadowEdges edge, double margin) {
-  node->m_padding[edge] = margin;
+  node->m_padding[(int)edge] = margin;
   xaml::Thickness thickness = GetThickness(node->m_padding);
   element.Padding(thickness);
 }
 
 template <class T>
 void SetBorderThickness(ShadowNodeBase *node, const T &element, ShadowEdges edge, double margin) {
-  node->m_border[edge] = margin;
+  node->m_border[(int)edge] = margin;
   xaml::Thickness thickness = GetThickness(node->m_border);
   element.BorderThickness(thickness);
 }
@@ -117,9 +118,9 @@ bool TryUpdateBackgroundBrush(const T &element, const std::string &propertyName,
 inline void
 UpdateCornerRadiusValueOnNode(ShadowNodeBase *node, ShadowCorners corner, const folly::dynamic &propertyValue) {
   if (propertyValue.isNumber())
-    node->m_cornerRadius[corner] = propertyValue.asDouble();
+    node->m_cornerRadius[(int)corner] = propertyValue.asDouble();
   else
-    node->m_cornerRadius[corner] = c_UndefinedEdge;
+    node->m_cornerRadius[(int)corner] = c_UndefinedEdge;
 }
 
 template <class T>
@@ -282,9 +283,9 @@ bool TryUpdateFontProperties(const T &element, const std::string &propertyName, 
       const std::string &value = propertyValue.getString();
       winrt::Windows::UI::Text::FontWeight fontWeight;
       if (value == "normal")
-        fontWeight = winrt::Windows::UI::Text::FontWeights::Normal();
+        fontWeight = text::FontWeights::Normal();
       else if (value == "bold")
-        fontWeight = winrt::Windows::UI::Text::FontWeights::Bold();
+        fontWeight = text::FontWeights::Bold();
       else if (value == "100")
         fontWeight.Weight = 100;
       else if (value == "200")
@@ -304,18 +305,15 @@ bool TryUpdateFontProperties(const T &element, const std::string &propertyName, 
       else if (value == "900")
         fontWeight.Weight = 900;
       else
-        fontWeight = winrt::Windows::UI::Text::FontWeights::Normal();
+        fontWeight = text::FontWeights::Normal();
 
       element.FontWeight(fontWeight);
     } else if (propertyValue.isNull()) {
       element.ClearValue(T::FontWeightProperty());
     }
-
   } else if (propertyName == "fontStyle") {
     if (propertyValue.isString()) {
-      element.FontStyle(
-          (propertyValue.getString() == "italic") ? winrt::Windows::UI::Text::FontStyle::Italic
-                                                  : winrt::Windows::UI::Text::FontStyle::Normal);
+      element.FontStyle((propertyValue.getString() == "italic") ? text::FontStyle::Italic : text::FontStyle::Normal);
     } else if (propertyValue.isNull()) {
       element.ClearValue(T::FontStyleProperty());
     }
@@ -407,14 +405,15 @@ bool TryUpdateTextDecorationLine(
 
       const std::string &value = propertyValue.getString();
       TextDecorations decorations = TextDecorations::None;
-      if (value == "none")
+      if (value == "none") {
         decorations = TextDecorations::None;
-      else if (value == "underline")
+      } else if (value == "underline") {
         decorations = TextDecorations::Underline;
-      else if (value == "line-through")
+      } else if (value == "line-through") {
         decorations = TextDecorations::Strikethrough;
-      else if (value == "underline line-through")
+      } else if (value == "underline line-through") {
         decorations = TextDecorations::Underline | TextDecorations::Strikethrough;
+      }
 
       element.TextDecorations(decorations);
     } else if (propertyValue.isNull()) {
@@ -489,16 +488,13 @@ bool TryUpdateOrientation(const T &element, const std::string &propertyName, con
 inline bool
 TryUpdateMouseEvents(ShadowNodeBase *node, const std::string &propertyName, const folly::dynamic &propertyValue) {
   if (propertyName == "onMouseEnter")
-    node->m_onMouseEnter = !propertyValue.isNull() && propertyValue.asBool();
+    node->m_onMouseEnterRegistered = !propertyValue.isNull() && propertyValue.asBool();
   else if (propertyName == "onMouseLeave")
-    node->m_onMouseLeave = !propertyValue.isNull() && propertyValue.asBool();
-  else if (propertyName == "onMouseMove")
-    node->m_onMouseMove = !propertyValue.isNull() && propertyValue.asBool();
+    node->m_onMouseLeaveRegistered = !propertyValue.isNull() && propertyValue.asBool();
   else
     return false;
 
   return true;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -10,10 +10,10 @@
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include "Unicode.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 const char *NativeAnimatedModule::name{"NativeAnimatedModule"};
 const char *NativeAnimatedModule::s_createAnimatedNodeName{"createAnimatedNode"};
+const char *NativeAnimatedModule::s_getValueName{"getValue"};
 const char *NativeAnimatedModule::s_connectAnimatedNodeToViewName{"connectAnimatedNodeToView"};
 const char *NativeAnimatedModule::s_disconnectAnimatedNodeFromViewName{"disconnectAnimatedNodeFromView"};
 const char *NativeAnimatedModule::s_connectAnimatedNodesName{"connectAnimatedNodes"};
@@ -43,6 +43,12 @@ std::vector<facebook::xplat::module::CxxModule::Method> NativeAnimatedModule::ge
             const auto tag = facebook::xplat::jsArgAsInt(args, 0);
             const auto config = facebook::xplat::jsArgAsObject(args, 1);
             NativeAnimatedModule::CreateAnimatedNode(tag, config);
+          }),
+      Method(
+          s_getValueName,
+          [this](folly::dynamic args, Callback saveValueCallback) {
+            const auto animatedNodeTag = facebook::xplat::jsArgAsInt(args, 0);
+            NativeAnimatedModule::GetValue(animatedNodeTag, saveValueCallback);
           }),
       Method(
           s_connectAnimatedNodeToViewName,
@@ -153,6 +159,10 @@ void NativeAnimatedModule::CreateAnimatedNode(int64_t tag, const folly::dynamic 
   m_nodesManager->CreateAnimatedNode(tag, config, m_wkReactInstance, m_nodesManager);
 }
 
+void NativeAnimatedModule::GetValue(int64_t animatedNodeTag, const Callback &saveValueCallback) {
+  m_nodesManager->GetValue(animatedNodeTag, saveValueCallback);
+}
+
 void NativeAnimatedModule::ConnectAnimatedNodeToView(int64_t animatedNodeTag, int64_t viewTag) {
   m_nodesManager->ConnectAnimatedNodeToView(animatedNodeTag, viewTag);
 }
@@ -222,5 +232,4 @@ void NativeAnimatedModule::StartListeningToAnimatedNodeValue(int64_t /*tag*/) {
 void NativeAnimatedModule::StopListeningToAnimatedNodeValue(int64_t /*tag*/) {
   // NotImplemented
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

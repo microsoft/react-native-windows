@@ -6,10 +6,10 @@
 import HomePage from '../pages/HomePage';
 import ImageTestPage from '../pages/ImageTestPage';
 import assert from 'assert';
+import { IMAGE_TESTPAGE } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 beforeAll(() => {
-  HomePage.backToHomePage();
-  HomePage.clickAndGotoImagePage();
+  HomePage.goToTestPage(IMAGE_TESTPAGE);
 });
 
 describe('ImageWithoutBorderTest', () => {

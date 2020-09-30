@@ -21,7 +21,7 @@ import {ValidationError} from './ValidationStrategy';
 import {findManifest} from './FileSearch';
 import {getNpmPackage} from './PackageUtils';
 
-doMain(async () => {
+void doMain(async () => {
   const npmPackage = await getNpmPackage();
 
   return new Promise((resolve, _reject) => {
@@ -40,6 +40,7 @@ doMain(async () => {
               describe: 'Optional React Native version to check against',
             },
           }),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         cmdArgv =>
           validateManifest({
             manifestPath: cmdArgv.manifest,
@@ -53,6 +54,7 @@ doMain(async () => {
           cmdYargs.options({
             override: {type: 'string', describe: 'The override to add'},
           }),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         cmdArgv => addOverride(cmdArgv.override!),
       )
       .command(
@@ -62,6 +64,7 @@ doMain(async () => {
           cmdYargs.options({
             override: {type: 'string', describe: 'The override to remove'},
           }),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         cmdArgv => removeOverride(cmdArgv.override!),
       )
       .command(
@@ -83,6 +86,7 @@ doMain(async () => {
               describe: 'Optional React Native version to check against',
             },
           }),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         cmdArgv =>
           upgrade({
             manifestPath: cmdArgv.manifest,
@@ -111,7 +115,7 @@ async function validateManifest(opts: {
   manifestPath?: string;
   reactNativeVersion?: string;
 }) {
-  const spinner = ora(`Verifying overrides`).start();
+  const spinner = ora(`Validating overrides`).start();
 
   await spinnerGuard(spinner, async () => {
     const validationErrors = await Api.validateManifest(opts);
@@ -140,14 +144,11 @@ async function addOverride(overridePath: string) {
         'Warning: override already exists in manifest and will be overwritten',
       ),
     );
-    Api.removeOverride(overrideName, {manifestPath});
   }
 
   const overrideDetails = await promptForOverrideDetails();
 
-  const spinner = ora(
-    'Adding override (This may take a while on first run)',
-  ).start();
+  const spinner = ora('Adding override').start();
   await spinnerGuard(spinner, async () => {
     const override = await overrideFromDetails(
       overridePath,
@@ -155,8 +156,9 @@ async function addOverride(overridePath: string) {
       await Api.getOverrideFactory({manifestPath}),
     );
 
+    await Api.removeOverride(overrideName, {manifestPath});
     await Api.addOverride(override, {manifestPath});
-    spinner.succeed('Adding override');
+    spinner.succeed();
   });
 }
 
@@ -168,7 +170,7 @@ async function removeOverride(overridePath: string) {
   const manifestDir = path.dirname(manifestPath);
   const overrideName = path.relative(manifestDir, path.resolve(overridePath));
 
-  if (Api.removeOverride(overrideName, {manifestPath})) {
+  if (await Api.removeOverride(overrideName, {manifestPath})) {
     console.log(chalk.greenBright('Override successfully removed'));
   } else {
     console.error(
@@ -270,15 +272,31 @@ async function printValidationErrors(validationErrors: Array<ValidationError>) {
     errors,
     `Found overrides whose original files have changed. Upgrade overrides using 'npx ${
       npmPackage.name
-    } auto-upgrade <manifest>' and 'npx ${
-      npmPackage.name
-    } manual-upgrade <manifest>':`,
+    } upgrade:`,
   );
 
   printErrorType(
     'overrideDifferentFromBase',
     errors,
     'The following overrides should be an exact copy of their base files. Ensure overrides are up to date or revert changes:',
+  );
+
+  printErrorType(
+    'overrideSameAsBase',
+    errors,
+    'The following overrides are identical to their base files. Please remove them or set their type to "copy":',
+  );
+
+  printErrorType(
+    'expectedFile',
+    errors,
+    'The following overrides should operate on files, but list directories:',
+  );
+
+  printErrorType(
+    'expectedDirectory',
+    errors,
+    'The following overrides should operate on directories, but listed files:',
   );
 
   if (errors.length !== 0) {
@@ -341,5 +359,5 @@ async function doMain(fn: () => Promise<void>): Promise<void> {
   }
 
   await fn();
-  lock.unlock();
+  await lock.unlock();
 }

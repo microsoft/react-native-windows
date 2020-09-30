@@ -28,8 +28,7 @@ using namespace xaml::Media;
 } // namespace winrt
 using namespace std;
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 //
 // TimerQueue
@@ -113,8 +112,6 @@ void Timing::OnRendering() {
         params.push_back(folly::dynamic(readyTimers[i]));
 
       instance->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(params));
-    } else {
-      assert(false && "getInstance().lock failed");
     }
   }
 }
@@ -144,8 +141,7 @@ void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, b
   }
 
   // Convert double duration in ms to TimeSpan
-  // Make sure duration is always larger than 16ms to avoid unnecessary wakeups.
-  auto period = TimeSpanFromMs(std::max(duration, 16.0));
+  auto period = TimeSpanFromMs(duration);
   const int64_t msFrom1601to1970 = 11644473600000;
   winrt::DateTime scheduledTime(TimeSpanFromMs(jsSchedulingTime + msFrom1601to1970));
   auto initialTargetTime = scheduledTime + period;
@@ -207,8 +203,7 @@ auto TimingModule::getMethods() -> std::vector<Method> {
   };
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp
 
 namespace facebook {
 namespace react {

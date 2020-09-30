@@ -17,9 +17,6 @@
     "typescript",
     "typescriptreact"
   ],
-  "eslint.options": {
-    "configFile": "./vnext/.eslintrc.js"
-  },
   "[json]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },

@@ -7,4 +7,5 @@
 #include <future>
 
 #undef GetCurrentTime
+#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.Collections.h>

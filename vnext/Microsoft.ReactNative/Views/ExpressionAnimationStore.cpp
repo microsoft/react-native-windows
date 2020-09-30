@@ -8,12 +8,11 @@
 
 #include <UI.Composition.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 // Expression for computing the center point of a UIElement, produces a vector3
 // with 2D translation to center.
-comp::ExpressionAnimation ExpressionAnimationStore::GetElementCenterPointExpression() {
+comp::ExpressionAnimation ExpressionAnimationStore::GetElementCenterPointExpression(comp::Compositor compositor) {
   /*
 
   // Because of a bug in the Composition system, we cannot cache this
@@ -42,7 +41,7 @@ comp::ExpressionAnimation ExpressionAnimationStore::GetElementCenterPointExpress
   // The way we obtain the center of an element is by using the ActualSize façade. However this was only added in 19h1
   // An expression animation that refers to a non-existent property (e.g. in RS5) will crash, so use the CenterPoint as
   // a fallback. This might be wrong but at least we won't crash.
-  return xaml::Window::Current().Compositor().CreateExpressionAnimation(
+  return compositor.CreateExpressionAnimation(
       g_HasActualSizeProperty == TriBit::Set
           ? L"vector3(0.5 * uielement.ActualSize.x, 0.5 * uielement.ActualSize.y, 0)"
           : L"vector3(uielement.CenterPoint.X, uielement.CenterPoint.Y, uielement.CenterPoint.Z)");
@@ -50,14 +49,13 @@ comp::ExpressionAnimation ExpressionAnimationStore::GetElementCenterPointExpress
 
 // Expression for applying a TransformMatrix about the centerpoint of a
 // UIElement, produces a Matrix4x4 with overall transform.
-comp::ExpressionAnimation ExpressionAnimationStore::GetTransformCenteringExpression() {
+comp::ExpressionAnimation ExpressionAnimationStore::GetTransformCenteringExpression(comp::Compositor compositor) {
   if (m_transformCenteringExpression == nullptr) {
-    m_transformCenteringExpression = xaml::Window::Current().Compositor().CreateExpressionAnimation(
+    m_transformCenteringExpression = compositor.CreateExpressionAnimation(
         L"Matrix4x4.CreateFromTranslation(-PS.center) * PS.transform * Matrix4x4.CreateFromTranslation(PS.center)");
   }
 
   return m_transformCenteringExpression;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

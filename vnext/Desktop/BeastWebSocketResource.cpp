@@ -122,7 +122,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::OnRead(error_code ec, size_t si
     }
 
     if (m_readHandler)
-      m_readHandler(size, std::move(message));
+      m_readHandler(size, std::move(message), m_stream->got_binary());
 
     m_bufferIn.consume(size);
   } // if (ec)
@@ -314,7 +314,7 @@ websocket::close_code BaseWebSocketResource<SocketLayer, Stream>::ToBeastCloseCo
 #pragma region IWebSocketResource members
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::Connect(const Protocols &protocols, const Options &options) {
+void BaseWebSocketResource<SocketLayer, Stream>::Connect(const Protocols &protocols, const Options &options) noexcept {
   // "Cannot call Connect more than once");
   assert(ReadyState::Connecting == m_readyState);
 
@@ -374,7 +374,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::OnConnect(
 }
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::Close(CloseCode code, const string &reason) {
+void BaseWebSocketResource<SocketLayer, Stream>::Close(CloseCode code, const string &reason) noexcept {
   if (m_closeRequested)
     return;
 
@@ -391,12 +391,12 @@ void BaseWebSocketResource<SocketLayer, Stream>::Close(CloseCode code, const str
 }
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::Send(const string &message) {
+void BaseWebSocketResource<SocketLayer, Stream>::Send(string &&message) noexcept {
   EnqueueWrite(std::move(message), false);
 }
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::SendBinary(const string &base64String) {
+void BaseWebSocketResource<SocketLayer, Stream>::SendBinary(string &&base64String) noexcept {
   m_stream->binary(true);
 
   string message;
@@ -418,7 +418,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::SendBinary(const string &base64
 }
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::Ping() {
+void BaseWebSocketResource<SocketLayer, Stream>::Ping() noexcept {
   if (ReadyState::Closed == m_readyState)
     return;
 
@@ -432,37 +432,39 @@ void BaseWebSocketResource<SocketLayer, Stream>::Ping() {
 #pragma region Handler setters
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::SetOnConnect(function<void()> &&handler) {
+void BaseWebSocketResource<SocketLayer, Stream>::SetOnConnect(function<void()> &&handler) noexcept {
   m_connectHandler = handler;
 }
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::SetOnPing(function<void()> &&handler) {
+void BaseWebSocketResource<SocketLayer, Stream>::SetOnPing(function<void()> &&handler) noexcept {
   m_pingHandler = handler;
 }
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::SetOnSend(function<void(size_t)> &&handler) {
+void BaseWebSocketResource<SocketLayer, Stream>::SetOnSend(function<void(size_t)> &&handler) noexcept {
   m_writeHandler = handler;
 }
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::SetOnMessage(function<void(size_t, const string &)> &&handler) {
+void BaseWebSocketResource<SocketLayer, Stream>::SetOnMessage(
+    function<void(size_t, const string &, bool isBinary)> &&handler) noexcept {
   m_readHandler = handler;
 }
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::SetOnClose(function<void(CloseCode, const string &)> &&handler) {
+void BaseWebSocketResource<SocketLayer, Stream>::SetOnClose(
+    function<void(CloseCode, const string &)> &&handler) noexcept {
   m_closeHandler = handler;
 }
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::SetOnError(function<void(Error &&)> &&handler) {
+void BaseWebSocketResource<SocketLayer, Stream>::SetOnError(function<void(Error &&)> &&handler) noexcept {
   m_errorHandler = handler;
 }
 
 template <typename SocketLayer, typename Stream>
-IWebSocketResource::ReadyState BaseWebSocketResource<SocketLayer, Stream>::GetReadyState() const {
+IWebSocketResource::ReadyState BaseWebSocketResource<SocketLayer, Stream>::GetReadyState() const noexcept {
   return m_readyState;
 }
 

@@ -10,55 +10,45 @@ MockWebSocketResource::~MockWebSocketResource() {}
 
 #pragma region IWebSocketResource overrides
 
-void MockWebSocketResource::Connect(const Protocols &protocols, const Options &options) /*override*/
+void MockWebSocketResource::Connect(const Protocols &protocols, const Options &options) noexcept /*override*/
 {
   if (Mocks.Connect)
     return Mocks.Connect(protocols, options);
-
-  throw exception("Not implemented");
 }
 
-void MockWebSocketResource::Ping() /*override*/
+void MockWebSocketResource::Ping() noexcept /*override*/
 {
   if (Mocks.Connect)
     return Mocks.Ping();
-
-  throw exception("Not implemented");
 }
 
-void MockWebSocketResource::Send(const string &message) /*override*/
+void MockWebSocketResource::Send(string &&message) noexcept /*override*/
 {
   if (Mocks.Send)
-    return Mocks.Send(message);
-
-  throw exception("Not implemented");
+    return Mocks.Send(std::move(message));
 }
 
-void MockWebSocketResource::SendBinary(const string &message) /*override*/
+void MockWebSocketResource::SendBinary(string &&message) noexcept /*override*/
 {
   if (Mocks.SendBinary)
-    return Mocks.SendBinary(message);
-
-  throw exception("Not implemented");
+    return Mocks.SendBinary(std::move(message));
 }
 
-void MockWebSocketResource::Close(CloseCode code, const string &reason) /*override*/
+void MockWebSocketResource::Close(CloseCode code, const string &reason) noexcept /*override*/
 {
   if (Mocks.Close)
     return Mocks.Close(code, reason);
-
-  throw exception("Not implemented");
 }
 
-IWebSocketResource::ReadyState MockWebSocketResource::GetReadyState() const /*override*/
+IWebSocketResource::ReadyState MockWebSocketResource::GetReadyState() const noexcept /*override*/
 {
   if (Mocks.GetReadyState)
     return Mocks.GetReadyState();
 
-  throw exception("Not implemented");
+  return ReadyState::Connecting;
 }
 
-void MockWebSocketResource::SetOnConnect(function<void()> &&handler) /*override*/
+void MockWebSocketResource::SetOnConnect(function<void()> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnConnect)
     return SetOnConnect(std::move(handler));
@@ -66,7 +56,7 @@ void MockWebSocketResource::SetOnConnect(function<void()> &&handler) /*override*
   m_connectHandler = std::move(handler);
 }
 
-void MockWebSocketResource::SetOnPing(function<void()> &&handler) /*override*/
+void MockWebSocketResource::SetOnPing(function<void()> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnPing)
     return Mocks.SetOnPing(std::move(handler));
@@ -74,7 +64,7 @@ void MockWebSocketResource::SetOnPing(function<void()> &&handler) /*override*/
   m_pingHandler = std::move(handler);
 }
 
-void MockWebSocketResource::SetOnSend(function<void(size_t)> &&handler) /*override*/
+void MockWebSocketResource::SetOnSend(function<void(size_t)> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnSend)
     return Mocks.SetOnSend(std::move(handler));
@@ -82,7 +72,7 @@ void MockWebSocketResource::SetOnSend(function<void(size_t)> &&handler) /*overri
   m_writeHandler = std::move(handler);
 }
 
-void MockWebSocketResource::SetOnMessage(function<void(size_t, const string &)> &&handler) /*override*/
+void MockWebSocketResource::SetOnMessage(function<void(size_t, const string &, bool)> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnMessage)
     return Mocks.SetOnMessage(std::move(handler));
@@ -90,7 +80,7 @@ void MockWebSocketResource::SetOnMessage(function<void(size_t, const string &)> 
   m_readHandler = std::move(handler);
 }
 
-void MockWebSocketResource::SetOnClose(function<void(CloseCode, const string &)> &&handler) /*override*/
+void MockWebSocketResource::SetOnClose(function<void(CloseCode, const string &)> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnClose)
     return Mocks.SetOnClose(std::move(handler));
@@ -98,7 +88,7 @@ void MockWebSocketResource::SetOnClose(function<void(CloseCode, const string &)>
   m_closeHandler = std::move(handler);
 }
 
-void MockWebSocketResource::SetOnError(function<void(Error &&)> &&handler) /*override*/
+void MockWebSocketResource::SetOnError(function<void(Error &&)> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnError)
     return Mocks.SetOnError(std::move(handler));
@@ -123,9 +113,9 @@ void MockWebSocketResource::OnSend(size_t size) {
     m_writeHandler(size);
 }
 
-void MockWebSocketResource::OnMessage(size_t size, const string &message) {
+void MockWebSocketResource::OnMessage(size_t size, const string &message, bool isBinary) {
   if (m_readHandler)
-    m_readHandler(size, message);
+    m_readHandler(size, message, isBinary);
 }
 
 void MockWebSocketResource::OnClose(CloseCode code, const string &reason) {

@@ -6,8 +6,7 @@
 #include "MultiplicationAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 MultiplicationAnimatedNode::MultiplicationAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -18,7 +17,7 @@ MultiplicationAnimatedNode::MultiplicationAnimatedNode(
   }
 
   m_propertySet.StartAnimation(s_valueName, [nodes = m_inputNodes, manager]() {
-    const auto anim = xaml::Window::Current().Compositor().CreateExpressionAnimation();
+    const auto anim = react::uwp::GetCompositor().CreateExpressionAnimation();
 
     anim.Expression([nodes, manager, anim]() {
       winrt::hstring expr = L"1";
@@ -32,5 +31,4 @@ MultiplicationAnimatedNode::MultiplicationAnimatedNode(
     return anim;
   }());
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

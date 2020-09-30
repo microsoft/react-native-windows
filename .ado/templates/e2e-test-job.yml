@@ -29,29 +29,20 @@ jobs:
       - task: CmdLine@2
         displayName: Set LocalDumps
         inputs:
-          script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd
+          script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd ReactUWPTestApp
           workingDirectory: $(Build.SourcesDirectory)
 
-      - task: NuGetCommand@2
-        displayName: NuGet restore - ReactUWPTestApp
+      - task: CmdLine@2
+        displayName: Set up AppVerifer on ReactUWPTestApp
         inputs:
-          command: restore
-          noCache: true
-          restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-         
+          script: regedit /S $(Build.SourcesDirectory)\.ado\ReactUWPTestApp.reg
+          workingDirectory: $(Build.SourcesDirectory)
+
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script: yarn windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
+          script: yarn windows --no-launch --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/E2ETest
-
-      - task: PublishBuildArtifacts@1
-        displayName: Upload build logs
-        condition:  succeededOrFailed()
-        inputs:    
-          pathtoPublish: '$(BuildLogDirectory)'
-          artifactName: 'Build logs - $(Agent.JobName)' 
 
       - task: CopyFiles@2
         displayName: Copy ReactUWPTestApp artifacts
@@ -61,26 +52,12 @@ jobs:
           contents: AppPackages\**
         condition: succeededOrFailed()
 
-      - task: PublishBuildArtifacts@1
+      - task: PublishPipelineArtifact@1
         displayName: "Publish Artifact:ReactUWPTestApp"
         inputs:
-          artifactName: ReactUWPTestApp
-          pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestApp
+          artifactName: ReactUWPTestApp-$(System.JobAttempt)
+          targetPath: $(Build.StagingDirectory)/ReactUWPTestApp
         condition: succeededOrFailed()
-
-      # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
-      - task: PowerShell@2
-        displayName: Pre-warm test app
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            Start-Sleep -Seconds 30
-
-      - task: PowerShell@2
-        displayName: 'Check TestApp'
-        inputs:
-          targetType: 'inline'
-          script: 'if ((Get-Process ReactUwpTestApp) -eq $Null) { echo "TestApp is not running"; exit 1}'
 
       - task: CmdLine@2
         displayName: run e2etest
@@ -124,11 +101,11 @@ jobs:
           script: ". $(Build.SourcesDirectory)\\.ado\\Get-ShellScaling.ps1 > $(Build.StagingDirectory)\\ReactUWPTestAppTreeDump\\scaleFactor.txt"
         condition: failed()
 
-      - task: PublishBuildArtifacts@1
+      - task: PublishPipelineArtifact@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
         inputs:
-          artifactName: ReactUWPTestAppTreeDump
-          pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
+          artifactName: ReactUWPTestAppTreeDump-$(System.JobAttempt)
+          targetPath: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
         condition: succeededOrFailed()
 
       - task: PublishTestResults@2
@@ -151,3 +128,8 @@ jobs:
           script: |
             Get-WmiObject Win32_LogicalDisk
         condition: succeededOrFailed()
+
+      - template: upload-build-logs.yml
+        parameters:
+          buildLogDirectory: '$(BuildLogDirectory)'
+          condition: succeededOrFailed()

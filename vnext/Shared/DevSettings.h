@@ -104,6 +104,11 @@ struct DevSettings {
   /// Superseded by PreparedScriptStore on the JSI stack, and will be removed
   /// soon. (See #3603)
   ChakraBundleUrlMetadataMap chakraBundleUrlMetadataMap;
+
+  /// Callback to show the devmenu
+  std::function<void()> showDevMenuCallback;
+
+  bool inlineSourceMap{true};
 };
 
 } // namespace react

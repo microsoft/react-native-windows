@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Diagnostics.ContractsLight;
 using Microsoft.CodeAnalysis;
 
 namespace Microsoft.ReactNative.Managed.CodeGen.Model
@@ -13,21 +15,31 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
 
     public bool IsSynchronous { get; }
 
-    public MethodReturnType ReturnType { get; }
+    public MethodReturnStyle ReturnStyle { get; }
 
-    public ReactMethod(IMethodSymbol method, string name, bool isSynchronous = false)
+    public ITypeSymbol EffectiveReturnType { get; }
+
+    public IReadOnlyList<IParameterSymbol> EffectiveParameters { get; }
+
+    public ReactMethod(IMethodSymbol method, string name, MethodReturnStyle returnStyle, ITypeSymbol effectiveReturnType, IReadOnlyList<IParameterSymbol> effectiveParameters, bool isSynchronous)
     {
+      Contract.Requires(!(IsSynchronous && returnStyle == MethodReturnStyle.Task), "Task style methods are required to be asynchronous");
       Method = method;
       Name = name;
+      ReturnStyle = returnStyle;
+      EffectiveReturnType = effectiveReturnType;
+      EffectiveParameters = effectiveParameters;
       IsSynchronous = isSynchronous;
     }
 
-    public enum MethodReturnType
+    public enum MethodReturnStyle
     {
       Void = 0,
-      Callback = 1,
-      TwoCallbacks = 2,
-      Promise = 3
+      Callback,
+      TwoCallbacks,
+      Promise,
+      ReturnValue,
+      Task,
     }
   }
 }

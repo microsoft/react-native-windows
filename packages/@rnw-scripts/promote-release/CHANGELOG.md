@@ -1,8 +1,36 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Wed, 01 Jul 2020 05:06:19 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Sep 2020 05:06:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.5
+
+Mon, 21 Sep 2020 05:06:22 GMT
+
+### Patches
+
+- Fixup eslint config (ngerlem@microsoft.com)
+
+## 0.2.0
+
+Tue, 11 Aug 2020 07:36:05 GMT
+
+### Minor changes
+
+- Don't write release variables (ngerlem@microsoft.com)
+
+### Patches
+
+- Package-Editing Utilities To Its Own Package (ngerlem@microsoft.com)
+
+## 0.1.0
+
+Tue, 28 Jul 2020 05:06:13 GMT
+
+### Minor changes
+
+- Support packages opting into promotion (ngerlem@microsoft.com)
 
 ## 0.0.2
 

@@ -25,20 +25,20 @@ class RAMBundleRegistry;
 }
 } // namespace facebook
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class MessageQueueThread;
 
-class WebSocketJSExecutor : public facebook::react::JSExecutor {
+class WebSocketJSExecutor : public facebook::react::JSExecutor,
+                            public std::enable_shared_from_this<WebSocketJSExecutor> {
  public:
   WebSocketJSExecutor(
       std::shared_ptr<facebook::react::ExecutorDelegate> delegate,
       std::shared_ptr<facebook::react::MessageQueueThread> messageQueueThread);
   ~WebSocketJSExecutor() override;
 
-  virtual void loadApplicationScript(std::unique_ptr<const facebook::react::JSBigString> script, std::string sourceURL)
-      override;
+  virtual void initializeRuntime() override;
+  virtual void loadBundle(std::unique_ptr<const facebook::react::JSBigString> script, std::string sourceURL) override;
   virtual void setBundleRegistry(std::unique_ptr<facebook::react::RAMBundleRegistry> bundleRegistry) override;
   virtual void registerBundle(uint32_t bundleId, const std::string &bundlePath) override;
   virtual void callFunction(const std::string &moduleId, const std::string &methodId, const folly::dynamic &arguments)
@@ -124,5 +124,4 @@ class WebSocketJSExecutor : public facebook::react::JSExecutor {
   std::atomic<LONG> m_requestId{0};
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -1,18 +1,14 @@
 // @ts-check
-const projectConfig = require('./local-cli/lib-commonjs/config/projectConfig');
-const dependencyConfig = require('./local-cli/lib-commonjs/config/dependencyConfig');
+const cli = require('@react-native-windows/cli');
 
 module.exports = {
     // **** This section defined commands and options on how to provide the Windows platform to external applications
-    commands: [
-      require('./local-cli/lib-commonjs/runWindows/runWindows'),
-      require('./local-cli/lib-commonjs/runWindows/utils/autolink'),
-    ],
+    commands: cli.commands,
     platforms: {
       windows: {
         linkConfig: () => null,
-        projectConfig: projectConfig.projectConfigWindows,
-        dependencyConfig: dependencyConfig.dependencyConfigWindows,
+        projectConfig: cli.projectConfig,
+        dependencyConfig: cli.dependencyConfig,
         npmPackageName: 'react-native-windows',
       },
     },

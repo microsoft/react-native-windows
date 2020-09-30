@@ -28,6 +28,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     public static readonly SyntaxToken ModuleBuilder = Identifier("moduleBuilder");
     public static readonly SyntaxToken Module = Identifier("module");
     public static readonly SyntaxToken CreatePackage = Identifier("CreatePackage");
+    public static readonly SyntaxToken CreatePackageImplementation = Identifier("CreatePackageImplementation");
     public static readonly SyntaxToken AddViewManager = Identifier("AddViewManager");
     public static readonly SyntaxToken AddModule = Identifier("AddModule");
 
@@ -72,6 +73,9 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     public static readonly SyntaxToken ValueLocalName = Identifier("value");
     public static readonly SyntaxToken AssemblyLocalName = Identifier("assembly");
     public static readonly SyntaxToken AssemblyPropertyName = Identifier("Assembly");
+
+    public static readonly SyntaxToken ContinueWith = Identifier("ContinueWith");
+    public static readonly SyntaxToken TaskLocalName = Identifier("task");
   }
 
  

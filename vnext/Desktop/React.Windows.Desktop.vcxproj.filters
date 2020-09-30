@@ -57,9 +57,6 @@
     <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IViewManager.idl">
-      <Filter>ABI</Filter>
-    </Midl>
     <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl">
       <Filter>ABI</Filter>
     </Midl>
@@ -84,10 +81,13 @@
     <Midl Include="ABI\TestController.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\ReactInstance.idl">
+    <Midl Include="..\Microsoft.ReactNative\IReactNonAbiValue.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactNonAbiValue.idl">
+    <Midl Include="..\Microsoft.ReactNative\JsiApi.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl">
       <Filter>ABI</Filter>
     </Midl>
   </ItemGroup>
@@ -99,6 +99,7 @@
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactContext.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactInstanceSettings.cpp" />
     <ClCompile Include="ABI\MemoryTracker.cpp">
@@ -122,9 +123,6 @@
     <ClCompile Include="CxxReactWin32\JSBigString.cpp">
       <Filter>Source Files\CxxReactWin32</Filter>
     </ClCompile>
-    <ClCompile Include="DevSupportManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="HttpResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -134,21 +132,38 @@
     <ClCompile Include="module.g.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\NetworkingModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\TimingModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\WebSocketModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="WebSocketResourceFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\NativeModulesProvider.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\DynamicReader.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\DynamicWriter.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactContext.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactModuleBuilder.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\JsiReader.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\JsiWriter.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactPackageBuilder.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\RedBox.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
+    <ClCompile Include="RuntimeOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MemoryTracker.h">
@@ -166,12 +181,12 @@
     <ClInclude Include="ABI\TestController.h">
       <Filter>ABI</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BeastWebSocketResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DevSupportManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HttpResource.h">
@@ -180,16 +195,18 @@
     <ClInclude Include="JSBigStringResourceDll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\NetworkingModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\TimingModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="NativeModuleFactories.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorInfo.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

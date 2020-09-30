@@ -3,14 +3,15 @@
 
 #include "pch.h"
 #include "AlertModule.h"
-// #include <XamlUtils.h>
 #include "Unicode.h"
 
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Media.h>
+#include <UI.Xaml.Shapes.h>
 #include <Utils/ValueUtils.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "Utils/Helpers.h"
-
-#include <UI.Xaml.Controls.h>
 
 namespace Microsoft::ReactNative {
 
@@ -27,8 +28,29 @@ void Alert::showAlert(ShowAlertArgs const &args, std::function<void(std::string)
 
       if (react::uwp::Is19H1OrHigher()) {
         // XamlRoot added in 19H1
-        if (auto xamlRoot = React::XamlUIService::GetXamlRoot(strongThis->m_context.Properties().Handle())) {
+        if (const auto xamlRoot = React::XamlUIService::GetXamlRoot(strongThis->m_context.Properties().Handle())) {
           dialog.XamlRoot(xamlRoot);
+          auto rootChangedToken = xamlRoot.Changed([=](auto &&, auto &&) {
+            const auto rootSize = xamlRoot.Size();
+            const auto popupRoot = xaml::Media::VisualTreeHelper::GetParent(dialog);
+            const auto nChildren = xaml::Media::VisualTreeHelper::GetChildrenCount(popupRoot);
+            if (nChildren == 2) {
+              // The first is supposed to be the smoke screen (Rectangle), and the second the content dialog
+              if (const auto smoke =
+                      xaml::Media::VisualTreeHelper::GetChild(popupRoot, 0).try_as<xaml::Shapes::Rectangle>()) {
+                const auto assertDialog =
+                    xaml::Media::VisualTreeHelper::GetChild(popupRoot, 1).try_as<xaml::Controls::ContentDialog>();
+                if (assertDialog == dialog) {
+                  smoke.Width(rootSize.Width);
+                  smoke.Height(rootSize.Height);
+                  dialog.Width(rootSize.Width);
+                  dialog.Height(rootSize.Height);
+                }
+              }
+            }
+          });
+
+          dialog.Closed([=](auto &&, auto &&) { xamlRoot.Changed(rootChangedToken); });
         }
       }
 

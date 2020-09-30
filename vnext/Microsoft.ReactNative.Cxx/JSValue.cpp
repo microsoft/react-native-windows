@@ -1,5 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+// IMPORTANT: Before updating this file
+// please read react-native-windows repo:
+// vnext/Microsoft.ReactNative.Cxx/README.md
 
 #include "pch.h"
 #include "JSValue.h"
@@ -169,7 +172,11 @@ struct JSValueLogWriter {
   }
 
   JSValueLogWriter &WriteSeparator(bool &start) noexcept {
-    m_stream << start ? (start = false, "") : ",";
+    if (start) {
+      start = false;
+    } else {
+      m_stream << ",";
+    }
     return *this;
   }
 
@@ -466,6 +473,11 @@ JSValue::~JSValue() noexcept {
       break;
     case JSValueType::String:
       m_string.~basic_string();
+      break;
+    case JSValueType::Boolean:
+    case JSValueType::Int64:
+    case JSValueType::Double:
+    case JSValueType::Null:
       break;
   }
 

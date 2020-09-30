@@ -2,7 +2,6 @@ name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/release.yml
   - template: variables/vs2019.yml
 
 schedules:
@@ -12,7 +11,7 @@ schedules:
     include:
       - master
 
-- cron: "0 5 * * 1" # 5AM Monday UTC (10PM Sunday PST)
+- cron: "0 15 * * 1" # 3PM Monday UTC (8AM Monday PST)
   displayName: Weekly stable publish build
   branches:
     include:
@@ -38,34 +37,24 @@ jobs:
 
       - template: templates/yarn-install.yml
 
-      - task: CmdLine@2
+      - script: yarn build
         displayName: yarn build
-        inputs:
-          script: yarn build
 
-      - task: CmdLine@2
-        displayName: Beachball Publish
-        inputs:
-          script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public $(extraPublishArgs)
+      - script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags
+        displayName: Beachball Publish (Master Branch)
+        condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
-      - task: CmdLine@2
-        displayName: Create GitHub Release
-        inputs:
-          script: npx $(githubReleaseNpxArgs) @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
+      - script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
+        displayName: Beachball Publish (Stable Branch)
+        condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
-      - task: CmdLine@2
-        displayName: Set Version Env Vars
-        name: setVersionEnvVars
-        inputs:
-          script: node ./.ado/setVersionEnvVars.js
-        env:
-          RUNNER_TEMP: $(Build.StagingDirectory)
+      - script: npx --ignore-existing @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
+        displayName: Create GitHub Releases for New Tags (Stable Branch)
+        condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
-      - task: PublishBuildArtifacts@1
-        displayName: Publish VersionEnvVars
-        inputs:
-          PathtoPublish: $(Build.StagingDirectory)/versionEnvVars
-          ArtifactName: VersionEnvVars
+      - template: templates/set-version-vars.yml
+
+      - template: templates/publish-version-vars.yml
 
   - job: RnwNativeBuildDesktop
     displayName: Build Desktop
@@ -75,28 +64,27 @@ jobs:
         X64Debug:
           BuildConfiguration: Debug
           BuildPlatform: x64
-        X86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
+        ARM64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM64
+        ARM64Release:
+          BuildConfiguration: Release
+          BuildPlatform: ARM64
+
     pool:
       vmImage: $(VmImage)
 
     steps:
-      - task: DownloadBuildArtifacts@0
-        displayName: Download VersionEnvVars
-        inputs:
-          artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
-
-      - task: CmdLine@2
-        inputs:
-          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
+      - template: templates/apply-published-version-vars.yml
 
       - template: templates/build-rnw.yml
         parameters:
@@ -148,19 +136,11 @@ jobs:
       vmImage: $(VmImage)
 
     steps:
-      - task: DownloadBuildArtifacts@0
-        displayName: Download VersionEnvVars
-        inputs:
-          artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
-
-      - task: CmdLine@2
-        inputs:
-          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
+      - template: templates/apply-published-version-vars.yml
 
       - template: templates/build-rnw.yml
         parameters:
-          project: vnext/ReactWindows-Universal.sln
+          project: vnext/Microsoft.ReactNative.sln
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -182,22 +162,24 @@ jobs:
       - RnwNpmPublish
       - RnwNativeBuildDesktop
       - RnwNativeBuildUniversal
-    displayName: Publish NuGet
+    displayName: Sign Binaries and Publish NuGet
     pool:
       vmImage: $(VmImage)
+      # Disable codesign for now, until we're sure
+      # vmImage: Package ES Lab E
 
     steps:
       - checkout: none
 
-      - task: DownloadBuildArtifacts@0
-        displayName: Download VersionEnvVars
-        inputs:
-          artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
+      # Disable codesign for now, until we're sure
+      # - task: PkgESSetupBuild@10
+      #   displayName: 'XESSetupBuild'
+      #   inputs:
+      #     productName: microsoftreactnative
+      #     branchVersion: false
+      #     nugetVer: true
 
-      - task: CmdLine@2
-        inputs:
-          script: node $(Build.StagingDirectory)/VersionEnvVars/versionEnvVars.js
+      - template: templates/apply-published-version-vars.yml
 
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0
@@ -208,9 +190,11 @@ jobs:
         parameters:
           publishCommitId: $(publishCommitId)
           npmVersion: $(npmVersion)
+          # Disable codesign for now, until we're sure
+          # signMicrosoft: true
 
-      - task: PublishBuildArtifacts@1
+      - task: PublishPipelineArtifact@1
         displayName: "Publish final nuget artifacts"
         inputs:
-          PathtoPublish: $(System.DefaultWorkingDirectory)\NugetRootFinal
-          ArtifactName: "ReactWindows-final-nuget"
+          targetPath: $(System.DefaultWorkingDirectory)\NugetRootFinal
+          artifactName: "ReactWindows-final-nuget"

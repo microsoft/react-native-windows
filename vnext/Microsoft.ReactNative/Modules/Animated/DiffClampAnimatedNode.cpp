@@ -6,8 +6,7 @@
 #include "DiffClampAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 DiffClampAnimatedNode::DiffClampAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -18,7 +17,7 @@ DiffClampAnimatedNode::DiffClampAnimatedNode(
   m_max = config.find(s_maxName).dereference().second.asDouble();
 
   m_propertySet.StartAnimation(s_valueName, [node = m_inputNodeTag, min = m_min, max = m_max, manager]() {
-    const auto anim = xaml::Window::Current().Compositor().CreateExpressionAnimation();
+    const auto anim = react::uwp::GetCompositor().CreateExpressionAnimation();
     anim.SetReferenceParameter(s_inputParameterName, manager->GetValueAnimatedNode(node)->PropertySet());
     anim.SetScalarParameter(s_minParameterName, static_cast<float>(min));
     anim.SetScalarParameter(s_maxParameterName, static_cast<float>(max));
@@ -28,5 +27,4 @@ DiffClampAnimatedNode::DiffClampAnimatedNode(
     return anim;
   }());
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

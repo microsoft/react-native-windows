@@ -3,8 +3,7 @@
 
 #pragma once
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 // Holds a cache of unique ExpressionAnimations.
 // It's better for performance to cache each unique ExpressionAnimation, as
@@ -14,8 +13,8 @@ namespace uwp {
 // resolved, so they can be reused.
 class ExpressionAnimationStore {
  public:
-  comp::ExpressionAnimation GetElementCenterPointExpression();
-  comp::ExpressionAnimation GetTransformCenteringExpression();
+  comp::ExpressionAnimation GetElementCenterPointExpression(comp::Compositor compositor);
+  comp::ExpressionAnimation GetTransformCenteringExpression(comp::Compositor compositor);
 
  private:
   // Compositor bug, see notes in GetElementCenterPointExpression()
@@ -24,5 +23,4 @@ class ExpressionAnimationStore {
   comp::ExpressionAnimation m_transformCenteringExpression{nullptr};
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

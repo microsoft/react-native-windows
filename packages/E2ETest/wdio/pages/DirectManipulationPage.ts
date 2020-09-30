@@ -8,18 +8,9 @@ import {
   MEASURE_IN_WINDOW_BUTTON,
   DIRECT_MANIPULATION_RESULT,
   MEASURE_LAYOUT_BUTTON,
-} from '../../app/Consts';
+} from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 class DirectManipulationPage extends BasePage {
-  backToHomePage() {
-    this.homeButton.click();
-    this.waitForPageLoaded();
-  }
-
-  isPageLoaded() {
-    return super.isPageLoaded() && this.measureInWindowButton.isDisplayed();
-  }
-
   clickMeasureInWindowAndGetResult() {
     this.measureInWindowButton.click();
     return this.directManipulationResult.getText();

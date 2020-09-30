@@ -5,8 +5,7 @@
 
 #include <Views/ControlViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class SliderViewManager : public ControlViewManager {
   using Super = ControlViewManager;
@@ -30,5 +29,4 @@ class SliderViewManager : public ControlViewManager {
   friend class SliderShadowNode;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

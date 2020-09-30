@@ -5,9 +5,9 @@
 
 #include <Views/ViewManagerBase.h>
 
+#include "Unicode.h"
 #include "ViewPanel.h"
 #include "cdebug.h"
-#include "unicode.h"
 
 #include <Modules/NativeUIManager.h>
 
@@ -16,14 +16,11 @@
 #include <TestHook.h>
 #include <Views/ShadowNodeBase.h>
 
-using namespace folly;
-
 namespace winrt {
 using namespace xaml;
 }
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 float GetConstrainedResult(float constrainTo, float measuredSize, YGMeasureMode measureMode) {
   // Round up to workaround truncation inside yoga
@@ -82,21 +79,21 @@ YGSize DefaultYogaSelfMeasureFunc(
 ViewManagerBase::ViewManagerBase(const std::shared_ptr<IReactInstance> &reactInstance)
     : m_wkReactInstance(reactInstance) {}
 
-dynamic ViewManagerBase::GetExportedViewConstants() const {
-  return dynamic::object();
+folly::dynamic ViewManagerBase::GetExportedViewConstants() const {
+  return folly::dynamic::object();
 }
 
-dynamic ViewManagerBase::GetCommands() const {
-  return dynamic::object();
+folly::dynamic ViewManagerBase::GetCommands() const {
+  return folly::dynamic::object();
 }
 
-dynamic ViewManagerBase::GetNativeProps() const {
+folly::dynamic ViewManagerBase::GetNativeProps() const {
   folly::dynamic props = folly::dynamic::object();
   props.update(folly::dynamic::object("onLayout", "function")("keyDownEvents", "array")("keyUpEvents", "array"));
   return props;
 }
 
-dynamic ViewManagerBase::GetConstants() const {
+folly::dynamic ViewManagerBase::GetConstants() const {
   folly::dynamic constants = folly::dynamic::object("Constants", GetExportedViewConstants())("Commands", GetCommands())(
       "NativeProps", GetNativeProps());
 
@@ -122,7 +119,7 @@ void ViewManagerBase::destroyShadow(facebook::react::ShadowNode *node) const {
   delete node;
 }
 
-dynamic ViewManagerBase::GetExportedCustomBubblingEventTypeConstants() const {
+folly::dynamic ViewManagerBase::GetExportedCustomBubblingEventTypeConstants() const {
   const PCSTR standardEventBaseNames[] = {
       // Generic events
       "Press",
@@ -161,16 +158,12 @@ dynamic ViewManagerBase::GetExportedCustomBubblingEventTypeConstants() const {
   return bubblingEvents;
 }
 
-dynamic ViewManagerBase::GetExportedCustomDirectEventTypeConstants() const {
+folly::dynamic ViewManagerBase::GetExportedCustomDirectEventTypeConstants() const {
   folly::dynamic eventTypes = folly::dynamic::object();
   eventTypes.update(folly::dynamic::object("topLayout", folly::dynamic::object("registrationName", "onLayout"))(
       "topMouseEnter", folly::dynamic::object("registrationName", "onMouseEnter"))(
       "topMouseLeave", folly::dynamic::object("registrationName", "onMouseLeave"))(
-      "topAccessibilityAction", folly::dynamic::object("registrationName", "onAccessibilityAction"))
-                    //    ("topMouseMove",
-                    //    folly::dynamic::object("registrationName",
-                    //    "onMouseMove"))
-  );
+      "topAccessibilityAction", folly::dynamic::object("registrationName", "onAccessibilityAction")));
   return eventTypes;
 }
 
@@ -214,7 +207,7 @@ void ViewManagerBase::ReplaceChild(const XamlView &parent, const XamlView &oldCh
   assert(false);
 }
 
-void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const dynamic &reactDiffMap) {
+void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   // Directly dirty this node since non-layout changes like the text property do
   // not trigger relayout
   //  There isn't actually a yoga node for RawText views, but it will invalidate
@@ -232,6 +225,8 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const dynam
       NotifyUnimplementedProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
+
+  OnPropertiesUpdated(nodeToUpdate);
 }
 
 bool ViewManagerBase::UpdateProperty(
@@ -239,7 +234,7 @@ bool ViewManagerBase::UpdateProperty(
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
   if (propertyName == "onLayout") {
-    nodeToUpdate->m_onLayout = !propertyValue.isNull() && propertyValue.asBool();
+    nodeToUpdate->m_onLayoutRegistered = !propertyValue.isNull() && propertyValue.asBool();
   } else if (propertyName == "keyDownEvents") {
     nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
   } else if (propertyName == "keyUpEvents") {
@@ -298,7 +293,7 @@ void ViewManagerBase::SetLayoutProps(
   fe.Height(height);
 
   // Fire Events
-  if (nodeToUpdate.m_onLayout) {
+  if (nodeToUpdate.m_onLayoutRegistered) {
     int64_t tag = GetTag(viewToUpdate);
     folly::dynamic layout = folly::dynamic::object("x", left)("y", top)("height", height)("width", width);
 
@@ -321,5 +316,4 @@ bool ViewManagerBase::RequiresYogaNode() const {
 bool ViewManagerBase::IsNativeControlWithSelfLayout() const {
   return GetYogaCustomMeasureFunc() != nullptr;
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

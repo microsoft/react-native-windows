@@ -27,6 +27,7 @@ import type {
   BlurEvent,
   FocusEvent,
   LayoutEvent,
+  MouseEvent, // [Windows]
   PressEvent,
 } from '../../Types/CoreEventTypes';
 import Platform from '../../Utilities/Platform';
@@ -66,12 +67,11 @@ type Props = $ReadOnly<{|
   rejectResponderTermination?: ?boolean,
   testID?: ?string,
   touchSoundDisabled?: ?boolean,
-  acceptsKeyboardFocus?: ?boolean, // [Windows]
   accessibilityPosInSet?: ?number, // [Windows]
   accessibilitySetSize?: ?number, // [Windows]
   onAccessibilityTap?: ?() => void, // [Windows]
-  onMouseEnter?: ?(event: SyntheticEvent<{}>) => void, // [Windows]
-  onMouseLeave?: ?(event: SyntheticEvent<{}>) => void, // [Windows]
+  onMouseEnter?: ?(event: MouseEvent) => void, // [Windows]
+  onMouseLeave?: ?(event: MouseEvent) => void, // [Windows]
   tabIndex?: ?number, // [Windows]
   tooltip?: ?Stringish, // [Windows]
 |}>;
@@ -137,10 +137,6 @@ class TouchableWithoutFeedback extends React.Component<Props, State> {
     const elementProps: {[string]: mixed, ...} = {
       ...eventHandlersWithoutBlurAndFocus,
       accessible: this.props.accessible !== false,
-      acceptsKeyboardFocus:
-        (this.props.acceptsKeyboardFocus === undefined ||
-          this.props.acceptsKeyboardFocus === true) &&
-        !this.props.disabled, // [Windows]
       focusable:
         this.props.focusable !== false && this.props.onPress !== undefined,
     };
@@ -198,6 +194,7 @@ function createPressabilityConfig(props: Props): PressabilityConfig {
     delayLongPress: props.delayLongPress,
     delayPressIn: props.delayPressIn,
     delayPressOut: props.delayPressOut,
+    minPressDuration: 0,
     pressRectOffset: props.pressRetentionOffset,
     android_disableSound: props.touchSoundDisabled,
     onBlur: props.onBlur,
@@ -206,6 +203,8 @@ function createPressabilityConfig(props: Props): PressabilityConfig {
     onPress: props.onPress,
     onPressIn: props.onPressIn,
     onPressOut: props.onPressOut,
+    onMouseEnter: props.onMouseEnter, // [Windows]
+    onMouseLeave: props.onMouseLeave, // [Windows]
   };
 }
 

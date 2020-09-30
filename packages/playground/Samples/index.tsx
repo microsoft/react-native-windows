@@ -8,7 +8,6 @@ import * as React from 'react';
 import {
   AppRegistry,
   Button,
-  CheckBox,
   StyleSheet,
   ScrollView,
   Switch,
@@ -58,7 +57,7 @@ class PopupButton extends React.Component<
   {
     buttonTitle: string;
     isFlyoutVisible: boolean;
-    popupCheckBoxState: boolean;
+    popupSwitchState: boolean;
     isLightDismissEnabled: boolean;
   }
 > {
@@ -70,7 +69,7 @@ class PopupButton extends React.Component<
     this.state = {
       buttonTitle: 'Open Flyout',
       isFlyoutVisible: false,
-      popupCheckBoxState: true,
+      popupSwitchState: true,
       isLightDismissEnabled: false,
     };
   }
@@ -79,7 +78,7 @@ class PopupButton extends React.Component<
     return (
       <View style={{flexDirection: 'row', padding: 20}}>
         <Text style={{padding: 5}}>isLightDismissEnabled: </Text>
-        <CheckBox
+        <Switch
           value={this.state.isLightDismissEnabled}
           onValueChange={value => this.setState({isLightDismissEnabled: value})}
         />
@@ -98,12 +97,10 @@ class PopupButton extends React.Component<
             <Text style={{justifyContent: 'center', paddingTop: 10}}>
               This is a flyout
             </Text>
-            <CheckBox
+            <Switch
               style={{justifyContent: 'center', padding: 20}}
-              value={this.state.popupCheckBoxState}
-              onValueChange={value =>
-                this.setState({popupCheckBoxState: value})
-              }
+              value={this.state.popupSwitchState}
+              onValueChange={value => this.setState({popupSwitchState: value})}
             />
             <Button onPress={this._onPopupButtonPressed} title="Close" />
           </View>
@@ -440,16 +437,13 @@ export default class Bootstrap extends React.Component<
             <View style={{flexDirection: 'column', alignItems: 'center'}}>
               <Text>circle</Text>
               <View
+                focusable
                 style={{
                   backgroundColor: 'orange',
                   borderRadius: 30,
                   width: 60,
                   height: 60,
                   margin: 10,
-                }}
-                {...{
-                  // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-                  acceptsKeyboardFocus: true,
                 }}>
                 <View
                   style={{backgroundColor: 'magenta', width: 60, height: 60}}
@@ -678,18 +672,6 @@ export default class Bootstrap extends React.Component<
               alignItems: 'center',
               marginTop: 15,
             }}>
-            <CheckBox
-              onValueChange={value => this.setState({checkBoxIsOn: value})}
-              value={this.state.checkBoxIsOn}
-            />
-            <Text>Checkbox {this.state.checkBoxIsOn ? 'ON' : 'OFF'}</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: 15,
-            }}>
             <Switch
               onValueChange={value => this.setState({switchIsOn: value})}
               value={this.state.switchIsOn}
@@ -789,7 +771,7 @@ export default class Bootstrap extends React.Component<
     Linking.canOpenURL('https://www.microsoft.com')
       .then(canOpen => {
         if (canOpen) {
-          Linking.openURL('https://www.microsoft.com');
+          void Linking.openURL('https://www.microsoft.com');
         }
       })
       .catch(() => {

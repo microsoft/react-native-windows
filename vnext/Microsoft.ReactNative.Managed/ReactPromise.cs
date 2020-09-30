@@ -16,77 +16,102 @@ using System.Collections.Generic;
 
 namespace Microsoft.ReactNative.Managed
 {
-  // Implementation of IReactPromise that represents a JavaScript Promise
-  // which can be passed to the native module as a method parameter.
-  //
-  // Methods with ReactMethodAttribute that use an IReactPromise as the last parameter
-  // will be marked as "promise" and will return a promise when invoked from JavaScript.
-  public class ReactPromise<T> : IReactPromise<T>
-  {
-    private static readonly string ErrorDefaultCode = "EUNSPECIFIED";
-    private static readonly string ErrorDefaultMessage = "Error not specified.";
-
-    // Keys for m_reject's Error object
-    private static readonly string ErrorMapKeyCode = "code";
-    private static readonly string ErrorMapKeyMessage = "message";
-    private static readonly string ErrorMapKeyUserInfo = "userInfo";
-    private static readonly string ErrorMapKeyNativeStack = "nativeStackWindows";
-
-    private IJSValueWriter m_writer;
-    private MethodResultCallback m_resolve;
-    private MethodResultCallback m_reject;
-
-    public ReactPromise(IJSValueWriter writer, MethodResultCallback resolve, MethodResultCallback reject)
+    // Implementation of IReactPromise that represents a JavaScript Promise
+    // which can be passed to the native module as a method parameter.
+    //
+    // Methods with ReactMethodAttribute that use an IReactPromise as the last parameter
+    // will be marked as "promise" and will return a promise when invoked from JavaScript.
+    public class ReactPromise<T> : IReactPromise<T>
     {
-      m_writer = writer;
-      m_resolve = resolve;
-      m_reject = reject;
-    }
+        private IJSValueWriter m_writer;
+        private MethodResultCallback m_resolve;
+        private MethodResultCallback m_reject;
 
-    //  Successfully resolve the ReactPromise with an optional value.
-    public void Resolve(T value)
-    {
-      if (m_resolve != null)
-      {
-        m_writer.WriteArgs(value);
-        m_resolve(m_writer);
-      }
-
-      Clear();
-    }
-
-    // Reject the ReactPromise and report an error.
-    public void Reject(ReactError error)
-    {
-      if (m_reject != null)
-      {
-        var errorInfo = new Dictionary<string, JSValue>
+        public ReactPromise(IJSValueWriter writer, MethodResultCallback resolve, MethodResultCallback reject)
         {
-          [ErrorMapKeyCode] = new JSValue(error?.Code ?? ErrorDefaultCode),
-          [ErrorMapKeyMessage] = new JSValue(error?.Message ?? error?.Exception?.Message ?? ErrorDefaultMessage),
+            m_writer = writer;
+            m_resolve = resolve;
+            m_reject = reject;
+        }
 
-          // For consistency with iOS ensure userInfo key exists, even if we null it.
-          // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
-          [ErrorMapKeyUserInfo] = (error?.UserInfo != null) ? new JSValue(error.UserInfo) : new JSValue(),
+        //  Successfully resolve the ReactPromise with an optional value.
+        public void Resolve(T value)
+        {
+            if (m_resolve != null)
+            {
+                m_writer.WriteArgs(value);
+                m_resolve(m_writer);
+            }
 
-          // Attach a nativeStackWindows string if an exception was passed.
-          // This matches iOS behavior - iOS adds a `nativeStackIOS` property
-          // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
-          [ErrorMapKeyNativeStack] = new JSValue(error?.Exception?.StackTrace ?? "")
-        };
+            Clear();
+        }
 
-        m_writer.WriteArgs(errorInfo);
-        m_reject(m_writer);
-      }
+        // Reject the ReactPromise and report an error.
+        public void Reject(ReactError error)
+        {
+            if (m_reject != null)
+            {
+                ReactPromiseWriter.WriteError(m_writer,
+                  code: error?.Code,
+                  message: error?.Message,
+                  userInfo: error?.UserInfo,
+                  stackTrace: error?.Exception?.StackTrace);
+                m_reject(m_writer);
+            }
 
-      Clear();
+            Clear();
+        }
+
+        private void Clear()
+        {
+            m_resolve = null;
+            m_reject = null;
+            m_writer = null;
+        }
     }
 
-    private void Clear()
+    public static class ReactPromiseWriter
     {
-      m_resolve = null;
-      m_reject = null;
-      m_writer = null;
+        public static void WriteError(
+          IJSValueWriter writer,
+          string code,
+          string message,
+          IReadOnlyDictionary<string, JSValue> userInfo,
+          string stackTrace)
+        {
+            writer.WriteArrayBegin();
+            {
+                writer.WriteObjectBegin();
+                {
+                    writer.WritePropertyName(ReactErrorConstants.Code);
+                    writer.WriteString(code ?? ReactErrorConstants.DefaultCode);
+
+                    writer.WritePropertyName(ReactErrorConstants.Message);
+                    writer.WriteString(message ?? ReactErrorConstants.DefaultMessage);
+
+                    // For consistency with iOS ensure userInfo key exists, even if we null it.
+                    // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
+                    writer.WritePropertyName(ReactErrorConstants.UserInfo);
+                    if (userInfo == null)
+                    {
+                        writer.WriteNull();
+                    }
+                    else
+                    {
+                        writer.WriteValue(userInfo);
+                    }
+
+                    // Attach a nativeStackWindows string if an exception was passed.
+                    // This matches iOS behavior - iOS adds a `nativeStackIOS` property
+                    // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
+                    writer.WritePropertyName(ReactErrorConstants.NativeStack);
+                    writer.WriteString(stackTrace ?? string.Empty);
+                }
+                writer.WriteObjectEnd();
+
+            }
+            writer.WriteArrayEnd();
+        }
+
     }
-  }
 }

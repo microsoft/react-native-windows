@@ -27,8 +27,8 @@
 
   <ItemGroup>
     <PackageReference Include="Humanizer" Version="2.8.11" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.5.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.5.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.7.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.7.0" />
     <PackageReference Include="RuntimeContracts" Version="0.3.0" />
   </ItemGroup>
 
@@ -46,10 +46,10 @@
   <!-- 
     This target returns the location of the deployed executable.
   -->
-  <Target Name="GetPublishedToolPath" DependsOnTargets="PublishTool" Returns="$(_PublishedToolExecutable)">
-    <PropertyGroup>
-      <_PublishedToolExecutable>$([System.IO.Path]::GetFullPath('$(PublishDir)'))$(_DeploymentApplicationManifestIdentity)</_PublishedToolExecutable>
-    </PropertyGroup>
+  <Target Name="GetPublishedToolPath" DependsOnTargets="PublishTool" Returns="@(_PublishedToolExecutable)">
+    <ItemGroup>
+      <_PublishedToolExecutable Include="$([System.IO.Path]::GetFullPath('$(PublishDir)'))$(_DeploymentApplicationManifestIdentity)" />
+    </ItemGroup>
   </Target>
 
   <!-- 

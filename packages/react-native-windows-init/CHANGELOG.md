@@ -1,8 +1,56 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Wed, 08 Jul 2020 01:27:37 GMT and should not be manually modified.
+This log was last generated on Thu, 24 Sep 2020 05:06:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.29
+
+Thu, 24 Sep 2020 05:06:21 GMT
+
+### Patches
+
+- Zero-Config Tests for CLI, react-native-windows-init, react-native-windows-codegen (ngerlem@microsoft.com)
+
+## 0.1.28
+
+Mon, 21 Sep 2020 05:06:22 GMT
+
+### Patches
+
+- Fixup eslint config (ngerlem@microsoft.com)
+
+## 0.1.27
+
+Sat, 19 Sep 2020 05:05:08 GMT
+
+### Patches
+
+- Adding new native module template support to react-native-windows-init (jthysell@microsoft.com)
+
+## 0.1.26
+
+Mon, 14 Sep 2020 22:03:37 GMT
+
+### Patches
+
+- Reconcile package versions (ngerlem@microsoft.com)
+
+## 0.1.22
+
+Fri, 31 Jul 2020 05:05:10 GMT
+
+### Patches
+
+- Fix devmode for react-native-windows-init to add the package to packages.config as well (dannyvv@microsoft.com)
+
+## 0.1.21
+
+Tue, 28 Jul 2020 05:06:13 GMT
+
+### Patches
+
+- Separate local-cli into its own package (ngerlem@microsoft.com)
 
 ## 0.1.19
 

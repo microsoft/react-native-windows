@@ -6,8 +6,7 @@
 #include "EventAnimationDriver.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 EventAnimationDriver::EventAnimationDriver(
     const folly::dynamic &eventPath,
     int64_t animatedValueTag,
@@ -25,5 +24,4 @@ ValueAnimatedNode *EventAnimationDriver::AnimatedValue() {
   return static_cast<ValueAnimatedNode *>(nullptr);
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

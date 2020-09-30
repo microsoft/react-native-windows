@@ -1,0 +1,302 @@
+{
+  "name": "@react-native-windows/cli",
+  "entries": [
+    {
+      "date": "Tue, 29 Sep 2020 05:05:53 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.20",
+      "version": "0.0.0-canary.20",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix run-windows Warnings Using Node 14",
+            "author": "ngerlem@microsoft.com",
+            "commit": "89b37d236af1c9d5db7af2d28c2d14d1c3189992",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Sep 2020 05:05:40 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.19",
+      "version": "0.0.0-canary.19",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix casing rules for new projects names for `react-native-windows-init`",
+            "author": "jthysell@microsoft.com",
+            "commit": "9bc6c559fc350480d6d014644c3fbf4882d5a39a",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Add -NoProfile to powershell invocations to ensure deterministic script execution where user profiles do not have the ability to break or change the build outputs",
+            "author": "dannyvv@microsoft.com",
+            "commit": "34204f8e56810882b1f66fa247f075499a76022d",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 24 Sep 2020 05:06:21 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.18",
+      "version": "0.0.0-canary.18",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Zero-Config Tests for CLI, react-native-windows-init, react-native-windows-codegen",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5a96480f422aa7c731d7febb900a3962e1265c08",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.17",
+      "version": "0.0.0-canary.17",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 19 Sep 2020 05:05:08 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.16",
+      "version": "0.0.0-canary.16",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding new native module template support to react-native-windows-init",
+            "author": "jthysell@microsoft.com",
+            "commit": "c7a42af99fb614652d446ebaee12ea689ade4458",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Sep 2020 05:05:28 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.15",
+      "version": "0.0.0-canary.15",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable trying Previews of VS as a fallback",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "c30f54a8ba3a605910b43613825b386b62b1675d",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Yarn on Windows breaks apps that read from the environment variables",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "2018f3132087b1f76c48474c8df0b4e7f3b62501",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Sep 2020 05:05:15 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.14",
+      "version": "0.0.0-canary.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix ts warning",
+            "author": "asklar@microsoft.com",
+            "commit": "61a641820532b42034f2ad4a670bdc43b817adac",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Sep 2020 22:03:37 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.13",
+      "version": "0.0.0-canary.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Reconcile package versions",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8adedcfb2ce6492a4a7ede59e0f9188dc205d659",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Sep 2020 05:06:35 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.11",
+      "version": "0.0.0-canary.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable @typescript-eslint/no-floating-promises",
+            "author": "ngerlem@microsoft.com",
+            "commit": "62f3bb771a129f9cb81bd826827bf4001821a684",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 02 Sep 2020 05:05:16 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.10",
+      "version": "0.0.0-canary.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Keep Templates in react-native-windows Package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aad763dd75ffe79e21495a87efbf0e2e583d66eb",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 28 Aug 2020 05:06:54 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.9",
+      "version": "0.0.0-canary.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed templates so C++ apps can consume C# native modules",
+            "author": "jthysell@microsoft.com",
+            "commit": "db6213f3b9ec6553068e54809c72fceeeb7f0731",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Aug 2020 05:07:06 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.8",
+      "version": "0.0.0-canary.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix deploy bug where a framework package is installed for one arch but not the one that we are building for",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "3d857e5dfc8b6191793e8c9cf7d8044fa18d8d9f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 25 Aug 2020 05:05:08 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.7",
+      "version": "0.0.0-canary.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Default run-windows to disabling parallel MSBuild When Machine Has < 16GB of Memory",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c144d4a27abcdc6f7402578be8b7ad7f39310dff",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.5",
+      "version": "0.0.0-canary.5",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to eslint 6.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 20 Aug 2020 05:05:23 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.5",
+      "version": "0.0.0-canary.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add --singleproc to run-windows",
+            "author": "asklar@microsoft.com",
+            "commit": "82bf0682e141a3cf8c53db9bc69edc44411d00a7",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Aug 2020 05:04:41 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.4",
+      "version": "0.0.0-canary.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixing config and autolinking",
+            "author": "jthysell@microsoft.com",
+            "commit": "286f393305bb13cf5982545d4e6b7de68e9a35c9",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 14 Aug 2020 05:05:34 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.3",
+      "version": "0.0.0-canary.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Disable autolinking check in msbuild when using `react-native run-windows`",
+            "author": "jthysell@microsoft.com",
+            "commit": "917b8585d4d8ac94140ad2dff538de6c5b1bddc8",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 11 Aug 2020 07:36:05 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.2",
+      "version": "0.0.0-canary.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make C# CodeGen the default",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7a65915e82d6bc6884e267a8c96d0fa7fadb0e9e",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Jul 2020 05:06:13 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.1",
+      "version": "0.0.0-canary.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Separate local-cli into its own package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fbb4352a015533ebaa77a8d3ea497850a0f67c3f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    }
+  ]
+}

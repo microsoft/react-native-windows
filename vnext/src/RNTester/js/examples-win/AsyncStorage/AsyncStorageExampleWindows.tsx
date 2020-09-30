@@ -4,7 +4,7 @@
  * @format
  */
 
-import React = require('react');
+import * as React from 'react';
 import {
   AsyncStorage,
   Button,
@@ -57,7 +57,7 @@ class AsyncStorageExample extends React.Component<
 
   private makeOnRemoveEntryPress(key: string) {
     return () => {
-      AsyncStorage.removeItem(key);
+      void AsyncStorage.removeItem(key);
       this.setState(prevState => {
         let asyncStorageData = prevState.asyncStorageData.filter(
           kvp => kvp[0] !== key,
@@ -76,12 +76,12 @@ class AsyncStorageExample extends React.Component<
   };
 
   private onAddEntryPress = () => {
-    AsyncStorage.setItem(this.state.name, this.state.value);
+    void AsyncStorage.setItem(this.state.name, this.state.value);
     this.updateAsyncStorageData(this.state.name, this.state.value);
   };
 
   private onClearAllKeysPress = () => {
-    AsyncStorage.clear();
+    void AsyncStorage.clear();
     this.setState({asyncStorageData: []});
   };
 

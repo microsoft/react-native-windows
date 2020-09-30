@@ -19,8 +19,11 @@
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Input.h>
 
-namespace react {
-namespace uwp {
+#ifdef WINUI3_PREVIEW3
+#include <winrt/Microsoft.UI.Input2.Experimental.h>
+#endif
+
+namespace react::uwp {
 
 std::vector<int64_t> GetTagsForBranch(facebook::react::INativeUIManagerHost *host, int64_t tag);
 
@@ -151,8 +154,6 @@ void TouchEventHandler::OnPointerMoved(
   } else {
     // Move with no buttons pressed
     UpdatePointersInViews(instance, args, tag, sourceElement);
-    // MouseMove support: (Not yet enabled, requires adding to ViewPropTypes.js)
-    // SendPointerMove(args, tag, sourceElement);
   }
 }
 
@@ -202,12 +203,18 @@ TouchEventHandler::ReactPointer TouchEventHandler::CreateReactPointer(
   pointer.target = tag;
   pointer.identifier = m_touchId++;
   pointer.pointerId = point.PointerId();
+#ifndef WINUI3_PREVIEW3
   pointer.deviceType = point.PointerDevice().PointerDeviceType();
+#else
+  pointer.deviceType = point.PointerDeviceType();
+#endif
   pointer.isLeftButton = props.IsLeftButtonPressed();
   pointer.isRightButton = props.IsRightButtonPressed();
   pointer.isMiddleButton = props.IsMiddleButtonPressed();
   pointer.isHorizontalScrollWheel = props.IsHorizontalMouseWheel();
+#ifndef WINUI3_PREVIEW3
   pointer.isEraser = props.IsEraser();
+#endif
 
   UpdateReactPointer(pointer, args, sourceElement);
 
@@ -226,7 +233,9 @@ void TouchEventHandler::UpdateReactPointer(
   pointer.positionRoot = rootPoint.Position();
   pointer.positionView = point.Position();
   pointer.timestamp = point.Timestamp() / 1000; // us -> ms
+#ifndef WINUI3_PREVIEW3
   pointer.pressure = props.Pressure();
+#endif
   pointer.isBarrelButton = props.IsBarrelButtonPressed();
   pointer.shiftKey = 0 != (keyModifiers & static_cast<uint32_t>(winrt::Windows::System::VirtualKeyModifiers::Shift));
   pointer.ctrlKey = 0 != (keyModifiers & static_cast<uint32_t>(winrt::Windows::System::VirtualKeyModifiers::Control));
@@ -295,7 +304,7 @@ void TouchEventHandler::UpdatePointersInViews(
       }
 
       ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(existingTag));
-      if (node != nullptr && node->m_onMouseLeave)
+      if (node != nullptr && node->m_onMouseLeaveRegistered)
         instance->DispatchEvent(existingTag, "topMouseLeave", GetPointerJson(pointer, existingTag));
     }
   }
@@ -308,7 +317,7 @@ void TouchEventHandler::UpdatePointersInViews(
     }
 
     ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(newTag));
-    if (node != nullptr && node->m_onMouseEnter)
+    if (node != nullptr && node->m_onMouseEnterRegistered)
       instance->DispatchEvent(newTag, "topMouseEnter", GetPointerJson(pointer, newTag));
   }
 
@@ -510,5 +519,4 @@ std::vector<int64_t> GetTagsForBranch(facebook::react::INativeUIManagerHost *hos
   return tags;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

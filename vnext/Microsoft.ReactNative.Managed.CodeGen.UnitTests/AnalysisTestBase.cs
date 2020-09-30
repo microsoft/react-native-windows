@@ -28,6 +28,8 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests
         {
             var csCode = @"
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.ReactNative.Managed;
 
 [ReactModule]

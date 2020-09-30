@@ -31,6 +31,19 @@ module.exports = {
       ),
     ]),
   },
+
+  // Metro doesn't currently handle assets from other packages within a monorepo.  This is the current workaround people use
+  server: {
+    enhanceMiddleware: middleware => {
+      return (req, res, next) => {
+        if (req.url.startsWith('/vnext')) {
+          req.url = req.url.replace('/vnext', '/assets/../../vnext');
+        }
+        return middleware(req, res, next);
+      };
+    },
+  },
+
   transformer: {
     getTransformOptions: async () => ({
       transform: {

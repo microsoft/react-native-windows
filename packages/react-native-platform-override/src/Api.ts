@@ -5,20 +5,25 @@
  * @format
  */
 
+// Typings for "async" confuse this rule
+/* eslint-disable @typescript-eslint/no-misused-promises */
+
 import * as Serialized from './Serialized';
+import * as _ from 'lodash';
 import * as fs from 'fs';
 import * as path from 'path';
 
 import OverrideFactory, {OverrideFactoryImpl} from './OverrideFactory';
 import {
-  OverrideFileRepository,
   ReactFileRepository,
+  WritableFileRepository,
   bindVersion,
 } from './FileRepository';
+import {eachLimit, mapLimit} from 'async';
+import FileSystemRepository from './FileSystemRepository';
 import GitReactFileRepository from './GitReactFileRepository';
 import Manifest from './Manifest';
 import Override from './Override';
-import OverrideFileRepositoryImpl from './OverrideFileRepositoryImpl';
 import {UpgradeResult} from './UpgradeStrategy';
 import {ValidationError} from './ValidationStrategy';
 import {findManifest} from './FileSearch';
@@ -29,6 +34,8 @@ import {getInstalledRNVersion} from './PackageUtils';
 export * from './OverrideFactory';
 export * from './Override';
 export {UpgradeResult, ValidationError};
+
+const MAX_CONCURRENT_TASKS = 30;
 
 /**
  * Check that the given manifest correctly describe overrides and that all
@@ -54,7 +61,8 @@ export async function hasOverride(
 }
 
 /**
- * Removes an override from the manifest
+ * Removes an override from the manifest if it exists.
+ * @returns whether the override was removed
  */
 export async function removeOverride(
   overrideName: string,
@@ -112,46 +120,66 @@ export async function upgradeOverrides(opts: {
 }): Promise<UpgradeResult[]> {
   const ctx = await createManifestContext(opts);
 
-  const outOfDateOverrides = (await ctx.manifest.validate(
+  const validationErrors = await ctx.manifest.validate(
     ctx.overrideRepo,
     ctx.reactRepo,
-  ))
+  );
+
+  const outOfDateOverrides = validationErrors
     .filter(err => err.type === 'outOfDate')
-    .map(err => err.overrideName)
-    .map(ovrName => ctx.manifest.findOverride(ovrName)!);
+    .map(err => ctx.manifest.findOverride(err.overrideName)!);
 
-  const upgradeResults: Array<UpgradeResult> = [];
-
+  // Perform upgrades concurrently so we can take advantage of
+  // GitReactFileRepository optimizations when multiple requests are queued at
+  // once.
   let i = 0;
-  for (const override of outOfDateOverrides) {
-    if (opts.progressListener) {
-      opts.progressListener(++i, outOfDateOverrides.length);
-    }
+  const upgradeResults = await mapLimit<Override, UpgradeResult>(
+    outOfDateOverrides,
+    MAX_CONCURRENT_TASKS,
+    async override => {
+      const upgradeResult = await override
+        .upgradeStrategy()
+        .upgrade(
+          ctx.gitReactRepo,
+          ctx.overrideRepo,
+          ctx.reactNativeVersion,
+          opts.allowConflicts,
+        );
 
-    const upgradeResult = await override
-      .upgradeStrategy()
-      .upgrade(
-        ctx.gitReactRepo,
-        ctx.overrideRepo,
-        ctx.reactNativeVersion,
-        opts.allowConflicts,
-      );
+      if (opts.progressListener) {
+        opts.progressListener(++i, outOfDateOverrides.length);
+      }
 
-    upgradeResults.push(upgradeResult);
+      return upgradeResult;
+    },
+  );
 
-    if (upgradeResult.fileWritten) {
-      await ctx.manifest.markUpToDate(override.name(), ctx.overrideFactory);
-    }
-  }
+  // Regenerate overrides that are already up to date to update the baseVersion
+  // to current. This helps to minimize the numbers of versions we have to
+  // check out for future upgrades.
+  const upToDateOverrides = [
+    ..._.difference(
+      await ctx.manifest.listOverrides(),
+      validationErrors.map(err => ctx.manifest.findOverride(err.overrideName)!),
+    ).map(ovr => ovr.name()),
 
-  if (upgradeResults.length > 0) {
-    await Serialized.writeManifestToFile(
-      ctx.manifest.serialize(),
-      ctx.manifestPath,
-    );
-  }
+    ...upgradeResults
+      .filter(res => res.filesWritten)
+      .map(res => res.overrideName),
+  ];
 
-  return upgradeResults;
+  await eachLimit(upToDateOverrides, MAX_CONCURRENT_TASKS, async name => {
+    await ctx.manifest.markUpToDate(name, ctx.overrideFactory);
+  });
+
+  await Serialized.writeManifestToFile(
+    ctx.manifest.serialize(),
+    ctx.manifestPath,
+  );
+
+  return upgradeResults.sort((a, b) =>
+    a.overrideName.localeCompare(b.overrideName, 'en'),
+  );
 }
 
 /**
@@ -169,7 +197,7 @@ async function checkFileExists(friendlyName: string, filePath: string) {
  * Context describing state centered around a single manifest
  */
 interface ManifestContext {
-  overrideRepo: OverrideFileRepository;
+  overrideRepo: WritableFileRepository;
   reactRepo: ReactFileRepository;
   gitReactRepo: GitReactFileRepository;
   overrideFactory: OverrideFactory;
@@ -192,7 +220,7 @@ async function createManifestContext(opts: {
     opts.reactNativeVersion || (await getInstalledRNVersion());
 
   const overrideDir = path.dirname(manifestPath);
-  const overrideRepo = new OverrideFileRepositoryImpl(overrideDir);
+  const overrideRepo = new FileSystemRepository(overrideDir);
 
   const gitReactRepo = await GitReactFileRepository.createAndInit();
   const reactRepo = bindVersion(gitReactRepo, reactNativeVersion);

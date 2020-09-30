@@ -3,12 +3,14 @@
 
 #include "pch.h"
 
-#include "ReactImageBrush.h"
-
 #include <UI.Composition.Effects.h>
-#include <sstream>
+#include "Effects.h"
+#include "ReactImageBrush.h"
+#include "XamlView.h"
 
-#include "BorderEffect.h"
+#include <winrt/Windows.Graphics.Display.h>
+#include <winrt/Windows.Graphics.Effects.h>
+#include <sstream>
 
 namespace winrt {
 using namespace winrt::Windows::Storage::Streams;
@@ -18,8 +20,7 @@ using namespace xaml::Media;
 using namespace comp::Effects;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 /*static*/ winrt::com_ptr<ReactImageBrush> ReactImageBrush::Create() {
   return winrt::make_self<ReactImageBrush>();
 }
@@ -37,8 +38,27 @@ void ReactImageBrush::OnDisconnected() {
 
 void ReactImageBrush::ResizeMode(react::uwp::ResizeMode value) {
   if (m_resizeMode != value) {
+    const bool forceEffectBrush{value == ResizeMode::Repeat || m_resizeMode == ResizeMode::Repeat};
     m_resizeMode = value;
+    UpdateCompositionBrush(forceEffectBrush);
+  }
+}
+
+void ReactImageBrush::BlurRadius(float value) {
+  if (m_blurRadius != value) {
+    m_blurRadius = value;
     UpdateCompositionBrush();
+  }
+}
+
+void ReactImageBrush::TintColor(winrt::Color value) {
+  bool sameColor{value.A == m_tintColor.A && value.R == m_tintColor.R && value.G == m_tintColor.G &&
+                 value.B == m_tintColor.B};
+
+  if (!sameColor) {
+    const bool forceEffectBrush{value.A == 0 || m_tintColor.A == 0};
+    m_tintColor = value;
+    UpdateCompositionBrush(forceEffectBrush);
   }
 }
 
@@ -64,16 +84,27 @@ void ReactImageBrush::Source(winrt::LoadedImageSurface const &value) {
   }
 }
 
-void ReactImageBrush::UpdateCompositionBrush() {
+void ReactImageBrush::UpdateCompositionBrush(bool forceEffectBrush) {
   if (m_loadedImageSurface) {
     comp::CompositionSurfaceBrush surfaceBrush{GetOrCreateSurfaceBrush()};
     surfaceBrush.Stretch(ResizeModeToStretch());
 
     auto compositionBrush{surfaceBrush.as<comp::CompositionBrush>()};
-    if (ResizeMode() == ResizeMode::Repeat) {
-      // If ResizeMode is set to Repeat, then we need to use a CompositionEffectBrush.
+    if (ResizeMode() == ResizeMode::Repeat || BlurRadius() > 0 || m_tintColor.A != 0) {
+      // The effects used for ResizeMode::Repeat and tintColor are conditional, so if we
+      // are switching to/from those modes, then we need to create a new CompositionBrush.
       // The CompositionSurfaceBrush holding the image is used as its source.
-      compositionBrush = GetOrCreateEffectBrush(surfaceBrush);
+      compositionBrush = GetOrCreateEffectBrush(surfaceBrush, forceEffectBrush);
+
+      // https://microsoft.github.io/Win2D/html/P_Microsoft_Graphics_Canvas_Effects_GaussianBlurEffect_BlurAmount.htm
+      // "You can compute the blur radius of the kernel by multiplying the standard deviation by 3.
+      // The units of both the standard deviation and blur radius are DIPs.
+      // A value of zero DIPs disables this effect entirely."
+      compositionBrush.Properties().InsertScalar(BlurBlurAmount, m_blurRadius / 3);
+
+      if (m_tintColor.A != 0) {
+        compositionBrush.Properties().InsertColor(TintColorColor, m_tintColor);
+      }
     }
 
     // The CompositionBrush is only set after the image is first loaded and anytime
@@ -131,7 +162,7 @@ comp::CompositionStretch ReactImageBrush::ResizeModeToStretch() {
 comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
   // If it doesn't exist, create it
   if (!CompositionBrush()) {
-    comp::CompositionSurfaceBrush surfaceBrush{xaml::Window::Current().Compositor().CreateSurfaceBrush()};
+    comp::CompositionSurfaceBrush surfaceBrush{GetCompositor().CreateSurfaceBrush()};
     surfaceBrush.Surface(m_loadedImageSurface);
 
     return surfaceBrush;
@@ -152,25 +183,62 @@ comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
 }
 
 comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
-    comp::CompositionSurfaceBrush const &surfaceBrush) {
-  if (!m_effectBrush) {
-    auto borderEffect{winrt::make<BORDEREFFECT_NAMESPACE::implementation::BorderEffect>()};
+    comp::CompositionSurfaceBrush const &surfaceBrush,
+    bool forceEffectBrush) {
+  if (!m_effectBrush || forceEffectBrush) {
+    // GaussianBlurEffect
+    auto blurEffect{winrt::make<winrt::Microsoft::ReactNative::implementation::GaussianBlurEffect>()};
+    blurEffect.Name(L"Blur");
 
-    borderEffect.ExtendX(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
-    borderEffect.ExtendY(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
+    // https://microsoft.github.io/Win2D/html/P_Microsoft_Graphics_Canvas_Effects_GaussianBlurEffect_BlurAmount.htm
+    // "You can compute the blur radius of the kernel by multiplying the standard deviation by 3.
+    // The units of both the standard deviation and blur radius are DIPs.
+    // A value of zero DIPs disables this effect entirely."
+    blurEffect.BlurAmount(m_blurRadius / 3);
 
-    comp::CompositionEffectSourceParameter borderEffectSourceParameter{L"source"};
-    borderEffect.Source(borderEffectSourceParameter);
+    std::vector<winrt::hstring> animatedProperties;
+    animatedProperties.push_back({BlurBlurAmount});
 
-    comp::CompositionEffectFactory effectFactory{
-        xaml::Window::Current().Compositor().CreateEffectFactory(borderEffect)};
+    if (ResizeMode() == ResizeMode::Repeat) {
+      // BorderEffect
+      auto borderEffect{winrt::make<winrt::Microsoft::ReactNative::implementation::BorderEffect>()};
+
+      borderEffect.ExtendX(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
+      borderEffect.ExtendY(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
+
+      comp::CompositionEffectSourceParameter borderEffectSourceParameter{L"source"};
+      borderEffect.Source(borderEffectSourceParameter);
+      blurEffect.Source(borderEffect);
+    } else {
+      comp::CompositionEffectSourceParameter blurEffectSourceParameter{L"source"};
+      blurEffect.Source(blurEffectSourceParameter);
+    }
+
+    winrt::IGraphicsEffect effect{blurEffect};
+
+    // tintColor
+    if (m_tintColor.A != 0) {
+      auto tintColorEffect{winrt::make<winrt::Microsoft::ReactNative::implementation::ColorSourceEffect>()};
+      tintColorEffect.Name(L"TintColor");
+      tintColorEffect.Color(m_tintColor);
+
+      auto compositeEffect{winrt::make<winrt::Microsoft::ReactNative::implementation::CompositeStepEffect>()};
+      compositeEffect.Mode(winrt::Microsoft::ReactNative::CanvasComposite::SourceIn);
+      compositeEffect.Destination(blurEffect);
+      compositeEffect.Source(tintColorEffect);
+
+      animatedProperties.push_back({TintColorColor});
+
+      effect = compositeEffect;
+    }
+
+    comp::CompositionEffectFactory effectFactory{GetCompositor().CreateEffectFactory(effect, animatedProperties)};
+
     m_effectBrush = effectFactory.CreateBrush();
-
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);
   }
 
   return m_effectBrush;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

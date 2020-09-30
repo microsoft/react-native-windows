@@ -11,7 +11,8 @@ import * as path from 'path';
 import * as semver from 'semver';
 import * as simplegit from 'simple-git/promise';
 
-import ActionQueue from './ActionQueue';
+import BatchingQueue from './BatchingQueue';
+import FileSystemRepository from './FileSystemRepository';
 import {VersionedReactFileRepository} from './FileRepository';
 import fetch from 'node-fetch';
 import {getNpmPackage} from './PackageUtils';
@@ -26,18 +27,18 @@ const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
  */
 export default class GitReactFileRepository
   implements VersionedReactFileRepository {
+  private fileRepo: FileSystemRepository;
   private gitClient: simplegit.SimpleGit;
-  private gitDirectory: string;
   private checkedOutVersion?: string;
 
-  // We have a potential race condition where one call to getFileContents
-  // could checkout out a new tag while an existing call is rading a file.
-  // Queue items to ensure the read operation is performed atomically
-  private actionQueue: ActionQueue;
+  // We need to ensure it is impossible to check out a new React Native
+  // version while an operation hasn't yet finished. We queue each operation to
+  // ensure they are performed atomically.
+  private batchingQueue: BatchingQueue<string>;
 
   private constructor(gitDirectory: string, gitClient: simplegit.SimpleGit) {
-    this.actionQueue = new ActionQueue();
-    this.gitDirectory = gitDirectory;
+    this.batchingQueue = new BatchingQueue();
+    this.fileRepo = new FileSystemRepository(gitDirectory);
     this.gitClient = gitClient;
   }
 
@@ -54,23 +55,35 @@ export default class GitReactFileRepository
       await gitClient.init();
     }
 
+    await gitClient.addConfig('core.filemode', 'false');
     return new GitReactFileRepository(dir, gitClient);
   }
 
-  async getFileContents(
+  async listFiles(
+    globs: string[] | undefined,
+    reactNativeVersion: string,
+  ): Promise<string[]> {
+    return this.usingVersion(reactNativeVersion, () =>
+      this.fileRepo.listFiles(globs),
+    );
+  }
+
+  async readFile(
     filename: string,
     reactNativeVersion: string,
   ): Promise<Buffer | null> {
-    return this.actionQueue.enqueue(async () => {
-      await this.checkoutVersion(reactNativeVersion);
-      const filePath = path.join(this.gitDirectory, filename);
+    return this.usingVersion(reactNativeVersion, () =>
+      this.fileRepo.readFile(filename),
+    );
+  }
 
-      try {
-        return await fs.promises.readFile(filePath);
-      } catch {
-        return null;
-      }
-    });
+  async stat(
+    filename: string,
+    reactNativeVersion: string,
+  ): Promise<'file' | 'directory' | 'none'> {
+    return this.usingVersion(reactNativeVersion, () =>
+      this.fileRepo.stat(filename),
+    );
   }
 
   /**
@@ -82,16 +95,15 @@ export default class GitReactFileRepository
     reactNativeVersion: string,
     newContent: Buffer,
   ): Promise<string> {
-    return this.actionQueue.enqueue(async () => {
-      await this.checkoutVersion(reactNativeVersion);
-      const filePath = path.join(this.gitDirectory, filename);
-
+    return this.usingVersion(reactNativeVersion, async () => {
       try {
-        await fs.promises.writeFile(filePath, newContent);
+        await this.fileRepo.writeFile(filename, newContent);
         const patch = await this.gitClient.diff([
           '--patch',
           '--ignore-space-at-eol',
           '--binary',
+          '--',
+          filename,
         ]);
 
         if (patch.length === 0) {
@@ -119,12 +131,9 @@ export default class GitReactFileRepository
     reactNativeVersion: string,
     patchContent: string,
   ): Promise<{patchedFile: Buffer | null; hasConflicts: boolean}> {
-    return this.actionQueue.enqueue(async () => {
-      await this.checkoutVersion(reactNativeVersion);
-      const filePath = path.join(this.gitDirectory, filename);
-      const patchPath = path.join(this.gitDirectory, 'rnwgit.patch');
+    return this.usingVersion(reactNativeVersion, async () => {
       try {
-        await fs.promises.writeFile(patchPath, patchContent);
+        await this.fileRepo.writeFile('rnwgit.patch', patchContent);
 
         let hasConflicts = false;
         let binaryConflicts = false;
@@ -134,7 +143,7 @@ export default class GitReactFileRepository
             'apply',
             '--3way',
             '--whitespace=nowarn',
-            patchPath,
+            'rnwgit.patch',
           ]);
         } catch (ex) {
           // Hack alert: simple-git doesn't populate exception information from
@@ -151,12 +160,22 @@ export default class GitReactFileRepository
 
         const patchedFile = binaryConflicts
           ? null
-          : await fs.promises.readFile(filePath);
+          : await this.fileRepo.readFile(filename);
 
         return {patchedFile, hasConflicts};
       } finally {
         await this.gitClient.reset('hard');
       }
+    });
+  }
+
+  private async usingVersion<T>(
+    reactNativeVersion: string,
+    fn: () => Promise<T>,
+  ): Promise<T> {
+    return await this.batchingQueue.enqueue(reactNativeVersion, async () => {
+      await this.checkoutVersion(reactNativeVersion);
+      return await fn();
     });
   }
 

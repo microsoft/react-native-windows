@@ -50,8 +50,7 @@ struct json_type_traits<react::uwp::HandledKeyboardEvent> {
   }
 };
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 std::vector<HandledKeyboardEvent> KeyboardHelper::FromJS(folly::dynamic const &obj) {
   return json_type_traits<std::vector<HandledKeyboardEvent>>::parseJson(obj);
@@ -210,7 +209,7 @@ void UpdateModifiedKeyStatusTo(T &event) {
 };
 
 void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(
-    std::string const &eventName,
+    std::string &&eventName,
     xaml::Input::KeyRoutedEventArgs const &args) {
   if (auto instance = m_wkReactInstance.lock()) {
     if (auto source = args.OriginalSource().try_as<xaml::FrameworkElement>()) {
@@ -222,7 +221,7 @@ void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(
         event.key = KeyboardHelper::FromVirtualKey(args.Key(), event.shiftKey, event.capLocked);
         event.code = KeyboardHelper::CodeFromVirtualKey(args.OriginalKey());
 
-        instance->DispatchEvent(event.target, eventName, ToEventData(event));
+        instance->DispatchEvent(event.target, std::move(eventName), ToEventData(event));
       }
     }
   }
@@ -639,5 +638,4 @@ bool KeyboardHelper::IsModifiedKeyLocked(
       winrt::CoreVirtualKeyStates::Locked;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

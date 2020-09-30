@@ -13,8 +13,7 @@ namespace winrt {
 using namespace Windows::UI::Core;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 enum class HandledEventPhase {
   Capturing = 1, // match the value with EventPhase in React. EventPhase
                  // includes None, Capturing, AtTarget, Bubbling
@@ -87,7 +86,7 @@ class PreviewKeyboardEventHandlerOnRoot : public PreviewKeyboardEventHandler {
   void OnPreKeyDown(winrt::IInspectable const &sender, xaml::Input::KeyRoutedEventArgs const &args);
   void OnPreKeyUp(winrt::IInspectable const &sender, xaml::Input::KeyRoutedEventArgs const &args);
 
-  void DispatchEventToJs(std::string const &name, xaml::Input::KeyRoutedEventArgs const &args);
+  void DispatchEventToJs(std::string &&name, xaml::Input::KeyRoutedEventArgs const &args);
   std::weak_ptr<IReactInstance> m_wkReactInstance;
 };
 
@@ -129,5 +128,4 @@ struct KeyboardHelper {
   static bool IsModifiedKeyPressed(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey virtualKey);
   static bool IsModifiedKeyLocked(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey virtualKey);
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

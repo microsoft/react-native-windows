@@ -10,9 +10,8 @@
 
 'use strict';
 
-const RCTDeviceEventEmitter = require('../../EventEmitter/RCTDeviceEventEmitter');
-const UIManager = require('../../ReactNative/UIManager');
-
+import RCTDeviceEventEmitter from '../../EventEmitter/RCTDeviceEventEmitter';
+import UIManager from '../../ReactNative/UIManager';
 import NativeAccessibilityInfo from './NativeAccessibilityInfo';
 
 const REDUCE_MOTION_EVENT = 'reduceMotionDidChange';
@@ -93,7 +92,7 @@ const AccessibilityInfo = {
    */
   get fetch(): () => Promise<boolean> {
     console.warn(
-      'AccessibilityInfo.fetch is deprecated, call Accessibility.isScreenReaderEnabled instead',
+      'AccessibilityInfo.fetch is deprecated, call AccessibilityInfo.isScreenReaderEnabled instead',
     );
     return this.isScreenReaderEnabled;
   },

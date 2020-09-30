@@ -4,18 +4,12 @@
  */
 
 import { BasePage, By } from './BasePage';
-import { SHOW_IMAGE_BORDER, SET_RTL_MODE } from '../../app/Consts';
+import {
+  SHOW_IMAGE_BORDER,
+  SET_RTL_MODE,
+} from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 class ImageTestPage extends BasePage {
-  backToHomePage() {
-    this.homeButton.click();
-    this.waitForPageLoaded();
-  }
-
-  isPageLoaded() {
-    return super.isPageLoaded();
-  }
-
   toggleImageBorder() {
     this._imageBorder.click();
   }

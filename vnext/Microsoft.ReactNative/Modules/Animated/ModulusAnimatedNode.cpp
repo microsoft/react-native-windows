@@ -6,8 +6,7 @@
 #include "ModulusAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 ModulusAnimatedNode::ModulusAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -17,7 +16,7 @@ ModulusAnimatedNode::ModulusAnimatedNode(
   m_modulus = static_cast<int64_t>(config.find(s_modulusName).dereference().second.asDouble());
 
   m_propertySet.StartAnimation(s_valueName, [node = m_inputNodeTag, mod = m_modulus, manager]() {
-    const auto anim = xaml::Window::Current().Compositor().CreateExpressionAnimation();
+    const auto anim = react::uwp::GetCompositor().CreateExpressionAnimation();
     anim.SetReferenceParameter(s_inputParameterName, manager->GetValueAnimatedNode(node)->PropertySet());
     anim.SetScalarParameter(s_modName, static_cast<float>(mod));
     anim.Expression(
@@ -26,5 +25,4 @@ ModulusAnimatedNode::ModulusAnimatedNode(
     return anim;
   }());
 }
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

@@ -25,8 +25,7 @@
 #pragma optimize("", off)
 #endif
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 WebSocketJSExecutor::WebSocketJSExecutor(
     std::shared_ptr<facebook::react::ExecutorDelegate> delegate,
@@ -62,7 +61,12 @@ WebSocketJSExecutor::WebSocketJSExecutor(
     }
   });
 
-  m_closed = m_socket.Closed(winrt::auto_revoke, [this](auto &&, auto &&args) { SetState(State::Disconnected); });
+  auto weakThis = weak_from_this();
+  m_closed = m_socket.Closed(winrt::auto_revoke, [weakThis](auto &&, auto &&args) {
+    if (auto _this = weakThis.lock()) {
+      _this->SetState(State::Disconnected);
+    }
+  });
 }
 
 WebSocketJSExecutor::~WebSocketJSExecutor() {
@@ -70,7 +74,11 @@ WebSocketJSExecutor::~WebSocketJSExecutor() {
   m_msgReceived.revoke();
 }
 
-void WebSocketJSExecutor::loadApplicationScript(
+void WebSocketJSExecutor::initializeRuntime() {
+  // No init needed before loading a bundle
+}
+
+void WebSocketJSExecutor::loadBundle(
     std::unique_ptr<const facebook::react::JSBigString> script,
     std::string sourceURL) {
   int requestId = ++m_requestId;
@@ -220,9 +228,7 @@ bool WebSocketJSExecutor::PrepareJavaScriptRuntime(int milliseconds) {
 
 void WebSocketJSExecutor::PollPrepareJavaScriptRuntime() {
   m_messageQueueThread->runOnQueue([this]() {
-    auto timeout = std::chrono::milliseconds(750);
-
-    for (uint32_t retries = 20; retries > 0; --retries) {
+    for (uint32_t retries = 50; retries > 0; --retries) {
       if (PrepareJavaScriptRuntime(750)) {
         OnDebuggerAttach();
         return;
@@ -280,7 +286,6 @@ void WebSocketJSExecutor::OnMessageReceived(const std::string &msg) {
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp
 
 #pragma warning(pop)

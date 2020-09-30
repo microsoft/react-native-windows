@@ -3,6 +3,8 @@ parameters:
   packageVersion: ''
   slices: ''
   buildProperties: ''
+  codesignBinaries: false
+  codesignNuget: false
 
 steps:
 
@@ -15,6 +17,14 @@ steps:
       arguments: -nuspec $(System.DefaultWorkingDirectory)/ReactWindows/${{parameters.packageId}}.nuspec -outfile $(System.DefaultWorkingDirectory)/ReactWindows/${{parameters.packageId}}.nuspec -slices ${{ parameters.slices }} -debug
     condition: and(succeeded(), ne('', '${{ parameters.slices }}'))
 
+  - ${{ if eq(parameters.codesignBinaries, true) }}:
+    - task: PkgESCodeSign@10
+      displayName: '${{ parameters.packageId }} CodeSign Binaries'
+      inputs:
+        signConfigXml: $(System.DefaultWorkingDirectory)\ReactWindows\${{ parameters.packageId }}.SignConfig.xml
+        inPathRoot: ${{parameters.nugetroot}}
+        outPathRoot: ${{parameters.nugetroot}}
+
   - task: NuGetCommand@2
     displayName: '${{ parameters.packageId }} - Nuget pack'
     inputs:
@@ -23,6 +33,14 @@ steps:
       packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/${{ parameters.packageId }}.nuspec
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.packageId }};${{ parameters.buildProperties }}
+  
+  - ${{ if eq(parameters.codesignNuget, true) }}:
+    - task: PkgESCodeSign@10
+      displayName: '${{ parameters.packageId }} CodeSign NuGet'
+      inputs:
+        signConfigXml: $(System.DefaultWorkingDirectory)\ReactWindows\${{ parameters.packageId }}.NugetSignConfig.xml
+        inPathRoot: $(System.DefaultWorkingDirectory)/NugetRootFinal
+        outPathRoot: $(System.DefaultWorkingDirectory)/NugetRootFinal
 
   - task: CmdLine@2
     displayName: '${{ parameters.packageId }} - Nuget push to local test feed'

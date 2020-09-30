@@ -5,8 +5,9 @@
 #include <boost/algorithm/string.hpp>
 #include <functional/functor.h>
 #include <regex>
+#include "Base/FollyIncludes.h"
 #include "DevServerHelper.h"
-#include "DynamicReader.h"
+#include "RedBoxErrorInfo.h"
 #include "Unicode.h"
 
 #include <winrt/Windows.Foundation.Collections.h>
@@ -91,7 +92,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
             </StackPanel>
           </ScrollViewer>
           <Button x:Name='DismissButton' Grid.Row='1' Grid.Column='0' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Dismiss</Button>
-          <Button x:Name='ReloadButton' Grid.Row='1' Grid.Column='2' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Reload (NYI)</Button>
+          <Button x:Name='ReloadButton' Grid.Row='1' Grid.Column='2' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Reload</Button>
         </Grid>)";
 
     m_redboxContent = winrt::unbox_value<xaml::Controls::Grid>(xaml::Markup::XamlReader::Load(xamlString));
@@ -317,7 +318,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
   void PopulateFrameStackUI() noexcept {
     m_stackPanel.Children().Clear();
-    for (const auto frame : m_errorInfo.Callstack) {
+    for (const auto &frame : m_errorInfo.Callstack) {
       const winrt::hstring xamlFrameString =
           LR"(
           <StackPanel Margin='0,5,0,5'
@@ -397,7 +398,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 /*
  * This class is implemented such that the methods on IRedBoxHandler are thread safe.
  */
-struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxHandler>, IRedBoxHandler {
+struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultRedBoxHandler>, IRedBoxHandler {
   DefaultRedBoxHandler(Mso::WeakPtr<Mso::React::IReactHost> &&weakReactHost, Mso::DispatchQueue &&uiQueue) noexcept
       : m_weakReactHost{std::move(weakReactHost)}, m_uiQueue{std::move(uiQueue)} {}
 
@@ -409,7 +410,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
       std::swap(m_redBoxes, redBoxes);
     }
     m_uiQueue.Post([redBoxes = std::move(redBoxes)]() {
-      for (const auto redBox : redBoxes) {
+      for (const auto &redBox : redBoxes) {
         redBox->Dismiss();
       }
     });
@@ -525,81 +526,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
 };
 #endif
 
-struct RedBoxErrorFrameInfo
-    : public winrt::implements<RedBoxErrorFrameInfo, winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo> {
-  RedBoxErrorFrameInfo(Mso::React::ErrorFrameInfo &&errorFrameInfo) : m_frame(std::move(errorFrameInfo)) {}
-
-  winrt::hstring File() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_frame.File).c_str();
-  }
-
-  winrt::hstring Method() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_frame.Method).c_str();
-  }
-
-  uint32_t Line() const noexcept {
-    return m_frame.Line;
-  }
-
-  uint32_t Column() const noexcept {
-    return m_frame.Column;
-  }
-
-  bool Collapse() const noexcept {
-    return m_frame.Collapse;
-  }
-
- private:
-  Mso::React::ErrorFrameInfo m_frame;
-};
-
-struct RedBoxErrorInfo : public winrt::implements<RedBoxErrorInfo, winrt::Microsoft::ReactNative::IRedBoxErrorInfo> {
-  RedBoxErrorInfo(Mso::React::ErrorInfo &&errorInfo) : m_errorInfo(std::move(errorInfo)) {}
-
-  winrt::hstring Message() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.Message).c_str();
-  }
-
-  winrt::hstring OriginalMessage() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.OriginalMessage).c_str();
-  }
-
-  winrt::hstring Name() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.Name).c_str();
-  }
-
-  winrt::hstring ComponentStack() const noexcept {
-    return ::Microsoft::Common::Unicode::Utf8ToUtf16(m_errorInfo.ComponentStack).c_str();
-  }
-
-  winrt::Microsoft::ReactNative::IJSValueReader ExtraData() const noexcept {
-    return winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(m_errorInfo.ExtraData);
-  }
-
-  uint32_t Id() const noexcept {
-    return m_errorInfo.Id;
-  }
-
-  winrt::Windows::Foundation::Collections::IVectorView<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo>
-  Callstack() noexcept {
-    if (!m_callstack) {
-      m_callstack = winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo>();
-      for (auto frame : m_errorInfo.Callstack) {
-        m_callstack.Append(winrt::make<RedBoxErrorFrameInfo>(std::move(frame)));
-      }
-    }
-
-    return m_callstack.GetView();
-  }
-
- private:
-  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IRedBoxErrorFrameInfo> m_callstack{
-      nullptr};
-
-  Mso::React::ErrorInfo m_errorInfo;
-};
-
-struct RedBoxHandler : public Mso::React::IRedBoxHandler {
+struct RedBoxHandler final : public Mso::React::IRedBoxHandler {
   RedBoxHandler(winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) : m_redBoxHandler(redBoxHandler) {}
 
   static_assert(

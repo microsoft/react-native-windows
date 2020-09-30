@@ -6,10 +6,10 @@
 import HomePage from '../pages/HomePage';
 import DirectManipulationPage from '../pages/DirectManipulationPage';
 import assert from 'assert';
+import { DIRECT_MANIPULATION_TESTPAGE } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 beforeAll(() => {
-  HomePage.backToHomePage();
-  HomePage.clickAndGotoDirectManipulationPage();
+  HomePage.goToTestPage(DIRECT_MANIPULATION_TESTPAGE);
 });
 
 describe('DirectManipulationTest', () => {
@@ -19,7 +19,6 @@ describe('DirectManipulationTest', () => {
       result.includes('width='),
       'measureInWindow response include width'
     );
-    assert.ok(result.includes('x=0;'), 'measureInWindow response x=0');
   });
 
   it('measureLayout Test', () => {

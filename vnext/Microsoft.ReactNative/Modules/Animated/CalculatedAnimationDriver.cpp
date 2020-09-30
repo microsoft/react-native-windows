@@ -6,13 +6,12 @@
 #include <math.h>
 #include "CalculatedAnimationDriver.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> CalculatedAnimationDriver::MakeAnimation(
     const folly::dynamic & /*config*/) {
   const auto [scopedBatch, animation, easingFunction] = []() {
-    const auto compositor = xaml::Window::Current().Compositor();
+    const auto compositor = react::uwp::GetCompositor();
     return std::make_tuple(
         compositor.CreateScopedBatch(comp::CompositionBatchTypes::AllAnimations),
         compositor.CreateScalarKeyFrameAnimation(),
@@ -55,5 +54,4 @@ std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> CalculatedA
   return std::make_tuple(animation, scopedBatch);
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

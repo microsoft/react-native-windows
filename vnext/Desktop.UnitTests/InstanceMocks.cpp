@@ -38,7 +38,8 @@ void MockInstanceCallback::decrementPendingJSCalls() /*override*/ {}
 
 #pragma region MockJSExecutor
 
-void MockJSExecutor::loadApplicationScript(unique_ptr<const JSBigString> script, string sourceURL) {}
+void MockJSExecutor::initializeRuntime() {}
+void MockJSExecutor::loadBundle(unique_ptr<const JSBigString> script, string sourceURL) {}
 void MockJSExecutor::setBundleRegistry(unique_ptr<RAMBundleRegistry> bundleRegistry) {}
 void MockJSExecutor::registerBundle(uint32_t bundleId, const string &bundlePath) {}
 

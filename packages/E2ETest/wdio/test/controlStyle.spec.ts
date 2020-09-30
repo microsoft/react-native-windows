@@ -6,14 +6,15 @@
 import HomePage from '../pages/HomePage';
 import ControlStyleTestPage from '../pages/ControlStylePage';
 import assert from 'assert';
+import { CONTROL_STYLE_TESTPAGE } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 beforeAll(() => {
-  HomePage.backToHomePage();
-  HomePage.clickAndGotoControlStylePage();
+  HomePage.goToTestPage(CONTROL_STYLE_TESTPAGE);
 });
 
 describe('ControlStyleTest', () => {
   /* Test case #1: Controls style with regular border */
+
   it('ControlStyleTestWithRegularBorder', () => {
     const result = ControlStyleTestPage.getTreeDumpResult();
     assert(

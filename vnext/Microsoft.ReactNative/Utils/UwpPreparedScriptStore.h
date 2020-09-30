@@ -1,5 +1,5 @@
 #pragma once
-#include <ScriptStore.h>
+#include <JSI/Shared/ScriptStore.h>
 #include <cxxreact/JSBigString.h>
 #include <jsi/jsi.h>
 #include <winrt/Windows.Foundation.h>
@@ -7,8 +7,7 @@
 #include <future>
 #include <string>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 class UwpPreparedScriptStore : public facebook::jsi::PreparedScriptStore {
  public:
   UwpPreparedScriptStore(winrt::hstring uri);
@@ -62,5 +61,4 @@ class ByteCodeBuffer final : public facebook::jsi::Buffer {
   int size_;
   std::unique_ptr<uint8_t[]> byteArray_;
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

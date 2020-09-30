@@ -10,13 +10,9 @@ import {
   SUBMIT_ON_LOGIN,
   LOGINRESULT_ON_LOGIN,
   SHOWPASSWORD_ON_LOGIN,
-} from '../../app/Consts';
+} from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
 
 class LoginPage extends BasePage {
-  isPageLoaded() {
-    return super.isPageLoaded() && this._userName.isDisplayed();
-  }
-
   setLoginInfo(userName: string, password: string) {
     this._userName.setValue(userName);
     this._password.setValue(password);

@@ -11,9 +11,9 @@ import * as globby from 'globby';
 import * as os from 'os';
 import * as path from 'path';
 
+import FileSystemRepository from '../FileSystemRepository';
 import GitReactFileRepository from '../GitReactFileRepository';
-import {OverrideFileRepository} from '../FileRepository';
-import OverrideFileRepositoryImpl from '../OverrideFileRepositoryImpl';
+import {WritableFileRepository} from '../FileRepository';
 import {getNpmPackage} from '../PackageUtils';
 
 /**
@@ -66,12 +66,12 @@ export async function usingGitReactRepo<T>(
 }
 
 /**
- * Helper to create an isolated override repository filled with specified files
- * and clean it up once execution finishes
+ * Helper to create an isolated repository filled with specified files and
+ * clean it up once execution finishes
  */
-export async function usingOverrides<T>(
+export async function usingFiles<T>(
   overridesToCopy: string[],
-  fn: (overrideRepo: OverrideFileRepository, baseDir: string) => Promise<T>,
+  fn: (overrideRepo: WritableFileRepository, baseDir: string) => Promise<T>,
 ): Promise<T> {
   return await usingScratchDirectory(async targetDirectory => {
     const collateralPath = path.join(__dirname, 'collateral');
@@ -86,20 +86,17 @@ export async function usingOverrides<T>(
       }),
     );
 
-    return await fn(
-      new OverrideFileRepositoryImpl(targetDirectory),
-      targetDirectory,
-    );
+    return await fn(new FileSystemRepository(targetDirectory), targetDirectory);
   });
 }
 
 /**
- * Helper to create an isolated override repository cloned from a source folder
- * and clean it up once execution finishes
+ * Helper to create an isolated repository cloned from a source folder and
+ * clean it up once execution finishes
  */
-export async function usingOverrideRepo<T>(
+export async function usingRepository<T>(
   sourceFolder: string,
-  fn: (overrideRepo: OverrideFileRepository, baseDir: string) => Promise<T>,
+  fn: (overrideRepo: WritableFileRepository, baseDir: string) => Promise<T>,
 ): Promise<T> {
   const collateralPath = path.join(__dirname, 'collateral');
   const srcRepo = path.join(collateralPath, sourceFolder);
@@ -107,7 +104,7 @@ export async function usingOverrideRepo<T>(
     f => path.relative(collateralPath, f),
   );
 
-  return await usingOverrides(srcFiles, async (repo, baseDir) => {
+  return await usingFiles(srcFiles, async (repo, baseDir) => {
     return await fn(repo, path.join(baseDir, sourceFolder));
   });
 }

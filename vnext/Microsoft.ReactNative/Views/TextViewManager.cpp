@@ -12,6 +12,7 @@
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <Utils/PropertyUtils.h>
+#include <Utils/TransformableText.h>
 #include <Utils/ValueUtils.h>
 
 namespace winrt {
@@ -20,10 +21,9 @@ using namespace xaml::Automation;
 using namespace xaml::Automation::Peers;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
-class TextShadowNode : public ShadowNodeBase {
+class TextShadowNode final : public ShadowNodeBase {
   using Super = ShadowNodeBase;
 
  private:
@@ -43,7 +43,10 @@ class TextShadowNode : public ShadowNodeBase {
       if (run != nullptr) {
         m_firstChildNode = &child;
         auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
-        textBlock.Text(run.Text());
+        std::wstring text(run.Text().c_str());
+        transformableText.originalText = text;
+        text = transformableText.TransformText();
+        textBlock.Text(winrt::hstring(text));
         return;
       }
     } else if (index == 1 && m_firstChildNode != nullptr) {
@@ -55,17 +58,19 @@ class TextShadowNode : public ShadowNodeBase {
     Super::AddView(child, index);
   }
 
-  void removeAllChildren() {
+  void removeAllChildren() override {
     m_firstChildNode = nullptr;
     Super::removeAllChildren();
   }
 
-  void RemoveChildAt(int64_t indexToRemove) {
+  void RemoveChildAt(int64_t indexToRemove) override {
     if (indexToRemove == 0) {
       m_firstChildNode = nullptr;
     }
     Super::RemoveChildAt(indexToRemove);
   }
+
+  TransformableText transformableText{};
 };
 
 TextViewManager::TextViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
@@ -94,6 +99,10 @@ bool TextViewManager::UpdateProperty(
 
   if (TryUpdateForeground(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateFontProperties(textBlock, propertyName, propertyValue)) {
+  } else if (propertyName == "textTransform") {
+    auto textNode = static_cast<TextShadowNode *>(nodeToUpdate);
+    auto textTransform = TransformableText::GetTextTransform(propertyValue);
+    textNode->transformableText.textTransform = textTransform;
   } else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {
@@ -176,5 +185,4 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node) {
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

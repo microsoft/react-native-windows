@@ -5,8 +5,7 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class PopupViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
@@ -33,5 +32,4 @@ class PopupViewManager : public FrameworkElementViewManager {
   friend class PopupShadowNode;
 };
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

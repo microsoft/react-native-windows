@@ -17,8 +17,7 @@ using namespace xaml::Controls;
 using namespace xaml::Shapes;
 } // namespace winrt
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 class SwitchShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -173,5 +172,4 @@ void SwitchViewManager::DispatchCommand(
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

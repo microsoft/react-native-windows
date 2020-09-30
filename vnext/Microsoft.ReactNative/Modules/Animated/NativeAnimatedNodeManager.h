@@ -16,8 +16,7 @@
 #include "TransformAnimatedNode.h"
 #include "ValueAnimatedNode.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 /// <summary>
 /// This is the main class that coordinates how native animated JS
 /// implementation drives UI changes.
@@ -45,6 +44,7 @@ class NativeAnimatedNodeManager {
       const folly::dynamic &config,
       const std::weak_ptr<IReactInstance> &instance,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
+  void GetValue(int64_t animatedNodeTag, const Callback &endCallback);
   void ConnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag);
   void DisconnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag);
   void ConnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag);
@@ -106,5 +106,4 @@ class NativeAnimatedNodeManager {
   static constexpr std::string_view s_framesName{"frames"};
   static constexpr std::string_view s_dynamicToValuesName{"dynamicToValues"};
 };
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

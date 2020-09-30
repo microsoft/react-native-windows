@@ -12,8 +12,7 @@
 
 #include <IReactInstance.h>
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 namespace polyester {
 
 class ButtonShadowNode : public ContentControlShadowNode {
@@ -90,5 +89,4 @@ bool ButtonViewManager::UpdateProperty(
 }
 
 } // namespace polyester
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

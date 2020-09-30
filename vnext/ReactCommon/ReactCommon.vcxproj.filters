@@ -102,10 +102,10 @@
     <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
-    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp">
       <Filter>jsi\jsi</Filter>
     </ClCompile>
-    <ClCompile Include="$(JSI_Source)\jsi\JSIDynamic.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.cpp">
       <Filter>jsi\jsi</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
@@ -134,9 +134,6 @@
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.cpp">
       <Filter>turbomodule\core</Filter>
-    </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\BridgeJSCallInvoker.cpp">
-      <Filter>jscallinvoker\ReactCommon</Filter>
     </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp">
       <Filter>yoga\event</Filter>
@@ -236,13 +233,13 @@
     <ClInclude Include="$(YogaDir)\yoga\Yoga.h">
       <Filter>yoga</Filter>
     </ClInclude>
-    <ClInclude Include="$(JSI_SourcePath)\jsi\instrumentation.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h">
@@ -262,9 +259,6 @@
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.h">
       <Filter>turbomodule\core</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\BridgeJSCallInvoker.h">
-      <Filter>jscallinvoker\ReactCommon</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\JSCallInvoker.h">
       <Filter>jscallinvoker\ReactCommon</Filter>

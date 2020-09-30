@@ -1,8 +1,73 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Wed, 08 Jul 2020 01:27:37 GMT and should not be manually modified.
+This log was last generated on Thu, 24 Sep 2020 05:06:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.8
+
+Thu, 24 Sep 2020 05:06:21 GMT
+
+### Patches
+
+- Ignore filemode for Scratch Repository (ngerlem@microsoft.com)
+
+## 0.2.7
+
+Tue, 22 Sep 2020 04:46:10 GMT
+
+### Patches
+
+- Fix react-native-platform-override CLI (ngerlem@microsoft.com)
+
+## 0.2.6
+
+Mon, 21 Sep 2020 05:06:22 GMT
+
+### Patches
+
+- Fixup eslint config (ngerlem@microsoft.com)
+
+## 0.2.5
+
+Mon, 14 Sep 2020 22:03:37 GMT
+
+### Patches
+
+- Reconcile package versions (ngerlem@microsoft.com)
+
+## 0.2.4
+
+Sat, 12 Sep 2020 05:08:52 GMT
+
+### Patches
+
+- Start Sharing Test Configuration Between Node Projects (ngerlem@microsoft.com)
+
+## 0.2.3
+
+Wed, 09 Sep 2020 05:06:35 GMT
+
+### Patches
+
+- Enable @typescript-eslint/no-floating-promises (ngerlem@microsoft.com)
+
+## 0.2.1
+
+Tue, 14 Jul 2020 05:05:25 GMT
+
+### Patches
+
+- Add Validation That Patch/Derived Overrides Aren't Identical to Their Originals (ngerlem@microsoft.com)
+
+## 0.2.0
+
+Sat, 11 Jul 2020 05:09:38 GMT
+
+### Minor changes
+
+- Improve Override Upgrade Performance (ngerlem@microsoft.com)
+- Support Directory Copy Overrides (ngerlem@microsoft.com)
 
 ## 0.1.1
 

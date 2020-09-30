@@ -1,6 +1,7 @@
 
 #include "pch.h"
 #include "ReactSupport.h"
+#include "Base/FollyIncludes.h"
 
 using namespace winrt;
 using namespace Windows::Foundation;
@@ -177,7 +178,7 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
     }
     default:
       wchar_t buf[512];
-      swprintf(buf, sizeof(buf), L"Unrecognized argument value type: %d\n", propType);
+      swprintf(buf, ARRAYSIZE(buf), L"Unrecognized argument value type: %d\n", propType);
       throw hresult_invalid_argument(buf);
   }
 
