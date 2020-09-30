@@ -187,6 +187,7 @@ jobs:
             /p:BaseIntDir=$(BaseIntDir)
             /p:AppxPackageSigningEnabled=false
             /p:UseWinUI3=true
+        continueOnError: true # See issue #6129
 
       - task: PublishBuildArtifacts@1
         displayName: Upload crash dumps
@@ -582,6 +583,7 @@ jobs:
           projectType: app
           additionalInitArguments: --useWinUI3 true
           additionalRunArguments:
+          continueOnBuildFailure: true # See issue #6129
         WinUI3_X86DebugCs:
           language: cs
           configuration: Debug
@@ -589,6 +591,7 @@ jobs:
           projectType: app
           additionalInitArguments: --useWinUI3 true
           additionalRunArguments:
+          continueOnBuildFailure: true # See issue #6129
         X86DebugCppLib:
           language: cpp
           configuration: Debug
