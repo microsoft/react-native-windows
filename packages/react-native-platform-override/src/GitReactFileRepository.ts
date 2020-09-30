@@ -58,8 +58,9 @@ export default class GitReactFileRepository
 
     if (!(await gitClient.checkIsRepo())) {
       await gitClient.init();
-      await gitClient.addConfig('core.filemode', 'false');
       await gitClient.addConfig('core.autocrlf', 'input');
+      await gitClient.addConfig('core.filemode', 'false');
+      await gitClient.addConfig('core.ignorecase', 'true');
     }
 
     return new GitReactFileRepository(dir, gitClient);
@@ -122,9 +123,7 @@ export default class GitReactFileRepository
         ]);
 
         if (patch.length === 0) {
-          throw new Error(
-            `Generated patch for ${filename} was empty. Is it identical to the original?`,
-          );
+          throw new Error(`Generated patch for ${filename} was empty`);
         }
 
         return patch;

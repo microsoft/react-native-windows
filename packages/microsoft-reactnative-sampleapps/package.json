@@ -11,8 +11,8 @@
     "windows": "react-native run-windows"
   },
   "dependencies": {
-    "react": "16.13.1",
-    "react-native": "0.0.0-e96f1e1d8",
+    "react": "0.0.0-experimental-aae83a4b9",
+    "react-native": "0.0.0-949dedca9",
     "react-native-windows": "0.0.0-canary.174"
   },
   "devDependencies": {
