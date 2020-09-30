@@ -48,7 +48,7 @@ steps:
     inputs:
       script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs --release ${{ parameters.additionalRunArguments }}
       workingDirectory: $(Agent.BuildDirectory)
-    continueOnError: ${{ parameters.continueOnBuildFailure }}
+    continueOnError: true
     condition: and(succeeded(), eq('Release', variables['localConfig']))
 
   - task: CmdLine@2
@@ -56,26 +56,5 @@ steps:
     inputs:
       script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs ${{ parameters.additionalRunArguments }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
-    continueOnError: ${{ parameters.continueOnBuildFailure }}
+    continueOnError: true
     condition: and(succeeded(), eq('Debug', variables['localConfig']))
-
-  - template: upload-build-logs.yml
-    parameters:
-      buildLogDirectory: '$(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs'
-
-  - task: CmdLine@2
-    displayName: Create bundle testcli
-    inputs:
-      script: npx --no-install react-native bundle --entry-file index.js --platform windows --bundle-output test.bundle
-      workingDirectory: $(Agent.BuildDirectory)\testcli
-    condition: and(succeeded(), eq(variables['localProjectType'], 'app'))
-
-  # We are experiencing random package restore failures.
-  # We want to uploading the vedaccio logs to aid in diagnosing if it is verdaccio or npmjs.org
-  - task: PublishPipelineArtifact@1
-    displayName: Upload Verdaccio.log (on failure)
-    inputs:
-      targetPath: 'verdaccio.log'
-      artifact: '$(Agent.JobName).Verdaccio.log-$(System.JobAttempt)'
-    condition: failed()
-
