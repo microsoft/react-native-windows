@@ -48,7 +48,7 @@ steps:
     inputs:
       script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs --release ${{ parameters.additionalRunArguments }}
       workingDirectory: $(Agent.BuildDirectory)
-    continueOnError: ${{ eq('true', parameters.continueOnBuildFailure)) }}
+    continueOnError: ${{ eq('true', parameters.continueOnBuildFailure) }}
     condition: and(succeeded(), eq('Release', variables['localConfig']))
 
   - task: CmdLine@2
@@ -56,5 +56,5 @@ steps:
     inputs:
       script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs ${{ parameters.additionalRunArguments }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
-    continueOnError: ${{ eq('true', parameters.continueOnBuildFailure)) }}
+    continueOnError: ${{ eq('true', parameters.continueOnBuildFailure) }}
     condition: and(succeeded(), eq('Debug', variables['localConfig']))
