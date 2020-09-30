@@ -594,7 +594,7 @@ jobs:
           projectType: app
           additionalInitArguments: --useWinUI3 true
           additionalRunArguments:
-          continueOnBuildFailure: true # See issue #6129
+          continueOnBuildFailure: true
         WinUI3_X86DebugCs:
           language: cs
           configuration: Debug
@@ -602,7 +602,7 @@ jobs:
           projectType: app
           additionalInitArguments: --useWinUI3 true
           additionalRunArguments:
-          continueOnBuildFailure: true # See issue #6129
+          continueOnBuildFailure: true
         X86DebugCppLib:
           language: cpp
           configuration: Debug
