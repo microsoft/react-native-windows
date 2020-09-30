@@ -12,7 +12,7 @@
   "dependencies": {
     "chai": "^4.2.0",
     "react": "16.13.1",
-    "react-native": "0.0.0-e96f1e1d8",
+    "react-native": "0.0.0-d3fb036d6",
     "react-native-windows": "^0.0.0-canary.174"
   },
   "devDependencies": {

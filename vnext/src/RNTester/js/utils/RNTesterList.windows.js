@@ -136,24 +136,7 @@ const APIExamples: Array<RNTesterExample> = [
   },
   {
     key: 'AlertExample',
-    module: {
-      title: require('react-native/RNTester/js/examples/Alert/AlertExample')
-        .AlertExample.title,
-      description: require('react-native/RNTester/js/examples/Alert/AlertExample')
-        .AlertExample.description,
-      examples: [
-        {
-          title: require('react-native/RNTester/js/examples/Alert/AlertExample')
-            .AlertExample.title,
-          render: () => {
-            return React.createElement(
-              require('react-native/RNTester/js/examples/Alert/AlertExample')
-                .AlertExample,
-            );
-          },
-        },
-      ],
-    },
+    module: require('../examples/Alert/AlertExample'),
   },
   {
     key: 'AnimatedExample',
