@@ -5,8 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:react="using:Microsoft.ReactNative"
-    mc:Ignorable="d">
-    <Grid>
+    mc:Ignorable="d"
+    Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -22,7 +23,7 @@
             x:Name="x_LoadButton"
             Label="Load"
             Icon="Play"
-            Style="{StaticResource AppBarButtonRevealStyle}"
+            Style="{ThemeResource AppBarButtonRevealStyle}"
             VerticalAlignment="Center"
             Grid.Column="0"
             Grid.RowSpan="2"
@@ -34,7 +35,7 @@
             Grid.Row="0"
             Grid.Column="1"
             BorderThickness="1,0,0,0"
-            BorderBrush="{StaticResource SystemBaseMediumColor}">
+            BorderBrush="{ThemeResource SystemBaseMediumColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -103,7 +104,7 @@
             Grid.Column="1"
             Orientation="Horizontal"
             BorderThickness="1,0,0,0"
-            BorderBrush="{StaticResource SystemBaseMediumColor}">
+            BorderBrush="{ThemeResource SystemBaseMediumColor}">
             <CheckBox x:Name="x_UseWebDebuggerCheckBox"
                  Margin="8,4,4,4"
                  VerticalAlignment="Center"
@@ -152,9 +153,9 @@
         </StackPanel>
         <react:ReactRootView x:Name="ReactRootView"
             BorderThickness="0,1,0,0"
-            BorderBrush="{StaticResource SystemBaseMediumColor}"
+            BorderBrush="{ThemeResource SystemBaseMediumColor}"
             Grid.Row="3"
             Grid.ColumnSpan="2"
-            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+            />
     </Grid>
 </Page>

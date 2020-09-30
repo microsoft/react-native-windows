@@ -68,6 +68,26 @@ void ReactContext::EmitJSEvent(
   m_context->CallJSFunction(to_string(eventEmitterName), "emit", std::move(params));
 }
 
+bool ReactContext::UseWebDebugger() noexcept
+{
+  return Mso::React::ReactOptions::UseWebDebugger(m_context->Properties());
+}
+
+bool ReactContext::UseFastRefresh() noexcept
+{
+  return Mso::React::ReactOptions::UseFastRefresh(m_context->Properties());
+}
+
+bool ReactContext::UseDirectDebugger() noexcept
+{
+  return Mso::React::ReactOptions::UseDirectDebugger(m_context->Properties());
+}
+
+bool ReactContext::DebuggerBreakOnNextLine() noexcept
+{
+  return Mso::React::ReactOptions::DebuggerBreakOnNextLine(m_context->Properties());
+}
+
 Mso::React::IReactContext &ReactContext::GetInner() const noexcept {
   return *m_context;
 }
