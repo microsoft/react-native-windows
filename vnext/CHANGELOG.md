@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 29 Sep 2020 05:05:53 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Sep 2020 05:06:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.174
+
+Wed, 30 Sep 2020 05:06:49 GMT
+
+### Changes
+
+- Simplify react::uwp::IReactInstance (vmorozov@microsoft.com)
+- Initial ABI-safe JSI implementation (vmorozov@microsoft.com)
+- Add react-native-platform-override macOS Support (nick@nickgerleman.com)
+- integrate RN 7/7 build (igklemen@microsoft.com)
 
 ## 0.0.0-canary.173
 

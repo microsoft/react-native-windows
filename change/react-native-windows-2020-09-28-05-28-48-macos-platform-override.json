@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add react-native-platform-override macOS Support",
-  "packageName": "react-native-windows",
-  "email": "nick@nickgerleman.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-28T12:28:48.788Z"
-}
