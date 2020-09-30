@@ -12,8 +12,6 @@
 
 import type {RNTesterExample} from '../types/RNTesterTypes';
 
-import {createElement} from 'react';
-
 const ComponentExamples: Array<RNTesterExample> = [
   {
     key: 'ActivityIndicatorExample',
@@ -129,13 +127,8 @@ const APIExamples: Array<RNTesterExample> = [
   },
   {
     key: 'BoxShadowExample',
-<<<<<<< Upstream
-    module: require('../examples/BoxShadow/BoxShadowExample'),
-  },
-=======
     module: require('react-native/RNTester/js/examples/BoxShadow/BoxShadowExample'),
   } /*
->>>>>>> Override
   {
     key: 'ClipboardExample',
     module: require('react-native/RNTester/js/examples/Clipboard/ClipboardExample'),
