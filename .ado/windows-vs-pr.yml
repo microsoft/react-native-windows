@@ -502,6 +502,7 @@ jobs:
           projectType: app
           additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
           additionalRunArguments:
+          continueOnBuildFailure: false
         X86DebugCs:
           language: cs
           configuration: Debug
@@ -509,26 +510,31 @@ jobs:
           projectType: app
           additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
           additionalRunArguments:
+          continueOnBuildFailure: false
         #X86ReleaseCpp:
         #  language: cpp
         #  configuration: Release
         #  platform: x86
         #  projectType: app
+        #  continueOnBuildFailure: false
         #X86ReleaseCs:
         #  language: cs
         #  configuration: Release
         #  platform: x86
         #  projectType: app
+        #  continueOnBuildFailure: false
         #X64DebugCpp:
         #  language: cpp
         #  configuration: Debug
         #  platform: x64
         #  projectType: app
+        #  continueOnBuildFailure: false
         #X64DebugCs:
         #  language: cs
         #  configuration: Debug
         #  platform: x64
         #  projectType: app
+        #  continueOnBuildFailure: false
         X64ReleaseCpp:
           language: cpp
           configuration: Release
@@ -536,6 +542,7 @@ jobs:
           projectType: app
           additionalInitArguments:
           additionalRunArguments:
+          continueOnBuildFailure: false
         X64ReleaseCs:
           language: cs
           configuration: Release
@@ -543,16 +550,19 @@ jobs:
           projectType: app
           additionalInitArguments:
           additionalRunArguments:
+          continueOnBuildFailure: false
         #ArmDebugCpp:
         #  language: cpp
         #  configuration: Debug
         #  platform: arm
         #  projectType: app
+        #  continueOnBuildFailure: false
         #ArmDebugCs:
         #  language: cs
         #  configuration: Debug
         #  platform: arm
         #  projectType: app
+        #  continueOnBuildFailure: false
         ArmReleaseCpp:
           language: cpp
           configuration: Release
@@ -560,6 +570,7 @@ jobs:
           projectType: app
           additionalInitArguments:
           additionalRunArguments: --no-deploy
+          continueOnBuildFailure: false
         ArmReleaseCs:
           language: cs
           configuration: Release
@@ -567,26 +578,31 @@ jobs:
           projectType: app
           additionalInitArguments:
           additionalRunArguments: --no-deploy
+          continueOnBuildFailure: false
         #Arm64DebugCpp:
         #  language: cpp
         #  configuration: Debug
         #  platform: arm64
         #  projectType: app
+        #  continueOnBuildFailure: false
         #Arm64DebugCs:
         #  language: cs
         #  configuration: Debug
         #  platform: arm64
         #  projectType: app
+        #  continueOnBuildFailure: false
         #Arm64ReleaseCpp:
         #  language: cpp
         #  configuration: Release
         #  platform: arm64
         #  projectType: app
+        #  continueOnBuildFailure: false
         #Arm64ReleaseCs:
         #  language: cs
         #  configuration: Release
         #  platform: arm64
         #  projectType: app
+        #  continueOnBuildFailure: false
         WinUI3_X86DebugCpp:
           language: cpp
           configuration: Debug
@@ -610,6 +626,7 @@ jobs:
           projectType: lib
           additionalInitArguments:
           additionalRunArguments: --no-autolink --no-deploy
+          continueOnBuildFailure: false
         X86DebugCsLib:
           language: cs
           configuration: Debug
@@ -617,6 +634,7 @@ jobs:
           projectType: lib
           additionalInitArguments:
           additionalRunArguments: --no-autolink --no-deploy
+          continueOnBuildFailure: false
 
     timeoutInMinutes: 50 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
