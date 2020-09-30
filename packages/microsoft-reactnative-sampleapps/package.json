@@ -24,6 +24,7 @@
     "eslint": "6.8.0",
     "just-scripts": "^0.36.1",
     "metro-react-native-babel-preset": "^0.56.0",
+    "prettier": "1.19.1",
     "react-native-windows-codegen": "0.1.6",
     "react-test-renderer": "16.9.0"
   }
