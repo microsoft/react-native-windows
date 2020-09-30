@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Fix applying patches when case is mismatched",
+  "packageName": "react-native-platform-override",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-30T20:25:27.566Z"
+}
