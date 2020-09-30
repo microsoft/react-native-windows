@@ -630,7 +630,7 @@ jobs:
           platform: $(platform)
           additionalInitArguments: $(additionalInitArguments)
           additionalRunArguments: $(additionalRunArguments)
-          continueOnBuildFailure: 'true'
+          continueOnBuildFailure: true
           projectType: $(projectType)
 
   - job: CliInitExperimental

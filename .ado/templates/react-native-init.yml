@@ -28,7 +28,7 @@ parameters:
     default: ''
   - name: continueOnBuildFailure
     type: string # Used in a matrix which doesn't support booleans
-    default: 'true'
+    default: ''
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
