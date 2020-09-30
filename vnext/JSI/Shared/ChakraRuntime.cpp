@@ -993,7 +993,7 @@ facebook::jsi::Value ChakraRuntime::HostObjectOwnKeysTrap(
 }
 
 facebook::jsi::Object ChakraRuntime::createHostObjectProxyHandler() noexcept {
-  // TODO (yicyao): handler can be cached and reused for multiple HostObjects.
+  // TODO: handler can be cached and reused for multiple HostObjects.
 
   facebook::jsi::Object handler = createObject();
 

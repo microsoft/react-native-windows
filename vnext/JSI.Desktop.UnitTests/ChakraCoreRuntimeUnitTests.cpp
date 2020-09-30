@@ -7,7 +7,7 @@
 #include <V8JsiRuntime.h>
 #endif
 
-// TODO (yicyao): #2730 Introduces a vcxitem for shared test code and move this
+// TODO: #2730 Introduces a vcxitem for shared test code and move this
 // there.
 #include <Threading/MessageQueueThreadFactory.h>
 
@@ -25,7 +25,7 @@ using Microsoft::JSI::ChakraRuntimeArgs;
 using Microsoft::JSI::makeChakraRuntime;
 using react::uwp::MakeJSQueueThread;
 
-// TODO (yicyao): #2729 We need to add tests for ChakraCoreRuntime specific
+// TODO: #2729 We need to add tests for ChakraCoreRuntime specific
 // behaviors such as ScriptStore. This may require us to bring back JSITestBase.
 
 std::vector<RuntimeFactory> runtimeGenerators() {
