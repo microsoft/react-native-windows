@@ -4,14 +4,13 @@
 // clang-format off
 #include "WinRTWebSocketResource.h"
 
-#include <ReactUWP/Utils/CppWinrtLessExceptions.h>
+#include <Utils/CppWinrtLessExceptions.h>
 #include <Unicode.h>
 #include <Utilities.h>
 
 // Windows API
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
-#include <atlbase.h>
 #include <RestrictedErrorInfo.h>
 #include <roerrorapi.h>
 
@@ -386,8 +385,8 @@ void WinRTWebSocketResource::Synchronize() noexcept
 string WinRTWebSocketResource::GetRestrictedErrorMessage() noexcept
 {
   string result;
-  CComPtr<IRestrictedErrorInfo> errorInfo;
-  if (SUCCEEDED(GetRestrictedErrorInfo(&errorInfo)))
+  winrt::com_ptr<IRestrictedErrorInfo> errorInfo;
+  if (SUCCEEDED(GetRestrictedErrorInfo(errorInfo.put())))
   {
     BSTR description;
     HRESULT error;

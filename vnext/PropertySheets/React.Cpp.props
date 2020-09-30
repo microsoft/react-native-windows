@@ -102,6 +102,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
 
       <!-- Add include directories expected by React Native C++ code and headers -->
