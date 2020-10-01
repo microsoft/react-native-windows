@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  *
  * @format
- * @flow
+ * @flow strict-local
  */
 
 'use strict';
@@ -26,12 +26,12 @@ class RCTNetworking extends NativeEventEmitter {
     method: string,
     trackingName: string,
     url: string,
-    headers: Object,
+    headers: {...},
     data: RequestBody,
     responseType: NativeResponseType,
     incrementalUpdates: boolean,
     timeout: number,
-    callback: (requestId: number) => any,
+    callback: (requestId: number) => void,
     withCredentials: boolean,
   ) {
     const body = convertRequestBody(data);
@@ -54,7 +54,7 @@ class RCTNetworking extends NativeEventEmitter {
     RCTNetworkingNative.abortRequest(requestId);
   }
 
-  clearCookies(callback: (result: boolean) => any) {
+  clearCookies(callback: (result: boolean) => void) {
     RCTNetworkingNative.clearCookies(callback);
   }
 }

@@ -36,7 +36,7 @@ struct FileVersionInfoResource {
 
 } // namespace
 
-// TODO (yicyao): We temporarily removed weak reference semantics from
+// TODO: We temporarily removed weak reference semantics from
 // ChakraCore based jsi::Runtime.
 
 // ES6 Promise callback

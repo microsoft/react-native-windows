@@ -1,10 +1,10 @@
 {
   "name": "@rnw-scripts/just-task",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "main": "just-task.js",
   "dependencies": {
-    "@rnw-scripts/jest-e2e-config": "0.1.0"
+    "@rnw-scripts/jest-e2e-config": "0.1.1"
   },
   "devDependencies": {
     "just-scripts": "^0.36.1"

@@ -32,8 +32,14 @@
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
 
+; Ignore react-native-windows' target folder. Flow is not compiled with long path support and after running unittests these folders have long paths
+.*/node_modules/react-native-windows/target/.*
+.*/node_modules/react-native-windows/Microsoft.ReactNative.Managed.CodeGen.UnitTests/.*
+
 ; These files dont need to be checked and just increase the build time
+.*/node_modules/e2etest/.*
 .*/node_modules/microsoft-reactnative-sampleapps/.*
+.*/node_modules/playground/.*
 
 ; Ignore templates for 'react-native init'
 <PROJECT_ROOT>/template/.*
@@ -122,4 +128,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.128.0
+^0.130.0

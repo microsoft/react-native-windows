@@ -47,10 +47,10 @@
     "@wdio/sync": "5.12.1",
     "@wdio/utils": "5.12.1",
     "acorn": "^7.1.1",
+    "bl": "3.0.1",
     "logkitty": "^0.7.1",
     "eslint-plugin-react": "^7.14.1",
-    "eslint-plugin-react-hooks": "3.0.0",
-    "eslint-plugin-react-hooks-comment": "eslint-plugin-react-hooks-resolution-can-be-removed-with-rn-after-july-10th-2020",
+    "eslint-plugin-react-hooks": "4.0.7",
     "webdriver": "git+https://github.com/react-native-windows/webdriver.git",
     "webdriverio": "5.12.1"
   },

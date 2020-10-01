@@ -26,7 +26,7 @@ class JsiRuntimeUnitTests : public ::testing::TestWithParam<RuntimeFactory> {
   }
 
   bool checkValue(const Value &value, const std::string &jsValue) {
-    // TODO (yicyao): Should we use === instead of == here?
+    // TODO: Should we use === instead of == here?
     return function("function(value) { return value == " + jsValue + "; }").call(rt, std::move(value)).getBool();
   }
 

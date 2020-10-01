@@ -24,6 +24,7 @@ import {
 import Manifest from '../Manifest';
 import {OverrideFactoryImpl} from '../OverrideFactory';
 import {hashContent} from '../Hash';
+import {normalizePath} from '../PathUtils';
 
 const reactFiles: Array<MockFile> = [
   {
@@ -119,7 +120,10 @@ test('validate - Missing Override', async () => {
 
   const errors = await manifest.validate(ovrRepo, reactRepo);
   expect(errors).toEqual([
-    {type: 'missingFromManifest', overrideName: 'bbb\\ccc.win32.js'},
+    {
+      type: 'missingFromManifest',
+      overrideName: normalizePath('bbb\\ccc.win32.js'),
+    },
   ]);
 });
 
@@ -133,7 +137,10 @@ test('validate - Extra Override', async () => {
 
   const errors = await manifest.validate(ovrRepo, reactRepo);
   expect(errors).toEqual([
-    {type: 'overrideNotFound', overrideName: 'bbb\\ddd.win32.js'},
+    {
+      type: 'overrideNotFound',
+      overrideName: normalizePath('bbb\\ddd.win32.js'),
+    },
   ]);
 });
 
@@ -200,7 +207,10 @@ test('validate - Include Catches Errors', async () => {
 
   const errors = await manifest.validate(ovrRepo, reactRepo);
   expect(errors).toEqual([
-    {overrideName: 'aaa\\aaa.windows.js', type: 'missingFromManifest'},
+    {
+      overrideName: normalizePath('aaa\\aaa.windows.js'),
+      type: 'missingFromManifest',
+    },
   ]);
 });
 
@@ -241,7 +251,10 @@ test('validate - Exclude Catches Errors', async () => {
 
   const errors = await manifest.validate(ovrRepo, reactRepo);
   expect(errors).toEqual([
-    {overrideName: 'aaa\\bbb.windows.js', type: 'missingFromManifest'},
+    {
+      overrideName: normalizePath('aaa\\bbb.windows.js'),
+      type: 'missingFromManifest',
+    },
   ]);
 });
 

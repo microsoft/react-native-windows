@@ -2,6 +2,42 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.53",
+      "version": "0.0.0-canary.53",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 7/29 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b111a2fa6e0ec245e87a653394105be1c98568ee",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 30 Sep 2020 05:06:49 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.52",
+      "version": "0.0.0-canary.52",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "integrate RN 7/7 build",
+            "author": "igklemen@microsoft.com",
+            "commit": "eb13b4761acb4df37b02d75f4296b8a8033db2ec",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 25 Sep 2020 05:05:40 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.51",
       "version": "0.0.0-canary.51",

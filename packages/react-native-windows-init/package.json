@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-init",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "description": "CLI to add react-native-windows to an existing react-native project",
   "main": "index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -27,10 +27,10 @@
     "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "@react-native-windows/cli": "0.0.0-canary.20",
-    "@rnw-scripts/eslint-config": "0.1.3",
-    "@rnw-scripts/jest-unittest-config": "0.1.0",
-    "@rnw-scripts/just-task": "0.0.5",
+    "@react-native-windows/cli": "0.0.0-canary.21",
+    "@rnw-scripts/eslint-config": "0.1.4",
+    "@rnw-scripts/jest-unittest-config": "0.1.1",
+    "@rnw-scripts/just-task": "0.0.6",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/chalk": "^2.2.0",
     "@types/jest": "^26.0.13",
@@ -42,6 +42,7 @@
     "eslint": "6.8.0",
     "jest": "^26.4.2",
     "just-scripts": "^0.36.1",
+    "prettier": "1.19.1",
     "typescript": "^3.8.3"
   },
   "files": [
