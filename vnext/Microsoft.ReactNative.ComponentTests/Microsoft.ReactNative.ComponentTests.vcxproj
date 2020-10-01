@@ -144,7 +144,7 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <ClInclude Include="$(JSI_SourcePath)\jsi\test\testlib.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChakraEdgeRuntimeTests.cpp" />
@@ -157,7 +157,7 @@
     </ClCompile>
     <ClInclude Include="CommonReaderTest.h" />
     <ClInclude Include="pch/pch.h" />
-    <ClCompile Include="$(JSI_SourcePath)\jsi\test\testlib.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.cpp">
       <!--
         The JSI tests have a number of violations that we must suppress to avoid chaning the code.
         C4100 - unreferenced formal parameter
