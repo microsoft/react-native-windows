@@ -25,7 +25,7 @@ export const supportKeyboard = <P extends object>(
   class SupportKeyboard extends React.Component<PropsWithForwardedRef> {
     public render(): JSX.Element {
       const {forwardedRef, ...rest} = this.props;
-      return <WrappedComponent ref={forwardedRef} {...rest as P} />;
+      return <WrappedComponent ref={forwardedRef} {...(rest as P)} />;
     }
   }
 

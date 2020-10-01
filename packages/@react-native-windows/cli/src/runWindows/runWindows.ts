@@ -135,9 +135,7 @@ async function runWindows(
       );
     } catch (e) {
       newError(
-        `Build failed with message ${
-          e.message
-        }. Check your build configuration.`,
+        `Build failed with message ${e.message}. Check your build configuration.`,
       );
       if (e.logfile) {
         console.log('See', chalk.bold(e.logfile));

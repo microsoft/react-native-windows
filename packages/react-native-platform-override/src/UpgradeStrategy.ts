@@ -114,14 +114,13 @@ export const UpgradeStrategies = {
     baseDirectory: string,
   ): UpgradeStrategy => ({
     upgrade: async (gitReactRepo, overrideRepo, newVersion) => {
-      const baseFiles = (await gitReactRepo.listFiles(
-        [`${baseDirectory}/**`],
-        newVersion,
-      )).map(f => path.relative(baseDirectory, f));
+      const baseFiles = (
+        await gitReactRepo.listFiles([`${baseDirectory}/**`], newVersion)
+      ).map(f => path.relative(baseDirectory, f));
 
-      const overrideFiles = (await overrideRepo.listFiles([
-        `${overrideDirectory}/**`,
-      ])).map(f => path.relative(overrideDirectory, f));
+      const overrideFiles = (
+        await overrideRepo.listFiles([`${overrideDirectory}/**`])
+      ).map(f => path.relative(overrideDirectory, f));
 
       // Note that this logic can lead emopty directories. This shouldn't
       // matter in practice as Git won't track them.

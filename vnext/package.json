@@ -65,7 +65,7 @@
     "flow-bin": "^0.130.0",
     "jscodeshift": "^0.9.0",
     "just-scripts": "^0.36.1",
-    "prettier": "1.17.0",
+    "prettier": "1.19.1",
     "react": "0.0.0-experimental-aae83a4b9",
     "react-native": "0.0.0-949dedca9",
     "react-native-platform-override": "^0.3.0",

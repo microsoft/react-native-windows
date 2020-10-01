@@ -78,16 +78,12 @@ function translateSpecFunctionParam(
     case 'ReservedFunctionValueTypeAnnotation':
       if (param.typeAnnotation.name !== 'RootTag')
         throw new Error(
-          `Unknown reserved function: ${
-            param.typeAnnotation.name
-          } in translateSpecFunctionParam`,
+          `Unknown reserved function: ${param.typeAnnotation.name} in translateSpecFunctionParam`,
         );
       return 'double';
     default:
       throw new Error(
-        `Unhandled type in translateSpecFunctionParam: ${
-          param.typeAnnotation.type
-        }`,
+        `Unhandled type in translateSpecFunctionParam: ${param.typeAnnotation.type}`,
       );
   }
 }
@@ -120,16 +116,12 @@ function translateFunctionParam(param: FunctionTypeAnnotationParam): string {
     case 'ReservedFunctionValueTypeAnnotation':
       if (param.typeAnnotation.name !== 'RootTag')
         throw new Error(
-          `Unknown reserved function: ${
-            param.typeAnnotation.name
-          } in translateFunctionParam`,
+          `Unknown reserved function: ${param.typeAnnotation.name} in translateFunctionParam`,
         );
       return 'double';
     default:
       throw new Error(
-        `Unhandled type in translateFunctionParam: ${
-          param.typeAnnotation.type
-        } in translateFunctionParam`,
+        `Unhandled type in translateFunctionParam: ${param.typeAnnotation.type} in translateFunctionParam`,
       );
   }
 }

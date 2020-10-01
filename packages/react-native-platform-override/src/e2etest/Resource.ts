@@ -100,9 +100,9 @@ export async function usingRepository<T>(
 ): Promise<T> {
   const collateralPath = path.join(__dirname, 'collateral');
   const srcRepo = path.join(collateralPath, sourceFolder);
-  const srcFiles = (await globby(['**/*'], {cwd: srcRepo, absolute: true})).map(
-    f => path.relative(collateralPath, f),
-  );
+  const srcFiles = (
+    await globby(['**/*'], {cwd: srcRepo, absolute: true})
+  ).map(f => path.relative(collateralPath, f));
 
   return await usingFiles(srcFiles, async (repo, baseDir) => {
     return await fn(repo, path.join(baseDir, sourceFolder));

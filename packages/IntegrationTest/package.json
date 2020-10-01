@@ -34,6 +34,7 @@
     "jest": "^26.4.2",
     "just-scripts": "^0.36.1",
     "ora": "^3.4.0",
+    "prettier": "1.19.1",
     "ps-list": "^7.2.0",
     "typescript": "^3.8.3",
     "walkdir": "^0.4.1",

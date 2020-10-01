@@ -56,9 +56,7 @@ function getAppPackage(
       ? `{*_x86_${configuration}_*,*_Win32_${configuration}_*}`
       : `*_${options.arch}_${configuration}_*`;
 
-  const appPackageGlob = `${
-    options.root
-  }/windows/{*/AppPackages,AppPackages/*}/${packageFolder}`;
+  const appPackageGlob = `${options.root}/windows/{*/AppPackages,AppPackages/*}/${packageFolder}`;
   const appPackageCandidates = glob.sync(appPackageGlob);
   let appPackage;
   if (appPackageCandidates.length === 1 || !projectName) {
@@ -124,11 +122,7 @@ function getAppxManifestPath(
   projectName?: string,
 ): string {
   const configuration = getBuildConfiguration(options);
-  const appxManifestGlob = `windows/{*/bin/${
-    options.arch
-  }/${configuration},${configuration}/*,target/${
-    options.arch
-  }/${configuration},${options.arch}/${configuration}/*}/AppxManifest.xml`;
+  const appxManifestGlob = `windows/{*/bin/${options.arch}/${configuration},${configuration}/*,target/${options.arch}/${configuration},${options.arch}/${configuration}/*}/AppxManifest.xml`;
   const globs = glob.sync(path.join(options.root, appxManifestGlob));
   let appxPath: string;
   if (globs.length === 1 || !projectName) {
@@ -147,9 +141,7 @@ function getAppxManifestPath(
 
   if (!appxPath) {
     throw new Error(
-      `Unable to find AppxManifest from "${
-        options.root
-      }", using search path: "${appxManifestGlob}" `,
+      `Unable to find AppxManifest from "${options.root}", using search path: "${appxManifestGlob}" `,
     );
   }
   return appxPath;
@@ -310,9 +302,7 @@ export async function deployToDesktop(
     await runPowerShellScriptFunction(
       'Installing dependent framework packages',
       windowsStoreAppUtils,
-      `Install-AppDependencies ${appxManifestPath} ${appPackageFolder} ${
-        options.arch
-      }`,
+      `Install-AppDependencies ${appxManifestPath} ${appPackageFolder} ${options.arch}`,
       verbose,
     );
     await build.buildSolution(
