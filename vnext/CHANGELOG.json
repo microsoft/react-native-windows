@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.175",
+      "version": "0.0.0-canary.175",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 7/29 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b111a2fa6e0ec245e87a653394105be1c98568ee",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove Microsoft user names from sourcecode",
+            "author": "dannyvv@microsoft.com",
+            "commit": "5f7c89b96bb3e77cac1bf1da4d2366d1bd5716d3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Sep 2020 05:06:49 GMT",
       "tag": "react-native-windows_v0.0.0-canary.174",
       "version": "0.0.0-canary.174",

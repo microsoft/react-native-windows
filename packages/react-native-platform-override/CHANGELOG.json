@@ -2,6 +2,27 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "react-native-platform-override_v0.3.1",
+      "version": "0.3.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "react-native-platform-override"
+          },
+          {
+            "comment": "Fix applying patches when case is mismatched",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b111a2fa6e0ec245e87a653394105be1c98568ee",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Sep 2020 05:06:49 GMT",
       "tag": "react-native-platform-override_v0.3.0",
       "version": "0.3.0",
