@@ -17,7 +17,7 @@
 // then), this could go away (or cppwinrt API could add nothrow accessors)
 //
 
-#include "winrt/base.h"
+#include <winrt/base.h>
 
 // #define DEFAULT_CPPWINRT_EXCEPTIONS
 #ifndef DEFAULT_CPPWINRT_EXCEPTIONS

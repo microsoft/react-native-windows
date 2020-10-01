@@ -292,7 +292,6 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\AccessibilityUtils.h" />
-    <ClInclude Include="Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="Utils\Helpers.h" />
     <ClInclude Include="Utils\LocalBundleReader.h" />
     <ClInclude Include="Utils\PropertyHandlerUtils.h" />
@@ -695,9 +694,8 @@
     <Error Condition="'$(Source)'==''" Text="To generate a pre-processed file, please specify a source file with msbuild /p:Source=nameOfTheSource.cpp" />
     <CL PreprocessToFile="true" Sources="$(Source)" AdditionalIncludeDirectories="%(ClCompile.AdditionalIncludeDirectories)" PreprocessorDefinitions="%(ClCompile.PreprocessorDefinitions)" AdditionalOptions="%(ClCompile.AdditionalOptions) /d1PP" PreprocessKeepComments="true" PreprocessOutputPath="$(Source.Replace('.cpp', '.pp'))" />
   </Target>
-
   <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/3133 -->
-  <Target Name="InjectForcedXamlIncludes" BeforeTargets="CompileXamlGeneratedFiles" >
+  <Target Name="InjectForcedXamlIncludes" BeforeTargets="CompileXamlGeneratedFiles">
     <ItemGroup>
       <ClCompile Condition="'%(ClCompile.CompilerIteration)' == 'XamlGenerated'">
         <ForcedIncludeFiles>%(ForcedIncludeFiles);winrt/Microsoft.UI.Xaml.Controls.h;winrt/Microsoft.UI.Xaml.XamlTypeInfo.h</ForcedIncludeFiles>

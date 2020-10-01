@@ -116,6 +116,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleRegistry.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WinRTWebSocketResource.h" />

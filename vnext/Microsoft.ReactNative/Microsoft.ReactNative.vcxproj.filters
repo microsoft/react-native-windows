@@ -636,9 +636,6 @@
     <ClInclude Include="Utils\AccessibilityUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\CppWinrtLessExceptions.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\Helpers.h">
       <Filter>Utils</Filter>
     </ClInclude>
