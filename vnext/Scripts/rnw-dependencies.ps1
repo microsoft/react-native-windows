@@ -217,18 +217,18 @@ $requirements = @(
         };
         Optional = $true;
     },
-    @{
-        Name = "MSBuild Structured Log Viewer";
-        Tags = @('rnwDev');
-        Valid = (cmd "/c assoc .binlog 2>nul" )  -ne $null;
-        Install = {
-            choco install -y msbuild-structured-log-viewer;
-            $slv = gci ${env:LocalAppData}\MSBuildStructuredLogViewer\StructuredLogViewer.exe -Recurse | select FullName | Sort-Object -Property FullName -Descending | Select-Object -First 1
-            cmd /c "assoc .binlog=MSBuildLog >nul";
-            cmd /c "ftype MSBuildLog=$($slv.FullName) %1 >nul";
-         };
-         Optional = $true;
-    },
+    # @{
+    #     Name = "MSBuild Structured Log Viewer";
+    #     Tags = @('rnwDev');
+    #     Valid = (cmd "/c assoc .binlog 2>nul" )  -ne $null;
+    #     Install = {
+    #         choco install -y msbuild-structured-log-viewer;
+    #         $slv = gci ${env:LocalAppData}\MSBuildStructuredLogViewer\StructuredLogViewer.exe -Recurse | select FullName | Sort-Object -Property FullName -Descending | Select-Object -First 1
+    #         # cmd /c "assoc .binlog=MSBuildLog >nul";
+    #         # cmd /c "ftype MSBuildLog=$($slv.FullName) %1 >nul";
+    #      };
+    #      Optional = $true;
+    # },
     @{
         # The 64-bit version of MsBuild does not support long paths. A temp fix for v16 is: https://github.com/microsoft/msbuild/issues/5331
         Name = "MSBuild 64-bit Long Path Support"
