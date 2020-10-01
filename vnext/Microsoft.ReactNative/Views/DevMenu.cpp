@@ -117,53 +117,78 @@ void DevMenuManager::CreateAndShowUI() noexcept {
                                                                                  : L"Enable Break on First Line");
 
   m_reloadJSRevoker = devMenu.Reload().Click(
-      winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        Hide();
-        DevSettings::Reload(React::ReactPropertyBag(m_context->Properties()));
+      winrt::auto_revoke,
+      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+        if (auto strongThis = wkThis.lock()) {
+          strongThis->Hide();
+          DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
+        }
       });
 
   m_remoteDebugJSRevoker = devMenu.RemoteDebug().Click(
-      winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        Hide();
-        Mso::React::ReactOptions::SetUseWebDebugger(
-            m_context->Properties(), !Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()));
-        DevSettings::Reload(React::ReactPropertyBag(m_context->Properties()));
+      winrt::auto_revoke,
+      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+        if (auto strongThis = wkThis.lock()) {
+          strongThis->Hide();
+          Mso::React::ReactOptions::SetUseWebDebugger(
+              strongThis->m_context->Properties(),
+              !Mso::React::ReactOptions::UseWebDebugger(strongThis->m_context->Properties()));
+          DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
+        }
       });
 
   m_directDebuggingRevoker = devMenu.DirectDebug().Click(
-      winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        Hide();
-        Mso::React::ReactOptions::SetUseDirectDebugger(
-            m_context->Properties(), !Mso::React::ReactOptions::UseDirectDebugger(m_context->Properties()));
-        DevSettings::Reload(React::ReactPropertyBag(m_context->Properties()));
+      winrt::auto_revoke,
+      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+        if (auto strongThis = wkThis.lock()) {
+          strongThis->Hide();
+          Mso::React::ReactOptions::SetUseDirectDebugger(
+              strongThis->m_context->Properties(),
+              !Mso::React::ReactOptions::UseDirectDebugger(strongThis->m_context->Properties()));
+          DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
+        }
       });
 
   m_breakOnNextLineRevoker = devMenu.BreakOnNextLine().Click(
-      winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        Hide();
-        Mso::React::ReactOptions::SetDebuggerBreakOnNextLine(
-            m_context->Properties(), !Mso::React::ReactOptions::DebuggerBreakOnNextLine(m_context->Properties()));
-        DevSettings::Reload(React::ReactPropertyBag(m_context->Properties()));
+      winrt::auto_revoke,
+      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+        if (auto strongThis = wkThis.lock()) {
+          strongThis->Hide();
+          Mso::React::ReactOptions::SetDebuggerBreakOnNextLine(
+              strongThis->m_context->Properties(),
+              !Mso::React::ReactOptions::DebuggerBreakOnNextLine(strongThis->m_context->Properties()));
+          DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
+        }
       });
 
   m_fastRefreshRevoker = devMenu.FastRefresh().Click(
-      winrt::auto_revoke, [this](auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        Hide();
-        Mso::React::ReactOptions::SetUseFastRefresh(
-            m_context->Properties(), !Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()));
-        DevSettings::Reload(React::ReactPropertyBag(m_context->Properties()));
+      winrt::auto_revoke,
+      [wkThis = weak_from_this()](auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+        if (auto strongThis = wkThis.lock()) {
+          strongThis->Hide();
+          Mso::React::ReactOptions::SetUseFastRefresh(
+              strongThis->m_context->Properties(),
+              !Mso::React::ReactOptions::UseFastRefresh(strongThis->m_context->Properties()));
+          DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
+        }
       });
 
   m_toggleInspectorRevoker = devMenu.Inspector().Click(
-      winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        Hide();
-        DevSettings::ToggleElementInspector(*m_context);
+      winrt::auto_revoke,
+      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+        if (auto strongThis = wkThis.lock()) {
+          strongThis->Hide();
+          DevSettings::ToggleElementInspector(*(strongThis->m_context));
+        }
       });
 
   m_configBundlerRevoker = devMenu.ConfigBundler().Click(
-      winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        Hide();
-        React::ReactPropertyBag(m_context->Properties()).Get(ConfigureBundlerProperty())();
+      winrt::auto_revoke,
+      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+        if (auto strongThis = wkThis.lock()) {
+          strongThis->Hide();
+          React::ReactPropertyBag(strongThis->m_context->Properties()).Get(ConfigureBundlerProperty())();
+        }
       });
   // Only show Configure Bundler when connected to a bundler
   devMenu.ConfigBundler().Visibility(
@@ -173,7 +198,11 @@ void DevMenuManager::CreateAndShowUI() noexcept {
           : xaml::Visibility::Collapsed);
 
   m_cancelRevoker = devMenu.Cancel().Click(
-      winrt::auto_revoke, [this](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) { Hide(); });
+      winrt::auto_revoke, [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) {
+        if (auto strongThis = wkThis.lock()) {
+          strongThis->Hide();
+        }
+      });
 
   m_flyout = xaml::Controls::Flyout{};
   m_flyout.Content(devMenu);

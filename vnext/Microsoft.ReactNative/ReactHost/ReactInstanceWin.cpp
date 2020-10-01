@@ -230,15 +230,9 @@ void ReactInstanceWin::Initialize() noexcept {
 
           auto devSettings = std::make_shared<facebook::react::DevSettings>();
           devSettings->useJITCompilation = m_options.EnableJITCompilation;
-          devSettings->sourceBundleHost = m_options.DeveloperSettings.SourceBundleHost.empty()
-              ? facebook::react::DevServerHelper::DefaultPackagerHost
-              : m_options.DeveloperSettings.SourceBundleHost;
-          devSettings->sourceBundlePort = m_options.DeveloperSettings.SourceBundlePort
-              ? m_options.DeveloperSettings.SourceBundlePort
-              : facebook::react::DevServerHelper::DefaultPackagerPort;
-          devSettings->debugBundlePath = m_options.DeveloperSettings.SourceBundleName.empty()
-              ? m_options.Identity
-              : m_options.DeveloperSettings.SourceBundleName;
+          devSettings->sourceBundleHost = SourceBundleHost();
+          devSettings->sourceBundlePort = SourceBundlePort();
+          devSettings->debugBundlePath = DebugBundlePath();
           devSettings->liveReloadCallback = GetLiveReloadCallback();
           devSettings->errorCallback = GetErrorCallback();
           devSettings->loggingCallback = GetLoggingCallback();
@@ -250,9 +244,7 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->useWebDebugger = m_useWebDebugger;
           devSettings->useFastRefresh = m_isFastReloadEnabled;
           // devSettings->memoryTracker = GetMemoryTracker();
-          devSettings->bundleRootPath =
-              m_options.BundleRootPath.empty() ? "ms-appx:///Bundle/" : m_options.BundleRootPath;
-          m_bundleRootPath = devSettings->bundleRootPath;
+          devSettings->bundleRootPath = BundleRootPath();
 
           devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
           devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
@@ -359,13 +351,9 @@ void ReactInstanceWin::Initialize() noexcept {
             if (m_options.UseDeveloperSupport() && State() != ReactInstanceState::HasError) {
               folly::dynamic params = folly::dynamic::array(
                   STRING(RN_PLATFORM),
-                  m_options.DeveloperSettings.SourceBundleName.empty() ? m_options.Identity
-                                                                       : m_options.DeveloperSettings.SourceBundleName,
-                  m_options.DeveloperSettings.SourceBundleHost.empty()
-                      ? facebook::react::DevServerHelper::DefaultPackagerHost
-                      : m_options.DeveloperSettings.SourceBundleHost,
-                  m_options.DeveloperSettings.SourceBundlePort ? m_options.DeveloperSettings.SourceBundlePort
-                                                               : facebook::react::DevServerHelper::DefaultPackagerPort,
+                  DebugBundlePath(),
+                  SourceBundleHost(),
+                  SourceBundlePort(),
                   m_isFastReloadEnabled);
               m_instance.Load()->callJSFunction("HMRClient", "setup", std::move(params));
             }
@@ -406,7 +394,7 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
   if (m_useWebDebugger || m_isFastReloadEnabled) {
     // Getting bundle from the packager, so do everything async.
     auto instanceWrapper = m_instanceWrapper.LoadWithLock();
-    instanceWrapper->loadBundle(Mso::Copy(m_options.Identity));
+    instanceWrapper->loadBundle(Mso::Copy(JavaScriptBundleFile()));
 
     m_jsMessageThread.Load()->runOnQueue([
       weakThis = Mso::WeakPtr{this},
@@ -433,7 +421,7 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
         auto &options = strongThis->m_options;
 
         try {
-          instanceWrapper->loadBundleSync(Mso::Copy(options.Identity));
+          instanceWrapper->loadBundleSync(Mso::Copy(strongThis->JavaScriptBundleFile()));
         } catch (...) {
           strongThis->m_state = ReactInstanceState::HasError;
           strongThis->AbandonJSCallQueue();
@@ -572,7 +560,7 @@ facebook::react::NativeLoggingHook ReactInstanceWin::GetLoggingCallback() noexce
   } else {
     // When no logging callback was specified, use a default one in DEBUG builds
 #if DEBUG
-    return [telemetryTag{m_options.Identity}](facebook::react::RCTLogLevel logLevel, const char *message) {
+    return [telemetryTag{JavaScriptBundleFile()}](facebook::react::RCTLogLevel logLevel, const char *message) {
       std::ostringstream ss;
       ss << "ReactNative ['" << telemetryTag << "'] (";
       switch (logLevel) {
@@ -759,10 +747,6 @@ std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() 
   return m_instance.LoadWithLock();
 }
 
-std::string ReactInstanceWin::GetBundleRootPath() noexcept {
-  return m_bundleRootPath.empty() ? m_options.BundleRootPath : m_bundleRootPath;
-}
-
 std::shared_ptr<react::uwp::IReactInstance> ReactInstanceWin::UwpReactInstance() noexcept {
   return m_legacyInstance;
 }
@@ -802,5 +786,48 @@ std::string ReactInstanceWin::getApplicationLocalFolder() {
   return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
 }
 #endif
+
+bool ReactInstanceWin::UseWebDebugger() const noexcept {
+  return m_useWebDebugger;
+}
+
+bool ReactInstanceWin::UseFastRefresh() const noexcept {
+  return m_isFastReloadEnabled;
+}
+
+bool ReactInstanceWin::UseDirectDebugger() const noexcept {
+  return m_useDirectDebugger;
+}
+
+bool ReactInstanceWin::DebuggerBreakOnNextLine() const noexcept {
+  return m_debuggerBreakOnNextLine;
+}
+
+uint16_t ReactInstanceWin::DebuggerPort() const noexcept {
+  return m_options.DeveloperSettings.DebuggerPort;
+}
+
+std::string ReactInstanceWin::DebugBundlePath() const noexcept {
+  return m_options.DeveloperSettings.SourceBundleName.empty() ? m_options.Identity
+                                                              : m_options.DeveloperSettings.SourceBundleName;
+}
+
+std::string ReactInstanceWin::BundleRootPath() const noexcept {
+  return m_options.BundleRootPath.empty() ? "ms-appx:///Bundle/" : m_options.BundleRootPath;
+}
+
+std::string ReactInstanceWin::SourceBundleHost() const noexcept {
+  return m_options.DeveloperSettings.SourceBundleHost.empty() ? facebook::react::DevServerHelper::DefaultPackagerHost
+                                                              : m_options.DeveloperSettings.SourceBundleHost;
+}
+
+uint16_t ReactInstanceWin::SourceBundlePort() const noexcept {
+  return m_options.DeveloperSettings.SourceBundlePort ? m_options.DeveloperSettings.SourceBundlePort
+                                                      : facebook::react::DevServerHelper::DefaultPackagerPort;
+}
+
+std::string ReactInstanceWin::JavaScriptBundleFile() const noexcept {
+  return m_options.Identity;
+}
 
 } // namespace Mso::React

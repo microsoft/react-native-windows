@@ -26,7 +26,7 @@ struct ILegacyReactInstance : IUnknown {
   virtual facebook::react::INativeUIManager *NativeUIManager() noexcept = 0;
 #endif
   virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() noexcept = 0;
-  virtual std::string GetBundleRootPath() noexcept = 0;
+  virtual std::string BundleRootPath() const noexcept = 0;
 
   virtual bool IsLoaded() const noexcept = 0;
 #ifndef CORE_ABI

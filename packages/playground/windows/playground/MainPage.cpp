@@ -73,6 +73,26 @@ void MainPage::OnLoadClick(
     host.InstanceSettings().DebugHost(m_bundlerHostname);
   }
 
+  host.InstanceSettings().InstanceCreated(
+      [wkThis = get_weak()](auto sender, winrt::Microsoft::ReactNative::InstanceCreatedEventArgs args) {
+        if (auto strongThis = wkThis.get()) {
+          args.Context().UIDispatcher().Post([wkThis, context = args.Context()]() {
+            if (auto strongThis = wkThis.get()) {
+              strongThis->x_UseWebDebuggerCheckBox().IsChecked(context.UseWebDebugger());
+              strongThis->x_UseFastRefreshCheckBox().IsChecked(context.UseFastRefresh());
+              strongThis->x_UseDirectDebuggerCheckBox().IsChecked(context.UseDirectDebugger());
+              strongThis->x_BreakOnFirstLineCheckBox().IsChecked(context.DebuggerBreakOnNextLine());
+              strongThis->x_entryPointCombo().SelectedItem(winrt::box_value(context.DebugBundlePath()));
+              strongThis->x_DebuggerPort().Text(winrt::to_hstring(context.DebuggerPort()));
+              if (context.UseWebDebugger()) {
+                strongThis->RequestedTheme(xaml::ElementTheme::Light);
+              } else {
+                strongThis->RequestedTheme(xaml::ElementTheme::Default);
+              }
+            }
+          });
+        }
+      });
   // Nudge the ReactNativeHost to create the instance and wrapping context
   host.ReloadInstance();
 }
