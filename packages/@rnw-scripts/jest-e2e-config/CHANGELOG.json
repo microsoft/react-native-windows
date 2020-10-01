@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/jest-e2e-config",
   "entries": [
     {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "@rnw-scripts/jest-e2e-config_v0.1.1",
+      "version": "0.1.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "@rnw-scripts/jest-e2e-config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Sep 2020 22:03:37 GMT",
       "tag": "@rnw-scripts/jest-e2e-config_v0.1.0",
       "version": "0.1.0",

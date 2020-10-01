@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/babel-node-config",
   "entries": [
     {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "@rnw-scripts/babel-node-config_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "@rnw-scripts/babel-node-config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Sep 2020 05:08:52 GMT",
       "tag": "@rnw-scripts/babel-node-config_v0.0.1",
       "version": "0.0.1",
