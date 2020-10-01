@@ -6,12 +6,10 @@
     <ItemsProjectGuid>{da8b35b3-da00-4b02-bde6-6a397b3fd46b}</ItemsProjectGuid>
     <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)\..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)\..\..\node_modules\react-native</ReactNativeDir>
     <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)\..\..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)\..\..\..\node_modules\react-native</ReactNativeDir>
-    <JSI_SourcePath Condition="'$(JSI_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_SourcePath>
-    <JSI_SourcePath Condition="'$(JSI_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)\jsi\jsi.h')">$(MSBuildThisFileDirectory)</JSI_SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);$(JSI_SourcePath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Midl>
       <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -21,9 +19,9 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(JSI_SourcePath)\jsi\instrumentation.h" />
-    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h" />
-    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CppWinRTIncludes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.h" />
@@ -67,7 +65,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Shapes.h" />
   </ItemGroup>
   <ItemGroup Condition="'$(BuildMSRNCxx)'!='false'">
-    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValue.cpp" />

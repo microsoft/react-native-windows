@@ -6,7 +6,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ModuleRegistration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReactPromise.cpp" />
-    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp">
@@ -31,13 +31,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactError.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactPromise.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StructInfo.h" />
-    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h">
       <Filter>JSI</Filter>
     </ClInclude>
-    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h">
       <Filter>JSI</Filter>
     </ClInclude>
-    <ClInclude Include="$(JSI_SourcePath)\jsi\instrumentation.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h">
       <Filter>JSI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Composition.Effects.h">
