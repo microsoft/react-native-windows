@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix native modules not being re-initialized on reload",
+  "packageName": "react-native-windows",
+  "email": "tn0502@gmail.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-01T22:03:14.221Z"
+}
