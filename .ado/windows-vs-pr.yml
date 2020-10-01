@@ -587,22 +587,6 @@ jobs:
         #  configuration: Release
         #  platform: arm64
         #  projectType: app
-        WinUI3_X86DebugCpp:
-          language: cpp
-          configuration: Debug
-          platform: x86
-          projectType: app
-          additionalInitArguments: --useWinUI3 true
-          additionalRunArguments:
-          continueOnBuildFailure: true # See issue #6129
-        WinUI3_X86DebugCs:
-          language: cs
-          configuration: Debug
-          platform: x86
-          projectType: app
-          additionalInitArguments: --useWinUI3 true
-          additionalRunArguments:
-          continueOnBuildFailure: true # See issue #6129
         X86DebugCppLib:
           language: cpp
           configuration: Debug
@@ -631,6 +615,36 @@ jobs:
           additionalInitArguments: $(additionalInitArguments)
           additionalRunArguments: $(additionalRunArguments)
           projectType: $(projectType)
+
+  - job: CliInitWinUI3
+    variables:
+      - template: variables/vs2019.yml
+    displayName: Verify react-native init WinUI3
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    strategy:
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+        X86DebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: x86
+        X86DebugCs:
+          language: cs
+          configuration: Debug
+          platform: x86
+    timeoutInMinutes: 50 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    pool:
+      vmImage: $(VmImage)
+    steps:
+      - template: templates/react-native-init.yml
+        parameters:
+          language: $(language)
+          configuration: $(configuration)
+          platform: $(platform)
+          additionalInitArguments: --useWinUI3 true
+          continueOnBuildFailure: true # See issue #6129
+          projectType: app
 
   - job: CliInitExperimental
     variables:
