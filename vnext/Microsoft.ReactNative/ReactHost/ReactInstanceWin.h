@@ -69,6 +69,12 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
       facebook::react::IReactRootView *rootView,
       folly::dynamic &&initialProps) noexcept override;
   void DetachRootView(facebook::react::IReactRootView *rootView) noexcept override;
+
+  bool UseWebDebugger() noexcept;
+  bool UseFastRefresh() noexcept;
+  bool UseDirectDebugger() noexcept;
+  bool DebuggerBreakOnNextLine() noexcept;
+  uint16_t DebuggerPort() noexcept;
 #endif
 
  private:

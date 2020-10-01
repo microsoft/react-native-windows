@@ -32,6 +32,12 @@ class ReactContext final : public Mso::UnknownObject<IReactContext> {
   std::string GetBundleRootPath() const noexcept override;
   facebook::react::INativeUIManager *NativeUIManager() const noexcept override;
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override;
+
+  bool UseWebDebugger() noexcept;
+  bool UseFastRefresh() noexcept;
+  bool UseDirectDebugger() noexcept;
+  bool DebuggerBreakOnNextLine() noexcept;
+  uint16_t DebuggerPort() noexcept;
 #endif
 
  private:

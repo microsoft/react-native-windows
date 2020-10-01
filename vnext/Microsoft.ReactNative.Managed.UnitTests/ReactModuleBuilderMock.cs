@@ -332,5 +332,15 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_builder.EmitJSEvent(eventEmitterName, eventName, paramsArgWriter);
     }
+
+    bool IReactContext.DebuggerBreakOnNextLine => throw new NotImplementedException();
+
+    ushort IReactContext.DebuggerPort => throw new NotImplementedException();
+
+    bool IReactContext.UseDirectDebugger => throw new NotImplementedException();
+
+    bool IReactContext.UseFastRefresh => throw new NotImplementedException();
+
+    bool IReactContext.UseWebDebugger => throw new NotImplementedException();
   }
 }

@@ -89,6 +89,44 @@ std::shared_ptr<facebook::react::Instance> ReactContext::GetInnerInstance() cons
 
   return nullptr;
 }
+
+
+bool ReactContext::UseWebDebugger() noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->UseWebDebugger();
+  }
+  return false;
+}
+
+bool ReactContext::UseFastRefresh() noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->UseFastRefresh();
+  }
+  return false;
+}
+
+bool ReactContext::UseDirectDebugger() noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->UseDirectDebugger();
+  }
+  return false;
+}
+
+bool ReactContext::DebuggerBreakOnNextLine() noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->DebuggerBreakOnNextLine();
+  }
+  return false;
+}
+
+uint16_t ReactContext::DebuggerPort() noexcept {
+    if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->DebuggerPort();
+  }
+  return false;
+}
+
+
 #endif
 
 } // namespace Mso::React

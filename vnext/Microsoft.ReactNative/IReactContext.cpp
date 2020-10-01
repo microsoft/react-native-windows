@@ -70,22 +70,26 @@ void ReactContext::EmitJSEvent(
 
 bool ReactContext::UseWebDebugger() noexcept
 {
-  return Mso::React::ReactOptions::UseWebDebugger(m_context->Properties());
+  return m_context->UseWebDebugger();
 }
 
 bool ReactContext::UseFastRefresh() noexcept
 {
-  return Mso::React::ReactOptions::UseFastRefresh(m_context->Properties());
+  return m_context->UseFastRefresh();
 }
 
 bool ReactContext::UseDirectDebugger() noexcept
 {
-  return Mso::React::ReactOptions::UseDirectDebugger(m_context->Properties());
+  return m_context->UseDirectDebugger();
 }
 
 bool ReactContext::DebuggerBreakOnNextLine() noexcept
 {
-  return Mso::React::ReactOptions::DebuggerBreakOnNextLine(m_context->Properties());
+  return m_context->DebuggerBreakOnNextLine();
+}
+
+uint16_t ReactContext::DebuggerPort() noexcept {
+  return m_context->DebuggerPort();
 }
 
 Mso::React::IReactContext &ReactContext::GetInner() const noexcept {

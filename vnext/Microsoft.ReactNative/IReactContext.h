@@ -35,6 +35,7 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
   bool UseFastRefresh() noexcept;
   bool UseDirectDebugger() noexcept;
   bool DebuggerBreakOnNextLine() noexcept;
+  uint16_t DebuggerPort() noexcept;
 
   // Not part of the public ABI interface
   // Internal accessor for within the Microsoft.ReactNative dll to allow calling into internal methods

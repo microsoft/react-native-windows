@@ -803,4 +803,24 @@ std::string ReactInstanceWin::getApplicationLocalFolder() {
 }
 #endif
 
+bool ReactInstanceWin::UseWebDebugger() noexcept {
+  return m_useWebDebugger;
+}
+
+bool ReactInstanceWin::UseFastRefresh() noexcept {
+  return m_isFastReloadEnabled;
+}
+
+bool ReactInstanceWin::UseDirectDebugger() noexcept {
+  return m_useDirectDebugger;
+}
+
+bool ReactInstanceWin::DebuggerBreakOnNextLine() noexcept {
+  return m_debuggerBreakOnNextLine;
+}
+
+uint16_t ReactInstanceWin::DebuggerPort() noexcept {
+  return Options().DeveloperSettings.DebuggerPort;
+}
+
 } // namespace Mso::React

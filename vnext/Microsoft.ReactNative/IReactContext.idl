@@ -49,5 +49,6 @@ namespace Microsoft.ReactNative {
     Boolean UseFastRefresh { get; };
     Boolean UseDirectDebugger { get; };
     Boolean DebuggerBreakOnNextLine { get; };
+    UInt16 DebuggerPort { get; };
   }
 } // namespace Microsoft.ReactNative
