@@ -31,16 +31,16 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
       hstring const &eventName,
       JSValueArgWriter const &paramsArgWriter) noexcept;
 
-  bool UseWebDebugger() noexcept;
-  bool UseFastRefresh() noexcept;
-  bool UseDirectDebugger() noexcept;
-  bool DebuggerBreakOnNextLine() noexcept;
-  uint16_t DebuggerPort() noexcept;
-  hstring DebugBundlePath() noexcept;
-  hstring BundleRootPath() noexcept;
-  hstring SourceBundleHost() noexcept;
-  uint16_t SourceBundlePort() noexcept;
-  hstring JavaScriptBundleFile() noexcept;
+  bool UseWebDebugger() const noexcept;
+  bool UseFastRefresh() const noexcept;
+  bool UseDirectDebugger() const noexcept;
+  bool DebuggerBreakOnNextLine() const noexcept;
+  uint16_t DebuggerPort() const noexcept;
+  hstring DebugBundlePath() const noexcept;
+  hstring BundleRootPath() const noexcept;
+  hstring SourceBundleHost() const noexcept;
+  uint16_t SourceBundlePort() const noexcept;
+  hstring JavaScriptBundleFile() const noexcept;
 
   // Not part of the public ABI interface
   // Internal accessor for within the Microsoft.ReactNative dll to allow calling into internal methods

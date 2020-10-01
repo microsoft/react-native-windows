@@ -68,45 +68,47 @@ void ReactContext::EmitJSEvent(
   m_context->CallJSFunction(to_string(eventEmitterName), "emit", std::move(params));
 }
 
-bool ReactContext::UseWebDebugger() noexcept {
+#ifndef CORE_ABI
+bool ReactContext::UseWebDebugger() const noexcept {
   return m_context->UseWebDebugger();
 }
 
-bool ReactContext::UseFastRefresh() noexcept {
+bool ReactContext::UseFastRefresh() const noexcept {
   return m_context->UseFastRefresh();
 }
 
-bool ReactContext::UseDirectDebugger() noexcept {
+bool ReactContext::UseDirectDebugger() const noexcept {
   return m_context->UseDirectDebugger();
 }
 
-bool ReactContext::DebuggerBreakOnNextLine() noexcept {
+bool ReactContext::DebuggerBreakOnNextLine() const noexcept {
   return m_context->DebuggerBreakOnNextLine();
 }
 
-uint16_t ReactContext::DebuggerPort() noexcept {
+uint16_t ReactContext::DebuggerPort() const noexcept {
   return m_context->DebuggerPort();
 }
 
-hstring ReactContext::DebugBundlePath() noexcept {
+hstring ReactContext::DebugBundlePath() const noexcept {
   return winrt::to_hstring(m_context->DebugBundlePath());
 }
 
-hstring ReactContext::BundleRootPath() noexcept {
+hstring ReactContext::BundleRootPath() const noexcept {
   return winrt::to_hstring(m_context->BundleRootPath());
 }
 
-hstring ReactContext::SourceBundleHost() noexcept {
+hstring ReactContext::SourceBundleHost() const noexcept {
   return winrt::to_hstring(m_context->SourceBundleHost());
 }
 
-uint16_t ReactContext::SourceBundlePort() noexcept {
+uint16_t ReactContext::SourceBundlePort() const noexcept {
   return m_context->SourceBundlePort();
 }
 
-hstring ReactContext::JavaScriptBundleFile() noexcept {
+hstring ReactContext::JavaScriptBundleFile() const noexcept {
   return winrt::to_hstring(m_context->JavaScriptBundleFile());
 }
+#endif
 
 Mso::React::IReactContext &ReactContext::GetInner() const noexcept {
   return *m_context;
