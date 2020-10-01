@@ -94,8 +94,8 @@ temp
 /third-party
 /packages/
 
-# Required to run babel-plugin-inline-view-configs - will be removed once the babel-plugin-inline-view-configs package is published
-/babel-plugin-inline-view-configs
+# Build output for babel-plugin-codegen - will be removed once the babel-plugin-codegen package is published
+/babel-plugin-codegen
 
 # Copied from root as part of build
 /README.md
