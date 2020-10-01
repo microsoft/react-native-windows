@@ -83,6 +83,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     bool connected = false;
     bool closed = false;
     bool error = false;
+    string errorMessage;
     ws->SetOnConnect([&connected]()
     {
       connected = true;
@@ -91,9 +92,9 @@ TEST_CLASS (WebSocketIntegrationTest)
     {
       closed = true;
     });
-    ws->SetOnError([&error](Error&& e)
+    ws->SetOnError([&errorMessage](Error&& e)
     {
-      error = true;
+      errorMessage = e.Message;
     });
 
     server->Start();
@@ -101,7 +102,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->Close(CloseCode::Normal, "Closing");
     server->Stop();
 
-    Assert::IsFalse(error);
+    Assert::AreEqual({}, errorMessage);
     Assert::IsTrue(connected);
     Assert::IsTrue(closed);
   }
