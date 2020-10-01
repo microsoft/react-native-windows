@@ -4,4 +4,5 @@ variables:
   BaseIntDir: $(Agent.HomeDirectory)\BaseIntDir # redirect to C:
   runCodesignValidationInjection: false
   vmImage: windows-2019
+  containerPool: "rnw-ci"
   containerImage: rnwci.azurecr.io/pr/warmedup:24404ef09d15fd69f9908c3a76ddd5512a51559a

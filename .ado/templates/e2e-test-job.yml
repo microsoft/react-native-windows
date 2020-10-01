@@ -14,8 +14,7 @@ jobs:
       - name: BuildLogDirectory
         value: $(Build.BinariesDirectory)\$(BuildPlatform)\BuildLogs
 
-    pool:
-      vmImage: $(vmImage)
+    pool: $(containerPool)
     container: 
       image: $(containerImage)
       endpoint: rnw-ci-containers

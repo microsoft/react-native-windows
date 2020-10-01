@@ -82,4 +82,5 @@ if ($phase -eq '' -or $phase -eq 'npx') {
     & npx react-native init npxWarmup
     popd
 }
- 
+
+Write-Host 'Completed warmup'

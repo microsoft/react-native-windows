@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/windows:2004
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
 RUN mkdir c:\\setup
 WORKDIR c:\\setup
 COPY rnw-dependencies.ps1 .
