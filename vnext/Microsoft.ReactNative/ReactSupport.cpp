@@ -1,6 +1,7 @@
 
 #include "pch.h"
 #include "ReactSupport.h"
+#include "Base/FollyIncludes.h"
 
 using namespace winrt;
 using namespace Windows::Foundation;

@@ -30,6 +30,7 @@ export default class GitReactFileRepository
   private fileRepo: FileSystemRepository;
   private gitClient: simplegit.SimpleGit;
   private checkedOutVersion?: string;
+  private static githubToken?: string;
 
   // We need to ensure it is impossible to check out a new React Native
   // version while an operation hasn't yet finished. We queue each operation to
@@ -42,6 +43,10 @@ export default class GitReactFileRepository
     this.gitClient = gitClient;
   }
 
+  /**
+   * Asynchronusly initialize the scratch repository, creating a new Git repo is needed
+   * @param gitDirectory optional repo directory
+   */
   static async createAndInit(
     gitDirectory?: string,
   ): Promise<GitReactFileRepository> {
@@ -53,10 +58,21 @@ export default class GitReactFileRepository
 
     if (!(await gitClient.checkIsRepo())) {
       await gitClient.init();
+      await gitClient.addConfig('core.autocrlf', 'input');
+      await gitClient.addConfig('core.filemode', 'false');
+      await gitClient.addConfig('core.ignorecase', 'true');
     }
 
-    await gitClient.addConfig('core.filemode', 'false');
     return new GitReactFileRepository(dir, gitClient);
+  }
+
+  /**
+   * Set a GitHub API token for all instances of GitReactFileRepository to use
+   * when making requests.
+   * @param token a GitHub PAT
+   */
+  static setGithubToken(token: string) {
+    GitReactFileRepository.githubToken = token;
   }
 
   async listFiles(
@@ -107,9 +123,7 @@ export default class GitReactFileRepository
         ]);
 
         if (patch.length === 0) {
-          throw new Error(
-            `Generated patch for ${filename} was empty. Is it identical to the original?`,
-          );
+          throw new Error(`Generated patch for ${filename} was empty`);
         }
 
         return patch;
@@ -233,11 +247,25 @@ export default class GitReactFileRepository
   }
 
   private async longCommitHash(shortHash: string): Promise<string> {
-    // We cannot get long hash directly from a remote, so query Github's API
-    // for it.
-    const commitInfo = await fetch(`${RN_COMMIT_ENDPOINT}/${shortHash}`);
+    const githubToken =
+      GitReactFileRepository.githubToken ||
+      process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN;
+
+    // We cannot get abbreviated hash directly from a remote, so query Github's
+    // API for it.
+    const commitInfo = await fetch(`${RN_COMMIT_ENDPOINT}/${shortHash}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'react-native-platform-override',
+        ...(githubToken && {Authorization: `Token ${githubToken}`}),
+      },
+    });
     if (!commitInfo.ok) {
-      throw new Error(`Unable to query Github for commit '${shortHash}`);
+      throw new Error(
+        `Unable to query Github for commit '${shortHash}' Status: '${
+          commitInfo.statusText
+        }'`,
+      );
     }
 
     return (await commitInfo.json()).sha;

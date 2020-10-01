@@ -6,35 +6,41 @@
  */
 
 import * as minimatch from 'minimatch';
-import * as path from 'path';
 
 import FileRepository, {
   ReactFileRepository,
   WritableFileRepository,
 } from '../FileRepository';
 
+import {normalizePath, unixPath} from '../PathUtils';
+
 export interface MockFile {
   filename: string;
   content: string | Buffer;
 }
 
-export interface MockEmptyDirectory {
-  dirname: string;
-}
-
 export default class MockFileRepository implements FileRepository {
   protected files: MockFile[];
-  protected directories: MockEmptyDirectory[];
+  protected emptyDirectories: string[];
+  private normalize: (file: string) => string;
 
-  constructor(files: MockFile[], directories?: MockEmptyDirectory[]) {
+  constructor(
+    files: MockFile[],
+    opts?: {
+      emptyDirectories?: string[];
+      rawPaths?: boolean;
+    },
+  ) {
+    const emptyDirectories = (opts && opts.emptyDirectories) || [];
+    this.normalize =
+      opts && opts.rawPaths ? (file: string) => file : normalizePath;
+
     this.files = files.map(file => ({
       ...file,
-      filename: path.normalize(file.filename),
+      filename: this.normalize(file.filename),
     }));
 
-    this.directories = (directories || []).map(dir => ({
-      dirname: path.normalize(dir.dirname),
-    }));
+    this.emptyDirectories = emptyDirectories.map(this.normalize);
   }
 
   async listFiles(globs: string[] = ['**']): Promise<string[]> {
@@ -44,20 +50,20 @@ export default class MockFileRepository implements FileRepository {
 
     return this.files
       .map(file => file.filename)
-      .filter(file => includeGlobs.some(g => g.match(file)))
-      .filter(file => excludeGlobs.every(g => g.match(file)));
+      .filter(file => includeGlobs.some(g => g.match(unixPath(file))))
+      .filter(file => excludeGlobs.every(g => g.match(unixPath(file))));
   }
 
   async readFile(filename: string): Promise<Buffer | null> {
-    const normalizedName = path.normalize(filename);
+    const normalizedName = this.normalize(filename);
     const file = this.files.find(f => f.filename === normalizedName);
     return file ? Buffer.from(file.content) : null;
   }
 
   async stat(filename: string): Promise<'file' | 'directory' | 'none'> {
-    const normalizedName = path.normalize(filename);
+    const normalizedName = this.normalize(filename);
 
-    if (this.directories.find(dir => dir.dirname === normalizedName)) {
+    if (this.emptyDirectories.find(dir => dir === normalizedName)) {
       return 'directory';
     }
 

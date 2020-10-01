@@ -18,7 +18,7 @@ Today we support the following projects as a NuGet package:
 
 ## Steps
 1. Decide which slices you want. The default is a single slice `'Debug,X64'` but more are supported. 
-1. Decide on the version scheme. Recommended is: `0.0.1-dannyvv001` and keeping bumping the last 3 digigs
+1. Decide on the version scheme. Recommended is: `0.0.1-MyTest001` and keeping bumping the last 3 digigs
 1. Build the bits in your repo for slice you selected
    1. open terminal for your enlistment (in vs dev prompt if you haven't setup your box otherwise)
    1. yarn

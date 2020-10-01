@@ -16,6 +16,7 @@ import * as yargs from 'yargs';
 import {overrideFromDetails, promptForOverrideDetails} from './OverridePrompt';
 
 import CrossProcessLock from './CrossProcessLock';
+import GitReactFileRepository from './GitReactFileRepository';
 import {UpgradeResult} from './UpgradeStrategy';
 import {ValidationError} from './ValidationStrategy';
 import {findManifest} from './FileSearch';
@@ -96,6 +97,15 @@ void doMain(async () => {
       )
       .epilogue(npmPackage.description)
       .option('color', {hidden: true})
+      .option('githubToken', {
+        description: 'Optional PAT to use for GitHub API calls',
+        type: 'string',
+      })
+      .middleware(argv => {
+        if (argv.githubToken) {
+          GitReactFileRepository.setGithubToken(argv.githubToken);
+        }
+      })
       .demandCommand()
       .recommendCommands()
       .strict()

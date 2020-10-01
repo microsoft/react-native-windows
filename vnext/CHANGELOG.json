@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 30 Sep 2020 05:06:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.174",
+      "version": "0.0.0-canary.174",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Simplify react::uwp::IReactInstance",
+            "author": "vmorozov@microsoft.com",
+            "commit": "c2001a2f1caec259a5bcdd81cffa1e524e121f92",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Initial ABI-safe JSI implementation",
+            "author": "vmorozov@microsoft.com",
+            "commit": "b377a77f3eac4baaa20e738d3f7f80653ddf06ea",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add react-native-platform-override macOS Support",
+            "author": "nick@nickgerleman.com",
+            "commit": "64c111f645e82bb4d867d16254c3f6cf48e6dcc1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "integrate RN 7/7 build",
+            "author": "igklemen@microsoft.com",
+            "commit": "eb13b4761acb4df37b02d75f4296b8a8033db2ec",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Sep 2020 05:05:53 GMT",
       "tag": "react-native-windows_v0.0.0-canary.173",
       "version": "0.0.0-canary.173",

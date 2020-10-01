@@ -29,8 +29,6 @@
 #include "CppWinRTIncludes.h"
 #include "HResult.h"
 
-#include "Base/CxxReactIncludes.h"
-
 #include <algorithm>
 #include <atomic>
 #include <chrono>
