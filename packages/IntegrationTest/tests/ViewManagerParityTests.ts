@@ -15,12 +15,12 @@ const ReactNativeViewConfigRegistry = require('react-native/Libraries/Renderer/s
 const layoutProps = Object.keys(LayoutPropTypes);
 
 function diffViewManagerViewConfig(opts: {
-  componentaName: string;
+  component: string;
   ignoredProps: string[];
   notYetImplementedProps?: Array<[string, number]>;
 }) {
-  const viewManagerConfig = UIManager.getViewManagerConfig(opts.componentaName);
-  const viewConfig = ReactNativeViewConfigRegistry.get(opts.componentaName);
+  const viewManagerConfig = UIManager.getViewManagerConfig(opts.component);
+  const viewConfig = ReactNativeViewConfigRegistry.get(opts.component);
 
   const viewManagerConfigProps: string[] = Object.keys(
     // @ts-ignore
@@ -38,7 +38,7 @@ function diffViewManagerViewConfig(opts: {
   if (unsupportedProps.length > 0) {
     throw new Error(
       `The view manager for the native component "${
-        opts.componentaName
+        opts.component
       }" is missing support for properties: ${unsupportedProps
         .map(p => `\n - ${p}`)
         .join('')}`,
@@ -53,7 +53,7 @@ function diffViewManagerViewConfig(opts: {
   if (falseNyiProps.length > 0) {
     throw new Error(
       `The following props for ${
-        opts.componentaName
+        opts.component
       } are marked as not yet implemented but an implementation was found: ${falseNyiProps
         .map(p => `\n - ${p}`)
         .join('')}`,
@@ -63,7 +63,7 @@ function diffViewManagerViewConfig(opts: {
 
 functionTest('RCTView', () =>
   diffViewManagerViewConfig({
-    componentaName: 'RCTView',
+    component: 'RCTView',
     ignoredProps: [
       'hasTVPreferredFocus', // TV only
       'nativeBackgroundAndroid', // Android only
@@ -80,7 +80,12 @@ functionTest('RCTView', () =>
       'clickable', // Android-specific legacy
       'elevation', // Android only
       'renderToHardwareTextureAndroid', // Android only
+      'rotation', // Android legacy
+      'scaleX', // Android legacy
+      'scaleY', // Android legacy
       'shouldRasterizeIOS', // iOS Only
+      'translateX', // Android legacy
+      'translateY', // Android legacy
     ],
     notYetImplementedProps: [
       ['backfaceVisibility', 3538],
@@ -101,6 +106,10 @@ functionTest('RCTView', () =>
       ['onAccessibilityTap', 3120],
       ['onMagicTap', 3121],
       ['removeClippedSubviews', 3067],
+      ['shadowColor', 2800],
+      ['shadowOffset', 2800],
+      ['shadowOpacity', 2800],
+      ['shadowRadius', 2800],
     ],
   }),
 );
