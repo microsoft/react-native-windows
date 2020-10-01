@@ -58,8 +58,6 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
       winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs const &args);
   void Synchronize() noexcept;
 
-  std::string GetRestrictedErrorMessage() noexcept;
-
  public:
   WinRTWebSocketResource(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
