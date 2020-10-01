@@ -212,7 +212,7 @@ $requirements = @(
             # don't install from choco as we need an exact version match. appium-windows-driver checks the checksum of WAD.
             # See \node_modules\appium-windows-driver\build\lib\installer.js
             $ProgressPreference = 'Ignore';
-            Invoke-WebRequest https://github.com/microsoft/WinAppDriver/releases/download/v1.1/WindowsApplicationDriver.msi  -OutFile $env:TEMP\WindowsApplicationDriver.msi
+            Invoke-WebRequest -UseBasicParsing https://github.com/microsoft/WinAppDriver/releases/download/v1.1/WindowsApplicationDriver.msi -OutFile $env:TEMP\WindowsApplicationDriver.msi
             & $env:TEMP\WindowsApplicationDriver.msi /q
         };
         Optional = $true;

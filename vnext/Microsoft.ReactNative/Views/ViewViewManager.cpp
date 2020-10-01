@@ -220,10 +220,10 @@ class ViewShadowNode : public ShadowNodeBase {
     return contentControl.try_as<XamlView>();
   }
 
-  void DispatchEvent(std::string eventName, folly::dynamic &&eventData) {
+  void DispatchEvent(std::string &&eventName, folly::dynamic &&eventData) {
     auto instance = GetViewManager()->GetReactInstance().lock();
     if (instance != nullptr)
-      instance->DispatchEvent(m_tag, eventName, std::move(eventData));
+      instance->DispatchEvent(m_tag, std::move(eventName), std::move(eventData));
   }
 
  private:

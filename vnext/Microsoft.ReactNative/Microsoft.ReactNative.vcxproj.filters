@@ -46,15 +46,6 @@
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="TestHook.cpp" />
-    <ClCompile Include="Threading\BatchingQueueThread.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="Threading\MessageDispatchQueue.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="Threading\MessageQueueThreadFactory.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
     <ClCompile Include="ViewManagersProvider.cpp" />
     <ClCompile Include="Base\CoreNativeModules.cpp">
       <Filter>Base</Filter>
@@ -165,9 +156,6 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\NativeUIManager.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\NetworkingModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\TimingModule.cpp">
@@ -326,6 +314,7 @@
     <ClCompile Include="Utils\ValueUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="JsiApi.cpp" />
     <ClCompile Include="RedBoxErrorInfo.cpp" />
     <ClCompile Include="RedBoxErrorFrameInfo.cpp" />
   </ItemGroup>
@@ -391,15 +380,6 @@
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="TestHook.h" />
-    <ClInclude Include="Threading\BatchingQueueThread.h">
-      <Filter>Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="Threading\MessageDispatchQueue.h">
-      <Filter>Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="Threading\MessageQueueThreadFactory.h">
-      <Filter>Threading</Filter>
-    </ClInclude>
     <ClInclude Include="ViewManagersProvider.h" />
     <ClInclude Include="Base\CoreNativeModules.h">
       <Filter>Base</Filter>
@@ -516,9 +496,6 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\NativeUIManager.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\NetworkingModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\TimingModule.h">
@@ -700,6 +677,7 @@
     <ClInclude Include="Views\IXamlRootView.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="JsiApi.h" />
     <ClInclude Include="RedBoxErrorInfo.h" />
     <ClInclude Include="RedBoxErrorFrameInfo.h" />
     <ClInclude Include="Views\Image\Effects.h">
@@ -742,6 +720,7 @@
       <Filter>Views\cppwinrt</Filter>
     </Midl>
     <Midl Include="IViewManagerCore.idl" />
+    <Midl Include="JsiApi.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />
@@ -772,9 +751,6 @@
     </Filter>
     <Filter Include="ReactHost">
       <UniqueIdentifier>{323742e5-5542-43fd-9b79-7914b708b9a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Threading">
-      <UniqueIdentifier>{72fbc00f-4a01-4363-8807-378641b7a17c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{7d98959f-0655-4d14-b73a-68f001ff9d12}</UniqueIdentifier>

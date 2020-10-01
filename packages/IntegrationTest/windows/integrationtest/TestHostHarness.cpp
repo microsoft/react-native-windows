@@ -14,66 +14,80 @@ using namespace winrt::integrationtest;
 using namespace winrt::Microsoft::ReactNative;
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Data::Json;
+using namespace winrt::Windows::System;
 
 namespace IntegrationTest {
 
-TestHostHarness::TestHostHarness() noexcept {
+TestHostHarness::TestHostHarness(const ReactNativeHost &reactHost) noexcept
+    : m_dispatcher{ReactDispatcherHelper::UIThreadDispatcher()} {
+  VerifyElseCrash(m_dispatcher);
+  VerifyElseCrash(m_dispatcher.HasThreadAccess());
+
   m_redboxHandler = winrt::make<TestHostHarnessRedboxHandler>(get_weak());
   m_commandListener = winrt::make_self<TestCommandListener>();
 
   m_commandListener->OnTestCommand([weakThis{get_weak()}](
       const TestCommand &command, TestCommandResponse response) noexcept {
     if (auto strongThis = weakThis.get()) {
-      strongThis->OnTestCommand(command, std::move(response));
+      strongThis->m_dispatcher.Post([ strongThis, command, response{std::move(response)} ]() mutable noexcept {
+        strongThis->OnTestCommand(command, std::move(response));
+      });
     }
   });
+
+  reactHost.InstanceSettings().RedBoxHandler(m_redboxHandler);
+  m_instanceLoadedRevoker = reactHost.InstanceSettings().InstanceLoaded(
+      winrt::auto_revoke, [weakThis{get_weak()}](const auto & /*sender*/, auto &&args) noexcept {
+        if (auto strongThis = weakThis.get()) {
+          strongThis->m_dispatcher.Post(
+              [ strongThis, args{std::move(args)} ]() noexcept { strongThis->OnInstanceLoaded(args); });
+        }
+      });
 }
 
 void TestHostHarness::SetRootView(ReactRootView &&rootView) noexcept {
+  VerifyElseCrash(m_dispatcher.HasThreadAccess());
+
   m_rootView = std::move(rootView);
 }
 
-void TestHostHarness::SetReactHost(ReactNativeHost &&reactHost) noexcept {
-  reactHost.InstanceSettings().RedBoxHandler(m_redboxHandler);
-  m_instanceLoadedRevoker = reactHost.InstanceSettings().InstanceLoaded(
-      winrt::auto_revoke, [weakThis{get_weak()}](const auto & /*sender*/, const auto &args) noexcept {
-        auto strongThis = weakThis.get();
-        if (!strongThis) {
-          return;
+void TestHostHarness::OnInstanceLoaded(const InstanceLoadedEventArgs &args) noexcept {
+  VerifyElseCrash(m_dispatcher.HasThreadAccess());
+
+  if (!m_commandListener->IsListening()) {
+    StartListening();
+  }
+
+  ReactContext context(args.Context());
+  m_context = context;
+  m_instanceFailedToLoad = args.Failed();
+
+  context.Notifications().Subscribe(
+      TestModule::TestCompletedEvent(),
+      m_dispatcher,
+      [weakThis{get_weak()}](const auto & /*sender*/, ReactNotificationArgs<void> /*args*/) noexcept {
+        if (auto strongThis = weakThis.get()) {
+          if (strongThis->m_currentTransaction) {
+            strongThis->HandleHostAction(strongThis->m_currentTransaction->OnTestModuleTestCompleted());
+          }
         }
+      });
 
-        if (!strongThis->m_commandListener->IsListening()) {
-          strongThis->StartListening();
+  context.Notifications().Subscribe(
+      TestModule::TestPassedEvent(),
+      m_dispatcher,
+      [weakThis{get_weak()}](const auto & /*sender*/, ReactNotificationArgs<bool> args) noexcept {
+        if (auto strongThis = weakThis.get()) {
+          if (strongThis->m_currentTransaction) {
+            strongThis->HandleHostAction(strongThis->m_currentTransaction->OnTestModuleTestPassed(*args.Data()));
+          }
         }
-
-        ReactContext context(args.Context());
-        strongThis->m_context = context;
-
-        context.Notifications().Subscribe(
-            TestModule::TestCompletedEvent(),
-            context.UIDispatcher(),
-            [weakThis](const auto & /*sender*/, ReactNotificationArgs<void> /*args*/) noexcept {
-              if (auto strongThis = weakThis.get()) {
-                if (strongThis->m_currentTransaction) {
-                  strongThis->HandleHostAction(strongThis->m_currentTransaction->OnTestModuleTestCompleted());
-                }
-              }
-            });
-
-        context.Notifications().Subscribe(
-            TestModule::TestPassedEvent(),
-            context.UIDispatcher(),
-            [weakThis](const auto & /*sender*/, ReactNotificationArgs<bool> args) noexcept {
-              if (auto strongThis = weakThis.get()) {
-                if (strongThis->m_currentTransaction) {
-                  strongThis->HandleHostAction(strongThis->m_currentTransaction->OnTestModuleTestPassed(*args.Data()));
-                }
-              }
-            });
       });
 }
 
 winrt::fire_and_forget TestHostHarness::StartListening() noexcept {
+  VerifyElseCrash(m_dispatcher.HasThreadAccess());
+
   auto listenResult = co_await m_commandListener->StartListening();
 
   switch (listenResult) {
@@ -95,11 +109,18 @@ winrt::fire_and_forget TestHostHarness::StartListening() noexcept {
 }
 
 winrt::fire_and_forget TestHostHarness::OnTestCommand(TestCommand command, TestCommandResponse response) noexcept {
+  VerifyElseCrash(m_dispatcher.HasThreadAccess());
+
   // Keep ourselves alive while we have a test command
   auto strongThis = get_strong();
 
   if (m_pendingResponse) {
     response.Error("Received a test command while still processing the previous");
+    co_return;
+  }
+
+  if (m_instanceFailedToLoad) {
+    response.Error("The instance failed to load");
     co_return;
   }
 
@@ -134,10 +155,13 @@ winrt::fire_and_forget TestHostHarness::OnTestCommand(TestCommand command, TestC
 }
 
 winrt::fire_and_forget TestHostHarness::TimeoutOnInactivty(winrt::weak_ref<TestTransaction> transaction) noexcept {
-  constexpr auto CommandTimeout = 20s;
+  VerifyElseCrash(m_dispatcher.HasThreadAccess());
 
+  winrt::apartment_context harnessContext;
   auto weakThis = get_weak();
-  co_await CommandTimeout;
+
+  co_await 20s;
+  co_await harnessContext;
 
   if (auto strongTransaction = transaction.get()) {
     if (auto strongThis = weakThis.get()) {
@@ -149,6 +173,8 @@ winrt::fire_and_forget TestHostHarness::TimeoutOnInactivty(winrt::weak_ref<TestT
 }
 
 winrt::fire_and_forget TestHostHarness::HandleHostAction(HostAction action) noexcept {
+  VerifyElseCrash(m_dispatcher.HasThreadAccess());
+
   switch (action) {
     case HostAction::Continue:
       break;
@@ -173,9 +199,11 @@ winrt::fire_and_forget TestHostHarness::HandleHostAction(HostAction action) noex
 }
 
 IAsyncAction TestHostHarness::FlushJSQueue() noexcept {
+  VerifyElseCrash(m_dispatcher.HasThreadAccess());
+
   winrt::handle signal(CreateEvent(nullptr, false, false, nullptr));
 
-  m_context.JSDispatcher().Post([&signal, uiDispatcher{m_context.UIDispatcher()} ]() noexcept {
+  m_context.JSDispatcher().Post([&signal, uiDispatcher{m_dispatcher} ]() noexcept {
     uiDispatcher.Post([&signal]() noexcept { SetEvent(signal.get()); });
   });
 
@@ -183,6 +211,8 @@ IAsyncAction TestHostHarness::FlushJSQueue() noexcept {
 }
 
 void TestHostHarness::ShowJSError(std::string_view err) noexcept {
+  VerifyElseCrash(m_dispatcher.HasThreadAccess());
+
   m_context.CallJSFunction(L"RCTLog", L"logToConsole", "error", err);
 }
 
@@ -214,10 +244,7 @@ void TestHostHarnessRedboxHandler::DismissRedBox() noexcept {
 template <typename TFunc>
 void TestHostHarnessRedboxHandler::QueueToUI(TFunc &&func) noexcept {
   if (auto strongHarness = m_weakHarness.get()) {
-    if (strongHarness->m_context) {
-      strongHarness->m_context.UIDispatcher().Post(
-          [ strongHarness, func{std::move(func)} ]() noexcept { func(*strongHarness); });
-    }
+    strongHarness->m_dispatcher.Post([ strongHarness, func{std::move(func)} ]() noexcept { func(*strongHarness); });
   }
 }
 

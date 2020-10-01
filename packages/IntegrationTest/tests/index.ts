@@ -7,6 +7,7 @@
 
 require('./lib/SetupGlobals');
 
+require('./InteropCSModuleTests');
 require('./MountComponentTests');
 require('./PlatformTests');
 require('./SampleTests');

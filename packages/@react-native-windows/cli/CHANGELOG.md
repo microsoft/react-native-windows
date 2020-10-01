@@ -1,8 +1,25 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 24 Sep 2020 05:06:21 GMT and should not be manually modified.
+This log was last generated on Tue, 29 Sep 2020 05:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.20
+
+Tue, 29 Sep 2020 05:05:53 GMT
+
+### Changes
+
+- Fix run-windows Warnings Using Node 14 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.19
+
+Fri, 25 Sep 2020 05:05:40 GMT
+
+### Changes
+
+- Fix casing rules for new projects names for `react-native-windows-init` (jthysell@microsoft.com)
+- Add -NoProfile to powershell invocations to ensure deterministic script execution where user profiles do not have the ability to break or change the build outputs (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.18
 

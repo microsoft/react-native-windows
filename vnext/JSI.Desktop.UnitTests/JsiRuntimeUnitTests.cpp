@@ -551,7 +551,7 @@ TEST_P(JsiRuntimeUnitTests_Chakra, HostFunctionTest) {
   rt.global().setProperty(rt, "cons", dot);
   EXPECT_TRUE(eval("cons('left', 'right') == 'left.right'").getBool());
   EXPECT_TRUE(eval("cons.name == 'dot'").getBool());
-  // TODO (yicyao): Chakra(Core)'s APIs can only create host functions that
+  // TODO: Chakra(Core)'s APIs can only create host functions that
   // takes in no parameters. The arugmenst needed for the host function are
   // passed through the arguments object. Disabling this test for now.
   // EXPECT_TRUE(eval("cons.length == 2").getBool());
@@ -616,7 +616,7 @@ TEST_P(JsiRuntimeUnitTests_Chakra, HostFunctionTest) {
       function("function (f) { return f('A cat'); }").call(rt, callable).getString(rt).utf8(rt),
       "A cat was called with std::function::target");
   EXPECT_TRUE(callable.isHostFunction(rt));
-  // TODO (yicyao): Chakra(Core)Runtime currently does not support getHostFunction.
+  // TODO: Chakra(Core)Runtime currently does not support getHostFunction.
   // EXPECT_NE(callable.getHostFunction(rt).target<Callable>(), nullptr);
 
   std::string strval = "strval1";

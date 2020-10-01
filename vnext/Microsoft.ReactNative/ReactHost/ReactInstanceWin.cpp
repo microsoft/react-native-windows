@@ -8,11 +8,12 @@
 #include <Base/CoreNativeModules.h>
 #include <IUIManager.h>
 #include <Threading/MessageDispatchQueue.h>
+#include <Threading/MessageQueueThreadFactory.h>
+
 #include <XamlUIService.h>
 #include "ReactErrorProvider.h"
 
 #include "Microsoft.ReactNative/IReactNotificationService.h"
-#include "Microsoft.ReactNative/Threading/MessageQueueThreadFactory.h"
 
 #include "../../codegen/NativeAccessibilityInfoSpec.g.h"
 #include "../../codegen/NativeAppStateSpec.g.h"
@@ -129,8 +130,7 @@ ReactInstanceWin::ReactInstanceWin(
           this,
           options.Properties,
           winrt::make<implementation::ReactNotificationService>(options.Notifications))},
-      m_legacyInstance{
-          std::make_shared<react::uwp::UwpReactInstanceProxy>(Mso::WeakPtr<Mso::React::IReactInstance>{this})} {
+      m_legacyInstance{std::make_shared<react::uwp::UwpReactInstanceProxy>(Mso::Copy(m_reactContext))} {
   m_whenCreated.SetValue();
 }
 
@@ -201,8 +201,6 @@ void ReactInstanceWin::Initialize() noexcept {
   InitNativeMessageThread();
   InitUIMessageThread();
 
-  m_legacyReactInstance = std::make_shared<react::uwp::UwpReactInstanceProxy>(this);
-
   // InitUIManager uses m_legacyReactInstance
   InitUIManager();
 
@@ -215,7 +213,7 @@ void ReactInstanceWin::Initialize() noexcept {
       [weakThis = Mso::WeakPtr{this}]() noexcept {
         // Objects that must be created on the UI thread
         if (auto strongThis = weakThis.GetStrongPtr()) {
-          auto const &legacyInstance = strongThis->m_legacyReactInstance;
+          auto const &legacyInstance = strongThis->m_legacyInstance;
           strongThis->m_appTheme =
               std::make_shared<react::uwp::AppTheme>(legacyInstance, strongThis->m_uiMessageThread.LoadWithLock());
           Microsoft::ReactNative::I18nManager::InitI18nInfo(
@@ -282,7 +280,7 @@ void ReactInstanceWin::Initialize() noexcept {
               m_jsMessageThread.Load(),
               std::move(m_appTheme),
               std::move(m_appearanceListener),
-              m_legacyReactInstance);
+              m_legacyInstance);
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
 
@@ -552,11 +550,11 @@ void ReactInstanceWin::InitUIManager() noexcept {
 
   // Custom view managers
   if (m_options.ViewManagerProvider) {
-    viewManagers = m_options.ViewManagerProvider->GetViewManagers(m_reactContext, m_legacyReactInstance);
+    viewManagers = m_options.ViewManagerProvider->GetViewManagers(m_reactContext, m_legacyInstance);
   }
 
-  react::uwp::AddStandardViewManagers(viewManagers, m_legacyReactInstance);
-  react::uwp::AddPolyesterViewManagers(viewManagers, m_legacyReactInstance);
+  react::uwp::AddStandardViewManagers(viewManagers, m_legacyInstance);
+  react::uwp::AddPolyesterViewManagers(viewManagers, m_legacyInstance);
 
   auto uiManager = react::uwp::CreateUIManager2(m_reactContext.Get(), std::move(viewManagers));
   auto wkUIManger = std::weak_ptr<facebook::react::IUIManager>(uiManager);

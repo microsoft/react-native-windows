@@ -29,8 +29,6 @@
 #include "CppWinRTIncludes.h"
 #include "HResult.h"
 
-#include "Base/CxxReactIncludes.h"
-
 #include <algorithm>
 #include <atomic>
 #include <chrono>
@@ -53,7 +51,3 @@
 
 #include <activeObject/activeObject.h>
 #include <future/future.h>
-
-// https://github.com/microsoft/microsoft-ui-xaml/issues/3133
-#include <winrt/Microsoft.UI.Xaml.Controls.h>
-#include <winrt/Microsoft.UI.Xaml.XamlTypeInfo.h>

@@ -19,13 +19,13 @@ class TestHostHarness : public winrt::implements<TestHostHarness, winrt::Windows
   friend class TestHostHarnessRedboxHandler;
 
  public:
-  TestHostHarness() noexcept;
+  TestHostHarness(const winrt::Microsoft::ReactNative::ReactNativeHost &reactHost) noexcept;
 
   void SetRootView(winrt::Microsoft::ReactNative::ReactRootView &&rootView) noexcept;
-  void SetReactHost(winrt::Microsoft::ReactNative::ReactNativeHost &&reactHost) noexcept;
 
  private:
   void ShowJSError(std::string_view err) noexcept;
+  void OnInstanceLoaded(const winrt::Microsoft::ReactNative::InstanceLoadedEventArgs &args) noexcept;
   winrt::fire_and_forget StartListening() noexcept;
   winrt::fire_and_forget OnTestCommand(TestCommand command, TestCommandResponse response) noexcept;
   winrt::fire_and_forget TimeoutOnInactivty(winrt::weak_ref<TestTransaction> transaction) noexcept;
@@ -41,6 +41,11 @@ class TestHostHarness : public winrt::implements<TestHostHarness, winrt::Windows
   winrt::com_ptr<TestTransaction> m_currentTransaction;
   winrt::Microsoft::ReactNative::IRedBoxHandler m_redboxHandler;
   std::optional<TestCommandResponse> m_pendingResponse;
+
+  bool m_instanceFailedToLoad{false};
+
+  // Note: this may be accessed by other threads
+  const winrt::Microsoft::ReactNative::ReactDispatcher m_dispatcher;
 };
 
 //! Redbox handler which feeds into the TestHostHarness to communicate exceptions to the test runner

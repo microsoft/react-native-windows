@@ -5,6 +5,8 @@
 #include "AutolinkedNativeModules.g.h"
 #include "ReactPackageProvider.h"
 
+#include <winrt/InteropTestModuleCS.h>
+
 using namespace winrt::integrationtest;
 using namespace winrt::integrationtest::implementation;
 using namespace winrt;
@@ -38,9 +40,9 @@ App::App() noexcept {
   RegisterAutolinkedNativeModulePackages(PackageProviders()); // Includes any autolinked modules
 
   PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
+  PackageProviders().Append(winrt::InteropTestModuleCS::ReactPackageProvider());
 
-  m_harness = winrt::make_self<IntegrationTest::TestHostHarness>();
-  m_harness->SetReactHost(Host());
+  m_harness = winrt::make_self<IntegrationTest::TestHostHarness>(Host());
 
   InitializeComponent();
 }

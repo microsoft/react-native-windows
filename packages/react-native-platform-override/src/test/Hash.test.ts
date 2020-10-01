@@ -21,7 +21,7 @@ test('hashContent - Insensitive to Line Ending Type', () => {
   expect(hashContent('a\r\n')).toBe(hashContent('a\n'));
 });
 
-test('Hasher - Same between strings and string buffers', () => {
+test('hashContent - Same between strings and string buffers', () => {
   expect(hashContent('a\r\n')).toBe(hashContent(Buffer.from('a\n')));
 });
 
@@ -118,6 +118,30 @@ test('hashFileOrDirectory - Directory Unsorted', async () => {
   );
 });
 
+test('hashFileOrDirectory - Directory Different Slashes', async () => {
+  const fileRepo1 = new MockFileRepository(
+    [
+      {filename: 'a/c.txt', content: 'Lorem Ipsum'},
+      {filename: 'a/b.txt', content: 'Hello World!'},
+      {filename: 'b/a.txt', content: 'Ignore Me'},
+    ],
+    {rawPaths: true},
+  );
+
+  const fileRepo2 = new MockFileRepository(
+    [
+      {filename: 'a\\c.txt', content: 'Lorem Ipsum'},
+      {filename: 'a\\b.txt', content: 'Hello World!'},
+      {filename: 'b\\a.txt', content: 'Ignore Me'},
+    ],
+    {rawPaths: true},
+  );
+
+  expect(await hashFileOrDirectory('a', fileRepo1)).toBe(
+    await hashFileOrDirectory('a', fileRepo2),
+  );
+});
+
 test('hashFileOrDirectory - Directory Rename', async () => {
   const fileRepo1 = new MockFileRepository([
     {filename: 'a/c.txt', content: 'Lorem Ipsum'},
@@ -161,7 +185,9 @@ test('hashFileOrDirectory - Empty Directory', async () => {
       {filename: 'a/b.txt', content: 'Hello World!'},
       {filename: 'b/a.txt', content: 'Ignore Me'},
     ],
-    [{dirname: 'empty1'}, {dirname: 'empty2'}],
+    {
+      emptyDirectories: ['empty1', 'empty2'],
+    },
   );
 
   const hash1 = await hashFileOrDirectory('empty1', fileRepo);

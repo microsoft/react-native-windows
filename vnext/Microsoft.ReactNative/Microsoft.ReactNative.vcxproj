@@ -197,6 +197,9 @@
       <DependentUpon>IReactNotificationService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="JsiApi.h">
+      <DependentUpon>JsiApi.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="JsiReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClInclude>
@@ -241,7 +244,6 @@
     <ClInclude Include="Modules\LinkingManagerModule.h" />
     <ClInclude Include="Modules\LogBoxModule.h" />
     <ClInclude Include="Modules\NativeUIManager.h" />
-    <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="NativeModulesProvider.h" />
@@ -360,9 +362,6 @@
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="TestHook.h" />
-    <ClInclude Include="Threading\BatchingQueueThread.h" />
-    <ClInclude Include="Threading\MessageDispatchQueue.h" />
-    <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
     <ClInclude Include="QuirkSettings.h">
       <DependentUpon>QuirkSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -399,6 +398,9 @@
     <ClCompile Include="IReactNotificationService.cpp">
       <DependentUpon>IReactNotificationService.idl</DependentUpon>
       <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="JsiApi.cpp">
+      <DependentUpon>JsiApi.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="JsiReader.cpp">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
@@ -440,7 +442,6 @@
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
     <ClCompile Include="Modules\LogBoxModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
-    <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
@@ -549,9 +550,6 @@
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="TestHook.cpp" />
-    <ClCompile Include="Threading\BatchingQueueThread.cpp" />
-    <ClCompile Include="Threading\MessageDispatchQueue.cpp" />
-    <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="QuirkSettings.cpp">
       <DependentUpon>QuirkSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -578,6 +576,7 @@
     <Midl Include="IReactPackageProvider.idl" />
     <Midl Include="IViewManager.idl" />
     <Midl Include="IViewManagerCore.idl" />
+    <Midl Include="JsiApi.idl" />
     <Midl Include="ReactApplication.idl" />
     <Midl Include="IReactContext.idl">
       <SubType>Designer</SubType>
@@ -695,5 +694,14 @@
     <Message Condition="'$(Source)'!=''" Text="Preprocessing: $(Source)" />
     <Error Condition="'$(Source)'==''" Text="To generate a pre-processed file, please specify a source file with msbuild /p:Source=nameOfTheSource.cpp" />
     <CL PreprocessToFile="true" Sources="$(Source)" AdditionalIncludeDirectories="%(ClCompile.AdditionalIncludeDirectories)" PreprocessorDefinitions="%(ClCompile.PreprocessorDefinitions)" AdditionalOptions="%(ClCompile.AdditionalOptions) /d1PP" PreprocessKeepComments="true" PreprocessOutputPath="$(Source.Replace('.cpp', '.pp'))" />
+  </Target>
+
+  <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/3133 -->
+  <Target Name="InjectForcedXamlIncludes" BeforeTargets="CompileXamlGeneratedFiles" >
+    <ItemGroup>
+      <ClCompile Condition="'%(ClCompile.CompilerIteration)' == 'XamlGenerated'">
+        <ForcedIncludeFiles>%(ForcedIncludeFiles);winrt/Microsoft.UI.Xaml.Controls.h;winrt/Microsoft.UI.Xaml.XamlTypeInfo.h</ForcedIncludeFiles>
+      </ClCompile>
+    </ItemGroup>
   </Target>
 </Project>

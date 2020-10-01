@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.18",
+  "version": "0.0.0-canary.20",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -26,7 +26,7 @@
     "nuget-exe": "4.9.2",
     "ora": "^3.4.0",
     "semver": "^7.3.2",
-    "shelljs": "^0.7.8",
+    "shelljs": "^0.8.4",
     "username": "^5.1.0",
     "uuid": "^3.3.2",
     "xml-parser": "^1.2.1",

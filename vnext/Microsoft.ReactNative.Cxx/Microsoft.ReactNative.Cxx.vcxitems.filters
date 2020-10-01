@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSValue.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ModuleRegistration.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ReactPromise.cpp" />
+    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
+      <Filter>JSI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp">
+      <Filter>JSI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactHandleHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSValue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSValueReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSValueTreeReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSValueWriter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ModuleRegistration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NativeModules.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactDispatcher.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactNonAbiValue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactNotificationService.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactPropertyBag.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactContext.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactError.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactPromise.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StructInfo.h" />
+    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h">
+      <Filter>JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h">
+      <Filter>JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(JSI_SourcePath)\jsi\instrumentation.h">
+      <Filter>JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Composition.Effects.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Composition.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Input.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Popups.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Text.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.Peers.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Controls.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Controls.Primitives.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Documents.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Input.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Markup.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Media.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Media.Imaging.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Media.Media3D.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Navigation.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Shapes.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XamlHelpers.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSValueXaml.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CppWinRTIncludes.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NamespaceRedirect.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.h">
+      <Filter>JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Hosting.DesktopWindowXamlSource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Hosting.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="JSI">
+      <UniqueIdentifier>{143f5a14-082a-496a-bbd4-8f5b3fa7fc77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{acac5f8a-4b6a-4139-9b74-6e3c36aceb20}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

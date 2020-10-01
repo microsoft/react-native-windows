@@ -154,6 +154,7 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   }
 
  private:
+  void RewriteErrorMessage(JsValueRef jsError);
   void VerifyJsErrorElseThrow(JsErrorCode error);
 
   // ChakraPointerValue is needed for working with Facebook's jsi::Pointer class
@@ -328,7 +329,8 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   bool evaluateSerializedScript(
       const facebook::jsi::Buffer &scriptBuffer,
       const facebook::jsi::Buffer &serializedScriptBuffer,
-      const std::string &sourceURL);
+      const std::string &sourceURL,
+      JsValueRef *result);
 
   static std::once_flag s_runtimeVersionInitFlag;
   static uint64_t s_runtimeVersion;

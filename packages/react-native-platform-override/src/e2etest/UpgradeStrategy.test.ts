@@ -338,7 +338,9 @@ async function evaluateStrategy(opts: {
     );
 
     if (isutf8(actualContent) && isutf8(expectedContent)) {
-      expect(actualContent.toString()).toBe(expectedContent.toString());
+      expect(actualContent.toString().replace(/\r\n/g, '\n')).toBe(
+        expectedContent.toString().replace(/\r\n/g, '\n'),
+      );
     } else {
       expect(actualContent.compare(expectedContent)).toBe(0);
     }

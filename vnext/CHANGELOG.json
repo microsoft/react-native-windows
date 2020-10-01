@@ -2,6 +2,126 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 30 Sep 2020 05:06:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.174",
+      "version": "0.0.0-canary.174",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Simplify react::uwp::IReactInstance",
+            "author": "vmorozov@microsoft.com",
+            "commit": "c2001a2f1caec259a5bcdd81cffa1e524e121f92",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Initial ABI-safe JSI implementation",
+            "author": "vmorozov@microsoft.com",
+            "commit": "b377a77f3eac4baaa20e738d3f7f80653ddf06ea",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add react-native-platform-override macOS Support",
+            "author": "nick@nickgerleman.com",
+            "commit": "64c111f645e82bb4d867d16254c3f6cf48e6dcc1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "integrate RN 7/7 build",
+            "author": "igklemen@microsoft.com",
+            "commit": "eb13b4761acb4df37b02d75f4296b8a8033db2ec",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 29 Sep 2020 05:05:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.173",
+      "version": "0.0.0-canary.173",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Special UI When Debugger Attached",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3a41737a788f7ded7e4675d4539ebf619e500156",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Reduce Microsoft.ReactNative PCH By 155MB-260MB",
+            "author": "ngerlem@microsoft.com",
+            "commit": "31563b93287b3a5849f956cce73019a36ee4a1e6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove TestMessageQueueThread.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "c10720bde2f53ba3ed50ab93048a585a8377e46b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Don't reload the ReactNativeHost multiple times",
+            "author": "ryan.fowler@singlewire.com",
+            "commit": "7baf74ec48b7d8d7ab78d9349f95a13272311eb2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 26 Sep 2020 05:04:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.172",
+      "version": "0.0.0-canary.172",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use WinRT HTTP module",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "5d543f09a207241e4cd38b5b84e1fe07e519673c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "resizing the xaml island should dismiss any flyouts in it",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "e7d516c7a19b5a8a5c97f9d9df1b2444d21b419d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Sep 2020 05:05:40 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.171",
+      "version": "0.0.0-canary.171",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Supply UniversalApiContract for Platform.Version",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8d7e61941ba4b655edd13b92e7b4dde68f24d007",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Build fixes from folly update",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "23567627c97a3471e60b50cbef16230d3e785845",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add -NoProfile to powershell invocations to ensure deterministic script execution where user profiles do not have the ability to break or change the build outputs",
+            "author": "dannyvv@microsoft.com",
+            "commit": "34204f8e56810882b1f66fa247f075499a76022d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add -UseBasicParsing to all powershell Invoke-WebRequest calls to avoid dependency on IE",
+            "author": "dannyvv@microsoft.com",
+            "commit": "38077f7ea4c421a08f52835fa7f2f8db07b7cb5c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 23 Sep 2020 05:04:55 GMT",
       "tag": "react-native-windows_v0.0.0-canary.169",
       "version": "0.0.0-canary.169",

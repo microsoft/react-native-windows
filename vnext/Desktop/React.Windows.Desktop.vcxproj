@@ -145,6 +145,7 @@
     <Midl Include="..\Microsoft.ReactNative\IReactNotificationService.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactNonAbiValue.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl" />
+    <Midl Include="..\Microsoft.ReactNative\JsiApi.idl" />
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
   </ItemGroup>
   <ItemGroup>
@@ -219,7 +220,6 @@
     <ClCompile Include="RuntimeOptions.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
-    <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\WebSocketModule.cpp" />
     <ClCompile Include="pch.cpp">
@@ -284,7 +284,6 @@
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.h" />
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorInfo.h" />
-    <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="NativeModuleFactories.h" />

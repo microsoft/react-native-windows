@@ -1,8 +1,24 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 22 Sep 2020 04:46:10 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Sep 2020 05:06:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.52
+
+Wed, 30 Sep 2020 05:06:49 GMT
+
+### Changes
+
+- integrate RN 7/7 build (igklemen@microsoft.com)
+
+## 0.0.0-canary.51
+
+Fri, 25 Sep 2020 05:05:40 GMT
+
+### Changes
+
+- Supply UniversalApiContract for Platform.Version (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.49
 

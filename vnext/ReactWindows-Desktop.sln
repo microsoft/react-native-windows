@@ -105,6 +105,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mso", "Mso", "{4DE630AE-EC5
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mso", "Mso\Mso.vcxitems", "{84E05BFA-CBAF-4F0D-BFB6-4CE85742A57E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Cxx", "Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems", "{DA8B35B3-DA00-4B02-BDE6-6A397B3FD46B}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
@@ -113,13 +115,13 @@ Global
 		Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
 		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{44dced9b-9c4c-48fe-8545-0930192bbc16}*SharedItemsImports = 4
 		Mso\Mso.vcxitems*{44dced9b-9c4c-48fe-8545-0930192bbc16}*SharedItemsImports = 4
-		Chakra\Chakra.vcxitems*{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}*SharedItemsImports = 4
 		Mso\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
 		Chakra\Chakra.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
 		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
 		Mso\Mso.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
 		Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
+		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{da8b35b3-da00-4b02-bde6-6a397b3fd46b}*SharedItemsImports = 9
 		include\Include.vcxitems*{ef074ba1-2d54-4d49-a28e-5e040b47cd2e}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

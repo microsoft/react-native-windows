@@ -404,7 +404,7 @@ JsValueRef evaluateScriptWithBytecode(
     [[maybe_unused]] std::string &&bytecodeFileName,
     [[maybe_unused]] bool asyncBytecodeGeneration) {
 #if defined(WINRT)
-  // TODO: yicyao
+  // TODO:
   // ChakraRT does not support the JsRunSerialized() API.
   // Hence for UWP implementation, we fall back to using the original source
   // code right now.
@@ -454,7 +454,7 @@ JsValueRef evaluateScriptWithBytecode(
   }
 
   // This code is duplicated from evaluateScript.
-  // TODO (yicyao, task 1977635) get rid of this duplicated code.
+  // TODO (task 1977635) get rid of this duplicated code.
   bool hasException = false;
   if (result == JsErrorInExceptionState || (JsHasException(&hasException), hasException)) {
     JsGetAndClearException(&exn);

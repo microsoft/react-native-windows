@@ -1,0 +1,36 @@
+parameters:
+  name: ''
+
+jobs:
+  - job: ${{ parameters.name }}
+    displayName: macOS Tests
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+
+    variables:
+      - template: ../variables/macos.yml
+
+    pool:
+      vmImage: $(VmImage)
+
+    timeoutInMinutes: 20 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+
+    steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 1 # the depth of commits to ask Git to fetch
+        submodules: false
+            
+      - template: yarn-install.yml
+
+      - script: yarn build
+        displayName: yarn build
+
+      - script: yarn test --color
+        displayName: Test react-native-platform-override
+        workingDirectory: packages/react-native-platform-override
+
+      - script: yarn validate-overrides
+        displayName: yarn validate-overrides
+

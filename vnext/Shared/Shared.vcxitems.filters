@@ -107,6 +107,18 @@
       <Filter>Source Files\Executors</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.cpp">
+      <Filter>Source Files\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.cpp">
+      <Filter>Source Files\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.cpp">
+      <Filter>Source Files\Threading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -147,6 +159,12 @@
     </Filter>
     <Filter Include="Header Files\Executors">
       <UniqueIdentifier>{d2b54f2c-7e3c-48a6-8df6-dea9fb7ab4e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Threading">
+      <UniqueIdentifier>{0ffdd86e-d4b2-4517-a8e3-8cb8ee8d8bca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Threading">
+      <UniqueIdentifier>{32ac535b-b680-447d-9849-9fdffb26f218}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -305,6 +323,18 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.h">
+      <Filter>Header Files\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.h">
+      <Filter>Header Files\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.h">
+      <Filter>Header Files\Threading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

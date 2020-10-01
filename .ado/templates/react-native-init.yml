@@ -26,6 +26,9 @@ parameters:
   - name: additionalInitArguments
     type: string
     default: ''
+  - name: continueOnBuildFailure
+    type: boolean
+    default: false
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -122,6 +125,11 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), ${{ not(parameters.useNuGet) }})
 
+  # Reclaim memory used by Verdaccio to reduce the chance of build OOM issues
+  - script: tskill node
+    displayName: Kill Verdaccio
+    condition: succeededOrFailed()
+
   - task: PowerShell@2
     displayName: List Visual Studio Components
     inputs:
@@ -174,6 +182,7 @@ steps:
     inputs:
       script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs --release ${{ parameters.additionalRunArguments }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
+    continueOnError: ${{ parameters.continueOnBuildFailure }}
     condition: and(succeeded(), eq('Release', variables['localConfig']))
 
   - task: CmdLine@2
@@ -181,6 +190,7 @@ steps:
     inputs:
       script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs ${{ parameters.additionalRunArguments }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
+    continueOnError: ${{ parameters.continueOnBuildFailure }}
     condition: and(succeeded(), eq('Debug', variables['localConfig']))
 
   - template: upload-build-logs.yml
@@ -196,15 +206,6 @@ steps:
 
   # We are experiencing random package restore failures.
   # We want to uploading the vedaccio logs to aid in diagnosing if it is verdaccio or npmjs.org
-  # To do so we have to kill the existing server because it keeps a file-lock on the log file
-  - task: PowerShell@2
-    displayName: Stop test npm server (verdaccio) to upload it's logs (on failure)
-    inputs:
-      targetType: inline
-      script: |
-        stop-process -name node
-    condition: failed()
-
   - task: PublishPipelineArtifact@1
     displayName: Upload Verdaccio.log (on failure)
     inputs:

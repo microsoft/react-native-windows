@@ -41,6 +41,7 @@ EXPORTS
 ?hash@dynamic@folly@@QBEIXZ
 ?loadScriptFromString@Instance@react@facebook@@QAEXV?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@std@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@_N@Z
 ?makeConversionError@folly@@YG?AVConversionError@1@W4ConversionCode@1@V?$Range@PBD@1@@Z
+?name@?$TypeInfo@UObjectImpl@dynamic@folly@@@dynamic@folly@@2QBDB
 ?parseJson@folly@@YG?AUdynamic@1@V?$Range@PBD@1@@Z
 ?setGlobalVariable@Instance@react@facebook@@QAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@5@@Z
 ?size@dynamic@folly@@QBEIXZ
@@ -59,6 +60,7 @@ EXPORTS
 ?CreateAsyncStorageModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PB_W@Z
 ?Make@IHttpResource@React@Microsoft@@SG?AV?$unique_ptr@UIHttpResource@React@Microsoft@@U?$default_delete@UIHttpResource@React@Microsoft@@@std@@@std@@XZ
 ??0NetworkingModule@React@Microsoft@@QAE@XZ
+?MakeJSQueueThread@uwp@react@@YG?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
 
 _YGAlignToString@4
 _YGAssert@8
