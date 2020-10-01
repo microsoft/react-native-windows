@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/take-screenshot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -17,12 +17,13 @@
     "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "0.1.3",
-    "@rnw-scripts/just-task": "0.0.5",
+    "@rnw-scripts/eslint-config": "0.1.4",
+    "@rnw-scripts/just-task": "0.0.6",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/yargs": "^15.0.5",
     "eslint": "6.8.0",
     "just-scripts": "^0.36.1",
+    "prettier": "1.19.1",
     "typescript": "^3.8.3"
   },
   "beachball": {

@@ -122,9 +122,7 @@ export function addProjectToSolution(
   const projectGuid = project.projectGuid.toUpperCase();
 
   const projectEntryBlock = [
-    `Project("${projectTypeGuid}") = "${
-      project.projectName
-    }", "${relProjectFile}", "${projectGuid}"`,
+    `Project("${projectTypeGuid}") = "${project.projectName}", "${relProjectFile}", "${projectGuid}"`,
     'EndProject',
   ];
 

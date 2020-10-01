@@ -241,7 +241,6 @@ exports.config = {
   afterTest: function(test) {
     if (test.error !== undefined) {
       let name = 'ERROR-' + Date.now();
-      // eslint-disable-next-line no-undef
       browser.saveScreenshot('./errorShots/' + name + '.png');
     }
   },

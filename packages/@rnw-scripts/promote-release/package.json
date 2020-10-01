@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/promote-release",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -13,20 +13,21 @@
     "promote-release": "./bin.js"
   },
   "dependencies": {
-    "@rnw-scripts/find-repo-root": "^0.0.10",
-    "@rnw-scripts/package-utils": "^0.0.7",
+    "@rnw-scripts/find-repo-root": "^0.0.11",
+    "@rnw-scripts/package-utils": "^0.0.8",
     "chalk": "^4.1.0",
     "simple-git": "^1.131.0",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "0.1.3",
-    "@rnw-scripts/just-task": "0.0.5",
+    "@rnw-scripts/eslint-config": "0.1.4",
+    "@rnw-scripts/just-task": "0.0.6",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/chalk": "^2.2.0",
     "@types/yargs": "^15.0.5",
     "eslint": "6.8.0",
     "just-scripts": "^0.36.1",
+    "prettier": "1.19.1",
     "typescript": "^3.8.3"
   },
   "beachball": {

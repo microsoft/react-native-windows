@@ -61,7 +61,10 @@ function ThreeColorsHorizontalExample() {
       })`,
     color: ColorGradientWin32({
       gradientDirection: 'ToRight',
-      colorStops: [{color: 'red', offset: 0}, {color: 'blue', offset: 1}],
+      colorStops: [
+        {color: 'red', offset: 0},
+        {color: 'blue', offset: 1},
+      ],
     }),
   };
 

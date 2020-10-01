@@ -266,9 +266,7 @@ export default class GitReactFileRepository
     });
     if (!commitInfo.ok) {
       throw new Error(
-        `Unable to query Github for commit '${shortHash}' Status: '${
-          commitInfo.statusText
-        }'`,
+        `Unable to query Github for commit '${shortHash}' Status: '${commitInfo.statusText}'`,
       );
     }
 

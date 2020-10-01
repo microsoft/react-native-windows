@@ -177,8 +177,11 @@ export class CopyOverride extends BaseFileOverride {
   }
 
   async createUpdated(factory: OverrideFactory): Promise<Override> {
-    return factory.createCopyOverride(this.overrideFile, this.baseFile, this
-      .issueNumber as number);
+    return factory.createCopyOverride(
+      this.overrideFile,
+      this.baseFile,
+      this.issueNumber as number,
+    );
   }
 
   upgradeStrategy(): UpgradeStrategy {
