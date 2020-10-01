@@ -52,7 +52,7 @@ struct ReactContextStub : implements<ReactContextStub, IReactContext> {
     paramsArgWriter(writer);
     Args = TakeJSValue(writer);
   }
-  
+
   uint16_t DebuggerPort() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
@@ -70,6 +70,26 @@ struct ReactContextStub : implements<ReactContextStub, IReactContext> {
   }
 
   bool UseWebDebugger() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  hstring DebugBundlePath() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  hstring BundleRootPath() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  hstring SourceBundleHost() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  uint16_t SourceBundlePort() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  hstring JavaScriptBundleFile() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
 

@@ -36,6 +36,11 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
   bool UseDirectDebugger() noexcept;
   bool DebuggerBreakOnNextLine() noexcept;
   uint16_t DebuggerPort() noexcept;
+  hstring DebugBundlePath() noexcept;
+  hstring BundleRootPath() noexcept;
+  hstring SourceBundleHost() noexcept;
+  uint16_t SourceBundlePort() noexcept;
+  hstring JavaScriptBundleFile() noexcept;
 
   // Not part of the public ABI interface
   // Internal accessor for within the Microsoft.ReactNative dll to allow calling into internal methods

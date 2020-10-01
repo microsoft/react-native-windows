@@ -342,5 +342,15 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     bool IReactContext.UseFastRefresh => throw new NotImplementedException();
 
     bool IReactContext.UseWebDebugger => throw new NotImplementedException();
+
+    string IReactContext.BundleRootPath => throw new NotImplementedException();
+
+    string IReactContext.DebugBundlePath => throw new NotImplementedException();
+
+    string IReactContext.JavaScriptBundleFile => throw new NotImplementedException();
+
+    string IReactContext.SourceBundleHost => throw new NotImplementedException();
+
+    ushort IReactContext.SourceBundlePort => throw new NotImplementedException();
   }
 }

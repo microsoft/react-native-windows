@@ -44,6 +44,7 @@ namespace Microsoft.ReactNative {
     IReactNotificationService Notifications { get; };
     IVector<IReactPackageProvider> PackageProviders { get; };
     Boolean UseDeveloperSupport { get; set; };
+    // Deprecated - use JavaScriptBundleFile instead
     String JavaScriptMainModuleName { get; set; };
     String JavaScriptBundleFile { get; set; };
     Boolean UseWebDebugger { get; set; };

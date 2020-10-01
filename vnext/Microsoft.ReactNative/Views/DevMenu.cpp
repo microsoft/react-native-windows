@@ -117,7 +117,8 @@ void DevMenuManager::CreateAndShowUI() noexcept {
                                                                                  : L"Enable Break on First Line");
 
   m_reloadJSRevoker = devMenu.Reload().Click(
-      winrt::auto_revoke, [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+      winrt::auto_revoke,
+      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
         if (auto strongThis = wkThis.lock()) {
           strongThis->Hide();
           DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
@@ -197,8 +198,7 @@ void DevMenuManager::CreateAndShowUI() noexcept {
           : xaml::Visibility::Collapsed);
 
   m_cancelRevoker = devMenu.Cancel().Click(
-      winrt::auto_revoke,
-      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) {
+      winrt::auto_revoke, [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) {
         if (auto strongThis = wkThis.lock()) {
           strongThis->Hide();
         }
