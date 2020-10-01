@@ -281,9 +281,7 @@ export default class GitReactFileRepository
     const stat = await this.fileRepo.stat(filename);
     if (stat === 'none') {
       throw new Error(
-        `Cannot find file "${filename}" in react-native@${
-          this.checkedOutVersion
-        }`,
+        `Cannot find file "${filename}" in react-native@${this.checkedOutVersion}`,
       );
     } else if (stat === 'directory') {
       throw new Error(`"${filename}" refers to a directory`);
