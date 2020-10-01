@@ -112,6 +112,15 @@ export default class GitReactFileRepository
     newContent: Buffer,
   ): Promise<string> {
     return this.usingVersion(reactNativeVersion, async () => {
+      const stat = await this.fileRepo.stat(filename);
+      if (stat === 'none') {
+        throw new Error(
+          `Cannot find file "${filename}" in react-native@${reactNativeVersion}`,
+        );
+      } else if (stat === 'directory') {
+        throw new Error(`"${filename}" refers to a directory`);
+      }
+
       try {
         await this.fileRepo.writeFile(filename, newContent);
         const patch = await this.gitClient.diff([
@@ -146,6 +155,15 @@ export default class GitReactFileRepository
     patchContent: string,
   ): Promise<{patchedFile: Buffer | null; hasConflicts: boolean}> {
     return this.usingVersion(reactNativeVersion, async () => {
+      const stat = await this.fileRepo.stat(filename);
+      if (stat === 'none') {
+        throw new Error(
+          `Cannot find file "${filename}" in react-native@${reactNativeVersion}`,
+        );
+      } else if (stat === 'directory') {
+        throw new Error(`"${filename}" refers to a directory`);
+      }
+
       try {
         await this.fileRepo.writeFile('rnwgit.patch', patchContent);
 
