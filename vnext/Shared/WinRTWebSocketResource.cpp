@@ -5,15 +5,12 @@
 #include "WinRTWebSocketResource.h"
 
 #include <Utils/CppWinrtLessExceptions.h>
-#include <Unicode.h>
 #include <Utilities.h>
 
 // Windows API
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 
-using Microsoft::Common::Unicode::Utf8ToUtf16;
-using Microsoft::Common::Unicode::Utf16ToUtf8;
 using Microsoft::Common::Utilities::CheckedReinterpretCast;
 
 using std::function;
@@ -105,7 +102,7 @@ WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, Uri&&
 }
 
 WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<ChainValidationResult> &&certExeptions) noexcept
-  : WinRTWebSocketResource(MessageWebSocket{}, Uri{ Utf8ToUtf16(urlString) }, std::move(certExeptions))
+  : WinRTWebSocketResource(MessageWebSocket{}, Uri{ winrt::to_hstring(urlString) }, std::move(certExeptions))
 {
 }
 
@@ -144,7 +141,8 @@ IAsyncAction WinRTWebSocketResource::PerformConnect() noexcept
       if (self->m_errorHandler)
       {
         auto error = winrt::hresult_error(result, winrt::hresult_error::from_abi);
-        self->m_errorHandler({ Utf16ToUtf8(error.message()), ErrorType::Connection });
+
+        self->m_errorHandler({ winrt::to_string(error.message()), ErrorType::Connection });
       }
     }
   }
@@ -152,7 +150,7 @@ IAsyncAction WinRTWebSocketResource::PerformConnect() noexcept
   {
     if (self->m_errorHandler)
     {
-      self->m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
+      self->m_errorHandler({ winrt::to_string(e.message()), ErrorType::Connection });
     }
   }
 
@@ -202,7 +200,7 @@ fire_and_forget WinRTWebSocketResource::PerformPing() noexcept
       if (self->m_errorHandler)
       {
         auto error = winrt::hresult_error(result, winrt::hresult_error::from_abi);
-        self->m_errorHandler({ Utf16ToUtf8(error.message()), ErrorType::Ping});
+        self->m_errorHandler({ winrt::to_string(error.message()), ErrorType::Ping});
       }
     }
   }
@@ -210,7 +208,7 @@ fire_and_forget WinRTWebSocketResource::PerformPing() noexcept
   {
     if (self->m_errorHandler)
     {
-      self->m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Ping });
+      self->m_errorHandler({ winrt::to_string(e.message()), ErrorType::Ping });
     }
   }
 }
@@ -250,7 +248,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string&& message, bool isBi
     {
       self->m_socket.Control().MessageType(SocketMessageType::Binary);
 
-      auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(messageLocal));
+      auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(messageLocal));
       length = buffer.Length();
       self->m_writer.WriteBuffer(buffer);
     }
@@ -283,13 +281,12 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string&& message, bool isBi
       if (self->m_errorHandler)
       {
         auto error = winrt::hresult_error(result, winrt::hresult_error::from_abi);
-        self->m_errorHandler({ Utf16ToUtf8(error.message()), ErrorType::Send });
+        self->m_errorHandler({ winrt::to_string(error.message()), ErrorType::Send });
       }
     }
   }
   catch (std::exception const& e)
   {
-    // Utf8ToUtf16 may throw
     if (self->m_errorHandler)
     {
       self->m_errorHandler({ e.what(), ErrorType::Ping });
@@ -300,7 +297,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string&& message, bool isBi
     //TODO: Remove after fixing unit tests exceptions.
     if (self->m_errorHandler)
     {
-      self->m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Ping });
+      self->m_errorHandler({ winrt::to_string(e.message()), ErrorType::Ping });
     }
   }
 }
@@ -313,7 +310,7 @@ fire_and_forget WinRTWebSocketResource::PerformClose() noexcept
 
   try
   {
-    m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
+    m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
 
     if (m_closeHandler)
     {
@@ -324,14 +321,14 @@ fire_and_forget WinRTWebSocketResource::PerformClose() noexcept
   {
     if (m_errorHandler)
     {
-      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Close });
+      m_errorHandler({ winrt::to_string(e.message()), ErrorType::Close });
     }
   }
   catch (hresult_error const& e)
   {
     if (m_errorHandler)
     {
-      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Close });
+      m_errorHandler({ winrt::to_string(e.message()), ErrorType::Close });
     }
   }
 
@@ -359,7 +356,7 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, IMessag
       auto buffer = reader.ReadBuffer(len);
       winrt::hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
 
-      response = Utf16ToUtf8(std::wstring_view(data));
+      response = winrt::to_string(std::wstring_view(data));
     }
 
     if (m_readHandler)
@@ -371,7 +368,7 @@ void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, IMessag
   {
     if (m_errorHandler)
     {
-      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Receive });
+      m_errorHandler({ winrt::to_string(e.message()), ErrorType::Receive });
     }
   }
 }
@@ -395,14 +392,14 @@ void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& 
 
   for (const auto& header : options)
   {
-    m_socket.SetRequestHeader(header.first, Utf8ToUtf16(header.second));
+    m_socket.SetRequestHeader(header.first, winrt::to_hstring(header.second));
   }
 
   winrt::Windows::Foundation::Collections::IVector<winrt::hstring> supportedProtocols =
     m_socket.Control().SupportedProtocols();
   for (const auto& protocol : protocols)
   {
-    supportedProtocols.Append(Utf8ToUtf16(protocol));
+    supportedProtocols.Append(winrt::to_hstring(protocol));
   }
 
   m_connectRequested = true;
