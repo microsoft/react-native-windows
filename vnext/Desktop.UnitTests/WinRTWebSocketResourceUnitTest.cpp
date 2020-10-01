@@ -37,6 +37,9 @@ IAsyncAction ThrowAsync() {
 namespace Microsoft::React::Test {
 TEST_CLASS (WinRTWebSocketResourceUnitTest) {
   TEST_METHOD(ConnectSucceeds) {
+    // Microsoft C++ Unit Test Framework does not properly log full test names.
+    Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::ConnectSucceeds");
+
     bool connected = true;
     string errorMessage;
     auto imws{winrt::make<MockMessageWebSocket>()};
@@ -63,6 +66,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
   BEGIN_TEST_METHOD_ATTRIBUTE(ConnectFails)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(ConnectFails) {
+    Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::ConnectFails");
     bool connected = false;
     string errorMessage;
     auto imws{winrt::make<MockMessageWebSocket>()};
@@ -86,6 +90,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
   }
 
   TEST_METHOD(InternalSocketThrowsHResult) {
+    Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::InternalSocketThrowsHResult");
     shared_ptr<WinRTWebSocketResource> rc;
 
     auto lambda = [&rc]() mutable {
