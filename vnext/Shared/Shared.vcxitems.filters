@@ -110,15 +110,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.cpp">
-      <Filter>Source Files\Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.cpp">
-      <Filter>Source Files\Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.cpp">
-      <Filter>Source Files\Threading</Filter>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -327,15 +321,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.h">
-      <Filter>Header Files\Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.h">
-      <Filter>Header Files\Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.h">
-      <Filter>Header Files\Threading</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)etw\build.bat">

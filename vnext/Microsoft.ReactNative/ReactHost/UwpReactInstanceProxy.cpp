@@ -44,8 +44,8 @@ ExpressionAnimationStore &UwpReactInstanceProxy::GetExpressionAnimationStore() n
   return m_expressionAnimationStore;
 }
 
-std::string UwpReactInstanceProxy::GetBundleRootPath() const noexcept {
-  return m_context->GetBundleRootPath();
+std::string UwpReactInstanceProxy::BundleRootPath() const noexcept {
+  return m_context->BundleRootPath();
 }
 
 bool UwpReactInstanceProxy::IsLoaded() const noexcept {

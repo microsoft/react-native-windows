@@ -48,7 +48,7 @@ struct IReactInstance {
 
   // Returns the root path of the JS bundle. This is needed for
   // classes that do not have access to the settings object.
-  virtual std::string GetBundleRootPath() const noexcept = 0;
+  virtual std::string BundleRootPath() const noexcept = 0;
 
   // Test Hooks
   virtual void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> &&testHook) noexcept = 0;

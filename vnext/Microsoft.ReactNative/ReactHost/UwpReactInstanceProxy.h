@@ -31,7 +31,7 @@ struct UwpReactInstanceProxy : IReactInstance, std::enable_shared_from_this<UwpR
   bool IsInError() const noexcept override;
   bool IsWaitingForDebugger() const noexcept override;
   ExpressionAnimationStore &GetExpressionAnimationStore() noexcept override;
-  std::string GetBundleRootPath() const noexcept override;
+  std::string BundleRootPath() const noexcept override;
   bool IsLoaded() const noexcept override;
 
   // Test hooks

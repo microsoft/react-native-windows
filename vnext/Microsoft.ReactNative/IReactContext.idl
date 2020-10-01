@@ -44,5 +44,18 @@ namespace Microsoft.ReactNative {
 
     // Call JavaScript module event. It is a specialized CallJSFunction call where method name is always 'emit'.
     void EmitJSEvent(String eventEmitterName, String eventName, JSValueArgWriter paramsArgWriter);
+
+#ifndef CORE_ABI
+    Boolean UseWebDebugger { get; };
+    Boolean UseFastRefresh { get; };
+    Boolean UseDirectDebugger { get; };
+    Boolean DebuggerBreakOnNextLine { get; };
+    UInt16 DebuggerPort { get; };
+    String DebugBundlePath { get; };
+    String BundleRootPath { get; };
+    String SourceBundleHost { get; };
+    UInt16 SourceBundlePort { get; };
+    String JavaScriptBundleFile { get; };
+#endif
   }
 } // namespace Microsoft.ReactNative

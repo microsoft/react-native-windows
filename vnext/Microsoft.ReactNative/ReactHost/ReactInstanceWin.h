@@ -59,7 +59,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   facebook::react::INativeUIManager *NativeUIManager() noexcept override;
 #endif
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() noexcept override;
-  std::string GetBundleRootPath() noexcept override;
 #ifndef CORE_ABI
   std::shared_ptr<react::uwp::IReactInstance> UwpReactInstance() noexcept override;
 #endif
@@ -69,6 +68,17 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
       facebook::react::IReactRootView *rootView,
       folly::dynamic &&initialProps) noexcept override;
   void DetachRootView(facebook::react::IReactRootView *rootView) noexcept override;
+
+  bool UseWebDebugger() const noexcept;
+  bool UseFastRefresh() const noexcept;
+  bool UseDirectDebugger() const noexcept;
+  bool DebuggerBreakOnNextLine() const noexcept;
+  uint16_t DebuggerPort() const noexcept;
+  std::string DebugBundlePath() const noexcept;
+  std::string BundleRootPath() const noexcept;
+  std::string SourceBundleHost() const noexcept;
+  uint16_t SourceBundlePort() const noexcept;
+  std::string JavaScriptBundleFile() const noexcept;
 #endif
 
  private:
@@ -169,7 +179,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   std::shared_ptr<react::uwp::AppTheme> m_appTheme;
   Mso::CntPtr<react::uwp::AppearanceChangeListener> m_appearanceListener;
 #endif
-  std::string m_bundleRootPath;
   Mso::DispatchQueue m_uiQueue;
   std::deque<JSCallEntry> m_jsCallQueue;
 };

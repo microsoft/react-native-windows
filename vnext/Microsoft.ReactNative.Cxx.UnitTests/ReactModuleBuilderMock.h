@@ -142,6 +142,46 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
       hstring const &eventName,
       JSValueArgWriter const &paramsArgWriter) noexcept;
 
+  uint16_t DebuggerPort() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  bool DebuggerBreakOnNextLine() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  bool UseDirectDebugger() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  bool UseFastRefresh() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  bool UseWebDebugger() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  hstring DebugBundlePath() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  hstring BundleRootPath() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  hstring SourceBundleHost() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  uint16_t SourceBundlePort() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  hstring JavaScriptBundleFile() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
  private:
   ReactModuleBuilderMock *m_builderMock;
 };

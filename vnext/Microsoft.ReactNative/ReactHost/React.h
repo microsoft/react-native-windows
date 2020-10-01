@@ -81,9 +81,19 @@ struct IReactContext : IUnknown {
 #ifndef CORE_ABI
   virtual ReactInstanceState State() const noexcept = 0;
   virtual bool IsLoaded() const noexcept = 0;
-  virtual std::string GetBundleRootPath() const noexcept = 0;
   virtual facebook::react::INativeUIManager *NativeUIManager() const noexcept = 0;
   virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept = 0;
+  virtual bool UseWebDebugger() const noexcept = 0;
+  virtual bool UseFastRefresh() const noexcept = 0;
+  virtual bool UseDirectDebugger() const noexcept = 0;
+  virtual bool DebuggerBreakOnNextLine() const noexcept = 0;
+  virtual uint16_t DebuggerPort() const noexcept = 0;
+  virtual std::string DebugBundlePath() const noexcept = 0;
+  virtual std::string BundleRootPath() const noexcept = 0;
+  virtual std::string SourceBundleHost() const noexcept = 0;
+  virtual uint16_t SourceBundlePort() const noexcept = 0;
+  virtual std::string JavaScriptBundleFile() const noexcept = 0;
+
 #endif
 };
 
