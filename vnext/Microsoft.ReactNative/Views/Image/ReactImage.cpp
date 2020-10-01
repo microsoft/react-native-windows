@@ -250,8 +250,8 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                 // the SizeChanged event has already fired and the ReactImageBrush's
                 // size has not been set. Use ActualWidth/Height in that case.
                 if (compositionBrush->AvailableSize() == winrt::Size{0, 0}) {
-                  compositionBrush->AvailableSize(
-                      {static_cast<float>(strong_this->ActualWidth()), static_cast<float>(strong_this->ActualHeight())});
+                  compositionBrush->AvailableSize({static_cast<float>(strong_this->ActualWidth()),
+                                                   static_cast<float>(strong_this->ActualHeight())});
                 }
 
                 compositionBrush->Source(surface);
