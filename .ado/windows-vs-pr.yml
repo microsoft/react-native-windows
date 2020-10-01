@@ -1,4 +1,3 @@
-# This file defines the Windows Visual Studio PR build steps used during the CI loop
 name: $(Date:yyyyMMdd).$(Rev:r)
 
 trigger: none # will disable CI builds entirely
@@ -9,10 +8,12 @@ pr:
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/vs2019.yml
+  - group: platform-override-zero-permission-token
 
 jobs:
   - job: Setup
+    variables:
+      - template: variables/vs2019.yml
     steps:
       - task: powershell@2
         name: checkPayload
@@ -22,6 +23,8 @@ jobs:
           filePath: .ado/shouldSkipPRBuild.ps1
 
   - job: RNWUniversalPR
+    variables:
+      - template: variables/vs2019.yml
     displayName: Universal PR
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
@@ -143,6 +146,8 @@ jobs:
             Microsoft.ReactNative.Managed.CodeGen\**
 
   - job: RNW_WinUI3
+    variables:
+      - template: variables/vs2019.yml
     displayName: WinUI3 Playground
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
@@ -187,6 +192,7 @@ jobs:
             /p:BaseIntDir=$(BaseIntDir)
             /p:AppxPackageSigningEnabled=false
             /p:UseWinUI3=true
+        continueOnError: true # See issue #6129
 
       - task: PublishBuildArtifacts@1
         displayName: Upload crash dumps
@@ -197,6 +203,8 @@ jobs:
 
 
   - job: RNWUniversalOtherProjectsPR
+    variables:
+      - template: variables/vs2019.yml
     displayName: Universal Other Projects PR
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
@@ -277,6 +285,10 @@ jobs:
             /p:BaseIntDir=$(BaseIntDir)
 
   - job: RNWSampleAppsPR
+    variables:
+      - template: variables/vs2019.yml
+      - name: BuildLogDirectory
+        value: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
     displayName: Sample Apps PR
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
@@ -313,8 +325,6 @@ jobs:
     cancelTimeoutInMinutes: 5
     pool:
       vmImage: $(VmImage)
-    variables:
-      BuildLogDirectory:  $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
 
     steps:
       - checkout: self
@@ -357,6 +367,17 @@ jobs:
           buildLogDirectory: '$(BuildLogDirectory)'
 
   - job: RNWDesktopPR
+    variables:
+      - template: variables/vs2019.yml
+      #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage,WebSocket,Logging).
+      #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
+      - name: Desktop.IntegrationTests.Filter
+        value: >
+          (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
+          (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
+          (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
+          (FullyQualifiedName!~WebSocketModule_)&
+          (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
     displayName: Desktop PR
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
@@ -380,21 +401,10 @@ jobs:
         ARM64Release:
           BuildConfiguration: Release
           BuildPlatform: ARM64
-
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-
-    variables:
-      #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage,WebSocket,Logging).
-      #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
-      Desktop.IntegrationTests.Filter: >
-        (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
-        (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
-        (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
-        (FullyQualifiedName!~WebSocketModule_)&
-        (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
 
     steps:
       - checkout: self
@@ -478,6 +488,8 @@ jobs:
             React.Windows.Desktop.Test.DLL\**
 
   - job: CliInit
+    variables:
+      - template: variables/vs2019.yml
     displayName: Verify react-native init
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
@@ -582,6 +594,7 @@ jobs:
           projectType: app
           additionalInitArguments: --useWinUI3 true
           additionalRunArguments:
+          continueOnBuildFailure: true # See issue #6129
         WinUI3_X86DebugCs:
           language: cs
           configuration: Debug
@@ -589,6 +602,7 @@ jobs:
           projectType: app
           additionalInitArguments: --useWinUI3 true
           additionalRunArguments:
+          continueOnBuildFailure: true # See issue #6129
         X86DebugCppLib:
           language: cpp
           configuration: Debug
@@ -604,7 +618,7 @@ jobs:
           additionalInitArguments:
           additionalRunArguments: --no-autolink --no-deploy
 
-    timeoutInMinutes: 40 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 50 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:
       vmImage: $(VmImage)
@@ -619,6 +633,8 @@ jobs:
           projectType: $(projectType)
 
   - job: CliInitExperimental
+    variables:
+      - template: variables/vs2019.yml
     displayName: Verify react-native init experimental
     dependsOn:
      - Setup
@@ -649,6 +665,8 @@ jobs:
           useNuGet: true
 
   - job: JSChecks
+    variables:
+      - template: variables/vs2019.yml
     displayName: JavaScript Checks
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
@@ -725,3 +743,7 @@ jobs:
     parameters:
       name: IntegrationTest
       BuildPlatform: x64
+
+  - template: templates/macos-tests-job.yml
+    parameters:
+      name: MacTests

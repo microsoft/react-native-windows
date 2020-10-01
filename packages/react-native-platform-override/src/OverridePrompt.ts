@@ -11,6 +11,7 @@ import * as path from 'path';
 
 import Override from './Override';
 import OverrideFactory from './OverrideFactory';
+import {normalizePath} from './PathUtils';
 
 export type OverridePromptAnswers =
   | {type: 'derived'; baseFile: string; codeCopied: boolean; issue?: number}
@@ -26,7 +27,7 @@ export async function overrideFromDetails(
 ): Promise<Override> {
   const manifestPath = await FileSearch.findManifest(overridePath);
   const manifestDir = path.dirname(manifestPath);
-  const overrideName = path.normalize(path.relative(manifestDir, overridePath));
+  const overrideName = normalizePath(path.relative(manifestDir, overridePath));
 
   switch (answers.type) {
     case 'derived':

@@ -11,9 +11,9 @@
     "windows": "react-native run-windows"
   },
   "dependencies": {
-    "react": "16.13.1",
-    "react-native": "0.0.0-e96f1e1d8",
-    "react-native-windows": "0.0.0-canary.173"
+    "react": "0.0.0-experimental-aae83a4b9",
+    "react-native": "0.0.0-949dedca9",
+    "react-native-windows": "0.0.0-canary.174"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -24,6 +24,7 @@
     "eslint": "6.8.0",
     "just-scripts": "^0.36.1",
     "metro-react-native-babel-preset": "^0.56.0",
+    "prettier": "1.19.1",
     "react-native-windows-codegen": "0.1.6",
     "react-test-renderer": "16.9.0"
   }

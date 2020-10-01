@@ -166,9 +166,7 @@ export default class MSBuildTools {
     if (!vsInstallation) {
       if (process.env.VisualStudioVersion != null) {
         throw new Error(
-          `MSBuild tools not found for version ${
-            process.env.VisualStudioVersion
-          } (from environment). Make sure all required components have been installed`,
+          `MSBuild tools not found for version ${process.env.VisualStudioVersion} (from environment). Make sure all required components have been installed`,
         );
       } else {
         throw new Error(
@@ -184,9 +182,7 @@ export default class MSBuildTools {
 
     if (fs.existsSync(toolsPath)) {
       newSuccess(
-        `Found MSBuild v${version} at ${toolsPath} (${
-          vsInstallation.installationVersion
-        })`,
+        `Found MSBuild v${version} at ${toolsPath} (${vsInstallation.installationVersion})`,
       );
       return new MSBuildTools(
         version,

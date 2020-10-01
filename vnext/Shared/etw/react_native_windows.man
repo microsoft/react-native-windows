@@ -2,7 +2,7 @@
 <instrumentationManifest xsi:schemaLocation="http://schemas.microsoft.com/win/2004/08/events eventman.xsd" xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:trace="http://schemas.microsoft.com/win/2004/08/events/trace">
 	<instrumentation>
 		<events>
-			<provider name="React-Native-Windows-Provider" guid="{CEC49226-329E-4EA2-A16A-C37C6C0B2CD7}" symbol="REACT_NATIVE_WINDOWS" resourceFileName="C:\\Users\\anandrag.REDMOND\\source\\repos\\rnw_etw_res\\x64\\Debug\\rnw_etw_res.dll" messageFileName="C:\\Users\\anandrag.REDMOND\\source\\repos\\rnw_etw_res\x64\Debug\rnw_etw_res.dll">
+			<provider name="React-Native-Windows-Provider" guid="{CEC49226-329E-4EA2-A16A-C37C6C0B2CD7}" symbol="REACT_NATIVE_WINDOWS" resourceFileName="C:\\Users\\rnw\\source\\repos\\rnw_etw_res\\x64\\Debug\\rnw_etw_res.dll" messageFileName="C:\\Users\\rnw\\source\\repos\\rnw_etw_res\x64\Debug\rnw_etw_res.dll">
 				<events>
 					<event symbol="JS_BEGIN_SECTION" value="1" version="0" level="win:Informational" task="GenericSystraceJS" opcode="SyncSectionStart" template="tidBeginSection"></event>
 					<event symbol="JS_END_SECTION" value="2" version="0" level="win:Informational" task="GenericSystraceJS" opcode="SyncSectionEnd" template="tidEndSection"></event>

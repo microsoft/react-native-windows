@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "chai": "^4.2.0",
-    "react": "16.13.1",
-    "react-native": "0.0.0-e96f1e1d8",
-    "react-native-windows": "^0.0.0-canary.173"
+    "react": "0.0.0-experimental-aae83a4b9",
+    "react-native": "0.0.0-949dedca9",
+    "react-native-windows": "^0.0.0-canary.174"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -34,6 +34,7 @@
     "jest": "^26.4.2",
     "just-scripts": "^0.36.1",
     "ora": "^3.4.0",
+    "prettier": "1.19.1",
     "ps-list": "^7.2.0",
     "typescript": "^3.8.3",
     "walkdir": "^0.4.1",

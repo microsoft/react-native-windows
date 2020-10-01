@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  *
  * @format
- * @flow
+ * @flow strict
  */
 
 'use strict';

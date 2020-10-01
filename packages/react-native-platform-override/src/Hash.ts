@@ -7,6 +7,7 @@
 
 import * as crypto from 'crypto';
 import * as path from 'path';
+import {normalizePath, unixPath} from './PathUtils';
 import FileRepository from './FileRepository';
 import isutf8 from 'isutf8';
 
@@ -64,12 +65,17 @@ export async function hashFileOrDirectory(
     return hashContent((await repo.readFile(name))!);
   } else {
     const hasher = new Hasher();
-    for (const file of (await repo.listFiles([`${name}/**`])).sort()) {
+    const subfiles = await repo.listFiles([`${unixPath(name)}/**`]);
+
+    for (const file of subfiles.sort()) {
       const contents = await repo.readFile(file);
       hasher.feedContent(contents!);
 
       // Incorporate the filename to detect if renames happen
-      hasher.feedContent(path.relative(name, file));
+      const platformIndependentPath = unixPath(
+        path.relative(name, normalizePath(file)),
+      );
+      hasher.feedContent(platformIndependentPath);
     }
     return hasher.digest();
   }

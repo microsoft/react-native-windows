@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Thu, 24 Sep 2020 05:06:21 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Sep 2020 05:06:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.0
+
+Wed, 30 Sep 2020 05:06:49 GMT
+
+### Minor changes
+
+- macOS Support (nick@nickgerleman.com)
 
 ## 0.2.8
 

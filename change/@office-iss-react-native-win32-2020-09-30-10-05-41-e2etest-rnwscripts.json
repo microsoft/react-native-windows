@@ -1,8 +1,8 @@
 {
   "type": "prerelease",
-  "comment": "integrate RN 7/7 build",
+  "comment": "ESLint Fixup",
   "packageName": "@office-iss/react-native-win32",
-  "email": "igklemen@microsoft.com",
+  "email": "ngerlem@microsoft.com",
   "dependentChangeType": "patch",
-  "date": "2020-09-29T02:25:32.767Z"
+  "date": "2020-09-30T17:05:37.750Z"
 }

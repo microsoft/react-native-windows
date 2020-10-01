@@ -7,7 +7,8 @@
     "@react-native-community/eslint-config": "^2.0.0"
   },
   "devDependencies": {
-    "eslint": "6.8.0"
+    "eslint": "6.8.0",
+    "prettier": "1.19.1"
   },
   "peerDependencies": {
     "eslint": ">=6.7.0"

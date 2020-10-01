@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 30 Sep 2020 05:06:49 GMT",
+      "tag": "react-native-platform-override_v0.3.0",
+      "version": "0.3.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "macOS Support",
+            "author": "nick@nickgerleman.com",
+            "commit": "64c111f645e82bb4d867d16254c3f6cf48e6dcc1",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Sep 2020 05:06:21 GMT",
       "tag": "react-native-platform-override_v0.2.8",
       "version": "0.2.8",

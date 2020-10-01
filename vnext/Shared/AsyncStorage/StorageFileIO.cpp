@@ -146,20 +146,6 @@ void StorageFileIO::flush() {
 
 void StorageFileIO::throwLastErrorMessage() {
   char errorMessageBuffer[IOHelperBufferSize + 1] = {0};
-#ifdef LIBLET_BUILD // This is silly and makes our lives more difficult while
-                    // providing absolutely 0 value. But without it, we get
-                    // "prod blocking" OACR bugs...
-  OACR_REVIEWED_CALL(
-      tudorm,
-      FormatMessageA(
-          FORMAT_MESSAGE_FROM_SYSTEM,
-          nullptr,
-          GetLastError(),
-          MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-          errorMessageBuffer,
-          IOHelperBufferSize,
-          nullptr));
-#else
   FormatMessageA(
       FORMAT_MESSAGE_FROM_SYSTEM,
       nullptr,
@@ -168,7 +154,6 @@ void StorageFileIO::throwLastErrorMessage() {
       errorMessageBuffer,
       IOHelperBufferSize,
       nullptr);
-#endif
   throw std::exception(errorMessageBuffer);
 }
 } // namespace react

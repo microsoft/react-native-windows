@@ -7,6 +7,7 @@
 
 import * as Api from '../Api';
 import * as path from 'path';
+import {normalizePath} from '../PathUtils';
 import {usingRepository} from './Resource';
 
 const SAMPLE_REPO_VERSION = '0.0.0-56cf99a96';
@@ -97,19 +98,21 @@ test('upgradeOverrides', async () => {
       {
         filesWritten: true,
         hasConflicts: false,
-        overrideName:
+        overrideName: normalizePath(
           'ReactCommon\\turbomodule\\samples\\SampleTurboCxxModule.cpp',
+        ),
       },
       {
         filesWritten: true,
         hasConflicts: false,
-        overrideName:
+        overrideName: normalizePath(
           'ReactCommon\\turbomodule\\samples\\SampleTurboCxxModule.h',
+        ),
       },
       {
         filesWritten: false,
         hasConflicts: true,
-        overrideName: 'ReactCommon\\yoga\\yoga\\Yoga.cpp',
+        overrideName: normalizePath('ReactCommon\\yoga\\yoga\\Yoga.cpp'),
       },
     ]);
 
