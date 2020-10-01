@@ -80,7 +80,7 @@ WinRTWebSocketResource::WinRTWebSocketResource(
     : m_uri{std::move(uri)}, m_socket{std::move(socket)}, m_writer{std::move(writer)} {
   m_socket.MessageReceived({this, &WinRTWebSocketResource::OnMessageReceived});
 
-  for (auto certException : certExeptions) {
+  for (const auto& certException : certExeptions) {
     m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
   }
 }
