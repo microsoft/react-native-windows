@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 02 Oct 2020 05:05:22 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.176",
+      "version": "0.0.0-canary.176",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Expose getters for some instance settings on reactcontext",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "d6704978e3c272dacc9cf61275e2abc522da3c3f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 8/5 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "219d73e26770e6fab386132139990cc5a4c8c368",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Image - fix pre-1903 crash",
+            "author": "email not defined",
+            "commit": "5096a7abd7b40ac74b9920e49bec09e2d72edcd8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 8/17 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e8ba1847f0d7475cb67b0e491f692045c00d880e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use lessthrow_await_adapter in Desktop WebSocket resource",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "c2049ba6844929a318ba37f975ceee2296300231",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 01 Oct 2020 05:08:11 GMT",
       "tag": "react-native-windows_v0.0.0-canary.175",
       "version": "0.0.0-canary.175",

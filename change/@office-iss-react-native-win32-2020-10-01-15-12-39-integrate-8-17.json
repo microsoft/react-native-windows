@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate 8/17 Nightly RN Build",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-10-01T22:12:37.567Z"
-}
