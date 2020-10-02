@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include <Modules/WebSocketModule.h>
+#include <Modules/WebSocketModuleUwp.h>
 #include <CreateModules.h>
 #include <WinRTWebSocketResource.h>
 
@@ -14,12 +15,17 @@
 namespace Microsoft::React {
 
 std::shared_ptr<IWebSocketResource> IWebSocketResource::Make(std::string &&urlString) {
+  // TODO: use runtime setting
   std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
   return std::make_shared<WinRTWebSocketResource>(std::move(urlString), std::move(certExceptions));
 }
 
 std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept
 {
+  // TODO: use runtime setting
+  if (false) {
+    return std::make_unique<react::uwp::WebSocketModule>();
+  }
   return std::make_unique<WebSocketModule>();
 }
 
