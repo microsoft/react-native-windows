@@ -14,6 +14,9 @@ import ValidationStrategy, {ValidationStrategies} from './ValidationStrategy';
 import {normalizePath, unixPath} from './PathUtils';
 import OverrideFactory from './OverrideFactory';
 
+export type SerializeOpts = {defaultBaseVersion?: string};
+export type FromSerializedOpts = {defaultBaseVersion?: string};
+
 /**
  * Immutable programmatic representation of an override. This should remain
  * generic to files vs directories, different representations, different
@@ -33,7 +36,7 @@ export default interface Override {
   /**
    * Convert to a serialized representation
    */
-  serialize(): Serialized.Override;
+  serialize(opts?: SerializeOpts): Serialized.Override;
 
   /**
    * Create a copy of the override which is considered "up to date" in regards
@@ -69,6 +72,7 @@ export class PlatformOverride implements Override {
 
   static fromSerialized(
     serialized: Serialized.PlatformOverride,
+    _opts?: FromSerializedOpts,
   ): PlatformOverride {
     return new PlatformOverride(serialized);
   }
@@ -158,11 +162,14 @@ abstract class BaseFileOverride implements Override {
     );
   }
 
-  protected serialzeBase() {
+  protected serialzeBase(opts?: SerializeOpts) {
     return {
       file: unixPath(this.overrideFile),
       baseFile: unixPath(this.baseFile),
-      baseVersion: this.baseVersion,
+      baseVersion:
+        opts?.defaultBaseVersion === this.baseVersion
+          ? undefined
+          : this.baseVersion,
       baseHash: this.baseHash,
     };
   }
@@ -182,14 +189,17 @@ export class CopyOverride extends BaseFileOverride {
     super(args);
   }
 
-  static fromSerialized(serialized: Serialized.CopyOverride): CopyOverride {
-    return new CopyOverride(serialized);
+  static fromSerialized(
+    serialized: Serialized.CopyOverride,
+    opts?: FromSerializedOpts,
+  ): CopyOverride {
+    return new CopyOverride(mergeBaseVersion(serialized, opts));
   }
 
-  serialize(): Serialized.CopyOverride {
+  serialize(opts?: SerializeOpts): Serialized.CopyOverride {
     return {
       type: 'copy',
-      ...this.serialzeBase(),
+      ...this.serialzeBase(opts),
       issue: this.issueNumber as number,
     };
   }
@@ -231,14 +241,15 @@ export class DerivedOverride extends BaseFileOverride {
 
   static fromSerialized(
     serialized: Serialized.DerivedOverride,
+    opts?: FromSerializedOpts,
   ): DerivedOverride {
-    return new DerivedOverride(serialized);
+    return new DerivedOverride(mergeBaseVersion(serialized, opts));
   }
 
-  serialize(): Serialized.DerivedOverride {
+  serialize(opts?: SerializeOpts): Serialized.DerivedOverride {
     return {
       type: 'derived',
-      ...this.serialzeBase(),
+      ...this.serialzeBase(opts),
       issue: this.issueNumber || undefined,
     };
   }
@@ -285,14 +296,17 @@ export class PatchOverride extends BaseFileOverride {
     super(args);
   }
 
-  static fromSerialized(serialized: Serialized.PatchOverride): PatchOverride {
-    return new PatchOverride(serialized);
+  static fromSerialized(
+    serialized: Serialized.PatchOverride,
+    opts?: FromSerializedOpts,
+  ): PatchOverride {
+    return new PatchOverride(mergeBaseVersion(serialized, opts));
   }
 
-  serialize(): Serialized.PatchOverride {
+  serialize(opts?: SerializeOpts): Serialized.PatchOverride {
     return {
       type: 'patch',
-      ...this.serialzeBase(),
+      ...this.serialzeBase(opts),
       issue: this.issueNumber as number,
     };
   }
@@ -350,16 +364,20 @@ export class DirectoryCopyOverride implements Override {
 
   static fromSerialized(
     serialized: Serialized.DirectoryCopyOverride,
+    opts?: FromSerializedOpts,
   ): DirectoryCopyOverride {
-    return new DirectoryCopyOverride(serialized);
+    return new DirectoryCopyOverride(mergeBaseVersion(serialized, opts));
   }
 
-  serialize(): Serialized.DirectoryCopyOverride {
+  serialize(opts?: SerializeOpts): Serialized.DirectoryCopyOverride {
     return {
       type: 'copy',
       directory: unixPath(this.directory),
       baseDirectory: unixPath(this.baseDirectory),
-      baseVersion: this.baseVersion,
+      baseVersion:
+        opts?.defaultBaseVersion === this.baseVersion
+          ? undefined
+          : this.baseVersion,
       baseHash: this.baseHash,
       issue: this.issue,
     };
@@ -414,17 +432,39 @@ export class DirectoryCopyOverride implements Override {
   }
 }
 
-export function deserializeOverride(ovr: Serialized.Override): Override {
+export function deserializeOverride(
+  ovr: Serialized.Override,
+  opts?: FromSerializedOpts,
+): Override {
   switch (ovr.type) {
     case 'platform':
-      return PlatformOverride.fromSerialized(ovr);
+      return PlatformOverride.fromSerialized(ovr, opts);
     case 'copy':
       return 'directory' in ovr
-        ? DirectoryCopyOverride.fromSerialized(ovr)
-        : CopyOverride.fromSerialized(ovr);
+        ? DirectoryCopyOverride.fromSerialized(ovr, opts)
+        : CopyOverride.fromSerialized(ovr, opts);
     case 'derived':
-      return DerivedOverride.fromSerialized(ovr);
+      return DerivedOverride.fromSerialized(ovr, opts);
     case 'patch':
-      return PatchOverride.fromSerialized(ovr);
+      return PatchOverride.fromSerialized(ovr, opts);
   }
+}
+
+function mergeBaseVersion<T extends {baseVersion?: string}>(
+  ovr: T,
+  opts?: FromSerializedOpts,
+): T & {baseVersion: string} {
+  if (!ovr.baseVersion && !opts?.defaultBaseVersion) {
+    throw new Error(
+      `The following override should declare a baseVersion if the manifest does not provide a default: ${JSON.stringify(
+        ovr,
+        null,
+        2,
+      )}`,
+    );
+  }
+
+  return Object.assign({}, ovr, {
+    baseVersion: ovr.baseVersion || opts?.defaultBaseVersion!,
+  });
 }

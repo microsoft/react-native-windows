@@ -26,7 +26,7 @@ const PatchOverrideType = t.type({
   type: t.literal('patch'),
   file: t.string,
   baseFile: t.string,
-  baseVersion: t.string,
+  baseVersion: t.union([t.undefined, t.string]),
   baseHash: t.string,
 
   // Allow LEGACY_FIXME for existing overrides that don't have issues yet
@@ -40,7 +40,7 @@ const DerivedOverrideType = t.type({
   type: t.literal('derived'),
   file: t.string,
   baseFile: t.string,
-  baseVersion: t.string,
+  baseVersion: t.union([t.undefined, t.string]),
   baseHash: t.string,
 
   // Allow LEGACY_FIXME for existing overrides that don't have issues yet
@@ -54,7 +54,7 @@ const CopyOverrideType = t.type({
   type: t.literal('copy'),
   file: t.string,
   baseFile: t.string,
-  baseVersion: t.string,
+  baseVersion: t.union([t.undefined, t.string]),
   baseHash: t.string,
   issue: t.number,
 });
@@ -66,7 +66,7 @@ const DirectoryCopyOverrideType = t.type({
   type: t.literal('copy'),
   directory: t.string,
   baseDirectory: t.string,
-  baseVersion: t.string,
+  baseVersion: t.union([t.undefined, t.string]),
   baseHash: t.string,
   issue: t.number,
 });
@@ -88,6 +88,7 @@ const OverrideType = t.union([
 const ManifestType = t.type({
   includePatterns: t.union([t.undefined, t.array(t.string)]),
   excludePatterns: t.union([t.undefined, t.array(t.string)]),
+  baseVersion: t.union([t.undefined, t.string]),
   overrides: t.array(OverrideType),
 });
 

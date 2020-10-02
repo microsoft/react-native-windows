@@ -132,7 +132,6 @@ export async function upgradeOverrides(opts: {
   manifestPath?: string;
   reactNativeVersion?: string;
   allowConflicts: boolean;
-  newVersion?: string;
   progressListener?: UpgradeProgressListener;
 }): Promise<UpgradeResult[]> {
   const ctx = await createManifestContext(opts);
@@ -189,6 +188,7 @@ export async function upgradeOverrides(opts: {
     await ctx.manifest.markUpToDate(name, ctx.overrideFactory);
   });
 
+  ctx.manifest.setBaseVersion(ctx.reactNativeVersion);
   await Serialized.writeManifestToFile(
     ctx.manifest.serialize(),
     ctx.manifestPath,

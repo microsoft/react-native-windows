@@ -13,19 +13,18 @@
     "**/*.windesktop.js",
     "src/RNTester/js/examples-win/**"
   ],
+  "baseVersion": "0.0.0-423155127",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "f177c2ce170c403708153db596577a436d71e5dc"
     },
     {
       "type": "patch",
       "file": "DeforkingPatches/ReactCommon/yoga/yoga/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "caab3561363f0adf848ffd7da38f07aad5bb70cb",
       "issue": 3994
     },
@@ -33,7 +32,6 @@
       "type": "copy",
       "directory": "flow-typed",
       "baseDirectory": "flow-typed",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "f1491d073bd76e90b6c185d818ec807ac52346b9",
       "issue": 6139
     },
@@ -41,7 +39,6 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "3536f993a01e0fc159d357d944df0d93e2ede812",
       "issue": 4054
     },
@@ -49,7 +46,6 @@
       "type": "copy",
       "directory": "ReactCopies/RNTester/js",
       "baseDirectory": "RNTester/js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "4f53cbff777d251f6a105b44727f8554daaeb90d",
       "issue": 4054
     },
@@ -57,7 +53,6 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "8c9bb33fcf4aed06aa913aca6f5cc65478761f84",
       "issue": 5430
     },
@@ -65,7 +60,6 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "02590f3430fb57fcd954357c9dbeeaa8bdc01d06",
       "issue": 5430
     },
@@ -73,7 +67,6 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/package.json",
       "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "bc3f1d26bd0fcbcb8dc09023e8889575c0adbc80",
       "issue": 5430
     },
@@ -81,7 +74,6 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "27967b6f36e9bc2bc3f4ac79c1320b7152d93f83",
       "issue": "LEGACY_FIXME"
     },
@@ -109,7 +101,6 @@
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.windows.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "b4867752830f6953516c5898a7e2fc0dc796dcfa",
       "issue": "LEGACY_FIXME"
     },
@@ -125,7 +116,6 @@
       "type": "copy",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "525b7ac5ec31febba5f57c8faa7ccc9a6e0fa34c",
       "issue": 4578
     },
@@ -133,7 +123,6 @@
       "type": "patch",
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "93f4b6047b238d31c2c72c44f11cd689c6a4b071",
       "issue": "LEGACY_FIXME"
     },
@@ -145,7 +134,6 @@
       "type": "derived",
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.windows.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "218895e2a5f3d7614a2cb577da187800857850ea"
     },
     {
@@ -156,14 +144,12 @@
       "type": "derived",
       "file": "src/Libraries/Components/DatePickerAndroid/DatePickerAndroid.windows.js",
       "baseFile": "Libraries/Components/DatePickerAndroid/DatePickerAndroid.ios.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.windows.js",
       "baseFile": "Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.ios.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
@@ -194,14 +180,12 @@
       "type": "derived",
       "file": "src/Libraries/Components/MaskedView/MaskedViewIOS.windows.js",
       "baseFile": "Libraries/Components/MaskedView/MaskedViewIOS.android.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "0b409391c852a1001cee74a84414a13c4fe88f8b"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Picker/Picker.windows.js",
       "baseFile": "Libraries/Components/Picker/Picker.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "ebfef6691cf4634daa34c025327f837d292ef44f",
       "issue": 4611
     },
@@ -209,14 +193,12 @@
       "type": "derived",
       "file": "src/Libraries/Components/Picker/PickerAndroid.windows.js",
       "baseFile": "Libraries/Components/Picker/PickerAndroid.ios.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Components/Picker/PickerIOS.windows.js",
       "baseFile": "Libraries/Components/Picker/PickerIOS.android.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6"
     },
     {
@@ -227,7 +209,6 @@
       "type": "derived",
       "file": "src/Libraries/Components/Picker/PickerWindows.tsx",
       "baseFile": "Libraries/Components/Picker/PickerIOS.ios.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "1a94e2e99474b15141d1c67c1211ac1dc2c2a62d",
       "issue": 4611
     },
@@ -243,21 +224,18 @@
       "type": "derived",
       "file": "src/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.windows.js",
       "baseFile": "Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.ios.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Components/ProgressViewIOS/ProgressViewIOS.windows.js",
       "baseFile": "Libraries/Components/ProgressViewIOS/ProgressViewIOS.android.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "f0b35fdee6b1c9e7bfe860a9e0aefc00337ea7fd"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/RefreshControl/RefreshControl.windows.js",
       "baseFile": "Libraries/Components/RefreshControl/RefreshControl.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "0efdf9cc52f5411bbf296f92e30aa44f83668b45",
       "issue": "LEGACY_FIXME"
     },
@@ -265,7 +243,6 @@
       "type": "derived",
       "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.windows.js",
       "baseFile": "Libraries/Components/SafeAreaView/SafeAreaView.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "db15a0f43bd49e0be23b74b192fb28ee70fd3fee",
       "issue": "LEGACY_FIXME"
     },
@@ -273,7 +250,6 @@
       "type": "derived",
       "file": "src/Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.windows.js",
       "baseFile": "Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.android.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "37cea8b532ea4e4335120c6f8b2d3d3548e31b18",
       "issue": "LEGACY_FIXME"
     },
@@ -281,7 +257,6 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "05c8c1e9142210b472c9c1ce891314b786ecc50f",
       "issue": "LEGACY_FIXME"
     },
@@ -289,7 +264,6 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "e982deb23d7ad5312ab0c09508a6d58c152b5be7",
       "issue": "LEGACY_FIXME"
     },
@@ -297,14 +271,12 @@
       "type": "derived",
       "file": "src/Libraries/Components/ToastAndroid/ToastAndroid.windows.js",
       "baseFile": "Libraries/Components/ToastAndroid/ToastAndroid.ios.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "614b7e88c38f5820656c79d64239bfb74ca308c0"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "9b1b8d8b8d7a26c1e8d16617a4c9e7a686018912",
       "issue": "LEGACY_FIXME"
     },
@@ -312,7 +284,6 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "9a1867dd466facf4eda43cafe747b8b019713a95",
       "issue": "LEGACY_FIXME"
     },
@@ -320,7 +291,6 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "58698d349b3327660c71708f7128c2247caaef3f",
       "issue": "LEGACY_FIXME"
     },
@@ -328,7 +298,6 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.windows.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "8d5d480284b4cdaf7d8d86935967370d455b7b68",
       "issue": "LEGACY_FIXME"
     },
@@ -336,7 +305,6 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.windows.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "147459dc889f04f2405db051445833f791726895",
       "issue": 5843
     },
@@ -344,7 +312,6 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "2d01902a9edd76f728e9044e2ed8a35d44f34424",
       "issue": "LEGACY_FIXME"
     },
@@ -352,7 +319,6 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "2b12228aa1ab0e12844996a99ff5d38fbff689a1",
       "issue": "LEGACY_FIXME"
     },
@@ -368,7 +334,6 @@
       "type": "patch",
       "file": "src/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.windows.js",
       "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "c6d80f9ea60e5802d2e67ed50a78f2b6840d1162",
       "issue": "LEGACY_FIXME"
     },
@@ -376,7 +341,6 @@
       "type": "copy",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "9bd6a85eef7bb41373df9eb7dd9b21a986848cbd",
       "issue": 4590
     },
@@ -388,7 +352,6 @@
       "type": "derived",
       "file": "src/Libraries/Network/RCTNetworkingWinShared.js",
       "baseFile": "Libraries/Network/RCTNetworking.ios.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "8ffebf68a136054311f723682864c4c609ad0587",
       "issue": "LEGACY_FIXME"
     },
@@ -396,7 +359,6 @@
       "type": "patch",
       "file": "src/Libraries/NewAppScreen/components/DebugInstructions.windows.js",
       "baseFile": "Libraries/NewAppScreen/components/DebugInstructions.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "a9f4db370db2e34a8708abd57bc5a7ab5c44ccf1",
       "issue": "LEGACY_FIXME"
     },
@@ -404,7 +366,6 @@
       "type": "patch",
       "file": "src/Libraries/NewAppScreen/components/ReloadInstructions.windows.js",
       "baseFile": "Libraries/NewAppScreen/components/ReloadInstructions.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "39326801da6c9ce8c350aa8ba971be4a386499bc",
       "issue": "LEGACY_FIXME"
     },
@@ -412,7 +373,6 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "72a2fea2216d144cc985f243c6d27274f8f4edb6",
       "issue": 4379
     },
@@ -420,7 +380,6 @@
       "type": "derived",
       "file": "src/Libraries/Settings/Settings.windows.js",
       "baseFile": "Libraries/Settings/Settings.android.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "00604dd0ab624b3f5b80d460f48dbc3ac7ee905d",
       "issue": "LEGACY_FIXME"
     },
@@ -432,14 +391,12 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "bf4306bd49457c2b82ee8f85147aa458505a5150"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.windows.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "e8f8ce02645228b423fdda317e5d1d9e69b54e6d",
       "issue": "LEGACY_FIXME"
     },
@@ -447,7 +404,6 @@
       "type": "copy",
       "file": "src/Libraries/Utilities/BackHandler.windows.js",
       "baseFile": "Libraries/Utilities/BackHandler.android.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "69605da09902165f866377d7eda5897029ef4d62",
       "issue": 4629
     },
@@ -455,14 +411,12 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/NativePlatformConstantsWin.js",
       "baseFile": "Libraries/Utilities/NativePlatformConstantsIOS.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "71ec2fb1dbf35d65562538d2c63d099ec1392d00"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.windows.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "750d5a0afc192d9ec98c27d28402285c9e3155a0"
     },
     {
@@ -473,7 +427,6 @@
       "type": "patch",
       "file": "src/RNTester/js/components/RNTesterExampleList.windows.js",
       "baseFile": "RNTester/js/components/RNTesterExampleList.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "282bb1231e430fe2263a4cae29ac5d8254c0cab8",
       "issue": 5834
     },
@@ -485,7 +438,6 @@
       "type": "patch",
       "file": "src/RNTester/js/examples/ScrollView/ScrollViewExample.windows.js",
       "baseFile": "RNTester/js/examples/ScrollView/ScrollViewExample.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "e622893fe0a5ce9d48b10644cd29a38de72b6a26",
       "issue": "LEGACY_FIXME"
     },
@@ -493,7 +445,6 @@
       "type": "patch",
       "file": "src/RNTester/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "RNTester/js/examples/TextInput/TextInputExample.android.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "1755bffd6ae353838f1779007dc4a512b8dddcdc",
       "issue": 5688
     },
@@ -501,7 +452,6 @@
       "type": "patch",
       "file": "src/RNTester/js/examples/View/ViewExample.windows.js",
       "baseFile": "RNTester/js/examples/View/ViewExample.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "2425a6f8fb8b7c7633b5744811c75edf77f29c2f",
       "issue": "LEGACY_FIXME"
     },
@@ -509,7 +459,6 @@
       "type": "derived",
       "file": "src/RNTester/js/RNTesterApp.windows.js",
       "baseFile": "RNTester/js/RNTesterApp.ios.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "34d2517461704840a508ce1856bc3a364fb3fc7e",
       "issue": 4586
     },
@@ -517,7 +466,6 @@
       "type": "derived",
       "file": "src/RNTester/js/utils/RNTesterList.windows.js",
       "baseFile": "RNTester/js/utils/RNTesterList.android.js",
-      "baseVersion": "0.0.0-423155127",
       "baseHash": "0ac04af15d7ff9d34b3abe1a11110c24480fba4b",
       "issue": "LEGACY_FIXME"
     },
