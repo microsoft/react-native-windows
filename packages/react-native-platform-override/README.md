@@ -17,6 +17,7 @@ An example override manifest
   "excludePatterns": [
     "src/README.md"
   ],
+  "baseVersion": "0.0.0-10b4b9505",
   "overrides": [
     {
       "type": "derived",
@@ -33,6 +34,7 @@ An example override manifest
 |-------------------|----------|-----------------------------------------------------------------|----------|
 | `includePatterns` | Optional | A list of globs of files to enforce are listed in the manifest. | `["**"]` |
 | `excludePatterns` | Optional | Globs to be excluded from the above list.                       | `[]`     |
+| `baseVersion`     | Optional | The default react-native version of an override                 |          |
 | `overrides`       | Required | List of registered overrides, added by the tooling              |          |
 
 ## Override Types

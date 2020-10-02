@@ -373,6 +373,7 @@ test('Serialization Round-Trip', () => {
   const serializedManifest: Serialized.Manifest = {
     includePatterns: undefined,
     excludePatterns: undefined,
+    baseVersion: undefined,
     overrides: [
       {
         type: 'platform',

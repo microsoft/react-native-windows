@@ -47,6 +47,7 @@ const extensionsRegex = new RegExp(extensions.map(e => `\\.${e}`).join('|'));
   const manifest: Serialized.Manifest = {
     includePatterns: undefined,
     excludePatterns: undefined,
+    baseVersion: undefined,
     overrides: [],
   };
   const overrideFiles = await overrides.listFiles();
