@@ -47,7 +47,7 @@ const extensionsRegex = new RegExp(extensions.map(e => `\\.${e}`).join('|'));
   const manifest: Serialized.Manifest = {
     includePatterns: undefined,
     excludePatterns: undefined,
-    baseVersion: undefined,
+    baseVersion: version,
     overrides: [],
   };
   const overrideFiles = await overrides.listFiles();
@@ -57,10 +57,10 @@ const extensionsRegex = new RegExp(extensions.map(e => `\\.${e}`).join('|'));
     spinner.text = `Creating manifest (${++i}/${overrideFiles.length})`;
 
     const contents = (await overrides.readFile(file))!;
-    (await tryAddCopy(file, version, contents, reactSources, manifest)) ||
-      (await tryAddPatch(file, version, contents, reactSources, manifest)) ||
-      (await tryAddDerived(file, version, contents, reactSources, manifest)) ||
-      addUnknown(file, version, manifest);
+    (await tryAddCopy(file, contents, reactSources, manifest)) ||
+      (await tryAddPatch(file, contents, reactSources, manifest)) ||
+      (await tryAddDerived(file, contents, reactSources, manifest)) ||
+      addUnknown(file, manifest);
   }
 
   const ovrFile = path.join(directory, 'overrides.json');
@@ -71,7 +71,6 @@ const extensionsRegex = new RegExp(extensions.map(e => `\\.${e}`).join('|'));
 
 async function tryAddCopy(
   filename: string,
-  rnVersion: string,
   overrideContent: Buffer,
   reactSources: FileRepository.ReactFileRepository,
   manifest: Serialized.Manifest,
@@ -89,7 +88,7 @@ async function tryAddCopy(
     type: 'copy',
     file: filename,
     baseFile: filename,
-    baseVersion: rnVersion,
+    baseVersion: undefined,
     baseHash: hashContent(baseContent),
     issue: 0,
   });
@@ -99,7 +98,6 @@ async function tryAddCopy(
 
 async function tryAddPatch(
   filename: string,
-  rnVersion: string,
   overrideContent: Buffer,
   reactSources: FileRepository.ReactFileRepository,
   manifest: Serialized.Manifest,
@@ -117,12 +115,12 @@ async function tryAddPatch(
       type: 'patch',
       file: filename,
       baseFile: baseFile,
-      baseVersion: rnVersion,
+      baseVersion: undefined,
       baseHash: hashContent(baseContent),
       issue: 'LEGACY_FIXME',
     });
   } else {
-    addUnknown(filename, rnVersion, manifest);
+    addUnknown(filename, manifest);
   }
 
   return true;
@@ -130,7 +128,6 @@ async function tryAddPatch(
 
 async function tryAddDerived(
   filename: string,
-  rnVersion: string,
   overrideContent: Buffer,
   reactSources: FileRepository.ReactFileRepository,
   manifest: Serialized.Manifest,
@@ -169,7 +166,7 @@ async function tryAddDerived(
     type: 'derived',
     file: filename,
     baseFile: bestMatch.file,
-    baseVersion: rnVersion,
+    baseVersion: undefined,
     baseHash: hashContent(bestMatch.contents),
     issue: 'LEGACY_FIXME',
   });
@@ -177,16 +174,11 @@ async function tryAddDerived(
   return true;
 }
 
-function addUnknown(
-  filename: string,
-  rnVersion: string,
-  manifest: Serialized.Manifest,
-) {
+function addUnknown(filename: string, manifest: Serialized.Manifest) {
   (manifest.overrides as Array<any>).push({
     type: '???',
     file: filename,
     baseFile: '???',
-    baseVersion: rnVersion,
     baseHash: '???',
     issue: 'LEGACY_FIXME',
   });
