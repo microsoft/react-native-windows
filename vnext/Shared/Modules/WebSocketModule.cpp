@@ -227,8 +227,4 @@ shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id,
 
 #pragma endregion private members
 
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept {
-  return std::make_unique<WebSocketModule>();
-}
-
 } // namespace Microsoft::React

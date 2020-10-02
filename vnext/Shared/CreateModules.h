@@ -10,7 +10,7 @@
 namespace facebook {
 namespace react {
 
-class MessageQueueueThread;
+class MessageQueueThread;
 
 // This method is to create a unique_ptr of native timing module.
 // @param A MessageQueueThread on which this native module lives.
@@ -20,3 +20,9 @@ std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
 
 } // namespace react
 } // namespace facebook
+
+namespace Microsoft::React {
+
+std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept;
+
+}
