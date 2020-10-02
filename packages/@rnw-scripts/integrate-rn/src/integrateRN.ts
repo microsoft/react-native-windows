@@ -171,7 +171,7 @@ async function applyRnDependencyChanges(
   )) {
     if (
       newDevDeps[name] &&
-      newDevDeps[name] === oldRnJson.devDependencies[name]
+      newDevDeps[name] === (oldRnJson.devDependencies || {})[name]
     ) {
       newDevDeps[name] = version;
     }
