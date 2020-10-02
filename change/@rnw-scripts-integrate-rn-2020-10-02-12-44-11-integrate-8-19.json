@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Allow Missing react-native devDependencies",
+  "packageName": "@rnw-scripts/integrate-rn",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-02T19:44:07.724Z"
+}
