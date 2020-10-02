@@ -30,7 +30,7 @@ class SwitchShadowNode : public ShadowNodeBase {
   void UpdateTrackColor();
 
  private:
-  static void OnToggled(IReactInstance &instance, int64_t tag, bool newValue);
+  static void OnToggled(const Mso::React::IReactContext &context, int64_t tag, bool newValue);
 
   winrt::ToggleSwitch::Toggled_revoker m_toggleSwitchToggledRevoker{};
   winrt::ToggleSwitch::Loading_revoker m_toggleSwitchLoadingRevoker{};
@@ -44,12 +44,10 @@ void SwitchShadowNode::createView() {
   Super::createView();
 
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
-  auto wkinstance = GetViewManager()->GetReactInstance();
   m_toggleSwitchToggledRevoker = toggleSwitch.Toggled(winrt::auto_revoke, [=](auto &&, auto &&) {
     UpdateTrackColor();
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr)
-      OnToggled(*instance, m_tag, toggleSwitch.IsOn());
+    if (!m_updating)
+      OnToggled(GetViewManager()->GetReactContext(), m_tag, toggleSwitch.IsOn());
   });
 
   // properties can come down early before native XAML element added into tree
@@ -104,12 +102,12 @@ void SwitchShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
-/*static*/ void SwitchShadowNode::OnToggled(IReactInstance &instance, int64_t tag, bool newValue) {
+/*static*/ void SwitchShadowNode::OnToggled(const Mso::React::IReactContext &context, int64_t tag, bool newValue) {
   folly::dynamic eventData = folly::dynamic::object("target", tag)("value", newValue);
-  instance.DispatchEvent(tag, "topChange", std::move(eventData));
+  context.DispatchEvent(tag, "topChange", std::move(eventData));
 }
 
-SwitchViewManager::SwitchViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
+SwitchViewManager::SwitchViewManager(const Mso::React::IReactContext& context) : Super(context) {}
 
 const char *SwitchViewManager::GetName() const {
   return "RCTSwitch";

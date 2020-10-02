@@ -160,19 +160,14 @@ void TextInputShadowNode::createView() {
 }
 
 void TextInputShadowNode::dispatchTextInputChangeEvent(winrt::hstring newText) {
-  auto wkinstance = GetViewManager()->GetReactInstance();
-
-  if (auto instance = wkinstance.lock()) {
-    m_nativeEventCount++;
-    folly::dynamic eventData =
-        folly::dynamic::object("target", m_tag)("text", HstringToDynamic(newText))("eventCount", m_nativeEventCount);
-    instance->DispatchEvent(m_tag, "topTextInputChange", std::move(eventData));
-  }
+  m_nativeEventCount++;
+  folly::dynamic eventData =
+      folly::dynamic::object("target", m_tag)("text", HstringToDynamic(newText))("eventCount", m_nativeEventCount);
+  GetViewManager()->GetReactContext().DispatchEvent(m_tag, "topTextInputChange", std::move(eventData));
 }
 
 void TextInputShadowNode::registerEvents() {
   auto control = GetView().as<xaml::Controls::Control>();
-  auto wkinstance = GetViewManager()->GetReactInstance();
   auto tag = m_tag;
 
   // TextChanged is implemented as async event in Xaml. If Javascript is like
@@ -250,14 +245,12 @@ void TextInputShadowNode::registerEvents() {
     }
     HideCaretIfNeeded();
 
-    auto instance = wkinstance.lock();
     folly::dynamic eventData = folly::dynamic::object("target", tag);
-    if (!m_updating && instance != nullptr)
-      instance->DispatchEvent(tag, "topTextInputFocus", std::move(eventData));
+    if (!m_updating)
+      GetViewManager()->GetReactContext().DispatchEvent(tag, "topTextInputFocus", std::move(eventData));
   });
 
   m_controlLostFocusRevoker = control.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
     folly::dynamic eventDataBlur = folly::dynamic::object("target", tag);
     folly::dynamic eventDataEndEditing = {};
     if (m_isTextBox) {
@@ -267,16 +260,15 @@ void TextInputShadowNode::registerEvents() {
       eventDataEndEditing = folly::dynamic::object("target", tag)(
           "text", HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
     }
-    if (!m_updating && instance != nullptr) {
-      instance->DispatchEvent(tag, "topTextInputBlur", std::move(eventDataBlur));
-      instance->DispatchEvent(tag, "topTextInputEndEditing", std::move(eventDataEndEditing));
+    if (!m_updating) {
+      GetViewManager()->GetReactContext().DispatchEvent(tag, "topTextInputBlur", std::move(eventDataBlur));
+      GetViewManager()->GetReactContext().DispatchEvent(tag, "topTextInputEndEditing", std::move(eventDataEndEditing));
     }
   });
 
   m_controlKeyDownRevoker =
       control.KeyDown(winrt::auto_revoke, [=](auto &&, xaml::Input::KeyRoutedEventArgs const &args) {
         if (args.Key() == winrt::Windows::System::VirtualKey::Enter && !args.Handled()) {
-          if (auto instance = wkinstance.lock()) {
             folly::dynamic eventDataSubmitEditing = {};
             if (m_isTextBox) {
               eventDataSubmitEditing = folly::dynamic::object("target", tag)(
@@ -285,20 +277,19 @@ void TextInputShadowNode::registerEvents() {
               eventDataSubmitEditing = folly::dynamic::object("target", tag)(
                   "text", HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
             }
-            instance->DispatchEvent(tag, "topTextInputSubmitEditing", std::move(eventDataSubmitEditing));
-          }
+            GetViewManager()->GetReactContext().DispatchEvent(
+                tag, "topTextInputSubmitEditing", std::move(eventDataSubmitEditing));
         }
       });
 
   if (m_isTextBox) {
     auto textBox = control.as<xaml::Controls::TextBox>();
     m_textBoxSelectionChangedRevoker = textBox.SelectionChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
-      auto instance = wkinstance.lock();
       folly::dynamic selectionData = folly::dynamic::object("start", textBox.SelectionStart())(
           "end", textBox.SelectionStart() + textBox.SelectionLength());
       folly::dynamic eventData = folly::dynamic::object("target", tag)("selection", std::move(selectionData));
-      if (!m_updating && instance != nullptr)
-        instance->DispatchEvent(tag, "topTextInputSelectionChange", std::move(eventData));
+      if (!m_updating)
+        GetViewManager()->GetReactContext().DispatchEvent(tag, "topTextInputSelectionChange", std::move(eventData));
     });
   }
 
@@ -306,12 +297,12 @@ void TextInputShadowNode::registerEvents() {
       control.SizeChanged(winrt::auto_revoke, [=](auto &&, winrt::SizeChangedEventArgs const &args) {
         if (m_isTextBox) {
           if (control.as<xaml::Controls::TextBox>().TextWrapping() == xaml::TextWrapping::Wrap) {
-            auto instance = wkinstance.lock();
             folly::dynamic contentSizeData =
                 folly::dynamic::object("width", args.NewSize().Width)("height", args.NewSize().Height);
             folly::dynamic eventData = folly::dynamic::object("target", tag)("contentSize", std::move(contentSizeData));
-            if (!m_updating && instance != nullptr)
-              instance->DispatchEvent(tag, "topTextInputContentSizeChange", std::move(eventData));
+            if (!m_updating)
+              GetViewManager()->GetReactContext().DispatchEvent(
+                  tag, "topTextInputContentSizeChange", std::move(eventData));
           }
         }
       });
@@ -321,12 +312,11 @@ void TextInputShadowNode::registerEvents() {
     if (textBoxView) {
       m_scrollViewerViewChangingRevoker = textBoxView.ViewChanging(
           winrt::auto_revoke, [=](auto &&, xaml::Controls::ScrollViewerViewChangingEventArgs const &args) {
-            auto instance = wkinstance.lock();
-            if (!m_updating && instance != nullptr) {
+            if (!m_updating) {
               folly::dynamic offsetData = folly::dynamic::object("x", args.FinalView().HorizontalOffset())(
                   "y", args.FinalView().VerticalOffset());
               folly::dynamic eventData = folly::dynamic::object("target", tag)("contentOffset", std::move(offsetData));
-              instance->DispatchEvent(tag, "topTextInputOnScroll", std::move(eventData));
+              GetViewManager()->GetReactContext().DispatchEvent(tag, "topTextInputOnScroll", std::move(eventData));
             }
           });
     }
@@ -336,7 +326,6 @@ void TextInputShadowNode::registerEvents() {
   if (control.try_as<xaml::IUIElement7>()) {
     m_controlCharacterReceivedRevoker = control.CharacterReceived(
         winrt::auto_revoke, [=](auto &&, xaml::Input::CharacterReceivedRoutedEventArgs const &args) {
-          auto instance = wkinstance.lock();
           std::string key;
           wchar_t s[2] = L" ";
           s[0] = args.Character();
@@ -348,9 +337,9 @@ void TextInputShadowNode::registerEvents() {
             key = "Backspace";
           }
 
-          if (!m_updating && instance != nullptr) {
+          if (!m_updating) {
             folly::dynamic eventData = folly::dynamic::object("target", tag)("key", folly::dynamic(key));
-            instance->DispatchEvent(tag, "topTextInputKeyPress", std::move(eventData));
+            GetViewManager()->GetReactContext().DispatchEvent(tag, "topTextInputKeyPress", std::move(eventData));
           }
         });
   }
@@ -624,12 +613,12 @@ void TextInputShadowNode::SetSelection(int64_t start, int64_t end) {
 
 void TextInputShadowNode::dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) {
   if (commandId == "focus") {
-    if (auto reactInstance = GetViewManager()->GetReactInstance().lock()) {
-      reactInstance->NativeUIManager()->focus(m_tag);
+    if (auto uiManager = GetViewManager()->GetReactContext().NativeUIManager()) {
+      uiManager->focus(m_tag);
     }
   } else if (commandId == "blur") {
-    if (auto reactInstance = GetViewManager()->GetReactInstance().lock()) {
-      reactInstance->NativeUIManager()->blur(m_tag);
+    if (auto uiManager = GetViewManager()->GetReactContext().NativeUIManager()) {
+      uiManager->blur(m_tag);
     }
   } else if (commandId == "setTextAndSelection") {
     m_mostRecentEventCount = static_cast<uint32_t>(commandArgs[0].asInt());
@@ -640,8 +629,8 @@ void TextInputShadowNode::dispatchCommand(const std::string &commandId, const fo
   }
 }
 
-TextInputViewManager::TextInputViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+TextInputViewManager::TextInputViewManager(const Mso::React::IReactContext& context)
+    : Super(context) {}
 
 const char *TextInputViewManager::GetName() const {
   return "RCTTextInput";

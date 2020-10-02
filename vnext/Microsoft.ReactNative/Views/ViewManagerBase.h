@@ -8,6 +8,7 @@
 #include <XamlView.h>
 #include <folly/dynamic.h>
 #include <yoga/yoga.h>
+#include <React.h>
 
 namespace facebook {
 namespace react {
@@ -17,6 +18,7 @@ struct ShadowNode;
 
 namespace react::uwp {
 
+class ExpressionAnimationStore;
 struct IReactInstance;
 struct ShadowNodeBase;
 
@@ -38,7 +40,7 @@ REACTWINDOWS_EXPORT YGSize DefaultYogaSelfMeasureFunc(
 #pragma warning(disable : 4251) // member is not DLL exported
 class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager {
  public:
-  ViewManagerBase(const std::shared_ptr<IReactInstance> &reactInstance);
+  ViewManagerBase(const Mso::React::IReactContext& context);
   virtual ~ViewManagerBase() {}
 
   virtual XamlView CreateView(int64_t tag);
@@ -76,9 +78,11 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
   virtual bool RequiresYogaNode() const;
   bool IsNativeControlWithSelfLayout() const;
 
-  std::weak_ptr<IReactInstance> GetReactInstance() const {
-    return m_wkReactInstance;
+  const Mso::React::IReactContext& GetReactContext() const {
+    return *m_context;
   }
+  std::shared_ptr<ExpressionAnimationStore> GetExpressionAnimationStore() noexcept;
+  void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept;
 
   virtual void TransferProperties(const XamlView &oldView, const XamlView &newView);
 
@@ -94,7 +98,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
   virtual void OnPropertiesUpdated(ShadowNodeBase *node) {}
 
  protected:
-  std::weak_ptr<IReactInstance> m_wkReactInstance;
+  Mso::CntPtr<const Mso::React::IReactContext> m_context;
 };
 #pragma warning(pop)
 

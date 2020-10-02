@@ -6,13 +6,14 @@
 #include <IReactInstance.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <winrt/Windows.UI.ViewManagement.h>
+#include <React.h>
 
 namespace react::uwp {
 
 class AppTheme {
  public:
   AppTheme(
-      const std::shared_ptr<IReactInstance> &reactInstance,
+      const Mso::React::IReactContext& context,
       const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread);
 
   bool getIsHighContrast();
@@ -24,7 +25,7 @@ class AppTheme {
 
   void fireEvent(std::string const &eventName, folly::dynamic &&eventData);
 
-  std::weak_ptr<IReactInstance> m_wkReactInstance;
+  Mso::CntPtr<const Mso::React::IReactContext> m_context;
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
   bool m_isHighContrast{false};
   folly::dynamic m_highContrastColors;

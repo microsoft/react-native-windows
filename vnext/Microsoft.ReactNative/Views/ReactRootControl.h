@@ -32,7 +32,7 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   ~ReactRootControl() noexcept;
 
  public: // IXamlRootView
-  std::shared_ptr<IReactInstance> GetReactInstance() const noexcept override;
+  Mso::React::IReactContext* GetReactContext() const noexcept override;
   XamlView GetXamlView() const noexcept override;
   void SetJSComponentName(std::string &&mainComponentName) noexcept override;
   void SetInitialProps(folly::dynamic &&initialProps) noexcept override;
@@ -68,9 +68,9 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   void EnsureFocusSafeHarbor() noexcept;
   void UpdateRootViewInternal() noexcept;
 
-  void ShowInstanceLoading(Mso::React::IReactInstance &reactInstance) noexcept;
-  void ShowInstanceWaiting(Mso::React::IReactInstance &reactInstance) noexcept;
-  void ShowInstanceLoaded(Mso::React::IReactInstance &reactInstance) noexcept;
+  void ShowInstanceLoading() noexcept;
+  void ShowInstanceWaiting() noexcept;
+  void ShowInstanceLoaded() noexcept;
   void ShowInstanceError() noexcept;
 
   void AttachBackHandlers(XamlView const &rootView) noexcept;
@@ -84,14 +84,12 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   std::shared_ptr<SIPEventHandler> m_SIPEventHandler;
   std::shared_ptr<PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
 
-  //  std::shared_ptr<IReactInstance> m_reactInstance;
-
   Mso::DispatchQueue m_uiQueue;
   Mso::CntPtr<Mso::React::IReactViewHost> m_reactViewHost;
   Mso::WeakPtr<Mso::React::IReactInstance> m_weakReactInstance;
+  Mso::CntPtr<Mso::React::IReactContext> m_context;
   std::unique_ptr<Mso::React::ReactOptions> m_reactOptions;
   std::unique_ptr<Mso::React::ReactViewOptions> m_reactViewOptions;
-  std::weak_ptr<facebook::react::InstanceWrapper> m_fbReactInstance;
 
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};

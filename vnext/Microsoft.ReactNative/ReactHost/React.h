@@ -43,6 +43,12 @@ enum class LogLevel : int32_t {
   Fatal = 4,
 };
 
+enum class JSIEngine : int32_t {
+  Chakra = 0, // Use the JSIExecutorFactory with ChakraRuntime
+  Hermes = 1, // Use the JSIExecutorFactory with Hermes
+  V8 = 2, // Use the JSIExecutorFactory with V8
+};
+
 using OnErrorCallback = Mso::Functor<void(const Mso::ErrorCode &)>;
 using OnLoggingCallback = Mso::Functor<void(LogLevel logLevel, const char *message)>;
 using OnReactInstanceCreatedCallback = Mso::Functor<void(Mso::CntPtr<IReactContext> &&)>;
@@ -70,14 +76,21 @@ struct IReactInstance : IUnknown {
   virtual const ReactOptions &Options() const noexcept = 0;
 
   virtual ReactInstanceState State() const noexcept = 0;
+
+  virtual Mso::React::IReactContext& GetReactContext() const noexcept = 0;
+
+  virtual void AttachMeasuredRootView(
+      facebook::react::IReactRootView *rootView,
+      folly::dynamic &&initialProps) noexcept = 0;
+  virtual void DetachRootView(facebook::react::IReactRootView *rootView) noexcept = 0;
 };
 
 MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
 struct IReactContext : IUnknown {
-  virtual winrt::Microsoft::ReactNative::IReactNotificationService Notifications() noexcept = 0;
-  virtual winrt::Microsoft::ReactNative::IReactPropertyBag Properties() noexcept = 0;
-  virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept = 0;
-  virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept = 0;
+  virtual winrt::Microsoft::ReactNative::IReactNotificationService Notifications() const noexcept = 0;
+  virtual winrt::Microsoft::ReactNative::IReactPropertyBag Properties() const noexcept = 0;
+  virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) const noexcept = 0;
+  virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept = 0;
 #ifndef CORE_ABI
   virtual ReactInstanceState State() const noexcept = 0;
   virtual bool IsLoaded() const noexcept = 0;
@@ -93,6 +106,7 @@ struct IReactContext : IUnknown {
   virtual std::string SourceBundleHost() const noexcept = 0;
   virtual uint16_t SourceBundlePort() const noexcept = 0;
   virtual std::string JavaScriptBundleFile() const noexcept = 0;
+  virtual bool UseDeveloperSupport() const noexcept = 0;
 
 #endif
 };
@@ -143,8 +157,7 @@ struct NativeModuleProvider2 {
 
 struct ViewManagerProvider2 {
   virtual std::vector<react::uwp::NativeViewManager> GetViewManagers(
-      Mso::CntPtr<IReactContext> const &reactContext,
-      std::shared_ptr<react::uwp::IReactInstance> const &instance) = 0;
+      Mso::CntPtr<IReactContext> const &reactContext) = 0;
 };
 
 //! A simple struct that describes the basic properties/needs of an SDX. Whenever a new SDX is
@@ -217,7 +230,7 @@ struct ReactOptions {
   std::string ByteCodeFileUri;
   bool EnableByteCodeCaching{true};
   bool UseJsi{true};
-  react::uwp::JSIEngine JsiEngine{react::uwp::JSIEngine::Chakra};
+  JSIEngine JsiEngine{JSIEngine::Chakra};
 
   //! Enable function nativePerformanceNow.
   //! Method nativePerformanceNow() returns high resolution time info.
@@ -352,7 +365,7 @@ MSO_GUID(IReactViewInstance, "29e04f14-9fc9-4dd7-a543-e59db0d57bd2")
 struct IReactViewInstance : IUnknown {
   //! Initialize ReactRootView with the reactInstance and view-specific settings.
   virtual Mso::Future<void> InitRootView(
-      Mso::CntPtr<IReactInstance> &&reactInstance,
+      Mso::CntPtr<Mso::React::IReactInstance> &&reactInstance,
       ReactViewOptions &&viewOptions) noexcept = 0;
 
   //! Update ReactRootView with changes in ReactInstance.

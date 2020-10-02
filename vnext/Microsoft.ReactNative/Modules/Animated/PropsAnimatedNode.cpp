@@ -15,9 +15,9 @@ namespace react::uwp {
 PropsAnimatedNode::PropsAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
-    const std::weak_ptr<IReactInstance> &instance,
+    const Mso::CntPtr<Mso::React::IReactContext> &context,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
-    : AnimatedNode(tag, manager), m_instance(instance) {
+    : AnimatedNode(tag, manager), m_context(context) {
   for (const auto &entry : config.find("props").dereference().second.items()) {
     m_propMapping.insert({entry.first.getString(), static_cast<int64_t>(entry.second.asDouble())});
   }
@@ -145,11 +145,9 @@ void PropsAnimatedNode::StartAnimations() {
         uiElement.StartAnimation(m_centerPointAnimation);
       }
     } else {
-      if (const auto instance = m_instance.lock()) {
         if (const auto manager = m_manager.lock()) {
-          manager->AddDelayedPropsNode(Tag(), instance);
+          manager->AddDelayedPropsNode(Tag(), m_context);
         }
-      }
     }
   }
 }
@@ -257,8 +255,8 @@ void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeTyp
 }
 
 ShadowNodeBase *PropsAnimatedNode::GetShadowNodeBase() {
-  if (const auto instance = m_instance.lock()) {
-    if (const auto nativeUIManagerHost = static_cast<NativeUIManager *>(instance->NativeUIManager())->getHost()) {
+  if (const auto uiManager = m_context->NativeUIManager()) {
+    if (const auto nativeUIManagerHost = static_cast<NativeUIManager *>(uiManager)->getHost()) {
       return static_cast<ShadowNodeBase *>(nativeUIManagerHost->FindShadowNodeForTag(m_connectedViewTag));
     }
   }

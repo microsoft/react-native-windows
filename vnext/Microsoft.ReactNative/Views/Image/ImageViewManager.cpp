@@ -95,7 +95,7 @@ class ImageShadowNode : public ShadowNodeBase {
   winrt::event_token m_onLoadEndToken;
 };
 
-ImageViewManager::ImageViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
+ImageViewManager::ImageViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *ImageViewManager::GetName() const {
   return "RCTImageView";
@@ -148,25 +148,17 @@ bool ImageViewManager::UpdateProperty(
 }
 
 void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, ReactImageSource &source) {
-  auto reactInstance{m_wkReactInstance.lock()};
-  if (reactInstance == nullptr)
-    return;
-
   int64_t tag = grid.Tag().as<winrt::IPropertyValue>().GetInt64();
   folly::dynamic imageSource =
       folly::dynamic::object()("uri", source.uri)("width", source.width)("height", source.height);
 
   folly::dynamic eventData = folly::dynamic::object()("target", tag)("source", imageSource);
-  reactInstance->DispatchEvent(tag, eventName, std::move(eventData));
+  GetReactContext().DispatchEvent(tag, eventName, std::move(eventData));
 }
 
 void ImageViewManager::setSource(winrt::Grid grid, const folly::dynamic &data) {
-  auto instance{m_wkReactInstance.lock()};
-  if (instance == nullptr)
-    return;
-
   auto sources{json_type_traits<std::vector<ReactImageSource>>::parseJson(data)};
-  sources[0].bundleRootPath = instance->BundleRootPath();
+  sources[0].bundleRootPath = GetReactContext().BundleRootPath();
 
   if (sources[0].packagerAsset && sources[0].uri.find("file://") == 0) {
     sources[0].uri.replace(0, 7, sources[0].bundleRootPath);

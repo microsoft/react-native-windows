@@ -11,7 +11,7 @@ class PickerViewManager : public ControlViewManager {
   using Super = ControlViewManager;
 
  public:
-  PickerViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+  PickerViewManager(const Mso::React::IReactContext& context);
 
   const char *GetName() const override;
   folly::dynamic GetNativeProps() const override;

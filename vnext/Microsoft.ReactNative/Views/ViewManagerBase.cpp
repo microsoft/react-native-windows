@@ -15,6 +15,8 @@
 #include <IXamlRootView.h>
 #include <TestHook.h>
 #include <Views/ShadowNodeBase.h>
+#include <ReactPropertyBag.h>
+#include <Views/ExpressionAnimationStore.h>
 
 namespace winrt {
 using namespace xaml;
@@ -76,8 +78,8 @@ YGSize DefaultYogaSelfMeasureFunc(
   return desiredSize;
 }
 
-ViewManagerBase::ViewManagerBase(const std::shared_ptr<IReactInstance> &reactInstance)
-    : m_wkReactInstance(reactInstance) {}
+ViewManagerBase::ViewManagerBase(const Mso::React::IReactContext& context)
+    : m_context(&context) {}
 
 folly::dynamic ViewManagerBase::GetExportedViewConstants() const {
   return folly::dynamic::object();
@@ -183,10 +185,6 @@ XamlView ViewManagerBase::CreateView(int64_t tag) {
   }
 #endif
 
-  auto instance = m_wkReactInstance.lock();
-  if (instance != nullptr)
-    instance->CallXamlViewCreatedTestHook(view);
-
   return view;
 }
 
@@ -214,9 +212,8 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly
   //  the ancestors which
   //  will include the containing Text element. And that's what matters.
   int64_t tag = GetTag(nodeToUpdate->GetView());
-  auto instance = m_wkReactInstance.lock();
-  if (instance != nullptr && instance->IsLoaded())
-    static_cast<NativeUIManager *>(instance->NativeUIManager())->DirtyYogaNode(tag);
+  if (auto uiManager = static_cast<NativeUIManager *>(GetReactContext().NativeUIManager()))
+    uiManager->DirtyYogaNode(tag);
 
   for (const auto &pair : reactDiffMap.items()) {
     const std::string &propertyName = pair.first.getString();
@@ -252,6 +249,22 @@ void ViewManagerBase::DispatchCommand(
     const std::string & /*commandId*/,
     const folly::dynamic & /*commandArgs*/) {
   assert(false); // View did not handle its command
+}
+
+
+static const winrt::Microsoft::ReactNative::ReactPropertyId<
+    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<ExpressionAnimationStore>>>
+    &ExpressionAnimationStorePropertyId() noexcept {
+  static const winrt::Microsoft::ReactNative::ReactPropertyId<
+      winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<ExpressionAnimationStore>>>
+      prop{
+      L"ReactNative.ViewManagerBase", L"ExpressionAnimationStore"};
+  return prop;
+}
+
+std::shared_ptr<ExpressionAnimationStore> ViewManagerBase::GetExpressionAnimationStore() noexcept {
+  return winrt::Microsoft::ReactNative::ReactPropertyBag(GetReactContext().Properties())
+      .GetOrCreate(ExpressionAnimationStorePropertyId(), []() { return std::make_shared<ExpressionAnimationStore>(); }).Value();
 }
 
 void ViewManagerBase::NotifyUnimplementedProperty(
@@ -299,9 +312,7 @@ void ViewManagerBase::SetLayoutProps(
 
     folly::dynamic eventData = folly::dynamic::object("target", tag)("layout", std::move(layout));
 
-    auto instance = m_wkReactInstance.lock();
-    if (instance != nullptr)
-      instance->DispatchEvent(tag, "topLayout", std::move(eventData));
+    m_context->DispatchEvent(tag, "topLayout", std::move(eventData));
   }
 }
 
@@ -316,4 +327,10 @@ bool ViewManagerBase::RequiresYogaNode() const {
 bool ViewManagerBase::IsNativeControlWithSelfLayout() const {
   return GetYogaCustomMeasureFunc() != nullptr;
 }
+
+void ViewManagerBase::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept {
+  folly::dynamic params = folly::dynamic::array(viewTag, std::move(eventName), std::move(eventData));
+  m_context->CallJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
+}
+
 } // namespace react::uwp

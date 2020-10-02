@@ -40,9 +40,6 @@
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
-    <ClCompile Include="ReactHost\UwpReactInstanceProxy.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="TestHook.cpp" />
@@ -372,9 +369,6 @@
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\ReactNativeHeaders.h">
-      <Filter>ReactHost</Filter>
-    </ClInclude>
-    <ClInclude Include="ReactHost\UwpReactInstanceProxy.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactSupport.h" />

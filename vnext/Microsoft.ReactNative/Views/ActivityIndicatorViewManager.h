@@ -11,7 +11,7 @@ class ActivityIndicatorViewManager : public ControlViewManager {
   using Super = ControlViewManager;
 
  public:
-  ActivityIndicatorViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+  ActivityIndicatorViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
   folly::dynamic GetNativeProps() const override;

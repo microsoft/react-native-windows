@@ -135,7 +135,7 @@ void IconShadowNode::updateProperties(const folly::dynamic &&props) {
 //
 // IconViewManager
 //
-IconViewManager::IconViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
+IconViewManager::IconViewManager(const Mso::React::IReactContext& context) : Super(context) {}
 
 const char *IconViewManager::GetName() const {
   return "PLYIcon";

@@ -8,6 +8,7 @@
 #include <set>
 #include "CppWinRTIncludes.h"
 #include "XamlView.h"
+#include <React.h>
 
 namespace winrt {
 using namespace Windows::UI::Core;
@@ -80,14 +81,14 @@ class KeyboardEventHandler : public KeyboardEventBaseHandler {
 
 class PreviewKeyboardEventHandlerOnRoot : public PreviewKeyboardEventHandler {
  public:
-  PreviewKeyboardEventHandlerOnRoot(const std::weak_ptr<IReactInstance> &reactInstance);
+  PreviewKeyboardEventHandlerOnRoot(const Mso::React::IReactContext & context);
 
  private:
   void OnPreKeyDown(winrt::IInspectable const &sender, xaml::Input::KeyRoutedEventArgs const &args);
   void OnPreKeyUp(winrt::IInspectable const &sender, xaml::Input::KeyRoutedEventArgs const &args);
 
   void DispatchEventToJs(std::string &&name, xaml::Input::KeyRoutedEventArgs const &args);
-  std::weak_ptr<IReactInstance> m_wkReactInstance;
+  Mso::CntPtr<const Mso::React::IReactContext> m_context;
 };
 
 class HandledKeyboardEventHandler {

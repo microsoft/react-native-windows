@@ -195,8 +195,7 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic &&reactDiffMap)
       if (propertyValue.isString()) {
         m_dismissKeyboardOnDrag = (propertyValue.getString() == "on-drag");
         if (m_dismissKeyboardOnDrag) {
-          auto wkinstance = GetViewManager()->GetReactInstance();
-          m_SIPEventHandler = std::make_unique<SIPEventHandler>(wkinstance);
+          m_SIPEventHandler = std::make_unique<SIPEventHandler>(GetViewManager()->GetReactContext());
           m_SIPEventHandler->AttachView(GetView(), false /*fireKeyboardEvents*/);
         }
       }
@@ -310,10 +309,6 @@ void ScrollViewShadowNode::EmitScrollEvent(
     double x,
     double y,
     double zoom) {
-  const auto instance = GetViewManager()->GetReactInstance().lock();
-  if (instance == nullptr)
-    return;
-
   const auto scrollViewerNotNull = scrollViewer;
 
   folly::dynamic offset = folly::dynamic::object("x", x)("y", y);
@@ -331,7 +326,7 @@ void ScrollViewShadowNode::EmitScrollEvent(
           "contentInset", contentInset)("contentSize", contentSize)("layoutMeasurement", layoutSize)("zoomScale", zoom);
 
   folly::dynamic params = folly::dynamic::array(tag, eventName, eventJson);
-  instance->CallJsFunction("RCTEventEmitter", "receiveEvent", std::move(params));
+  GetViewManager()->GetReactContext().CallJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
 }
 
 template <typename T>
@@ -400,7 +395,7 @@ void ScrollViewShadowNode::UpdateZoomMode(const winrt::ScrollViewer &scrollViewe
                                                                    : winrt::ZoomMode::Disabled);
 }
 
-ScrollViewManager::ScrollViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
+ScrollViewManager::ScrollViewManager(const Mso::React::IReactContext& context) : Super(context) {}
 
 const char *ScrollViewManager::GetName() const {
   return "RCTScrollView";

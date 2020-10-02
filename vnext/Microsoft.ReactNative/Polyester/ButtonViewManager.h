@@ -16,7 +16,7 @@ class ButtonViewManager : public ContentControlViewManager {
   using Super = ContentControlViewManager;
 
  public:
-  ButtonViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+  ButtonViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
   folly::dynamic GetNativeProps() const override;

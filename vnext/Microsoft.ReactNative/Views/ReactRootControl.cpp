@@ -60,13 +60,8 @@ ReactRootControl::~ReactRootControl() noexcept {
   }
 }
 
-std::shared_ptr<IReactInstance> ReactRootControl::GetReactInstance() const noexcept {
-  if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
-    auto &legacyInstance = query_cast<Mso::React::ILegacyReactInstance &>(*reactInstance);
-    return legacyInstance.UwpReactInstance();
-  }
-
-  return {};
+Mso::React::IReactContext* ReactRootControl::GetReactContext() const noexcept {
+  return m_context.Get();
 }
 
 XamlView ReactRootControl::GetXamlView() const noexcept {
@@ -152,21 +147,19 @@ void ReactRootControl::InitRootView(
   }
 
   m_weakReactInstance = Mso::WeakPtr{reactInstance};
-  auto &legacyReactInstance = query_cast<Mso::React::ILegacyReactInstance &>(*reactInstance);
-  m_reactOptions = std::make_unique<Mso::React::ReactOptions>(reactInstance->Options());
+  m_context = &reactInstance->GetReactContext();
   m_reactViewOptions = std::make_unique<Mso::React::ReactViewOptions>(std::move(reactViewOptions));
 
-  auto uwpReactInstance = legacyReactInstance.UwpReactInstance();
   if (!m_touchEventHandler) {
-    m_touchEventHandler = std::make_shared<TouchEventHandler>(uwpReactInstance);
+    m_touchEventHandler = std::make_shared<TouchEventHandler>(*m_context);
   }
 
   if (!m_SIPEventHandler) {
-    m_SIPEventHandler = std::make_shared<SIPEventHandler>(uwpReactInstance);
+    m_SIPEventHandler = std::make_shared<SIPEventHandler>(*m_context);
   }
 
   if (!m_previewKeyboardEventHandlerOnRoot) {
-    m_previewKeyboardEventHandlerOnRoot = std::make_shared<PreviewKeyboardEventHandlerOnRoot>(uwpReactInstance);
+    m_previewKeyboardEventHandlerOnRoot = std::make_shared<PreviewKeyboardEventHandlerOnRoot>(*m_context);
   }
 
   auto xamlRootView = m_weakXamlRootView.get();
@@ -190,13 +183,13 @@ void ReactRootControl::UpdateRootViewInternal() noexcept {
   if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
     switch (reactInstance->State()) {
       case Mso::React::ReactInstanceState::Loading:
-        ShowInstanceLoading(*reactInstance);
+        ShowInstanceLoading();
         break;
       case Mso::React::ReactInstanceState::WaitingForDebugger:
-        ShowInstanceWaiting(*reactInstance);
+        ShowInstanceWaiting();
         break;
       case Mso::React::ReactInstanceState::Loaded:
-        ShowInstanceLoaded(*reactInstance);
+        ShowInstanceLoaded();
         break;
       case Mso::React::ReactInstanceState::HasError:
         ShowInstanceError();
@@ -212,8 +205,8 @@ void ReactRootControl::UninitRootView() noexcept {
     return;
   }
 
-  if (auto fbReactInstance = m_fbReactInstance.lock()) {
-    fbReactInstance->DetachRootView(this);
+  if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
+    reactInstance->DetachRootView(this);
   }
 
   if (m_touchEventHandler != nullptr) {
@@ -231,21 +224,23 @@ void ReactRootControl::UninitRootView() noexcept {
   m_SIPEventHandler.reset();
 
   m_reactOptions = nullptr;
+  m_context.Clear();
   m_reactViewOptions = nullptr;
   m_weakReactInstance = nullptr;
 
   m_isInitialized = false;
 }
 
-void ReactRootControl::ShowInstanceLoaded(Mso::React::IReactInstance &reactInstance) noexcept {
+void ReactRootControl::ShowInstanceLoaded() noexcept {
   if (XamlView xamlRootView = m_weakXamlRootView.get()) {
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
 
     // Remove existing children from root view (from the hosted app)
     xamlRootGrid.Children().Clear();
 
-    auto &legacyInstance = query_cast<Mso::React::ILegacyReactInstance &>(reactInstance);
-    legacyInstance.AttachMeasuredRootView(this, Mso::Copy(m_reactViewOptions->InitialProps));
+    if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
+      reactInstance->AttachMeasuredRootView(this, Mso::Copy(m_reactViewOptions->InitialProps));
+    }
     m_isJSViewAttached = true;
   }
 }
@@ -259,7 +254,7 @@ void ReactRootControl::ShowInstanceError() noexcept {
   }
 }
 
-void ReactRootControl::ShowInstanceWaiting(Mso::React::IReactInstance & /*reactInstance*/) noexcept {
+void ReactRootControl::ShowInstanceWaiting() noexcept {
   if (XamlView xamlRootView = m_weakXamlRootView.get()) {
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
 
@@ -292,8 +287,8 @@ void ReactRootControl::ShowInstanceWaiting(Mso::React::IReactInstance & /*reactI
   }
 }
 
-void ReactRootControl::ShowInstanceLoading(Mso::React::IReactInstance & /*reactInstance*/) noexcept {
-  if (!m_reactOptions->UseDeveloperSupport())
+void ReactRootControl::ShowInstanceLoading() noexcept {
+  if (!m_context->UseDeveloperSupport())
     return;
 
   if (XamlView xamlRootView = m_weakXamlRootView.get()) {
@@ -433,13 +428,11 @@ void ReactRootControl::RemoveBackHandlers() noexcept {
 }
 
 bool ReactRootControl::OnBackRequested() noexcept {
-  if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
-    query_cast<Mso::React::ILegacyReactInstance &>(*reactInstance)
-        .CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
-    return true;
-  }
+  if (m_context->State() != Mso::React::ReactInstanceState::Loaded)
+    return false;
 
-  return false;
+  m_context->CallJSFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
+  return true;
 }
 
 Mso::React::IReactViewHost *ReactRootControl::ReactViewHost() noexcept {

@@ -13,7 +13,7 @@ class RawTextViewManager : public ViewManagerBase {
   using Super = ViewManagerBase;
 
  public:
-  RawTextViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+  RawTextViewManager(const Mso::React::IReactContext& context);
 
   const char *GetName() const override;
 
@@ -35,7 +35,7 @@ class RawTextViewManager : public ViewManagerBase {
   XamlView CreateViewCore(int64_t tag) override;
 
  private:
-  void NotifyAncestorsTextChanged(IReactInstance *instance, ShadowNodeBase *nodeToUpdate);
+  void NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate);
 };
 
 } // namespace react::uwp

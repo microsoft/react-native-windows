@@ -7,6 +7,7 @@
 
 #include <Utils/ValueUtils.h>
 #include <XamlUtils.h>
+#include <cxxreact/CxxModule.h>
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
@@ -25,9 +26,9 @@ namespace react::uwp {
 //
 
 AppTheme::AppTheme(
-    const std::shared_ptr<IReactInstance> &reactInstance,
+    const Mso::React::IReactContext& context,
     const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
-    : m_wkReactInstance(reactInstance), m_queueThread(defaultQueueThread) {
+    : m_context(&context), m_queueThread(defaultQueueThread) {
   if (auto currentApp = xaml::TryGetCurrentApplication()) {
     m_isHighContrast = m_accessibilitySettings.HighContrast();
     m_highContrastColors = getHighContrastColors();
@@ -73,9 +74,7 @@ std::string AppTheme::formatRGB(winrt::Windows::UI::Color ElementColor) {
 }
 
 void AppTheme::fireEvent(std::string const &eventName, folly::dynamic &&eventData) {
-  if (auto instance = m_wkReactInstance.lock()) {
-    instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array(eventName, std::move(eventData)));
-  }
+  m_context->CallJSFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array(eventName, std::move(eventData)));
 }
 
 AppThemeModule::AppThemeModule(std::shared_ptr<AppTheme> &&appTheme) : m_appTheme(std::move(appTheme)) {}

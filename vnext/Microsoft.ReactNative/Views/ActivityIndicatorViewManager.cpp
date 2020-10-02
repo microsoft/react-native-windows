@@ -11,8 +11,8 @@
 
 namespace react::uwp {
 
-ActivityIndicatorViewManager::ActivityIndicatorViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+ActivityIndicatorViewManager::ActivityIndicatorViewManager(const Mso::React::IReactContext &context)
+    : Super(context) {}
 
 const char *ActivityIndicatorViewManager::GetName() const {
   return "RCTActivityIndicatorView";

@@ -24,8 +24,8 @@ using namespace xaml::Media;
 namespace react::uwp {
 namespace polyester {
 
-HyperlinkViewManager::HyperlinkViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
-    : ContentControlViewManager(reactInstance) {}
+HyperlinkViewManager::HyperlinkViewManager(const Mso::React::IReactContext& context)
+    : ContentControlViewManager(context) {}
 
 const char *HyperlinkViewManager::GetName() const {
   return "PLYHyperlink";
@@ -42,10 +42,8 @@ folly::dynamic HyperlinkViewManager::GetNativeProps() const {
 XamlView HyperlinkViewManager::CreateViewCore(int64_t tag) {
   auto button = winrt::HyperlinkButton();
   button.Click([=](auto &&, auto &&) {
-    auto instance = m_wkReactInstance.lock();
     folly::dynamic eventData = folly::dynamic::object("target", tag);
-    if (instance != nullptr)
-      instance->DispatchEvent(tag, "topClick", std::move(eventData));
+    GetReactContext().DispatchEvent(tag, "topClick", std::move(eventData));
   });
 
   return button;

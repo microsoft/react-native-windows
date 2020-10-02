@@ -68,8 +68,8 @@ struct json_type_traits<winrt::IVector<winrt::react::uwp::AccessibilityAction>> 
 
 namespace react::uwp {
 
-FrameworkElementViewManager::FrameworkElementViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+FrameworkElementViewManager::FrameworkElementViewManager(const Mso::React::IReactContext& context)
+    : Super(context) {}
 
 void FrameworkElementViewManager::TransferProperty(
     const XamlView &oldView,
@@ -538,10 +538,8 @@ void FrameworkElementViewManager::ApplyTransformMatrix(
 void FrameworkElementViewManager::StartTransformAnimation(
     xaml::UIElement uielement,
     comp::CompositionPropertySet transformPS) {
-  auto instance = GetReactInstance().lock();
-  assert(instance != nullptr);
   auto expression =
-      instance->GetExpressionAnimationStore().GetTransformCenteringExpression(react::uwp::GetCompositor(uielement));
+      GetExpressionAnimationStore()->GetTransformCenteringExpression(react::uwp::GetCompositor(uielement));
   expression.SetReferenceParameter(L"PS", transformPS);
   expression.Target(L"TransformMatrix");
   uielement.StartAnimation(expression);

@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <React.h>
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
 #include <Shared/NativeModuleProvider.h>
@@ -30,6 +31,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::MessageQueueThread> &jsMessageQueue,
     std::shared_ptr<react::uwp::AppTheme> &&appTheme,
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
-    const std::shared_ptr<IReactInstance> &uwpInstance) noexcept;
+    Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
 
 } // namespace react::uwp

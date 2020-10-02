@@ -10,6 +10,7 @@
 #include <winrt/Windows.UI.ViewManagement.h>
 
 #include "IReactInstance.h"
+#include <React.h>
 
 namespace react::uwp {
 
@@ -19,7 +20,7 @@ class AppearanceChangeListener final : public Mso::ActiveObject<> {
   using UISettings = winrt::Windows::UI::ViewManagement::UISettings;
 
  public:
-  AppearanceChangeListener(std::weak_ptr<IReactInstance> &&reactInstance, Mso::DispatchQueue const &uiQueue) noexcept;
+  AppearanceChangeListener(const Mso::React::IReactContext& context, Mso::DispatchQueue const &uiQueue) noexcept;
   const char *GetColorScheme() const noexcept;
 
  private:
@@ -29,6 +30,7 @@ class AppearanceChangeListener final : public Mso::ActiveObject<> {
   UISettings m_uiSettings;
   UISettings::ColorValuesChanged_revoker m_revoker;
   std::atomic<ApplicationTheme> m_currentTheme;
+  Mso::CntPtr<const Mso::React::IReactContext> m_context;
   std::weak_ptr<IReactInstance> m_weakReactInstance;
 };
 
