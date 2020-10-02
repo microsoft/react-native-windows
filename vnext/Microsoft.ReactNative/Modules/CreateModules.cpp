@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include <CreateModules.h>
 #include <Modules/WebSocketModule.h>
 #include <Modules/WebSocketModuleUwp.h>
-#include <CreateModules.h>
 #include <WinRTWebSocketResource.h>
 
 // React Native
@@ -15,14 +15,13 @@
 namespace Microsoft::React {
 
 std::shared_ptr<IWebSocketResource> IWebSocketResource::Make(std::string &&urlString) {
-  // TODO: use runtime setting
+  // TODO: use QuirkSettings
   std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
   return std::make_shared<WinRTWebSocketResource>(std::move(urlString), std::move(certExceptions));
 }
 
-std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept
-{
-  // TODO: use runtime setting
+std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept {
+  // TODO: use QuirkSettings
   if (false) {
     return std::make_unique<react::uwp::WebSocketModule>();
   }

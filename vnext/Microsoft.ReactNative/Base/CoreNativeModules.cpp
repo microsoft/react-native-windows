@@ -61,10 +61,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       },
       batchingUIMessageQueue);
 
-  modules.emplace_back(
-      "WebSocketModule",
-      []() { return Microsoft::React::CreateWebSocketModule(); },
-      jsMessageQueue);
+  modules.emplace_back("WebSocketModule", []() { return Microsoft::React::CreateWebSocketModule(); }, jsMessageQueue);
 
   modules.emplace_back(
       Microsoft::React::NetworkingModule::Name,
