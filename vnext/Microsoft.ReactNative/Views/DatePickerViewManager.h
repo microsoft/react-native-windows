@@ -11,7 +11,7 @@ class DatePickerViewManager : public ControlViewManager {
   using Super = ControlViewManager;
 
  public:
-  DatePickerViewManager(const Mso::React::IReactContext& context);
+  DatePickerViewManager(const Mso::React::IReactContext &context);
 
   facebook::react::ShadowNode *createShadow() const;
   const char *GetName() const override;

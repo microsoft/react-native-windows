@@ -49,8 +49,7 @@ void ContentControlShadowNode::createView() {
   }
 }
 
-ContentControlViewManager::ContentControlViewManager(const Mso::React::IReactContext& context)
-    : Super(context) {}
+ContentControlViewManager::ContentControlViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 facebook::react::ShadowNode *ContentControlViewManager::createShadow() const {
   return new ContentControlShadowNode();

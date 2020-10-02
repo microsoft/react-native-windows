@@ -26,7 +26,7 @@ using namespace xaml::Media;
 
 namespace react::uwp {
 
-RawTextViewManager::RawTextViewManager(const Mso::React::IReactContext& context) : Super(context) {}
+RawTextViewManager::RawTextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *RawTextViewManager::GetName() const {
   return "RCTRawText";
@@ -50,7 +50,8 @@ bool RawTextViewManager::UpdateProperty(
 
     if (nodeToUpdate->GetParent() != -1) {
       if (auto uiManager = m_context->NativeUIManager()) {
-        const ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(nodeToUpdate->GetParent()));
+        const ShadowNodeBase *parent =
+            static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(nodeToUpdate->GetParent()));
         if (parent && parent->m_children.size() == 1) {
           auto view = parent->GetView();
           auto textBlock = view.try_as<winrt::TextBlock>();

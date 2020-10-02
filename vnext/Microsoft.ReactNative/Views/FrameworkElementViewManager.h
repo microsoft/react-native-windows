@@ -11,7 +11,7 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
   using Super = ViewManagerBase;
 
  public:
-  FrameworkElementViewManager(const Mso::React::IReactContext& context);
+  FrameworkElementViewManager(const Mso::React::IReactContext &context);
 
   folly::dynamic GetNativeProps() const override;
 

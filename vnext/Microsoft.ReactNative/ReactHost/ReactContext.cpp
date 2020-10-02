@@ -153,7 +153,7 @@ std::string ReactContext::JavaScriptBundleFile() const noexcept {
 }
 
 bool ReactContext::UseDeveloperSupport() const noexcept {
-    if (auto instance = m_reactInstance.GetStrongPtr()) {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->UseDeveloperSupport();
   }
   return false;

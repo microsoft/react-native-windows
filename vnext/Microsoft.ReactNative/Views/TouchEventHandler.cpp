@@ -27,7 +27,7 @@ namespace react::uwp {
 
 std::vector<int64_t> GetTagsForBranch(facebook::react::INativeUIManagerHost *host, int64_t tag);
 
-TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext& context)
+TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context)
     : m_xamlView(nullptr), m_context(&context) {}
 
 TouchEventHandler::~TouchEventHandler() {

@@ -77,7 +77,7 @@ struct IReactInstance : IUnknown {
 
   virtual ReactInstanceState State() const noexcept = 0;
 
-  virtual Mso::React::IReactContext& GetReactContext() const noexcept = 0;
+  virtual Mso::React::IReactContext &GetReactContext() const noexcept = 0;
 
   virtual void AttachMeasuredRootView(
       facebook::react::IReactRootView *rootView,

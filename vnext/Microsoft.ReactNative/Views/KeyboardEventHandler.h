@@ -3,12 +3,12 @@
 
 #pragma once
 #include <IReactInstance.h>
+#include <React.h>
 #include <folly/dynamic.h>
 #include <optional>
 #include <set>
 #include "CppWinRTIncludes.h"
 #include "XamlView.h"
-#include <React.h>
 
 namespace winrt {
 using namespace Windows::UI::Core;
@@ -81,7 +81,7 @@ class KeyboardEventHandler : public KeyboardEventBaseHandler {
 
 class PreviewKeyboardEventHandlerOnRoot : public PreviewKeyboardEventHandler {
  public:
-  PreviewKeyboardEventHandlerOnRoot(const Mso::React::IReactContext & context);
+  PreviewKeyboardEventHandlerOnRoot(const Mso::React::IReactContext &context);
 
  private:
   void OnPreKeyDown(winrt::IInspectable const &sender, xaml::Input::KeyRoutedEventArgs const &args);

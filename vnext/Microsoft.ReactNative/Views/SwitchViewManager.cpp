@@ -107,7 +107,7 @@ void SwitchShadowNode::updateProperties(const folly::dynamic &&props) {
   context.DispatchEvent(tag, "topChange", std::move(eventData));
 }
 
-SwitchViewManager::SwitchViewManager(const Mso::React::IReactContext& context) : Super(context) {}
+SwitchViewManager::SwitchViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *SwitchViewManager::GetName() const {
   return "RCTSwitch";

@@ -13,10 +13,10 @@
 
 #include <IReactInstance.h>
 #include <IXamlRootView.h>
-#include <TestHook.h>
-#include <Views/ShadowNodeBase.h>
 #include <ReactPropertyBag.h>
+#include <TestHook.h>
 #include <Views/ExpressionAnimationStore.h>
+#include <Views/ShadowNodeBase.h>
 
 namespace winrt {
 using namespace xaml;
@@ -78,8 +78,7 @@ YGSize DefaultYogaSelfMeasureFunc(
   return desiredSize;
 }
 
-ViewManagerBase::ViewManagerBase(const Mso::React::IReactContext& context)
-    : m_context(&context) {}
+ViewManagerBase::ViewManagerBase(const Mso::React::IReactContext &context) : m_context(&context) {}
 
 folly::dynamic ViewManagerBase::GetExportedViewConstants() const {
   return folly::dynamic::object();
@@ -251,20 +250,19 @@ void ViewManagerBase::DispatchCommand(
   assert(false); // View did not handle its command
 }
 
-
 static const winrt::Microsoft::ReactNative::ReactPropertyId<
     winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<ExpressionAnimationStore>>>
     &ExpressionAnimationStorePropertyId() noexcept {
   static const winrt::Microsoft::ReactNative::ReactPropertyId<
       winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<ExpressionAnimationStore>>>
-      prop{
-      L"ReactNative.ViewManagerBase", L"ExpressionAnimationStore"};
+      prop{L"ReactNative.ViewManagerBase", L"ExpressionAnimationStore"};
   return prop;
 }
 
 std::shared_ptr<ExpressionAnimationStore> ViewManagerBase::GetExpressionAnimationStore() noexcept {
   return winrt::Microsoft::ReactNative::ReactPropertyBag(GetReactContext().Properties())
-      .GetOrCreate(ExpressionAnimationStorePropertyId(), []() { return std::make_shared<ExpressionAnimationStore>(); }).Value();
+      .GetOrCreate(ExpressionAnimationStorePropertyId(), []() { return std::make_shared<ExpressionAnimationStore>(); })
+      .Value();
 }
 
 void ViewManagerBase::NotifyUnimplementedProperty(
@@ -328,7 +326,8 @@ bool ViewManagerBase::IsNativeControlWithSelfLayout() const {
   return GetYogaCustomMeasureFunc() != nullptr;
 }
 
-void ViewManagerBase::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept {
+void ViewManagerBase::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const
+    noexcept {
   folly::dynamic params = folly::dynamic::array(viewTag, std::move(eventName), std::move(eventData));
   m_context->CallJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
 }

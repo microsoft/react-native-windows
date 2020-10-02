@@ -94,9 +94,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
 
   modules.emplace_back(
       NativeAnimatedModule::name,
-      [context = std::move(context)]() mutable {
-        return std::make_unique<NativeAnimatedModule>(std::move(context));
-      },
+      [context = std::move(context)]() mutable { return std::make_unique<NativeAnimatedModule>(std::move(context)); },
       batchingUIMessageQueue);
 
   modules.emplace_back(

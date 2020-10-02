@@ -7,8 +7,7 @@
 
 namespace react::uwp {
 
-ScrollContentViewManager::ScrollContentViewManager(const Mso::React::IReactContext& context)
-    : Super(context) {}
+ScrollContentViewManager::ScrollContentViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *ScrollContentViewManager::GetName() const {
   return "RCTScrollContentView";

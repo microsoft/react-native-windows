@@ -41,8 +41,7 @@ void DatePickerShadowNode::createView() {
 
   m_dataPickerDateChangedRevoker = datePicker.DateChanged(
       winrt::auto_revoke,
-      [=](
-          xaml::Controls::CalendarDatePicker /*picker*/, xaml::Controls::CalendarDatePickerDateChangedEventArgs args) {
+      [=](xaml::Controls::CalendarDatePicker /*picker*/, xaml::Controls::CalendarDatePickerDateChangedEventArgs args) {
         if (!m_updating && args.NewDate() != nullptr)
           OnDateChanged(GetViewManager()->GetReactContext(), m_tag, args.NewDate().Value());
       });
@@ -125,7 +124,10 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
-void DatePickerShadowNode::OnDateChanged(const Mso::React::IReactContext &context, int64_t tag, winrt::DateTime const &newDate) {
+void DatePickerShadowNode::OnDateChanged(
+    const Mso::React::IReactContext &context,
+    int64_t tag,
+    winrt::DateTime const &newDate) {
   auto timeInMilliseconds = DateTimeToDynamic(newDate, m_timeZoneOffsetInSeconds);
   if (!timeInMilliseconds.isNull()) {
     folly::dynamic eventData = folly::dynamic::object("target", tag)("newDate", timeInMilliseconds);
@@ -133,8 +135,7 @@ void DatePickerShadowNode::OnDateChanged(const Mso::React::IReactContext &contex
   }
 }
 
-DatePickerViewManager::DatePickerViewManager(const Mso::React::IReactContext& context)
-    : Super(context) {}
+DatePickerViewManager::DatePickerViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *DatePickerViewManager::GetName() const {
   return "RCTDatePicker";

@@ -36,7 +36,7 @@ class ContentControlViewManager : public ControlViewManager {
   using Super = ControlViewManager;
 
  public:
-  ContentControlViewManager(const Mso::React::IReactContext& context);
+  ContentControlViewManager(const Mso::React::IReactContext &context);
 
   facebook::react::ShadowNode *createShadow() const override;
 

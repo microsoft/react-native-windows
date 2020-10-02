@@ -18,7 +18,7 @@
 
 namespace react::uwp {
 
-ControlViewManager::ControlViewManager(const Mso::React::IReactContext& context) : Super(context) {}
+ControlViewManager::ControlViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 folly::dynamic ControlViewManager::GetNativeProps() const {
   folly::dynamic props = Super::GetNativeProps();

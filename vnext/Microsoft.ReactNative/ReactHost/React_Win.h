@@ -12,7 +12,4 @@
 #include <string>
 #include "React.h"
 
-namespace Mso::React {
-
-
-} // namespace Mso::React
+namespace Mso::React {} // namespace Mso::React

@@ -37,8 +37,7 @@ void ButtonShadowNode::createView() {
   });
 }
 
-ButtonViewManager::ButtonViewManager(const Mso::React::IReactContext& context)
-    : ContentControlViewManager(context) {}
+ButtonViewManager::ButtonViewManager(const Mso::React::IReactContext &context) : ContentControlViewManager(context) {}
 
 const char *ButtonViewManager::GetName() const {
   // TODO: Is this right? Or should it be RCTButton?

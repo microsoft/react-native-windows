@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include <React.h>
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
+#include <React.h>
 #include <Shared/NativeModuleProvider.h>
 #include <smartPtr/cntPtr.h>
 #include <memory>

@@ -4,16 +4,16 @@
 #pragma once
 
 #include <IReactInstance.h>
+#include <React.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <winrt/Windows.UI.ViewManagement.h>
-#include <React.h>
 
 namespace react::uwp {
 
 class AppTheme {
  public:
   AppTheme(
-      const Mso::React::IReactContext& context,
+      const Mso::React::IReactContext &context,
       const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread);
 
   bool getIsHighContrast();

@@ -73,7 +73,7 @@ class TextShadowNode final : public ShadowNodeBase {
   TransformableText transformableText{};
 };
 
-TextViewManager::TextViewManager(const Mso::React::IReactContext& context) : Super(context) {}
+TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 facebook::react::ShadowNode *TextViewManager::createShadow() const {
   return new TextShadowNode();

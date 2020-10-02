@@ -26,7 +26,7 @@ namespace react::uwp {
 //
 
 AppTheme::AppTheme(
-    const Mso::React::IReactContext& context,
+    const Mso::React::IReactContext &context,
     const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
     : m_context(&context), m_queueThread(defaultQueueThread) {
   if (auto currentApp = xaml::TryGetCurrentApplication()) {

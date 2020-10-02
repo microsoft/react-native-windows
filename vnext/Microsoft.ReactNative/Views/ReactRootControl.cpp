@@ -60,7 +60,7 @@ ReactRootControl::~ReactRootControl() noexcept {
   }
 }
 
-Mso::React::IReactContext* ReactRootControl::GetReactContext() const noexcept {
+Mso::React::IReactContext *ReactRootControl::GetReactContext() const noexcept {
   return m_context.Get();
 }
 

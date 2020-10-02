@@ -221,7 +221,7 @@ class ViewShadowNode : public ShadowNodeBase {
   }
 
   void DispatchEvent(std::string &&eventName, folly::dynamic &&eventData) {
-      GetViewManager()->GetReactContext().DispatchEvent(m_tag, std::move(eventName), std::move(eventData));
+    GetViewManager()->GetReactContext().DispatchEvent(m_tag, std::move(eventName), std::move(eventData));
   }
 
  private:
@@ -313,7 +313,7 @@ bool TryUpdateBorderProperties(
 
 // ViewViewManager
 
-ViewViewManager::ViewViewManager(const Mso::React::IReactContext& context) : Super(context) {}
+ViewViewManager::ViewViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *ViewViewManager::GetName() const {
   return "RCTView";

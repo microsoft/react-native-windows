@@ -178,7 +178,7 @@ bool PickerShadowNode::NeedsForceLayout() {
   return true;
 }
 
-PickerViewManager::PickerViewManager(const Mso::React::IReactContext& context) : Super(context) {}
+PickerViewManager::PickerViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *PickerViewManager::GetName() const {
   return "RCTPicker";

@@ -12,7 +12,7 @@ class IconViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
-  IconViewManager(const Mso::React::IReactContext& context);
+  IconViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
   facebook::react::ShadowNode *createShadow() const override;

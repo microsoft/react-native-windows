@@ -269,16 +269,16 @@ void TextInputShadowNode::registerEvents() {
   m_controlKeyDownRevoker =
       control.KeyDown(winrt::auto_revoke, [=](auto &&, xaml::Input::KeyRoutedEventArgs const &args) {
         if (args.Key() == winrt::Windows::System::VirtualKey::Enter && !args.Handled()) {
-            folly::dynamic eventDataSubmitEditing = {};
-            if (m_isTextBox) {
-              eventDataSubmitEditing = folly::dynamic::object("target", tag)(
-                  "text", HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
-            } else {
-              eventDataSubmitEditing = folly::dynamic::object("target", tag)(
-                  "text", HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
-            }
-            GetViewManager()->GetReactContext().DispatchEvent(
-                tag, "topTextInputSubmitEditing", std::move(eventDataSubmitEditing));
+          folly::dynamic eventDataSubmitEditing = {};
+          if (m_isTextBox) {
+            eventDataSubmitEditing = folly::dynamic::object("target", tag)(
+                "text", HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
+          } else {
+            eventDataSubmitEditing = folly::dynamic::object("target", tag)(
+                "text", HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
+          }
+          GetViewManager()->GetReactContext().DispatchEvent(
+              tag, "topTextInputSubmitEditing", std::move(eventDataSubmitEditing));
         }
       });
 
@@ -629,8 +629,7 @@ void TextInputShadowNode::dispatchCommand(const std::string &commandId, const fo
   }
 }
 
-TextInputViewManager::TextInputViewManager(const Mso::React::IReactContext& context)
-    : Super(context) {}
+TextInputViewManager::TextInputViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *TextInputViewManager::GetName() const {
   return "RCTTextInput";

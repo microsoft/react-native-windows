@@ -231,7 +231,7 @@ void FlyoutShadowNode::createView() {
 
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
   if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
-    if (auto uiManager = static_cast<NativeUIManager *> (GetViewManager()->GetReactContext().NativeUIManager())) {
+    if (auto uiManager = static_cast<NativeUIManager *>(GetViewManager()->GetReactContext().NativeUIManager())) {
       if (auto xamlRoot = uiManager->tryGetXamlRoot()) {
         flyoutBase6.XamlRoot(xamlRoot);
         m_xamlRootChangedRevoker = xamlRoot.Changed(winrt::auto_revoke, [this](auto &&, auto &&) {
@@ -244,7 +244,7 @@ void FlyoutShadowNode::createView() {
   }
 }
 
-/*static*/ void FlyoutShadowNode::OnFlyoutClosed(const Mso::React::IReactContext& context, int64_t tag, bool newValue) {
+/*static*/ void FlyoutShadowNode::OnFlyoutClosed(const Mso::React::IReactContext &context, int64_t tag, bool newValue) {
   folly::dynamic eventData = folly::dynamic::object("target", tag)("isOpen", newValue);
   context.DispatchEvent(tag, "topDismiss", std::move(eventData));
 }
@@ -425,7 +425,7 @@ winrt::FlyoutPresenter FlyoutShadowNode::GetFlyoutPresenter() const {
   return scope;
 }
 
-FlyoutViewManager::FlyoutViewManager(const Mso::React::IReactContext& context) : Super(context) {}
+FlyoutViewManager::FlyoutViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *FlyoutViewManager::GetName() const {
   return "RCTFlyout";

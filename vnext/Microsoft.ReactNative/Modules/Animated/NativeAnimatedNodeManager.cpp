@@ -343,9 +343,7 @@ void NativeAnimatedNodeManager::AddDelayedPropsNode(
   m_delayedPropsNodes.push_back(propsNodeTag);
   if (m_delayedPropsNodes.size() <= 1) {
     if (const auto uiManger = context->NativeUIManager()) {
-      static_cast<NativeUIManager *>(uiManger)->AddBatchCompletedCallback([this]() {
-        ProcessDelayedPropsNodes();
-      });
+      static_cast<NativeUIManager *>(uiManger)->AddBatchCompletedCallback([this]() { ProcessDelayedPropsNodes(); });
     }
   }
 }

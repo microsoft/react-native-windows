@@ -11,7 +11,7 @@ class SwitchViewManager : public ControlViewManager {
   using Super = ControlViewManager;
 
  public:
-  SwitchViewManager(const Mso::React::IReactContext& context);
+  SwitchViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
   folly::dynamic GetNativeProps() const override;

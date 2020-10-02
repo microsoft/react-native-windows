@@ -42,8 +42,7 @@ void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
   Super::AddView(child, index);
 }
 
-VirtualTextViewManager::VirtualTextViewManager(const Mso::React::IReactContext& context)
-    : Super(context) {}
+VirtualTextViewManager::VirtualTextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *VirtualTextViewManager::GetName() const {
   return "RCTVirtualText";

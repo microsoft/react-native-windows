@@ -290,7 +290,7 @@ winrt::Size PopupShadowNode::GetAppWindowSize() {
   return windowSize;
 }
 
-PopupViewManager::PopupViewManager(const Mso::React::IReactContext& context) : Super(context) {}
+PopupViewManager::PopupViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *PopupViewManager::GetName() const {
   return "RCTPopup";

@@ -22,7 +22,7 @@ class VirtualTextViewManager : public ViewManagerBase {
   using Super = ViewManagerBase;
 
  public:
-  VirtualTextViewManager(const Mso::React::IReactContext& context);
+  VirtualTextViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
   facebook::react::ShadowNode *createShadow() const override {

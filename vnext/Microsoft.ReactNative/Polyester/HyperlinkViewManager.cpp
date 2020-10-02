@@ -24,7 +24,7 @@ using namespace xaml::Media;
 namespace react::uwp {
 namespace polyester {
 
-HyperlinkViewManager::HyperlinkViewManager(const Mso::React::IReactContext& context)
+HyperlinkViewManager::HyperlinkViewManager(const Mso::React::IReactContext &context)
     : ContentControlViewManager(context) {}
 
 const char *HyperlinkViewManager::GetName() const {

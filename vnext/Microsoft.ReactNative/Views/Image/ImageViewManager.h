@@ -10,7 +10,7 @@ class ImageViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
-  ImageViewManager(const Mso::React::IReactContext& context);
+  ImageViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
 

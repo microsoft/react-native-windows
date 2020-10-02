@@ -11,7 +11,7 @@ class TextViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
-  TextViewManager(const Mso::React::IReactContext& context);
+  TextViewManager(const Mso::React::IReactContext &context);
 
   facebook::react::ShadowNode *createShadow() const override;
 

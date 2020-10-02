@@ -11,7 +11,7 @@ class ScrollContentViewManager : public ViewViewManager {
   using Super = ViewViewManager;
 
  public:
-  ScrollContentViewManager(const Mso::React::IReactContext& context);
+  ScrollContentViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
 };

@@ -26,5 +26,4 @@ typedef unsigned int LiveReloadCallbackCookie;
 typedef unsigned int ErrorCallbackCookie;
 typedef unsigned int DebuggerAttachCallbackCookie;
 
-
 } // namespace react::uwp

@@ -68,8 +68,7 @@ struct json_type_traits<winrt::IVector<winrt::react::uwp::AccessibilityAction>> 
 
 namespace react::uwp {
 
-FrameworkElementViewManager::FrameworkElementViewManager(const Mso::React::IReactContext& context)
-    : Super(context) {}
+FrameworkElementViewManager::FrameworkElementViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 void FrameworkElementViewManager::TransferProperty(
     const XamlView &oldView,

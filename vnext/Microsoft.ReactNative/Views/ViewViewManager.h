@@ -14,7 +14,7 @@ class ViewViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
-  ViewViewManager(const Mso::React::IReactContext& context);
+  ViewViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
 

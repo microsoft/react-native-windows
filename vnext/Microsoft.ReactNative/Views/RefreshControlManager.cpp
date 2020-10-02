@@ -69,8 +69,7 @@ void RefreshControlShadowNode::updateProperties(const folly::dynamic &&props) {
   Super::updateProperties(std::move(props));
 }
 
-RefreshControlViewManager::RefreshControlViewManager(const Mso::React::IReactContext& context)
-    : Super(context) {}
+RefreshControlViewManager::RefreshControlViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 facebook::react::ShadowNode *RefreshControlViewManager::createShadow() const {
   return new RefreshControlShadowNode();

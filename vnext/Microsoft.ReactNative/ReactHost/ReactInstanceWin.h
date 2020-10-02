@@ -48,7 +48,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
  public: // IReactInstance
   const ReactOptions &Options() const noexcept override;
   ReactInstanceState State() const noexcept override;
-  Mso::React::IReactContext& GetReactContext() const noexcept override;
+  Mso::React::IReactContext &GetReactContext() const noexcept override;
   void AttachMeasuredRootView(
       facebook::react::IReactRootView *rootView,
       folly::dynamic &&initialProps) noexcept override;

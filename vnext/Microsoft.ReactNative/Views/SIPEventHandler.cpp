@@ -18,7 +18,7 @@ using namespace xaml::Media;
 } // namespace winrt
 namespace react::uwp {
 
-SIPEventHandler::SIPEventHandler(const Mso::React::IReactContext& context)
+SIPEventHandler::SIPEventHandler(const Mso::React::IReactContext &context)
     : m_context(&context), m_fireKeyboradEvents(false), m_finalRect(winrt::RectHelper::Empty()){};
 
 SIPEventHandler::~SIPEventHandler() {
@@ -110,8 +110,8 @@ bool SIPEventHandler::IsOcclusionsEmpty(winrt::IVectorView<winrt::CoreInputViewO
 }
 
 void SIPEventHandler::SendEvent(std::string &&eventName, folly::dynamic &&parameters) {
-    m_context->CallJSFunction(
-        "RCTDeviceEventEmitter", "emit", folly::dynamic::array(std::move(eventName), std::move(parameters)));
+  m_context->CallJSFunction(
+      "RCTDeviceEventEmitter", "emit", folly::dynamic::array(std::move(eventName), std::move(parameters)));
 }
 
 } // namespace react::uwp

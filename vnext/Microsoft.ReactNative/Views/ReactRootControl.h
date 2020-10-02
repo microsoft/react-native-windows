@@ -32,7 +32,7 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   ~ReactRootControl() noexcept;
 
  public: // IXamlRootView
-  Mso::React::IReactContext* GetReactContext() const noexcept override;
+  Mso::React::IReactContext *GetReactContext() const noexcept override;
   XamlView GetXamlView() const noexcept override;
   void SetJSComponentName(std::string &&mainComponentName) noexcept override;
   void SetInitialProps(folly::dynamic &&initialProps) noexcept override;

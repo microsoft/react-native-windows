@@ -11,7 +11,7 @@ class SliderViewManager : public ControlViewManager {
   using Super = ControlViewManager;
 
  public:
-  SliderViewManager(const Mso::React::IReactContext& context);
+  SliderViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
   folly::dynamic GetNativeProps() const override;

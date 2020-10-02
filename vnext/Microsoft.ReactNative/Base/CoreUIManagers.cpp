@@ -38,7 +38,7 @@ namespace react::uwp {
 
 void AddStandardViewManagers(
     std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
-    const Mso::React::IReactContext& context) noexcept {
+    const Mso::React::IReactContext &context) noexcept {
   viewManagers.push_back(std::make_unique<ActivityIndicatorViewManager>(context));
   viewManagers.push_back(std::make_unique<DatePickerViewManager>(context));
   viewManagers.push_back(std::make_unique<FlyoutViewManager>(context));
@@ -60,7 +60,7 @@ void AddStandardViewManagers(
 
 void AddPolyesterViewManagers(
     std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
-    const Mso::React::IReactContext& context) noexcept {
+    const Mso::React::IReactContext &context) noexcept {
   viewManagers.push_back(std::make_unique<polyester::ButtonViewManager>(context));
   viewManagers.push_back(std::make_unique<polyester::ButtonContentViewManager>(context));
   viewManagers.push_back(std::make_unique<polyester::HyperlinkViewManager>(context));

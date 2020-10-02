@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <React.h>
 #include <IReactInstance.h>
+#include <React.h>
 #include <folly/dynamic.h>
 #include "AnimatedNode.h"
 

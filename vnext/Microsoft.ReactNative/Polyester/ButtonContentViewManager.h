@@ -12,7 +12,7 @@ class ButtonContentViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
-  ButtonContentViewManager(const Mso::React::IReactContext& context);
+  ButtonContentViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
 

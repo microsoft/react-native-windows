@@ -64,11 +64,11 @@ namespace react::uwp {
 
 void AddStandardViewManagers(
     std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
-    const Mso::React::IReactContext& context) noexcept;
+    const Mso::React::IReactContext &context) noexcept;
 
 void AddPolyesterViewManagers(
     std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
-    const Mso::React::IReactContext& context) noexcept;
+    const Mso::React::IReactContext &context) noexcept;
 
 std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
     Mso::React::IReactContext *context,
@@ -828,7 +828,7 @@ bool ReactInstanceWin::UseDeveloperSupport() const noexcept {
   return m_options.UseDeveloperSupport();
 }
 
-Mso::React::IReactContext& ReactInstanceWin::GetReactContext() const noexcept {
+Mso::React::IReactContext &ReactInstanceWin::GetReactContext() const noexcept {
   return *m_reactContext;
 }
 

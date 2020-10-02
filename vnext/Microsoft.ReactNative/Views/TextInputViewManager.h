@@ -11,7 +11,7 @@ class TextInputViewManager : public ControlViewManager {
   using Super = ControlViewManager;
 
  public:
-  TextInputViewManager(const Mso::React::IReactContext& context);
+  TextInputViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
   folly::dynamic GetNativeProps() const override;

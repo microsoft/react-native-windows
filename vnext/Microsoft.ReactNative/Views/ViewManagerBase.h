@@ -3,12 +3,12 @@
 
 #pragma once
 
+#include <React.h>
 #include <Shared/ReactWindowsAPI.h>
 #include <Shared/ViewManager.h>
 #include <XamlView.h>
 #include <folly/dynamic.h>
 #include <yoga/yoga.h>
-#include <React.h>
 
 namespace facebook {
 namespace react {
@@ -40,7 +40,7 @@ REACTWINDOWS_EXPORT YGSize DefaultYogaSelfMeasureFunc(
 #pragma warning(disable : 4251) // member is not DLL exported
 class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager {
  public:
-  ViewManagerBase(const Mso::React::IReactContext& context);
+  ViewManagerBase(const Mso::React::IReactContext &context);
   virtual ~ViewManagerBase() {}
 
   virtual XamlView CreateView(int64_t tag);
@@ -78,7 +78,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
   virtual bool RequiresYogaNode() const;
   bool IsNativeControlWithSelfLayout() const;
 
-  const Mso::React::IReactContext& GetReactContext() const {
+  const Mso::React::IReactContext &GetReactContext() const {
     return *m_context;
   }
   std::shared_ptr<ExpressionAnimationStore> GetExpressionAnimationStore() noexcept;

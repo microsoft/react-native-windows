@@ -15,7 +15,7 @@ using Method = facebook::xplat::module::CxxModule::Method;
 namespace react::uwp {
 
 AppearanceChangeListener::AppearanceChangeListener(
-    const Mso::React::IReactContext& context,
+    const Mso::React::IReactContext &context,
     Mso::DispatchQueue const &uiQueue) noexcept
     : Mso::ActiveObject<>(uiQueue), m_context(&context) {
   // Ensure we're constructed on the UI thread
@@ -49,7 +49,7 @@ void AppearanceChangeListener::OnColorValuesChanged() noexcept {
     m_currentTheme = newTheme;
 
     m_context->CallJSFunction(
-          "RCTDeviceEventEmitter", "emit", folly::dynamic::array("appearanceChanged", ToString(m_currentTheme)));
+        "RCTDeviceEventEmitter", "emit", folly::dynamic::array("appearanceChanged", ToString(m_currentTheme)));
   }
 }
 

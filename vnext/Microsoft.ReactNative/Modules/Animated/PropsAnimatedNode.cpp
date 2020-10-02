@@ -145,9 +145,9 @@ void PropsAnimatedNode::StartAnimations() {
         uiElement.StartAnimation(m_centerPointAnimation);
       }
     } else {
-        if (const auto manager = m_manager.lock()) {
-          manager->AddDelayedPropsNode(Tag(), m_context);
-        }
+      if (const auto manager = m_manager.lock()) {
+        manager->AddDelayedPropsNode(Tag(), m_context);
+      }
     }
   }
 }

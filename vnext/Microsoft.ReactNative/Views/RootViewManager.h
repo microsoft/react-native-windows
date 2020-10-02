@@ -11,7 +11,7 @@ class RootViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
-  RootViewManager(const Mso::React::IReactContext& context);
+  RootViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
 

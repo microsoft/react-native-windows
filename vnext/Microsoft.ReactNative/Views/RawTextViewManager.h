@@ -13,7 +13,7 @@ class RawTextViewManager : public ViewManagerBase {
   using Super = ViewManagerBase;
 
  public:
-  RawTextViewManager(const Mso::React::IReactContext& context);
+  RawTextViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
 
