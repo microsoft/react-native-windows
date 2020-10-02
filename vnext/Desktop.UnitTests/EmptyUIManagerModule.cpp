@@ -5,7 +5,6 @@
 #include <cxxreact/JsArgumentHelpers.h>
 
 using namespace std;
-using namespace folly;
 using namespace facebook::react;
 using namespace facebook::xplat;
 
@@ -36,7 +35,7 @@ EmptyUIManager::EmptyUIManager(
     std::shared_ptr<NodeRegistry> nodeRegistry)
     : m_viewManagers(std::move(viewManagers)), m_nodeRegistry(nodeRegistry) {}
 
-void EmptyUIManager::PopulateViewManagerConstants(std::map<std::string, dynamic> &constants) {
+void EmptyUIManager::PopulateViewManagerConstants(std::map<std::string, folly::dynamic> &constants) {
   for (auto &&vm : *m_viewManagers)
     constants.emplace(std::make_pair(std::string(vm->GetName()), vm->GetConstants()));
 }
@@ -97,15 +96,16 @@ std::map<std::string, folly::dynamic> EmptyUIManagerModule::getConstants() {
 
 auto EmptyUIManagerModule::getMethods() -> std::vector<Method> {
   return {
-      Method("removeRootView", [this](dynamic args) { m_manager->removeRootView(jsArgAsInt(args, 0)); }),
+      Method("removeRootView", [this](folly::dynamic args) { m_manager->removeRootView(jsArgAsInt(args, 0)); }),
       Method(
           "createView",
-          [this](dynamic args) {
+          [this](folly::dynamic args) {
             m_manager->createView(
                 jsArgAsInt(args, 0), jsArgAsString(args, 1), jsArgAsInt(args, 2), jsArgAsDynamic(args, 3));
           }),
       Method(
-          "setChildren", [this](dynamic args) { m_manager->setChildren(jsArgAsInt(args, 0), jsArgAsArray(args, 1)); }),
+          "setChildren",
+          [this](folly::dynamic args) { m_manager->setChildren(jsArgAsInt(args, 0), jsArgAsArray(args, 1)); }),
   };
 }
 

@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Sep 2020 15:04:34 GMT",
+      "tag": "react-native-windows_v0.63.3",
+      "version": "0.63.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add missing exports",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "39f589411ad47ee7bca0bfe7fb34b8003cdb8da6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Sep 2020 15:04:59 GMT",
+      "tag": "react-native-windows_v0.63.3",
+      "version": "0.63.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Port update folly to 0.63",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "24b82db4ed7d121ca50f233915114ff883b4c3f6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Sep 2020 21:58:15 GMT",
+      "tag": "react-native-windows_v0.63.2",
+      "version": "0.63.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Deprecate AppTheme by adding yellowbox warning (#5889)",
+            "author": "email not defined",
+            "commit": "4e52e629bc3a019ab09458f48f31133e4ec80311",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix 5870: Dont check for inheritance, but do explicit type check",
+            "author": "dannyvv@microsoft.com",
+            "commit": "aa55914f35c182d84e67a9ee2fbbd0da28f73b28",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 and Hermes pacakge versions",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "6d6a927552700f433a9687422f3ab29ad86e50e6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Sep 2020 15:05:16 GMT",
       "tag": "react-native-windows_v0.63.1",
       "version": "0.63.1",
