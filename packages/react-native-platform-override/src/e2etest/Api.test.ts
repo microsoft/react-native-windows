@@ -120,15 +120,13 @@ test('upgradeOverrides', async () => {
       (await repo.readFile('sampleOverrideRepo/overrides.json'))!.toString(),
     );
 
+    expect(manifest.baseVersion).toBe(opts.reactNativeVersion);
+
     for (const serializedOverride of manifest.overrides) {
-      if (serializedOverride.file !== 'ReactCommon/yoga/yoga/Yoga.cpp') {
-        expect({
-          file: serializedOverride.file,
-          version: serializedOverride.baseVersion,
-        }).toEqual({
-          file: serializedOverride.file,
-          version: opts.reactNativeVersion,
-        });
+      if (serializedOverride.file === 'ReactCommon/yoga/yoga/Yoga.cpp') {
+        expect(serializedOverride.baseVersion).toBe('0.0.0-56cf99a96');
+      } else {
+        expect(serializedOverride.baseVersion).toBeUndefined();
       }
     }
   });
