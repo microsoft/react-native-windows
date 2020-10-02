@@ -134,6 +134,17 @@ test('upgradeOverrides', async () => {
   });
 });
 
+test('diffOverride', async () => {
+  await usingRepository('sampleOverrideRepo', async (_, repoPath) => {
+    const opts = {
+      manifestPath: path.join(repoPath, 'overrides.json'),
+    };
+
+    const diff = await Api.diffOverride('ReactCommon/yoga/yoga/Yoga.cpp', opts);
+    expect(diff.length).toBeGreaterThan(0);
+  });
+});
+
 function expectIncrementing(
   expectedTotal: number,
 ): Api.UpgradeProgressListener {
