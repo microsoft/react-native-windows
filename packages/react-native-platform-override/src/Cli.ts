@@ -72,28 +72,17 @@ void doMain(async () => {
         'diff <override>',
         'Compares an override to the base file of its current version',
         cmdYargs =>
-          cmdYargs
-            .options({
-              override: {type: 'string', describe: 'The override to add'},
-              useManifestVersion: {
-                type: 'boolean',
-                default: false,
-                describe:
-                  'Compare against the base file of the current manifest react-native-version instead of current override version',
-              },
-              version: {
-                type: 'string',
-                describe: 'Optional React Native version to check against',
-              },
-            })
-            .conflicts('useManifestVersion', 'version'),
+          cmdYargs.options({
+            override: {type: 'string', describe: 'The override to add'},
+            useManifestVersion: {
+              type: 'boolean',
+              default: false,
+              describe:
+                'Compare against the base file of the current manifest react-native-version instead of current override version',
+            },
+          }),
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        cmdArgv =>
-          diffOverride(
-            cmdArgv.override!,
-            cmdArgv.useManifestVersion,
-            cmdArgv.version,
-          ),
+        cmdArgv => diffOverride(cmdArgv.override!, cmdArgv.useManifestVersion),
       )
       .command(
         'upgrade',
@@ -220,18 +209,14 @@ async function removeOverride(overridePath: string) {
 /**
  * Diffs an override against its base file
  */
-async function diffOverride(
-  overridePath: string,
-  useManifestVersion: boolean,
-  version?: string,
-) {
+async function diffOverride(overridePath: string, useManifestVersion: boolean) {
   const manifestPath = await findManifest(path.dirname(overridePath));
   const manifestDir = path.dirname(manifestPath);
   const overrideName = path.relative(manifestDir, path.resolve(overridePath));
 
   const reactNativeVersion = useManifestVersion
     ? await Api.manifestVersion({manifestPath})
-    : version;
+    : undefined;
 
   const diff = await Api.diffOverride(overrideName, {
     manifestPath,

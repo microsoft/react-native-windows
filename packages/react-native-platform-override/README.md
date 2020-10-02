@@ -88,7 +88,6 @@ targets a different react-native version.
 |------------------------|----------|----------------------------------------------------------------------------------------------------------------|---------|
 | `<override>`           | Required | The override to diff against                                                                                   |         |
 | `--useManifestVersion` | Optional | Compare against the base file of the current manifest react-native-version instead of current override version | false   |
-| `--version`            | Optional | Compare the override against the base file of a specific react-native version                                  |         |
 
 ## GitHub Tokens
 `react-native-platform-override` makes requests to GitHub's API. An OAuth token may optionally be provided by using the `--githubToken`
