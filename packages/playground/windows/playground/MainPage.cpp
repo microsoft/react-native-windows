@@ -119,8 +119,7 @@ void winrt::playground::implementation::MainPage::x_entryPointCombo_SelectionCha
       auto selectedItem = winrt::to_string(winrt::unbox_value<winrt::hstring>(content));
       if (selectedItem == "Samples\\rntester") {
         x_rootComponentNameCombo().SelectedIndex(0);
-      }
-      else {
+      } else {
         x_rootComponentNameCombo().SelectedIndex(1);
       }
     }
