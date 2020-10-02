@@ -40,11 +40,17 @@ export const DiffStrategies = {
         throw new Error(`Couldn't read override "${overrideFile}"`);
       }
 
-      return gitReactRepo.generatePatch(
+      const patch = await gitReactRepo.generatePatch(
         baseFile,
         baseVersion,
         overrideContents,
       );
+
+      return patch
+        .trim()
+        .split('\n')
+        .slice(4) // Ignore Git gunk
+        .join('\n');
     },
   }),
 };

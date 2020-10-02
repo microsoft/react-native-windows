@@ -104,7 +104,7 @@ export async function addOverride(
  */
 export async function diffOverride(
   overrideName: string,
-  opts: {manifestPath?: string; reactNativeVersion?: string},
+  opts: {manifestPath?: string},
 ): Promise<string> {
   const ctx = await createManifestContext(opts);
 
@@ -113,19 +113,7 @@ export async function diffOverride(
     throw new Error(`Could not find override with name "${overrideName}"`);
   }
 
-  return override
-    .diffStrategy(opts.reactNativeVersion)
-    .diff(ctx.gitReactRepo, ctx.overrideRepo);
-}
-
-/**
- * Returns the react-native version of the override manifest
- */
-export async function manifestVersion(opts: {
-  manifestPath?: string;
-}): Promise<string> {
-  const {reactNativeVersion} = await createManifestContext(opts);
-  return reactNativeVersion;
+  return override.diffStrategy().diff(ctx.gitReactRepo, ctx.overrideRepo);
 }
 
 /**

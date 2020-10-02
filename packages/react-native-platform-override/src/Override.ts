@@ -53,9 +53,8 @@ export default interface Override {
 
   /**
    * Specifies how to diff an override against its base version
-   * @param reactNativeVersion a specific version of react-native to compare against
    */
-  diffStrategy(reactNativeVersion?: string): DiffStrategy;
+  diffStrategy(): DiffStrategy;
 }
 
 /**
@@ -151,11 +150,11 @@ abstract class BaseFileOverride implements Override {
     ];
   }
 
-  diffStrategy(reactNativeVersion?: string): DiffStrategy {
+  diffStrategy(): DiffStrategy {
     return DiffStrategies.compareBaseFile(
       this.overrideFile,
       this.baseFile,
-      reactNativeVersion || this.baseVersion,
+      this.baseVersion,
     );
   }
 

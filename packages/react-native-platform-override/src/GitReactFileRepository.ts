@@ -124,10 +124,6 @@ export default class GitReactFileRepository
           filename,
         ]);
 
-        if (patch.length === 0) {
-          throw new Error(`Generated patch for ${filename} was empty`);
-        }
-
         return patch;
       } finally {
         await this.gitClient.reset('hard');

@@ -81,13 +81,12 @@ Attempts to automatically merge new changes into out-of-date overrides.
 | `--no-conflicts`    | Optional | Whether to allow upgraded files to contain conlict markers | `--conflicts`                   |
 
 ### `diff <override>`
-Diffs an override against its base file. By default it it compared to the base file of the overrides current version, even if the manifest
-targets a different react-native version.
+Diffs an override against its base file. It it compared to the base file of the override's current version, even if a newer verison of
+react-native is installed.
 
 | Option                 | Required | Description                                                                                                    | Default |
 |------------------------|----------|----------------------------------------------------------------------------------------------------------------|---------|
 | `<override>`           | Required | The override to diff against                                                                                   |         |
-| `--useManifestVersion` | Optional | Compare against the base file of the current manifest react-native-version instead of current override version | false   |
 
 ## GitHub Tokens
 `react-native-platform-override` makes requests to GitHub's API. An OAuth token may optionally be provided by using the `--githubToken`
