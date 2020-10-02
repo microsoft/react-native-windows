@@ -56,6 +56,26 @@ test('Well Formed Patch', () => {
   expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
+test('Well Formed Patch - Default Base', () => {
+  const manifest: Serialized.Manifest = {
+    includePatterns: undefined,
+    excludePatterns: undefined,
+    baseVersion: '0.61.5',
+    overrides: [
+      {
+        type: 'patch',
+        file: 'foo.win32.js',
+        baseFile: 'foo.js',
+        baseVersion: undefined,
+        baseHash: 'AAAABBBB',
+        issue: 4567,
+      },
+    ],
+  };
+
+  expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
+});
+
 test('Well Formed Derived', () => {
   const manifest: Serialized.Manifest = {
     includePatterns: undefined,
