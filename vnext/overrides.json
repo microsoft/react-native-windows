@@ -19,7 +19,7 @@
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "602e74405a7617b75f310700e93ff4d106054c83"
+      "baseHash": "f177c2ce170c403708153db596577a436d71e5dc"
     },
     {
       "type": "patch",
@@ -53,7 +53,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "80aa1fe96412a5f027dbf5e3df3feddab91c3ccb",
+      "baseHash": "8c9bb33fcf4aed06aa913aca6f5cc65478761f84",
       "issue": 5430
     },
     {
@@ -257,7 +257,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "4508091254e184ee4dfc383c091186ba6ed60f01",
+      "baseHash": "05c8c1e9142210b472c9c1ce891314b786ecc50f",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -373,7 +373,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "b7ab4262be21b1c2db00dd52e345529181c45aa8",
+      "baseHash": "72a2fea2216d144cc985f243c6d27274f8f4edb6",
       "issue": 4379
     },
     {

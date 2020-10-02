@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Thu, 01 Oct 2020 05:08:11 GMT and should not be manually modified.
+This log was last generated on Fri, 02 Oct 2020 05:05:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.2
+
+Fri, 02 Oct 2020 05:05:22 GMT
+
+### Patches
+
+- Add some extra error handling to GitReactFileRepository (ngerlem@microsoft.com)
 
 ## 0.3.1
 

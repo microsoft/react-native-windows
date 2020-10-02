@@ -82,6 +82,14 @@ Attempts to automatically merge new changes into out-of-date overrides.
 | `--version <v>`     | Optional | A version of React Native to check against                 | The currently installed version |
 | `--no-conflicts`    | Optional | Whether to allow upgraded files to contain conlict markers | `--conflicts`                   |
 
+### `diff <override>`
+Diffs an override against its base file. It it compared to the base file of the override's current version, even if a newer verison of
+react-native is installed.
+
+| Option                 | Required | Description                                                                                                    | Default |
+|------------------------|----------|----------------------------------------------------------------------------------------------------------------|---------|
+| `<override>`           | Required | The override to diff against                                                                                   |         |
+
 ## GitHub Tokens
 `react-native-platform-override` makes requests to GitHub's API. An OAuth token may optionally be provided by using the `--githubToken`
 parameter or setting the PLATFORM_OVERRIDE_GITHUB_TOKEN environment variable.

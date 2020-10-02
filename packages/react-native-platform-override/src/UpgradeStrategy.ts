@@ -64,6 +64,10 @@ export const UpgradeStrategies = {
         ovrContent,
       );
 
+      if (ovrAsPatch.length === 0) {
+        throw new Error(`Generated patch for ${overrideName} was empty`);
+      }
+
       const {patchedFile, hasConflicts} = await gitReactRepo.getPatchedFile(
         baseFile,
         newVersion,

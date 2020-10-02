@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Fri, 02 Oct 2020 05:05:22 GMT",
+      "tag": "react-native-platform-override_v0.3.2",
+      "version": "0.3.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add some extra error handling to GitReactFileRepository",
+            "author": "ngerlem@microsoft.com",
+            "commit": "43cc1b4998ded80783c84b2b2544975dd900d68e",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 01 Oct 2020 05:08:11 GMT",
       "tag": "react-native-platform-override_v0.3.1",
       "version": "0.3.1",

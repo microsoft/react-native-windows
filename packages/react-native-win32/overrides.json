@@ -10,7 +10,7 @@
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "602e74405a7617b75f310700e93ff4d106054c83"
+      "baseHash": "f177c2ce170c403708153db596577a436d71e5dc"
     },
     {
       "type": "copy",
@@ -37,7 +37,7 @@
       "type": "patch",
       "file": "src/Libraries/BatchedBridge/MessageQueue.win32.js",
       "baseFile": "Libraries/BatchedBridge/MessageQueue.js",
-      "baseHash": "d6e61e1a1069b2ff88a9701e6d185c7c3b739541",
+      "baseHash": "85eea8e9510b516c12e19fcfedc4553b990feb11",
       "issue": 5807
     },
     {
@@ -159,7 +159,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "4508091254e184ee4dfc383c091186ba6ed60f01",
+      "baseHash": "05c8c1e9142210b472c9c1ce891314b786ecc50f",
       "issue": "LEGACY_FIXME"
     },
     {
@@ -305,7 +305,7 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/InspectorOverlay.win32.js",
       "baseFile": "Libraries/Inspector/InspectorOverlay.js",
-      "baseHash": "a1d045fb2d0fb751d8f0518fd40af63454b88b04",
+      "baseHash": "b11d03daa2e3f828a350667f543b2cda4fa65dbf",
       "issue": "LEGACY_FIXME"
     },
     {

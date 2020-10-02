@@ -100,6 +100,23 @@ export async function addOverride(
 }
 
 /**
+ * Ouputs a patch-style diff of an override compared to its original source
+ */
+export async function diffOverride(
+  overrideName: string,
+  opts: {manifestPath?: string},
+): Promise<string> {
+  const ctx = await createManifestContext(opts);
+
+  const override = ctx.manifest.findOverride(overrideName);
+  if (!override) {
+    throw new Error(`Could not find override with name "${overrideName}"`);
+  }
+
+  return override.diffStrategy().diff(ctx.gitReactRepo, ctx.overrideRepo);
+}
+
+/**
  * Receives notifications on progress during overide upgrades
  */
 export type UpgradeProgressListener = (

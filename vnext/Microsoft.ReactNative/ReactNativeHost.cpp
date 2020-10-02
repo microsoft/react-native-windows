@@ -81,18 +81,16 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 
   auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
 
-  if (!m_packageBuilder) {
-    m_packageBuilder = make<ReactPackageBuilder>(
-        modulesProvider,
+  m_packageBuilder = make<ReactPackageBuilder>(
+      modulesProvider,
 #ifndef CORE_ABI
-        viewManagersProvider,
+      viewManagersProvider,
 #endif
-        turboModulesProvider);
+      turboModulesProvider);
 
-    if (auto packageProviders = InstanceSettings().PackageProviders()) {
-      for (auto const &packageProvider : packageProviders) {
-        packageProvider.CreatePackage(m_packageBuilder);
-      }
+  if (auto packageProviders = InstanceSettings().PackageProviders()) {
+    for (auto const &packageProvider : packageProviders) {
+      packageProvider.CreatePackage(m_packageBuilder);
     }
   }
 
