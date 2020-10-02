@@ -69,6 +69,33 @@ void doMain(async () => {
         cmdArgv => removeOverride(cmdArgv.override!),
       )
       .command(
+        'diff <override>',
+        'Compares an override to the base file of its current version',
+        cmdYargs =>
+          cmdYargs
+            .options({
+              override: {type: 'string', describe: 'The override to add'},
+              useManifestVersion: {
+                type: 'boolean',
+                default: false,
+                describe:
+                  'Compare against the base file of the current manifest react-native-version instead of current override version',
+              },
+              version: {
+                type: 'string',
+                describe: 'Optional React Native version to check against',
+              },
+            })
+            .conflicts('useManifestVersion', 'version'),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        cmdArgv =>
+          diffOverride(
+            cmdArgv.override!,
+            cmdArgv.useManifestVersion,
+            cmdArgv.version,
+          ),
+      )
+      .command(
         'upgrade',
         'Attempts to automatically merge new changes into out-of-date overrides',
         cmdYargs =>
@@ -188,6 +215,42 @@ async function removeOverride(overridePath: string) {
     );
     process.exit(1);
   }
+}
+
+/**
+ * Diffs an override against its base file
+ */
+async function diffOverride(
+  overridePath: string,
+  useManifestVersion: boolean,
+  version?: string,
+) {
+  const manifestPath = await findManifest(path.dirname(overridePath));
+  const manifestDir = path.dirname(manifestPath);
+  const overrideName = path.relative(manifestDir, path.resolve(overridePath));
+
+  const reactNativeVersion = useManifestVersion
+    ? await Api.manifestVersion({manifestPath})
+    : version;
+
+  const diff = await Api.diffOverride(overrideName, {
+    manifestPath,
+    reactNativeVersion,
+  });
+
+  const colorizedDiff = diff
+    .split('\n')
+    .slice(4) // Ignore Git gunk
+    .map(line =>
+      line.startsWith('+')
+        ? chalk.green(line)
+        : line.startsWith('-')
+        ? chalk.red(line)
+        : line,
+    )
+    .join('\n');
+
+  console.log(colorizedDiff);
 }
 
 /**

@@ -8,6 +8,7 @@
 import * as Serialized from './Serialized';
 import * as path from 'path';
 
+import DiffStrategy, {DiffStrategies} from './DiffStrategy';
 import UpgradeStrategy, {UpgradeStrategies} from './UpgradeStrategy';
 import ValidationStrategy, {ValidationStrategies} from './ValidationStrategy';
 import {normalizePath, unixPath} from './PathUtils';
@@ -49,6 +50,12 @@ export default interface Override {
    * Specifies how to check if the override contents are valid and up to date.
    */
   validationStrategies(): ValidationStrategy[];
+
+  /**
+   * Specifies how to diff an override against its base version
+   * @param reactNativeVersion a specific version of react-native to compare against
+   */
+  diffStrategy(reactNativeVersion?: string): DiffStrategy;
 }
 
 /**
@@ -89,6 +96,10 @@ export class PlatformOverride implements Override {
 
   validationStrategies(): ValidationStrategy[] {
     return [ValidationStrategies.overrideFileExists(this.overrideFile)];
+  }
+
+  diffStrategy(): DiffStrategy {
+    return DiffStrategies.asssumeSame();
   }
 }
 
@@ -138,6 +149,14 @@ abstract class BaseFileOverride implements Override {
         this.baseHash,
       ),
     ];
+  }
+
+  diffStrategy(reactNativeVersion?: string): DiffStrategy {
+    return DiffStrategies.compareBaseFile(
+      this.overrideFile,
+      this.baseFile,
+      reactNativeVersion || this.baseVersion,
+    );
   }
 
   protected serialzeBase() {
@@ -389,6 +408,10 @@ export class DirectoryCopyOverride implements Override {
         this.baseDirectory,
       ),
     ];
+  }
+
+  diffStrategy(): DiffStrategy {
+    return DiffStrategies.asssumeSame();
   }
 }
 
