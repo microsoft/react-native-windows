@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 03 Oct 2020 05:04:45 GMT and should not be manually modified.
+This log was last generated on Sun, 04 Oct 2020 05:04:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.178
+
+Sun, 04 Oct 2020 05:04:25 GMT
+
+### Changes
+
+- Remove the other TimingModule Assertion (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.177
 

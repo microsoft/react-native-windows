@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove the other TimingModule Assertion",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-10-02T19:58:35.058Z"
-}
