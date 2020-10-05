@@ -32,7 +32,7 @@
     "babel-jest": "^26.3.0",
     "eslint": "6.8.0",
     "jest": "^26.4.2",
-    "just-scripts": "^0.36.1",
+    "just-scripts": "^0.44.7",
     "ora": "^3.4.0",
     "prettier": "1.19.1",
     "ps-list": "^7.2.0",

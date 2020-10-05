@@ -69,7 +69,7 @@
     "eslint": "6.8.0",
     "flow-bin": "^0.131.0",
     "jscodeshift": "^0.9.0",
-    "just-scripts": "^0.36.1",
+    "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "react": "16.13.1",
     "react-native": "0.0.0-f8e5423c8",
