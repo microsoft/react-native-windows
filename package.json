@@ -53,6 +53,8 @@
     "logkitty": "^0.7.1",
     "eslint-plugin-react": "^7.14.1",
     "eslint-plugin-react-hooks": "4.0.7",
+    "mkdirp-comment": "Resolution can be removed once E2ETest is off of forked/old wdio",
+    "mkdirp": "0.5.5",
     "webdriver": "git+https://github.com/react-native-windows/webdriver.git",
     "webdriverio": "5.12.1"
   },
