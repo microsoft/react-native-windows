@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Remove ILegacyReactInstance, and react::uwp::IReactInstance",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-02T20:42:03.536Z"
+}

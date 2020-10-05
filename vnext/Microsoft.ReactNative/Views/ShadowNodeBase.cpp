@@ -81,8 +81,8 @@ void ShadowNodeBase::ReplaceChild(const XamlView &oldChildView, const XamlView &
 
 void ShadowNodeBase::ReparentView(XamlView view) {
   GetViewManager()->TransferProperties(m_view, view);
-  if (const auto instance = GetViewManager()->GetReactInstance().lock()) {
-    if (const auto nativeUIManager = static_cast<NativeUIManager *>(instance->NativeUIManager())) {
+  if (auto uiManager = GetViewManager()->GetReactContext().NativeUIManager()) {
+    if (const auto nativeUIManager = static_cast<NativeUIManager *>(uiManager)) {
       int64_t parentTag = GetParent();
       auto host = nativeUIManager->getHost();
       auto pParentNode = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parentTag));
@@ -94,8 +94,8 @@ void ShadowNodeBase::ReparentView(XamlView view) {
   ReplaceView(view);
 
   // Let the UIManager know about this so it can update the yoga context.
-  if (const auto instance = GetViewManager()->GetReactInstance().lock()) {
-    auto pNativeUiManager = static_cast<NativeUIManager *>(instance->NativeUIManager());
+  if (auto uiManager = GetViewManager()->GetReactContext().NativeUIManager()) {
+    auto pNativeUiManager = static_cast<NativeUIManager *>(uiManager);
     pNativeUiManager->ReplaceView(*static_cast<ShadowNode *>(this));
   }
 }
@@ -121,10 +121,9 @@ void ShadowNodeBase::UpdateTransformPS() {
     assert(uielement != nullptr);
     m_transformPS = EnsureTransformPS();
     m_transformPS.InsertVector3(L"center", {0, 0, 0});
-    auto instance = GetViewManager()->GetReactInstance().lock();
-    assert(instance != nullptr);
+
     auto centeringAnimation =
-        instance->GetExpressionAnimationStore().GetElementCenterPointExpression(GetCompositor(GetView()));
+        GetViewManager()->GetExpressionAnimationStore()->GetElementCenterPointExpression(GetCompositor(GetView()));
     centeringAnimation.SetExpressionReferenceParameter(L"uielement", uielement);
     m_transformPS.StartAnimation(L"center", centeringAnimation);
 
@@ -156,10 +155,7 @@ void ShadowNodeBase::EnsureHandledKeyboardEventHandler() {
 }
 
 void ShadowNodeBase::YellowBox(const std::string &message) const noexcept {
-  const auto instance = GetViewManager()->GetReactInstance().lock();
-  if (instance) {
-    instance->CallJsFunction("RCTLog", "logToConsole", folly::dynamic::array("warn", message));
-  }
+  GetViewManager()->GetReactContext().CallJSFunction("RCTLog", "logToConsole", folly::dynamic::array("warn", message));
 }
 
 } // namespace react::uwp

@@ -24,7 +24,6 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
 
  public:
   ABIViewManager(
-      std::shared_ptr<react::uwp::IReactInstance> const &reactInstance,
       Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
       ReactNative::IViewManager const &viewManager);
 

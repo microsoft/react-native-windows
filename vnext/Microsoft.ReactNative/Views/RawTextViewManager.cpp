@@ -26,7 +26,7 @@ using namespace xaml::Media;
 
 namespace react::uwp {
 
-RawTextViewManager::RawTextViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
+RawTextViewManager::RawTextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *RawTextViewManager::GetName() const {
   return "RCTRawText";
@@ -49,9 +49,9 @@ bool RawTextViewManager::UpdateProperty(
     run.Text(asHstring(propertyValue));
 
     if (nodeToUpdate->GetParent() != -1) {
-      if (auto instance = this->m_wkReactInstance.lock()) {
-        const ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(
-            instance->NativeUIManager()->getHost()->FindShadowNodeForTag(nodeToUpdate->GetParent()));
+      if (auto uiManager = m_context->NativeUIManager()) {
+        const ShadowNodeBase *parent =
+            static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(nodeToUpdate->GetParent()));
         if (parent && parent->m_children.size() == 1) {
           auto view = parent->GetView();
           auto textBlock = view.try_as<winrt::TextBlock>();
@@ -60,7 +60,7 @@ bool RawTextViewManager::UpdateProperty(
           }
         }
 
-        NotifyAncestorsTextChanged(instance.operator->(), nodeToUpdate);
+        NotifyAncestorsTextChanged(nodeToUpdate);
       }
     }
   } else {
@@ -69,8 +69,11 @@ bool RawTextViewManager::UpdateProperty(
   return true;
 }
 
-void RawTextViewManager::NotifyAncestorsTextChanged(IReactInstance *instance, ShadowNodeBase *nodeToUpdate) {
-  auto host = instance->NativeUIManager()->getHost();
+void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate) {
+  auto uiManager = GetReactContext().NativeUIManager();
+  if (!uiManager)
+    return;
+  auto host = uiManager->getHost();
   ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(nodeToUpdate->GetParent()));
   while (parent) {
     auto viewManager = parent->GetViewManager();

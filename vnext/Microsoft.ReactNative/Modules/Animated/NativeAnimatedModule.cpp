@@ -11,8 +11,8 @@
 namespace react::uwp {
 const char *NativeAnimatedModule::name{"NativeAnimatedModule"};
 
-NativeAnimatedModule::NativeAnimatedModule(const std::weak_ptr<IReactInstance> &reactInstance)
-    : m_wkReactInstance(reactInstance) {
+NativeAnimatedModule::NativeAnimatedModule(Mso::CntPtr<Mso::React::IReactContext> &&context)
+    : m_context(std::move(context)) {
   m_nodesManager = std::make_shared<NativeAnimatedNodeManager>(NativeAnimatedNodeManager());
 }
 
@@ -148,7 +148,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> NativeAnimatedModule::ge
 }
 
 void NativeAnimatedModule::CreateAnimatedNode(int64_t tag, const folly::dynamic &config) {
-  m_nodesManager->CreateAnimatedNode(tag, config, m_wkReactInstance, m_nodesManager);
+  m_nodesManager->CreateAnimatedNode(tag, config, m_context, m_nodesManager);
 }
 
 void NativeAnimatedModule::GetValue(int64_t animatedNodeTag, const Callback &saveValueCallback) {

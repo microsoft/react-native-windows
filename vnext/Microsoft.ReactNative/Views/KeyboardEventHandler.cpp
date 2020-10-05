@@ -100,11 +100,11 @@ void KeyboardEventHandler::unhook() {
   m_keyUpRevoker.revoke();
 }
 
-PreviewKeyboardEventHandlerOnRoot::PreviewKeyboardEventHandlerOnRoot(const std::weak_ptr<IReactInstance> &reactInstance)
+PreviewKeyboardEventHandlerOnRoot::PreviewKeyboardEventHandlerOnRoot(const Mso::React::IReactContext &context)
     : PreviewKeyboardEventHandler(
           std::bind(&PreviewKeyboardEventHandlerOnRoot::OnPreKeyDown, this, _1, _2),
           std::bind(&PreviewKeyboardEventHandlerOnRoot::OnPreKeyUp, this, _1, _2)),
-      m_wkReactInstance(reactInstance) {}
+      m_context(&context) {}
 
 void PreviewKeyboardEventHandlerOnRoot::OnPreKeyDown(
     winrt::IInspectable const & /*sender*/,
@@ -211,18 +211,16 @@ void UpdateModifiedKeyStatusTo(T &event) {
 void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(
     std::string &&eventName,
     xaml::Input::KeyRoutedEventArgs const &args) {
-  if (auto instance = m_wkReactInstance.lock()) {
-    if (auto source = args.OriginalSource().try_as<xaml::FrameworkElement>()) {
-      auto reactId = getViewId(instance.operator->(), source);
-      if (reactId.isValid) {
-        ReactKeyboardEvent event;
-        event.target = reactId.tag;
-        UpdateModifiedKeyStatusTo(event);
-        event.key = KeyboardHelper::FromVirtualKey(args.Key(), event.shiftKey, event.capLocked);
-        event.code = KeyboardHelper::CodeFromVirtualKey(args.OriginalKey());
+  if (auto source = args.OriginalSource().try_as<xaml::FrameworkElement>()) {
+    auto reactId = getViewId(*m_context, source);
+    if (reactId.isValid) {
+      ReactKeyboardEvent event;
+      event.target = reactId.tag;
+      UpdateModifiedKeyStatusTo(event);
+      event.key = KeyboardHelper::FromVirtualKey(args.Key(), event.shiftKey, event.capLocked);
+      event.code = KeyboardHelper::CodeFromVirtualKey(args.OriginalKey());
 
-        instance->DispatchEvent(event.target, std::move(eventName), ToEventData(event));
-      }
+      m_context->DispatchEvent(event.target, std::move(eventName), ToEventData(event));
     }
   }
 }

@@ -11,8 +11,7 @@
 namespace react::uwp {
 namespace polyester {
 
-ButtonContentViewManager::ButtonContentViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+ButtonContentViewManager::ButtonContentViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 void ButtonContentViewManager::AddView(const XamlView &parent, const XamlView &child, int64_t index) {
   auto stackPanel(parent.as<xaml::Controls::StackPanel>());

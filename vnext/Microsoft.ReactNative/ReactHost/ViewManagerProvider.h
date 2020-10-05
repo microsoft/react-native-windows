@@ -6,16 +6,12 @@
 #include <memory>
 #include <vector>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 class IViewManager;
-}
-} // namespace facebook
-namespace react::uwp {
-struct IReactInstance;
 }
 
 namespace react::uwp {
+struct IReactInstance;
 
 using NativeViewManager = std::unique_ptr<facebook::react::IViewManager>;
 
