@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 05 Oct 2020 15:04:50 GMT",
+      "tag": "react-native-windows_v0.63.4",
+      "version": "0.63.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix pre-1903 crash when loading certain images",
+            "author": "email not defined",
+            "commit": "976222751c7ea8486b8948c927935d1d9ee21277",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Sep 2020 15:04:34 GMT",
       "tag": "react-native-windows_v0.63.3",
       "version": "0.63.3",

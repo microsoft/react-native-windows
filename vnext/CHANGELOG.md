@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 21 Sep 2020 15:04:59 GMT and should not be manually modified.
+This log was last generated on Mon, 05 Oct 2020 15:04:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.4
+
+Mon, 05 Oct 2020 15:04:50 GMT
+
+### Patches
+
+- Fix pre-1903 crash when loading certain images (email not defined)
 
 ## 0.63.3
 

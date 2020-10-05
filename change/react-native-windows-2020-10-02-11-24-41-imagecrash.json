@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix pre-1903 crash when loading certain images",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch",
-  "date": "2020-10-02T18:24:41.653Z"
-}
