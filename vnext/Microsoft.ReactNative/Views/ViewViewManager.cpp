@@ -221,9 +221,7 @@ class ViewShadowNode : public ShadowNodeBase {
   }
 
   void DispatchEvent(std::string &&eventName, folly::dynamic &&eventData) {
-    auto instance = GetViewManager()->GetReactInstance().lock();
-    if (instance != nullptr)
-      instance->DispatchEvent(m_tag, std::move(eventName), std::move(eventData));
+    GetViewManager()->GetReactContext().DispatchEvent(m_tag, std::move(eventName), std::move(eventData));
   }
 
  private:
@@ -315,7 +313,7 @@ bool TryUpdateBorderProperties(
 
 // ViewViewManager
 
-ViewViewManager::ViewViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
+ViewViewManager::ViewViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *ViewViewManager::GetName() const {
   return "RCTView";
@@ -505,11 +503,9 @@ void ViewViewManager::TryUpdateView(
 
   // If we need to change the root of our view, do it now
   if (oldXamlView != newXamlView) {
-    auto instance = m_wkReactInstance.lock();
-    if (instance == nullptr)
+    auto pNativeUiManager = static_cast<NativeUIManager *>(m_context->NativeUIManager());
+    if (!pNativeUiManager)
       return;
-
-    auto pNativeUiManager = static_cast<NativeUIManager *>(instance->NativeUIManager());
 
     // Inform the parent ShadowNode of this change so the hierarchy can be
     // updated

@@ -2,6 +2,27 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Sat, 03 Oct 2020 05:04:45 GMT",
+      "tag": "react-native-platform-override_v0.3.3",
+      "version": "0.3.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow Default baseVersion in Override Manfests",
+            "author": "ngerlem@microsoft.com",
+            "commit": "feca1c6fea43a0459c922e4af1c3daf5c3b65ec5",
+            "package": "react-native-platform-override"
+          },
+          {
+            "comment": "Add command to diff overrides",
+            "author": "ngerlem@microsoft.com",
+            "commit": "10f9b80d943ed34824132912a936fa1af7d0f8e0",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 02 Oct 2020 05:05:22 GMT",
       "tag": "react-native-platform-override_v0.3.2",
       "version": "0.3.2",

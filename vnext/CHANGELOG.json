@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 04 Oct 2020 05:04:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.178",
+      "version": "0.0.0-canary.178",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove the other TimingModule Assertion",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cfb1b87474d6c03d8d125953c39242f566ff85fa",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 03 Oct 2020 05:04:45 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.177",
+      "version": "0.0.0-canary.177",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix native modules not being re-initialized on reload",
+            "author": "tn0502@gmail.com",
+            "commit": "489d342b7807dbe6fb6630146e294c2d6fe42c87",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 8/19 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "85360682867c1bc265da6730581df5994d679cda",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow Default baseVersion in Override Manfests",
+            "author": "ngerlem@microsoft.com",
+            "commit": "feca1c6fea43a0459c922e4af1c3daf5c3b65ec5",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 02 Oct 2020 05:05:22 GMT",
       "tag": "react-native-windows_v0.0.0-canary.176",
       "version": "0.0.0-canary.176",

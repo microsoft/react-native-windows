@@ -64,11 +64,11 @@ namespace react::uwp {
 
 void AddStandardViewManagers(
     std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
-    std::shared_ptr<IReactInstance> const &instance) noexcept;
+    const Mso::React::IReactContext &context) noexcept;
 
 void AddPolyesterViewManagers(
     std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
-    std::shared_ptr<IReactInstance> const &instance) noexcept;
+    const Mso::React::IReactContext &context) noexcept;
 
 std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
     Mso::React::IReactContext *context,
@@ -129,8 +129,7 @@ ReactInstanceWin::ReactInstanceWin(
       m_reactContext{Mso::Make<ReactContext>(
           this,
           options.Properties,
-          winrt::make<implementation::ReactNotificationService>(options.Notifications))},
-      m_legacyInstance{std::make_shared<react::uwp::UwpReactInstanceProxy>(Mso::Copy(m_reactContext))} {
+          winrt::make<implementation::ReactNotificationService>(options.Notifications))} {
   m_whenCreated.SetValue();
 }
 
@@ -213,13 +212,12 @@ void ReactInstanceWin::Initialize() noexcept {
       [weakThis = Mso::WeakPtr{this}]() noexcept {
         // Objects that must be created on the UI thread
         if (auto strongThis = weakThis.GetStrongPtr()) {
-          auto const &legacyInstance = strongThis->m_legacyInstance;
-          strongThis->m_appTheme =
-              std::make_shared<react::uwp::AppTheme>(legacyInstance, strongThis->m_uiMessageThread.LoadWithLock());
+          strongThis->m_appTheme = std::make_shared<react::uwp::AppTheme>(
+              strongThis->GetReactContext(), strongThis->m_uiMessageThread.LoadWithLock());
           Microsoft::ReactNative::I18nManager::InitI18nInfo(
               winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
           strongThis->m_appearanceListener =
-              Mso::Make<react::uwp::AppearanceChangeListener>(legacyInstance, strongThis->m_uiQueue);
+              Mso::Make<react::uwp::AppearanceChangeListener>(strongThis->GetReactContext(), strongThis->m_uiQueue);
           Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(
               winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
         }
@@ -272,7 +270,7 @@ void ReactInstanceWin::Initialize() noexcept {
               m_jsMessageThread.Load(),
               std::move(m_appTheme),
               std::move(m_appearanceListener),
-              m_legacyInstance);
+              m_reactContext);
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
 
@@ -299,13 +297,13 @@ void ReactInstanceWin::Initialize() noexcept {
             std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
             switch (m_options.JsiEngine) {
-              case react::uwp::JSIEngine::Hermes:
+              case JSIEngine::Hermes:
 #if defined(USE_HERMES)
                 devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
                 devSettings->inlineSourceMap = false;
                 break;
 #endif
-              case react::uwp::JSIEngine::V8:
+              case JSIEngine::V8:
 #if defined(USE_V8)
                 preparedScriptStore =
                     std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
@@ -314,7 +312,7 @@ void ReactInstanceWin::Initialize() noexcept {
                     devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
                 break;
 #endif
-              case react::uwp::JSIEngine::Chakra:
+              case JSIEngine::Chakra:
                 if (m_options.EnableByteCodeCaching || !m_options.ByteCodeFileUri.empty()) {
                   scriptStore = std::make_unique<react::uwp::UwpScriptStore>();
                   preparedScriptStore = std::make_unique<react::uwp::UwpPreparedScriptStore>(
@@ -348,7 +346,7 @@ void ReactInstanceWin::Initialize() noexcept {
 
             LoadJSBundles();
 
-            if (m_options.UseDeveloperSupport() && State() != ReactInstanceState::HasError) {
+            if (UseDeveloperSupport() && State() != ReactInstanceState::HasError) {
               folly::dynamic params = folly::dynamic::array(
                   STRING(RN_PLATFORM),
                   DebugBundlePath(),
@@ -538,11 +536,11 @@ void ReactInstanceWin::InitUIManager() noexcept {
 
   // Custom view managers
   if (m_options.ViewManagerProvider) {
-    viewManagers = m_options.ViewManagerProvider->GetViewManagers(m_reactContext, m_legacyInstance);
+    viewManagers = m_options.ViewManagerProvider->GetViewManagers(m_reactContext);
   }
 
-  react::uwp::AddStandardViewManagers(viewManagers, m_legacyInstance);
-  react::uwp::AddPolyesterViewManagers(viewManagers, m_legacyInstance);
+  react::uwp::AddStandardViewManagers(viewManagers, *m_reactContext);
+  react::uwp::AddPolyesterViewManagers(viewManagers, *m_reactContext);
 
   auto uiManager = react::uwp::CreateUIManager2(m_reactContext.Get(), std::move(viewManagers));
   auto wkUIManger = std::weak_ptr<facebook::react::IUIManager>(uiManager);
@@ -592,7 +590,7 @@ facebook::react::NativeLoggingHook ReactInstanceWin::GetLoggingCallback() noexce
 std::shared_ptr<IRedBoxHandler> ReactInstanceWin::GetRedBoxHandler() noexcept {
   if (m_options.RedBoxHandler) {
     return m_options.RedBoxHandler;
-  } else if (m_options.UseDeveloperSupport()) {
+  } else if (UseDeveloperSupport()) {
     auto localWkReactHost = m_weakReactHost;
     return CreateDefaultRedBoxHandler(std::move(localWkReactHost), Mso::Copy(m_uiQueue));
   } else {
@@ -747,10 +745,6 @@ std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() 
   return m_instance.LoadWithLock();
 }
 
-std::shared_ptr<react::uwp::IReactInstance> ReactInstanceWin::UwpReactInstance() noexcept {
-  return m_legacyInstance;
-}
-
 bool ReactInstanceWin::IsLoaded() const noexcept {
   return m_state == ReactInstanceState::Loaded;
 }
@@ -828,6 +822,14 @@ uint16_t ReactInstanceWin::SourceBundlePort() const noexcept {
 
 std::string ReactInstanceWin::JavaScriptBundleFile() const noexcept {
   return m_options.Identity;
+}
+
+bool ReactInstanceWin::UseDeveloperSupport() const noexcept {
+  return m_options.UseDeveloperSupport();
+}
+
+Mso::React::IReactContext &ReactInstanceWin::GetReactContext() const noexcept {
+  return *m_reactContext;
 }
 
 } // namespace Mso::React

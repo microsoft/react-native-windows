@@ -24,7 +24,7 @@ namespace react::uwp {
 
 class TouchEventHandler {
  public:
-  TouchEventHandler(const std::weak_ptr<IReactInstance> &reactInstance);
+  TouchEventHandler(const Mso::React::IReactContext &context);
   virtual ~TouchEventHandler();
 
   void AddTouchHandlers(XamlView xamlView);
@@ -69,11 +69,7 @@ class TouchEventHandler {
   CreateReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::UIElement sourceElement);
   void
   UpdateReactPointer(ReactPointer &pointer, const winrt::PointerRoutedEventArgs &args, xaml::UIElement sourceElement);
-  void UpdatePointersInViews(
-      std::shared_ptr<IReactInstance> instance,
-      const winrt::PointerRoutedEventArgs &args,
-      int64_t tag,
-      xaml::UIElement sourceElement);
+  void UpdatePointersInViews(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::UIElement sourceElement);
 
   enum class TouchEventType { Start = 0, End, Move, Cancel, PointerEntered, PointerExited, PointerMove };
   void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
@@ -101,7 +97,7 @@ class TouchEventHandler {
       bool &isHit);
 
   XamlView m_xamlView;
-  std::weak_ptr<IReactInstance> m_wkReactInstance;
+  Mso::CntPtr<const Mso::React::IReactContext> m_context;
 };
 
 } // namespace react::uwp

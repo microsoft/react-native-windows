@@ -4,6 +4,7 @@
 #pragma once
 
 #include <IReactInstance.h>
+#include <React.h>
 #include <folly/dynamic.h>
 #include <stdint.h>
 
@@ -21,7 +22,7 @@ inline typename T asEnum(folly::dynamic const &obj) {
   return static_cast<T>(obj.asInt());
 }
 
-ReactId getViewId(_In_ IReactInstance *instance, xaml::FrameworkElement const &fe);
+ReactId getViewId(const Mso::React::IReactContext &context, xaml::FrameworkElement const &fe);
 std::int32_t CountOpenPopups();
 
 bool IsRS3OrHigher();

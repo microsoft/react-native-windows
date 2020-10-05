@@ -12,7 +12,7 @@ class FlyoutViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
-  FlyoutViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+  FlyoutViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
   facebook::react::ShadowNode *createShadow() const override;
