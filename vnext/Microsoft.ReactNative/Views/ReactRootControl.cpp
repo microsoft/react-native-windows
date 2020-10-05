@@ -146,6 +146,7 @@ void ReactRootControl::InitRootView(
     UninitRootView();
   }
 
+  m_reactOptions = std::make_unique<Mso::React::ReactOptions>(reactInstance->Options());
   m_weakReactInstance = Mso::WeakPtr{reactInstance};
   m_context = &reactInstance->GetReactContext();
   m_reactViewOptions = std::make_unique<Mso::React::ReactViewOptions>(std::move(reactViewOptions));
@@ -205,9 +206,9 @@ void ReactRootControl::UninitRootView() noexcept {
     return;
   }
 
-  if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
-    reactInstance->DetachRootView(this);
-  }
+  // if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
+  //   reactInstance->DetachRootView(this);
+  // }
 
   if (m_touchEventHandler != nullptr) {
     m_touchEventHandler->RemoveTouchHandlers();
