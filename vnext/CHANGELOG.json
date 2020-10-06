@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 06 Oct 2020 05:04:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.179",
+      "version": "0.0.0-canary.179",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove ILegacyReactInstance, and react::uwp::IReactInstance",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e25d2ce64e15d825b492bffc8d1f908877d8d0af",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update System.Private.Uri version for C# codegen",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b4883728279bfb212c698d2c9920458c55a727d4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 04 Oct 2020 05:04:25 GMT",
       "tag": "react-native-windows_v0.0.0-canary.178",
       "version": "0.0.0-canary.178",
