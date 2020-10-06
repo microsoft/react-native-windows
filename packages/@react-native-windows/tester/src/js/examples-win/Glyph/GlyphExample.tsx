@@ -6,7 +6,7 @@
 
 import * as React from 'react';
 import {Text, View} from 'react-native';
-import {Glyph} from '../../../../Libraries/Components/Glyph/Glyph';
+import {Glyph} from 'react-native-windows';
 
 class GlyphExamples extends React.Component {
   public render() {

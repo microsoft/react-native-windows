@@ -14,10 +14,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {IKeyboardEvent} from '../../../../Libraries/Components/Keyboard/KeyboardExtProps';
-import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
-import {supportKeyboard} from '../../../../Libraries/Components/Keyboard/KeyboardExt';
-import {ViewWindows} from '../../../../Libraries/Components/View/ViewWindows';
+import {IKeyboardEvent, Picker, supportKeyboard, ViewWindows} from 'react-native-windows';
 
 // TextInput2 is used to verify supportKeyboard + focus
 const TextInput2 = supportKeyboard(TextInput);

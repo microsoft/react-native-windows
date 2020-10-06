@@ -10,8 +10,8 @@ import {
   HandledEventPhase,
   IHandledKeyboardEvent,
   IKeyboardEvent,
-} from '../../../../Libraries/Components/Keyboard/KeyboardExtProps';
-import {supportKeyboard} from '../../../../Libraries/Components/Keyboard/KeyboardExt';
+  supportKeyboard,
+} from 'react-native-windows';
 
 const ViewWindows = supportKeyboard(View);
 

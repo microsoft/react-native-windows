@@ -6,9 +6,7 @@
 
 import * as React from 'react';
 import {Text, View} from 'react-native';
-import {DatePicker} from '../../../../Libraries/Components/DatePicker/DatePicker';
-import {DayOfWeek} from '../../../../Libraries/Components/DatePicker/DatePickerProps';
-import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
+import {DatePicker, DayOfWeek, Picker} from 'react-native-windows';
 
 interface IDatePickerExampleState {
   dateFormat:

@@ -10,8 +10,7 @@ import {
   StyleSheet,
   Button,
 } from 'react-native';
-import {DatePicker} from '../../../../Libraries/Components/DatePicker/DatePicker';
-import {Picker} from '../../../../Libraries/Components/Picker/PickerWindows';
+import {DatePicker, Picker} from 'react-native-windows';
 import * as React from 'react'
 import { useState } from 'react';
 import { SHOWBORDER_ON_CONTROLSTYLE, TREE_DUMP_RESULT } from './Consts';

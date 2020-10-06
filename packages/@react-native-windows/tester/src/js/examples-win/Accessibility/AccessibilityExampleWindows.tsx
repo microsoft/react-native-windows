@@ -13,8 +13,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import {AppTheme} from '../../../../Libraries/AppTheme/AppTheme';
-import {IHighContrastChangedEvent} from '../../../../Libraries/AppTheme/AppThemeTypes';
+import {AppTheme, IHighContrastChangedEvent} from 'react-native-windows';
 
 class AccessibilityBaseExample extends React.Component {
   public render() {

@@ -6,7 +6,7 @@
 
 import * as React from 'react';
 import {Button, Text, TextInput, View} from 'react-native';
-import {Popup} from '../../../../Libraries/Components/Popup/Popup';
+import {Popup} from 'react-native-windows';
 
 interface IAnchoredPopupExampleState {
   showPopup: boolean;
