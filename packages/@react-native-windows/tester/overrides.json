@@ -1,0 +1,46 @@
+{
+  "includePatterns": [
+    "src"
+  ],
+  "excludePatterns": [
+    "src/js/examples-win/**"
+  ],
+  "baseVersion": "0.0.0-12543d557",
+  "overrides": [
+    {
+      "type": "patch",
+      "file": "src/js/components/RNTesterExampleList.windows.js",
+      "baseFile": "packages/rn-tester/js/components/RNTesterExampleList.js",
+      "baseHash": "b065341e44bf70ce9cf8a9f7a2a8738502f820bd",
+      "issue": 5834
+    },
+    {
+      "type": "patch",
+      "file": "src/js/examples/TextInput/TextInputExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
+      "baseHash": "1755bffd6ae353838f1779007dc4a512b8dddcdc",
+      "issue": 5688
+    },
+    {
+      "type": "patch",
+      "file": "src/js/examples/View/ViewExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
+      "baseHash": "2425a6f8fb8b7c7633b5744811c75edf77f29c2f",
+      "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "derived",
+      "file": "src/js/RNTesterApp.windows.js",
+      "baseFile": "packages/rn-tester/js/RNTesterApp.ios.js",
+      "baseHash": "26ff4ba8744e250fd430d25ba5784bc361f60a68",
+      "issue": 4586
+    },
+    {
+      "type": "derived",
+      "file": "src/js/utils/RNTesterList.windows.js",
+      "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
+      "baseHash": "0ac04af15d7ff9d34b3abe1a11110c24480fba4b",
+      "issue": "LEGACY_FIXME"
+    }
+  ]
+}

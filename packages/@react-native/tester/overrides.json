@@ -1,0 +1,22 @@
+{
+  "excludePatterns": [
+    "node_modules"
+  ],
+  "baseVersion": "0.0.0-12543d557",
+  "overrides": [
+    {
+      "type": "copy",
+      "directory": "js",
+      "baseDirectory": "packages/rn-tester/js",
+      "baseHash": "37a107634dd046e26920a6fa0a58da17e1dd66bf",
+      "issue": 4054
+    },
+    {
+      "type": "patch",
+      "file": "package.json",
+      "baseFile": "packages/rn-tester/package.json",
+      "baseHash": "c0220d63af0f6298e7a62347a1f3f10bb8bf6f35",
+      "issue": 4054
+    }
+  ]
+}
