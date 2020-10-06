@@ -26,7 +26,7 @@ class DatePickerShadowNode : public ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
 
  private:
-  void OnDateChanged(IReactInstance &instance, int64_t tag, winrt::DateTime const &newDate);
+  void OnDateChanged(const Mso::React::IReactContext &context, int64_t tag, winrt::DateTime const &newDate);
 
   int64_t m_selectedTime{0}, m_maxTime{0}, m_minTime{0}; // These values are expected to be in milliseconds
   int64_t m_timeZoneOffsetInSeconds = 0; // Timezone offset is expected to be in seconds
@@ -38,14 +38,12 @@ void DatePickerShadowNode::createView() {
   Super::createView();
 
   auto datePicker = GetView().as<xaml::Controls::CalendarDatePicker>();
-  auto wkinstance = GetViewManager()->GetReactInstance();
 
   m_dataPickerDateChangedRevoker = datePicker.DateChanged(
       winrt::auto_revoke,
       [=](xaml::Controls::CalendarDatePicker /*picker*/, xaml::Controls::CalendarDatePickerDateChangedEventArgs args) {
-        auto instance = wkinstance.lock();
-        if (!m_updating && instance != nullptr && args.NewDate() != nullptr)
-          OnDateChanged(*instance, m_tag, args.NewDate().Value());
+        if (!m_updating && args.NewDate() != nullptr)
+          OnDateChanged(GetViewManager()->GetReactContext(), m_tag, args.NewDate().Value());
       });
 }
 
@@ -126,16 +124,18 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
-void DatePickerShadowNode::OnDateChanged(IReactInstance &instance, int64_t tag, winrt::DateTime const &newDate) {
+void DatePickerShadowNode::OnDateChanged(
+    const Mso::React::IReactContext &context,
+    int64_t tag,
+    winrt::DateTime const &newDate) {
   auto timeInMilliseconds = DateTimeToDynamic(newDate, m_timeZoneOffsetInSeconds);
   if (!timeInMilliseconds.isNull()) {
     folly::dynamic eventData = folly::dynamic::object("target", tag)("newDate", timeInMilliseconds);
-    instance.DispatchEvent(tag, "topChange", std::move(eventData));
+    context.DispatchEvent(tag, "topChange", std::move(eventData));
   }
 }
 
-DatePickerViewManager::DatePickerViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+DatePickerViewManager::DatePickerViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *DatePickerViewManager::GetName() const {
   return "RCTDatePicker";

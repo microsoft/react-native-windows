@@ -32,15 +32,12 @@ void ButtonShadowNode::createView() {
   auto button = GetView().as<winrt::Button>();
 
   m_buttonClickRevoker = button.Click(winrt::auto_revoke, [=](auto &&, auto &&) {
-    auto instance = GetViewManager()->GetReactInstance().lock();
     folly::dynamic eventData = folly::dynamic::object("target", m_tag);
-    if (instance != nullptr)
-      instance->DispatchEvent(m_tag, "topClick", std::move(eventData));
+    GetViewManager()->DispatchEvent(m_tag, "topClick", std::move(eventData));
   });
 }
 
-ButtonViewManager::ButtonViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
-    : ContentControlViewManager(reactInstance) {}
+ButtonViewManager::ButtonViewManager(const Mso::React::IReactContext &context) : ContentControlViewManager(context) {}
 
 const char *ButtonViewManager::GetName() const {
   // TODO: Is this right? Or should it be RCTButton?

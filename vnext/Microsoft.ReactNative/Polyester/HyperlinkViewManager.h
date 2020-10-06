@@ -12,7 +12,7 @@ class HyperlinkViewManager : public ContentControlViewManager {
   using Super = ContentControlViewManager;
 
  public:
-  HyperlinkViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+  HyperlinkViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
   folly::dynamic GetNativeProps() const override;

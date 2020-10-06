@@ -369,10 +369,11 @@ test('markUpToDate - Simple', async () => {
   expect(newOverride.baseHash).toBe(hashContent(reactFiles[0].content));
 });
 
-test('Serialization Round-Trip', () => {
+test('Serialization (Indivudal Base) Round-Trip', () => {
   const serializedManifest: Serialized.Manifest = {
     includePatterns: undefined,
     excludePatterns: undefined,
+    baseVersion: undefined,
     overrides: [
       {
         type: 'platform',
@@ -410,8 +411,11 @@ test('Serialization Round-Trip', () => {
   );
 });
 
-test('String Exact Serialization Round-Trip', () => {
-  const serializedManifest: any = {
+test('Serialization (Default Base) Round-Trip', () => {
+  const serializedManifest: Serialized.Manifest = {
+    includePatterns: undefined,
+    excludePatterns: undefined,
+    baseVersion: '0.68.7',
     overrides: [
       {
         type: 'platform',
@@ -421,7 +425,88 @@ test('String Exact Serialization Round-Trip', () => {
         type: 'derived',
         file: 'abcd.windows.js',
         baseFile: 'abcd.js',
-        baseVersion: '0.68.7',
+        baseVersion: undefined,
+        baseHash: 'gksdpofgkesgpofk',
+        issue: undefined,
+      },
+      {
+        type: 'patch',
+        file: 'defg.windows.js',
+        baseFile: 'defg.js',
+        baseVersion: undefined,
+        baseHash: 'sdfssfsfsf',
+        issue: 'LEGACY_FIXME',
+      },
+      {
+        type: 'copy',
+        file: 'ffgg.windows.js',
+        baseFile: 'ffgg.android.js',
+        baseVersion: undefined,
+        baseHash: 'sdfssfsfsf',
+        issue: 1234,
+      },
+    ],
+  };
+
+  expect(Manifest.fromSerialized(serializedManifest).serialize()).toEqual(
+    serializedManifest,
+  );
+});
+
+test('Serialization (Differing Bases) Round-Trip', () => {
+  const serializedManifest: Serialized.Manifest = {
+    includePatterns: undefined,
+    excludePatterns: undefined,
+    baseVersion: '0.68.7',
+    overrides: [
+      {
+        type: 'platform',
+        file: 'aaa.js',
+      },
+      {
+        type: 'derived',
+        file: 'abcd.windows.js',
+        baseFile: 'abcd.js',
+        baseVersion: undefined,
+        baseHash: 'gksdpofgkesgpofk',
+        issue: undefined,
+      },
+      {
+        type: 'patch',
+        file: 'defg.windows.js',
+        baseFile: 'defg.js',
+        baseVersion: '0.64.3',
+        baseHash: 'sdfssfsfsf',
+        issue: 'LEGACY_FIXME',
+      },
+      {
+        type: 'copy',
+        file: 'ffgg.windows.js',
+        baseFile: 'ffgg.android.js',
+        baseVersion: undefined,
+        baseHash: 'sdfssfsfsf',
+        issue: 1234,
+      },
+    ],
+  };
+
+  expect(Manifest.fromSerialized(serializedManifest).serialize()).toEqual(
+    serializedManifest,
+  );
+});
+
+test('String Exact Serialization Round-Trip', () => {
+  const serializedManifest: any = {
+    baseVersion: '0.68.7',
+    overrides: [
+      {
+        type: 'platform',
+        file: 'aaa.js',
+      },
+      {
+        type: 'derived',
+        file: 'abcd.windows.js',
+        baseFile: 'abcd.js',
         baseHash: 'gksdpofgkesgpofk',
       },
       {
@@ -436,7 +521,6 @@ test('String Exact Serialization Round-Trip', () => {
         type: 'copy',
         file: 'ffgg.windows.js',
         baseFile: 'ffgg.android.js',
-        baseVersion: '0.65.3',
         baseHash: 'sdfssfsfsf',
         issue: 1234,
       },

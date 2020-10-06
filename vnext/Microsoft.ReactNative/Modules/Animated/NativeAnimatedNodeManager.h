@@ -42,7 +42,7 @@ class NativeAnimatedNodeManager {
   void CreateAnimatedNode(
       int64_t tag,
       const folly::dynamic &config,
-      const std::weak_ptr<IReactInstance> &instance,
+      const Mso::CntPtr<Mso::React::IReactContext> &context,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   void GetValue(int64_t animatedNodeTag, const Callback &endCallback);
   void ConnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag);
@@ -80,7 +80,7 @@ class NativeAnimatedNodeManager {
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   void RemoveAnimatedEventFromView(int64_t viewTag, const std::string &eventName, int64_t animatedValueTag);
   void ProcessDelayedPropsNodes();
-  void AddDelayedPropsNode(int64_t propsNodeTag, const std::shared_ptr<IReactInstance> &instance);
+  void AddDelayedPropsNode(int64_t propsNodeTag, const Mso::CntPtr<Mso::React::IReactContext> &context);
 
   AnimatedNode *GetAnimatedNode(int64_t tag);
   ValueAnimatedNode *GetValueAnimatedNode(int64_t tag);

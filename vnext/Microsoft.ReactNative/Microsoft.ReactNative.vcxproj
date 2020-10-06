@@ -278,7 +278,6 @@
     <ClInclude Include="ReactHost\ReactInstanceWin.h" />
     <ClInclude Include="ReactHost\ReactNativeHeaders.h" />
     <ClInclude Include="ReactHost\React_Win.h" />
-    <ClInclude Include="ReactHost\UwpReactInstanceProxy.h" />
     <ClInclude Include="ReactInstanceSettings.h">
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -472,7 +471,6 @@
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
     <ClCompile Include="ReactHost\ReactHost.cpp" />
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />
-    <ClCompile Include="ReactHost\UwpReactInstanceProxy.cpp" />
     <ClCompile Include="ReactInstanceSettings.cpp">
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>

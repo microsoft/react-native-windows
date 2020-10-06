@@ -48,6 +48,8 @@
     "@wdio/utils": "5.12.1",
     "acorn": "^7.1.1",
     "bl": "3.0.1",
+    "hermes-engine-comment": "The hermes-engine resolution can be removed when we integrate the 9/17 Nightly RN Build",
+    "hermes-engine": "0.7.0",
     "logkitty": "^0.7.1",
     "eslint-plugin-react": "^7.14.1",
     "eslint-plugin-react-hooks": "4.0.7",

@@ -13,8 +13,7 @@ namespace winrt::Microsoft::ReactNative {
 
 class ViewManagersProvider final : public Mso::React::ViewManagerProvider2 {
   std::vector<react::uwp::NativeViewManager> GetViewManagers(
-      Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
-      std::shared_ptr<react::uwp::IReactInstance> const &instance) override;
+      Mso::CntPtr<Mso::React::IReactContext> const &reactContext) override;
 
  public:
   ViewManagersProvider() noexcept;

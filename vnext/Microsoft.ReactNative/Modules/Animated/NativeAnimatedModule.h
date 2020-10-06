@@ -55,7 +55,7 @@
 namespace react::uwp {
 class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
  public:
-  NativeAnimatedModule(const std::weak_ptr<IReactInstance> &reactInstance);
+  NativeAnimatedModule(Mso::CntPtr<Mso::React::IReactContext> &&context);
   virtual ~NativeAnimatedModule() = default;
 
   // CxxModule
@@ -93,24 +93,6 @@ class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
 
  private:
   std::shared_ptr<NativeAnimatedNodeManager> m_nodesManager{};
-  std::weak_ptr<IReactInstance> m_wkReactInstance;
-
-  static const char *s_createAnimatedNodeName;
-  static const char *s_getValueName;
-  static const char *s_connectAnimatedNodeToViewName;
-  static const char *s_disconnectAnimatedNodeFromViewName;
-  static const char *s_connectAnimatedNodesName;
-  static const char *s_disconnectAnimatedNodesName;
-  static const char *s_stopAnimationName;
-  static const char *s_startAnimatingNodeName;
-  static const char *s_dropAnimatedNodeName;
-  static const char *s_setAnimatedNodeValueName;
-  static const char *s_setAnimatedNodeOffsetName;
-  static const char *s_flattenAnimatedNodeOffsetName;
-  static const char *s_extractAnimatedNodeOffsetName;
-  static const char *s_addAnimatedEventToViewName;
-  static const char *s_removeAnimatedEventFromViewName;
-  static const char *s_startListeningToAnimatedNodeValueName;
-  static const char *s_stopListeningToAnimatedNodeValueName;
+  Mso::CntPtr<Mso::React::IReactContext> m_context;
 };
 } // namespace react::uwp

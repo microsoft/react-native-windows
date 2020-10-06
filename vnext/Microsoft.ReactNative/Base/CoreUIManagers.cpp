@@ -38,33 +38,33 @@ namespace react::uwp {
 
 void AddStandardViewManagers(
     std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
-    std::shared_ptr<IReactInstance> const &instance) noexcept {
-  viewManagers.push_back(std::make_unique<ActivityIndicatorViewManager>(instance));
-  viewManagers.push_back(std::make_unique<DatePickerViewManager>(instance));
-  viewManagers.push_back(std::make_unique<FlyoutViewManager>(instance));
-  viewManagers.push_back(std::make_unique<ImageViewManager>(instance));
-  viewManagers.push_back(std::make_unique<PickerViewManager>(instance));
-  viewManagers.push_back(std::make_unique<PopupViewManager>(instance));
-  viewManagers.push_back(std::make_unique<RawTextViewManager>(instance));
-  viewManagers.push_back(std::make_unique<RootViewManager>(instance));
-  viewManagers.push_back(std::make_unique<ScrollContentViewManager>(instance));
-  viewManagers.push_back(std::make_unique<SliderViewManager>(instance));
-  viewManagers.push_back(std::make_unique<ScrollViewManager>(instance));
-  viewManagers.push_back(std::make_unique<SwitchViewManager>(instance));
-  viewManagers.push_back(std::make_unique<TextViewManager>(instance));
-  viewManagers.push_back(std::make_unique<TextInputViewManager>(instance));
-  viewManagers.push_back(std::make_unique<ViewViewManager>(instance));
-  viewManagers.push_back(std::make_unique<VirtualTextViewManager>(instance));
-  viewManagers.push_back(std::make_unique<RefreshControlViewManager>(instance));
+    const Mso::React::IReactContext &context) noexcept {
+  viewManagers.push_back(std::make_unique<ActivityIndicatorViewManager>(context));
+  viewManagers.push_back(std::make_unique<DatePickerViewManager>(context));
+  viewManagers.push_back(std::make_unique<FlyoutViewManager>(context));
+  viewManagers.push_back(std::make_unique<ImageViewManager>(context));
+  viewManagers.push_back(std::make_unique<PickerViewManager>(context));
+  viewManagers.push_back(std::make_unique<PopupViewManager>(context));
+  viewManagers.push_back(std::make_unique<RawTextViewManager>(context));
+  viewManagers.push_back(std::make_unique<RootViewManager>(context));
+  viewManagers.push_back(std::make_unique<ScrollContentViewManager>(context));
+  viewManagers.push_back(std::make_unique<SliderViewManager>(context));
+  viewManagers.push_back(std::make_unique<ScrollViewManager>(context));
+  viewManagers.push_back(std::make_unique<SwitchViewManager>(context));
+  viewManagers.push_back(std::make_unique<TextViewManager>(context));
+  viewManagers.push_back(std::make_unique<TextInputViewManager>(context));
+  viewManagers.push_back(std::make_unique<ViewViewManager>(context));
+  viewManagers.push_back(std::make_unique<VirtualTextViewManager>(context));
+  viewManagers.push_back(std::make_unique<RefreshControlViewManager>(context));
 }
 
 void AddPolyesterViewManagers(
     std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
-    std::shared_ptr<IReactInstance> const &instance) noexcept {
-  viewManagers.push_back(std::make_unique<polyester::ButtonViewManager>(instance));
-  viewManagers.push_back(std::make_unique<polyester::ButtonContentViewManager>(instance));
-  viewManagers.push_back(std::make_unique<polyester::HyperlinkViewManager>(instance));
-  viewManagers.push_back(std::make_unique<polyester::IconViewManager>(instance));
+    const Mso::React::IReactContext &context) noexcept {
+  viewManagers.push_back(std::make_unique<polyester::ButtonViewManager>(context));
+  viewManagers.push_back(std::make_unique<polyester::ButtonContentViewManager>(context));
+  viewManagers.push_back(std::make_unique<polyester::HyperlinkViewManager>(context));
+  viewManagers.push_back(std::make_unique<polyester::IconViewManager>(context));
 }
 
 std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(

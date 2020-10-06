@@ -36,7 +36,7 @@ class PopupShadowNode : public ShadowNodeBase {
   virtual void RemoveChildAt(int64_t indexToRemove) override;
   void updateProperties(const folly::dynamic &&props) override;
 
-  static void OnPopupClosed(IReactInstance &instance, int64_t tag);
+  static void OnPopupClosed(const Mso::React::IReactContext &context, int64_t tag);
   winrt::Windows::Foundation::Size GetAppWindowSize();
   xaml::Controls::ContentControl GetControl();
   void UpdateTabStops();
@@ -77,19 +77,17 @@ void PopupShadowNode::createView() {
 
   auto popup = GetView().as<winrt::Popup>();
   auto control = GetControl();
-  auto wkinstance = GetViewManager()->GetReactInstance();
-  m_touchEventHandler = std::make_unique<TouchEventHandler>(wkinstance);
-  m_previewKeyboardEventHandlerOnRoot = std::make_unique<PreviewKeyboardEventHandlerOnRoot>(wkinstance);
+  m_touchEventHandler = std::make_unique<TouchEventHandler>(GetViewManager()->GetReactContext());
+  m_previewKeyboardEventHandlerOnRoot =
+      std::make_unique<PreviewKeyboardEventHandlerOnRoot>(GetViewManager()->GetReactContext());
 
   m_popupClosedRevoker = popup.Closed(winrt::auto_revoke, [=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr)
-      OnPopupClosed(*instance, m_tag);
+    if (!m_updating)
+      OnPopupClosed(GetViewManager()->GetReactContext(), m_tag);
   });
 
   m_popupOpenedRevoker = popup.Opened(winrt::auto_revoke, [=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr) {
+    if (!m_updating) {
       // When multiple flyouts/popups are overlapping, XAML's theme shadows
       // don't render properly. As a workaround we enable a z-index
       // translation based on an elevation derived from the count of open
@@ -109,15 +107,13 @@ void PopupShadowNode::createView() {
   });
 
   m_popupSizeChangedRevoker = popup.SizeChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr) {
+    if (!m_updating) {
       UpdateLayout();
     }
   });
 
   m_windowSizeChangedRevoker = xaml::Window::Current().SizeChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr) {
+    if (!m_updating) {
       UpdateLayout();
     }
   });
@@ -228,36 +224,32 @@ void PopupShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
-/*static*/ void PopupShadowNode::OnPopupClosed(IReactInstance &instance, int64_t tag) {
+/*static*/ void PopupShadowNode::OnPopupClosed(const Mso::React::IReactContext &context, int64_t tag) {
   folly::dynamic eventData = folly::dynamic::object("target", tag);
-  instance.DispatchEvent(tag, "topDismiss", std::move(eventData));
+  context.DispatchEvent(tag, "topDismiss", std::move(eventData));
 }
 
 void PopupShadowNode::UpdateLayout() {
-  auto wkinstance = static_cast<PopupViewManager *>(GetViewManager())->m_wkReactInstance;
-  auto instance = wkinstance.lock();
-
-  if (instance == nullptr)
-    return;
-
   auto popup = GetView().as<winrt::Popup>();
 
   // center relative to anchor
   if (m_targetTag > 0) {
-    auto pNativeUIManagerHost = static_cast<NativeUIManager *>(instance->NativeUIManager())->getHost();
-    ShadowNodeBase *pShadowNodeChild =
-        static_cast<ShadowNodeBase *>(pNativeUIManagerHost->FindShadowNodeForTag(m_targetTag));
+    if (auto uiManager = static_cast<NativeUIManager *>(GetViewManager()->GetReactContext().NativeUIManager())) {
+      auto pNativeUIManagerHost = uiManager->getHost();
+      ShadowNodeBase *pShadowNodeChild =
+          static_cast<ShadowNodeBase *>(pNativeUIManagerHost->FindShadowNodeForTag(m_targetTag));
 
-    if (pShadowNodeChild != nullptr) {
-      auto targetView = pShadowNodeChild->GetView();
-      auto targetElement = targetView.as<xaml::FrameworkElement>();
+      if (pShadowNodeChild != nullptr) {
+        auto targetView = pShadowNodeChild->GetView();
+        auto targetElement = targetView.as<xaml::FrameworkElement>();
 
-      auto popupTransform = targetElement.TransformToVisual(popup);
-      winrt::Point bottomRightPoint(
-          static_cast<float>(targetElement.Width()), static_cast<float>(targetElement.Height()));
-      auto point = popupTransform.TransformPoint(bottomRightPoint);
-      popup.HorizontalOffset(point.X + m_horizontalOffset);
-      popup.VerticalOffset(point.Y + m_verticalOffset);
+        auto popupTransform = targetElement.TransformToVisual(popup);
+        winrt::Point bottomRightPoint(
+            static_cast<float>(targetElement.Width()), static_cast<float>(targetElement.Height()));
+        auto point = popupTransform.TransformPoint(bottomRightPoint);
+        popup.HorizontalOffset(point.X + m_horizontalOffset);
+        popup.VerticalOffset(point.Y + m_verticalOffset);
+      }
     }
   } else // Center relative to app window
   {
@@ -298,7 +290,7 @@ winrt::Size PopupShadowNode::GetAppWindowSize() {
   return windowSize;
 }
 
-PopupViewManager::PopupViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
+PopupViewManager::PopupViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *PopupViewManager::GetName() const {
   return "RCTPopup";

@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add some extra error handling to GitReactFileRepository",
-  "packageName": "react-native-platform-override",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-10-01T00:46:03.775Z"
-}

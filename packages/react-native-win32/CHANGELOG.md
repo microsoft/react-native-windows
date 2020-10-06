@@ -1,8 +1,26 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 01 Oct 2020 05:08:11 GMT and should not be manually modified.
+This log was last generated on Sat, 03 Oct 2020 05:04:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.55
+
+Sat, 03 Oct 2020 05:04:45 GMT
+
+### Changes
+
+- Integrate 8/19 Nightly RN Build (ngerlem@microsoft.com)
+- Allow Default baseVersion in Override Manfests (ngerlem@microsoft.com)
+
+## 0.0.0-canary.54
+
+Fri, 02 Oct 2020 05:05:22 GMT
+
+### Changes
+
+- Integrate 8/5 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 8/17 Nightly RN Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.53
 

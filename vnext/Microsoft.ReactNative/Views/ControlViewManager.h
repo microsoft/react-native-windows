@@ -13,7 +13,7 @@ class REACTWINDOWS_EXPORT ControlViewManager : public FrameworkElementViewManage
   using Super = FrameworkElementViewManager;
 
  public:
-  ControlViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+  ControlViewManager(const Mso::React::IReactContext &context);
 
   folly::dynamic GetNativeProps() const override;
   bool UpdateProperty(

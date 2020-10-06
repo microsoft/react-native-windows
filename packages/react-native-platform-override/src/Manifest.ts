@@ -23,6 +23,7 @@ import {normalizePath} from './PathUtils';
 export default class Manifest {
   private includePatterns?: string[];
   private excludePatterns?: string[];
+  private baseVersion?: string;
   private overrides: Override[];
 
   /**
@@ -37,6 +38,7 @@ export default class Manifest {
     opts: {
       includePatterns?: string[];
       excludePatterns?: string[];
+      baseVersion?: string;
     } = {},
   ) {
     const uniquelyNamed = _.uniqBy(overrides, ovr => ovr.name());
@@ -46,14 +48,18 @@ export default class Manifest {
 
     this.includePatterns = opts.includePatterns;
     this.excludePatterns = opts.excludePatterns;
+    this.baseVersion = opts.baseVersion;
     this.overrides = _.clone(overrides);
   }
 
   static fromSerialized(man: Serialized.Manifest): Manifest {
-    const overrides = man.overrides.map(deserializeOverride);
+    const overrides = man.overrides.map(ovr =>
+      deserializeOverride(ovr, {defaultBaseVersion: man.baseVersion}),
+    );
     return new Manifest(overrides, {
       includePatterns: man.includePatterns,
       excludePatterns: man.excludePatterns,
+      baseVersion: man.baseVersion,
     });
   }
 
@@ -167,9 +173,12 @@ export default class Manifest {
     return {
       includePatterns: this.includePatterns,
       excludePatterns: this.excludePatterns,
+      baseVersion: this.baseVersion,
       overrides: this.overrides
         .sort((a, b) => a.name().localeCompare(b.name(), 'en'))
-        .map(override => override.serialize()),
+        .map(override =>
+          override.serialize({defaultBaseVersion: this.baseVersion}),
+        ),
     };
   }
 
@@ -178,6 +187,13 @@ export default class Manifest {
    */
   listOverrides(): Override[] {
     return _.clone(this.overrides);
+  }
+
+  /**
+   * Set the default baseVersion for the manifest
+   */
+  setBaseVersion(baseVersion?: string) {
+    this.baseVersion = baseVersion;
   }
 
   /**

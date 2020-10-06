@@ -69,6 +69,16 @@ void doMain(async () => {
         cmdArgv => removeOverride(cmdArgv.override!),
       )
       .command(
+        'diff <override>',
+        'Compares an override to the base file of its current version',
+        cmdYargs =>
+          cmdYargs.options({
+            override: {type: 'string', describe: 'The override to add'},
+          }),
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        cmdArgv => diffOverride(cmdArgv.override!),
+      )
+      .command(
         'upgrade',
         'Attempts to automatically merge new changes into out-of-date overrides',
         cmdYargs =>
@@ -188,6 +198,29 @@ async function removeOverride(overridePath: string) {
     );
     process.exit(1);
   }
+}
+
+/**
+ * Diffs an override against its base file
+ */
+async function diffOverride(overridePath: string) {
+  const manifestPath = await findManifest(path.dirname(overridePath));
+  const manifestDir = path.dirname(manifestPath);
+  const overrideName = path.relative(manifestDir, path.resolve(overridePath));
+  const diff = await Api.diffOverride(overrideName, {manifestPath});
+
+  const colorizedDiff = diff
+    .split('\n')
+    .map(line =>
+      line.startsWith('+')
+        ? chalk.green(line)
+        : line.startsWith('-')
+        ? chalk.red(line)
+        : line,
+    )
+    .join('\n');
+
+  console.log(colorizedDiff);
 }
 
 /**
