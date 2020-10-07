@@ -19,12 +19,12 @@ Whenever:
 - files are added to the following folders
 - listed files are edited
 
-You are required to create a pull requeset in `react-native-macos` to prove that your change is compatible with macOS by doing:
+You are required to create a pull request in `react-native-macos` to prove that your change is compatible with macOS by doing:
 
 - Update this file: https://github.com/microsoft/react-native-macos/blob/master/ReactTurboModuleCxx/React-TurboModuleCxx-RNW.podspec
   - Change `s.source` to your own fork and commit
   - Follow the instruction to build and test `RNTester/RNTester-macOS` by running the `Snapshot/Screenshot` test page
-  - Create a PR to `react-native-macos` to show the result
+  - Create a PR in `react-native-macos` to show the result
   - In some cases, you will also need to update files in https://github.com/microsoft/react-native-macos/tree/master/ReactTurboModuleCxx to make your change work in macOS
 - Submit your change to `react-native-windows`
 - Update the podspec file again with `s.source` pointing to the commit that is just submitted to `react-native-windows`
