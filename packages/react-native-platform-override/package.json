@@ -62,7 +62,7 @@
     "diff-match-patch": "^1.0.4",
     "eslint": "6.8.0",
     "jest": "^26.4.2",
-    "just-scripts": "^0.36.1",
+    "just-scripts": "^0.44.7",
     "minimatch": "^3.0.4",
     "prettier": "1.19.1",
     "typescript": "^3.8.3"
