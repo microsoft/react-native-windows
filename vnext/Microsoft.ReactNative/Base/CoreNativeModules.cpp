@@ -61,10 +61,11 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       },
       batchingUIMessageQueue);
 
-  // TODO: Is &&context appropriate if moved in two 'emplace_back' instances?
   modules.emplace_back(
       "WebSocketModule",
-      [context = std::move(context)]() mutable { return Microsoft::React::CreateWebSocketModule(std::move(context)); },
+      [context]() mutable {
+        return Microsoft::React::CreateWebSocketModule(Mso::CntPtr<Mso::React::IReactContext>(context));
+      },
       jsMessageQueue);
 
   modules.emplace_back(

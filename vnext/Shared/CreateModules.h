@@ -12,8 +12,6 @@
 namespace facebook {
 namespace react {
 
-class MessageQueueThread;
-
 // This method is to create a unique_ptr of native timing module.
 // @param A MessageQueueThread on which this native module lives.
 // @return Native timing module
@@ -25,7 +23,10 @@ std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
 
 namespace Microsoft::React {
 
+// This method is to create a unique_ptr of a native WebSocket module.
+// @param An IReactContext smart pointer to provide runtime configuration values.
+// @return Native WebSocket module.
 std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
-    Mso::CntPtr<Mso::React::IReactContext> &&context = nullptr) noexcept;
+    Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
 
-}
+} // namespace Microsoft::React
