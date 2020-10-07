@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Change order of JavaScript tests to get failures earlier",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-07T23:06:16.578Z"
+}
