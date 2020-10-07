@@ -21,6 +21,7 @@
     "deploybundleapp": "react-native run-windows --no-launch --no-packager --no-build --bundle"
   },
   "dependencies": {
+    "@react-native-windows/tester": "0.0.1",
     "prompt-sync": "^4.2.0",
     "react": "16.13.1",
     "react-native": "0.0.0-12543d557",

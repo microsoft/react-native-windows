@@ -5,6 +5,9 @@
   "description": "Windows private fork of RNTester",
   "private": true,
   "scripts": {
+    "build": "just-scripts build",
+    "lint:fix": "just-scripts lint:fix",
+    "lint": "just-scripts lint",
     "validate-overrides": "react-native-platform-override validate"
   },
   "dependencies": {
