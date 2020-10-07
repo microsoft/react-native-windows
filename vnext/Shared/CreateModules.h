@@ -26,6 +26,6 @@ std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
 namespace Microsoft::React {
 
 std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
-    Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
+    Mso::CntPtr<Mso::React::IReactContext> &&context = nullptr) noexcept;
 
 }
