@@ -6,8 +6,17 @@ In order to make `REACT_MODULE` cross-platform,
 some C++ source files need to be shared between `react-native-windows` repo and `react-native-macos` repo.
 
 Whenever:
+- new files need to be shared
 
-- files are added to the following folder
+Please add this comment as in other files:
+```C++
+// IMPORTANT: Before updating this file
+// please read react-native-windows repo:
+// vnext/Microsoft.ReactNative.Cxx/README.md
+```
+
+Whenever:
+- files are added to the following folders
 - listed files are edited
 
 You are required to create a pull requeset in `react-native-macos` to prove that your change is compatible with macOS by doing:
