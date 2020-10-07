@@ -596,7 +596,9 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       "WebSocketModule",
-      []() -> std::unique_ptr<xplat::module::CxxModule> { return Microsoft::React::CreateWebSocketModule(/*IReactContext*/); },
+      []() -> std::unique_ptr<xplat::module::CxxModule> {
+        return Microsoft::React::CreateWebSocketModule(/*IReactContext*/);
+      },
       nativeQueue));
 // TODO: This is not included for UWP because we have a different module which
 // is added later. However, this one is designed
