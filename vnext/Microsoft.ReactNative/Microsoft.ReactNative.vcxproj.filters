@@ -161,18 +161,6 @@
     <ClCompile Include="Modules\WebSocketModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Polyester\ButtonContentViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="Polyester\ButtonViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="Polyester\ContentControlViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="Polyester\HyperlinkViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
     <ClCompile Include="Polyester\IconViewManager.cpp">
       <Filter>Polyester</Filter>
     </ClCompile>
@@ -497,18 +485,6 @@
     </ClInclude>
     <ClInclude Include="Modules\WebSocketModuleUwp.h">
       <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Polyester\ButtonContentViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="Polyester\ButtonViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="Polyester\ContentControlViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="Polyester\HyperlinkViewManager.h">
-      <Filter>Polyester</Filter>
     </ClInclude>
     <ClInclude Include="Polyester\IconViewManager.h">
       <Filter>Polyester</Filter>

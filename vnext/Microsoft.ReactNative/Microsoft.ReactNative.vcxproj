@@ -247,10 +247,6 @@
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="NativeModulesProvider.h" />
-    <ClInclude Include="Polyester\ButtonContentViewManager.h" />
-    <ClInclude Include="Polyester\ButtonViewManager.h" />
-    <ClInclude Include="Polyester\ContentControlViewManager.h" />
-    <ClInclude Include="Polyester\HyperlinkViewManager.h" />
     <ClInclude Include="Polyester\IconViewManager.h" />
     <ClInclude Include="ReactHost\IReactInstance.h" />
     <ClInclude Include="ReactHost\ViewManagerProvider.h" />
@@ -443,10 +439,6 @@
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
-    <ClCompile Include="Polyester\ButtonContentViewManager.cpp" />
-    <ClCompile Include="Polyester\ButtonViewManager.cpp" />
-    <ClCompile Include="Polyester\ContentControlViewManager.cpp" />
-    <ClCompile Include="Polyester\HyperlinkViewManager.cpp" />
     <ClCompile Include="Polyester\IconViewManager.cpp" />
     <ClCompile Include="RedBoxErrorInfo.cpp" />
     <ClCompile Include="RedBoxErrorFrameInfo.cpp" />

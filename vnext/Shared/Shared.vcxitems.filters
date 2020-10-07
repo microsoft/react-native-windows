@@ -341,6 +341,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.h">
       <Filter>Header Files\Threading</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)etw\build.bat">

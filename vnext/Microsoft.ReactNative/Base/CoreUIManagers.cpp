@@ -29,9 +29,6 @@
 
 // Polyester View Managers // TODO: Move Polyester implementations out of this
 // library and depot
-#include <Polyester/ButtonContentViewManager.h>
-#include <Polyester/ButtonViewManager.h>
-#include <Polyester/HyperlinkViewManager.h>
 #include <Polyester/IconViewManager.h>
 
 namespace react::uwp {
@@ -61,9 +58,6 @@ void AddStandardViewManagers(
 void AddPolyesterViewManagers(
     std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
     const Mso::React::IReactContext &context) noexcept {
-  viewManagers.push_back(std::make_unique<polyester::ButtonViewManager>(context));
-  viewManagers.push_back(std::make_unique<polyester::ButtonContentViewManager>(context));
-  viewManagers.push_back(std::make_unique<polyester::HyperlinkViewManager>(context));
   viewManagers.push_back(std::make_unique<polyester::IconViewManager>(context));
 }
 
