@@ -23,7 +23,7 @@ std::shared_ptr<IWebSocketResource> IWebSocketResource::Make(std::string &&urlSt
 std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept {
   // TODO: use QuirkSettings
   if (false) {
-    return std::make_unique<react::uwp::WebSocketModule>();
+    return std::make_unique<react::uwp::LegacyWebSocketModule>();
   }
   return std::make_unique<WebSocketModule>();
 }
