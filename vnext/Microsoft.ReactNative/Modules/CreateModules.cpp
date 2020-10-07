@@ -4,6 +4,8 @@
 #include <CreateModules.h>
 #include <Modules/WebSocketModule.h>
 #include <Modules/WebSocketModuleUwp.h>
+#include <QuirkSettings.h>
+#include <ReactPropertyBag.h>
 #include <WinRTWebSocketResource.h>
 
 // React Native
@@ -11,6 +13,10 @@
 
 // Windows API
 #include <winrt/Windows.Security.Cryptography.Certificates.h>
+
+using winrt::Microsoft::ReactNative::ReactPropertyBag;
+using winrt::Microsoft::ReactNative::ReactPropertyId;
+using winrt::Microsoft::ReactNative::implementation::QuirkSettings;
 
 namespace Microsoft::React {
 
@@ -20,9 +26,9 @@ std::shared_ptr<IWebSocketResource> IWebSocketResource::Make(std::string &&urlSt
   return std::make_shared<WinRTWebSocketResource>(std::move(urlString), std::move(certExceptions));
 }
 
-std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept {
-  // TODO: use QuirkSettings
-  if (false) {
+std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
+    Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept {
+  if (QuirkSettings::GetUseLegacyWebSocketModule(ReactPropertyBag(context->Properties()))) {
     return std::make_unique<react::uwp::LegacyWebSocketModule>();
   }
   return std::make_unique<WebSocketModule>();

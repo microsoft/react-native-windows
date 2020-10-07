@@ -18,6 +18,12 @@ namespace Microsoft.ReactNative {
     // Set this setting to false to maintain the behavior from react-native-windows <= 0.62
     // The default value is true.
     static void SetMatchAndroidAndIOSStretchBehavior(ReactInstanceSettings settings, Boolean value);
+
+    // Transitional setting allowing to use the to be retired LegacyWebSocketModule.
+    static void SetUseLegacyWebSocketModule(ReactInstanceSettings settings, Boolean value);
+
+    // Runtime setting allowing Networking (HTTP, WebSocket) connections to skip certificate validation.
+    static void SetAcceptSelfSigned(ReactInstanceSettings settings, Boolean value);
   }
 
 } // namespace Microsoft.ReactNative

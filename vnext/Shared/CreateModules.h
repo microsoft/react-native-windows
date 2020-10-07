@@ -3,7 +3,9 @@
 
 #pragma once
 
+#include <React.h>
 #include <cxxreact/CxxModule.h>
+#include <smartPtr/cntPtr.h>
 
 #include <memory>
 
@@ -23,6 +25,7 @@ std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
 
 namespace Microsoft::React {
 
-std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept;
+std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
+    Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
 
 }
