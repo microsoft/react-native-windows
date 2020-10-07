@@ -3483,7 +3483,7 @@ appium-android-driver@^4.10.0:
 appium-android-driver@^4.12.0:
   version "4.12.0-stub.0"
 
-appium-base-driver@3.x, appium-base-driver@^3.0.0, appium-base-driver@^3.x:
+appium-base-driver@3.x, appium-base-driver@^3.x:
   version "3.21.2"
   resolved "https://registry.yarnpkg.com/appium-base-driver/-/appium-base-driver-3.21.2.tgz#caa924f677804636c9734f016a6fca8403d28db2"
   integrity sha512-cA7adQK63OiZzCvuHfQ4jKcT3tFogo8dfbgbgS4xpcmIEXgUZd/6MHicQG4NdfzbJpojQXNSeeCkRvlpksQrOQ==
@@ -3702,23 +3702,7 @@ appium-remote-debugger@^5.1.0:
     source-map-support "^0.5.5"
 
 appium-selendroid-driver@1.x:
-  version "1.13.4"
-  resolved "https://registry.yarnpkg.com/appium-selendroid-driver/-/appium-selendroid-driver-1.13.4.tgz#e3da6dbf7fba688c495a4622aa52492d30f38d93"
-  integrity sha512-UIudCv/PChJIVJ0KuYIQmIDVv3W4LtQRWdtZItqruVdxXYpCaQTaAX/+LHr9w/nzhkny3ZckFuj9nl6b4unL+A==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    appium-adb "^7.0.0"
-    appium-android-driver "^4.0.0"
-    appium-base-driver "^3.0.0"
-    appium-support "^2.5.0"
-    asyncbox "^2.3.1"
-    fancy-log "^1.3.2"
-    lodash "^4.17.4"
-    request-promise "^4.1.1"
-    source-map-support "^0.5.5"
-    teen_process "^1.7.1"
-    utf7 "^1.0.0"
-    yargs "^13.1.0"
+  version "1.13.4-stub.0"
 
 appium-support@2.x, appium-support@^2.11.1, appium-support@^2.20.0, appium-support@^2.24.0, appium-support@^2.25.0, appium-support@^2.26.0, appium-support@^2.28.0, appium-support@^2.29.0, appium-support@^2.30.0, appium-support@^2.31.0, appium-support@^2.32.0, appium-support@^2.4.0, appium-support@^2.5.0, appium-support@^2.6.0:
   version "2.49.0"
@@ -13490,7 +13474,7 @@ tasklist@^3.1.0:
     pify "^2.2.0"
     sec "^1.0.0"
 
-teen_process@1.x, teen_process@^1.11.0, teen_process@^1.14.0, teen_process@^1.14.1, teen_process@^1.15.0, teen_process@^1.3.0, teen_process@^1.3.1, teen_process@^1.5.1, teen_process@^1.6.0, teen_process@^1.7.0, teen_process@^1.7.1:
+teen_process@1.x, teen_process@^1.11.0, teen_process@^1.14.0, teen_process@^1.14.1, teen_process@^1.15.0, teen_process@^1.3.0, teen_process@^1.3.1, teen_process@^1.5.1, teen_process@^1.6.0, teen_process@^1.7.0:
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/teen_process/-/teen_process-1.15.0.tgz#1e0250fda2bd89686e794a3ea14897465a6ec7f0"
   integrity sha512-E8DdTeffAselFMtcE56jNiof7jt+X+KJPpCn4xvbLFy0YVAT24Y9O5jSIzOFfAKIAirKkK0M9YfmQfmxmUdgGA==
@@ -14068,13 +14052,6 @@ username@^5.1.0:
   dependencies:
     execa "^1.0.0"
     mem "^4.3.0"
-
-utf7@^1.0.0:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/utf7/-/utf7-1.0.2.tgz#955f490aae653ba220b9456a0a8776c199360991"
-  integrity sha1-lV9JCq5lO6IguUVqCod2wZk2CZE=
-  dependencies:
-    semver "~5.3.0"
 
 utf8-byte-length@^1.0.1:
   version "1.0.4"
@@ -14670,7 +14647,7 @@ yargs@^12.0.5:
     y18n "^3.2.1 || ^4.0.0"
     yargs-parser "^11.1.1"
 
-yargs@^13.1.0, yargs@^13.2.4:
+yargs@^13.2.4:
   version "13.3.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-13.3.0.tgz#4c657a55e07e5f2cf947f8a366567c04a0dedc83"
   integrity sha512-2eehun/8ALW8TLoIl7MVaRUrg+yCnenu8B4kBlRxj3GJGDKU1Og7sMXPNm1BYyM1DOJmTZ4YeN/Nwxv+8XJsUA==
