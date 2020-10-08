@@ -25,6 +25,7 @@ task(
   'build',
   series(
     cleanTask(['js']),
+    copyTask({paths: ['src/js'], dest: 'js'}),
     tscTask(),
     copyTask({paths: [path.join(rnTesterPath, 'js')], dest: 'js'}),
   ),
