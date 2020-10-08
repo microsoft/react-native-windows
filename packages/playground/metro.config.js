@@ -10,7 +10,11 @@ const blacklist = require('metro-config/src/defaults/blacklist');
 const {resolve} = require('metro-resolver');
 
 const rnwPath = fs.realpathSync(
-  path.resolve(require.resolve('react-native-windows/package.json'), '..'),
+  path.dirname(require.resolve('react-native-windows/package.json')),
+);
+
+const rnwTesterPath = fs.realpathSync(
+  path.dirname(require.resolve('@react-native-windows/tester/package.json')),
 );
 
 const rnwPathNormalized = path.normalize(rnwPath);
@@ -114,12 +118,14 @@ module.exports = {
     path.resolve(__dirname, '../..', 'node_modules'),
     // Include react-native-windows
     rnwPath,
+    rnwTesterPath,
   ],
 
   resolver: {
     extraNodeModules: {
       // Redirect react-native-windows to avoid symlink (metro doesn't like symlinks)
       'react-native-windows': rnwPath,
+      '@react-native-windows/tester': rnwTesterPath,
     },
     blacklistRE: blacklist([
       // Avoid error EBUSY: resource busy or locked, open 'D:\a\1\s\packages\playground\msbuild.ProjectImports.zip' in pipeline

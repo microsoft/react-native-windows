@@ -2,6 +2,7 @@
   "packages": [
     "packages/*",
     "packages/@react-native-windows/*",
+    "packages/@react-native/*",
     "packages/@rnw-scripts/*",
     "vnext"
   ],

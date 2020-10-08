@@ -8,7 +8,7 @@ import {
   APPLY_SCALE_TRANSFORM_BUTTON,
   TRANSFORM_TEST_RESULT,
   MEASURE_LAYOUT_BUTTON,
-} from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
+} from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 class DirectManipulationPage extends BasePage {
   clickApplyScaleTransform() {

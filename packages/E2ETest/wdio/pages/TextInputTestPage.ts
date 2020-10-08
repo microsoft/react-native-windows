@@ -9,7 +9,7 @@ import {
   ML_TEXTINPUT_ON_TEXTINPUT,
   CAP_TEXTINPUT_ON_TEXTINPUT,
   CURTEXT_ON_TEXTINPUT,
-} from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
+} from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 class TextInputTestPage extends BasePage {
   clickTextInput() {

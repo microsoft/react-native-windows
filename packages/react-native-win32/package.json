@@ -7,7 +7,7 @@
   "typings": "./typings-index.d.ts",
   "scripts": {
     "build": "just-scripts build",
-    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file RNTester/js/RNTesterApp.win32.js --bundle-output dist/win32/dev/RNTester/js/RNTesterApp.bundle --assets-dest dist/win32/dev --sourcemap-output ./dist/win32/dev/RNTester/js/RNTesterApp.bundle.map",
+    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file ../react-native-win32-tester/js/RNTesterApp.win32.js --bundle-output dist/win32/dev/RNTester/js/RNTesterApp.bundle --assets-dest dist/win32/dev --sourcemap-output ./dist/win32/dev/RNTester/js/RNTesterApp.bundle.map",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
     "lint:fix": "just-scripts lint:fix",
@@ -71,14 +71,14 @@
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "react": "16.13.1",
-    "react-native": "0.0.0-f8e5423c8",
+    "react-native": "0.0.0-12543d557",
     "react-native-platform-override": "^0.3.3",
     "react-shallow-renderer": "^16.13.1",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "0.0.0-f8e5423c8"
+    "react-native": "0.0.0-12543d557"
   },
   "beachball": {
     "defaultNpmTag": "canary",
