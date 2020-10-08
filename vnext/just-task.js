@@ -50,10 +50,14 @@ task('eslint:fix', eslintTask({fix: true}));
 
 task('copyRNLibraries', copyRNLibaries.copyTask(__dirname));
 
-task('copyReadmeFromRoot', () => {
+task('copyReadmeAndLicenseFromRoot', () => {
   fs.copyFileSync(
     path.resolve(__dirname, '../README.md'),
     path.resolve(__dirname, 'README.md'),
+  );
+  fs.copyFileSync(
+    path.resolve(__dirname, '../LICENSE'),
+    path.resolve(__dirname, 'LICENSE'),
   );
 });
 
@@ -76,7 +80,7 @@ task(
   series(
     condition('clean', () => argv().clean),
     'copyRNLibraries',
-    'copyReadmeFromRoot',
+    'copyReadmeAndLicenseFromRoot',
     'compileTsPlatformOverrides',
     'codegen',
     condition('apiExtractorVerify', () => argv().ci),
