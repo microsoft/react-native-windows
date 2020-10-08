@@ -66,10 +66,6 @@ void AddStandardViewManagers(
     std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
     const Mso::React::IReactContext &context) noexcept;
 
-void AddPolyesterViewManagers(
-    std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
-    const Mso::React::IReactContext &context) noexcept;
-
 std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
     Mso::React::IReactContext *context,
     std::vector<react::uwp::NativeViewManager> &&viewManagers) noexcept;
@@ -540,7 +536,6 @@ void ReactInstanceWin::InitUIManager() noexcept {
   }
 
   react::uwp::AddStandardViewManagers(viewManagers, *m_reactContext);
-  react::uwp::AddPolyesterViewManagers(viewManagers, *m_reactContext);
 
   auto uiManager = react::uwp::CreateUIManager2(m_reactContext.Get(), std::move(viewManagers));
   auto wkUIManger = std::weak_ptr<facebook::react::IUIManager>(uiManager);

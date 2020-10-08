@@ -6,7 +6,6 @@
 #include <Views/FrameworkElementViewManager.h>
 
 namespace react::uwp {
-namespace polyester {
 
 class GlyphViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
@@ -22,5 +21,4 @@ class GlyphViewManager : public FrameworkElementViewManager {
   XamlView CreateViewCore(int64_t tag) override;
 };
 
-} // namespace polyester
 } // namespace react::uwp

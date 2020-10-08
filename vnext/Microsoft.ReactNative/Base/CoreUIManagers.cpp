@@ -52,12 +52,7 @@ void AddStandardViewManagers(
   viewManagers.push_back(std::make_unique<ViewViewManager>(context));
   viewManagers.push_back(std::make_unique<VirtualTextViewManager>(context));
   viewManagers.push_back(std::make_unique<RefreshControlViewManager>(context));
-}
-
-void AddPolyesterViewManagers(
-    std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
-    const Mso::React::IReactContext &context) noexcept {
-  viewManagers.push_back(std::make_unique<polyester::GlyphViewManager>(context));
+  viewManagers.push_back(std::make_unique<GlyphViewManager>(context));
 }
 
 std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
