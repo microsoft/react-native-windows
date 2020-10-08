@@ -13,7 +13,7 @@
   "dependencies": {
     "react": "16.13.1",
     "react-native": "0.0.0-12543d557",
-    "react-native-windows": "0.0.0-canary.178"
+    "react-native-windows": "0.0.0-canary.179"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -22,7 +22,7 @@
     "@types/react": "16.9.0",
     "@types/react-native": "^0.63.18",
     "eslint": "6.8.0",
-    "just-scripts": "^0.36.1",
+    "just-scripts": "^0.44.7",
     "metro-react-native-babel-preset": "^0.56.0",
     "prettier": "1.19.1",
     "react-native-windows-codegen": "0.1.7",

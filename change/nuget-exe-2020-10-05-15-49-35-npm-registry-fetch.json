@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Update just-scipts (remove npm-registry-fetch)",
+  "packageName": "nuget-exe",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-10-05T22:49:27.869Z"
+}

@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 04 Oct 2020 05:04:25 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Oct 2020 05:04:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.179
+
+Tue, 06 Oct 2020 05:04:27 GMT
+
+### Changes
+
+- Remove ILegacyReactInstance, and react::uwp::IReactInstance (30809111+acoates-ms@users.noreply.github.com)
+- Update System.Private.Uri version for C# codegen (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.178
 

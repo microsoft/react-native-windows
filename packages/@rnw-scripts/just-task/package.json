@@ -7,9 +7,9 @@
     "@rnw-scripts/jest-e2e-config": "0.1.1"
   },
   "devDependencies": {
-    "just-scripts": "^0.36.1"
+    "just-scripts": "^0.44.7"
   },
   "peerDependencies": {
-    "just-scripts": "^0.36.1"
+    "just-scripts": "^0.44.7"
   }
 }

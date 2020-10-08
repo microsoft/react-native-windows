@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Update just-scipts (remove npm-registry-fetch)",
+  "packageName": "@react-native-windows/cli",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-10-05T22:49:12.995Z"
+}
