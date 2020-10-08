@@ -6,7 +6,7 @@
 import HomePage from '../pages/HomePage';
 import ImageTestPage from '../pages/ImageTestPage';
 import assert from 'assert';
-import { IMAGE_TESTPAGE } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
+import { IMAGE_TESTPAGE } from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 beforeAll(() => {
   HomePage.goToTestPage(IMAGE_TESTPAGE);
