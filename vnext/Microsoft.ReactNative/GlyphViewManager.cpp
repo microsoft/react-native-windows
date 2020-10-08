@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 //
+<<<<<<< HEAD:vnext/Microsoft.ReactNative/GlyphViewManager.cpp
+=======
+// GlyphViewManager is a temporary implementation of render Icon from Font
+// support final impl pending polyester design
+>>>>>>> 7d286faabe2c78d45019b27b4d39130e57c26ba1:vnext/Microsoft.ReactNative/Polyester/IconViewManager.cpp
 //
 
 #include "pch.h"
@@ -139,7 +144,11 @@ const char *GlyphViewManager::GetName() const {
 }
 
 facebook::react::ShadowNode *GlyphViewManager::createShadow() const {
+<<<<<<< HEAD:vnext/Microsoft.ReactNative/GlyphViewManager.cpp
   return new GlyphShadowNode();
+=======
+  return new IconShadowNode();
+>>>>>>> 7d286faabe2c78d45019b27b4d39130e57c26ba1:vnext/Microsoft.ReactNative/Polyester/IconViewManager.cpp
 }
 
 folly::dynamic GlyphViewManager::GetNativeProps() const {
