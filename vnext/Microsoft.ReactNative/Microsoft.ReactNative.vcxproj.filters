@@ -161,21 +161,6 @@
     <ClCompile Include="Modules\WebSocketModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Polyester\ButtonContentViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="Polyester\ButtonViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="Polyester\ContentControlViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="Polyester\HyperlinkViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="Polyester\IconViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
     <ClCompile Include="Views\Image\ImageViewManager.cpp">
       <Filter>Views\Image</Filter>
     </ClCompile>
@@ -314,6 +299,7 @@
     <ClCompile Include="JsiApi.cpp" />
     <ClCompile Include="RedBoxErrorInfo.cpp" />
     <ClCompile Include="RedBoxErrorFrameInfo.cpp" />
+    <ClCompile Include="GlyphViewManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -498,21 +484,6 @@
     <ClInclude Include="Modules\WebSocketModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Polyester\ButtonContentViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="Polyester\ButtonViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="Polyester\ContentControlViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="Polyester\HyperlinkViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="Polyester\IconViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
     <ClInclude Include="Views\Image\ImageViewManager.h">
       <Filter>Views\Image</Filter>
     </ClInclude>
@@ -677,6 +648,7 @@
     <ClInclude Include="Utils\TransformableText.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="GlyphViewManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -736,9 +708,6 @@
     </Filter>
     <Filter Include="Pch">
       <UniqueIdentifier>{cabb286d-fae0-4cfa-b793-79d13f559b41}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Polyester">
-      <UniqueIdentifier>{c7bc39da-51b4-4410-846f-ffc20dfa57cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="ReactHost">
       <UniqueIdentifier>{323742e5-5542-43fd-9b79-7914b708b9a5}</UniqueIdentifier>
