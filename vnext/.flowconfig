@@ -31,9 +31,6 @@
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
-<PROJECT_ROOT>/RNTester/js/components/RNTesterExampleList.js
-<PROJECT_ROOT>/RNTester/js/examples/ScrollView/ScrollViewExample.js
-<PROJECT_ROOT>/RNTester/js/examples/View/ViewExample.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*

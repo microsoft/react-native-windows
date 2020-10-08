@@ -6,7 +6,7 @@
 import HomePage from '../pages/HomePage';
 import TransformTestPage from '../pages/TransformTestPage';
 import assert from 'assert';
-import { TRANSFORM_TESTPAGE } from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
+import { TRANSFORM_TESTPAGE } from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 beforeAll(() => {
   HomePage.goToTestPage(TRANSFORM_TESTPAGE);

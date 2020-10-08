@@ -4,7 +4,7 @@
     "flow-typed",
     "src/**"
   ],
-  "baseVersion": "0.0.0-f8e5423c8",
+  "baseVersion": "0.0.0-12543d557",
   "overrides": [
     {
       "type": "derived",
@@ -400,46 +400,6 @@
       "file": "src/Libraries/Utilities/Platform.win32.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
       "baseHash": "750d5a0afc192d9ec98c27d28402285c9e3155a0",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/APIExamples/AccessibilityExampleWin32.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/APIExamples/ThemingModuleAPI.tsx"
-    },
-    {
-      "type": "patch",
-      "file": "src/RNTester/js/components/ListExampleShared.win32.js",
-      "baseFile": "RNTester/js/components/ListExampleShared.js",
-      "baseHash": "d7be07e3fd8d9c1df8e23d5674ce3eb067d00865",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "patch",
-      "file": "src/RNTester/js/components/RNTesterExampleFilter.win32.js",
-      "baseFile": "RNTester/js/components/RNTesterExampleFilter.js",
-      "baseHash": "8a8182f7c36e8184b7bbfe1445263ceca622b2c1",
-      "issue": "LEGACY_FIXME"
-    },
-    {
-      "type": "platform",
-      "file": "src/RNTester/js/examples/ColorGradientWin32Example.js"
-    },
-    {
-      "type": "derived",
-      "file": "src/RNTester/js/RNTesterApp.win32.js",
-      "baseFile": "RNTester/js/RNTesterApp.ios.js",
-      "baseHash": "34d2517461704840a508ce1856bc3a364fb3fc7e",
-      "issue": 4586
-    },
-    {
-      "type": "derived",
-      "file": "src/RNTester/js/utils/RNTesterList.win32.js",
-      "baseFile": "RNTester/js/utils/RNTesterList.android.js",
-      "baseHash": "0ac04af15d7ff9d34b3abe1a11110c24480fba4b",
       "issue": "LEGACY_FIXME"
     },
     {

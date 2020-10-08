@@ -511,6 +511,10 @@ module.exports = {
     return require('./Libraries/Components/Keyboard/KeyboardExt')
       .supportKeyboard;
   },
+  get DayOfWeek(): any {
+    return require('./Libraries/Components/DatePicker/DatePickerProps')
+      .DayOfWeek;
+  },
   get EventPhase(): any {
     return require('./Libraries/Components/Keyboard/KeyboardExtProps')
       .HandledEventPhase;

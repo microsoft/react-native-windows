@@ -8,7 +8,7 @@ import {
   MEASURE_IN_WINDOW_BUTTON,
   DIRECT_MANIPULATION_RESULT,
   MEASURE_LAYOUT_BUTTON,
-} from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
+} from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 class DirectManipulationPage extends BasePage {
   clickMeasureInWindowAndGetResult() {
