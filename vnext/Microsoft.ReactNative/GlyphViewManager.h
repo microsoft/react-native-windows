@@ -8,11 +8,11 @@
 namespace react::uwp {
 namespace polyester {
 
-class IconViewManager : public FrameworkElementViewManager {
+class GlyphViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
-  IconViewManager(const Mso::React::IReactContext &context);
+  GlyphViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
   facebook::react::ShadowNode *createShadow() const override;

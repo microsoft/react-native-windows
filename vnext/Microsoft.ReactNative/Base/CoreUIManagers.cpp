@@ -27,9 +27,8 @@
 #include <Views/ViewViewManager.h>
 #include <Views/VirtualTextViewManager.h>
 
-// Polyester View Managers // TODO: Move Polyester implementations out of this
-// library and depot
-#include <Polyester/IconViewManager.h>
+// Polyester View Managers
+#include <GlyphViewManager.h>
 
 namespace react::uwp {
 
@@ -58,7 +57,7 @@ void AddStandardViewManagers(
 void AddPolyesterViewManagers(
     std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
     const Mso::React::IReactContext &context) noexcept {
-  viewManagers.push_back(std::make_unique<polyester::IconViewManager>(context));
+  viewManagers.push_back(std::make_unique<polyester::GlyphViewManager>(context));
 }
 
 std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
