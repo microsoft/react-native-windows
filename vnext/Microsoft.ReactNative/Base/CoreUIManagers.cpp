@@ -9,6 +9,7 @@
 #include <ViewManagerProvider.h>
 
 // Standard View Managers
+#include <GlyphViewManager.h>
 #include <Views/ActivityIndicatorViewManager.h>
 #include <Views/DatePickerViewManager.h>
 #include <Views/FlyoutViewManager.h>
@@ -26,9 +27,6 @@
 #include <Views/TextViewManager.h>
 #include <Views/ViewViewManager.h>
 #include <Views/VirtualTextViewManager.h>
-
-// Polyester View Managers
-#include <GlyphViewManager.h>
 
 namespace react::uwp {
 
@@ -52,16 +50,7 @@ void AddStandardViewManagers(
   viewManagers.push_back(std::make_unique<ViewViewManager>(context));
   viewManagers.push_back(std::make_unique<VirtualTextViewManager>(context));
   viewManagers.push_back(std::make_unique<RefreshControlViewManager>(context));
-<<<<<<< HEAD
   viewManagers.push_back(std::make_unique<GlyphViewManager>(context));
-=======
-}
-
-void AddPolyesterViewManagers(
-    std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
-    const Mso::React::IReactContext &context) noexcept {
-  viewManagers.push_back(std::make_unique<polyester::GlyphViewManager>(context));
->>>>>>> 7d286faabe2c78d45019b27b4d39130e57c26ba1
 }
 
 std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
