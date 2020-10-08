@@ -25,9 +25,6 @@
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheet.js
 <PROJECT_ROOT>/Libraries/Utilities/DeviceInfo.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
-<PROJECT_ROOT>/RNTester/js/components/FlatListExample.js
-<PROJECT_ROOT>/RNTester/js/components/ListExampleShared.js
-<PROJECT_ROOT>/RNTester/js/components/RNTesterExampleFilter.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
