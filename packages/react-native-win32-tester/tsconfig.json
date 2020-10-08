@@ -1,0 +1,13 @@
+{
+  "extends": "@rnw-scripts/ts-config",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": ".",
+
+    // Some code copied from react-native-win32 is not strict clean
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"],
+}

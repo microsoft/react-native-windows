@@ -7,7 +7,7 @@
   "typings": "./typings-index.d.ts",
   "scripts": {
     "build": "just-scripts build",
-    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file RNTester/js/RNTesterApp.win32.js --bundle-output dist/win32/dev/RNTester/js/RNTesterApp.bundle --assets-dest dist/win32/dev --sourcemap-output ./dist/win32/dev/RNTester/js/RNTesterApp.bundle.map",
+    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file ../react-native-win32-tester/js/RNTesterApp.win32.js --bundle-output dist/win32/dev/RNTester/js/RNTesterApp.bundle --assets-dest dist/win32/dev --sourcemap-output ./dist/win32/dev/RNTester/js/RNTesterApp.bundle.map",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
     "lint:fix": "just-scripts lint:fix",

@@ -1,7 +1,6 @@
 'use strict';
 import * as React from 'react';
 import { View, Text, StyleSheet, TextInput, NativeModules, ScrollView } from 'react-native';
-// import { ViewWin32 } from '../../Libraries/Components/View/ViewWin32';
 
 const styles = StyleSheet.create({
   box: {

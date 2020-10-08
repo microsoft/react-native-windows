@@ -10,7 +10,7 @@ import {
   TouchableHighlight,
   ListRenderItemInfo,
 } from 'react-native';
-import { ViewWin32 } from '../../Libraries/Components/View/ViewWin32';
+import { ViewWin32 } from '@office-iss/react-native-win32';
 
 const styles = StyleSheet.create({
   border: {
