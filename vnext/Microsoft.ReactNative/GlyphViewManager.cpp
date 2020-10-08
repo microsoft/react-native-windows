@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 //
-// IconViewManager is a temporary implementation of render Icon from Font
+// GlyphViewManager is a temporary implementation of render Icon from Font
 // support final impl pending polyester design
 //
 
 #include "pch.h"
 
-#include "IconViewManager.h"
+#include "GlyphViewManager.h"
 
 #include <UI.Xaml.Documents.h>
 #include <Utils/ValueUtils.h>
@@ -133,19 +133,19 @@ void IconShadowNode::updateProperties(const folly::dynamic &&props) {
 }
 
 //
-// IconViewManager
+// GlyphViewManager
 //
-IconViewManager::IconViewManager(const Mso::React::IReactContext &context) : Super(context) {}
+GlyphViewManager::GlyphViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *IconViewManager::GetName() const {
+const char *GlyphViewManager::GetName() const {
   return "PLYIcon";
 }
 
-facebook::react::ShadowNode *IconViewManager::createShadow() const {
+facebook::react::ShadowNode *GlyphViewManager::createShadow() const {
   return new IconShadowNode();
 }
 
-folly::dynamic IconViewManager::GetNativeProps() const {
+folly::dynamic GlyphViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
   props.update(
@@ -154,7 +154,7 @@ folly::dynamic IconViewManager::GetNativeProps() const {
   return props;
 }
 
-XamlView IconViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView GlyphViewManager::CreateViewCore(int64_t /*tag*/) {
   winrt::Glyphs glyphs = winrt::Glyphs();
   return glyphs;
 }

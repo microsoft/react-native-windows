@@ -186,6 +186,7 @@
     <ClInclude Include="DynamicWriter.h">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="GlyphViewManager.h" />
     <ClInclude Include="HResult.h" />
     <ClInclude Include="IReactDispatcher.h">
       <DependentUpon>IReactDispatcher.idl</DependentUpon>
@@ -247,7 +248,6 @@
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="NativeModulesProvider.h" />
-    <ClInclude Include="Polyester\IconViewManager.h" />
     <ClInclude Include="ReactHost\IReactInstance.h" />
     <ClInclude Include="ReactHost\ViewManagerProvider.h" />
     <ClInclude Include="RedBoxErrorInfo.h" />
@@ -383,6 +383,7 @@
     <ClCompile Include="DynamicWriter.cpp">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="GlyphViewManager.cpp" />
     <ClCompile Include="IReactDispatcher.cpp">
       <DependentUpon>IReactDispatcher.idl</DependentUpon>
     </ClCompile>
@@ -439,7 +440,6 @@
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
-    <ClCompile Include="Polyester\IconViewManager.cpp" />
     <ClCompile Include="RedBoxErrorInfo.cpp" />
     <ClCompile Include="RedBoxErrorFrameInfo.cpp" />
     <ClCompile Include="TurboModulesProvider.cpp" />
