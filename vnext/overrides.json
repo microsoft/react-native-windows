@@ -258,6 +258,10 @@
       "baseHash": "e982deb23d7ad5312ab0c09508a6d58c152b5be7"
     },
     {
+      "type": "platform",
+      "file": "src/Libraries/Components/TextInput/WindowsTextInputNativeComponent.js"
+    },
+    {
       "type": "copy",
       "file": "src/Libraries/Components/ToastAndroid/ToastAndroid.windows.js",
       "baseFile": "Libraries/Components/ToastAndroid/ToastAndroid.ios.js",

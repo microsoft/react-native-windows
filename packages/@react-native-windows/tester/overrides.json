@@ -58,6 +58,13 @@
     },
     {
       "type": "patch",
+      "file": "src/js/examples/Pressable/PressableExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
+      "baseHash": "060fb16f36ade354b3a7e3efd05576f3fc8bfe19",
+      "issue": 6240
+    },
+    {
+      "type": "patch",
       "file": "src/js/examples/SectionList/SectionListExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/SectionList/SectionListExample.js",
       "baseHash": "a67bae2ac5eac82dacaf0c90fa11978afdd0e824",

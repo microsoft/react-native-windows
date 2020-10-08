@@ -64,17 +64,15 @@ class ViewShadowNode : public ShadowNodeBase {
         });
   }
 
-  void dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) override {
-    if (commandId == "focus") {
-      if (auto uiManager = GetViewManager()->GetReactContext().NativeUIManager()) {
-        uiManager->focus(m_tag);
-      }
+  void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+      uiManager->focus(m_tag);
     } else if (commandId == "blur") {
-      if (auto uiManager = GetViewManager()->GetReactContext().NativeUIManager()) {
+      if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
         uiManager->blur(m_tag);
       }
     } else {
-      Super::dispatchCommand(commandId, commandArgs);
+      Super::dispatchCommand(commandId, std::move(commandArgs));
     }
   }
 

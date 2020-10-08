@@ -526,8 +526,8 @@ exports.examples = [
   },
   {
     title: 'Focusability in Pressable',
-    description: ('<Pressable> components can be receive focus by calling the focus() and blur() methods on them.' + 
-    'They also expose onFocus and onBlur callbacks to hadle incoming native events.': string),
+    description: ('<Pressable> components can be receive focus by calling the focus() and blur() methods on them.' +
+      'They also expose onFocus and onBlur callbacks to hadle incoming native events.': string),
     render: function(): React.Node {
       return <PressableFocusCallbacks />;
     },
