@@ -5,6 +5,7 @@
 #include <Modules/WebSocketModule.h>
 #include <Modules/WebSocketModuleUwp.h>
 #include <QuirkSettings.h>
+#include <React.h>
 #include <ReactPropertyBag.h>
 #include <WinRTWebSocketResource.h>
 
