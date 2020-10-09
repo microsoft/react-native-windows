@@ -299,7 +299,12 @@
     <ClCompile Include="JsiApi.cpp" />
     <ClCompile Include="RedBoxErrorInfo.cpp" />
     <ClCompile Include="RedBoxErrorFrameInfo.cpp" />
-    <ClCompile Include="GlyphViewManager.cpp" />
+    <ClCompile Include="Modules\CreateModules.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="GlyphViewManager.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />

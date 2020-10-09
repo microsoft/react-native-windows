@@ -430,6 +430,7 @@
     <ClCompile Include="Modules\AppStateModule.cpp" />
     <ClCompile Include="Modules\AppThemeModuleUwp.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
+    <ClCompile Include="Modules\CreateModules.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="Modules\I18nManagerModule.cpp" />

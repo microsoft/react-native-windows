@@ -6,14 +6,14 @@
 #undef Check
 using namespace std;
 
+#include <CreateModules.h>
+
 #include <folly/dynamic.h>
 #include <cassert>
 #include "TimingModule.h"
 
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
-
-#include "NativeModuleFactories.h"
 
 using namespace facebook::xplat;
 using namespace folly;

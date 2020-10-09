@@ -38,12 +38,12 @@ void OutputDebugString(const char *format, winrt::hresult_error const &e) {
 }
 
 //
-// WebSocketModule::WebSocket
+// LegacyWebSocketModule::WebSocket
 //
 
-class WebSocketModule::WebSocket {
+class LegacyWebSocketModule::WebSocket {
  public:
-  WebSocket(WebSocketModule *parent) : m_parent(parent) {}
+  WebSocket(LegacyWebSocketModule *parent) : m_parent(parent) {}
 
   void Disconnect() {
     m_parent = nullptr;
@@ -63,7 +63,7 @@ class WebSocketModule::WebSocket {
   void sendEvent(std::string &&eventName, folly::dynamic &&parameters);
 
  private:
-  WebSocketModule *m_parent;
+  LegacyWebSocketModule *m_parent;
   std::map<int64_t, winrt::MessageWebSocket> m_ws_clients;
   std::map<int64_t, winrt::Windows::Storage::Streams::DataWriter> m_dataWriters;
   std::map<int64_t, winrt::MessageWebSocket::MessageReceived_revoker> m_msgReceiveds;
@@ -81,7 +81,7 @@ std::future<winrt::hresult> Connect(
   co_return async.ErrorCode();
 }
 
-void WebSocketModule::WebSocket::connect(
+void LegacyWebSocketModule::WebSocket::connect(
     const std::string &url,
     folly::dynamic /* @Nullable final ReadableArray */ protocols,
     folly::dynamic /* @Nullable final ReadableArray */ options,
@@ -188,13 +188,13 @@ void WebSocketModule::WebSocket::connect(
   }
 }
 
-void WebSocketModule::WebSocket::close(int64_t code, std::string &&reason, int64_t id) {
+void LegacyWebSocketModule::WebSocket::close(int64_t code, std::string &&reason, int64_t id) {
   auto socket = m_ws_clients[id];
   socket.Close();
   sendEvent("websocketClosed", folly::dynamic::object("id", id)("code", code)("reason", std::move(reason)));
 }
 
-void WebSocketModule::WebSocket::send(const std::string &message, int64_t id) {
+void LegacyWebSocketModule::WebSocket::send(const std::string &message, int64_t id) {
   try {
     auto socket = m_ws_clients[id];
     auto dataWriter = m_dataWriters[id];
@@ -211,7 +211,7 @@ void WebSocketModule::WebSocket::send(const std::string &message, int64_t id) {
   }
 }
 
-void WebSocketModule::WebSocket::sendBinary(const std::string &base64String, int64_t id) {
+void LegacyWebSocketModule::WebSocket::sendBinary(const std::string &base64String, int64_t id) {
   try {
     auto socket = m_ws_clients[id];
     auto dataWriter = m_dataWriters[id];
@@ -227,7 +227,7 @@ void WebSocketModule::WebSocket::sendBinary(const std::string &base64String, int
   }
 }
 
-void WebSocketModule::WebSocket::ping(int64_t id) {
+void LegacyWebSocketModule::WebSocket::ping(int64_t id) {
   try {
     auto socket = m_ws_clients[id];
     auto dataWriter = m_dataWriters[id];
@@ -245,12 +245,12 @@ void WebSocketModule::WebSocket::ping(int64_t id) {
   }
 }
 
-void WebSocketModule::WebSocket::onError(int64_t id, winrt::hresult hr) {
+void LegacyWebSocketModule::WebSocket::onError(int64_t id, winrt::hresult hr) {
   folly::dynamic errorObj = folly::dynamic::object("id", id)("message", static_cast<int32_t>(hr));
   sendEvent("websocketFailed", std::move(errorObj));
 }
 
-void WebSocketModule::WebSocket::sendEvent(std::string &&eventName, folly::dynamic &&parameters) {
+void LegacyWebSocketModule::WebSocket::sendEvent(std::string &&eventName, folly::dynamic &&parameters) {
   if (!m_parent)
     return;
 
@@ -260,26 +260,26 @@ void WebSocketModule::WebSocket::sendEvent(std::string &&eventName, folly::dynam
 }
 
 //
-// WebSocketModule
+// LegacyWebSocketModule
 //
 
-WebSocketModule::WebSocketModule() : m_webSocket(std::make_shared<WebSocket>(this)) {}
+LegacyWebSocketModule::LegacyWebSocketModule() : m_webSocket(std::make_shared<WebSocket>(this)) {}
 
-WebSocketModule::~WebSocketModule() {
+LegacyWebSocketModule::~LegacyWebSocketModule() {
   m_webSocket->Disconnect();
 }
 
-std::string WebSocketModule::getName() {
+std::string LegacyWebSocketModule::getName() {
   return Name;
 }
 
-std::map<std::string, folly::dynamic> WebSocketModule::getConstants() {
+std::map<std::string, folly::dynamic> LegacyWebSocketModule::getConstants() {
   std::map<std::string, folly::dynamic> constants{{}};
 
   return constants;
 }
 
-auto WebSocketModule::getMethods() -> std::vector<Method> {
+auto LegacyWebSocketModule::getMethods() -> std::vector<Method> {
   std::shared_ptr<WebSocket> webSocket(m_webSocket);
   return {
       Method(

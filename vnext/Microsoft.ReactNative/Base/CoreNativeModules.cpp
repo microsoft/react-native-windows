@@ -16,7 +16,6 @@
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/UIManagerModule.h>
-#include <Modules/WebSocketModuleUwp.h>
 #include <Threading/MessageQueueThreadFactory.h>
 
 // Shared
@@ -63,8 +62,8 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       batchingUIMessageQueue);
 
   modules.emplace_back(
-      react::uwp::WebSocketModule::Name,
-      []() { return std::make_unique<react::uwp::WebSocketModule>(); },
+      "WebSocketModule",
+      [context]() { return Microsoft::React::CreateWebSocketModule(Mso::CntPtr<Mso::React::IReactContext>(context)); },
       jsMessageQueue);
 
   modules.emplace_back(

@@ -221,7 +221,6 @@
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
-    <ClCompile Include="Modules\WebSocketModule.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -286,7 +285,6 @@
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorInfo.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="Modules\TimingModule.h" />
-    <ClInclude Include="NativeModuleFactories.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="HttpResource.h" />
     <ClInclude Include="BeastWebSocketResource.h" />

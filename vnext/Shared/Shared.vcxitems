@@ -46,6 +46,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\SourceCodeModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\UIManagerModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ShadowNode.cpp" />
