@@ -63,7 +63,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
 
   modules.emplace_back(
       "WebSocketModule",
-      [context]() mutable {
+      [context]() {
         return Microsoft::React::CreateWebSocketModule(Mso::CntPtr<Mso::React::IReactContext>(context));
       },
       jsMessageQueue);

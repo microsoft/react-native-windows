@@ -22,7 +22,6 @@ using winrt::Microsoft::ReactNative::implementation::QuirkSettings;
 namespace Microsoft::React {
 
 std::shared_ptr<IWebSocketResource> IWebSocketResource::Make(std::string &&urlString) {
-  // TODO: use QuirkSettings
   std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
   return std::make_shared<WinRTWebSocketResource>(std::move(urlString), std::move(certExceptions));
 }
