@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update just-scipts (remove npm-registry-fetch)",
-  "packageName": "@rnw-scripts/find-repo-root",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none",
-  "date": "2020-10-05T22:49:18.236Z"
-}

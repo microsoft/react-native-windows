@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate 8/20 Nightly RN Build (Extract RNTester)",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-10-08T01:23:46.803Z"
-}

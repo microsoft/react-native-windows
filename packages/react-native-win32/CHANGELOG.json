@@ -2,6 +2,35 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 09 Oct 2020 05:06:32 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.56",
+      "version": "0.0.0-canary.56",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 8/20 Nightly RN Build (Extract RNTester)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f50540af66deb1f94949734dcc12cca299a78fcc",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Most people do not need rex, do not install it for everyone using the RNW repo",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "ccf67e7a36e760e5907660aa1393d7ab7f692bbc",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Update just-scipts (remove npm-registry-fetch)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "00b2d84b8effce0b7405a67bd4903eed88cb9aaf",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 03 Oct 2020 05:04:45 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.55",
       "version": "0.0.0-canary.55",

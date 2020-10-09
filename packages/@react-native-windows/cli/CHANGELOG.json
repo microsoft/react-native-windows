@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 09 Oct 2020 05:06:32 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.21",
+      "version": "0.0.0-canary.21",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update just-scipts (remove npm-registry-fetch)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "00b2d84b8effce0b7405a67bd4903eed88cb9aaf",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 01 Oct 2020 05:08:11 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.21",
       "version": "0.0.0-canary.21",

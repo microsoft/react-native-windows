@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 06 Oct 2020 05:04:27 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Oct 2020 05:06:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.180
+
+Fri, 09 Oct 2020 05:06:32 GMT
+
+### Changes
+
+- removed no longer used polyester controls (chiara.mooney@gmail.com)
+- Change order of JavaScript tests to get failures earlier (dannyvv@microsoft.com)
+- Integrate 8/20 Nightly RN Build (Extract RNTester) (ngerlem@microsoft.com)
+- Update System.Private.Uri version for C# codegen for unittest (dannyvv@microsoft.com)
+- Consolidate WebSocketModules (julio.rocha@microsoft.com)
+- update folly version to fix folly bug 1454 (asklar@winse.microsoft.com)
 
 ## 0.0.0-canary.179
 

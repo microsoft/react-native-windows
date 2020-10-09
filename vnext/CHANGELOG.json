@@ -2,6 +2,65 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 09 Oct 2020 05:06:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.180",
+      "version": "0.0.0-canary.180",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "removed no longer used polyester controls",
+            "author": "chiara.mooney@gmail.com",
+            "commit": "e3750ea882f6dfce69bc5f053122dc0fcecc232b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Change order of JavaScript tests to get failures earlier",
+            "author": "dannyvv@microsoft.com",
+            "commit": "be2d628f24607cfd213f015e5957922f0466ad33",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 8/20 Nightly RN Build (Extract RNTester)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f50540af66deb1f94949734dcc12cca299a78fcc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update System.Private.Uri version for C# codegen for unittest",
+            "author": "dannyvv@microsoft.com",
+            "commit": "27836558add6882be0c320459e1c51db45ed3d7f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Consolidate WebSocketModules",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "288b224e3df40f30553a52d1b54f7911d38796d6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "update folly version to fix folly bug 1454",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "9d98fe335200db37054c6ade427cd435ad72096c",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Update vnext/Microsoft.ReactNative.Cxx/README.md",
+            "author": "zihanc@microsoft.com",
+            "commit": "ea5925217f8bd2e8f34da11a666bb35ba0b9e6a7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update just-scipts (remove npm-registry-fetch)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "00b2d84b8effce0b7405a67bd4903eed88cb9aaf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 06 Oct 2020 05:04:27 GMT",
       "tag": "react-native-windows_v0.0.0-canary.179",
       "version": "0.0.0-canary.179",
