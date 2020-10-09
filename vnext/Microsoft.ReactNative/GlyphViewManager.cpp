@@ -1,13 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 //
-// IconViewManager is a temporary implementation of render Icon from Font
-// support final impl pending polyester design
 //
 
 #include "pch.h"
 
-#include "IconViewManager.h"
+#include "GlyphViewManager.h"
 
 #include <UI.Xaml.Documents.h>
 #include <Utils/ValueUtils.h>
@@ -23,16 +21,15 @@ using namespace xaml::Media;
 } // namespace winrt
 
 namespace react::uwp {
-namespace polyester {
 
 //
-// IconShadowNode
+// GlyphShadowNode
 //
-class IconShadowNode : public ShadowNodeBase {
+class GlyphShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
 
  public:
-  IconShadowNode() = default;
+  GlyphShadowNode() = default;
 
   void createView() override;
   void updateProperties(const folly::dynamic &&props) override;
@@ -44,7 +41,7 @@ class IconShadowNode : public ShadowNodeBase {
   double m_height = 24;
 };
 
-void IconShadowNode::createView() {
+void GlyphShadowNode::createView() {
   Super::createView();
   auto glyphs = GetView().as<winrt::Glyphs>();
 
@@ -52,7 +49,7 @@ void IconShadowNode::createView() {
   UpdateFontColorProps(glyphs);
 }
 
-void IconShadowNode::updateProperties(const folly::dynamic &&props) {
+void GlyphShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
   auto glyphs = GetView().as<winrt::Glyphs>();
   bool updateEmSize = false;
@@ -67,7 +64,7 @@ void IconShadowNode::updateProperties(const folly::dynamic &&props) {
 #ifdef DEBUG
       else if (propertyValue.isNull()) {
         // Log error, must have a color
-        YellowBox("IconShadowNode - color property must be non-null");
+        YellowBox("GlyphShadowNode - color property must be non-null");
       }
 #endif
     } else if (propertyName == "fontUri") {
@@ -114,7 +111,7 @@ void IconShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
-/*static*/ void IconShadowNode::UpdateFontColorProps(winrt::Glyphs glyphs) {
+/*static*/ void GlyphShadowNode::UpdateFontColorProps(winrt::Glyphs glyphs) {
   glyphs.IsColorFontEnabled(false);
 
   auto application = winrt::Application::Current();
@@ -133,19 +130,19 @@ void IconShadowNode::updateProperties(const folly::dynamic &&props) {
 }
 
 //
-// IconViewManager
+// GlyphViewManager
 //
-IconViewManager::IconViewManager(const Mso::React::IReactContext &context) : Super(context) {}
+GlyphViewManager::GlyphViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *IconViewManager::GetName() const {
+const char *GlyphViewManager::GetName() const {
   return "PLYIcon";
 }
 
-facebook::react::ShadowNode *IconViewManager::createShadow() const {
-  return new IconShadowNode();
+facebook::react::ShadowNode *GlyphViewManager::createShadow() const {
+  return new GlyphShadowNode();
 }
 
-folly::dynamic IconViewManager::GetNativeProps() const {
+folly::dynamic GlyphViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
   props.update(
@@ -154,10 +151,9 @@ folly::dynamic IconViewManager::GetNativeProps() const {
   return props;
 }
 
-XamlView IconViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView GlyphViewManager::CreateViewCore(int64_t /*tag*/) {
   winrt::Glyphs glyphs = winrt::Glyphs();
   return glyphs;
 }
 
-} // namespace polyester
 } // namespace react::uwp
