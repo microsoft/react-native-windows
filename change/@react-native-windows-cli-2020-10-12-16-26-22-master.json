@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix config and app publish to allow for the windows native source code to live in a different location",
+  "packageName": "@react-native-windows/cli",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-12T23:26:21.917Z"
+}
