@@ -9,4 +9,5 @@
     <UseExperimentalNuget Condition="'$(UseExperimentalNuget)' == ''" >false</UseExperimentalNuget>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\CppAppConsumeCSharpModule.props" />
 </Project>

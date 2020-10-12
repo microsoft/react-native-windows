@@ -30,4 +30,6 @@
           ContinueOnError="false" />
   </Target>
 
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\CppAppConsumeCSharpModule.targets" />
+
 </Project>
