@@ -48,6 +48,7 @@ function shouldLaunchApp(options: RunWindowsOptions): boolean {
 
 function getAppPackage(
   options: RunWindowsOptions,
+  windowsRoot: string,
   projectName?: string,
 ): string {
   const configuration = getBuildConfiguration(options);
@@ -56,7 +57,7 @@ function getAppPackage(
       ? `{*_x86_${configuration}_*,*_Win32_${configuration}_*}`
       : `*_${options.arch}_${configuration}_*`;
 
-  const appPackageGlob = `${options.root}/windows/{*/AppPackages,AppPackages/*}/${packageFolder}`;
+  const appPackageGlob = `${windowsRoot}/{*/AppPackages,AppPackages/*}/${packageFolder}`;
   const appPackageCandidates = glob.sync(appPackageGlob);
   let appPackage;
   if (appPackageCandidates.length === 1 || !projectName) {
@@ -76,7 +77,7 @@ function getAppPackage(
       'No package found in *_Release_* folder, removing the _Release_ prefix and checking again',
     );
 
-    const rootGlob = `${options.root}/windows/{*/AppPackages,AppPackages/*}`;
+    const rootGlob = `${windowsRoot}/{*/AppPackages,AppPackages/*}`;
     const newGlob = `${rootGlob}/*_${
       options.arch === 'x86' ? 'Win32' : options.arch
     }_${options.release ? '' : 'Debug_'}Test`;
@@ -119,11 +120,12 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
 
 function getAppxManifestPath(
   options: RunWindowsOptions,
+  windowsRoot: string,
   projectName?: string,
 ): string {
   const configuration = getBuildConfiguration(options);
-  const appxManifestGlob = `windows/{*/bin/${options.arch}/${configuration},${configuration}/*,target/${options.arch}/${configuration},${options.arch}/${configuration}/*}/AppxManifest.xml`;
-  const globs = glob.sync(path.join(options.root, appxManifestGlob));
+  const appxManifestGlob = `{*/bin/${options.arch}/${configuration},${configuration}/*,target/${options.arch}/${configuration},${options.arch}/${configuration}/*}/AppxManifest.xml`;
+  const globs = glob.sync(path.join(windowsRoot, appxManifestGlob));
   let appxPath: string;
   if (globs.length === 1 || !projectName) {
     appxPath = globs[0];
@@ -141,7 +143,7 @@ function getAppxManifestPath(
 
   if (!appxPath) {
     throw new Error(
-      `Unable to find AppxManifest from "${options.root}", using search path: "${appxManifestGlob}" `,
+      `Unable to find AppxManifest from "${windowsRoot}", using search path: "${appxManifestGlob}" `,
     );
   }
   return appxPath;
@@ -151,8 +153,13 @@ function parseAppxManifest(appxManifestPath: string): parse.Document {
   return parse(fs.readFileSync(appxManifestPath, 'utf8'));
 }
 
-function getAppxManifest(options: RunWindowsOptions): parse.Document {
-  return parseAppxManifest(getAppxManifestPath(options, undefined));
+function getAppxManifest(
+  options: RunWindowsOptions,
+  windowsRoot: string,
+): parse.Document {
+  return parseAppxManifest(
+    getAppxManifestPath(options, windowsRoot, undefined),
+  );
 }
 
 function handleResponseError(e: Error): never {
@@ -166,9 +173,10 @@ function handleResponseError(e: Error): never {
 // Errors: 0x80073d10 - bad architecture
 export async function deployToDevice(
   options: RunWindowsOptions,
+  windowsRoot: string,
   verbose: boolean,
 ) {
-  const appPackageFolder = getAppPackage(options);
+  const appPackageFolder = getAppPackage(options, windowsRoot);
 
   const deployTarget = options.target
     ? options.target
@@ -176,7 +184,7 @@ export async function deployToDevice(
     ? 'emulator'
     : 'device';
   const deployTool = new WinAppDeployTool();
-  const appxManifest = getAppxManifest(options);
+  const appxManifest = getAppxManifest(options, windowsRoot);
   const shouldLaunch = shouldLaunchApp(options);
   const identity = appxManifest.root.children.filter(function(x) {
     return x.name === 'mp:PhoneIdentity';
@@ -231,9 +239,17 @@ export async function deployToDesktop(
     windowsConfig && windowsConfig.project && windowsConfig.project.projectName
       ? windowsConfig.project.projectName
       : options.proj!;
-  const appPackageFolder = getAppPackage(options, projectName);
+  const windowsRoot =
+    windowsConfig && windowsConfig.folder && windowsConfig.sourceDir
+      ? path.join(windowsConfig.folder, windowsConfig.sourceDir)
+      : path.join(options.root, 'windows');
+  const appPackageFolder = getAppPackage(options, windowsRoot, projectName);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
-  const appxManifestPath = getAppxManifestPath(options, projectName);
+  const appxManifestPath = getAppxManifestPath(
+    options,
+    windowsRoot,
+    projectName,
+  );
   const appxManifest = parseAppxManifest(appxManifestPath);
   const identity = appxManifest.root.children.filter(function(x) {
     return x.name === 'Identity';

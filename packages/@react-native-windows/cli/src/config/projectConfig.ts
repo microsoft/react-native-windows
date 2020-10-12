@@ -99,6 +99,9 @@ export function projectConfigWindows(
   var validProject = false;
 
   if (usingManualOverride) {
+    // Copy the sourceDir from the user config.
+    result.sourceDir = userConfig.sourceDir;
+
     // Manual override, try to use it for solutionFile
     if (!('solutionFile' in userConfig)) {
       result.solutionFile =
