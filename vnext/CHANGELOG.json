@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 12 Oct 2020 15:07:16 GMT",
+      "tag": "react-native-windows_v0.63.5",
+      "version": "0.63.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Backport fix for native modules not being re-initialized on reload (#6159)",
+            "author": "tn0502@gmail.com",
+            "commit": "cefc50bbd7bcc2b0ef24f408161c9cfe02acf590",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Oct 2020 15:04:50 GMT",
       "tag": "react-native-windows_v0.63.4",
       "version": "0.63.4",

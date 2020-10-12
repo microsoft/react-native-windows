@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 05 Oct 2020 15:04:50 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Oct 2020 15:07:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.5
+
+Mon, 12 Oct 2020 15:07:16 GMT
+
+### Patches
+
+- Backport fix for native modules not being re-initialized on reload (#6159) (tn0502@gmail.com)
 
 ## 0.63.4
 
