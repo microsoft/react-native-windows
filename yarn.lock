@@ -7041,9 +7041,9 @@ forwarded@~0.1.2:
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
 fp-ts@^2.5.0:
-  version "2.8.3"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.8.3.tgz#c09652bbf21e64d65a9f93587ad549ab0e03abe7"
-  integrity sha512-oGD3BTSzFCPs9alaI/2gh0SCNKyhPXkpeIBvkXNvnoczHfDAUd2HHtotCdLO0hOTTTTx8VKA0mhhR7LUNo+cKg==
+  version "2.8.4"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.8.4.tgz#d1af738a94de8591d441ef656153d04bd878edeb"
+  integrity sha512-J+kwce5SysU0YKuZ3aCnFk+dyezZD1mij6u26w1fCVfuLYgJR4eeXmVfJiUjthpZ+4yCRkRfcwMI5SkGw52oFA==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
