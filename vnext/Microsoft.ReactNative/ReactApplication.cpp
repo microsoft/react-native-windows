@@ -105,12 +105,7 @@ void ReactApplication::OnActivated(Windows::ApplicationModel::Activation::IActiv
     react::uwp::LinkingManagerModule::OpenUri(protocolActivatedEventArgs.Uri());
   } else if (e.Kind() == Windows::ApplicationModel::Activation::ActivationKind::ToastNotification) {
     auto toastActivatedEventArgs{e.as<Windows::ApplicationModel::Activation::ToastNotificationActivatedEventArgs>()};
-    try {
-      Windows::Foundation::Uri u{toastActivatedEventArgs.Argument()};
-      react::uwp::LinkingManagerModule::OpenUri(u);
-    } catch (...) {
-      // Don't crash, but also don't let the application know what the toast argument was.
-    }
+    Windows::Foundation::Uri u{L"toast:///?" + toastActivatedEventArgs.Argument()};
   }
   this->OnCreate(e);
 }
