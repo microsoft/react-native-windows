@@ -93,15 +93,12 @@ export function projectConfigWindows(
 
   var result: DeepPartial<WindowsProjectConfig> = {
     folder: folder,
-    sourceDir: sourceDir.substr(folder.length + 1),
+    sourceDir: path.relative(folder, sourceDir),
   };
-
+  console.log(result.sourceDir + '----' + sourceDir);
   var validProject = false;
 
   if (usingManualOverride) {
-    // Copy the sourceDir from the user config.
-    result.sourceDir = userConfig.sourceDir;
-
     // Manual override, try to use it for solutionFile
     if (!('solutionFile' in userConfig)) {
       result.solutionFile =

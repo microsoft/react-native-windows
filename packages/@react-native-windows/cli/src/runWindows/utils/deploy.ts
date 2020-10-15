@@ -242,7 +242,7 @@ export async function deployToDesktop(
   const windowsRoot =
     windowsConfig && windowsConfig.folder && windowsConfig.sourceDir
       ? path.join(windowsConfig.folder, windowsConfig.sourceDir)
-      : path.join(options.root, 'windows');
+      : path.dirname(slnFile);
   const appPackageFolder = getAppPackage(options, windowsRoot, projectName);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(
