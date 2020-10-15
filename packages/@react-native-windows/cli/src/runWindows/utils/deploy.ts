@@ -78,7 +78,7 @@ function getAppPackage(
 
     const rootGlob = `${options.root}/windows/{*/AppPackages,AppPackages/*}`;
     const newGlob = `${rootGlob}/*_${
-      options.arch === 'x86' ? 'Win32' : options.arch
+      options.arch === 'x86' ? '{Win32,x86}' : options.arch
     }_${options.release ? '' : 'Debug_'}Test`;
 
     const result = glob.sync(newGlob);
@@ -244,7 +244,6 @@ export async function deployToDesktop(
   )[0];
 
   const vsVersion = buildTools.installationVersion;
-
   if (vsVersion.startsWith('16.5') || vsVersion.startsWith('16.6')) {
     // VS 16.5 and 16.6 introduced a regression in packaging where the certificates created in the UI will render the package uninstallable.
     // This will be fixed in 16.7. In the meantime we need to copy the Add-AppDevPackage that has the fix for this EKU issue:
