@@ -118,7 +118,7 @@ export default class MSBuildTools {
       console.log(`Running MSBuild with args ${args.join(' ')}`);
     }
 
-    const progressName = 'Building Solution';
+    const progressName =  (target === 'Deploy') ? 'Deploying Solution' : 'Building Solution';
     const spinner = newSpinner(progressName);
     try {
       await commandWithProgress(
