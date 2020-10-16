@@ -9,7 +9,6 @@ import * as chalk from 'chalk';
 import * as deploy from './utils/deploy';
 import {newError, newInfo, newWarn} from './utils/commandWithProgress';
 import * as info from './utils/info';
-import * as path from 'path';
 import MSBuildTools from './utils/msbuildtools';
 
 import {Command, Config} from '@react-native-community/cli-types';
@@ -159,7 +158,7 @@ async function runWindows(
 
     try {
       if (options.device || options.emulator || options.target) {
-        await deploy.deployToDevice(options, path.dirname(slnFile), verbose);
+        await deploy.deployToDevice(options, verbose);
       } else {
         await deploy.deployToDesktop(options, verbose, config, buildTools);
       }
