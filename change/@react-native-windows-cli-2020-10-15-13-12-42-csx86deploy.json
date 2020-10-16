@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "C# apps have x86 platform=x86 but C++ apps have Win32",
+  "packageName": "@react-native-windows/cli",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-15T20:12:42.642Z"
+}
