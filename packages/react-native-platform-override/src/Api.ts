@@ -26,7 +26,6 @@ import Manifest from './Manifest';
 import Override from './Override';
 import {UpgradeResult} from './UpgradeStrategy';
 import {ValidationError} from './ValidationStrategy';
-import {findManifest} from './FileSearch';
 import {getInstalledRNVersion} from './PackageUtils';
 
 // Re-export types used in the public API so external packages don't have to
@@ -41,11 +40,16 @@ const MAX_CONCURRENT_TASKS = 30;
  * Check that the given manifest correctly describe overrides and that all
  * overrides are up to date
  */
-export async function validateManifest(opts: {
-  manifestPath?: string;
-  reactNativeVersion?: string;
-}): Promise<ValidationError[]> {
-  const {manifest, overrideRepo, reactRepo} = await createManifestContext(opts);
+export async function validateManifest(
+  manifestPath: string,
+  opts?: {
+    reactNativeVersion?: string;
+  },
+): Promise<ValidationError[]> {
+  const {manifest, overrideRepo, reactRepo} = await createManifestContext(
+    manifestPath,
+    opts,
+  );
   return await manifest.validate(overrideRepo, reactRepo);
 }
 
@@ -54,9 +58,9 @@ export async function validateManifest(opts: {
  */
 export async function hasOverride(
   overrideName: string,
-  opts: {manifestPath?: string},
+  manifestPath: string,
 ): Promise<boolean> {
-  const {manifest} = await createManifestContext(opts);
+  const {manifest} = await createManifestContext(manifestPath);
   return manifest.hasOverride(overrideName);
 }
 
@@ -66,9 +70,9 @@ export async function hasOverride(
  */
 export async function removeOverride(
   overrideName: string,
-  opts: {manifestPath?: string},
+  manifestPath: string,
 ): Promise<boolean> {
-  const {manifest, manifestPath} = await createManifestContext(opts);
+  const {manifest} = await createManifestContext(manifestPath);
   const removed = manifest.removeOverride(overrideName);
   if (removed) {
     await Serialized.writeManifestToFile(manifest.serialize(), manifestPath);
@@ -80,11 +84,13 @@ export async function removeOverride(
 /**
  * Returns a factory to create overrides which may be added to the manifest
  */
-export async function getOverrideFactory(opts: {
-  manifestPath?: string;
-  reactNativeVersion?: string;
-}): Promise<OverrideFactory> {
-  return (await createManifestContext(opts)).overrideFactory;
+export async function getOverrideFactory(
+  manifestPath: string,
+  opts?: {
+    reactNativeVersion?: string;
+  },
+): Promise<OverrideFactory> {
+  return (await createManifestContext(manifestPath, opts)).overrideFactory;
 }
 
 /**
@@ -92,9 +98,9 @@ export async function getOverrideFactory(opts: {
  */
 export async function addOverride(
   override: Override,
-  opts: {manifestPath?: string},
+  manifestPath: string,
 ): Promise<void> {
-  const {manifest, manifestPath} = await createManifestContext(opts);
+  const {manifest} = await createManifestContext(manifestPath);
   await manifest.addOverride(override);
   await Serialized.writeManifestToFile(manifest.serialize(), manifestPath);
 }
@@ -104,9 +110,9 @@ export async function addOverride(
  */
 export async function diffOverride(
   overrideName: string,
-  opts: {manifestPath?: string},
+  manifestPath: string,
 ): Promise<string> {
-  const ctx = await createManifestContext(opts);
+  const ctx = await createManifestContext(manifestPath);
 
   const override = ctx.manifest.findOverride(overrideName);
   if (!override) {
@@ -128,13 +134,15 @@ export type UpgradeProgressListener = (
  * Attempts to automatically merge changes from the current version into
  * out-of-date overrides.
  */
-export async function upgradeOverrides(opts: {
-  manifestPath?: string;
-  reactNativeVersion?: string;
-  allowConflicts: boolean;
-  progressListener?: UpgradeProgressListener;
-}): Promise<UpgradeResult[]> {
-  const ctx = await createManifestContext(opts);
+export async function upgradeOverrides(
+  manifestPath: string,
+  opts: {
+    allowConflicts: boolean;
+    reactNativeVersion?: string;
+    progressListener?: UpgradeProgressListener;
+  },
+): Promise<UpgradeResult[]> {
+  const ctx = await createManifestContext(manifestPath, opts);
 
   const validationErrors = await ctx.manifest.validate(
     ctx.overrideRepo,
@@ -189,10 +197,7 @@ export async function upgradeOverrides(opts: {
   });
 
   ctx.manifest.setBaseVersion(ctx.reactNativeVersion);
-  await Serialized.writeManifestToFile(
-    ctx.manifest.serialize(),
-    ctx.manifestPath,
-  );
+  await Serialized.writeManifestToFile(ctx.manifest.serialize(), manifestPath);
 
   return upgradeResults.sort((a, b) =>
     a.overrideName.localeCompare(b.overrideName, 'en'),
@@ -219,22 +224,21 @@ interface ManifestContext {
   gitReactRepo: GitReactFileRepository;
   overrideFactory: OverrideFactory;
   manifest: Manifest;
-  manifestPath: string;
   reactNativeVersion: string;
 }
 
 /**
  * Sets up state for a manifest describing overrides at a specified RN version
  */
-async function createManifestContext(opts: {
-  manifestPath?: string;
-  reactNativeVersion?: string;
-}): Promise<ManifestContext> {
-  const manifestPath = opts.manifestPath || (await findManifest());
-
+async function createManifestContext(
+  manifestPath: string,
+  opts?: {
+    reactNativeVersion?: string;
+  },
+): Promise<ManifestContext> {
   await checkFileExists('manifest', manifestPath);
   const reactNativeVersion =
-    opts.reactNativeVersion || (await getInstalledRNVersion());
+    opts?.reactNativeVersion || (await getInstalledRNVersion());
 
   const overrideDir = path.dirname(manifestPath);
   const overrideRepo = new FileSystemRepository(overrideDir);
@@ -252,7 +256,6 @@ async function createManifestContext(opts: {
     reactRepo,
     gitReactRepo,
     overrideFactory,
-    manifestPath,
     manifest,
     reactNativeVersion,
   };

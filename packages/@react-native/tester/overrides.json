@@ -1,7 +1,4 @@
 {
-  "excludePatterns": [
-    "node_modules"
-  ],
   "baseVersion": "0.0.0-12543d557",
   "overrides": [
     {

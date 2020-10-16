@@ -7,24 +7,15 @@
  */
 
 import * as findUp from 'find-up';
-import * as fs from 'fs';
 import * as path from 'path';
 
 /**
- * Find the root directory of the repo upward from cwd
+ * Find the root directory of a repo upward from cwd
  */
 export default async (): Promise<string> => {
   const root = await findUp(
     async (dir: string): Promise<findUp.Match> => {
-      const packagePath = path.join(dir, 'package.json');
-      if (!(await findUp.exists(packagePath))) {
-        return undefined;
-      }
-
-      const pkg = (await fs.promises.readFile(packagePath)).toString();
-      return JSON.parse(pkg).name === 'react-native-windows-repo'
-        ? dir
-        : undefined;
+      return (await findUp.exists(path.join(dir, '.git'))) ? dir : undefined;
     },
     {type: 'directory'},
   );

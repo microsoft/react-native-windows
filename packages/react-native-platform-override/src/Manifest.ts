@@ -6,8 +6,8 @@
  */
 
 import * as Serialized from './Serialized';
-
 import * as _ from 'lodash';
+import * as path from 'path';
 
 import Override, {deserializeOverride} from './Override';
 import {ReactFileRepository, WritableFileRepository} from './FileRepository';
@@ -83,6 +83,7 @@ export default class Manifest {
     const missingFromManifest = overrideFiles.filter(
       file =>
         file !== 'overrides.json' &&
+        path.relative('node_modules', file).startsWith('..') &&
         !this.overrides.some(override => override.includesFile(file)),
     );
     for (const missingFile of missingFromManifest) {

@@ -64,6 +64,10 @@ const overrideFiles: Array<MockFile> = [
     filename: 'overrides.json',
     content: 'Manifest validation should ignore my existence',
   },
+  {
+    filename: 'node_modules\\foo\\index.js',
+    content: 'Manifest validation should ignore my existence as well',
+  },
 ];
 
 const reactRepo = new MockReactFileRepository(reactFiles);

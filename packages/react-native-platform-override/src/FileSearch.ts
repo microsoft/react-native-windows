@@ -7,9 +7,10 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import {enumerateLocalPackages} from '@rnw-scripts/package-utils';
 
 /**
- * Search for a manifest adjacent to the package above cwd
+ * Search for a single manifest adjacent to the package above cwd
  */
 export async function findManifest(cwd?: string): Promise<string> {
   const packagePath = await findFileAbove(cwd || process.cwd(), 'package.json');
@@ -25,6 +26,29 @@ export async function findManifest(cwd?: string): Promise<string> {
   }
 
   return manifestPath;
+}
+
+/**
+ * Enumerate the override manifests reachable from CWD, prefering the local
+ * package if run within a package with an override manifest, otherwise
+ * searching for packages in a monorepo
+ */
+export async function findAllManifests(cwd?: string): Promise<string[]> {
+  const packagePath = await findFileAbove(cwd || process.cwd(), 'package.json');
+  if (!packagePath) {
+    throw new Error('This command must be run within a package');
+  }
+
+  const packageDir = path.dirname(packagePath);
+  if (await exists(path.join(packageDir, 'overrides.json'))) {
+    return [path.join(packageDir, 'overrides.json')];
+  }
+
+  const localPackages = await enumerateLocalPackages(pkg =>
+    exists(path.join(pkg.path, 'overrides.json')),
+  );
+
+  return localPackages.map(pkg => path.join(pkg.path, 'overrides.json'));
 }
 
 /**
