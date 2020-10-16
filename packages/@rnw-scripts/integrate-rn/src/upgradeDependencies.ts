@@ -115,7 +115,7 @@ async function upgradeRepoConfig(
     },
   );
 
-  if (!upgradeResult.filesWritten) {
+  if (upgradeResult && !upgradeResult.filesWritten) {
     throw new Error(
       'Could not sync repo-config package due to conflicts. Please resolve manually',
     );
