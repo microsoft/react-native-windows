@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Allow non-RNW repos",
+  "packageName": "@rnw-scripts/find-repo-root",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-16T22:35:30.909Z"
+}

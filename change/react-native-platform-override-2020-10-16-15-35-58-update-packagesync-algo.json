@@ -1,0 +1,8 @@
+{
+  "type": "minor",
+  "comment": "Allow Multiple Manifests in Monorepos",
+  "packageName": "react-native-platform-override",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-16T22:35:58.960Z"
+}
