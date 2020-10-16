@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 01 Oct 2020 05:08:11 GMT and should not be manually modified.
+This log was last generated on Fri, 16 Oct 2020 05:04:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.22
+
+Fri, 16 Oct 2020 05:04:19 GMT
+
+### Changes
+
+- Fix config and app publish to allow for the windows native source code to live in a different location (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.21
 
