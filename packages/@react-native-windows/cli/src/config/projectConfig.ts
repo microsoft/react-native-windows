@@ -93,9 +93,9 @@ export function projectConfigWindows(
 
   var result: DeepPartial<WindowsProjectConfig> = {
     folder: folder,
-    sourceDir: sourceDir.substr(folder.length + 1),
+    sourceDir: path.relative(folder, sourceDir),
   };
-
+  console.log(result.sourceDir + '----' + sourceDir);
   var validProject = false;
 
   if (usingManualOverride) {
