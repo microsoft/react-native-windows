@@ -233,17 +233,16 @@ function syncDevDependencies(
   const devDependencies = Object.entries(pkg.devDependencies || {});
   const newRNDevDevDeps =
     reactNativePackageDiff.newPackage.devDependencies || {};
-  const newRepoConfigDevDeps =
-    repoConfigPackageDiff.newPackage.devDependencies || {};
+  const newRepoConfigDeps = repoConfigPackageDiff.newPackage.dependencies || {};
 
   for (const [dependency, version] of devDependencies) {
     if (pkg.outOfTreePlatform && newRNDevDevDeps.hasOwnProperty(dependency)) {
       if (semver.gt(newRNDevDevDeps[dependency], version)) {
         pkg.devDependencies![dependency] = newRNDevDevDeps[dependency];
       }
-    } else if (newRepoConfigDevDeps.hasOwnProperty(dependency)) {
-      if (semver.gt(newRepoConfigDevDeps[dependency], version)) {
-        pkg.devDependencies![dependency] = newRepoConfigDevDeps[dependency];
+    } else if (newRepoConfigDeps.hasOwnProperty(dependency)) {
+      if (semver.gt(newRepoConfigDeps[dependency], version)) {
+        pkg.devDependencies![dependency] = newRepoConfigDeps[dependency];
       }
     }
   }
