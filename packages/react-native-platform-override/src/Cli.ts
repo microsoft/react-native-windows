@@ -7,7 +7,6 @@
 
 import * as Api from './Api';
 
-import * as _ from 'lodash';
 import * as chalk from 'chalk';
 import * as ora from 'ora';
 import * as path from 'path';

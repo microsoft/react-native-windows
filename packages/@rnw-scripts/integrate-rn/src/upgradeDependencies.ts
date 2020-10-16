@@ -152,15 +152,15 @@ export function determineNewPackageDependencies(
   localPackages: LocalPackageDeps[],
 ): LocalPackageDeps[] {
   return localPackages.map(pkg => {
-    const newPackage: LocalPackageDeps = _.clone(pkg);
+    const newPackage: LocalPackageDeps = _.cloneDeep(pkg);
 
-    if (pkg.outOfTreePlatform) {
+    if (newPackage.outOfTreePlatform) {
       syncReactNativeDependencies(newPackage, reactNativePackageDiff);
     }
 
-    if (pkg.dependencies && pkg.dependencies['react-native']) {
-      pkg.dependencies['react-native'] = bumpSemver(
-        pkg.dependencies['react-native'],
+    if (newPackage.dependencies && newPackage.dependencies['react-native']) {
+      newPackage.dependencies['react-native'] = bumpSemver(
+        newPackage.dependencies['react-native'],
         newReactNativeVersion,
       );
     }
@@ -168,10 +168,11 @@ export function determineNewPackageDependencies(
     ensureValidReactNativePeerDep(pkg, newReactNativeVersion);
     syncDevDependencies(pkg, repoConfigPackageDiff, reactNativePackageDiff);
 
-    pkg.dependencies = pkg.dependencies && sortKeys(pkg.dependencies);
-    pkg.peerDependencies =
+    newPackage.dependencies = pkg.dependencies && sortKeys(pkg.dependencies);
+    newPackage.peerDependencies =
       pkg.peerDependencies && sortKeys(pkg.peerDependencies);
-    pkg.devDependencies = pkg.devDependencies && sortKeys(pkg.devDependencies);
+    newPackage.devDependencies =
+      pkg.devDependencies && sortKeys(pkg.devDependencies);
 
     return newPackage;
   });
@@ -237,11 +238,21 @@ function syncDevDependencies(
 
   for (const [dependency, version] of devDependencies) {
     if (pkg.outOfTreePlatform && newRNDevDevDeps.hasOwnProperty(dependency)) {
-      if (semver.gt(newRNDevDevDeps[dependency], version)) {
+      if (
+        semver.gt(
+          semver.minVersion(newRNDevDevDeps[dependency])!,
+          semver.minVersion(version)!,
+        )
+      ) {
         pkg.devDependencies![dependency] = newRNDevDevDeps[dependency];
       }
     } else if (newRepoConfigDeps.hasOwnProperty(dependency)) {
-      if (semver.gt(newRepoConfigDeps[dependency], version)) {
+      if (
+        semver.gt(
+          semver.minVersion(newRepoConfigDeps[dependency])!,
+          semver.minVersion(version)!,
+        )
+      ) {
         pkg.devDependencies![dependency] = newRepoConfigDeps[dependency];
       }
     }
