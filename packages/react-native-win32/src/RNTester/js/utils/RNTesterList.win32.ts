@@ -31,6 +31,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('../../../Libraries/Components/Touchable/Tests/TouchableWin32Test'),
   },
   {
+    key: 'PlatformColorExample',
+    module: require('../../js/components/PlatformColor.win32'),
+  },
+  {
     key: 'ScrollViewSimpleExample',
     module: require('react-native/RNTester/js/examples/ScrollView/ScrollViewSimpleExample'),
   },
@@ -57,7 +61,7 @@ const ComponentExamples: Array<IRNTesterExample> = [
   {
     key: 'PickerExample',
     module: require('react-native/RNTester/js/examples/Picker/PickerExample'),
-  }
+  },
 ];
 
 const APIExamples: Array<IRNTesterExample> = [
@@ -91,7 +95,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },
 ];
 
-const Modules: { [key: string]: IRNTesterModule } = {};
+const Modules: {[key: string]: IRNTesterModule} = {};
 
 APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
   Modules[Example.key] = Example.module;
