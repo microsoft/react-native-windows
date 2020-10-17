@@ -48,6 +48,8 @@ function processColorObject(
         gradientDirection: color.gradientDirection,
         colorStops: gradientColorStops,
       };
+    } else if (color.hasOwnProperty('resource_paths')) {
+      return color;
     }
   }
 

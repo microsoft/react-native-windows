@@ -11,14 +11,14 @@
 'use strict';
 
 const processColor = require('./processColor');
-import type {NativeOrDynamicColorType} from './NativeOrDynamicColorType'; // TODO(macOS ISS#2323203)
+import type {NativeOrDynamicColorType, PlatformColorType} from './NativeOrDynamicColorType'; // TODO(macOS ISS#2323203)
 
 function processColorArray(
   /* $FlowFixMe(>=0.89.0 site=react_native_fb) This comment suppresses an
    * error found when Flow v0.89 was deployed. To see the error, delete
    * this comment and run Flow. */
   colors: ?Array<any>,
-): ?Array<?(number | NativeOrDynamicColorType)> /* TODO(macOS ISS#2323203) */ {
+): ?Array<?(number | NativeOrDynamicColorType | PlatformColorType | )> /* TODO(macOS ISS#2323203) */ {
   // ]TODO(macOS ISS#2323203)
   return colors == null ? null : colors.map(processColor);
 }

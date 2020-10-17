@@ -9,11 +9,14 @@
 const invariant = require('invariant');
 const normalizeColor = require('./normalizeColor');
 
-import type {NativeOrDynamicColorType} from './NativeOrDynamicColorType';
+import type {
+  NativeOrDynamicColorType,
+  PlatformColorType,
+} from './NativeOrDynamicColorType';
 
 function normalizeColorObject(
-  color: NativeOrDynamicColorType,
-): ?NativeOrDynamicColorType {
+  color: NativeOrDynamicColorType | PlatformColorType,
+): ?NativeOrDynamicColorType | PlatformColorType {
   if (color && typeof color === 'object') {
     if (
       color.hasOwnProperty('colorStops') &&
@@ -53,6 +56,8 @@ function normalizeColorObject(
         gradientDirection: color.gradientDirection,
         colorStops: gradientColorStops,
       };
+    } else if (color.hasOwnProperty('resource_paths')) {
+      return color;
     }
   }
 
