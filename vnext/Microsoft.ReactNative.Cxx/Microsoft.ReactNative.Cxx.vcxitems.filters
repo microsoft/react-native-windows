@@ -6,12 +6,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ModuleRegistration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReactPromise.cpp" />
-    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
-      <Filter>JSI</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp">
-      <Filter>JSI</Filter>
-    </ClCompile>
+    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
@@ -31,15 +27,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactError.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactPromise.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StructInfo.h" />
-    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h">
-      <Filter>JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h">
-      <Filter>JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(JSI_SourcePath)\jsi\instrumentation.h">
-      <Filter>JSI</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Composition.Effects.h">
       <Filter>UI</Filter>
     </ClInclude>
@@ -103,11 +90,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)NamespaceRedirect.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.h">
-      <Filter>JSI</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Hosting.DesktopWindowXamlSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Hosting.h" />
+    <ClInclude Include="$(JSI_SourcePath)\jsi\instrumentation.h" />
+    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h" />
+    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="JSI">

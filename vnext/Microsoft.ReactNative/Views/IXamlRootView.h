@@ -4,6 +4,7 @@
 #pragma once
 
 #include <IReactRootView.h>
+#include <React.h>
 #include <folly/dynamic.h>
 #include "XamlView.h"
 
@@ -14,7 +15,7 @@ struct IXamlReactControl {
 };
 
 struct IXamlRootView : public facebook::react::IReactRootView {
-  virtual std::shared_ptr<IReactInstance> GetReactInstance() const noexcept = 0;
+  virtual Mso::React::IReactContext *GetReactContext() const noexcept = 0;
   virtual XamlView GetXamlView() const noexcept = 0;
 
   virtual void SetJSComponentName(std::string &&mainComponentName) noexcept = 0;

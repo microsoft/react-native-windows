@@ -31,9 +31,6 @@
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
-<PROJECT_ROOT>/RNTester/js/components/RNTesterExampleList.js
-<PROJECT_ROOT>/RNTester/js/examples/ScrollView/ScrollViewExample.js
-<PROJECT_ROOT>/RNTester/js/examples/View/ViewExample.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
@@ -123,8 +120,6 @@ deprecated-type=warn
 unsafe-getters-setters=warn
 unnecessary-invariant=warn
 signature-verification-failure=warn
-deprecated-utility=error
-unsafe-addition=error
 
 [strict]
 deprecated-type
@@ -136,4 +131,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.130.0
+^0.131.0

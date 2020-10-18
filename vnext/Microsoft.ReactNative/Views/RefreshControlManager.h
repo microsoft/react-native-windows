@@ -11,7 +11,7 @@ class RefreshControlViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
-  RefreshControlViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+  RefreshControlViewManager(const Mso::React::IReactContext &context);
 
   facebook::react::ShadowNode *createShadow() const override;
 

@@ -38,7 +38,7 @@ void SliderShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
-SliderViewManager::SliderViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
+SliderViewManager::SliderViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *SliderViewManager::GetName() const {
   return "RCTSlider";

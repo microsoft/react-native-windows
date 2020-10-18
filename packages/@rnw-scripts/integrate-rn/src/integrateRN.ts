@@ -166,10 +166,12 @@ async function applyRnDependencyChanges(
   // differs more and react-native itself cannot depend on these. Just make
   // sure our versions match core where we were matching before.
   const newDevDeps = pkg.json.devDependencies;
-  for (const [name, version] of Object.entries(newRNJson.devDependencies)) {
+  for (const [name, version] of Object.entries(
+    newRNJson.devDependencies || {},
+  )) {
     if (
       newDevDeps[name] &&
-      newDevDeps[name] === oldRnJson.devDependencies[name]
+      newDevDeps[name] === (oldRnJson.devDependencies || {})[name]
     ) {
       newDevDeps[name] = version;
     }

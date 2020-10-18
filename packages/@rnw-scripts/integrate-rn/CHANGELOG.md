@@ -1,8 +1,24 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Mon, 21 Sep 2020 05:06:22 GMT and should not be manually modified.
+This log was last generated on Sat, 03 Oct 2020 05:04:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.13
+
+Sat, 03 Oct 2020 05:04:45 GMT
+
+### Patches
+
+- Allow Missing react-native devDependencies (ngerlem@microsoft.com)
+
+## 0.0.11
+
+Thu, 01 Oct 2020 05:08:11 GMT
+
+### Patches
+
+- ESLint Fixup (ngerlem@microsoft.com)
 
 ## 0.0.7
 

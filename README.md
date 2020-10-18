@@ -24,7 +24,7 @@
 
 This repository adds support for the [Windows 10 SDK](https://developer.microsoft.com/en-us/windows/downloads), which allows you to build apps for [all devices supported by Windows 10](https://developer.microsoft.com/en-us/windows/get-started-windows-10) including PCs, tablets, 2-in-1s, Xbox, Mixed reality devices etc.
 
-Visit the official [React Native for Windows & Mac website](https://microsoft.github.io/react-native-windows) to learn more.
+Visit the official [React Native for Windows + macOS website](https://microsoft.github.io/react-native-windows) to learn more.
 
 ## Contents
 
@@ -44,7 +44,7 @@ You can run React Native Windows apps only on devices supported by the [Windows 
 For a full and detailed list of the system requirements and how to set up your development platform, see our [System Requirements](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies) documentation on our website.
 
 ## Getting Started
-See the [Getting Started Guide](https://microsoft.github.io/react-native-windows/docs/getting-started) on our React Native for Windows & Mac website to build your first React Native for Windows app.
+See the [Getting Started Guide](https://microsoft.github.io/react-native-windows/docs/getting-started) on our React Native for Windows + macOS website to build your first React Native for Windows app.
 
 ### Logging Issues
 Search the [existing issues](https://github.com/microsoft/react-native-windows/issues) and try to make sure your problem doesn’t already exist before opening a new issue. If your issue doesn't exist yet, try to make sure you provide as much information as possible to us so we can help you sooner. It’s helpful if you include information like:
@@ -61,7 +61,7 @@ See [Contributing guidelines](https://github.com/microsoft/react-native-windows/
 ## Documentation
 [React Native already has great documentation](https://reactnative.dev/docs/getting-started.html) and we're working to ensure the React Native Windows is part of that documentation story.
 
-[React Native for Windows](https://microsoft.github.io/react-native-windows/) has it's own separate documentation site where Windows and Mac specific information, like API docs and blog updates live.
+[React Native for Windows](https://microsoft.github.io/react-native-windows/) has it's own separate documentation site where Windows and macOS specific information, like API docs and blog updates live.
 
 ### Examples
 - Using the CLI in the [Getting Started](https://microsoft.github.io/react-native-windows/docs/getting-started) guide will set you up with a sample React Native for Windows app that you can begin editing right away.

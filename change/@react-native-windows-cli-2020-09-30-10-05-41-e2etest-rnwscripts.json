@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "ESLint Fixup",
-  "packageName": "@react-native-windows/cli",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-30T17:05:14.962Z"
-}

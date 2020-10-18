@@ -40,10 +40,6 @@ exports.copyTask = baseDir => {
       paths: reactNative('Libraries/**/*.+(js|jsx|png|gif|jpg|html)'),
       dest: base('Libraries'),
     }),
-    copyTask({
-      paths: reactCopies('RNTester/**'),
-      dest: base('RNTester'),
-    }),
 
     copyTask({
       paths: reactNative('index.js', 'interface.js', 'rn-get-polyfills.js'),
@@ -70,14 +66,13 @@ exports.cleanTask = baseDir => {
       }),
 
       base('Libraries'),
-      base('RNTester'),
       base('index.js'),
       base('interface.js'),
       base('rn-get-polyfills.js'),
 
       // Remove TS compiled gunk in our root
       ...glob.sync(
-        '+(index|RNTester|typings-index)*(.windows|.win32)*(.d)+(.js|.ts)*(.map)',
+        '+(index|typings-index)*(.windows|.win32)*(.d)+(.js|.ts)*(.map)',
         {
           cwd: baseDir,
           absolute: true,

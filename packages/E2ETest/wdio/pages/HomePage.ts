@@ -7,7 +7,7 @@ import { BasePage, By } from './BasePage';
 import {
   SEARCH_BOX,
   BACK_BUTTON,
-} from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
+} from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 class HomePage extends BasePage {
   goToTestPage(page: string) {

@@ -30,7 +30,7 @@ class PickerShadowNode : public ShadowNodeBase {
  private:
   void RepopulateItems();
   static void OnSelectionChanged(
-      IReactInstance &instance,
+      const Mso::React::IReactContext &context,
       int64_t tag,
       folly::dynamic &&value,
       int32_t selectedIndex,
@@ -66,13 +66,11 @@ void PickerShadowNode::createView() {
   Super::createView();
   auto combobox = GetView().as<xaml::Controls::ComboBox>();
   combobox.TabIndex(0);
-  auto wkinstance = GetViewManager()->GetReactInstance();
 
   combobox.AllowFocusOnInteraction(true);
 
   m_comboBoxSelectionChangedRevoker = combobox.SelectionChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr) {
+    if (!m_updating) {
       int32_t index = combobox.SelectedIndex();
       folly::dynamic value;
       if (index >= 0 && index < static_cast<int32_t>(m_items.size()))
@@ -80,7 +78,7 @@ void PickerShadowNode::createView() {
       folly::dynamic text;
       if (s_isEditableComboboxSupported == react::uwp::TriBit::Set && index == -1)
         text = HstringToDynamic(combobox.Text());
-      OnSelectionChanged(*instance, m_tag, std::move(value), index, std::move(text));
+      OnSelectionChanged(GetViewManager()->GetReactContext(), m_tag, std::move(value), index, std::move(text));
     }
   });
 
@@ -166,21 +164,21 @@ void PickerShadowNode::RepopulateItems() {
 }
 
 /*static*/ void PickerShadowNode::OnSelectionChanged(
-    IReactInstance &instance,
+    const Mso::React::IReactContext &context,
     int64_t tag,
     folly::dynamic &&value,
     int32_t selectedIndex,
     folly::dynamic &&text) {
   folly::dynamic eventData = folly::dynamic::object("target", tag)("value", std::move(value))(
       "itemIndex", selectedIndex)("text", std::move(text));
-  instance.DispatchEvent(tag, "topChange", std::move(eventData));
+  context.DispatchEvent(tag, "topChange", std::move(eventData));
 }
 
 bool PickerShadowNode::NeedsForceLayout() {
   return true;
 }
 
-PickerViewManager::PickerViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
+PickerViewManager::PickerViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *PickerViewManager::GetName() const {
   return "RCTPicker";

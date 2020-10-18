@@ -22,16 +22,28 @@ class ReactContext final : public Mso::UnknownObject<IReactContext> {
   void Destroy() noexcept;
 
  public: // IReactContext
-  winrt::Microsoft::ReactNative::IReactPropertyBag Properties() noexcept override;
-  winrt::Microsoft::ReactNative::IReactNotificationService Notifications() noexcept override;
-  void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept override;
-  void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept override;
+  winrt::Microsoft::ReactNative::IReactPropertyBag Properties() const noexcept override;
+  winrt::Microsoft::ReactNative::IReactNotificationService Notifications() const noexcept override;
+  void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) const noexcept override;
+  void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept override;
 #ifndef CORE_ABI
   ReactInstanceState State() const noexcept override;
   bool IsLoaded() const noexcept override;
-  std::string GetBundleRootPath() const noexcept override;
   facebook::react::INativeUIManager *NativeUIManager() const noexcept override;
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override;
+
+  bool UseWebDebugger() const noexcept override;
+  bool UseFastRefresh() const noexcept override;
+  bool UseDirectDebugger() const noexcept override;
+  bool DebuggerBreakOnNextLine() const noexcept override;
+  uint16_t DebuggerPort() const noexcept override;
+  std::string DebugBundlePath() const noexcept override;
+  std::string BundleRootPath() const noexcept override;
+  std::string SourceBundleHost() const noexcept override;
+  uint16_t SourceBundlePort() const noexcept override;
+  std::string JavaScriptBundleFile() const noexcept override;
+  bool UseDeveloperSupport() const noexcept override;
+
 #endif
 
  private:

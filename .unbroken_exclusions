@@ -1,4 +1,4 @@
-!node_modules
+!**/node_modules
 !vnext/packages
 !vnext/ReactCopies
 !packages/react-native-platform-override/node_modules

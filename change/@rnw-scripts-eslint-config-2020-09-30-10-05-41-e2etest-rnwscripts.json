@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "ESLint Fixup",
-  "packageName": "@rnw-scripts/eslint-config",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-30T17:05:21.101Z"
-}

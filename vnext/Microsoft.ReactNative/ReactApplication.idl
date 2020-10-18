@@ -16,6 +16,7 @@ namespace Microsoft.ReactNative {
     ReactNativeHost Host { get; };
 
     Boolean UseDeveloperSupport { get; set; };
+    // Deprecated - Use JavaScriptBundleFile instead
     String JavaScriptMainModuleName { get; set; };
     String JavaScriptBundleFile { get; set; };
   }

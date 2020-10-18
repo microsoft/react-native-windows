@@ -12,7 +12,7 @@ class ScrollViewManager : public ControlViewManager {
   using Super = ControlViewManager;
 
  public:
-  ScrollViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+  ScrollViewManager(const Mso::React::IReactContext &context);
 
   const char *GetName() const override;
   folly::dynamic GetCommands() const override;

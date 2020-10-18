@@ -25,15 +25,15 @@ void ReactContext::Destroy() noexcept {
   }
 }
 
-winrt::Microsoft::ReactNative::IReactPropertyBag ReactContext::Properties() noexcept {
+winrt::Microsoft::ReactNative::IReactPropertyBag ReactContext::Properties() const noexcept {
   return m_properties;
 }
 
-winrt::Microsoft::ReactNative::IReactNotificationService ReactContext::Notifications() noexcept {
+winrt::Microsoft::ReactNative::IReactNotificationService ReactContext::Notifications() const noexcept {
   return m_notifications;
 }
 
-void ReactContext::CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept {
+void ReactContext::CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) const noexcept {
 #ifndef CORE_ABI // requires instance
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     instance->CallJsFunction(std::move(module), std::move(method), std::move(params));
@@ -41,7 +41,7 @@ void ReactContext::CallJSFunction(std::string &&module, std::string &&method, fo
 #endif
 }
 
-void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept {
+void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept {
 #ifndef CORE_ABI // requires instance
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     instance->DispatchEvent(viewTag, std::move(eventName), std::move(eventData));
@@ -66,14 +66,6 @@ bool ReactContext::IsLoaded() const noexcept {
   return false;
 }
 
-std::string ReactContext::GetBundleRootPath() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->GetBundleRootPath();
-  }
-
-  return "";
-}
-
 facebook::react::INativeUIManager *ReactContext::NativeUIManager() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->NativeUIManager();
@@ -89,6 +81,84 @@ std::shared_ptr<facebook::react::Instance> ReactContext::GetInnerInstance() cons
 
   return nullptr;
 }
+
+bool ReactContext::UseWebDebugger() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->UseWebDebugger();
+  }
+  return false;
+}
+
+bool ReactContext::UseFastRefresh() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->UseFastRefresh();
+  }
+  return false;
+}
+
+bool ReactContext::UseDirectDebugger() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->UseDirectDebugger();
+  }
+  return false;
+}
+
+bool ReactContext::DebuggerBreakOnNextLine() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->DebuggerBreakOnNextLine();
+  }
+  return false;
+}
+
+uint16_t ReactContext::DebuggerPort() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->DebuggerPort();
+  }
+  return 0;
+}
+
+std::string ReactContext::DebugBundlePath() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->DebugBundlePath();
+  }
+  return {};
+}
+
+std::string ReactContext::BundleRootPath() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->BundleRootPath();
+  }
+  return {};
+}
+
+std::string ReactContext::SourceBundleHost() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->SourceBundleHost();
+  }
+  return {};
+}
+
+uint16_t ReactContext::SourceBundlePort() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->SourceBundlePort();
+  }
+  return 0;
+}
+
+std::string ReactContext::JavaScriptBundleFile() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->JavaScriptBundleFile();
+  }
+  return {};
+}
+
+bool ReactContext::UseDeveloperSupport() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->UseDeveloperSupport();
+  }
+  return false;
+}
+
 #endif
 
 } // namespace Mso::React

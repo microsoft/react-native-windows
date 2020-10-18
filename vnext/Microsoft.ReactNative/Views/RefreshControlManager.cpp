@@ -35,12 +35,9 @@ void RefreshControlShadowNode::createView() {
   if (auto refreshContainer = GetView().try_as<winrt::RefreshContainer>()) {
     m_refreshRequestedRevoker =
         refreshContainer.RefreshRequested(winrt::auto_revoke, [this](auto &&, winrt::RefreshRequestedEventArgs args) {
-          auto wkinstance = GetViewManager()->GetReactInstance();
-          if (auto instance = wkinstance.lock()) {
-            m_refreshDeferral = args.GetDeferral();
-            folly::dynamic eventData = folly::dynamic::object();
-            instance->DispatchEvent(m_tag, "topOnRefresh", std::move(eventData));
-          }
+          m_refreshDeferral = args.GetDeferral();
+          folly::dynamic eventData = folly::dynamic::object();
+          GetViewManager()->DispatchEvent(m_tag, "topOnRefresh", std::move(eventData));
         });
   }
 }
@@ -72,8 +69,7 @@ void RefreshControlShadowNode::updateProperties(const folly::dynamic &&props) {
   Super::updateProperties(std::move(props));
 }
 
-RefreshControlViewManager::RefreshControlViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+RefreshControlViewManager::RefreshControlViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 facebook::react::ShadowNode *RefreshControlViewManager::createShadow() const {
   return new RefreshControlShadowNode();

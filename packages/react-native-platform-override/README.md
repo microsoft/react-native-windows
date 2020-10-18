@@ -17,6 +17,7 @@ An example override manifest
   "excludePatterns": [
     "src/README.md"
   ],
+  "baseVersion": "0.0.0-10b4b9505",
   "overrides": [
     {
       "type": "derived",
@@ -33,6 +34,7 @@ An example override manifest
 |-------------------|----------|-----------------------------------------------------------------|----------|
 | `includePatterns` | Optional | A list of globs of files to enforce are listed in the manifest. | `["**"]` |
 | `excludePatterns` | Optional | Globs to be excluded from the above list.                       | `[]`     |
+| `baseVersion`     | Optional | The default react-native version of an override                 |          |
 | `overrides`       | Required | List of registered overrides, added by the tooling              |          |
 
 ## Override Types
@@ -79,6 +81,14 @@ Attempts to automatically merge new changes into out-of-date overrides.
 | `--manifest <file>` | Optional | Path to an override manifest to validate                   | Package root above cwd          |
 | `--version <v>`     | Optional | A version of React Native to check against                 | The currently installed version |
 | `--no-conflicts`    | Optional | Whether to allow upgraded files to contain conlict markers | `--conflicts`                   |
+
+### `diff <override>`
+Diffs an override against its base file. It it compared to the base file of the override's current version, even if a newer verison of
+react-native is installed.
+
+| Option                 | Required | Description                                                                                                    | Default |
+|------------------------|----------|----------------------------------------------------------------------------------------------------------------|---------|
+| `<override>`           | Required | The override to diff against                                                                                   |         |
 
 ## GitHub Tokens
 `react-native-platform-override` makes requests to GitHub's API. An OAuth token may optionally be provided by using the `--githubToken`

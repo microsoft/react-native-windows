@@ -112,6 +112,8 @@ export default class GitReactFileRepository
     newContent: Buffer,
   ): Promise<string> {
     return this.usingVersion(reactNativeVersion, async () => {
+      await this.ensureFile(filename);
+
       try {
         await this.fileRepo.writeFile(filename, newContent);
         const patch = await this.gitClient.diff([
@@ -121,10 +123,6 @@ export default class GitReactFileRepository
           '--',
           filename,
         ]);
-
-        if (patch.length === 0) {
-          throw new Error(`Generated patch for ${filename} was empty`);
-        }
 
         return patch;
       } finally {
@@ -146,6 +144,8 @@ export default class GitReactFileRepository
     patchContent: string,
   ): Promise<{patchedFile: Buffer | null; hasConflicts: boolean}> {
     return this.usingVersion(reactNativeVersion, async () => {
+      await this.ensureFile(filename);
+
       try {
         await this.fileRepo.writeFile('rnwgit.patch', patchContent);
 
@@ -271,5 +271,16 @@ export default class GitReactFileRepository
 
   private static async defaultGitDirectory(): Promise<string> {
     return path.join(os.tmpdir(), (await getNpmPackage()).name, 'git');
+  }
+
+  private async ensureFile(filename: string): Promise<void> {
+    const stat = await this.fileRepo.stat(filename);
+    if (stat === 'none') {
+      throw new Error(
+        `Cannot find file "${filename}" in react-native@${this.checkedOutVersion}`,
+      );
+    } else if (stat === 'directory') {
+      throw new Error(`"${filename}" refers to a directory`);
+    }
   }
 }

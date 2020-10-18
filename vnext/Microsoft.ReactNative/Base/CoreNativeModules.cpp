@@ -16,7 +16,6 @@
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/UIManagerModule.h>
-#include <Modules/WebSocketModuleUwp.h>
 #include <Threading/MessageQueueThreadFactory.h>
 
 // Shared
@@ -52,7 +51,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
         &jsMessageQueue, // JS engine thread (what we use for external modules)
     std::shared_ptr<react::uwp::AppTheme> &&appTheme,
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
-    const std::shared_ptr<IReactInstance> &uwpInstance) noexcept {
+    Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept {
   std::vector<facebook::react::NativeModuleDescription> modules;
 
   modules.emplace_back(
@@ -63,8 +62,8 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       batchingUIMessageQueue);
 
   modules.emplace_back(
-      react::uwp::WebSocketModule::Name,
-      []() { return std::make_unique<react::uwp::WebSocketModule>(); },
+      "WebSocketModule",
+      [context]() { return Microsoft::React::CreateWebSocketModule(Mso::CntPtr<Mso::React::IReactContext>(context)); },
       jsMessageQueue);
 
   modules.emplace_back(
@@ -94,9 +93,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
 
   modules.emplace_back(
       NativeAnimatedModule::name,
-      [wpUwpInstance = std::weak_ptr(uwpInstance)]() mutable {
-        return std::make_unique<NativeAnimatedModule>(std::move(wpUwpInstance));
-      },
+      [context = std::move(context)]() mutable { return std::make_unique<NativeAnimatedModule>(std::move(context)); },
       batchingUIMessageQueue);
 
   modules.emplace_back(

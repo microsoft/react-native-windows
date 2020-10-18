@@ -2,6 +2,78 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Fri, 09 Oct 2020 05:06:32 GMT",
+      "tag": "react-native-platform-override_v0.3.3",
+      "version": "0.3.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update just-scipts (remove npm-registry-fetch)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "00b2d84b8effce0b7405a67bd4903eed88cb9aaf",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 03 Oct 2020 05:04:45 GMT",
+      "tag": "react-native-platform-override_v0.3.3",
+      "version": "0.3.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow Default baseVersion in Override Manfests",
+            "author": "ngerlem@microsoft.com",
+            "commit": "feca1c6fea43a0459c922e4af1c3daf5c3b65ec5",
+            "package": "react-native-platform-override"
+          },
+          {
+            "comment": "Add command to diff overrides",
+            "author": "ngerlem@microsoft.com",
+            "commit": "10f9b80d943ed34824132912a936fa1af7d0f8e0",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 02 Oct 2020 05:05:22 GMT",
+      "tag": "react-native-platform-override_v0.3.2",
+      "version": "0.3.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add some extra error handling to GitReactFileRepository",
+            "author": "ngerlem@microsoft.com",
+            "commit": "43cc1b4998ded80783c84b2b2544975dd900d68e",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "react-native-platform-override_v0.3.1",
+      "version": "0.3.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "react-native-platform-override"
+          },
+          {
+            "comment": "Fix applying patches when case is mismatched",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b111a2fa6e0ec245e87a653394105be1c98568ee",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Sep 2020 05:06:49 GMT",
       "tag": "react-native-platform-override_v0.3.0",
       "version": "0.3.0",

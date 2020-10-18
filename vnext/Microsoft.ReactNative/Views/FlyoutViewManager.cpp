@@ -86,7 +86,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
 
   void AddView(ShadowNode &child, int64_t index) override;
   void createView() override;
-  static void OnFlyoutClosed(IReactInstance &instance, int64_t tag, bool newValue);
+  static void OnFlyoutClosed(const Mso::React::IReactContext &context, int64_t tag, bool newValue);
   void onDropViewInstance() override;
   void removeAllChildren() override;
   void updateProperties(const folly::dynamic &&props) override;
@@ -157,21 +157,19 @@ void FlyoutShadowNode::createView() {
   if (m_isFlyoutShowOptionsSupported)
     m_showOptions = winrt::FlyoutShowOptions();
 
-  auto wkinstance = GetViewManager()->GetReactInstance();
-  m_touchEventHanadler = std::make_unique<TouchEventHandler>(wkinstance);
-  m_previewKeyboardEventHandlerOnRoot = std::make_unique<PreviewKeyboardEventHandlerOnRoot>(wkinstance);
+  m_touchEventHanadler = std::make_unique<TouchEventHandler>(GetViewManager()->GetReactContext());
+  m_previewKeyboardEventHandlerOnRoot =
+      std::make_unique<PreviewKeyboardEventHandlerOnRoot>(GetViewManager()->GetReactContext());
 
   m_flyoutClosingRevoker = m_flyout.Closing(
       winrt::auto_revoke, [=](winrt::FlyoutBase /*flyoutbase*/, winrt::FlyoutBaseClosingEventArgs args) {
-        auto instance = wkinstance.lock();
-        if (!m_updating && instance != nullptr && !m_isLightDismissEnabled && m_isOpen) {
+        if (!m_updating && !m_isLightDismissEnabled && m_isOpen) {
           args.Cancel(true);
         }
       });
 
   m_flyoutClosedRevoker = m_flyout.Closed(winrt::auto_revoke, [=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr) {
+    if (!m_updating) {
       if (m_targetElement != nullptr) {
         // When the flyout closes, attempt to move focus to
         // its anchor element to prevent cases where focus can land on
@@ -180,7 +178,7 @@ void FlyoutShadowNode::createView() {
         xaml::Input::FocusManager::TryFocusAsync(m_targetElement, winrt::FocusState::Programmatic);
       }
 
-      OnFlyoutClosed(*instance, m_tag, false);
+      OnFlyoutClosed(GetViewManager()->GetReactContext(), m_tag, false);
       m_xamlRootChangedRevoker.revoke();
     }
   });
@@ -193,11 +191,9 @@ void FlyoutShadowNode::createView() {
   // move focus to the first focusable element in the flyout.)
   //
   m_flyoutOpenedRevoker = m_flyout.Opened(winrt::auto_revoke, [=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-
     m_flyout.AllowFocusOnInteraction(false);
 
-    if (!m_updating && instance != nullptr) {
+    if (!m_updating) {
       if (auto flyoutPresenter = GetFlyoutPresenter()) {
         // When multiple flyouts/popups are overlapping, XAML's theme
         // shadows don't render properly. As a workaround we enable a
@@ -235,8 +231,8 @@ void FlyoutShadowNode::createView() {
 
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
   if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
-    if (auto instance = wkinstance.lock()) {
-      if (auto xamlRoot = static_cast<NativeUIManager *>(instance->NativeUIManager())->tryGetXamlRoot()) {
+    if (auto uiManager = static_cast<NativeUIManager *>(GetViewManager()->GetReactContext().NativeUIManager())) {
+      if (auto xamlRoot = uiManager->tryGetXamlRoot()) {
         flyoutBase6.XamlRoot(xamlRoot);
         m_xamlRootChangedRevoker = xamlRoot.Changed(winrt::auto_revoke, [this](auto &&, auto &&) {
           if (m_isLightDismissEnabled) {
@@ -248,9 +244,9 @@ void FlyoutShadowNode::createView() {
   }
 }
 
-/*static*/ void FlyoutShadowNode::OnFlyoutClosed(IReactInstance &instance, int64_t tag, bool newValue) {
+/*static*/ void FlyoutShadowNode::OnFlyoutClosed(const Mso::React::IReactContext &context, int64_t tag, bool newValue) {
   folly::dynamic eventData = folly::dynamic::object("target", tag)("isOpen", newValue);
-  instance.DispatchEvent(tag, "topDismiss", std::move(eventData));
+  context.DispatchEvent(tag, "topDismiss", std::move(eventData));
 }
 
 void FlyoutShadowNode::onDropViewInstance() {
@@ -290,8 +286,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
       else if (propertyValue.isNull())
         m_isLightDismissEnabled = true;
       if (m_isOpen) {
-        auto popup = GetFlyoutParentPopup();
-        if (popup != nullptr) {
+        if (auto popup = GetFlyoutParentPopup()) {
           popup.IsLightDismissEnabled(m_isLightDismissEnabled);
         }
       }
@@ -365,27 +360,22 @@ void FlyoutShadowNode::OnShowFlyout() {
     winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
   }
 
-  auto popup = GetFlyoutParentPopup();
-  if (popup != nullptr) {
+  if (auto popup = GetFlyoutParentPopup()) {
     popup.IsLightDismissEnabled(m_isLightDismissEnabled);
   }
 }
 
 void FlyoutShadowNode::SetTargetFrameworkElement() {
-  auto wkinstance = GetViewManager()->GetReactInstance();
-  auto instance = wkinstance.lock();
-
-  if (instance == nullptr)
-    return;
-
   if (m_targetTag > 0) {
-    auto pNativeUIManagerHost = static_cast<NativeUIManager *>(instance->NativeUIManager())->getHost();
-    ShadowNodeBase *pShadowNodeChild =
-        static_cast<ShadowNodeBase *>(pNativeUIManagerHost->FindShadowNodeForTag(m_targetTag));
+    if (auto uiManager = static_cast<NativeUIManager *>(GetViewManager()->GetReactContext().NativeUIManager())) {
+      auto pNativeUIManagerHost = uiManager->getHost();
+      ShadowNodeBase *pShadowNodeChild =
+          static_cast<ShadowNodeBase *>(pNativeUIManagerHost->FindShadowNodeForTag(m_targetTag));
 
-    if (pShadowNodeChild != nullptr) {
-      auto targetView = pShadowNodeChild->GetView();
-      m_targetElement = targetView.as<xaml::FrameworkElement>();
+      if (pShadowNodeChild != nullptr) {
+        auto targetView = pShadowNodeChild->GetView();
+        m_targetElement = targetView.as<xaml::FrameworkElement>();
+      }
     }
   } else {
     m_targetElement = xaml::Window::Current().Content().as<xaml::FrameworkElement>();
@@ -433,7 +423,7 @@ winrt::FlyoutPresenter FlyoutShadowNode::GetFlyoutPresenter() const {
   return scope;
 }
 
-FlyoutViewManager::FlyoutViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
+FlyoutViewManager::FlyoutViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *FlyoutViewManager::GetName() const {
   return "RCTFlyout";

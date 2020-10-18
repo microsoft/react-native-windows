@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove Microsoft user names from sourcecode",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-29T15:56:05.061Z"
-}

@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "ESLint Fixup",
-  "packageName": "@rnw-scripts/babel-node-config",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-09-30T17:05:18.353Z"
-}

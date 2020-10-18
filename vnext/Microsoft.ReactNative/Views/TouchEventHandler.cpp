@@ -27,8 +27,8 @@ namespace react::uwp {
 
 std::vector<int64_t> GetTagsForBranch(facebook::react::INativeUIManagerHost *host, int64_t tag);
 
-TouchEventHandler::TouchEventHandler(const std::weak_ptr<IReactInstance> &reactInstance)
-    : m_xamlView(nullptr), m_wkReactInstance(reactInstance) {}
+TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context)
+    : m_xamlView(nullptr), m_context(&context) {}
 
 TouchEventHandler::~TouchEventHandler() {
   RemoveTouchHandlers();
@@ -67,8 +67,7 @@ void TouchEventHandler::OnPointerPressed(
     const winrt::IInspectable & /*sender*/,
     const winrt::PointerRoutedEventArgs &args) {
   // Short circuit all of this if we are in an error state
-  auto instance = m_wkReactInstance.lock();
-  if (!instance || instance->IsInError())
+  if (m_context->State() == Mso::React::ReactInstanceState::HasError)
     return;
 
   if (IndexOfPointerWithId(args.Pointer().PointerId()) != std::nullopt) {
@@ -92,7 +91,7 @@ void TouchEventHandler::OnPointerPressed(
 
   if (m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
     // Pointer pressing updates the enter/leave state
-    UpdatePointersInViews(instance, args, tag, sourceElement);
+    UpdatePointersInViews(args, tag, sourceElement);
 
     size_t pointerIndex = AddReactPointer(args, tag, sourceElement);
 
@@ -126,19 +125,17 @@ void TouchEventHandler::OnPointerExited(
     const winrt::IInspectable & /*sender*/,
     const winrt::PointerRoutedEventArgs &args) {
   // Short circuit all of this if we are in an error state
-  auto instance = m_wkReactInstance.lock();
-  if (!instance || instance->IsInError())
+  if (m_context->State() == Mso::React::ReactInstanceState::HasError)
     return;
 
-  UpdatePointersInViews(instance, args, -1, nullptr);
+  UpdatePointersInViews(args, -1, nullptr);
 }
 
 void TouchEventHandler::OnPointerMoved(
     const winrt::IInspectable & /*sender*/,
     const winrt::PointerRoutedEventArgs &args) {
   // Short circuit all of this if we are in an error state
-  auto instance = m_wkReactInstance.lock();
-  if (!instance || instance->IsInError())
+  if (m_context->State() == Mso::React::ReactInstanceState::HasError)
     return;
 
   // Only if the view has a Tag can we process this
@@ -153,14 +150,13 @@ void TouchEventHandler::OnPointerMoved(
     DispatchTouchEvent(TouchEventType::Move, *optPointerIndex);
   } else {
     // Move with no buttons pressed
-    UpdatePointersInViews(instance, args, tag, sourceElement);
+    UpdatePointersInViews(args, tag, sourceElement);
   }
 }
 
 void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args) {
   // Short circuit all of this if we are in an error state
-  auto instance = m_wkReactInstance.lock();
-  if (!instance || instance->IsInError())
+  if (m_context->State() == Mso::React::ReactInstanceState::HasError)
     return;
 
   auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
@@ -252,11 +248,12 @@ std::optional<size_t> TouchEventHandler::IndexOfPointerWithId(uint32_t pointerId
 }
 
 void TouchEventHandler::UpdatePointersInViews(
-    std::shared_ptr<IReactInstance> instance,
     const winrt::PointerRoutedEventArgs &args,
     int64_t tag,
     xaml::UIElement sourceElement) {
-  auto nativeUiManager = static_cast<NativeUIManager *>(instance->NativeUIManager());
+  auto nativeUiManager = static_cast<NativeUIManager *>(m_context->NativeUIManager());
+  if (!nativeUiManager)
+    return;
   auto puiManagerHost = nativeUiManager->getHost();
   int32_t pointerId = args.Pointer().PointerId();
 
@@ -305,7 +302,7 @@ void TouchEventHandler::UpdatePointersInViews(
 
       ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(existingTag));
       if (node != nullptr && node->m_onMouseLeaveRegistered)
-        instance->DispatchEvent(existingTag, "topMouseLeave", GetPointerJson(pointer, existingTag));
+        m_context->DispatchEvent(existingTag, "topMouseLeave", GetPointerJson(pointer, existingTag));
     }
   }
 
@@ -318,7 +315,7 @@ void TouchEventHandler::UpdatePointersInViews(
 
     ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(newTag));
     if (node != nullptr && node->m_onMouseEnterRegistered)
-      instance->DispatchEvent(newTag, "topMouseEnter", GetPointerJson(pointer, newTag));
+      m_context->DispatchEvent(newTag, "topMouseEnter", GetPointerJson(pointer, newTag));
   }
 
   m_pointersInViews[pointerId] = {std::move(newViewsSet), std::move(newViews)};
@@ -352,18 +349,15 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
     return;
   folly::dynamic params = folly::dynamic::array(eventName, std::move(touches), std::move(changedIndices));
 
-  auto instance = m_wkReactInstance.lock();
-  instance->CallJsFunction("RCTEventEmitter", "receiveTouches", std::move(params));
+  m_context->CallJSFunction("RCTEventEmitter", "receiveTouches", std::move(params));
 }
 
 bool TouchEventHandler::DispatchBackEvent() {
-  auto instance = m_wkReactInstance.lock();
-  if (instance != nullptr && !instance->IsInError()) {
-    instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
-    return true;
-  }
+  if (m_context->State() != Mso::React::ReactInstanceState::Loaded)
+    return false;
 
-  return false;
+  m_context->CallJSFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
+  return true;
 }
 
 const char *TouchEventHandler::GetPointerDeviceTypeName(

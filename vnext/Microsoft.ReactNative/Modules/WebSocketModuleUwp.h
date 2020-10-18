@@ -8,10 +8,10 @@
 
 namespace react::uwp {
 
-class WebSocketModule : public facebook::xplat::module::CxxModule {
+class LegacyWebSocketModule : public facebook::xplat::module::CxxModule {
  public:
-  WebSocketModule();
-  virtual ~WebSocketModule();
+  LegacyWebSocketModule();
+  virtual ~LegacyWebSocketModule();
 
   // CxxModule
   std::string getName() override;

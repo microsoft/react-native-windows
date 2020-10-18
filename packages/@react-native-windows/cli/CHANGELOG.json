@@ -2,6 +2,72 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 17 Oct 2020 05:06:20 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.23",
+      "version": "0.0.0-canary.23",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "C# apps have x86 platform=x86 but C++ apps have Win32",
+            "author": "asklar@microsoft.com",
+            "commit": "cfac7ab1942d3380eb33bb779f571befd10a6bff",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Revert \"Fix project config and package deploy to support the windows code in a different location (#6232)\"",
+            "author": "dannyvv@microsoft.com",
+            "commit": "0f3c2aafb5bf9a93f03ea9b22c1f7f013bb46b2b",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 16 Oct 2020 05:04:19 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.22",
+      "version": "0.0.0-canary.22",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix config and app publish to allow for the windows native source code to live in a different location",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ceb3c4519d5c0e13e843a0a93f7b39aebfbef94f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Oct 2020 05:06:32 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.21",
+      "version": "0.0.0-canary.21",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update just-scipts (remove npm-registry-fetch)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "00b2d84b8effce0b7405a67bd4903eed88cb9aaf",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.21",
+      "version": "0.0.0-canary.21",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Sep 2020 05:05:53 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.20",
       "version": "0.0.0-canary.20",

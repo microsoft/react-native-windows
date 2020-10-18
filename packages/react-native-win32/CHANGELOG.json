@@ -2,6 +2,98 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 09 Oct 2020 05:06:32 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.56",
+      "version": "0.0.0-canary.56",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 8/20 Nightly RN Build (Extract RNTester)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f50540af66deb1f94949734dcc12cca299a78fcc",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Most people do not need rex, do not install it for everyone using the RNW repo",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "ccf67e7a36e760e5907660aa1393d7ab7f692bbc",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Update just-scipts (remove npm-registry-fetch)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "00b2d84b8effce0b7405a67bd4903eed88cb9aaf",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 03 Oct 2020 05:04:45 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.55",
+      "version": "0.0.0-canary.55",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 8/19 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "85360682867c1bc265da6730581df5994d679cda",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Allow Default baseVersion in Override Manfests",
+            "author": "ngerlem@microsoft.com",
+            "commit": "feca1c6fea43a0459c922e4af1c3daf5c3b65ec5",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 02 Oct 2020 05:05:22 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.54",
+      "version": "0.0.0-canary.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 8/5 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "219d73e26770e6fab386132139990cc5a4c8c368",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 8/17 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e8ba1847f0d7475cb67b0e491f692045c00d880e",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.53",
+      "version": "0.0.0-canary.53",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 7/29 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b111a2fa6e0ec245e87a653394105be1c98568ee",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Sep 2020 05:06:49 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.52",
       "version": "0.0.0-canary.52",

@@ -14,10 +14,9 @@
 namespace winrt::Microsoft::ReactNative {
 
 ABIViewManager::ABIViewManager(
-    std::shared_ptr<react::uwp::IReactInstance> const &reactInstance,
     Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
     ReactNative::IViewManager const &viewManager)
-    : Super(reactInstance),
+    : Super(*reactContext),
       m_name{to_string(viewManager.Name())},
       m_viewManager{viewManager},
       m_viewManagerWithReactContext{viewManager.try_as<IViewManagerWithReactContext>()},

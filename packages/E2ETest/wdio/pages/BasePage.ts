@@ -7,7 +7,7 @@ import {
   REACT_CONTROL_ERROR_TEST_ID,
   BACK_BUTTON,
   TREE_DUMP_RESULT,
-} from 'react-native-windows/RNTester/js/examples-win/LegacyTests/Consts';
+} from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 export function By(testId: string): WebdriverIO.Element {
   return $('~' + testId);

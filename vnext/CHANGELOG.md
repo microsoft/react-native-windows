@@ -1,8 +1,78 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 30 Sep 2020 05:06:49 GMT and should not be manually modified.
+This log was last generated on Sat, 10 Oct 2020 05:04:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.181
+
+Sat, 10 Oct 2020 05:04:10 GMT
+
+### Changes
+
+- Fixed missing folly headers on publish (jthysell@microsoft.com)
+
+## 0.0.0-canary.180
+
+Fri, 09 Oct 2020 05:06:32 GMT
+
+### Changes
+
+- removed no longer used polyester controls (chiara.mooney@gmail.com)
+- Change order of JavaScript tests to get failures earlier (dannyvv@microsoft.com)
+- Integrate 8/20 Nightly RN Build (Extract RNTester) (ngerlem@microsoft.com)
+- Update System.Private.Uri version for C# codegen for unittest (dannyvv@microsoft.com)
+- Consolidate WebSocketModules (julio.rocha@microsoft.com)
+- update folly version to fix folly bug 1454 (asklar@winse.microsoft.com)
+
+## 0.0.0-canary.179
+
+Tue, 06 Oct 2020 05:04:27 GMT
+
+### Changes
+
+- Remove ILegacyReactInstance, and react::uwp::IReactInstance (30809111+acoates-ms@users.noreply.github.com)
+- Update System.Private.Uri version for C# codegen (dannyvv@microsoft.com)
+
+## 0.0.0-canary.178
+
+Sun, 04 Oct 2020 05:04:25 GMT
+
+### Changes
+
+- Remove the other TimingModule Assertion (ngerlem@microsoft.com)
+
+## 0.0.0-canary.177
+
+Sat, 03 Oct 2020 05:04:45 GMT
+
+### Changes
+
+- Fix native modules not being re-initialized on reload (tn0502@gmail.com)
+- Integrate 8/19 Nightly RN Build (ngerlem@microsoft.com)
+- Allow Default baseVersion in Override Manfests (ngerlem@microsoft.com)
+
+## 0.0.0-canary.176
+
+Fri, 02 Oct 2020 05:05:22 GMT
+
+### Changes
+
+- Expose getters for some instance settings on reactcontext (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 8/5 Nightly RN Build (ngerlem@microsoft.com)
+- Image - fix pre-1903 crash (email not defined)
+- Integrate 8/17 Nightly RN Build (ngerlem@microsoft.com)
+- Use lessthrow_await_adapter in Desktop WebSocket resource (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.175
+
+Thu, 01 Oct 2020 05:08:11 GMT
+
+### Changes
+
+- Integrate 7/29 Nightly Build (ngerlem@microsoft.com)
+- Remove Microsoft user names from sourcecode (dannyvv@microsoft.com)
+- ESLint Fixup (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.174
 

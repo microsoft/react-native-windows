@@ -16,7 +16,7 @@ using namespace xaml::Controls;
 
 namespace react::uwp {
 
-RootViewManager::RootViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
+RootViewManager::RootViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const char *RootViewManager::GetName() const {
   return "ROOT";

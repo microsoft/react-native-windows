@@ -2,6 +2,224 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 17 Oct 2020 05:06:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.183",
+      "version": "0.0.0-canary.183",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update FlyoutViewManager.cpp",
+            "author": "dannyvv@microsoft.com",
+            "commit": "12883b49f9f7b504a1821bd7b39ba9190aebeb46",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 10 Oct 2020 05:04:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.181",
+      "version": "0.0.0-canary.181",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed missing folly headers on publish",
+            "author": "jthysell@microsoft.com",
+            "commit": "2cead552a6a4700ba81889c970bd82005e6a570e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Oct 2020 05:06:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.180",
+      "version": "0.0.0-canary.180",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "removed no longer used polyester controls",
+            "author": "chiara.mooney@gmail.com",
+            "commit": "e3750ea882f6dfce69bc5f053122dc0fcecc232b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Change order of JavaScript tests to get failures earlier",
+            "author": "dannyvv@microsoft.com",
+            "commit": "be2d628f24607cfd213f015e5957922f0466ad33",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 8/20 Nightly RN Build (Extract RNTester)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f50540af66deb1f94949734dcc12cca299a78fcc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update System.Private.Uri version for C# codegen for unittest",
+            "author": "dannyvv@microsoft.com",
+            "commit": "27836558add6882be0c320459e1c51db45ed3d7f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Consolidate WebSocketModules",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "288b224e3df40f30553a52d1b54f7911d38796d6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "update folly version to fix folly bug 1454",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "9d98fe335200db37054c6ade427cd435ad72096c",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Update vnext/Microsoft.ReactNative.Cxx/README.md",
+            "author": "zihanc@microsoft.com",
+            "commit": "ea5925217f8bd2e8f34da11a666bb35ba0b9e6a7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update just-scipts (remove npm-registry-fetch)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "00b2d84b8effce0b7405a67bd4903eed88cb9aaf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Oct 2020 05:04:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.179",
+      "version": "0.0.0-canary.179",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove ILegacyReactInstance, and react::uwp::IReactInstance",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e25d2ce64e15d825b492bffc8d1f908877d8d0af",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update System.Private.Uri version for C# codegen",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b4883728279bfb212c698d2c9920458c55a727d4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 04 Oct 2020 05:04:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.178",
+      "version": "0.0.0-canary.178",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove the other TimingModule Assertion",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cfb1b87474d6c03d8d125953c39242f566ff85fa",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 03 Oct 2020 05:04:45 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.177",
+      "version": "0.0.0-canary.177",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix native modules not being re-initialized on reload",
+            "author": "tn0502@gmail.com",
+            "commit": "489d342b7807dbe6fb6630146e294c2d6fe42c87",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 8/19 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "85360682867c1bc265da6730581df5994d679cda",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow Default baseVersion in Override Manfests",
+            "author": "ngerlem@microsoft.com",
+            "commit": "feca1c6fea43a0459c922e4af1c3daf5c3b65ec5",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 02 Oct 2020 05:05:22 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.176",
+      "version": "0.0.0-canary.176",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Expose getters for some instance settings on reactcontext",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "d6704978e3c272dacc9cf61275e2abc522da3c3f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 8/5 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "219d73e26770e6fab386132139990cc5a4c8c368",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Image - fix pre-1903 crash",
+            "author": "email not defined",
+            "commit": "5096a7abd7b40ac74b9920e49bec09e2d72edcd8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 8/17 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e8ba1847f0d7475cb67b0e491f692045c00d880e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use lessthrow_await_adapter in Desktop WebSocket resource",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "c2049ba6844929a318ba37f975ceee2296300231",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.175",
+      "version": "0.0.0-canary.175",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 7/29 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b111a2fa6e0ec245e87a653394105be1c98568ee",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove Microsoft user names from sourcecode",
+            "author": "dannyvv@microsoft.com",
+            "commit": "5f7c89b96bb3e77cac1bf1da4d2366d1bd5716d3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Sep 2020 05:06:49 GMT",
       "tag": "react-native-windows_v0.0.0-canary.174",
       "version": "0.0.0-canary.174",

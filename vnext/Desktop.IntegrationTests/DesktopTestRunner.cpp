@@ -7,7 +7,6 @@
 #include <IUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/WebSocketModule.h>
-#include <NativeModuleFactories.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include "ChakraRuntimeHolder.h"
 #include "DesktopTestInstance.h"

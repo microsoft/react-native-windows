@@ -186,6 +186,7 @@
     <ClInclude Include="DynamicWriter.h">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="GlyphViewManager.h" />
     <ClInclude Include="HResult.h" />
     <ClInclude Include="IReactDispatcher.h">
       <DependentUpon>IReactDispatcher.idl</DependentUpon>
@@ -247,11 +248,6 @@
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="NativeModulesProvider.h" />
-    <ClInclude Include="Polyester\ButtonContentViewManager.h" />
-    <ClInclude Include="Polyester\ButtonViewManager.h" />
-    <ClInclude Include="Polyester\ContentControlViewManager.h" />
-    <ClInclude Include="Polyester\HyperlinkViewManager.h" />
-    <ClInclude Include="Polyester\IconViewManager.h" />
     <ClInclude Include="ReactHost\IReactInstance.h" />
     <ClInclude Include="ReactHost\ViewManagerProvider.h" />
     <ClInclude Include="RedBoxErrorInfo.h" />
@@ -278,7 +274,6 @@
     <ClInclude Include="ReactHost\ReactInstanceWin.h" />
     <ClInclude Include="ReactHost\ReactNativeHeaders.h" />
     <ClInclude Include="ReactHost\React_Win.h" />
-    <ClInclude Include="ReactHost\UwpReactInstanceProxy.h" />
     <ClInclude Include="ReactInstanceSettings.h">
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -292,7 +287,6 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\AccessibilityUtils.h" />
-    <ClInclude Include="Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="Utils\Helpers.h" />
     <ClInclude Include="Utils\LocalBundleReader.h" />
     <ClInclude Include="Utils\PropertyHandlerUtils.h" />
@@ -389,6 +383,7 @@
     <ClCompile Include="DynamicWriter.cpp">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="GlyphViewManager.cpp" />
     <ClCompile Include="IReactDispatcher.cpp">
       <DependentUpon>IReactDispatcher.idl</DependentUpon>
     </ClCompile>
@@ -435,6 +430,7 @@
     <ClCompile Include="Modules\AppStateModule.cpp" />
     <ClCompile Include="Modules\AppThemeModuleUwp.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
+    <ClCompile Include="Modules\CreateModules.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="Modules\I18nManagerModule.cpp" />
@@ -445,11 +441,6 @@
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
-    <ClCompile Include="Polyester\ButtonContentViewManager.cpp" />
-    <ClCompile Include="Polyester\ButtonViewManager.cpp" />
-    <ClCompile Include="Polyester\ContentControlViewManager.cpp" />
-    <ClCompile Include="Polyester\HyperlinkViewManager.cpp" />
-    <ClCompile Include="Polyester\IconViewManager.cpp" />
     <ClCompile Include="RedBoxErrorInfo.cpp" />
     <ClCompile Include="RedBoxErrorFrameInfo.cpp" />
     <ClCompile Include="TurboModulesProvider.cpp" />
@@ -472,7 +463,6 @@
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
     <ClCompile Include="ReactHost\ReactHost.cpp" />
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />
-    <ClCompile Include="ReactHost\UwpReactInstanceProxy.cpp" />
     <ClCompile Include="ReactInstanceSettings.cpp">
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -695,9 +685,8 @@
     <Error Condition="'$(Source)'==''" Text="To generate a pre-processed file, please specify a source file with msbuild /p:Source=nameOfTheSource.cpp" />
     <CL PreprocessToFile="true" Sources="$(Source)" AdditionalIncludeDirectories="%(ClCompile.AdditionalIncludeDirectories)" PreprocessorDefinitions="%(ClCompile.PreprocessorDefinitions)" AdditionalOptions="%(ClCompile.AdditionalOptions) /d1PP" PreprocessKeepComments="true" PreprocessOutputPath="$(Source.Replace('.cpp', '.pp'))" />
   </Target>
-
   <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/3133 -->
-  <Target Name="InjectForcedXamlIncludes" BeforeTargets="CompileXamlGeneratedFiles" >
+  <Target Name="InjectForcedXamlIncludes" BeforeTargets="CompileXamlGeneratedFiles">
     <ItemGroup>
       <ClCompile Condition="'%(ClCompile.CompilerIteration)' == 'XamlGenerated'">
         <ForcedIncludeFiles>%(ForcedIncludeFiles);winrt/Microsoft.UI.Xaml.Controls.h;winrt/Microsoft.UI.Xaml.XamlTypeInfo.h</ForcedIncludeFiles>

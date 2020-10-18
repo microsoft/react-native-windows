@@ -14,16 +14,27 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
  public:
   QuirkSettings() noexcept;
 
-  // public API - part of idl interface
-  static void SetMatchAndroidAndIOSStretchBehavior(
-      winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
-      bool value) noexcept;
-
   // Internal use
   static void SetMatchAndroidAndIOSStretchBehavior(
       winrt::Microsoft::ReactNative::ReactPropertyBag properties,
       bool value) noexcept;
   static bool GetMatchAndroidAndIOSStretchBehavior(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+
+  static bool GetUseLegacyWebSocketModule(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+
+  static bool GetAcceptSelfSigned(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+
+#pragma region Public API - part of IDL interface
+  static void SetMatchAndroidAndIOSStretchBehavior(
+      winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+      bool value) noexcept;
+
+  static void SetUseLegacyWebSocketModule(
+      winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+      bool value) noexcept;
+
+  static void SetAcceptSelfSigned(winrt::Microsoft::ReactNative::ReactInstanceSettings settings, bool value) noexcept;
+#pragma endregion Public API - part of IDL interface
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
