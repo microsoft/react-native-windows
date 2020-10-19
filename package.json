@@ -13,7 +13,7 @@
     "format": "format-files -i -style=file -assume-filename=../.clang-format",
     "format:verify": "format-files -i -style=file -assume-filename=../.clang-format -verify",
     "test": "lerna run test --parallel -- --color",
-    "validate-overrides": "react-native-platform-override validate"
+    "validate-overrides": "react-native-platform-override validate --color"
   },
   "repository": {
     "type": "git",

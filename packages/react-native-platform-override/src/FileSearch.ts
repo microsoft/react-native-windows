@@ -10,7 +10,8 @@ import * as path from 'path';
 import {enumerateLocalPackages} from '@rnw-scripts/package-utils';
 
 /**
- * Search for a single manifest adjacent to the package above cwd
+ * Search for a single manifest adjacent to the package above a directory or
+ * CWD
  */
 export async function findManifest(cwd?: string): Promise<string> {
   const packagePath = await findFileAbove(cwd || process.cwd(), 'package.json');
@@ -33,8 +34,8 @@ export async function findManifest(cwd?: string): Promise<string> {
  * package if run within a package with an override manifest, otherwise
  * searching for packages in a monorepo
  */
-export async function findAllManifests(cwd?: string): Promise<string[]> {
-  const packagePath = await findFileAbove(cwd || process.cwd(), 'package.json');
+export async function findAllManifests(): Promise<string[]> {
+  const packagePath = await findFileAbove(process.cwd(), 'package.json');
   if (!packagePath) {
     throw new Error('This command must be run within a package');
   }

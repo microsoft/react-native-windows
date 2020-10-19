@@ -16,6 +16,9 @@ import {
 import runCommand from './runCommand';
 import {upgradeOverrides} from 'react-native-platform-override';
 
+/**
+ * Describes the dependencies of a package
+ */
 export type PackageDeps = {
   packageName: string;
   dependencies?: Record<string, string>;
@@ -23,29 +26,46 @@ export type PackageDeps = {
   devDependencies?: Record<string, string>;
 };
 
+/**
+ * Describes the dependencies of a monorepo-local NPM package (with extra
+ * information)
+ */
 export type LocalPackageDeps = PackageDeps & {
   outOfTreePlatform: boolean;
 };
 
+/**
+ * Describes a package before and after being updated
+ */
 export type PackageDiff = {
   oldPackage: PackageDeps;
   newPackage: PackageDeps;
 };
 
+/**
+ * List of package names for react-native out-of-tree platforms
+ */
 const OUT_OF_TREE_PLATFORMS = [
   '@office-iss/react-native-win32',
   'react-native-windows',
 ];
 
-export async function upgradeDependencies(newReactNativeVersion: string) {
+/**
+ * Upgrades all packages in the monorepo cwd resides in to use a new version
+ * of react-native, updating non-react-native dependencies, devDependencies,
+ * and peerDependencies where appropriate.
+ */
+export default async function upgradeDependencies(
+  newReactNativeVersion: string,
+) {
   const reactNativeDiff = await upgradeReactNative(newReactNativeVersion);
   const repoConfigDiff = await upgradeRepoConfig(newReactNativeVersion);
   const localPackages = (await enumerateLocalPackages()).map(pkg => ({
-    ...jsonPackageDeps(pkg.json),
+    ...extractPackageDeps(pkg.json),
     outOfTreePlatform: OUT_OF_TREE_PLATFORMS.includes(pkg.json.name),
   }));
 
-  const newDeps = await determineNewPackageDependencies(
+  const newDeps = await calcPackageDependencies(
     newReactNativeVersion,
     reactNativeDiff,
     repoConfigDiff,
@@ -58,15 +78,36 @@ export async function upgradeDependencies(newReactNativeVersion: string) {
       const [writablePackage] = writablePackages.filter(
         p => p.json.name === deps.packageName,
       );
-      await writablePackage.assignProps(
+
+      const oldJson = writablePackage.json;
+      const newJson = Object.assign(
+        oldJson,
         _.pick(deps, 'dependencies', 'peerDependencies', 'devDependencies'),
       );
+
+      // If all dependencies were deleted we want to delete the group from the
+      // JSON, but still want to retain previous ordering
+      if (!deps.dependencies) {
+        delete newJson.dependencies;
+      }
+      if (!deps.devDependencies) {
+        delete newJson.devDependencies;
+      }
+      if (!deps.peerDependencies) {
+        delete newJson.peerDependencies;
+      }
+
+      await writablePackage.setJson(newJson);
     }),
   );
 
   await runCommand('yarn install');
 }
 
+/**
+ * Updates and installs a new version of the literal react-native package
+ * across the monorepo
+ */
 async function upgradeReactNative(
   newReactNativeVersion: string,
 ): Promise<PackageDiff> {
@@ -99,15 +140,18 @@ async function upgradeReactNative(
   await runCommand('yarn install');
   const newJson = (await findPackage('react-native', findRnOpts))!.json;
 
-  return jsonPackageDiff(origJson, newJson);
+  return extractPackageDiff(origJson, newJson);
 }
 
+/**
+ * Uses override tooling to pull in a new version of the repo-config package
+ */
 async function upgradeRepoConfig(
   newReactNativeVersion: string,
 ): Promise<PackageDiff> {
   const origPackage = (await findLocalPackage('@react-native/repo-config'))!;
 
-  const [upgradeResult] = await upgradeOverrides(
+  const upgradeResults = await upgradeOverrides(
     path.join(origPackage.path, 'overrides.json'),
     {
       reactNativeVersion: newReactNativeVersion,
@@ -115,24 +159,30 @@ async function upgradeRepoConfig(
     },
   );
 
-  if (upgradeResult && !upgradeResult.filesWritten) {
+  if (!upgradeResults.every(result => result.filesWritten)) {
     throw new Error(
       'Could not sync repo-config package due to conflicts. Please resolve manually',
     );
   }
 
   const newPackage = (await findLocalPackage('@react-native/repo-config'))!;
-  return jsonPackageDiff(origPackage.json, newPackage.json);
+  return extractPackageDiff(origPackage.json, newPackage.json);
 }
 
-function jsonPackageDiff(origJson: any, newJson: any): PackageDiff {
+/**
+ * Extracts old and new dependencies from old and new package.json
+ */
+function extractPackageDiff(origJson: any, newJson: any): PackageDiff {
   return {
-    oldPackage: jsonPackageDeps(origJson),
-    newPackage: jsonPackageDeps(newJson),
+    oldPackage: extractPackageDeps(origJson),
+    newPackage: extractPackageDeps(newJson),
   };
 }
 
-function jsonPackageDeps(json: any): PackageDeps {
+/**
+ * Extracts dependencies from package.json
+ */
+function extractPackageDeps(json: any): PackageDeps {
   return {
     packageName: json.name,
     ...(json.dependencies && {dependencies: json.dependencies}),
@@ -145,7 +195,12 @@ function jsonPackageDeps(json: any): PackageDeps {
   };
 }
 
-export function determineNewPackageDependencies(
+/**
+ * Given inputs on the packages of the monorepo along with old + new RN related
+ * packages, determines the list of dependencies for every package in the
+ * monorepo. Exported for testability.
+ */
+export function calcPackageDependencies(
   newReactNativeVersion: string,
   reactNativePackageDiff: PackageDiff,
   repoConfigPackageDiff: PackageDiff,
@@ -165,14 +220,26 @@ export function determineNewPackageDependencies(
       );
     }
 
-    ensureValidReactNativePeerDep(pkg, newReactNativeVersion);
-    syncDevDependencies(pkg, repoConfigPackageDiff, reactNativePackageDiff);
+    ensureValidReactNativePeerDep(newPackage, newReactNativeVersion);
+    ensureReactNativePeerDepsSatisfied(
+      newPackage,
+      reactNativePackageDiff.newPackage,
+    );
+    syncDevDependencies(
+      newPackage,
+      repoConfigPackageDiff,
+      reactNativePackageDiff,
+    );
 
-    newPackage.dependencies = pkg.dependencies && sortKeys(pkg.dependencies);
-    newPackage.peerDependencies =
-      pkg.peerDependencies && sortKeys(pkg.peerDependencies);
-    newPackage.devDependencies =
-      pkg.devDependencies && sortKeys(pkg.devDependencies);
+    if (newPackage.dependencies) {
+      newPackage.dependencies = sortByKeys(newPackage.dependencies);
+    }
+    if (newPackage.peerDependencies) {
+      newPackage.peerDependencies = sortByKeys(newPackage.peerDependencies);
+    }
+    if (newPackage.devDependencies) {
+      newPackage.devDependencies = sortByKeys(newPackage.devDependencies);
+    }
 
     return newPackage;
   });
@@ -181,7 +248,7 @@ export function determineNewPackageDependencies(
 /**
  * Sort an object by keys
  */
-function sortKeys<T>(obj: Record<string, T>): Record<string, T> {
+function sortByKeys<T>(obj: Record<string, T>): Record<string, T> {
   return _(obj)
     .toPairs()
     .sortBy(0)
@@ -189,6 +256,10 @@ function sortKeys<T>(obj: Record<string, T>): Record<string, T> {
     .value();
 }
 
+/**
+ * Matches dependencies + peer dependencies of an out-of-tree platform to
+ * those used by react-native.
+ */
 function syncReactNativeDependencies(
   pkg: LocalPackageDeps,
   reactNativePackageDiff: PackageDiff,
@@ -205,7 +276,9 @@ function syncReactNativeDependencies(
     ..._.pick(pkg.dependencies, extraDeps),
     ...reactNativePackageDiff.newPackage.dependencies,
   };
-  if (Object.keys(newDeps).length !== 0) {
+  if (Object.keys(newDeps).length === 0) {
+    delete pkg.dependencies;
+  } else {
     pkg.dependencies = newDeps;
   }
 
@@ -217,11 +290,17 @@ function syncReactNativeDependencies(
     ..._.pick(pkg.peerDependencies, extraPeerDeps),
     ...reactNativePackageDiff.newPackage.peerDependencies,
   };
-  if (Object.keys(newPeerDeps).length !== 0) {
+  if (Object.keys(newPeerDeps).length === 0) {
+    delete pkg.peerDependencies;
+  } else {
     pkg.peerDependencies = newPeerDeps;
   }
 }
 
+/**
+ * Updates devDependencies of all packages to align with those used in the RN
+ * core monorepo where newer.
+ */
 function syncDevDependencies(
   pkg: LocalPackageDeps,
   repoConfigPackageDiff: PackageDiff,
@@ -259,6 +338,10 @@ function syncDevDependencies(
   }
 }
 
+/**
+ * Ensures any peer-dependencies in a package referencing react-native remain
+ * compatible with the version we're upgrading too.
+ */
 function ensureValidReactNativePeerDep(
   pkg: LocalPackageDeps,
   newReactNativeVersion: string,
@@ -286,6 +369,27 @@ function ensureValidReactNativePeerDep(
 }
 
 /**
+ * Ensure that a package fulfills peer depenedncies for react-native if relying on it
+ */
+function ensureReactNativePeerDepsSatisfied(
+  pkg: LocalPackageDeps,
+  newReactNativePkg: PackageDeps,
+) {
+  if (!pkg.dependencies || !pkg.dependencies['react-native']) {
+    return;
+  }
+
+  const rnPeerDeps = newReactNativePkg.peerDependencies || {};
+  for (const [dep, rnDepVersion] of Object.entries(rnPeerDeps)) {
+    if (!pkg.dependencies[dep]) {
+      pkg.dependencies[dep] = rnDepVersion;
+    } else if (!semver.satisfies(pkg.dependencies[dep], rnDepVersion)) {
+      pkg.dependencies[dep] = bumpSemver(pkg.dependencies[dep], rnDepVersion);
+    }
+  }
+}
+
+/**
  * Updates semver version or range to use a new version, preserving previous
  * range semantics. Only simple cases are supported.
  *
@@ -293,7 +397,7 @@ function ensureValidReactNativePeerDep(
  * @param newVersion the new value to bump to
  */
 function bumpSemver(origVersion: string, newVersion: string): string {
-  if (!semver.valid(origVersion) || !semver.validRange(origVersion)) {
+  if (!semver.valid(origVersion) && !semver.validRange(origVersion)) {
     throw new Error(`Unable to bump invalid semver '${origVersion}'`);
   }
 

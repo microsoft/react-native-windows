@@ -24,7 +24,7 @@ import {
 } from 'react-native-platform-override';
 
 import runCommand from './runCommand';
-import {upgradeDependencies} from './upgradeDependencies';
+import upgradeDependencies from './upgradeDependencies';
 
 (async () => {
   const {argv} = yargs
@@ -59,13 +59,13 @@ import {upgradeDependencies} from './upgradeDependencies';
  * Enumerate packages subject to override validation
  */
 async function enumerateOverridePackages(): Promise<WritableNpmPackage[]> {
-  return await enumerateLocalPackages(isOverridePackages);
+  return await enumerateLocalPackages(isOverridePackage);
 }
 
 /**
  * Whether the NPM package is subject to override validation
  */
-async function isOverridePackages(pkg: NpmPackage): Promise<boolean> {
+async function isOverridePackage(pkg: NpmPackage): Promise<boolean> {
   try {
     await fs.promises.access(path.join(pkg.path, 'overrides.json'));
     return true;
