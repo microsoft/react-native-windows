@@ -23,15 +23,13 @@
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "27967b6f36e9bc2bc3f4ac79c1320b7152d93f83",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "27967b6f36e9bc2bc3f4ac79c1320b7152d93f83"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.win32.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseHash": "b4867752830f6953516c5898a7e2fc0dc796dcfa",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "b4867752830f6953516c5898a7e2fc0dc796dcfa"
     },
     {
       "type": "patch",
@@ -44,15 +42,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseHash": "525b7ac5ec31febba5f57c8faa7ccc9a6e0fa34c",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "525b7ac5ec31febba5f57c8faa7ccc9a6e0fa34c"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/NativeAccessibilityInfo.js",
-      "baseHash": "7b519b61f8100b5997c999b21552fd270abafce7",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "7b519b61f8100b5997c999b21552fd270abafce7"
     },
     {
       "type": "platform",
@@ -129,8 +125,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.win32.js",
       "baseFile": "Libraries/Components/SafeAreaView/SafeAreaView.js",
-      "baseHash": "db15a0f43bd49e0be23b74b192fb28ee70fd3fee",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "db15a0f43bd49e0be23b74b192fb28ee70fd3fee"
     },
     {
       "type": "copy",
@@ -159,15 +154,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "05c8c1e9142210b472c9c1ce891314b786ecc50f",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "05c8c1e9142210b472c9c1ce891314b786ecc50f"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "e982deb23d7ad5312ab0c09508a6d58c152b5be7",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "e982deb23d7ad5312ab0c09508a6d58c152b5be7"
     },
     {
       "type": "copy",
@@ -204,15 +197,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewAttributes.win32.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewAttributes.js",
-      "baseHash": "0825b0257e19cfef2d626f19d219256a01c54b67",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "0825b0257e19cfef2d626f19d219256a01c54b67"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.win32.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseHash": "8d5d480284b4cdaf7d8d86935967370d455b7b68",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "8d5d480284b4cdaf7d8d86935967370d455b7b68"
     },
     {
       "type": "platform",
@@ -298,15 +289,13 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "Libraries/Inspector/Inspector.js",
-      "baseHash": "60aa482532caac00745f8ae8611a36c756fb5b75",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "60aa482532caac00745f8ae8611a36c756fb5b75"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Inspector/InspectorOverlay.win32.js",
       "baseFile": "Libraries/Inspector/InspectorOverlay.js",
-      "baseHash": "b11d03daa2e3f828a350667f543b2cda4fa65dbf",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "b11d03daa2e3f828a350667f543b2cda4fa65dbf"
     },
     {
       "type": "derived",
@@ -345,8 +334,7 @@
       "type": "derived",
       "file": "src/Libraries/Settings/Settings.win32.js",
       "baseFile": "Libraries/Settings/Settings.android.js",
-      "baseHash": "00604dd0ab624b3f5b80d460f48dbc3ac7ee905d",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "00604dd0ab624b3f5b80d460f48dbc3ac7ee905d"
     },
     {
       "type": "platform",
@@ -364,8 +352,7 @@
       "type": "patch",
       "file": "src/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "Libraries/StyleSheet/StyleSheet.js",
-      "baseHash": "95ed8a2da162e168c7d740640a9d6c0fdb282c84",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "95ed8a2da162e168c7d740640a9d6c0fdb282c84"
     },
     {
       "type": "copy",
@@ -378,29 +365,25 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/DeviceInfo.win32.js",
       "baseFile": "Libraries/Utilities/DeviceInfo.js",
-      "baseHash": "19aa984db7404750d8b86ad1359057dfe8912b24",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "19aa984db7404750d8b86ad1359057dfe8912b24"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Utilities/Dimensions.win32.js",
       "baseFile": "Libraries/Utilities/Dimensions.js",
-      "baseHash": "6a61022dbe92a0683a82669ace739fc7ca110c7d",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "6a61022dbe92a0683a82669ace739fc7ca110c7d"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Utilities/NativePlatformConstantsWin.js",
       "baseFile": "Libraries/Utilities/NativePlatformConstantsIOS.js",
-      "baseHash": "71ec2fb1dbf35d65562538d2c63d099ec1392d00",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "71ec2fb1dbf35d65562538d2c63d099ec1392d00"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.win32.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
-      "baseHash": "750d5a0afc192d9ec98c27d28402285c9e3155a0",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "750d5a0afc192d9ec98c27d28402285c9e3155a0"
     },
     {
       "type": "platform",
