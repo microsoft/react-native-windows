@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 #pragma once
 
+#include <CxxMessageQueue.h>
 #include <INativeUIManager.h>
 #include <NativeModules.h>
+#include <React.h>
+#include <Views/ShadowNodeRegistry.h>
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/Windows.Foundation.h>
-#include <Views/ShadowNodeRegistry.h>
-#include <CxxMessageQueue.h>
-#include <React.h>
 
 namespace Microsoft::ReactNative {
 
@@ -16,9 +16,12 @@ class UIManagerModule;
 class IViewManager;
 class NativeUIManager;
 
-// Settings to configure the UIManager -- these should be pushed to the instance settings before the creation of the UIManager
+// Settings to configure the UIManager -- these should be pushed to the instance settings before the creation of the
+// UIManager
 struct UIManagerSettings {
-  UIManagerSettings(const std::shared_ptr<facebook::react::MessageQueueThread> batchingUIMessageQueue, std::vector<std::unique_ptr<IViewManager>>&& viewManagers);
+  UIManagerSettings(
+      const std::shared_ptr<facebook::react::MessageQueueThread> batchingUIMessageQueue,
+      std::vector<std::unique_ptr<IViewManager>> &&viewManagers);
   UIManagerSettings(UIManagerSettings const &) = delete;
   const std::shared_ptr<facebook::react::MessageQueueThread> batchingUIMessageQueue;
   std::vector<std::unique_ptr<IViewManager>> viewManagers;
@@ -26,14 +29,14 @@ struct UIManagerSettings {
 
 std::weak_ptr<NativeUIManager> GetNativeUIManager(const Mso::React::IReactContext &context);
 
-
 REACT_MODULE(UIManager)
 struct UIManager {
   UIManager();
   ~UIManager();
 
   static void SetSettings(
-      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties, std::unique_ptr<UIManagerSettings>&& settings) noexcept;
+      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+      std::unique_ptr<UIManagerSettings> &&settings) noexcept;
 
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
@@ -76,7 +79,7 @@ struct UIManager {
   REACT_METHOD(dispatchViewManagerCommand)
   void dispatchViewManagerCommand(
       double reactTag,
-      winrt::Microsoft::ReactNative::JSValue&& commandID,
+      winrt::Microsoft::ReactNative::JSValue &&commandID,
       winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) noexcept;
 
   REACT_METHOD(measure)
@@ -154,7 +157,7 @@ struct UIManager {
   REACT_METHOD(dismissPopupMenu)
   void dismissPopupMenu() noexcept;
 
-private:
+ private:
   std::shared_ptr<facebook::react::MessageQueueThread> m_batchingUIMessageQueue;
   std::shared_ptr<UIManagerModule> m_module;
   winrt::Microsoft::ReactNative::ReactContext m_context;

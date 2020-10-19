@@ -77,7 +77,7 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
       std::vector<
           std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
           &&cxxModules,
-      std::unique_ptr<InstanceCallback>&& callback,
+      std::unique_ptr<InstanceCallback> &&callback,
       std::shared_ptr<MessageQueueThread> jsQueue,
       std::shared_ptr<MessageQueueThread> nativeQueue,
       std::shared_ptr<DevSettings> devSettings,

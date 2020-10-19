@@ -424,11 +424,7 @@ InstanceImpl::InstanceImpl(
     }
   }
 
-  m_innerInstance->initializeBridge(
-      std::move(callback),
-      jsef,
-      m_jsThread,
-      m_moduleRegistry);
+  m_innerInstance->initializeBridge(std::move(callback), jsef, m_jsThread, m_moduleRegistry);
 
   // All JSI runtimes do support host objects and hence the native modules
   // proxy.

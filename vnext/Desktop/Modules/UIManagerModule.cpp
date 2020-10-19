@@ -14,8 +14,8 @@ using namespace std;
 #include "ShadowNodeRegistry.h"
 #include "UIManagerModule.h"
 
-#include <IReactRootView.h>
 #include <INativeUIManagerLegacy.h>
+#include <IReactRootView.h>
 #include <cdebug.h>
 #include <winrt/base.h>
 

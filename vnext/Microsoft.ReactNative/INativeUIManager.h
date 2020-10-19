@@ -24,12 +24,12 @@ struct INativeUIManagerHost {
   // system event, etc.
   virtual void zombieView(int64_t tag) = 0;
 
-  virtual void RegisterRootView(facebook::react::IReactRootView *rootView, int64_t rootViewTag, int64_t width, int64_t height) = 0;
+  virtual void
+  RegisterRootView(facebook::react::IReactRootView *rootView, int64_t rootViewTag, int64_t width, int64_t height) = 0;
   virtual std::unordered_set<int64_t> &GetAllRootTags() = 0;
   virtual ShadowNode &GetShadowNodeForTag(int64_t tag) = 0;
   virtual ShadowNode *FindShadowNodeForTag(int64_t tag) = 0;
   virtual ShadowNode *FindParentRootShadowNode(int64_t tag) = 0;
-
 };
 
 struct INativeUIManager {

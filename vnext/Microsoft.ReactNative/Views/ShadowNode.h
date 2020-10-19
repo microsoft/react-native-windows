@@ -20,9 +20,7 @@ struct ShadowNode {
 
   virtual void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props);
   virtual void onDropViewInstance() = 0;
-  virtual void dispatchCommand(
-      const std::string &commandId,
-      winrt::Microsoft::ReactNative::JSValueArray &&commandArgs);
+  virtual void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs);
   virtual void removeAllChildren() = 0;
   virtual void AddView(ShadowNode &child, int64_t index) = 0;
   virtual void RemoveChildAt(int64_t indexToRemove) = 0;
