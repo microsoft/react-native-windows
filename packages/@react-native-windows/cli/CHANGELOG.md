@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 16 Oct 2020 05:04:19 GMT and should not be manually modified.
+This log was last generated on Sat, 17 Oct 2020 05:06:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.23
+
+Sat, 17 Oct 2020 05:06:20 GMT
+
+### Changes
+
+- C# apps have x86 platform=x86 but C++ apps have Win32 (asklar@microsoft.com)
+- Revert "Fix project config and package deploy to support the windows code in a different location (#6232)" (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.22
 

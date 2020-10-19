@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 17 Oct 2020 05:06:20 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.23",
+      "version": "0.0.0-canary.23",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "C# apps have x86 platform=x86 but C++ apps have Win32",
+            "author": "asklar@microsoft.com",
+            "commit": "cfac7ab1942d3380eb33bb779f571befd10a6bff",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Revert \"Fix project config and package deploy to support the windows code in a different location (#6232)\"",
+            "author": "dannyvv@microsoft.com",
+            "commit": "0f3c2aafb5bf9a93f03ea9b22c1f7f013bb46b2b",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 16 Oct 2020 05:04:19 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.22",
       "version": "0.0.0-canary.22",

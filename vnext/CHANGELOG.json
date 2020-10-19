@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 17 Oct 2020 05:06:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.183",
+      "version": "0.0.0-canary.183",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update FlyoutViewManager.cpp",
+            "author": "dannyvv@microsoft.com",
+            "commit": "12883b49f9f7b504a1821bd7b39ba9190aebeb46",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 10 Oct 2020 05:04:10 GMT",
       "tag": "react-native-windows_v0.0.0-canary.181",
       "version": "0.0.0-canary.181",
