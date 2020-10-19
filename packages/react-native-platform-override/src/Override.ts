@@ -162,8 +162,9 @@ abstract class BaseFileOverride implements Override {
     );
   }
 
-  protected serializeBase(opts?: SerializeOpts) {
+  protected serializeBase<T>(type: T, opts?: SerializeOpts) {
     return {
+      type,
       file: unixPath(this.overrideFile),
       baseFile: unixPath(this.baseFile),
       baseVersion:
@@ -198,10 +199,7 @@ export class CopyOverride extends BaseFileOverride {
   }
 
   serialize(opts?: SerializeOpts): Serialized.CopyOverride {
-    return {
-      type: 'copy',
-      ...this.serializeBase(opts),
-    };
+    return this.serializeBase('copy', opts);
   }
 
   async createUpdated(factory: OverrideFactory): Promise<Override> {
@@ -247,10 +245,7 @@ export class DerivedOverride extends BaseFileOverride {
   }
 
   serialize(opts?: SerializeOpts): Serialized.DerivedOverride {
-    return {
-      type: 'derived',
-      ...this.serializeBase(opts),
-    };
+    return this.serializeBase('derived', opts);
   }
 
   async createUpdated(factory: OverrideFactory): Promise<Override> {
@@ -303,10 +298,7 @@ export class PatchOverride extends BaseFileOverride {
   }
 
   serialize(opts?: SerializeOpts): Serialized.PatchOverride {
-    return {
-      type: 'patch',
-      ...this.serializeBase(opts),
-    };
+    return this.serializeBase('patch', opts);
   }
 
   async createUpdated(factory: OverrideFactory): Promise<Override> {
