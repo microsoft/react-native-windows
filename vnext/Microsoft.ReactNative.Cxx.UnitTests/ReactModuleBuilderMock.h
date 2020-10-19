@@ -249,7 +249,7 @@ ReactModuleBuilderMock::CallSync(std::wstring const &methodName, TResult &result
   if (auto method = GetSyncMethod(methodName)) {
     auto writer = ArgWriter();
     method(ArgReader(std::forward<TArgs>(args)...), writer);
-    ReadArgs(MakeJSValueTreeReader(TakeJSValue(writer)), result);
+    ReadValue(MakeJSValueTreeReader(TakeJSValue(writer)), result);
   }
 }
 
