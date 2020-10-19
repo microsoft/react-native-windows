@@ -28,6 +28,8 @@ class SwitchShadowNode : public ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
   void UpdateThumbColor();
   void UpdateTrackColor();
+  void dispatchCommand(const std::string& commandId, const folly::dynamic& commandArgs) override;
+
 
  private:
   static void OnToggled(const Mso::React::IReactContext &context, int64_t tag, bool newValue);
@@ -100,6 +102,19 @@ void SwitchShadowNode::updateProperties(const folly::dynamic &&props) {
   }
 
   m_updating = false;
+}
+
+void SwitchShadowNode::dispatchCommand(
+  const std::string& commandId,
+  const folly::dynamic& commandArgs) {
+  if (commandId == "setValue") {
+      m_updating = true;
+      Super::dispatchCommand(commandId, commandArgs);
+      m_updating = false;
+  }
+  else {
+      Super::dispatchCommand( commandId, commandArgs);
+  }
 }
 
 /*static*/ void SwitchShadowNode::OnToggled(const Mso::React::IReactContext &context, int64_t tag, bool newValue) {
