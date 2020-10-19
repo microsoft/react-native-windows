@@ -90,7 +90,7 @@ async function tryAddCopy(
     baseFile: filename,
     baseVersion: undefined,
     baseHash: hashContent(baseContent),
-    issue: 0,
+    issue: undefined,
   });
 
   return true;
