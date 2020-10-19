@@ -34,7 +34,7 @@ namespace Microsoft.ReactNative.Managed
         Parameter(typeof(IJSValueWriter), out var outputWriter),
         MethodArgs(methodInfo.GetParameters(), out var argTypes, out var args),
         inputReader.CallExt(ReadArgsOf(argTypes), args),
-        outputWriter.CallExt(WriteArgsOf(methodInfo.ReturnType),
+        outputWriter.CallExt(WriteValueOf(methodInfo.ReturnType),
           module.CastTo(methodInfo.DeclaringType).Call(methodInfo, args)));
     }
 

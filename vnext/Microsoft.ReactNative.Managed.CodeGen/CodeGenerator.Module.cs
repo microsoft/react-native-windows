@@ -254,19 +254,26 @@ namespace Microsoft.ReactNative.Managed.CodeGen
         }
         else
         {
-          // generate:
-          //   writer.WriteArgs(result);
-          var writeArgs = InvocationExpression(
-            MemberAccessExpression(ReactTypes.JSValueWriter, ReactNativeNames.WriteArgsMethodName),
-            IdentifierName(ReactNativeNames.WriterLocalName),
-            IdentifierName(ReactNativeNames.ResultLocalName));
-
           if (method.IsSynchronous)
-          {
-            statements.Add(ExpressionStatement(writeArgs));
+            {
+            // generate:
+            //   writer.WriteValue(result);
+            var writeValue = InvocationExpression(
+              MemberAccessExpression(ReactTypes.JSValueWriter, ReactNativeNames.WriteValueMethodName),
+              IdentifierName(ReactNativeNames.WriterLocalName),
+              IdentifierName(ReactNativeNames.ResultLocalName));
+
+            statements.Add(ExpressionStatement(writeValue));
           }
           else
           {
+            // generate:
+            //   writer.WriteArgs(result);
+            var writeArgs = InvocationExpression(
+              MemberAccessExpression(ReactTypes.JSValueWriter, ReactNativeNames.WriteArgsMethodName),
+              IdentifierName(ReactNativeNames.WriterLocalName),
+              IdentifierName(ReactNativeNames.ResultLocalName));
+
             // generate:
             //   resolve(.. writeargs ..);
             statements.Add(
