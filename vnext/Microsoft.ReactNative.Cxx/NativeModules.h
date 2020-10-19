@@ -627,7 +627,7 @@ struct ModuleSyncMethodInfo<TResult (TModule::*)(TArgs...) noexcept>
       ArgTuple typedArgs{};
       ReadArgs(argReader, std::get<I>(typedArgs)...);
       TResult result = (module->*method)(std::get<I>(std::move(typedArgs))...);
-      WriteArgs(argWriter, result);
+      WriteValue(argWriter, result);
     };
   }
 
@@ -655,7 +655,7 @@ struct ModuleSyncMethodInfo<TResult (*)(TArgs...) noexcept> : ModuleSyncMethodIn
       ArgTuple typedArgs{};
       ReadArgs(argReader, std::get<I>(typedArgs)...);
       TResult result = (*method)(std::get<I>(std::move(typedArgs))...);
-      WriteArgs(argWriter, result);
+      WriteValue(argWriter, result);
     };
   }
 

@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Sync native module functions are wrapping the result in an array, which it shouldnt",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-16T18:14:51.505Z"
+}
