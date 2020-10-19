@@ -288,8 +288,7 @@ void FlyoutShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueOb
       else if (propertyValue.IsNull())
         m_isLightDismissEnabled = true;
       if (m_isOpen) {
-        auto popup = GetFlyoutParentPopup();
-        if (popup != nullptr) {
+        if (auto popup = GetFlyoutParentPopup()) {
           popup.IsLightDismissEnabled(m_isLightDismissEnabled);
         }
       }
@@ -366,8 +365,7 @@ void FlyoutShadowNode::OnShowFlyout() {
     winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
   }
 
-  auto popup = GetFlyoutParentPopup();
-  if (popup != nullptr) {
+  if (auto popup = GetFlyoutParentPopup()) {
     popup.IsLightDismissEnabled(m_isLightDismissEnabled);
   }
 }
