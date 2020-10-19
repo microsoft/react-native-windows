@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Move UIManager to NM2 infra",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-19T20:47:12.336Z"
+}
