@@ -34,9 +34,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\UIManagerModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -61,12 +58,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MemoryTracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ShadowNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -74,9 +65,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ViewManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)WinRTWebSocketResource.cpp">
@@ -206,9 +194,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\UIManagerModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
@@ -252,9 +237,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)IHttpResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)INativeUIManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)InstanceManager.h">
@@ -347,6 +329,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)INativeUIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)etw\build.bat">

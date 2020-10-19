@@ -39,6 +39,8 @@
 
 namespace react::uwp {
 
+using XamlView = Microsoft::ReactNative::XamlView;
+
 //===========================================================================
 // ReactRootControl implementation
 //===========================================================================
@@ -152,15 +154,16 @@ void ReactRootControl::InitRootView(
   m_reactViewOptions = std::make_unique<Mso::React::ReactViewOptions>(std::move(reactViewOptions));
 
   if (!m_touchEventHandler) {
-    m_touchEventHandler = std::make_shared<TouchEventHandler>(*m_context);
+    m_touchEventHandler = std::make_shared<Microsoft::ReactNative::TouchEventHandler>(*m_context);
   }
 
   if (!m_SIPEventHandler) {
-    m_SIPEventHandler = std::make_shared<SIPEventHandler>(*m_context);
+    m_SIPEventHandler = std::make_shared<Microsoft::ReactNative::SIPEventHandler>(*m_context);
   }
 
   if (!m_previewKeyboardEventHandlerOnRoot) {
-    m_previewKeyboardEventHandlerOnRoot = std::make_shared<PreviewKeyboardEventHandlerOnRoot>(*m_context);
+    m_previewKeyboardEventHandlerOnRoot =
+        std::make_shared<Microsoft::ReactNative::PreviewKeyboardEventHandlerOnRoot>(*m_context);
   }
 
   auto xamlRootView = m_weakXamlRootView.get();

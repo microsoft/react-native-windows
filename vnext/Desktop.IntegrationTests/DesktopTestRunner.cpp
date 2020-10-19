@@ -8,8 +8,10 @@
 #include <Modules/NetworkingModule.h>
 #include <Modules/WebSocketModule.h>
 #include <Threading/MessageQueueThreadFactory.h>
+#include <cxxreact/Instance.h>
 #include "ChakraRuntimeHolder.h"
 #include "DesktopTestInstance.h"
+#include "TestInstance.h"
 #include "TestModule.h"
 #include "TestRootView.h"
 
@@ -24,17 +26,18 @@ using std::vector;
 
 namespace Microsoft::React::Test {
 
+struct TestInstanceCallback : public facebook::react::InstanceCallback {
+  TestInstanceCallback() {}
+  virtual ~TestInstanceCallback() = default;
+  void onBatchComplete() override {}
+  void incrementPendingJSCalls() override {}
+  void decrementPendingJSCalls() override {}
+};
+
 shared_ptr<ITestInstance> TestRunner::GetInstance(
     string &&jsBundleFile,
     vector<tuple<string, CxxModule::Provider>> &&cxxModules,
     shared_ptr<DevSettings> devSettings) noexcept {
-  vector<unique_ptr<IViewManager>> viewManagers;
-  viewManagers.push_back(unique_ptr<IViewManager>(new TestViewManager("RCTView")));
-  viewManagers.push_back(unique_ptr<IViewManager>(new TestViewManager("RCTText")));
-  viewManagers.push_back(unique_ptr<IViewManager>(new TestViewManager("RCTRawText")));
-  viewManagers.push_back(unique_ptr<IViewManager>(new TestViewManager("RCTScrollView")));
-
-  auto uiManager = createIUIManager(std::move(viewManagers), new TestNativeUIManager());
   auto nativeQueue = react::uwp::MakeJSQueueThread();
   auto jsQueue = react::uwp::MakeJSQueueThread();
 
@@ -62,9 +65,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
           nativeQueue),
       // Apparently mandatory for /IntegrationTests
       std::make_tuple(
-          "UIManager",
-          [uiManager]() -> unique_ptr<CxxModule> { return createUIManagerModule(uiManager); },
-          nativeQueue),
+          "UIManager", []() -> unique_ptr<CxxModule> { return std::make_unique<TestUIManager>(); }, nativeQueue),
       // Apparently mandatory for /IntegrationTests
       std::make_tuple(
           TestDeviceInfoModule::name,
@@ -84,7 +85,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
       "",
       std::move(extraModules),
       nullptr,
-      std::move(uiManager),
+      std::make_unique<TestInstanceCallback>(),
       std::move(jsQueue),
       std::move(nativeQueue),
       std::move(devSettings));

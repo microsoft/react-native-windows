@@ -21,7 +21,7 @@ using namespace xaml::Automation;
 using namespace xaml::Automation::Peers;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class TextShadowNode final : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -75,12 +75,12 @@ class TextShadowNode final : public ShadowNodeBase {
 
 TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-facebook::react::ShadowNode *TextViewManager::createShadow() const {
+ShadowNode *TextViewManager::createShadow() const {
   return new TextShadowNode();
 }
 
-const char *TextViewManager::GetName() const {
-  return "RCTText";
+const wchar_t *TextViewManager::GetName() const {
+  return L"RCTText";
 }
 
 XamlView TextViewManager::CreateViewCore(int64_t /*tag*/) {
@@ -92,7 +92,7 @@ XamlView TextViewManager::CreateViewCore(int64_t /*tag*/) {
 bool TextViewManager::UpdateProperty(
     ShadowNodeBase *nodeToUpdate,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   auto textBlock = nodeToUpdate->GetView().as<xaml::Controls::TextBlock>();
   if (textBlock == nullptr)
     return true;
@@ -109,8 +109,9 @@ bool TextViewManager::UpdateProperty(
   } else if (TryUpdateTextDecorationLine(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateCharacterSpacing(textBlock, propertyName, propertyValue)) {
   } else if (propertyName == "numberOfLines") {
-    if (propertyValue.isNumber()) {
-      auto numberLines = static_cast<int32_t>(propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+      auto numberLines = propertyValue.AsInt32();
       if (numberLines == 1) {
         textBlock.TextWrapping(xaml::TextWrapping::NoWrap); // setting no wrap for single line
                                                             // text for better trimming
@@ -119,29 +120,30 @@ bool TextViewManager::UpdateProperty(
         textBlock.TextWrapping(xaml::TextWrapping::Wrap);
       }
       textBlock.MaxLines(numberLines);
-    } else if (propertyValue.isNull()) {
+    } else if (propertyValue.IsNull()) {
       textBlock.TextWrapping(xaml::TextWrapping::Wrap); // set wrapping back to default
       textBlock.ClearValue(xaml::Controls::TextBlock::MaxLinesProperty());
     }
   } else if (propertyName == "lineHeight") {
-    if (propertyValue.isNumber())
-      textBlock.LineHeight(static_cast<int32_t>(propertyValue.asDouble()));
-    else if (propertyValue.isNull())
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      textBlock.LineHeight(propertyValue.AsInt32());
+    else if (propertyValue.IsNull())
       textBlock.ClearValue(xaml::Controls::TextBlock::LineHeightProperty());
   } else if (propertyName == "selectable") {
-    if (propertyValue.isBool())
-      textBlock.IsTextSelectionEnabled(propertyValue.asBool());
-    else if (propertyValue.isNull())
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+      textBlock.IsTextSelectionEnabled(propertyValue.AsBoolean());
+    else if (propertyValue.IsNull())
       textBlock.ClearValue(xaml::Controls::TextBlock::IsTextSelectionEnabledProperty());
   } else if (propertyName == "allowFontScaling") {
-    if (propertyValue.isBool()) {
-      textBlock.IsTextScaleFactorEnabled(propertyValue.asBool());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+      textBlock.IsTextScaleFactorEnabled(propertyValue.AsBoolean());
     } else {
       textBlock.ClearValue(xaml::Controls::TextBlock::IsTextScaleFactorEnabledProperty());
     }
   } else if (propertyName == "selectionColor") {
-    if (IsValidColorValue(propertyValue)) {
-      textBlock.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
+    if (react::uwp::IsValidColorValue(propertyValue)) {
+      textBlock.SelectionHighlightColor(react::uwp::SolidColorBrushFrom(propertyValue));
     } else
       textBlock.ClearValue(xaml::Controls::TextBlock::SelectionHighlightColorProperty());
   } else {
@@ -185,4 +187,4 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node) {
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

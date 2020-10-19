@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <Shared/ViewManager.h>
+#include <Views/ViewManager.h>
 #include "ReactHost/React.h"
 
 #include <winrt/Microsoft.ReactNative.h>
@@ -12,7 +12,7 @@
 namespace winrt::Microsoft::ReactNative {
 
 class ViewManagersProvider final : public Mso::React::ViewManagerProvider2 {
-  std::vector<react::uwp::NativeViewManager> GetViewManagers(
+  std::vector<std::unique_ptr<::Microsoft::ReactNative::IViewManager>> GetViewManagers(
       Mso::CntPtr<Mso::React::IReactContext> const &reactContext) override;
 
  public:

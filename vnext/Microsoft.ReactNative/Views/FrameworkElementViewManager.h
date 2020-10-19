@@ -5,7 +5,7 @@
 
 #include "ViewManagerBase.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
   using Super = ViewManagerBase;
@@ -13,7 +13,7 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
  public:
   FrameworkElementViewManager(const Mso::React::IReactContext &context);
 
-  folly::dynamic GetNativeProps() const override;
+  void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
   // Helper functions related to setting/updating TransformMatrix
   void RefreshTransformMatrix(ShadowNodeBase *shadowNode);
@@ -25,7 +25,7 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
   bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,
       const std::string &propertyName,
-      const folly::dynamic &propertyValue) override;
+      const winrt::Microsoft::ReactNative::JSValue &propertyValue) override;
 
   void TransferProperty(const XamlView &oldView, const XamlView &newView, xaml::DependencyProperty dp);
 
@@ -42,4 +42,4 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
       winrt::Windows::Foundation::Numerics::float4x4 transformMatrix);
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

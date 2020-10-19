@@ -8,6 +8,7 @@
 #include "TouchEventHandler.h"
 
 #include <Modules/NativeUIManager.h>
+#include <Modules/PaperUIManagerModule.h>
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
@@ -21,7 +22,7 @@ namespace winrt {
 using namespace xaml::Controls::Primitives;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class PopupShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -34,7 +35,7 @@ class PopupShadowNode : public ShadowNodeBase {
   void AddView(ShadowNode &child, int64_t index) override;
   virtual void removeAllChildren() override;
   virtual void RemoveChildAt(int64_t indexToRemove) override;
-  void updateProperties(const folly::dynamic &&props) override;
+  void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
   static void OnPopupClosed(const Mso::React::IReactContext &context, int64_t tag);
   winrt::Windows::Foundation::Size GetAppWindowSize();
@@ -94,7 +95,7 @@ void PopupShadowNode::createView() {
       // popups/flyouts. We apply this translation on open of the popup.
       // (Translation is only supported on RS5+, eg. IUIElement9)
       if (auto uiElement9 = GetView().try_as<xaml::IUIElement9>()) {
-        auto numOpenPopups = CountOpenPopups();
+        auto numOpenPopups = react::uwp::CountOpenPopups();
         if (numOpenPopups > 0) {
           winrt::Numerics::float3 translation{0, 0, (float)16 * numOpenPopups};
           popup.Translation(translation);
@@ -152,7 +153,7 @@ void PopupShadowNode::removeAllChildren() {
   m_previewKeyboardEventHandlerOnRoot->unhook();
 }
 
-void PopupShadowNode::updateProperties(const folly::dynamic &&props) {
+void PopupShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_updating = true;
 
   auto popup = GetView().as<winrt::Popup>();
@@ -161,44 +162,47 @@ void PopupShadowNode::updateProperties(const folly::dynamic &&props) {
 
   bool needsLayoutUpdate = false;
   bool needsTabUpdate = false;
-  const folly::dynamic *isOpenProp = nullptr;
+  const winrt::Microsoft::ReactNative::JSValue *isOpenProp = nullptr;
 
-  for (auto &pair : props.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
+  for (auto &pair : props) {
+    const std::string &propertyName = pair.first;
+    const auto &propertyValue = pair.second;
 
     if (propertyName == "autoFocus") {
-      if (propertyValue.isBool()) {
-        m_autoFocus = propertyValue.asBool();
-      } else if (propertyValue.isNull()) {
-        m_autoFocus = true;
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+        m_autoFocus = propertyValue.AsBoolean();
+      } else if (propertyValue.IsNull()) {
+        m_autoFocus = false;
       }
       needsTabUpdate = true;
     } else if (propertyName == "target") {
-      if (propertyValue.isNumber())
-        m_targetTag = static_cast<int64_t>(propertyValue.asDouble());
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+        m_targetTag = propertyValue.AsInt64();
       else
         m_targetTag = -1;
     } else if (propertyName == "isOpen") {
       isOpenProp = &propertyValue;
     } else if (propertyName == "isLightDismissEnabled") {
-      if (propertyValue.isBool()) {
-        popup.IsLightDismissEnabled(propertyValue.getBool());
-      } else if (propertyValue.isNull()) {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+        popup.IsLightDismissEnabled(propertyValue.AsBoolean());
+      } else if (propertyValue.IsNull()) {
         popup.ClearValue(winrt::Popup::IsLightDismissEnabledProperty());
       }
       needsTabUpdate = true;
     } else if (propertyName == "horizontalOffset") {
-      if (propertyValue.isNumber()) {
-        m_horizontalOffset = propertyValue.asDouble();
-      } else if (propertyValue.isNull()) {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+        m_horizontalOffset = propertyValue.AsDouble();
+      } else if (propertyValue.IsNull()) {
         m_horizontalOffset = 0;
       }
       needsLayoutUpdate = true;
     } else if (propertyName == "verticalOffset") {
-      if (propertyValue.isNumber()) {
-        m_verticalOffset = propertyValue.asDouble();
-      } else if (propertyValue.isNull()) {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+        m_verticalOffset = propertyValue.AsDouble();
+      } else if (propertyValue.IsNull()) {
         m_verticalOffset = 0;
       }
       needsLayoutUpdate = true;
@@ -214,13 +218,13 @@ void PopupShadowNode::updateProperties(const folly::dynamic &&props) {
 
   // IsOpen needs to be set after IsLightDismissEnabled for light-dismiss to work
   if (isOpenProp != nullptr) {
-    if (isOpenProp->isBool())
-      popup.IsOpen(isOpenProp->getBool());
-    else if (isOpenProp->isNull())
+    if (isOpenProp->Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+      popup.IsOpen(isOpenProp->AsBoolean());
+    else if (isOpenProp->IsNull())
       popup.ClearValue(winrt::Popup::IsOpenProperty());
   }
 
-  Super::updateProperties(std::move(props));
+  Super::updateProperties(props);
   m_updating = false;
 }
 
@@ -234,7 +238,7 @@ void PopupShadowNode::UpdateLayout() {
 
   // center relative to anchor
   if (m_targetTag > 0) {
-    if (auto uiManager = static_cast<NativeUIManager *>(GetViewManager()->GetReactContext().NativeUIManager())) {
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
       auto pNativeUIManagerHost = uiManager->getHost();
       ShadowNodeBase *pShadowNodeChild =
           static_cast<ShadowNodeBase *>(pNativeUIManagerHost->FindShadowNodeForTag(m_targetTag));
@@ -292,20 +296,21 @@ winrt::Size PopupShadowNode::GetAppWindowSize() {
 
 PopupViewManager::PopupViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *PopupViewManager::GetName() const {
-  return "RCTPopup";
+const wchar_t *PopupViewManager::GetName() const {
+  return L"RCTPopup";
 }
 
-folly::dynamic PopupViewManager::GetNativeProps() const {
-  auto props = Super::GetNativeProps();
-
-  props.update(folly::dynamic::object("isOpen", "boolean")("isLightDismissEnabled", "boolean")("autoFocus", "boolean")(
-      "horizontalOffset", "number")("verticalOffset", "number")("target", "number"));
-
-  return props;
+void PopupViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"isOpen", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"isLightDismissEnabled", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"autoFocus", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"horizontalOffset", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"verticalOffset", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"target", L"number");
 }
 
-facebook::react::ShadowNode *PopupViewManager::createShadow() const {
+ShadowNode *PopupViewManager::createShadow() const {
   return new PopupShadowNode();
 }
 
@@ -334,11 +339,14 @@ void PopupViewManager::SetLayoutProps(
   Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
 }
 
-folly::dynamic PopupViewManager::GetExportedCustomDirectEventTypeConstants() const {
-  auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topDismiss"] = folly::dynamic::object("registrationName", "onDismiss");
+void PopupViewManager::GetExportedCustomDirectEventTypeConstants(
+    const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetExportedCustomDirectEventTypeConstants(writer);
 
-  return directEvents;
+  writer.WritePropertyName(L"topDismiss");
+  writer.WriteObjectBegin();
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"registrationName", L"onDismiss");
+  writer.WriteObjectEnd();
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

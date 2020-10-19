@@ -15,6 +15,7 @@ using namespace std;
 #include "UIManagerModule.h"
 
 #include <IReactRootView.h>
+#include <INativeUIManagerLegacy.h>
 #include <cdebug.h>
 #include <winrt/base.h>
 

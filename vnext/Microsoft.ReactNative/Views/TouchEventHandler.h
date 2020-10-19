@@ -20,7 +20,7 @@ using namespace Windows::Foundation;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class TouchEventHandler {
  public:
@@ -100,4 +100,4 @@ class TouchEventHandler {
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

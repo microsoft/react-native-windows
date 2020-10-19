@@ -6,6 +6,7 @@
 #include <Views/ShadowNodeBase.h>
 #include "DatePickerViewManager.h"
 
+#include <JsValueWriter.h>
 #include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 
@@ -15,7 +16,7 @@ namespace winrt {
 using DayOfWeek = Windows::Globalization::DayOfWeek;
 }
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class DatePickerShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -23,7 +24,7 @@ class DatePickerShadowNode : public ShadowNodeBase {
  public:
   DatePickerShadowNode() = default;
   void createView() override;
-  void updateProperties(const folly::dynamic &&props) override;
+  void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
  private:
   void OnDateChanged(const Mso::React::IReactContext &context, int64_t tag, winrt::DateTime const &newDate);
@@ -47,7 +48,7 @@ void DatePickerShadowNode::createView() {
       });
 }
 
-void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
+void DatePickerShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_updating = true;
 
   auto datePicker = GetView().as<xaml::Controls::CalendarDatePicker>();
@@ -58,69 +59,74 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
   bool updateMaxDate = false;
   bool updateMinDate = false;
 
-  for (auto &pair : props.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
+  for (auto &pair : props) {
+    const std::string &propertyName = pair.first;
+    const auto &propertyValue = pair.second;
 
     if (propertyName == "dayOfWeekFormat") {
-      if (propertyValue.isString())
-        datePicker.DayOfWeekFormat(asHstring(propertyValue));
-      else if (propertyValue.isNull())
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String)
+        datePicker.DayOfWeekFormat(react::uwp::asHstring(propertyValue));
+      else if (propertyValue.IsNull())
         datePicker.ClearValue(xaml::Controls::CalendarDatePicker::DayOfWeekFormatProperty());
     } else if (propertyName == "dateFormat") {
-      if (propertyValue.isString())
-        datePicker.DateFormat(asHstring(propertyValue));
-      else if (propertyValue.isNull())
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String)
+        datePicker.DateFormat(react::uwp::asHstring(propertyValue));
+      else if (propertyValue.IsNull())
         datePicker.ClearValue(xaml::Controls::CalendarDatePicker::DateFormatProperty());
     } else if (propertyName == "firstDayOfWeek") {
-      if (propertyValue.isNumber())
-        datePicker.FirstDayOfWeek(static_cast<winrt::DayOfWeek>(static_cast<int64_t>(propertyValue.asDouble())));
-      else if (propertyValue.isNull())
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+        datePicker.FirstDayOfWeek(static_cast<winrt::DayOfWeek>(propertyValue.AsInt64()));
+      else if (propertyValue.IsNull())
         datePicker.ClearValue(xaml::Controls::CalendarDatePicker::FirstDayOfWeekProperty());
     } else if (propertyName == "maxDate") {
-      if (propertyValue.isNumber()) {
-        m_maxTime = static_cast<int64_t>(propertyValue.asDouble());
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+        m_maxTime = static_cast<int64_t>(propertyValue.AsInt64());
         updateMaxDate = true;
-      } else if (propertyValue.isNull()) {
+      } else if (propertyValue.IsNull()) {
         datePicker.ClearValue(xaml::Controls::CalendarDatePicker::MaxDateProperty());
       }
     } else if (propertyName == "minDate") {
-      if (propertyValue.isNumber()) {
-        m_minTime = static_cast<int64_t>(propertyValue.asDouble());
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+        m_minTime = propertyValue.AsInt64();
         updateMinDate = true;
-      } else if (propertyValue.isNull()) {
+      } else if (propertyValue.IsNull()) {
         datePicker.ClearValue(xaml::Controls::CalendarDatePicker::MinDateProperty());
       }
     } else if (propertyName == "placeholderText") {
-      if (propertyValue.isString())
-        datePicker.PlaceholderText(asHstring(propertyValue));
-      else if (propertyValue.isNull())
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String)
+        datePicker.PlaceholderText(react::uwp::asHstring(propertyValue));
+      else if (propertyValue.IsNull())
         datePicker.ClearValue(xaml::Controls::CalendarDatePicker::PlaceholderTextProperty());
     } else if (propertyName == "selectedDate") {
-      if (propertyValue.isNumber()) {
-        m_selectedTime = static_cast<int64_t>(propertyValue.asDouble());
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+        m_selectedTime = propertyValue.AsInt64();
         updateSelectedDate = true;
-      } else if (propertyValue.isNull()) {
+      } else if (propertyValue.IsNull()) {
         datePicker.ClearValue(xaml::Controls::CalendarDatePicker::DateProperty());
       }
     } else if (propertyName == "timeZoneOffsetInSeconds") {
-      if (propertyValue.isNumber())
-        m_timeZoneOffsetInSeconds = static_cast<int64_t>(propertyValue.asDouble());
-      else if (propertyValue.isNull())
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+        m_timeZoneOffsetInSeconds = propertyValue.AsInt64();
+      else if (propertyValue.IsNull())
         m_timeZoneOffsetInSeconds = 0;
     }
   }
 
   if (updateMaxDate)
-    datePicker.MaxDate(DateTimeFrom(m_maxTime, m_timeZoneOffsetInSeconds));
+    datePicker.MaxDate(react::uwp::DateTimeFrom(m_maxTime, m_timeZoneOffsetInSeconds));
 
   if (updateMinDate)
-    datePicker.MinDate(DateTimeFrom(m_minTime, m_timeZoneOffsetInSeconds));
+    datePicker.MinDate(react::uwp::DateTimeFrom(m_minTime, m_timeZoneOffsetInSeconds));
 
   if (updateSelectedDate)
-    datePicker.Date(DateTimeFrom(m_selectedTime, m_timeZoneOffsetInSeconds));
+    datePicker.Date(react::uwp::DateTimeFrom(m_selectedTime, m_timeZoneOffsetInSeconds));
 
-  Super::updateProperties(std::move(props));
+  Super::updateProperties(props);
   m_updating = false;
 }
 
@@ -128,7 +134,7 @@ void DatePickerShadowNode::OnDateChanged(
     const Mso::React::IReactContext &context,
     int64_t tag,
     winrt::DateTime const &newDate) {
-  auto timeInMilliseconds = DateTimeToDynamic(newDate, m_timeZoneOffsetInSeconds);
+  auto timeInMilliseconds = react::uwp::DateTimeToDynamic(newDate, m_timeZoneOffsetInSeconds);
   if (!timeInMilliseconds.isNull()) {
     folly::dynamic eventData = folly::dynamic::object("target", tag)("newDate", timeInMilliseconds);
     context.DispatchEvent(tag, "topChange", std::move(eventData));
@@ -137,21 +143,24 @@ void DatePickerShadowNode::OnDateChanged(
 
 DatePickerViewManager::DatePickerViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *DatePickerViewManager::GetName() const {
-  return "RCTDatePicker";
+const wchar_t *DatePickerViewManager::GetName() const {
+  return L"RCTDatePicker";
 }
 
-folly::dynamic DatePickerViewManager::GetNativeProps() const {
-  auto props = Super::GetNativeProps();
+void DatePickerViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
 
-  props.update(folly::dynamic::object("dayOfWeekFormat", "string")("dateFormat", "string")("firstDayOfWeek", "number")(
-      "maxDate", "number")("minDate", "number")("placeholderText", "string")("selectedDate", "number")(
-      "timeZoneOffsetInSeconds", "number"));
-
-  return props;
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"dayOfWeekFormat", L"string");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"dateFormat", L"string");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"firstDayOfWeek", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"maxDate", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"minDate", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"placeholderText", L"string");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"selectedDate", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"timeZoneOffsetInSeconds", L"number");
 }
 
-facebook::react::ShadowNode *DatePickerViewManager::createShadow() const {
+ShadowNode *DatePickerViewManager::createShadow() const {
   return new DatePickerShadowNode();
 }
 
@@ -164,4 +173,4 @@ YGMeasureFunc DatePickerViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -23,6 +23,7 @@
 #include "FacadeType.h"
 
 #include <Modules/NativeUIManager.h>
+#include <Modules/PaperUIManagerModule.h>
 #include <Windows.Foundation.h>
 
 namespace react::uwp {
@@ -342,8 +343,8 @@ void NativeAnimatedNodeManager::AddDelayedPropsNode(
     const Mso::CntPtr<Mso::React::IReactContext> &context) {
   m_delayedPropsNodes.push_back(propsNodeTag);
   if (m_delayedPropsNodes.size() <= 1) {
-    if (const auto uiManger = context->NativeUIManager()) {
-      static_cast<NativeUIManager *>(uiManger)->AddBatchCompletedCallback([this]() { ProcessDelayedPropsNodes(); });
+    if (const auto uiManger = Microsoft::ReactNative::GetNativeUIManager(*context).lock()) {
+      uiManger->AddBatchCompletedCallback([this]() { ProcessDelayedPropsNodes(); });
     }
   }
 }

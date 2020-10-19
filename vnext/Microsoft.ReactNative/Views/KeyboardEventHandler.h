@@ -3,6 +3,7 @@
 
 #pragma once
 #include <IReactInstance.h>
+#include <JSValue.h>
 #include <React.h>
 #include <folly/dynamic.h>
 #include <optional>
@@ -14,7 +15,7 @@ namespace winrt {
 using namespace Windows::UI::Core;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 enum class HandledEventPhase {
   Capturing = 1, // match the value with EventPhase in React. EventPhase
                  // includes None, Capturing, AtTarget, Bubbling
@@ -101,7 +102,9 @@ class HandledKeyboardEventHandler {
   void unhook();
 
  public:
-  void UpdateHandledKeyboardEvents(std::string const &propertyName, folly::dynamic const &value);
+  void UpdateHandledKeyboardEvents(
+      std::string const &propertyName,
+      winrt::Microsoft::ReactNative::JSValue const &value);
 
  private:
   void EnsureKeyboardEventHandler();
@@ -122,11 +125,11 @@ class HandledKeyboardEventHandler {
 };
 
 struct KeyboardHelper {
-  static std::vector<HandledKeyboardEvent> FromJS(folly::dynamic const &obj);
+  static std::vector<HandledKeyboardEvent> FromJS(winrt::Microsoft::ReactNative::JSValue const &obj);
   static HandledKeyboardEvent CreateKeyboardEvent(HandledEventPhase phase, xaml::Input::KeyRoutedEventArgs const &args);
   static std::string FromVirtualKey(winrt::Windows::System::VirtualKey key, bool shiftDown, bool capLocked);
   static std::string CodeFromVirtualKey(winrt::Windows::System::VirtualKey key);
   static bool IsModifiedKeyPressed(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey virtualKey);
   static bool IsModifiedKeyLocked(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey virtualKey);
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

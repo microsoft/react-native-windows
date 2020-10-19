@@ -16,7 +16,7 @@ ModulusAnimatedNode::ModulusAnimatedNode(
   m_modulus = static_cast<int64_t>(config.find(s_modulusName).dereference().second.asDouble());
 
   m_propertySet.StartAnimation(s_valueName, [node = m_inputNodeTag, mod = m_modulus, manager]() {
-    const auto anim = react::uwp::GetCompositor().CreateExpressionAnimation();
+    const auto anim = Microsoft::ReactNative::GetCompositor().CreateExpressionAnimation();
     anim.SetReferenceParameter(s_inputParameterName, manager->GetValueAnimatedNode(node)->PropertySet());
     anim.SetScalarParameter(s_modName, static_cast<float>(mod));
     anim.Expression(

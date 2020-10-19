@@ -9,8 +9,11 @@
 
 #include "FacadeType.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 struct ShadowNodeBase;
+}
+
+namespace react::uwp {
 class PropsAnimatedNode final : public AnimatedNode {
  public:
   PropsAnimatedNode(
@@ -28,7 +31,7 @@ class PropsAnimatedNode final : public AnimatedNode {
 
  private:
   void MakeAnimation(int64_t valueNodeTag, FacadeType facadeType);
-  ShadowNodeBase *GetShadowNodeBase();
+  Microsoft::ReactNative::ShadowNodeBase *GetShadowNodeBase();
   xaml::UIElement GetUIElement();
 
   Mso::CntPtr<Mso::React::IReactContext> m_context{};

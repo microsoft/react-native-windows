@@ -3,12 +3,13 @@
 
 #include "pch.h"
 
+#include <JSValueWriter.h>
 #include <Views/SIPEventHandler.h>
 #include <Views/ShadowNodeBase.h>
 #include "Impl/ScrollViewUWPImplementation.h"
 #include "ScrollViewManager.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 namespace ScrollViewCommands {
 constexpr const char *ScrollTo = "scrollTo";
@@ -21,9 +22,10 @@ class ScrollViewShadowNode : public ShadowNodeBase {
  public:
   ScrollViewShadowNode();
   ~ScrollViewShadowNode();
-  void dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) override;
+  void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs)
+      override;
   void createView() override;
-  void updateProperties(const folly::dynamic &&props) override;
+  void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
  private:
   void AddHandlers(const winrt::ScrollViewer &scrollViewer);
@@ -35,7 +37,9 @@ class ScrollViewShadowNode : public ShadowNodeBase {
       double y,
       double zoom);
   template <typename T>
-  std::tuple<bool, T> getPropertyAndValidity(folly::dynamic propertyValue, T defaultValue);
+  std::tuple<bool, T> getPropertyAndValidity(
+      const winrt::Microsoft::ReactNative::JSValue &propertyValue,
+      T defaultValue);
   void SetScrollMode(const winrt::ScrollViewer &scrollViewer);
   void UpdateZoomMode(const winrt::ScrollViewer &scrollViewer);
 
@@ -64,18 +68,20 @@ ScrollViewShadowNode::~ScrollViewShadowNode() {
   m_SIPEventHandler.reset();
 }
 
-void ScrollViewShadowNode::dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) {
+void ScrollViewShadowNode::dispatchCommand(
+    const std::string &commandId,
+    winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
   if (scrollViewer == nullptr)
     return;
 
   if (commandId == ScrollViewCommands::ScrollTo) {
-    double x = commandArgs[0].asDouble();
-    double y = commandArgs[1].asDouble();
-    bool animated = commandArgs[2].asBool();
+    double x = commandArgs[0].AsDouble();
+    double y = commandArgs[1].AsDouble();
+    bool animated = commandArgs[2].AsBoolean();
     scrollViewer.ChangeView(x, y, nullptr, !animated /*disableAnimation*/);
   } else if (commandId == ScrollViewCommands::ScrollToEnd) {
-    bool animated = commandArgs[0].asBool();
+    bool animated = commandArgs[0].AsBoolean();
     bool horiz = scrollViewer.HorizontalScrollMode() == winrt::ScrollMode::Auto;
     if (horiz)
       scrollViewer.ChangeView(scrollViewer.ScrollableWidth(), nullptr, nullptr, !animated /*disableAnimation*/);
@@ -89,7 +95,7 @@ void ScrollViewShadowNode::createView() {
 
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
   scrollViewer.TabIndex(0);
-  const auto scrollViewUWPImplementation = ScrollViewUWPImplementation(scrollViewer);
+  const auto scrollViewUWPImplementation = react::uwp::ScrollViewUWPImplementation(scrollViewer);
   scrollViewUWPImplementation.ScrollViewerSnapPointManager();
 
   AddHandlers(scrollViewer);
@@ -115,22 +121,22 @@ void ScrollViewShadowNode::createView() {
       });
 }
 
-void ScrollViewShadowNode::updateProperties(const folly::dynamic &&reactDiffMap) {
+void ScrollViewShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_updating = true;
 
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
   if (scrollViewer == nullptr)
     return;
 
-  for (const auto &pair : reactDiffMap.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
+  for (const auto &pair : props) {
+    const std::string &propertyName = pair.first;
+    const auto &propertyValue = pair.second;
 
     if (propertyName == "horizontal") {
       const auto [valid, horizontal] = getPropertyAndValidity(propertyValue, false);
       if (valid) {
         m_isHorizontal = horizontal;
-        ScrollViewUWPImplementation(scrollViewer).SetHorizontal(horizontal);
+        react::uwp::ScrollViewUWPImplementation(scrollViewer).SetHorizontal(horizontal);
         SetScrollMode(scrollViewer);
       }
     }
@@ -173,27 +179,32 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic &&reactDiffMap)
     } else if (propertyName == "snapToInterval") {
       const auto [valid, snapToInterval] = getPropertyAndValidity(propertyValue, 0.0);
       if (valid) {
-        ScrollViewUWPImplementation(scrollViewer).SnapToInterval(static_cast<float>(snapToInterval));
+        react::uwp::ScrollViewUWPImplementation(scrollViewer).SnapToInterval(static_cast<float>(snapToInterval));
       }
     } else if (propertyName == "snapToOffsets") {
-      const auto [valid, snapToOffsets] = getPropertyAndValidity(propertyValue, winrt::single_threaded_vector<float>());
-      if (valid) {
-        ScrollViewUWPImplementation(scrollViewer).SnapToOffsets(snapToOffsets.GetView());
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Array) {
+        const auto snapToOffsets = winrt::single_threaded_vector<float>();
+        for (const auto &val : propertyValue.AsArray()) {
+          if (val.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+              val.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+            snapToOffsets.Append(val.AsSingle());
+        }
+        react::uwp::ScrollViewUWPImplementation(scrollViewer).SnapToOffsets(snapToOffsets.GetView());
       }
     } else if (propertyName == "snapToStart") {
       const auto [valid, snaptoStart] = getPropertyAndValidity(propertyValue, true);
       if (valid) {
-        ScrollViewUWPImplementation(scrollViewer).SnapToStart(snaptoStart);
+        react::uwp::ScrollViewUWPImplementation(scrollViewer).SnapToStart(snaptoStart);
       }
     } else if (propertyName == "snapToEnd") {
       const auto [valid, snapToEnd] = getPropertyAndValidity(propertyValue, true);
       if (valid) {
-        ScrollViewUWPImplementation(scrollViewer).SnapToEnd(snapToEnd);
+        react::uwp::ScrollViewUWPImplementation(scrollViewer).SnapToEnd(snapToEnd);
       }
     } else if (propertyName == "keyboardDismissMode") {
       m_dismissKeyboardOnDrag = false;
-      if (propertyValue.isString()) {
-        m_dismissKeyboardOnDrag = (propertyValue.getString() == "on-drag");
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+        m_dismissKeyboardOnDrag = (propertyValue.AsString() == "on-drag");
         if (m_dismissKeyboardOnDrag) {
           m_SIPEventHandler = std::make_unique<SIPEventHandler>(GetViewManager()->GetReactContext());
           m_SIPEventHandler->AttachView(GetView(), false /*fireKeyboardEvents*/);
@@ -202,17 +213,17 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic &&reactDiffMap)
     } else if (propertyName == "snapToAlignment") {
       const auto [valid, snapToAlignment] = getPropertyAndValidity(propertyValue, winrt::SnapPointsAlignment::Near);
       if (valid) {
-        ScrollViewUWPImplementation(scrollViewer).SnapPointAlignment(snapToAlignment);
+        react::uwp::ScrollViewUWPImplementation(scrollViewer).SnapPointAlignment(snapToAlignment);
       }
     } else if (propertyName == "pagingEnabled") {
       const auto [valid, pagingEnabled] = getPropertyAndValidity(propertyValue, false);
       if (valid) {
-        ScrollViewUWPImplementation(scrollViewer).PagingEnabled(pagingEnabled);
+        react::uwp::ScrollViewUWPImplementation(scrollViewer).PagingEnabled(pagingEnabled);
       }
     }
   }
 
-  Super::updateProperties(std::move(reactDiffMap));
+  Super::updateProperties(props);
   m_updating = false;
 }
 
@@ -330,44 +341,29 @@ void ScrollViewShadowNode::EmitScrollEvent(
 }
 
 template <typename T>
-std::tuple<bool, T> ScrollViewShadowNode::getPropertyAndValidity(folly::dynamic propertyValue, T defaultValue) {
-  if (propertyValue.isNull()) {
+std::tuple<bool, T> ScrollViewShadowNode::getPropertyAndValidity(
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue,
+    T defaultValue) {
+  if (propertyValue.IsNull()) {
     return std::make_tuple(true, defaultValue);
   }
 
   if constexpr (std::is_same<T, bool>()) {
-    if (propertyValue.isBool()) {
-      return std::make_tuple(true, propertyValue.getBool());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+      return std::make_tuple(true, propertyValue.AsBoolean());
     }
   }
 
   if constexpr (std::is_same<T, double>()) {
-    if (propertyValue.isDouble()) {
-      return std::make_tuple(true, propertyValue.getDouble());
-    }
-    if (propertyValue.isInt()) {
-      return std::make_tuple(true, static_cast<double>(propertyValue.getInt()));
-    }
-  }
-
-  if constexpr (std::is_same<T, winrt::IVector<float>>()) {
-    if (propertyValue.isArray()) {
-      return std::make_tuple(true, [propertyValue]() {
-        const auto vector = winrt::single_threaded_vector<float>();
-        for (const auto &val : propertyValue) {
-          if (val.isDouble())
-            vector.Append(static_cast<float>(val.getDouble()));
-          else if (val.isInt())
-            vector.Append(static_cast<float>(val.getInt()));
-        }
-        return vector;
-      }());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+      return std::make_tuple(true, propertyValue.AsDouble());
     }
   }
 
   if constexpr (std::is_same<T, winrt::SnapPointsAlignment>()) {
-    if (propertyValue.isString()) {
-      return std::make_tuple(true, static_cast<T>([snapToAlignment = propertyValue.getString()]() {
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+      return std::make_tuple(true, static_cast<T>([snapToAlignment = propertyValue.AsString()]() {
                                if (snapToAlignment == "end") {
                                  return winrt::SnapPointsAlignment::Far;
                                } else if (snapToAlignment == "center") {
@@ -397,42 +393,59 @@ void ScrollViewShadowNode::UpdateZoomMode(const winrt::ScrollViewer &scrollViewe
 
 ScrollViewManager::ScrollViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *ScrollViewManager::GetName() const {
-  return "RCTScrollView";
+const wchar_t *ScrollViewManager::GetName() const {
+  return L"RCTScrollView";
 }
 
-folly::dynamic ScrollViewManager::GetCommands() const {
+void ScrollViewManager::GetCommands(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
   // Upstream JS will dispatch the string directly instead of ever actually calling this, but providing a real
   // implementation is simple enough in case anything changes.
-  return folly::dynamic::object(ScrollViewCommands::ScrollTo, ScrollViewCommands::ScrollTo)(
-      ScrollViewCommands::ScrollToEnd, ScrollViewCommands::ScrollToEnd);
+  writer.WritePropertyName(Microsoft::Common::Unicode::Utf8ToUtf16(ScrollViewCommands::ScrollTo));
+  writer.WriteString(Microsoft::Common::Unicode::Utf8ToUtf16(ScrollViewCommands::ScrollTo));
+  writer.WritePropertyName(Microsoft::Common::Unicode::Utf8ToUtf16(ScrollViewCommands::ScrollToEnd));
+  writer.WriteString(Microsoft::Common::Unicode::Utf8ToUtf16(ScrollViewCommands::ScrollToEnd));
 }
 
-folly::dynamic ScrollViewManager::GetNativeProps() const {
-  auto props = Super::GetNativeProps();
-
-  props.update(folly::dynamic::object("horizontal", "boolean")("scrollEnabled", "boolean")(
-      "showsHorizontalScrollIndicator", "boolean")("showsVerticalScrollIndicator", "boolean")(
-      "minimumZoomScale", "float")("maximumZoomScale", "float")("zoomScale", "float")("snapToInterval", "float")(
-      "snapToOffsets", "array")("snapToAlignment", "number")("snapToStart", "boolean")("snapToEnd", "boolean")(
-      "pagingEnabled", "boolean")("keyboardDismissMode", "string"));
-
-  return props;
+void ScrollViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"horizontal", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"scrollEnabled", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"showsHorizontalScrollIndicator", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"showsVerticalScrollIndicator", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"minimumZoomScale", L"float");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"maximumZoomScale", L"float");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"zoomScale", L"float");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"snapToInterval", L"float");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"snapToOffsets", L"array");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"snapToAlignment", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"snapToStart", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"snapToEnd", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"pagingEnabled", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"keyboardDismissMode", L"string");
 }
 
-facebook::react::ShadowNode *ScrollViewManager::createShadow() const {
+ShadowNode *ScrollViewManager::createShadow() const {
   return new ScrollViewShadowNode();
 }
 
-folly::dynamic ScrollViewManager::GetExportedCustomDirectEventTypeConstants() const {
-  auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topScrollBeginMomentum"] = folly::dynamic::object("registrationName", "onMomentumScrollBegin");
-  directEvents["topScrollEndMomentum"] = folly::dynamic::object("registrationName", "onMomentumScrollEnd");
-  directEvents["topScrollBeginDrag"] = folly::dynamic::object("registrationName", "onScrollBeginDrag");
-  directEvents["topScrollEndDrag"] = folly::dynamic::object("registrationName", "onScrollEndDrag");
-  directEvents["topScroll"] = folly::dynamic::object("registrationName", "onScroll");
+void ScrollViewManager::GetExportedCustomDirectEventTypeConstants(
+    const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetExportedCustomDirectEventTypeConstants(writer);
 
-  return directEvents;
+  const PCWSTR eventNames[] = {
+      L"ScrollBeginMomentum", L"ScrollEndMomentum", L"ScrollBeginDrag", L"ScrollEndDrag", L"Scroll"};
+
+  for (auto &eventBaseName : eventNames) {
+    using namespace std::string_literals;
+    std::wstring eventName = L"top"s + eventBaseName;
+    std::wstring bubbleName = L"on"s + eventBaseName;
+
+    writer.WritePropertyName(L"top"s + eventBaseName);
+    writer.WriteObjectBegin();
+    writer.WritePropertyName(L"registrationName");
+    writer.WriteString(L"on"s + eventBaseName);
+    writer.WriteObjectEnd();
+  }
 }
 
 XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/) {
@@ -444,7 +457,7 @@ XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/) {
   scrollViewer.VerticalSnapPointsType(winrt::SnapPointsType::Mandatory);
   scrollViewer.HorizontalSnapPointsType(winrt::SnapPointsType::Mandatory);
 
-  const auto snapPointManager = SnapPointManagingContentControl::Create();
+  const auto snapPointManager = react::uwp::SnapPointManagingContentControl::Create();
   scrollViewer.Content(*snapPointManager);
 
   return scrollViewer;
@@ -454,13 +467,13 @@ void ScrollViewManager::AddView(const XamlView &parent, const XamlView &child, [
   assert(index == 0);
 
   auto scrollViewer = parent.as<winrt::ScrollViewer>();
-  auto snapPointManager = scrollViewer.Content().as<SnapPointManagingContentControl>();
+  auto snapPointManager = scrollViewer.Content().as<react::uwp::SnapPointManagingContentControl>();
   snapPointManager->Content(child);
 }
 
 void ScrollViewManager::RemoveAllChildren(const XamlView &parent) {
   auto scrollViewer = parent.as<winrt::ScrollViewer>();
-  auto snapPointManager = scrollViewer.Content().as<SnapPointManagingContentControl>();
+  auto snapPointManager = scrollViewer.Content().as<react::uwp::SnapPointManagingContentControl>();
   snapPointManager->Content(nullptr);
 }
 
@@ -472,7 +485,7 @@ void ScrollViewManager::RemoveChildAt(const XamlView &parent, [[maybe_unused]] i
 void ScrollViewManager::SnapToInterval(const XamlView &parent, float interval) {
   if (parent) {
     if (const auto scrollViewer = parent.as<winrt::ScrollViewer>()) {
-      ScrollViewUWPImplementation(scrollViewer).SnapToInterval(interval);
+      react::uwp::ScrollViewUWPImplementation(scrollViewer).SnapToInterval(interval);
     }
   }
 }
@@ -480,9 +493,9 @@ void ScrollViewManager::SnapToInterval(const XamlView &parent, float interval) {
 void ScrollViewManager::SnapToOffsets(const XamlView &parent, const winrt::IVectorView<float> &offsets) {
   if (parent) {
     if (const auto scrollViewer = parent.as<winrt::ScrollViewer>()) {
-      ScrollViewUWPImplementation(scrollViewer).SnapToOffsets(offsets);
+      react::uwp::ScrollViewUWPImplementation(scrollViewer).SnapToOffsets(offsets);
     }
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

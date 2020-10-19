@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <INativeUIManager.h>
+#include <INativeUIManagerLegacy.h>
 #include <IUIManager.h>
 #include <ShadowNodeRegistry.h>
 #include <ViewManager.h>

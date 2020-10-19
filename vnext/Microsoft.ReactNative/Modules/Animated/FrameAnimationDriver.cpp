@@ -22,7 +22,7 @@ FrameAnimationDriver::FrameAnimationDriver(
 std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> FrameAnimationDriver::MakeAnimation(
     const folly::dynamic & /*config*/) {
   const auto [scopedBatch, animation] = []() {
-    const auto compositor = react::uwp::GetCompositor();
+    const auto compositor = Microsoft::ReactNative::GetCompositor();
     return std::make_tuple(
         compositor.CreateScopedBatch(comp::CompositionBatchTypes::AllAnimations),
         compositor.CreateScalarKeyFrameAnimation());

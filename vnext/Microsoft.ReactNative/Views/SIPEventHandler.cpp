@@ -16,7 +16,7 @@ using namespace Windows::UI::ViewManagement::Core;
 using namespace xaml;
 using namespace xaml::Media;
 } // namespace winrt
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 SIPEventHandler::SIPEventHandler(const Mso::React::IReactContext &context)
     : m_context(&context), m_fireKeyboradEvents(false), m_finalRect(winrt::RectHelper::Empty()){};
@@ -42,12 +42,12 @@ void SIPEventHandler::AttachView(XamlView xamlView, bool fireKeyboardEvents) {
 
 void SIPEventHandler::InitializeCoreInputView() {
   if (const auto xamlView = m_view.get()) {
-    if (!IsRS3OrHigher()) {
+    if (!react::uwp::IsRS3OrHigher()) {
       return; // CoreInputView is only supported on >= RS3.
     }
 
 #ifndef USE_WINUI3
-    if (Is19H1OrHigher()) {
+    if (react::uwp::Is19H1OrHigher()) {
       // 19H1 and higher supports island scenarios
       auto uiElement(xamlView.as<xaml::UIElement>());
       m_coreInputView = winrt::CoreInputView::GetForUIContext(uiElement.UIContext());
@@ -92,7 +92,8 @@ if (IsRS5OrHigher() && m_coreInputView && !m_isShowing) { // CoreInputView.TrySh
 */
 
 void SIPEventHandler::TryHide() {
-  if (IsRS5OrHigher() && m_coreInputView && m_isShowing) { // CoreInputView.TryHide is only avaliable after RS5
+  if (react::uwp::IsRS5OrHigher() && m_coreInputView &&
+      m_isShowing) { // CoreInputView.TryHide is only avaliable after RS5
     m_coreInputView.TryHide();
   }
 }
@@ -114,4 +115,4 @@ void SIPEventHandler::SendEvent(std::string &&eventName, folly::dynamic &&parame
       "RCTDeviceEventEmitter", "emit", folly::dynamic::array(std::move(eventName), std::move(parameters)));
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

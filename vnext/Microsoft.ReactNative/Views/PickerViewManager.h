@@ -5,7 +5,7 @@
 
 #include <Views/ControlViewManager.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class PickerViewManager : public ControlViewManager {
   using Super = ControlViewManager;
@@ -13,10 +13,10 @@ class PickerViewManager : public ControlViewManager {
  public:
   PickerViewManager(const Mso::React::IReactContext &context);
 
-  const char *GetName() const override;
-  folly::dynamic GetNativeProps() const override;
+  const wchar_t *GetName() const override;
+  void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
-  facebook::react::ShadowNode *createShadow() const override;
+  ShadowNode *createShadow() const override;
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
@@ -26,4 +26,4 @@ class PickerViewManager : public ControlViewManager {
   friend class PickerShadowNode;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -7,6 +7,7 @@
 #include <Utils/ValueUtils.h>
 #include "Unicode.h"
 
+#include <JSValue.h>
 #include <folly/dynamic.h>
 #include <iomanip>
 
@@ -46,9 +47,7 @@ struct ColorComp {
   }
 };
 
-xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d) {
-  winrt::hstring resourceName{winrt::to_hstring(d.find("windowsbrush")->second.asString())};
-
+xaml::Media::Brush BrushFromColorObject(winrt::hstring resourceName) {
   thread_local static std::map<winrt::hstring, winrt::weak_ref<xaml::Media::SolidColorBrush>> accentColorMap = {
       {L"SystemAccentColor", {nullptr}},
       {L"SystemAccentColorLight1", {nullptr}},
@@ -93,21 +92,35 @@ xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d) {
   return winrt::unbox_value<winrt::Brush>(resource);
 }
 
-REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic &d) {
-  UINT argb = static_cast<UINT>(d.asInt());
+xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d) {
+  return BrushFromColorObject(winrt::to_hstring(d.find("windowsbrush")->second.asString()));
+}
+
+xaml::Media::Brush BrushFromColorObject(const winrt::Microsoft::ReactNative::JSValue &v) {
+  return BrushFromColorObject(winrt::to_hstring(v["windowsbrush"].AsString()));
+}
+
+winrt::Color ColorFromNumber(DWORD argb) {
   return winrt::ColorHelper::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
 }
 
-REACTWINDOWS_API_(xaml::Media::SolidColorBrush)
-SolidColorBrushFrom(const folly::dynamic &d) {
-  if (d.isObject()) {
-    return BrushFromColorObject(d).as<xaml::Media::SolidColorBrush>();
-  }
+REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic &d) {
+  if (!d.isNumber())
+    return winrt::Colors::Transparent();
+  return ColorFromNumber(static_cast<UINT>(d.asInt()));
+}
 
+winrt::Color ColorFrom(const winrt::Microsoft::ReactNative::JSValue &v) {
+  if (v.Type() != winrt::Microsoft::ReactNative::JSValueType::Int64 &&
+      v.Type() != winrt::Microsoft::ReactNative::JSValueType::Double)
+    return winrt::Colors::Transparent();
+  return ColorFromNumber(v.AsUInt32());
+}
+
+xaml::Media::SolidColorBrush SolidBrushFromColor(winrt::Color color) {
   thread_local static std::map<winrt::Color, winrt::weak_ref<xaml::Media::SolidColorBrush>, ColorComp>
       solidColorBrushCache;
 
-  const auto color = d.isNumber() ? ColorFrom(d) : winrt::Colors::Transparent();
   if (solidColorBrushCache.count(color) != 0) {
     if (auto brush = solidColorBrushCache[color].get()) {
       return brush;
@@ -119,12 +132,38 @@ SolidColorBrushFrom(const folly::dynamic &d) {
   return brush;
 }
 
+REACTWINDOWS_API_(xaml::Media::SolidColorBrush)
+SolidColorBrushFrom(const winrt::Microsoft::ReactNative::JSValue &v) {
+  if (v.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
+    return BrushFromColorObject(v).as<xaml::Media::SolidColorBrush>();
+  }
+
+  return SolidBrushFromColor(ColorFrom(v));
+}
+
+REACTWINDOWS_API_(xaml::Media::SolidColorBrush)
+SolidColorBrushFrom(const folly::dynamic &d) {
+  if (d.isObject()) {
+    return BrushFromColorObject(d).as<xaml::Media::SolidColorBrush>();
+  }
+
+  return SolidBrushFromColor(ColorFrom(d));
+}
+
 REACTWINDOWS_API_(winrt::Brush) BrushFrom(const folly::dynamic &d) {
   if (d.isObject()) {
     return BrushFromColorObject(d);
   }
 
   return SolidColorBrushFrom(d);
+}
+
+REACTWINDOWS_API_(xaml::Media::Brush)
+BrushFrom(const winrt::Microsoft::ReactNative::JSValue &v) {
+  if (v.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
+    return BrushFromColorObject(v);
+  }
+  return SolidColorBrushFrom(v);
 }
 
 REACTWINDOWS_API_(xaml::HorizontalAlignment)
@@ -192,13 +231,34 @@ REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic &d) {
   return winrt::hstring(asWStr(d));
 }
 
+winrt::hstring asHstring(const winrt::Microsoft::ReactNative::JSValue &v) {
+  return winrt::hstring(Microsoft::Common::Unicode::Utf8ToUtf16(v.AsString()));
+}
+
 REACTWINDOWS_API_(bool) IsValidColorValue(const folly::dynamic &d) {
   return d.isObject() ? (d.find("windowsbrush") != d.items().end()) : d.isNumber();
+}
+
+REACTWINDOWS_API_(bool) IsValidColorValue(const winrt::Microsoft::ReactNative::JSValue &v) {
+  if (v.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
+    return !v.AsObject()["windowsbrush"].IsNull();
+  }
+  return v.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+      v.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64;
 }
 
 REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms) {
   std::chrono::milliseconds dur((int64_t)ms);
   return winrt::TimeSpan::duration(dur);
+}
+
+// C# provides System.Uri.TryCreate, but no native equivalent seems to exist
+winrt::Uri UriTryCreate(winrt::param::hstring const &uri) {
+  try {
+    return winrt::Uri(uri);
+  } catch (...) {
+    return winrt::Uri(nullptr);
+  }
 }
 
 } // namespace react::uwp

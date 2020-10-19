@@ -12,7 +12,7 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::UI::ViewManagement::Core;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class SIPEventHandler {
  public:
@@ -42,4 +42,4 @@ class SIPEventHandler {
   void InitializeCoreInputView();
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -24,7 +24,7 @@ using namespace xaml::Controls;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 static YogaNodePtr make_yoga_node(YGConfigRef config) {
   YogaNodePtr result(YGNodeNewWithConfig(config));
@@ -153,7 +153,7 @@ struct RootShadowNode final : public ShadowNodeBase {
   RootShadowNode &operator=(RootShadowNode const &) = delete;
   RootShadowNode() = delete;
 
-  RootShadowNode(facebook::react::IReactRootView *rootView, facebook::react::INativeUIManagerHost *host) {
+  RootShadowNode(facebook::react::IReactRootView *rootView, INativeUIManagerHost *host) {
     auto reactRootView = static_cast<react::uwp::IXamlRootView *>(rootView);
     m_view = reactRootView->GetXamlView();
   }
@@ -164,7 +164,7 @@ struct RootShadowNode final : public ShadowNodeBase {
     assert(false);
   }
 
-  void AddView(facebook::react::ShadowNode &child, int64_t index) override {
+  void AddView(ShadowNode &child, int64_t index) override {
     auto panel(GetView().as<winrt::Panel>());
     if (panel != nullptr) {
       auto childView = static_cast<ShadowNodeBase &>(child).GetView().as<xaml::UIElement>();
@@ -173,29 +173,57 @@ struct RootShadowNode final : public ShadowNodeBase {
   }
 };
 
-void NativeUIManager::setHost(facebook::react::INativeUIManagerHost *host) {
+void NativeUIManager::setHost(INativeUIManagerHost *host) {
   m_host = host;
 }
 
-facebook::react::ShadowNode *NativeUIManager::createRootShadowNode(facebook::react::IReactRootView *pReactRootView) {
+ShadowNode *NativeUIManager::createRootShadowNode(facebook::react::IReactRootView *pReactRootView) {
   return new RootShadowNode(pReactRootView, m_host);
 }
 
-void NativeUIManager::destroyRootShadowNode(facebook::react::ShadowNode *node) {
+void NativeUIManager::destroyRootShadowNode(ShadowNode *node) {
   delete node;
 }
 
-void NativeUIManager::AddRootView(
-    facebook::react::ShadowNode &shadowNode,
-    facebook::react::IReactRootView *pReactRootView) {
-  auto xamlRootView = static_cast<IXamlRootView *>(pReactRootView);
+int64_t NativeUIManager::AddMeasuredRootView(facebook::react::IReactRootView *rootView) {
+  auto tag = m_nextRootTag;
+  m_nextRootTag += RootViewTagIncrement;
+
+  int64_t width = rootView->GetActualWidth();
+  int64_t height = rootView->GetActualHeight();
+
+  m_host->RegisterRootView(rootView, tag, width, height);
+
+  // TODO: call UpdateRootNodeSize when ReactRootView size changes
+  /*var resizeCount = 0;
+  rootView.SetOnSizeChangedListener((sender, args) =>
+  {
+  var currentCount = ++resizeCount;
+  var newWidth = args.NewSize.Width;
+  var newHeight = args.NewSize.Height;
+
+  Context.RunOnNativeModulesQueueThread(() =>
+  {
+  if (currentCount == resizeCount)
+  {
+  Context.AssertOnNativeModulesQueueThread();
+  _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight,
+  _eventDispatcher);
+  }
+  });
+  });*/
+
+  return tag;
+}
+
+void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReactRootView *pReactRootView) {
+  auto xamlRootView = static_cast<react::uwp::IXamlRootView *>(pReactRootView);
   XamlView view = xamlRootView->GetXamlView();
   m_tagsToXamlReactControl.emplace(shadowNode.m_tag, xamlRootView->GetXamlReactControl());
 
   // Push the appropriate FlowDirection into the root view.
   view.as<xaml::FrameworkElement>().FlowDirection(
-      Microsoft::ReactNative::I18nManager::IsRTL(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))
+      I18nManager::IsRTL(winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))
           ? xaml::FlowDirection::RightToLeft
           : xaml::FlowDirection::LeftToRight);
 
@@ -213,7 +241,7 @@ void NativeUIManager::destroy() {
   delete this;
 }
 
-void NativeUIManager::removeRootView(facebook::react::ShadowNode &shadow) {
+void NativeUIManager::removeRootView(Microsoft::ReactNative::ShadowNode &shadow) {
   m_tagsToXamlReactControl.erase(shadow.m_tag);
   RemoveView(shadow, true);
 }
@@ -236,32 +264,34 @@ void NativeUIManager::ensureInBatch() {
     m_inBatch = true;
 }
 
-static float NumberOrDefault(const folly::dynamic &value, float defaultValue) {
+static float NumberOrDefault(const winrt::Microsoft::ReactNative::JSValue &value, float defaultValue) {
   float result = defaultValue;
 
-  if (value.isNumber())
-    result = static_cast<float>(value.asDouble());
-  else if (value.isNull())
+  if (value.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+      value.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+    result = value.AsSingle();
+  else if (value.IsNull())
     result = defaultValue;
-  else if (value.isString())
-    result = std::stof(value.getString());
+  else if (value.Type() == winrt::Microsoft::ReactNative::JSValueType::String)
+    result = std::stof(value.AsString());
   else
     assert(false);
 
   return result;
 }
 
-static YGValue YGValueOrDefault(const folly::dynamic &value, YGValue defaultValue) {
+static YGValue YGValueOrDefault(const winrt::Microsoft::ReactNative::JSValue &value, YGValue defaultValue) {
   YGValue result = defaultValue;
 
-  if (value.isNumber())
-    return YGValue{static_cast<float>(value.asDouble()), YGUnitPoint};
+  if (value.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+      value.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+    return YGValue{value.AsSingle(), YGUnitPoint};
 
-  if (value.isNull())
+  if (value.IsNull())
     return defaultValue;
 
-  if (value.isString()) {
-    std::string str = value.getString();
+  if (value.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+    std::string str = value.AsString();
     if (str == "auto")
       return YGValue{YGUndefined, YGUnitAuto};
     if (str.length() > 0 && str.back() == '%') {
@@ -364,18 +394,18 @@ static void SetYogaValueAutoHelper(
   }
 }
 
-static void StyleYogaNode(ShadowNodeBase &shadowNode, const YGNodeRef yogaNode, const folly::dynamic &props) {
-  if (props.empty())
-    return;
-
-  for (const auto &pair : props.items()) {
-    const std::string &key = pair.first.getString();
+static void StyleYogaNode(
+    ShadowNodeBase &shadowNode,
+    const YGNodeRef yogaNode,
+    const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  for (const auto &pair : props) {
+    const std::string &key = pair.first;
     const auto &value = pair.second;
 
     if (key == "flexDirection") {
       YGFlexDirection direction = YGFlexDirectionColumn;
 
-      if (value == "column" || value.isNull())
+      if (value == "column" || value.IsNull())
         direction = YGFlexDirectionColumn;
       else if (value == "row")
         direction = YGFlexDirectionRow;
@@ -390,7 +420,7 @@ static void StyleYogaNode(ShadowNodeBase &shadowNode, const YGNodeRef yogaNode, 
     } else if (key == "justifyContent") {
       YGJustify justify = YGJustifyFlexStart;
 
-      if (value == "flex-start" || value.isNull())
+      if (value == "flex-start" || value.IsNull())
         justify = YGJustifyFlexStart;
       else if (value == "flex-end")
         justify = YGJustifyFlexEnd;
@@ -409,7 +439,7 @@ static void StyleYogaNode(ShadowNodeBase &shadowNode, const YGNodeRef yogaNode, 
     } else if (key == "flexWrap") {
       YGWrap wrap = YGWrapNoWrap;
 
-      if (value == "nowrap" || value.isNull())
+      if (value == "nowrap" || value.IsNull())
         wrap = YGWrapNoWrap;
       else if (value == "wrap")
         wrap = YGWrapWrap;
@@ -420,7 +450,7 @@ static void StyleYogaNode(ShadowNodeBase &shadowNode, const YGNodeRef yogaNode, 
     } else if (key == "alignItems") {
       YGAlign align = YGAlignStretch;
 
-      if (value == "stretch" || value.isNull())
+      if (value == "stretch" || value.IsNull())
         align = YGAlignStretch;
       else if (value == "flex-start")
         align = YGAlignFlexStart;
@@ -437,7 +467,7 @@ static void StyleYogaNode(ShadowNodeBase &shadowNode, const YGNodeRef yogaNode, 
     } else if (key == "alignSelf") {
       YGAlign align = YGAlignAuto;
 
-      if (value == "auto" || value.isNull())
+      if (value == "auto" || value.IsNull())
         align = YGAlignAuto;
       else if (value == "stretch")
         align = YGAlignStretch;
@@ -458,7 +488,7 @@ static void StyleYogaNode(ShadowNodeBase &shadowNode, const YGNodeRef yogaNode, 
 
       if (value == "stretch")
         align = YGAlignStretch;
-      else if (value == "flex-start" || value.isNull())
+      else if (value == "flex-start" || value.IsNull())
         align = YGAlignFlexStart;
       else if (value == "flex-end")
         align = YGAlignFlexEnd;
@@ -492,7 +522,7 @@ static void StyleYogaNode(ShadowNodeBase &shadowNode, const YGNodeRef yogaNode, 
     } else if (key == "position") {
       YGPositionType position = YGPositionTypeRelative;
 
-      if (value == "relative" || value.isNull())
+      if (value == "relative" || value.IsNull())
         position = YGPositionTypeRelative;
       else if (value == "absolute")
         position = YGPositionTypeAbsolute;
@@ -502,7 +532,7 @@ static void StyleYogaNode(ShadowNodeBase &shadowNode, const YGNodeRef yogaNode, 
       YGNodeStyleSetPositionType(yogaNode, position);
     } else if (key == "overflow") {
       YGOverflow overflow = YGOverflowVisible;
-      if (value == "visible" || value.isNull())
+      if (value == "visible" || value.IsNull())
         overflow = YGOverflowVisible;
       else if (value == "hidden")
         overflow = YGOverflowHidden;
@@ -512,7 +542,7 @@ static void StyleYogaNode(ShadowNodeBase &shadowNode, const YGNodeRef yogaNode, 
       YGNodeStyleSetOverflow(yogaNode, overflow);
     } else if (key == "display") {
       YGDisplay display = YGDisplayFlex;
-      if (value == "flex" || value.isNull())
+      if (value == "flex" || value.IsNull())
         display = YGDisplayFlex;
       else if (value == "none")
         display = YGDisplayNone;
@@ -720,7 +750,7 @@ static void StyleYogaNode(ShadowNodeBase &shadowNode, const YGNodeRef yogaNode, 
   }
 }
 
-void NativeUIManager::CreateView(facebook::react::ShadowNode &shadowNode, folly::dynamic /*ReadableMap*/ props) {
+void NativeUIManager::CreateView(ShadowNode &shadowNode, React::JSValueObject &props) {
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto *pViewManager = node.GetViewManager();
 
@@ -739,7 +769,7 @@ void NativeUIManager::CreateView(facebook::react::ShadowNode &shadowNode, folly:
       if (func != nullptr) {
         YGNodeSetMeasureFunc(yogaNode, func);
 
-        auto context = std::make_unique<YogaContext>(node.GetView());
+        auto context = std::make_unique<Microsoft::ReactNative::YogaContext>(node.GetView());
         YGNodeSetContext(yogaNode, reinterpret_cast<void *>(context.get()));
 
         m_tagsToYogaContext.emplace(node.m_tag, std::move(context));
@@ -748,10 +778,7 @@ void NativeUIManager::CreateView(facebook::react::ShadowNode &shadowNode, folly:
   }
 }
 
-void NativeUIManager::AddView(
-    facebook::react::ShadowNode &parentShadowNode,
-    facebook::react::ShadowNode &childShadowNode,
-    uint64_t index) {
+void NativeUIManager::AddView(ShadowNode &parentShadowNode, ShadowNode &childShadowNode, uint64_t index) {
   ShadowNodeBase &parentNode = static_cast<ShadowNodeBase &>(parentShadowNode);
   auto *pViewManager = parentNode.GetViewManager();
 
@@ -770,7 +797,7 @@ void NativeUIManager::AddView(
   }
 }
 
-void NativeUIManager::RemoveView(facebook::react::ShadowNode &shadowNode, bool removeChildren /*= true*/) {
+void NativeUIManager::RemoveView(ShadowNode &shadowNode, bool removeChildren /*= true*/) {
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
 
   if (removeChildren) {
@@ -790,7 +817,7 @@ void NativeUIManager::RemoveView(facebook::react::ShadowNode &shadowNode, bool r
   m_tagsToYogaContext.erase(node.m_tag);
 }
 
-void NativeUIManager::ReplaceView(facebook::react::ShadowNode &shadowNode) {
+void NativeUIManager::ReplaceView(ShadowNode &shadowNode) {
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto *pViewManager = node.GetViewManager();
 
@@ -814,7 +841,7 @@ void NativeUIManager::ReplaceView(facebook::react::ShadowNode &shadowNode) {
   }
 }
 
-void NativeUIManager::UpdateView(facebook::react::ShadowNode &shadowNode, folly::dynamic /*ReadableMap*/ props) {
+void NativeUIManager::UpdateView(ShadowNode &shadowNode, winrt::Microsoft::ReactNative::JSValueObject &props) {
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto *pViewManager = node.GetViewManager();
 
@@ -914,16 +941,16 @@ winrt::Windows::Foundation::Rect GetRectOfElementInParentCoords(
 }
 
 void NativeUIManager::measure(
-    facebook::react::ShadowNode &shadowNode,
-    facebook::react::ShadowNode &shadowRoot,
-    facebook::xplat::module::CxxModule::Callback callback) {
+    ShadowNode &shadowNode,
+    ShadowNode &shadowRoot,
+    std::function<void(React::JSValue const &)> const &callback) {
   std::vector<folly::dynamic> args;
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
   auto feView = view.try_as<xaml::FrameworkElement>();
   if (feView == nullptr) {
-    callback(args);
+    callback(React::JSValue::Null);
     return;
   }
 
@@ -952,58 +979,68 @@ void NativeUIManager::measure(
       feRootView = xamlRootView.as<xaml::FrameworkElement>();
     }
     if (feRootView == nullptr) {
-      callback(args);
+      callback(React::JSValue::Null);
       return;
     }
   }
 
   winrt::Rect rectInParentCoords = GetRectOfElementInParentCoords(feView, feRootView);
 
+  auto writer = React::MakeJSValueTreeWriter();
+  writer.WriteArrayBegin();
+
   // TODO: The first two params are for the local position. It's unclear what
   // this is exactly, but it is not used anyway.
   //  Either codify this non-use or determine if and how we can send the needed
   //  data.
-  args.push_back(0.0f);
-  args.push_back(0.0f);
+  writer.WriteDouble(0.0);
+  writer.WriteDouble(0.0);
 
   // Size
-  args.push_back(rectInParentCoords.Width);
-  args.push_back(rectInParentCoords.Height);
+  writer.WriteDouble(rectInParentCoords.Width);
+  writer.WriteDouble(rectInParentCoords.Height);
 
   // Global Position
-  args.push_back(rectInParentCoords.X);
-  args.push_back(rectInParentCoords.Y);
+  writer.WriteDouble(rectInParentCoords.X);
+  writer.WriteDouble(rectInParentCoords.Y);
 
-  callback(args);
+  writer.WriteArrayEnd();
+  callback(TakeJSValue(writer));
 }
 
 void NativeUIManager::measureInWindow(
-    facebook::react::ShadowNode &shadowNode,
-    facebook::xplat::module::CxxModule::Callback callback) {
+    ShadowNode &shadowNode,
+    std::function<void(React::JSValue const &)> const &callback) {
   std::vector<folly::dynamic> args;
 
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
+  auto writer = React::MakeJSValueTreeWriter();
+
   if (auto view = node.GetView().try_as<xaml::FrameworkElement>()) {
     auto windowTransform = view.TransformToVisual(xaml::Window::Current().Content());
     auto positionInWindow = windowTransform.TransformPoint({0, 0});
 
+    writer.WriteArrayBegin();
+
     // x, y
-    args.push_back(positionInWindow.X);
-    args.push_back(positionInWindow.Y);
+    writer.WriteDouble(positionInWindow.X);
+    writer.WriteDouble(positionInWindow.Y);
 
     // Size
-    args.push_back(view.ActualWidth());
-    args.push_back(view.ActualHeight());
+    writer.WriteDouble(view.ActualWidth());
+    writer.WriteDouble(view.ActualHeight());
+
+    writer.WriteArrayEnd();
   }
 
-  callback(args);
+  callback(React::TakeJSValue(writer));
 }
 
 void NativeUIManager::measureLayout(
-    facebook::react::ShadowNode &shadowNode,
-    facebook::react::ShadowNode &ancestorNode,
-    facebook::xplat::module::CxxModule::Callback errorCallback,
-    facebook::xplat::module::CxxModule::Callback callback) {
+    ShadowNode &shadowNode,
+    ShadowNode &ancestorNode,
+    std::function<void(React::JSValue const &)> const &errorCallback,
+    std::function<void(React::JSValue const &)> const &callback) {
   std::vector<folly::dynamic> args;
   try {
     const auto &target = static_cast<ShadowNodeBase &>(shadowNode);
@@ -1016,26 +1053,33 @@ void NativeUIManager::measureLayout(
     const auto height = static_cast<float>(targetElement.ActualHeight());
     const auto transformedBounds = ancestorTransform.TransformBounds(winrt::Rect(0, 0, width, height));
 
+    auto writer = React::MakeJSValueTreeWriter();
+    writer.WriteArrayBegin();
     // x, y
-    args.push_back(transformedBounds.X);
-    args.push_back(transformedBounds.Y);
+    writer.WriteDouble(transformedBounds.X);
+    writer.WriteDouble(transformedBounds.Y);
 
     // Size
-    args.push_back(transformedBounds.Width);
-    args.push_back(transformedBounds.Height);
-    callback(args);
+    writer.WriteDouble(transformedBounds.Width);
+    writer.WriteDouble(transformedBounds.Height);
+
+    writer.WriteArrayEnd();
+    callback(React::TakeJSValue(writer));
   } catch (winrt::hresult_error const &e) {
     const auto &msg = e.message();
-    args.push_back(Microsoft::Common::Unicode::Utf16ToUtf8(msg.c_str(), msg.size()));
-    errorCallback(args);
+    auto writer = React::MakeJSValueTreeWriter();
+    writer.WriteArrayBegin();
+    writer.WriteString(msg);
+    writer.WriteArrayEnd();
+    errorCallback(React::TakeJSValue(writer));
   }
 }
 
 void NativeUIManager::findSubviewIn(
-    facebook::react::ShadowNode &shadowNode,
+    ShadowNode &shadowNode,
     float x,
     float y,
-    facebook::xplat::module::CxxModule::Callback callback) {
+    std::function<void(React::JSValue const &)> const &callback) {
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
@@ -1070,20 +1114,21 @@ void NativeUIManager::findSubviewIn(
   }
 
   if (foundElement == nullptr) {
-    callback({});
+    callback(React::JSValue::Null);
     return;
   }
 
   auto box = GetRectOfElementInParentCoords(foundElement, rootUIView);
 
-  std::vector<folly::dynamic> args;
-  args.push_back(foundTag);
-  args.push_back(box.X);
-  args.push_back(box.Y);
-  args.push_back(box.Width);
-  args.push_back(box.Height);
-
-  callback(args);
+  auto writer = React::MakeJSValueTreeWriter();
+  writer.WriteArrayBegin();
+  writer.WriteInt64(foundTag);
+  writer.WriteDouble(box.X);
+  writer.WriteDouble(box.Y);
+  writer.WriteDouble(box.Width);
+  writer.WriteDouble(box.Height);
+  writer.WriteArrayEnd();
+  callback(React::TakeJSValue(writer));
 }
 
 void NativeUIManager::focus(int64_t reactTag) {
@@ -1122,4 +1167,4 @@ std::weak_ptr<react::uwp::IXamlReactControl> NativeUIManager::GetParentXamlReact
   return {};
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

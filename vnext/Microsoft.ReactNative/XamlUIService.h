@@ -6,6 +6,7 @@
 #include "XamlUIService.g.h"
 #include "IUIManager.h"
 
+#include "INativeUIManager.h"
 #include "ReactHost/React.h"
 #include "ReactPropertyBag.h"
 #include "winrt/Microsoft.ReactNative.h"
@@ -14,9 +15,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 struct XamlUIService : XamlUIServiceT<XamlUIService> {
  public:
-  XamlUIService(
-      std::weak_ptr<facebook::react::IUIManager> &&uimanager,
-      Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
+  XamlUIService(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
   static ReactPropertyId<XamlUIService> XamlUIServiceProperty() noexcept;
 
   xaml::DependencyObject ElementFromReactTag(int64_t reactTag) noexcept;
@@ -30,7 +29,7 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
   static xaml::XamlRoot GetXamlRoot(IReactPropertyBag const &properties) noexcept;
 
  private:
-  std::weak_ptr<facebook::react::IUIManager> m_wkUIManager;
+  std::weak_ptr<::Microsoft::ReactNative::INativeUIManagerHost> m_wkUIManager;
   Mso::CntPtr<Mso::React::IReactContext> m_context;
 };
 

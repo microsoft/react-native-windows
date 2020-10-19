@@ -19,32 +19,36 @@
 
 namespace winrt::Microsoft::ReactNative {
 
-class ABIViewManager : public react::uwp::FrameworkElementViewManager {
-  using Super = react::uwp::FrameworkElementViewManager;
+class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewManager {
+  using Super = ::Microsoft::ReactNative::FrameworkElementViewManager;
 
  public:
   ABIViewManager(
       Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
       ReactNative::IViewManager const &viewManager);
 
-  const char *GetName() const override;
+  const wchar_t *GetName() const override;
 
-  folly::dynamic GetExportedViewConstants() const override;
+  void GetExportedViewConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
-  folly::dynamic GetNativeProps() const override;
+  void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
-  void UpdateProperties(react::uwp::ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
+  void UpdateProperties(
+      ::Microsoft::ReactNative::ShadowNodeBase *nodeToUpdate,
+      winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
-  folly::dynamic GetCommands() const override;
+  void GetCommands(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
   void DispatchCommand(
       const xaml::DependencyObject &viewToUpdate,
       const std::string &commandId,
-      const folly::dynamic &commandArgs) override;
+      winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) override;
 
-  folly::dynamic GetExportedCustomBubblingEventTypeConstants() const override;
+  void GetExportedCustomBubblingEventTypeConstants(
+      const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
-  folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
+  void GetExportedCustomDirectEventTypeConstants(
+      const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
   void AddView(const xaml::DependencyObject &parent, const xaml::DependencyObject &child, int64_t index) override;
   void RemoveAllChildren(const xaml::DependencyObject &parent) override;
@@ -57,7 +61,7 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
  protected:
   xaml::DependencyObject CreateViewCore(int64_t) override;
 
-  std::string m_name;
+  std::wstring m_name;
   ReactNative::IViewManager m_viewManager;
   IViewManagerWithReactContext m_viewManagerWithReactContext;
   IViewManagerWithExportedViewConstants m_viewManagerWithExportedViewConstants;

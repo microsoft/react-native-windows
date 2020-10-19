@@ -9,7 +9,7 @@
 #include <Utils/TransformableText.h>
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 struct VirtualTextShadowNode final : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -24,8 +24,8 @@ class VirtualTextViewManager : public ViewManagerBase {
  public:
   VirtualTextViewManager(const Mso::React::IReactContext &context);
 
-  const char *GetName() const override;
-  facebook::react::ShadowNode *createShadow() const override {
+  const wchar_t *GetName() const override;
+  ShadowNode *createShadow() const override {
     return new VirtualTextShadowNode();
   }
 
@@ -39,9 +39,9 @@ class VirtualTextViewManager : public ViewManagerBase {
   bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,
       const std::string &propertyName,
-      const folly::dynamic &propertyValue) override;
+      const winrt::Microsoft::ReactNative::JSValue &propertyValue) override;
 
   XamlView CreateViewCore(int64_t tag) override;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

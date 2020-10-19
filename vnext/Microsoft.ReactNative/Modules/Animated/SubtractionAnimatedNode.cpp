@@ -21,7 +21,7 @@ SubtractionAnimatedNode::SubtractionAnimatedNode(
   }
 
   m_propertySet.StartAnimation(s_valueName, [firstNode = m_firstInput, nodes = m_inputNodes, manager]() {
-    const auto anim = react::uwp::GetCompositor().CreateExpressionAnimation();
+    const auto anim = Microsoft::ReactNative::GetCompositor().CreateExpressionAnimation();
 
     anim.Expression([firstNode, nodes, manager, anim]() {
       anim.SetReferenceParameter(s_baseName, manager->GetValueAnimatedNode(firstNode)->PropertySet());

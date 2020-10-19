@@ -94,7 +94,6 @@ struct IReactContext : IUnknown {
 #ifndef CORE_ABI
   virtual ReactInstanceState State() const noexcept = 0;
   virtual bool IsLoaded() const noexcept = 0;
-  virtual facebook::react::INativeUIManager *NativeUIManager() const noexcept = 0;
   virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept = 0;
   virtual bool UseWebDebugger() const noexcept = 0;
   virtual bool UseFastRefresh() const noexcept = 0;
@@ -156,7 +155,7 @@ struct NativeModuleProvider2 {
 };
 
 struct ViewManagerProvider2 {
-  virtual std::vector<react::uwp::NativeViewManager> GetViewManagers(
+  virtual std::vector<std::unique_ptr<::Microsoft::ReactNative::IViewManager>> GetViewManagers(
       Mso::CntPtr<IReactContext> const &reactContext) = 0;
 };
 

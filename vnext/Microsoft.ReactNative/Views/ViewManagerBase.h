@@ -5,22 +5,17 @@
 
 #include <React.h>
 #include <Shared/ReactWindowsAPI.h>
-#include <Shared/ViewManager.h>
+#include <Views/ViewManager.h>
 #include <XamlView.h>
 #include <folly/dynamic.h>
 #include <yoga/yoga.h>
 
-namespace facebook {
-namespace react {
-struct ShadowNode;
-}
-} // namespace facebook
-
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class ExpressionAnimationStore;
 struct IReactInstance;
 struct ShadowNodeBase;
+struct ShadowNode;
 
 struct YogaContext {
   YogaContext(const XamlView &view_) : view(view_) {}
@@ -38,33 +33,38 @@ REACTWINDOWS_EXPORT YGSize DefaultYogaSelfMeasureFunc(
 #pragma warning(push)
 #pragma warning(disable : 4275) // base is not DLL exported
 #pragma warning(disable : 4251) // member is not DLL exported
-class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager {
+class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
  public:
   ViewManagerBase(const Mso::React::IReactContext &context);
   virtual ~ViewManagerBase() {}
 
   virtual XamlView CreateView(int64_t tag);
 
-  folly::dynamic GetExportedViewConstants() const override;
-  folly::dynamic GetCommands() const override;
-  folly::dynamic GetNativeProps() const override;
+  void GetExportedViewConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+  void GetCommands(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
-  facebook::react::ShadowNode *createShadow() const override;
-  void destroyShadow(facebook::react::ShadowNode *node) const override;
+  void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
-  folly::dynamic GetConstants() const override;
-  folly::dynamic GetExportedCustomBubblingEventTypeConstants() const override;
-  folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
+  ShadowNode *createShadow() const override;
+  void destroyShadow(ShadowNode *node) const override;
+
+  void GetConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+  void GetExportedCustomBubblingEventTypeConstants(
+      const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+  void GetExportedCustomDirectEventTypeConstants(
+      const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
   virtual void AddView(const XamlView &parent, const XamlView &child, int64_t index);
   virtual void RemoveAllChildren(const XamlView &parent);
   virtual void RemoveChildAt(const XamlView &parent, int64_t index);
   virtual void ReplaceChild(const XamlView &parent, const XamlView &oldChild, const XamlView &newChild);
 
-  virtual void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap);
+  virtual void UpdateProperties(ShadowNodeBase *nodeToUpdate, winrt::Microsoft::ReactNative::JSValueObject &props);
 
-  virtual void
-  DispatchCommand(const XamlView &viewToUpdate, const std::string &commandId, const folly::dynamic &commandArgs);
+  virtual void DispatchCommand(
+      const XamlView &viewToUpdate,
+      const std::string &commandId,
+      winrt::Microsoft::ReactNative::JSValueArray &&commandArgs);
 
   // Yoga Layout
   virtual void SetLayoutProps(
@@ -81,7 +81,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
   const Mso::React::IReactContext &GetReactContext() const {
     return *m_context;
   }
-  std::shared_ptr<ExpressionAnimationStore> GetExpressionAnimationStore() noexcept;
+  std::shared_ptr<react::uwp::ExpressionAnimationStore> GetExpressionAnimationStore() noexcept;
   void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept;
 
   virtual void TransferProperties(const XamlView &oldView, const XamlView &newView);
@@ -89,12 +89,14 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
  protected:
   virtual XamlView CreateViewCore(int64_t tag) = 0;
   virtual void OnViewCreated(XamlView view) {}
-  virtual bool
-  UpdateProperty(ShadowNodeBase *nodeToUpdate, const std::string &propertyName, const folly::dynamic &propertyValue);
+  virtual bool UpdateProperty(
+      ShadowNodeBase *nodeToUpdate,
+      const std::string &propertyName,
+      const winrt::Microsoft::ReactNative::JSValue &propertyValue);
   virtual void NotifyUnimplementedProperty(
       ShadowNodeBase *nodeToUpdate,
       const std::string &propertyName,
-      const folly::dynamic &value);
+      const winrt::Microsoft::ReactNative::JSValue &value);
   virtual void OnPropertiesUpdated(ShadowNodeBase *node) {}
 
  protected:
@@ -102,4 +104,4 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager
 };
 #pragma warning(pop)
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

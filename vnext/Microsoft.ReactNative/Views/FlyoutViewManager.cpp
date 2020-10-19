@@ -9,6 +9,7 @@
 #include "ViewPanel.h"
 
 #include <Modules/NativeUIManager.h>
+#include <Modules/PaperUIManagerModule.h>
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
@@ -63,9 +64,9 @@ static const std::unordered_map<std::string, winrt::FlyoutPlacementMode> placeme
 
 template <>
 struct json_type_traits<winrt::FlyoutPlacementMode> {
-  static winrt::FlyoutPlacementMode parseJson(const folly::dynamic &json) {
+  static winrt::FlyoutPlacementMode parseJson(const winrt::Microsoft::ReactNative::JSValue &value) {
     auto placementMode = !!(winrt::Flyout().try_as<winrt::IFlyoutBase5>()) ? placementModeRS5 : placementModeMinVersion;
-    auto iter = placementMode.find(json.asString());
+    auto iter = placementMode.find(value.AsString());
 
     if (iter != placementMode.end()) {
       return iter->second;
@@ -75,7 +76,7 @@ struct json_type_traits<winrt::FlyoutPlacementMode> {
   }
 };
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class FlyoutShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -89,7 +90,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   static void OnFlyoutClosed(const Mso::React::IReactContext &context, int64_t tag, bool newValue);
   void onDropViewInstance() override;
   void removeAllChildren() override;
-  void updateProperties(const folly::dynamic &&props) override;
+  void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
   winrt::Flyout GetFlyout();
   void AdjustDefaultFlyoutStyle(float maxWidth, float maxHeight);
 
@@ -201,7 +202,7 @@ void FlyoutShadowNode::createView() {
         // of open popups/flyouts. We apply this translation on open of the
         // flyout. (Translation is only supported on RS5+, eg. IUIElement9)
         if (auto uiElement9 = GetView().try_as<xaml::IUIElement9>()) {
-          auto numOpenPopups = CountOpenPopups();
+          auto numOpenPopups = react::uwp::CountOpenPopups();
           if (numOpenPopups > 0) {
             winrt::Numerics::float3 translation{0, 0, (float)16 * numOpenPopups};
             flyoutPresenter.Translation(translation);
@@ -231,7 +232,7 @@ void FlyoutShadowNode::createView() {
 
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
   if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
-    if (auto uiManager = static_cast<NativeUIManager *>(GetViewManager()->GetReactContext().NativeUIManager())) {
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
       if (auto xamlRoot = uiManager->tryGetXamlRoot()) {
         flyoutBase6.XamlRoot(xamlRoot);
         m_xamlRootChangedRevoker = xamlRoot.Changed(winrt::auto_revoke, [this](auto &&, auto &&) {
@@ -260,7 +261,7 @@ void FlyoutShadowNode::removeAllChildren() {
   m_flyout.ClearValue(winrt::Flyout::ContentProperty());
 }
 
-void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
+void FlyoutShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_updating = true;
   bool updateTargetElement = false;
   bool updateIsOpen = false;
@@ -269,21 +270,22 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
   if (m_flyout == nullptr)
     return;
 
-  for (auto &pair : props.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
+  for (auto &pair : props) {
+    const std::string &propertyName = pair.first;
+    const auto &propertyValue = pair.second;
 
     if (propertyName == "horizontalOffset") {
-      if (propertyValue.isNumber())
-        m_horizontalOffset = static_cast<float>(propertyValue.asDouble());
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+        m_horizontalOffset = propertyValue.AsSingle();
       else
         m_horizontalOffset = 0;
 
       updateOffset = true;
     } else if (propertyName == "isLightDismissEnabled") {
-      if (propertyValue.isBool())
-        m_isLightDismissEnabled = propertyValue.asBool();
-      else if (propertyValue.isNull())
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+        m_isLightDismissEnabled = propertyValue.AsBoolean();
+      else if (propertyValue.IsNull())
         m_isLightDismissEnabled = true;
       if (m_isOpen) {
         auto popup = GetFlyoutParentPopup();
@@ -292,9 +294,9 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
         }
       }
     } else if (propertyName == "isOpen") {
-      if (propertyValue.isBool()) {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
         bool isOpen = m_isOpen;
-        m_isOpen = propertyValue.asBool();
+        m_isOpen = propertyValue.AsBoolean();
         if (isOpen != m_isOpen) {
           updateIsOpen = true;
         }
@@ -303,21 +305,24 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
       auto placement = json_type_traits<winrt::FlyoutPlacementMode>::parseJson(propertyValue);
       m_flyout.Placement(placement);
     } else if (propertyName == "target") {
-      if (propertyValue.isNumber()) {
-        m_targetTag = static_cast<int64_t>(propertyValue.asDouble());
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+        m_targetTag = propertyValue.AsInt64();
         updateTargetElement = true;
-      } else
+      } else {
         m_targetTag = -1;
+      }
     } else if (propertyName == "verticalOffset") {
-      if (propertyValue.isNumber())
-        m_verticalOffset = static_cast<float>(propertyValue.asDouble());
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+        m_verticalOffset = propertyValue.AsSingle();
       else
         m_verticalOffset = 0;
 
       updateOffset = true;
     } else if (propertyName == "isOverlayEnabled") {
       auto overlayMode = winrt::LightDismissOverlayMode::Off;
-      if (propertyValue.isBool() && propertyValue.asBool()) {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean && propertyValue.AsBoolean()) {
         overlayMode = winrt::LightDismissOverlayMode::On;
       }
 
@@ -369,7 +374,7 @@ void FlyoutShadowNode::OnShowFlyout() {
 
 void FlyoutShadowNode::SetTargetFrameworkElement() {
   if (m_targetTag > 0) {
-    if (auto uiManager = static_cast<NativeUIManager *>(GetViewManager()->GetReactContext().NativeUIManager())) {
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
       auto pNativeUIManagerHost = uiManager->getHost();
       ShadowNodeBase *pShadowNodeChild =
           static_cast<ShadowNodeBase *>(pNativeUIManagerHost->FindShadowNodeForTag(m_targetTag));
@@ -427,33 +432,37 @@ winrt::FlyoutPresenter FlyoutShadowNode::GetFlyoutPresenter() const {
 
 FlyoutViewManager::FlyoutViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *FlyoutViewManager::GetName() const {
-  return "RCTFlyout";
+const wchar_t *FlyoutViewManager::GetName() const {
+  return L"RCTFlyout";
 }
 
 XamlView FlyoutViewManager::CreateViewCore(int64_t /*tag*/) {
   return winrt::make<winrt::react::uwp::implementation::ViewPanel>().as<XamlView>();
 }
 
-facebook::react::ShadowNode *FlyoutViewManager::createShadow() const {
+ShadowNode *FlyoutViewManager::createShadow() const {
   return new FlyoutShadowNode();
 }
 
-folly::dynamic FlyoutViewManager::GetNativeProps() const {
-  auto props = Super::GetNativeProps();
-
-  props.update(
-      folly::dynamic::object("horizontalOffset", "number")("isLightDismissEnabled", "boolean")("isOpen", "boolean")(
-          "placement", "number")("target", "number")("verticalOffset", "number")("isOverlayEnabled", "boolean"));
-
-  return props;
+void FlyoutViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
+  React::WriteProperty(writer, L"horizontalOffset", L"number");
+  React::WriteProperty(writer, L"isLightDismissEnabled", L"boolean");
+  React::WriteProperty(writer, L"isOpen", L"boolean");
+  React::WriteProperty(writer, L"placement", L"number");
+  React::WriteProperty(writer, L"target", L"number");
+  React::WriteProperty(writer, L"verticalOffset", L"number");
+  React::WriteProperty(writer, L"isOverlayEnabled", L"boolean");
 }
 
-folly::dynamic FlyoutViewManager::GetExportedCustomDirectEventTypeConstants() const {
-  auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topDismiss"] = folly::dynamic::object("registrationName", "onDismiss");
+void FlyoutViewManager::GetExportedCustomDirectEventTypeConstants(
+    const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetExportedCustomDirectEventTypeConstants(writer);
 
-  return directEvents;
+  writer.WritePropertyName(L"topDismiss");
+  writer.WriteObjectBegin();
+  React::WriteProperty(writer, L"registrationName", L"onDismiss");
+  writer.WriteObjectEnd();
 }
 
 void FlyoutViewManager::SetLayoutProps(
@@ -472,4 +481,4 @@ void FlyoutViewManager::SetLayoutProps(
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

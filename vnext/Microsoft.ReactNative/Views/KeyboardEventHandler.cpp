@@ -24,35 +24,35 @@ static constexpr auto CODE = "code";
 using namespace react::uwp;
 
 template <>
-struct json_type_traits<react::uwp::HandledKeyboardEvent> {
-  static react::uwp::HandledKeyboardEvent parseJson(const folly::dynamic &json) {
-    react::uwp::HandledKeyboardEvent event;
+struct json_type_traits<Microsoft::ReactNative::HandledKeyboardEvent> {
+  static Microsoft::ReactNative::HandledKeyboardEvent parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {
+    Microsoft::ReactNative::HandledKeyboardEvent event;
 
-    for (auto const &pair : json.items()) {
-      const std::string &propertyName = pair.first.getString();
-      const folly::dynamic &propertyValue = pair.second;
+    for (auto const &pair : json.AsObject()) {
+      const std::string &propertyName = pair.first;
+      const auto &propertyValue = pair.second;
 
       if (propertyName == ALT_KEY)
-        event.altKey = propertyValue.asBool();
+        event.altKey = propertyValue.AsBoolean();
       else if (propertyName == SHIFT_KEY)
-        event.shiftKey = propertyValue.asBool();
+        event.shiftKey = propertyValue.AsBoolean();
       else if (propertyName == CTRL_KEY)
-        event.ctrlKey = propertyValue.asBool();
+        event.ctrlKey = propertyValue.AsBoolean();
       else if (propertyName == META_KEY)
-        event.metaKey = propertyValue.asBool();
+        event.metaKey = propertyValue.AsBoolean();
       else if (propertyName == CODE)
-        event.code = propertyValue.asString();
+        event.code = propertyValue.AsString();
       else if (propertyName == EVENT_PHASE)
-        event.handledEventPhase = asEnum<HandledEventPhase>(propertyValue);
+        event.handledEventPhase = asEnum<Microsoft::ReactNative::HandledEventPhase>(propertyValue);
     }
 
     return event;
   }
 };
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
-std::vector<HandledKeyboardEvent> KeyboardHelper::FromJS(folly::dynamic const &obj) {
+std::vector<HandledKeyboardEvent> KeyboardHelper::FromJS(winrt::Microsoft::ReactNative::JSValue const &obj) {
   return json_type_traits<std::vector<HandledKeyboardEvent>>::parseJson(obj);
 }
 
@@ -122,7 +122,7 @@ HandledKeyboardEventHandler::HandledKeyboardEventHandler() {}
 
 void HandledKeyboardEventHandler::UpdateHandledKeyboardEvents(
     std::string const &propertyName,
-    folly::dynamic const &value) {
+    winrt::Microsoft::ReactNative::JSValue const &value) {
   if (propertyName == "keyDownEvents") {
     m_handledKeyDownKeyboardEvents = KeyboardHelper::FromJS(value);
   } else if (propertyName == "keyUpEvents")
@@ -636,4 +636,4 @@ bool KeyboardHelper::IsModifiedKeyLocked(
       winrt::CoreVirtualKeyStates::Locked;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

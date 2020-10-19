@@ -11,11 +11,9 @@
 #include <functional>
 #include <string>
 
-namespace facebook {
-namespace react {
+namespace Microsoft::ReactNative {
 struct INativeUIManager;
-}
-} // namespace facebook
+} // namespace Microsoft::ReactNative
 
 namespace react::uwp {
 

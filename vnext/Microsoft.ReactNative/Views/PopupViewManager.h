@@ -5,7 +5,7 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class PopupViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
@@ -13,12 +13,13 @@ class PopupViewManager : public FrameworkElementViewManager {
  public:
   PopupViewManager(const Mso::React::IReactContext &context);
 
-  const char *GetName() const override;
-  folly::dynamic GetNativeProps() const override;
+  const wchar_t *GetName() const override;
+  void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
-  facebook::react::ShadowNode *createShadow() const override;
+  ShadowNode *createShadow() const override;
 
-  folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
+  void GetExportedCustomDirectEventTypeConstants(
+      const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
   void SetLayoutProps(
       ShadowNodeBase &nodeToUpdate,
       const XamlView &viewToUpdate,
@@ -32,4 +33,4 @@ class PopupViewManager : public FrameworkElementViewManager {
   friend class PopupShadowNode;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -28,12 +28,12 @@ namespace react::uwp {
 // It keeps a weak reference to the XAML ReactRootView.
 // TODO: consider to remove this class in favor of ReactRootView XAML control.
 struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, IXamlRootView, IXamlReactControl {
-  ReactRootControl(XamlView const &rootView) noexcept;
+  ReactRootControl(Microsoft::ReactNative::XamlView const &rootView) noexcept;
   ~ReactRootControl() noexcept;
 
  public: // IXamlRootView
   Mso::React::IReactContext *GetReactContext() const noexcept override;
-  XamlView GetXamlView() const noexcept override;
+  Microsoft::ReactNative::XamlView GetXamlView() const noexcept override;
   void SetJSComponentName(std::string &&mainComponentName) noexcept override;
   void SetInitialProps(folly::dynamic &&initialProps) noexcept override;
   void AttachRoot() noexcept override;
@@ -49,7 +49,7 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   void SetTag(int64_t tag) noexcept override;
 
  public: // IXamlReactControl
-  void blur(XamlView const &xamlView) noexcept override;
+  void blur(Microsoft::ReactNative::XamlView const &xamlView) noexcept override;
 
  public:
   //! property ReactViewHost : Mso::React::IReactViewHost
@@ -64,7 +64,7 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   void UninitRootView() noexcept;
 
  private:
-  void PrepareXamlRootView(XamlView const &rootView) noexcept;
+  void PrepareXamlRootView(Microsoft::ReactNative::XamlView const &rootView) noexcept;
   void EnsureFocusSafeHarbor() noexcept;
   void UpdateRootViewInternal() noexcept;
 
@@ -73,16 +73,16 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   void ShowInstanceLoaded() noexcept;
   void ShowInstanceError() noexcept;
 
-  void AttachBackHandlers(XamlView const &rootView) noexcept;
+  void AttachBackHandlers(Microsoft::ReactNative::XamlView const &rootView) noexcept;
   void RemoveBackHandlers() noexcept;
   bool OnBackRequested() noexcept;
 
  private:
   int64_t m_rootTag{-1};
 
-  std::shared_ptr<TouchEventHandler> m_touchEventHandler;
-  std::shared_ptr<SIPEventHandler> m_SIPEventHandler;
-  std::shared_ptr<PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
+  std::shared_ptr<Microsoft::ReactNative::TouchEventHandler> m_touchEventHandler;
+  std::shared_ptr<Microsoft::ReactNative::SIPEventHandler> m_SIPEventHandler;
+  std::shared_ptr<Microsoft::ReactNative::PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
 
   Mso::DispatchQueue m_uiQueue;
   Mso::CntPtr<Mso::React::IReactViewHost> m_reactViewHost;
@@ -99,8 +99,8 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
   //  safe harbor
   //  m_xamlRootView
   //    JS created children
-  winrt::weak_ref<XamlView> m_weakRootView{nullptr};
-  winrt::weak_ref<XamlView> m_weakXamlRootView{nullptr};
+  winrt::weak_ref<Microsoft::ReactNative::XamlView> m_weakRootView{nullptr};
+  winrt::weak_ref<Microsoft::ReactNative::XamlView> m_weakXamlRootView{nullptr};
 
   xaml::Controls::ContentControl m_focusSafeHarbor{nullptr};
   xaml::Controls::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};

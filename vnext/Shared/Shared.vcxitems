@@ -45,12 +45,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\PlatformConstantsModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\SourceCodeModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\UIManagerModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ShadowNode.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.cpp" />
@@ -60,7 +57,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp">
       <ExcludedFromBuild Condition="'$(USE_V8)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ViewManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinRTWebSocketResource.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -85,7 +81,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IDevSupportManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IHttpResource.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)INativeUIManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)InstanceManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IReactRootView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IRedBoxHandler.h" />
@@ -101,7 +96,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\PlatformConstantsModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\SourceCodeModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\UIManagerModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NativeModuleProvider.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)OInstance.h" />

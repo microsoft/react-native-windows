@@ -5,7 +5,7 @@
 
 #include <Views/ViewViewManager.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class ScrollContentViewManager : public ViewViewManager {
   using Super = ViewViewManager;
@@ -13,7 +13,7 @@ class ScrollContentViewManager : public ViewViewManager {
  public:
   ScrollContentViewManager(const Mso::React::IReactContext &context);
 
-  const char *GetName() const override;
+  const wchar_t *GetName() const override;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

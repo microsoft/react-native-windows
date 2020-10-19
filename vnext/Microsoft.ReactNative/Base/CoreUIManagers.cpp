@@ -28,10 +28,10 @@
 #include <Views/ViewViewManager.h>
 #include <Views/VirtualTextViewManager.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 void AddStandardViewManagers(
-    std::vector<std::unique_ptr<facebook::react::IViewManager>> &viewManagers,
+    std::vector<std::unique_ptr<Microsoft::ReactNative::IViewManager>> &viewManagers,
     const Mso::React::IReactContext &context) noexcept {
   viewManagers.push_back(std::make_unique<ActivityIndicatorViewManager>(context));
   viewManagers.push_back(std::make_unique<DatePickerViewManager>(context));
@@ -53,11 +53,4 @@ void AddStandardViewManagers(
   viewManagers.push_back(std::make_unique<GlyphViewManager>(context));
 }
 
-std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
-    Mso::React::IReactContext *context,
-    std::vector<react::uwp::NativeViewManager> &&viewManagers) noexcept {
-  // Create UIManager, passing in ViewManagers
-  return createIUIManager(std::move(viewManagers), new NativeUIManager(context));
-}
-
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -5,18 +5,16 @@
 
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/ValueUtils.h>
+#include <unicode.h>
 
 #include <UI.Text.h>
-#include <folly/dynamic.h>
 #include <stdint.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.Foundation.h>
 
 #include <Views/ShadowNodeBase.h>
 
-namespace react::uwp {
-
-struct ShadowNodeBase;
+namespace Microsoft::ReactNative {
 
 static double DefaultOrOverride(double defaultValue, double x) {
   return x != c_UndefinedEdge ? x : defaultValue;
@@ -98,15 +96,18 @@ void SetBorderBrush(const T &element, const xaml::Media::Brush &brush) {
 }
 
 template <class T>
-bool TryUpdateBackgroundBrush(const T &element, const std::string &propertyName, const folly::dynamic &propertyValue) {
+bool TryUpdateBackgroundBrush(
+    const T &element,
+    const std::string &propertyName,
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "backgroundColor") {
-    if (IsValidColorValue(propertyValue)) {
-      const auto brush = BrushFrom(propertyValue);
+    if (react::uwp::IsValidColorValue(propertyValue)) {
+      const auto brush = react::uwp::BrushFrom(propertyValue);
       element.Background(brush);
-      UpdateControlBackgroundResourceBrushes(element, brush);
-    } else if (propertyValue.isNull()) {
+      react::uwp::UpdateControlBackgroundResourceBrushes(element, brush);
+    } else if (propertyValue.IsNull()) {
       element.ClearValue(T::BackgroundProperty());
-      UpdateControlBackgroundResourceBrushes(element, nullptr);
+      react::uwp::UpdateControlBackgroundResourceBrushes(element, nullptr);
     }
 
     return true;
@@ -115,10 +116,13 @@ bool TryUpdateBackgroundBrush(const T &element, const std::string &propertyName,
   return false;
 }
 
-inline void
-UpdateCornerRadiusValueOnNode(ShadowNodeBase *node, ShadowCorners corner, const folly::dynamic &propertyValue) {
-  if (propertyValue.isNumber())
-    node->m_cornerRadius[(int)corner] = propertyValue.asDouble();
+inline void UpdateCornerRadiusValueOnNode(
+    ShadowNodeBase *node,
+    ShadowCorners corner,
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
+  if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+      propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+    node->m_cornerRadius[(int)corner] = propertyValue.AsDouble();
   else
     node->m_cornerRadius[(int)corner] = c_UndefinedEdge;
 }
@@ -130,15 +134,18 @@ void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element) {
 }
 
 template <class T>
-bool TryUpdateForeground(const T &element, const std::string &propertyName, const folly::dynamic &propertyValue) {
+bool TryUpdateForeground(
+    const T &element,
+    const std::string &propertyName,
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "color") {
-    if (IsValidColorValue(propertyValue)) {
-      const auto brush = BrushFrom(propertyValue);
+    if (react::uwp::IsValidColorValue(propertyValue)) {
+      const auto brush = react::uwp::BrushFrom(propertyValue);
       element.Foreground(brush);
-      UpdateControlForegroundResourceBrushes(element, brush);
-    } else if (propertyValue.isNull()) {
+      react::uwp::UpdateControlForegroundResourceBrushes(element, brush);
+    } else if (propertyValue.IsNull()) {
       element.ClearValue(T::ForegroundProperty());
-      UpdateControlForegroundResourceBrushes(element, nullptr);
+      react::uwp::UpdateControlForegroundResourceBrushes(element, nullptr);
     }
 
     return true;
@@ -152,35 +159,36 @@ bool TryUpdateBorderProperties(
     ShadowNodeBase *node,
     const T &element,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   bool isBorderProperty = true;
 
   if (propertyName == "borderColor") {
-    if (IsValidColorValue(propertyValue)) {
-      const auto brush = BrushFrom(propertyValue);
+    if (react::uwp::IsValidColorValue(propertyValue)) {
+      const auto brush = react::uwp::BrushFrom(propertyValue);
       element.BorderBrush(brush);
-      UpdateControlBorderResourceBrushes(element, brush);
-    } else if (propertyValue.isNull()) {
+      react::uwp::UpdateControlBorderResourceBrushes(element, brush);
+    } else if (propertyValue.IsNull()) {
       // If there's still a border thickness, use the default border brush.
       if (element.BorderThickness() != xaml::ThicknessHelper::FromUniformLength(0.0)) {
-        element.BorderBrush(DefaultBrushStore::Instance().GetDefaultBorderBrush());
+        element.BorderBrush(react::uwp::DefaultBrushStore::Instance().GetDefaultBorderBrush());
       } else {
         element.ClearValue(T::BorderBrushProperty());
       }
-      UpdateControlBorderResourceBrushes(element, nullptr);
+      react::uwp::UpdateControlBorderResourceBrushes(element, nullptr);
     }
   } else {
     auto iter = edgeTypeMap.find(propertyName);
     if (iter != edgeTypeMap.end()) {
-      if (propertyValue.isNumber()) {
-        SetBorderThickness(node, element, iter->second, propertyValue.asDouble());
-        if (propertyValue.asDouble() != 0 && !element.BorderBrush()) {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+        SetBorderThickness(node, element, iter->second, propertyValue.AsDouble());
+        if (propertyValue.AsDouble() != 0 && !element.BorderBrush()) {
           // Borders with no brush draw something other than transparent on other platforms.
           // To match, we'll use a default border brush if one isn't already set.
           // Note:  Keep this in sync with code in ViewPanel::FinalizeProperties().
-          element.BorderBrush(DefaultBrushStore::Instance().GetDefaultBorderBrush());
+          element.BorderBrush(react::uwp::DefaultBrushStore::Instance().GetDefaultBorderBrush());
         }
-      } else if (propertyValue.isNull()) {
+      } else if (propertyValue.IsNull()) {
         SetBorderThickness(node, element, iter->second, 0);
       }
     } else {
@@ -196,36 +204,45 @@ bool TryUpdatePadding(
     ShadowNodeBase *node,
     const T &element,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   bool isPaddingProperty = true;
 
   if (propertyName == "paddingLeft") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Left, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      UpdatePadding(node, element, ShadowEdges::Left, propertyValue.AsDouble());
   } else if (propertyName == "paddingTop") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Top, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      UpdatePadding(node, element, ShadowEdges::Top, propertyValue.AsDouble());
   } else if (propertyName == "paddingRight") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Right, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      UpdatePadding(node, element, ShadowEdges::Right, propertyValue.AsDouble());
   } else if (propertyName == "paddingBottom") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Bottom, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      UpdatePadding(node, element, ShadowEdges::Bottom, propertyValue.AsDouble());
   } else if (propertyName == "paddingStart") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Start, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      UpdatePadding(node, element, ShadowEdges::Start, propertyValue.AsDouble());
   } else if (propertyName == "paddingEnd") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::End, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      UpdatePadding(node, element, ShadowEdges::End, propertyValue.AsDouble());
   } else if (propertyName == "paddingHorizontal") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Horizontal, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      UpdatePadding(node, element, ShadowEdges::Horizontal, propertyValue.AsDouble());
   } else if (propertyName == "paddingVertical") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Vertical, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      UpdatePadding(node, element, ShadowEdges::Vertical, propertyValue.AsDouble());
   } else if (propertyName == "padding") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      UpdatePadding(node, element, ShadowEdges::AllEdges, propertyValue.AsDouble());
   } else {
     isPaddingProperty = false;
   }
@@ -238,7 +255,7 @@ bool TryUpdateCornerRadiusOnNode(
     ShadowNodeBase *node,
     const T & /*element*/,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "borderTopLeftRadius") {
     UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopLeft, propertyValue);
   } else if (propertyName == "borderTopRightRadius") {
@@ -265,22 +282,26 @@ bool TryUpdateCornerRadiusOnNode(
 }
 
 template <class T>
-bool TryUpdateFontProperties(const T &element, const std::string &propertyName, const folly::dynamic &propertyValue) {
+bool TryUpdateFontProperties(
+    const T &element,
+    const std::string &propertyName,
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   bool isFontProperty = true;
 
   if (propertyName == "fontSize") {
-    if (propertyValue.isNumber())
-      element.FontSize(propertyValue.asDouble());
-    else if (propertyValue.isNull())
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      element.FontSize(propertyValue.AsDouble());
+    else if (propertyValue.IsNull())
       element.ClearValue(T::FontSizeProperty());
   } else if (propertyName == "fontFamily") {
-    if (propertyValue.isString())
-      element.FontFamily(xaml::Media::FontFamily(asWStr(propertyValue)));
-    else if (propertyValue.isNull())
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String)
+      element.FontFamily(xaml::Media::FontFamily(Microsoft::Common::Unicode::Utf8ToUtf16(propertyValue.AsString())));
+    else if (propertyValue.IsNull())
       element.ClearValue(T::FontFamilyProperty());
   } else if (propertyName == "fontWeight") {
-    if (propertyValue.isString()) {
-      const std::string &value = propertyValue.getString();
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+      const std::string &value = propertyValue.AsString();
       winrt::Windows::UI::Text::FontWeight fontWeight;
       if (value == "normal")
         fontWeight = text::FontWeights::Normal();
@@ -308,13 +329,13 @@ bool TryUpdateFontProperties(const T &element, const std::string &propertyName, 
         fontWeight = text::FontWeights::Normal();
 
       element.FontWeight(fontWeight);
-    } else if (propertyValue.isNull()) {
+    } else if (propertyValue.IsNull()) {
       element.ClearValue(T::FontWeightProperty());
     }
   } else if (propertyName == "fontStyle") {
-    if (propertyValue.isString()) {
-      element.FontStyle((propertyValue.getString() == "italic") ? text::FontStyle::Italic : text::FontStyle::Normal);
-    } else if (propertyValue.isNull()) {
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+      element.FontStyle((propertyValue.AsString() == "italic") ? text::FontStyle::Italic : text::FontStyle::Normal);
+    } else if (propertyValue.IsNull()) {
       element.ClearValue(T::FontStyleProperty());
     }
 
@@ -340,12 +361,15 @@ void SetTextAlignment(const T &element, const std::string &value) {
 }
 
 template <class T>
-bool TryUpdateTextAlignment(const T &element, const std::string &propertyName, const folly::dynamic &propertyValue) {
+bool TryUpdateTextAlignment(
+    const T &element,
+    const std::string &propertyName,
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "textAlign") {
-    if (propertyValue.isString()) {
-      const std::string &value = propertyValue.getString();
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+      const std::string &value = propertyValue.AsString();
       SetTextAlignment(element, value);
-    } else if (propertyValue.isNull()) {
+    } else if (propertyValue.IsNull()) {
       element.ClearValue(T::TextAlignmentProperty());
     }
 
@@ -368,12 +392,15 @@ void SetTextTrimming(const T &element, const std::string &value) {
 }
 
 template <class T>
-bool TryUpdateTextTrimming(const T &element, const std::string &propertyName, const folly::dynamic &propertyValue) {
+bool TryUpdateTextTrimming(
+    const T &element,
+    const std::string &propertyName,
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "ellipsizeMode") {
-    if (propertyValue.isString()) {
-      const std::string &value = propertyValue.getString();
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+      const std::string &value = propertyValue.AsString();
       SetTextTrimming(element, value);
-    } else if (propertyValue.isNull()) {
+    } else if (propertyValue.IsNull()) {
       element.ClearValue(T::TextTrimmingProperty());
     }
 
@@ -387,7 +414,7 @@ template <class T>
 bool TryUpdateTextDecorationLine(
     const T &element,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "textDecorationLine") {
     // FUTURE: remove when SDK target minVer >= 10.0.15063.0
     static bool isTextDecorationsSupported =
@@ -400,10 +427,10 @@ bool TryUpdateTextDecorationLine(
     if (!isTextDecorationsSupported)
       return true;
 
-    if (propertyValue.isString()) {
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
       using winrt::Windows::UI::Text::TextDecorations;
 
-      const std::string &value = propertyValue.getString();
+      const std::string &value = propertyValue.AsString();
       TextDecorations decorations = TextDecorations::None;
       if (value == "none") {
         decorations = TextDecorations::None;
@@ -416,7 +443,7 @@ bool TryUpdateTextDecorationLine(
       }
 
       element.TextDecorations(decorations);
-    } else if (propertyValue.isNull()) {
+    } else if (propertyValue.IsNull()) {
       element.ClearValue(T::TextDecorationsProperty());
     }
 
@@ -437,12 +464,15 @@ void SetFlowDirection(const T &element, const std::string &value) {
 }
 
 template <class T>
-bool TryUpdateFlowDirection(const T &element, const std::string &propertyName, const folly::dynamic &propertyValue) {
+bool TryUpdateFlowDirection(
+    const T &element,
+    const std::string &propertyName,
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if ((propertyName == "writingDirection") || (propertyName == "direction")) {
-    if (propertyValue.isString()) {
-      const std::string &value = propertyValue.getString();
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+      const std::string &value = propertyValue.AsString();
       SetFlowDirection(element, value);
-    } else if (propertyValue.isNull()) {
+    } else if (propertyValue.IsNull()) {
       element.ClearValue(T::FlowDirectionProperty());
     }
 
@@ -453,11 +483,15 @@ bool TryUpdateFlowDirection(const T &element, const std::string &propertyName, c
 }
 
 template <class T>
-bool TryUpdateCharacterSpacing(const T &element, const std::string &propertyName, const folly::dynamic &propertyValue) {
+bool TryUpdateCharacterSpacing(
+    const T &element,
+    const std::string &propertyName,
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "letterSpacing" || propertyName == "characterSpacing") {
-    if (propertyValue.isNumber())
-      element.CharacterSpacing(static_cast<int32_t>(propertyValue.asDouble()));
-    else if (propertyValue.isNull())
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      element.CharacterSpacing(propertyValue.AsInt32());
+    else if (propertyValue.IsNull())
       element.ClearValue(T::CharacterSpacingProperty());
 
     return true;
@@ -467,12 +501,15 @@ bool TryUpdateCharacterSpacing(const T &element, const std::string &propertyName
 }
 
 template <class T>
-bool TryUpdateOrientation(const T &element, const std::string &propertyName, const folly::dynamic &propertyValue) {
+bool TryUpdateOrientation(
+    const T &element,
+    const std::string &propertyName,
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "orientation") {
-    if (propertyValue.isNull()) {
+    if (propertyValue.IsNull()) {
       element.ClearValue(T::OrientationProperty());
-    } else if (propertyValue.isString()) {
-      const std::string &valueString = propertyValue.getString();
+    } else if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+      const std::string &valueString = propertyValue.AsString();
       if (valueString == "horizontal")
         element.Orientation(xaml::Controls::Orientation::Horizontal);
       else if (valueString == "vertical")
@@ -485,16 +522,18 @@ bool TryUpdateOrientation(const T &element, const std::string &propertyName, con
   return false;
 }
 
-inline bool
-TryUpdateMouseEvents(ShadowNodeBase *node, const std::string &propertyName, const folly::dynamic &propertyValue) {
+inline bool TryUpdateMouseEvents(
+    ShadowNodeBase *node,
+    const std::string &propertyName,
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "onMouseEnter")
-    node->m_onMouseEnterRegistered = !propertyValue.isNull() && propertyValue.asBool();
+    node->m_onMouseEnterRegistered = !propertyValue.IsNull() && propertyValue.AsBoolean();
   else if (propertyName == "onMouseLeave")
-    node->m_onMouseLeaveRegistered = !propertyValue.isNull() && propertyValue.asBool();
+    node->m_onMouseLeaveRegistered = !propertyValue.IsNull() && propertyValue.AsBoolean();
   else
     return false;
 
   return true;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

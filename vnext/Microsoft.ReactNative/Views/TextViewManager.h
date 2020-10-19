@@ -5,7 +5,7 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class TextViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
@@ -13,9 +13,9 @@ class TextViewManager : public FrameworkElementViewManager {
  public:
   TextViewManager(const Mso::React::IReactContext &context);
 
-  facebook::react::ShadowNode *createShadow() const override;
+  ShadowNode *createShadow() const override;
 
-  const char *GetName() const override;
+  const wchar_t *GetName() const override;
 
   void AddView(const XamlView &parent, const XamlView &child, int64_t index) override;
   void RemoveAllChildren(const XamlView &parent) override;
@@ -29,9 +29,9 @@ class TextViewManager : public FrameworkElementViewManager {
   bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,
       const std::string &propertyName,
-      const folly::dynamic &propertyValue) override;
+      const winrt::Microsoft::ReactNative::JSValue &propertyValue) override;
 
   XamlView CreateViewCore(int64_t tag) override;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -5,7 +5,7 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class GlyphViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
@@ -13,12 +13,12 @@ class GlyphViewManager : public FrameworkElementViewManager {
  public:
   GlyphViewManager(const Mso::React::IReactContext &context);
 
-  const char *GetName() const override;
-  facebook::react::ShadowNode *createShadow() const override;
-  folly::dynamic GetNativeProps() const override;
+  const wchar_t *GetName() const override;
+  ShadowNode *createShadow() const override;
+  void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

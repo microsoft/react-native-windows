@@ -246,6 +246,7 @@
     <ClInclude Include="Modules\LogBoxModule.h" />
     <ClInclude Include="Modules\NativeUIManager.h" />
     <ClInclude Include="Modules\TimingModule.h" />
+    <ClInclude Include="Modules\PaperUIManagerModule.h" />
     <ClInclude Include="Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="ReactHost\IReactInstance.h" />
@@ -324,7 +325,9 @@
     <ClInclude Include="Views\RootViewManager.h" />
     <ClInclude Include="Views\ScrollContentViewManager.h" />
     <ClInclude Include="Views\ScrollViewManager.h" />
+    <ClInclude Include="Views\ShadowNode.h" />
     <ClInclude Include="Views\ShadowNodeBase.h" />
+    <ClInclude Include="Views\ShadowNodeRegistry.h" />
     <ClInclude Include="Views\SIPEventHandler.h" />
     <ClInclude Include="Views\SliderViewManager.h" />
     <ClInclude Include="Views\SwitchViewManager.h" />
@@ -439,6 +442,7 @@
     <ClCompile Include="Modules\LogBoxModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
+    <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="RedBoxErrorInfo.cpp" />
@@ -507,7 +511,9 @@
     <ClCompile Include="Views\RootViewManager.cpp" />
     <ClCompile Include="Views\ScrollContentViewManager.cpp" />
     <ClCompile Include="Views\ScrollViewManager.cpp" />
+    <ClCompile Include="Views\ShadowNode.cpp" />
     <ClCompile Include="Views\ShadowNodeBase.cpp" />
+    <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
     <ClCompile Include="Views\SIPEventHandler.cpp" />
     <ClCompile Include="Views\SliderViewManager.cpp" />
     <ClCompile Include="Views\SwitchViewManager.cpp" />
