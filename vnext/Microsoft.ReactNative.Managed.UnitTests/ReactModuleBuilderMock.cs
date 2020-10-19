@@ -230,7 +230,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     private static T GetResult<T>(IJSValueWriter writer)
     {
       var resulReader = new JSValueTreeReader((writer as JSValueTreeWriter).TakeValue());
-      resulReader.ReadArgs(out T result);
+      resulReader.ReadValue(out T result);
       return result;
     }
 
