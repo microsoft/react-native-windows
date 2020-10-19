@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Oct 2020 15:08:23 GMT",
+      "tag": "react-native-windows_v0.62.13",
+      "version": "0.62.13",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.62] Fixed templates so C++ apps can consume C# native modules #5851",
+            "author": "jthysell@microsoft.com",
+            "commit": "652334385bd0926e555c66930d63c809284e3e1f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 23 Sep 2020 20:30:07 GMT",
       "tag": "react-native-windows_v0.62.12",
       "version": "0.62.12",
