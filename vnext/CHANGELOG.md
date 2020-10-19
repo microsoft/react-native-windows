@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 23 Sep 2020 20:30:07 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Oct 2020 15:08:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.13
+
+Mon, 19 Oct 2020 15:08:23 GMT
+
+### Patches
+
+- [0.62] Fixed templates so C++ apps can consume C# native modules #5851 (jthysell@microsoft.com)
 
 ## 0.62.12
 
