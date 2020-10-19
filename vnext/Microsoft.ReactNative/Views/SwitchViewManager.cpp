@@ -28,6 +28,7 @@ class SwitchShadowNode : public ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
   void UpdateThumbColor();
   void UpdateTrackColor();
+  void dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) override;
 
  private:
   static void OnToggled(const Mso::React::IReactContext &context, int64_t tag, bool newValue);
@@ -102,6 +103,18 @@ void SwitchShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
+void SwitchShadowNode::dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) {
+  if (commandId == "setValue") {
+    auto value = commandArgs[0].asBool();
+    auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
+    m_updating = true;
+    toggleSwitch.IsOn(value);
+    m_updating = false;
+  } else {
+    Super::dispatchCommand(commandId, commandArgs);
+  }
+}
+
 /*static*/ void SwitchShadowNode::OnToggled(const Mso::React::IReactContext &context, int64_t tag, bool newValue) {
   folly::dynamic eventData = folly::dynamic::object("target", tag)("value", newValue);
   context.DispatchEvent(tag, "topChange", std::move(eventData));
@@ -156,18 +169,6 @@ bool SwitchViewManager::UpdateProperty(
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
   return true;
-}
-
-void SwitchViewManager::DispatchCommand(
-    const XamlView &viewToUpdate,
-    const std::string &commandId,
-    const folly::dynamic &commandArgs) {
-  if (commandId == "setValue") {
-    auto value = commandArgs[0].asBool();
-    viewToUpdate.as<winrt::ToggleSwitch>().IsOn(value);
-  } else {
-    Super::DispatchCommand(viewToUpdate, commandId, commandArgs);
-  }
 }
 
 } // namespace react::uwp
