@@ -105,11 +105,11 @@ void SwitchShadowNode::updateProperties(const folly::dynamic &&props) {
 
 void SwitchShadowNode::dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) {
   if (commandId == "setValue") {
-    m_updating = true;
     auto value = commandArgs[0].asBool();
     auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
     if (toggleSwitch == nullptr)
       return;
+    m_updating = true;
     toggleSwitch.IsOn(value);
     m_updating = false;
   } else {
