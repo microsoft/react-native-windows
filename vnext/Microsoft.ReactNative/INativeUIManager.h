@@ -37,7 +37,7 @@ struct INativeUIManager {
   virtual ShadowNode *createRootShadowNode(facebook::react::IReactRootView *rootView) = 0;
   virtual void configureNextLayoutAnimation(
       winrt::Microsoft::ReactNative::JSValueObject &&config,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &callback,
+      std::function<void()> const &callback,
       std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &errorCallback) = 0;
   virtual void destroyRootShadowNode(ShadowNode *) = 0;
   virtual void removeRootView(ShadowNode &rootNode) = 0;
@@ -54,22 +54,23 @@ struct INativeUIManager {
   virtual void measure(
       ShadowNode &shadowNode,
       ShadowNode &shadowRoot,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &callback) = 0;
+      std::function<void(double left, double top, double width, double height, double pageX, double pageY)> const
+          &callback) = 0;
   virtual void measureInWindow(
       ShadowNode &shadowNode,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &callback) = 0;
+      std::function<void(double x, double y, double width, double height)> const &callback) = 0;
   virtual void measureLayout(
       ShadowNode &shadowNode,
       ShadowNode &ancestorShadowNode,
       std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &errorCallback,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &callback) = 0;
+      std::function<void(double left, double top, double width, double height)> const &callback) = 0;
   virtual void focus(int64_t reactTag) = 0;
   virtual void blur(int64_t reactTag) = 0;
   virtual void findSubviewIn(
       ShadowNode &shadowNode,
       float x,
       float y,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &callback) = 0;
+      std::function<void(double nativeViewTag, double left, double top, double width, double height)> const &callback) = 0;
 };
 
 } // namespace Microsoft::ReactNative

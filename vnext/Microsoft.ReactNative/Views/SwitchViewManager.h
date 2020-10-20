@@ -16,10 +16,6 @@ class SwitchViewManager : public ControlViewManager {
   const wchar_t *GetName() const override;
   void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
   ShadowNode *createShadow() const override;
-  void DispatchCommand(
-      const XamlView &viewToUpdate,
-      const std::string &commandId,
-      winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) override;
 
  protected:
   bool UpdateProperty(

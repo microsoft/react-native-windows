@@ -30,7 +30,7 @@ struct UIManagerSettings {
 std::weak_ptr<NativeUIManager> GetNativeUIManager(const Mso::React::IReactContext &context);
 
 REACT_MODULE(UIManager)
-struct UIManager {
+struct UIManager final {
   UIManager();
   ~UIManager();
 
@@ -73,7 +73,7 @@ struct UIManager {
   void findSubviewIn(
       double reactTag,
       winrt::Microsoft::ReactNative::JSValueArray &&point,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &callback) noexcept;
+      std::function<void(double nativeViewTag, double left, double top, double width, double height)> const &callback) noexcept;
 
   // The spec is incorrect in that it specifies a number for the command ID, but its actually a number or a string
   REACT_METHOD(dispatchViewManagerCommand)
@@ -85,12 +85,12 @@ struct UIManager {
   REACT_METHOD(measure)
   void measure(
       double reactTag,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &callback) noexcept;
+      std::function<void(double left, double top, double width, double height, double pageX, double pageY)> const &callback) noexcept;
 
   REACT_METHOD(measureInWindow)
   void measureInWindow(
       double reactTag,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &callback) noexcept;
+      std::function<void(double x, double y, double width, double height)> const &callback) noexcept;
 
   REACT_METHOD(viewIsDescendantOf)
   void viewIsDescendantOf(
@@ -103,7 +103,7 @@ struct UIManager {
       double reactTag,
       double ancestorReactTag,
       std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &errorCallback,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &callback) noexcept;
+      std::function<void(double left, double top, double width, double height)> const &callback) noexcept;
 
   REACT_METHOD(measureLayoutRelativeToParent)
   void measureLayoutRelativeToParent(
@@ -120,7 +120,7 @@ struct UIManager {
   REACT_METHOD(configureNextLayoutAnimation)
   void configureNextLayoutAnimation(
       winrt::Microsoft::ReactNative::JSValueObject &&config,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &callback,
+      std::function<void()> const &callback,
       std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &errorCallback) noexcept;
 
   REACT_METHOD(removeSubviewsFromContainerWithID)

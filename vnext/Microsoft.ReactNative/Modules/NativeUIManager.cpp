@@ -943,14 +943,15 @@ winrt::Windows::Foundation::Rect GetRectOfElementInParentCoords(
 void NativeUIManager::measure(
     ShadowNode &shadowNode,
     ShadowNode &shadowRoot,
-    std::function<void(React::JSValue const &)> const &callback) {
+    std::function<void(double left, double top, double width, double height, double pageX, double pageY)> const
+        &callback) {
   std::vector<folly::dynamic> args;
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
   auto feView = view.try_as<xaml::FrameworkElement>();
   if (feView == nullptr) {
-    callback(React::JSValue::Null);
+    callback(0,0,0,0,0,0);
     return;
   }
 
@@ -979,68 +980,44 @@ void NativeUIManager::measure(
       feRootView = xamlRootView.as<xaml::FrameworkElement>();
     }
     if (feRootView == nullptr) {
-      callback(React::JSValue::Null);
+      callback(0, 0, 0, 0, 0, 0);
       return;
     }
   }
 
   winrt::Rect rectInParentCoords = GetRectOfElementInParentCoords(feView, feRootView);
 
-  auto writer = React::MakeJSValueTreeWriter();
-  writer.WriteArrayBegin();
-
   // TODO: The first two params are for the local position. It's unclear what
   // this is exactly, but it is not used anyway.
   //  Either codify this non-use or determine if and how we can send the needed
   //  data.
-  writer.WriteDouble(0.0);
-  writer.WriteDouble(0.0);
-
-  // Size
-  writer.WriteDouble(rectInParentCoords.Width);
-  writer.WriteDouble(rectInParentCoords.Height);
-
-  // Global Position
-  writer.WriteDouble(rectInParentCoords.X);
-  writer.WriteDouble(rectInParentCoords.Y);
-
-  writer.WriteArrayEnd();
-  callback(TakeJSValue(writer));
+  callback(
+      0.0, 0.0, rectInParentCoords.Width, rectInParentCoords.Height, rectInParentCoords.X, rectInParentCoords.Y);
 }
 
 void NativeUIManager::measureInWindow(
     ShadowNode &shadowNode,
-    std::function<void(React::JSValue const &)> const &callback) {
+    std::function<void(double x, double y, double width, double height)> const &callback) {
   std::vector<folly::dynamic> args;
 
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
-  auto writer = React::MakeJSValueTreeWriter();
 
   if (auto view = node.GetView().try_as<xaml::FrameworkElement>()) {
     auto windowTransform = view.TransformToVisual(xaml::Window::Current().Content());
     auto positionInWindow = windowTransform.TransformPoint({0, 0});
 
-    writer.WriteArrayBegin();
-
-    // x, y
-    writer.WriteDouble(positionInWindow.X);
-    writer.WriteDouble(positionInWindow.Y);
-
-    // Size
-    writer.WriteDouble(view.ActualWidth());
-    writer.WriteDouble(view.ActualHeight());
-
-    writer.WriteArrayEnd();
+    callback(positionInWindow.X, positionInWindow.Y, view.ActualWidth(), view.ActualHeight());
+    return;
   }
 
-  callback(React::TakeJSValue(writer));
+  callback(0,0,0,0);
 }
 
 void NativeUIManager::measureLayout(
     ShadowNode &shadowNode,
     ShadowNode &ancestorNode,
     std::function<void(React::JSValue const &)> const &errorCallback,
-    std::function<void(React::JSValue const &)> const &callback) {
+    std::function<void(double left, double top, double width, double height)> const &callback) {
   std::vector<folly::dynamic> args;
   try {
     const auto &target = static_cast<ShadowNodeBase &>(shadowNode);
@@ -1053,24 +1030,11 @@ void NativeUIManager::measureLayout(
     const auto height = static_cast<float>(targetElement.ActualHeight());
     const auto transformedBounds = ancestorTransform.TransformBounds(winrt::Rect(0, 0, width, height));
 
-    auto writer = React::MakeJSValueTreeWriter();
-    writer.WriteArrayBegin();
-    // x, y
-    writer.WriteDouble(transformedBounds.X);
-    writer.WriteDouble(transformedBounds.Y);
-
-    // Size
-    writer.WriteDouble(transformedBounds.Width);
-    writer.WriteDouble(transformedBounds.Height);
-
-    writer.WriteArrayEnd();
-    callback(React::TakeJSValue(writer));
+    callback(transformedBounds.X, transformedBounds.Y, transformedBounds.Width, transformedBounds.Height);
   } catch (winrt::hresult_error const &e) {
     const auto &msg = e.message();
     auto writer = React::MakeJSValueTreeWriter();
-    writer.WriteArrayBegin();
     writer.WriteString(msg);
-    writer.WriteArrayEnd();
     errorCallback(React::TakeJSValue(writer));
   }
 }
@@ -1079,13 +1043,13 @@ void NativeUIManager::findSubviewIn(
     ShadowNode &shadowNode,
     float x,
     float y,
-    std::function<void(React::JSValue const &)> const &callback) {
+    std::function<void(double nativeViewTag, double left, double top, double width, double height)> const &callback) {
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
   auto rootUIView = view.as<xaml::UIElement>();
   if (rootUIView == nullptr) {
-    callback({});
+    callback(0, 0, 0, 0, 0);
     return;
   }
 
@@ -1114,21 +1078,12 @@ void NativeUIManager::findSubviewIn(
   }
 
   if (foundElement == nullptr) {
-    callback(React::JSValue::Null);
+    callback(0,0,0,0,0);
     return;
   }
 
   auto box = GetRectOfElementInParentCoords(foundElement, rootUIView);
-
-  auto writer = React::MakeJSValueTreeWriter();
-  writer.WriteArrayBegin();
-  writer.WriteInt64(foundTag);
-  writer.WriteDouble(box.X);
-  writer.WriteDouble(box.Y);
-  writer.WriteDouble(box.Width);
-  writer.WriteDouble(box.Height);
-  writer.WriteArrayEnd();
-  callback(React::TakeJSValue(writer));
+  callback(static_cast<double>(foundTag), box.X, box.Y, box.Width, box.Height);
 }
 
 void NativeUIManager::focus(int64_t reactTag) {

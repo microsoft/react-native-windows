@@ -16,9 +16,9 @@
 
 namespace Microsoft::ReactNative {
 
-struct ViewAtIndex {
-  int64_t tag;
-  int64_t index;
+struct ViewAtIndex final {
+  int64_t tag{};
+  int64_t index{};
   static bool ViewAtIndexCompare(
       const std::shared_ptr<ViewAtIndex> &x,
       const std::shared_ptr<ViewAtIndex> &y) noexcept {
@@ -119,7 +119,6 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   }
 
   void createView(int64_t reactTag, std::string viewName, int64_t rootTag, React::JSValueObject &&props) noexcept {
-    // try {
     m_nativeUIManager->ensureInBatch();
     auto viewManager = GetViewManager(viewName);
     auto node = viewManager->createShadow();
@@ -160,7 +159,8 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   void findSubviewIn(
       int64_t reactTag,
       React::JSValueArray &&point,
-      std::function<void(React::JSValue const &)> const &callback) noexcept {
+      std::function<void(double nativeViewTag, double left, double top, double width, double height)> const
+          &callback) noexcept {
     auto &node = m_nodeRegistry.getNode(reactTag);
     float x = static_cast<float>(point[0]);
     float y = static_cast<float>(point[1]);
@@ -178,7 +178,10 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       node.dispatchCommand(commandID.AsString(), std::move(commandArgs));
   }
 
-  void measure(int64_t reactTag, std::function<void(React::JSValue const &)> const &callback) noexcept {
+  void measure(
+      int64_t reactTag,
+      std::function<void(double left, double top, double width, double height, double pageX, double pageY)> const
+          &callback) noexcept {
     auto &node = m_nodeRegistry.getNode(reactTag);
     int64_t rootTag = reactTag;
     while (true) {
@@ -192,7 +195,9 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     m_nativeUIManager->measure(node, rootNode, callback);
   }
 
-  void measureInWindow(int64_t reactTag, std::function<void(React::JSValue const &)> const &callback) noexcept {
+  void measureInWindow(
+      int64_t reactTag,
+      std::function<void(double x, double y, double width, double height)> const &callback) noexcept {
     auto &node = m_nodeRegistry.getNode(reactTag);
     m_nativeUIManager->measureInWindow(node, callback);
   }
@@ -209,7 +214,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       int64_t reactTag,
       int64_t ancestorReactTag,
       std::function<void(React::JSValue const &)> const &errorCallback,
-      std::function<void(React::JSValue const &)> const &callback) noexcept {
+      std::function<void(double left, double top, double width, double height)> const &callback) noexcept {
     auto &node = m_nodeRegistry.getNode(reactTag);
     auto &ancestorNode = m_nodeRegistry.getNode(ancestorReactTag);
     m_nativeUIManager->measureLayout(node, ancestorNode, errorCallback, callback);
@@ -233,7 +238,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
 
   void configureNextLayoutAnimation(
       React::JSValueObject &&config,
-      std::function<void(React::JSValue const &)> const &callback,
+      std::function<void()> const &callback,
       std::function<void(React::JSValue const &)> const &errorCallback) noexcept {
     m_nativeUIManager->configureNextLayoutAnimation(std::move(config), callback, errorCallback);
   }
@@ -567,7 +572,8 @@ void UIManager::blur(double reactTag) noexcept {
 void UIManager::findSubviewIn(
     double reactTag,
     React::JSValueArray &&point,
-    std::function<void(React::JSValue const &)> const &callback) noexcept {
+    std::function<void(double nativeViewTag, double left, double top, double width, double height)> const
+        &callback) noexcept {
   m_batchingUIMessageQueue->runOnQueue(Mso::VoidFunctor([m = std::weak_ptr<UIManagerModule>(m_module),
                                                          reactTag,
                                                          point = std::move(point),
@@ -577,11 +583,6 @@ void UIManager::findSubviewIn(
     }
   }));
 }
-
-struct dispatchViewManagerCommandArgs {
-  React::JSValue commandID;
-  React::JSValueArray commandArgs;
-};
 
 void UIManager::dispatchViewManagerCommand(
     double reactTag,
@@ -597,7 +598,10 @@ void UIManager::dispatchViewManagerCommand(
   }));
 }
 
-void UIManager::measure(double reactTag, std::function<void(React::JSValue const &)> const &callback) noexcept {
+void UIManager::measure(
+    double reactTag,
+    std::function<void(double left, double top, double width, double height, double pageX, double pageY)> const
+        &callback) noexcept {
   m_batchingUIMessageQueue->runOnQueue(Mso::VoidFunctor(
       [m = std::weak_ptr<UIManagerModule>(m_module), reactTag, callback = std::move(callback)]() mutable {
         if (auto module = m.lock()) {
@@ -606,7 +610,9 @@ void UIManager::measure(double reactTag, std::function<void(React::JSValue const
       }));
 }
 
-void UIManager::measureInWindow(double reactTag, std::function<void(React::JSValue const &)> const &callback) noexcept {
+void UIManager::measureInWindow(
+    double reactTag,
+    std::function<void(double x, double y, double width, double height)> const &callback) noexcept {
   m_batchingUIMessageQueue->runOnQueue(Mso::VoidFunctor(
       [m = std::weak_ptr<UIManagerModule>(m_module), reactTag, callback = std::move(callback)]() mutable {
         if (auto module = m.lock()) {
@@ -634,7 +640,7 @@ void UIManager::measureLayout(
     double reactTag,
     double ancestorReactTag,
     std::function<void(React::JSValue const &)> const &errorCallback,
-    std::function<void(React::JSValue const &)> const &callback) noexcept {
+    std::function<void(double left, double top, double width, double height)> const &callback) noexcept {
   m_batchingUIMessageQueue->runOnQueue(Mso::VoidFunctor([m = std::weak_ptr<UIManagerModule>(m_module),
                                                          reactTag,
                                                          ancestorReactTag,
@@ -684,7 +690,7 @@ void UIManager::clearJSResponder() noexcept {
 
 void UIManager::configureNextLayoutAnimation(
     React::JSValueObject &&config,
-    std::function<void(React::JSValue const &)> const &callback,
+    std::function<void()> const &callback,
     std::function<void(React::JSValue const &)> const &errorCallback) noexcept {
   m_batchingUIMessageQueue->runOnQueue(Mso::VoidFunctor([m = std::weak_ptr<UIManagerModule>(m_module),
                                                          config = std::move(config),

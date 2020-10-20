@@ -104,14 +104,14 @@ struct LoadedCallbackGuard {
   Mso::CntPtr<ReactInstanceWin> m_reactInstance;
 };
 
-struct BridgeUIBatchInstanceCallback : public facebook::react::InstanceCallback {
+struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCallback {
   BridgeUIBatchInstanceCallback(Mso::WeakPtr<ReactInstanceWin> wkInstance) : m_wkInstance(wkInstance) {}
   virtual ~BridgeUIBatchInstanceCallback() = default;
   void onBatchComplete() override {
     if (auto instance = m_wkInstance.GetStrongPtr()) {
       // While using a CxxModule for UIManager (which would include when running under webdebugger)
       // We need to post the batch complete to the NativeQueue ensure that the UIManager has posted everything from this
-      // batch into its queue before we complete the batch Once we move UIManager over to JSI, we can mark the batch
+      // batch into its queue before we complete the batch.  Once we move UIManager over to JSI, we can mark the batch
       // complete as soon as we get here.
       instance->m_jsDispatchQueue.Load().Post([wkInstance = m_wkInstance]() {
         if (auto instance = wkInstance.GetStrongPtr()) {

@@ -25,8 +25,6 @@ class TestUIManager : public facebook::xplat::module::CxxModule {
   std::string getName() override;
   std::map<std::string, folly::dynamic> getConstants() override;
   std::vector<facebook::xplat::module::CxxModule::Method> getMethods() override;
-
- private:
 };
 
 } // namespace Microsoft::React::Test
