@@ -540,6 +540,10 @@
       "issue": "LEGACY_FIXME"
     },
     {
+      "type": "platform",
+      "file": "RNTester\\js\\components\\PlatformColor.js"
+    },
+    {
       "type": "patch",
       "file": "RNTester\\js\\components\\RNTesterExampleFilter.win32.js",
       "baseFile": "RNTester\\js\\components\\RNTesterExampleFilter.js",

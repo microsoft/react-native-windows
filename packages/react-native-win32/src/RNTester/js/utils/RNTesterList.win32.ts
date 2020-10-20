@@ -32,7 +32,7 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'PlatformColorExample',
-    module: require('../../js/components/PlatformColor.win32'),
+    module: require('../../js/components/PlatformColor'),
   },
   {
     key: 'ScrollViewSimpleExample',
