@@ -55,7 +55,7 @@ struct TestRedBoxHandler : Mso::React::IRedBoxHandler {
   void dismissRedbox() override {}
 
  private:
-  std::function<void(Mso::React::ErrorInfo &&, Mso::React::ErrorType)> &&m_onErrorFn;
+  std::function<void(Mso::React::ErrorInfo &&, Mso::React::ErrorType)> m_onErrorFn;
 };
 
 TestResult TestRunner::RunTest(string &&bundlePath, string &&appName, NativeLoggingHook &&loggingCallback) {
@@ -94,6 +94,11 @@ TestResult TestRunner::RunTest(string &&bundlePath, string &&appName, NativeLogg
     };
     devSettings->redboxHandler =
         std::make_shared<TestRedBoxHandler>([&result](Mso::React::ErrorInfo &&info, Mso::React::ErrorType) {
+          // The logging test fires this error by design, which shouldn't fail the tests
+          if (info.Message.find("console.error: This is from console.error") != string::npos) {
+            return;
+          }
+
           result.Message = Microsoft::Common::Unicode::Utf8ToUtf16(info.Message);
           result.Status = TestStatus::Failed;
         });
