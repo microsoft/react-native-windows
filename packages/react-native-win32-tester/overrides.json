@@ -11,15 +11,13 @@
       "type": "patch",
       "file": "src/js/components/ListExampleShared.win32.js",
       "baseFile": "packages/rn-tester/js/components/ListExampleShared.js",
-      "baseHash": "d7be07e3fd8d9c1df8e23d5674ce3eb067d00865",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "d7be07e3fd8d9c1df8e23d5674ce3eb067d00865"
     },
     {
       "type": "patch",
       "file": "src/js/components/RNTesterExampleFilter.win32.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterExampleFilter.js",
-      "baseHash": "8a8182f7c36e8184b7bbfe1445263ceca622b2c1",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "8a8182f7c36e8184b7bbfe1445263ceca622b2c1"
     },
     {
       "type": "patch",
@@ -46,8 +44,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "0ac04af15d7ff9d34b3abe1a11110c24480fba4b",
-      "issue": "LEGACY_FIXME"
+      "baseHash": "0ac04af15d7ff9d34b3abe1a11110c24480fba4b"
     }
   ]
 }

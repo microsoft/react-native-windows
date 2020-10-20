@@ -29,7 +29,7 @@ void ChakraRuntime::initRuntimeVersion() noexcept {
 }
 
 std::unique_ptr<const facebook::jsi::Buffer> ChakraRuntime::generatePreparedScript(
-    const std::string &sourceURL,
+    const std::string & /*sourceURL*/,
     const facebook::jsi::Buffer &sourceBuffer) noexcept {
   const std::wstring scriptUTF16 =
       Microsoft::Common::Unicode::Utf8ToUtf16(reinterpret_cast<const char *>(sourceBuffer.data()), sourceBuffer.size());
@@ -56,10 +56,10 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
   const std::wstring url16 = Microsoft::Common::Unicode::Utf8ToUtf16(sourceURL);
 
   JsValueRef result;
-  VerifyJsErrorElseThrow(
+  ChakraVerifyJsErrorElseThrow(
       JsRunScript(script16.c_str(), JS_SOURCE_CONTEXT_NONE /*sourceContext*/, url16.c_str(), &result));
 
-  return ToJsiValue(ChakraObjectRef(result));
+  return ToJsiValue(result);
 }
 
 bool ChakraRuntime::evaluateSerializedScript(
@@ -80,7 +80,7 @@ bool ChakraRuntime::evaluateSerializedScript(
   } else if (errorCode == JsErrorBadSerializedScript) {
     return false;
   } else {
-    VerifyJsErrorElseThrow(errorCode);
+    ChakraVerifyJsErrorElseThrow(errorCode);
     return true;
   }
 }

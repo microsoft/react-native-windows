@@ -136,58 +136,6 @@ test('Well Formed Directory Copy', () => {
   expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
 });
 
-test('Fixme Allowed As Issue', () => {
-  const manifest: Serialized.Manifest = {
-    includePatterns: undefined,
-    excludePatterns: undefined,
-    baseVersion: undefined,
-    overrides: [
-      {
-        type: 'patch',
-        file: 'foo.win32.js',
-        baseFile: 'foo.js',
-        baseVersion: '0.61.5',
-        baseHash: 'AAAABBBB',
-        issue: 'LEGACY_FIXME',
-      },
-    ],
-  };
-
-  expect(Serialized.parseManifest(JSON.stringify(manifest))).toEqual(manifest);
-});
-
-test('Issue Must Be Present For Patch', () => {
-  const manifest = {
-    overrides: [
-      {
-        type: 'patch',
-        file: 'foo.win32.js',
-        baseFile: 'foo.js',
-        baseVersion: '0.61.5',
-        baseHash: 'AAAABBBB',
-      },
-    ],
-  };
-
-  expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
-});
-
-test('Issue Must Be Present For Copy', () => {
-  const manifest = {
-    overrides: [
-      {
-        type: 'copy',
-        file: 'foo.win32.js',
-        baseFile: 'foo.js',
-        baseVersion: '0.61.5',
-        baseHash: 'AAAABBBB',
-      },
-    ],
-  };
-
-  expect(() => Serialized.parseManifest(JSON.stringify(manifest))).toThrow();
-});
-
 test('Issue Cannot Be Arbitrary String', () => {
   const manifest = {
     overrides: [

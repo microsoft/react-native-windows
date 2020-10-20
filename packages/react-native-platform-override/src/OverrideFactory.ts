@@ -26,25 +26,25 @@ export default interface OverrideFactory {
   createCopyOverride(
     file: string,
     baseFile: string,
-    issue: number,
+    issue?: number,
   ): Promise<CopyOverride>;
 
   createDerivedOverride(
     file: string,
     baseFile: string,
-    issue?: number | 'LEGACY_FIXME',
+    issue?: number,
   ): Promise<DerivedOverride>;
 
   createPatchOverride(
     file: string,
     baseFile: string,
-    issue: number | 'LEGACY_FIXME',
+    issue?: number,
   ): Promise<PatchOverride>;
 
   createDirectoryCopyOverride(
     directory: string,
     baseDirectory: string,
-    issue: number,
+    issue?: number,
   ): Promise<DirectoryCopyOverride>;
 }
 
@@ -68,7 +68,7 @@ export class OverrideFactoryImpl implements OverrideFactory {
   async createCopyOverride(
     file: string,
     baseFile: string,
-    issue: number,
+    issue?: number,
   ): Promise<CopyOverride> {
     await this.checkOverrideExists(file, 'file');
     return new CopyOverride({
@@ -96,7 +96,7 @@ export class OverrideFactoryImpl implements OverrideFactory {
   async createPatchOverride(
     file: string,
     baseFile: string,
-    issue: number | 'LEGACY_FIXME',
+    issue?: number,
   ): Promise<PatchOverride> {
     await this.checkOverrideExists(file, 'file');
     return new PatchOverride({
@@ -110,7 +110,7 @@ export class OverrideFactoryImpl implements OverrideFactory {
   async createDirectoryCopyOverride(
     directory: string,
     baseDirectory: string,
-    issue: number,
+    issue?: number,
   ): Promise<DirectoryCopyOverride> {
     await this.checkOverrideExists(directory, 'directory');
     return new DirectoryCopyOverride({

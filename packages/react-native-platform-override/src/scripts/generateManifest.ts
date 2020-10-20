@@ -90,7 +90,7 @@ async function tryAddCopy(
     baseFile: filename,
     baseVersion: undefined,
     baseHash: hashContent(baseContent),
-    issue: 0,
+    issue: undefined,
   });
 
   return true;
@@ -117,7 +117,7 @@ async function tryAddPatch(
       baseFile: baseFile,
       baseVersion: undefined,
       baseHash: hashContent(baseContent),
-      issue: 'LEGACY_FIXME',
+      issue: undefined,
     });
   } else {
     addUnknown(filename, manifest);
@@ -168,7 +168,7 @@ async function tryAddDerived(
     baseFile: bestMatch.file,
     baseVersion: undefined,
     baseHash: hashContent(bestMatch.contents),
-    issue: 'LEGACY_FIXME',
+    issue: undefined,
   });
 
   return true;
@@ -180,7 +180,6 @@ function addUnknown(filename: string, manifest: Serialized.Manifest) {
     file: filename,
     baseFile: '???',
     baseHash: '???',
-    issue: 'LEGACY_FIXME',
   });
 }
 

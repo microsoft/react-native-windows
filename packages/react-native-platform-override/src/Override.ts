@@ -114,20 +114,20 @@ abstract class BaseFileOverride implements Override {
   protected baseFile: string;
   protected baseVersion: string;
   protected baseHash: string;
-  protected issueNumber: number | null | 'LEGACY_FIXME';
+  protected issueNumber?: number;
 
   constructor(args: {
     file: string;
     baseFile: string;
     baseVersion: string;
     baseHash: string;
-    issue?: number | 'LEGACY_FIXME';
+    issue?: number;
   }) {
     this.overrideFile = normalizePath(args.file);
     this.baseFile = normalizePath(args.baseFile);
     this.baseVersion = args.baseVersion;
     this.baseHash = args.baseHash;
-    this.issueNumber = args.issue || null;
+    this.issueNumber = args.issue;
   }
 
   name(): string {
@@ -162,8 +162,9 @@ abstract class BaseFileOverride implements Override {
     );
   }
 
-  protected serialzeBase(opts?: SerializeOpts) {
+  protected serializeBase<T>(type: T, opts?: SerializeOpts) {
     return {
+      type,
       file: unixPath(this.overrideFile),
       baseFile: unixPath(this.baseFile),
       baseVersion:
@@ -171,6 +172,7 @@ abstract class BaseFileOverride implements Override {
           ? undefined
           : this.baseVersion,
       baseHash: this.baseHash,
+      issue: this.issueNumber,
     };
   }
 }
@@ -184,7 +186,7 @@ export class CopyOverride extends BaseFileOverride {
     baseFile: string;
     baseVersion: string;
     baseHash: string;
-    issue: number;
+    issue?: number;
   }) {
     super(args);
   }
@@ -197,11 +199,7 @@ export class CopyOverride extends BaseFileOverride {
   }
 
   serialize(opts?: SerializeOpts): Serialized.CopyOverride {
-    return {
-      type: 'copy',
-      ...this.serialzeBase(opts),
-      issue: this.issueNumber as number,
-    };
+    return this.serializeBase('copy', opts);
   }
 
   async createUpdated(factory: OverrideFactory): Promise<Override> {
@@ -234,7 +232,7 @@ export class DerivedOverride extends BaseFileOverride {
     baseFile: string;
     baseVersion: string;
     baseHash: string;
-    issue?: number | 'LEGACY_FIXME';
+    issue?: number;
   }) {
     super(args);
   }
@@ -247,11 +245,7 @@ export class DerivedOverride extends BaseFileOverride {
   }
 
   serialize(opts?: SerializeOpts): Serialized.DerivedOverride {
-    return {
-      type: 'derived',
-      ...this.serialzeBase(opts),
-      issue: this.issueNumber || undefined,
-    };
+    return this.serializeBase('derived', opts);
   }
 
   async createUpdated(factory: OverrideFactory): Promise<Override> {
@@ -291,7 +285,7 @@ export class PatchOverride extends BaseFileOverride {
     baseFile: string;
     baseVersion: string;
     baseHash: string;
-    issue?: number | 'LEGACY_FIXME';
+    issue?: number;
   }) {
     super(args);
   }
@@ -304,11 +298,7 @@ export class PatchOverride extends BaseFileOverride {
   }
 
   serialize(opts?: SerializeOpts): Serialized.PatchOverride {
-    return {
-      type: 'patch',
-      ...this.serialzeBase(opts),
-      issue: this.issueNumber as number,
-    };
+    return this.serializeBase('patch', opts);
   }
 
   async createUpdated(factory: OverrideFactory): Promise<Override> {
@@ -346,14 +336,14 @@ export class DirectoryCopyOverride implements Override {
   private baseDirectory: string;
   private baseVersion: string;
   private baseHash: string;
-  private issue: number;
+  private issue?: number;
 
   constructor(args: {
     directory: string;
     baseDirectory: string;
     baseVersion: string;
     baseHash: string;
-    issue: number;
+    issue?: number;
   }) {
     this.directory = normalizePath(args.directory);
     this.baseDirectory = normalizePath(args.baseDirectory);

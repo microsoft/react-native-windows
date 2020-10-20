@@ -144,6 +144,10 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ChakraEdgeRuntimeTests.cpp" />
     <ClCompile Include="DynamicReaderTest.cpp" />
     <ClCompile Include="JsiArgumentReaderTest.cpp" />
     <ClCompile Include="JsiReaderTest.cpp" />
@@ -153,6 +157,20 @@
     </ClCompile>
     <ClInclude Include="CommonReaderTest.h" />
     <ClInclude Include="pch/pch.h" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.cpp">
+      <!--
+        The JSI tests have a number of violations that we must suppress to avoid chaning the code.
+        C4100 - unreferenced formal parameter
+        C4245 - 'initializing': conversion from 'int' to 'unsigned __int64', signed/unsigned mismatch
+        C4389 - '==': signed/unsigned mismatch
+        C4458 - declaration of '<varname>' hides class member
+      -->
+      <DisableSpecificWarnings>4100;4245;4389;4458;$(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <!-- JSI tests require RuntimeTypeInfo -->
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <!-- To avoid RuntimeTypeInfo conflict with project's PCH -->
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -118,7 +118,7 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(JSI_SourcePath)\jsi\test\testlib.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.cpp">
       <!--
         The JSI tests have a number of violations that we must suppress to avoid chaning the code.
         C4100 - unreferenced formal parameter
@@ -131,7 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MockReactPackageProvider.h" />
-    <ClInclude Include="$(JSI_SourcePath)\jsi\test\testlib.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

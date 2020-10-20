@@ -29,6 +29,7 @@ class SwitchShadowNode : public ShadowNodeBase {
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
   void UpdateThumbColor();
   void UpdateTrackColor();
+  void dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) override;
 
  private:
   static void OnToggled(const Mso::React::IReactContext &context, int64_t tag, bool newValue);
@@ -168,7 +169,9 @@ void SwitchViewManager::DispatchCommand(
     winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
   if (commandId == "setValue") {
     auto value = commandArgs[0].AsBoolean();
+    m_updating = true;
     viewToUpdate.as<winrt::ToggleSwitch>().IsOn(value);
+    m_updating = false;
   } else {
     Super::DispatchCommand(viewToUpdate, commandId, std::move(commandArgs));
   }
