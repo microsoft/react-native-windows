@@ -138,7 +138,6 @@ ChakraApi::JsRefHolder::~JsRefHolder() noexcept {
 
 /*static*/ JsPropertyIdRef ChakraApi::GetPropertyIdFromName(std::string_view name) {
   ChakraVerifyElseThrow(name.data(), "Property name cannot be a nullptr.");
-  ChakraVerifyElseThrow(name.size(), "Property name cannot be empty.");
 
   JsPropertyIdRef propertyId{JS_INVALID_REFERENCE};
   // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
