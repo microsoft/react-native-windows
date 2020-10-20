@@ -21,7 +21,6 @@ export type NativeOrDynamicColorType = {
   // Necessary Gradient members
   gradientDirection?: string,
   colorStops?: Array<ColorStop>,
-
   // Necessary PlatformColor members
   resource_paths?: Array<string>,
 };
@@ -45,10 +44,12 @@ export function handleColorObject(
       color.hasOwnProperty('gradientDirection') &&
       !color.hasOwnProperty('resource_paths')
     ) {
-      invariant(
-        color.colorStops.length >= 2,
-        'Gradients must contain at least two colors.',
-      );
+      if (color.colorStops) {
+        invariant(
+          color.colorStops.length >= 2,
+          'Gradients must contain at least two colors.',
+        );
+      }
 
       invariant(
         color.gradientDirection === 'ToTop' ||
@@ -59,13 +60,15 @@ export function handleColorObject(
       );
 
       const gradientColorStops: Array<ColorStop> = [];
-      color.colorStops.forEach((colorStop: ColorStop) => {
-        gradientColorStops.push({
-          // $FlowFixMe
-          color: handleColor(colorStop.color),
-          offset: colorStop.offset,
+      if (color.colorStops) {
+        color.colorStops.forEach((colorStop: ColorStop) => {
+          gradientColorStops.push({
+            // $FlowFixMe
+            color: handleColor(colorStop.color),
+            offset: colorStop.offset,
+          });
         });
-      });
+      }
 
       return {
         gradientDirection: color.gradientDirection,
