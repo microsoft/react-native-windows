@@ -42,6 +42,12 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Shared\tracing\tracing.cpp">
       <Filter>ExternalFiles\Shared</Filter>
     </ClCompile>
+    <ClCompile Include="ChakraEdgeRuntimeTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(JSI_SourcePath)\jsi\test\testlib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl">
@@ -67,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="CommonReaderTest.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(JSI_SourcePath)\jsi\test\testlib.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

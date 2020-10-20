@@ -60,7 +60,7 @@ void ChakraRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
     runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
       JsValueRef undefinedValue;
       JsGetUndefinedValue(&undefinedValue);
-      VerifyJsErrorElseThrow(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
+      ChakraVerifyJsErrorElseThrow(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
       JsRelease(funcRef, nullptr);
     });
   }
@@ -80,7 +80,7 @@ void ChakraRuntime::PromiseRejectionTracker(JsValueRef /*promise*/, JsValueRef r
         JsValueRef stackStrValue;
         error = JsConvertValueToString(stack, &stackStrValue);
         if (error == JsNoError) {
-          errorStream << ToStdString(ChakraObjectRef(stackStrValue));
+          errorStream << StringToStdString(stackStrValue);
         }
       }
     }
@@ -90,7 +90,7 @@ void ChakraRuntime::PromiseRejectionTracker(JsValueRef /*promise*/, JsValueRef r
       JsValueRef strValue;
       error = JsConvertValueToString(reason, &strValue);
       if (error == JsNoError) {
-        errorStream << ToStdString(ChakraObjectRef(strValue));
+        errorStream << StringToStdString(strValue);
       }
     }
 
@@ -269,10 +269,10 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
   JsCreateString(reinterpret_cast<const char *>(sourceURL.c_str()), sourceURL.size(), &sourceURLRef);
 
   JsValueRef result;
-  VerifyJsErrorElseThrow(
+  ChakraVerifyJsErrorElseThrow(
       JsRun(sourceRef, 0, sourceURLRef, JsParseScriptAttributes::JsParseScriptAttributeNone, &result));
 
-  return ToJsiValue(ChakraObjectRef(result));
+  return ToJsiValue(result);
 }
 
 bool ChakraRuntime::evaluateSerializedScript(
@@ -289,7 +289,7 @@ bool ChakraRuntime::evaluateSerializedScript(
           &bytecodeArrayBuffer) == JsNoError) {
     JsValueRef sourceURLRef = nullptr;
     if (!sourceURL.empty()) {
-      sourceURLRef = ToJsString(std::string_view{reinterpret_cast<const char *>(sourceURL.c_str()), sourceURL.size()});
+      sourceURLRef = PointerToString(sourceURL);
     }
 
     JsErrorCode errorCode = JsRunSerialized(
@@ -316,7 +316,7 @@ bool ChakraRuntime::evaluateSerializedScript(
     } else if (errorCode == JsErrorBadSerializedScript) {
       return false;
     } else {
-      VerifyChakraErrorElseThrow(errorCode);
+      ChakraVerifyJsErrorElseThrow(errorCode);
     }
   }
 
