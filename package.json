@@ -54,8 +54,10 @@
     "hermes-engine": "0.7.0",
     "eslint-plugin-react": "^7.14.1",
     "eslint-plugin-react-hooks": "4.0.7",
+    "node-fetch": "2.6.1",
     "webdriver": "git+https://github.com/react-native-windows/webdriver.git",
-    "webdriverio": "5.12.1"
+    "webdriverio": "5.12.1",
+    "yargs-parser": "^18.1.1"
   },
   "beachball": {
     "gitTags": false

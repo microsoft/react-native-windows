@@ -132,10 +132,10 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
       root = window.Content().as<xaml::FrameworkElement>();
     }
 
-    m_redboxContent.MaxHeight(root.ActualSize().y);
-    m_redboxContent.Height(root.ActualSize().y);
-    m_redboxContent.MaxWidth(root.ActualSize().x);
-    m_redboxContent.Width(root.ActualSize().x);
+    m_redboxContent.MaxHeight(root.ActualHeight());
+    m_redboxContent.Height(root.ActualHeight());
+    m_redboxContent.MaxWidth(root.ActualWidth());
+    m_redboxContent.Width(root.ActualWidth());
 
     m_sizeChangedRevoker = root.SizeChanged(
         winrt::auto_revoke,
