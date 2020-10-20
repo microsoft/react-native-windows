@@ -29,9 +29,7 @@ class SwitchShadowNode : public ShadowNodeBase {
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
   void UpdateThumbColor();
   void UpdateTrackColor();
-  void dispatchCommand(
-      const std::string &commandId,
-      winrt::Microsoft::ReactNative::JSValueArray &&commandArgs);
+  void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs);
 
  private:
   static void OnToggled(const Mso::React::IReactContext &context, int64_t tag, bool newValue);
@@ -108,7 +106,9 @@ void SwitchShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueOb
   m_updating = false;
 }
 
-void SwitchShadowNode::dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
+void SwitchShadowNode::dispatchCommand(
+    const std::string &commandId,
+    winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
   if (commandId == "setValue") {
     auto value = commandArgs[0].AsBoolean();
     auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();

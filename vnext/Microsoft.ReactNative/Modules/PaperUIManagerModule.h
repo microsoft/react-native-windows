@@ -73,7 +73,8 @@ struct UIManager final {
   void findSubviewIn(
       double reactTag,
       winrt::Microsoft::ReactNative::JSValueArray &&point,
-      std::function<void(double nativeViewTag, double left, double top, double width, double height)> const &callback) noexcept;
+      std::function<void(double nativeViewTag, double left, double top, double width, double height)> const
+          &callback) noexcept;
 
   // The spec is incorrect in that it specifies a number for the command ID, but its actually a number or a string
   REACT_METHOD(dispatchViewManagerCommand)
@@ -85,7 +86,8 @@ struct UIManager final {
   REACT_METHOD(measure)
   void measure(
       double reactTag,
-      std::function<void(double left, double top, double width, double height, double pageX, double pageY)> const &callback) noexcept;
+      std::function<void(double left, double top, double width, double height, double pageX, double pageY)> const
+          &callback) noexcept;
 
   REACT_METHOD(measureInWindow)
   void measureInWindow(

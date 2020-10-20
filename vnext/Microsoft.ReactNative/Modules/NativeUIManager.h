@@ -38,7 +38,7 @@ class NativeUIManager final : public INativeUIManager {
   void configureNextLayoutAnimation(
       winrt::Microsoft::ReactNative::JSValueObject && /*config*/,
       std::function<void()> const & /*callback*/,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const & /*errorCallback*/) override {};
+      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const & /*errorCallback*/) override{};
   void destroy() override;
   void destroyRootShadowNode(ShadowNode *) override;
   void removeRootView(ShadowNode &rootshadow) override;

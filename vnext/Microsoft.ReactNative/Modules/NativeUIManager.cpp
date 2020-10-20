@@ -951,7 +951,7 @@ void NativeUIManager::measure(
 
   auto feView = view.try_as<xaml::FrameworkElement>();
   if (feView == nullptr) {
-    callback(0,0,0,0,0,0);
+    callback(0, 0, 0, 0, 0, 0);
     return;
   }
 
@@ -991,8 +991,7 @@ void NativeUIManager::measure(
   // this is exactly, but it is not used anyway.
   //  Either codify this non-use or determine if and how we can send the needed
   //  data.
-  callback(
-      0.0, 0.0, rectInParentCoords.Width, rectInParentCoords.Height, rectInParentCoords.X, rectInParentCoords.Y);
+  callback(0.0, 0.0, rectInParentCoords.Width, rectInParentCoords.Height, rectInParentCoords.X, rectInParentCoords.Y);
 }
 
 void NativeUIManager::measureInWindow(
@@ -1010,7 +1009,7 @@ void NativeUIManager::measureInWindow(
     return;
   }
 
-  callback(0,0,0,0);
+  callback(0, 0, 0, 0);
 }
 
 void NativeUIManager::measureLayout(
@@ -1078,7 +1077,7 @@ void NativeUIManager::findSubviewIn(
   }
 
   if (foundElement == nullptr) {
-    callback(0,0,0,0,0);
+    callback(0, 0, 0, 0, 0);
     return;
   }
 

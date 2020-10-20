@@ -70,7 +70,8 @@ struct INativeUIManager {
       ShadowNode &shadowNode,
       float x,
       float y,
-      std::function<void(double nativeViewTag, double left, double top, double width, double height)> const &callback) = 0;
+      std::function<void(double nativeViewTag, double left, double top, double width, double height)> const
+          &callback) = 0;
 };
 
 } // namespace Microsoft::ReactNative
