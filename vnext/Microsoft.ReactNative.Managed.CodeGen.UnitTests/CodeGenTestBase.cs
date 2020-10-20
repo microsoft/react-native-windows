@@ -41,12 +41,14 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests
             }
             else
             {
+                var generateMessage = @"To generate the file, set 'CodeGenTestBase.AutoFixLkgs' temporarily to true in C# file 'vnext\Microsoft.ReactNative.Managed.CodeGen.UnitTests\CodeGenTestBase.cs'.";
+
                 var lkgFile = GetLkgPath(lkgName);
                 if (!File.Exists(lkgFile))
                 {
                     TraceEncountered(codeToCompare, "Encountered");
                     Assert.Fail(
-                      $"Could not find expected LKG file: '{lkgFile}'. To generate the file, set CodeGenTestBase.AutoFixLkgs temporarily to true.");
+                      $"Could not find expected LKG file: '{lkgFile}'. {generateMessage}");
                 }
 
                 var lkgContents = File.ReadAllText(lkgFile);
@@ -54,7 +56,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests
                 {
                     TraceEncountered(lkgContents, "Expected");
                     TraceEncountered(codeToCompare, "Encountered");
-                    Assert.AreEqual(lkgContents, codeToCompare, "Lkg does not match. To generate the file, set CodeGenTestBase.AutoFixLkgs temporarily to true.");
+                    Assert.AreEqual(lkgContents, codeToCompare, $"Lkg file '{lkgFile}' does not match expected content. {generateMessage}");
                 }
 #pragma warning restore CS0162
             }

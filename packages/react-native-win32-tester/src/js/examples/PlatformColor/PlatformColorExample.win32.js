@@ -113,7 +113,10 @@ function PlatformColorsExample() {
       ];
     } else if (Platform.OS === 'android') {
       colors = [
-        {label: '?attr/colorAccent', color: PlatformColor('?attr/colorAccent')},
+        {
+          label: '?attr/colorAccent',
+          color: PlatformColor('?attr/colorAccent'),
+        },
         {
           label: '?attr/colorBackgroundFloating',
           color: PlatformColor('?attr/colorBackgroundFloating'),
@@ -146,7 +149,10 @@ function PlatformColorsExample() {
           label: '?attr/colorPrimary',
           color: PlatformColor('?attr/colorPrimary'),
         },
-        {label: '?colorPrimaryDark', color: PlatformColor('?colorPrimaryDark')},
+        {
+          label: '?colorPrimaryDark',
+          color: PlatformColor('?colorPrimaryDark'),
+        },
         {
           label: '@android:color/holo_purple',
           color: PlatformColor('@android:color/holo_purple'),
@@ -162,6 +168,61 @@ function PlatformColorsExample() {
         {
           label: '@color/catalyst_logbox_background',
           color: PlatformColor('@color/catalyst_logbox_background'),
+        },
+      ];
+    } else if (Platform.OS === 'win32') {
+      colors = [
+        {
+          label: 'Window',
+          color: PlatformColor('Window'),
+        },
+        {
+          label: 'Background',
+          color: PlatformColor('Background'),
+        },
+        {
+          label: 'ActiveCaption',
+          color: PlatformColor('ActiveCaption'),
+        },
+        {
+          label: 'InactiveCaption',
+          color: PlatformColor('InactiveCaption'),
+        },
+        {
+          label: 'ButtonFace',
+          color: PlatformColor('ButtonFace'),
+        },
+        {
+          label: 'ButtonText',
+          color: PlatformColor('ButtonText'),
+        },
+        {
+          label: 'WindowText',
+          color: PlatformColor('WindowText'),
+        },
+        {
+          label: 'CaptionText',
+          color: PlatformColor('CaptionText'),
+        },
+        {
+          label: 'Highlight',
+          color: PlatformColor('Highlight'),
+        },
+        {
+          label: 'HighlightText',
+          color: PlatformColor('HighlightText'),
+        },
+        {
+          label: 'Hotlight',
+          color: PlatformColor('Hotlight'),
+        },
+        {
+          label: 'GrayText',
+          color: PlatformColor('GrayText'),
+        },
+        {
+          label: 'InactiveCaptionText',
+          color: PlatformColor('InactiveCaptionText'),
         },
       ];
     }
@@ -197,6 +258,11 @@ function FallbackColorsExample() {
     color = {
       label: "PlatformColor('bogus', '@color/catalyst_redbox_background')",
       color: PlatformColor('bogus', '@color/catalyst_redbox_background'),
+    };
+  } else if (Platform.OS === 'win32') {
+    color = {
+      label: "PlatformColor('bogus', 'Hotlight', 'also bogus')",
+      color: PlatformColor('bogus', 'Hotlight', 'also bogus'),
     };
   } else {
     color = {

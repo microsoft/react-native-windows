@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Drop Issue Requirement from Override Manifest Schema Validation",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-19T12:08:07.615Z"
+}

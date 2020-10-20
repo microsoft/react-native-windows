@@ -66,7 +66,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <PreprocessorDefinitions>_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);$(JSI_SourcePath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj</AdditionalOptions>
       <ConformanceMode>true</ConformanceMode>
       <CallingConvention>Cdecl</CallingConvention>
