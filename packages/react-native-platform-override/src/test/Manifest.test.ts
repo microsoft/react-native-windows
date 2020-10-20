@@ -393,7 +393,7 @@ test('Serialization (Indivudal Base) Round-Trip', () => {
         baseFile: 'defg.js',
         baseVersion: '0.65.3',
         baseHash: 'sdfssfsfsf',
-        issue: 'LEGACY_FIXME',
+        issue: undefined,
       },
       {
         type: 'copy',
@@ -435,7 +435,7 @@ test('Serialization (Default Base) Round-Trip', () => {
         baseFile: 'defg.js',
         baseVersion: undefined,
         baseHash: 'sdfssfsfsf',
-        issue: 'LEGACY_FIXME',
+        issue: undefined,
       },
       {
         type: 'copy',
@@ -477,7 +477,7 @@ test('Serialization (Differing Bases) Round-Trip', () => {
         baseFile: 'defg.js',
         baseVersion: '0.64.3',
         baseHash: 'sdfssfsfsf',
-        issue: 'LEGACY_FIXME',
+        issue: undefined,
       },
       {
         type: 'copy',
@@ -515,7 +515,7 @@ test('String Exact Serialization Round-Trip', () => {
         baseFile: 'defg.js',
         baseVersion: '0.65.3',
         baseHash: 'sdfssfsfsf',
-        issue: 'LEGACY_FIXME',
+        issue: undefined,
       },
       {
         type: 'copy',

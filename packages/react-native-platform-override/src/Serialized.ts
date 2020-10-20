@@ -28,9 +28,7 @@ const PatchOverrideType = t.type({
   baseFile: t.string,
   baseVersion: t.union([t.undefined, t.string]),
   baseHash: t.string,
-
-  // Allow LEGACY_FIXME for existing overrides that don't have issues yet
-  issue: t.union([t.number, t.literal('LEGACY_FIXME')]),
+  issue: t.union([t.undefined, t.number]),
 });
 
 /**
@@ -42,9 +40,7 @@ const DerivedOverrideType = t.type({
   baseFile: t.string,
   baseVersion: t.union([t.undefined, t.string]),
   baseHash: t.string,
-
-  // Allow LEGACY_FIXME for existing overrides that don't have issues yet
-  issue: t.union([t.undefined, t.number, t.literal('LEGACY_FIXME')]),
+  issue: t.union([t.undefined, t.number]),
 });
 
 /**
@@ -56,7 +52,7 @@ const CopyOverrideType = t.type({
   baseFile: t.string,
   baseVersion: t.union([t.undefined, t.string]),
   baseHash: t.string,
-  issue: t.number,
+  issue: t.union([t.undefined, t.number]),
 });
 
 /**
@@ -68,7 +64,7 @@ const DirectoryCopyOverrideType = t.type({
   baseDirectory: t.string,
   baseVersion: t.union([t.undefined, t.string]),
   baseHash: t.string,
-  issue: t.number,
+  issue: t.union([t.undefined, t.number]),
 });
 
 /**
