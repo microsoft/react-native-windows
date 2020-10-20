@@ -12,10 +12,7 @@
 
 const React = require('react');
 const ReactNative = require('react-native');
-import {
-  NativeOrDynamicColorType,
-  PlatformColor,
-} from 'react-native/Libraries/StyleSheet/NativeOrDynamicColorType.win32'; // #6210
+import {PlatformColor} from 'react-native/Libraries/StyleSheet/NativeOrDynamicColorType.win32';
 const {StyleSheet, Text, View} = ReactNative;
 
 function PlatformColorsExample() {

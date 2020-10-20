@@ -11,19 +11,12 @@
 const Platform = require('../Utilities/Platform');
 
 const normalizeColor = require('./normalizeColor');
-import type {
-  NativeOrDynamicColorType,
-  PlatformColorType,
-} from './NativeOrDynamicColorType'; // ]TODO(macOS ISS#2323203)
+import type {NativeOrDynamicColorType} from './NativeOrDynamicColorType'; // ]TODO(macOS ISS#2323203)
 
 /* eslint no-bitwise: 0 */
 function processColor(
-  color?: ?(string | number | NativeOrDynamicColorType | PlatformColorType),
-): ?(
-  | number
-  | NativeOrDynamicColorType
-  | PlatformColorType
-) /* TODO(macOS ISS#2323203) */ {
+  color?: ?(string | number | NativeOrDynamicColorType),
+): ?(number | NativeOrDynamicColorType) /* TODO(macOS ISS#2323203) */ {
   if (color === undefined || color === null) {
     return color;
   }
@@ -34,7 +27,7 @@ function processColor(
   }
 
   if (typeof int32Color === 'object') {
-    // Handles NativeOrDynamicColorType and PlatformColorType
+    // Handles NativeOrDynamicColorType
     const processColorObject = require('./processColorObject'); // TODO(macOS ISS#2323203)
 
     const processedColorObj = processColorObject(int32Color);

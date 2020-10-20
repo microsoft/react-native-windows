@@ -6,54 +6,15 @@
  */
 'use strict';
 
-const invariant = require('invariant');
 const processColor = require('./processColor');
 
-import type {
-  ColorStop,
-  NativeOrDynamicColorType,
-} from './NativeOrDynamicColorType';
+import type {NativeOrDynamicColorType} from './NativeOrDynamicColorType';
+import {handleColorObject} from './NativeOrDynamicColorType';
 
 function processColorObject(
   color?: NativeOrDynamicColorType,
 ): ?NativeOrDynamicColorType {
-  if (color && typeof color === 'object') {
-    if (
-      color.hasOwnProperty('colorStops') &&
-      color.hasOwnProperty('gradientDirection')
-    ) {
-      invariant(
-        color.colorStops.length >= 2,
-        'Gradients must contain at least two colors.',
-      );
-
-      invariant(
-        color.gradientDirection === 'ToTop' ||
-          color.gradientDirection === 'ToBottom' ||
-          color.gradientDirection === 'ToLeft' ||
-          color.gradientDirection === 'ToRight',
-        'Unsupported gradient direction; currently supports ToTop, ToBottom, ToLeft, and ToRight.',
-      );
-
-      const gradientColorStops: Array<ColorStop> = [];
-      color.colorStops.forEach((colorStop: ColorStop) => {
-        gradientColorStops.push({
-          //$FlowFixMe
-          color: processColor(colorStop.color),
-          offset: colorStop.offset,
-        });
-      });
-
-      return {
-        gradientDirection: color.gradientDirection,
-        colorStops: gradientColorStops,
-      };
-    } else if (color.hasOwnProperty('resource_paths')) {
-      return color;
-    }
-  }
-
-  return null;
+  return handleColorObject(color, processColor);
 }
 
 module.exports = processColorObject;

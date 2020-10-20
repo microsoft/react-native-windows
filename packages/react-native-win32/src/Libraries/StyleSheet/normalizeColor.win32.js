@@ -9,23 +9,15 @@
 /* eslint no-bitwise: 0 */
 'use strict';
 
-import type {
-  NativeOrDynamicColorType,
-  PlatformColorType,
-} from './NativeOrDynamicColorType'; // TODO(macOS ISS#2323203)
+import type {NativeOrDynamicColorType} from './NativeOrDynamicColorType'; // TODO(macOS ISS#2323203)
 
 function normalizeColor(
   color: ?(
     | string
     | number
     | NativeOrDynamicColorType
-    | PlatformColorType
   ) /* TODO(macOS ISS#2323203) */,
-): ?(
-  | number
-  | NativeOrDynamicColorType
-  | PlatformColorType
-) /* TODO(macOS ISS#2323203) */ {
+): ?(number | NativeOrDynamicColorType) /* TODO(macOS ISS#2323203) */ {
   const matchers = getMatchers();
   let match;
 
