@@ -58,10 +58,10 @@ void LogBox::ShowOnUIThread() noexcept {
     root = window.Content().as<xaml::FrameworkElement>();
   }
 
-  m_logBoxContent.MaxHeight(root.ActualSize().y);
-  m_logBoxContent.Height(root.ActualSize().y);
-  m_logBoxContent.MaxWidth(root.ActualSize().x);
-  m_logBoxContent.Width(root.ActualSize().x);
+  m_logBoxContent.MaxHeight(root.ActualHeight());
+  m_logBoxContent.Height(root.ActualHeight());
+  m_logBoxContent.MaxWidth(root.ActualWidth());
+  m_logBoxContent.Width(root.ActualWidth());
   m_logBoxContent.UpdateLayout();
 
   m_sizeChangedRevoker = root.SizeChanged(
