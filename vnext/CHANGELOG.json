@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 20 Oct 2020 05:03:56 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.184",
+      "version": "0.0.0-canary.184",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Switch was generating spurious events which could result on two events (on/off) being sent before the first event was fully handled",
+            "author": "gill.peacegood@axsy.com",
+            "commit": "a5a32da15c114fc0bce7193362c26a8a9e8e30fc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update Chakra JSI implementation",
+            "author": "vmorozov@microsoft.com",
+            "commit": "a40f3fb55446f53cac8776aeed7174b5ec16987e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Sync native module functions are wrapping the result in an array, which it shouldnt",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "552c880eb4cee63569c7c0ec96bee715cb2f3ca4",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Improve unittest message to update LKG's",
+            "author": "dannyvv@microsoft.com",
+            "commit": "bac122122b9e96435b140bbec9833736d99ebb6e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 17 Oct 2020 05:06:20 GMT",
       "tag": "react-native-windows_v0.0.0-canary.183",
       "version": "0.0.0-canary.183",

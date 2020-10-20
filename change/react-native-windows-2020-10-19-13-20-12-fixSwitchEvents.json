@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Switch was generating spurious events which could result on two events (on/off) being sent before the first event was fully handled",
-  "packageName": "react-native-windows",
-  "email": "gill.peacegood@axsy.com",
-  "dependentChangeType": "patch",
-  "date": "2020-10-19T12:20:12.307Z"
-}
