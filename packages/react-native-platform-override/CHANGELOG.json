@@ -2,6 +2,27 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 21 Oct 2020 05:05:24 GMT",
+      "tag": "react-native-platform-override_v0.4.0",
+      "version": "0.4.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Allow Multiple Manifests in Monorepos",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cd0d904f4779ef919654bc006c6d4525bbf1b724",
+            "package": "react-native-platform-override"
+          },
+          {
+            "comment": "Drop Issue Requirement from Override Manifest Schema Validation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "79249d0429284d99952b922b88b4a109cb368031",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Oct 2020 05:06:32 GMT",
       "tag": "react-native-platform-override_v0.3.3",
       "version": "0.3.3",

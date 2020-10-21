@@ -19,6 +19,6 @@
     "react-native": "0.0.0-12543d557"
   },
   "devDependencies": {
-    "react-native-platform-override": "^0.3.3"
+    "react-native-platform-override": "^0.4.0"
   }
 }

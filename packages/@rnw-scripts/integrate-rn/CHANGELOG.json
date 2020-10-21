@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Wed, 21 Oct 2020 05:05:24 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.14",
+      "version": "0.0.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update Package Syncing Algorithm",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cd0d904f4779ef919654bc006c6d4525bbf1b724",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Oct 2020 05:06:32 GMT",
       "tag": "@rnw-scripts/integrate-rn_v0.0.13",
       "version": "0.0.13",

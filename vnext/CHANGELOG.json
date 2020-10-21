@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 21 Oct 2020 05:05:24 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.185",
+      "version": "0.0.0-canary.185",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Crash when Logbox shown on pre-19H1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d328e4c036ca1477d9bb5ae4cd2a91d7b807825c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Make native modules to use JS queue",
+            "author": "vmorozov@microsoft.com",
+            "commit": "12781dd972314b554727d6fb7c2b3baae3df209a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Drop Issue Requirement from Override Manifest Schema Validation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "79249d0429284d99952b922b88b4a109cb368031",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Oct 2020 05:03:56 GMT",
       "tag": "react-native-windows_v0.0.0-canary.184",
       "version": "0.0.0-canary.184",

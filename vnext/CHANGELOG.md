@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 20 Oct 2020 05:03:56 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Oct 2020 05:05:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.185
+
+Wed, 21 Oct 2020 05:05:24 GMT
+
+### Changes
+
+- Fix Crash when Logbox shown on pre-19H1 (ngerlem@microsoft.com)
+- Make native modules to use JS queue (vmorozov@microsoft.com)
+- Drop Issue Requirement from Override Manifest Schema Validation (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.184
 

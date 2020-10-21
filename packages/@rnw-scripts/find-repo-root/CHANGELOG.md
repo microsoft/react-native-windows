@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/find-repo-root
 
-This log was last generated on Thu, 01 Oct 2020 05:08:11 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Oct 2020 05:05:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.12
+
+Wed, 21 Oct 2020 05:05:24 GMT
+
+### Patches
+
+- Allow non-RNW repos (ngerlem@microsoft.com)
 
 ## 0.0.11
 

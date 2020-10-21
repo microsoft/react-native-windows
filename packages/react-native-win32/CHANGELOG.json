@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 21 Oct 2020 05:05:24 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.57",
+      "version": "0.0.0-canary.57",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Drop Issue Requirement from Override Manifest Schema Validation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "79249d0429284d99952b922b88b4a109cb368031",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Oct 2020 05:06:32 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.56",
       "version": "0.0.0-canary.56",

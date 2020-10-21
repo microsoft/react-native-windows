@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Sat, 03 Oct 2020 05:04:45 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Oct 2020 05:05:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.14
+
+Wed, 21 Oct 2020 05:05:24 GMT
+
+### Patches
+
+- Update Package Syncing Algorithm (ngerlem@microsoft.com)
 
 ## 0.0.13
 
