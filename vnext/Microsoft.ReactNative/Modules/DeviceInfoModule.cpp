@@ -112,6 +112,7 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
   m_dpi = displayInfo.LogicalDpi();
   m_screenWidth = displayInfo.ScreenWidthInRawPixels();
   m_screenHeight = displayInfo.ScreenHeightInRawPixels();
+  notifyChanged();
 }
 
 void DeviceInfo::GetConstants(React::ReactConstantProvider &provider) noexcept {
