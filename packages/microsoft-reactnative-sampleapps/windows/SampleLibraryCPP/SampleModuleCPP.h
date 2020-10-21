@@ -254,10 +254,11 @@ struct SampleModuleCppImpl {
   REACT_METHOD(EmitJSEvent3)
   void EmitJSEvent3(int value1, int value2) noexcept {
     // Test the ReactContext::EmitJSEvent
-    m_reactContext.EmitJSEvent(L"RCTDeviceEventEmitter", L"EmitJSEvent3Cpp", [&](IJSValueWriter const argWriter) noexcept {
-      WriteValue(argWriter, value1);
-      WriteValue(argWriter, value2);
-    });
+    m_reactContext.EmitJSEvent(
+        L"RCTDeviceEventEmitter", L"EmitJSEvent3Cpp", [&](IJSValueWriter const argWriter) noexcept {
+          WriteValue(argWriter, value1);
+          WriteValue(argWriter, value2);
+        });
   }
 
 #pragma endregion
