@@ -284,7 +284,7 @@ void ReactInstanceWin::Initialize() noexcept {
 
           if (m_options.ModuleProvider != nullptr) {
             std::vector<facebook::react::NativeModuleDescription> customCxxModules =
-                m_options.ModuleProvider->GetModules(m_reactContext, m_batchingUIThread);
+                m_options.ModuleProvider->GetModules(m_reactContext, m_jsMessageThread.Load());
             cxxModules.insert(std::end(cxxModules), std::begin(customCxxModules), std::end(customCxxModules));
           }
 
