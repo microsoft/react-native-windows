@@ -22,15 +22,24 @@ import {
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
 
 /**
- * Locates the react-native-windows directory containing template files
+ * Locates the react-native-windows directory
  * @param config project configuration
  */
-function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
+function resolveRnwRoot(projectConfig: WindowsProjectConfig) {
   const rnwPackage = path.dirname(
     require.resolve('react-native-windows/package.json', {
       paths: [projectConfig.folder],
     }),
   );
+  return rnwPackage;
+}
+
+/**
+ * Locates the react-native-windows directory containing template files
+ * @param config project configuration
+ */
+function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
+  const rnwPackage = resolveRnwRoot(projectConfig);
   return path.join(rnwPackage, 'template');
 }
 
@@ -159,6 +168,7 @@ async function updateAutoLink(
     }
 
     const windowsAppConfig: WindowsProjectConfig = projectConfig.windows;
+    const rnwRoot = resolveRnwRoot(windowsAppConfig);
     const templateRoot = resolveTemplateRoot(windowsAppConfig);
 
     if (options.sln) {
@@ -401,6 +411,48 @@ async function updateAutoLink(
         changesNecessary;
     }
 
+    // Generating props for app project consumption
+    let propertiesForProps = '';
+    let addCsModuleSupport: boolean = false;
+
+    if (projectLang === 'cpp') {
+      for (const dependencyName in windowsDependencies) {
+        windowsDependencies[dependencyName].projects.forEach(project => {
+          if (project.directDependency && project.projectLang === 'cs') {
+            addCsModuleSupport = true;
+          }
+        });
+      }
+
+      if (addCsModuleSupport) {
+        propertiesForProps += `\n    <ConsumeCSharpModules>true</ConsumeCSharpModules>`;
+      }
+    }
+
+    const propsFileName = 'AutolinkedNativeModules.g.props';
+
+    const srcPropsFile = path.join(
+      templateRoot,
+      `${projectLang}-app`,
+      'src',
+      propsFileName,
+    );
+
+    const destPropsFile = path.join(projectDir, propsFileName);
+
+    verboseMessage(
+      `Calculating ${chalk.bold(path.basename(destPropsFile))}...`,
+      verbose,
+    );
+
+    const propsContents = getNormalizedContents(srcPropsFile, {
+      autolinkPropertiesForProps: propertiesForProps,
+    });
+
+    changesNecessary =
+      updateFile(destPropsFile, propsContents, verbose, checkMode) ||
+      changesNecessary;
+
     // Generating targets for app project consumption
     let projectReferencesForTargets = '';
 
@@ -454,7 +506,7 @@ async function updateAutoLink(
     let projectsForSolution: Project[] = [];
 
     for (const dependencyName in windowsDependencies) {
-      // Process projects
+      // Process dependency projects
       windowsDependencies[dependencyName].projects.forEach(project => {
         const dependencyProjectFile = path.join(
           windowsDependencies[dependencyName].folder,
@@ -468,6 +520,23 @@ async function updateAutoLink(
           projectLang: project.projectLang,
           projectGuid: project.projectGuid,
         });
+      });
+    }
+
+    if (addCsModuleSupport) {
+      // Add managed projects
+      projectsForSolution.push({
+          projectFile: path.join(rnwRoot, 'Microsoft.ReactNative.Managed/Microsoft.ReactNative.Managed.csproj'),
+          projectName: 'Microsoft.ReactNative.Managed',
+          projectLang: 'cs',
+          projectGuid: '{F2824844-CE15-4242-9420-308923CD76C3}',
+      });
+      projectsForSolution.push({
+        projectFile: path.join(rnwRoot, 'Microsoft.ReactNative.Managed.CodeGen//Microsoft.ReactNative.Managed.CodeGen.csproj'),
+        projectName: 'Microsoft.ReactNative.Managed.CodeGen',
+        projectLang: 'cs',
+        projectGuid: '{ADED4FBE-887D-4271-AF24-F0823BCE7961}',
+        projectTypeGuid: '{9A19103F-16F7-4668-BE54-9A1E7A4F7556}',
       });
     }
 

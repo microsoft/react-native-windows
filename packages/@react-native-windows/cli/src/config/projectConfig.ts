@@ -55,6 +55,7 @@ export interface Project {
   projectName: string;
   projectLang: 'cpp' | 'cs' | null;
   projectGuid: string | null;
+  projectTypeGuid?: string;
 }
 
 export interface WindowsProjectConfig {
@@ -93,7 +94,7 @@ export function projectConfigWindows(
 
   var result: DeepPartial<WindowsProjectConfig> = {
     folder: folder,
-    sourceDir: sourceDir.substr(folder.length + 1),
+    sourceDir: path.relative(folder, sourceDir),
   };
 
   var validProject = false;

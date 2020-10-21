@@ -117,7 +117,7 @@ export function addProjectToSolution(
   const slnDir = path.dirname(slnFile);
   const relProjectFile = path.relative(slnDir, project.projectFile);
 
-  const projectTypeGuid = projectTypeGuidsByLanguage[project.projectLang];
+  const projectTypeGuid = 'projectTypeGuid' in project ? project.projectTypeGuid! : projectTypeGuidsByLanguage[project.projectLang];
 
   const projectGuid = project.projectGuid.toUpperCase();
 
@@ -149,16 +149,18 @@ export function addProjectToSolution(
 
   slnConfigs.forEach(slnConfig => {
     projectConfigLines.push(
-      `\t\t${projectGuid}.${slnConfig}.ActiveCfg = ${slnConfig.replace(
-        'x86',
-        'Win32',
-      )}`,
+      `\t\t${projectGuid}.${slnConfig}.ActiveCfg = ${
+        project.projectLang === 'cpp'
+          ? slnConfig.replace('x86', 'Win32')
+          : slnConfig
+      }`,
     );
     projectConfigLines.push(
-      `\t\t${projectGuid}.${slnConfig}.Build.0 = ${slnConfig.replace(
-        'x86',
-        'Win32',
-      )}`,
+      `\t\t${projectGuid}.${slnConfig}.Build.0 = ${
+        project.projectLang === 'cpp'
+          ? slnConfig.replace('x86', 'Win32')
+          : slnConfig
+      }`,
     );
   });
 
@@ -169,7 +171,8 @@ export function addProjectToSolution(
   projectConfigLines.forEach(projectConfigLine => {
     if (slnLines.indexOf(projectConfigLine) < 0) {
       if (verbose) {
-        console.log(chalk.yellow('Missing project config block.'));
+        const configLine = projectConfigLine.substr(projectConfigLine.indexOf("= ") + 2);
+        console.log(chalk.yellow(`Missing ${configLine} config block.`));
       }
 
       const projectConfigEndIndex = slnLines.indexOf(
