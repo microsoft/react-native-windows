@@ -56,7 +56,7 @@ namespace react::uwp {
 class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
  public:
   NativeAnimatedModule(Mso::CntPtr<Mso::React::IReactContext> &&context);
-  virtual ~NativeAnimatedModule() = default;
+  virtual ~NativeAnimatedModule();
 
   // CxxModule
   std::string getName() override {

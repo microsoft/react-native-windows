@@ -33,9 +33,11 @@ struct BatchingQueueThread final : facebook::react::BatchingMessageQueueThread {
 
   using WorkItemQueue = std::vector<std::function<void()>>;
   std::shared_ptr<WorkItemQueue> m_taskQueue;
+  std::mutex m_mutex;
 
 #if DEBUG
   std::thread::id m_expectedThreadId{};
+  bool m_quit{false};
 #endif
 };
 

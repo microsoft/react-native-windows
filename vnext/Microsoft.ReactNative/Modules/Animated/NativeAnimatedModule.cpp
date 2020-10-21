@@ -5,6 +5,7 @@
 
 #include "NativeAnimatedModule.h"
 
+#include <IReactDispatcher.h>
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
 
@@ -14,6 +15,16 @@ const char *NativeAnimatedModule::name{"NativeAnimatedModule"};
 NativeAnimatedModule::NativeAnimatedModule(Mso::CntPtr<Mso::React::IReactContext> &&context)
     : m_context(std::move(context)) {
   m_nodesManager = std::make_shared<NativeAnimatedNodeManager>(NativeAnimatedNodeManager());
+}
+
+NativeAnimatedModule::~NativeAnimatedModule() {
+  auto uiDispatcher =
+      winrt::Microsoft::ReactNative::implementation::ReactDispatcher::GetUIDispatcher(m_context->Properties());
+
+  // To make sure that we destroy UI components in UI thread.
+  if (!uiDispatcher.HasThreadAccess()) {
+    uiDispatcher.Post([maanger = std::move(m_nodesManager)]() {});
+  }
 }
 
 std::vector<facebook::xplat::module::CxxModule::Method> NativeAnimatedModule::getMethods() {
