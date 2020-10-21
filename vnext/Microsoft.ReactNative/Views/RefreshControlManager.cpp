@@ -5,6 +5,7 @@
 
 #include "RefreshControlManager.h"
 
+#include <JSValueWriter.h>
 #include <UI.Xaml.Controls.h>
 #include <Utils/Helpers.h>
 #include <Views/ShadowNodeBase.h>
@@ -15,7 +16,7 @@ using namespace xaml::Controls;
 using namespace Windows::Foundation;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class RefreshControlShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -23,7 +24,7 @@ class RefreshControlShadowNode : public ShadowNodeBase {
  public:
   RefreshControlShadowNode(){};
   void createView() override;
-  void updateProperties(const folly::dynamic &&props) override;
+  void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
  private:
   winrt::RefreshContainer::RefreshRequested_revoker m_refreshRequestedRevoker{};
@@ -42,21 +43,20 @@ void RefreshControlShadowNode::createView() {
   }
 }
 
-void RefreshControlShadowNode::updateProperties(const folly::dynamic &&props) {
+void RefreshControlShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
   if (auto refreshContainer = GetView().try_as<winrt::RefreshContainer>()) {
-    for (const auto &pair : props.items()) {
-      const std::string &propertyName = pair.first.getString();
+    for (const auto &pair : props) {
+      const std::string &propertyName = pair.first;
       if (propertyName == "flexDirection") {
-        const folly::dynamic &propertyValue = pair.second;
-        if (propertyValue.isString() && propertyValue.asString() == "column") { // vertical scrollView
+        if (pair.second.Type() == winrt::Microsoft::ReactNative::JSValueType::String &&
+            pair.second.AsString() == "column") { // vertical scrollView
           refreshContainer.PullDirection(winrt::RefreshPullDirection::TopToBottom);
         } else {
           refreshContainer.PullDirection(winrt::RefreshPullDirection::LeftToRight);
         }
       } else if (propertyName == "refreshing") {
-        const folly::dynamic &propertyValue = pair.second;
-        if (propertyValue.isBool()) {
-          bool refreshing = propertyValue.asBool();
+        if (pair.second.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+          bool refreshing = pair.second.AsBoolean();
           if (!refreshing && m_refreshDeferral) {
             m_refreshDeferral.Complete();
             m_refreshDeferral = nullptr;
@@ -66,21 +66,21 @@ void RefreshControlShadowNode::updateProperties(const folly::dynamic &&props) {
     }
   }
 
-  Super::updateProperties(std::move(props));
+  Super::updateProperties(props);
 }
 
 RefreshControlViewManager::RefreshControlViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-facebook::react::ShadowNode *RefreshControlViewManager::createShadow() const {
+ShadowNode *RefreshControlViewManager::createShadow() const {
   return new RefreshControlShadowNode();
 }
 
-const char *RefreshControlViewManager::GetName() const {
-  return "RCTRefreshControl";
+const wchar_t *RefreshControlViewManager::GetName() const {
+  return L"RCTRefreshControl";
 }
 
 XamlView RefreshControlViewManager::CreateViewCore(int64_t /*tag*/) {
-  if (IsRS4OrHigher()) {
+  if (react::uwp::IsRS4OrHigher()) {
     // refreshContainer is supported >= RS4
     return winrt::RefreshContainer();
   } else {
@@ -97,17 +97,18 @@ void RefreshControlViewManager::AddView(const XamlView &parent, const XamlView &
   }
 }
 
-folly::dynamic RefreshControlViewManager::GetNativeProps() const {
-  auto props = Super::GetNativeProps();
-
-  props.update(folly::dynamic::object("refreshing", "boolean"));
-
-  return props;
+void RefreshControlViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"refreshing", L"boolean");
 }
 
-folly::dynamic RefreshControlViewManager::GetExportedCustomDirectEventTypeConstants() const {
-  auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topOnRefresh"] = folly::dynamic::object("registrationName", "onRefresh");
-  return directEvents;
+void RefreshControlViewManager::GetExportedCustomDirectEventTypeConstants(
+    const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetExportedCustomDirectEventTypeConstants(writer);
+
+  writer.WritePropertyName(L"topOnRefresh");
+  writer.WriteObjectBegin();
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"registrationName", L"onRefresh");
+  writer.WriteObjectEnd();
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

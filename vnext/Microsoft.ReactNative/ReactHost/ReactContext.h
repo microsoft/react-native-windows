@@ -29,7 +29,6 @@ class ReactContext final : public Mso::UnknownObject<IReactContext> {
 #ifndef CORE_ABI
   ReactInstanceState State() const noexcept override;
   bool IsLoaded() const noexcept override;
-  facebook::react::INativeUIManager *NativeUIManager() const noexcept override;
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override;
 
   bool UseWebDebugger() const noexcept override;

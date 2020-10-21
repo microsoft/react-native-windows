@@ -9,7 +9,9 @@
 
 #include "DynamicAutomationProperties.h"
 
+#include <JSValueWriter.h>
 #include <Modules/NativeUIManager.h>
+#include <Modules/PaperUIManagerModule.h>
 #include <Utils/AccessibilityUtils.h>
 #include <Utils/PropertyUtils.h>
 
@@ -27,7 +29,7 @@
 #include <winrt/Windows.Foundation.h>
 #endif
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 // ViewShadowNode
 
@@ -42,19 +44,21 @@ class ViewShadowNode : public ShadowNodeBase {
 
     auto panel = GetViewPanel();
 
-    DynamicAutomationProperties::SetAccessibilityInvokeEventHandler(panel, [=]() {
+    react::uwp::DynamicAutomationProperties::SetAccessibilityInvokeEventHandler(panel, [=]() {
       if (OnClick())
         DispatchEvent("topClick", std::move(folly::dynamic::object("target", m_tag)));
       else
         DispatchEvent("topAccessibilityTap", std::move(folly::dynamic::object("target", m_tag)));
     });
 
-    DynamicAutomationProperties::SetAccessibilityActionEventHandler(
+    react::uwp::DynamicAutomationProperties::SetAccessibilityActionEventHandler(
         panel, [=](winrt::react::uwp::AccessibilityAction const &action) {
           folly::dynamic eventData = folly::dynamic::object("target", m_tag);
 
           eventData.insert(
-              "actionName", action.Label.empty() ? HstringToDynamic(action.Name) : HstringToDynamic(action.Label));
+              "actionName",
+              action.Label.empty() ? react::uwp::HstringToDynamic(action.Name)
+                                   : react::uwp::HstringToDynamic(action.Label));
 
           DispatchEvent("topAccessibilityAction", std::move(eventData));
         });
@@ -248,12 +252,12 @@ template <>
 bool TryUpdateBackgroundBrush(
     const winrt::react::uwp::ViewPanel &element,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "backgroundColor") {
-    if (IsValidColorValue(propertyValue))
-      element.ViewBackground(BrushFrom(propertyValue));
-    else if (propertyValue.isNull())
-      element.ClearValue(ViewPanel::ViewBackgroundProperty());
+    if (react::uwp::IsValidColorValue(propertyValue))
+      element.ViewBackground(react::uwp::BrushFrom(propertyValue));
+    else if (propertyValue.IsNull())
+      element.ClearValue(react::uwp::ViewPanel::ViewBackgroundProperty());
 
     return true;
   }
@@ -273,37 +277,44 @@ bool TryUpdateBorderProperties(
     ShadowNodeBase *node,
     const winrt::react::uwp::ViewPanel &element,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   bool isBorderProperty = true;
 
   if (propertyName == "borderColor") {
-    if (IsValidColorValue(propertyValue))
-      element.BorderBrush(BrushFrom(propertyValue));
-    else if (propertyValue.isNull())
-      element.ClearValue(ViewPanel::BorderBrushProperty());
+    if (react::uwp::IsValidColorValue(propertyValue))
+      element.BorderBrush(react::uwp::BrushFrom(propertyValue));
+    else if (propertyValue.IsNull())
+      element.ClearValue(react::uwp::ViewPanel::BorderBrushProperty());
   } else if (propertyName == "borderLeftWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Left, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      SetBorderThickness(node, element, ShadowEdges::Left, propertyValue.AsDouble());
   } else if (propertyName == "borderTopWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Top, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      SetBorderThickness(node, element, ShadowEdges::Top, propertyValue.AsDouble());
   } else if (propertyName == "borderRightWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Right, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      SetBorderThickness(node, element, ShadowEdges::Right, propertyValue.AsDouble());
   } else if (propertyName == "borderBottomWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Bottom, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      SetBorderThickness(node, element, ShadowEdges::Bottom, propertyValue.AsDouble());
   } else if (propertyName == "borderStartWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Start, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      SetBorderThickness(node, element, ShadowEdges::Start, propertyValue.AsDouble());
   } else if (propertyName == "borderEndWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::End, propertyValue.asDouble());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      SetBorderThickness(node, element, ShadowEdges::End, propertyValue.AsDouble());
   } else if (propertyName == "borderWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
-    else if (propertyValue.isNull())
-      element.ClearValue(ViewPanel::BorderThicknessProperty());
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      SetBorderThickness(node, element, ShadowEdges::AllEdges, propertyValue.AsDouble());
+    else if (propertyValue.IsNull())
+      element.ClearValue(react::uwp::ViewPanel::BorderThicknessProperty());
   } else {
     isBorderProperty = false;
   }
@@ -315,19 +326,26 @@ bool TryUpdateBorderProperties(
 
 ViewViewManager::ViewViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *ViewViewManager::GetName() const {
-  return "RCTView";
+const wchar_t *ViewViewManager::GetName() const {
+  return L"RCTView";
 }
 
-folly::dynamic ViewViewManager::GetExportedCustomDirectEventTypeConstants() const {
-  auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topClick"] = folly::dynamic::object("registrationName", "onClick");
-  directEvents["topAccessibilityTap"] = folly::dynamic::object("registrationName", "onAccessibilityTap");
+void ViewViewManager::GetExportedCustomDirectEventTypeConstants(
+    const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetExportedCustomDirectEventTypeConstants(writer);
 
-  return directEvents;
+  writer.WritePropertyName(L"topClick");
+  writer.WriteObjectBegin();
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"registrationName", L"onClick");
+  writer.WriteObjectEnd();
+
+  writer.WritePropertyName(L"topAccessibilityTap");
+  writer.WriteObjectBegin();
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"registrationName", L"onAccessibilityTap");
+  writer.WriteObjectEnd();
 }
 
-facebook::react::ShadowNode *ViewViewManager::createShadow() const {
+ShadowNode *ViewViewManager::createShadow() const {
   return new ViewShadowNode();
 }
 
@@ -339,19 +357,22 @@ XamlView ViewViewManager::CreateViewCore(int64_t /*tag*/) {
   return panel.as<XamlView>();
 }
 
-folly::dynamic ViewViewManager::GetNativeProps() const {
-  auto props = Super::GetNativeProps();
+void ViewViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
 
-  props.update(folly::dynamic::object("pointerEvents", "string")("onClick", "function")("onMouseEnter", "function")(
-      "onMouseLeave", "function")("focusable", "boolean")("enableFocusRing", "boolean")("tabIndex", "number"));
-
-  return props;
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"pointerEvents", L"string");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"onClick", L"function");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"onMouseEnter", L"function");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"onMouseLeave", L"function");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"focusable", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"enableFocusRing", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"tabIndex", L"number");
 }
 
 bool ViewViewManager::UpdateProperty(
     ShadowNodeBase *nodeToUpdate,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   auto *pViewShadowNode = static_cast<ViewShadowNode *>(nodeToUpdate);
 
   auto pPanel = pViewShadowNode->GetViewPanel();
@@ -363,32 +384,32 @@ bool ViewViewManager::UpdateProperty(
       UpdateCornerRadiusOnElement(nodeToUpdate, pPanel);
     } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
     } else if (propertyName == "onClick") {
-      pViewShadowNode->OnClick(!propertyValue.isNull() && propertyValue.asBool());
+      pViewShadowNode->OnClick(!propertyValue.IsNull() && propertyValue.AsBoolean());
     } else if (propertyName == "overflow") {
-      if (propertyValue.isString()) {
-        bool clipChildren = propertyValue.getString() == "hidden";
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+        bool clipChildren = propertyValue.AsString() == "hidden";
         pPanel.ClipChildren(clipChildren);
       }
     } else if (propertyName == "pointerEvents") {
-      if (propertyValue.isString()) {
-        bool hitTestable = propertyValue.getString() != "none";
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+        bool hitTestable = propertyValue.AsString() != "none";
         pPanel.IsHitTestVisible(hitTestable);
       }
     } else if (propertyName == "focusable") {
-      if (propertyValue.isBool())
-        pViewShadowNode->IsFocusable(propertyValue.getBool());
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+        pViewShadowNode->IsFocusable(propertyValue.AsBoolean());
     } else if (propertyName == "enableFocusRing") {
-      if (propertyValue.isBool())
-        pViewShadowNode->EnableFocusRing(propertyValue.getBool());
-      else if (propertyValue.isNull())
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+        pViewShadowNode->EnableFocusRing(propertyValue.AsBoolean());
+      else if (propertyValue.IsNull())
         pViewShadowNode->EnableFocusRing(false);
     } else if (propertyName == "tabIndex") {
-      if (propertyValue.isNumber()) {
-        auto tabIndex = propertyValue.asDouble();
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double) {
+        auto tabIndex = propertyValue.AsDouble();
         if (tabIndex == static_cast<int32_t>(tabIndex)) {
           pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
         }
-      } else if (propertyValue.isNull()) {
+      } else if (propertyValue.IsNull()) {
         pViewShadowNode->TabIndex(std::numeric_limits<std::int32_t>::max());
       }
     } else {
@@ -419,7 +440,7 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   if (auto view = viewShadowNode->GetView().try_as<xaml::UIElement>()) {
     // If we have DynamicAutomationProperties, we need a ViewControl with a
     // DynamicAutomationPeer
-    shouldBeControl = shouldBeControl || HasDynamicAutomationProperties(view);
+    shouldBeControl = shouldBeControl || react::uwp::HasDynamicAutomationProperties(view);
   }
 
   panel.FinalizeProperties();
@@ -503,25 +524,23 @@ void ViewViewManager::TryUpdateView(
 
   // If we need to change the root of our view, do it now
   if (oldXamlView != newXamlView) {
-    auto pNativeUiManager = static_cast<NativeUIManager *>(m_context->NativeUIManager());
-    if (!pNativeUiManager)
-      return;
+    if (auto pNativeUiManager = GetNativeUIManager(*m_context).lock()) {
+      // Inform the parent ShadowNode of this change so the hierarchy can be
+      // updated
+      int64_t parentTag = pViewShadowNode->GetParent();
+      auto host = pNativeUiManager->getHost();
+      auto *pParentNode = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parentTag));
+      if (pParentNode != nullptr)
+        pParentNode->ReplaceChild(oldXamlView, newXamlView);
 
-    // Inform the parent ShadowNode of this change so the hierarchy can be
-    // updated
-    int64_t parentTag = pViewShadowNode->GetParent();
-    auto host = pNativeUiManager->getHost();
-    auto *pParentNode = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parentTag));
-    if (pParentNode != nullptr)
-      pParentNode->ReplaceChild(oldXamlView, newXamlView);
+      // Update the ShadowNode with the new XamlView
+      pViewShadowNode->ReplaceView(newXamlView);
+      pViewShadowNode->RefreshProperties();
 
-    // Update the ShadowNode with the new XamlView
-    pViewShadowNode->ReplaceView(newXamlView);
-    pViewShadowNode->RefreshProperties();
-
-    // Inform the NativeUIManager of this change so the yoga layout can be
-    // updated
-    pNativeUiManager->ReplaceView(*pViewShadowNode);
+      // Inform the NativeUIManager of this change so the yoga layout can be
+      // updated
+      pNativeUiManager->ReplaceView(*pViewShadowNode);
+    }
   }
 
   // Ensure parenting is setup properly
@@ -567,4 +586,4 @@ xaml::Media::SolidColorBrush ViewViewManager::EnsureTransparentBrush() {
   return m_transparentBrush;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

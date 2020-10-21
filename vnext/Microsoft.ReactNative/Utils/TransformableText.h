@@ -3,7 +3,7 @@
 
 #pragma once
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 struct TransformableText final {
   enum class TextTransform : uint8_t { Undefined, None, Uppercase, Lowercase, Capitalize };
 
@@ -52,9 +52,9 @@ struct TransformableText final {
     return str;
   }
 
-  static TextTransform GetTextTransform(const folly::dynamic &propertyValue) noexcept {
-    if (propertyValue.isString()) {
-      auto value = propertyValue.asString();
+  static TextTransform GetTextTransform(const winrt::Microsoft::ReactNative::JSValue &propertyValue) noexcept {
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+      auto value = propertyValue.AsString();
       if (value == "none") {
         return TextTransform::None;
       } else if (value == "lowercase") {
@@ -69,4 +69,4 @@ struct TransformableText final {
   }
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

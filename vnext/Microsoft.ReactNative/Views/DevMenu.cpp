@@ -41,9 +41,9 @@ React::ReactPropertyId<React::ReactNonAbiValue<Mso::VoidFunctor>> ConfigureBundl
 bool IsCtrlShiftD(winrt::Windows::System::VirtualKey key) noexcept {
   return (
       key == winrt::Windows::System::VirtualKey::D &&
-      react::uwp::KeyboardHelper::IsModifiedKeyPressed(
+      KeyboardHelper::IsModifiedKeyPressed(
           winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Shift) &&
-      react::uwp::KeyboardHelper::IsModifiedKeyPressed(
+      KeyboardHelper::IsModifiedKeyPressed(
           winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Control));
 }
 

@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <ShadowNode.h>
+#include <Views/ShadowNode.h>
 #include <XamlView.h>
 
 #include <folly/dynamic.h>
@@ -12,7 +12,7 @@
 #include <Shared/ReactWindowsAPI.h>
 #include "KeyboardEventHandler.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class ViewManagerBase;
 
@@ -57,21 +57,22 @@ extern const DECLSPEC_SELECTANY double c_UndefinedEdge = -1;
 #pragma warning(push)
 #pragma warning(disable : 4275) // base is not DLL exported
 #pragma warning(disable : 4251) // member is not DLL exported
-struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
+struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   ShadowNodeBase(const ShadowNodeBase &) = delete;
   ShadowNodeBase &operator=(ShadowNodeBase const &) = delete;
   ShadowNodeBase();
   virtual ~ShadowNodeBase() {}
 
   virtual void onDropViewInstance() override;
-  virtual void dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) override;
+  virtual void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs)
+      override;
   virtual void removeAllChildren() override;
   virtual void AddView(ShadowNode &child, int64_t index) override;
   virtual void RemoveChildAt(int64_t indexToRemove) override;
   virtual void createView() override;
   virtual bool NeedsForceLayout();
 
-  virtual void updateProperties(const folly::dynamic &&props) override;
+  virtual void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
   virtual void ReplaceChild(const XamlView &oldChildView, const XamlView &newChildView);
   virtual bool ImplementsPadding() {
@@ -128,7 +129,9 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
 
   // Support Keyboard
  public:
-  void UpdateHandledKeyboardEvents(std::string const &propertyName, folly::dynamic const &value);
+  void UpdateHandledKeyboardEvents(
+      std::string const &propertyName,
+      winrt::Microsoft::ReactNative::JSValue const &value);
 
  private:
   void EnsureHandledKeyboardEventHandler();
@@ -136,4 +139,4 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
 };
 #pragma warning(pop)
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

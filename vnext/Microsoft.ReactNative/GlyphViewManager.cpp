@@ -20,7 +20,7 @@ using namespace xaml::Documents;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 //
 // GlyphShadowNode
@@ -32,7 +32,7 @@ class GlyphShadowNode : public ShadowNodeBase {
   GlyphShadowNode() = default;
 
   void createView() override;
-  void updateProperties(const folly::dynamic &&props) override;
+  void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
  private:
   static void UpdateFontColorProps(xaml::Documents::Glyphs glyphs);
@@ -49,43 +49,46 @@ void GlyphShadowNode::createView() {
   UpdateFontColorProps(glyphs);
 }
 
-void GlyphShadowNode::updateProperties(const folly::dynamic &&props) {
+void GlyphShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_updating = true;
   auto glyphs = GetView().as<winrt::Glyphs>();
   bool updateEmSize = false;
 
-  for (auto &pair : props.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
+  for (auto &pair : props) {
+    const std::string &propertyName = pair.first;
+    const auto &propertyValue = pair.second;
 
     if (propertyName == "color") {
-      if (IsValidColorValue(propertyValue))
-        glyphs.Fill(BrushFrom(propertyValue));
+      if (react::uwp::IsValidColorValue(propertyValue))
+        glyphs.Fill(react::uwp::BrushFrom(propertyValue));
 #ifdef DEBUG
-      else if (propertyValue.isNull()) {
+      else if (propertyValue.IsNull()) {
         // Log error, must have a color
         YellowBox("GlyphShadowNode - color property must be non-null");
       }
 #endif
     } else if (propertyName == "fontUri") {
-      if (propertyValue.isString()) {
-        auto uri = winrt::Uri(asHstring(propertyValue));
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+        auto uri = winrt::Uri(react::uwp::asHstring(propertyValue));
         glyphs.FontUri(uri);
       }
     } else if (propertyName == "glyph") {
-      if (propertyValue.isString())
-        glyphs.Indices(asHstring(propertyValue));
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+        glyphs.Indices(react::uwp::asHstring(propertyValue));
+      }
     } else if (propertyName == "colorEnabled") {
-      if (propertyValue.isBool())
-        glyphs.IsColorFontEnabled(propertyValue.asBool());
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+        glyphs.IsColorFontEnabled(propertyValue.AsBoolean());
     } else if (propertyName == "height") {
-      if (propertyValue.isNumber())
-        m_height = propertyValue.asDouble();
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+        m_height = propertyValue.AsDouble();
 
       updateEmSize = true;
     } else if (propertyName == "emSize") {
-      if (propertyValue.isNumber())
-        m_emSize = propertyValue.asDouble();
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+        m_emSize = propertyValue.AsDouble();
       else
         m_emSize.reset();
 
@@ -107,7 +110,7 @@ void GlyphShadowNode::updateProperties(const folly::dynamic &&props) {
     glyphs.FontRenderingEmSize(emSize);
   }
 
-  Super::updateProperties(std::move(props));
+  Super::updateProperties(props);
   m_updating = false;
 }
 
@@ -134,21 +137,25 @@ void GlyphShadowNode::updateProperties(const folly::dynamic &&props) {
 //
 GlyphViewManager::GlyphViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *GlyphViewManager::GetName() const {
-  return "PLYIcon";
+const wchar_t *GlyphViewManager::GetName() const {
+  return L"PLYIcon";
 }
 
-facebook::react::ShadowNode *GlyphViewManager::createShadow() const {
+ShadowNode *GlyphViewManager::createShadow() const {
   return new GlyphShadowNode();
 }
 
-folly::dynamic GlyphViewManager::GetNativeProps() const {
-  auto props = Super::GetNativeProps();
+void GlyphViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
 
-  props.update(
-      folly::dynamic::object("emSize", "number")("fontUri", "string")("glyph", "string")("colorEnabled", "boolean"));
-
-  return props;
+  writer.WritePropertyName(L"emSize");
+  writer.WriteString(L"number");
+  writer.WritePropertyName(L"fontUri");
+  writer.WriteString(L"string");
+  writer.WritePropertyName(L"glyph");
+  writer.WriteString(L"string");
+  writer.WritePropertyName(L"colorEnabled");
+  writer.WriteString(L"boolean");
 }
 
 XamlView GlyphViewManager::CreateViewCore(int64_t /*tag*/) {
@@ -156,4 +163,4 @@ XamlView GlyphViewManager::CreateViewCore(int64_t /*tag*/) {
   return glyphs;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

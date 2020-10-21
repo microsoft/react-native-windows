@@ -5,7 +5,7 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class RootViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
@@ -13,7 +13,7 @@ class RootViewManager : public FrameworkElementViewManager {
  public:
   RootViewManager(const Mso::React::IReactContext &context);
 
-  const char *GetName() const override;
+  const wchar_t *GetName() const override;
 
   void AddView(const XamlView &parent, const XamlView &child, int64_t index) override;
   void RemoveAllChildren(const XamlView &parent) override;
@@ -27,10 +27,10 @@ class RootViewManager : public FrameworkElementViewManager {
       float width,
       float height) override;
 
-  void destroyShadow(facebook::react::ShadowNode *node) const override;
+  void destroyShadow(ShadowNode *node) const override;
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

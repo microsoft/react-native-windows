@@ -11,7 +11,7 @@ namespace react::uwp {
 std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> CalculatedAnimationDriver::MakeAnimation(
     const folly::dynamic & /*config*/) {
   const auto [scopedBatch, animation, easingFunction] = []() {
-    const auto compositor = react::uwp::GetCompositor();
+    const auto compositor = Microsoft::ReactNative::GetCompositor();
     return std::make_tuple(
         compositor.CreateScopedBatch(comp::CompositionBatchTypes::AllAnimations),
         compositor.CreateScalarKeyFrameAnimation(),

@@ -12,6 +12,7 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
+#include <Utils/ValueUtils.h>
 #include "Unicode.h"
 #include "XamlView.h"
 #include "cdebug.h"
@@ -132,9 +133,9 @@ void ReactImage::Source(ReactImageSource source) {
   }
 
   try {
-    winrt::Uri uri{Utf8ToUtf16(source.uri)};
-    winrt::hstring scheme{uri.SchemeName()};
-    winrt::hstring ext{uri.Extension()};
+    winrt::Uri uri{react::uwp::UriTryCreate(Utf8ToUtf16(source.uri))};
+    winrt::hstring scheme{uri ? uri.SchemeName() : L""};
+    winrt::hstring ext{uri ? uri.Extension() : L""};
 
     if (((scheme == L"http") || (scheme == L"https")) && !source.headers.empty()) {
       source.sourceType = ImageSourceType::Download;
@@ -193,7 +194,8 @@ void ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
 
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   const ReactImageSource source{m_imageSource};
-  const winrt::Uri uri{Utf8ToUtf16(source.uri)};
+  winrt::Uri uri{react::uwp::UriTryCreate(Utf8ToUtf16(source.uri))};
+
   const bool fromStream{source.sourceType == ImageSourceType::Download ||
                         source.sourceType == ImageSourceType::InlineData};
 
@@ -227,51 +229,56 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       compositionBrush->TintColor(strong_this->m_tintColor);
 
       const auto surface = fromStream ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)
-                                      : winrt::LoadedImageSurface::StartLoadFromUri(uri);
+                                      : uri ? winrt::LoadedImageSurface::StartLoadFromUri(uri) : nullptr;
 
       m_sizeChangedRevoker = strong_this->SizeChanged(
           winrt::auto_revoke, [compositionBrush](const auto &, const winrt::SizeChangedEventArgs &args) {
             compositionBrush->AvailableSize(args.NewSize());
           });
 
-      strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
-          winrt::auto_revoke,
-          [weak_this, compositionBrush, surface, fireLoadEndEvent, uri](
-              winrt::LoadedImageSurface const & /*sender*/,
-              winrt::LoadedImageSourceLoadCompletedEventArgs const &args) {
-            if (auto strong_this{weak_this.get()}) {
-              bool succeeded{false};
-              if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
-                winrt::Size size{surface.DecodedPhysicalSize()};
-                strong_this->m_imageSource.height = size.Height;
-                strong_this->m_imageSource.width = size.Width;
+      if (strong_this->m_surfaceLoadedRevoker)
+        strong_this->m_surfaceLoadedRevoker.revoke();
 
-                // If we are dynamically switching the resizeMode to 'repeat', then
-                // the SizeChanged event has already fired and the ReactImageBrush's
-                // size has not been set. Use ActualWidth/Height in that case.
-                if (compositionBrush->AvailableSize() == winrt::Size{0, 0}) {
-                  compositionBrush->AvailableSize({static_cast<float>(strong_this->ActualWidth()),
-                                                   static_cast<float>(strong_this->ActualHeight())});
+      if (surface) {
+        strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
+            winrt::auto_revoke,
+            [weak_this, compositionBrush, surface, fireLoadEndEvent, uri](
+                winrt::LoadedImageSurface const & /*sender*/,
+                winrt::LoadedImageSourceLoadCompletedEventArgs const &args) {
+              if (auto strong_this{weak_this.get()}) {
+                bool succeeded{false};
+                if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
+                  winrt::Size size{surface.DecodedPhysicalSize()};
+                  strong_this->m_imageSource.height = size.Height;
+                  strong_this->m_imageSource.width = size.Width;
+
+                  // If we are dynamically switching the resizeMode to 'repeat', then
+                  // the SizeChanged event has already fired and the ReactImageBrush's
+                  // size has not been set. Use ActualWidth/Height in that case.
+                  if (compositionBrush->AvailableSize() == winrt::Size{0, 0}) {
+                    compositionBrush->AvailableSize({static_cast<float>(strong_this->ActualWidth()),
+                                                     static_cast<float>(strong_this->ActualHeight())});
+                  }
+
+                  compositionBrush->Source(surface);
+                  compositionBrush->ResizeMode(strong_this->m_resizeMode);
+                  compositionBrush->BlurRadius(strong_this->m_blurRadius);
+                  compositionBrush->TintColor(strong_this->m_tintColor);
+
+                  strong_this->Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
+                  succeeded = true;
+                } else {
+                  ImageFailed(uri, args);
                 }
 
-                compositionBrush->Source(surface);
-                compositionBrush->ResizeMode(strong_this->m_resizeMode);
-                compositionBrush->BlurRadius(strong_this->m_blurRadius);
-                compositionBrush->TintColor(strong_this->m_tintColor);
+                if (fireLoadEndEvent) {
+                  strong_this->m_onLoadEndEvent(*strong_this, succeeded);
+                }
 
-                strong_this->Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
-                succeeded = true;
-              } else {
-                ImageFailed(uri, args);
+                strong_this->m_sizeChangedRevoker.revoke();
               }
-
-              if (fireLoadEndEvent) {
-                strong_this->m_onLoadEndEvent(*strong_this, succeeded);
-              }
-
-              strong_this->m_sizeChangedRevoker.revoke();
-            }
-          });
+            });
+      }
     } else {
       winrt::ImageBrush imageBrush{strong_this->Background().try_as<winrt::ImageBrush>()};
       bool createImageBrush{!imageBrush};
@@ -378,14 +385,11 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(Re
     winrt::HttpRequestMessage request{httpMethod, uri};
 
     if (!source.headers.empty()) {
-      for (auto &header : source.headers.items()) {
-        const std::string &name{header.first.getString()};
-        const std::string &value{header.second.getString()};
-
-        if (_stricmp(name.c_str(), "authorization") == 0) {
-          request.Headers().TryAppendWithoutValidation(Utf8ToUtf16(name), Utf8ToUtf16(value));
+      for (auto &header : source.headers) {
+        if (_stricmp(header.first.c_str(), "authorization") == 0) {
+          request.Headers().TryAppendWithoutValidation(Utf8ToUtf16(header.first), Utf8ToUtf16(header.second));
         } else {
-          request.Headers().Append(Utf8ToUtf16(name), Utf8ToUtf16(value));
+          request.Headers().Append(Utf8ToUtf16(header.first), Utf8ToUtf16(header.second));
         }
       }
     }

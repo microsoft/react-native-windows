@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <JSValueWriter.h>
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Input.h>
@@ -16,7 +17,7 @@
 
 #include <winrt/Windows.Foundation.Metadata.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class PickerShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -24,7 +25,7 @@ class PickerShadowNode : public ShadowNodeBase {
  public:
   PickerShadowNode();
   void createView() override;
-  void updateProperties(const folly::dynamic &&props) override;
+  void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
   bool NeedsForceLayout() override;
 
  private:
@@ -36,7 +37,7 @@ class PickerShadowNode : public ShadowNodeBase {
       int32_t selectedIndex,
       folly::dynamic &&text);
 
-  folly::dynamic m_items;
+  winrt::Microsoft::ReactNative::JSValueArray m_items;
   int32_t m_selectedIndex = -1;
 
   // FUTURE: remove when we can require RS5+
@@ -73,11 +74,18 @@ void PickerShadowNode::createView() {
     if (!m_updating) {
       int32_t index = combobox.SelectedIndex();
       folly::dynamic value;
-      if (index >= 0 && index < static_cast<int32_t>(m_items.size()))
-        value = m_items.at(index)["value"];
+      if (index >= 0 && index < static_cast<int32_t>(m_items.size())) {
+        if (m_items[index].AsObject()["value"].Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+          value = m_items[index].AsObject()["value"].AsString();
+        } else if (
+            m_items[index].AsObject()["value"].Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+            m_items[index].AsObject()["value"].Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+          value = m_items[index].AsObject()["value"].AsDouble();
+        }
+      }
       folly::dynamic text;
       if (s_isEditableComboboxSupported == react::uwp::TriBit::Set && index == -1)
-        text = HstringToDynamic(combobox.Text());
+        text = react::uwp::HstringToDynamic(combobox.Text());
       OnSelectionChanged(GetViewManager()->GetReactContext(), m_tag, std::move(value), index, std::move(text));
     }
   });
@@ -90,45 +98,41 @@ void PickerShadowNode::createView() {
   });
 }
 
-void PickerShadowNode::updateProperties(const folly::dynamic &&props) {
+void PickerShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_updating = true;
 
   bool updateSelectedIndex = false;
   auto combobox = GetView().as<xaml::Controls::ComboBox>();
-  for (auto &pair : props.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
+  for (auto &pair : props) {
+    const std::string &propertyName = pair.first;
+    const auto &propertyValue = pair.second;
 
     if (propertyName == "editable") {
       if (s_isEditableComboboxSupported == react::uwp::TriBit::Set) {
-        if (propertyValue.isBool())
-          combobox.IsEditable(propertyValue.asBool());
-        else if (propertyValue.isNull())
+        if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+          combobox.IsEditable(propertyValue.AsBoolean());
+        else if (propertyValue.IsNull())
           combobox.ClearValue(xaml::Controls::ComboBox::IsEditableProperty());
       }
     } else if (propertyName == "text") {
       if (s_isEditableComboboxSupported == react::uwp::TriBit::Set) {
-        if (propertyValue.isString())
-          combobox.Text(asHstring(propertyValue));
-        else if (propertyValue.isNull())
+        if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String)
+          combobox.Text(react::uwp::asHstring(propertyValue));
+        else if (propertyValue.IsNull())
           combobox.ClearValue(xaml::Controls::ComboBox::TextProperty());
       }
     } else if (propertyName == "enabled") {
-      if (propertyValue.isBool())
-        combobox.IsEnabled(propertyValue.asBool());
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+        combobox.IsEnabled(propertyValue.AsBoolean());
     } else if (propertyName == "selectedIndex") {
-      if (propertyValue.isNumber()) {
-        auto selectedIndex = propertyValue.asDouble();
-        if (selectedIndex == static_cast<int32_t>(selectedIndex)) {
-          m_selectedIndex = static_cast<int32_t>(selectedIndex);
-        }
-        updateSelectedIndex = true;
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+        m_selectedIndex = propertyValue.AsInt32();
       }
+      updateSelectedIndex = true;
     } else if (propertyName == "items") {
-      if (propertyValue.isArray()) {
-        m_items = propertyValue;
-        RepopulateItems();
-      }
+      m_items = propertyValue.AsArray().Copy();
+      RepopulateItems();
     }
   }
 
@@ -137,7 +141,7 @@ void PickerShadowNode::updateProperties(const folly::dynamic &&props) {
   if (updateSelectedIndex)
     combobox.SelectedIndex(m_selectedIndex);
 
-  Super::updateProperties(std::move(props));
+  Super::updateProperties(props);
   m_updating = false;
 }
 
@@ -147,14 +151,14 @@ void PickerShadowNode::RepopulateItems() {
   auto comboBoxItems = combobox.Items();
   comboBoxItems.Clear();
   for (const auto &item : m_items) {
-    if (item.count("label")) {
-      std::string label = item["label"].asString();
+    if (!item["label"].IsNull()) {
+      std::string label = item["label"].AsString();
       auto comboboxItem = xaml::Controls::ComboBoxItem();
 
       comboboxItem.Content(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(label)));
 
-      if (item.count("textColor") && IsValidColorValue(item["textColor"]))
-        comboboxItem.Foreground(BrushFrom(item["textColor"]));
+      if (!item["textColor"].IsNull() && react::uwp::IsValidColorValue(item["textColor"]))
+        comboboxItem.Foreground(react::uwp::BrushFrom(item["textColor"]));
 
       comboBoxItems.Append(comboboxItem);
     }
@@ -180,20 +184,21 @@ bool PickerShadowNode::NeedsForceLayout() {
 
 PickerViewManager::PickerViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *PickerViewManager::GetName() const {
-  return "RCTPicker";
+const wchar_t *PickerViewManager::GetName() const {
+  return L"RCTPicker";
 }
 
-folly::dynamic PickerViewManager::GetNativeProps() const {
-  auto props = Super::GetNativeProps();
+void PickerViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
 
-  props.update(folly::dynamic::object("editable", "boolean")("enabled", "boolean")("items", "array")(
-      "selectedIndex", "number")("text", "string"));
-
-  return props;
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"editable", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"enabled", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"items", L"array");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"selectedIndex", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"text", L"string");
 }
 
-facebook::react::ShadowNode *PickerViewManager::createShadow() const {
+ShadowNode *PickerViewManager::createShadow() const {
   return new PickerShadowNode();
 }
 
@@ -206,4 +211,4 @@ YGMeasureFunc PickerViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

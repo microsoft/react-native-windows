@@ -5,24 +5,24 @@
 
 #include "ActivityIndicatorViewManager.h"
 
+#include <JSValueWriter.h>
 #include <UI.Xaml.Controls.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 ActivityIndicatorViewManager::ActivityIndicatorViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *ActivityIndicatorViewManager::GetName() const {
-  return "RCTActivityIndicatorView";
+const wchar_t *ActivityIndicatorViewManager::GetName() const {
+  return L"RCTActivityIndicatorView";
 }
 
-folly::dynamic ActivityIndicatorViewManager::GetNativeProps() const {
-  auto props = Super::GetNativeProps();
+void ActivityIndicatorViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
 
-  props.update(folly::dynamic::object("animating", "boolean")("color", "Color"));
-
-  return props;
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"animating", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"color", L"Color");
 }
 
 XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t /*tag*/) {
@@ -33,15 +33,15 @@ XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t /*tag*/) {
 bool ActivityIndicatorViewManager::UpdateProperty(
     ShadowNodeBase *nodeToUpdate,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   auto progressRing = nodeToUpdate->GetView().as<xaml::Controls::ProgressRing>();
   if (progressRing == nullptr)
     return true;
 
   if (propertyName == "animating") {
-    if (propertyValue.isBool())
-      progressRing.IsActive(propertyValue.asBool());
-    else if (propertyValue.isNull())
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+      progressRing.IsActive(propertyValue.AsBoolean());
+    if (propertyValue.IsNull())
       progressRing.ClearValue(xaml::Controls::ProgressRing::IsActiveProperty());
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
@@ -49,4 +49,4 @@ bool ActivityIndicatorViewManager::UpdateProperty(
   return true;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

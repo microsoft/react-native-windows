@@ -8,6 +8,7 @@
 
 #include <UI.Xaml.Controls.h>
 
+#include <JSValue.h>
 #include <folly/dynamic.h>
 
 namespace react::uwp {
@@ -18,7 +19,7 @@ struct ReactImageSource {
   std::string uri;
   std::string method;
   std::string bundleRootPath;
-  folly::dynamic headers;
+  std::vector<std::pair<std::string, std::string>> headers;
   double width = 0;
   double height = 0;
   double scale = 1.0;
@@ -42,7 +43,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   void OnLoadEnd(winrt::event_token const &token) noexcept;
 
   // Public Properties
-  ReactImageSource Source() {
+  const ReactImageSource &Source() {
     return m_imageSource;
   }
   void Source(ReactImageSource source);

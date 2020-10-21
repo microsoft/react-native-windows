@@ -162,7 +162,7 @@ comp::CompositionStretch ReactImageBrush::ResizeModeToStretch() {
 comp::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
   // If it doesn't exist, create it
   if (!CompositionBrush()) {
-    comp::CompositionSurfaceBrush surfaceBrush{GetCompositor().CreateSurfaceBrush()};
+    comp::CompositionSurfaceBrush surfaceBrush{Microsoft::ReactNative::GetCompositor().CreateSurfaceBrush()};
     surfaceBrush.Surface(m_loadedImageSurface);
 
     return surfaceBrush;
@@ -232,7 +232,8 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
       effect = compositeEffect;
     }
 
-    comp::CompositionEffectFactory effectFactory{GetCompositor().CreateEffectFactory(effect, animatedProperties)};
+    comp::CompositionEffectFactory effectFactory{
+        Microsoft::ReactNative::GetCompositor().CreateEffectFactory(effect, animatedProperties)};
 
     m_effectBrush = effectFactory.CreateBrush();
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);

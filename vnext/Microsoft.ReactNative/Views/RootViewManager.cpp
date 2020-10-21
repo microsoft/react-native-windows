@@ -14,12 +14,12 @@ using namespace xaml;
 using namespace xaml::Controls;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 RootViewManager::RootViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *RootViewManager::GetName() const {
-  return "ROOT";
+const wchar_t *RootViewManager::GetName() const {
+  return L"ROOT";
 }
 
 XamlView RootViewManager::CreateViewCore(int64_t /*tag*/) {
@@ -58,9 +58,9 @@ void RootViewManager::SetLayoutProps(
   // changes.
 }
 
-void RootViewManager::destroyShadow(facebook::react::ShadowNode * /*node*/) const {
+void RootViewManager::destroyShadow(ShadowNode * /*node*/) const {
   // Don't delete the node here, allow the NativeUIManager to handle that since
   // it creates it.
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

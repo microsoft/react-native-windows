@@ -8,6 +8,7 @@
 #include <Views/ControlViewManager.h>
 #include <Views/ShadowNodeBase.h>
 
+#include <JSValueWriter.h>
 #include <Utils/PropertyUtils.h>
 
 #ifdef USE_WINUI3
@@ -16,14 +17,13 @@
 #define TAB_INDEX_PROPERTY xaml::Controls::Control::TabIndexProperty
 #endif
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 ControlViewManager::ControlViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-folly::dynamic ControlViewManager::GetNativeProps() const {
-  folly::dynamic props = Super::GetNativeProps();
-  props.update(folly::dynamic::object("tabIndex", "number"));
-  return props;
+void ControlViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"tabIndex", L"number");
 }
 void ControlViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
   TransferProperty(oldView, newView, xaml::Controls::Control::FontSizeProperty());
@@ -49,7 +49,7 @@ void ControlViewManager::TransferProperties(const XamlView &oldView, const XamlV
 bool ControlViewManager::UpdateProperty(
     ShadowNodeBase *nodeToUpdate,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   auto control(nodeToUpdate->GetView().as<xaml::Controls::Control>());
 
   bool implementsPadding = nodeToUpdate->ImplementsPadding();
@@ -64,12 +64,13 @@ bool ControlViewManager::UpdateProperty(
       finalizeBorderRadius = true;
     } else if (implementsPadding && TryUpdatePadding(nodeToUpdate, control, propertyName, propertyValue)) {
     } else if (propertyName == "tabIndex") {
-      if (propertyValue.isNumber()) {
-        auto tabIndex = propertyValue.asDouble();
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+        auto tabIndex = propertyValue.AsDouble();
         if (tabIndex == static_cast<int32_t>(tabIndex))
           control.ClearValue(TAB_INDEX_PROPERTY());
         control.TabIndex(static_cast<int32_t>(tabIndex));
-      } else if (propertyValue.isNull()) {
+      } else if (propertyValue.IsNull()) {
         control.ClearValue(TAB_INDEX_PROPERTY());
       }
     } else {
@@ -92,4 +93,4 @@ void ControlViewManager::OnViewCreated(XamlView view) {
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

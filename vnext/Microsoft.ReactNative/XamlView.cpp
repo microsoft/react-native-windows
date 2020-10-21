@@ -8,7 +8,7 @@
 #include <UI.Xaml.Documents.h>
 #include "Utils/Helpers.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 xaml::XamlRoot TryGetXamlRoot(const XamlView &view) {
   xaml::XamlRoot root{nullptr};
@@ -54,4 +54,4 @@ comp::Compositor GetCompositor() {
   return tlsCompositor;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -13,6 +13,7 @@
 
 #include <IReactInstance.h>
 #include <IXamlRootView.h>
+#include <Modules/PaperUIManagerModule.h>
 #include <ReactPropertyBag.h>
 #include <TestHook.h>
 #include <Views/ExpressionAnimationStore.h>
@@ -22,7 +23,7 @@ namespace winrt {
 using namespace xaml;
 }
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 float GetConstrainedResult(float constrainTo, float measuredSize, YGMeasureMode measureMode) {
   // Round up to workaround truncation inside yoga
@@ -80,35 +81,44 @@ YGSize DefaultYogaSelfMeasureFunc(
 
 ViewManagerBase::ViewManagerBase(const Mso::React::IReactContext &context) : m_context(&context) {}
 
-folly::dynamic ViewManagerBase::GetExportedViewConstants() const {
-  return folly::dynamic::object();
+void ViewManagerBase::GetExportedViewConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {}
+
+void ViewManagerBase::GetCommands(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {}
+
+void ViewManagerBase::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  React::WriteProperty(writer, L"onLayout", L"function");
+  React::WriteProperty(writer, L"keyDownEvents", L"array");
+  React::WriteProperty(writer, L"keyUpEvents", L"array");
 }
 
-folly::dynamic ViewManagerBase::GetCommands() const {
-  return folly::dynamic::object();
+void ViewManagerBase::GetConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  writer.WritePropertyName(L"Constants");
+  writer.WriteObjectBegin();
+  GetExportedViewConstants(writer);
+  writer.WriteObjectEnd();
+
+  writer.WritePropertyName(L"Commands");
+  writer.WriteObjectBegin();
+  GetCommands(writer);
+  writer.WriteObjectEnd();
+
+  writer.WritePropertyName(L"NativeProps");
+  writer.WriteObjectBegin();
+  GetNativeProps(writer);
+  writer.WriteObjectEnd();
+
+  writer.WritePropertyName(L"bubblingEventTypes");
+  writer.WriteObjectBegin();
+  GetExportedCustomBubblingEventTypeConstants(writer);
+  writer.WriteObjectEnd();
+
+  writer.WritePropertyName(L"directEventTypes");
+  writer.WriteObjectBegin();
+  GetExportedCustomDirectEventTypeConstants(writer);
+  writer.WriteObjectEnd();
 }
 
-folly::dynamic ViewManagerBase::GetNativeProps() const {
-  folly::dynamic props = folly::dynamic::object();
-  props.update(folly::dynamic::object("onLayout", "function")("keyDownEvents", "array")("keyUpEvents", "array"));
-  return props;
-}
-
-folly::dynamic ViewManagerBase::GetConstants() const {
-  folly::dynamic constants = folly::dynamic::object("Constants", GetExportedViewConstants())("Commands", GetCommands())(
-      "NativeProps", GetNativeProps());
-
-  const auto bubblingEventTypesConstants = GetExportedCustomBubblingEventTypeConstants();
-  if (!bubblingEventTypesConstants.empty())
-    constants["bubblingEventTypes"] = std::move(bubblingEventTypesConstants);
-  const auto directEventTypesConstants = GetExportedCustomDirectEventTypeConstants();
-  if (!directEventTypesConstants.empty())
-    constants["directEventTypes"] = std::move(directEventTypesConstants);
-
-  return constants;
-}
-
-facebook::react::ShadowNode *ViewManagerBase::createShadow() const {
+ShadowNode *ViewManagerBase::createShadow() const {
   // This class is the default ShadowNode that most view managers can use. If
   // they need special functionality
   //  they should override this function and create their own ShadowNodeBase
@@ -116,56 +126,67 @@ facebook::react::ShadowNode *ViewManagerBase::createShadow() const {
   return new ShadowNodeBase();
 }
 
-void ViewManagerBase::destroyShadow(facebook::react::ShadowNode *node) const {
+void ViewManagerBase::destroyShadow(ShadowNode *node) const {
   delete node;
 }
 
-folly::dynamic ViewManagerBase::GetExportedCustomBubblingEventTypeConstants() const {
-  const PCSTR standardEventBaseNames[] = {
+void ViewManagerBase::GetExportedCustomBubblingEventTypeConstants(
+    const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  const PCWSTR standardEventBaseNames[] = {
       // Generic events
-      "Press",
-      "Change",
-      "Focus",
-      "Blur",
-      "SubmitEditing",
-      "EndEditing",
-      "KeyPress",
+      L"Press",
+      L"Change",
+      L"Focus",
+      L"Blur",
+      L"SubmitEditing",
+      L"EndEditing",
+      L"KeyPress",
 
       // Touch events
-      "TouchStart",
-      "TouchMove",
-      "TouchCancel",
-      "TouchEnd",
+      L"TouchStart",
+      L"TouchMove",
+      L"TouchCancel",
+      L"TouchEnd",
 
       // Keyboard events
-      "KeyUp",
-      "KeyDown",
+      L"KeyUp",
+      L"KeyDown",
   };
 
   folly::dynamic bubblingEvents = folly::dynamic::object();
   for (auto &standardEventBaseName : standardEventBaseNames) {
     using namespace std::string_literals;
+    std::wstring eventName = L"top"s + standardEventBaseName;
+    std::wstring bubbleName = L"on"s + standardEventBaseName;
 
-    std::string eventName = "top"s + standardEventBaseName;
-    std::string bubbleName = "on"s + standardEventBaseName;
-
-    folly::dynamic registration = folly::dynamic::object();
-    registration["captured"] = bubbleName + "Capture";
-    registration["bubbled"] = std::move(bubbleName);
-
-    bubblingEvents[std::move(eventName)] = folly::dynamic::object("phasedRegistrationNames", std::move(registration));
+    writer.WritePropertyName(eventName);
+    writer.WriteObjectBegin();
+    writer.WritePropertyName(L"phasedRegistrationNames");
+    writer.WriteObjectBegin();
+    React::WriteProperty(writer, L"captured", bubbleName + L"Capture");
+    React::WriteProperty(writer, L"capbubbledtured", std::move(bubbleName));
+    writer.WriteObjectEnd();
+    writer.WriteObjectEnd();
   }
-
-  return bubblingEvents;
 }
 
-folly::dynamic ViewManagerBase::GetExportedCustomDirectEventTypeConstants() const {
-  folly::dynamic eventTypes = folly::dynamic::object();
-  eventTypes.update(folly::dynamic::object("topLayout", folly::dynamic::object("registrationName", "onLayout"))(
-      "topMouseEnter", folly::dynamic::object("registrationName", "onMouseEnter"))(
-      "topMouseLeave", folly::dynamic::object("registrationName", "onMouseLeave"))(
-      "topAccessibilityAction", folly::dynamic::object("registrationName", "onAccessibilityAction")));
-  return eventTypes;
+void ViewManagerBase::GetExportedCustomDirectEventTypeConstants(
+    const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  const PCWSTR eventNames[] = {// Generic events
+                               L"Layout",
+                               L"MouseEnter",
+                               L"AccessibilityAction"};
+
+  for (auto &eventBaseName : eventNames) {
+    using namespace std::string_literals;
+    std::wstring eventName = L"top"s + eventBaseName;
+    std::wstring bubbleName = L"on"s + eventBaseName;
+
+    writer.WritePropertyName(L"top"s + eventBaseName);
+    writer.WriteObjectBegin();
+    React::WriteProperty(writer, L"registrationName", L"on"s + eventBaseName);
+    writer.WriteObjectEnd();
+  }
 }
 
 XamlView ViewManagerBase::CreateView(int64_t tag) {
@@ -204,19 +225,21 @@ void ViewManagerBase::ReplaceChild(const XamlView &parent, const XamlView &oldCh
   assert(false);
 }
 
-void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
+void ViewManagerBase::UpdateProperties(
+    ShadowNodeBase *nodeToUpdate,
+    winrt::Microsoft::ReactNative::JSValueObject &props) {
   // Directly dirty this node since non-layout changes like the text property do
   // not trigger relayout
   //  There isn't actually a yoga node for RawText views, but it will invalidate
   //  the ancestors which
   //  will include the containing Text element. And that's what matters.
   int64_t tag = GetTag(nodeToUpdate->GetView());
-  if (auto uiManager = static_cast<NativeUIManager *>(GetReactContext().NativeUIManager()))
+  if (auto uiManager = GetNativeUIManager(GetReactContext()).lock())
     uiManager->DirtyYogaNode(tag);
 
-  for (const auto &pair : reactDiffMap.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
+  for (const auto &pair : props) {
+    const std::string &propertyName = pair.first;
+    const auto &propertyValue = pair.second;
     if (!UpdateProperty(nodeToUpdate, propertyName, propertyValue)) {
       NotifyUnimplementedProperty(nodeToUpdate, propertyName, propertyValue);
     }
@@ -228,9 +251,9 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly
 bool ViewManagerBase::UpdateProperty(
     ShadowNodeBase *nodeToUpdate,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "onLayout") {
-    nodeToUpdate->m_onLayoutRegistered = !propertyValue.isNull() && propertyValue.asBool();
+    nodeToUpdate->m_onLayoutRegistered = !propertyValue.IsNull() && propertyValue.AsBoolean();
   } else if (propertyName == "keyDownEvents") {
     nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
   } else if (propertyName == "keyUpEvents") {
@@ -246,36 +269,39 @@ void ViewManagerBase::TransferProperties(const XamlView & /*oldView*/, const Xam
 void ViewManagerBase::DispatchCommand(
     const XamlView & /*viewToUpdate*/,
     const std::string & /*commandId*/,
-    const folly::dynamic & /*commandArgs*/) {
+    winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
   assert(false); // View did not handle its command
 }
 
 static const winrt::Microsoft::ReactNative::ReactPropertyId<
-    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<ExpressionAnimationStore>>>
+    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<react::uwp::ExpressionAnimationStore>>>
     &ExpressionAnimationStorePropertyId() noexcept {
   static const winrt::Microsoft::ReactNative::ReactPropertyId<
-      winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<ExpressionAnimationStore>>>
+      winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<react::uwp::ExpressionAnimationStore>>>
       prop{L"ReactNative.ViewManagerBase", L"ExpressionAnimationStore"};
   return prop;
 }
 
-std::shared_ptr<ExpressionAnimationStore> ViewManagerBase::GetExpressionAnimationStore() noexcept {
+std::shared_ptr<react::uwp::ExpressionAnimationStore> ViewManagerBase::GetExpressionAnimationStore() noexcept {
   return winrt::Microsoft::ReactNative::ReactPropertyBag(GetReactContext().Properties())
-      .GetOrCreate(ExpressionAnimationStorePropertyId(), []() { return std::make_shared<ExpressionAnimationStore>(); })
+      .GetOrCreate(
+          ExpressionAnimationStorePropertyId(),
+          []() { return std::make_shared<react::uwp::ExpressionAnimationStore>(); })
       .Value();
 }
 
 void ViewManagerBase::NotifyUnimplementedProperty(
     ShadowNodeBase *nodeToUpdate,
     const std::string &propertyName,
-    const folly::dynamic &value) {
+    const winrt::Microsoft::ReactNative::JSValue &value) {
 #ifdef DEBUG
   auto viewManagerName = nodeToUpdate->GetViewManager()->GetName();
   auto element(nodeToUpdate->GetView().as<winrt::IInspectable>());
 
   if (element != nullptr) {
     auto className = Microsoft::Common::Unicode::Utf16ToUtf8(winrt::get_class_name(element));
-    TestHook::NotifyUnimplementedProperty(viewManagerName, className, propertyName, value);
+    TestHook::NotifyUnimplementedProperty(
+        Microsoft::Common::Unicode::Utf16ToUtf8(viewManagerName), className, propertyName, value);
   } else {
     cdebug << "[NonIInspectable] viewManagerName = " << viewManagerName << std::endl;
   }
@@ -297,8 +323,8 @@ void ViewManagerBase::SetLayoutProps(
   auto fe = element.as<xaml::FrameworkElement>();
 
   // Set Position & Size Properties
-  ViewPanel::SetLeft(element, left);
-  ViewPanel::SetTop(element, top);
+  react::uwp::ViewPanel::SetLeft(element, left);
+  react::uwp::ViewPanel::SetTop(element, top);
 
   fe.Width(width);
   fe.Height(height);
@@ -332,4 +358,4 @@ void ViewManagerBase::DispatchEvent(int64_t viewTag, std::string &&eventName, fo
   m_context->CallJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

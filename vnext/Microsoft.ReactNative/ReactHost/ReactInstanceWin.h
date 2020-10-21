@@ -41,9 +41,12 @@ static_assert(
     static_cast<int32_t>(facebook::react::RCTLogLevel::Fatal) == static_cast<int32_t>(LogLevel::Fatal),
     "LogLevel::Fatal value must match");
 
+struct BridgeUIBatchInstanceCallback;
+
 //! ReactInstance implementation for Windows that is managed by ReactHost.
 class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> {
   using Super = ActiveObjectType;
+  friend BridgeUIBatchInstanceCallback;
 
  public: // IReactInstance
   const ReactOptions &Options() const noexcept override;
@@ -60,9 +63,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
  public:
   void CallJsFunction(std::string &&moduleName, std::string &&method, folly::dynamic &&params) noexcept;
   void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept;
-#ifndef CORE_ABI
-  facebook::react::INativeUIManager *NativeUIManager() noexcept;
-#endif
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() noexcept;
   bool IsLoaded() const noexcept;
 #ifndef CORE_ABI
@@ -161,7 +161,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
                                                                                                              m_mutex};
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::MessageQueueThread>> m_uiMessageThread{Queue(),
                                                                                                          m_mutex};
-  const Mso::ActiveReadableField<std::shared_ptr<facebook::react::IUIManager>> m_uiManager{Queue(), m_mutex};
 
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::InstanceWrapper>> m_instanceWrapper{Queue(), m_mutex};
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::Instance>> m_instance{Queue(), m_mutex};

@@ -35,7 +35,7 @@
 
     <file src="$nugetroot$\inc\Shared\AbiSafe.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\DevSettings.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\INativeUIManager.h" target="inc"/>
+    <file src="$nugetroot$\inc\Desktop\INativeUIManagerLegacy.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\InstanceManager.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IReactRootView.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IRedBoxHandler.h" target="inc"/>

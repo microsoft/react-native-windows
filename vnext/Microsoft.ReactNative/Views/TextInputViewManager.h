@@ -5,7 +5,7 @@
 
 #include <Views/ControlViewManager.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class TextInputViewManager : public ControlViewManager {
   using Super = ControlViewManager;
@@ -13,10 +13,11 @@ class TextInputViewManager : public ControlViewManager {
  public:
   TextInputViewManager(const Mso::React::IReactContext &context);
 
-  const char *GetName() const override;
-  folly::dynamic GetNativeProps() const override;
-  folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
-  facebook::react::ShadowNode *createShadow() const override;
+  const wchar_t *GetName() const override;
+  void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+  void GetExportedCustomDirectEventTypeConstants(
+      const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+  ShadowNode *createShadow() const override;
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
   virtual void TransferProperties(const XamlView &oldView, const XamlView &newView) override;
@@ -29,4 +30,4 @@ class TextInputViewManager : public ControlViewManager {
   void TransferInputScope(const XamlView &oldView, const XamlView &newView, const bool copyToPasswordBox);
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

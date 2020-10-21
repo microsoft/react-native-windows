@@ -4,23 +4,23 @@
 #include "pch.h"
 #include "XamlUIService.h"
 #include "XamlUIService.g.cpp"
+#include <Modules/NativeUIManager.h>
+#include <Modules/PaperUIManagerModule.h>
 #include "DynamicWriter.h"
+#include "ShadowNodeBase.h"
 #include "Views/ShadowNodeBase.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-XamlUIService::XamlUIService(
-    std::weak_ptr<facebook::react::IUIManager> &&uimanager,
-    Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept
-    : m_wkUIManager(uimanager), m_context(context) {}
+XamlUIService::XamlUIService(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept : m_context(context) {}
 
 xaml::DependencyObject XamlUIService::ElementFromReactTag(int64_t reactTag) noexcept {
-  if (auto strongUIManager = m_wkUIManager.lock()) {
-    auto shadowNode = strongUIManager->FindShadowNodeForTag(reactTag);
+  if (auto uiManager = ::Microsoft::ReactNative::GetNativeUIManager(*m_context).lock()) {
+    auto shadowNode = uiManager->getHost()->FindShadowNodeForTag(reactTag);
     if (!shadowNode)
       return nullptr;
 
-    return static_cast<react::uwp::ShadowNodeBase *>(shadowNode)->GetView();
+    return static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(shadowNode)->GetView();
   }
   return nullptr;
 }

@@ -42,7 +42,7 @@ void InterpolationAnimatedNode::OnAttachToNode(int64_t animatedNodeTag) {
   const auto [rawValueAnimation, offsetAnimation] = [this]() {
     if (const auto manager = m_manager.lock()) {
       if (const auto parent = manager->GetValueAnimatedNode(m_parentTag)) {
-        const auto compositor = react::uwp::GetCompositor();
+        const auto compositor = Microsoft::ReactNative::GetCompositor();
 
         const auto rawValueAnimation = CreateExpressionAnimation(compositor, *parent);
         rawValueAnimation.Expression(

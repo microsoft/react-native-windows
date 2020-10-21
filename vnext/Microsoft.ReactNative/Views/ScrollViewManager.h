@@ -6,7 +6,7 @@
 #include <Views/ControlViewManager.h>
 #include "Impl/ScrollViewUWPImplementation.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class ScrollViewManager : public ControlViewManager {
   using Super = ControlViewManager;
@@ -14,12 +14,13 @@ class ScrollViewManager : public ControlViewManager {
  public:
   ScrollViewManager(const Mso::React::IReactContext &context);
 
-  const char *GetName() const override;
-  folly::dynamic GetCommands() const override;
-  folly::dynamic GetNativeProps() const override;
-  folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
+  const wchar_t *GetName() const override;
+  void GetCommands(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+  void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+  void GetExportedCustomDirectEventTypeConstants(
+      const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
-  facebook::react::ShadowNode *createShadow() const override;
+  ShadowNode *createShadow() const override;
 
   void AddView(const XamlView &parent, const XamlView &child, int64_t index) override;
   void RemoveAllChildren(const XamlView &parent) override;
@@ -35,4 +36,4 @@ class ScrollViewManager : public ControlViewManager {
   friend class ScrollViewShadowNode;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

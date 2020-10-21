@@ -17,7 +17,7 @@ using namespace xaml::Controls;
 using namespace xaml::Documents;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
   auto view = static_cast<ShadowNodeBase &>(child).GetView();
@@ -44,8 +44,8 @@ void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
 
 VirtualTextViewManager::VirtualTextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *VirtualTextViewManager::GetName() const {
-  return "RCTVirtualText";
+const wchar_t *VirtualTextViewManager::GetName() const {
+  return L"RCTVirtualText";
 }
 
 XamlView VirtualTextViewManager::CreateViewCore(int64_t /*tag*/) {
@@ -55,7 +55,7 @@ XamlView VirtualTextViewManager::CreateViewCore(int64_t /*tag*/) {
 bool VirtualTextViewManager::UpdateProperty(
     ShadowNodeBase *nodeToUpdate,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   auto span = nodeToUpdate->GetView().as<winrt::Span>();
   if (span == nullptr)
     return true;
@@ -95,4 +95,4 @@ bool VirtualTextViewManager::RequiresYogaNode() const {
   return false;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -14,8 +14,10 @@
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 
+#include <INativeUIManager.h>
 #include <IReactInstance.h>
-#include <Shared/INativeUIManager.h>
+#include <Modules/NativeUIManager.h>
+#include <Modules/PaperUIManagerModule.h>
 
 #ifdef USE_WINUI3
 namespace winrt::Microsoft::UI::Xaml::Controls {
@@ -40,15 +42,15 @@ struct Selection {
 // Such code is better to move to a seperate parser layer
 template <>
 struct json_type_traits<react::uwp::Selection> {
-  static react::uwp::Selection parseJson(const folly::dynamic &json) {
+  static react::uwp::Selection parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {
     react::uwp::Selection selection;
-    for (auto &item : json.items()) {
+    for (auto &item : json.AsObject()) {
       if (item.first == "start") {
-        auto start = item.second.asInt();
+        auto start = item.second.AsInt64();
         if (start == start)
           selection.start = start;
       } else if (item.first == "end") {
-        auto end = item.second.asInt();
+        auto end = item.second.AsInt64();
         if (end == end)
           selection.end = end;
       }
@@ -71,10 +73,12 @@ static const std::unordered_map<std::string, xaml::Input::InputScopeNameValue> p
     {"default", xaml::Input::InputScopeNameValue::Password},
     {"numeric", xaml::Input::InputScopeNameValue::NumericPin}};
 
-static xaml::Input::InputScopeNameValue parseKeyboardType(const folly::dynamic &val, const bool isTextBox) {
+static xaml::Input::InputScopeNameValue parseKeyboardType(
+    const winrt::Microsoft::ReactNative::JSValue &val,
+    const bool isTextBox) {
   auto keyboardTypeMap = isTextBox ? textBoxKeyboardTypeMap : passwordBoxKeyboardTypeMap;
 
-  auto iter = keyboardTypeMap.find(val.asString());
+  auto iter = keyboardTypeMap.find(val.AsString());
 
   if (iter != keyboardTypeMap.end()) {
     return iter->second;
@@ -83,7 +87,7 @@ static xaml::Input::InputScopeNameValue parseKeyboardType(const folly::dynamic &
   return isTextBox ? xaml::Input::InputScopeNameValue::Default : xaml::Input::InputScopeNameValue::Password;
 }
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class TextInputShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -91,9 +95,10 @@ class TextInputShadowNode : public ShadowNodeBase {
  public:
   TextInputShadowNode() = default;
   void createView() override;
-  void updateProperties(const folly::dynamic &&props) override;
+  void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
-  void dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) override;
+  void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs)
+      override;
 
   void AddView(ShadowNode & /*child*/, int64_t /*index*/) override {
     // NYI #5689
@@ -116,8 +121,10 @@ class TextInputShadowNode : public ShadowNodeBase {
   void dispatchTextInputChangeEvent(winrt::hstring newText);
   void registerEvents();
   void HideCaretIfNeeded();
-  void setPasswordBoxPlaceholderForeground(xaml::Controls::PasswordBox passwordBox, folly::dynamic color);
-  void SetText(const folly::dynamic &text);
+  void setPasswordBoxPlaceholderForeground(
+      xaml::Controls::PasswordBox passwordBox,
+      const winrt::Microsoft::ReactNative::JSValue &color);
+  void SetText(const winrt::Microsoft::ReactNative::JSValue &text);
   void SetSelection(int64_t start, int64_t end);
   winrt::Shape FindCaret(xaml::DependencyObject element);
 
@@ -126,7 +133,7 @@ class TextInputShadowNode : public ShadowNodeBase {
   bool m_contextMenuHidden = false;
   bool m_hideCaret = false;
   bool m_isTextBox = true;
-  folly::dynamic m_placeholderTextColor;
+  winrt::Microsoft::ReactNative::JSValue m_placeholderTextColor;
 
   // Javascripts is running in a different thread. If the typing is very fast,
   // It's possible that two TextChanged are raised but TextInput just got the
@@ -161,8 +168,8 @@ void TextInputShadowNode::createView() {
 
 void TextInputShadowNode::dispatchTextInputChangeEvent(winrt::hstring newText) {
   m_nativeEventCount++;
-  folly::dynamic eventData =
-      folly::dynamic::object("target", m_tag)("text", HstringToDynamic(newText))("eventCount", m_nativeEventCount);
+  folly::dynamic eventData = folly::dynamic::object("target", m_tag)("text", react::uwp::HstringToDynamic(newText))(
+      "eventCount", m_nativeEventCount);
   GetViewManager()->GetReactContext().DispatchEvent(m_tag, "topTextInputChange", std::move(eventData));
 }
 
@@ -254,11 +261,11 @@ void TextInputShadowNode::registerEvents() {
     folly::dynamic eventDataBlur = folly::dynamic::object("target", tag);
     folly::dynamic eventDataEndEditing = {};
     if (m_isTextBox) {
-      eventDataEndEditing =
-          folly::dynamic::object("target", tag)("text", HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
+      eventDataEndEditing = folly::dynamic::object("target", tag)(
+          "text", react::uwp::HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
     } else {
       eventDataEndEditing = folly::dynamic::object("target", tag)(
-          "text", HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
+          "text", react::uwp::HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
     }
     if (!m_updating) {
       GetViewManager()->GetReactContext().DispatchEvent(tag, "topTextInputBlur", std::move(eventDataBlur));
@@ -272,10 +279,10 @@ void TextInputShadowNode::registerEvents() {
           folly::dynamic eventDataSubmitEditing = {};
           if (m_isTextBox) {
             eventDataSubmitEditing = folly::dynamic::object("target", tag)(
-                "text", HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
+                "text", react::uwp::HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
           } else {
             eventDataSubmitEditing = folly::dynamic::object("target", tag)(
-                "text", HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
+                "text", react::uwp::HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
           }
           GetViewManager()->GetReactContext().DispatchEvent(
               tag, "topTextInputSubmitEditing", std::move(eventDataSubmitEditing));
@@ -308,7 +315,8 @@ void TextInputShadowNode::registerEvents() {
       });
 
   m_controlLoadedRevoker = control.Loaded(winrt::auto_revoke, [=](auto &&, auto &&) {
-    auto textBoxView = control.GetTemplateChild(asHstring("ContentElement")).as<xaml::Controls::ScrollViewer>();
+    auto contentElement = control.GetTemplateChild(L"ContentElement");
+    auto textBoxView = contentElement.as<xaml::Controls::ScrollViewer>();
     if (textBoxView) {
       m_scrollViewerViewChangingRevoker = textBoxView.ViewChanging(
           winrt::auto_revoke, [=](auto &&, xaml::Controls::ScrollViewerViewChangingEventArgs const &args) {
@@ -376,10 +384,10 @@ void TextInputShadowNode::HideCaretIfNeeded() {
 
 void TextInputShadowNode::setPasswordBoxPlaceholderForeground(
     xaml::Controls::PasswordBox passwordBox,
-    folly::dynamic color) {
-  m_placeholderTextColor = color;
+    const winrt::Microsoft::ReactNative::JSValue &color) {
+  m_placeholderTextColor = color.Copy();
   auto defaultRD = xaml::ResourceDictionary();
-  auto solidColorBrush = ColorFrom(color);
+  auto solidColorBrush = react::uwp::ColorFrom(m_placeholderTextColor);
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForeground"), winrt::box_value(solidColorBrush));
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundFocused"), winrt::box_value(solidColorBrush));
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundPointerOver"), winrt::box_value(solidColorBrush));
@@ -390,15 +398,15 @@ void TextInputShadowNode::setPasswordBoxPlaceholderForeground(
   passwordBox.Resources(passwordBoxResource);
 }
 
-void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
+void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_updating = true;
   auto control = GetView().as<xaml::Controls::Control>();
   auto textBox = control.try_as<xaml::Controls::TextBox>();
   auto passwordBox = control.try_as<xaml::Controls::PasswordBox>();
 
-  for (auto &pair : props.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
+  for (auto &pair : props) {
+    const std::string &propertyName = pair.first;
+    const auto &propertyValue = pair.second;
 
     // Applicable properties for both TextBox and PasswordBox
     if (TryUpdateFontProperties(control, propertyName, propertyValue)) {
@@ -406,31 +414,32 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
     } else if (TryUpdateCharacterSpacing(control, propertyName, propertyValue)) {
       continue;
     } else if (propertyName == "allowFontScaling") {
-      if (propertyValue.isBool())
-        control.IsTextScaleFactorEnabled(propertyValue.asBool());
-      else if (propertyValue.isNull())
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+        control.IsTextScaleFactorEnabled(propertyValue.AsBoolean());
+      else if (propertyValue.IsNull())
         control.ClearValue(xaml::Controls::Control::IsTextScaleFactorEnabledProperty());
     } else if (propertyName == "clearTextOnFocus") {
-      if (propertyValue.isBool())
-        m_shouldClearTextOnFocus = propertyValue.asBool();
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+        m_shouldClearTextOnFocus = propertyValue.AsBoolean();
     } else if (propertyName == "selectTextOnFocus") {
-      if (propertyValue.isBool())
-        m_shouldSelectTextOnFocus = propertyValue.asBool();
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+        m_shouldSelectTextOnFocus = propertyValue.AsBoolean();
     } else if (propertyName == "mostRecentEventCount") {
-      if (propertyValue.isNumber()) {
-        m_mostRecentEventCount = static_cast<uint32_t>(propertyValue.asInt());
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+        m_mostRecentEventCount = propertyValue.AsInt32();
       }
     } else if (propertyName == "contextMenuHidden") {
-      if (propertyValue.isBool())
-        m_contextMenuHidden = propertyValue.asBool();
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+        m_contextMenuHidden = propertyValue.AsBoolean();
     } else if (propertyName == "caretHidden") {
-      if (propertyValue.isBool()) {
-        m_hideCaret = propertyValue.asBool();
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+        m_hideCaret = propertyValue.AsBoolean();
         HideCaretIfNeeded();
       }
     } else if (propertyName == "secureTextEntry") {
-      if (propertyValue.isBool()) {
-        if (propertyValue.asBool()) {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+        if (propertyValue.AsBoolean()) {
           if (m_isTextBox) {
             xaml::Controls::PasswordBox newPasswordBox;
             ReparentView(newPasswordBox);
@@ -438,7 +447,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             registerEvents();
             control = newPasswordBox.as<xaml::Controls::Control>();
             passwordBox = newPasswordBox;
-            if (!m_placeholderTextColor.isNull()) {
+            if (!m_placeholderTextColor.IsNull()) {
               setPasswordBoxPlaceholderForeground(newPasswordBox, m_placeholderTextColor);
             }
           }
@@ -450,46 +459,47 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             registerEvents();
             control = newTextBox.as<xaml::Controls::Control>();
             textBox = newTextBox;
-            if (!m_placeholderTextColor.isNull()) {
-              textBox.PlaceholderForeground(SolidColorBrushFrom(m_placeholderTextColor));
+            if (!m_placeholderTextColor.IsNull()) {
+              textBox.PlaceholderForeground(react::uwp::SolidColorBrushFrom(m_placeholderTextColor));
             }
           }
         }
       }
     } else if (propertyName == "maxLength") {
-      if (propertyValue.isNumber()) {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
         control.SetValue(
             m_isTextBox ? xaml::Controls::TextBox::MaxLengthProperty()
                         : xaml::Controls::PasswordBox::MaxLengthProperty(),
-            winrt::PropertyValue::CreateInt32(static_cast<int32_t>(propertyValue.asDouble())));
-      } else if (propertyValue.isNull()) {
+            winrt::PropertyValue::CreateInt32(propertyValue.AsInt32()));
+      } else if (propertyValue.IsNull()) {
         control.ClearValue(
             m_isTextBox ? xaml::Controls::TextBox::MaxLengthProperty()
                         : xaml::Controls::PasswordBox::MaxLengthProperty());
       }
     } else if (propertyName == "placeholder") {
-      if (propertyValue.isString()) {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         control.SetValue(
             m_isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
                         : xaml::Controls::PasswordBox::PlaceholderTextProperty(),
-            winrt::PropertyValue::CreateString(asHstring(propertyValue)));
-      } else if (propertyValue.isNull()) {
+            winrt::PropertyValue::CreateString(react::uwp::asHstring(propertyValue)));
+      } else if (propertyValue.IsNull()) {
         control.ClearValue(
             m_isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
                         : xaml::Controls::PasswordBox::PlaceholderTextProperty());
       }
     } else if (propertyName == "selectionColor") {
-      if (IsValidColorValue(propertyValue)) {
+      if (react::uwp::IsValidColorValue(propertyValue)) {
         control.SetValue(
             m_isTextBox ? xaml::Controls::TextBox::SelectionHighlightColorProperty()
                         : xaml::Controls::PasswordBox::SelectionHighlightColorProperty(),
-            SolidColorBrushFrom(propertyValue));
-      } else if (propertyValue.isNull())
+            react::uwp::SolidColorBrushFrom(propertyValue));
+      } else if (propertyValue.IsNull())
         control.ClearValue(
             m_isTextBox ? xaml::Controls::TextBox::SelectionHighlightColorProperty()
                         : xaml::Controls::PasswordBox::SelectionHighlightColorProperty());
     } else if (propertyName == "keyboardType") {
-      if (propertyValue.isString()) {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         auto inputScopeNameVaue = parseKeyboardType(propertyValue, m_isTextBox);
         auto scope = xaml::Input::InputScope();
         auto scopeName = xaml::Input::InputScopeName(inputScopeNameVaue);
@@ -499,19 +509,19 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             m_isTextBox ? xaml::Controls::TextBox::InputScopeProperty()
                         : xaml::Controls::PasswordBox::InputScopeProperty(),
             scope);
-      } else if (propertyValue.isNull())
+      } else if (propertyValue.IsNull())
         control.ClearValue(
             m_isTextBox ? xaml::Controls::TextBox::InputScopeProperty()
                         : xaml::Controls::PasswordBox::InputScopeProperty());
     } else if (propertyName == "placeholderTextColor") {
       m_placeholderTextColor = nullptr;
       if (textBox.try_as<xaml::Controls::ITextBox6>() && m_isTextBox) {
-        if (IsValidColorValue(propertyValue)) {
-          m_placeholderTextColor = propertyValue;
-          textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
-        } else if (propertyValue.isNull())
+        if (react::uwp::IsValidColorValue(propertyValue)) {
+          m_placeholderTextColor = propertyValue.Copy();
+          textBox.PlaceholderForeground(react::uwp::SolidColorBrushFrom(propertyValue));
+        } else if (propertyValue.IsNull())
           textBox.ClearValue(xaml::Controls::TextBox::PlaceholderForegroundProperty());
-      } else if (m_isTextBox != true && IsValidColorValue(propertyValue)) {
+      } else if (m_isTextBox != true && react::uwp::IsValidColorValue(propertyValue)) {
         setPasswordBoxPlaceholderForeground(passwordBox, propertyValue);
       }
     } else {
@@ -519,46 +529,47 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
           continue;
         } else if (propertyName == "multiline") {
-          if (propertyValue.isBool()) {
-            const bool isMultiline = propertyValue.asBool();
+          if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+            const bool isMultiline = propertyValue.AsBoolean();
             textBox.TextWrapping(isMultiline ? xaml::TextWrapping::Wrap : xaml::TextWrapping::NoWrap);
             textBox.AcceptsReturn(isMultiline);
-          } else if (propertyValue.isNull())
+          } else if (propertyValue.IsNull())
             textBox.ClearValue(xaml::Controls::TextBox::TextWrappingProperty());
         } else if (propertyName == "editable") {
-          if (propertyValue.isBool())
-            textBox.IsReadOnly(!propertyValue.asBool());
-          else if (propertyValue.isNull())
+          if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+            textBox.IsReadOnly(!propertyValue.AsBoolean());
+          else if (propertyValue.IsNull())
             textBox.ClearValue(xaml::Controls::TextBox::IsReadOnlyProperty());
         } else if (propertyName == "scrollEnabled") {
-          if (propertyValue.isBool() && textBox.TextWrapping() == xaml::TextWrapping::Wrap) {
+          if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean &&
+              textBox.TextWrapping() == xaml::TextWrapping::Wrap) {
             auto scrollMode =
-                propertyValue.asBool() ? xaml::Controls::ScrollMode::Auto : xaml::Controls::ScrollMode::Disabled;
+                propertyValue.AsBoolean() ? xaml::Controls::ScrollMode::Auto : xaml::Controls::ScrollMode::Disabled;
             xaml::Controls::ScrollViewer::SetVerticalScrollMode(textBox, scrollMode);
             xaml::Controls::ScrollViewer::SetHorizontalScrollMode(textBox, scrollMode);
           }
         } else if (propertyName == "selection") {
-          if (propertyValue.isObject()) {
-            auto selection = json_type_traits<Selection>::parseJson(propertyValue);
+          if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
+            auto selection = json_type_traits<react::uwp::Selection>::parseJson(propertyValue);
             SetSelection(selection.start, selection.end);
           }
         } else if (propertyName == "spellCheck") {
-          if (propertyValue.isBool())
-            textBox.IsSpellCheckEnabled(propertyValue.asBool());
-          else if (propertyValue.isNull())
+          if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+            textBox.IsSpellCheckEnabled(propertyValue.AsBoolean());
+          else if (propertyValue.IsNull())
             textBox.ClearValue(xaml::Controls::TextBox::IsSpellCheckEnabledProperty());
         } else if (propertyName == "text") {
           SetText(propertyValue);
         } else if (propertyName == "autoCapitalize") {
           if (textBox.try_as<xaml::Controls::ITextBox6>()) {
-            if (propertyValue.isString()) {
-              if (propertyValue.asString() == "characters") {
+            if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+              if (propertyValue.AsString() == "characters") {
                 textBox.CharacterCasing(xaml::Controls::CharacterCasing::Upper);
               } else { // anything else turns off autoCap (should be "None" but
                        // we don't support "words"/"senetences" yet)
                 textBox.CharacterCasing(xaml::Controls::CharacterCasing::Normal);
               }
-            } else if (propertyValue.isNull())
+            } else if (propertyValue.IsNull())
               textBox.ClearValue(xaml::Controls::TextBox::CharacterCasingProperty());
           }
         }
@@ -570,32 +581,32 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
     }
   }
 
-  Super::updateProperties(std::move(props));
+  Super::updateProperties(props);
   m_updating = false;
 }
 
-void TextInputShadowNode::SetText(const folly::dynamic &text) {
+void TextInputShadowNode::SetText(const winrt::Microsoft::ReactNative::JSValue &text) {
   auto textBox = this->GetView().try_as<xaml::Controls::TextBox>();
   auto passwordBox = this->GetView().try_as<xaml::Controls::PasswordBox>();
 
   if (m_mostRecentEventCount == m_nativeEventCount) {
     if (textBox) {
-      if (text.isString()) {
+      if (text.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         auto oldValue = textBox.Text();
-        auto newValue = asHstring(text);
+        auto newValue = react::uwp::asHstring(text);
         if (oldValue != newValue) {
           textBox.Text(newValue);
         }
-      } else if (text.isNull())
+      } else if (text.IsNull())
         textBox.ClearValue(xaml::Controls::TextBox::TextProperty());
     } else {
-      if (text.isString()) {
+      if (text.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         auto oldValue = passwordBox.Password();
-        auto newValue = asHstring(text);
+        auto newValue = react::uwp::asHstring(text);
         if (oldValue != newValue) {
           passwordBox.Password(newValue);
         }
-      } else if (text.isNull())
+      } else if (text.IsNull())
         passwordBox.ClearValue(xaml::Controls::PasswordBox::PasswordProperty());
     }
   }
@@ -611,59 +622,82 @@ void TextInputShadowNode::SetSelection(int64_t start, int64_t end) {
   }
 }
 
-void TextInputShadowNode::dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) {
+void TextInputShadowNode::dispatchCommand(
+    const std::string &commandId,
+    winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
   if (commandId == "focus") {
-    if (auto uiManager = GetViewManager()->GetReactContext().NativeUIManager()) {
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
       uiManager->focus(m_tag);
     }
   } else if (commandId == "blur") {
-    if (auto uiManager = GetViewManager()->GetReactContext().NativeUIManager()) {
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
       uiManager->blur(m_tag);
     }
   } else if (commandId == "setTextAndSelection") {
-    m_mostRecentEventCount = static_cast<uint32_t>(commandArgs[0].asInt());
+    m_mostRecentEventCount = commandArgs[0].AsInt32();
     SetText(commandArgs[1]);
-    SetSelection(commandArgs[2].asInt(), commandArgs[3].asInt());
+    SetSelection(commandArgs[2].AsInt64(), commandArgs[3].AsInt64());
   } else {
-    Super::dispatchCommand(commandId, commandArgs);
+    Super::dispatchCommand(commandId, std::move(commandArgs));
   }
 }
 
 TextInputViewManager::TextInputViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *TextInputViewManager::GetName() const {
-  return "RCTTextInput";
+const wchar_t *TextInputViewManager::GetName() const {
+  return L"RCTTextInput";
 }
 
-folly::dynamic TextInputViewManager::GetNativeProps() const {
-  auto props = Super::GetNativeProps();
+void TextInputViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
 
-  props.update(folly::dynamic::object("allowFontScaling", "boolean")("clearTextOnFocus", "boolean")(
-      "editable", "boolean")("maxLength", "int")("multiline", "boolean")("placeholder", "string")(
-      "placeholderTextColor", "Color")("scrollEnabled", "boolean")("selection", "Map")("selectionColor", "Color")(
-      "selectTextOnFocus", "boolean")("spellCheck", "boolean")("text", "string")("mostRecentEventCount", "int")(
-      "secureTextEntry", "boolean")("keyboardType", "string")("contextMenuHidden", "boolean")("caretHidden", "boolean")(
-      "autoCapitalize", "string"));
-
-  return props;
+  React::WriteProperty(writer, L"allowFontScaling", L"boolean");
+  React::WriteProperty(writer, L"clearTextOnFocus", L"boolean");
+  React::WriteProperty(writer, L"editable", L"boolean");
+  React::WriteProperty(writer, L"maxLength", L"int");
+  React::WriteProperty(writer, L"multiline", L"boolean");
+  React::WriteProperty(writer, L"placeholder", L"string");
+  React::WriteProperty(writer, L"placeholderTextColor", L"Color");
+  React::WriteProperty(writer, L"scrollEnabled", L"boolean");
+  React::WriteProperty(writer, L"selection", L"Map");
+  React::WriteProperty(writer, L"selectionColor", L"Color");
+  React::WriteProperty(writer, L"selectTextOnFocus", L"boolean");
+  React::WriteProperty(writer, L"spellCheck", L"boolean");
+  React::WriteProperty(writer, L"text", L"string");
+  React::WriteProperty(writer, L"mostRecentEventCount", L"int");
+  React::WriteProperty(writer, L"secureTextEntry", L"boolean");
+  React::WriteProperty(writer, L"keyboardType", L"string");
+  React::WriteProperty(writer, L"contextMenuHidden", L"boolean");
+  React::WriteProperty(writer, L"caretHidden", L"boolean");
+  React::WriteProperty(writer, L"autoCapitalize", L"string");
 }
 
-folly::dynamic TextInputViewManager::GetExportedCustomDirectEventTypeConstants() const {
-  auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topTextInputChange"] = folly::dynamic::object("registrationName", "onChange");
-  directEvents["topTextInputFocus"] = folly::dynamic::object("registrationName", "onFocus");
-  directEvents["topTextInputBlur"] = folly::dynamic::object("registrationName", "onBlur");
-  directEvents["topTextInputEndEditing"] = folly::dynamic::object("registrationName", "onEndEditing");
-  directEvents["topTextInputSelectionChange"] = folly::dynamic::object("registrationName", "onSelectionChange");
-  directEvents["topTextInputContentSizeChange"] = folly::dynamic::object("registrationName", "onContentSizeChange");
-  directEvents["topTextInputKeyPress"] = folly::dynamic::object("registrationName", "onKeyPress");
-  directEvents["topTextInputOnScroll"] = folly::dynamic::object("registrationName", "onScroll");
-  directEvents["topTextInputSubmitEditing"] = folly::dynamic::object("registrationName", "onSubmitEditing");
+void TextInputViewManager::GetExportedCustomDirectEventTypeConstants(
+    const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetExportedCustomDirectEventTypeConstants(writer);
 
-  return directEvents;
+  const PCWSTR eventNames[] = {// Generic events
+                               L"Change",
+                               L"Focus",
+                               L"Blur",
+                               L"EndEditing",
+                               L"SelectionChange",
+                               L"ContentSizeChange",
+                               L"KeyPress",
+                               L"OnScroll",
+                               L"SubmitEditing"};
+
+  for (auto &eventBaseName : eventNames) {
+    using namespace std::string_literals;
+    writer.WritePropertyName(L"topTextInput"s + eventBaseName);
+    writer.WriteObjectBegin();
+    writer.WritePropertyName(L"registrationName");
+    writer.WriteString(L"on"s + eventBaseName);
+    writer.WriteObjectEnd();
+  }
 }
 
-facebook::react::ShadowNode *TextInputViewManager::createShadow() const {
+ShadowNode *TextInputViewManager::createShadow() const {
   return new TextInputShadowNode();
 }
 
@@ -762,4 +796,4 @@ void TextInputViewManager::TransferProperties(const XamlView &oldView, const Xam
   }
   Super::TransferProperties(oldView, newView);
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

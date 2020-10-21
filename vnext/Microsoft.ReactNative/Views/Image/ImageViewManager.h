@@ -4,7 +4,7 @@
 #include <Views/FrameworkElementViewManager.h>
 #include "ReactImage.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class ImageViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
@@ -12,22 +12,23 @@ class ImageViewManager : public FrameworkElementViewManager {
  public:
   ImageViewManager(const Mso::React::IReactContext &context);
 
-  const char *GetName() const override;
+  const wchar_t *GetName() const override;
 
-  folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
-  folly::dynamic GetNativeProps() const override;
-  facebook::react::ShadowNode *createShadow() const override;
-  void EmitImageEvent(xaml::Controls::Grid grid, const char *eventName, ReactImageSource &source);
+  void GetExportedCustomDirectEventTypeConstants(
+      const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+  void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+  ShadowNode *createShadow() const override;
+  void EmitImageEvent(xaml::Controls::Grid grid, const char *eventName, react::uwp::ReactImageSource &source);
 
  protected:
   bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,
       const std::string &propertyName,
-      const folly::dynamic &propertyValue) override;
+      const winrt::Microsoft::ReactNative::JSValue &propertyValue) override;
 
   XamlView CreateViewCore(int64_t tag) override;
 
  private:
-  void setSource(xaml::Controls::Grid grid, const folly::dynamic &sources);
+  void setSource(xaml::Controls::Grid grid, const winrt::Microsoft::ReactNative::JSValue &sources);
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

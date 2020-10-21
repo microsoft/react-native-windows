@@ -30,7 +30,7 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-    std::shared_ptr<IUIManager> uimanager,
+    std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings) noexcept {
@@ -39,7 +39,7 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
       std::move(jsBundleBasePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
-      std::move(uimanager),
+      std::move(callback),
       std::move(jsQueue),
       std::move(nativeQueue),
       std::move(devSettings),
@@ -55,7 +55,7 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-    std::shared_ptr<IUIManager> uimanager,
+    std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings) noexcept {
@@ -65,7 +65,7 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
       std::move(jsBundleRelativePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
-      std::move(uimanager),
+      std::move(callback),
       std::move(jsQueue),
       std::move(nativeQueue),
       std::move(devSettings),

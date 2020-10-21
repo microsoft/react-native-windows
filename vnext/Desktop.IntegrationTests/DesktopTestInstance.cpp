@@ -16,16 +16,6 @@ namespace Microsoft::React::Test {
 DesktopTestInstance::DesktopTestInstance(shared_ptr<InstanceWrapper> instanceWrapper) noexcept
     : m_instanceWrapper{move(instanceWrapper)} {}
 
-void DesktopTestInstance::AttachMeasuredRootView(std::string &&appName) noexcept {
-  m_rootView = make_unique<TestRootView>(move(appName));
-
-  m_instanceWrapper->AttachMeasuredRootView(m_rootView.get(), {});
-}
-
-void DesktopTestInstance::DetachRootView() noexcept {
-  m_instanceWrapper->DetachRootView(m_rootView.get());
-}
-
 shared_ptr<facebook::react::Instance> DesktopTestInstance::GetInnerInstance() const noexcept {
   return m_instanceWrapper->GetInstance();
 }

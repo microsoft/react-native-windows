@@ -52,7 +52,11 @@ winrt::fire_and_forget GetImageSizeAsync(
   try {
     ReactImageSource source;
     source.uri = uriString;
-    source.headers = headers;
+    if (!headers.isNull()) {
+      for (auto &header : headers.items()) {
+        source.headers.push_back(std::make_pair(header.first.asString(), header.second.asString()));
+      }
+    }
 
     winrt::Uri uri{Microsoft::Common::Unicode::Utf8ToUtf16(uriString)};
     winrt::hstring scheme{uri.SchemeName()};

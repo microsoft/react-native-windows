@@ -6,7 +6,7 @@
 #include <Views/FrameworkElementViewManager.h>
 #include <Views/ViewPanel.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class ViewShadowNode;
 
@@ -16,11 +16,12 @@ class ViewViewManager : public FrameworkElementViewManager {
  public:
   ViewViewManager(const Mso::React::IReactContext &context);
 
-  const char *GetName() const override;
+  const wchar_t *GetName() const override;
 
-  folly::dynamic GetNativeProps() const override;
-  folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
-  facebook::react::ShadowNode *createShadow() const override;
+  void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+  void GetExportedCustomDirectEventTypeConstants(
+      const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+  ShadowNode *createShadow() const override;
 
   // Yoga Layout
   void SetLayoutProps(
@@ -35,7 +36,7 @@ class ViewViewManager : public FrameworkElementViewManager {
   bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,
       const std::string &propertyName,
-      const folly::dynamic &propertyValue) override;
+      const winrt::Microsoft::ReactNative::JSValue &propertyValue) override;
   void OnPropertiesUpdated(ShadowNodeBase *node) override;
 
   XamlView CreateViewCore(int64_t tag) override;
@@ -47,4 +48,4 @@ class ViewViewManager : public FrameworkElementViewManager {
   xaml::Media::SolidColorBrush m_transparentBrush{nullptr};
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

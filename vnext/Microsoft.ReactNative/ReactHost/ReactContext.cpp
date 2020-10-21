@@ -66,14 +66,6 @@ bool ReactContext::IsLoaded() const noexcept {
   return false;
 }
 
-facebook::react::INativeUIManager *ReactContext::NativeUIManager() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->NativeUIManager();
-  }
-
-  return nullptr;
-}
-
 std::shared_ptr<facebook::react::Instance> ReactContext::GetInnerInstance() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->GetInnerInstance();

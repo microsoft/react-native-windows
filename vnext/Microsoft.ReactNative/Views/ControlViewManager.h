@@ -5,7 +5,7 @@
 
 #include "FrameworkElementViewManager.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 struct ShadowNodeBase;
 
@@ -15,15 +15,15 @@ class REACTWINDOWS_EXPORT ControlViewManager : public FrameworkElementViewManage
  public:
   ControlViewManager(const Mso::React::IReactContext &context);
 
-  folly::dynamic GetNativeProps() const override;
+  void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
   bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,
       const std::string &propertyName,
-      const folly::dynamic &propertyValue) override;
+      const winrt::Microsoft::ReactNative::JSValue &propertyValue) override;
   void TransferProperties(const XamlView &oldView, const XamlView &newView) override;
 
  protected:
   void OnViewCreated(XamlView view) override;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

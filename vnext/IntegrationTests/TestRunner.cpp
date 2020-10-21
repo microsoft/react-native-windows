@@ -41,6 +41,23 @@ void TestRunner::AwaitEvent(HANDLE &event, TestResult &result) {
 
 TestRunner::TestRunner() {}
 
+struct TestRedBoxHandler : Mso::React::IRedBoxHandler {
+  TestRedBoxHandler(std::function<void(Mso::React::ErrorInfo &&, Mso::React::ErrorType)> &&OnErrorFn)
+      : m_onErrorFn(std::move(OnErrorFn)) {}
+
+  void showNewError(Mso::React::ErrorInfo &&info, Mso::React::ErrorType type) override {
+    m_onErrorFn(std::move(info), type);
+  }
+  bool isDevSupportEnabled() const override {
+    return true;
+  }
+  void updateError(Mso::React::ErrorInfo &&) override {}
+  void dismissRedbox() override {}
+
+ private:
+  std::function<void(Mso::React::ErrorInfo &&, Mso::React::ErrorType)> m_onErrorFn;
+};
+
 TestResult TestRunner::RunTest(string &&bundlePath, string &&appName, NativeLoggingHook &&loggingCallback) {
   // Set up
   HANDLE functionCalled = CreateEvent(
@@ -75,6 +92,16 @@ TestResult TestRunner::RunTest(string &&bundlePath, string &&appName, NativeLogg
       result.Message = Microsoft::Common::Unicode::Utf8ToUtf16(message);
       result.Status = TestStatus::Failed;
     };
+    devSettings->redboxHandler =
+        std::make_shared<TestRedBoxHandler>([&result](Mso::React::ErrorInfo &&info, Mso::React::ErrorType) {
+          // The logging test fires this error by design, which shouldn't fail the tests
+          if (info.Message.find("console.error: This is from console.error") != string::npos) {
+            return;
+          }
+
+          result.Message = Microsoft::Common::Unicode::Utf8ToUtf16(info.Message);
+          result.Status = TestStatus::Failed;
+        });
     devSettings->loggingCallback = std::move(loggingCallback);
 
     // React instance scope
@@ -102,7 +129,10 @@ TestResult TestRunner::RunTest(string &&bundlePath, string &&appName, NativeLogg
         }
       });
 
-      instance->AttachMeasuredRootView(move(appName));
+      const int rootTag = 101;
+      folly::dynamic params = folly::dynamic::array(
+          std::move(appName), folly::dynamic::object("initialProps", folly::dynamic::object())("rootTag", rootTag));
+      instance->GetInnerInstance()->callJSFunction("AppRegistry", "runApplication", std::move(params));
 
       // Failure on instance creation.
       if (TestStatus::Failed == result.Status)
@@ -110,7 +140,8 @@ TestResult TestRunner::RunTest(string &&bundlePath, string &&appName, NativeLogg
 
       AwaitEvent(functionCalled, result);
 
-      instance->DetachRootView();
+      instance->GetInnerInstance()->callJSFunction(
+          "AppRegistry", "unmountApplicationComponentAtRootTag", std::move(folly::dynamic::array(rootTag)));
     }
 
     // Tear down

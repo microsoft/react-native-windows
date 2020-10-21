@@ -16,8 +16,10 @@
 #include <vector>
 
 namespace react::uwp {
-
 struct IXamlReactControl;
+}
+
+namespace Microsoft::ReactNative {
 
 struct YogaNodeDeleter {
   void operator()(YGNodeRef node) {
@@ -27,50 +29,50 @@ struct YogaNodeDeleter {
 
 typedef std::unique_ptr<YGNode, YogaNodeDeleter> YogaNodePtr;
 
-class NativeUIManager final : public facebook::react::INativeUIManager {
+class NativeUIManager final : public INativeUIManager {
  public:
   NativeUIManager(Mso::React::IReactContext *reactContext);
 
   // INativeUIManager
-  facebook::react::ShadowNode *createRootShadowNode(facebook::react::IReactRootView *rootView) override;
+  ShadowNode *createRootShadowNode(facebook::react::IReactRootView *rootView) override;
   void configureNextLayoutAnimation(
-      folly::dynamic && /*config*/,
-      facebook::xplat::module::CxxModule::Callback /*success*/,
-      facebook::xplat::module::CxxModule::Callback /*error*/) override{};
+      winrt::Microsoft::ReactNative::JSValueObject && /*config*/,
+      std::function<void()> const & /*callback*/,
+      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const & /*errorCallback*/) override{};
   void destroy() override;
-  void destroyRootShadowNode(facebook::react::ShadowNode *) override;
-  void removeRootView(facebook::react::ShadowNode &rootshadow) override;
-  void setHost(facebook::react::INativeUIManagerHost *host) override;
-  facebook::react::INativeUIManagerHost *getHost() override {
+  void destroyRootShadowNode(ShadowNode *) override;
+  void removeRootView(ShadowNode &rootshadow) override;
+  void setHost(INativeUIManagerHost *host) override;
+  INativeUIManagerHost *getHost() override {
     return m_host;
   }
-  void AddRootView(facebook::react::ShadowNode &shadowNode, facebook::react::IReactRootView *pReactRootView) override;
-  void CreateView(facebook::react::ShadowNode &shadowNode, folly::dynamic /*ReadableMap*/ props) override;
-  void AddView(
-      facebook::react::ShadowNode &parentShadowNode,
-      facebook::react::ShadowNode &childShadowNode,
-      uint64_t index) override;
-  void RemoveView(facebook::react::ShadowNode &shadowNode, bool removeChildren = true) override;
-  void ReplaceView(facebook::react::ShadowNode &shadowNode) override;
-  void UpdateView(facebook::react::ShadowNode &shadowNode, folly::dynamic /*ReadableMap*/ props) override;
+  void AddRootView(ShadowNode &shadowNode, facebook::react::IReactRootView *pReactRootView) override;
+  void CreateView(ShadowNode &shadowNode, winrt::Microsoft::ReactNative::JSValueObject &props) override;
+  void AddView(ShadowNode &parentShadowNode, ShadowNode &childShadowNode, uint64_t index) override;
+  void RemoveView(ShadowNode &shadowNode, bool removeChildren = true) override;
+  void ReplaceView(ShadowNode &shadowNode) override;
+  void UpdateView(ShadowNode &shadowNode, winrt::Microsoft::ReactNative::JSValueObject &props) override;
   void onBatchComplete() override;
   void ensureInBatch() override;
   void measure(
-      facebook::react::ShadowNode &shadowNode,
-      facebook::react::ShadowNode &shadowRoot,
-      facebook::xplat::module::CxxModule::Callback callback) override;
-  void measureInWindow(facebook::react::ShadowNode &shadowNode, facebook::xplat::module::CxxModule::Callback callback)
-      override;
+      ShadowNode &shadowNode,
+      ShadowNode &shadowRoot,
+      std::function<void(double left, double top, double width, double height, double pageX, double pageY)> const
+          &callback) override;
+  void measureInWindow(
+      Microsoft::ReactNative::ShadowNode &shadowNode,
+      std::function<void(double x, double y, double width, double height)> const &callback) override;
   void measureLayout(
-      facebook::react::ShadowNode &shadowNode,
-      facebook::react::ShadowNode &ancestorNode,
-      facebook::xplat::module::CxxModule::Callback errorCallback,
-      facebook::xplat::module::CxxModule::Callback callback) override;
+      ShadowNode &shadowNode,
+      ShadowNode &ancestorNode,
+      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &errorCallback,
+      std::function<void(double left, double top, double width, double height)> const &callback) override;
   void findSubviewIn(
-      facebook::react::ShadowNode &shadowNode,
+      ShadowNode &shadowNode,
       float x,
       float y,
-      facebook::xplat::module::CxxModule::Callback callback) override;
+      std::function<void(double nativeViewTag, double left, double top, double width, double height)> const &callback)
+      override;
 
   void focus(int64_t reactTag) override;
   void blur(int64_t reactTag) override;
@@ -89,6 +91,8 @@ class NativeUIManager final : public facebook::react::INativeUIManager {
   // Like Mouse/Keyboard, the event source may not have matched XamlView.
   XamlView reactPeerOrContainerFrom(xaml::FrameworkElement fe);
 
+  int64_t AddMeasuredRootView(facebook::react::IReactRootView *rootView);
+
  private:
   void DoLayout();
   void UpdateExtraLayout(int64_t tag);
@@ -97,10 +101,12 @@ class NativeUIManager final : public facebook::react::INativeUIManager {
   std::weak_ptr<react::uwp::IXamlReactControl> GetParentXamlReactControl(int64_t tag) const;
 
  private:
-  facebook::react::INativeUIManagerHost *m_host = nullptr;
+  INativeUIManagerHost *m_host = nullptr;
   Mso::CntPtr<Mso::React::IReactContext> m_context;
   YGConfigRef m_yogaConfig;
   bool m_inBatch = false;
+  int64_t m_nextRootTag = 101;
+  static const int64_t RootViewTagIncrement = 10;
 
   std::map<int64_t, YogaNodePtr> m_tagsToYogaNodes;
   std::map<int64_t, std::unique_ptr<YogaContext>> m_tagsToYogaContext;
@@ -108,7 +114,7 @@ class NativeUIManager final : public facebook::react::INativeUIManager {
   std::vector<std::function<void()>> m_batchCompletedCallbacks;
   std::vector<int64_t> m_extraLayoutNodes;
 
-  std::map<int64_t, std::weak_ptr<IXamlReactControl>> m_tagsToXamlReactControl;
+  std::map<int64_t, std::weak_ptr<react::uwp::IXamlReactControl>> m_tagsToXamlReactControl;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

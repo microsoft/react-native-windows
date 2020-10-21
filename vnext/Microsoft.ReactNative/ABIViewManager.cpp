@@ -8,6 +8,7 @@
 
 #include "IReactContext.h"
 
+#include <JSValueWriter.h>
 #include <Utils/ValueUtils.h>
 #include "ReactHost/MsoUtils.h"
 
@@ -17,7 +18,7 @@ ABIViewManager::ABIViewManager(
     Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
     ReactNative::IViewManager const &viewManager)
     : Super(*reactContext),
-      m_name{to_string(viewManager.Name())},
+      m_name{viewManager.Name()},
       m_viewManager{viewManager},
       m_viewManagerWithReactContext{viewManager.try_as<IViewManagerWithReactContext>()},
       m_viewManagerWithExportedViewConstants{viewManager.try_as<IViewManagerWithExportedViewConstants>()},
@@ -33,7 +34,7 @@ ABIViewManager::ABIViewManager(
   }
 }
 
-const char *ABIViewManager::GetName() const {
+const wchar_t *ABIViewManager::GetName() const {
   return m_name.c_str();
 }
 
@@ -42,147 +43,108 @@ xaml::DependencyObject ABIViewManager::CreateViewCore(int64_t) {
   return view;
 }
 
-folly::dynamic ABIViewManager::GetExportedViewConstants() const {
-  folly::dynamic parent = Super::GetExportedViewConstants();
+void ABIViewManager::GetExportedViewConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetExportedViewConstants(writer);
 
   if (m_viewManagerWithExportedViewConstants) {
     if (auto constantProvider = m_viewManagerWithExportedViewConstants.ExportedViewConstants()) {
       IJSValueWriter argWriter = winrt::make<DynamicWriter>();
-      argWriter.WriteObjectBegin();
-      constantProvider(argWriter);
-      argWriter.WriteObjectEnd();
-
-      auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
-
-      if (!outerChild.isNull()) {
-        parent.update(outerChild);
-      }
+      constantProvider(writer);
     }
   }
-
-  return parent;
 }
 
-folly::dynamic ABIViewManager::GetNativeProps() const {
-  folly::dynamic innerParent = Super::GetNativeProps();
+void ABIViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
 
   if (m_nativeProps) {
     for (const auto &pair : m_nativeProps) {
-      std::string key = to_string(pair.Key());
-
-      folly::dynamic value;
+      writer.WritePropertyName(pair.Key());
       switch (pair.Value()) {
         case ViewManagerPropertyType::Boolean:
-          value = folly::dynamic("boolean");
+          writer.WriteString(L"boolean");
           break;
         case ViewManagerPropertyType::Number:
-          value = folly::dynamic("number");
+          writer.WriteString(L"number");
           break;
         case ViewManagerPropertyType::String:
-          value = folly::dynamic("string");
+          writer.WriteString(L"string");
           break;
         case ViewManagerPropertyType::Array:
-          value = folly::dynamic("array");
+          writer.WriteString(L"array");
           break;
         case ViewManagerPropertyType::Map:
-          value = folly::dynamic("Map");
+          writer.WriteString(L"Map");
           break;
         case ViewManagerPropertyType::Color:
-          value = folly::dynamic("Color");
+          writer.WriteString(L"Color");
           break;
       }
-
-      innerParent.insert(key, value);
     }
   }
-
-  return innerParent;
 }
 
-void ABIViewManager::UpdateProperties(react::uwp::ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
+void ABIViewManager::UpdateProperties(
+    ::Microsoft::ReactNative::ShadowNodeBase *nodeToUpdate,
+    winrt::Microsoft::ReactNative::JSValueObject &props) {
   if (m_viewManagerWithNativeProperties) {
     auto view = nodeToUpdate->GetView().as<xaml::FrameworkElement>();
 
-    IJSValueReader propertyMapReader = winrt::make<DynamicReader>(reactDiffMap);
-
-    if (reactDiffMap.size() > 0) {
-      m_viewManagerWithNativeProperties.UpdateProperties(view, propertyMapReader);
+    if (props.size() > 0) {
+      m_viewManagerWithNativeProperties.UpdateProperties(
+          view, MakeJSValueTreeReader(winrt::Microsoft::ReactNative::JSValue(std::move(props.Copy()))));
     }
   }
 
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, props);
 }
 
-folly::dynamic ABIViewManager::GetCommands() const {
-  folly::dynamic commandMap = folly::dynamic::object();
-
+void ABIViewManager::GetCommands(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
   // Why are we providing commands with the same key and value? React Native 0.61 internally introduced string command
   // IDs which can be dispatched directly without querying the ViewManager for commands. Integer command IDs are
   // internally deprecated, but querying for command ID is still the documented path. Returning constants as their
   // string lets us internally only support the string path.
   if (m_viewManagerWithCommands) {
     for (const auto &commandName : m_viewManagerWithCommands.Commands()) {
-      auto commandAsStr = to_string(commandName);
-      commandMap[commandAsStr] = commandAsStr;
+      winrt::Microsoft::ReactNative::WriteProperty(writer, commandName, commandName);
     }
   }
-
-  return commandMap;
 }
 
 void ABIViewManager::DispatchCommand(
     const xaml::DependencyObject &viewToUpdate,
     const std::string &commandId,
-    const folly::dynamic &commandArgs) {
+    winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
   if (m_viewManagerWithCommands) {
     auto view = viewToUpdate.as<xaml::FrameworkElement>();
-
-    IJSValueReader argReader = winrt::make<DynamicReader>(commandArgs);
-    m_viewManagerWithCommands.DispatchCommand(view, to_hstring(commandId), argReader);
+    m_viewManagerWithCommands.DispatchCommand(
+        view,
+        to_hstring(commandId),
+        MakeJSValueTreeReader(winrt::Microsoft::ReactNative::JSValue(std::move(commandArgs))));
   }
 }
 
-folly::dynamic ABIViewManager::GetExportedCustomBubblingEventTypeConstants() const {
-  folly::dynamic parent = Super::GetExportedCustomBubblingEventTypeConstants();
+void ABIViewManager::GetExportedCustomBubblingEventTypeConstants(
+    const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetExportedCustomBubblingEventTypeConstants(writer);
 
   if (m_viewManagerWithExportedEventTypeConstants) {
     if (auto constantProvider =
             m_viewManagerWithExportedEventTypeConstants.ExportedCustomBubblingEventTypeConstants()) {
-      IJSValueWriter argWriter = winrt::make<DynamicWriter>();
-      argWriter.WriteObjectBegin();
-      constantProvider(argWriter);
-      argWriter.WriteObjectEnd();
-
-      auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
-
-      if (!outerChild.isNull()) {
-        parent.update(outerChild);
-      }
+      constantProvider(writer);
     }
   }
-
-  return parent;
 }
 
-folly::dynamic ABIViewManager::GetExportedCustomDirectEventTypeConstants() const {
-  folly::dynamic parent = Super::GetExportedCustomDirectEventTypeConstants();
+void ABIViewManager::GetExportedCustomDirectEventTypeConstants(
+    const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetExportedCustomDirectEventTypeConstants(writer);
 
   if (m_viewManagerWithExportedEventTypeConstants) {
     if (auto constantProvider = m_viewManagerWithExportedEventTypeConstants.ExportedCustomDirectEventTypeConstants()) {
-      IJSValueWriter argWriter = winrt::make<DynamicWriter>();
-      argWriter.WriteObjectBegin();
-      constantProvider(argWriter);
-      argWriter.WriteObjectEnd();
-
-      auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
-
-      if (!outerChild.isNull()) {
-        parent.update(outerChild);
-      }
+      constantProvider(writer);
     }
   }
-
-  return parent;
 }
 
 void ABIViewManager::AddView(const xaml::DependencyObject &parent, const xaml::DependencyObject &child, int64_t index) {

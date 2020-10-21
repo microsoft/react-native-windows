@@ -6,7 +6,7 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class FlyoutViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
@@ -14,10 +14,11 @@ class FlyoutViewManager : public FrameworkElementViewManager {
  public:
   FlyoutViewManager(const Mso::React::IReactContext &context);
 
-  const char *GetName() const override;
-  facebook::react::ShadowNode *createShadow() const override;
-  folly::dynamic GetNativeProps() const override;
-  folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
+  const wchar_t *GetName() const override;
+  ShadowNode *createShadow() const override;
+  void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+  void GetExportedCustomDirectEventTypeConstants(
+      const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
   void SetLayoutProps(
       ShadowNodeBase &nodeToUpdate,
       const XamlView &viewToUpdate,
@@ -31,4 +32,4 @@ class FlyoutViewManager : public FrameworkElementViewManager {
   friend class FlyoutShadowNode;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

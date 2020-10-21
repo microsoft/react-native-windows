@@ -68,25 +68,21 @@ void TestHook::NotifyUnimplementedProperty(
     const std::string &viewManager,
     const std::string &reactClassName,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (std::find(layoutProperties.begin(), layoutProperties.end(), propertyName) != layoutProperties.end()) {
     return;
   }
   std::string value;
   size_t size{};
-  try {
-    if (propertyValue.isObject()) {
-      value = "[Object]";
-    } else if (propertyValue.isNull()) {
-      value = "[Null]";
-    } else if (propertyValue.isArray()) {
-      size = propertyValue.size();
-      value = "[Array]";
-    } else {
-      value = propertyValue.asString();
-    }
-  } catch (const folly::TypeError &e) {
-    value = e.what();
+  if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
+    value = "[Object]";
+  } else if (propertyValue.IsNull()) {
+    value = "[Null]";
+  } else if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Array) {
+    size = propertyValue.AsArray().size();
+    value = "[Array]";
+  } else {
+    value = propertyValue.AsString();
   }
 
   cdebug << "[UnimplementedProperty] ViewManager = " << viewManager << " elementClass = " << reactClassName

@@ -6,6 +6,7 @@
 #include <Views/ShadowNodeBase.h>
 #include "SliderViewManager.h"
 
+#include <JSValueWriter.h>
 #include <Utils/ValueUtils.h>
 
 #include <IReactInstance.h>
@@ -17,7 +18,7 @@ namespace winrt {
 using ToggleButton = xaml::Controls::Primitives::ToggleButton;
 }
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class SliderShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -25,34 +26,33 @@ class SliderShadowNode : public ShadowNodeBase {
  public:
   SliderShadowNode() = default;
   void createView() override;
-  void updateProperties(const folly::dynamic &&props) override;
+  void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 };
 
 void SliderShadowNode::createView() {
   Super::createView();
 }
 
-void SliderShadowNode::updateProperties(const folly::dynamic &&props) {
+void SliderShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_updating = true;
-  Super::updateProperties(std::move(props));
+  Super::updateProperties(props);
   m_updating = false;
 }
 
 SliderViewManager::SliderViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *SliderViewManager::GetName() const {
-  return "RCTSlider";
+const wchar_t *SliderViewManager::GetName() const {
+  return L"RCTSlider";
 }
 
-folly::dynamic SliderViewManager::GetNativeProps() const {
-  auto props = Super::GetNativeProps();
+void SliderViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
 
-  props.update(folly::dynamic::object("value", "integer")("disabled", "boolean"));
-
-  return props;
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"value", L"integer");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"disabled", L"boolean");
 }
 
-facebook::react::ShadowNode *SliderViewManager::createShadow() const {
+ShadowNode *SliderViewManager::createShadow() const {
   return new SliderShadowNode();
 }
 
@@ -64,20 +64,21 @@ XamlView SliderViewManager::CreateViewCore(int64_t /*tag*/) {
 bool SliderViewManager::UpdateProperty(
     ShadowNodeBase *nodeToUpdate,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   auto slider = nodeToUpdate->GetView().as<xaml::Controls::Slider>();
   if (slider == nullptr)
     return true;
 
   if (propertyName == "disabled") {
-    if (propertyValue.isBool())
-      slider.IsEnabled(!propertyValue.asBool());
-    else if (propertyValue.isNull())
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+      slider.IsEnabled(!propertyValue.AsBoolean());
+    else if (propertyValue.IsNull())
       slider.ClearValue(xaml::Controls::Control::IsEnabledProperty());
   } else if (propertyName == "value") {
-    if (propertyValue.isNumber())
-      slider.Value(propertyValue.asDouble());
-    else if (propertyValue.isNull())
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+      slider.Value(propertyValue.AsDouble());
+    else if (propertyValue.IsNull())
       slider.Value(0);
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
@@ -85,4 +86,4 @@ bool SliderViewManager::UpdateProperty(
   return true;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

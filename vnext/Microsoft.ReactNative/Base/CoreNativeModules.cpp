@@ -15,7 +15,7 @@
 #include <Modules/LinkingManagerModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
-#include <Modules/UIManagerModule.h>
+#include <Modules/PaperUIManagerModule.h>
 #include <Threading/MessageQueueThreadFactory.h>
 
 // Shared
@@ -43,23 +43,13 @@ bool HasPackageIdentity() noexcept {
 } // namespace
 
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
-    const std::shared_ptr<facebook::react::IUIManager> &uiManager,
     const std::shared_ptr<facebook::react::MessageQueueThread> &batchingUIMessageQueue,
-    const std::shared_ptr<facebook::react::MessageQueueThread>
-        &uiMessageQueue, // UI queue without batching or affinity limitations
     const std::shared_ptr<facebook::react::MessageQueueThread>
         &jsMessageQueue, // JS engine thread (what we use for external modules)
     std::shared_ptr<react::uwp::AppTheme> &&appTheme,
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept {
   std::vector<facebook::react::NativeModuleDescription> modules;
-
-  modules.emplace_back(
-      "UIManager",
-      [uiManager, uiMessageQueue]() {
-        return facebook::react::createUIManagerModule(std::shared_ptr(uiManager), std::shared_ptr(uiMessageQueue));
-      },
-      batchingUIMessageQueue);
 
   modules.emplace_back(
       "WebSocketModule",

@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <IReactInstance.h>
+#include <JSValueWriter.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Shapes.h>
 #include <Utils/ResourceBrushUtils.h>
@@ -17,7 +18,7 @@ using namespace xaml::Controls;
 using namespace xaml::Shapes;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class SwitchShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
@@ -25,10 +26,10 @@ class SwitchShadowNode : public ShadowNodeBase {
  public:
   SwitchShadowNode() = default;
   void createView() override;
-  void updateProperties(const folly::dynamic &&props) override;
+  void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
   void UpdateThumbColor();
   void UpdateTrackColor();
-  void dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) override;
+  void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs);
 
  private:
   static void OnToggled(const Mso::React::IReactContext &context, int64_t tag, bool newValue);
@@ -36,9 +37,9 @@ class SwitchShadowNode : public ShadowNodeBase {
   winrt::ToggleSwitch::Toggled_revoker m_toggleSwitchToggledRevoker{};
   winrt::ToggleSwitch::Loading_revoker m_toggleSwitchLoadingRevoker{};
 
-  folly::dynamic m_thumbColor;
-  folly::dynamic m_offTrackColor;
-  folly::dynamic m_onTrackColor;
+  winrt::Microsoft::ReactNative::JSValue m_thumbColor;
+  winrt::Microsoft::ReactNative::JSValue m_offTrackColor;
+  winrt::Microsoft::ReactNative::JSValue m_onTrackColor;
 };
 
 void SwitchShadowNode::createView() {
@@ -64,8 +65,8 @@ void SwitchShadowNode::UpdateThumbColor() {
   if (toggleSwitch == nullptr)
     return;
 
-  const auto thumbBrush = IsValidColorValue(m_thumbColor) ? BrushFrom(m_thumbColor) : nullptr;
-  UpdateToggleSwitchThumbResourceBrushes(toggleSwitch, thumbBrush);
+  const auto thumbBrush = react::uwp::IsValidColorValue(m_thumbColor) ? react::uwp::BrushFrom(m_thumbColor) : nullptr;
+  react::uwp::UpdateToggleSwitchThumbResourceBrushes(toggleSwitch, thumbBrush);
 }
 
 void SwitchShadowNode::UpdateTrackColor() {
@@ -73,29 +74,31 @@ void SwitchShadowNode::UpdateTrackColor() {
   if (toggleSwitch == nullptr)
     return;
 
-  const auto onTrackBrush = IsValidColorValue(m_onTrackColor) ? BrushFrom(m_onTrackColor) : nullptr;
-  const auto offTrackBrush = IsValidColorValue(m_offTrackColor) ? BrushFrom(m_offTrackColor) : nullptr;
-  UpdateToggleSwitchTrackResourceBrushes(toggleSwitch, onTrackBrush, offTrackBrush);
+  const auto onTrackBrush =
+      react::uwp::IsValidColorValue(m_onTrackColor) ? react::uwp::BrushFrom(m_onTrackColor) : nullptr;
+  const auto offTrackBrush =
+      react::uwp::IsValidColorValue(m_offTrackColor) ? react::uwp::BrushFrom(m_offTrackColor) : nullptr;
+  react::uwp::UpdateToggleSwitchTrackResourceBrushes(toggleSwitch, onTrackBrush, offTrackBrush);
 }
 
-void SwitchShadowNode::updateProperties(const folly::dynamic &&props) {
+void SwitchShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_updating = true;
 
-  Super::updateProperties(std::move(props));
-  for (const auto &pair : props.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
+  Super::updateProperties(props);
+  for (const auto &pair : props) {
+    const std::string &propertyName = pair.first;
+    const auto &propertyValue = pair.second;
     // RN maps thumbColor to deprecated thumbTintColor,
     // and trackColor to tintColor(not toggled state) and onTintColor( toggled
     // state)
     if (propertyName == "thumbTintColor") {
-      m_thumbColor = propertyValue;
+      m_thumbColor = propertyValue.Copy();
       UpdateThumbColor();
     } else if (propertyName == "tintColor") {
-      m_offTrackColor = propertyValue;
+      m_offTrackColor = propertyValue.Copy();
       UpdateTrackColor();
     } else if (propertyName == "onTintColor") {
-      m_onTrackColor = propertyValue;
+      m_onTrackColor = propertyValue.Copy();
       UpdateTrackColor();
     }
   }
@@ -103,15 +106,17 @@ void SwitchShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
-void SwitchShadowNode::dispatchCommand(const std::string &commandId, const folly::dynamic &commandArgs) {
+void SwitchShadowNode::dispatchCommand(
+    const std::string &commandId,
+    winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
   if (commandId == "setValue") {
-    auto value = commandArgs[0].asBool();
+    auto value = commandArgs[0].AsBoolean();
     auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
     m_updating = true;
     toggleSwitch.IsOn(value);
     m_updating = false;
   } else {
-    Super::dispatchCommand(commandId, commandArgs);
+    Super::dispatchCommand(commandId, std::move(commandArgs));
   }
 }
 
@@ -122,20 +127,21 @@ void SwitchShadowNode::dispatchCommand(const std::string &commandId, const folly
 
 SwitchViewManager::SwitchViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const char *SwitchViewManager::GetName() const {
-  return "RCTSwitch";
+const wchar_t *SwitchViewManager::GetName() const {
+  return L"RCTSwitch";
 }
 
-folly::dynamic SwitchViewManager::GetNativeProps() const {
-  auto props = Super::GetNativeProps();
+void SwitchViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
 
-  props.update(folly::dynamic::object("value", "boolean")("disabled", "boolean")("thumbTintColor", "Color")(
-      "tintColor", "Color")("onTintColor", "Color"));
-
-  return props;
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"value", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"disabled", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"thumbTintColor", L"Color");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"tintColor", L"Color");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"onTintColor", L"Color");
 }
 
-facebook::react::ShadowNode *SwitchViewManager::createShadow() const {
+ShadowNode *SwitchViewManager::createShadow() const {
   return new SwitchShadowNode();
 }
 
@@ -150,20 +156,20 @@ XamlView SwitchViewManager::CreateViewCore(int64_t /*tag*/) {
 bool SwitchViewManager::UpdateProperty(
     ShadowNodeBase *nodeToUpdate,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   auto toggleSwitch = nodeToUpdate->GetView().as<winrt::ToggleSwitch>();
   if (toggleSwitch == nullptr)
     return true;
 
   if (propertyName == "disabled") {
-    if (propertyValue.isBool())
-      toggleSwitch.IsEnabled(!propertyValue.asBool());
-    else if (propertyValue.isNull())
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+      toggleSwitch.IsEnabled(!propertyValue.AsBoolean());
+    else if (propertyValue.IsNull())
       toggleSwitch.ClearValue(xaml::Controls::Control::IsEnabledProperty());
   } else if (propertyName == "value") {
-    if (propertyValue.isBool())
-      toggleSwitch.IsOn(propertyValue.asBool());
-    else if (propertyValue.isNull())
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+      toggleSwitch.IsOn(propertyValue.AsBoolean());
+    else if (propertyValue.IsNull())
       toggleSwitch.ClearValue(winrt::ToggleSwitch::IsOnProperty());
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
@@ -171,4 +177,4 @@ bool SwitchViewManager::UpdateProperty(
   return true;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative
