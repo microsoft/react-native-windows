@@ -22,7 +22,9 @@
     "@rnw-scripts/ts-config": "0.1.0",
     "eslint": "6.8.0",
     "just-scripts": "^0.44.7",
+    "react-native": "0.0.0-9b973f32e",
     "react-native-platform-override": "^0.4.0",
+    "react-native-windows": "^0.0.0-canary.185",
     "typescript": "^3.8.3"
   }
 }
