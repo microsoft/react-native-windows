@@ -16,6 +16,19 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   TransformableText transformableText{};
 
   void AddView(ShadowNode &child, int64_t index) override;
+
+  bool m_isHighlighted = false;
+  folly::dynamic m_ColorValue = nullptr;
+  size_t m_length = 0;
+
+  typedef struct HighlightData {
+    std::vector<std::unique_ptr<HighlightData>> data;
+    size_t spanIdx = 0;
+    bool isHighlighted = false;
+    folly::dynamic color;
+  } HighlightData;
+
+  std::unique_ptr<HighlightData> m_highlightData = std::make_unique<HighlightData>();
 };
 
 class VirtualTextViewManager : public ViewManagerBase {

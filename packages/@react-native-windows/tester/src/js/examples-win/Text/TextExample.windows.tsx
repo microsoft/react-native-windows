@@ -72,6 +72,58 @@ export class AttributeToggler extends React.Component<
   }
 }
 
+export class BackgroundColorDemo extends React.Component<{}> {
+  public render() {
+    return (
+      <View>
+        <Text>
+          Outer no_color{' '}
+          <Text style={{backgroundColor: 'green'}}>
+            START_NESTED green{' '}
+            <Text style={{backgroundColor: 'blue'}}>DEEPER_NESTED blue</Text>{' '}
+            END_NESTED
+          </Text>{' '}
+          attributes.
+        </Text>
+        <Text>
+          Outer no_color{' '}
+          <Text>
+            START_NESTED no_color{' '}
+            <Text style={{backgroundColor: 'blue'}}>DEEPER_NESTED blue</Text>{' '}
+            END_NESTED
+          </Text>{' '}
+          attributes.
+        </Text>
+        <Text>
+          Outer no_color{' '}
+          <Text style={{backgroundColor: 'green'}}>
+            START_NESTED green <Text>DEEPER_NESTED inherit green</Text>{' '}
+            END_NESTED
+          </Text>{' '}
+          attributes.
+        </Text>
+        <Text style={{backgroundColor: 'red'}}>
+          Outer red{' '}
+          <Text>
+            START_NESTED inherit red <Text>DEEPER_NESTED inherit red</Text>{' '}
+            END_NESTED
+          </Text>{' '}
+          attributes.
+        </Text>
+        <Text style={{backgroundColor: 'red'}}>
+          Outer red{' '}
+          <Text style={{backgroundColor: 'green'}}>
+            START_NESTED green{' '}
+            <Text style={{backgroundColor: 'blue'}}>DEEPER_NESTED blue</Text>{' '}
+            END_NESTED
+          </Text>{' '}
+          attributes.
+        </Text>
+      </View>
+    );
+  }
+}
+
 export class TextExample extends React.Component<{}> {
   public render() {
     const lorumIpsum =
@@ -441,6 +493,11 @@ export class TextExample extends React.Component<{}> {
         <RNTesterBlock title="Toggling Attributes">
           <AttributeToggler />
         </RNTesterBlock>
+
+        <RNTesterBlock title="backgroundColor new examples">
+          <BackgroundColorDemo />
+        </RNTesterBlock>
+
         <RNTesterBlock title="backgroundColor attribute">
           <Text style={{backgroundColor: '#ffaaaa'}}>
             Red background,
