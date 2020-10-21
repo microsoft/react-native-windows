@@ -11,8 +11,10 @@
     "validate-overrides": "react-native-platform-override validate"
   },
   "dependencies": {
-    "@react-native/tester": "0.0.1",
-    "react-native": "0.0.0-12543d557",
+    "@react-native/tester": "0.0.1"
+  },
+  "peerDependencies": {
+    "react-native": "0.0.0-9b973f32e",
     "react-native-windows": "^0.0.0-canary.185"
   },
   "devDependencies": {

@@ -24,7 +24,7 @@
     "@react-native-windows/tester": "0.0.1",
     "prompt-sync": "^4.2.0",
     "react": "16.13.1",
-    "react-native": "0.0.0-12543d557",
+    "react-native": "0.0.0-9b973f32e",
     "react-native-windows": "0.0.0-canary.185"
   },
   "devDependencies": {
@@ -48,7 +48,7 @@
     "just-scripts": "^0.44.7",
     "metro-react-native-babel-preset": "^0.56.0",
     "prettier": "1.19.1",
-    "react-test-renderer": "16.9.0",
+    "react-test-renderer": "16.13.1",
     "rimraf": "^3.0.0",
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.8.0",

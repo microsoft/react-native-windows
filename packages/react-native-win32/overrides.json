@@ -4,13 +4,13 @@
     "flow-typed",
     "src/**"
   ],
-  "baseVersion": "0.0.0-12543d557",
+  "baseVersion": "0.0.0-9b973f32e",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "f177c2ce170c403708153db596577a436d71e5dc"
+      "baseHash": "a02ec80bfa99acea12365f29e51b898a074e362a"
     },
     {
       "type": "copy",
@@ -23,7 +23,7 @@
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "27967b6f36e9bc2bc3f4ac79c1320b7152d93f83"
+      "baseHash": "717b73b2397607b3d0a74534cc3360a1be627906"
     },
     {
       "type": "patch",
@@ -166,7 +166,7 @@
       "type": "copy",
       "file": "src/Libraries/Components/ToastAndroid/ToastAndroid.win32.js",
       "baseFile": "Libraries/Components/ToastAndroid/ToastAndroid.ios.js",
-      "baseHash": "614b7e88c38f5820656c79d64239bfb74ca308c0",
+      "baseHash": "b0fea77dfa90389e101e6721bb095190dde82368",
       "issue": 4378
     },
     {
