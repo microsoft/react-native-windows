@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <JSValueWriter.h>
+#include <JsiWriter.h>
 #include <Views/SIPEventHandler.h>
 #include <Views/ShadowNodeBase.h>
 #include "Impl/ScrollViewUWPImplementation.h"
@@ -432,20 +433,30 @@ void ScrollViewManager::GetExportedCustomDirectEventTypeConstants(
     const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
   Super::GetExportedCustomDirectEventTypeConstants(writer);
 
-  const PCWSTR eventNames[] = {
-      L"ScrollBeginMomentum", L"ScrollEndMomentum", L"ScrollBeginDrag", L"ScrollEndDrag", L"Scroll"};
+  writer.WritePropertyName(L"topScrollBeginMomentum");
+  writer.WriteObjectBegin();
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"registrationName", L"onMomentumScrollBegin");
+  writer.WriteObjectEnd();
 
-  for (auto &eventBaseName : eventNames) {
-    using namespace std::string_literals;
-    std::wstring eventName = L"top"s + eventBaseName;
-    std::wstring bubbleName = L"on"s + eventBaseName;
+  writer.WritePropertyName(L"topScrollEndMomentum");
+  writer.WriteObjectBegin();
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"registrationName", L"onMomentumScrollEnd");
+  writer.WriteObjectEnd();
 
-    writer.WritePropertyName(L"top"s + eventBaseName);
-    writer.WriteObjectBegin();
-    writer.WritePropertyName(L"registrationName");
-    writer.WriteString(L"on"s + eventBaseName);
-    writer.WriteObjectEnd();
-  }
+  writer.WritePropertyName(L"topScrollBeginDrag");
+  writer.WriteObjectBegin();
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"registrationName", L"onScrollBeginDrag");
+  writer.WriteObjectEnd();
+
+  writer.WritePropertyName(L"topScrollEndDrag");
+  writer.WriteObjectBegin();
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"registrationName", L"onScrollEndDrag");
+  writer.WriteObjectEnd();
+
+  writer.WritePropertyName(L"topScroll");
+  writer.WriteObjectBegin();
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"registrationName", L"onScroll");
+  writer.WriteObjectEnd();
 }
 
 XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/) {

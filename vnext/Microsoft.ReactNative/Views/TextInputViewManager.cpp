@@ -677,22 +677,19 @@ void TextInputViewManager::GetExportedCustomDirectEventTypeConstants(
   Super::GetExportedCustomDirectEventTypeConstants(writer);
 
   const PCWSTR eventNames[] = {// Generic events
-                               L"TextInputChange",
-                               L"TextInputFocus",
-                               L"TextInputBlur",
-                               L"TextInputEndEditing",
-                               L"TextInputSelectionChange",
-                               L"TextInputContentSizeChange",
-                               L"TextInputKeyPress",
-                               L"TextInputOnScroll",
-                               L"TextInputSubmitEditing"};
+                               L"Change",
+                               L"Focus",
+                               L"Blur",
+                               L"EndEditing",
+                               L"SelectionChange",
+                               L"ContentSizeChange",
+                               L"KeyPress",
+                               L"OnScroll",
+                               L"SubmitEditing"};
 
   for (auto &eventBaseName : eventNames) {
     using namespace std::string_literals;
-    std::wstring eventName = L"top"s + eventBaseName;
-    std::wstring bubbleName = L"on"s + eventBaseName;
-
-    writer.WritePropertyName(L"top"s + eventBaseName);
+    writer.WritePropertyName(L"topTextInput"s + eventBaseName);
     writer.WriteObjectBegin();
     writer.WritePropertyName(L"registrationName");
     writer.WriteString(L"on"s + eventBaseName);
