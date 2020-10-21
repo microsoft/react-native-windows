@@ -254,13 +254,16 @@ class TurboModuleImpl : public facebook::react::TurboModule {
               auto argReader = winrt::make<JsiReader>(runtime, args, count);
 
               // prepare output value
-              auto writer = winrt::make<JsiWriter>(runtime);
+              auto argWriter = winrt::make<JsiWriter>(runtime);
 
               // call the function
-              method(argReader, writer);
+              method(argReader, argWriter);
 
               // set the return value
-              return writer.as<JsiWriter>()->MoveResult();
+              const facebook::jsi::Value *resultArgs = nullptr;
+              size_t resultCount = 0;
+              argWriter.as<JsiWriter>()->AccessResultAsArgs(resultArgs, resultCount);
+              return facebook::jsi::Value(rt, resultArgs[0]);
             });
       }
     }
