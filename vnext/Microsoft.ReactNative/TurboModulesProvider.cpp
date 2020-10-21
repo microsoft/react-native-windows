@@ -87,6 +87,15 @@ class TurboModuleImpl : public facebook::react::TurboModule {
     providedModule = reactModuleProvider(m_moduleBuilder);
   }
 
+  std::vector<facebook::jsi::PropNameID> getPropertyNames(facebook::jsi::Runtime &rt) override {
+    std::vector<facebook::jsi::PropNameID> props;
+    auto tmb = m_moduleBuilder.as<TurboModuleBuilder>();
+    for (auto it : tmb->m_methods) {
+      props.push_back(facebook::jsi::PropNameID::forAscii(rt, it.first));
+    }
+    return props;
+  };
+
   facebook::jsi::Value get(facebook::jsi::Runtime &runtime, const facebook::jsi::PropNameID &propName) override {
     // it is not safe to assume that "runtime" never changes, so members are not cached here
     auto tmb = m_moduleBuilder.as<TurboModuleBuilder>();

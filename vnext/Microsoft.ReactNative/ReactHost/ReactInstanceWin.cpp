@@ -136,9 +136,13 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
           }
         });
       } else {
-        if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
-          uiManager->onBatchComplete();
-        }
+        instance->m_batchingUIThread->runOnQueue([wkInstance = m_wkInstance]() {
+          if (auto instance = wkInstance.GetStrongPtr()) {
+            if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
+              uiManager->onBatchComplete();
+            }
+          }
+        });
 #ifdef WINRT
         // For UWP we use a batching message queue to optimize the usage
         // of the CoreDispatcher.  Win32 already has an optimized queue.
