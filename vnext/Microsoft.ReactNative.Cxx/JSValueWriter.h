@@ -272,6 +272,18 @@ inline JSValueArgWriter MakeJSValueArgWriter(TArgs &&... args) noexcept {
   };
 }
 
+template <class T, std::enable_if_t<std::is_invocable_v<T, IJSValueWriter const &>, int> = 0>
+inline JSValueArgWriter MakeJSValueWriter(T &&argWriter) noexcept {
+  return std::forward<T>(argWriter);
+}
+
+template <class... TArgs>
+inline JSValueArgWriter MakeJSValueWriter(TArgs &&... args) noexcept {
+  return [&args...](IJSValueWriter const &writer) noexcept {
+    (WriteValue(writer, args), ...);
+  };
+}
+
 } // namespace winrt::Microsoft::ReactNative
 
 #endif // MICROSOFT_REACTNATIVE_JSVALUEWRITER

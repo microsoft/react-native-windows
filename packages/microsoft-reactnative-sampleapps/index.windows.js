@@ -43,6 +43,12 @@ var getCallback = function(prefix) {
   };
 };
 
+var getCallback2 = function(prefix) {
+  return function(arg1, arg2) {
+    log(prefix + "arg1: " + arg1 + " arg2: " + arg2);
+  };
+};
+
 var getErrorCallback = function(prefix) {
   return function(error) {
     log(prefix + (error || {}).message);
@@ -63,6 +69,12 @@ class SampleApp extends Component {
   componentDidMount() {
     this.timedEventCSSub = SampleModuleCSEmitter.addListener('TimedEventCS', getCallback('SampleModuleCS.TimedEventCS() => '));
     this.timedEventCppSub = SampleModuleCppEmitter.addListener('TimedEventCpp', getCallback('SampleModuleCpp.TimedEventCpp() => '));
+    this.EmitJSEvent1CppSub = SampleModuleCppEmitter.addListener('EmitJSEvent1Cpp', getCallback('SampleModuleCpp.EmitJSEvent1Cpp => '));
+    this.EmitJSEvent2CppSub = SampleModuleCppEmitter.addListener('EmitJSEvent2Cpp', getCallback2('SampleModuleCpp.EmitJSEvent2Cpp => '));
+    this.EmitJSEvent3CppSub = SampleModuleCppEmitter.addListener('EmitJSEvent3Cpp', getCallback2('SampleModuleCpp.EmitJSEvent3Cpp => '));
+    this.EmitJSEvent1CSSub = SampleModuleCppEmitter.addListener('EmitJSEvent1CS', getCallback('SampleModuleCS.EmitJSEvent1CS => '));
+    this.EmitJSEvent2CSSub = SampleModuleCppEmitter.addListener('EmitJSEvent2CS', getCallback2('SampleModuleCS.EmitJSEvent2CS => '));
+    this.EmitJSEvent3CSSub = SampleModuleCppEmitter.addListener('EmitJSEvent3CS', getCallback2('SampleModuleCS.EmitJSEvent3CS => '));
     this.openURLSub = Linking.addListener('url', (event) => log('Open URL => ' + event.url));
 
     Linking.getInitialURL()
@@ -73,6 +85,12 @@ class SampleApp extends Component {
   componentWillUnmount() {
     this.timedEventCSSub.remove();
     this.timedEventCppSub.remove();
+    this.EmitJSEvent1CppSub.remove();
+    this.EmitJSEvent2CppSub.remove();
+    this.EmitJSEvent3CppSub.remove();
+    this.EmitJSEvent1CSSub.remove();
+    this.EmitJSEvent2CSSub.remove();
+    this.EmitJSEvent3CSSub.remove();
     this.openURLSub.remove();
   }
 
@@ -165,10 +183,13 @@ class SampleApp extends Component {
       .then(getCallback('SampleModuleCS.TaskOfTTwoArgs then => '))
       .catch(getErrorCallback('SampleModuleCS.TaskOfTTwoArgs catch => '));
 
+    NativeModules.SampleModuleCS.EmitJSEvent1(43);
+    NativeModules.SampleModuleCS.EmitJSEvent2(8, 52);
+    NativeModules.SampleModuleCS.EmitJSEvent3(15, 79);
 
-    log('SampleModuleCS.SyncReturnMethod => ' + NativeModules.SampleModuleCS.SyncReturnMethod());
-
-    log('SampleModuleCS.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCS.SyncReturnMethodWithArgs(numberArg));
+    //TODO: make sync method accessible only in non-web debugger scenarios
+    //log('SampleModuleCS.SyncReturnMethod => ' + NativeModules.SampleModuleCS.SyncReturnMethod());
+    //log('SampleModuleCS.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCS.SyncReturnMethodWithArgs(numberArg));
   }
 
   onPressSampleModuleCpp() {
@@ -244,9 +265,13 @@ class SampleApp extends Component {
 
     NativeModules.SampleModuleCpp.callDistanceFunction({x: 2, y: 3}, {x: 5, y: 6});
 
-    log('SampleModuleCpp.SyncReturnMethod => ' + NativeModules.SampleModuleCpp.SyncReturnMethod());
+    NativeModules.SampleModuleCpp.EmitJSEvent1(42);
+    NativeModules.SampleModuleCpp.EmitJSEvent2(7, 51);
+    NativeModules.SampleModuleCpp.EmitJSEvent3(14, 78);
 
-    log('SampleModuleCpp.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCpp.SyncReturnMethodWithArgs(numberArg));
+    //TODO: make sync method accessible only in non-web debugger scenarios
+    //log('SampleModuleCpp.SyncReturnMethod => ' + NativeModules.SampleModuleCpp.SyncReturnMethod());
+    //log('SampleModuleCpp.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCpp.SyncReturnMethodWithArgs(numberArg));
   }
 
   onPressCustomUserControlCS() {

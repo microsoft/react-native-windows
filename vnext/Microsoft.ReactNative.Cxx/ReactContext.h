@@ -62,7 +62,7 @@ struct ReactContext {
   // args are either function arguments or a single lambda with 'IJSValueWriter const&' argument.
   template <class... TArgs>
   void EmitJSEvent(std::wstring_view eventEmitterName, std::wstring_view eventName, TArgs &&... args) const noexcept {
-    m_handle.EmitJSEvent(eventEmitterName, eventName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
+    m_handle.EmitJSEvent(eventEmitterName, eventName, MakeJSValueWriter(std::forward<TArgs>(args)...));
   }
 
 #if !defined(CORE_ABI) && !defined(__APPLE__)

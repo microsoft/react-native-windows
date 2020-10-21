@@ -6,6 +6,7 @@ using Microsoft.ReactNative.Managed;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.Security.Cryptography.Core;
 using Windows.System.Threading;
 
 namespace SampleLibraryCS
@@ -26,6 +27,8 @@ namespace SampleLibraryCS
         [ReactInitializer]
         public void Initialize(ReactContext reactContext)
         {
+            _reactContext = reactContext;
+
             Debug.WriteLine($"C# Properties.Prop1: {reactContext.Handle.Properties.Get(ReactPropertyBagHelper.GetName(null, "Prop1"))}");
             Debug.WriteLine($"C# Properties.Prop2: {reactContext.Handle.Properties.Get(ReactPropertyBagHelper.GetName(null, "Prop2"))}");
 
@@ -278,11 +281,36 @@ namespace SampleLibraryCS
         [ReactEvent("TimedEventCS")]
         public Action<int> TimedEvent { get; set; }
 
-        #endregion
+        [ReactMethod]
+        public void EmitJSEvent1(int value)
+        {
+            // Test the ReactContext.EmitJSEvent
+            _reactContext.EmitJSEvent("RCTDeviceEventEmitter", "EmitJSEvent1CS", value);
+        }
 
-        #region JS Functions
+        [ReactMethod]
+        public void EmitJSEvent2(int value1, int value2)
+        {
+            // Test the ReactContext::EmitJSEvent
+            _reactContext.EmitJSEvent("RCTDeviceEventEmitter", "EmitJSEvent2CS", value1, value2);
+        }
 
-        [ReactFunction("calcDistance", ModuleName = "SampleModuleCpp")]
+        [ReactMethod]
+        public void EmitJSEvent3(int value1, int value2)
+        {
+            // Test the ReactContext::EmitJSEvent
+            _reactContext.EmitJSEvent<JSValueArgWriter>("RCTDeviceEventEmitter", "EmitJSEvent3CS", (IJSValueWriter argWriter) =>
+            {
+                argWriter.WriteValue(value1);
+                argWriter.WriteValue(value2);
+            });
+        }
+
+#endregion
+
+#region JS Functions
+
+[ReactFunction("calcDistance", ModuleName = "SampleModuleCpp")]
         public Action<Point, Point> CalcDistance = null;
 
         [ReactMethod("callDistanceFunction")]
@@ -297,5 +325,6 @@ namespace SampleLibraryCS
         private ThreadPoolTimer _timer;
         private int _timerCount = 0;
         private const int TimedEventIntervalMS = 5000;
+        private ReactContext _reactContext;
     }
 }

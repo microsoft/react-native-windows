@@ -34,6 +34,8 @@ struct SampleModuleCppImpl {
 
   REACT_INIT(Initialize)
   void Initialize(ReactContext const &reactContext) noexcept {
+    m_reactContext = reactContext;
+
     const ReactPropertyId<int> myProp1{L"Prop1"};
     const ReactPropertyId<winrt::hstring> myProp2{L"Prop2"};
     DEBUG_OUTPUT("C++ Properties.Prop1:", *reactContext.Properties().Get(myProp1));
@@ -237,6 +239,28 @@ struct SampleModuleCppImpl {
   REACT_EVENT(TimedEvent, L"TimedEventCpp");
   std::function<void(int)> TimedEvent;
 
+  REACT_METHOD(EmitJSEvent1)
+  void EmitJSEvent1(int value) noexcept {
+    // Test the ReactContext::EmitJSEvent
+    m_reactContext.EmitJSEvent(L"RCTDeviceEventEmitter", L"EmitJSEvent1Cpp", value);
+  }
+
+  REACT_METHOD(EmitJSEvent2)
+  void EmitJSEvent2(int value1, int value2) noexcept {
+    // Test the ReactContext::EmitJSEvent
+    m_reactContext.EmitJSEvent(L"RCTDeviceEventEmitter", L"EmitJSEvent2Cpp", value1, value2);
+  }
+
+  REACT_METHOD(EmitJSEvent3)
+  void EmitJSEvent3(int value1, int value2) noexcept {
+    // Test the ReactContext::EmitJSEvent
+    m_reactContext.EmitJSEvent(
+        L"RCTDeviceEventEmitter", L"EmitJSEvent3Cpp", [&](IJSValueWriter const argWriter) noexcept {
+          WriteValue(argWriter, value1);
+          WriteValue(argWriter, value2);
+        });
+  }
+
 #pragma endregion
 
 #pragma region JS Functions
@@ -255,6 +279,7 @@ struct SampleModuleCppImpl {
   winrt::Windows::System::Threading::ThreadPoolTimer m_timer{nullptr};
   int m_timerCount{0};
   static constexpr std::chrono::milliseconds TimedEventInterval{5000};
+  ReactContext m_reactContext;
 };
 
 // SampleSharedCppModule shows how to inherited native modules from std::enable_shared_from_this
