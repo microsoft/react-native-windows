@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Ensure that destruction of animation nodes happen on UI thread",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-21T18:22:08.379Z"
+}
