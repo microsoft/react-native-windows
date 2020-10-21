@@ -15,10 +15,7 @@ BatchingQueueThread::BatchingQueueThread(
 BatchingQueueThread::~BatchingQueueThread() noexcept {}
 
 void BatchingQueueThread::runOnQueue(std::function<void()> &&func) noexcept {
-  std::lock_guard<std::mutex> lck(m_mutex);
-
-  if (m_quit)
-    return;
+  std::lock_guard lck(m_mutex);
 
   EnsureQueue();
   m_taskQueue->emplace_back(std::move(func));
@@ -49,10 +46,7 @@ void BatchingQueueThread::EnsureQueue() noexcept {
   }
 }
 
-void BatchingQueueThread::onBatchComplete() noexcept {
-  ThreadCheck();
-  std::lock_guard<std::mutex> lck(m_mutex);
-
+void BatchingQueueThread::postBatch() noexcept {
   if (m_taskQueue) {
     m_queueThread->runOnQueue([taskQueue{std::move(m_taskQueue)}]() noexcept {
       for (auto &task : *taskQueue) {
@@ -63,23 +57,20 @@ void BatchingQueueThread::onBatchComplete() noexcept {
   }
 }
 
+void BatchingQueueThread::onBatchComplete() noexcept {
+  std::lock_guard lck(m_mutex);
+  postBatch();
+}
+
 void BatchingQueueThread::runOnQueueSync(std::function<void()> && /*func*/) noexcept {
   assert(false && "Not supported");
   std::terminate();
 }
 
 void BatchingQueueThread::quitSynchronous() noexcept {
-  Mso::ManualResetEvent resetEvent;
-  {
-    std::lock_guard<std::mutex> lck(m_mutex);
-
-    m_quit = true;
-
-    if (m_taskQueue)
-      m_taskQueue->emplace_back([&resetEvent]() { resetEvent.Set(); });
-  }
-
-  resetEvent.Wait();
+  std::lock_guard lck(m_mutex);
+  postBatch();
+  m_queueThread->quitSynchronous();
 }
 
 } // namespace react::uwp

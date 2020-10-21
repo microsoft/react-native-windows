@@ -27,6 +27,7 @@ struct BatchingQueueThread final : facebook::react::BatchingMessageQueueThread {
  private:
   void EnsureQueue() noexcept;
   void ThreadCheck() noexcept;
+  void postBatch() noexcept;
 
  private:
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
@@ -34,7 +35,6 @@ struct BatchingQueueThread final : facebook::react::BatchingMessageQueueThread {
   using WorkItemQueue = std::vector<std::function<void()>>;
   std::shared_ptr<WorkItemQueue> m_taskQueue;
   std::mutex m_mutex;
-  bool m_quit{false};
 
 #if DEBUG
   std::thread::id m_expectedThreadId{};
