@@ -9,14 +9,13 @@
     "type": "git",
     "url": "git@github.com:facebook/react-native.git"
   },
-  "scripts": {
-    "validate-overrides": "react-native-platform-override validate"
-  },
   "dependencies": {
     "invariant": "^2.2.4",
-    "nullthrows": "^1.1.1",
+    "nullthrows": "^1.1.1"
+  },
+  "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "0.0.0-12543d557"
+    "react-native": "0.0.0-9b973f32e"
   },
   "devDependencies": {
     "react-native-platform-override": "^0.4.0"

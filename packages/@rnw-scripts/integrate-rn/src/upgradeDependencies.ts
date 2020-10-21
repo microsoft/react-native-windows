@@ -135,6 +135,17 @@ async function upgradeReactNative(
         },
       });
     }
+
+    if (pkg.json.devDependencies && pkg.json.devDependencies['react-native']) {
+      await pkg.mergeProps({
+        devDependencies: {
+          'react-native': bumpSemver(
+            pkg.json.devDependencies['react-native'],
+            newReactNativeVersion,
+          ),
+        },
+      });
+    }
   }
 
   await runCommand('yarn install');
@@ -198,7 +209,9 @@ function extractPackageDeps(json: any): PackageDeps {
 /**
  * Given inputs on the packages of the monorepo along with old + new RN related
  * packages, determines the list of dependencies for every package in the
- * monorepo. Exported for testability.
+ * monorepo. Exported for testability. Assumes all dependencies and
+ * devDependencies have already been updated to the newer version of
+ * react-native.
  */
 export function calcPackageDependencies(
   newReactNativeVersion: string,
