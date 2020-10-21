@@ -242,7 +242,7 @@
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
-      "baseFile": "Libraries/Components/TextInput/TextsInput.js",
+      "baseFile": "Libraries/Components/TextInput/TextInput.js",
       "baseHash": "05c8c1e9142210b472c9c1ce891314b786ecc50f"
     },
     {
