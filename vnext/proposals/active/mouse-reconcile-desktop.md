@@ -77,6 +77,22 @@ private onPointerOver_ = (event: IPointerEvent) => {
 };
 ```
 
+### Callbacks NOT being implemented
+The following are outstanding events that we are *not* looking to implement at this time. But should be represented as possible callbacks that can be revisited later.
+
+| API | Args | Returns | Description |
+|:---:|:----:|:-------:|----|
+| onPointerEnter | IPointerEvent | void | Fires when a pointing device is moved into the hit test boundaries of an element, including its children.|
+| onPointerDown | IPointerEvent | void | Fires when a pointing device's button (or buttons) state is non-negative. |
+| onPointerMove | IPointerEvent | void | Fires when a pointer changes coordinates when within the hit test boundaries of an element.|
+| onPointerUp | IPointerEvent | void | Fires when a pointing device's button (or buttons) return to negative from being non-negative. |
+| onPointerOverCapture | IPointerEvent | void | Occurs when the `onPointerOver` event is being routed. `onPointerOver` is the corresponding bubbling event. |
+| onPointerEnterCapture | IPointerEvent | void | Occurs when the `onPointerEnter` event is being routed. `onPointerEnter` is the corresponding bubbling event.|
+| onPointerDownCapture | IPointerEvent | void | Occurs when the `onPointerDown` event is being routed. `onPointerDown` is the corresponding bubbling event. |
+| onPointerMoveCapture | IPointerEvent | void | Occurs when the `onPointerMove` event is being routed. `onPointerMove` is the corresponding bubbling event.|
+| onPointerUpCapture | IPointerEvent | void | Occurs when the `onPointerUp` event is being routed. `onPointerUp` is the corresponding bubbling event. |
+| onPointerLeaveCapture | IPointerEvent | void | Occurs when the `onPointerLeave` event is being routed. `onPointerLeave` is the corresponding bubbling event. |
+
 ### Declarative properties
 
 To co-ordinate the handoffs of these pointer events between the native layer and the JS layer, we are also introducing 2 corresponding properties on the `View`(?) component. Those are:
