@@ -23,7 +23,7 @@ NativeAnimatedModule::~NativeAnimatedModule() {
 
   // To make sure that we destroy UI components in UI thread.
   if (!uiDispatcher.HasThreadAccess()) {
-    uiDispatcher.Post([maanger = std::move(m_nodesManager)]() {});
+    uiDispatcher.Post([manager = std::move(m_nodesManager)]() {});
   }
 }
 

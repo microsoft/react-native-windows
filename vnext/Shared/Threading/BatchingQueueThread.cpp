@@ -15,7 +15,7 @@ BatchingQueueThread::BatchingQueueThread(
 BatchingQueueThread::~BatchingQueueThread() noexcept {}
 
 void BatchingQueueThread::runOnQueue(std::function<void()> &&func) noexcept {
-  std::lock_guard lck(m_mutex);
+  std::scoped_lock lck(m_mutex);
 
   EnsureQueue();
   m_taskQueue->emplace_back(std::move(func));
@@ -46,7 +46,7 @@ void BatchingQueueThread::EnsureQueue() noexcept {
   }
 }
 
-void BatchingQueueThread::postBatch() noexcept {
+void BatchingQueueThread::PostBatch() noexcept {
   if (m_taskQueue) {
     m_queueThread->runOnQueue([taskQueue{std::move(m_taskQueue)}]() noexcept {
       for (auto &task : *taskQueue) {
@@ -58,8 +58,8 @@ void BatchingQueueThread::postBatch() noexcept {
 }
 
 void BatchingQueueThread::onBatchComplete() noexcept {
-  std::lock_guard lck(m_mutex);
-  postBatch();
+  std::scoped_lock lck(m_mutex);
+  PostBatch();
 }
 
 void BatchingQueueThread::runOnQueueSync(std::function<void()> && /*func*/) noexcept {
@@ -68,8 +68,8 @@ void BatchingQueueThread::runOnQueueSync(std::function<void()> && /*func*/) noex
 }
 
 void BatchingQueueThread::quitSynchronous() noexcept {
-  std::lock_guard lck(m_mutex);
-  postBatch();
+  std::scoped_lock lck(m_mutex);
+  PostBatch();
   m_queueThread->quitSynchronous();
 }
 

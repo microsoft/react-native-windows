@@ -27,7 +27,7 @@ struct BatchingQueueThread final : facebook::react::BatchingMessageQueueThread {
  private:
   void EnsureQueue() noexcept;
   void ThreadCheck() noexcept;
-  void postBatch() noexcept;
+  void PostBatch() noexcept;
 
  private:
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
