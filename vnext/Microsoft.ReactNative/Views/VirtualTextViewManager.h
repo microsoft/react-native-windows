@@ -17,18 +17,13 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
 
   void AddView(ShadowNode &child, int64_t index) override;
 
-  bool m_isHighlighted = false;
-  folly::dynamic m_ColorValue = nullptr;
-  size_t m_length = 0;
-
-  typedef struct HighlightData {
-    std::vector<std::unique_ptr<HighlightData>> data;
+  struct HighlightData {
+    std::vector<HighlightData> data;
     size_t spanIdx = 0;
-    bool isHighlighted = false;
-    folly::dynamic color;
-  } HighlightData;
+    std::optional<winrt::Windows::UI::Color> color;
+  };
 
-  std::unique_ptr<HighlightData> m_highlightData = std::make_unique<HighlightData>();
+  HighlightData m_highlightData;
 };
 
 class VirtualTextViewManager : public ViewManagerBase {

@@ -31,8 +31,7 @@ class TextShadowNode final : public ShadowNodeBase {
  private:
   ShadowNode *m_firstChildNode;
 
-  bool m_isHighlighted = false;
-  folly::dynamic m_ColorValue;
+  std::optional<winrt::Windows::UI::Color> m_ColorValue = std::nullopt;
   int32_t m_prevCursorEnd = 0;
 
  public:
@@ -54,8 +53,8 @@ class TextShadowNode final : public ShadowNodeBase {
         text = transformableText.TransformText();
         textBlock.Text(winrt::hstring(text));
 
-        if (m_isHighlighted) {
-          AddHighlighter(m_ColorValue, text.size());
+        if (m_ColorValue) {
+          AddHighlighter(m_ColorValue.value(), text.size());
         }
 
         m_prevCursorEnd += textBlock.Text().size();
@@ -72,44 +71,40 @@ class TextShadowNode final : public ShadowNodeBase {
     Super::AddView(child, index);
 
     if (auto run = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Run>()) {
-      if (m_isHighlighted) {
-        AddHighlighter(m_ColorValue, run.Text().size());
+      if (m_ColorValue) {
+        AddHighlighter(m_ColorValue.value(), run.Text().size());
       }
 
       m_prevCursorEnd += run.Text().size();
     } else if (auto span = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Span>()) {
-      AddNestedTextHighlighter(
-          m_isHighlighted, m_ColorValue, span, static_cast<VirtualTextShadowNode &>(child).m_highlightData.get());
+      AddNestedTextHighlighter(m_ColorValue, span, static_cast<VirtualTextShadowNode &>(child).m_highlightData);
     }
   }
 
   void AddNestedTextHighlighter(
-      bool isParentHighlighted,
-      folly::dynamic parentColor,
+      const std::optional<winrt::Windows::UI::Color> &parentColor,
       winrt::Span &span,
-      VirtualTextShadowNode::HighlightData *highData) {
-    if (!highData->isHighlighted && isParentHighlighted) {
-      highData->isHighlighted = true;
-      highData->color = parentColor;
+      VirtualTextShadowNode::HighlightData highData) {
+    if (!highData.color && parentColor) {
+      highData.color = parentColor;
     }
 
     for (const auto &el : span.Inlines()) {
       if (auto run = el.try_as<winrt::Run>()) {
-        if (highData->isHighlighted) {
-          AddHighlighter(highData->color, run.Text().size());
+        if (highData.color) {
+          AddHighlighter(highData.color.value(), run.Text().size());
         }
 
         m_prevCursorEnd += run.Text().size();
       } else if (auto spanChild = el.try_as<winrt::Span>()) {
-        AddNestedTextHighlighter(
-            highData->isHighlighted, highData->color, spanChild, highData->data[highData->spanIdx++].get());
+        AddNestedTextHighlighter(highData.color, spanChild, highData.data[highData.spanIdx++]);
       }
     }
   }
 
-  void AddHighlighter(const folly::dynamic &color, size_t runSize) {
+  void AddHighlighter(const winrt::Windows::UI::Color &color, size_t runSize) {
     auto newHigh = winrt::TextHighlighter{};
-    newHigh.Background(SolidColorBrushFrom(color));
+    newHigh.Background(react::uwp::SolidBrushFromColor(color));
 
     winrt::TextRange newRange{m_prevCursorEnd, static_cast<int32_t>(runSize)};
     newHigh.Ranges().Append(newRange);
@@ -206,8 +201,9 @@ bool TextViewManager::UpdateProperty(
     } else
       textBlock.ClearValue(xaml::Controls::TextBlock::SelectionHighlightColorProperty());
   } else if (propertyName == "backgroundColor") {
-    static_cast<TextShadowNode *>(nodeToUpdate)->m_isHighlighted = IsValidColorValue(propertyValue);
-    static_cast<TextShadowNode *>(nodeToUpdate)->m_ColorValue = propertyValue;
+    if (react::uwp::IsValidColorValue(propertyValue)) {
+      static_cast<TextShadowNode *>(nodeToUpdate)->m_ColorValue = react::uwp::ColorFrom(propertyValue);
+    }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }

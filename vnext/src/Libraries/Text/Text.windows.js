@@ -30,7 +30,6 @@ const processColor = require('../StyleSheet/processColor');
 import type {PressEvent} from '../Types/CoreEventTypes';
 import type {HostComponent} from '../Renderer/shims/ReactNativeTypes';
 import type {PressRetentionOffset, TextProps} from './TextProps';
-import {string} from 'prop-types';
 
 type ResponseHandlers = $ReadOnly<{|
   onStartShouldSetResponder: () => boolean,

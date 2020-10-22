@@ -39,7 +39,7 @@ void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
       }
     }
 
-    m_highlightData->data.emplace_back(std::move(childVTSN.m_highlightData));
+    m_highlightData.data.emplace_back(childVTSN.m_highlightData);
   }
   Super::AddView(child, index);
 }
@@ -72,9 +72,9 @@ bool VirtualTextViewManager::UpdateProperty(
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     node->transformableText.textTransform = TransformableText::GetTextTransform(propertyValue);
   } else if (propertyName == "backgroundColor") {
-    static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData->isHighlighted =
-        IsValidColorValue(propertyValue);
-    static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData->color = propertyValue;
+    if (react::uwp::IsValidColorValue(propertyValue)) {
+      static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.color = react::uwp::ColorFrom(propertyValue);
+    }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
