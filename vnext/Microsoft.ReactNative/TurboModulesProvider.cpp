@@ -257,7 +257,9 @@ class TurboModuleImpl : public facebook::react::TurboModule {
               auto argWriter = winrt::make<JsiWriter>(runtime);
 
               // call the function
+              argWriter.WriteArrayBegin();
               method(argReader, argWriter);
+              argWriter.WriteArrayEnd();
 
               // set the return value
               const facebook::jsi::Value *resultArgs = nullptr;
