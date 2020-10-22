@@ -129,12 +129,12 @@ XamlView NativeUIManager::reactPeerOrContainerFrom(xaml::FrameworkElement fe) {
   return nullptr;
 }
 
-NativeUIManager::NativeUIManager(Mso::React::IReactContext *reactContext) {
+NativeUIManager::NativeUIManager(winrt::Microsoft::ReactNative::ReactContext const &reactContext) {
   m_context = reactContext;
 
   m_yogaConfig = YGConfigNew();
   if (React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(
-          React::ReactPropertyBag(m_context->Properties())))
+          m_context.Properties()))
     YGConfigSetUseLegacyStretchBehaviour(m_yogaConfig, true);
 
 #if defined(_DEBUG)
@@ -223,7 +223,7 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
 
   // Push the appropriate FlowDirection into the root view.
   view.as<xaml::FrameworkElement>().FlowDirection(
-      I18nManager::IsRTL(winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))
+      I18nManager::IsRTL(m_context.Properties())
           ? xaml::FlowDirection::RightToLeft
           : xaml::FlowDirection::LeftToRight);
 
@@ -986,6 +986,8 @@ void NativeUIManager::measure(
   }
 
   winrt::Rect rectInParentCoords = GetRectOfElementInParentCoords(feView, feRootView);
+
+
 
   // TODO: The first two params are for the local position. It's unclear what
   // this is exactly, but it is not used anyway.

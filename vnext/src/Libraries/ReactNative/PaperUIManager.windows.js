@@ -32,59 +32,61 @@ function getConstants(): Object {
   return NativeUIManagerConstants;
 }
 
-console.log('Before Call to Object.keys(NativeUIManager)');
-console.log(
-  'uiman keys: ' + JSON.stringify(Object.getOwnPropertyNames(NativeUIManager)),
-);
+const UIManagerJS = {};
+
+// [Windows The spread operator doesn't work on JSI turbomodules, so use this instead
+for (const propName of Object.getOwnPropertyNames(NativeUIManager)) {
+  UIManagerJS[propName] = NativeUIManager[propName];
+}
+// Windows]
 
 /* $FlowFixMe(>=0.123.0 site=react_native_fb) This comment suppresses an error
  * found when Flow v0.123.0 was deployed. To see the error, delete this comment
  * and run Flow. */
-const UIManagerJS = {
-  ...NativeUIManager,
-  getConstants(): Object {
-    return getConstants();
-  },
-  getViewManagerConfig: function(viewManagerName: string): any {
-    if (
-      viewManagerConfigs[viewManagerName] === undefined &&
-      NativeUIManager.getConstantsForViewManager
-    ) {
-      try {
-        viewManagerConfigs[
-          viewManagerName
-        ] = NativeUIManager.getConstantsForViewManager(viewManagerName);
-      } catch (e) {
-        viewManagerConfigs[viewManagerName] = null;
-      }
+//const UIManagerJS = {
+//  ...NativeUIManager,
+UIManagerJS.getConstants = getConstants;
+//  },
+UIManagerJS.getViewManagerConfig = function(viewManagerName: string): any {
+  if (
+    viewManagerConfigs[viewManagerName] === undefined &&
+    NativeUIManager.getConstantsForViewManager
+  ) {
+    try {
+      viewManagerConfigs[
+        viewManagerName
+      ] = NativeUIManager.getConstantsForViewManager(viewManagerName);
+    } catch (e) {
+      viewManagerConfigs[viewManagerName] = null;
     }
+  }
 
-    const config = viewManagerConfigs[viewManagerName];
-    if (config) {
-      return config;
+  const config = viewManagerConfigs[viewManagerName];
+  if (config) {
+    return config;
+  }
+
+  // If we're in the Chrome Debugger, let's not even try calling the sync
+  // method.
+  if (!global.nativeCallSyncHook) {
+    return config;
+  }
+
+  if (
+    NativeUIManager.lazilyLoadView &&
+    !triedLoadingConfig.has(viewManagerName)
+  ) {
+    const result = NativeUIManager.lazilyLoadView(viewManagerName);
+    triedLoadingConfig.add(viewManagerName);
+    if (result.viewConfig) {
+      getConstants()[viewManagerName] = result.viewConfig;
+      lazifyViewManagerConfig(viewManagerName);
     }
+  }
 
-    // If we're in the Chrome Debugger, let's not even try calling the sync
-    // method.
-    if (!global.nativeCallSyncHook) {
-      return config;
-    }
-
-    if (
-      NativeUIManager.lazilyLoadView &&
-      !triedLoadingConfig.has(viewManagerName)
-    ) {
-      const result = NativeUIManager.lazilyLoadView(viewManagerName);
-      triedLoadingConfig.add(viewManagerName);
-      if (result.viewConfig) {
-        getConstants()[viewManagerName] = result.viewConfig;
-        lazifyViewManagerConfig(viewManagerName);
-      }
-    }
-
-    return viewManagerConfigs[viewManagerName];
-  },
+  return viewManagerConfigs[viewManagerName];
 };
+//};
 
 // TODO (T45220498): Remove this.
 // 3rd party libs may be calling `NativeModules.UIManager.getViewManagerConfig()`

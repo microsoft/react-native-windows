@@ -14,6 +14,7 @@
 #include <map>
 #include <memory>
 #include <vector>
+#include <nativemodules.h>
 
 namespace react::uwp {
 struct IXamlReactControl;
@@ -31,7 +32,7 @@ typedef std::unique_ptr<YGNode, YogaNodeDeleter> YogaNodePtr;
 
 class NativeUIManager final : public INativeUIManager {
  public:
-  NativeUIManager(Mso::React::IReactContext *reactContext);
+  NativeUIManager(winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   // INativeUIManager
   ShadowNode *createRootShadowNode(facebook::react::IReactRootView *rootView) override;
@@ -102,7 +103,7 @@ class NativeUIManager final : public INativeUIManager {
 
  private:
   INativeUIManagerHost *m_host = nullptr;
-  Mso::CntPtr<Mso::React::IReactContext> m_context;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
   YGConfigRef m_yogaConfig;
   bool m_inBatch = false;
   int64_t m_nextRootTag = 101;

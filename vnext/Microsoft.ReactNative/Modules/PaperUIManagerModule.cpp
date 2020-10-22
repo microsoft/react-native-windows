@@ -84,8 +84,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
     m_context = reactContext;
 
-    auto contextSelf = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactContext>(m_context.Handle());
-    m_nativeUIManager = std::make_shared<NativeUIManager>(&contextSelf->GetInner());
+    m_nativeUIManager = std::make_shared<NativeUIManager>(reactContext);
 
     m_context.Properties().Set(NativeUIManagerProperty(), std::weak_ptr<NativeUIManager>(m_nativeUIManager));
 
