@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 21 Oct 2020 05:05:24 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Oct 2020 05:06:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.186
+
+Thu, 22 Oct 2020 05:06:28 GMT
+
+### Changes
+
+- Fix ReactContext::EmitJSEvent arg passing (vmorozov@microsoft.com)
+- raise change event when dimensions change (kmelmon@microsoft.com)
+- Integrate 8/25 Nightly RN Build (ngerlem@microsoft.com)
+- Move UIManager to NM2 infra (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.185
 
