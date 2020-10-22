@@ -279,7 +279,7 @@ inline JSValueArgWriter MakeJSValueWriter(T &&argWriter) noexcept {
 
 template <class... TArgs>
 inline JSValueArgWriter MakeJSValueWriter(TArgs &&... args) noexcept {
-  return [&args...](IJSValueWriter const &[[maybe_unused]]writer) noexcept {
+  return [&args...](IJSValueWriter const &[[maybe_unused]] writer) noexcept {
     (WriteValue(writer, args), ...);
   };
 }
