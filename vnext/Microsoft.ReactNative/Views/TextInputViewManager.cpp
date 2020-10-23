@@ -703,7 +703,6 @@ ShadowNode *TextInputViewManager::createShadow() const {
 
 XamlView TextInputViewManager::CreateViewCore(int64_t /*tag*/) {
   xaml::Controls::TextBox textBox;
-  textBox.TabIndex(0);
   return textBox;
 }
 
