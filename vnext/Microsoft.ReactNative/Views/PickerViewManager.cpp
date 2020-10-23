@@ -66,8 +66,6 @@ PickerShadowNode::PickerShadowNode() : Super() {
 void PickerShadowNode::createView() {
   Super::createView();
   auto combobox = GetView().as<xaml::Controls::ComboBox>();
-  combobox.TabIndex(0);
-
   combobox.AllowFocusOnInteraction(true);
 
   m_comboBoxSelectionChangedRevoker = combobox.SelectionChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
