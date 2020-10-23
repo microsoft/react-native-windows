@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 22 Oct 2020 05:06:28 GMT and should not be manually modified.
+This log was last generated on Fri, 23 Oct 2020 05:04:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.187
+
+Fri, 23 Oct 2020 05:04:37 GMT
+
+### Changes
+
+- Enable onFocus() and onBlur() callbacks on Pressable. Allow calling .focus() and .blur() on Pressable. (igklemen@microsoft.com)
 
 ## 0.0.0-canary.186
 

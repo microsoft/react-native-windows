@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 23 Oct 2020 05:04:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.187",
+      "version": "0.0.0-canary.187",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable onFocus() and onBlur() callbacks on Pressable. Allow calling .focus() and .blur() on Pressable.",
+            "author": "igklemen@microsoft.com",
+            "commit": "a8e7166c6b76d1457db12ac1504b164c0c4d3cf0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Oct 2020 05:06:28 GMT",
       "tag": "react-native-windows_v0.0.0-canary.186",
       "version": "0.0.0-canary.186",

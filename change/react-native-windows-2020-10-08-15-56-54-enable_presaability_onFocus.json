@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enable onFocus() and onBlur() callbacks on Pressable. Allow calling .focus() and .blur() on Pressable.",
-  "packageName": "react-native-windows",
-  "email": "igklemen@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-10-08T22:56:54.532Z"
-}
