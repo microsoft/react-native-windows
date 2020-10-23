@@ -209,8 +209,10 @@ void ReactRootControl::UninitRootView() noexcept {
     return;
   }
 
-  if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
-    reactInstance->DetachRootView(this);
+  if (m_isJSViewAttached) {
+    if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
+      reactInstance->DetachRootView(this);
+    }
   }
 
   if (m_touchEventHandler != nullptr) {
