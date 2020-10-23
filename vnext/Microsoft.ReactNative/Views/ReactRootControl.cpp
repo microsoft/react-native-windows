@@ -298,9 +298,8 @@ void ReactRootControl::ShowInstanceError() noexcept {
 
 void ReactRootControl::ShowInstanceWaiting(Mso::React::IReactInstance & /*reactInstance*/) noexcept {
   if (XamlView xamlRootView = m_weakXamlRootView.get()) {
-
     EnsureLoadingUI();
-    
+
     // Place message into TextBlock
     std::wstring wstrMessage(L"Connecting to remote debugger");
     m_waitingTextBlock.Text(wstrMessage);

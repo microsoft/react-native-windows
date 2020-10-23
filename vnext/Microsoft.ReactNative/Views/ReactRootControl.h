@@ -80,7 +80,7 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
  private:
   void ClearLoadingUI() noexcept;
   void EnsureLoadingUI() noexcept;
-  
+
   int64_t m_rootTag{-1};
 
   std::shared_ptr<TouchEventHandler> m_touchEventHandler;

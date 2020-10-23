@@ -33,13 +33,13 @@ const char *NativeAnimatedModule::s_stopListeningToAnimatedNodeValueName{"stopLi
 NativeAnimatedModule::NativeAnimatedModule(
     const std::weak_ptr<IReactInstance> &reactInstance,
     std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue)
-    : m_wkReactInstance(reactInstance), m_uiMessageQueue (uiMessageQueue){
+    : m_wkReactInstance(reactInstance), m_uiMessageQueue(uiMessageQueue) {
   m_nodesManager = std::make_shared<NativeAnimatedNodeManager>(NativeAnimatedNodeManager());
 }
 
 NativeAnimatedModule::~NativeAnimatedModule() {
   // To make sure that we destroy UI components in UI thread.
-  if (auto uiMessageQueue = m_uiMessageQueue.lock() ){
+  if (auto uiMessageQueue = m_uiMessageQueue.lock()) {
     uiMessageQueue->runOnQueue([manager = std::move(m_nodesManager)]() {});
   }
 }

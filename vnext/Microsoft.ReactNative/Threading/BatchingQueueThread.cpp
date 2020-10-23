@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include "Threading/BatchingQueueThread.h"
-#include <cassert>
 #include <eventWaitHandle/eventWaitHandle.h>
+#include <cassert>
 
 namespace react::uwp {
 
