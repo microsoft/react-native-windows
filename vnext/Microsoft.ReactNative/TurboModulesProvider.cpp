@@ -259,11 +259,8 @@ class TurboModuleImpl : public facebook::react::TurboModule {
               // call the function
               method(argReader, argWriter);
 
-              // set the return value
-              const facebook::jsi::Value *resultArgs = nullptr;
-              size_t resultCount = 0;
-              argWriter.as<JsiWriter>()->AccessResultAsArgs(resultArgs, resultCount);
-              return facebook::jsi::Value(rt, resultArgs[0]);
+              // return the result
+              return argWriter.as<JsiWriter>()->MoveResult();
             });
       }
     }
