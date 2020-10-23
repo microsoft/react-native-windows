@@ -60,7 +60,7 @@
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "060fb16f36ade354b3a7e3efd05576f3fc8bfe19",
+      "baseHash": "40d09402c5fba75ff77f5262393452cc92ad1b1d",
       "issue": 6240
     },
     {
