@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
 
 export const displayName = (_undefined?: string) => {};
 export const title = 'AsyncStorage Windows';
+export const category = 'Basic';
 export const description = 'Usage of AsyncStorage';
 export const examples = [
   {

@@ -242,6 +242,7 @@ class KeyboardFocusExample extends React.Component<
 }
 export const displayName = (_undefined?: string) => {};
 export const title = 'Keyboard Focus Example';
+export const category = 'Basic';
 export const description = 'Demo of keyboard focus.';
 export const examples = [
   {

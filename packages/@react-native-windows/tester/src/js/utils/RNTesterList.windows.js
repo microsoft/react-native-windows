@@ -31,18 +31,22 @@ const ComponentExamples: Array<RNTesterExample> = [
   },
   {
     key: 'DatePickerExample',
+    category: 'UI',
     module: require('../examples-win/DatePicker/DatePickerExample'),
   },
   {
     key: 'FastTextExample',
+    category: 'Basic',
     module: require('../examples-win/FastText/FastTextExample'),
   },
   {
     key: 'FlyoutExample',
+    category: 'UI',
     module: require('../examples-win/Flyout/FlyoutExample'),
   },
   {
     key: 'GlyphExample',
+    category: 'UI',
     module: require('../examples-win/Glyph/GlyphExample'),
   },
   {
@@ -66,6 +70,7 @@ const ComponentExamples: Array<RNTesterExample> = [
   },
   {
     key: 'PickerWindowsExample',
+    category: 'UI',
     module: require('../examples-win/Picker/PickerWindowsExample'),
   },
   {
@@ -75,10 +80,12 @@ const ComponentExamples: Array<RNTesterExample> = [
   },
   {
     key: 'PopupExample',
+    category: 'UI',
     module: require('../examples-win/Popup/PopupExample'),
   },
   {
     key: 'KeyboardExtensionExample',
+    category: 'Basic',
     module: require('../examples-win/Keyboard/KeyboardExtensionExample'),
   },
   {
@@ -118,6 +125,7 @@ const ComponentExamples: Array<RNTesterExample> = [
   },
   {
     key: 'TransferProperties',
+    category: 'Basic',
     module: require('../examples-win/TransferProperties/TransferPropertiesExample'),
   },
   {
@@ -162,6 +170,7 @@ const ComponentExamples: Array<RNTesterExample> = [
 const APIExamples: Array<RNTesterExample> = [
   {
     key: 'KeyboardFocusExample',
+    category: 'Basic',
     module: require('../examples-win/Keyboard/KeyboardFocusExample'),
   },
   {
@@ -171,14 +180,17 @@ const APIExamples: Array<RNTesterExample> = [
   },
   {
     key: 'AccessibilityExampleWindows',
+    category: 'Basic',
     module: require('../examples-win/Accessibility/AccessibilityExampleWindows'),
   },
   {
     key: 'AccessibilityInfo',
+    category: 'Basic',
     module: require('../examples-win/Accessibility/AccessibilityInfoExample'),
   },
   {
     key: 'AsyncStorageExampleWindows',
+    category: 'Basic',
     module: require('../examples-win/AsyncStorage/AsyncStorageExampleWindows'),
   },
   {
@@ -252,6 +264,7 @@ const APIExamples: Array<RNTesterExample> = [
   },
   {
     key: 'MouseExample',
+    category: 'Basic',
     module: require('../examples-win/Mouse/MouseExample'),
   },
   {

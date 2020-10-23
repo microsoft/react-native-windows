@@ -252,6 +252,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
 
 export const displayName = (_undefined?: string) => {};
 export const title = 'Flyout';
+export const category = 'Basic';
 export const description =
   'Displays content on top of existing content, within the bounds of the application window.';
 export const examples = [

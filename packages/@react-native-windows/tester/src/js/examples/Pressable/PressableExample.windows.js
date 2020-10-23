@@ -16,6 +16,7 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  TouchableHighlight,
   Platform,
   View,
 } from 'react-native';
@@ -262,7 +263,7 @@ function PressableFocusCallbacks() {
   const viewRef = useRef<React.ElementRef<typeof Pressable> | null>(null);
 
   const focusViewPressed = () => {
-    nullthrows(viewRef.current).focus();
+    viewRef.current.focus();
   };
 
   return (

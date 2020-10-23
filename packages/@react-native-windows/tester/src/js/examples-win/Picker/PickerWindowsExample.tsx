@@ -268,6 +268,7 @@ class PickerEditableExample extends React.Component<{}, any> {
 
 export const displayName = (_undefined?: string) => {};
 export const title = 'PickerWindows';
+export const category = 'UI';
 export const description =
   'Render lists of selectable options with UWP ComboBox.';
 export const examples = [
