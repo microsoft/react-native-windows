@@ -12,7 +12,7 @@
   "dependencies": {
     "@react-native-windows/tester": "0.0.1",
     "react": "16.13.1",
-    "react-native": "0.0.0-9b973f32e",
+    "react-native": "0.0.0-5bc67b658",
     "react-native-windows": "0.0.0-canary.187"
   },
   "devDependencies": {

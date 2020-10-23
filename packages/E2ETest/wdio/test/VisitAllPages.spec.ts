@@ -1,81 +1,57 @@
 /**
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
+ * @format
  */
 
 import HomePage from '../pages/HomePage';
 
-let pages = [
-  '<ActivityIndicator>',
-  '<Button>',
-  //  'Custom Views',
-  '<DatePicker>',
-  'Fast Path Texts',
-  '<FlatList>',
-  '<Flyout>',
-  '<Glyph> UWP',
-  '<Image>',
-  //  '<FlatList> - MultiColumn',
-  'New App Screen',
-  '<Picker>',
-  '<PickerWindows>',
-  '<Pressable>',
-  '<Popup>',
-  'Keyboard extension Example',
-  '<ScrollViewSimpleExample>',
-  //  '<SectionList>',
-  '<Switch>',
-  '<Text>',
-  '<TextInput>',
-  //'<Touchable*> and onPress',
-  '<TransferProperties>',
-  '<TransparentHitTestExample>',
-  '<View>',
-  'Keyboard Focus Example',
-  'Accessibility',
-  'AccessibilityInfo',
-  'Accessibility Windows',
-  'AsyncStorage Windows',
-  'Alert',
-  'Animated - Examples',
-  'Animated - Gratuitous App',
-  'Appearance',
-  'AppState',
-  'Border',
-  'Box Shadow',
-  'Clipboard',
-  'Crash',
-  'DevSettings',
-  'Dimensions',
-  'Keyboard',
-  'Layout Events',
-  'Linking',
-  'Layout - Flexbox',
-  'Mouse Events',
-  'Native Animated Example',
-  'PanResponder Sample',
-  'PlatformColor',
-  'Pointer Events',
-  'RTLExample',
-  'Share',
-  'Timers',
-  'WebSocket',
-  'Transforms',
-  //  '<LegacyControlStyleTest>',
-  //  '<LegacyTransformTest>',
-  //  '<LegacyTextInputTest>',
-  //  '<LegacyLoginTest>',
-  //  '<LegacyDirectManipulationTest>',
-  //  '<LegacyImageTest>',
-  //  '<LegacyAccessibilityTest>',
+import {
+  ApiExamples,
+  ComponentExamples,
+  // @ts-ignore no typings from internals in flow
+} from '@react-native-windows/tester/js/utils/RNTesterList';
+import { By } from '../pages/BasePage';
+
+const ignoredExamples = [
+  'Custom Views',
+  'FlatList - MultiColumn',
+  'SectionList',
+  'Touchable* and onPress',
+  'LegacyControlStyleTest',
+  'LegacyTransformTest',
+  'LegacyTextInputTest',
+  'LegacyLoginTest',
+  'LegacyDirectManipulationTest',
+  'LegacyImageTest',
+  'LegacyAccessibilityTest',
 ];
 
 describe('VisitAllPagesTest', () => {
-  pages.forEach(function(page) {
-    it(page, () => {
-      console.log('loading page ' + page);
-      HomePage.goToTestPage(page);
-      HomePage.backToHomePage();
-    });
+  ApiExamples.forEach((example: { key: string; module: any }) => {
+    addVisitPageTest(example.key, 'api');
+  });
+
+  ComponentExamples.forEach((example: { key: string; module: any }) => {
+    addVisitPageTest(example.key, 'component');
   });
 });
+
+function addVisitPageTest(name: string, type: 'api' | 'component') {
+  if (!ignoredExamples.includes(name)) {
+    it(name, () => {
+      console.log('loading page ' + name);
+
+      if (type === 'api') {
+        HomePage.waitForElementLoaded('apis-tab');
+        By('apis-tab').click();
+      } else {
+        HomePage.waitForElementLoaded('components-tab');
+        By('components-tab').click();
+      }
+
+      HomePage.goToTestPage(name);
+      HomePage.backToHomePage();
+    });
+  }
+}

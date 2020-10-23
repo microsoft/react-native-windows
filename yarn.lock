@@ -12062,10 +12062,10 @@ react-native-tscodegen@0.66.1:
     nullthrows "1.1.1"
     typescript "^3.5.3"
 
-react-native@0.0.0-9b973f32e:
-  version "0.0.0-9b973f32e"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-9b973f32e.tgz#f205837b17d7feb56e7a857786d43eba93419aa9"
-  integrity sha512-55BHHL7lTyJjreNfgHDfTem7FFYLLyS4Cb+v40p4VSKnYpPIx6dCPanD6ItUfeKdI7jYk74WZUXUR7t6425ymw==
+react-native@0.0.0-5bc67b658:
+  version "0.0.0-5bc67b658"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-5bc67b658.tgz#926ce3dfa5683f9de303a33ae0c767b440df88ec"
+  integrity sha512-ozYlcZKJ0YZNg1Q876YlKhcOykAaZrTNh7W7K3k415ySDAGfGr7RmhI6cbot7/2bQbMnFhnVR3sc/fh3589WxQ==
   dependencies:
     "@react-native-community/cli" "^4.10.0"
     "@react-native-community/cli-platform-android" "^4.10.0"

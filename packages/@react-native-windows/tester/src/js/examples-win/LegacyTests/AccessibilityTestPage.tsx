@@ -81,7 +81,7 @@ export function AccessibilityTestPage() {
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<LegacyAccessibilityTest>';
+export const title = 'LegacyAccessibilityTest';
 export const description = 'Legacy e2e test for Accessibility';
 export const examples = [
   {

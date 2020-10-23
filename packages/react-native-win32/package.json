@@ -7,16 +7,16 @@
   "typings": "./typings-index.d.ts",
   "scripts": {
     "build": "just-scripts build",
-    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file ../react-native-win32-tester/js/RNTesterApp.win32.js --bundle-output dist/win32/dev/RNTester/js/RNTesterApp.bundle --assets-dest dist/win32/dev --sourcemap-output ./dist/win32/dev/RNTester/js/RNTesterApp.bundle.map",
+    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file ../react-native-win32-tester/js/RNTesterApp.win32.js --bundle-output dist/win32/dev/js/RNTesterApp.bundle --assets-dest dist/win32/dev --sourcemap-output ./dist/win32/dev/js/RNTesterApp.bundle.map",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
     "lint:fix": "just-scripts lint:fix",
     "lint": "just-scripts lint",
     "api": "just-scripts api",
-    "run-win32-dev-web": "npx @office-iss/rex-win32@0.62.7-tenantreactnativewin-13222 --bundle RNTester/js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --useDevMain --useWebDebugger",
-    "run-win32-devmain": "npx @office-iss/rex-win32@0.62.7-tenantreactnativewin-13222 --bundle RNTester/js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --useDevMain",
-    "run-win32": "npx @office-iss/rex-win32@0.62.7-tenantreactnativewin-13222 --bundle RNTester/js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev",
-    "start": "react-native start",
+    "run-win32-dev-web": "npx @office-iss/rex-win32@0.62.7-tenantreactnativewin-13222 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --useDevMain --useWebDebugger",
+    "run-win32-devmain": "npx @office-iss/rex-win32@0.62.7-tenantreactnativewin-13222 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --useDevMain",
+    "run-win32": "npx @office-iss/rex-win32@0.62.7-tenantreactnativewin-13222 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev",
+    "start": "react-native start --projectRoot ../react-native-win32-tester",
     "validate-overrides": "react-native-platform-override validate"
   },
   "dependencies": {
@@ -71,14 +71,14 @@
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "react": "16.13.1",
-    "react-native": "0.0.0-9b973f32e",
+    "react-native": "0.0.0-5bc67b658",
     "react-native-platform-override": "^0.4.0",
     "react-shallow-renderer": "^16.13.1",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "0.0.0-9b973f32e"
+    "react-native": "0.0.0-5bc67b658"
   },
   "beachball": {
     "defaultNpmTag": "canary",

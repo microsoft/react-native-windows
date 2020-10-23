@@ -15,7 +15,7 @@
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "0.0.0-9b973f32e"
+    "react-native": "0.0.0-5bc67b658"
   },
   "devDependencies": {
     "react-native-platform-override": "^0.4.0"

@@ -135,7 +135,7 @@ class ZIndexChange extends React.Component<{}, any> {
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<TransferProperties>';
+export const title = 'TransferProperties';
 export const description =
   'Some tests that change the backing XAML element ' +
   'to see if transfer properties is working.';

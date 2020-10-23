@@ -245,7 +245,7 @@ const CursorExample: React.FunctionComponent = () => {
   );
 }
 
-export const title = '<ViewWin32>';
+export const title = 'ViewWin32';
 export const displayName = 'ViewWin32 Example';
 export const description = 'All the stock View props plus Win32 specific ones';
 export const examples = [
