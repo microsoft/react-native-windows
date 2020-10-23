@@ -61,6 +61,7 @@ namespace ReactUWPTestApp
 
             // RNTester will load the most recently visited example page (or a provided link to an example) if
             // reopened. Clear local storage to suppress that behavior and always go to the example list first.
+            // #6319 Tracks a better way to do this
             ApplicationData.Current.ClearAsync().AsTask().Wait();
 
             var frame = Window.Current.Content as Frame;
