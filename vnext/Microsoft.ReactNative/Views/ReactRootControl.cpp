@@ -213,8 +213,9 @@ void ReactRootControl::UninitRootView() noexcept {
     return;
   }
 
-  if (auto fbReactInstance = m_fbReactInstance.lock()) {
-    fbReactInstance->DetachRootView(this);
+  if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
+    auto &legacyInstance = query_cast<Mso::React::ILegacyReactInstance &>(*reactInstance);
+    legacyInstance.DetachRootView(this);
   }
 
   if (m_touchEventHandler != nullptr) {
@@ -238,12 +239,52 @@ void ReactRootControl::UninitRootView() noexcept {
   m_isInitialized = false;
 }
 
+void ReactRootControl::ClearLoadingUI() noexcept {
+  if (XamlView xamlRootView = m_weakXamlRootView.get()) {
+    auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
+
+    auto children = xamlRootGrid.Children();
+    uint32_t index{0};
+    if (m_greenBoxGrid && children.IndexOf(m_greenBoxGrid, index)) {
+      children.RemoveAt(index);
+    }
+  }
+}
+
+void ReactRootControl::EnsureLoadingUI() noexcept {
+  if (XamlView xamlRootView = m_weakXamlRootView.get()) {
+    auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
+
+    // Create Grid & TextBlock to hold text
+    if (m_waitingTextBlock == nullptr) {
+      m_waitingTextBlock = winrt::TextBlock();
+      m_greenBoxGrid = winrt::Grid{};
+      m_greenBoxGrid.Background(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
+      m_greenBoxGrid.Children().Append(m_waitingTextBlock);
+      m_greenBoxGrid.VerticalAlignment(xaml::VerticalAlignment::Center);
+
+      // Format TextBlock
+      m_waitingTextBlock.TextAlignment(winrt::TextAlignment::Center);
+      m_waitingTextBlock.TextWrapping(xaml::TextWrapping::Wrap);
+      m_waitingTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
+      m_waitingTextBlock.Foreground(xaml::Media::SolidColorBrush(winrt::Colors::White()));
+      winrt::Thickness margin = {10.0f, 10.0f, 10.0f, 10.0f};
+      m_waitingTextBlock.Margin(margin);
+    }
+
+    auto children = xamlRootGrid.Children();
+    uint32_t index;
+    if (m_greenBoxGrid && !children.IndexOf(m_greenBoxGrid, index)) {
+      children.Append(m_greenBoxGrid);
+    }
+  }
+}
+
 void ReactRootControl::ShowInstanceLoaded(Mso::React::IReactInstance &reactInstance) noexcept {
   if (XamlView xamlRootView = m_weakXamlRootView.get()) {
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
 
-    // Remove existing children from root view (from the hosted app)
-    xamlRootGrid.Children().Clear();
+    ClearLoadingUI();
 
     auto &legacyInstance = query_cast<Mso::React::ILegacyReactInstance &>(reactInstance);
     legacyInstance.AttachMeasuredRootView(this, Mso::Copy(m_reactViewOptions->InitialProps));
@@ -252,44 +293,17 @@ void ReactRootControl::ShowInstanceLoaded(Mso::React::IReactInstance &reactInsta
 }
 
 void ReactRootControl::ShowInstanceError() noexcept {
-  if (XamlView xamlRootView = m_weakXamlRootView.get()) {
-    auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
-
-    // Remove existing children from root view (from the hosted app)
-    xamlRootGrid.Children().Clear();
-  }
+  ClearLoadingUI();
 }
 
 void ReactRootControl::ShowInstanceWaiting(Mso::React::IReactInstance & /*reactInstance*/) noexcept {
   if (XamlView xamlRootView = m_weakXamlRootView.get()) {
-    auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
 
-    // Remove existing children from root view (from the hosted app)
-    xamlRootGrid.Children().Clear();
-
-    // Create Grid & TextBlock to hold text
-    if (m_waitingTextBlock == nullptr) {
-      m_waitingTextBlock = winrt::TextBlock();
-      m_greenBoxGrid = winrt::Grid{};
-      m_greenBoxGrid.Background(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
-      m_greenBoxGrid.Children().Append(m_waitingTextBlock);
-      m_greenBoxGrid.VerticalAlignment(xaml::VerticalAlignment::Center);
-    }
-
-    // Add box grid to root view
-    xamlRootGrid.Children().Append(m_greenBoxGrid);
-
+    EnsureLoadingUI();
+    
     // Place message into TextBlock
     std::wstring wstrMessage(L"Connecting to remote debugger");
     m_waitingTextBlock.Text(wstrMessage);
-
-    // Format TextBlock
-    m_waitingTextBlock.TextAlignment(winrt::TextAlignment::Center);
-    m_waitingTextBlock.TextWrapping(xaml::TextWrapping::Wrap);
-    m_waitingTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
-    m_waitingTextBlock.Foreground(xaml::Media::SolidColorBrush(winrt::Colors::White()));
-    winrt::Thickness margin = {10.0f, 10.0f, 10.0f, 10.0f};
-    m_waitingTextBlock.Margin(margin);
   }
 }
 
@@ -298,34 +312,11 @@ void ReactRootControl::ShowInstanceLoading(Mso::React::IReactInstance & /*reactI
     return;
 
   if (XamlView xamlRootView = m_weakXamlRootView.get()) {
-    auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
-
-    // Remove existing children from root view (from the hosted app)
-    xamlRootGrid.Children().Clear();
-
-    // Create Grid & TextBlock to hold text
-    if (m_waitingTextBlock == nullptr) {
-      m_waitingTextBlock = winrt::TextBlock();
-      m_greenBoxGrid = winrt::Grid{};
-      m_greenBoxGrid.Background(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
-      m_greenBoxGrid.Children().Append(m_waitingTextBlock);
-      m_greenBoxGrid.VerticalAlignment(xaml::VerticalAlignment::Center);
-    }
-
-    // Add box grid to root view
-    xamlRootGrid.Children().Append(m_greenBoxGrid);
+    EnsureLoadingUI();
 
     // Place message into TextBlock
     std::wstring wstrMessage(L"Loading bundle.");
     m_waitingTextBlock.Text(wstrMessage);
-
-    // Format TextBlock
-    m_waitingTextBlock.TextAlignment(winrt::TextAlignment::Center);
-    m_waitingTextBlock.TextWrapping(xaml::TextWrapping::Wrap);
-    m_waitingTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
-    m_waitingTextBlock.Foreground(xaml::Media::SolidColorBrush(winrt::Colors::White()));
-    winrt::Thickness margin = {10.0f, 10.0f, 10.0f, 10.0f};
-    m_waitingTextBlock.Margin(margin);
   }
 }
 

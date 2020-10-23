@@ -55,8 +55,10 @@
 namespace react::uwp {
 class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
  public:
-  NativeAnimatedModule(const std::weak_ptr<IReactInstance> &reactInstance);
-  virtual ~NativeAnimatedModule() = default;
+  NativeAnimatedModule(
+      const std::weak_ptr<IReactInstance> &reactInstance,
+      std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue);
+  virtual ~NativeAnimatedModule();
 
   // CxxModule
   std::string getName() override {
@@ -93,6 +95,7 @@ class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
  private:
   std::shared_ptr<NativeAnimatedNodeManager> m_nodesManager{};
   std::weak_ptr<IReactInstance> m_wkReactInstance;
+  std::weak_ptr<facebook::react::MessageQueueThread> m_uiMessageQueue;
 
   static const char *s_createAnimatedNodeName;
   static const char *s_connectAnimatedNodeToViewName;

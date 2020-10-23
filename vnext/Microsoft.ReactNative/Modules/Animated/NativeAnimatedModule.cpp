@@ -5,6 +5,7 @@
 
 #include "NativeAnimatedModule.h"
 
+#include <IReactDispatcher.h>
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
@@ -29,9 +30,18 @@ const char *NativeAnimatedModule::s_removeAnimatedEventFromViewName{"removeAnima
 const char *NativeAnimatedModule::s_startListeningToAnimatedNodeValueName{"startListeningToAnimatedNodeValue"};
 const char *NativeAnimatedModule::s_stopListeningToAnimatedNodeValueName{"stopListeningToAnimatedNodeValue"};
 
-NativeAnimatedModule::NativeAnimatedModule(const std::weak_ptr<IReactInstance> &reactInstance)
-    : m_wkReactInstance(reactInstance) {
+NativeAnimatedModule::NativeAnimatedModule(
+    const std::weak_ptr<IReactInstance> &reactInstance,
+    std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue)
+    : m_wkReactInstance(reactInstance), m_uiMessageQueue (uiMessageQueue){
   m_nodesManager = std::make_shared<NativeAnimatedNodeManager>(NativeAnimatedNodeManager());
+}
+
+NativeAnimatedModule::~NativeAnimatedModule() {
+  // To make sure that we destroy UI components in UI thread.
+  if (auto uiMessageQueue = m_uiMessageQueue.lock() ){
+    uiMessageQueue->runOnQueue([manager = std::move(m_nodesManager)]() {});
+  }
 }
 
 std::vector<facebook::xplat::module::CxxModule::Method> NativeAnimatedModule::getMethods() {
