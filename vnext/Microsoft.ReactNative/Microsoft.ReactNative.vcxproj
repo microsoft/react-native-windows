@@ -699,4 +699,13 @@
       </ClCompile>
     </ItemGroup>
   </Target>
+  <Target Name="SanityCheck" BeforeTargets="_PrepareForBuild">
+    <PropertyGroup>
+      <LongPathsEnabled>$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\FileSystem', 'LongPathsEnabled', null, RegistryView.Registry64))</LongPathsEnabled>
+      <AppModelUnlock>$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock', 'AllowDevelopmentWithoutDevLicense', null, RegistryView.Registry64))</AppModelUnlock>
+      <RnwDeps>http://aka.ms/rnw-deps</RnwDeps>
+    </PropertyGroup>
+    <Error Condition="'$(LongPathsEnabled)'!='1'" Text="Long-path support is not enabled. Please ensure the React Native dependencies script has been run, see $(RnwDeps)" />
+    <Error Condition="'$(AppModelUnlock)'!='1'" Text="Developer mode is disabled. Please ensure the React Native dependencies script has been run, see $(RnwDeps)" />
+  </Target>
 </Project>
