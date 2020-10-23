@@ -73,11 +73,11 @@ const apiExamples = [
 ];
 
 describe('VisitAllPagesTest', () => {
-  componentExamples.forEach(ex => addTestPage(ex, 'component'));
-  apiExamples.forEach(ex => addTestPage(ex, 'api'));
+  componentExamples.forEach(ex => visitTestPage(ex, 'component'));
+  apiExamples.forEach(ex => visitTestPage(ex, 'api'));
 });
 
-function addTestPage(name: string, type: 'api' | 'component') {
+function visitTestPage(name: string, type: 'api' | 'component') {
   it(name, () => {
     console.log('loading page ' + name);
 
