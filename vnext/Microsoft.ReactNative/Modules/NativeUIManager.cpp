@@ -3,13 +3,12 @@
 
 #include "pch.h"
 
-#include "Modules/I18nManagerModule.h"
-#include "NativeUIManager.h"
-
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
 #include <Views/ShadowNodeBase.h>
+#include "Modules/I18nManagerModule.h"
+#include "NativeUIManager.h"
 
 #include "CppWinRTIncludes.h"
 #include "IXamlRootView.h"
@@ -1087,7 +1086,7 @@ void NativeUIManager::findSubviewIn(
 
 void NativeUIManager::focus(int64_t reactTag) {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(reactTag))) {
-    xaml::Input::FocusManager::TryFocusAsync(shadowNode->GetView(), winrt::FocusState::Programmatic);
+    xaml::Input::FocusManager::TryFocusAsync(shadowNode->GetView(), winrt::FocusState::Keyboard);
   }
 }
 
