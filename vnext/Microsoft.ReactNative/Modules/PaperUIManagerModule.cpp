@@ -80,6 +80,14 @@ std::weak_ptr<NativeUIManager> GetNativeUIManager(const Mso::React::IReactContex
 class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, public INativeUIManagerHost {
  public:
   UIManagerModule() {}
+  ~UIManagerModule() {
+    m_nodeRegistry.removeAllRootViews([this](int64_t rootViewTag) { removeRootView(rootViewTag); });
+    m_nodeRegistry.ForAllNodes([this](int64_t tag, shadow_ptr const &shadowNode) noexcept {
+      DropView(tag, false, true);
+    });
+    m_nativeUIManager->setHost(nullptr);
+    m_nativeUIManager->destroy();
+  }
 
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
     m_context = reactContext;
@@ -269,6 +277,15 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
 
     std::vector<int64_t> emptyVec;
     manageChildren(parent.m_tag, emptyVec, emptyVec, tagToAdd, indicesToAdd, indicesToRemove);
+  }
+
+  void removeRootView(int64_t rootViewTag) noexcept {
+    m_nativeUIManager->ensureInBatch();
+    auto &node = m_nodeRegistry.getRoot(rootViewTag);
+    m_nativeUIManager->removeRootView(node);
+    DropView(rootViewTag, true);
+    m_nodeRegistry.removeRootView(rootViewTag);
+    m_nativeUIManager->destroyRootShadowNode(&node);
   }
 
   void setChildren(int64_t containerTag, React::JSValueArray &&reactTags) noexcept {
@@ -717,6 +734,14 @@ void UIManager::replaceExistingNonRootView(double reactTag, double newReactTag) 
           module->replaceExistingNonRootView(static_cast<int64_t>(reactTag), static_cast<int64_t>(newReactTag));
         }
       }));
+}
+
+void UIManager::removeRootView(double reactTag) noexcept {
+  m_batchingUIMessageQueue->runOnQueue(Mso::VoidFunctor([m = std::weak_ptr<UIManagerModule>(m_module), reactTag]() {
+    if (auto module = m.lock()) {
+      module->removeRootView(static_cast<int64_t>(reactTag));
+    }
+  }));
 }
 
 void UIManager::setChildren(double containerTag, React::JSValueArray &&reactTags) noexcept {
