@@ -267,7 +267,7 @@ function IsElevated {
     return [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544");
 }
 
-if (!(IsElevated)) {
+if (!($NoPrompt) -and !(IsElevated)) {
     Write-Output "rnw-dependencies - this script must run elevated. Exiting.";
     return;
 }
