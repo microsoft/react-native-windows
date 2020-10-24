@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 19 Oct 2020 15:08:23 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Oct 2020 14:04:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.14
+
+Sat, 24 Oct 2020 14:04:36 GMT
+
+### Patches
+
+- [Internal] Export createUIManagerModule that takes a uiQueue (acoates@microsoft.com)
 
 ## 0.62.13
 

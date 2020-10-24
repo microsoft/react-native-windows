@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 24 Oct 2020 14:04:36 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.4",
+      "version": "0.62.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "PlatformColor support for RN 0.62 Win32",
+            "author": "ppatboyd@outlook.com",
+            "commit": "ccfc1026f15e3b61af81a5d007f4025a563e7521",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Sep 2020 15:05:49 GMT",
       "tag": "@office-iss/react-native-win32_v0.62.3",
       "version": "0.62.3",

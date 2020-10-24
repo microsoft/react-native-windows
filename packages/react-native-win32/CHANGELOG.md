@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 07 Sep 2020 15:05:49 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Oct 2020 14:04:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.4
+
+Sat, 24 Oct 2020 14:04:36 GMT
+
+### Patches
+
+- PlatformColor support for RN 0.62 Win32 (ppatboyd@outlook.com)
 
 ## 0.62.3
 

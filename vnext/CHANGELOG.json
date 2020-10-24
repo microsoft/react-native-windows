@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 24 Oct 2020 14:04:36 GMT",
+      "tag": "react-native-windows_v0.62.14",
+      "version": "0.62.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[Internal] Export createUIManagerModule that takes a uiQueue",
+            "author": "acoates@microsoft.com",
+            "commit": "056377140e24ae8c00ad47c00f641550607ee25a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Oct 2020 15:08:23 GMT",
       "tag": "react-native-windows_v0.62.13",
       "version": "0.62.13",

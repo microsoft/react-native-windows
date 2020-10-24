@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "PlatformColor support for RN 0.62 Win32",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ppatboyd@outlook.com",
-  "dependentChangeType": "patch",
-  "date": "2020-10-17T01:56:17.536Z"
-}
