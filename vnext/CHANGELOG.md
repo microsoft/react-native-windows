@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 23 Oct 2020 05:04:37 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Oct 2020 05:07:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.188
+
+Sat, 24 Oct 2020 05:07:36 GMT
+
+### Changes
+
+- fix tab ordering on ScrollViewer, TextInput, and Picker (kmelmon@microsoft.com)
+- Integrate RNTester Redesign (8/26 Nightly Build) (ngerlem@microsoft.com)
+- Fix failing unit tests (vmorozov@microsoft.com)
+- Ensure that destruction of animation nodes happen on UI thread (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.187
 

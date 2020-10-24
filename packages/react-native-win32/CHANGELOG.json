@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 24 Oct 2020 05:07:36 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.59",
+      "version": "0.0.0-canary.59",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate RNTester Redesign (8/26 Nightly Build)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8ed62998598e6249c4a9cfb9db1e84d53d9fb541",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Oct 2020 05:06:28 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.58",
       "version": "0.0.0-canary.58",

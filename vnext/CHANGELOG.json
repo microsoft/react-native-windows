@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 24 Oct 2020 05:07:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.188",
+      "version": "0.0.0-canary.188",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix tab ordering on ScrollViewer, TextInput, and Picker",
+            "author": "kmelmon@microsoft.com",
+            "commit": "f9981681a4e202f2f936519c1be6fe7fb17aba52",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate RNTester Redesign (8/26 Nightly Build)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8ed62998598e6249c4a9cfb9db1e84d53d9fb541",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix failing unit tests",
+            "author": "vmorozov@microsoft.com",
+            "commit": "df7b389ae2459161943e579d5b8f284ebf36cb51",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Ensure that destruction of animation nodes happen on UI thread",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "1519ad7bb2a0eb105602b4524a3264c9da6893bd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Oct 2020 05:04:37 GMT",
       "tag": "react-native-windows_v0.0.0-canary.187",
       "version": "0.0.0-canary.187",

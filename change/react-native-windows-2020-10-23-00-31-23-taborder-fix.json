@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix tab ordering on ScrollViewer, TextInput, and Picker",
-  "packageName": "react-native-windows",
-  "email": "kmelmon@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-10-23T07:31:23.257Z"
-}
