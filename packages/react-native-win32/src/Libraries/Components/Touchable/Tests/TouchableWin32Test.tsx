@@ -475,7 +475,7 @@ const TouchableFocusExample = () => {
 }
 
 export const displayName = 'TouchableWin32 Examples';
-export const title = '<TouchableWin32>';
+export const title = 'TouchableWin32';
 export const description = 'Demonstration of touchable + focus + hover behavior all in one component';
 
 export const examples = [

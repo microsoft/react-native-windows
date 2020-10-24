@@ -12,7 +12,7 @@
     "src/tsconfig.json",
     "**/*.windesktop.js"
   ],
-  "baseVersion": "0.0.0-9b973f32e",
+  "baseVersion": "0.0.0-5bc67b658",
   "overrides": [
     {
       "type": "derived",

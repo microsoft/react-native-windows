@@ -154,8 +154,18 @@ bool TextViewManager::UpdateProperty(
 
 void TextViewManager::AddView(const XamlView &parent, const XamlView &child, int64_t index) {
   auto textBlock(parent.as<xaml::Controls::TextBlock>());
-  auto childInline(child.as<winrt::Inline>());
-  textBlock.Inlines().InsertAt(static_cast<uint32_t>(index), childInline);
+
+  if (auto childInline = child.try_as<winrt::Inline>()) {
+    textBlock.Inlines().InsertAt(static_cast<uint32_t>(index), childInline);
+  } else {
+    // #6315 Text can embed non-text elements. Fail gracefully instead of crashing if that happens
+    textBlock.Inlines().InsertAt(static_cast<uint32_t>(index), winrt::Run());
+    GetReactContext().CallJSFunction(
+        "RCTLog",
+        "logToConsole",
+        folly::dynamic::array(
+            "warn", "React Native for Windows does not yet support nesting non-Text components under <Text>"));
+  }
 }
 
 void TextViewManager::RemoveAllChildren(const XamlView &parent) {

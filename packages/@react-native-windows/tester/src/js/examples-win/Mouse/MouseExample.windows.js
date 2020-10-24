@@ -19,6 +19,7 @@ const {
 
 exports.displayName = 'MouseExample';
 exports.title = 'Mouse Events';
+exports.category = 'Basic';
 exports.description = 'Tests that mouse events can be observed';
 exports.examples = [
   {

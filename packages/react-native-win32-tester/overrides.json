@@ -5,8 +5,15 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.0.0-9b973f32e",
+  "baseVersion": "0.0.0-5bc67b658",
   "overrides": [
+    {
+      "type": "patch",
+      "file": "src/js/components/ExamplePage.win32.js",
+      "baseFile": "packages/rn-tester/js/components/ExamplePage.js",
+      "baseHash": "7d97d2dd62d2055c1e2e7bd69ce93e1b6ec1c2c0",
+      "issue": 4050
+    },
     {
       "type": "patch",
       "file": "src/js/components/ListExampleShared.win32.js",
@@ -17,7 +24,7 @@
       "type": "patch",
       "file": "src/js/components/RNTesterExampleFilter.win32.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterExampleFilter.js",
-      "baseHash": "8a8182f7c36e8184b7bbfe1445263ceca622b2c1"
+      "baseHash": "7f3f22f1c2643b730bbd1e3d633c263dcd6a0a6f"
     },
     {
       "type": "patch",
@@ -30,21 +37,28 @@
       "type": "patch",
       "file": "src/js/examples/PlatformColor/PlatformColorExample.win32.js",
       "baseFile": "packages/rn-tester/js/examples/PlatformColor/PlatformColorExample.js",
-      "baseHash": "4ed1c701e08611ec3648e4dd27f5974c2a821a08",
+      "baseHash": "db23f30353b5681f49f2835fb730ca647ce30bf6",
       "issue": 6210
     },
     {
       "type": "derived",
       "file": "src/js/RNTesterApp.win32.js",
       "baseFile": "packages/rn-tester/js/RNTesterApp.ios.js",
-      "baseHash": "26ff4ba8744e250fd430d25ba5784bc361f60a68",
+      "baseHash": "b86a1fd9363b807c340c58135e610bdae8ee2fae",
       "issue": 4586
+    },
+    {
+      "type": "derived",
+      "file": "src/js/utils/RNTesterAsyncStorageAbstraction.win32.js",
+      "baseFile": "packages/rn-tester/js/utils/RNTesterAsyncStorageAbstraction.js",
+      "baseHash": "a00e706027e10d9c6d98ab3febd6a6f1e947ae5e",
+      "issue": 6316
     },
     {
       "type": "derived",
       "file": "src/js/utils/RNTesterList.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "0ac04af15d7ff9d34b3abe1a11110c24480fba4b"
+      "baseHash": "6e0d7dd2c48c2a46cb746cfbd56cdafd141ef3b5"
     }
   ]
 }

@@ -40,6 +40,7 @@ function AccessibilityInfoExample(props): React.Node {
 }
 
 exports.title = 'AccessibilityInfo';
+exports.category = 'Basic';
 exports.description = 'Examples of using AccessibilityInfo APIs.';
 exports.examples = [
   {

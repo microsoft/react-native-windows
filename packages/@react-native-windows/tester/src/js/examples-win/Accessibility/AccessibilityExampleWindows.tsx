@@ -555,6 +555,7 @@ class AccessibilityListExamples extends React.Component {
 
 export const displayName = (_undefined?: string) => {};
 export const title = 'Accessibility Windows';
+export const category = 'Basic';
 export const description = 'Usage of accessibility properties.';
 export const examples = [
   {

@@ -13,15 +13,13 @@
 import * as React from 'react';
 import {
   Animated,
+  Pressable,
   StyleSheet,
   Text,
-  Platform,
   TouchableHighlight,
-  Pressable,
+  Platform,
   View,
 } from 'react-native';
-
-const nullthrows = require('nullthrows');
 
 const {useEffect, useRef, useState} = React;
 
@@ -265,7 +263,7 @@ function PressableFocusCallbacks() {
   const viewRef = useRef<React.ElementRef<typeof Pressable> | null>(null);
 
   const focusViewPressed = () => {
-    nullthrows(viewRef.current).focus();
+    viewRef.current.focus();
   };
 
   return (
@@ -364,7 +362,9 @@ const styles = StyleSheet.create({
 
 exports.displayName = (undefined: ?string);
 exports.description = 'Component for making views pressable.';
-exports.title = '<Pressable>';
+exports.title = 'Pressable';
+exports.category = 'UI';
+exports.documentationURL = 'https://reactnative.dev/docs/pressable';
 exports.examples = [
   {
     title: 'Change content based on Press',

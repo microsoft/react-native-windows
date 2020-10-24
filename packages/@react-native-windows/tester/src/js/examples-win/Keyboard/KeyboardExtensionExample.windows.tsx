@@ -177,6 +177,7 @@ class ViewWindowsKeyboardExample extends React.Component<
 }
 export const displayName = (_undefined?: string) => {};
 export const title = 'Keyboard extension Example';
+export const category = 'Basic';
 export const description = 'Demo of keyboard properties.';
 export const examples = [
   {

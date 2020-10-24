@@ -653,7 +653,7 @@ export const styles = StyleSheet.create({
 });
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<Text>';
+export const title = 'Text';
 export const description = 'Base component for rendering styled text.';
 export const examples = [
   {

@@ -9,5 +9,5 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <react:ReactRootView x:Name="myRootView" ComponentName="ReactUWPTestApp"
-        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="500"/>
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="600"/>
 </Page>

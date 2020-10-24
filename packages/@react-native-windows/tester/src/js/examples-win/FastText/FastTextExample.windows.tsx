@@ -111,6 +111,7 @@ class SlowExamples extends React.Component<{}, any> {
 
 export const displayName = undefined;
 export const title = 'Fast Path Texts';
+export const category = 'Basic';
 export const description =
   'Examples of performant fast path texts, turn on IsTextPerformanceVisualizationEnabled to visualize examples';
 export const examples = [

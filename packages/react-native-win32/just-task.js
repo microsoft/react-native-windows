@@ -66,10 +66,7 @@ function ensureDirectoryExists(filePath) {
 
 task('prepareBundle', () => {
   ensureDirectoryExists(
-    path.resolve(
-      __dirname,
-      'dist/win32/dev/RNTester/js/RNTesterApp.win32.bundle',
-    ),
+    path.resolve(__dirname, 'dist/win32/dev/js/RNTesterApp.win32.bundle'),
   );
 });
 
