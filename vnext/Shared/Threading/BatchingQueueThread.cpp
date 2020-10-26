@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "Threading/BatchingQueueThread.h"
+#include <eventWaitHandle/eventWaitHandle.h>
 #include <cassert>
 
 namespace react::uwp {
@@ -14,7 +15,8 @@ BatchingQueueThread::BatchingQueueThread(
 BatchingQueueThread::~BatchingQueueThread() noexcept {}
 
 void BatchingQueueThread::runOnQueue(std::function<void()> &&func) noexcept {
-  ThreadCheck();
+  std::scoped_lock lck(m_mutex);
+
   EnsureQueue();
   m_taskQueue->emplace_back(std::move(func));
 
@@ -44,8 +46,7 @@ void BatchingQueueThread::EnsureQueue() noexcept {
   }
 }
 
-void BatchingQueueThread::onBatchComplete() noexcept {
-  ThreadCheck();
+void BatchingQueueThread::PostBatch() noexcept {
   if (m_taskQueue) {
     m_queueThread->runOnQueue([taskQueue{std::move(m_taskQueue)}]() noexcept {
       for (auto &task : *taskQueue) {
@@ -56,15 +57,20 @@ void BatchingQueueThread::onBatchComplete() noexcept {
   }
 }
 
+void BatchingQueueThread::onBatchComplete() noexcept {
+  std::scoped_lock lck(m_mutex);
+  PostBatch();
+}
+
 void BatchingQueueThread::runOnQueueSync(std::function<void()> && /*func*/) noexcept {
   assert(false && "Not supported");
   std::terminate();
 }
 
 void BatchingQueueThread::quitSynchronous() noexcept {
-  // Used by OInstance
-  // assert(false && "Not supported");
-  // std::terminate();
+  std::scoped_lock lck(m_mutex);
+  PostBatch();
+  m_queueThread->quitSynchronous();
 }
 
 } // namespace react::uwp

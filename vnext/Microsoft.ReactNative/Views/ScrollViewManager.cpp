@@ -95,7 +95,6 @@ void ScrollViewShadowNode::createView() {
   Super::createView();
 
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
-  scrollViewer.TabIndex(0);
   const auto scrollViewUWPImplementation = react::uwp::ScrollViewUWPImplementation(scrollViewer);
   scrollViewUWPImplementation.ScrollViewerSnapPointManager();
 

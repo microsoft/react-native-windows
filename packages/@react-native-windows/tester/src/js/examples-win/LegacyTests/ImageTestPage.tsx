@@ -127,7 +127,7 @@ export function ImageTestPage() {
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<LegacyImageTest>';
+export const title = 'LegacyImageTest';
 export const description = 'Legacy e2e test for Image';
 export const examples = [
   {

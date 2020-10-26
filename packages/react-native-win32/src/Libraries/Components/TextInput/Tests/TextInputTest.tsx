@@ -108,7 +108,7 @@ const StyleTextInputTest: React.FC<{}> = () => {
   );
 };
 
-export const title = '<TextInput>';
+export const title = 'TextInput';
 export const displayName = 'TextInput';
 export const description = 'TextInput Examples and Tests';
 export const examples = [

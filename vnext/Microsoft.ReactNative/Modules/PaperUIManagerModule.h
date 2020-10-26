@@ -135,6 +135,9 @@ struct UIManager final {
   REACT_METHOD(replaceExistingNonRootView)
   void replaceExistingNonRootView(double reactTag, double newReactTag) noexcept;
 
+  REACT_METHOD(removeRootView)
+  void removeRootView(double reactTag) noexcept;
+
   REACT_METHOD(setChildren)
   void setChildren(double containerTag, winrt::Microsoft::ReactNative::JSValueArray &&reactTags) noexcept;
 

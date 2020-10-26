@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.185",
+  "version": "0.0.0-canary.188",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -38,10 +38,10 @@
     "hermes-engine": "~0.6.0",
     "invariant": "^2.2.4",
     "jsc-android": "^245459.0.0",
-    "metro-babel-register": "0.62.0",
-    "metro-react-native-babel-transformer": "0.62.0",
-    "metro-runtime": "0.62.0",
-    "metro-source-map": "0.62.0",
+    "metro-babel-register": "0.63.0",
+    "metro-react-native-babel-transformer": "0.63.0",
+    "metro-runtime": "0.63.0",
+    "metro-source-map": "0.63.0",
     "nullthrows": "^1.1.1",
     "pretty-format": "^26.0.1",
     "promise": "^8.0.3",
@@ -64,12 +64,12 @@
     "@types/react-native": "^0.63.18",
     "eslint": "6.8.0",
     "eslint-plugin-prettier": "2.6.2",
-    "flow-bin": "^0.131.0",
+    "flow-bin": "^0.132.0",
     "jscodeshift": "^0.9.0",
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "react": "16.13.1",
-    "react-native": "0.0.0-12543d557",
+    "react-native": "0.0.0-5bc67b658",
     "react-native-platform-override": "^0.4.0",
     "react-native-windows-codegen": "0.1.7",
     "react-refresh": "^0.4.0",
@@ -78,7 +78,7 @@
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "0.0.0-12543d557"
+    "react-native": "0.0.0-5bc67b658"
   },
   "beachball": {
     "defaultNpmTag": "canary",

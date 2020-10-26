@@ -2,6 +2,87 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 24 Oct 2020 05:07:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.188",
+      "version": "0.0.0-canary.188",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix tab ordering on ScrollViewer, TextInput, and Picker",
+            "author": "kmelmon@microsoft.com",
+            "commit": "f9981681a4e202f2f936519c1be6fe7fb17aba52",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate RNTester Redesign (8/26 Nightly Build)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8ed62998598e6249c4a9cfb9db1e84d53d9fb541",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix failing unit tests",
+            "author": "vmorozov@microsoft.com",
+            "commit": "df7b389ae2459161943e579d5b8f284ebf36cb51",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Ensure that destruction of animation nodes happen on UI thread",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "1519ad7bb2a0eb105602b4524a3264c9da6893bd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 23 Oct 2020 05:04:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.187",
+      "version": "0.0.0-canary.187",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable onFocus() and onBlur() callbacks on Pressable. Allow calling .focus() and .blur() on Pressable.",
+            "author": "igklemen@microsoft.com",
+            "commit": "a8e7166c6b76d1457db12ac1504b164c0c4d3cf0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Oct 2020 05:06:28 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.186",
+      "version": "0.0.0-canary.186",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix ReactContext::EmitJSEvent arg passing",
+            "author": "vmorozov@microsoft.com",
+            "commit": "9b8494a58bb17e53b725ab2539191695d053c0bc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "raise change event when dimensions change",
+            "author": "kmelmon@microsoft.com",
+            "commit": "848cbeef4c1d0d293bcd5dddc87dc032fc3b4d5f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 8/25 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "14707bb11c4f1421c298cc10522fe9bdbf5098f2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Move UIManager to NM2 infra",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "034770c8c764ecd97c28d69296eca6f49ce729d2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Oct 2020 05:05:24 GMT",
       "tag": "react-native-windows_v0.0.0-canary.185",
       "version": "0.0.0-canary.185",

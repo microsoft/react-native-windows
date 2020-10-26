@@ -82,7 +82,7 @@ export class TextInputTestPage extends React.Component<
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<LegacyTextInputTest>';
+export const title = 'LegacyTextInputTest';
 export const description = 'Legacy e2e test for TextInput';
 export const examples = [
   {

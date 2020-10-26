@@ -47,7 +47,8 @@ class GlyphExamples extends React.Component {
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<Glyph> UWP';
+export const title = 'Glyph UWP';
+export const category = 'UI';
 export const description = 'Usage of Glyph control.';
 export const examples = [
   {

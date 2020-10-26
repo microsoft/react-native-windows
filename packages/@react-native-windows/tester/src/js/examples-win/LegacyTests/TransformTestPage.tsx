@@ -85,7 +85,7 @@ export function TransformTestPage() {
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<LegacyTransformTest>';
+export const title = 'LegacyTransformTest';
 export const description = 'Legacy e2e test for Transforms';
 export const examples = [
   {

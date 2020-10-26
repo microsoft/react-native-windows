@@ -19,11 +19,6 @@ const TextAncestor = require('../../Text/TextAncestor');
 const TextInputState = require('./TextInputState');
 const TouchableWithoutFeedback = require('../Touchable/TouchableWithoutFeedback');
 
-// [Windows
-const requireNativeComponent = require('../../ReactNative/requireNativeComponent');
-import codegenNativeCommands from '../../Utilities/codegenNativeCommands';
-// Windows]
-
 const invariant = require('invariant');
 const nullthrows = require('nullthrows');
 const setAndForwardRef = require('../../Utilities/setAndForwardRef');
@@ -66,10 +61,9 @@ if (Platform.OS === 'android') {
 }
 // [Windows
 else if (Platform.OS === 'windows') {
-  WindowsTextInput = requireNativeComponent('RCTTextInput');
-  WindowsTextInputCommands = codegenNativeCommands<
-    TextInputNativeCommands<HostComponent<any>>,
-  >({supportedCommands: ['focus', 'blur', 'setTextAndSelection']});
+  WindowsTextInput = require('./WindowsTextInputNativeComponent').default;
+  WindowsTextInputCommands = require('./WindowsTextInputNativeComponent')
+    .Commands;
 }
 // Windows]
 

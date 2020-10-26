@@ -3,7 +3,7 @@ import { Image } from 'react-native';
 
 const testImage = require('./img/dpitest.png');
 
-export const title = '<ImageWin32Test>';
+export const title = 'ImageWin32Test';
 export const displayName = 'Image Win32 test';
 export const description = 'Image Win32 test';
 export const examples = [

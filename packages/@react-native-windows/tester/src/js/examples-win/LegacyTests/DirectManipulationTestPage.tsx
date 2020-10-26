@@ -89,7 +89,7 @@ export function DirectManipulationTestPage() {
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<LegacyDirectManipulationTest>';
+export const title = 'LegacyDirectManipulationTest';
 export const description = 'Legacy e2e test for DirectManipulation';
 export const examples = [
   {

@@ -113,7 +113,8 @@ class DatePickerExample extends React.Component<{}, IDatePickerExampleState> {
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<DatePicker>';
+export const title = 'DatePicker';
+export const category = 'UI';
 export const description =
   'Component that allows a user to pick a date from a calendar display with UWP CalendarDatePicker.';
 export const examples = [
