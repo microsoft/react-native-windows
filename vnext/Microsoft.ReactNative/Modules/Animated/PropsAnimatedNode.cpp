@@ -154,6 +154,7 @@ void PropsAnimatedNode::StartAnimations() {
 }
 
 void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag) {
+  /*
   if (m_expressionAnimations.count(valueTag)) {
     if (const auto target = GetUIElement()) {
       // We should start and stop the expression animations if there are
@@ -164,22 +165,25 @@ void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag) {
       // Fixing this will prevent memory bloat as the current solutions never
       // stops the expression animations that are built as a part of this
       // animation solution. Tracked by issue #3280.
-      // target.StopAnimation(m_expressionAnimations.at(valueTag));
+      target.StopAnimation(m_expressionAnimations.at(valueTag));
       m_suspendedExpressionAnimationTags.push_back(valueTag);
     }
   }
+  */
 }
 
 void PropsAnimatedNode::ResumeSuspendedAnimations(int64_t valueTag) {
+  /*
   const auto iterator =
       std::find(m_suspendedExpressionAnimationTags.begin(), m_suspendedExpressionAnimationTags.end(), valueTag);
   if (iterator != m_suspendedExpressionAnimationTags.end()) {
     if (const auto target = GetUIElement()) {
       // See comment above, tracked by issue #3280
-      // target.StartAnimation(m_expressionAnimations.at(valueTag));
+      target.StartAnimation(m_expressionAnimations.at(valueTag));
       m_suspendedExpressionAnimationTags.erase(iterator);
     }
   }
+  */
 }
 
 void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeType) {
@@ -256,10 +260,11 @@ void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeTyp
 }
 
 Microsoft::ReactNative::ShadowNodeBase *PropsAnimatedNode::GetShadowNodeBase() {
-  if (const auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*m_context).lock()) {
-    if (const auto nativeUIManagerHost = uiManager->getHost()) {
-      return static_cast<Microsoft::ReactNative::ShadowNodeBase *>(
-          nativeUIManagerHost->FindShadowNodeForTag(m_connectedViewTag));
+  if (const auto instance = m_instance.lock()) {
+    if (const auto uiManager = instance->NativeUIManager()) {
+      if (const auto nativeUIManagerHost = static_cast<NativeUIManager *>(uiManager)->getHost()) {
+        return static_cast<ShadowNodeBase *>(nativeUIManagerHost->FindShadowNodeForTag(m_connectedViewTag));
+      }
     }
   }
   return nullptr;
