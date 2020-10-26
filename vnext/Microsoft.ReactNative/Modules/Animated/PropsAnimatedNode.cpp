@@ -260,11 +260,10 @@ void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeTyp
 }
 
 Microsoft::ReactNative::ShadowNodeBase *PropsAnimatedNode::GetShadowNodeBase() {
-  if (const auto instance = m_instance.lock()) {
-    if (const auto uiManager = instance->NativeUIManager()) {
-      if (const auto nativeUIManagerHost = static_cast<NativeUIManager *>(uiManager)->getHost()) {
-        return static_cast<ShadowNodeBase *>(nativeUIManagerHost->FindShadowNodeForTag(m_connectedViewTag));
-      }
+  if (const auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*m_context).lock()) {
+    if (const auto nativeUIManagerHost = uiManager->getHost()) {
+      return static_cast<Microsoft::ReactNative::ShadowNodeBase *>(
+          nativeUIManagerHost->FindShadowNodeForTag(m_connectedViewTag));
     }
   }
   return nullptr;
