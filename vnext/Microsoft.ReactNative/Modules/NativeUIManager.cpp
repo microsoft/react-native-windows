@@ -128,9 +128,8 @@ XamlView NativeUIManager::reactPeerOrContainerFrom(xaml::FrameworkElement fe) {
   return nullptr;
 }
 
-NativeUIManager::NativeUIManager(winrt::Microsoft::ReactNative::ReactContext const &reactContext) {
-  m_context = reactContext;
-
+NativeUIManager::NativeUIManager(winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : m_context(reactContext) {
   m_yogaConfig = YGConfigNew();
   if (React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(m_context.Properties()))
     YGConfigSetUseLegacyStretchBehaviour(m_yogaConfig, true);

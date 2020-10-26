@@ -90,7 +90,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
   std::vector<facebook::jsi::PropNameID> getPropertyNames(facebook::jsi::Runtime &rt) override {
     std::vector<facebook::jsi::PropNameID> props;
     auto tmb = m_moduleBuilder.as<TurboModuleBuilder>();
-    for (auto it : tmb->m_methods) {
+    for (auto &it : tmb->m_methods) {
       props.push_back(facebook::jsi::PropNameID::forAscii(rt, it.first));
     }
     return props;
@@ -268,7 +268,6 @@ class TurboModuleImpl : public facebook::react::TurboModule {
               // call the function
               method(argReader, writer);
 
-              // set the return value
               return writer.as<JsiWriter>()->MoveResult();
             });
       }
