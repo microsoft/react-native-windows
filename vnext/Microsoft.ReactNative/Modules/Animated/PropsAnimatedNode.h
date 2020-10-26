@@ -36,7 +36,7 @@ class PropsAnimatedNode final : public AnimatedNode {
 
   int64_t m_connectedViewTag{s_connectedViewTagUnset};
   std::unordered_map<int64_t, comp::CompositionAnimation> m_expressionAnimations{};
-  std::vector<int64_t> m_suspendedExpressionAnimationTags{};
+  // std::vector<int64_t> m_suspendedExpressionAnimationTags{};
   comp::ExpressionAnimation m_centerPointAnimation{nullptr};
   winrt::Numerics::float3 m_rotationAxis{0, 0, 1};
   bool m_needsCenterPointAnimation{false};
