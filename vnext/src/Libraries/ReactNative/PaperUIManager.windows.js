@@ -32,10 +32,12 @@ function getConstants(): Object {
   return NativeUIManagerConstants;
 }
 
+// $FlowFixMe
 const UIManagerJS = {};
 
 // [Windows The spread operator doesn't work on JSI turbomodules, so use this instead
 for (const propName of Object.getOwnPropertyNames(NativeUIManager)) {
+  // $FlowFixMe
   UIManagerJS[propName] = NativeUIManager[propName];
 }
 // Windows]
@@ -45,8 +47,10 @@ for (const propName of Object.getOwnPropertyNames(NativeUIManager)) {
  * and run Flow. */
 //const UIManagerJS = {
 //  ...NativeUIManager,
+// $FlowFixMe
 UIManagerJS.getConstants = getConstants;
 //  },
+// $FlowFixMe
 UIManagerJS.getViewManagerConfig = function(viewManagerName: string): any {
   if (
     viewManagerConfigs[viewManagerName] === undefined &&
@@ -92,11 +96,11 @@ UIManagerJS.getViewManagerConfig = function(viewManagerName: string): any {
 // 3rd party libs may be calling `NativeModules.UIManager.getViewManagerConfig()`
 // instead of `UIManager.getViewManagerConfig()` off UIManager.js.
 // This is a workaround for now.
-// $FlowFixMe
 // [Windows - This is incompatible with running UIManager as a JSI object.
 //            getViewManagerConfig is implemented on the JSI object, so we dont
 //            need to hook this unless we are runnign in webdebugger
 if (!global.nativeCallSyncHook)
+  // $FlowFixMe
   NativeUIManager.getViewManagerConfig = UIManagerJS.getViewManagerConfig;
 
 function lazifyViewManagerConfig(viewName) {
