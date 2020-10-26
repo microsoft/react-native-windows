@@ -361,6 +361,12 @@
       "issue": 4379
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
+      "baseFile": "Libraries/ReactNative/PaperUIManager.js",
+      "baseHash": "a72811cd104bb575d0ab2659343dc2ea11c6b674"
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/Settings/Settings.windows.js",
       "baseFile": "Libraries/Settings/Settings.android.js",
