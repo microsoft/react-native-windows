@@ -94,8 +94,10 @@ UIManagerJS.getViewManagerConfig = function(viewManagerName: string): any {
 // This is a workaround for now.
 // $FlowFixMe
 // [Windows - This is incompatible with running UIManager as a JSI object.
-// NativeUIManager.getViewManagerConfig = UIManagerJS.getViewManagerConfig;
-// Windows]
+//            getViewManagerConfig is implemented on the JSI object, so we dont
+//            need to hook this unless we are runnign in webdebugger
+if (!global.nativeCallSyncHook)
+  NativeUIManager.getViewManagerConfig = UIManagerJS.getViewManagerConfig;
 
 function lazifyViewManagerConfig(viewName) {
   const viewConfig = getConstants()[viewName];

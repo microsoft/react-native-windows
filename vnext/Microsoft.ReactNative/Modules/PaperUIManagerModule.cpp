@@ -93,7 +93,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     m_nativeUIManager->setHost(this);
   }
 
-  React::JSValueObject getConstantsForViewManager(std::string &viewManagerName) noexcept {
+  React::JSValueObject getConstantsForViewManager(std::string &&viewManagerName) noexcept {
     const IViewManager *vm = GetViewManager(viewManagerName);
 
     auto writer = winrt::Microsoft::ReactNative::MakeJSValueTreeWriter();
@@ -505,7 +505,11 @@ void UIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext const &re
 }
 
 React::JSValueObject UIManager::getConstantsForViewManager(std::string viewManagerName) noexcept {
-  return m_module->getConstantsForViewManager(viewManagerName);
+  return m_module->getConstantsForViewManager(std::move(viewManagerName));
+}
+
+React::JSValueObject UIManager::getViewManagerConfig(std::string viewManagerName) noexcept {
+  return getConstantsForViewManager(std::move(viewManagerName));
 }
 
 void UIManager::ConstantsViaConstantsProvider(
