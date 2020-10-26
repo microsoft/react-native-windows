@@ -213,9 +213,11 @@ void ReactRootControl::UninitRootView() noexcept {
     return;
   }
 
-  if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
-    auto &legacyInstance = query_cast<Mso::React::ILegacyReactInstance &>(*reactInstance);
-    legacyInstance.DetachRootView(this);
+  if (m_isJSViewAttached) {
+    if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
+      auto &legacyInstance = query_cast<Mso::React::ILegacyReactInstance &>(*reactInstance);
+      legacyInstance.DetachRootView(this);
+    }
   }
 
   if (m_touchEventHandler != nullptr) {
