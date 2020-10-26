@@ -11,10 +11,10 @@
 #include <yoga/yoga.h>
 
 #include <ReactHost/React.h>
+#include <nativemodules.h>
 #include <map>
 #include <memory>
 #include <vector>
-#include <nativemodules.h>
 
 namespace react::uwp {
 struct IXamlReactControl;
@@ -38,8 +38,8 @@ class NativeUIManager final : public INativeUIManager {
   ShadowNode *createRootShadowNode(facebook::react::IReactRootView *rootView) override;
   void configureNextLayoutAnimation(
       winrt::Microsoft::ReactNative::JSValueObject && /*config*/,
-      std::function<void()> const & /*callback*/,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const & /*errorCallback*/) override{};
+      std::function<void()> && /*callback*/,
+      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> && /*errorCallback*/) override{};
   void destroy() override;
   void destroyRootShadowNode(ShadowNode *) override;
   void removeRootView(ShadowNode &rootshadow) override;
@@ -58,21 +58,21 @@ class NativeUIManager final : public INativeUIManager {
   void measure(
       ShadowNode &shadowNode,
       ShadowNode &shadowRoot,
-      std::function<void(double left, double top, double width, double height, double pageX, double pageY)> const
-          &callback) override;
+      std::function<void(double left, double top, double width, double height, double pageX, double pageY)> &&callback)
+      override;
   void measureInWindow(
       Microsoft::ReactNative::ShadowNode &shadowNode,
-      std::function<void(double x, double y, double width, double height)> const &callback) override;
+      std::function<void(double x, double y, double width, double height)> &&callback) override;
   void measureLayout(
       ShadowNode &shadowNode,
       ShadowNode &ancestorNode,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &errorCallback,
-      std::function<void(double left, double top, double width, double height)> const &callback) override;
+      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> &&errorCallback,
+      std::function<void(double left, double top, double width, double height)> &&callback) override;
   void findSubviewIn(
       ShadowNode &shadowNode,
       float x,
       float y,
-      std::function<void(double nativeViewTag, double left, double top, double width, double height)> const &callback)
+      std::function<void(double nativeViewTag, double left, double top, double width, double height)> &&callback)
       override;
 
   void focus(int64_t reactTag) override;
