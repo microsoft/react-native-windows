@@ -646,7 +646,7 @@ jobs:
           continueOnBuildFailure: true # See issue #6129
           projectType: app
 
-   - job: CliInitHermes
+  - job: CliInitHermes
     variables:
       - template: variables/vs2019.yml
     displayName: Verify react-native init Hermes
