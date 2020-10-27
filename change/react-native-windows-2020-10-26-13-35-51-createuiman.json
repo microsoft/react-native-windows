@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "[Win32] Export createUIManagerModule that takes a uiQueue",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-26T20:35:51.241Z"
+}
