@@ -165,7 +165,8 @@ exports.config = {
   },
 
   jasmineNodeOpts: {
-    defaultTimeoutInterval: 60000,
+    // Needs to be longer than the 1m webdriverio timeout to let its errors be propgated
+    defaultTimeoutInterval: 100000,
   },
 
   //

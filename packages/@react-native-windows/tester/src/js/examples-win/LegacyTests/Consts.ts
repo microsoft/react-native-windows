@@ -1,7 +1,7 @@
 // Framework
-export const SEARCH_BOX = 'explorer_search';
-export const BACK_BUTTON = 'BackButton';
-export const REACT_CONTROL_ERROR_TEST_ID = 'ReactControlErrorMessage';
+export const TESTER_LIST_SEARCH_BOX = 'explorer_search';
+export const COMPONENTS_NAV_BUTTON = 'components-tab';
+export const APIS_NAV_BUTTON = 'apis-tab';
 export const TREE_DUMP_RESULT = 'TreeDump';
 
 // TextInputTestPage

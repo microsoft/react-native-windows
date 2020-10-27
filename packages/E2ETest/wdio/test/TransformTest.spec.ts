@@ -5,18 +5,20 @@
 
 import HomePage from '../pages/HomePage';
 import TransformTestPage from '../pages/TransformTestPage';
-import assert from 'assert';
 import { TRANSFORM_TESTPAGE } from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 beforeAll(() => {
-  HomePage.goToTestPage(TRANSFORM_TESTPAGE);
+  HomePage.goToComponentExample(TRANSFORM_TESTPAGE);
 });
 
 describe('TransformTest', () => {
   it('Measure original size and position', () => {
     const result = TransformTestPage.clickMeasureLayoutAndGetResult();
-    assert.ok(result.includes('width=60'), 'measureLayout response width=60');
-    assert.ok(result.includes('x=0;'), 'measureLayout response x=20');
+    expect(result.includes('width=60')).toBe(
+      true,
+      'measureLayout response width=60'
+    );
+    expect(result.includes('x=0;')).toBe(true, 'measureLayout response x=20');
   });
 
   // Uncomment and run this test on 19h1+ when Platform.Version is available.

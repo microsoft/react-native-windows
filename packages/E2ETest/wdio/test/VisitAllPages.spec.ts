@@ -1,12 +1,9 @@
 /**
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
- * @format
  */
 
 import HomePage from '../pages/HomePage';
-
-import { By } from '../pages/BasePage';
 
 const componentExamples = [
   'ActivityIndicator',
@@ -73,23 +70,8 @@ const apiExamples = [
 ];
 
 describe('VisitAllPagesTest', () => {
-  componentExamples.forEach(ex => visitTestPage(ex, 'component'));
-  apiExamples.forEach(ex => visitTestPage(ex, 'api'));
+  componentExamples.forEach(ex =>
+    it(ex, () => HomePage.goToComponentExample(ex))
+  );
+  apiExamples.forEach(ex => it(ex, () => HomePage.goToApiExample(ex)));
 });
-
-function visitTestPage(name: string, type: 'api' | 'component') {
-  it(name, () => {
-    console.log('loading page ' + name);
-
-    if (type === 'api') {
-      HomePage.waitForElementLoaded('apis-tab');
-      By('apis-tab').click();
-    } else {
-      HomePage.waitForElementLoaded('components-tab');
-      By('components-tab').click();
-    }
-
-    HomePage.goToTestPage(name);
-    HomePage.backToHomePage();
-  });
-}
