@@ -414,13 +414,9 @@ const EmptyState = () => (
       <View>
         <Text style={styles.heading}>Bookmarks are empty</Text>
         <Text style={styles.subheading}>
-          Please tap the{' '}
-          <Image
-            source={require('../assets/bookmark-outline-gray.png')}
-            resizeMode="contain"
-            style={styles.bookmarkIcon}
-          />{' '}
-          icon to bookmark examples.
+          {/* [Windows replace Bookmark inline image with text Bookmark */}
+          Please tap the Bookmark icon to bookmark examples.
+          {/* Windows] */}
         </Text>
       </View>
     </View>
