@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 24 Oct 2020 05:07:36 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Oct 2020 05:04:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.189
+
+Tue, 27 Oct 2020 05:04:48 GMT
+
+### Changes
+
+- Don't require elevation just to check dev dependencies (asklar@microsoft.com)
 
 ## 0.0.0-canary.188
 

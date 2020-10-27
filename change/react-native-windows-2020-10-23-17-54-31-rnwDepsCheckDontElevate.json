@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Don't require elevation just to check dev dependencies",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-10-24T00:54:30.899Z"
-}
