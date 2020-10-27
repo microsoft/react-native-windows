@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 27 Oct 2020 05:04:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.189",
+      "version": "0.0.0-canary.189",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Don't require elevation just to check dev dependencies",
+            "author": "asklar@microsoft.com",
+            "commit": "a1d37568673072f9e7fbd7f44a52857c2dd6035b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Oct 2020 05:07:36 GMT",
       "tag": "react-native-windows_v0.0.0-canary.188",
       "version": "0.0.0-canary.188",
