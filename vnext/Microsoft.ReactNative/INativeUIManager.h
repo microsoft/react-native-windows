@@ -33,7 +33,6 @@ struct INativeUIManagerHost {
 };
 
 struct INativeUIManager {
-  virtual void destroy() = 0;
   virtual ShadowNode *createRootShadowNode(facebook::react::IReactRootView *rootView) = 0;
   virtual void configureNextLayoutAnimation(
       winrt::Microsoft::ReactNative::JSValueObject &&config,

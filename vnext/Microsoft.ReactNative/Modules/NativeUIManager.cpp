@@ -236,10 +236,6 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
       view.as<xaml::FrameworkElement>().SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) { DoLayout(); }));
 }
 
-void NativeUIManager::destroy() {
-  delete this;
-}
-
 void NativeUIManager::removeRootView(Microsoft::ReactNative::ShadowNode &shadow) {
   m_tagsToXamlReactControl.erase(shadow.m_tag);
   RemoveView(shadow, true);

@@ -86,7 +86,6 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       DropView(tag, false, true);
     });
     m_nativeUIManager->setHost(nullptr);
-    m_nativeUIManager->destroy();
   }
 
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
