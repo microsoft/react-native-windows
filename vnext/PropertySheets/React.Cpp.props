@@ -26,16 +26,16 @@
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\ReactPatches.targets" />
 
   <PropertyGroup>
-    <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
-    <HERMES_Version Condition="'$(HERMES_Version)' == ''">0.6.1</HERMES_Version>
-    <HERMES_Package Condition="'$(HERMES_Package)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HERMES_Version)</HERMES_Package>
+    <UseHermes Condition="'$(UseHermes)' == ''">false</UseHermes>
+    <HermesVersion Condition="'$(HermesVersion)' == ''">0.6.3</HermesVersion>
+    <HermesPackage Condition="'$(HermesPackage)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HermesVersion)</HermesPackage>
     <!-- TODO: Can we automatically distinguish between uwp and win32 here? -->
-    <HERMES_ARCH Condition="'$(HERMES_ARCH)' == ''">uwp</HERMES_ARCH>
+    <HermesArch Condition="'$(HermesArch)' == ''">uwp</HermesArch>
 
-    <USE_V8 Condition="('$(USE_V8)' == '') OR ('$(Platform)' == 'ARM')">false</USE_V8>
-    <V8_Version Condition="'$(V8_Version)' == ''">0.64.2</V8_Version>
-    <V8_Package Condition="'$(V8_Package)' == '' AND '$(V8AppPlatform)' == 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8_Version)</V8_Package>
-    <V8_Package Condition="'$(V8_Package)' == '' AND '$(V8AppPlatform)' != 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.UWP.$(V8_Version)</V8_Package>
+    <UseV8 Condition="('$(UseV8)' == '') OR ('$(Platform)' == 'ARM')">false</UseV8>
+    <V8Version Condition="'$(V8Version)' == ''">0.64.2</V8Version>
+    <V8Package Condition="'$(V8Package)' == '' AND '$(V8AppPlatform)' == 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8Version)</V8Package>
+    <V8Package Condition="'$(V8Package)' == '' AND '$(V8AppPlatform)' != 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.UWP.$(V8Version)</V8Package>
 
     <!-- Enables React-Native-Windows ETW Provider : React-Native-Windows-Provider  -->
     <ENABLE_ETW_TRACING Condition="'$(ENABLE_ETW_TRACING)' == ''">true</ENABLE_ETW_TRACING>
@@ -52,8 +52,8 @@
     <ClCompile>
       <PreprocessorDefinitions Condition="'$(ENABLE_ETW_TRACING)'=='true'">ENABLE_ETW_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)'=='true'">ENABLE_JS_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(UseHermes)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 

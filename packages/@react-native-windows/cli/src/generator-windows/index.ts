@@ -160,7 +160,6 @@ export async function copyProjectTemplateAndReplace(
   }
   if (options.useWinUI3) {
     console.log('Using experimental WinUI3 dependency.');
-    fs.writeFileSync(path.join(destPath, windowsDir, 'UseWinUI3'), '');
   }
   const projDir = 'proj';
   const srcPath = path.join(srcRootPath, `${language}-${projectType}`);
@@ -240,6 +239,15 @@ export async function copyProjectTemplateAndReplace(
     });
   }
 
+  if (options.useHermes) {
+    cppNugetPackages.push({
+      id: 'ReactNative.Hermes.Windows',
+      version: '0.6.3',
+      hasProps: false,
+      hasTargets: true,
+    });
+  }
+
   const templateVars: Record<string, any> = {
     useMustache: true,
     regExpPatternsToRemove: ['//\\sclang-format\\s(on|off)\\s'],
@@ -265,6 +273,7 @@ export async function copyProjectTemplateAndReplace(
 
     // cpp template variables
     useWinUI3: options.useWinUI3,
+    useHermes: options.useHermes,
     xamlNamespace: xamlNamespace,
     xamlNamespaceCpp: xamlNamespaceCpp,
     cppNugetPackages: cppNugetPackages,
@@ -309,6 +318,10 @@ export async function copyProjectTemplateAndReplace(
           {
             from: path.join(srcPath, projDir, 'MyApp.sln'),
             to: path.join(windowsDir, newProjectName + '.sln'),
+          },
+          {
+            from: path.join(sharedPath, projDir, 'BuildFlags.props'),
+            to: path.join(windowsDir, 'BuildFlags.props'),
           },
         ]
       : [

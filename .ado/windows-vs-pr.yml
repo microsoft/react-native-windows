@@ -646,6 +646,31 @@ jobs:
           continueOnBuildFailure: true # See issue #6129
           projectType: app
 
+   - job: CliInitHermes
+    variables:
+      - template: variables/vs2019.yml
+    displayName: Verify react-native init Hermes
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    strategy:
+      matrix:
+        X64DebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: x64
+    timeoutInMinutes: 50 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    pool:
+      vmImage: $(VmImage)
+    steps:
+      - template: templates/react-native-init.yml
+        parameters:
+          language: $(language)
+          configuration: $(configuration)
+          platform: $(platform)
+          additionalInitArguments: --useHermes
+          projectType: app
+
   - job: CliInitExperimental
     variables:
       - template: variables/vs2019.yml

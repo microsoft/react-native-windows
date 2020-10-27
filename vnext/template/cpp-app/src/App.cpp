@@ -36,6 +36,10 @@ App::App() noexcept
 #else
     InstanceSettings().UseDeveloperSupport(false);
 #endif
+{{#useHermes}}
+
+    InstanceSettings().JSIEngineOverride(Microsoft::ReactNative::JSIEngine::Hermes);
+{{/useHermes}}
 
     RegisterAutolinkedNativeModulePackages(PackageProviders()); // Includes any autolinked modules
 
