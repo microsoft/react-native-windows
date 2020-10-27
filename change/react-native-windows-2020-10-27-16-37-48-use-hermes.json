@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Allow Hermes to be used in C++ projects without modifying source code",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-27T23:37:48.552Z"
+}
