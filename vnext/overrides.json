@@ -325,7 +325,7 @@
       "baseHash": "c6d80f9ea60e5802d2e67ed50a78f2b6840d1162"
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
       "baseHash": "9bd6a85eef7bb41373df9eb7dd9b21a986848cbd",
