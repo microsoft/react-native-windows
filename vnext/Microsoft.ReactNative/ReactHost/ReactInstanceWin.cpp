@@ -109,31 +109,49 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
   virtual ~BridgeUIBatchInstanceCallback() = default;
   void onBatchComplete() override {
     if (auto instance = m_wkInstance.GetStrongPtr()) {
-      // While using a CxxModule for UIManager (which would include when running under webdebugger)
-      // We need to post the batch complete to the NativeQueue ensure that the UIManager has posted everything from this
-      // batch into its queue before we complete the batch.  Once we move UIManager over to JSI, we can mark the batch
-      // complete as soon as we get here.
-      instance->m_jsDispatchQueue.Load().Post([wkInstance = m_wkInstance]() {
-        if (auto instance = wkInstance.GetStrongPtr()) {
-          instance->m_batchingUIThread->runOnQueue([wkInstance]() {
-            if (auto instance = wkInstance.GetStrongPtr()) {
-              if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
-                uiManager->onBatchComplete();
+      if (instance->UseWebDebugger()) {
+        // While using a CxxModule for UIManager (which we do when running under webdebugger)
+        // We need to post the batch complete to the NativeQueue to ensure that the UIManager
+        // has posted everything from this batch into its queue before we complete the batch.
+        instance->m_jsDispatchQueue.Load().Post([wkInstance = m_wkInstance]() {
+          if (auto instance = wkInstance.GetStrongPtr()) {
+            instance->m_batchingUIThread->runOnQueue([wkInstance]() {
+              if (auto instance = wkInstance.GetStrongPtr()) {
+                if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
+                  uiManager->onBatchComplete();
+                }
               }
-            }
-          });
+            });
 
 #ifdef WINRT
-          // For UWP we use a batching message queue to optimize the usage
-          // of the CoreDispatcher.  Win32 already has an optimized queue.
-          facebook::react::BatchingMessageQueueThread *batchingUIThread =
-              static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
-          if (batchingUIThread != nullptr) {
-            batchingUIThread->onBatchComplete();
-          }
+            // For UWP we use a batching message queue to optimize the usage
+            // of the CoreDispatcher.  Win32 already has an optimized queue.
+            facebook::react::BatchingMessageQueueThread *batchingUIThread =
+                static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
+            if (batchingUIThread != nullptr) {
+              batchingUIThread->onBatchComplete();
+            }
 #endif
+          }
+        });
+      } else {
+        instance->m_batchingUIThread->runOnQueue([wkInstance = m_wkInstance]() {
+          if (auto instance = wkInstance.GetStrongPtr()) {
+            if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
+              uiManager->onBatchComplete();
+            }
+          }
+        });
+#ifdef WINRT
+        // For UWP we use a batching message queue to optimize the usage
+        // of the CoreDispatcher.  Win32 already has an optimized queue.
+        facebook::react::BatchingMessageQueueThread *batchingUIThread =
+            static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
+        if (batchingUIThread != nullptr) {
+          batchingUIThread->onBatchComplete();
         }
-      });
+#endif
+      }
     }
   }
   void incrementPendingJSCalls() override {}
@@ -191,10 +209,7 @@ void ReactInstanceWin::LoadModules(
     }
   };
 
-  // Try changing this back to a turbomodule once https://github.com/microsoft/react-native-windows/pull/5710 lands
-  // Note the BridgeUIBatchInstanceCallback should be updated when this is changed
-  // registerTurboModule(
-  registerNativeModule(
+  registerTurboModule(
       L"UIManager",
       // Spec incorrectly reports commandID as a number, but its actually a number | string.. so dont use the spec for
       // now
