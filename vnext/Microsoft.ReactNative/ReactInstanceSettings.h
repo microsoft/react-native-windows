@@ -181,7 +181,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 
 #if USE_HERMES
   JSIEngine m_jSIEngineOverride{JSIEngine::Hernes};
-#elseif USE_V8
+#elif USE_V8
   JSIEngine m_jSIEngineOverride{JSIEngine::V8};
 #else
   JSIEngine m_jSIEngineOverride{JSIEngine::Chakra};
