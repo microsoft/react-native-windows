@@ -5,28 +5,27 @@
 
 import HomePage from '../pages/HomePage';
 import DirectManipulationPage from '../pages/DirectManipulationPage';
-import assert from 'assert';
 import { DIRECT_MANIPULATION_TESTPAGE } from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 beforeAll(() => {
-  HomePage.goToTestPage(DIRECT_MANIPULATION_TESTPAGE);
+  HomePage.goToComponentExample(DIRECT_MANIPULATION_TESTPAGE);
 });
 
 describe('DirectManipulationTest', () => {
   it('measureInWindow Success', () => {
     const result = DirectManipulationPage.clickMeasureInWindowAndGetResult();
-    assert.ok(
-      result.includes('width='),
+    expect(result.includes('width=')).toBe(
+      true,
       'measureInWindow response include width'
     );
   });
 
   it('measureLayout Test', () => {
     const result = DirectManipulationPage.clickMeasureLayoutAndGetResult();
-    assert.ok(
-      result.includes('width=50'),
+    expect(result.includes('width=50')).toBe(
+      true,
       'measureLayout response has correct width'
     );
-    assert.ok(result.includes('x=20;'), 'measureLayout response x=20');
+    expect(result.includes('x=20')).toBe(true, 'measureLayout response x=20');
   });
 });

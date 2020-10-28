@@ -3,6 +3,7 @@ module.exports = {
   parserOptions: {tsconfigRootDir : __dirname},
   globals: {
     '$': 'readonly',
-    'browser': 'readonly'
+    'browser': 'readonly',
+    'expect': 'readonly',
   }
 };

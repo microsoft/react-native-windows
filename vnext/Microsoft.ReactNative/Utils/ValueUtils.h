@@ -20,6 +20,7 @@ namespace react::uwp {
 
 xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d);
 xaml::Media::Brush BrushFromColorObject(const winrt::Microsoft::ReactNative::JSValue &v);
+xaml::Media::SolidColorBrush SolidBrushFromColor(winrt::Windows::UI::Color color);
 
 REACTWINDOWS_API_(winrt::Windows::UI::Color) ColorFrom(const folly::dynamic &d);
 REACTWINDOWS_API_(winrt::Windows::UI::Color) ColorFrom(const winrt::Microsoft::ReactNative::JSValue &d);
