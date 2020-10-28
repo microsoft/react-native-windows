@@ -180,7 +180,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   uint16_t m_sourceBundlePort{0};
 
 #if USE_HERMES
-  JSIEngine m_jSIEngineOverride{JSIEngine::Hernes};
+  JSIEngine m_jSIEngineOverride{JSIEngine::Hermes};
 #elif USE_V8
   JSIEngine m_jSIEngineOverride{JSIEngine::V8};
 #else
