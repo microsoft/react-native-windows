@@ -69,6 +69,12 @@ const argv = yargs
       hidden: true,
       default: false,
     },
+    useHermes: {
+      type: 'boolean',
+      describe:
+        'Use Hermes instead of Chakra as the JS engine (supported on 0.64+)',
+      default: false,
+    },
     useWinUI3: {
       type: 'boolean',
       describe: '[Experimental] Use WinUI3',
@@ -398,6 +404,20 @@ function isProjectUsingYarn(cwd: string): boolean {
       );
     }
 
+    if (argv.useHermes && argv.experimentalNuGetDependency) {
+      userError(
+        "Error: Incompatible options specified. Options '--useHermes' and '--experimentalNuGetDependency' are incompatible",
+        EXITCODE_INCOMPATIBLE_OPTIONS,
+      );
+    }
+
+    if (argv.useHermes && argv.language === 'cs') {
+      userError(
+        "Error: '--useHermes' is not yet compatibile with C# projects",
+        EXITCODE_INCOMPATIBLE_OPTIONS,
+      );
+    }
+
     if (!useDevMode) {
       if (!version) {
         const rnVersion = getReactNativeVersion();
@@ -496,6 +516,7 @@ function isProjectUsingYarn(cwd: string): boolean {
       projectType: argv.projectType as 'lib' | 'app',
       experimentalNuGetDependency: argv.experimentalNuGetDependency,
       useWinUI3: argv.useWinUI3,
+      useHermes: argv.useHermes,
       nuGetTestVersion: argv.nuGetTestVersion,
       nuGetTestFeed: argv.nuGetTestFeed,
     });

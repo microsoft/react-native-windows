@@ -41,6 +41,7 @@ export interface GenerateOptions {
   nuGetTestVersion?: string;
   nuGetTestFeed?: string;
   useWinUI3: boolean;
+  useHermes: boolean;
   verbose: boolean;
 }
 
