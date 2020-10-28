@@ -5,13 +5,13 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.0.0-5bc67b658",
+  "baseVersion": "0.0.0-f0e80ae22",
   "overrides": [
     {
       "type": "patch",
       "file": "src/js/components/ExamplePage.win32.js",
       "baseFile": "packages/rn-tester/js/components/ExamplePage.js",
-      "baseHash": "7d97d2dd62d2055c1e2e7bd69ce93e1b6ec1c2c0",
+      "baseHash": "929a58e006b074189564a856cfc5dd7a132205a6",
       "issue": 4050
     },
     {
@@ -22,9 +22,16 @@
     },
     {
       "type": "patch",
+      "file": "src/js/components/RNTesterEmptyBookmarksState.win32.js",
+      "baseFile": "packages/rn-tester/js/components/RNTesterEmptyBookmarksState.js",
+      "baseHash": "312a8f4a51f942df975f865638570a5349c0cd3f",
+      "issue": 6341
+    },
+    {
+      "type": "patch",
       "file": "src/js/components/RNTesterExampleFilter.win32.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterExampleFilter.js",
-      "baseHash": "7f3f22f1c2643b730bbd1e3d633c263dcd6a0a6f"
+      "baseHash": "20e35122c8529a5bf848f91d9ea9b85be3c23882"
     },
     {
       "type": "patch",
@@ -41,24 +48,38 @@
       "issue": 6210
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src/js/RNTesterApp.win32.js",
-      "baseFile": "packages/rn-tester/js/RNTesterApp.ios.js",
-      "baseHash": "b86a1fd9363b807c340c58135e610bdae8ee2fae",
+      "baseFile": "packages/rn-tester/js/RNTesterApp.android.js",
+      "baseHash": "30f3ef9bdc0e2c337309079831664c4a596c404f",
       "issue": 4586
-    },
-    {
-      "type": "derived",
-      "file": "src/js/utils/RNTesterAsyncStorageAbstraction.win32.js",
-      "baseFile": "packages/rn-tester/js/utils/RNTesterAsyncStorageAbstraction.js",
-      "baseHash": "a00e706027e10d9c6d98ab3febd6a6f1e947ae5e",
-      "issue": 6316
     },
     {
       "type": "derived",
       "file": "src/js/utils/RNTesterList.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
       "baseHash": "6e0d7dd2c48c2a46cb746cfbd56cdafd141ef3b5"
+    },
+    {
+      "type": "patch",
+      "file": "src/js/utils/RNTesterStatePersister.win32.js",
+      "baseFile": "packages/rn-tester/js/utils/RNTesterStatePersister.js",
+      "baseHash": "b15ee55c3730ae01faa39fad54158596061a1a49",
+      "issue": 6316
+    },
+    {
+      "type": "patch",
+      "file": "src/js/utils/testerStateUtils.win32.js",
+      "baseFile": "packages/rn-tester/js/utils/testerStateUtils.js",
+      "baseHash": "dd1a238d51ec4926a3cb82a92994cfc3507e16f7",
+      "issue": 6316
+    },
+    {
+      "type": "patch",
+      "file": "src/js/utils/useAsyncStorageReducer.win32.js",
+      "baseFile": "packages/rn-tester/js/utils/useAsyncStorageReducer.js",
+      "baseHash": "dd12805229a025d0c45f676d6c535f2f19386025",
+      "issue": 6316
     }
   ]
 }

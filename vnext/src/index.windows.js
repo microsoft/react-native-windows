@@ -369,7 +369,7 @@ module.exports = {
       .default;
   },
   get NativeEventEmitter(): NativeEventEmitter {
-    return require('./Libraries/EventEmitter/NativeEventEmitter');
+    return require('./Libraries/EventEmitter/NativeEventEmitter').default;
   },
   // $FlowFixMe[value-as-type]
   get Networking(): Networking {
@@ -451,7 +451,7 @@ module.exports = {
 
   // Plugins
   get DeviceEventEmitter(): RCTDeviceEventEmitter {
-    return require('./Libraries/EventEmitter/RCTDeviceEventEmitter');
+    return require('./Libraries/EventEmitter/RCTDeviceEventEmitter').default;
   },
   get NativeAppEventEmitter(): RCTNativeAppEventEmitter {
     return require('./Libraries/EventEmitter/RCTNativeAppEventEmitter');

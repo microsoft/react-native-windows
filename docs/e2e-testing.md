@@ -143,7 +143,6 @@ Pay attention to the last line of the LoginPage, we always export a new instance
 ```
 // login.spec.ts
 before(() => {
-  HomePage.backToHomePage();
   HomePage.clickAndGotoLoginPage();
 });
 
