@@ -154,11 +154,9 @@ void PropsAnimatedNode::StartAnimations() {
   }
 }
 
-void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag) {
-}
+void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag) {}
 
-void PropsAnimatedNode::ResumeSuspendedAnimations(int64_t valueTag) {
-}
+void PropsAnimatedNode::ResumeSuspendedAnimations(int64_t valueTag) {}
 
 void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeType) {
   if (const auto manager = m_manager.lock()) {

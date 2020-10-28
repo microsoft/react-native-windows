@@ -246,7 +246,7 @@ void ReactRootControl::ClearLoadingUI() noexcept {
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
 
     auto children = xamlRootGrid.Children();
-    uint32_t index;
+    uint32_t index{0};
     if (m_greenBoxGrid && children.IndexOf(m_greenBoxGrid, index)) {
       children.RemoveAt(index);
     }
@@ -275,7 +275,7 @@ void ReactRootControl::EnsureLoadingUI() noexcept {
     }
 
     auto children = xamlRootGrid.Children();
-    uint32_t index;
+    uint32_t index{0};
     if (m_greenBoxGrid && !children.IndexOf(m_greenBoxGrid, index)) {
       children.Append(m_greenBoxGrid);
     }
