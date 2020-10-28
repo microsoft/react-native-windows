@@ -244,7 +244,10 @@ export async function copyProjectTemplateAndReplace(
       id: 'ReactNative.Hermes.Windows',
       version: '0.6.3',
       hasProps: false,
-      hasTargets: true,
+      // This does have build targets, but they're included automatically by
+      // Microsoft.ReactNative and don't need to be imported in the user
+      // project
+      hasTargets: false,
     });
   }
 
