@@ -178,7 +178,14 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   IRedBoxHandler m_redBoxHandler{nullptr};
   hstring m_sourceBundleHost{};
   uint16_t m_sourceBundlePort{0};
+
+#if USE_HERMES
+  JSIEngine m_jSIEngineOverride{JSIEngine::Hernes};
+#elseif USE_V8
+  JSIEngine m_jSIEngineOverride{JSIEngine::V8};
+#else
   JSIEngine m_jSIEngineOverride{JSIEngine::Chakra};
+#endif
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
