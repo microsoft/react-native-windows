@@ -1,6 +1,7 @@
 /**
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
+ * @format
  */
 
 import HomePage from '../pages/HomePage';

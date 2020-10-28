@@ -32,8 +32,10 @@ class HomePage extends BasePage {
     pageItem.click();
 
     // Make sure we've launched the example by waiting until the search box is
-    // no longer present
+    // no longer present, but make sure we haven't crashed by checking that nav
+    // buttons are still visible
     this.waitForElementHidden(TESTER_LIST_SEARCH_BOX);
+    this.waitForElementLoaded(COMPONENTS_NAV_BUTTON);
   }
 }
 
