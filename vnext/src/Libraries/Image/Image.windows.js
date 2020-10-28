@@ -18,6 +18,8 @@ const StyleSheet = require('../StyleSheet/StyleSheet');
 const ImageAnalyticsTagContext = require('./ImageAnalyticsTagContext').default;
 const flattenStyle = require('../StyleSheet/flattenStyle');
 const resolveAssetSource = require('./resolveAssetSource');
+const TextAncestor = require('../Text/TextAncestor'); // [Windows]
+import invariant from 'invariant'; // [Windows]
 
 import type {ImageProps as ImagePropsType} from './ImageProps';
 
@@ -125,21 +127,34 @@ let Image = (props: ImagePropsType, forwardedRef) => {
   }
 
   return (
-    <ImageAnalyticsTagContext.Consumer>
-      {analyticTag => {
+    // [Windows
+    <TextAncestor.Consumer>
+      {hasTextAncestor => {
+        invariant(
+          !hasTextAncestor,
+          'Nesting of <Image> within <Text> is not currently supported.',
+        );
+        // windows]
+
         return (
-          <ImageViewNativeComponent
-            {...props}
-            ref={forwardedRef}
-            style={style}
-            resizeMode={resizeMode}
-            tintColor={tintColor}
-            source={sources}
-            internal_analyticTag={analyticTag}
-          />
+          <ImageAnalyticsTagContext.Consumer>
+            {analyticTag => {
+              return (
+                <ImageViewNativeComponent
+                  {...props}
+                  ref={forwardedRef}
+                  style={style}
+                  resizeMode={resizeMode}
+                  tintColor={tintColor}
+                  source={sources}
+                  internal_analyticTag={analyticTag}
+                />
+              );
+            }}
+          </ImageAnalyticsTagContext.Consumer>
         );
       }}
-    </ImageAnalyticsTagContext.Consumer>
+    </TextAncestor.Consumer>
   );
 };
 
