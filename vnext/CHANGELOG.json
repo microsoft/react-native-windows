@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 28 Oct 2020 05:04:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.190",
+      "version": "0.0.0-canary.190",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implement backgroundColor for Text.",
+            "author": "igklemen@microsoft.com",
+            "commit": "d9e784fcfc077529a3f844a4e0f42174e8fae671",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Move UIManager to JSI",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "9fb5f9a22b7e5acee1259108da54f350cf00c275",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Followup from #6289",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "48f6f67fc14f3f7a7c33e8a1b3c62e8e64882bd8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[Win32] Export createUIManagerModule that takes a uiQueue",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "6b415659aa017dbc41e3f28e817fb768a8e80435",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Oct 2020 05:04:48 GMT",
       "tag": "react-native-windows_v0.0.0-canary.189",
       "version": "0.0.0-canary.189",

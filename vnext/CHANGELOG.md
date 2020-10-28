@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 27 Oct 2020 05:04:48 GMT and should not be manually modified.
+This log was last generated on Wed, 28 Oct 2020 05:04:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.190
+
+Wed, 28 Oct 2020 05:04:32 GMT
+
+### Changes
+
+- Implement backgroundColor for Text. (igklemen@microsoft.com)
+- Move UIManager to JSI (30809111+acoates-ms@users.noreply.github.com)
+- Followup from #6289 (30809111+acoates-ms@users.noreply.github.com)
+- [Win32] Export createUIManagerModule that takes a uiQueue (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.189
 
