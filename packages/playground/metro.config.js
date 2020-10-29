@@ -17,24 +17,28 @@ const rnwTesterPath = fs.realpathSync(
   path.dirname(require.resolve('@react-native-windows/tester/package.json')),
 );
 
-const rnwPathNormalized = path.normalize(rnwPath);
-const rnwSrcPathNormalized = path.normalize(rnwPath + '/src');
+const devPackages = {
+  'react-native': path.normalize(rnwPath),
+  'react-native-windows': path.normalize(rnwPath),
+  '@react-native-windows/tester': path.normalize(rnwTesterPath),
+};
 
 function isRelativeImport(filePath) {
   return /^[.][.]?(?:[/]|$)/.test(filePath);
 }
 
-// Example: vnextResolve('C:/Repos/react-native-windows/vnext/', './Libraries/Text/Text');
-// Returns a full path to the resolved location which would be in vnext/src if the file exists there
-// or just in vnext otherwise
-function vnextResolve(originDir, moduleName) {
+// Example: devResolve('C:/Repos/react-native-windows/vnext/', './Libraries/Text/Text');
+// Returns a full path to the resolved location which would be in the src subdirectory if
+// the file exists or the directory root otherwise
+function devResolve(packageName, originDir, moduleName) {
   const originDirSrc = originDir.replace(
-    rnwPathNormalized,
-    rnwSrcPathNormalized,
+    devPackages[packageName],
+    path.join(devPackages[packageName], 'src'),
   );
 
   // redirect the resolution to src if an appropriate file exists there
   const extensions = [
+    '',
     '.windows.tsx',
     '.windows.ts',
     '.windows.jsx',
@@ -45,8 +49,8 @@ function vnextResolve(originDir, moduleName) {
     '.js',
   ];
 
-  // For each potential extension we need to check for the file in either vnext/src, or in vnext
-  for (let extension of extensions) {
+  // For each potential extension we need to check for the file in either src and root
+  for (const extension of extensions) {
     const potentialSrcModuleName =
       path.resolve(originDirSrc, moduleName) + extension;
     if (fs.existsSync(potentialSrcModuleName)) {
@@ -60,55 +64,81 @@ function vnextResolve(originDir, moduleName) {
   }
 }
 
-// This teaches metro how we merge vnext/src and files from core to vnext...
-// Basically any resolves within vnext we look to see if the file exists in vnext/src,
-// and use that one if it exists.  That way fast refresh will work on files within vnext/src
-function vnextDevResolveRequest(
+/**
+ * Allows the usage of live reload in packages in our repo which merges
+ * Windows-specific over core. These normally work by copying from the "src"
+ * subdirectory to package root during build time, but this resolver will
+ * instead prefere the copy in "src" to avoid the need to build.
+ */
+function devResolveRequest(
   context,
   _realModuleName /* string */,
   platform /* string */,
   moduleName /* string */,
 ) {
-  let backupResolveRequest = context.resolveRequest;
+  const backupResolveRequest = context.resolveRequest;
   delete context.resolveRequest;
 
   try {
-    let modifiedModuleName = moduleName;
-    if (platform === 'windows') {
-      if (moduleName === 'react-native') {
-        // redirect react-native -> vnext/src/index.windows.js
-        modifiedModuleName = path.resolve(rnwPath, 'src/index.windows.js');
-      } else if (moduleName.startsWith('react-native/')) {
-        // redirect react-native/foo -> vnext/src/foo or vnext/foo
-        modifiedModuleName = vnextResolve(
-          rnwPath,
-          (moduleName = `./${moduleName.slice('react-native/'.length)}`),
-        );
-      } else if (
-        context.originModulePath.startsWith(rnwPath) &&
-        isRelativeImport(moduleName)
-      ) {
-        // We need to handle relative paths from within react-native-windows
-        let originPathWithoutSrc = context.originModulePath;
-        if (originPathWithoutSrc.startsWith(rnwSrcPathNormalized))
-          originPathWithoutSrc = `${rnwPath}/${originPathWithoutSrc.slice(
-            rnwSrcPathNormalized.length,
-          )}`;
-
-        const resolvedLocation = vnextResolve(
-          path.dirname(originPathWithoutSrc),
-          moduleName,
-        );
-        if (resolvedLocation) modifiedModuleName = resolvedLocation;
-      }
-    }
-    let result = resolve(context, modifiedModuleName, platform);
-    return result;
+    const modifiedModuleName =
+      tryResolveDevPackage(moduleName) ||
+      tryResolveDevAbsoluteImport(moduleName) ||
+      tryResolveDevRelativeImport(context.originModulePath, moduleName) ||
+      moduleName;
+    return resolve(context, modifiedModuleName, platform);
   } catch (e) {
     throw e;
   } finally {
     context.resolveRequest = backupResolveRequest;
   }
+}
+
+function tryResolveDevPackage(moduleName) /*: string | null*/ {
+  if (devPackages[moduleName]) {
+    return devResolve(moduleName, devPackages[moduleName], './index');
+  }
+
+  return null;
+}
+
+function tryResolveDevAbsoluteImport(moduleName) /*: string | null*/ {
+  for (const [packageName, packagePath] of Object.entries(devPackages)) {
+    if (moduleName.startsWith(`${packageName}/`)) {
+      return devResolve(
+        packageName,
+        packagePath,
+        `./${moduleName.slice(`${packageName}/`.length)}`,
+      );
+    }
+  }
+
+  return null;
+}
+
+function tryResolveDevRelativeImport(
+  originModulePath,
+  moduleName,
+) /*: string | null*/ {
+  for (const [packageName, packagePath] of Object.entries(devPackages)) {
+    if (
+      isRelativeImport(moduleName) &&
+      originModulePath.startsWith(packagePath)
+    ) {
+      const packageSrcPath = path.join(packagePath, 'src');
+      const originPathWithoutSrc = originModulePath.replace(
+        packageSrcPath,
+        packagePath,
+      );
+
+      return devResolve(
+        packageName,
+        path.dirname(originPathWithoutSrc),
+        moduleName,
+      );
+    }
+  }
+
+  return null;
 }
 
 module.exports = {
@@ -136,7 +166,7 @@ module.exports = {
         `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
       ),
     ]),
-    resolveRequest: vnextDevResolveRequest,
+    resolveRequest: devResolveRequest,
   },
 
   // Metro doesn't currently handle assets from other packages within a monorepo.  This is the current workaround people use
