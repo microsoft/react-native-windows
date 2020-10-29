@@ -32,7 +32,6 @@
     "art": "^0.10.0",
     "base64-js": "^1.1.2",
     "event-target-shim": "^5.0.1",
-    "fbjs": "^1.0.0",
     "fbjs-scripts": "^1.1.0",
     "hermes-engine": "~0.6.0",
     "invariant": "^2.2.4",
@@ -71,14 +70,14 @@
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "react": "16.13.1",
-    "react-native": "0.0.0-5bc67b658",
+    "react-native": "0.0.0-f0e80ae22",
     "react-native-platform-override": "^0.4.0",
     "react-shallow-renderer": "^16.13.1",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "0.0.0-5bc67b658"
+    "react-native": "0.0.0-f0e80ae22"
   },
   "beachball": {
     "defaultNpmTag": "canary",

@@ -374,7 +374,7 @@ module.exports = {
       .default;
   },
   get NativeEventEmitter(): NativeEventEmitter {
-    return require('./Libraries/EventEmitter/NativeEventEmitter');
+    return require('./Libraries/EventEmitter/NativeEventEmitter').default;
   },
   get Networking(): Networking {
     return require('./Libraries/Network/RCTNetworking');
@@ -455,7 +455,7 @@ module.exports = {
 
   // Plugins
   get DeviceEventEmitter(): RCTDeviceEventEmitter {
-    return require('./Libraries/EventEmitter/RCTDeviceEventEmitter');
+    return require('./Libraries/EventEmitter/RCTDeviceEventEmitter').default;
   },
   get NativeAppEventEmitter(): RCTNativeAppEventEmitter {
     return require('./Libraries/EventEmitter/RCTNativeAppEventEmitter');

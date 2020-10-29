@@ -12,13 +12,13 @@
     "src/tsconfig.json",
     "**/*.windesktop.js"
   ],
-  "baseVersion": "0.0.0-5bc67b658",
+  "baseVersion": "0.0.0-f0e80ae22",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a02ec80bfa99acea12365f29e51b898a074e362a"
+      "baseHash": "86d79e561c8ce6b2dd89ba20ec7d42246cb2a50f"
     },
     {
       "type": "patch",
@@ -66,7 +66,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "717b73b2397607b3d0a74534cc3360a1be627906"
+      "baseHash": "a26839159af016e9fb20dc4c18b3c744cde55cc1"
     },
     {
       "type": "platform",
@@ -249,7 +249,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "05c8c1e9142210b472c9c1ce891314b786ecc50f"
+      "baseHash": "b49b732f6a88bdc4e5783b5ac2339ee6105523fd"
     },
     {
       "type": "patch",
@@ -405,7 +405,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.windows.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
-      "baseHash": "750d5a0afc192d9ec98c27d28402285c9e3155a0"
+      "baseHash": "1e689ecb36aaa20e7b60b5f6e7620785e3826e0a"
     },
     {
       "type": "platform",

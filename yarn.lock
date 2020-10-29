@@ -12074,10 +12074,10 @@ react-native-tscodegen@0.66.1:
     nullthrows "1.1.1"
     typescript "^3.5.3"
 
-react-native@0.0.0-5bc67b658:
-  version "0.0.0-5bc67b658"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-5bc67b658.tgz#926ce3dfa5683f9de303a33ae0c767b440df88ec"
-  integrity sha512-ozYlcZKJ0YZNg1Q876YlKhcOykAaZrTNh7W7K3k415ySDAGfGr7RmhI6cbot7/2bQbMnFhnVR3sc/fh3589WxQ==
+react-native@0.0.0-f0e80ae22:
+  version "0.0.0-f0e80ae22"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-f0e80ae22.tgz#f83cf1c102a24e2840da2400ee5eabbca0f9a4c8"
+  integrity sha512-ojn3pfFo9MpX2pjUipmVBaC+6w6niNnoZYZCyAbOqlg6I7aLAU7jnq3Za7izsDeFbViJ3ezXflIvzjQ3zcntVA==
   dependencies:
     "@react-native-community/cli" "^4.10.0"
     "@react-native-community/cli-platform-android" "^4.10.0"
@@ -12089,7 +12089,6 @@ react-native@0.0.0-5bc67b658:
     anser "^1.4.9"
     base64-js "^1.1.2"
     event-target-shim "^5.0.1"
-    fbjs "^1.0.0"
     fbjs-scripts "^1.1.0"
     hermes-engine "~0.6.0"
     invariant "^2.2.4"
