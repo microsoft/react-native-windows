@@ -26,10 +26,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/FlatList/FlatListExample'),
   },
   {
-    key: 'CustomViewExample',
-    module: require('../examples-win/CustomView/CustomViewExample'),
-  },
-  {
     key: 'DatePickerExample',
     category: 'UI',
     module: require('../examples-win/DatePicker/DatePickerExample'),
