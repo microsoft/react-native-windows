@@ -526,13 +526,19 @@ async function updateAutoLink(
     if (addCsModuleSupport) {
       // Add managed projects
       projectsForSolution.push({
-          projectFile: path.join(rnwRoot, 'Microsoft.ReactNative.Managed/Microsoft.ReactNative.Managed.csproj'),
-          projectName: 'Microsoft.ReactNative.Managed',
-          projectLang: 'cs',
-          projectGuid: '{F2824844-CE15-4242-9420-308923CD76C3}',
+        projectFile: path.join(
+          rnwRoot,
+          'Microsoft.ReactNative.Managed/Microsoft.ReactNative.Managed.csproj',
+        ),
+        projectName: 'Microsoft.ReactNative.Managed',
+        projectLang: 'cs',
+        projectGuid: '{F2824844-CE15-4242-9420-308923CD76C3}',
       });
       projectsForSolution.push({
-        projectFile: path.join(rnwRoot, 'Microsoft.ReactNative.Managed.CodeGen//Microsoft.ReactNative.Managed.CodeGen.csproj'),
+        projectFile: path.join(
+          rnwRoot,
+          'Microsoft.ReactNative.Managed.CodeGen//Microsoft.ReactNative.Managed.CodeGen.csproj',
+        ),
         projectName: 'Microsoft.ReactNative.Managed.CodeGen',
         projectLang: 'cs',
         projectGuid: '{ADED4FBE-887D-4271-AF24-F0823BCE7961}',

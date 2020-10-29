@@ -117,7 +117,10 @@ export function addProjectToSolution(
   const slnDir = path.dirname(slnFile);
   const relProjectFile = path.relative(slnDir, project.projectFile);
 
-  const projectTypeGuid = 'projectTypeGuid' in project ? project.projectTypeGuid! : projectTypeGuidsByLanguage[project.projectLang];
+  const projectTypeGuid =
+    'projectTypeGuid' in project
+      ? project.projectTypeGuid!
+      : projectTypeGuidsByLanguage[project.projectLang];
 
   const projectGuid = project.projectGuid.toUpperCase();
 
@@ -171,7 +174,9 @@ export function addProjectToSolution(
   projectConfigLines.forEach(projectConfigLine => {
     if (slnLines.indexOf(projectConfigLine) < 0) {
       if (verbose) {
-        const configLine = projectConfigLine.substr(projectConfigLine.indexOf("= ") + 2);
+        const configLine = projectConfigLine.substr(
+          projectConfigLine.indexOf('= ') + 2,
+        );
         console.log(chalk.yellow(`Missing ${configLine} config block.`));
       }
 
