@@ -111,6 +111,10 @@ steps:
       npm set registry http://localhost:4873
     displayName: Modify default npm config to point to local verdaccio server
 
+  - script: |
+      npm set fetch-retries 10
+    displayName: Allow additional npm fetch retries
+
   - task: CmdLine@2
     displayName: Apply windows template (with nuget)
     inputs:
