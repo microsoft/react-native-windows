@@ -163,7 +163,8 @@ struct IWebSocketResource {
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&handler) noexcept = 0;
+  virtual void SetOnMessage(
+      std::function<void(std::size_t, const std::string &, bool isBinary)> &&handler) noexcept = 0;
 
   /// <summary>
   /// Sets the optional custom behavior to run when this instance is closed.
