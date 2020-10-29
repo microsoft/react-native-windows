@@ -9,7 +9,6 @@ import HomePage from '../pages/HomePage';
 const componentExamples = [
   'ActivityIndicator',
   'Button',
-  //  'Custom Views',
   'DatePicker',
   'Fast Path Texts',
   'FlatList',
