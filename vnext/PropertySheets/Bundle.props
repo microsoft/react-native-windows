@@ -29,7 +29,7 @@
     <BundleOutputPath Condition="'$(BundleOutputPath)' == ''">$([MSBuild]::NormalizePath('$(ProjectDir)\Bundle'))</BundleOutputPath>
 
     <!-- File path of the final JS bundle -->
-    <BundleOutputFile Condition="'$(BundleOutputFile)' == ''">$([MSBuild]::NormalizePath('$(BundleOutputPath)\$(BundleAssetName)'))</BundleOutputFile>
+    <BundleOutputFile Condition="'$(BundleOutputFile)' == ''">$(BundleOutputPath)\$(BundleAssetName)</BundleOutputFile>
 
     <!-- Should the bundle created be a dev bundle -->
     <UseDevBundle Condition="'$(UseDevBundle)' == '' and '$(Configuration)' == 'Debug'">true</UseDevBundle>
@@ -52,10 +52,10 @@
     <BundleConfigFile Condition="'$(BundleConfigFile)' == ''"></BundleConfigFile>
 
     <!-- Location where source map file for the JS bundle will be created -->
-    <BundleSourceMapDir Condition="'$(BundleSourceMapDir)' == ''">$(OutDir)\sourcemaps\react</BundleSourceMapDir>
+    <BundleSourceMapDir Condition="'$(BundleSourceMapDir)' == ''">$([MSBuild]::NormalizePath('$(OutDir)\sourcemaps\react'))</BundleSourceMapDir>
 
     <!-- Base (extensionless) filename for bundle sourcemaps -->
-    <BaseBundleSourceMap Condition="'$(BaseBundleSourceMap)' == ''">$([MSBuild]::MakeRelative($(BundleCommandWorkingDir), $([MSBuild]::NormalizePath('$(BundleSourceMapDir)\$(BundleAssetName)'))))</BaseBundleSourceMap>
+    <BaseBundleSourceMap Condition="'$(BaseBundleSourceMap)' == ''">$(BundleSourceMapDir)\$(BundleAssetName)</BaseBundleSourceMap>
     
     <!-- Source map file for the bundle (composed from packager + compiler if using Hermes) -->
     <BundleSourceMap Condition="'$(BundleSourceMap)' == ''">$(BaseBundleSourceMap).map</BundleSourceMap>
