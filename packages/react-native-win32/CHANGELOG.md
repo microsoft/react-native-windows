@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 24 Oct 2020 05:07:36 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Oct 2020 05:05:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.60
+
+Thu, 29 Oct 2020 05:05:49 GMT
+
+### Changes
+
+- Better error handling of Views inside Text components (30809111+acoates-ms@users.noreply.github.com)
+- Integrate Additional RNTester Refactoring (9/2 Nightly RN Build) (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.59
 

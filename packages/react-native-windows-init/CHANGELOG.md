@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Thu, 01 Oct 2020 05:08:11 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Oct 2020 05:05:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.31
+
+Thu, 29 Oct 2020 05:05:49 GMT
+
+### Patches
+
+- Allow Hermes to be used in C++ projects without modifying source code (ngerlem@microsoft.com)
 
 ## 0.1.30
 

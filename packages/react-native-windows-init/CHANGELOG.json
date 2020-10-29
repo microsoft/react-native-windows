@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Thu, 29 Oct 2020 05:05:49 GMT",
+      "tag": "react-native-windows-init_v0.1.31",
+      "version": "0.1.31",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow Hermes to be used in C++ projects without modifying source code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7e9d80e59fd0b8ca7549eda1a7d5cefc32d6cfbe",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Oct 2020 05:06:32 GMT",
       "tag": "react-native-windows-init_v0.1.30",
       "version": "0.1.30",

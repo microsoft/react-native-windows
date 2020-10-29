@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 29 Oct 2020 05:05:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.191",
+      "version": "0.0.0-canary.191",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Better error handling of Views inside Text components",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "776e348f599f7fb8655bb34a9d7b921b6a8daeaf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow Hermes to be used in C++ projects without modifying source code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7e9d80e59fd0b8ca7549eda1a7d5cefc32d6cfbe",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate Additional RNTester Refactoring (9/2 Nightly RN Build)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "34d003379dbc928f9698735b2e81dbab8f384832",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 28 Oct 2020 05:04:32 GMT",
       "tag": "react-native-windows_v0.0.0-canary.190",
       "version": "0.0.0-canary.190",

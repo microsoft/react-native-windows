@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 29 Oct 2020 05:05:49 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.60",
+      "version": "0.0.0-canary.60",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Better error handling of Views inside Text components",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "776e348f599f7fb8655bb34a9d7b921b6a8daeaf",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate Additional RNTester Refactoring (9/2 Nightly RN Build)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "34d003379dbc928f9698735b2e81dbab8f384832",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Oct 2020 05:07:36 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.59",
       "version": "0.0.0-canary.59",

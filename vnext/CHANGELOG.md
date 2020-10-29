@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 28 Oct 2020 05:04:32 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Oct 2020 05:05:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.191
+
+Thu, 29 Oct 2020 05:05:49 GMT
+
+### Changes
+
+- Better error handling of Views inside Text components (30809111+acoates-ms@users.noreply.github.com)
+- Allow Hermes to be used in C++ projects without modifying source code (ngerlem@microsoft.com)
+- Integrate Additional RNTester Refactoring (9/2 Nightly RN Build) (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.190
 

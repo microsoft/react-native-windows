@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Better error handling of Views inside Text components",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2020-10-27T20:09:55.071Z"
-}

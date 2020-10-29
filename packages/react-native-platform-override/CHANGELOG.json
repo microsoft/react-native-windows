@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Thu, 29 Oct 2020 05:05:49 GMT",
+      "tag": "react-native-platform-override_v0.4.1",
+      "version": "0.4.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Better Override Validation Messages When Errors Exist in Multiple Packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "efae6f59fc50b57b8f122c2d5c663e14e3fdef6a",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Oct 2020 05:05:24 GMT",
       "tag": "react-native-platform-override_v0.4.0",
       "version": "0.4.0",
