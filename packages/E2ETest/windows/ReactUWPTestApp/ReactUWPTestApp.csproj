@@ -160,7 +160,7 @@
       <Version>6.2.9</Version>
     </PackageReference>
     <PackageReference Include="XamlTreeDump">
-      <Version>1.0.3</Version>
+      <Version>1.0.5</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
