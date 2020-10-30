@@ -4,26 +4,26 @@
     "flow-typed",
     "src/**"
   ],
-  "baseVersion": "0.0.0-9b094ee77",
+  "baseVersion": "0.0.0-77f7658e4",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "77450a7acd7bb309e5470e541cab5e85d7e4aa36"
+      "baseHash": "7f31832893b66db402c57bc4c1194fec7cca56e4"
     },
     {
       "type": "copy",
       "directory": "flow-typed",
       "baseDirectory": "flow-typed",
-      "baseHash": "f1491d073bd76e90b6c185d818ec807ac52346b9",
+      "baseHash": "ea9220b9644559edb09e929872d37774e783d757",
       "issue": 6139
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "a26839159af016e9fb20dc4c18b3c744cde55cc1"
+      "baseHash": "073219bedb8f92d04fb2f60636df7314b8c243b7"
     },
     {
       "type": "patch",
@@ -358,7 +358,7 @@
       "type": "copy",
       "file": "src/Libraries/Utilities/BackHandler.win32.js",
       "baseFile": "Libraries/Utilities/BackHandler.android.js",
-      "baseHash": "69605da09902165f866377d7eda5897029ef4d62",
+      "baseHash": "972b0cbe23ba57207ee7c855975c0b3d4c28f0d2",
       "issue": 4629
     },
     {
