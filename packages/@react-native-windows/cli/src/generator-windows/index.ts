@@ -295,7 +295,12 @@ export async function copyProjectTemplateAndReplace(
       ? [
           // app common mappings
           {
-            from: path.join(srcRootPath, 'metro.config.js'),
+            from: path.join(
+              srcRootPath,
+              options.useDevMode
+                ? 'metro.devMode.config.js'
+                : 'metro.config.js',
+            ),
             to: 'metro.config.js',
           },
           {

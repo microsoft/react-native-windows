@@ -517,6 +517,7 @@ function isProjectUsingYarn(cwd: string): boolean {
       experimentalNuGetDependency: argv.experimentalNuGetDependency,
       useWinUI3: argv.useWinUI3,
       useHermes: argv.useHermes,
+      useDevMode: argv.useDevMode,
       nuGetTestVersion: argv.nuGetTestVersion,
       nuGetTestFeed: argv.nuGetTestFeed,
     });
