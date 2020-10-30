@@ -8,7 +8,6 @@
 
 // Standard Library
 #include <future>
-#include <mutex>
 
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -31,6 +30,12 @@ TEST_CLASS (WebSocketIntegrationTest)
     {
       return message + "_response";
     });
+    string serverError;
+    server->SetOnError([&serverError](Error&& err)
+    {
+      serverError = err.Message;
+    });
+
     string scheme = "ws";
     if (isSecure)
       scheme += "s";
@@ -45,10 +50,12 @@ TEST_CLASS (WebSocketIntegrationTest)
     {
       receivedPromise.set_value(message);
     });
-    string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
+    string clientError{};
+    ws->SetOnError([&clientError, &sentSizePromise, &receivedPromise](Error err)
     {
-      errorMessage = err.Message;
+      clientError = err.Message;
+      sentSizePromise.set_value(0);
+      receivedPromise.set_value("");
     });
 
     server->Start();
@@ -64,7 +71,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     auto receivedFuture = receivedPromise.get_future();
     receivedFuture.wait();
     string received = receivedFuture.get();
-    Assert::AreEqual({}, errorMessage);
+    Assert::AreEqual({}, clientError);
 
     ws->Close(CloseCode::Normal, "Closing after reading");
     server->Stop();
@@ -126,7 +133,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       {
         closed = true;
       });
-      ws->SetOnError([&errorMessage](IWebSocketResource::Error && error)
+      ws->SetOnError([&errorMessage](Error && error)
       {
         errorMessage = error.Message;
       });
@@ -156,7 +163,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       pingPromise.set_value(true);
     });
     string errorString;
-    ws->SetOnError([&errorString](IWebSocketResource::Error err)
+    ws->SetOnError([&errorString](Error err)
     {
       errorString = err.Message;
     });
@@ -186,7 +193,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     promise<string> response;
     ws->SetOnMessage([&response](size_t size, const string &message, bool isBinary) { response.set_value(message); });
     string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err) { errorMessage = err.Message; });
+    ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
 
     server->Start();
     ws->Connect();
@@ -258,7 +265,6 @@ TEST_CLASS (WebSocketIntegrationTest)
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(SendReceiveSsl)
-    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SendReceiveSsl)
   {
@@ -344,7 +350,7 @@ TEST_CLASS (WebSocketIntegrationTest)
         responsesReceived.set_value();
     });
     string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocketResource::Error err)
+    ws->SetOnError([&errorMessage](Error err)
     {
       errorMessage = err.Message;
     });
