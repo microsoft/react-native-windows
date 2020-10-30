@@ -17,8 +17,6 @@ import * as chalk from 'chalk';
 // @ts-ignore
 import * as Registry from 'npm-registry';
 
-import requireGenerateWindows from './requireGenerateWindows';
-
 import * as appInsights from 'applicationinsights';
 
 /**
@@ -29,6 +27,9 @@ import * as appInsights from 'applicationinsights';
 
 appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 const telClient = appInsights.defaultClient;
+telClient.commonProperties['sessionId'] = (new Date()).getTime().toString(36) + Math.random().toString(36).slice(2);
+
+import requireGenerateWindows from './requireGenerateWindows';
 
 const npmConfReg = execSync('npm config get registry')
   .toString()
@@ -82,7 +83,7 @@ const argv = yargs
     noTelemetry: {
       type: 'boolean',
       describe:
-        'Disables sending telemetry that allows analysis of failures of the react-native-windows CLI',
+        'Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
       default: false,
     },
     language: {
@@ -153,6 +154,9 @@ if (argv.verbose) {
 }
 
 if (argv.noTelemetry || process.env.AGENT_NAME) {
+  if (argv.verbose) {
+    console.log('Disabling telemetry');
+  }
   telClient.config.disableAppInsights = true;
 }
 
@@ -406,7 +410,7 @@ function setExit(exitCode: ExitCode, error?: String): void {
     telClient.trackEvent({
       name: 'init-exit',
       properties: {
-        argv: argv,
+        durationInSecs: process.uptime(),
         exitCode: ExitCode[exitCode],
         errorMessage: error,
       },
@@ -453,14 +457,14 @@ function isProjectUsingYarn(cwd: string): boolean {
     if (argv.useHermes && argv.experimentalNuGetDependency) {
       userError(
         "Error: Incompatible options specified. Options '--useHermes' and '--experimentalNuGetDependency' are incompatible",
-        EXITCODE_INCOMPATIBLE_OPTIONS,
+        ExitCode.INCOMPATIBLE_OPTIONS,
       );
     }
 
     if (argv.useHermes && argv.language === 'cs') {
       userError(
-        "Error: '--useHermes' is not yet compatibile with C# projects",
-        EXITCODE_INCOMPATIBLE_OPTIONS,
+        "Error: '--useHermes' is not yet compatible with C# projects",
+        ExitCode.INCOMPATIBLE_OPTIONS,
       );
     }
 

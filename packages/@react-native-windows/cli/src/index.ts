@@ -7,6 +7,12 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as findUp from 'find-up';
+
+import * as appInsights from 'applicationinsights';
+
+appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
+const telClient = appInsights.defaultClient;
+
 import {
   copyProjectTemplateAndReplace,
   installDependencies,
@@ -17,10 +23,6 @@ import {runWindowsCommand} from './runWindows/runWindows';
 import {dependencyConfigWindows} from './config/dependencyConfig';
 import {projectConfigWindows} from './config/projectConfig';
 
-import * as appInsights from 'applicationinsights';
-
-appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
-const telClient = appInsights.defaultClient;
 
 /**
  * Project generation options
@@ -50,6 +52,20 @@ export interface GenerateOptions {
   useHermes: boolean;
   verbose: boolean;
   noTelemetry: boolean;
+}
+
+function scrubOptions(opt: GenerateOptions) {
+  return {
+    overwrite: opt.overwrite,
+    language: opt.language,
+    projectType: opt.projectType,
+    experimentalNuGetDependency: opt.experimentalNuGetDependency,
+    nuGetTestFeed: opt.nuGetTestFeed ? true : false,
+    nuGetTestVersion: opt.nuGetTestVersion ? true : false,
+    useWinUI3: opt.useWinUI3,
+    useHermes: opt.useHermes,
+    verbose: opt.verbose,
+  };
 }
 
 /**
@@ -109,11 +125,12 @@ export async function generateWindows(
 
       const rnwPkgJson = require('../package.json');
 
+      const optScrubbed = scrubOptions(options);
       telClient.trackEvent({
         name: 'generate-windows',
         properties: {
           error: error,
-          ...options,
+          ...optScrubbed,
           'react-native': rnVersion,
           'cli-version': rnwPkgJson.version,
         },
