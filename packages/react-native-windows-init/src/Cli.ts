@@ -409,6 +409,16 @@ function isMSFTInternal(): boolean {
   return process.env.USERDNSDOMAIN !== undefined && process.env.USERDNSDOMAIN.endsWith('microsoft.com');
 }
 
+function getRNWInitVersion(): string {
+  try {
+    const pkgJson = require('../package.json');
+    if (pkgJson.name === 'react-native-windows-init' && pkgJson.version !== undefined) {
+      return pkgJson.version;
+    }
+  } catch { }
+  return '';
+}
+
 function setExit(exitCode: ExitCode, error?: String): void {
   if (!process.exitCode || process.exitCode === ExitCode.SUCCESS) {
     telClient.trackEvent({
@@ -417,6 +427,7 @@ function setExit(exitCode: ExitCode, error?: String): void {
         durationInSecs: process.uptime(),
         msftInternal: isMSFTInternal(),
         exitCode: ExitCode[exitCode],
+        rnwinitVersion: getRNWInitVersion(),
         errorMessage: error,
       },
     });
