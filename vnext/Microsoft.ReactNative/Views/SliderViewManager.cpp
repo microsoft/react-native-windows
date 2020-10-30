@@ -27,6 +27,7 @@ class SliderShadowNode : public ShadowNodeBase {
   SliderShadowNode() = default;
   void createView() override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
+  bool NeedsForceLayout();
 };
 
 void SliderShadowNode::createView() {
@@ -37,6 +38,10 @@ void SliderShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueOb
   m_updating = true;
   Super::updateProperties(props);
   m_updating = false;
+}
+
+bool SliderShadowNode::NeedsForceLayout() {
+  return true;
 }
 
 SliderViewManager::SliderViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -84,6 +89,10 @@ bool SliderViewManager::UpdateProperty(
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
   return true;
+}
+
+YGMeasureFunc SliderViewManager::GetYogaCustomMeasureFunc() const {
+  return DefaultYogaSelfMeasureFunc;
 }
 
 } // namespace Microsoft::ReactNative

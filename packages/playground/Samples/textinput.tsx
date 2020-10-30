@@ -12,6 +12,7 @@ import {
   TextInput,
   Keyboard,
   View,
+  Text,
   KeyboardAvoidingView,
 } from 'react-native';
 
@@ -45,6 +46,12 @@ export default class Bootstrap extends React.Component<{}, any> {
     const previousState = this.state.passwordHidden;
     this.setState({passwordHidden: !previousState});
   };
+
+  Item = ({title}) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  );
 
   render() {
     return (

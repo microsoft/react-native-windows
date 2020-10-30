@@ -307,6 +307,7 @@
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\ControlViewManager.h" />
     <ClInclude Include="Views\DatePickerViewManager.h" />
+    <ClInclude Include="Views\CheckboxViewManager.h" />
     <ClInclude Include="Views\DevMenu.h" />
     <ClInclude Include="Views\DynamicAutomationPeer.h" />
     <ClInclude Include="Views\DynamicAutomationProperties.h" />
@@ -498,6 +499,7 @@
     <ClCompile Include="Views\ConfigureBundlerDlg.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />
     <ClCompile Include="Views\DatePickerViewManager.cpp" />
+    <ClCompile Include="Views\CheckboxViewManager.cpp" />
     <ClCompile Include="Views\DevMenu.cpp" />
     <ClCompile Include="Views\DynamicAutomationPeer.cpp" />
     <ClCompile Include="Views\DynamicAutomationProperties.cpp" />

@@ -7,14 +7,15 @@
 
 namespace Microsoft::ReactNative {
 
-class SliderViewManager : public ControlViewManager {
+class CheckBoxViewManager : public ControlViewManager {
   using Super = ControlViewManager;
 
  public:
-  SliderViewManager(const Mso::React::IReactContext &context);
+  CheckBoxViewManager(const Mso::React::IReactContext &context);
 
   const wchar_t *GetName() const override;
   void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+
 
   ShadowNode *createShadow() const override;
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
@@ -25,9 +26,12 @@ class SliderViewManager : public ControlViewManager {
       const std::string &propertyName,
       const winrt::Microsoft::ReactNative::JSValue &propertyValue) override;
 
+ /* void DispatchCommand(const XamlView &viewToUpdate, const std::string &commandId, const folly::dynamic &commandArgs)
+      override;*/
+
   XamlView CreateViewCore(int64_t tag) override;
 
-  friend class SliderShadowNode;
+  friend class CheckBoxShadowNode;
 };
 
-} // namespace Microsoft::ReactNative
+} // namespace react::uwp
