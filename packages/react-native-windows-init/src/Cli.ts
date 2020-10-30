@@ -28,6 +28,9 @@ import * as appInsights from 'applicationinsights';
 appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 const telClient = appInsights.defaultClient;
 telClient.commonProperties['sessionId'] = (new Date()).getTime().toString(36) + Math.random().toString(36).slice(2);
+if (process.env.RNW_CLI_TEST) {
+  telClient.commonProperties['isTest'] = process.env.RNW_CLI_TEST;
+}
 
 import requireGenerateWindows from './requireGenerateWindows';
 
