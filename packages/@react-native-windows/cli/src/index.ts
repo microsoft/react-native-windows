@@ -19,7 +19,7 @@ import {projectConfigWindows} from './config/projectConfig';
 
 import * as appInsights from 'applicationinsights';
 
-appInsights.setup('a7b9ed40-e2a4-4166-bf80-230540f4dcff');
+appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 const telClient = appInsights.defaultClient;
 
 /**
