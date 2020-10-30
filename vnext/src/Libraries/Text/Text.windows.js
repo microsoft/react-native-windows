@@ -18,7 +18,6 @@ import {NativeText, NativeVirtualText} from './TextNativeComponent';
 const DeprecatedTextPropTypes = require('../DeprecatedPropTypes/DeprecatedTextPropTypes');
 const React = require('react');
 const StyleSheet = require('../StyleSheet/StyleSheet');
-import type {____ViewStyle_Internal} from '../StyleSheet/StyleSheetTypes';
 const TextAncestor = require('./TextAncestor');
 const Touchable = require('../Components/Touchable/Touchable');
 const View = require('../Components/View/View');
@@ -28,6 +27,7 @@ const processColor = require('../StyleSheet/processColor');
 import type {PressEvent} from '../Types/CoreEventTypes';
 import type {HostComponent} from '../Renderer/shims/ReactNativeTypes';
 import type {PressRetentionOffset, TextProps} from './TextProps';
+import type {TextStyleProp, ViewStyleProp} from '../StyleSheet/StyleSheet'; // [Windows]
 
 type ResponseHandlers = $ReadOnly<{|
   onStartShouldSetResponder: () => boolean,
@@ -143,7 +143,7 @@ class TouchableText extends React.Component<Props, State> {
             // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c.
             // Windows doesn't currently support nesting a <View> in a <Text>, so overriding this behavior here
             // by seting the Provider inside View, doesn't affect us functionally.
-            let styleProps: ____ViewStyle_Internal = (props.style: any);
+            let styleProps: ViewStyleProp = (props.style: any);
             if (
               styleProps &&
               styleProps.borderColor &&
@@ -186,7 +186,7 @@ class TouchableText extends React.Component<Props, State> {
                 <View style={styleProps}>
                   <TextAncestor.Provider value={true}>
                     <NativeText
-                      style={rest}
+                      style={((rest: any): TextStyleProp)}
                       {...textPropsLessStyle}
                       ref={forwardedRef}
                     />
