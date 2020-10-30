@@ -108,6 +108,7 @@ export async function generateWindows(
     );
   } catch (e) {
     error = e;
+    telClient.trackException({ exception: error });
     throw e;
   } finally {
     if (!options.noTelemetry && !process.env.AGENT_NAME) {
