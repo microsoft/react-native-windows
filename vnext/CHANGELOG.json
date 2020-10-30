@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 30 Oct 2020 05:07:51 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.192",
+      "version": "0.0.0-canary.192",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable Hermes Bytecode Compilation and SourceMap Creation as Part of Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f9ba026cad45a4d30c95e3a7d2efb7ba28a1b9f7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update Template Metro Config to Enable Inline Requires By Default",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8c6c44575c77cf2dddd0be0512e5a139c8f64bdb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 9/17 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2e8b1d34263f940d46583dad0b9c252b9549f8d9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Oct 2020 05:05:49 GMT",
       "tag": "react-native-windows_v0.0.0-canary.191",
       "version": "0.0.0-canary.191",

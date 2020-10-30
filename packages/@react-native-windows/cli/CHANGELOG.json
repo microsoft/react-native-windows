@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 30 Oct 2020 05:07:51 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.25",
+      "version": "0.0.0-canary.25",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable Hermes Bytecode Compilation and SourceMap Creation as Part of Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f9ba026cad45a4d30c95e3a7d2efb7ba28a1b9f7",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Oct 2020 05:05:49 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.24",
       "version": "0.0.0-canary.24",
