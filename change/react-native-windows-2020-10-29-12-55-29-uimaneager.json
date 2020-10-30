@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Initialize UIManager turbomodule eagerly",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-29T19:55:29.217Z"
+}
