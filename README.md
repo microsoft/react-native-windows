@@ -59,7 +59,7 @@ See [Contributing guidelines](https://github.com/microsoft/react-native-windows/
 [Good First Task](https://github.com/microsoft/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/microsoft/react-native-windows/labels/help%20wanted) are great starting points for PRs.
 
 ## Documentation
-[React Native already has great documentation](https://reactnative.dev/docs/getting-started.html) and we're working to ensure the React Native Windows is part of that documentation story.
+[React Native already has great documentation](https://reactnative.dev/docs/getting-started) and we're working to ensure the React Native Windows is part of that documentation story.
 
 [React Native for Windows](https://microsoft.github.io/react-native-windows/) has it's own separate documentation site where Windows and macOS specific information, like API docs and blog updates live.
 
