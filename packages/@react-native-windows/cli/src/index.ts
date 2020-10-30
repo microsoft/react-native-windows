@@ -12,6 +12,9 @@ import * as appInsights from 'applicationinsights';
 
 appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 const telClient = appInsights.defaultClient;
+if (!telClient.commonProperties.sessionId) {
+  telClient.commonProperties['sessionId'] = (new Date()).getTime().toString(36) + Math.random().toString(36).slice(2);
+}
 
 import {
   copyProjectTemplateAndReplace,
@@ -60,8 +63,8 @@ function scrubOptions(opt: GenerateOptions) {
     language: opt.language,
     projectType: opt.projectType,
     experimentalNuGetDependency: opt.experimentalNuGetDependency,
-    nuGetTestFeed: opt.nuGetTestFeed ? true : false,
-    nuGetTestVersion: opt.nuGetTestVersion ? true : false,
+    nuGetTestFeed: (opt.nuGetTestFeed !== undefined) ? true : false,
+    nuGetTestVersion: (opt.nuGetTestVersion !== undefined) ? true : false,
     useWinUI3: opt.useWinUI3,
     useHermes: opt.useHermes,
     verbose: opt.verbose,
