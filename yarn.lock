@@ -7110,10 +7110,10 @@ flatted@^2.0.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.2.tgz#4575b21e2bcee7434aa9be662f4b7b5f9c2b5138"
   integrity sha512-r5wGx7YeOwNWNlCA0wQ86zKyDLMQr+/RB8xy74M4hTphfmjlijTSSXGuH8rnvKZnfT9i+75zmd8jcKdMR4O6jA==
 
-flow-bin@^0.132.0:
-  version "0.132.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.132.0.tgz#8bf80a79630db24bd1422dc2cc4b5e97f97ccb98"
-  integrity sha512-S1g/vnAyNaLUdajmuUHCMl30qqye12gS6mr4LVyswf1k+JDF4efs6SfKmptuvnpitF3LGCVf0TIffChP8ljwnw==
+flow-bin@^0.133.0:
+  version "0.133.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.133.0.tgz#2ee44e3f5d0c0256cfe8e99d9a85e9801c281c50"
+  integrity sha512-01T5g8GdhtJEn+lhAwuv5zkrMStrmkuHrY3Nn9/aS9y6waNmNgimMKlzRpFH66S0F6Ez9EqU9psz5QaRveSJIA==
 
 flow-parser@0.*:
   version "0.113.0"
@@ -7765,7 +7765,7 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
-hermes-engine@0.7.0, hermes-engine@~0.6.0:
+hermes-engine@0.7.0, hermes-engine@~0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/hermes-engine/-/hermes-engine-0.7.0.tgz#c4a13e09811d7bc975a0662bd2ca7120003d6ef8"
   integrity sha512-lU9OenFWXXOzYldqn15QvbiD0kDc+uw2arhCOkR+9D+PhrLFcbEqnaXFESgchN77JYEf77KkqXncTZA8aoXw2A==
@@ -12074,10 +12074,10 @@ react-native-tscodegen@0.66.1:
     nullthrows "1.1.1"
     typescript "^3.5.3"
 
-react-native@0.0.0-f0e80ae22:
-  version "0.0.0-f0e80ae22"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-f0e80ae22.tgz#f83cf1c102a24e2840da2400ee5eabbca0f9a4c8"
-  integrity sha512-ojn3pfFo9MpX2pjUipmVBaC+6w6niNnoZYZCyAbOqlg6I7aLAU7jnq3Za7izsDeFbViJ3ezXflIvzjQ3zcntVA==
+react-native@0.0.0-9b094ee77:
+  version "0.0.0-9b094ee77"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-9b094ee77.tgz#17c909262dc215b0dc3592614ea52bf89f24a43f"
+  integrity sha512-T5FhgUnp4kzXxru/VdR7h5GffTGowyY04HqsPMZSF02Izgf21+hmEDREpAZ3mUJ63PFgb4zkjdwAKAUK0VFZ8A==
   dependencies:
     "@react-native-community/cli" "^4.10.0"
     "@react-native-community/cli-platform-android" "^4.10.0"
@@ -12090,7 +12090,7 @@ react-native@0.0.0-f0e80ae22:
     base64-js "^1.1.2"
     event-target-shim "^5.0.1"
     fbjs-scripts "^1.1.0"
-    hermes-engine "~0.6.0"
+    hermes-engine "~0.7.0"
     invariant "^2.2.4"
     jsc-android "^245459.0.0"
     metro-babel-register "0.63.0"

@@ -12,13 +12,13 @@
     "src/tsconfig.json",
     "**/*.windesktop.js"
   ],
-  "baseVersion": "0.0.0-f0e80ae22",
+  "baseVersion": "0.0.0-9b094ee77",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "86d79e561c8ce6b2dd89ba20ec7d42246cb2a50f"
+      "baseHash": "77450a7acd7bb309e5470e541cab5e85d7e4aa36"
     },
     {
       "type": "patch",
@@ -213,7 +213,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "b55d01b28764b9bfc75b903383b7b0c08d744b87"
+      "baseHash": "db754c4d52fbd1f79f6370f85352e031613315eb"
     },
     {
       "type": "derived",
@@ -249,7 +249,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "b49b732f6a88bdc4e5783b5ac2339ee6105523fd"
+      "baseHash": "309ff04ae5312224c992b9119a12c691149280cd"
     },
     {
       "type": "patch",
@@ -271,7 +271,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "9b1b8d8b8d7a26c1e8d16617a4c9e7a686018912"
+      "baseHash": "2e51013f1c2c36d5bc34bbe51d59125e175251f1"
     },
     {
       "type": "patch",
@@ -357,7 +357,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "72a2fea2216d144cc985f243c6d27274f8f4edb6",
+      "baseHash": "e1418d31343ca11ce165a87f82224ccc8d801052",
       "issue": 4379
     },
     {
@@ -380,7 +380,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "bf4306bd49457c2b82ee8f85147aa458505a5150"
+      "baseHash": "b14e205e0c11eadf8fc4b50618227e6ac8e666ee"
     },
     {
       "type": "patch",
