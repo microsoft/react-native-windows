@@ -14,7 +14,7 @@
     "@react-native/tester": "0.0.1"
   },
   "peerDependencies": {
-    "react-native": "0.0.0-f0e80ae22",
+    "react-native": "0.0.0-9b094ee77",
     "react-native-windows": "^0.0.0-canary.191"
   },
   "devDependencies": {
@@ -22,7 +22,7 @@
     "@rnw-scripts/ts-config": "0.1.0",
     "eslint": "6.8.0",
     "just-scripts": "^0.44.7",
-    "react-native": "0.0.0-f0e80ae22",
+    "react-native": "0.0.0-9b094ee77",
     "react-native-platform-override": "^0.4.1",
     "react-native-windows": "^0.0.0-canary.191",
     "typescript": "^3.8.3"
