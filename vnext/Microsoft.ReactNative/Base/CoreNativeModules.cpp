@@ -94,8 +94,8 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
 
   modules.emplace_back(
       NativeAnimatedModule::name,
-      [wpUwpInstance = std::weak_ptr(uwpInstance)]() mutable {
-        return std::make_unique<NativeAnimatedModule>(std::move(wpUwpInstance));
+      [wpUwpInstance = std::weak_ptr(uwpInstance), uiMessageQueue]() mutable {
+        return std::make_unique<NativeAnimatedModule>(std::move(wpUwpInstance), uiMessageQueue);
       },
       messageQueue);
 
