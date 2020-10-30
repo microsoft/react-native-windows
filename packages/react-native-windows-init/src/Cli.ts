@@ -405,12 +405,17 @@ function installReactNativeWindows(
   );
 }
 
+function isMSFTInternal(): boolean {
+  return process.env.USERDNSDOMAIN !== undefined && process.env.USERDNSDOMAIN.endsWith('microsoft.com');
+}
+
 function setExit(exitCode: ExitCode, error?: String): void {
   if (!process.exitCode || process.exitCode === ExitCode.SUCCESS) {
     telClient.trackEvent({
       name: 'init-exit',
       properties: {
         durationInSecs: process.uptime(),
+        msftInternal: isMSFTInternal(),
         exitCode: ExitCode[exitCode],
         errorMessage: error,
       },
