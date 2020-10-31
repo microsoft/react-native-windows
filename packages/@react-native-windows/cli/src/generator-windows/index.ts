@@ -140,7 +140,7 @@ export async function copyProjectTemplateAndReplace(
   // Similar to the above, but we want to retain namespace separators
   if (projectType === 'lib') {
     namespace = namespace
-      .split(/[\.\:]+/)
+      .split(/[.:]+/)
       .map(pascalCase)
       .join('.');
   }
@@ -190,7 +190,11 @@ export async function copyProjectTemplateAndReplace(
     {paths: [process.cwd()]},
   );
   const winui3Props = readProjectFile(winui3PropsPath);
-  const winui3Version = findPropertyValue(winui3Props, 'WinUI3Version', winui3PropsPath);
+  const winui3Version = findPropertyValue(
+    winui3Props,
+    'WinUI3Version',
+    winui3PropsPath,
+  );
 
   const csNugetPackages: NugetPackage[] = [
     {

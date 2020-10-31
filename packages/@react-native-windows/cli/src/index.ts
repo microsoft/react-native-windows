@@ -7,16 +7,16 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as findUp from 'find-up';
-
+import {randomBytes} from 'crypto';
 import * as appInsights from 'applicationinsights';
 
 appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 const telClient = appInsights.defaultClient;
 if (!telClient.commonProperties.sessionId) {
-  telClient.commonProperties['sessionId'] = (new Date()).getTime().toString(36) + Math.random().toString(36).slice(2);
+  telClient.commonProperties.sessionId = randomBytes(16).toString('hex');
 }
 if (process.env.RNW_CLI_TEST) {
-  telClient.commonProperties['isTest'] = process.env.RNW_CLI_TEST;
+  telClient.commonProperties.isTest = process.env.RNW_CLI_TEST;
 }
 
 import {
@@ -28,7 +28,6 @@ import {autoLinkCommand} from './runWindows/utils/autolink';
 import {runWindowsCommand} from './runWindows/runWindows';
 import {dependencyConfigWindows} from './config/dependencyConfig';
 import {projectConfigWindows} from './config/projectConfig';
-
 
 /**
  * Project generation options
@@ -66,8 +65,8 @@ function scrubOptions(opt: GenerateOptions) {
     language: opt.language,
     projectType: opt.projectType,
     experimentalNuGetDependency: opt.experimentalNuGetDependency,
-    nuGetTestFeed: (opt.nuGetTestFeed !== undefined) ? true : false,
-    nuGetTestVersion: (opt.nuGetTestVersion !== undefined) ? true : false,
+    nuGetTestFeed: opt.nuGetTestFeed !== undefined ? true : false,
+    nuGetTestVersion: opt.nuGetTestVersion !== undefined ? true : false,
     useWinUI3: opt.useWinUI3,
     useHermes: opt.useHermes,
     verbose: opt.verbose,
@@ -111,7 +110,7 @@ export async function generateWindows(
     );
   } catch (e) {
     error = e;
-    telClient.trackException({ exception: error });
+    telClient.trackException({exception: error});
     throw e;
   } finally {
     if (!options.noTelemetry && !process.env.AGENT_NAME) {
