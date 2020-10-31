@@ -130,7 +130,7 @@ export async function generateWindows(
         }
       }
 
-      const rnwPkgJson = require('../package.json');
+      const rnwCliPkgJson = require('../package.json');
 
       const optScrubbed = scrubOptions(options);
       telClient.trackEvent({
@@ -139,7 +139,7 @@ export async function generateWindows(
           error: error,
           ...optScrubbed,
           'react-native': rnVersion,
-          'cli-version': rnwPkgJson.version,
+          'cli-version': rnwCliPkgJson.version,
         },
       });
 
