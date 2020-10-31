@@ -161,9 +161,10 @@ export const runWindowsOptions: CommandOption[] = [
   },
   {
     name: '--no-telemetry',
-    description: 'Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
+    description:
+      'Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
     default: false,
-  }
+  },
 ];
 
 function parseBuildArch(arg: string): BuildArch {

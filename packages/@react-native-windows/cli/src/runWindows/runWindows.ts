@@ -12,7 +12,7 @@ appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 const telClient = appInsights.defaultClient;
 telClient.commonProperties.sessionId = randomBytes(16).toString('hex');
 if (process.env.RNW_CLI_TEST) {
-  telClient.commonProperties['isTest'] = process.env.RNW_CLI_TEST;
+  telClient.commonProperties.isTest = process.env.RNW_CLI_TEST;
 }
 
 function sanitizeStackTrace(envelope: any /*context: any*/): boolean {
@@ -59,8 +59,10 @@ import {autoLinkCommand} from './utils/autolink';
 import {totalmem, cpus} from 'os';
 import {execSync} from 'child_process';
 
-function getDiskFreeSpace(path: string | null) : number {
-  const out = execSync(`dir /-C ${path}`).toString().split('\r\n');
+function getDiskFreeSpace(drivePath: string | null): number {
+  const out = execSync(`dir /-C ${drivePath}`)
+    .toString()
+    .split('\r\n');
   const line = out[out.length - 2];
   const result = line.match(/(\d+) [^\d]+(\d+) /);
   if (result && result.length > 2) {
@@ -79,19 +81,21 @@ function SetExitProcessWithError(loggingWasEnabled: boolean): void {
 }
 
 function isMSFTInternal(): boolean {
-  return process.env.USERDNSDOMAIN !== undefined && process.env.USERDNSDOMAIN.endsWith('microsoft.com');
+  return (
+    process.env.USERDNSDOMAIN !== undefined &&
+    process.env.USERDNSDOMAIN.endsWith('microsoft.com')
+  );
 }
 
-function getPkgVersion(pkgName: string) : string {
+function getPkgVersion(pkgName: string): string {
   try {
     const pkgJson = require(`${pkgName}/package.json`);
     if (pkgJson.name === pkgName && pkgJson.version !== undefined) {
       return pkgJson.version;
     }
-  } catch { }
+  } catch {}
   newWarn(`Could not determine ${pkgName} version`);
   return '';
-
 }
 
 enum RunWindowsPhase {
@@ -100,7 +104,7 @@ enum RunWindowsPhase {
   FindBuildTools,
   NuGetRestore,
   FindSolution,
-  Deploy
+  Deploy,
 }
 
 let runWindowsPhase = RunWindowsPhase.None;
@@ -140,7 +144,7 @@ async function runWindows(
       sdks.forEach(version => console.log('    ' + version));
       return;
     } catch (e) {
-      telClient.trackException({ exception: e });
+      telClient.trackException({exception: e});
       newError('Unable to print environment info.\n' + e.toString());
       return SetExitProcessWithError(options.logging);
     }
@@ -150,7 +154,7 @@ async function runWindows(
   try {
     await runWindowsInternal(args, config, options);
   } catch (e) {
-    telClient.trackException({ exception: e });
+    telClient.trackException({exception: e});
     runWindowsError = e;
     return SetExitProcessWithError(options.logging);
   } finally {
@@ -174,12 +178,15 @@ async function runWindows(
         deploy: options.deploy,
         sln: options.sln !== undefined,
         proj: options.proj !== undefined,
-        msBuildProps: (options.msbuildprops !== undefined) ? options.msbuildprops!.split(',').length : 0,
+        msBuildProps:
+          options.msbuildprops !== undefined
+            ? options.msbuildprops!.split(',').length
+            : 0,
         info: options.info,
         directDebugging: options.directDebugging,
         'react-native-windows': getPkgVersion('react-native-windows'),
         'react-native': getPkgVersion('react-native'),
-        'cliVersion': getPkgVersion('@react-native-windows/cli'),
+        'cli-version': getPkgVersion('@react-native-windows/cli'),
         msftInternal: isMSFTInternal(),
         durationInSecs: process.uptime(),
         success: runWindowsError === undefined,
@@ -187,7 +194,7 @@ async function runWindows(
         totalMem: totalmem(),
         diskFree: getDiskFreeSpace(__dirname),
         cpus: cpus().length,
-      }
+      },
     });
     telClient.flush();
   }
@@ -246,7 +253,7 @@ async function runWindowsInternal(
       newError(
         'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
       );
-      throw new Error("Cannot find solution file");
+      throw new Error('Cannot find solution file');
     }
 
     try {
@@ -298,7 +305,7 @@ async function runWindowsInternal(
       newError(
         'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
       );
-      throw new Error("Cannot find solution file");
+      throw new Error('Cannot find solution file');
     }
 
     try {
