@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 31 Oct 2020 05:06:50 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.26",
+      "version": "0.0.0-canary.26",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Generator Failing to Overwrite Template Files",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0062f63ad8dd7f9f176fed8d1a4249a8a65c8748",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 Oct 2020 05:07:51 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.25",
       "version": "0.0.0-canary.25",

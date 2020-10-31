@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 30 Oct 2020 05:07:51 GMT and should not be manually modified.
+This log was last generated on Sat, 31 Oct 2020 05:06:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.26
+
+Sat, 31 Oct 2020 05:06:50 GMT
+
+### Changes
+
+- Fix Generator Failing to Overwrite Template Files (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.25
 
