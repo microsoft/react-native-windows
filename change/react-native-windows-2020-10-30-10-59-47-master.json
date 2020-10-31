@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Fix publish job by updating path of moved header file",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "none",
+  "date": "2020-10-30T17:59:47.401Z"
+}
