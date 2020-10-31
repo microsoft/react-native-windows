@@ -14,7 +14,36 @@ appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 const telClient = appInsights.defaultClient;
 if (!telClient.commonProperties.sessionId) {
   telClient.commonProperties.sessionId = randomBytes(16).toString('hex');
+  function sanitizeStackTrace(envelope: any /*context: any*/): boolean {
+    if (envelope.data.baseType === 'ExceptionData') {
+      const data = envelope.data.baseData;
+      if (data.exceptions && data.exceptions.length > 0) {
+        for (let i = 0; i < data.exceptions.length; i++) {
+          const exception = data.exceptions[i];
+          for (const frame of exception.parsedStack) {
+            const parens = frame.method.indexOf('(');
+            if (parens !== -1) {
+              // case 1: method === 'methodName (rootOfThePath'
+              frame.method = frame.method.substr(0, parens).trim();
+            } else {
+              // case 2: method === <no_method> or something without '(', fileName is full path
+            }
+            // preserve only the last_directory/filename
+            frame.fileName =
+              path.join(
+                path.basename(path.dirname(frame.fileName)),
+                path.basename(frame.fileName),
+              ) + ':';
+            frame.assembly = '';
+          }
+        }
+      }
+    }
+    return true;
+  }
+  telClient.addTelemetryProcessor(sanitizeStackTrace);
 }
+
 if (process.env.RNW_CLI_TEST) {
   telClient.commonProperties.isTest = process.env.RNW_CLI_TEST;
 }
