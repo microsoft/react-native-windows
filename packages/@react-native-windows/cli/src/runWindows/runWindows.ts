@@ -4,13 +4,46 @@
  * @format
  */
 
+import * as path from 'path';
+import {randomBytes} from 'crypto';
 import * as appInsights from 'applicationinsights';
+
 appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 const telClient = appInsights.defaultClient;
-telClient.commonProperties['sessionId'] = (new Date()).getTime().toString(36) + Math.random().toString(36).slice(2);
+telClient.commonProperties.sessionId = randomBytes(16).toString('hex');
 if (process.env.RNW_CLI_TEST) {
   telClient.commonProperties['isTest'] = process.env.RNW_CLI_TEST;
 }
+
+function sanitizeStackTrace(envelope: any /*context: any*/): boolean {
+  if (envelope.data.baseType === 'ExceptionData') {
+    const data = envelope.data.baseData;
+    if (data.exceptions && data.exceptions.length > 0) {
+      for (let i = 0; i < data.exceptions.length; i++) {
+        const exception = data.exceptions[i];
+        for (const frame of exception.parsedStack) {
+          const parens = frame.method.indexOf('(');
+          if (parens !== -1) {
+            // case 1: method === 'methodName (rootOfThePath'
+            frame.method = frame.method.substr(0, parens).trim();
+          } else {
+            // case 2: method === <no_method> or something without '(', fileName is full path
+          }
+          // preserve only the last_directory/filename
+          frame.fileName =
+            path.join(
+              path.basename(path.dirname(frame.fileName)),
+              path.basename(frame.fileName),
+            ) + ':';
+          frame.assembly = '';
+        }
+      }
+    }
+  }
+  return true;
+}
+
+telClient.addTelemetryProcessor(sanitizeStackTrace);
 
 import * as build from './utils/build';
 import * as chalk from 'chalk';
@@ -26,7 +59,7 @@ import {autoLinkCommand} from './utils/autolink';
 import {totalmem, cpus} from 'os';
 import {execSync} from 'child_process';
 
-function getDiskFreeSpace(path: string | null) : Number {
+function getDiskFreeSpace(path: string | null) : number {
   const out = execSync(`dir /-C ${path}`).toString().split('\r\n');
   const line = out[out.length - 2];
   const result = line.match(/(\d+) [^\d]+(\d+) /);
