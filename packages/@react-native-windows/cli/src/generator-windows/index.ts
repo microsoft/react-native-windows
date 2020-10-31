@@ -286,7 +286,7 @@ export async function copyProjectTemplateAndReplace(
     autolinkPropertiesForProps: '',
     autolinkProjectReferencesForTargets: '',
     autolinkCsUsingNamespaces: '',
-    autolinkCsReactPacakgeProviders: '',
+    autolinkCsReactPackageProviders: '',
     autolinkCppIncludes: '',
     autolinkCppPackageProviders:
       '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: vnext\local-cli\runWindows\utils\autolink.js
