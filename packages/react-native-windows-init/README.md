@@ -21,7 +21,7 @@ Options:
 | `--verbose`   | Enables logging.                               | [boolean]                                        |
 | `--language`  | Which language the app is written in.          | [string] [choices: "cs", "cpp"] [default: "cpp"] |
 | `--overwrite` | Overwrite any existing files without prompting | [boolean]                                        |
-| `--noTelemetry` | Disables sending telemetry that allows analysis of failures of the react-native-windows CLI | [boolean] |
+| `--no-telemetry` | Disables sending telemetry that allows analysis of failures of the react-native-windows CLI | [boolean] |
 
 
 ## Data Collection
