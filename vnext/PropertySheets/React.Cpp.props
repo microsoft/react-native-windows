@@ -108,6 +108,8 @@
         $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeDir)\ReactCommon\jsi;
         $(ReactNativeDir)\ReactCommon\jsiexecutor;
+        $(ReactNativeDir)\ReactCommon\react\nativemodule\core;
+        $(ReactNativeDir)\ReactCommon\react\nativemodule\samples;
         $(ReactNativeDir)\ReactCommon\reactperflogger;
         $(ReactNativeDir)\ReactCommon\runtimeexecutor;
         %(AdditionalIncludeDirectories);

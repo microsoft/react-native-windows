@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@react-native-community/cli": "^4.10.0",
-    "@react-native-community/cli-platform-android": "^4.10.0",
-    "@react-native-community/cli-platform-ios": "^4.10.0",
+    "@react-native-community/cli": "^4.13.0",
+    "@react-native-community/cli-platform-android": "^4.13.0",
+    "@react-native-community/cli-platform-ios": "^4.13.0",
     "@react-native-windows/cli": "0.0.0-canary.25",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "1.0.0",
@@ -63,12 +63,12 @@
     "@types/react-native": "^0.63.18",
     "eslint": "6.8.0",
     "eslint-plugin-prettier": "2.6.2",
-    "flow-bin": "^0.133.0",
-    "jscodeshift": "^0.9.0",
+    "flow-bin": "^0.135.0",
+    "jscodeshift": "^0.11.0",
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "react": "16.13.1",
-    "react-native": "0.0.0-9b094ee77",
+    "react-native": "0.0.0-77f7658e4",
     "react-native-platform-override": "^0.4.1",
     "react-native-windows-codegen": "0.1.7",
     "react-refresh": "^0.4.0",
@@ -77,7 +77,7 @@
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "0.0.0-9b094ee77"
+    "react-native": "0.0.0-77f7658e4"
   },
   "beachball": {
     "defaultNpmTag": "canary",
