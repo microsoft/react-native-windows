@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Update V8 and Hermes package versions",
+  "packageName": "react-native-windows",
+  "email": "tudor.mihai@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-30T22:54:43.888Z"
+}
