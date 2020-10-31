@@ -13,11 +13,12 @@ import * as validUrl from 'valid-url';
 import * as prompts from 'prompts';
 import * as findUp from 'find-up';
 import * as chalk from 'chalk';
-
+import * as path from 'path';
 // @ts-ignore
 import * as Registry from 'npm-registry';
 
 import * as appInsights from 'applicationinsights';
+import {randomBytes} from 'crypto';
 
 /**
  * Important:
@@ -27,10 +28,40 @@ import * as appInsights from 'applicationinsights';
 
 appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 const telClient = appInsights.defaultClient;
-telClient.commonProperties['sessionId'] = (new Date()).getTime().toString(36) + Math.random().toString(36).slice(2);
+telClient.commonProperties.sessionId = randomBytes(16).toString('hex');
 if (process.env.RNW_CLI_TEST) {
-  telClient.commonProperties['isTest'] = process.env.RNW_CLI_TEST;
+  telClient.commonProperties.isTest = process.env.RNW_CLI_TEST;
 }
+
+function sanitizeStackTrace(envelope: any /*context: any*/): boolean {
+  if (envelope.data.baseType === 'ExceptionData') {
+    const data = envelope.data.baseData;
+    if (data.exceptions && data.exceptions.length > 0) {
+      for (var i = 0; i < data.exceptions.length; i++) {
+        const exception = data.exceptions[i];
+        for (const frame of exception.parsedStack) {
+          const parens = frame.method.indexOf('(');
+          if (parens !== -1) {
+            // case 1: method === 'methodName (rootOfThePath'
+            frame.method = frame.method.substr(0, parens).trim();
+          } else {
+            // case 2: method === <no_method> or something without '(', fileName is full path
+          }
+          // preserve only the last_directory/filename
+          frame.fileName =
+            path.join(
+              path.basename(path.dirname(frame.fileName)),
+              path.basename(frame.fileName),
+            ) + ':';
+          frame.assembly = '';
+        }
+      }
+    }
+  }
+  return true;
+}
+
+telClient.addTelemetryProcessor(sanitizeStackTrace);
 
 import requireGenerateWindows from './requireGenerateWindows';
 
@@ -409,16 +440,22 @@ function installReactNativeWindows(
 }
 
 function isMSFTInternal(): boolean {
-  return process.env.USERDNSDOMAIN !== undefined && process.env.USERDNSDOMAIN.endsWith('microsoft.com');
+  return (
+    process.env.USERDNSDOMAIN !== undefined &&
+    process.env.USERDNSDOMAIN.endsWith('microsoft.com')
+  );
 }
 
 function getRNWInitVersion(): string {
   try {
     const pkgJson = require('../package.json');
-    if (pkgJson.name === 'react-native-windows-init' && pkgJson.version !== undefined) {
+    if (
+      pkgJson.name === 'react-native-windows-init' &&
+      pkgJson.version !== undefined
+    ) {
       return pkgJson.version;
     }
-  } catch { }
+  } catch {}
   return '';
 }
 

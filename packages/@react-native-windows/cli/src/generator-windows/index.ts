@@ -190,7 +190,11 @@ export async function copyProjectTemplateAndReplace(
     {paths: [process.cwd()]},
   );
   const winui3Props = readProjectFile(winui3PropsPath);
-  const winui3Version = findPropertyValue(winui3Props, 'WinUI3Version', winui3PropsPath);
+  const winui3Version = findPropertyValue(
+    winui3Props,
+    'WinUI3Version',
+    winui3PropsPath,
+  );
 
   const csNugetPackages: NugetPackage[] = [
     {

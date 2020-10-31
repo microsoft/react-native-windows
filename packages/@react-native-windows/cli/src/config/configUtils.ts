@@ -252,11 +252,11 @@ export function tryFindPropertyValue(
 export function findPropertyValue(
   projectContents: Node,
   propertyName: string,
-  path: string,
+  filePath: string,
 ): string {
   const res = tryFindPropertyValue(projectContents, propertyName);
   if (!res) {
-    throw new Error(`Couldn't find property ${propertyName} from ${path}`);
+    throw new Error(`Couldn't find property ${propertyName} from ${filePath}`);
   }
   return res;
 }
