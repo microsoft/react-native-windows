@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sun, 01 Nov 2020 05:05:46 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.27",
+      "version": "0.0.0-canary.27",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update V8 and Hermes package versions",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "2821026a7ba9aa3cae4b9c592e0b6215faea2b78",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 31 Oct 2020 05:06:50 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.26",
       "version": "0.0.0-canary.26",
