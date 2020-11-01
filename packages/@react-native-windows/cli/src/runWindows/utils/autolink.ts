@@ -564,7 +564,9 @@ async function updateAutoLink(
           "'npx react-native autolink-windows'",
         )} to apply the changes. (${Math.round(endTime - startTime)}ms)`,
       );
-      throw new Error("Auto-linking changes were necessary but --check was specified");
+      throw new Error(
+        'Auto-linking changes were necessary but --check was specified',
+      );
     } else {
       console.log(
         `${chalk.green(

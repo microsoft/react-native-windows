@@ -5,6 +5,7 @@
  */
 
 import * as path from 'path';
+import * as fs from 'fs';
 import {randomBytes} from 'crypto';
 import * as appInsights from 'applicationinsights';
 
@@ -89,7 +90,10 @@ function isMSFTInternal(): boolean {
 
 function getPkgVersion(pkgName: string): string {
   try {
-    const pkgJson = require(`${pkgName}/package.json`);
+    const pkgJsonPath = require.resolve(`${pkgName}/package.json`, {
+      paths: [process.cwd()],
+    });
+    const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath).toString());
     if (pkgJson.name === pkgName && pkgJson.version !== undefined) {
       return pkgJson.version;
     }
