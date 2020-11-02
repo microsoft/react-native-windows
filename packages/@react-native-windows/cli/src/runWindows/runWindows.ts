@@ -16,28 +16,26 @@ if (process.env.RNW_CLI_TEST) {
   telClient.commonProperties.isTest = process.env.RNW_CLI_TEST;
 }
 
+// CODE-SYNC: \packages\react-native-windows-init\src\Cli.ts
 function sanitizeStackTrace(envelope: any /*context: any*/): boolean {
   if (envelope.data.baseType === 'ExceptionData') {
     const data = envelope.data.baseData;
-    if (data.exceptions && data.exceptions.length > 0) {
-      for (let i = 0; i < data.exceptions.length; i++) {
-        const exception = data.exceptions[i];
-        for (const frame of exception.parsedStack) {
-          const parens = frame.method.indexOf('(');
-          if (parens !== -1) {
-            // case 1: method === 'methodName (rootOfThePath'
-            frame.method = frame.method.substr(0, parens).trim();
-          } else {
-            // case 2: method === <no_method> or something without '(', fileName is full path
-          }
-          // preserve only the last_directory/filename
-          frame.fileName =
-            path.join(
-              path.basename(path.dirname(frame.fileName)),
-              path.basename(frame.fileName),
-            ) + ':';
-          frame.assembly = '';
+    for (const exception of data.exceptions || []) {
+      for (const frame of exception.parsedStack) {
+        const parens = frame.method.indexOf('(');
+        if (parens !== -1) {
+          // case 1: method === 'methodName (rootOfThePath'
+          frame.method = frame.method.substr(0, parens).trim();
+        } else {
+          // case 2: method === <no_method> or something without '(', fileName is full path
         }
+        // preserve only the last_directory/filename
+        frame.fileName =
+          path.join(
+            path.basename(path.dirname(frame.fileName)),
+            path.basename(frame.fileName),
+          ) + ':';
+        frame.assembly = '';
       }
     }
   }
@@ -72,7 +70,7 @@ function getDiskFreeSpace(drivePath: string | null): number {
   return -1;
 }
 
-function SetExitProcessWithError(loggingWasEnabled: boolean): void {
+function setExitProcessWithError(loggingWasEnabled: boolean): void {
   if (!loggingWasEnabled) {
     console.log(
       `Re-run the command with ${chalk.bold('--logging')} for more information`,
@@ -84,14 +82,14 @@ function SetExitProcessWithError(loggingWasEnabled: boolean): void {
 function isMSFTInternal(): boolean {
   return (
     process.env.USERDNSDOMAIN !== undefined &&
-    process.env.USERDNSDOMAIN.endsWith('microsoft.com')
+    process.env.USERDNSDOMAIN.endsWith('.microsoft.com')
   );
 }
 
 function getPkgVersion(pkgName: string): string {
   try {
     const pkgJsonPath = require.resolve(`${pkgName}/package.json`, {
-      paths: [process.cwd()],
+      paths: [process.cwd(), __dirname],
     });
     const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath).toString());
     if (pkgJson.name === pkgName && pkgJson.version !== undefined) {
@@ -150,7 +148,7 @@ async function runWindows(
     } catch (e) {
       telClient.trackException({exception: e});
       newError('Unable to print environment info.\n' + e.toString());
-      return SetExitProcessWithError(options.logging);
+      return setExitProcessWithError(options.logging);
     }
   }
 
@@ -160,7 +158,7 @@ async function runWindows(
   } catch (e) {
     telClient.trackException({exception: e});
     runWindowsError = e;
-    return SetExitProcessWithError(options.logging);
+    return setExitProcessWithError(options.logging);
   } finally {
     telClient.trackEvent({
       name: 'run-windows',

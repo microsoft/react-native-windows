@@ -6,7 +6,6 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import * as findUp from 'find-up';
 import {randomBytes} from 'crypto';
 import * as appInsights from 'applicationinsights';
 
@@ -143,23 +142,23 @@ export async function generateWindows(
     throw e;
   } finally {
     if (options.telemetry && !process.env.AGENT_NAME) {
-      const cwd = process.cwd();
-      const pkgJsonPath = findUp.sync('package.json', {cwd});
       let rnVersion = '';
-      if (pkgJsonPath) {
-        const pkgJson = require(pkgJsonPath);
-        // check how react-native is installed
-        if (
-          'dependencies' in pkgJson &&
-          'react-native' in pkgJson.dependencies
-        ) {
-          // regular dependency (probably an app), inject into json and run install
-          rnVersion = pkgJson.dependencies['react-native'];
-        }
-      }
-
-      const rnwCliPkgJson = require('../package.json');
-
+      let cliVersion = '';
+      try {
+        const cwd = process.cwd();
+        const rnwPkg = JSON.parse(
+          fs
+            .readFileSync(
+              require.resolve('react-native-windows/package.json', {
+                paths: [cwd],
+              }),
+            )
+            .toString(),
+        );
+        rnVersion = rnwPkg.peerDependencies['react-native'] || '';
+        const rnwCliPkgJson = require('../package.json');
+        cliVersion = rnwCliPkgJson.version;
+      } catch {}
       const optScrubbed = scrubOptions(options);
       telClient.trackEvent({
         name: 'generate-windows',
@@ -167,7 +166,7 @@ export async function generateWindows(
           error: error,
           ...optScrubbed,
           'react-native': rnVersion,
-          'cli-version': rnwCliPkgJson.version,
+          'cli-version': cliVersion,
         },
       });
 
