@@ -433,7 +433,7 @@ async function updateAutoLink(
 
     const srcPropsFile = path.join(
       templateRoot,
-      `${projectLang}-app`,
+      `shared-app`,
       'src',
       propsFileName,
     );
@@ -482,7 +482,7 @@ async function updateAutoLink(
 
     const srcTargetFile = path.join(
       templateRoot,
-      `${projectLang}-app`,
+      `shared-app`,
       'src',
       targetFileName,
     );
