@@ -27,6 +27,9 @@ struct Point {
 };
 
 // Sample REACT_MODULE
+// The important notes about the module class:
+// - The module class must have the REACT_MODULE attribute.
+// - All exported methods with custom attributes must be public and noexcept.
 
 REACT_MODULE(SampleModuleCppImpl, L"SampleModuleCpp");
 struct SampleModuleCppImpl {
@@ -274,6 +277,11 @@ struct SampleModuleCppImpl {
   }
 
 #pragma endregion
+
+  REACT_METHOD(ReloadInstance)
+  void ReloadInstance() noexcept {
+    ReactNativeHost::FromContext(m_reactContext.Handle()).ReloadInstance();
+  }
 
  private:
   winrt::Windows::System::Threading::ThreadPoolTimer m_timer{nullptr};

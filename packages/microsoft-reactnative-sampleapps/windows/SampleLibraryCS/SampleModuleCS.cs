@@ -306,11 +306,11 @@ namespace SampleLibraryCS
             });
         }
 
-#endregion
+        #endregion
 
-#region JS Functions
+        #region JS Functions
 
-[ReactFunction("calcDistance", ModuleName = "SampleModuleCpp")]
+        [ReactFunction("calcDistance", ModuleName = "SampleModuleCpp")]
         public Action<Point, Point> CalcDistance = null;
 
         [ReactMethod("callDistanceFunction")]
@@ -321,6 +321,12 @@ namespace SampleLibraryCS
         }
 
         #endregion
+
+        [ReactMethod]
+        public void ReloadInstance()
+        {
+            ReactNativeHost.FromContext(_reactContext.Handle).ReloadInstance();
+        }
 
         private ThreadPoolTimer _timer;
         private int _timerCount = 0;
