@@ -25,18 +25,8 @@
 
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\ReactPatches.targets" />
 
+
   <PropertyGroup>
-    <UseHermes Condition="'$(UseHermes)' == ''">false</UseHermes>
-    <HermesVersion Condition="'$(HermesVersion)' == ''">0.6.3</HermesVersion>
-    <HermesPackage Condition="'$(HermesPackage)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HermesVersion)</HermesPackage>
-    <!-- TODO: Can we automatically distinguish between uwp and win32 here? -->
-    <HermesArch Condition="'$(HermesArch)' == ''">uwp</HermesArch>
-
-    <UseV8 Condition="('$(UseV8)' == '') OR ('$(Platform)' == 'ARM')">false</UseV8>
-    <V8Version Condition="'$(V8Version)' == ''">0.64.2</V8Version>
-    <V8Package Condition="'$(V8Package)' == '' AND '$(V8AppPlatform)' == 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8Version)</V8Package>
-    <V8Package Condition="'$(V8Package)' == '' AND '$(V8AppPlatform)' != 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.UWP.$(V8Version)</V8Package>
-
     <!-- Enables React-Native-Windows ETW Provider : React-Native-Windows-Provider  -->
     <ENABLE_ETW_TRACING Condition="'$(ENABLE_ETW_TRACING)' == ''">true</ENABLE_ETW_TRACING>
 
@@ -52,6 +42,12 @@
     <ClCompile>
       <PreprocessorDefinitions Condition="'$(ENABLE_ETW_TRACING)'=='true'">ENABLE_ETW_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)'=='true'">ENABLE_JS_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
+  <ItemDefinitionGroup>
+    <ClCompile>
       <PreprocessorDefinitions Condition="'$(UseHermes)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -112,6 +108,8 @@
         $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeDir)\ReactCommon\jsi;
         $(ReactNativeDir)\ReactCommon\jsiexecutor;
+        $(ReactNativeDir)\ReactCommon\react\nativemodule\core;
+        $(ReactNativeDir)\ReactCommon\react\nativemodule\samples;
         $(ReactNativeDir)\ReactCommon\reactperflogger;
         $(ReactNativeDir)\ReactCommon\runtimeexecutor;
         %(AdditionalIncludeDirectories);

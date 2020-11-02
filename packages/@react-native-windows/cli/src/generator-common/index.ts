@@ -285,7 +285,7 @@ async function upgradeFileContentChangedCallback(
         `You can see the new version here: ${absoluteSrcFilePath}`,
     );
 
-    const {shoudReplace} = await inquirer.prompt([
+    const {shouldReplace} = await inquirer.prompt([
       {
         name: 'shouldReplace',
         type: 'confirm',
@@ -294,7 +294,7 @@ async function upgradeFileContentChangedCallback(
       },
     ]);
 
-    return shoudReplace ? 'overwrite' : 'keep';
+    return shouldReplace ? 'overwrite' : 'keep';
   }
   if (contentChanged === 'identical') {
     return 'keep';
