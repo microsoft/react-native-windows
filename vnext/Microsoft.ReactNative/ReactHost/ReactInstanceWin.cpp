@@ -9,6 +9,7 @@
 #include <IUIManager.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
+#include <comUtil/qiCast.h>
 
 #include <XamlUIService.h>
 #include "ReactErrorProvider.h"
@@ -27,6 +28,7 @@
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
 
+#include <JSCallInvokerScheduler.h>
 #include <Shared/DevServerHelper.h>
 #include <Views/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
@@ -392,6 +394,7 @@ void ReactInstanceWin::Initialize() noexcept {
             m_options.TurboModuleProvider->SetReactContext(
                 winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
             auto instanceWrapper = facebook::react::CreateReactInstance(
+                std::shared_ptr<facebook::react::Instance>(strongThis->m_instance.Load()),
                 std::string(), // bundleRootPath
                 std::move(cxxModules),
                 m_options.TurboModuleProvider,
@@ -563,18 +566,39 @@ ReactInstanceState ReactInstanceWin::State() const noexcept {
 }
 
 void ReactInstanceWin::InitJSMessageThread() noexcept {
-  auto jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
+  m_instance.Exchange(std::make_shared<facebook::react::Instance>());
 
-  // Create MessageQueueThread for the DispatchQueue
-  VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");
+  static bool old = false;
+  if (old) {
+    auto jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
 
-  auto jsDispatcher =
-      winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
-  m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
+    // Create MessageQueueThread for the DispatchQueue
+    VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");
 
-  m_jsMessageThread.Exchange(std::make_shared<MessageDispatchQueue>(
-      jsDispatchQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError), Mso::Copy(m_whenDestroyed)));
-  m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
+    auto jsDispatcher =
+        winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
+    m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
+
+    m_jsMessageThread.Exchange(std::make_shared<MessageDispatchQueue>(
+        jsDispatchQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError), Mso::Copy(m_whenDestroyed)));
+    m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
+  } else {
+    auto scheduler = Mso::MakeJSCallInvokerScheduler(
+        m_instance.Load()->getJSCallInvoker(),
+        Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
+        Mso::Copy(m_whenDestroyed));
+    auto jsDispatchQueue = Mso::DispatchQueue::MakeCustomQueue(Mso::CntPtr(scheduler));
+
+    // Create MessageQueueThread for the DispatchQueue
+    VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");
+
+    auto jsDispatcher =
+        winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
+    m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
+
+    m_jsMessageThread.Exchange(qi_cast<Mso::IJSCallInvokerQueueScheduler>(scheduler.Get())->GetMessageQueue());
+    m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
+  }
 }
 
 void ReactInstanceWin::InitNativeMessageThread() noexcept {

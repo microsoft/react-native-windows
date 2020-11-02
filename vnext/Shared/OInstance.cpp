@@ -217,6 +217,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
 void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const char * /*tag*/) {}
 
 /*static*/ std::shared_ptr<InstanceImpl> InstanceImpl::MakeNoBundle(
+    std::shared_ptr<Instance> &&instance,
     std::string &&jsBundleBasePath,
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
@@ -227,7 +228,8 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings,
     std::shared_ptr<IDevSupportManager> devManager) noexcept {
-  auto instance = std::shared_ptr<InstanceImpl>(new InstanceImpl(
+  auto inner = std::shared_ptr<InstanceImpl>(new InstanceImpl(
+      std::move(instance),
       std::move(jsBundleBasePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
@@ -237,12 +239,13 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
       std::move(devSettings),
       std::move(devManager)));
 
-  instance->RegisterForReloadIfNecessary();
+  inner->RegisterForReloadIfNecessary();
 
-  return instance;
+  return inner;
 }
 
 /*static*/ std::shared_ptr<InstanceImpl> InstanceImpl::MakeAndLoadBundle(
+    std::shared_ptr<Instance> &&instance,
     std::string &&jsBundleBasePath,
     std::string &&jsBundleRelativePath,
     std::vector<
@@ -254,7 +257,8 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings,
     std::shared_ptr<IDevSupportManager> devManager) noexcept {
-  auto instance = std::shared_ptr<InstanceImpl>(new InstanceImpl(
+  auto inner = std::shared_ptr<InstanceImpl>(new InstanceImpl(
+      std::move(instance),
       std::move(jsBundleBasePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
@@ -264,10 +268,10 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
       std::move(devSettings),
       std::move(devManager)));
 
-  instance->loadBundle(std::move(jsBundleRelativePath));
-  instance->RegisterForReloadIfNecessary();
+  inner->loadBundle(std::move(jsBundleRelativePath));
+  inner->RegisterForReloadIfNecessary();
 
-  return instance;
+  return inner;
 }
 
 void InstanceImpl::SetInError() noexcept {
@@ -275,6 +279,7 @@ void InstanceImpl::SetInError() noexcept {
 }
 
 InstanceImpl::InstanceImpl(
+    std::shared_ptr<Instance> &&instance,
     std::string &&jsBundleBasePath,
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
@@ -291,7 +296,7 @@ InstanceImpl::InstanceImpl(
       m_jsBundleBasePath(std::move(jsBundleBasePath)),
       m_devSettings(std::move(devSettings)),
       m_devManager(std::move(devManager)),
-      m_innerInstance(std::make_shared<Instance>()) {
+      m_innerInstance(std::move(instance)) {
   // Temp set the logmarker here
   facebook::react::ReactMarker::logTaggedMarker = logMarker;
 
