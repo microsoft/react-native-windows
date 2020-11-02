@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Oct 2020 15:07:16 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Nov 2020 15:05:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.6
+
+Mon, 02 Nov 2020 15:05:04 GMT
+
+### Patches
+
+- Fix crash during instance destruction if there are outstanding animations (30809111+acoates-ms@users.noreply.github.com)
+- [Internal] Expose additional createUIManagerModule method (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.63.5
 

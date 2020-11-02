@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 31 Aug 2020 15:05:16 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Nov 2020 15:05:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.1
+
+Mon, 02 Nov 2020 15:05:04 GMT
+
+### Patches
+
+- Fix Generator Failing to Overwrite Template Files (ngerlem@microsoft.com)
 
 ## 0.63.0
 

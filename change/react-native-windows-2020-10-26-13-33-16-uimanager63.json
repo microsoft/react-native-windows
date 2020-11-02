@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[Internal] Expose additional createUIManagerModule method",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2020-10-26T20:33:16.200Z"
-}
