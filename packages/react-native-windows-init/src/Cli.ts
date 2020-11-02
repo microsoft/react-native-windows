@@ -442,7 +442,7 @@ function installReactNativeWindows(
 function isMSFTInternal(): boolean {
   return (
     process.env.USERDNSDOMAIN !== undefined &&
-    process.env.USERDNSDOMAIN.endsWith('microsoft.com')
+    process.env.USERDNSDOMAIN.endsWith('.microsoft.com')
   );
 }
 
