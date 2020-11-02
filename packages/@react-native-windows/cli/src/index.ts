@@ -85,7 +85,7 @@ export interface GenerateOptions {
   useWinUI3: boolean;
   useHermes: boolean;
   verbose: boolean;
-  noTelemetry: boolean;
+  telemetry: boolean;
 }
 
 function scrubOptions(opt: GenerateOptions) {
@@ -142,7 +142,7 @@ export async function generateWindows(
     telClient.trackException({exception: error});
     throw e;
   } finally {
-    if (!options.noTelemetry && !process.env.AGENT_NAME) {
+    if (options.telemetry && !process.env.AGENT_NAME) {
       const cwd = process.cwd();
       const pkgJsonPath = findUp.sync('package.json', {cwd});
       let rnVersion = '';
