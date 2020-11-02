@@ -114,11 +114,11 @@ const argv = yargs
       describe: 'Enables logging.',
       default: false,
     },
-    noTelemetry: {
+    telemetry: {
       type: 'boolean',
       describe:
-        'Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
-      default: false,
+        'Controls sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
+      default: true,
     },
     language: {
       type: 'string',
@@ -187,7 +187,7 @@ if (argv.verbose) {
   console.log(argv);
 }
 
-if (argv.noTelemetry || process.env.AGENT_NAME) {
+if (!argv.telemetry || process.env.AGENT_NAME) {
   if (argv.verbose) {
     console.log('Disabling telemetry');
   }
@@ -625,7 +625,7 @@ function isProjectUsingYarn(cwd: string): boolean {
       useHermes: argv.useHermes,
       nuGetTestVersion: argv.nuGetTestVersion,
       nuGetTestFeed: argv.nuGetTestFeed,
-      noTelemetry: argv.noTelemetry,
+      telemetry: argv.telemetry,
     });
     return setExit(ExitCode.SUCCESS);
   } catch (error) {
