@@ -14,6 +14,9 @@ const projectTypeGuidsByLanguage = {
   cs: '{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}',
 };
 
+export const dotNetCoreProjectTypeGuid =
+  '{9A19103F-16F7-4668-BE54-9A1E7A4F7556}';
+
 /**
  * Checks is the given block of lines exists within an array of lines.
  * @param lines The array of lines to search.

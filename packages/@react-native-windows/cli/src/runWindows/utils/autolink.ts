@@ -413,19 +413,20 @@ async function updateAutoLink(
 
     // Generating props for app project consumption
     let propertiesForProps = '';
-    let addCsModuleSupport: boolean = false;
+    let csModuleNames: string[] = [];
 
     if (projectLang === 'cpp') {
       for (const dependencyName in windowsDependencies) {
         windowsDependencies[dependencyName].projects.forEach(project => {
           if (project.directDependency && project.projectLang === 'cs') {
-            addCsModuleSupport = true;
+            csModuleNames.push(project.projectName);
           }
         });
       }
 
-      if (addCsModuleSupport) {
-        propertiesForProps += `\n    <ConsumeCSharpModules>true</ConsumeCSharpModules>`;
+      if (csModuleNames.length > 0) {
+        propertiesForProps += `\n    <!-- Set due to dependency on C# module(s): ${csModuleNames.join()} -->`;
+        propertiesForProps += `\n    <ConsumeCSharpModules Condition="'$(ConsumeCSharpModules)'==''">true</ConsumeCSharpModules>`;
       }
     }
 
@@ -523,7 +524,7 @@ async function updateAutoLink(
       });
     }
 
-    if (addCsModuleSupport) {
+    if (csModuleNames.length > 0) {
       // Add managed projects
       projectsForSolution.push({
         projectFile: path.join(
@@ -542,7 +543,7 @@ async function updateAutoLink(
         projectName: 'Microsoft.ReactNative.Managed.CodeGen',
         projectLang: 'cs',
         projectGuid: '{ADED4FBE-887D-4271-AF24-F0823BCE7961}',
-        projectTypeGuid: '{9A19103F-16F7-4668-BE54-9A1E7A4F7556}',
+        projectTypeGuid: vstools.dotNetCoreProjectTypeGuid,
       });
     }
 
