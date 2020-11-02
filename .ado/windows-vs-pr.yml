@@ -653,16 +653,15 @@ jobs:
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
-      # We should test x86 for one of these flavors once #6367 is resolved
       matrix:
         X64DebugCpp:
           language: cpp
           configuration: Debug
           platform: x64
-        X64ReleaseCpp:
+        X86ReleaseCpp:
           language: cpp
           configuration: Release
-          platform: x64
+          platform: x86
     timeoutInMinutes: 50 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:

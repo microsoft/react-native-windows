@@ -3,13 +3,13 @@
 
   <PropertyGroup>
     <UseHermes Condition="'$(UseHermes)' == ''">false</UseHermes>
-    <HermesVersion Condition="'$(HermesVersion)' == ''">0.6.3</HermesVersion>
+    <HermesVersion Condition="'$(HermesVersion)' == ''">0.7.1</HermesVersion>
     <HermesPackage Condition="'$(HermesPackage)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HermesVersion)</HermesPackage>
     <!-- TODO: Can we automatically distinguish between uwp and win32 here? -->
     <HermesArch Condition="'$(HermesArch)' == ''">uwp</HermesArch>
 
     <UseV8 Condition="('$(UseV8)' == '') OR ('$(Platform)' == 'ARM')">false</UseV8>
-    <V8Version Condition="'$(V8Version)' == ''">0.64.2</V8Version>
+    <V8Version Condition="'$(V8Version)' == ''">0.64.4</V8Version>
     <V8Package Condition="'$(V8Package)' == '' AND '$(V8AppPlatform)' == 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8Version)</V8Package>
     <V8Package Condition="'$(V8Package)' == '' AND '$(V8AppPlatform)' != 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.UWP.$(V8Version)</V8Package>
   </PropertyGroup>

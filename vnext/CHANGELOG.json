@@ -2,6 +2,50 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 01 Nov 2020 05:05:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.194",
+      "version": "0.0.0-canary.194",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update V8 and Hermes package versions",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "2821026a7ba9aa3cae4b9c592e0b6215faea2b78",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 31 Oct 2020 05:06:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.193",
+      "version": "0.0.0-canary.193",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Initialize UIManager turbomodule eagerly",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "8831df009e59ef494fdaabbe50ca8178a7fe02b6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 10/5 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "af3c428d350acf192e7663c0fd38c4536d6facb9",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix publish job by updating path of moved header file",
+            "author": "dannyvv@microsoft.com",
+            "commit": "330212738d25e7bb8c29392c24fd1443f03007b9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 Oct 2020 05:07:51 GMT",
       "tag": "react-native-windows_v0.0.0-canary.192",
       "version": "0.0.0-canary.192",

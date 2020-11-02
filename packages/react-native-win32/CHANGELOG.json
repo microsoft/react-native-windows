@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 31 Oct 2020 05:06:50 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.62",
+      "version": "0.0.0-canary.62",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 10/5 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "af3c428d350acf192e7663c0fd38c4536d6facb9",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 Oct 2020 05:07:51 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.61",
       "version": "0.0.0-canary.61",
