@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 02 Nov 2020 15:05:04 GMT",
+      "tag": "react-native-windows_v0.63.6",
+      "version": "0.63.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix crash during instance destruction if there are outstanding animations",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e010b7ef47974cc6b0cfb4e26336dd8a708bcf4f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[Internal] Expose additional createUIManagerModule method",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "0299fa1c6d390dbb0e8aa19b30a540f18d256ec5",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Oct 2020 15:07:16 GMT",
       "tag": "react-native-windows_v0.63.5",
       "version": "0.63.5",

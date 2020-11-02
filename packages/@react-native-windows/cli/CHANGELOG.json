@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 02 Nov 2020 15:05:04 GMT",
+      "tag": "@react-native-windows/cli_v0.63.1",
+      "version": "0.63.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Generator Failing to Overwrite Template Files",
+            "author": "ngerlem@microsoft.com",
+            "commit": "544a4f22c028016f2884b49bbf580b3fcdef715f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 Aug 2020 15:05:16 GMT",
       "tag": "@react-native-windows/cli_v0.63.0",
       "version": "0.63.0",
