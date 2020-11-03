@@ -18,23 +18,36 @@ const templateRoot = path.resolve('../../../vnext/template');
 
 const testProjectGuid = '{416476D5-974A-4EE2-8145-4E331297247E}';
 
-function projectTests(testAppName: string, setup?: Function): void {
+async function tryMkdir(dir: string): Promise<void> {
+  try {
+    await fs.promises.mkdir(dir, {recursive: true});
+  } catch (err) {}
+}
+
+function projectTests(
+  testAppName: string,
+  setup?: (folder: string) => Promise<void>,
+): void {
   const folder = path.resolve('src/test/projects/', testAppName);
   const rnc = require(path.join(folder, 'react-native.config.js'));
 
-  if (setup !== undefined) {
-    setup(folder);
-  }
+  test(`projectConfig - ${testAppName} (userConfig is null)`, async () => {
+    if (setup !== undefined) {
+      await setup(folder);
+    }
 
-  test(`projectConfig - ${testAppName} (userConfig is null)`, () => {
-    // Tests that given userConfig is null, the result will alwyas be null
+    // Tests that given userConfig is null, the result will always be null
     const userConfig = null;
     const expectedConfig: WindowsProjectConfig | null = null;
 
     expect(projectConfigWindows(folder, userConfig)).toBe(expectedConfig);
   });
 
-  test(`projectConfig - ${testAppName} (Use react-native.config.js)`, () => {
+  test(`projectConfig - ${testAppName} (Use react-native.config.js)`, async () => {
+    if (setup !== undefined) {
+      await setup(folder);
+    }
+
     // Tests the result given a windows project config in react-native.config.js
     const userConfig: Partial<WindowsProjectConfig> = rnc.project.windows;
     let expectedConfig: WindowsProjectConfig | null = rnc.expectedConfig;
@@ -46,7 +59,11 @@ function projectTests(testAppName: string, setup?: Function): void {
     expect(projectConfigWindows(folder, userConfig)).toEqual(expectedConfig);
   });
 
-  test(`projectConfig - ${testAppName} (Ignore react-native.config.js)`, () => {
+  test(`projectConfig - ${testAppName} (Ignore react-native.config.js)`, async () => {
+    if (setup !== undefined) {
+      await setup(folder);
+    }
+
     // Tests the result of ignoring the windows project config in react-native.config.js
     const userConfig: Partial<WindowsProjectConfig> = {};
     const expectedConfig: WindowsProjectConfig | null =
@@ -64,19 +81,15 @@ function projectTests(testAppName: string, setup?: Function): void {
 projectTests('BlankApp');
 
 // Nothing but a windows folder
-projectTests('MissingProjectFilesApp', (folder: string) => {
+projectTests('MissingProjectFilesApp', async (folder: string) => {
   const windowsDir = path.join(folder, 'windows');
-  if (!fs.existsSync(windowsDir)) {
-    fs.mkdirSync(windowsDir);
-  }
+  await tryMkdir(windowsDir);
 });
 
 // New C++ project based on the template
-projectTests('SimpleCppApp', (folder: string) => {
+projectTests('SimpleCppApp', async (folder: string) => {
   const windowsDir = path.join(folder, 'windows');
-  if (!fs.existsSync(windowsDir)) {
-    fs.mkdirSync(windowsDir);
-  }
+  await tryMkdir(windowsDir);
 
   const replacements = {
     name: 'SimpleCppApp',
@@ -86,7 +99,7 @@ projectTests('SimpleCppApp', (folder: string) => {
     projectGuidLower: testProjectGuid.toLowerCase(),
   };
 
-  void copyAndReplace(
+  await copyAndReplace(
     path.join(templateRoot, 'cpp-app/proj/MyApp.sln'),
     path.join(windowsDir, 'SimpleCppApp.sln'),
     replacements,
@@ -94,10 +107,9 @@ projectTests('SimpleCppApp', (folder: string) => {
   );
 
   const projDir = path.join(windowsDir, 'SimpleCppApp');
-  if (!fs.existsSync(projDir)) {
-    fs.mkdirSync(projDir);
-  }
-  void copyAndReplace(
+  await tryMkdir(projDir);
+
+  await copyAndReplace(
     path.join(templateRoot, 'cpp-app/proj/MyApp.vcxproj'),
     path.join(projDir, 'SimpleCppApp.vcxproj'),
     replacements,
@@ -106,11 +118,9 @@ projectTests('SimpleCppApp', (folder: string) => {
 });
 
 // New C# project based on the template
-projectTests('SimpleCSharpApp', (folder: string) => {
+projectTests('SimpleCSharpApp', async (folder: string) => {
   const windowsDir = path.join(folder, 'windows');
-  if (!fs.existsSync(windowsDir)) {
-    fs.mkdirSync(windowsDir);
-  }
+  await tryMkdir(windowsDir);
 
   const replacements = {
     name: 'SimpleCSharpApp',
@@ -120,7 +130,7 @@ projectTests('SimpleCSharpApp', (folder: string) => {
     projectGuidLower: testProjectGuid.toLowerCase(),
   };
 
-  void copyAndReplace(
+  await copyAndReplace(
     path.join(templateRoot, 'cs-app/proj/MyApp.sln'),
     path.join(windowsDir, 'SimpleCSharpApp.sln'),
     replacements,
@@ -128,10 +138,9 @@ projectTests('SimpleCSharpApp', (folder: string) => {
   );
 
   const projDir = path.join(windowsDir, 'SimpleCSharpApp');
-  if (!fs.existsSync(projDir)) {
-    fs.mkdirSync(projDir);
-  }
-  void copyAndReplace(
+  await tryMkdir(projDir);
+
+  await copyAndReplace(
     path.join(templateRoot, 'cs-app/proj/MyApp.csproj'),
     path.join(projDir, 'SimpleCSharpApp.csproj'),
     replacements,
