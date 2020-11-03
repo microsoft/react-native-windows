@@ -24,31 +24,113 @@ async function tryMkdir(dir: string): Promise<void> {
   } catch (err) {}
 }
 
-function projectTests(
-  testAppName: string,
-  setup?: (folder: string) => Promise<void>,
-): void {
-  const folder = path.resolve('src/test/projects/', testAppName);
-  const rnc = require(path.join(folder, 'react-native.config.js'));
+type TargetProject = [string, ((folder: string) => Promise<void>)?];
 
-  test(`projectConfig - ${testAppName} (userConfig is null)`, async () => {
+function project(
+  name: string,
+  setup?: (folder: string) => Promise<void>,
+): TargetProject {
+  return [name, setup];
+}
+
+const projects: TargetProject[] = [
+  // Nothing but a react-native.config.js, with nulls
+  project('BlankApp'),
+  // Nothing but a windows folder
+  project('MissingProjectFilesApp', async (folder: string) => {
+    const windowsDir = path.join(folder, 'windows');
+    await tryMkdir(windowsDir);
+  }),
+  // New C++ project based on the template
+  project('SimpleCppApp', async (folder: string) => {
+    const windowsDir = path.join(folder, 'windows');
+    await tryMkdir(windowsDir);
+
+    const replacements = {
+      name: 'SimpleCppApp',
+      namespace: 'SimpleCppApp',
+      useMustache: true,
+      projectGuidUpper: testProjectGuid,
+      projectGuidLower: testProjectGuid.toLowerCase(),
+    };
+
+    await copyAndReplace(
+      path.join(templateRoot, 'cpp-app/proj/MyApp.sln'),
+      path.join(windowsDir, 'SimpleCppApp.sln'),
+      replacements,
+      null,
+    );
+
+    const projDir = path.join(windowsDir, 'SimpleCppApp');
+    await tryMkdir(projDir);
+
+    await copyAndReplace(
+      path.join(templateRoot, 'cpp-app/proj/MyApp.vcxproj'),
+      path.join(projDir, 'SimpleCppApp.vcxproj'),
+      replacements,
+      null,
+    );
+  }),
+  // New C# project based on the template
+  project('SimpleCSharpApp', async (folder: string) => {
+    const windowsDir = path.join(folder, 'windows');
+    await tryMkdir(windowsDir);
+
+    const replacements = {
+      name: 'SimpleCSharpApp',
+      namespace: 'SimpleCSharpApp',
+      useMustache: true,
+      projectGuidUpper: testProjectGuid,
+      projectGuidLower: testProjectGuid.toLowerCase(),
+    };
+
+    await copyAndReplace(
+      path.join(templateRoot, 'cs-app/proj/MyApp.sln'),
+      path.join(windowsDir, 'SimpleCSharpApp.sln'),
+      replacements,
+      null,
+    );
+
+    const projDir = path.join(windowsDir, 'SimpleCSharpApp');
+    await tryMkdir(projDir);
+
+    await copyAndReplace(
+      path.join(templateRoot, 'cs-app/proj/MyApp.csproj'),
+      path.join(projDir, 'SimpleCSharpApp.csproj'),
+      replacements,
+      null,
+    );
+  }),
+];
+
+// Tests that given userConfig is null, the result will always be null
+test.each(projects)(
+  'projectConfig - %s (userConfig is null)',
+  async (name, setup) => {
+    const folder = path.resolve('src/test/projects/', name);
+
     if (setup !== undefined) {
       await setup(folder);
     }
 
-    // Tests that given userConfig is null, the result will always be null
     const userConfig = null;
     const expectedConfig: WindowsProjectConfig | null = null;
 
     expect(projectConfigWindows(folder, userConfig)).toBe(expectedConfig);
-  });
+  },
+);
 
-  test(`projectConfig - ${testAppName} (Use react-native.config.js)`, async () => {
+// Tests the result given a windows project config in react-native.config.js
+test.each(projects)(
+  'projectConfig - %s (Use react-native.config.js)',
+  async (name, setup) => {
+    const folder = path.resolve('src/test/projects/', name);
+    const rnc = require(path.join(folder, 'react-native.config.js'));
+
     if (setup !== undefined) {
       await setup(folder);
     }
 
-    // Tests the result given a windows project config in react-native.config.js
     const userConfig: Partial<WindowsProjectConfig> = rnc.project.windows;
     let expectedConfig: WindowsProjectConfig | null = rnc.expectedConfig;
 
@@ -57,14 +139,20 @@ function projectTests(
     }
 
     expect(projectConfigWindows(folder, userConfig)).toEqual(expectedConfig);
-  });
+  },
+);
 
-  test(`projectConfig - ${testAppName} (Ignore react-native.config.js)`, async () => {
+// Tests the result of ignoring the windows project config in react-native.config.js
+test.each(projects)(
+  'projectConfig - %s (Ignore react-native.config.js)',
+  async (name, setup) => {
+    const folder = path.resolve('src/test/projects/', name);
+    const rnc = require(path.join(folder, 'react-native.config.js'));
+
     if (setup !== undefined) {
       await setup(folder);
     }
 
-    // Tests the result of ignoring the windows project config in react-native.config.js
     const userConfig: Partial<WindowsProjectConfig> = {};
     const expectedConfig: WindowsProjectConfig | null =
       rnc.expectedConfigIgnoringOverride;
@@ -74,76 +162,5 @@ function projectTests(
     }
 
     expect(projectConfigWindows(folder, userConfig)).toEqual(expectedConfig);
-  });
-}
-
-// Nothing but a react-native.config.js, with nulls
-projectTests('BlankApp');
-
-// Nothing but a windows folder
-projectTests('MissingProjectFilesApp', async (folder: string) => {
-  const windowsDir = path.join(folder, 'windows');
-  await tryMkdir(windowsDir);
-});
-
-// New C++ project based on the template
-projectTests('SimpleCppApp', async (folder: string) => {
-  const windowsDir = path.join(folder, 'windows');
-  await tryMkdir(windowsDir);
-
-  const replacements = {
-    name: 'SimpleCppApp',
-    namespace: 'SimpleCppApp',
-    useMustache: true,
-    projectGuidUpper: testProjectGuid,
-    projectGuidLower: testProjectGuid.toLowerCase(),
-  };
-
-  await copyAndReplace(
-    path.join(templateRoot, 'cpp-app/proj/MyApp.sln'),
-    path.join(windowsDir, 'SimpleCppApp.sln'),
-    replacements,
-    null,
-  );
-
-  const projDir = path.join(windowsDir, 'SimpleCppApp');
-  await tryMkdir(projDir);
-
-  await copyAndReplace(
-    path.join(templateRoot, 'cpp-app/proj/MyApp.vcxproj'),
-    path.join(projDir, 'SimpleCppApp.vcxproj'),
-    replacements,
-    null,
-  );
-});
-
-// New C# project based on the template
-projectTests('SimpleCSharpApp', async (folder: string) => {
-  const windowsDir = path.join(folder, 'windows');
-  await tryMkdir(windowsDir);
-
-  const replacements = {
-    name: 'SimpleCSharpApp',
-    namespace: 'SimpleCSharpApp',
-    useMustache: true,
-    projectGuidUpper: testProjectGuid,
-    projectGuidLower: testProjectGuid.toLowerCase(),
-  };
-
-  await copyAndReplace(
-    path.join(templateRoot, 'cs-app/proj/MyApp.sln'),
-    path.join(windowsDir, 'SimpleCSharpApp.sln'),
-    replacements,
-    null,
-  );
-
-  const projDir = path.join(windowsDir, 'SimpleCSharpApp');
-  await tryMkdir(projDir);
-
-  await copyAndReplace(
-    path.join(templateRoot, 'cs-app/proj/MyApp.csproj'),
-    path.join(projDir, 'SimpleCSharpApp.csproj'),
-    replacements,
-    null,
-  );
-});
+  },
+);
