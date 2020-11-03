@@ -55,8 +55,7 @@ jobs:
         #Arm64Release:
         #  BuildConfiguration: Release
         #  BuildPlatform: ARM64
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool)
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
 
@@ -156,8 +155,7 @@ jobs:
         X86:
           BuildConfiguration: Debug
           BuildPlatform: x86
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool)
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
 
@@ -216,8 +214,7 @@ jobs:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool)
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
 
@@ -323,8 +320,7 @@ jobs:
         #  BuildPlatform: ARM64
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool)
 
     steps:
       - checkout: self
@@ -401,8 +397,7 @@ jobs:
         ARM64Release:
           BuildConfiguration: Release
           BuildPlatform: ARM64
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool)
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
@@ -604,8 +599,7 @@ jobs:
 
     timeoutInMinutes: 50 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool)
     steps:
       - template: templates/react-native-init.yml
         parameters:
@@ -634,8 +628,7 @@ jobs:
           platform: x86
     timeoutInMinutes: 50 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool)
     steps:
       - template: templates/react-native-init.yml
         parameters:
@@ -664,8 +657,7 @@ jobs:
           platform: x86
     timeoutInMinutes: 50 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool)
     steps:
       - template: templates/react-native-init.yml
         parameters:
@@ -690,8 +682,7 @@ jobs:
       )
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool)
     strategy:
       matrix:
         cpp:

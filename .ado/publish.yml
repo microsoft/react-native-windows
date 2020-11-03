@@ -80,8 +80,7 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: ARM64
 
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool)
 
     steps:
       - template: templates/apply-published-version-vars.yml
@@ -132,8 +131,7 @@ jobs:
         Arm64Release:
           BuildConfiguration: Release
           BuildPlatform: arm64
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool)
 
     steps:
       - template: templates/apply-published-version-vars.yml
@@ -163,8 +161,7 @@ jobs:
       - RnwNativeBuildDesktop
       - RnwNativeBuildUniversal
     displayName: Sign Binaries and Publish NuGet
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool)
       # Disable codesign for now, until we're sure
       # vmImage: Package ES Lab E
 
