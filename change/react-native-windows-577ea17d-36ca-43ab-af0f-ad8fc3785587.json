@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fix Nuget Publish to handle moved files",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "none"
+}
