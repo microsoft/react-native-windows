@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Update Microsoft.ReactNative NuGet Package to only contain release bits",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-30T18:37:42.949Z"
+}
