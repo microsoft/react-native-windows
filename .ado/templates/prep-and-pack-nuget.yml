@@ -5,7 +5,7 @@ parameters:
   nugetroot: $(System.DefaultWorkingDirectory)\ReactWindows
   desktopId: 'OfficeReact.Win32'
   microsoftRNId: 'Microsoft.ReactNative'
-  slices: '("x64.Release","x86.Release", "ARM.Release", "ARM64.Release")'
+  slices: '("x64.Release", "x86.Release", "ARM.Release", "ARM64.Release")'
   packDesktop: true
   packMicrosoftReactNative: true
   packMicrosoftReactNativeCxx: true
