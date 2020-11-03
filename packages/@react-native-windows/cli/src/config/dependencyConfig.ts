@@ -6,7 +6,7 @@
 
 import * as path from 'path';
 
-import * as configUtils from './configUtils.js';
+import * as configUtils from './configUtils';
 
 /*
 

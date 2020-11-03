@@ -6,7 +6,7 @@
 
 import * as path from 'path';
 
-import * as configUtils from './configUtils.js';
+import * as configUtils from './configUtils';
 
 /*
 
@@ -75,7 +75,7 @@ type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
  */
 export function projectConfigWindows(
   folder: string,
-  userConfig: Partial<WindowsProjectConfig> = {},
+  userConfig: Partial<WindowsProjectConfig> | null = {},
 ): WindowsProjectConfig | null {
   if (userConfig === null) {
     return null;
