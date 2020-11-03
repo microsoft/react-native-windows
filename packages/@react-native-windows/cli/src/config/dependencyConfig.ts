@@ -6,7 +6,7 @@
 
 import * as path from 'path';
 
-import * as configUtils from './configUtils.js';
+import * as configUtils from './configUtils';
 
 /*
 
@@ -143,7 +143,11 @@ export function dependencyConfigWindows(
     }
   } else if (!usingManualProjectsOverride) {
     // No manually provided projects, try to find sourceDir
-    sourceDir = configUtils.findWindowsFolder(folder);
+    if ('sourceDir' in userConfig && userConfig.sourceDir !== null) {
+      sourceDir = path.join(folder, userConfig.sourceDir!);
+    } else {
+      sourceDir = configUtils.findWindowsFolder(folder);
+    }
   }
 
   if (sourceDir === null) {
@@ -167,7 +171,7 @@ export function dependencyConfigWindows(
     return null;
   }
 
-  result.sourceDir = sourceDir.substr(folder.length + 1);
+  result.sourceDir = path.relative(folder, sourceDir);
 
   const usingManualSolutionFile = 'solutionFile' in userConfig;
 
@@ -184,7 +188,7 @@ export function dependencyConfigWindows(
   }
 
   result.solutionFile =
-    solutionFile !== null ? solutionFile.substr(sourceDir.length + 1) : null;
+    solutionFile !== null ? path.relative(sourceDir, solutionFile) : null;
 
   if (usingManualProjectsOverride) {
     // react-native.config used, fill out (auto) items for each provided project, verify (req) items are present
@@ -277,7 +281,7 @@ export function dependencyConfigWindows(
       }
 
       result.projects.push({
-        projectFile: projectFile.substr(sourceDir.length + 1),
+        projectFile: path.relative(sourceDir, projectFile),
         projectName,
         projectLang,
         projectGuid,
