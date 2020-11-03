@@ -231,7 +231,7 @@ void AttachContentHeaders(
     winrt::Windows::Web::Http::IHttpContent content,
     winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue contentType,
     std::string contentEncoding,
-    std::string contentLength) {) {
+    std::string contentLength) {
   if (contentType != nullptr)
     content.Headers().ContentType(contentType);
   if (!contentEncoding.empty())
