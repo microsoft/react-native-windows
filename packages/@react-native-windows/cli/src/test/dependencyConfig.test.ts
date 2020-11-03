@@ -36,7 +36,8 @@ function projectTests(testLibName: string, setup?: Function): void {
 
   test(`dependencyConfig - ${testLibName} (Use react-native.config.js)`, () => {
     // Tests the result given a windows project config in react-native.config.js
-    const userConfig: Partial<WindowsDependencyConfig> = rnc.dependency.platforms.windows;
+    const userConfig: Partial<WindowsDependencyConfig> =
+      rnc.dependency.platforms.windows;
     let expectedConfig: WindowsDependencyConfig | null = rnc.expectedConfig;
 
     if (expectedConfig !== null) {
