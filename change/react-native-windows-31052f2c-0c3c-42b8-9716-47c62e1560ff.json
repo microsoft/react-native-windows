@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Set `Content-Length` on the content object and not on the request.",
+  "packageName": "react-native-windows",
+  "email": "i@mandrigin.ru",
+  "dependentChangeType": "none"
+}
