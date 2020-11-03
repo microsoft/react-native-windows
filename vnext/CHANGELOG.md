@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 01 Nov 2020 05:05:46 GMT and should not be manually modified.
+This log was last generated on Tue, 03 Nov 2020 16:52:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.195
+
+Tue, 03 Nov 2020 16:52:55 GMT
+
+### Changes
+
+- Update Microsoft.ReactNative NuGet Package to only contain release bits (dannyvv@microsoft.com)
+- Add ReactNativeHost::FromContext method (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.194
 

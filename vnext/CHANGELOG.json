@@ -2,6 +2,35 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 03 Nov 2020 16:52:55 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.195",
+      "version": "0.0.0-canary.195",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix Nuget Publish to handle moved files",
+            "author": "dannyvv@microsoft.com",
+            "commit": "a65ab875069ba99299488a24ef0851cda7f5ae5b",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Update Microsoft.ReactNative NuGet Package to only contain release bits",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ef289da94cb27408cd3bfe9b0ca2ee56934ae750",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add ReactNativeHost::FromContext method",
+            "author": "vmorozov@microsoft.com",
+            "commit": "e0f279a253a013a89473a7e8ac0a7c3da67e41c0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 01 Nov 2020 05:05:46 GMT",
       "tag": "react-native-windows_v0.0.0-canary.194",
       "version": "0.0.0-canary.194",

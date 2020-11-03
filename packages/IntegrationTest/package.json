@@ -13,7 +13,7 @@
     "chai": "^4.2.0",
     "react": "16.13.1",
     "react-native": "0.0.0-77f7658e4",
-    "react-native-windows": "^0.0.0-canary.194"
+    "react-native-windows": "^0.0.0-canary.195"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
