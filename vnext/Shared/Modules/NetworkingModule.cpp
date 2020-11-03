@@ -237,8 +237,8 @@ void AttachContentHeaders(
   if (!contentEncoding.empty())
     content.Headers().ContentEncoding().ParseAdd(Microsoft::Common::Unicode::Utf8ToUtf16(contentEncoding));
   if (!contentLength.empty()) {
-     auto contentLengthHeader = atoi(contentLength.c_str());
-     content.Headers().ContentLength() = contentLengthHeader;
+    auto contentLengthHeader = atoi(contentLength.c_str());
+    content.Headers().ContentLength() = contentLengthHeader;
   }
 }
 
