@@ -31,6 +31,11 @@ steps:
     inputs:
       versionSpec: "12.9.1"
 
+  - task: CmdLine@2
+    displayName: install yarn
+    inputs:
+      script: npm install -g yarn
+
   - template: yarn-install.yml
 
   - task: CmdLine@2
