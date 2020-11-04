@@ -18,21 +18,24 @@ test('Sanitize message, no-op', () => {
 });
 
 test('Sanitize message, project_dir', () => {
-  console.log(`cwd[pd] = '${process.cwd()}'`);
   expect(
     telemetry.sanitizeMessage(`this is the cwd: '${process.cwd()}'`),
-  ).toEqual('this is the cwd:  [project_dir]\\???(47)');
+  ).toEqual(`this is the cwd:  [project_dir]\\???(${process.cwd().length})`);
   expect(
     telemetry.sanitizeMessage(`uppercase: '${process.cwd().toUpperCase()}'`),
-  ).toEqual('uppercase:  [project_dir]\\???(47)');
+  ).toEqual(`uppercase:  [project_dir]\\???(${process.cwd().length})`);
   expect(
     telemetry.sanitizeMessage(`lowercase: '${process.cwd().toLowerCase()}'`),
-  ).toEqual('lowercase:  [project_dir]\\???(47)');
+  ).toEqual(`lowercase:  [project_dir]\\???(${process.cwd().length})`);
   expect(
     telemetry.sanitizeMessage(
       `this is the cwd: '${process.cwd()}' and something else`,
     ),
-  ).toEqual('this is the cwd:  [project_dir]\\???(47)  and something else');
+  ).toEqual(
+    `this is the cwd:  [project_dir]\\???(${
+      process.cwd().length
+    })  and something else`,
+  );
   expect(
     telemetry.sanitizeMessage(
       `this is the cwd: ${process.cwd()} and something else`,
@@ -41,12 +44,15 @@ test('Sanitize message, project_dir', () => {
 });
 
 test('Sanitize message, node_modules', () => {
-  console.log(`cwd[nm] = '${process.cwd()}'`);
   expect(
     telemetry.sanitizeMessage(
       `this is the cwd: '${process.cwd()}\\node_modules'`,
     ),
-  ).toEqual('this is the cwd:  [project_dir]\\???(60)');
+  ).toEqual(
+    `this is the cwd:  [project_dir]\\???(${
+      (process.cwd() + '\\node_modules').length
+    })`,
+  );
   expect(
     telemetry.sanitizeMessage(
       `this is the cwd: '${process.cwd()}\\node_modules\\'`,
@@ -157,7 +163,6 @@ test('thrown exception a->b, hello world', done => {
 
       const stack = data.exceptions[0].parsedStack;
       expect(stack).toBeDefined();
-      // console.log(JSON.stringify(stack, null, 2));
       expect(stack.length).toBeGreaterThan(5);
 
       const filename = basename(__filename);
