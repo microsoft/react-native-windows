@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 03 Nov 2020 16:52:55 GMT and should not be manually modified.
+This log was last generated on Wed, 04 Nov 2020 05:10:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.196
+
+Wed, 04 Nov 2020 05:10:08 GMT
+
+### Changes
+
+- Autolinking fixes for C++ / C# interop (jthysell@microsoft.com)
 
 ## 0.0.0-canary.195
 

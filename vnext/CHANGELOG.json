@@ -2,6 +2,29 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 04 Nov 2020 05:10:08 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.196",
+      "version": "0.0.0-canary.196",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Autolinking fixes for C++ / C# interop",
+            "author": "jthysell@microsoft.com",
+            "commit": "b9f4e16f85015e09225374ec738e4f974d53d963",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Set `Content-Length` on the content object and not on the request.",
+            "author": "i@mandrigin.ru",
+            "commit": "f9cd16bb9aa16933533309750f63e2d0ca83d8a2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Nov 2020 16:52:55 GMT",
       "tag": "react-native-windows_v0.0.0-canary.195",
       "version": "0.0.0-canary.195",
