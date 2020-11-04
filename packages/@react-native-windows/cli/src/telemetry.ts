@@ -27,10 +27,11 @@ if (!telClient.commonProperties.sessionId) {
   function sanitizeMessage(msg: string): string {
     const parts = msg.split(/['[\]"]/g);
     const clean = [];
+    const projectRoot = process.cwd().toLowerCase();
     for (const part of parts) {
-      if (part.toLowerCase().startsWith(__dirname.toLowerCase())) {
+      if (part.toLowerCase().startsWith(projectRoot)) {
         const ext = path.extname(part);
-        const rest = part.slice(__dirname.length);
+        const rest = part.slice(projectRoot.length);
         // this is in the project dir but not under node_modules
         if (rest.toLowerCase().startsWith('\\windows\\')) {
           clean.push(`[windows]\\???${ext}(${part.length})`);
