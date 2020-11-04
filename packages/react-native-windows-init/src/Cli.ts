@@ -13,85 +13,16 @@ import * as validUrl from 'valid-url';
 import * as prompts from 'prompts';
 import * as findUp from 'find-up';
 import * as chalk from 'chalk';
-import * as path from 'path';
 // @ts-ignore
 import * as Registry from 'npm-registry';
 
-import * as appInsights from 'applicationinsights';
-import {randomBytes} from 'crypto';
+import {telemetryClient, isMSFTInternal} from '@react-native-windows/telemetry';
 
 /**
  * Important:
  * Do not use process.exit() in this script as it will prevent telemetry from being sent.
  * See https://github.com/microsoft/ApplicationInsights-node.js/issues/580
  */
-
-// CODE-SYNC: \packages\@react-native-windows\cli\src\telemetry.ts
-appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
-const telClient = appInsights.defaultClient;
-telClient.commonProperties.sessionId = randomBytes(16).toString('hex');
-if (process.env.RNW_CLI_TEST) {
-  telClient.commonProperties.isTest = process.env.RNW_CLI_TEST;
-}
-
-/**
- * Sanitize any paths that appear between quotes (''), brackets ([]), or double quotes ("").
- * @param msg the string to sanitize
- */
-function sanitizeMessage(msg: string): string {
-  const parts = msg.split(/['[\]"]/g);
-  const clean = [];
-  const projectRoot = process.cwd().toLowerCase();
-  for (const part of parts) {
-    if (part.toLowerCase().startsWith(projectRoot)) {
-      const ext = path.extname(part);
-      const rest = part.slice(projectRoot.length);
-      // this is in the project dir but not under node_modules
-      if (rest.toLowerCase().startsWith('\\windows\\')) {
-        clean.push(`[windows]\\???${ext}(${part.length})`);
-      } else if (rest.toLowerCase().startsWith('\\node_modules\\')) {
-        clean.push(rest.slice(1));
-      } else {
-        clean.push(`[project_dir]\\???${ext}(${part.length})`);
-      }
-    } else {
-      clean.push(part);
-    }
-  }
-  return clean.join(' ');
-}
-
-/**
- * Remove PII from exceptions' stack traces and messages
- * @param envelope the telemetry envelope. Provided by AppInsights.
- */
-function sanitizeExceptions(envelope: any /*context: any*/): boolean {
-  if (envelope.data.baseType === 'ExceptionData') {
-    const data = envelope.data.baseData;
-    for (const exception of data.exceptions || []) {
-      for (const frame of exception.parsedStack) {
-        const parens = frame.method.indexOf('(');
-        if (parens !== -1) {
-          // case 1: method === 'methodName (rootOfThePath'
-          frame.method = frame.method.substr(0, parens).trim();
-        } else {
-          // case 2: method === <no_method> or something without '(', fileName is full path
-        }
-        // preserve only the last_directory/filename
-        frame.fileName = path.join(
-          path.basename(path.dirname(frame.fileName)),
-          path.basename(frame.fileName),
-        );
-        frame.assembly = '';
-      }
-
-      exception.message = sanitizeMessage(exception.message);
-    }
-  }
-  return true;
-}
-
-telClient.addTelemetryProcessor(sanitizeExceptions);
 
 import requireGenerateWindows from './requireGenerateWindows';
 
@@ -105,7 +36,7 @@ const npm = new Registry({registry: NPM_REGISTRY_URL});
 
 enum ExitCode {
   SUCCESS = 0,
-  UNSUPPORTED_VERION_RN = 3,
+  UNSUPPORTED_VERSION_RN = 3,
   USER_CANCEL = 4,
   NO_REACTNATIVE_FOUND = 5,
   UNKNOWN_ERROR = 6,
@@ -221,7 +152,7 @@ if (!argv.telemetry || process.env.AGENT_NAME) {
   if (argv.verbose) {
     console.log('Disabling telemetry');
   }
-  telClient.config.disableAppInsights = true;
+  telemetryClient.config.disableAppInsights = true;
 }
 
 function getReactNativeProjectName(): string {
@@ -281,7 +212,7 @@ function getDefaultReactNativeWindowsSemVerForReactNativeVersion(
     )} react-native-windows supports react-native versions ${chalk.cyan(
       '>=0.60',
     )}`,
-    ExitCode.UNSUPPORTED_VERION_RN,
+    ExitCode.UNSUPPORTED_VERSION_RN,
   );
 }
 
@@ -469,13 +400,6 @@ function installReactNativeWindows(
   );
 }
 
-function isMSFTInternal(): boolean {
-  return (
-    process.env.USERDNSDOMAIN !== undefined &&
-    process.env.USERDNSDOMAIN.endsWith('.microsoft.com')
-  );
-}
-
 function getRNWInitVersion(): string {
   try {
     const pkgJson = require('../package.json');
@@ -491,7 +415,7 @@ function getRNWInitVersion(): string {
 
 function setExit(exitCode: ExitCode, error?: String): void {
   if (!process.exitCode || process.exitCode === ExitCode.SUCCESS) {
-    telClient.trackEvent({
+    telemetryClient.trackEvent({
       name: 'init-exit',
       properties: {
         durationInSecs: process.uptime(),
@@ -669,6 +593,6 @@ function isProjectUsingYarn(cwd: string): boolean {
     }
     setExit(exitCode, error.message);
   } finally {
-    telClient.flush();
+    telemetryClient.flush();
   }
 })();

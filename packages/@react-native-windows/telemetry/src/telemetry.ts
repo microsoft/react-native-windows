@@ -7,6 +7,7 @@
 import * as path from 'path';
 import {randomBytes} from 'crypto';
 import * as appInsights from 'applicationinsights';
+import {execSync} from 'child_process';
 
 appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 export const telClient = appInsights.defaultClient;
@@ -97,4 +98,16 @@ export function isMSFTInternal(): boolean {
     process.env.USERDNSDOMAIN !== undefined &&
     process.env.USERDNSDOMAIN.endsWith('.microsoft.com')
   );
+}
+
+export function getDiskFreeSpace(drivePath: string | null): number {
+  const out = execSync(`dir /-C ${drivePath}`)
+    .toString()
+    .split('\r\n');
+  const line = out[out.length - 2];
+  const result = line.match(/(\d+) [^\d]+(\d+) /);
+  if (result && result.length > 2) {
+    return Number(result[2]);
+  }
+  return -1;
 }

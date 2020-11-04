@@ -5,7 +5,11 @@
  */
 
 import * as fs from 'fs';
-import {telemetryClient, isMSFTInternal} from '@react-native-windows/telemetry';
+import {
+  telemetryClient,
+  isMSFTInternal,
+  getDiskFreeSpace,
+} from '@react-native-windows/telemetry';
 
 import * as build from './utils/build';
 import * as chalk from 'chalk';
@@ -19,19 +23,6 @@ import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
 
 import {autoLinkCommand} from './utils/autolink';
 import {totalmem, cpus} from 'os';
-import {execSync} from 'child_process';
-
-function getDiskFreeSpace(drivePath: string | null): number {
-  const out = execSync(`dir /-C ${drivePath}`)
-    .toString()
-    .split('\r\n');
-  const line = out[out.length - 2];
-  const result = line.match(/(\d+) [^\d]+(\d+) /);
-  if (result && result.length > 2) {
-    return Number(result[2]);
-  }
-  return -1;
-}
 
 function setExitProcessWithError(loggingWasEnabled: boolean): void {
   if (!loggingWasEnabled) {

@@ -4,4 +4,8 @@
  * @format
  */
 
-export {telClient as telemetryClient, isMSFTInternal} from './telemetry';
+export {
+  telClient as telemetryClient,
+  isMSFTInternal,
+  getDiskFreeSpace,
+} from './telemetry';

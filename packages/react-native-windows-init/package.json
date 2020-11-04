@@ -18,7 +18,7 @@
     "react-native-windows-init": "./bin.js"
   },
   "dependencies": {
-    "applicationinsights": "^1.8.8",
+    "@react-native-windows/telemetry": "^0.0.0-canary.1",
     "chalk": "^4.1.0",
     "mustache": "^4.0.1",
     "npm-registry": "^0.1.13",

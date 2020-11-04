@@ -3,6 +3,7 @@
   "version": "0.0.0-canary.1",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
+  "typings": "lib-commonjs/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git@github.com:microsoft/react-native-windows.git",
