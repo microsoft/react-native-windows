@@ -23,14 +23,14 @@ test('Sanitize message, project_dir', () => {
   ).toEqual('this is the cwd:  [project_dir]\\???(47)');
   expect(
     telemetry.sanitizeMessage(
-      `this is the cwd: '${process.cwd().toUpperCase()}'`,
+      `uppercase: '${process.cwd().toUpperCase()}'`,
     ),
-  ).toEqual('this is the cwd:  [project_dir]\\???(47)');
+  ).toEqual('uppercase:  [project_dir]\\???(47)');
   expect(
     telemetry.sanitizeMessage(
-      `this is the cwd: '${process.cwd().toLowerCase()}'`,
+      `lowercase: '${process.cwd().toLowerCase()}'`,
     ),
-  ).toEqual('this is the cwd:  [project_dir]\\???(47)');
+  ).toEqual('lowercase:  [project_dir]\\???(47)');
   expect(
     telemetry.sanitizeMessage(
       `this is the cwd: '${process.cwd()}' and something else`,
@@ -56,19 +56,19 @@ test('Sanitize message, node_modules', () => {
   ).toEqual('this is the cwd:  node_modules\\');
   expect(
     telemetry.sanitizeMessage(
-      `this is the cwd: '${process.cwd().toUpperCase()}\\NODE_MODULES\\'`,
+      `uppercase: '${process.cwd().toUpperCase()}\\NODE_MODULES\\'`,
     ),
-  ).toEqual('this is the cwd:  node_modules\\');
+  ).toEqual('uppercase:  node_modules\\');
   expect(
     telemetry.sanitizeMessage(
-      `this is the cwd: '${process.cwd().toLowerCase()}\\NODE_MODULES\\'`,
+      `lowercase: '${process.cwd().toLowerCase()}\\NODE_MODULES\\'`,
     ),
-  ).toEqual('this is the cwd:  node_modules\\');
+  ).toEqual('lowercase:  node_modules\\');
   expect(
     telemetry.sanitizeMessage(
-      `this is the cwd: '${process.cwd()}\\node_modules\\' and something else`,
+      `trailing: '${process.cwd()}\\node_modules\\' and something else`,
     ),
-  ).toEqual('this is the cwd:  node_modules\\  and something else');
+  ).toEqual('trailing:  node_modules\\  and something else');
   expect(
     telemetry.sanitizeMessage(
       `this is the cwd: ${process.cwd()}\\node_modules and something else that could be part of the path`,
