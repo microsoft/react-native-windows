@@ -13,7 +13,7 @@
     "clean": "just-scripts clean",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
-    "test": "just-scripts test",
+    "test": "set RNW_CLI_TEST=true&& just-scripts test",
     "watch": "just-scripts watch"
   },
   "dependencies": {

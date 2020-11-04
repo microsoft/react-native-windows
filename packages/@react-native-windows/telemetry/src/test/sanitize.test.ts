@@ -7,6 +7,9 @@
 
 import * as telemetry from '../telemetry';
 import * as appInsights from 'applicationinsights';
+import {basename} from 'path';
+
+telemetry.telClient.config.disableAppInsights = true;
 
 test('Sanitize message, no-op', () => {
   // do stuff
@@ -126,4 +129,100 @@ test('Sanitize stack frame', () => {
     level: 1,
     line: 42,
   });
+});
+
+test('basic setup', () => {
+  expect(telemetry.telClient.commonProperties.sessionId).toBeDefined();
+
+  expect(
+    telemetry.telClient.commonProperties.sessionId.length,
+  ).toBeGreaterThanOrEqual(32);
+
+  expect(telemetry.telClient.commonProperties.isTest).toEqual('true');
+});
+
+function b(s: string) {
+  throw new Error('hello ' + s);
+}
+function a(s: string) {
+  b(s);
+}
+
+test('thrown exception a->b, hello world', done => {
+  let pass = false;
+  telemetry.telClient.addTelemetryProcessor((envelope, _) => {
+    if (envelope.data.baseType === 'ExceptionData') {
+      const data = (envelope.data as any).baseData;
+      expect(data.exceptions).toBeDefined();
+      expect(data.exceptions.length).toEqual(1);
+      expect(data.exceptions[0].message).toEqual('hello world');
+
+      const stack = data.exceptions[0].parsedStack;
+      expect(stack).toBeDefined();
+      // console.log(JSON.stringify(stack, null, 2));
+      console.log(stack.length);
+      expect(stack.length).toBeGreaterThan(5);
+
+      const filename = basename(__filename);
+      expect(stack[0].method).toEqual('b');
+      expect(stack[1].method).toEqual('b');
+      expect(stack[2].method).toEqual('Object.a');
+      expect(stack[0].fileName).toEqual(`test\\${filename}`);
+      expect(stack[1].fileName).toEqual(`test\\${filename}`);
+      expect(stack[2].fileName).toEqual(`test\\${filename}`);
+      pass = true;
+    }
+    return true;
+  });
+  try {
+    a('world');
+  } catch (e) {
+    telemetry.telClient.trackException({exception: e});
+  }
+  telemetry.telClient.flush();
+
+  expect(pass).toBeTruthy();
+  telemetry.telClient.clearTelemetryProcessors();
+  telemetry.telClient.addTelemetryProcessor(telemetry.sanitizeExceptions);
+  done();
+});
+
+test('thrown exception a->b, hello path', done => {
+  let pass = false;
+
+  telemetry.telClient.addTelemetryProcessor((envelope, _) => {
+    if (envelope.data.baseType === 'ExceptionData') {
+      const data = (envelope.data as any).baseData;
+      expect(data.exceptions).toBeDefined();
+      expect(data.exceptions.length).toEqual(1);
+      expect(data.exceptions[0].message).toEqual('hello [project_dir]\\...');
+
+      const stack = data.exceptions[0].parsedStack;
+      expect(stack).toBeDefined();
+      console.log(stack.length);
+      expect(stack.length).toBeGreaterThan(5);
+
+      const filename = basename(__filename);
+      expect(stack[0].method).toEqual('b');
+      expect(stack[1].method).toEqual('b');
+      expect(stack[2].method).toEqual('Object.a');
+      expect(stack[0].fileName).toEqual(`test\\${filename}`);
+      expect(stack[1].fileName).toEqual(`test\\${filename}`);
+      expect(stack[2].fileName).toEqual(`test\\${filename}`);
+      pass = true;
+    }
+    return true;
+  });
+  try {
+    a(process.cwd());
+  } catch (e) {
+    telemetry.telClient.trackException({exception: e});
+  }
+  telemetry.telClient.flush();
+
+  expect(pass).toBeTruthy();
+  expect(pass).toBeTruthy();
+  telemetry.telClient.clearTelemetryProcessors();
+  telemetry.telClient.addTelemetryProcessor(telemetry.sanitizeExceptions);
+  done();
 });

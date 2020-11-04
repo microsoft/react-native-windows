@@ -18,6 +18,9 @@
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",
             "port": 9229,
+            "env": {
+                "RNW_CLI_TEST": "true", 
+            }
         }
     ]
 }

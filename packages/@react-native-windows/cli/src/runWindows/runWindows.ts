@@ -5,9 +5,7 @@
  */
 
 import * as fs from 'fs';
-import * as appInsights from 'applicationinsights';
-
-const telClient = appInsights.defaultClient;
+import {telemetryClient, isMSFTInternal} from '@react-native-windows/telemetry';
 
 import * as build from './utils/build';
 import * as chalk from 'chalk';
@@ -42,13 +40,6 @@ function setExitProcessWithError(loggingWasEnabled: boolean): void {
     );
   }
   process.exitCode = 1;
-}
-
-function isMSFTInternal(): boolean {
-  return (
-    process.env.USERDNSDOMAIN !== undefined &&
-    process.env.USERDNSDOMAIN.endsWith('.microsoft.com')
-  );
 }
 
 function getPkgVersion(pkgName: string): string {
@@ -90,7 +81,7 @@ async function runWindows(
     if (options.logging) {
       console.log('Disabling telemetry');
     }
-    telClient.config.disableAppInsights = true;
+    telemetryClient.config.disableAppInsights = true;
   }
 
   // https://github.com/yarnpkg/yarn/issues/8334 - Yarn on Windows breaks apps that read from the environment variables
@@ -111,7 +102,7 @@ async function runWindows(
       sdks.forEach(version => console.log('    ' + version));
       return;
     } catch (e) {
-      telClient.trackException({exception: e});
+      telemetryClient.trackException({exception: e});
       newError('Unable to print environment info.\n' + e.toString());
       return setExitProcessWithError(options.logging);
     }
@@ -121,11 +112,11 @@ async function runWindows(
   try {
     await runWindowsInternal(args, config, options);
   } catch (e) {
-    telClient.trackException({exception: e});
+    telemetryClient.trackException({exception: e});
     runWindowsError = e;
     return setExitProcessWithError(options.logging);
   } finally {
-    telClient.trackEvent({
+    telemetryClient.trackEvent({
       name: 'run-windows',
       properties: {
         release: options.release,
@@ -163,7 +154,7 @@ async function runWindows(
         cpus: cpus().length,
       },
     });
-    telClient.flush();
+    telemetryClient.flush();
   }
 }
 

@@ -37,7 +37,7 @@ export function sanitizeMessage(msg: string): string {
     } else if (part.toLowerCase().includes(projectRoot)) {
       // the path is in there but it isn't in a format we expect
       const filepathRegEx = new RegExp(
-        `${projectRoot.replace(/\\/g, '\\\\')}[^<>:;,?"*|/]+`,
+        `${projectRoot.replace(/\\/g, '\\\\')}[^<>:;,?"*|/]*`,
         'gi',
       );
 
@@ -69,7 +69,7 @@ export function sanitizeFrame(frame: any): void {
  * Remove PII from exceptions' stack traces and messages
  * @param envelope the telemetry envelope. Provided by AppInsights.
  */
-function sanitizeExceptions(envelope: any /*context: any*/): boolean {
+export function sanitizeExceptions(envelope: any /*context: any*/): boolean {
   if (envelope.data.baseType === 'ExceptionData') {
     const data = envelope.data.baseData;
     for (const exception of data.exceptions || []) {
@@ -90,4 +90,11 @@ if (process.env.RNW_CLI_TEST) {
 if (!telClient.commonProperties.sessionId) {
   telClient.commonProperties.sessionId = randomBytes(16).toString('hex');
   telClient.addTelemetryProcessor(sanitizeExceptions);
+}
+
+export function isMSFTInternal(): boolean {
+  return (
+    process.env.USERDNSDOMAIN !== undefined &&
+    process.env.USERDNSDOMAIN.endsWith('.microsoft.com')
+  );
 }

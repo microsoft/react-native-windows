@@ -4,6 +4,4 @@
  * @format
  */
 
-import {telClient} from './telemetry';
-
-export const telemetryClient = telClient;
+export {telClient as telemetryClient, isMSFTInternal} from './telemetry';
