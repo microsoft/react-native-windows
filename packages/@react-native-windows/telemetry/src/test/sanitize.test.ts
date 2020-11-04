@@ -22,14 +22,10 @@ test('Sanitize message, project_dir', () => {
     telemetry.sanitizeMessage(`this is the cwd: '${process.cwd()}'`),
   ).toEqual('this is the cwd:  [project_dir]\\???(47)');
   expect(
-    telemetry.sanitizeMessage(
-      `uppercase: '${process.cwd().toUpperCase()}'`,
-    ),
+    telemetry.sanitizeMessage(`uppercase: '${process.cwd().toUpperCase()}'`),
   ).toEqual('uppercase:  [project_dir]\\???(47)');
   expect(
-    telemetry.sanitizeMessage(
-      `lowercase: '${process.cwd().toLowerCase()}'`,
-    ),
+    telemetry.sanitizeMessage(`lowercase: '${process.cwd().toLowerCase()}'`),
   ).toEqual('lowercase:  [project_dir]\\???(47)');
   expect(
     telemetry.sanitizeMessage(
