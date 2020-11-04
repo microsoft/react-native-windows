@@ -26,6 +26,7 @@ import {randomBytes} from 'crypto';
  * See https://github.com/microsoft/ApplicationInsights-node.js/issues/580
  */
 
+// CODE-SYNC: \packages\@react-native-windows\cli\src\telemetry.ts
 appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 const telClient = appInsights.defaultClient;
 telClient.commonProperties.sessionId = randomBytes(16).toString('hex');
@@ -33,8 +34,38 @@ if (process.env.RNW_CLI_TEST) {
   telClient.commonProperties.isTest = process.env.RNW_CLI_TEST;
 }
 
-// CODE-SYNC: \packages\@react-native-windows\cli\src\index.ts
-function sanitizeStackTrace(envelope: any /*context: any*/): boolean {
+/**
+ * Sanitize any paths that appear between quotes (''), brackets ([]), or double quotes ("").
+ * @param msg the string to sanitize
+ */
+function sanitizeMessage(msg: string): string {
+
+  const parts = msg.split(/['[\]"]/g);
+  const clean = [];
+  for (const part of parts) {
+    if (part.toLowerCase().startsWith(__dirname.toLowerCase())) {
+      const ext = path.extname(part);
+      const rest = part.slice(__dirname.length);
+      // this is in the project dir but not under node_modules
+      if (rest.toLowerCase().startsWith('\\windows\\')) {
+        clean.push(`[windows]\\???${ext}(${part.length})`);
+      } else if (rest.toLowerCase().startsWith('\\node_modules\\')) {
+        clean.push(rest.slice(1));
+      } else {
+        clean.push(`[project_dir]\\???${ext}(${part.length})`);
+      }
+    } else {
+      clean.push(part);
+    }
+  }
+  return clean.join(' ');
+}
+
+/**
+ * Remove PII from exceptions' stack traces and messages
+ * @param envelope the telemetry envelope. Provided by AppInsights.
+ */
+function sanitizeExceptions(envelope: any /*context: any*/): boolean {
   if (envelope.data.baseType === 'ExceptionData') {
     const data = envelope.data.baseData;
     for (const exception of data.exceptions || []) {
@@ -53,12 +84,14 @@ function sanitizeStackTrace(envelope: any /*context: any*/): boolean {
         );
         frame.assembly = '';
       }
+
+      exception.message = sanitizeMessage(exception.message);
     }
   }
   return true;
 }
 
-telClient.addTelemetryProcessor(sanitizeStackTrace);
+telClient.addTelemetryProcessor(sanitizeExceptions);
 
 import requireGenerateWindows from './requireGenerateWindows';
 
