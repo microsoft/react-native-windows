@@ -18,6 +18,7 @@ test('Sanitize message, no-op', () => {
 });
 
 test('Sanitize message, project_dir', () => {
+  console.log(`cwd[pd] = '${process.cwd()}'`);
   expect(
     telemetry.sanitizeMessage(`this is the cwd: '${process.cwd()}'`),
   ).toEqual('this is the cwd:  [project_dir]\\???(47)');
@@ -40,6 +41,7 @@ test('Sanitize message, project_dir', () => {
 });
 
 test('Sanitize message, node_modules', () => {
+  console.log(`cwd[nm] = '${process.cwd()}'`);
   expect(
     telemetry.sanitizeMessage(
       `this is the cwd: '${process.cwd()}\\node_modules'`,
