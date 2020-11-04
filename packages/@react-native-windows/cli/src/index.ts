@@ -6,7 +6,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import {telClient} from './telemetry';
+import {telemetryClient} from '@react-native-windows/telemetry';
 
 import {
   copyProjectTemplateAndReplace,
@@ -99,7 +99,7 @@ export async function generateWindows(
     );
   } catch (e) {
     error = e;
-    telClient.trackException({exception: error});
+    telemetryClient.trackException({exception: error});
     throw e;
   } finally {
     if (options.telemetry && !process.env.AGENT_NAME) {
@@ -121,7 +121,7 @@ export async function generateWindows(
         cliVersion = rnwCliPkgJson.version;
       } catch {}
       const optScrubbed = scrubOptions(options);
-      telClient.trackEvent({
+      telemetryClient.trackEvent({
         name: 'generate-windows',
         properties: {
           error: error,
@@ -131,7 +131,7 @@ export async function generateWindows(
         },
       });
 
-      telClient.flush();
+      telemetryClient.flush();
     }
   }
 }
