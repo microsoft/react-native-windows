@@ -190,10 +190,11 @@ export async function copyProjectTemplateAndReplace(
     {paths: [process.cwd()]},
   );
   const winui3Props = readProjectFile(winui3PropsPath);
-  const winui3Version = findPropertyValue(winui3Props, 'WinUI3Version');
-  if (winui3Version === null) {
-    throw new Error('Unable to find WinUI3 version from property sheets');
-  }
+  const winui3Version = findPropertyValue(
+    winui3Props,
+    'WinUI3Version',
+    winui3PropsPath,
+  );
 
   const csNugetPackages: NugetPackage[] = [
     {
@@ -285,7 +286,7 @@ export async function copyProjectTemplateAndReplace(
     autolinkPropertiesForProps: '',
     autolinkProjectReferencesForTargets: '',
     autolinkCsUsingNamespaces: '',
-    autolinkCsReactPacakgeProviders: '',
+    autolinkCsReactPackageProviders: '',
     autolinkCppIncludes: '',
     autolinkCppPackageProviders:
       '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: vnext\local-cli\runWindows\utils\autolink.js
