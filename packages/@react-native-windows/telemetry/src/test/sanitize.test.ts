@@ -160,7 +160,6 @@ test('thrown exception a->b, hello world', done => {
       const stack = data.exceptions[0].parsedStack;
       expect(stack).toBeDefined();
       // console.log(JSON.stringify(stack, null, 2));
-      console.log(stack.length);
       expect(stack.length).toBeGreaterThan(5);
 
       const filename = basename(__filename);
@@ -199,7 +198,6 @@ test('thrown exception a->b, hello path', done => {
 
       const stack = data.exceptions[0].parsedStack;
       expect(stack).toBeDefined();
-      console.log(stack.length);
       expect(stack.length).toBeGreaterThan(5);
 
       const filename = basename(__filename);
