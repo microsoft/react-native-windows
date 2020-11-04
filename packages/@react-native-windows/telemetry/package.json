@@ -1,0 +1,48 @@
+{
+  "name": "@react-native-windows/telemetry",
+  "version": "0.0.0-canary.27",
+  "license": "MIT",
+  "main": "lib-commonjs/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:microsoft/react-native-windows.git",
+    "directory": "packages/@react-native-windows/telemetry"
+  },
+  "scripts": {
+    "build": "just-scripts build",
+    "clean": "just-scripts clean",
+    "lint": "just-scripts lint",
+    "lint:fix": "just-scripts lint:fix",
+    "test": "just-scripts test",
+    "watch": "just-scripts watch"
+  },
+  "dependencies": {
+    "applicationinsights": "^1.8.8"
+  },
+  "devDependencies": {
+    "@rnw-scripts/eslint-config": "0.1.4",
+    "@rnw-scripts/jest-unittest-config": "0.1.1",
+    "@rnw-scripts/just-task": "0.0.6",
+    "@rnw-scripts/ts-config": "0.1.0",
+    "@types/jest": "^26.0.13",
+    "@types/semver": "^7.3.3",
+    "babel-jest": "^26.3.0",
+    "eslint": "6.8.0",
+    "jest": "^26.4.2",
+    "just-scripts": "^0.44.7",
+    "prettier": "1.19.1",
+    "typescript": "^3.8.3"
+  },
+  "files": [
+    "lib-commonjs"
+  ],
+  "beachball": {
+    "defaultNpmTag": "canary",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch"
+    ]
+  },
+  "promoteRelease": true
+}
