@@ -244,13 +244,6 @@ $requirements = @(
         Optional = $true
     },
     @{
-        # Install the Windows ADK (Assessment and Deployment Kit) to install the wpt (Windows Performance Toolkit) so we can use wpr (Windows Performance Recorder) for performance analysis
-        Name = 'Windows ADK';
-        Tags = @('buildLab');
-        Valid = (Test-Path "${env:ProgramFiles(x86)}\Windows Kits\10\Windows Performance Toolkit\wpr.exe");
-        Install = { choco install -y windows-adk };
-    },
-    @{
         Name = "React-Native-Windows clone"
         Tags = @('clone')
         Valid = try {

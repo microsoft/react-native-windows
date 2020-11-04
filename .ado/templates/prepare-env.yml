@@ -23,6 +23,20 @@ steps:
       script: |
         Get-WmiObject Win32_LogicalDisk
 
+  - task: PowerShell@2
+    displayName: Enable Dev-Mode
+    inputs:
+      targetType: inline # filePath | inline
+      script: |
+        $RegistryKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
+        if (-not(Test-Path -Path $RegistryKeyPath)) {
+            New-Item -Path $RegistryKeyPath -ItemType Directory -Force
+        }
+        $value = get-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -ErrorAction SilentlyContinue
+        if (($value -eq $null) -or ($value.AllowDevelopmentWithoutDevLicense -ne 1)) {
+            Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1 -ErrorAction Stop
+        }
+
   - task: NuGetToolInstaller@0
     inputs:
       versionSpec: ">=4.6.0"
