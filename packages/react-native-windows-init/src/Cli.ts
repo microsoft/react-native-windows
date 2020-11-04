@@ -33,7 +33,7 @@ if (process.env.RNW_CLI_TEST) {
   telClient.commonProperties.isTest = process.env.RNW_CLI_TEST;
 }
 
-// CODE-SYNC: \packages\@react-native-windows\cli\src\runWindows\runWindows.ts
+// CODE-SYNC: \packages\@react-native-windows\cli\src\index.ts
 function sanitizeStackTrace(envelope: any /*context: any*/): boolean {
   if (envelope.data.baseType === 'ExceptionData') {
     const data = envelope.data.baseData;
@@ -47,11 +47,10 @@ function sanitizeStackTrace(envelope: any /*context: any*/): boolean {
           // case 2: method === <no_method> or something without '(', fileName is full path
         }
         // preserve only the last_directory/filename
-        frame.fileName =
-          path.join(
-            path.basename(path.dirname(frame.fileName)),
-            path.basename(frame.fileName),
-          ) + ':';
+        frame.fileName = path.join(
+          path.basename(path.dirname(frame.fileName)),
+          path.basename(frame.fileName),
+        );
         frame.assembly = '';
       }
     }

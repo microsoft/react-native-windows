@@ -154,7 +154,6 @@ async function updateAutoLink(
 
     if (options.sln) {
       const slnFile = path.join(windowsAppConfig.folder, options.sln);
-
       windowsAppConfig.solutionFile = path.relative(
         path.join(windowsAppConfig.folder, windowsAppConfig.sourceDir),
         slnFile,

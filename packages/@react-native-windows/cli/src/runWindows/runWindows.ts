@@ -4,45 +4,10 @@
  * @format
  */
 
-import * as path from 'path';
 import * as fs from 'fs';
-import {randomBytes} from 'crypto';
 import * as appInsights from 'applicationinsights';
 
-appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 const telClient = appInsights.defaultClient;
-telClient.commonProperties.sessionId = randomBytes(16).toString('hex');
-if (process.env.RNW_CLI_TEST) {
-  telClient.commonProperties.isTest = process.env.RNW_CLI_TEST;
-}
-
-// CODE-SYNC: \packages\react-native-windows-init\src\Cli.ts
-function sanitizeStackTrace(envelope: any /*context: any*/): boolean {
-  if (envelope.data.baseType === 'ExceptionData') {
-    const data = envelope.data.baseData;
-    for (const exception of data.exceptions || []) {
-      for (const frame of exception.parsedStack) {
-        const parens = frame.method.indexOf('(');
-        if (parens !== -1) {
-          // case 1: method === 'methodName (rootOfThePath'
-          frame.method = frame.method.substr(0, parens).trim();
-        } else {
-          // case 2: method === <no_method> or something without '(', fileName is full path
-        }
-        // preserve only the last_directory/filename
-        frame.fileName =
-          path.join(
-            path.basename(path.dirname(frame.fileName)),
-            path.basename(frame.fileName),
-          ) + ':';
-        frame.assembly = '';
-      }
-    }
-  }
-  return true;
-}
-
-telClient.addTelemetryProcessor(sanitizeStackTrace);
 
 import * as build from './utils/build';
 import * as chalk from 'chalk';
