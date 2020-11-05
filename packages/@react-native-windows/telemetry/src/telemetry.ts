@@ -33,7 +33,7 @@ function getAnonymizedPath(filepath: string): string {
         process.env[knownPath] &&
         filepath.toLowerCase().startsWith(process.env[knownPath]!.toLowerCase())
       ) {
-        return `[${knownPath}]`;
+        return `[${knownPath}]\\???(${filepath.length})`;
       }
     }
   }
@@ -46,7 +46,7 @@ function getAnonymizedPath(filepath: string): string {
 export function sanitizeMessage(msg: string): string {
   const parts = msg.split(/['[\]"]/g);
   const clean = [];
-  const pathRegEx = /[A-Za-z]:\\([^<>:;,?"*\t\r\n|/\\]+\\)*([^<>:;,?"*\t\r\n|/\\]+)/gi;
+  const pathRegEx = /[A-Za-z]:\\([^<>:;,?"*\t\r\n|/\\]+\\)+([^<>:;,?"*\t\r\n|/]+)/gi;
   for (const part of parts) {
     if (pathRegEx.test(part)) {
       pathRegEx.lastIndex = -1;

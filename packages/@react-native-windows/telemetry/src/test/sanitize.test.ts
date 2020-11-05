@@ -40,7 +40,7 @@ test('Sanitize message, project_dir', () => {
     telemetry.sanitizeMessage(
       `this is the cwd: ${process.cwd()} and something else`,
     ),
-  ).toEqual('this is the cwd: [project_dir]\\...');
+  ).toEqual(`this is the cwd: [project_dir]\\???(${(process.cwd() + ' and something else').length})`);
 });
 
 test('Sanitize message, node_modules', () => {
@@ -55,14 +55,14 @@ test('Sanitize message, node_modules', () => {
   );
   expect(
     telemetry.sanitizeMessage(
-      `this is the cwd: '${process.cwd()}\\node_modules\\'`,
+      `this is the cwd: '${process.cwd()}\\node_modules\\foo'`,
     ),
-  ).toEqual('this is the cwd:  node_modules\\');
+  ).toEqual('this is the cwd:  node_modules\\foo');
   expect(
     telemetry.sanitizeMessage(
-      `uppercase: '${process.cwd().toUpperCase()}\\NODE_MODULES\\'`,
+      `uppercase: '${process.cwd().toUpperCase()}\\NODE_MODULES\\foo'`,
     ),
-  ).toEqual('uppercase:  node_modules\\');
+  ).toEqual('uppercase:  node_modules\\foo');
   expect(
     telemetry.sanitizeMessage(
       `lowercase: '${process.cwd().toLowerCase()}\\NODE_MODULES\\'`,
@@ -77,12 +77,12 @@ test('Sanitize message, node_modules', () => {
     telemetry.sanitizeMessage(
       `this is the cwd: ${process.cwd()}\\node_modules and something else that could be part of the path`,
     ),
-  ).toEqual('this is the cwd: [project_dir]\\...');
+  ).toEqual(`this is the cwd: [project_dir]\\???(${(process.cwd() + '\\node_modules and something else that could be part of the path').length})`);
   expect(
     telemetry.sanitizeMessage(
-      `this is the cwd: ${process.cwd()}\\node_modules\\ and something else that could be part of the path`,
+      `this is the cwd: ${process.cwd()}\\node_modules\\ a file under nm`,
     ),
-  ).toEqual('this is the cwd: [project_dir]\\...');
+    ).toEqual(`this is the cwd: node_modules\\ a file under nm`);
 });
 
 test('Sanitize message, other path', () => {
@@ -101,10 +101,10 @@ test('Sanitize message, other path', () => {
       - ${process.env.APPDATA}\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\lib-commonjs\\Cli.js
       - ${process.env.APPDATA}\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\bin.js`,
     ),
-  ).toEqual(`Cannot find module 'react-native/package.json'
-  Require stack:
-  - [appdata]
-  - [appdata]`);
+  ).toEqual(`Cannot find module  react-native/package.json 
+      Require stack:
+      - [appdata]\\???(${(process.env.APPDATA + '\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\lib-commonjs\\Cli.js').length})
+      - [appdata]\\???(${(process.env.APPDATA + '\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\bin.js').length})`);
 });
 
 test('Sanitize stack frame', () => {
@@ -219,7 +219,7 @@ test('thrown exception a->b, hello path', done => {
       const data = (envelope.data as any).baseData;
       expect(data.exceptions).toBeDefined();
       expect(data.exceptions.length).toEqual(1);
-      expect(data.exceptions[0].message).toEqual('hello [project_dir]\\...');
+      expect(data.exceptions[0].message).toEqual(`hello [project_dir]\\???(${process.cwd().length})`);
 
       const stack = data.exceptions[0].parsedStack;
       expect(stack).toBeDefined();
