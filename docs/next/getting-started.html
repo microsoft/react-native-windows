@@ -151,6 +151,10 @@ Also ensure your system meets all the <a href="/react-native-windows/docs/next/r
 <li>Build the solution. You can now launch without first launching Metro.</li>
 <li>If you want to build an APPX package to share or publish, use the <strong>Project</strong> &gt; <strong>Publish</strong> &gt; <strong>Create App Packages...</strong> option.</li>
 </ul>
+<blockquote>
+<p>The Debug configuration uses the Web Debugger by default, which means the application's JavaScript code runs in Chrome.<br>
+If you're getting different runtime behavior between the Release and Debug configurations, consider disabling the <code>UseWebDebugger</code> setting in <a href="https://github.com/microsoft/react-native-windows/blob/6b415659aa017dbc41e3f28e817fb768a8e80435/vnext/template/cpp-app/src/App.cpp#L30"><code>App.cpp</code></a> or <a href="https://github.com/microsoft/react-native-windows/blob/6b415659aa017dbc41e3f28e817fb768a8e80435/vnext/template/cs-app/src/App.xaml.cs#L20"><code>App.xaml.cs</code></a> to get the same behavior in the Debug configuration.</p>
+</blockquote>
 <p>See also this article for additional details: <a href="https://techcommunity.microsoft.com/t5/windows-dev-appconsult/getting-started-with-react-native-for-windows/ba-p/912093#">https://techcommunity.microsoft.com/t5/windows-dev-appconsult/getting-started-with-react-native-for-windows/ba-p/912093#</a></p>
 </body>
 </html>
