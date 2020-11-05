@@ -17,4 +17,4 @@ facebook::react::SurfaceId getNextRootViewTag() noexcept {
   return s_nextRootViewTag += ROOT_VIEW_TAG_INCREMENT;
 }
 
-}
+} // namespace Microsoft::ReactNative
