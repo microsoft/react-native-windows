@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <Views/ShadowNode.h>
+#include <Views/PaperShadowNode.h>
 #include <functional/functorref.h>
 #include <map>
 
