@@ -2,6 +2,42 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 05 Nov 2020 05:05:45 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.29",
+      "version": "0.0.0-canary.29",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix(cli): Also look for .msix* extensions in CheckIfNeedInstallCertificate",
+            "author": "tonguye@microsoft.com",
+            "commit": "9bf1f5ec385f9c9b01a49ae30f66392e23aa72b6",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Add telemetry to react-native-windows CLI",
+            "author": "asklar@microsoft.com",
+            "commit": "61cc42e7f9b4dec313597fba6e99c6f22badbf7e",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 Nov 2020 05:10:08 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.28",
+      "version": "0.0.0-canary.28",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Autolinking fixes for C++ / C# interop",
+            "author": "jthysell@microsoft.com",
+            "commit": "b9f4e16f85015e09225374ec738e4f974d53d963",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 01 Nov 2020 05:05:46 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.27",
       "version": "0.0.0-canary.27",

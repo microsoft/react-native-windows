@@ -22,15 +22,24 @@ import {
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
 
 /**
- * Locates the react-native-windows directory containing template files
+ * Locates the react-native-windows directory
  * @param config project configuration
  */
-function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
+function resolveRnwRoot(projectConfig: WindowsProjectConfig) {
   const rnwPackage = path.dirname(
     require.resolve('react-native-windows/package.json', {
       paths: [projectConfig.folder],
     }),
   );
+  return rnwPackage;
+}
+
+/**
+ * Locates the react-native-windows directory containing template files
+ * @param config project configuration
+ */
+function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
+  const rnwPackage = resolveRnwRoot(projectConfig);
   return path.join(rnwPackage, 'template');
 }
 
@@ -104,25 +113,6 @@ function updateFile(
 }
 
 /**
- * Exits the script with the given status code.
- * @param statusCode The status code.
- * @param loggingWasEnabled Whether or not verbose lossing was enabled.
- */
-function exitProcessWithStatusCode(
-  statusCode: number,
-  loggingWasEnabled: boolean,
-) {
-  if (!loggingWasEnabled && statusCode !== 0) {
-    console.log(
-      `Error: Re-run the command with ${chalk.bold(
-        '--logging',
-      )} for more information.`,
-    );
-  }
-  process.exit(statusCode);
-}
-
-/**
  * Performs auto-linking for RNW native modules and apps.
  * @param args Unprocessed args passed from react-native CLI.
  * @param config Config passed from react-native CLI.
@@ -159,11 +149,11 @@ async function updateAutoLink(
     }
 
     const windowsAppConfig: WindowsProjectConfig = projectConfig.windows;
+    const rnwRoot = resolveRnwRoot(windowsAppConfig);
     const templateRoot = resolveTemplateRoot(windowsAppConfig);
 
     if (options.sln) {
       const slnFile = path.join(windowsAppConfig.folder, options.sln);
-
       windowsAppConfig.solutionFile = path.relative(
         path.join(windowsAppConfig.folder, windowsAppConfig.sourceDir),
         slnFile,
@@ -307,7 +297,7 @@ async function updateAutoLink(
     // Generating cs/h files for app code consumption
     if (projectLang === 'cs') {
       let csUsingNamespaces = '';
-      let csReactPacakgeProviders = '';
+      let csReactPackageProviders = '';
 
       for (const dependencyName in windowsDependencies) {
         windowsDependencies[dependencyName].projects.forEach(project => {
@@ -317,9 +307,9 @@ async function updateAutoLink(
               csUsingNamespaces += `\nusing ${namespace};`;
             });
 
-            csReactPacakgeProviders += `\n            // IReactPackageProviders from ${dependencyName}`;
+            csReactPackageProviders += `\n            // IReactPackageProviders from ${dependencyName}`;
             project.csPackageProviders.forEach(packageProvider => {
-              csReactPacakgeProviders += `\n            packageProviders.Add(new ${packageProvider}());`;
+              csReactPackageProviders += `\n            packageProviders.Add(new ${packageProvider}());`;
             });
           }
         });
@@ -343,7 +333,7 @@ async function updateAutoLink(
 
       const csContents = getNormalizedContents(srcCsFile, {
         autolinkCsUsingNamespaces: csUsingNamespaces,
-        autolinkCsReactPacakgeProviders: csReactPacakgeProviders,
+        autolinkCsReactPackageProviders: csReactPackageProviders,
       });
 
       changesNecessary =
@@ -401,6 +391,49 @@ async function updateAutoLink(
         changesNecessary;
     }
 
+    // Generating props for app project consumption
+    let propertiesForProps = '';
+    let csModuleNames: string[] = [];
+
+    if (projectLang === 'cpp') {
+      for (const dependencyName in windowsDependencies) {
+        windowsDependencies[dependencyName].projects.forEach(project => {
+          if (project.directDependency && project.projectLang === 'cs') {
+            csModuleNames.push(project.projectName);
+          }
+        });
+      }
+
+      if (csModuleNames.length > 0) {
+        propertiesForProps += `\n    <!-- Set due to dependency on C# module(s): ${csModuleNames.join()} -->`;
+        propertiesForProps += `\n    <ConsumeCSharpModules Condition="'$(ConsumeCSharpModules)'==''">true</ConsumeCSharpModules>`;
+      }
+    }
+
+    const propsFileName = 'AutolinkedNativeModules.g.props';
+
+    const srcPropsFile = path.join(
+      templateRoot,
+      `shared-app`,
+      'src',
+      propsFileName,
+    );
+
+    const destPropsFile = path.join(projectDir, propsFileName);
+
+    verboseMessage(
+      `Calculating ${chalk.bold(path.basename(destPropsFile))}...`,
+      verbose,
+    );
+
+    const propsContents = getNormalizedContents(srcPropsFile, {
+      autolinkPropertiesForProps: propertiesForProps,
+    });
+
+    changesNecessary =
+      updateFile(destPropsFile, propsContents, verbose, checkMode) ||
+      changesNecessary;
+
     // Generating targets for app project consumption
     let projectReferencesForTargets = '';
 
@@ -430,7 +463,7 @@ async function updateAutoLink(
 
     const srcTargetFile = path.join(
       templateRoot,
-      `${projectLang}-app`,
+      `shared-app`,
       'src',
       targetFileName,
     );
@@ -454,7 +487,7 @@ async function updateAutoLink(
     let projectsForSolution: Project[] = [];
 
     for (const dependencyName in windowsDependencies) {
-      // Process projects
+      // Process dependency projects
       windowsDependencies[dependencyName].projects.forEach(project => {
         const dependencyProjectFile = path.join(
           windowsDependencies[dependencyName].folder,
@@ -468,6 +501,29 @@ async function updateAutoLink(
           projectLang: project.projectLang,
           projectGuid: project.projectGuid,
         });
+      });
+    }
+
+    if (csModuleNames.length > 0) {
+      // Add managed projects
+      projectsForSolution.push({
+        projectFile: path.join(
+          rnwRoot,
+          'Microsoft.ReactNative.Managed/Microsoft.ReactNative.Managed.csproj',
+        ),
+        projectName: 'Microsoft.ReactNative.Managed',
+        projectLang: 'cs',
+        projectGuid: '{F2824844-CE15-4242-9420-308923CD76C3}',
+      });
+      projectsForSolution.push({
+        projectFile: path.join(
+          rnwRoot,
+          'Microsoft.ReactNative.Managed.CodeGen//Microsoft.ReactNative.Managed.CodeGen.csproj',
+        ),
+        projectName: 'Microsoft.ReactNative.Managed.CodeGen',
+        projectLang: 'cs',
+        projectGuid: '{ADED4FBE-887D-4271-AF24-F0823BCE7961}',
+        projectTypeGuid: vstools.dotNetCoreProjectTypeGuid,
       });
     }
 
@@ -507,7 +563,9 @@ async function updateAutoLink(
           "'npx react-native autolink-windows'",
         )} to apply the changes. (${Math.round(endTime - startTime)}ms)`,
       );
-      exitProcessWithStatusCode(0, verbose);
+      throw new Error(
+        'Auto-linking changes were necessary but --check was specified',
+      );
     } else {
       console.log(
         `${chalk.green(
@@ -525,7 +583,7 @@ async function updateAutoLink(
         endTime - startTime,
       )}ms)`,
     );
-    exitProcessWithStatusCode(1, verbose);
+    throw e;
   }
 }
 

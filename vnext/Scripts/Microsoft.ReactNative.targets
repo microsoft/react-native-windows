@@ -5,8 +5,7 @@
   <PropertyGroup>
     <Native-Platform Condition="'$(Platform)' == 'Win32'">x86</Native-Platform>
     <Native-Platform Condition="'$(Platform)' != 'Win32'">$(Platform)</Native-Platform>
-    <_rnwDebugFolder>$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\debug\</_rnwDebugFolder>
-    <_rnwReleaseFolder>$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\release\</_rnwReleaseFolder>
+    <_rnwFolder>$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\</_rnwFolder>
   </PropertyGroup>
   
   <ItemGroup Condition="'$(TargetPlatformIdentifier)' == 'UAP'">
@@ -14,20 +13,9 @@
       <Implementation>Microsoft.ReactNative.dll</Implementation>
     </Reference>
     
-    <ReferenceCopyLocalPaths Condition="$(Configuration) == 'Debug' and Exists('$(_rnwDebugFolder)Microsoft.ReactNative.dll')" Include="$(_rnwDebugFolder)Microsoft.ReactNative.dll" />
-    <ReferenceCopyLocalPaths Condition="$(Configuration) == 'Debug' and Exists('$(_rnwDebugFolder)Microsoft.ReactNative.pri')" Include="$(_rnwDebugFolder)Microsoft.ReactNative.pri" />
-    <ReferenceCopyLocalPaths Condition="$(Configuration) == 'Debug'" Include="$(_rnwDebugFolder)**\*.xbf" />
-
-    <!-- fall back to release bits if debug bits are not in package -->
-    <ReferenceCopyLocalPaths Condition="$(Configuration) == 'Debug' and !Exists('$(_rnwDebugFolder)Microsoft.ReactNative.dll') and Exists('$(_rnwReleaseFolder)Microsoft.ReactNative.dll')" Include="$(_rnwReleaseFolder)Microsoft.ReactNative.dll" />
-    <ReferenceCopyLocalPaths Condition="$(Configuration) == 'Debug' and !Exists('$(_rnwDebugFolder)Microsoft.ReactNative.pri') and Exists('$(_rnwReleaseFolder)Microsoft.ReactNative.dll')" Include="$(_rnwReleaseFolder)Microsoft.ReactNative.pri" />
-
-
-    <ReferenceCopyLocalPaths Condition="$(Configuration) != 'Debug' and Exists('$(_rnwReleaseFolder)Microsoft.ReactNative.dll')" Include="$(_rnwReleaseFolder)Microsoft.ReactNative.dll" />
-    <ReferenceCopyLocalPaths Condition="$(Configuration) != 'Debug' and Exists('$(_rnwReleaseFolder)Microsoft.ReactNative.pri')" Include="$(_rnwReleaseFolder)Microsoft.ReactNative.pri" />
-    <!-- fall back to debug bits if release bits are not in package -->
-    <ReferenceCopyLocalPaths Condition="$(Configuration) != 'Debug' and !Exists('$(_rnwReleaseFolder)Microsoft.ReactNative.dll') and Exists('$(_rnwDebugFolder)Microsoft.ReactNative.dll')" Include="$(_rnwDebugFolder)Microsoft.ReactNative.dll" />
-    <ReferenceCopyLocalPaths Condition="$(Configuration) != 'Debug' and !Exists('$(_rnwReleaseFolder)Microsoft.ReactNative.pri') and Exists('$(_rnwDebugFolder)Microsoft.ReactNative.dll')" Include="$(_rnwDebugFolder)Microsoft.ReactNative.pri" />
+    <ReferenceCopyLocalPaths Condition="Exists('$(_rnwFolder)Microsoft.ReactNative.dll')" Include="$(_rnwFolder)Microsoft.ReactNative.dll" />
+    <ReferenceCopyLocalPaths Condition="Exists('$(_rnwFolder)Microsoft.ReactNative.pri')" Include="$(_rnwFolder)Microsoft.ReactNative.pri" />
+    <ReferenceCopyLocalPaths Condition="$(Configuration) == 'Debug'" Include="$(_rnwFolder)**\*.xbf" />
 
   </ItemGroup>
 </Project>

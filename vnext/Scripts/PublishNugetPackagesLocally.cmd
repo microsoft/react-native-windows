@@ -10,7 +10,7 @@ set baseConfiguration=%5
 set ScriptFolder=%~dp0
 
 set defaultTargetDir=c:\temp\RnWNugetTesting
-set defaultSlices="@('x64.Debug')"
+set defaultSlices="@('x64.Debug','x64.Release','x86.Debug')"
 set defaultBaseConfiguration=Debug
 set defaultBasePlatform=x64
 
@@ -70,7 +70,7 @@ echo Invoking publish nuget packages with: %0 %*
     )
 
 
-call :ProcessNuget Microsoft.ReactNative                 strip
+call :ProcessNuget Microsoft.ReactNative                 strip -preferRelease $true
 call :ProcessNuget Microsoft.ReactNative.Cxx             nostrip
 call :ProcessNuget Microsoft.ReactNative.Managed         strip -preferRelease $true
 call :ProcessNuget Microsoft.ReactNative.Managed.CodeGen nostrip

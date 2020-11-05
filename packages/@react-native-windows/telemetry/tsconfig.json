@@ -1,0 +1,17 @@
+{
+  "extends": "@rnw-scripts/ts-config",
+  "compilerOptions": {
+    // Change the default to allow ES2019.String "trimEnd"
+    "lib": [
+      "DOM",
+      "ES6",
+      "DOM.Iterable",
+      "ES2019.String"
+    ],
+
+    // Not clean
+    "strictFunctionTypes": false,
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

@@ -4,21 +4,12 @@
 #include "pch.h"
 #include "DevSettingsModule.h"
 #include "IReactContext.h"
+#include "ReactNativeHost.h"
 
 namespace Microsoft::ReactNative {
 
-React::ReactPropertyId<React::ReactNonAbiValue<Mso::VoidFunctor>> ReloadProperty() noexcept {
-  static React::ReactPropertyId<React::ReactNonAbiValue<Mso::VoidFunctor>> propId{L"ReactNative.DevSettings",
-                                                                                  L"Reload"};
-  return propId;
-}
-
 void DevSettings::Initialize(React::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
-}
-
-/*static*/ void DevSettings::SetReload(Mso::React::ReactOptions const &options, Mso::VoidFunctor &&func) noexcept {
-  React::ReactPropertyBag(options.Properties).Set(ReloadProperty(), std::move(func));
 }
 
 void DevSettings::reload() noexcept {
@@ -26,7 +17,7 @@ void DevSettings::reload() noexcept {
 }
 
 /*static*/ void DevSettings::Reload(winrt::Microsoft::ReactNative::ReactPropertyBag const &properties) noexcept {
-  properties.Get(ReloadProperty())();
+  winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(properties).ReloadInstance();
 }
 
 void DevSettings::reloadWithReason(std::string /*reason*/) noexcept {

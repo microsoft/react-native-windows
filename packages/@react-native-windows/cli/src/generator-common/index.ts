@@ -78,7 +78,7 @@ type ContentChangedCallback = (
  *        If null, files will be overwritten.
  *        Function(path, 'identical' | 'changed' | 'new') => 'keep' | 'overwrite'
  */
-async function copyAndReplace(
+export async function copyAndReplace(
   srcPath: string,
   destPath: string,
   replacements: Replacements,
