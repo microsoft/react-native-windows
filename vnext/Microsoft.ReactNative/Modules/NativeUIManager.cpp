@@ -517,6 +517,8 @@ static void StyleYogaNode(
         position = YGPositionTypeRelative;
       else if (value == "absolute")
         position = YGPositionTypeAbsolute;
+      else if (value == "static")
+        position = YGPositionTypeStatic;
       else
         assert(false);
 
