@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix(cli): Also look for .msix* extensions in CheckIfNeedInstallCertificate",
-  "packageName": "@react-native-windows/cli",
-  "email": "tonguye@microsoft.com",
-  "dependentChangeType": "patch"
-}

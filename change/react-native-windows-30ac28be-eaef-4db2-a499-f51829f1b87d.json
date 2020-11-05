@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "[Fix PR] Update dependencies script to support new ADO images that don't have node 12",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "none"
-}
