@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 05 Nov 2020 17:30:59 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.3",
+      "version": "0.0.0-canary.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "sanitize paths in other drives too",
+            "author": "asklar@microsoft.com",
+            "commit": "10d82a2167557800fd518a13c170bdc7e7bffc14",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Nov 2020 05:05:45 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.2",
       "version": "0.0.0-canary.2",
