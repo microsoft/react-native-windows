@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Use string object for tooltips instead of textblocks since that breaks wordwrap etc",
   "packageName": "react-native-windows",
   "email": "asklar@microsoft.com",
