@@ -85,6 +85,23 @@ test('Sanitize message, node_modules', () => {
   ).toEqual('this is the cwd: [project_dir]\\...');
 });
 
+test('Sanitize message, other path', () => {
+  expect(
+    telemetry.sanitizeMessage(
+      `this is another path: 'A:\\foo\\bar\\baz'`,
+    ),
+  ).toEqual(
+    `this is another path:  [path]`,
+  );
+  expect(
+    telemetry.sanitizeMessage(
+      `this is another path: A:\\foo\\bar\\baz`,
+    ),
+  ).toEqual(
+    `this is another path: [path]`,
+  );
+});
+
 test('Sanitize stack frame', () => {
   const emptyFrame: appInsights.Contracts.StackFrame = {
     level: 0,

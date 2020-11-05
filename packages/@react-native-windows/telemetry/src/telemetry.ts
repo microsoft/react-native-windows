@@ -22,6 +22,7 @@ export function sanitizeMessage(msg: string): string {
   const parts = msg.split(/['[\]"]/g);
   const clean = [];
   const projectRoot = process.cwd().toLowerCase();
+  const pathRegEx = /[A-Za-z]:\\([^<>:;,?"*|/\\]+\\)*[^<>:;,?"*|/\\]+/gi;
   for (const part of parts) {
     if (part.toLowerCase().startsWith(projectRoot)) {
       const ext = path.extname(part);
@@ -43,6 +44,8 @@ export function sanitizeMessage(msg: string): string {
       );
 
       clean.push(part.replace(filepathRegEx, '[project_dir]\\...'));
+    } else if (pathRegEx.test(part)) {
+      clean.push(part.replace(pathRegEx, '[path]'));
     } else {
       clean.push(part);
     }
