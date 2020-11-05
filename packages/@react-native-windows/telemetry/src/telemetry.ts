@@ -12,8 +12,33 @@ import {execSync} from 'child_process';
 appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 export const telClient = appInsights.defaultClient;
 
-// CODE-SYNC: \packages\react-native-windows-init\src\Cli.ts
-
+function getAnonymizedPath(filepath: string): string {
+  const projectRoot = process.cwd().toLowerCase();
+  const knownPathsVars = ['appdata', 'localappdata', 'userprofile'];
+  if (filepath.toLowerCase().startsWith(projectRoot)) {
+    const ext = path.extname(filepath);
+    const rest = filepath.slice(projectRoot.length);
+    const node_modules = '\\node_modules\\';
+    // this is in the project dir but not under node_modules
+    if (rest.toLowerCase().startsWith('\\windows\\')) {
+      return `[windows]\\???${ext}(${filepath.length})`;
+    } else if (rest.toLowerCase().startsWith(node_modules)) {
+      return 'node_modules' + rest.slice(node_modules.length - 1);
+    } else {
+      return `[project_dir]\\???${ext}(${filepath.length})`;
+    }
+  } else {
+    for (const knownPath of knownPathsVars) {
+      if (
+        process.env[knownPath] &&
+        filepath.toLowerCase().startsWith(process.env[knownPath]!.toLowerCase())
+      ) {
+        return `[${knownPath}]\\???(${filepath.length})`;
+      }
+    }
+  }
+  return '[path]';
+}
 /**
  * Sanitize any paths that appear between quotes (''), brackets ([]), or double quotes ("").
  * @param msg the string to sanitize
@@ -21,29 +46,21 @@ export const telClient = appInsights.defaultClient;
 export function sanitizeMessage(msg: string): string {
   const parts = msg.split(/['[\]"]/g);
   const clean = [];
-  const projectRoot = process.cwd().toLowerCase();
+  const pathRegEx = /[A-Za-z]:\\([^<>:;,?"*\t\r\n|/\\]+\\)+([^<>:;,?"*\t\r\n|/]+)/gi;
   for (const part of parts) {
-    if (part.toLowerCase().startsWith(projectRoot)) {
-      const ext = path.extname(part);
-      const rest = part.slice(projectRoot.length);
-      const node_modules = '\\node_modules\\';
-      // this is in the project dir but not under node_modules
-      if (rest.toLowerCase().startsWith('\\windows\\')) {
-        clean.push(`[windows]\\???${ext}(${part.length})`);
-      } else if (rest.toLowerCase().startsWith(node_modules)) {
-        clean.push('node_modules' + rest.slice(node_modules.length - 1));
-      } else {
-        clean.push(`[project_dir]\\???${ext}(${part.length})`);
+    if (pathRegEx.test(part)) {
+      pathRegEx.lastIndex = -1;
+      let matches: RegExpExecArray | null;
+      let noPath = '';
+      let last = 0;
+      while ((matches = pathRegEx.exec(part))) {
+        noPath +=
+          part.substr(last, matches!.index - last) +
+          getAnonymizedPath(matches[0]);
+        last = matches!.index + matches![0].length;
       }
-    } else if (part.toLowerCase().includes(projectRoot)) {
-      // the path is in there but it isn't in a format we expect
-      const filepathRegEx = new RegExp(
-        `${projectRoot.replace(/\\/g, '\\\\')}[^<>:;,?"*|/]*`,
-        'gi',
-      );
-
-      clean.push(part.replace(filepathRegEx, '[project_dir]\\...'));
-    } else {
+      clean.push(noPath);
+    } else if (part !== '') {
       clean.push(part);
     }
   }
