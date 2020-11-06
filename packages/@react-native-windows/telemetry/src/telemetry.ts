@@ -87,7 +87,7 @@ export function sanitizeFrame(frame: any): void {
  * Remove PII from exceptions' stack traces and messages
  * @param envelope the telemetry envelope. Provided by AppInsights.
  */
-export function sanitizeExceptions(envelope: any /*context: any*/): boolean {
+export function sanitizeEnvelope(envelope: any /*context: any*/): boolean {
   if (envelope.data.baseType === 'ExceptionData') {
     const data = envelope.data.baseData;
     for (const exception of data.exceptions || []) {
@@ -98,6 +98,7 @@ export function sanitizeExceptions(envelope: any /*context: any*/): boolean {
       exception.message = sanitizeMessage(exception.message);
     }
   }
+  delete envelope.tags['ai.cloud.roleInstance'];
   return true;
 }
 
@@ -107,7 +108,7 @@ if (process.env.RNW_CLI_TEST) {
 
 if (!telClient.commonProperties.sessionId) {
   telClient.commonProperties.sessionId = randomBytes(16).toString('hex');
-  telClient.addTelemetryProcessor(sanitizeExceptions);
+  telClient.addTelemetryProcessor(sanitizeEnvelope);
 }
 
 export function isMSFTInternal(): boolean {
