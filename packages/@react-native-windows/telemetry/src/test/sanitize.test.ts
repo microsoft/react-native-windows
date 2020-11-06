@@ -109,8 +109,12 @@ test('Sanitize message, other path', () => {
     telemetry.sanitizeMessage(
       `Cannot find module 'react-native/package.json'
       Require stack:
-      - ${process.env.APPDATA}\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\lib-commonjs\\Cli.js
-      - ${process.env.APPDATA}\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\bin.js`,
+      - ${
+        process.env.APPDATA
+      }\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\lib-commonjs\\Cli.js
+      - ${
+        process.env.APPDATA
+      }\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\bin.js`,
     ),
   ).toEqual(`Cannot find module  react-native/package.json 
       Require stack:
