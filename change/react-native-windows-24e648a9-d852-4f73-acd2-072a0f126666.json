@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix PR validation by removing legacy generated header file",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
