@@ -14,7 +14,7 @@ import {
 import * as build from './utils/build';
 import * as chalk from 'chalk';
 import * as deploy from './utils/deploy';
-import {newError, newInfo} from './utils/commandWithProgress';
+import {newError, newInfo, newWarn} from './utils/commandWithProgress';
 import * as info from './utils/info';
 import MSBuildTools from './utils/msbuildtools';
 
@@ -104,7 +104,6 @@ async function runWindows(
         release: options.release,
         root: options.root !== undefined,
         arch: options.arch,
-        singleproc: options.singleproc,
         emulator: options.emulator,
         device: options.device,
         target: options.target,

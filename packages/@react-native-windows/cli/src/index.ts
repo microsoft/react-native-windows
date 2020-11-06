@@ -50,12 +50,10 @@ function scrubOptions(opt: GenerateOptions) {
   return {
     overwrite: opt.overwrite,
     language: opt.language,
-    projectType: opt.projectType,
     experimentalNuGetDependency: opt.experimentalNuGetDependency,
     nuGetTestFeed: opt.nuGetTestFeed !== undefined ? true : false,
     nuGetTestVersion: opt.nuGetTestVersion !== undefined ? true : false,
     useWinUI3: opt.useWinUI3,
-    useHermes: opt.useHermes,
     verbose: opt.verbose,
   };
 }
@@ -82,11 +80,6 @@ export async function generateWindows(
 
     installDependencies(options);
 
-    const rnwPackage = path.dirname(
-      require.resolve('react-native-windows/package.json', {
-        paths: [projectDir],
-      }),
-    );
     const templateRoot = path.join(__dirname, '..', 'templates');
     await copyProjectTemplateAndReplace(
       templateRoot,
