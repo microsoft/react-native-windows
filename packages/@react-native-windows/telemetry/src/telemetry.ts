@@ -114,7 +114,7 @@ if (!telClient.commonProperties.sessionId) {
 export function isMSFTInternal(): boolean {
   return (
     process.env.USERDNSDOMAIN !== undefined &&
-    process.env.USERDNSDOMAIN.endsWith('.microsoft.com')
+    process.env.USERDNSDOMAIN.toLowerCase().endsWith('.microsoft.com')
   );
 }
 
