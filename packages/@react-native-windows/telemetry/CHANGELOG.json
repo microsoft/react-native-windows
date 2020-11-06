@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Fri, 06 Nov 2020 05:06:31 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.4",
+      "version": "0.0.0-canary.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove roleInstance property",
+            "author": "asklar@microsoft.com",
+            "commit": "9254556d1726e6bec145a50c9935fae868060444",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Nov 2020 17:30:59 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.3",
       "version": "0.0.0-canary.3",
