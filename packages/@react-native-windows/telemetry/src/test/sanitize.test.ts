@@ -228,7 +228,7 @@ test('thrown exception a->b, hello world', done => {
 
   expect(pass).toBeTruthy();
   telemetry.telClient.clearTelemetryProcessors();
-  telemetry.telClient.addTelemetryProcessor(telemetry.sanitizeExceptions);
+  telemetry.telClient.addTelemetryProcessor(telemetry.sanitizeEnvelope);
   done();
 });
 
@@ -269,6 +269,20 @@ test('thrown exception a->b, hello path', done => {
   expect(pass).toBeTruthy();
   expect(pass).toBeTruthy();
   telemetry.telClient.clearTelemetryProcessors();
-  telemetry.telClient.addTelemetryProcessor(telemetry.sanitizeExceptions);
+  telemetry.telClient.addTelemetryProcessor(telemetry.sanitizeEnvelope);
   done();
+});
+
+test('trackEvent should not identify roleInstance', () => {
+  telemetry.telClient.addTelemetryProcessor((envelope, _) => {
+    expect(envelope.tags['ai.cloud.roleInstance']).toBeUndefined();
+    return true;
+  });
+  telemetry.telClient.trackEvent({
+    name: 'test',
+    properties: {},
+  });
+  telemetry.telClient.flush();
+  telemetry.telClient.clearTelemetryProcessors();
+  telemetry.telClient.addTelemetryProcessor(telemetry.sanitizeEnvelope);
 });
