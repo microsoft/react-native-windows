@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Views/ShadowNode.h"
+#include "Views/PaperShadowNode.h"
 
 namespace Microsoft::ReactNative {
 

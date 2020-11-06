@@ -6,7 +6,6 @@
 #include "MsoUtils.h"
 
 #include <Base/CoreNativeModules.h>
-#include <IUIManager.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
 

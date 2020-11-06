@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "Views/ShadowNodeRegistry.h"
-#include "Views/ShadowNode.h"
+#include "Views/PaperShadowNode.h"
 #include "Views/ViewManager.h"
 
 #include <glog/logging.h>

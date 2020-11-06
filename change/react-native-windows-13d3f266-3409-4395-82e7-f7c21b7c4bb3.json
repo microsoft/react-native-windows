@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Couple of minor cleanups to prep for fabric PR",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
