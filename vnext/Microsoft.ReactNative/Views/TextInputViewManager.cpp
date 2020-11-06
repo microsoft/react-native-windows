@@ -117,6 +117,10 @@ class TextInputShadowNode : public ShadowNodeBase {
     return true;
   }
 
+  bool NeedsForceLayout() {
+    return true;
+  }
+
  private:
   void dispatchTextInputChangeEvent(winrt::hstring newText);
   void registerEvents();
