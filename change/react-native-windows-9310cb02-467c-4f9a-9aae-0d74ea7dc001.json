@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "add force_layout to TextInput",
+  "packageName": "react-native-windows",
+  "email": "igklemen@microsoft.com",
+  "dependentChangeType": "patch"
+}
