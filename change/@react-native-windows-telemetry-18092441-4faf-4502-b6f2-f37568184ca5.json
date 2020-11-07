@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Create telemetry package",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

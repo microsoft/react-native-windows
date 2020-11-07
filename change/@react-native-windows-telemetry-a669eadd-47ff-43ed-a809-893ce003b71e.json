@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Remove roleInstance property",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

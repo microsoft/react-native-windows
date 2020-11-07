@@ -1,0 +1,1 @@
+# Change Log - @react-native-windows/telemetry
