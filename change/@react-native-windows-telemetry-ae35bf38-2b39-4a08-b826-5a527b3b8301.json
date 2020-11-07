@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix casing of msft domain",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

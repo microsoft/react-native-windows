@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Clear Unused Native Module Specs",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

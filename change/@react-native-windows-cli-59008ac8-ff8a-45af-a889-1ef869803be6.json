@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix Bundling With \"react-native-windows-init --useDevMode\"",
-  "packageName": "@react-native-windows/cli",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

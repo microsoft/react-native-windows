@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Fri, 06 Nov 2020 05:06:31 GMT and should not be manually modified.
+This log was last generated on Sat, 07 Nov 2020 05:04:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.5
+
+Sat, 07 Nov 2020 05:04:58 GMT
+
+### Changes
+
+- Fix casing of msft domain (asklar@microsoft.com)
 
 ## 0.0.0-canary.4
 

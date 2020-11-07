@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Thu, 05 Nov 2020 05:05:45 GMT and should not be manually modified.
+This log was last generated on Sat, 07 Nov 2020 05:04:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.33
+
+Sat, 07 Nov 2020 05:04:58 GMT
+
+### Patches
+
+- Fix Bundling With "react-native-windows-init --useDevMode" (ngerlem@microsoft.com)
 
 ## 0.1.32
 

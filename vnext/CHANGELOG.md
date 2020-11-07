@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 04 Nov 2020 05:10:08 GMT and should not be manually modified.
+This log was last generated on Sat, 07 Nov 2020 05:04:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.200
+
+Sat, 07 Nov 2020 05:04:58 GMT
+
+### Changes
+
+- Fix Bundling With "react-native-windows-init --useDevMode" (ngerlem@microsoft.com)
+- Couple of minor cleanups to prep for fabric PR (30809111+acoates-ms@users.noreply.github.com)
+- Fix PR validation by removing legacy generated header file (dannyvv@microsoft.com)
+- Clear Unused Native Module Specs (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.196
 
