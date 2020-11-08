@@ -5,8 +5,7 @@
     "outDir": ".",
 
     // Some code copied from react-native-win32 is not strict clean
-    "noImplicitAny": false,
-    "strictNullChecks": false,
+    "strict": false,
   },
   "include": ["src"],
   "exclude": ["node_modules"],
