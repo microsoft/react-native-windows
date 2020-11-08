@@ -29,6 +29,12 @@
       "vnext"
     ]
   },
+  "husky": {
+    "hooks": {
+      "post-checkout": "yarn & yarn build",
+      "post-merge": "yarn & yarn build"
+    }
+  },
   "devDependencies": {
     "beachball": "^1.32.0",
     "husky": "^4.2.5",
