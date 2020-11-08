@@ -65,18 +65,6 @@ task('copyReadmeAndLicenseFromRoot', () => {
   );
 });
 
-task(
-  'compileTsPlatformOverrides',
-  tscTask({
-    pretty: true,
-    ...(argv().production && {
-      inlineSources: true,
-    }),
-    target: 'es5',
-    module: 'commonjs',
-  }),
-);
-
 task('cleanRnLibraries', copyRNLibaries.cleanTask(__dirname));
 
 task(
@@ -85,7 +73,6 @@ task(
     condition('clean', () => argv().clean),
     'copyRNLibraries',
     'copyReadmeAndLicenseFromRoot',
-    'compileTsPlatformOverrides',
     'codegen',
     condition('apiExtractorVerify', () => argv().ci),
   ),
@@ -93,7 +80,7 @@ task(
 
 task('clean', series('cleanRnLibraries'));
 
-task('lint', series('eslint', 'flow-check'));
+task('lint', series('eslint', 'flow-check', tscTask()));
 task('lint:fix', series('eslint:fix'));
 
 task('api', series('apiExtractorUpdate', 'apiDocumenter'));

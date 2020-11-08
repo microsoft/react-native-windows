@@ -43,17 +43,6 @@ task('flow-check', () => {
   require('child_process').execSync('npx flow check', {stdio: 'inherit'});
 });
 
-task('ts', () => {
-  return tscTask({
-    pretty: true,
-    ...(argv().production && {
-      inlineSources: true,
-    }),
-    target: 'es5',
-    module: 'commonjs',
-  });
-});
-
 task('clean', copyRNLibaries.cleanTask(__dirname));
 
 function ensureDirectoryExists(filePath) {
@@ -75,12 +64,11 @@ task(
   series(
     condition('clean', () => argv().clean),
     'copyRNLibraries',
-    'ts',
     condition('apiExtractorVerify', () => argv().ci),
   ),
 );
 
-task('lint', series('eslint', 'flow-check'));
+task('lint', series('eslint', 'flow-check', tscTask()));
 task('lint:fix', series('eslint:fix'));
 
 task('api', series('apiExtractorUpdate', 'apiDocumenter'));

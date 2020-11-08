@@ -46,7 +46,7 @@ exports.copyTask = baseDir => {
       dest: base('.'),
     }),
 
-    copyTask({paths: src('**/*+(.d.ts|.js|.png)'), dest: base('.')}),
+    copyTask({paths: src('**'), dest: base('.')}),
   );
 };
 
@@ -71,13 +71,10 @@ exports.cleanTask = baseDir => {
       base('rn-get-polyfills.js'),
 
       // Remove TS compiled gunk in our root
-      ...glob.sync(
-        '+(index|typings-index)*(.windows|.win32)*(.d)+(.js|.ts)*(.map)',
-        {
-          cwd: baseDir,
-          absolute: true,
-        },
-      ),
+      ...glob.sync('+(index|typings-index)*(.windows|.win32)*(.d)+(.js|.ts)*', {
+        cwd: baseDir,
+        absolute: true,
+      }),
     ],
   });
 };
