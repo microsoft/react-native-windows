@@ -16,6 +16,7 @@ module.exports = {
   },
   cacheOptions: {
     outputGlob: [
+      'js/**',
       "lib/**",
       "lib-commonjs/**",
     ],
