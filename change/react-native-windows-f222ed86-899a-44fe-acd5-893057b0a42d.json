@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Avoid double transpilation of TS overrides",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
