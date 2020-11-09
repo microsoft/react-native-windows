@@ -3,7 +3,6 @@
   "version": "0.0.54",
   "private": true,
   "scripts": {
-    "clean": "just-scripts clean",
     "start": "react-native start",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
