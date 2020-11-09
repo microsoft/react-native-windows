@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 09 Nov 2020 16:48:39 GMT",
+      "tag": "react-native-windows_v0.62.15",
+      "version": "0.62.15",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use string object for tooltips instead of textblocks since that breaks wordwrap etc",
+            "author": "asklar@microsoft.com",
+            "commit": "815afffdaec92a90c668aa3c62c7b7802f286745",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Oct 2020 14:04:36 GMT",
       "tag": "react-native-windows_v0.62.14",
       "version": "0.62.14",

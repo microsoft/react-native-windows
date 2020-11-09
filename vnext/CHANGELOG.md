@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 24 Oct 2020 14:04:36 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Nov 2020 16:48:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.15
+
+Mon, 09 Nov 2020 16:48:39 GMT
+
+### Patches
+
+- Use string object for tooltips instead of textblocks since that breaks wordwrap etc (asklar@microsoft.com)
 
 ## 0.62.14
 
