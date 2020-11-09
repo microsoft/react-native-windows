@@ -1,8 +1,57 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 29 Oct 2020 05:05:49 GMT and should not be manually modified.
+This log was last generated on Sat, 07 Nov 2020 05:04:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.32
+
+Sat, 07 Nov 2020 05:04:58 GMT
+
+### Changes
+
+- Fix Bundling With "react-native-windows-init --useDevMode" (ngerlem@microsoft.com)
+
+## 0.0.0-canary.29
+
+Thu, 05 Nov 2020 05:05:45 GMT
+
+### Changes
+
+- fix(cli): Also look for .msix* extensions in CheckIfNeedInstallCertificate (tonguye@microsoft.com)
+- Add telemetry to react-native-windows CLI (asklar@microsoft.com)
+
+## 0.0.0-canary.28
+
+Wed, 04 Nov 2020 05:10:08 GMT
+
+### Changes
+
+- Autolinking fixes for C++ / C# interop (jthysell@microsoft.com)
+
+## 0.0.0-canary.27
+
+Sun, 01 Nov 2020 05:05:46 GMT
+
+### Changes
+
+- Update V8 and Hermes package versions (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.26
+
+Sat, 31 Oct 2020 05:06:50 GMT
+
+### Changes
+
+- Fix Generator Failing to Overwrite Template Files (ngerlem@microsoft.com)
+
+## 0.0.0-canary.25
+
+Fri, 30 Oct 2020 05:07:51 GMT
+
+### Changes
+
+- Enable Hermes Bytecode Compilation and SourceMap Creation as Part of Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.24
 

@@ -17,5 +17,7 @@ namespace Microsoft.ReactNative {
     Windows.Foundation.IAsyncAction LoadInstance();
     Windows.Foundation.IAsyncAction ReloadInstance();
     Windows.Foundation.IAsyncAction UnloadInstance();
+
+    static ReactNativeHost FromContext(IReactContext reactContext);
   }
 } // namespace Microsoft.ReactNative

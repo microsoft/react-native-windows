@@ -105,8 +105,6 @@ class NativeUIManager final : public INativeUIManager {
   winrt::Microsoft::ReactNative::ReactContext m_context;
   YGConfigRef m_yogaConfig;
   bool m_inBatch = false;
-  int64_t m_nextRootTag = 101;
-  static const int64_t RootViewTagIncrement = 10;
 
   std::map<int64_t, YogaNodePtr> m_tagsToYogaNodes;
   std::map<int64_t, std::unique_ptr<YogaContext>> m_tagsToYogaContext;

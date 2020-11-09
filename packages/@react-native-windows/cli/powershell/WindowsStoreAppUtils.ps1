@@ -143,7 +143,17 @@ function CheckIfNeedInstallCertificate
     )
 
     $PackagePath = Get-ChildItem (Join-Path $ScriptDir "*.appx") | Where-Object { $_.Mode -NotMatch "d" }
+    if ($PackagePath -eq $null)
+    {
+        $PackagePath = Get-ChildItem (Join-Path $ScriptDir "*.msix") | Where-Object { $_.Mode -NotMatch "d" }
+    }
+
     $BundlePath = Get-ChildItem (Join-Path $ScriptDir "*.appxbundle") | Where-Object { $_.Mode -NotMatch "d" }
+    if ($BundlePath -eq $null)
+    {
+        $BundlePath = Get-ChildItem (Join-Path $ScriptDir "*.msixbundle") | Where-Object { $_.Mode -NotMatch "d" }
+    }
+
     # There must be exactly 1 package/bundle
     if (($PackagePath.Count + $BundlePath.Count) -lt 1)
     {

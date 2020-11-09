@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-f0e80ae22",
+  "baseVersion": "0.0.0-77f7658e4",
   "overrides": [
     {
       "type": "patch",
@@ -86,6 +86,13 @@
     },
     {
       "type": "patch",
+      "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
+      "baseHash": "526e6f816e5cc13b264d6eba2668022e276c778c",
+      "issue": 6210
+    },
+    {
+      "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
       "baseHash": "24a37c3bb52acc5a29cf1259756490321fdf1475"
@@ -101,14 +108,14 @@
       "type": "patch",
       "file": "src/js/RNTesterAppShared.windows.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "9584b88105275c66c755247acd363ad33dffcc47",
+      "baseHash": "20181e3e69bc1dcadb0460533e0962506e779bf0",
       "issue": 6355
     },
     {
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "6e0d7dd2c48c2a46cb746cfbd56cdafd141ef3b5"
+      "baseHash": "a51e3721933832a1e2e0c83c47b792184f6d45a8"
     }
   ]
 }

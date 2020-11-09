@@ -44,7 +44,7 @@ const apiExamples = [
   'AccessibilityInfo',
   'Accessibility Windows',
   'AsyncStorage Windows',
-  'Alert',
+  'Alerts',
   'Animated - Examples',
   'Animated - Gratuitous App',
   'Appearance',

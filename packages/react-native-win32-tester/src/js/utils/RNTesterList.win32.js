@@ -218,14 +218,18 @@ const APIExamples: Array<RNTesterExample> = [
     key: 'WebSocketExample',
     category: 'Basic',
     module: require('../examples/WebSocket/WebSocketExample'),
-  },
-  {
-    key: 'TurboModuleExample',
-    module: require('../examples/TurboModule/TurboModuleExample'),
   }*/,
 ];
 
-const Modules: {...} = {};
+if (global.__turboModuleProxy) {
+  APIExamples.push({
+    key: 'TurboModuleExample',
+    category: 'Basic',
+    module: require('../examples/TurboModule/TurboModuleExample'),
+  });
+}
+
+const Modules: any = {};
 
 APIExamples.concat(ComponentExamples).forEach(Example => {
   Modules[Example.key] = Example.module;

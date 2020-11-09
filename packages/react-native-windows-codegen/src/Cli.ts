@@ -103,6 +103,7 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
   map.forEach((contents: string, fileName: string) => {
     try {
       const location = path.join(outputDir, fileName);
+      fs.mkdirSync(path.dirname(location), {recursive: true});
       fs.writeFileSync(location, contents);
     } catch (error) {
       success = false;

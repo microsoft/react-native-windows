@@ -4,12 +4,23 @@
   Licensed under the MIT License.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+     <ReactNativePackageDir Condition="'$(ReactNativePackageDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native\package.json'))\node_modules\react-native\</ReactNativePackageDir>
+  </PropertyGroup>
+
   <Target Name="MakeBundle" BeforeTargets="PrepareForBuild" 
-      Condition="'$(UseBundle)' == 'true' And ('$(BuildingInsideVisualStudio)'!='true' Or '$(BuildingProject)'=='true')">
-        <MakeDir Directories="$(BundleContentRoot)" Condition=" !Exists('$(BundleContentRoot)') and '$(BundleContentRoot)' != '' " />
-        <MakeDir Directories="$([MSBuild]::MakeRelative($(ProjectDir), $(BundleSourceMapDir)))" Condition=" !Exists('$([MSBuild]::MakeRelative($(ProjectDir), $(BundleSourceMapDir)))') and '$(BundleSourceMapDir)' != '' " />
-        <Message Importance="High" Text="Running [$(BundleCliCommand) --platform windows --entry-file $(BundleEntryFile) --bundle-output $([MSBuild]::NormalizePath('$(BundleOutputPath)\$(BundleAssetName)')) --assets-dest $(BundleContentRoot) --dev $(UseDevBundle) --reset-cache --sourcemap-output $([MSBuild]::MakeRelative($(BundleCommandWorkingDir), $([MSBuild]::NormalizePath('$(BundleSourceMapDir)\$(BundleAssetName).map')))) $(BundlerExtraArgs)] to build bundle file." />
-        <!-- Hermes will need more code here to build source maps (Call to node_modules/react-native/scripts/compose-source-maps.js) -->
-        <Exec Command="$(BundleCliCommand) --platform windows --entry-file $(BundleEntryFile) --bundle-output $([MSBuild]::NormalizePath('$(BundleOutputPath)\$(BundleAssetName)')) --assets-dest $(BundleContentRoot) --dev $(UseDevBundle) --reset-cache --sourcemap-output $([MSBuild]::MakeRelative($(BundleCommandWorkingDir), $([MSBuild]::NormalizePath('$(BundleSourceMapDir)\$(BundleAssetName).map')))) $(BundlerExtraArgs)" ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" />
+    Condition="'$(UseBundle)' == 'true' And ('$(BuildingInsideVisualStudio)'!='true' Or '$(BuildingProject)'=='true')">
+      <MakeDir Directories="$(BundleContentRoot)" />
+      <MakeDir Directories="$(BundleSourceMapDir)" />
+      <Message Importance="High" Text="Running [$(BundleCliCommand) --platform windows --entry-file $(BundleEntryFile) --bundle-output $(BundleOutputFile) --assets-dest $(BundleContentRoot) --dev $(UseDevBundle) --reset-cache --sourcemap-output $(PackagerSourceMap) $(BundlerExtraArgs)] to build bundle file." />
+      <Exec Command="$(BundleCliCommand) --platform windows --entry-file $(BundleEntryFile) --bundle-output $(BundleOutputFile) --assets-dest $(BundleContentRoot) --dev $(UseDevBundle) --reset-cache --sourcemap-output $(PackagerSourceMap) $(BundlerExtraArgs)" ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" />
+  </Target>
+
+  <!-- See https://github.com/facebook/react-native/blob/07d090dbc6c46b8f3760dbd25dbe0540c18cb3f3/react.gradle#L190 for reference -->
+  <Target Name="CompileHermesBytecode" AfterTargets="MakeBundle" Condition="'$(UseBundle)' == 'true' AND '$(UseHermes)' == 'true'">
+    <Exec Command="$(HermesCompilerCommand) -emit-binary -out $(BundleOutputFile).hbc $(BundleOutputFile) $(HermesCompilerFlags) -output-source-map" ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" />
+    <Move SourceFiles="$(BundleOutputFile).hbc" DestinationFiles="$(BundleOutputFile)" />
+    <Move SourceFiles="$(BundleOutputFile).hbc.map" DestinationFiles="$(HermesSourceMap)" />
+    <Exec Command="node $(ReactNativePackageDir)\scripts\compose-source-maps.js $(PackagerSourceMap) $(HermesSourceMap) -o $(BundleSourceMap)" ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" />
   </Target>
 </Project>

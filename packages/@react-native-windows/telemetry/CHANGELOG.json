@@ -1,0 +1,65 @@
+{
+  "name": "@react-native-windows/telemetry",
+  "entries": [
+    {
+      "date": "Sat, 07 Nov 2020 05:04:58 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.5",
+      "version": "0.0.0-canary.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix casing of msft domain",
+            "author": "asklar@microsoft.com",
+            "commit": "038cecd6638df6df39988fca433a104e82b3423e",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Nov 2020 05:06:31 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.4",
+      "version": "0.0.0-canary.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove roleInstance property",
+            "author": "asklar@microsoft.com",
+            "commit": "9254556d1726e6bec145a50c9935fae868060444",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Nov 2020 17:30:59 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.3",
+      "version": "0.0.0-canary.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "sanitize paths in other drives too",
+            "author": "asklar@microsoft.com",
+            "commit": "10d82a2167557800fd518a13c170bdc7e7bffc14",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Nov 2020 05:05:45 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.2",
+      "version": "0.0.0-canary.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Create telemetry package",
+            "author": "asklar@microsoft.com",
+            "commit": "61cc42e7f9b4dec313597fba6e99c6f22badbf7e",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    }
+  ]
+}

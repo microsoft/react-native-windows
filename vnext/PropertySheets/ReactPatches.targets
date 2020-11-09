@@ -24,9 +24,6 @@
       <DeforkingPatchCommonFiles Include="$(DeforkingPatchCommonPath)\**" />
       <ReactCommonSrcFiles Include="$(ReactCommonSrcPath)\**\*.cpp;$(ReactCommonSrcPath)\**\*.h" />
       <UnpatchedReactCommonSrcFiles Include="@(ReactCommonSrcFiles)" Condition="!Exists('$(DeforkingPatchCommonPath)\%(RecursiveDir)%(Filename)%(Extension)')" />
-
-      <!-- Special case to recreate custom header exports in Facebook BUCK logic -->
-      <JsiReactHeaderFiles Include="$(ReactNativePackageDir)\ReactCommon\turbomodule\core\*.h" />
     </ItemGroup>
   </Target>
 
@@ -37,9 +34,6 @@
           SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(DeforkingPatchCommonFiles)"
           DestinationFiles="@(DeforkingPatchCommonFiles->'$(ReactCommonDestPath)\%(RecursiveDir)%(Filename)%(Extension)')"
-          SkipUnchangedFiles="true" />
-    <Copy SourceFiles="@(JsiReactHeaderFiles)"
-          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactCommonDestPath)\ReactCommon\%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
   </Target>
 

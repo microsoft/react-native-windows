@@ -6,7 +6,7 @@
 
 import * as path from 'path';
 
-import * as configUtils from './configUtils.js';
+import * as configUtils from './configUtils';
 
 /*
 
@@ -55,6 +55,7 @@ export interface Project {
   projectName: string;
   projectLang: 'cpp' | 'cs' | null;
   projectGuid: string | null;
+  projectTypeGuid?: string;
 }
 
 export interface WindowsProjectConfig {
@@ -74,7 +75,7 @@ type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
  */
 export function projectConfigWindows(
   folder: string,
-  userConfig: Partial<WindowsProjectConfig> = {},
+  userConfig: Partial<WindowsProjectConfig> | null = {},
 ): WindowsProjectConfig | null {
   if (userConfig === null) {
     return null;
@@ -93,7 +94,7 @@ export function projectConfigWindows(
 
   var result: DeepPartial<WindowsProjectConfig> = {
     folder: folder,
-    sourceDir: sourceDir.substr(folder.length + 1),
+    sourceDir: path.relative(folder, sourceDir),
   };
 
   var validProject = false;

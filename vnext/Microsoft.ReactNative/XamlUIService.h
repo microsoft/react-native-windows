@@ -4,7 +4,6 @@
 #pragma once
 
 #include "XamlUIService.g.h"
-#include "IUIManager.h"
 
 #include "INativeUIManager.h"
 #include "ReactHost/React.h"

@@ -6,7 +6,6 @@
 #include "MsoUtils.h"
 
 #include <Base/CoreNativeModules.h>
-#include <IUIManager.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <comUtil/qiCast.h>
@@ -339,12 +338,6 @@ void ReactInstanceWin::Initialize() noexcept {
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
 
-          ::Microsoft::ReactNative::DevSettings::SetReload(
-              strongThis->Options(), [weakReactHost = m_weakReactHost]() noexcept {
-                if (auto reactHost = weakReactHost.GetStrongPtr()) {
-                  reactHost->ReloadInstance();
-                }
-              });
           LoadModules(nmp, m_options.TurboModuleProvider);
 
           auto modules = nmp->GetModules(m_reactContext, m_jsMessageThread.Load());

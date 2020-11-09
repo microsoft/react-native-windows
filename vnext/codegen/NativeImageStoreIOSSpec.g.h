@@ -13,7 +13,7 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct ImageStoreSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+struct ImageStoreIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(std::string, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{0, L"getBase64ForTag"},
       Method<void(std::string, Callback<React::JSValue>) noexcept>{1, L"hasImageForTag"},
@@ -23,7 +23,7 @@ struct ImageStoreSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
-    constexpr auto methodCheckResults = CheckMethods<TModule, ImageStoreSpec>();
+    constexpr auto methodCheckResults = CheckMethods<TModule, ImageStoreIOSSpec>();
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
