@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Don't initialize the telemetry client if running in no-telemetry mode",
+  "packageName": "@react-native-windows/cli",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-11-09T23:42:22.805Z"
+}
