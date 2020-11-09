@@ -82,6 +82,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   devSettings->platformName = "windesktop";
 
   auto instanceWrapper = CreateReactInstance(
+      std::make_shared<facebook::react::Instance>(),
       "",
       std::move(extraModules),
       nullptr,
