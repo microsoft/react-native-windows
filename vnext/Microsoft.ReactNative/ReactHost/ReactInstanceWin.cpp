@@ -8,6 +8,7 @@
 #include <Base/CoreNativeModules.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
+#include <comUtil/qiCast.h>
 
 #include <XamlUIService.h>
 #include "ReactErrorProvider.h"
@@ -26,8 +27,13 @@
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
 
+#include <Fabric/FabricUIManagerModule.h>
+#include <JSCallInvokerScheduler.h>
+#include <QuirkSettings.h>
+#include <SchedulerSettings.h>
 #include <Shared/DevServerHelper.h>
 #include <Views/ViewManager.h>
+#include <base/CoreNativeModules.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "ConfigureBundlerDlg.h"
 #include "DevMenu.h"
@@ -43,6 +49,7 @@
 #include "Modules/LogBoxModule.h"
 #include "Modules/NativeUIManager.h"
 #include "Modules/PaperUIManagerModule.h"
+#include "Modules/ReactRootViewTagGenerator.h"
 
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
@@ -208,6 +215,17 @@ void ReactInstanceWin::LoadModules(
     }
   };
 
+  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()))) {
+    registerTurboModule(
+        L"FabricUIManagerBinding",
+        // Spec incorrectly reports commandID as a number, but its actually a number | string.. so dont use the spec for
+        // now
+        // winrt::Microsoft::ReactNative::MakeTurboModuleProvider < ::Microsoft::ReactNative::UIManager,
+        //::Microsoft::ReactNativeSpecs::UIManagerSpec>());
+        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
+  }
+
   registerTurboModule(
       L"UIManager",
       // Spec incorrectly reports commandID as a number, but its actually a number | string.. so dont use the spec for
@@ -276,12 +294,12 @@ void ReactInstanceWin::Initialize() noexcept {
       [weakThis = Mso::WeakPtr{this}]() noexcept {
         // Objects that must be created on the UI thread
         if (auto strongThis = weakThis.GetStrongPtr()) {
-          strongThis->m_appTheme = std::make_shared<react::uwp::AppTheme>(
+          strongThis->m_appTheme = std::make_shared<::react::uwp::AppTheme>(
               strongThis->GetReactContext(), strongThis->m_uiMessageThread.LoadWithLock());
           Microsoft::ReactNative::I18nManager::InitI18nInfo(
               winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
           strongThis->m_appearanceListener =
-              Mso::Make<react::uwp::AppearanceChangeListener>(strongThis->GetReactContext(), strongThis->m_uiQueue);
+              Mso::Make<::react::uwp::AppearanceChangeListener>(strongThis->GetReactContext(), strongThis->m_uiQueue);
           Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(
               winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
         }
@@ -327,7 +345,7 @@ void ReactInstanceWin::Initialize() noexcept {
 
           // Acquire default modules and then populate with custom modules.
           // Note that some of these have custom thread affinity.
-          std::vector<facebook::react::NativeModuleDescription> cxxModules = react::uwp::GetCoreModules(
+          std::vector<facebook::react::NativeModuleDescription> cxxModules = ::react::uwp::GetCoreModules(
               m_batchingUIThread,
               m_jsMessageThread.Load(),
               std::move(m_appTheme),
@@ -370,8 +388,8 @@ void ReactInstanceWin::Initialize() noexcept {
 #endif
               case JSIEngine::Chakra:
                 if (m_options.EnableByteCodeCaching || !m_options.ByteCodeFileUri.empty()) {
-                  scriptStore = std::make_unique<react::uwp::UwpScriptStore>();
-                  preparedScriptStore = std::make_unique<react::uwp::UwpPreparedScriptStore>(
+                  scriptStore = std::make_unique<::react::uwp::UwpScriptStore>();
+                  preparedScriptStore = std::make_unique<::react::uwp::UwpPreparedScriptStore>(
                       winrt::to_hstring(m_options.ByteCodeFileUri));
                 }
                 devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
@@ -385,6 +403,7 @@ void ReactInstanceWin::Initialize() noexcept {
             m_options.TurboModuleProvider->SetReactContext(
                 winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
             auto instanceWrapper = facebook::react::CreateReactInstance(
+                std::shared_ptr<facebook::react::Instance>(strongThis->m_instance.Load()),
                 std::string(), // bundleRootPath
                 std::move(cxxModules),
                 m_options.TurboModuleProvider,
@@ -395,6 +414,15 @@ void ReactInstanceWin::Initialize() noexcept {
 
             m_instance.Exchange(Mso::Copy(instanceWrapper->GetInstance()));
             m_instanceWrapper.Exchange(std::move(instanceWrapper));
+
+            // Eagerly init the FabricUI binding
+            if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
+                    winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()))) {
+              Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
+                  winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()),
+                  m_instanceWrapper.Load()->GetInstance()->getRuntimeExecutor());
+              m_options.TurboModuleProvider->getModule("FabricUIManagerBinding", m_instance.Load()->getJSCallInvoker());
+            }
 
             if (auto onCreated = m_options.OnInstanceCreated.Get()) {
               onCreated->Invoke(Mso::CntPtr<Mso::React::IReactContext>(m_reactContext));
@@ -556,7 +584,13 @@ ReactInstanceState ReactInstanceWin::State() const noexcept {
 }
 
 void ReactInstanceWin::InitJSMessageThread() noexcept {
-  auto jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
+  m_instance.Exchange(std::make_shared<facebook::react::Instance>());
+
+  auto scheduler = Mso::MakeJSCallInvokerScheduler(
+      m_instance.Load()->getJSCallInvoker(),
+      Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
+      Mso::Copy(m_whenDestroyed));
+  auto jsDispatchQueue = Mso::DispatchQueue::MakeCustomQueue(Mso::CntPtr(scheduler));
 
   // Create MessageQueueThread for the DispatchQueue
   VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");
@@ -565,8 +599,8 @@ void ReactInstanceWin::InitJSMessageThread() noexcept {
       winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
   m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
 
-  m_jsMessageThread.Exchange(std::make_shared<MessageDispatchQueue>(
-      jsDispatchQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError), Mso::Copy(m_whenDestroyed)));
+  m_jsMessageThread.Exchange(qi_cast<Mso::IJSCallInvokerQueueScheduler>(scheduler.Get())->GetMessageQueue());
+
   m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
 }
 
@@ -583,7 +617,7 @@ void ReactInstanceWin::InitUIMessageThread() noexcept {
   m_uiMessageThread.Exchange(
       std::make_shared<MessageDispatchQueue>(m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
-  m_batchingUIThread = react::uwp::MakeBatchingQueueThread(m_uiMessageThread.Load());
+  m_batchingUIThread = ::react::uwp::MakeBatchingQueueThread(m_uiMessageThread.Load());
 }
 
 void ReactInstanceWin::InitUIManager() noexcept {
@@ -806,17 +840,42 @@ void ReactInstanceWin::AttachMeasuredRootView(
   int64_t rootTag = -1;
   rootView->ResetView();
 
-  if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*m_reactContext).lock()) {
-    rootTag = uiManager->AddMeasuredRootView(rootView);
-    rootView->SetTag(rootTag);
-  } else {
-    assert(false);
-  }
+  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()))) {
+    auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+        winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
 
-  std::string jsMainModuleName = rootView->JSComponentName();
-  folly::dynamic params = folly::dynamic::array(
-      std::move(jsMainModuleName), folly::dynamic::object("initialProps", std::move(initialProps))("rootTag", rootTag));
-  CallJsFunction("AppRegistry", "runApplication", std::move(params));
+    auto rootTag = Microsoft::ReactNative::getNextRootViewTag();
+    /*
+    ThemedReactContext reactContext =
+        new ThemedReactContext(
+            mReactApplicationContext, rootView.getContext(), reactRootView.getSurfaceID());
+            */
+    // mMountingManager.addRootView(rootTag, rootView);
+    // String moduleName = reactRootView.getJSModuleName();
+    // mReactContextForRootTag.put(rootTag, reactContext);
+    // if (ENABLE_FABRIC_LOGS) {
+    //      FLog.d(TAG, "Starting surface for module: %s and reactTag: %d", moduleName, rootTag);
+    //}
+    uiManager->startSurface(rootView, rootTag, rootView->JSComponentName(), std::move(initialProps));
+    // if (initialUITemplate != null) {
+    //      mBinding.renderTemplateToSurface(rootTag, initialUITemplate);
+    //}
+
+  } else {
+    if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*m_reactContext).lock()) {
+      rootTag = uiManager->AddMeasuredRootView(rootView);
+      rootView->SetTag(rootTag);
+    } else {
+      assert(false);
+    }
+
+    std::string jsMainModuleName = rootView->JSComponentName();
+    folly::dynamic params = folly::dynamic::array(
+        std::move(jsMainModuleName),
+        folly::dynamic::object("initialProps", std::move(initialProps))("rootTag", rootTag));
+    CallJsFunction("AppRegistry", "runApplication", std::move(params));
+  }
 }
 
 void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView) noexcept {

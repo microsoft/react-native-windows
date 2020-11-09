@@ -54,11 +54,17 @@
     <ClCompile Include="$(FollyDir)\folly\json_pointer.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Format.cpp" />
     <ClCompile Include="$(FollyDir)\folly\String.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\SharedMutex.cpp" />
     <ClCompile Include="$(FollyDir)\folly\container\detail\F14Table.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\concurrency\CacheLocality.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Conv.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\detail\Futex.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\synchronization\ParkingLot.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\synchronization\SanitizeThread.cpp" />
     <ClCompile Include="$(FollyDir)\folly\portability\string.cpp">
       <ObjectFileName>$(IntDir)\portabilityString.obj</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\portability\SysResource.cpp"/>
     <ClCompile Include="$(FollyDir)\folly\Demangle.cpp" />
     <ClCompile Include="$(FollyDir)\folly\dynamic.cpp" />
     <ClCompile Include="$(FollyDir)\folly\json.cpp" />

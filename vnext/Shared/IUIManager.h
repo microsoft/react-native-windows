@@ -15,8 +15,8 @@ namespace react {
 struct INativeUIManager;
 struct IReactRootView;
 class IViewManager;
-struct ShadowNode;
 class MessageQueueThread;
+struct ShadowNode;
 
 class IUIManager {
  public:

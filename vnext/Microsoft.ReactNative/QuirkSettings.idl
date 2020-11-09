@@ -24,6 +24,9 @@ namespace Microsoft.ReactNative {
 
     // Runtime setting allowing Networking (HTTP, WebSocket) connections to skip certificate validation.
     static void SetAcceptSelfSigned(ReactInstanceSettings settings, Boolean value);
+
+    // Enable ability to use new Fabric UIManager within this instance.
+    static void SetEnableFabric(ReactInstanceSettings settings, Boolean value);
   }
 
 } // namespace Microsoft.ReactNative
