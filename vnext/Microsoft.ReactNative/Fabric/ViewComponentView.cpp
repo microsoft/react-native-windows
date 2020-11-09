@@ -56,7 +56,7 @@ void ViewComponentView::updateProps(
   if (oldViewProps.borderStyles != newViewProps.borderStyles) {
     m_needsBorderUpdate = true;
   }
-  
+
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 

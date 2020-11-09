@@ -20,8 +20,8 @@
 namespace Microsoft::ReactNative {
 
 ParagraphComponentView::ParagraphComponentView() {
-  //static auto const defaultProps = std::make_shared<facebook::react::TextProps const>();
-  //m_props = defaultProps;
+  // static auto const defaultProps = std::make_shared<facebook::react::TextProps const>();
+  // m_props = defaultProps;
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
@@ -29,21 +29,25 @@ ParagraphComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void ParagraphComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void ParagraphComponentView::mountChildComponentView(
+    const IComponentView &childComponentView,
+    uint32_t index) noexcept {
   auto v = static_cast<const ParagraphComponentView &>(childComponentView);
   assert(false);
-  //m_element.Children().InsertAt(index, v.Element());
+  // m_element.Children().InsertAt(index, v.Element());
 }
 
-void ParagraphComponentView::unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void ParagraphComponentView::unmountChildComponentView(
+    const IComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
-  //m_element.Children().RemoveAt(index);
+  // m_element.Children().RemoveAt(index);
 }
 
 void ParagraphComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  //const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::TextProps>(m_props);
+  // const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::TextProps>(m_props);
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(props);
 
   /*
@@ -70,14 +74,13 @@ void ParagraphComponentView::updateProps(
     m_needsBorderUpdate = true;
   }
   */
-  //m_props = std::static_pointer_cast<facebook::react::TextProps const>(props);
+  // m_props = std::static_pointer_cast<facebook::react::TextProps const>(props);
 }
 
 void ParagraphComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
 void ParagraphComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
-
   const auto &newState = *std::static_pointer_cast<facebook::react::ParagraphShadowNode::ConcreteState const>(state);
 
   // Only handle single fragments right now
@@ -100,16 +103,13 @@ void ParagraphComponentView::updateLayoutMetrics(
   m_element.Height(layoutMetrics.frame.size.height);
 }
 void ParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-
-  //m_element.FinalizeProperties();
-
+  // m_element.FinalizeProperties();
 }
 void ParagraphComponentView::prepareForRecycle() noexcept {}
 facebook::react::SharedProps ParagraphComponentView::props() noexcept {
   assert(false);
   return {};
 }
-
 
 const xaml::FrameworkElement ParagraphComponentView::Element() const noexcept {
   return m_element;

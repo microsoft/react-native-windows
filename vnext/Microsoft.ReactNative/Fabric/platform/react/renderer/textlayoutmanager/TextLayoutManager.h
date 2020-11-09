@@ -26,12 +26,11 @@ using SharedTextLayoutManager = std::shared_ptr<const TextLayoutManager>;
  * Windows-specific TextLayoutManager.
  */
 class TextLayoutManager {
-public:
+ public:
   using Shared = std::shared_ptr<const TextLayoutManager>;
 
- #pragma region required interface from core cxx cross platform impl
-  TextLayoutManager(const ContextContainer::Shared &contextContainer)
-      : m_contextContainer(contextContainer){};
+#pragma region required interface from core cxx cross platform impl
+  TextLayoutManager(const ContextContainer::Shared &contextContainer) : m_contextContainer(contextContainer){};
   ~TextLayoutManager();
 
   /*
@@ -42,14 +41,12 @@ public:
       ParagraphAttributes paragraphAttributes,
       LayoutConstraints layoutConstraints) const;
 
- /*
+  /*
    * Measures lines of `attributedString` using native text rendering
    * infrastructure.
    */
-  LinesMeasurements measureLines(
-      AttributedString attributedString,
-      ParagraphAttributes paragraphAttributes,
-      Size size) const;
+  LinesMeasurements measureLines(AttributedString attributedString, ParagraphAttributes paragraphAttributes, Size size)
+      const;
 
   /*
    * Returns an opaque pointer to platform-specific TextLayoutManager.

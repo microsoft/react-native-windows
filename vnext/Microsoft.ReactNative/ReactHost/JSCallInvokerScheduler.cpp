@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-#include "eventWaitHandle/eventWaitHandle.h"
-#include <ReactCommon/CallInvoker.h>
-#include <cxxreact/MessageQueueThread.h>
 #include "JSCallInvokerScheduler.h"
+#include <ReactCommon/CallInvoker.h>
 #include <Threading/MessageDispatchQueue.h>
+#include <cxxreact/MessageQueueThread.h>
+#include "eventWaitHandle/eventWaitHandle.h"
 
 namespace Mso {
 
@@ -36,7 +36,6 @@ struct JSCallInvokerScheduler
   std::shared_ptr<facebook::react::CallInvoker> m_callInvoker;
 };
 
-
 std::shared_ptr<facebook::react::MessageQueueThread> JSCallInvokerScheduler::GetMessageQueue() noexcept {
   return m_jsMessageThread;
 }
@@ -50,8 +49,7 @@ JSCallInvokerScheduler::JSCallInvokerScheduler(
     Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
     Mso::Promise<void> &&whenQuit) noexcept
     : m_callInvoker(callInvoker) {
-
-    m_jsMessageThread = std::make_shared<Mso::React::MessageDispatchQueue>(
+  m_jsMessageThread = std::make_shared<Mso::React::MessageDispatchQueue>(
       Mso::DispatchQueue::MakeLooperQueue(), std::move(errorHandler), std::move(whenQuit));
 }
 
@@ -91,9 +89,11 @@ void JSCallInvokerScheduler::AwaitTermination() noexcept {
 }
 
 Mso::CntPtr<IDispatchQueueScheduler> MakeJSCallInvokerScheduler(
-    std::shared_ptr<facebook::react::CallInvoker> callInvoker, Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
+    std::shared_ptr<facebook::react::CallInvoker> callInvoker,
+    Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
     Mso::Promise<void> &&whenQuit) noexcept {
-  return Mso::Make<JSCallInvokerScheduler, IDispatchQueueScheduler>(callInvoker, std::move(errorHandler), std::move(whenQuit));
+  return Mso::Make<JSCallInvokerScheduler, IDispatchQueueScheduler>(
+      callInvoker, std::move(errorHandler), std::move(whenQuit));
 }
 
 } // namespace Mso

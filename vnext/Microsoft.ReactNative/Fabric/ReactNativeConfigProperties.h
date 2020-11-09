@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include <string>
-#include <react/config/ReactNativeConfig.h>
 #include <nativeModules.h>
+#include <react/config/ReactNativeConfig.h>
+#include <string>
 
 namespace Microsoft::ReactNative {
 
@@ -19,10 +19,8 @@ class ReactNativeConfigProperties : public facebook::react::ReactNativeConfig {
   virtual int64_t getInt64(const std::string &param) const override;
   virtual double getDouble(const std::string &param) const override;
 
-
-private:
+ private:
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
-
-}
+} // namespace Microsoft::ReactNative

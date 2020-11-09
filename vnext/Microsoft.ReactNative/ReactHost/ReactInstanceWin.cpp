@@ -885,7 +885,12 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView)
   auto rootTag = rootView->GetTag();
   folly::dynamic params = folly::dynamic::array(rootTag);
 
-  CallJsFunction("AppRegistry", "unmountApplicationComponentAtRootTag", std::move(params));
+  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()))) {
+    CallJsFunction("ReactFabric", "unmountComponentAtNode", std::move(params));
+  } else {
+    CallJsFunction("AppRegistry", "unmountApplicationComponentAtRootTag", std::move(params));
+  }
 
   // Give the JS thread time to finish executing
   m_jsMessageThread.Load()->runOnQueueSync([]() {});

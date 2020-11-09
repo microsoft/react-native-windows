@@ -19,10 +19,9 @@ TextLayoutManager::~TextLayoutManager() {}
 
 // TODO: This function is inefficient (not caching anything), and only handles single strings.
 TextMeasurement TextLayoutManager::measure(
-      AttributedStringBox attributedStringBox,
-      ParagraphAttributes paragraphAttributes,
-      LayoutConstraints layoutConstraints) const {
-
+    AttributedStringBox attributedStringBox,
+    ParagraphAttributes paragraphAttributes,
+    LayoutConstraints layoutConstraints) const {
   assert(attributedStringBox.getValue().getFragments().size() == 1);
 
   IDWriteFactory *pDWriteFactory;
@@ -30,12 +29,12 @@ TextMeasurement TextLayoutManager::measure(
       DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown **>(&pDWriteFactory));
 
   for (auto &fragment : attributedStringBox.getValue().getFragments()) {
-
-  IDWriteTextFormat *pTextFormat;
+    IDWriteTextFormat *pTextFormat;
     pDWriteFactory->CreateTextFormat(
         L"Gabriola", // Font family name.
         NULL, // Font collection (NULL sets it to use the system font collection).
-        static_cast<DWRITE_FONT_WEIGHT>(fragment.textAttributes.fontWeight.value_or(static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
+        static_cast<DWRITE_FONT_WEIGHT>(fragment.textAttributes.fontWeight.value_or(
+            static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
         DWRITE_FONT_STYLE_NORMAL,
         DWRITE_FONT_STRETCH_NORMAL,
         fragment.textAttributes.fontSize,
@@ -64,6 +63,7 @@ TextMeasurement TextLayoutManager::measure(
 
   /*
   
+
         // Get line bounds
   float baseline;
   float lineAdvance;
@@ -128,19 +128,18 @@ TextMeasurement TextLayoutManager::measure(
   return {};
 };
 
-  LinesMeasurements TextLayoutManager::measureLines(
-      AttributedString attributedString,
-      ParagraphAttributes paragraphAttributes,
-      Size size) const {
-        assert(false);
+LinesMeasurements TextLayoutManager::measureLines(
+    AttributedString attributedString,
+    ParagraphAttributes paragraphAttributes,
+    Size size) const {
+  assert(false);
 
-        std::vector<LineMeasurement> paragraphLines{};
-        return paragraphLines;
-      }
+  std::vector<LineMeasurement> paragraphLines{};
+  return paragraphLines;
+}
 
-
-void * TextLayoutManager::getNativeTextLayoutManager() const {
-  return (void*)this;
+void *TextLayoutManager::getNativeTextLayoutManager() const {
+  return (void *)this;
 }
 
 } // namespace react

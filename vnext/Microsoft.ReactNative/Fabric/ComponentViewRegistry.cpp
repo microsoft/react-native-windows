@@ -7,10 +7,10 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4244 4305)
-#include <react/renderer/components/view/ViewShadowNode.h>
+#include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/TextShadowNode.h>
-#include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
+#include <react/renderer/components/view/ViewShadowNode.h>
 #pragma warning(pop)
 
 #include "ParagraphComponentView.h"
@@ -23,7 +23,6 @@ namespace Microsoft::ReactNative {
 ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithComponentHandle(
     facebook::react::ComponentHandle componentHandle,
     facebook::react::Tag tag) noexcept {
-
   // TODO implement recycled components like core does
 
   std::shared_ptr<BaseComponentView> view;
@@ -44,7 +43,6 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
   view->Element().Tag(winrt::box_value(tag));
   auto it = m_registry.insert({tag, ComponentViewDescriptor{view, false, false}});
   return it.first->second;
-
 }
 
 ComponentViewDescriptor const &ComponentViewRegistry::componentViewDescriptorWithTag(

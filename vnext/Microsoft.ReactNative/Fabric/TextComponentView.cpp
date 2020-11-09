@@ -12,8 +12,8 @@
 namespace Microsoft::ReactNative {
 
 TextComponentView::TextComponentView() {
-  //static auto const defaultProps = std::make_shared<facebook::react::TextProps const>();
-  //m_props = defaultProps;
+  // static auto const defaultProps = std::make_shared<facebook::react::TextProps const>();
+  // m_props = defaultProps;
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
@@ -24,12 +24,12 @@ TextComponentView::supplementalComponentDescriptorProviders() noexcept {
 void TextComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
   auto v = static_cast<const TextComponentView &>(childComponentView);
   assert(false);
-  //m_element.Children().InsertAt(index, v.Element());
+  // m_element.Children().InsertAt(index, v.Element());
 }
 
 void TextComponentView::unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
-  //m_element.Children().RemoveAt(index);
+  // m_element.Children().RemoveAt(index);
 }
 
 void TextComponentView::updateProps(
@@ -62,7 +62,7 @@ void TextComponentView::updateProps(
     m_needsBorderUpdate = true;
   }
   */
-  //m_props = std::static_pointer_cast<facebook::react::TextProps const>(props);
+  // m_props = std::static_pointer_cast<facebook::react::TextProps const>(props);
 }
 
 void TextComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
@@ -83,9 +83,7 @@ void TextComponentView::updateLayoutMetrics(
   m_element.Height(layoutMetrics.frame.size.height);
 }
 void TextComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-
-  //m_element.FinalizeProperties();
-
+  // m_element.FinalizeProperties();
 }
 void TextComponentView::prepareForRecycle() noexcept {}
 facebook::react::SharedProps TextComponentView::props() noexcept {

@@ -3,7 +3,7 @@
 namespace facebook::react {
 class CallInvoker;
 class MessageQueueThread;
-}
+} // namespace facebook::react
 
 namespace Mso {
 
@@ -16,4 +16,4 @@ Mso::CntPtr<IDispatchQueueScheduler> MakeJSCallInvokerScheduler(
     std::shared_ptr<facebook::react::CallInvoker> callInvoker,
     Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
     Mso::Promise<void> &&whenQuit = nullptr) noexcept;
-}
+} // namespace Mso

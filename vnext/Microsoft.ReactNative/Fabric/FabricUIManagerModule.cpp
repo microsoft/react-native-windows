@@ -10,15 +10,15 @@
 #include <Fabric/ViewComponentView.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>
+#include <IXamlRootView.h>
 #include <JSI/jsi.h>
 #include <Modules\NativeUIManager.h>
-#include <IXamlRootView.h>
+#include <UI.Xaml.Controls.h>
 #include <Views/ViewManager.h>
 #include <XamlUtils.h>
 #include <react/renderer/core/EventBeat.h>
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include "ShadowNodeBase.h"
-#include <UI.Xaml.Controls.h>
 #include "Unicode.h"
 #include "XamlUIService.h"
 #pragma warning(push)
@@ -240,7 +240,7 @@ void FabricUIManager::installFabricUIManager( // in android this is Binding::ins
 }
 
 void FabricUIManager::startSurface(
-    facebook::react::IReactRootView* rootview,
+    facebook::react::IReactRootView *rootview,
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
@@ -250,7 +250,6 @@ void FabricUIManager::startSurface(
   auto rootFE = xamlRootView->GetXamlView().as<xaml::FrameworkElement>();
 
   m_surfaceRegistry.insert({surfaceId, xamlRootView->GetXamlView()});
-  //m_surfaceRoot = xamlRootView->GetXamlView();
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
     self->m_registry.dequeueComponentViewWithComponentHandle(facebook::react::RootShadowNode::Handle(), surfaceId);
@@ -268,9 +267,7 @@ void FabricUIManager::startSurface(
   // TODO scaling factor
   context.pointScaleFactor = 1; // pointScaleFactor_;
 
-
-
-  // TODO correct constaints, and add calls to measureSurfaceWithLayoutConstraints to update them 
+  // TODO correct constaints, and add calls to measureSurfaceWithLayoutConstraints to update them
   facebook::react::LayoutConstraints constraints;
   constraints.minimumSize.height = 0;
   constraints.minimumSize.width = 0;
@@ -292,18 +289,15 @@ void FabricUIManager::startSurface(
   );
 }
 
-
 void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {
   auto rootComponentViewDescriptor = m_registry.componentViewDescriptorWithTag(surfaceId);
-
 
   auto s = m_surfaceRegistry.at(surfaceId);
   auto p = s.as<xaml::Controls::Panel>();
   auto c = p.Children();
 
-
-  //m_surfaceRoot.as<xaml::Controls::Panel>().Children().Append(static_cast<ViewComponentView &>(*rootComponentViewDescriptor.view).Element());
-  m_surfaceRegistry.at(surfaceId).as<xaml::Controls::Panel>().Children().Append(static_cast<ViewComponentView &>(*rootComponentViewDescriptor.view).Element());
+  m_surfaceRegistry.at(surfaceId).as<xaml::Controls::Panel>().Children().Append(
+      static_cast<ViewComponentView &>(*rootComponentViewDescriptor.view).Element());
 }
 
 struct RemoveDeleteMetadata {
@@ -479,7 +473,6 @@ void Microsoft::ReactNative::FabricUIManager::schedulerDidRequestPreliminaryView
           });
   }
   */
-
 
   // Not needed on iOS.. so maybe not needed in windows?
   /*

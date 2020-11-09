@@ -19,8 +19,8 @@
 namespace Microsoft::ReactNative {
 
 ScrollViewComponentView::ScrollViewComponentView() {
-  //static auto const defaultProps = std::make_shared<facebook::react::TextProps const>();
-  //m_props = defaultProps;
+  // static auto const defaultProps = std::make_shared<facebook::react::TextProps const>();
+  // m_props = defaultProps;
 
   m_element.Content(m_contentPanel);
 }
@@ -30,18 +30,22 @@ ScrollViewComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void ScrollViewComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void ScrollViewComponentView::mountChildComponentView(
+    const IComponentView &childComponentView,
+    uint32_t index) noexcept {
   m_contentPanel.Children().InsertAt(index, static_cast<const BaseComponentView &>(childComponentView).Element());
 }
 
-void ScrollViewComponentView::unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void ScrollViewComponentView::unmountChildComponentView(
+    const IComponentView &childComponentView,
+    uint32_t index) noexcept {
   m_contentPanel.Children().RemoveAt(index);
 }
 
 void ScrollViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  //const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::TextProps>(m_props);
+  // const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::TextProps>(m_props);
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(props);
 
   /*
@@ -68,14 +72,20 @@ void ScrollViewComponentView::updateProps(
     m_needsBorderUpdate = true;
   }
   */
-  //m_props = std::static_pointer_cast<facebook::react::TextProps const>(props);
+  // m_props = std::static_pointer_cast<facebook::react::TextProps const>(props);
 }
 
 void ScrollViewComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
 void ScrollViewComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
-}
+
+    const auto &newState = *std::static_pointer_cast<facebook::react::ScrollViewShadowNode::ConcreteState const>(state);
+
+    auto contentSize = newState.getData().getContentSize();
+    m_contentPanel.Height(contentSize.height);
+    m_contentPanel.Width(contentSize.width);
+  }
 void ScrollViewComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
@@ -90,16 +100,13 @@ void ScrollViewComponentView::updateLayoutMetrics(
   m_element.Height(layoutMetrics.frame.size.height);
 }
 void ScrollViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-
-  //m_element.FinalizeProperties();
-
+  // m_element.FinalizeProperties();
 }
 void ScrollViewComponentView::prepareForRecycle() noexcept {}
 facebook::react::SharedProps ScrollViewComponentView::props() noexcept {
   assert(false);
   return {};
 }
-
 
 const xaml::FrameworkElement ScrollViewComponentView::Element() const noexcept {
   return m_element;

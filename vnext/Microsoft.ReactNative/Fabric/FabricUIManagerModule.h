@@ -190,8 +190,6 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   ComponentViewRegistry m_registry;
 
   std::unordered_map<facebook::react::SurfaceId, XamlView> m_surfaceRegistry;
-  // TODO how to fix m_surfaceRegistry to not hit compiler error... for now just store a single instance.. so only support one rootview
-  XamlView m_surfaceRoot{nullptr};
 
   std::recursive_mutex m_commitMutex;
 
