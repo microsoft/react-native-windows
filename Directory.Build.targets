@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <Target
+    Name="EnsureJavaScriptCodeUpToDate"
+    BeforeTargets="BeforeBuild"
+    Inputs="$(MSBuildThisFileDirectory)yarn.lock"
+    Outputs="$(RootIntDir)\JsUpToDateCheck\yarn.lock"
+    >
+
+    <Message Text="Checking if Yarn.lock file is 'up to date' by running a 'dry-run' version of yarn install and checking the exit code" />
+    <Exec 
+      ContinueOnError="True"
+      Command="npx yarn install --offline --cache-folder $(RootIntDir)\JsUpToDateCheck\Cache"
+      WorkingDirectory="$(MSBuildThisFileDirectory)"
+      >
+      <Output TaskParameter="ExitCode" ItemName="_YarnExitCode"/>
+    </Exec>
+
+    <!-- Fail the build if yarn needs to install packages. -->
+    <Error 
+      Condition="'%(_YarnExitCode.Identity)' != '0'"
+      Text="Yarn packages are out of date. Please run `yarn install &amp;&amp; yarn build` in the root of the repo to ensure the generated files are up to date" 
+    />
+
+    <!-- 
+      Copy the yarn.lock file to prevent this task from running over and over again. And ony rerun the check with yarn.lock changes. 
+      This will likely miss a few corner cases with local changes to package.json but should catch the most importance case after syncing
+    -->
+    <Copy
+      Condition="'%(_YarnExitCode.Identity)' != '0'"
+      SourceFiles="$(MSBuildThisFileDirectory)yarn.lock"
+      DestinationFolder="$(RootIntDir)\JsUpToDateCheck"/>
+  </Target>
+
+
+</Project>
