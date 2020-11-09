@@ -5,10 +5,9 @@
  * @ts-check
  */
 
-const { task, series, eslintTask, cleanTask } = require('just-scripts');
+const { task, series, eslintTask } = require('just-scripts');
 const fs = require('fs');
 
-task('clean', cleanTask({ paths: ['dist'] }));
 task('eslint', eslintTask());
 task('eslint:fix', eslintTask({ fix: true }));
 task('prepareBundle', () => {
