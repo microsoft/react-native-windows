@@ -1,18 +1,18 @@
-{	
-  "extends": "@rnw-scripts/ts-config",	
-  "compilerOptions": {	
-    "noEmit": true,	
-    "esModuleInterop": true,	
-    "types": [	
-    "@wdio/sync",	
-      "@wdio/jasmine-framework"	
-    ]	
-  },	
-  "include": [	
-    "app",	
-    "wdio"	
-  ],	
-  "exclude": [	
-    "node_modules"	
-  ]	
+{
+  "extends": "@rnw-scripts/ts-config",
+  "compilerOptions": {
+    "noEmit": true,
+    "esModuleInterop": true,
+    "types": [
+    "@wdio/sync",
+      "@wdio/jasmine-framework"
+    ]
+  },
+  "include": [
+    "app",
+    "wdio"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 } 
