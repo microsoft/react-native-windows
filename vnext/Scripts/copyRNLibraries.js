@@ -46,7 +46,7 @@ exports.copyTask = baseDir => {
       dest: base('.'),
     }),
 
-    copyTask({paths: src('**'), dest: base('.')}),
+    copyTask({paths: src('!babel-plugin-codegen'), dest: base('.')}),
   );
 };
 
