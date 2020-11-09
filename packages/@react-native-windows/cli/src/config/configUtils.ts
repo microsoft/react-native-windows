@@ -232,7 +232,7 @@ export function readProjectFile(projectPath: string) {
  * @param propertyName The property to look for.
  * @return The value of the tag if it exists.
  */
-export function tryFindPropertyValue(
+export function findPropertyValue(
   projectContents: Node,
   propertyName: string,
 ): string | null {
@@ -247,18 +247,6 @@ export function tryFindPropertyValue(
   }
 
   return null;
-}
-
-export function findPropertyValue(
-  projectContents: Node,
-  propertyName: string,
-  filePath: string,
-): string {
-  const res = tryFindPropertyValue(projectContents, propertyName);
-  if (!res) {
-    throw new Error(`Couldn't find property ${propertyName} from ${filePath}`);
-  }
-  return res;
 }
 
 /**
@@ -287,8 +275,8 @@ export function importProjectExists(
  */
 export function getProjectName(projectContents: Node): string {
   const name =
-    tryFindPropertyValue(projectContents, 'ProjectName') ||
-    tryFindPropertyValue(projectContents, 'AssemblyName') ||
+    findPropertyValue(projectContents, 'ProjectName') ||
+    findPropertyValue(projectContents, 'AssemblyName') ||
     '';
 
   return name;
@@ -300,7 +288,7 @@ export function getProjectName(projectContents: Node): string {
  * @return The project namespace.
  */
 export function getProjectNamespace(projectContents: Node): string | null {
-  return tryFindPropertyValue(projectContents, 'RootNamespace');
+  return findPropertyValue(projectContents, 'RootNamespace');
 }
 
 /**
@@ -309,5 +297,5 @@ export function getProjectNamespace(projectContents: Node): string | null {
  * @return The project guid.
  */
 export function getProjectGuid(projectContents: Node): string | null {
-  return tryFindPropertyValue(projectContents, 'ProjectGuid');
+  return findPropertyValue(projectContents, 'ProjectGuid');
 }

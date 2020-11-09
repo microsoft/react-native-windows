@@ -93,6 +93,25 @@ function updateFile(
 }
 
 /**
+ * Exits the script with the given status code.
+ * @param statusCode The status code.
+ * @param loggingWasEnabled Whether or not verbose lossing was enabled.
+ */
+function exitProcessWithStatusCode(
+  statusCode: number,
+  loggingWasEnabled: boolean,
+) {
+  if (!loggingWasEnabled && statusCode !== 0) {
+    console.log(
+      `Error: Re-run the command with ${chalk.bold(
+        '--logging',
+      )} for more information.`,
+    );
+  }
+  process.exit(statusCode);
+}
+
+/**
  * Performs auto-linking for RNW native modules and apps.
  * @param args Unprocessed args passed from react-native CLI.
  * @param config Config passed from react-native CLI.
@@ -132,6 +151,7 @@ async function updateAutoLink(
 
     if (options.sln) {
       const slnFile = path.join(windowsAppConfig.folder, options.sln);
+
       windowsAppConfig.solutionFile = path.relative(
         path.join(windowsAppConfig.folder, windowsAppConfig.sourceDir),
         slnFile,
@@ -275,7 +295,7 @@ async function updateAutoLink(
     // Generating cs/h files for app code consumption
     if (projectLang === 'cs') {
       let csUsingNamespaces = '';
-      let csReactPackageProviders = '';
+      let csReactPacakgeProviders = '';
 
       for (const dependencyName in windowsDependencies) {
         windowsDependencies[dependencyName].projects.forEach(project => {
@@ -285,9 +305,9 @@ async function updateAutoLink(
               csUsingNamespaces += `\nusing ${namespace};`;
             });
 
-            csReactPackageProviders += `\n            // IReactPackageProviders from ${dependencyName}`;
+            csReactPacakgeProviders += `\n            // IReactPackageProviders from ${dependencyName}`;
             project.csPackageProviders.forEach(packageProvider => {
-              csReactPackageProviders += `\n            packageProviders.Add(new ${packageProvider}());`;
+              csReactPacakgeProviders += `\n            packageProviders.Add(new ${packageProvider}());`;
             });
           }
         });
@@ -306,7 +326,7 @@ async function updateAutoLink(
 
       const csContents = getNormalizedContents(srcCsFile, {
         autolinkCsUsingNamespaces: csUsingNamespaces,
-        autolinkCsReactPackageProviders: csReactPackageProviders,
+        autolinkCsReactPacakgeProviders: csReactPacakgeProviders,
       });
 
       changesNecessary =
@@ -470,9 +490,7 @@ async function updateAutoLink(
           "'npx react-native autolink-windows'",
         )} to apply the changes. (${Math.round(endTime - startTime)}ms)`,
       );
-      throw new Error(
-        'Auto-linking changes were necessary but --check was specified',
-      );
+      exitProcessWithStatusCode(0, verbose);
     } else {
       console.log(
         `${chalk.green(
@@ -490,7 +508,7 @@ async function updateAutoLink(
         endTime - startTime,
       )}ms)`,
     );
-    throw e;
+    exitProcessWithStatusCode(1, verbose);
   }
 }
 
