@@ -20,7 +20,6 @@ const {
   apiExtractorUpdateTask,
 } = require('just-scripts');
 
-option('production');
 option('clean');
 option('ci');
 

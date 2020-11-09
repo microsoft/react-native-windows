@@ -22,7 +22,6 @@ const {execSync} = require('child_process');
 const fs = require('fs');
 const copyRNLibaries = require('./Scripts/copyRNLibraries');
 
-option('production');
 option('clean');
 option('ci');
 
