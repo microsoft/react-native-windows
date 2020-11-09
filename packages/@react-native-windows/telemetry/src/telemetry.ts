@@ -9,6 +9,10 @@ import {randomBytes} from 'crypto';
 import * as appInsights from 'applicationinsights';
 import {execSync} from 'child_process';
 
+if (!process.env.RNW_CLI_TEST) {
+  appInsights.Configuration.setInternalLogging(false, false);
+}
+
 appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
 export const telClient = appInsights.defaultClient;
 
