@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Set Content-Length on the content object and not on the request itself.",
-  "packageName": "react-native-windows",
-  "email": "i@mandrigin.ru",
-  "dependentChangeType": "patch",
-  "date": "2020-11-03T17:19:29.549Z"
-}

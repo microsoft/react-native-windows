@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update Microsoft.ReactNative Nuget Package to support layout convention (#6381)",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}
