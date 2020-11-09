@@ -5,7 +5,7 @@
  * @ts-check
  */
 
-const { task, series, eslintTask } = require('just-scripts');
+const { task, series, eslintTask, tscTask } = require('just-scripts');
 const fs = require('fs');
 
 task('eslint', eslintTask());
@@ -17,5 +17,5 @@ task('prepareBundle', () => {
   }
 });
 
-task('lint', series('eslint'));
+task('lint', series('eslint', tscTask()));
 task('lint:fix', series('eslint:fix'));
