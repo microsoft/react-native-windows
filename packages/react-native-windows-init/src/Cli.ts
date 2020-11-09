@@ -16,7 +16,7 @@ import * as chalk from 'chalk';
 // @ts-ignore
 import * as Registry from 'npm-registry';
 
-import {telemetryClient, isMSFTInternal} from '@react-native-windows/telemetry';
+import {Telemetry, isMSFTInternal} from '@react-native-windows/telemetry';
 
 /**
  * Important:
@@ -140,7 +140,9 @@ if (!argv.telemetry || process.env.AGENT_NAME) {
   if (argv.verbose) {
     console.log('Disabling telemetry');
   }
-  telemetryClient.config.disableAppInsights = true;
+  Telemetry.disable();
+} else {
+  Telemetry.setup();
 }
 
 function getReactNativeAppName(): string {
@@ -383,7 +385,7 @@ function getRNWInitVersion(): string {
 
 function setExit(exitCode: ExitCode, error?: String): void {
   if (!process.exitCode || process.exitCode === ExitCode.SUCCESS) {
-    telemetryClient.trackEvent({
+    Telemetry.client?.trackEvent({
       name: 'init-exit',
       properties: {
         durationInSecs: process.uptime(),
@@ -545,6 +547,6 @@ function isProjectUsingYarn(cwd: string): boolean {
     }
     setExit(exitCode, error.message);
   } finally {
-    telemetryClient.flush();
+    Telemetry.client?.flush();
   }
 })();

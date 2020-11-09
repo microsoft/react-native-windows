@@ -9,12 +9,34 @@ import {randomBytes} from 'crypto';
 import * as appInsights from 'applicationinsights';
 import {execSync} from 'child_process';
 
-if (!process.env.RNW_CLI_TEST) {
-  appInsights.Configuration.setInternalLogging(false, false);
-}
+export class Telemetry {
+  static client?: appInsights.TelemetryClient | undefined = undefined;
+  static disable() {
+    if (Telemetry.client) {
+      Telemetry.client.config.disableAppInsights = true;
+    }
+    Telemetry.shouldDisable = true;
+  }
+  static setup() {
+    if (!process.env.RNW_CLI_TEST) {
+      appInsights.Configuration.setInternalLogging(false, false);
+    }
+    appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
+    Telemetry.client = appInsights.defaultClient;
 
-appInsights.setup('795006ca-cf54-40ee-8bc6-03deb91401c3');
-export const telClient = appInsights.defaultClient;
+    if (Telemetry.shouldDisable) {
+      Telemetry.disable();
+    }
+    if (process.env.RNW_CLI_TEST) {
+      Telemetry.client.commonProperties.isTest = process.env.RNW_CLI_TEST;
+    }
+    if (!Telemetry.client.commonProperties.sessionId) {
+      Telemetry.client.commonProperties.sessionId = randomBytes(16).toString('hex');
+      Telemetry.client.addTelemetryProcessor(sanitizeEnvelope);
+    }
+  }
+  static shouldDisable: boolean = false;
+}
 
 function getAnonymizedPath(filepath: string): string {
   const projectRoot = process.cwd().toLowerCase();
@@ -104,15 +126,6 @@ export function sanitizeEnvelope(envelope: any /*context: any*/): boolean {
   }
   delete envelope.tags['ai.cloud.roleInstance'];
   return true;
-}
-
-if (process.env.RNW_CLI_TEST) {
-  telClient.commonProperties.isTest = process.env.RNW_CLI_TEST;
-}
-
-if (!telClient.commonProperties.sessionId) {
-  telClient.commonProperties.sessionId = randomBytes(16).toString('hex');
-  telClient.addTelemetryProcessor(sanitizeEnvelope);
 }
 
 export function isMSFTInternal(): boolean {
