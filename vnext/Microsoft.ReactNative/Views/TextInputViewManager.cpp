@@ -117,7 +117,7 @@ class TextInputShadowNode : public ShadowNodeBase {
     return true;
   }
 
-  bool NeedsForceLayout() {
+  virtual bool NeedsForceLayout() override {
     return true;
   }
 
