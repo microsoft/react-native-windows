@@ -17,7 +17,7 @@
     "react-native-windows-init": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/telemetry": "^0.63.0-0",
+    "@react-native-windows/telemetry": "^0.63.0",
     "chalk": "^3",
     "mustache": "^4.0.1",
     "npm-registry": "^0.1.13",
@@ -27,7 +27,7 @@
     "yargs": "^15.1.0"
   },
   "devDependencies": {
-    "@react-native-windows/cli": "0.63.1",
+    "@react-native-windows/cli": "0.63.2",
     "@rnw-scripts/eslint-config": "0.0.2",
     "@rnw-scripts/just-task": "0.0.2",
     "@rnw-scripts/ts-config": "0.1.0",

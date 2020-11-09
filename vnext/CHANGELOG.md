@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 02 Nov 2020 15:05:04 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Nov 2020 17:01:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.7
+
+Mon, 09 Nov 2020 17:01:11 GMT
+
+### Patches
+
+- Set Content-Length on the content object and not on the request itself. (i@mandrigin.ru)
+- Update Microsoft.ReactNative Nuget Package to support layout convention (#6381) (dannyvv@microsoft.com)
 
 ## 0.63.6
 

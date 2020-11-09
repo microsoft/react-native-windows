@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "sanitize paths in other drives too",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
