@@ -5,7 +5,12 @@
  * @format
  */
 
-import {Telemetry, sanitizeMessage, sanitizeEnvelope, sanitizeFrame} from '../telemetry';
+import {
+  Telemetry,
+  sanitizeMessage,
+  sanitizeEnvelope,
+  sanitizeFrame,
+} from '../telemetry';
 import * as appInsights from 'applicationinsights';
 import {basename} from 'path';
 
@@ -19,9 +24,9 @@ test('Sanitize message, no-op', () => {
 });
 
 test('Sanitize message, project_dir', () => {
-  expect(
-    sanitizeMessage(`this is the cwd: '${process.cwd()}'`),
-  ).toEqual(`this is the cwd:  [project_dir]\\???(${process.cwd().length})`);
+  expect(sanitizeMessage(`this is the cwd: '${process.cwd()}'`)).toEqual(
+    `this is the cwd:  [project_dir]\\???(${process.cwd().length})`,
+  );
   expect(
     sanitizeMessage(`uppercase: '${process.cwd().toUpperCase()}'`),
   ).toEqual(`uppercase:  [project_dir]\\???(${process.cwd().length})`);
@@ -29,18 +34,14 @@ test('Sanitize message, project_dir', () => {
     sanitizeMessage(`lowercase: '${process.cwd().toLowerCase()}'`),
   ).toEqual(`lowercase:  [project_dir]\\???(${process.cwd().length})`);
   expect(
-    sanitizeMessage(
-      `this is the cwd: '${process.cwd()}' and something else`,
-    ),
+    sanitizeMessage(`this is the cwd: '${process.cwd()}' and something else`),
   ).toEqual(
     `this is the cwd:  [project_dir]\\???(${
       process.cwd().length
     })  and something else`,
   );
   expect(
-    sanitizeMessage(
-      `this is the cwd: ${process.cwd()} and something else`,
-    ),
+    sanitizeMessage(`this is the cwd: ${process.cwd()} and something else`),
   ).toEqual(
     `this is the cwd: [project_dir]\\???(${
       (process.cwd() + ' and something else').length
@@ -50,18 +51,14 @@ test('Sanitize message, project_dir', () => {
 
 test('Sanitize message, node_modules', () => {
   expect(
-    sanitizeMessage(
-      `this is the cwd: '${process.cwd()}\\node_modules'`,
-    ),
+    sanitizeMessage(`this is the cwd: '${process.cwd()}\\node_modules'`),
   ).toEqual(
     `this is the cwd:  [project_dir]\\???(${
       (process.cwd() + '\\node_modules').length
     })`,
   );
   expect(
-    sanitizeMessage(
-      `this is the cwd: '${process.cwd()}\\node_modules\\foo'`,
-    ),
+    sanitizeMessage(`this is the cwd: '${process.cwd()}\\node_modules\\foo'`),
   ).toEqual('this is the cwd:  node_modules\\foo');
   expect(
     sanitizeMessage(
@@ -98,13 +95,13 @@ test('Sanitize message, node_modules', () => {
 });
 
 test('Sanitize message, other path', () => {
-  expect(
-    sanitizeMessage(`this is another path: 'A:\\foo\\bar\\baz'`),
-  ).toEqual(`this is another path:  [path]`);
+  expect(sanitizeMessage(`this is another path: 'A:\\foo\\bar\\baz'`)).toEqual(
+    `this is another path:  [path]`,
+  );
 
-  expect(
-    sanitizeMessage(`this is another path: A:\\foo\\bar\\baz`),
-  ).toEqual(`this is another path: [path]`);
+  expect(sanitizeMessage(`this is another path: A:\\foo\\bar\\baz`)).toEqual(
+    `this is another path: [path]`,
+  );
 
   expect(
     sanitizeMessage(

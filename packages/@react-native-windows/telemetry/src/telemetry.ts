@@ -31,7 +31,9 @@ export class Telemetry {
       Telemetry.client.commonProperties.isTest = process.env.RNW_CLI_TEST;
     }
     if (!Telemetry.client.commonProperties.sessionId) {
-      Telemetry.client.commonProperties.sessionId = randomBytes(16).toString('hex');
+      Telemetry.client.commonProperties.sessionId = randomBytes(16).toString(
+        'hex',
+      );
       Telemetry.client.addTelemetryProcessor(sanitizeEnvelope);
     }
   }
