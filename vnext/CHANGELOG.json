@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 10 Nov 2020 16:50:27 GMT",
+      "tag": "react-native-windows_v0.63.8",
+      "version": "0.63.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Upgrade to prettier 1.19.1 which has support for optional chaining operator (x?.foo) and lint",
+            "author": "asklar@microsoft.com",
+            "commit": "802058cdbcb8e44d33c73b05499e07041157d88b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 09 Nov 2020 17:01:11 GMT",
       "tag": "react-native-windows_v0.63.7",
       "version": "0.63.7",

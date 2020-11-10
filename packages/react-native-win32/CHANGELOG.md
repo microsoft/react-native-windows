@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 07 Sep 2020 15:05:16 GMT and should not be manually modified.
+This log was last generated on Tue, 10 Nov 2020 16:50:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.2
+
+Tue, 10 Nov 2020 16:50:27 GMT
+
+### Patches
+
+- Upgrade to prettier 1.19.1 which has support for optional chaining operator (x?.foo) and lint (asklar@microsoft.com)
 
 ## 0.63.1
 
