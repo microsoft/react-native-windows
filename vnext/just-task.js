@@ -24,7 +24,6 @@ const copyRNLibaries = require('./Scripts/copyRNLibraries');
 
 option('production');
 option('clean');
-option('ci');
 
 task('apiExtractorVerify', apiExtractorVerifyTask());
 task('apiExtractorUpdate', apiExtractorUpdateTask());
@@ -87,13 +86,12 @@ task(
     'copyReadmeAndLicenseFromRoot',
     'compileTsPlatformOverrides',
     'codegen',
-    condition('apiExtractorVerify', () => argv().ci),
   ),
 );
 
 task('clean', series('cleanRnLibraries'));
 
-task('lint', series('eslint', 'flow-check'));
+task('lint', series('eslint', 'flow-check', 'apiExtractorVerify'));
 task('lint:fix', series('eslint:fix'));
 
 task('api', series('apiExtractorUpdate', 'apiDocumenter'));
