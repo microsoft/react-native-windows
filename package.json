@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "lage build -- --color",
-    "lint": "lage lint -- --color",
+    "lint": "lage lint --verbose -- --color",
     "lint:fix": "lage lint:fix -- --color",
     "api": "lage api -- --color",
     "change": "beachball change",
