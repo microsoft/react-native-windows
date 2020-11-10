@@ -39,6 +39,7 @@ struct ParagraphComponentView : BaseComponentView {
   const xaml::FrameworkElement Element() const noexcept override;
 
  private:
+  std::shared_ptr<facebook::react::ParagraphProps const> m_props;
   facebook::react::LayoutMetrics m_layoutMetrics;
   xaml::Controls::TextBlock m_element;
 };

@@ -271,8 +271,8 @@ void FabricUIManager::startSurface(
   facebook::react::LayoutConstraints constraints;
   constraints.minimumSize.height = 0;
   constraints.minimumSize.width = 0;
-  constraints.maximumSize.height = 1000;
-  constraints.maximumSize.width = 1000;
+  constraints.maximumSize.height = 500;
+  constraints.maximumSize.width = 500;
   constraints.layoutDirection = rootFE.FlowDirection() == xaml::FlowDirection::LeftToRight
       ? facebook::react::LayoutDirection::LeftToRight
       : facebook::react::LayoutDirection::RightToLeft;

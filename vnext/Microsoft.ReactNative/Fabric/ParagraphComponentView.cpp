@@ -20,8 +20,8 @@
 namespace Microsoft::ReactNative {
 
 ParagraphComponentView::ParagraphComponentView() {
-  // static auto const defaultProps = std::make_shared<facebook::react::TextProps const>();
-  // m_props = defaultProps;
+  static auto const defaultProps = std::make_shared<facebook::react::ParagraphProps const>();
+  m_props = defaultProps;
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
@@ -47,34 +47,17 @@ void ParagraphComponentView::unmountChildComponentView(
 void ParagraphComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  // const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::TextProps>(m_props);
+  const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(props);
 
-  /*
-
-  if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
-    auto color = *newViewProps.backgroundColor;
-
-    if (newViewProps.backgroundColor) {
-      m_element.ViewBackground(::react::uwp::SolidColorBrushFrom(newViewProps.backgroundColor));
-    } else {
-      m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::ViewBackgroundProperty());
-    }
+  if (oldViewProps.foregroundColor != newViewProps.foregroundColor) {
+    if (newViewProps.foregroundColor)
+      m_element.Foreground(::react::uwp::SolidColorBrushFrom(newViewProps.backgroundColor));
+    else
+      m_element.ClearValue(::xaml::Controls::TextBlock::ForegroundProperty());
   }
 
-  if (oldViewProps.borderColors != newViewProps.borderColors) {
-    if (newViewProps.borderColors.all) {
-      m_element.BorderBrush(::react::uwp::SolidColorBrushFrom(*newViewProps.borderColors.all));
-    } else {
-      m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::BorderBrushProperty());
-    }
-  }
-
-  if (oldViewProps.borderStyles != newViewProps.borderStyles) {
-    m_needsBorderUpdate = true;
-  }
-  */
-  // m_props = std::static_pointer_cast<facebook::react::TextProps const>(props);
+  m_props = std::static_pointer_cast<facebook::react::ParagraphProps const>(props);
 }
 
 void ParagraphComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
