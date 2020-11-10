@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 10 Nov 2020 05:05:13 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.201",
+      "version": "0.0.0-canary.201",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Exclude *projectimports.zip from devmode metro config",
+            "author": "asklar@microsoft.com",
+            "commit": "68c0f6771cabe9b8e229f4819d78664172655e85",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add force_layout to TextInput",
+            "author": "igklemen@microsoft.com",
+            "commit": "0cb92959fe1209b226968efc4fa85250d17a820f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Nov 2020 05:04:58 GMT",
       "tag": "react-native-windows_v0.0.0-canary.200",
       "version": "0.0.0-canary.200",
