@@ -11,13 +11,22 @@ import {execSync} from 'child_process';
 
 export class Telemetry {
   static client?: appInsights.TelemetryClient | undefined = undefined;
+
   static disable() {
     if (Telemetry.client) {
       Telemetry.client.config.disableAppInsights = true;
     }
     Telemetry.shouldDisable = true;
   }
+
   static setup() {
+    if (Telemetry.isCI()) {
+      this.disable();
+      return;
+    }
+    if (Telemetry.client) {
+      return;
+    }
     if (!process.env.RNW_CLI_TEST) {
       appInsights.Configuration.setInternalLogging(false, false);
     }
@@ -36,6 +45,15 @@ export class Telemetry {
       );
       Telemetry.client.addTelemetryProcessor(sanitizeEnvelope);
     }
+  }
+
+  static isCI(): boolean {
+    return (
+      process.env.AGENT_NAME !== undefined || // Azure DevOps
+      process.env.CIRCLECI === 'true' || // CircleCI
+      process.env.TRAVIS === 'true' || // Travis
+      process.env.CI === 'true' // other CIs
+    );
   }
   static shouldDisable: boolean = false;
 }
