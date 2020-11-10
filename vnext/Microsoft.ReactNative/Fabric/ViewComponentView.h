@@ -6,6 +6,7 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4244)
+#include <react/renderer/components/view/ViewEventEmitter.h>
 #include <react/renderer/components/view/ViewProps.h>
 #pragma warning(pop)
 
@@ -15,6 +16,10 @@ namespace Microsoft::ReactNative {
 
 struct BaseComponentView : IComponentView {
   virtual const xaml::FrameworkElement Element() const noexcept = 0;
+  void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
+
+ protected:
+  facebook::react::SharedViewEventEmitter m_eventEmitter;
 };
 
 struct ViewComponentView : BaseComponentView {
@@ -27,7 +32,6 @@ struct ViewComponentView : BaseComponentView {
   void updateProps(
       facebook::react::Props::Shared const &props,
       facebook::react::Props::Shared const &oldProps) noexcept override;
-  void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
   void updateState(
       facebook::react::State::Shared const &state,
       facebook::react::State::Shared const &oldState) noexcept override;

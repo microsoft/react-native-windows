@@ -11,6 +11,10 @@
 
 namespace Microsoft::ReactNative {
 
+void BaseComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
+  m_eventEmitter = std::static_pointer_cast<facebook::react::ViewEventEmitter const>(eventEmitter);
+}
+
 ViewComponentView::ViewComponentView() {
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;
@@ -60,7 +64,6 @@ void ViewComponentView::updateProps(
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
-void ViewComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
 void ViewComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {}

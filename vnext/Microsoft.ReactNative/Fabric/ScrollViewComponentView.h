@@ -42,6 +42,22 @@ struct ScrollViewComponentView : BaseComponentView {
   facebook::react::LayoutMetrics m_layoutMetrics;
   xaml::Controls::ScrollViewer m_element;
 
+  xaml::FrameworkElement::SizeChanged_revoker m_scrollViewerSizeChangedRevoker{};
+  xaml::FrameworkElement::SizeChanged_revoker m_contentSizeChangedRevoker{};
+  xaml::Controls::ScrollViewer::ViewChanged_revoker m_scrollViewerViewChangedRevoker{};
+  xaml::Controls::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
+  xaml::Controls::ScrollViewer::DirectManipulationCompleted_revoker m_scrollViewerDirectManipulationCompletedRevoker{};
+  xaml::Controls::ScrollViewer::DirectManipulationStarted_revoker m_scrollViewerDirectManipulationStartedRevoker{};
+  xaml::Controls::Control::Loaded_revoker m_controlLoadedRevoker{};
+
+  float m_zoomFactor{1.0f};
+  bool m_isScrollingFromInertia = false;
+  bool m_isScrolling = false;
+  bool m_isHorizontal = false;
+  bool m_isScrollingEnabled = true;
+  bool m_changeViewAfterLoaded = false;
+  bool m_dismissKeyboardOnDrag = false;
+
   winrt::Microsoft::ReactNative::ViewPanel m_contentPanel;
 };
 
