@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Disable telemetry in other CI systems",
+  "packageName": "react-native-windows-init",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
