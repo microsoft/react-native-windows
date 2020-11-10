@@ -5,7 +5,7 @@ param(
 	[string] $SourceRoot = ($PSScriptRoot | Split-Path | Split-Path | Split-Path),
 	[string] $TargetRoot = "$SourceRoot\vnext\target",
 	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\vnext",
-	[System.IO.DirectoryInfo] $ReactNativeRoot,
+	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\node_modules\react-native",	
 	[string[]] $Extensions = ('h', 'hpp', 'def')
 )
 
@@ -13,17 +13,6 @@ param(
 [string] $FollyVersion = $props.Project.PropertyGroup.FollyVersion;
 $FollyVersion = $FollyVersion.Trim() # The extracted FollyVersion contains a space at the end that isn't actually present, issue #6216
 [System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}";
-
-if (!$ReactNativeRoot) {
-    $intermediateBuildDir = if ($env:BaseIntDir) { $env:BaseIntDir } else { "$SourceRoot\vnext\build" }
-    $relativeRnDir = @(gci $intermediateBuildDir react-native-patched -Recurse -Directory -Name)[0]
-
-    if (!$relativeRnDir) {
-        throw "Cannot find patched React Native Directory (has a project been built?)"
-    }
-
-    $ReactNativeRoot = Join-Path $intermediateBuildDir $relativeRnDir
-}
 
 Write-Host "Source root: [$SourceRoot]"
 Write-Host "Destination root: [$TargetRoot]"

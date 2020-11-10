@@ -46,7 +46,7 @@
     <PublishDir>$(OutDir)\Publish\</PublishDir>
 
     <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
-    <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$(IntDir)react-native-patched\</ReactNativeDir>
+    <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$(ReactNativePackageDir)</ReactNativeDir>
 
     <YogaDir Condition="'$(YogaDir)' == ''">$(ReactNativeDir)ReactCommon\yoga</YogaDir>
 
