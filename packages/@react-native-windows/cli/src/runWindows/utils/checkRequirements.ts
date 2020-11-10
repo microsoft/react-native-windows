@@ -32,7 +32,7 @@ function shortenVersion(version: Version): string {
 
 function getMinimalRequiredVersionFor(
   requirement: Requirement,
-  windowsTargetVersion: keyof (typeof REQUIRED_VERSIONS),
+  windowsTargetVersion: keyof typeof REQUIRED_VERSIONS,
 ): Version {
   return REQUIRED_VERSIONS[windowsTargetVersion][requirement];
 }
