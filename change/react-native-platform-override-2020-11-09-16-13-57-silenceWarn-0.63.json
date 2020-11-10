@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Upgrade to prettier 1.19.1 which has support for optional chaining operator (x?.foo) and lint",
+  "packageName": "react-native-platform-override",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-11-10T00:13:45.093Z"
+}
