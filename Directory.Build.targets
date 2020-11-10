@@ -25,7 +25,7 @@
 
     <!-- 
       Copy the yarn.lock file to prevent this task from running over and over again, and only rerun the check with yarn.lock changes. 
-      This will likely miss a few corner cases with local changes to package.json but should catch the most importance case after syncing
+      This will likely miss a few corner cases with local changes to package.json but should catch the most important case after syncing
     -->
     <Copy
       Condition="'%(_YarnExitCode.Identity)' != '0'"
