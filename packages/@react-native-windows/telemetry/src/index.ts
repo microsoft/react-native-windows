@@ -5,7 +5,7 @@
  */
 
 export {
-  telClient as telemetryClient,
+  Telemetry,
   isMSFTInternal,
   getDiskFreeSpace,
 } from './telemetry';

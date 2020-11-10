@@ -6,7 +6,7 @@
 
 import * as fs from 'fs';
 import {
-  telemetryClient,
+  Telemetry,
   isMSFTInternal,
   getDiskFreeSpace,
 } from '@react-native-windows/telemetry';
@@ -72,7 +72,9 @@ async function runWindows(
     if (options.logging) {
       console.log('Disabling telemetry');
     }
-    telemetryClient.config.disableAppInsights = true;
+    Telemetry.disable();
+  } else {
+    Telemetry.setup();
   }
 
   // https://github.com/yarnpkg/yarn/issues/8334 - Yarn on Windows breaks apps that read from the environment variables
@@ -93,7 +95,7 @@ async function runWindows(
       sdks.forEach(version => console.log('    ' + version));
       return;
     } catch (e) {
-      telemetryClient.trackException({exception: e});
+      Telemetry.client?.trackException({exception: e});
       newError('Unable to print environment info.\n' + e.toString());
       return setExitProcessWithError(options.logging);
     }
@@ -103,11 +105,11 @@ async function runWindows(
   try {
     await runWindowsInternal(args, config, options);
   } catch (e) {
-    telemetryClient.trackException({exception: e});
+    Telemetry.client?.trackException({exception: e});
     runWindowsError = e;
     return setExitProcessWithError(options.logging);
   } finally {
-    telemetryClient.trackEvent({
+    Telemetry.client?.trackEvent({
       name: 'run-windows',
       properties: {
         release: options.release,
@@ -145,7 +147,7 @@ async function runWindows(
         cpus: cpus().length,
       },
     });
-    telemetryClient.flush();
+    Telemetry.client?.flush();
   }
 }
 
