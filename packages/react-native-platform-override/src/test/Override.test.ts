@@ -20,7 +20,7 @@ type OverrideConstructor = new (...args: any[]) => Override;
 type TestCase<T extends OverrideConstructor> = [
   string,
   T,
-  ConstructorParameters<T>[0]
+  ConstructorParameters<T>[0],
 ];
 
 function testCase<T extends OverrideConstructor>(

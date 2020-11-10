@@ -77,9 +77,7 @@ function translateSpecFunctionParam(
       return 'React::JSValueObject';
     default:
       throw new Error(
-        `Unhandled type in translateSpecFunctionParam: ${
-          param.typeAnnotation.type
-        }`,
+        `Unhandled type in translateSpecFunctionParam: ${param.typeAnnotation.type}`,
       );
   }
 }
@@ -111,9 +109,7 @@ function translateFunctionParam(param: FunctionTypeAnnotationParam): string {
       return 'React::JSValueObject &&';
     default:
       throw new Error(
-        `Unhandled type in translateFunctionParam: ${
-          param.typeAnnotation.type
-        }`,
+        `Unhandled type in translateFunctionParam: ${param.typeAnnotation.type}`,
       );
   }
 }

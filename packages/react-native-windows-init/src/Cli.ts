@@ -447,9 +447,7 @@ function isProjectUsingYarn(cwd: string): boolean {
       if (!rnwResolvedVersion) {
         if (argv.version) {
           console.warn(
-            `Warning: Querying npm to find react-native-windows@${
-              argv.version
-            } failed.  Attempting to continue anyway...`,
+            `Warning: Querying npm to find react-native-windows@${argv.version} failed.  Attempting to continue anyway...`,
           );
         } else {
           const rnwLatestVersion = await getLatestRNWVersion();
@@ -507,13 +505,15 @@ function isProjectUsingYarn(cwd: string): boolean {
   `,
           );
 
-          const confirm: boolean = (await prompts({
-            type: 'confirm',
-            name: 'confirm',
-            message: `Do you wish to continue with ${chalk.green(
-              'react-native-windows',
-            )}@${chalk.cyan(rnwResolvedVersion)}?`,
-          })).confirm;
+          const confirm: boolean = (
+            await prompts({
+              type: 'confirm',
+              name: 'confirm',
+              message: `Do you wish to continue with ${chalk.green(
+                'react-native-windows',
+              )}@${chalk.cyan(rnwResolvedVersion)}?`,
+            })
+          ).confirm;
 
           if (!confirm) {
             userError('User canceled', ExitCode.USER_CANCEL);
