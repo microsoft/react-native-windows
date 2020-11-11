@@ -148,7 +148,7 @@ if (argv.verbose) {
   console.log(argv);
 }
 
-if (!argv.telemetry || process.env.AGENT_NAME) {
+if (!argv.telemetry) {
   if (argv.verbose) {
     console.log('Disabling telemetry');
   }

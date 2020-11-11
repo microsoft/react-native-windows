@@ -14,6 +14,7 @@ import {
 import * as appInsights from 'applicationinsights';
 import {basename} from 'path';
 
+delete process.env.AGENT_NAME; // allow this test to run in Azure DevOps / GHA
 Telemetry.setup();
 Telemetry.client!.config.disableAppInsights = true;
 
