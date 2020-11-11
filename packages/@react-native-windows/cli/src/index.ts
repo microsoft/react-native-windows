@@ -93,7 +93,7 @@ export async function generateWindows(
     Telemetry.client?.trackException({exception: error});
     throw e;
   } finally {
-    if (options.telemetry && !process.env.AGENT_NAME) {
+    if (Telemetry.client) {
       let rnVersion = '';
       let cliVersion = '';
       try {
