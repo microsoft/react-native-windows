@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 11 Nov 2020 05:05:29 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.62",
+      "version": "0.0.0-canary.62",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove buildci to allow JSChecks build caching for lint",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0111551952af4d6206cedb47021e9d324bb8ed5b",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 31 Oct 2020 05:06:50 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.62",
       "version": "0.0.0-canary.62",

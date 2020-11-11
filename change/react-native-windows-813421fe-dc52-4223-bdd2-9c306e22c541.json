@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Remove buildci to allow JSChecks build caching for lint",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

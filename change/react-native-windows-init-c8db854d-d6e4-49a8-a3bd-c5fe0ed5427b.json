@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Don't initialize AppInsights when passing no-telemetry",
-  "packageName": "react-native-windows-init",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

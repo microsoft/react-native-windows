@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove Build-Time Native Code Patching",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

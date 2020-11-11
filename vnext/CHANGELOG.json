@@ -2,6 +2,29 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 11 Nov 2020 05:05:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.202",
+      "version": "0.0.0-canary.202",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Build-Time Native Code Patching",
+            "author": "ngerlem@microsoft.com",
+            "commit": "22344de3666eac9111e7a6ecd9092a9bc8cae250",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Remove buildci to allow JSChecks build caching for lint",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0111551952af4d6206cedb47021e9d324bb8ed5b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Nov 2020 05:05:13 GMT",
       "tag": "react-native-windows_v0.0.0-canary.201",
       "version": "0.0.0-canary.201",
