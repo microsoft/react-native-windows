@@ -14,6 +14,12 @@ export interface ITextWin32Props extends Omit<RN.TextProps, TextWin32OmitTypes>,
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [keyDownEvents](./react-native-win32.itextwin32props.keydownevents.md) | [IHandledKeyboardEvent](./react-native-win32.ihandledkeyboardevent.md)<!-- -->\[\] |  |
+|  [keyUpEvents](./react-native-win32.itextwin32props.keyupevents.md) | [IHandledKeyboardEvent](./react-native-win32.ihandledkeyboardevent.md)<!-- -->\[\] |  |
+|  [onKeyDown](./react-native-win32.itextwin32props.onkeydown.md) | (args: [IKeyboardEvent](./react-native-win32.ikeyboardevent.md)<!-- -->) =&gt; void |  |
+|  [onKeyDownCapture](./react-native-win32.itextwin32props.onkeydowncapture.md) | (args: [IKeyboardEvent](./react-native-win32.ikeyboardevent.md)<!-- -->) =&gt; void |  |
+|  [onKeyUp](./react-native-win32.itextwin32props.onkeyup.md) | (args: [IKeyboardEvent](./react-native-win32.ikeyboardevent.md)<!-- -->) =&gt; void |  |
+|  [onKeyUpCapture](./react-native-win32.itextwin32props.onkeyupcapture.md) | (args: [IKeyboardEvent](./react-native-win32.ikeyboardevent.md)<!-- -->) =&gt; void |  |
 |  [textStyle](./react-native-win32.itextwin32props.textstyle.md) | [TextStyle](./react-native-win32.textstyle.md) | Role-based styling of the text control. The styles applied include font face, size, weight and color. These styles take precedence over the <code>style</code> property. |
 |  [tooltip](./react-native-win32.itextwin32props.tooltip.md) | string | Tooltip displayed on mouse hover of this element |
 
