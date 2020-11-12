@@ -88,7 +88,7 @@ export function findSolutionFiles(winFolder: string): string[] {
   // Try to find any solution file that appears to be a React Native solution
   for (const solutionFile of allSolutions) {
     if (isRnwSolution(path.join(winFolder, solutionFile))) {
-      solutionFiles.push(solutionFile);
+      solutionFiles.push(path.normalize(solutionFile));
     }
   }
 
@@ -141,7 +141,7 @@ export function findDependencyProjectFiles(winFolder: string): string[] {
   // Try to find any project file that appears to be a dependency project
   for (const projectFile of allProjects) {
     if (isRnwDependencyProject(path.join(winFolder, projectFile))) {
-      dependencyProjectFiles.push(projectFile);
+      dependencyProjectFiles.push(path.normalize(projectFile));
     }
   }
 
@@ -194,7 +194,7 @@ export function findAppProjectFiles(winFolder: string): string[] {
   // Try to find any project file that appears to be an app project
   for (const projectFile of allProjects) {
     if (isRnwAppProject(path.join(winFolder, projectFile))) {
-      appProjectFiles.push(projectFile);
+      appProjectFiles.push(path.normalize(projectFile));
     }
   }
 
@@ -232,7 +232,7 @@ export function readProjectFile(projectPath: string) {
  * @param propertyName The property to look for.
  * @return The value of the tag if it exists.
  */
-export function findPropertyValue(
+export function tryFindPropertyValue(
   projectContents: Node,
   propertyName: string,
 ): string | null {
@@ -247,6 +247,18 @@ export function findPropertyValue(
   }
 
   return null;
+}
+
+export function findPropertyValue(
+  projectContents: Node,
+  propertyName: string,
+  filePath: string,
+): string {
+  const res = tryFindPropertyValue(projectContents, propertyName);
+  if (!res) {
+    throw new Error(`Couldn't find property ${propertyName} from ${filePath}`);
+  }
+  return res;
 }
 
 /**
@@ -275,8 +287,8 @@ export function importProjectExists(
  */
 export function getProjectName(projectContents: Node): string {
   const name =
-    findPropertyValue(projectContents, 'ProjectName') ||
-    findPropertyValue(projectContents, 'AssemblyName') ||
+    tryFindPropertyValue(projectContents, 'ProjectName') ||
+    tryFindPropertyValue(projectContents, 'AssemblyName') ||
     '';
 
   return name;
@@ -288,7 +300,7 @@ export function getProjectName(projectContents: Node): string {
  * @return The project namespace.
  */
 export function getProjectNamespace(projectContents: Node): string | null {
-  return findPropertyValue(projectContents, 'RootNamespace');
+  return tryFindPropertyValue(projectContents, 'RootNamespace');
 }
 
 /**
@@ -297,5 +309,5 @@ export function getProjectNamespace(projectContents: Node): string | null {
  * @return The project guid.
  */
 export function getProjectGuid(projectContents: Node): string | null {
-  return findPropertyValue(projectContents, 'ProjectGuid');
+  return tryFindPropertyValue(projectContents, 'ProjectGuid');
 }

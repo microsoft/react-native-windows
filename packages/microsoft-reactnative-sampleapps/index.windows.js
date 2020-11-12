@@ -310,6 +310,16 @@ class SampleApp extends Component {
     log(`SampleApp.onLabelChangedCustomUserControlCpp("${label}")`);
   }
 
+  onReloadSampleModuleCS() {
+    log('SampleApp.onReloadSampleModuleCS()');
+    NativeModules.SampleModuleCS.ReloadInstance();
+  }
+
+  onReloadSampleModuleCpp() {
+    log('SampleApp.onReloadSampleModuleCpp()');
+    NativeModules.SampleModuleCpp.ReloadInstance();
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -332,6 +342,9 @@ class SampleApp extends Component {
 
         <CustomUserControlCpp style={styles.customcontrol} label="CustomUserControlCpp!" ref={(ref) => { this._CustomUserControlCppRef = ref; }} onLabelChanged={(evt) => { this.onLabelChangedCustomUserControlCpp(evt); }} />
         <Button onPress={() => { this.onPressCustomUserControlCpp(); }} title="Call CustomUserControlCpp Commands!" />
+
+        <Button onPress={() => { this.onReloadSampleModuleCS(); }} title="Reload from SampleModuleCS" disabled={NativeModules.SampleModuleCS == null} />
+        <Button onPress={() => { this.onReloadSampleModuleCpp(); }} title="Reload from SampleModuleCpp" disabled={NativeModules.SampleModuleCpp == null} />
 
         <CircleCS style={styles.circle}>
           <View style={styles.box}>

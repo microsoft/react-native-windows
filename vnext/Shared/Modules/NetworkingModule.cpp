@@ -230,11 +230,16 @@ void NetworkingModule::NetworkingHelper::OnRequestError(int64_t requestId, std::
 void AttachContentHeaders(
     winrt::Windows::Web::Http::IHttpContent content,
     winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue contentType,
-    std::string contentEncoding) {
+    std::string contentEncoding,
+    std::string contentLength) {
   if (contentType != nullptr)
     content.Headers().ContentType(contentType);
   if (!contentEncoding.empty())
     content.Headers().ContentEncoding().ParseAdd(Microsoft::Common::Unicode::Utf8ToUtf16(contentEncoding));
+  if (!contentLength.empty()) {
+    const auto contentLengthHeader = _atoi64(contentLength.c_str());
+    content.Headers().ContentLength(contentLengthHeader);
+  }
 }
 
 void AttachMultipartHeaders(winrt::Windows::Web::Http::IHttpContent content, const folly::dynamic &headers) {
@@ -272,6 +277,7 @@ void NetworkingModule::NetworkingHelper::SendRequest(
 
     winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue contentType(nullptr);
     std::string contentEncoding;
+    std::string contentLength;
 
     if (!headers.empty()) {
       for (auto &header : headers.items()) {
@@ -283,6 +289,8 @@ void NetworkingModule::NetworkingHelper::SendRequest(
               Microsoft::Common::Unicode::Utf8ToUtf16(value), contentType);
         else if (_stricmp(name.c_str(), "content-encoding") == 0)
           contentEncoding = value;
+        else if (_stricmp(name.c_str(), "content-length") == 0)
+          contentLength = value;
         else if (_stricmp(name.c_str(), "authorization") == 0)
           request.Headers().TryAppendWithoutValidation(
               Microsoft::Common::Unicode::Utf8ToUtf16(name), Microsoft::Common::Unicode::Utf8ToUtf16(value));
@@ -342,7 +350,7 @@ void NetworkingModule::NetworkingHelper::SendRequest(
       }
 
       if (content != nullptr) {
-        AttachContentHeaders(content, contentType, contentEncoding);
+        AttachContentHeaders(content, contentType, contentEncoding, contentLength);
         request.Content(content);
       }
     }

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "TurboModuleManager.h"
-#include "turbomodule/samples/SampleTurboCxxModule.h"
+#include "ReactCommon/SampleTurboCxxModule.h"
 
 namespace facebook {
 namespace react {

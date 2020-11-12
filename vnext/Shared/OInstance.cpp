@@ -40,7 +40,6 @@
 #include <DevSettings.h>
 #include <DevSupportManager.h>
 #include <IReactRootView.h>
-#include <IUIManager.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 #include "PackagerConnection.h"

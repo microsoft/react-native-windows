@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <Views/ShadowNode.h>
+#include <Views/PaperShadowNode.h>
 #include <XamlView.h>
 
 #include <folly/dynamic.h>

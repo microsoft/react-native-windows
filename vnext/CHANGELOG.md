@@ -1,8 +1,80 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 29 Oct 2020 05:05:49 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Nov 2020 05:05:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.202
+
+Wed, 11 Nov 2020 05:05:29 GMT
+
+### Changes
+
+- Remove Build-Time Native Code Patching (ngerlem@microsoft.com)
+
+## 0.0.0-canary.201
+
+Tue, 10 Nov 2020 05:05:13 GMT
+
+### Changes
+
+- Exclude *projectimports.zip from devmode metro config (asklar@microsoft.com)
+- add force_layout to TextInput (igklemen@microsoft.com)
+
+## 0.0.0-canary.200
+
+Sat, 07 Nov 2020 05:04:58 GMT
+
+### Changes
+
+- Fix Bundling With "react-native-windows-init --useDevMode" (ngerlem@microsoft.com)
+- Couple of minor cleanups to prep for fabric PR (30809111+acoates-ms@users.noreply.github.com)
+- Fix PR validation by removing legacy generated header file (dannyvv@microsoft.com)
+- Clear Unused Native Module Specs (ngerlem@microsoft.com)
+
+## 0.0.0-canary.196
+
+Wed, 04 Nov 2020 05:10:08 GMT
+
+### Changes
+
+- Autolinking fixes for C++ / C# interop (jthysell@microsoft.com)
+
+## 0.0.0-canary.195
+
+Tue, 03 Nov 2020 16:52:55 GMT
+
+### Changes
+
+- Update Microsoft.ReactNative NuGet Package to only contain release bits (dannyvv@microsoft.com)
+- Add ReactNativeHost::FromContext method (vmorozov@microsoft.com)
+
+## 0.0.0-canary.194
+
+Sun, 01 Nov 2020 05:05:46 GMT
+
+### Changes
+
+- Update V8 and Hermes package versions (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.193
+
+Sat, 31 Oct 2020 05:06:50 GMT
+
+### Changes
+
+- Initialize UIManager turbomodule eagerly (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 10/5 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.192
+
+Fri, 30 Oct 2020 05:07:51 GMT
+
+### Changes
+
+- Enable Hermes Bytecode Compilation and SourceMap Creation as Part of Build (ngerlem@microsoft.com)
+- Update Template Metro Config to Enable Inline Requires By Default (ngerlem@microsoft.com)
+- Integrate 9/17 Nightly RN Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.191
 

@@ -3,16 +3,15 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "lerna run build --stream -- --color",
-    "lint": "lerna run lint --parallel -- --color",
-    "lint:fix": "lerna run lint:fix --parallel -- --color",
-    "api": "lerna run api --parallel -- --color",
-    "buildci": "lerna run build --stream -- --ci",
+    "build": "lage build -- --color",
+    "lint": "lage lint --verbose -- --color",
+    "lint:fix": "lage lint:fix -- --color",
+    "api": "lage api -- --color",
     "change": "beachball change",
-    "clean": "lerna run clean --parallel -- --color",
+    "clean": "lage clean -- --color",
     "format": "format-files -i -style=file -assume-filename=../.clang-format",
     "format:verify": "format-files -i -style=file -assume-filename=../.clang-format -verify",
-    "test": "lerna run test --parallel -- --color",
+    "test": "lage test --verbose -- --color",
     "validate-overrides": "react-native-platform-override validate --color"
   },
   "repository": {
@@ -32,7 +31,7 @@
   "devDependencies": {
     "beachball": "^1.32.0",
     "husky": "^4.2.5",
-    "lerna": "^3.16.1"
+    "lage": "^0.24.0"
   },
   "resolutions": {
     "@wdio/appium-service": "5.12.1",
@@ -50,8 +49,6 @@
     "appium-android-driver": "4.12.0-stub.0",
     "appium-selendroid-driver": "1.13.4-stub.0",
     "appium-tizen-driver": "1.1.1-stub.0",
-    "hermes-engine-comment": "The hermes-engine resolution can be removed when we integrate the 9/17 Nightly RN Build",
-    "hermes-engine": "0.7.0",
     "eslint-plugin-react": "^7.14.1",
     "eslint-plugin-react-hooks": "4.0.7",
     "node-fetch": "2.6.1",

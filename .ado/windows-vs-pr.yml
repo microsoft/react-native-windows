@@ -670,6 +670,10 @@ jobs:
           language: cpp
           configuration: Debug
           platform: x64
+        X86ReleaseCpp:
+          language: cpp
+          configuration: Release
+          platform: x86
     timeoutInMinutes: 50 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:
@@ -741,9 +745,9 @@ jobs:
           script: npx --no-install beachball check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
-        displayName: yarn buildci
+        displayName: yarn build
         inputs:
-          script: yarn buildci
+          script: yarn build
 
       - task: CmdLine@2
         displayName: yarn format:verify

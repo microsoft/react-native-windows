@@ -1,8 +1,32 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Thu, 29 Oct 2020 05:05:49 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Nov 2020 05:05:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.34
+
+Wed, 11 Nov 2020 05:05:29 GMT
+
+### Patches
+
+- Don't initialize AppInsights when passing no-telemetry (asklar@microsoft.com)
+
+## 0.1.33
+
+Sat, 07 Nov 2020 05:04:58 GMT
+
+### Patches
+
+- Fix Bundling With "react-native-windows-init --useDevMode" (ngerlem@microsoft.com)
+
+## 0.1.32
+
+Thu, 05 Nov 2020 05:05:45 GMT
+
+### Patches
+
+- Add telemetry to react-native-windows CLI (asklar@microsoft.com)
 
 ## 0.1.31
 
