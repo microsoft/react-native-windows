@@ -2,6 +2,36 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 10 Nov 2020 16:50:27 GMT",
+      "tag": "@react-native-windows/cli_v0.63.3",
+      "version": "0.63.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Don't initialize the telemetry client if running in no-telemetry mode",
+            "author": "asklar@microsoft.com",
+            "commit": "802058cdbcb8e44d33c73b05499e07041157d88b",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 09 Nov 2020 17:01:11 GMT",
+      "tag": "@react-native-windows/cli_v0.63.2",
+      "version": "0.63.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "CLI telemetry",
+            "author": "asklar@microsoft.com",
+            "commit": "1df9474858223ada25c2cb214808edabb1286b4e",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 02 Nov 2020 15:05:04 GMT",
       "tag": "@react-native-windows/cli_v0.63.1",
       "version": "0.63.1",

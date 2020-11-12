@@ -39,11 +39,13 @@ export class Flyout extends React.Component<IFlyoutProps, IFlyoutTargetState> {
     if (prevState.targetRef !== nextProps.target) {
       // Map the 'target' property to a node tag to use in the native layer
       /* tslint:disable-next-line no-any */
-      const newtarget: number | null = findNodeHandle(nextProps.target as
-        | null
-        | number
-        | React.Component<IFlyoutProps, IFlyoutTargetState>
-        | React.ComponentClass<Flyout>);
+      const newtarget: number | null = findNodeHandle(
+        nextProps.target as
+          | null
+          | number
+          | React.Component<IFlyoutProps, IFlyoutTargetState>
+          | React.ComponentClass<Flyout>,
+      );
 
       return {
         target: newtarget,

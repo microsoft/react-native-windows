@@ -142,12 +142,8 @@ void AsyncStorageManager::multiMergeInternal(const dynamic &args, const module::
 
 void AsyncStorageManager::getAllKeysInternal(const dynamic &args, const module::CxxModule::Callback &jsCallback) {
   std::vector<std::string> keys = m_aofKVStorage->getAllKeys();
-  if (!keys.empty()) {
-    folly::dynamic jsRetVal = FollyDynamicConverter::stringVectorAsRetVal(keys);
-    jsCallback({noError, jsRetVal});
-  } else {
-    jsCallback({"AsyncStorageError - No Keys Found", {}});
-  }
+  folly::dynamic jsRetVal = FollyDynamicConverter::stringVectorAsRetVal(keys);
+  jsCallback({noError, jsRetVal});
 }
 } // namespace react
 } // namespace facebook

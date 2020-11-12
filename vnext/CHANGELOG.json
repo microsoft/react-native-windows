@@ -2,6 +2,42 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 10 Nov 2020 16:50:27 GMT",
+      "tag": "react-native-windows_v0.63.8",
+      "version": "0.63.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Upgrade to prettier 1.19.1 which has support for optional chaining operator (x?.foo) and lint",
+            "author": "asklar@microsoft.com",
+            "commit": "802058cdbcb8e44d33c73b05499e07041157d88b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 09 Nov 2020 17:01:11 GMT",
+      "tag": "react-native-windows_v0.63.7",
+      "version": "0.63.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Set Content-Length on the content object and not on the request itself.",
+            "author": "i@mandrigin.ru",
+            "commit": "2773769fe4b1e5890346af0d9743afbe38c086a3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update Microsoft.ReactNative Nuget Package to support layout convention (#6381)",
+            "author": "dannyvv@microsoft.com",
+            "commit": "365adb77504117b428df36d7daa9fb3cc3a63f49",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 02 Nov 2020 15:05:04 GMT",
       "tag": "react-native-windows_v0.63.6",
       "version": "0.63.6",

@@ -51,10 +51,11 @@ foreach($file in $filesSection.ChildNodes) {
 
             if ($preferRelease -and $flavor -eq "Debug" -and $slices.Contains("$platform.Release")) {
                 Write-Debug "          remove because it is debug and there is a release version requested"
-                # We are checking for the debug version. THere is a release version and we prefer release bits1111
+                # We are checking for the debug version. There is a release version and we prefer release bits
                 $nodesToRemove += $file
                 break;
             }
+
         }
     }
 }
