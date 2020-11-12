@@ -67,9 +67,10 @@ steps:
 
   - template: set-version-vars.yml
 
+  # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
   - task: NuGetToolInstaller@0
     inputs:
-      versionSpec: ">=4.6.0"
+      versionSpec: ">=5.8.0"
 
   - ${{ if eq(parameters.useNuGet, true) }}:
     - template: prep-and-pack-nuget.yml
