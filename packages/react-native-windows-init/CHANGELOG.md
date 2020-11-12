@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Wed, 11 Nov 2020 05:05:29 GMT and should not be manually modified.
+This log was last generated on Thu, 12 Nov 2020 05:05:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.35
+
+Thu, 12 Nov 2020 05:05:57 GMT
+
+### Patches
+
+- Disable telemetry in other CI systems (asklar@microsoft.com)
 
 ## 0.1.34
 

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2020 05:05:57 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.34",
+      "version": "0.0.0-canary.34",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Disable telemetry in other CI systems",
+            "author": "asklar@microsoft.com",
+            "commit": "bcda5759d5d1bed770e7a8524e5cc3f94cbc0c6a",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Nov 2020 05:05:29 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.33",
       "version": "0.0.0-canary.33",

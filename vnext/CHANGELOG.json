@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2020 05:05:57 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.203",
+      "version": "0.0.0-canary.203",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Keyboard Events to TextWin32",
+            "author": "krsiler@microsoft.com",
+            "commit": "e08b7dcdee2549eac8b1deb810330129653fb825",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Nov 2020 05:05:29 GMT",
       "tag": "react-native-windows_v0.0.0-canary.202",
       "version": "0.0.0-canary.202",

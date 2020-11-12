@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Disable telemetry in other CI systems",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
