@@ -396,7 +396,6 @@ void ReactInstanceWin::Initialize() noexcept {
                 Mso::Copy(m_batchingUIThread),
                 std::move(devSettings));
 
-            m_instance.Exchange(Mso::Copy(instanceWrapper->GetInstance()));
             m_instanceWrapper.Exchange(std::move(instanceWrapper));
 
             if (auto onCreated = m_options.OnInstanceCreated.Get()) {
