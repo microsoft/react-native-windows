@@ -144,6 +144,12 @@ jobs:
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
             Microsoft.ReactNative.Managed.CodeGen\**
+      
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Governance Detection'
+        inputs:
+          alertWarningLevel: Medium
+          scanType: 'Register'
 
   - job: RNW_WinUI3
     variables:
@@ -487,6 +493,12 @@ jobs:
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
 
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Governance Detection'
+        inputs:
+          alertWarningLevel: Medium
+          scanType: 'Register'
+
   - job: CliInit
     variables:
       - template: variables/vs2019.yml
@@ -733,9 +745,9 @@ jobs:
           script: npx --no-install beachball check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
-        displayName: yarn buildci
+        displayName: yarn build
         inputs:
-          script: yarn buildci
+          script: yarn build
 
       - task: CmdLine@2
         displayName: yarn format:verify

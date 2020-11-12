@@ -2,6 +2,65 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2020 05:05:57 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.203",
+      "version": "0.0.0-canary.203",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Keyboard Events to TextWin32",
+            "author": "krsiler@microsoft.com",
+            "commit": "e08b7dcdee2549eac8b1deb810330129653fb825",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Nov 2020 05:05:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.202",
+      "version": "0.0.0-canary.202",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Build-Time Native Code Patching",
+            "author": "ngerlem@microsoft.com",
+            "commit": "22344de3666eac9111e7a6ecd9092a9bc8cae250",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Remove buildci to allow JSChecks build caching for lint",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0111551952af4d6206cedb47021e9d324bb8ed5b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Nov 2020 05:05:13 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.201",
+      "version": "0.0.0-canary.201",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Exclude *projectimports.zip from devmode metro config",
+            "author": "asklar@microsoft.com",
+            "commit": "68c0f6771cabe9b8e229f4819d78664172655e85",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add force_layout to TextInput",
+            "author": "igklemen@microsoft.com",
+            "commit": "0cb92959fe1209b226968efc4fa85250d17a820f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Nov 2020 05:04:58 GMT",
       "tag": "react-native-windows_v0.0.0-canary.200",
       "version": "0.0.0-canary.200",

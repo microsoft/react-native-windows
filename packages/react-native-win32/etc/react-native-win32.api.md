@@ -247,6 +247,18 @@ export type IStateConditions = {
 //
 // @public (undocumented)
 export interface ITextWin32Props extends Omit_3<RN.TextProps, TextWin32OmitTypes>, BasePropsWin32 {
+    // (undocumented)
+    keyDownEvents?: IHandledKeyboardEvent[];
+    // (undocumented)
+    keyUpEvents?: IHandledKeyboardEvent[];
+    // (undocumented)
+    onKeyDown?: (args: IKeyboardEvent) => void;
+    // (undocumented)
+    onKeyDownCapture?: (args: IKeyboardEvent) => void;
+    // (undocumented)
+    onKeyUp?: (args: IKeyboardEvent) => void;
+    // (undocumented)
+    onKeyUpCapture?: (args: IKeyboardEvent) => void;
     // @deprecated
     textStyle?: TextStyle;
     tooltip?: string;
@@ -435,6 +447,11 @@ export type SharedAccessibilityPropsIOSandWin32 = {
     onAccessibilityTap?: () => void;
 };
 
+// @public (undocumented)
+export type SharedTextPropsAndroidandWin32 = {
+    selectable?: boolean;
+};
+
 // @public
 export type TextStyle = 'None' | 'SmallStandard' | 'SmallSecondary' | 'MediumStandard' | 'MediumSecondary' | 'MediumApp' | 'MediumBold' | 'MediumBoldApp' | 'LargeStandard' | 'LargePlusStandard' | 'ExtraLargeStandard' | 'HugeStandard';
 
@@ -446,7 +463,7 @@ export class TextWin32 extends React_2.Component<ITextWin32Props, {}> {
 }
 
 // @public (undocumented)
-export type TextWin32OmitTypes = RN.TextPropsAndroid & RN.TextPropsIOS & RN.AccessibilityPropsAndroid & Omit_3<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> & OmittedAccessibilityPropsWin32;
+export type TextWin32OmitTypes = Omit_3<RN.TextPropsAndroid, SharedTextPropsAndroidandWin32> & RN.TextPropsIOS & RN.AccessibilityPropsAndroid & Omit_3<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> & OmittedAccessibilityPropsWin32;
 
 // Warning: (ae-forgotten-export) The symbol "IInternalTouchableWin32State" needs to be exported by the entry point typings-index.d.ts
 //
