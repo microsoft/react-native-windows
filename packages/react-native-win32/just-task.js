@@ -22,7 +22,6 @@ const {
 
 option('production');
 option('clean');
-option('ci');
 
 task('apiExtractorVerify', apiExtractorVerifyTask());
 task('apiExtractorUpdate', apiExtractorUpdateTask());
@@ -76,11 +75,10 @@ task(
     condition('clean', () => argv().clean),
     'copyRNLibraries',
     'ts',
-    condition('apiExtractorVerify', () => argv().ci),
   ),
 );
 
-task('lint', series('eslint', 'flow-check'));
+task('lint', series('eslint', 'flow-check', 'apiExtractorVerify'));
 task('lint:fix', series('eslint:fix'));
 
 task('api', series('apiExtractorUpdate', 'apiDocumenter'));

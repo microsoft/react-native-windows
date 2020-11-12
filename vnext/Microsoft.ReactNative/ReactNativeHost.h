@@ -17,6 +17,8 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
  public: // ReactNativeHost ABI API
   ReactNativeHost() noexcept;
 
+  static ReactNative::ReactNativeHost FromContext(ReactNative::IReactContext const &reactContext) noexcept;
+
   // property PackageProviders
   Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
 
@@ -30,7 +32,7 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
 
  public:
   Mso::React::IReactHost *ReactHost() noexcept;
-  static winrt::Microsoft::ReactNative::ReactNativeHost GetReactNativeHost(ReactPropertyBag const &properties) noexcept;
+  static ReactNative::ReactNativeHost GetReactNativeHost(ReactPropertyBag const &properties) noexcept;
 
  private:
   Mso::CntPtr<Mso::React::IReactHost> m_reactHost;

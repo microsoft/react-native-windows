@@ -34,6 +34,11 @@ ReactNativeHost::ReactNativeHost() noexcept : m_reactHost{Mso::React::MakeReactH
 #endif
 }
 
+/*static*/ ReactNative::ReactNativeHost ReactNativeHost::FromContext(
+    ReactNative::IReactContext const &reactContext) noexcept {
+  return GetReactNativeHost(ReactPropertyBag{reactContext.Properties()});
+}
+
 IVector<IReactPackageProvider> ReactNativeHost::PackageProviders() noexcept {
   return InstanceSettings().PackageProviders();
 }

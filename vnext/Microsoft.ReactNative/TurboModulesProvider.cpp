@@ -308,7 +308,12 @@ TurboModulesProvider::TurboModulePtr TurboModulesProvider::getModule(
 }
 
 std::vector<std::string> TurboModulesProvider::getEagerInitModuleNames() noexcept {
-  return {};
+  std::vector<std::string> eagerModules;
+  auto it = m_moduleProviders.find("UIManager");
+  if (it != m_moduleProviders.end()) {
+    eagerModules.push_back("UIManager");
+  }
+  return eagerModules;
 }
 
 void TurboModulesProvider::SetReactContext(const IReactContext &reactContext) noexcept {

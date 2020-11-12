@@ -140,7 +140,7 @@ export async function copyProjectTemplateAndReplace(
   // Similar to the above, but we want to retain namespace separators
   if (projectType === 'lib') {
     namespace = namespace
-      .split(/[\.\:]+/)
+      .split(/[.:]+/)
       .map(pascalCase)
       .join('.');
   }
@@ -190,10 +190,11 @@ export async function copyProjectTemplateAndReplace(
     {paths: [process.cwd()]},
   );
   const winui3Props = readProjectFile(winui3PropsPath);
-  const winui3Version = findPropertyValue(winui3Props, 'WinUI3Version');
-  if (winui3Version === null) {
-    throw new Error('Unable to find WinUI3 version from property sheets');
-  }
+  const winui3Version = findPropertyValue(
+    winui3Props,
+    'WinUI3Version',
+    winui3PropsPath,
+  );
 
   const csNugetPackages: NugetPackage[] = [
     {
@@ -242,12 +243,9 @@ export async function copyProjectTemplateAndReplace(
   if (options.useHermes) {
     cppNugetPackages.push({
       id: 'ReactNative.Hermes.Windows',
-      version: '0.6.3',
+      version: '0.7.1',
       hasProps: false,
-      // This does have build targets, but they're included automatically by
-      // Microsoft.ReactNative and don't need to be imported in the user
-      // project
-      hasTargets: false,
+      hasTargets: true,
     });
   }
 
@@ -285,9 +283,10 @@ export async function copyProjectTemplateAndReplace(
     csNugetPackages: csNugetPackages,
 
     // autolinking template variables
+    autolinkPropertiesForProps: '',
     autolinkProjectReferencesForTargets: '',
     autolinkCsUsingNamespaces: '',
-    autolinkCsReactPacakgeProviders: '',
+    autolinkCsReactPackageProviders: '',
     autolinkCppIncludes: '',
     autolinkCppPackageProviders:
       '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: vnext\local-cli\runWindows\utils\autolink.js
@@ -298,7 +297,12 @@ export async function copyProjectTemplateAndReplace(
       ? [
           // app common mappings
           {
-            from: path.join(srcRootPath, 'metro.config.js'),
+            from: path.join(
+              srcRootPath,
+              options.useDevMode
+                ? 'metro.devMode.config.js'
+                : 'metro.config.js',
+            ),
             to: 'metro.config.js',
           },
           {
@@ -321,10 +325,6 @@ export async function copyProjectTemplateAndReplace(
           {
             from: path.join(srcPath, projDir, 'MyApp.sln'),
             to: path.join(windowsDir, newProjectName + '.sln'),
-          },
-          {
-            from: path.join(sharedPath, projDir, 'BuildFlags.props'),
-            to: path.join(windowsDir, 'BuildFlags.props'),
           },
         ]
       : [
@@ -455,24 +455,31 @@ export async function copyProjectTemplateAndReplace(
 
   // shared proj
   if (fs.existsSync(path.join(sharedPath, projDir))) {
+    let sharedProjMappings = [];
+
     // Once we are publishing to nuget.org, this shouldn't be needed anymore
     if (options.experimentalNuGetDependency) {
-      const nugetMappings = [
-        {
-          from: path.join(sharedPath, projDir, 'NuGet.Config'),
-          to: path.join(windowsDir, 'NuGet.Config'),
-        },
-      ];
+      sharedProjMappings.push({
+        from: path.join(sharedPath, projDir, 'NuGet.Config'),
+        to: path.join(windowsDir, 'NuGet.Config'),
+      });
+    }
 
-      for (const mapping of nugetMappings) {
-        await copyAndReplaceWithChangedCallback(
-          mapping.from,
-          destPath,
-          mapping.to,
-          templateVars,
-          options.overwrite,
-        );
-      }
+    if (fs.existsSync(path.join(sharedPath, projDir, 'BuildFlags.props'))) {
+      sharedProjMappings.push({
+        from: path.join(sharedPath, projDir, 'BuildFlags.props'),
+        to: path.join(windowsDir, 'BuildFlags.props'),
+      });
+    }
+
+    for (const mapping of sharedProjMappings) {
+      await copyAndReplaceWithChangedCallback(
+        mapping.from,
+        destPath,
+        mapping.to,
+        templateVars,
+        options.overwrite,
+      );
     }
   }
 

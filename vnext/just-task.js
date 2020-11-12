@@ -7,6 +7,7 @@
 
 const path = require('path');
 const {
+  cleanTask,
   task,
   series,
   condition,
@@ -23,7 +24,6 @@ const copyRNLibaries = require('./Scripts/copyRNLibraries');
 
 option('production');
 option('clean');
-option('ci');
 
 task('apiExtractorVerify', apiExtractorVerifyTask());
 task('apiExtractorUpdate', apiExtractorUpdateTask());
@@ -35,11 +35,14 @@ task('apiDocumenter', () => {
   );
 });
 
-task('codegen', () => {
-  execSync(
-    'npx react-native-windows-codegen --files Libraries/**/Native*.js --namespace Microsoft::ReactNativeSpecs',
-  );
-});
+task(
+  'codegen',
+  series(cleanTask({paths: ['./codegen']}), () => {
+    execSync(
+      'npx react-native-windows-codegen --files Libraries/**/Native*.js --namespace Microsoft::ReactNativeSpecs',
+    );
+  }),
+);
 
 task('flow-check', () => {
   require('child_process').execSync('npx flow check', {stdio: 'inherit'});
@@ -83,13 +86,12 @@ task(
     'copyReadmeAndLicenseFromRoot',
     'compileTsPlatformOverrides',
     'codegen',
-    condition('apiExtractorVerify', () => argv().ci),
   ),
 );
 
 task('clean', series('cleanRnLibraries'));
 
-task('lint', series('eslint', 'flow-check'));
+task('lint', series('eslint', 'flow-check', 'apiExtractorVerify'));
 task('lint:fix', series('eslint:fix'));
 
 task('api', series('apiExtractorUpdate', 'apiDocumenter'));

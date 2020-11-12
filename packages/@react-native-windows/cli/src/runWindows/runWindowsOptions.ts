@@ -28,6 +28,7 @@ export type BuildConfig = 'Debug' | 'DebugBundle' | 'Release' | 'ReleaseBundle';
  *    sln: String - Solution file to build
  *    msbuildprops: String - Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2
  *    direct-debugging: Number - Enable direct debugging on specified port
+ *    no-telemetry: Boolean - Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI
  */
 export interface RunWindowsOptions {
   release?: boolean;
@@ -51,6 +52,7 @@ export interface RunWindowsOptions {
   buildLogDirectory?: string;
   info: boolean;
   directDebugging?: number;
+  telemetry?: boolean;
 }
 
 export const runWindowsOptions: CommandOption[] = [
@@ -156,6 +158,12 @@ export const runWindowsOptions: CommandOption[] = [
     name: '--direct-debugging [number]',
     description: 'Enable direct debugging on specified port',
     parse: parseDirectDebuggingPort,
+  },
+  {
+    name: '--no-telemetry',
+    description:
+      'Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
+    default: false,
   },
 ];
 

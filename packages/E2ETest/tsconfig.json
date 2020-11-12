@@ -1,7 +1,6 @@
 {
   "extends": "@rnw-scripts/ts-config",
   "compilerOptions": {
-    "outDir": "dist",
     "esModuleInterop": true,
     "types": [
     "@wdio/sync",

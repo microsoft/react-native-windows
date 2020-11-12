@@ -12,17 +12,17 @@
     "src/tsconfig.json",
     "**/*.windesktop.js"
   ],
-  "baseVersion": "0.0.0-f0e80ae22",
+  "baseVersion": "0.0.0-77f7658e4",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "86d79e561c8ce6b2dd89ba20ec7d42246cb2a50f"
+      "baseHash": "7f31832893b66db402c57bc4c1194fec7cca56e4"
     },
     {
       "type": "patch",
-      "file": "DeforkingPatches/ReactCommon/yoga/yoga/Yoga.cpp",
+      "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseHash": "caab3561363f0adf848ffd7da38f07aad5bb70cb",
       "issue": 3994
@@ -31,7 +31,7 @@
       "type": "copy",
       "directory": "flow-typed",
       "baseDirectory": "flow-typed",
-      "baseHash": "f1491d073bd76e90b6c185d818ec807ac52346b9",
+      "baseHash": "ea9220b9644559edb09e929872d37774e783d757",
       "issue": 6139
     },
     {
@@ -59,14 +59,14 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/package.json",
       "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseHash": "bc3f1d26bd0fcbcb8dc09023e8889575c0adbc80",
+      "baseHash": "79c93a93901ea104514e60466b539e4b1e6c0aa6",
       "issue": 5430
     },
     {
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "a26839159af016e9fb20dc4c18b3c744cde55cc1"
+      "baseHash": "073219bedb8f92d04fb2f60636df7314b8c243b7"
     },
     {
       "type": "platform",
@@ -213,7 +213,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "b55d01b28764b9bfc75b903383b7b0c08d744b87"
+      "baseHash": "53bc7996e0fa83128b846a04d0bcec972a406133"
     },
     {
       "type": "derived",
@@ -249,7 +249,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "b49b732f6a88bdc4e5783b5ac2339ee6105523fd"
+      "baseHash": "309ff04ae5312224c992b9119a12c691149280cd"
     },
     {
       "type": "patch",
@@ -271,19 +271,19 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "9b1b8d8b8d7a26c1e8d16617a4c9e7a686018912"
+      "baseHash": "d43a1d363a5d126211e8ef3a00237820bc81900a"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "c1b06e1b1f627c83f10c28338238a7ecea9c561f"
+      "baseHash": "cb05e3460bdc1fe0eabdd1149591fce9a0341678"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "58698d349b3327660c71708f7128c2247caaef3f"
+      "baseHash": "01d138ef00a0485c1375e9f085d958f4072bf5fe"
     },
     {
       "type": "patch",
@@ -357,7 +357,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "72a2fea2216d144cc985f243c6d27274f8f4edb6",
+      "baseHash": "e1418d31343ca11ce165a87f82224ccc8d801052",
       "issue": 4379
     },
     {
@@ -380,7 +380,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "bf4306bd49457c2b82ee8f85147aa458505a5150"
+      "baseHash": "7469e1af464cb0b91a246fa697cba3a613310fdb"
     },
     {
       "type": "patch",
@@ -392,7 +392,7 @@
       "type": "copy",
       "file": "src/Libraries/Utilities/BackHandler.windows.js",
       "baseFile": "Libraries/Utilities/BackHandler.android.js",
-      "baseHash": "69605da09902165f866377d7eda5897029ef4d62",
+      "baseHash": "972b0cbe23ba57207ee7c855975c0b3d4c28f0d2",
       "issue": 4629
     },
     {

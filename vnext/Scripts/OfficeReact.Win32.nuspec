@@ -35,7 +35,7 @@
 
     <file src="$nugetroot$\inc\Shared\AbiSafe.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\DevSettings.h" target="inc"/>
-    <file src="$nugetroot$\inc\Desktop\INativeUIManagerLegacy.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWin32\INativeUIManagerLegacy.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\InstanceManager.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IReactRootView.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IRedBoxHandler.h" target="inc"/>
@@ -48,7 +48,7 @@
     <file src="$nugetroot$\inc\Shared\MemoryTracker.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Modules\I18nModule.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\NativeModuleProvider.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\ShadowNode.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWin32\ShadowNode.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Tracing.h" target="inc"/>
 
     <!-- Test DLL -->

@@ -26,10 +26,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/FlatList/FlatListExample'),
   },
   {
-    key: 'CustomViewExample',
-    module: require('../examples-win/CustomView/CustomViewExample'),
-  },
-  {
     key: 'DatePickerExample',
     category: 'UI',
     module: require('../examples-win/DatePicker/DatePickerExample'),
@@ -164,6 +160,10 @@ const ComponentExamples: Array<RNTesterExample> = [
   {
     key: 'LegacyAccessibilityTest',
     module: require('../examples-win/LegacyTests/AccessibilityTestPage'),
+  },
+  {
+    key: 'LegacyTextBackgroundColorTest',
+    module: require('../examples-win/LegacyTests/TextBackgroundColorTestPage'),
   },
 ];
 
@@ -312,11 +312,6 @@ const APIExamples: Array<RNTesterExample> = [
     category: 'Basic',
     module: require('../examples/WebSocket/WebSocketExample'),
   },
-  // TODO:  TurboModuleExample crashes the app if web debugging is turned on
-  //  {
-  //    key: 'TurboModuleExample',
-  //    module: require('../examples/TurboModule/TurboModuleExample'),
-  //  },
   /* TODO: ? XHRExample requires CameraRoll access
   {
     key: 'XHRExample',
@@ -324,6 +319,14 @@ const APIExamples: Array<RNTesterExample> = [
     module: require('../examples/XHR/XHRExample'),
   },*/
 ];
+
+if (global.__turboModuleProxy) {
+  APIExamples.push({
+    key: 'TurboModuleExample',
+    category: 'Basic',
+    module: require('../examples/TurboModule/TurboModuleExample'),
+  });
+}
 
 const Modules: any = {};
 

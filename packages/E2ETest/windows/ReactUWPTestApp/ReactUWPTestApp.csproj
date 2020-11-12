@@ -160,7 +160,7 @@
       <Version>6.2.9</Version>
     </PackageReference>
     <PackageReference Include="XamlTreeDump">
-      <Version>1.0.3</Version>
+      <Version>1.0.5</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +177,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>
-    <BundleEntryFile>dist/app/index.js</BundleEntryFile>
+    <BundleEntryFile>app/index.ts</BundleEntryFile>
   </PropertyGroup>
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props')" />

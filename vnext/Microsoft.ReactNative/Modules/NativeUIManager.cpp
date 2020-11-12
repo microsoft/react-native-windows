@@ -13,6 +13,7 @@
 #include "CppWinRTIncludes.h"
 #include "IXamlRootView.h"
 #include "QuirkSettings.h"
+#include "ReactRootViewTagGenerator.h"
 #include "Unicode.h"
 
 namespace winrt {
@@ -183,8 +184,7 @@ void NativeUIManager::destroyRootShadowNode(ShadowNode *node) {
 }
 
 int64_t NativeUIManager::AddMeasuredRootView(facebook::react::IReactRootView *rootView) {
-  auto tag = m_nextRootTag;
-  m_nextRootTag += RootViewTagIncrement;
+  auto tag = getNextRootViewTag();
 
   int64_t width = rootView->GetActualWidth();
   int64_t height = rootView->GetActualHeight();
@@ -517,6 +517,8 @@ static void StyleYogaNode(
         position = YGPositionTypeRelative;
       else if (value == "absolute")
         position = YGPositionTypeAbsolute;
+      else if (value == "static")
+        position = YGPositionTypeStatic;
       else
         assert(false);
 

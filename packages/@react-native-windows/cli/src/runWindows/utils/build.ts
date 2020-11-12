@@ -77,6 +77,9 @@ export function getAppSolutionFile(options: RunWindowsOptions, config: Config) {
 
   // Check the answer from react-native config
   const windowsAppConfig = config.project.windows;
+  if (!windowsAppConfig) {
+    throw new Error("Couldn't determine Windows app config");
+  }
   const configSolutionFile = windowsAppConfig.solutionFile;
 
   if (configSolutionFile.startsWith(configErrorString)) {

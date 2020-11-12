@@ -43,3 +43,6 @@ export const SHOWBORDER_ON_CONTROLSTYLE = 'ShowBorder';
 export const TRANSFORM_TESTPAGE = 'LegacyTransformTest';
 export const TRANSFORM_TEST_RESULT = 'TransfromTestResult';
 export const APPLY_SCALE_TRANSFORM_BUTTON = 'ApplyScaleTransformButton';
+
+// Text backgroundColor Page
+export const TEXT_BACKGROUND_COLOR_TESTPAGE = '<LegacyTextBackgroundColorTest>';

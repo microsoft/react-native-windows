@@ -14,6 +14,9 @@ const projectTypeGuidsByLanguage = {
   cs: '{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}',
 };
 
+export const dotNetCoreProjectTypeGuid =
+  '{9A19103F-16F7-4668-BE54-9A1E7A4F7556}';
+
 /**
  * Checks is the given block of lines exists within an array of lines.
  * @param lines The array of lines to search.
@@ -117,7 +120,10 @@ export function addProjectToSolution(
   const slnDir = path.dirname(slnFile);
   const relProjectFile = path.relative(slnDir, project.projectFile);
 
-  const projectTypeGuid = projectTypeGuidsByLanguage[project.projectLang];
+  const projectTypeGuid =
+    'projectTypeGuid' in project
+      ? project.projectTypeGuid!
+      : projectTypeGuidsByLanguage[project.projectLang];
 
   const projectGuid = project.projectGuid.toUpperCase();
 
@@ -149,16 +155,18 @@ export function addProjectToSolution(
 
   slnConfigs.forEach(slnConfig => {
     projectConfigLines.push(
-      `\t\t${projectGuid}.${slnConfig}.ActiveCfg = ${slnConfig.replace(
-        'x86',
-        'Win32',
-      )}`,
+      `\t\t${projectGuid}.${slnConfig}.ActiveCfg = ${
+        project.projectLang === 'cpp'
+          ? slnConfig.replace('x86', 'Win32')
+          : slnConfig
+      }`,
     );
     projectConfigLines.push(
-      `\t\t${projectGuid}.${slnConfig}.Build.0 = ${slnConfig.replace(
-        'x86',
-        'Win32',
-      )}`,
+      `\t\t${projectGuid}.${slnConfig}.Build.0 = ${
+        project.projectLang === 'cpp'
+          ? slnConfig.replace('x86', 'Win32')
+          : slnConfig
+      }`,
     );
   });
 
@@ -169,7 +177,10 @@ export function addProjectToSolution(
   projectConfigLines.forEach(projectConfigLine => {
     if (slnLines.indexOf(projectConfigLine) < 0) {
       if (verbose) {
-        console.log(chalk.yellow('Missing project config block.'));
+        const configLine = projectConfigLine.substr(
+          projectConfigLine.indexOf('= ') + 2,
+        );
+        console.log(chalk.yellow(`Missing ${configLine} config block.`));
       }
 
       const projectConfigEndIndex = slnLines.indexOf(
