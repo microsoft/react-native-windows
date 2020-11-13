@@ -68,7 +68,7 @@ async function runWindows(
   config: Config,
   options: RunWindowsOptions,
 ) {
-  if (!options.telemetry || process.env.AGENT_NAME) {
+  if (!options.telemetry) {
     if (options.logging) {
       console.log('Disabling telemetry');
     }

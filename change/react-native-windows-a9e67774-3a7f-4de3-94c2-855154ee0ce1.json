@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Don't return an error if AsyncStorage is empty",
+  "packageName": "react-native-windows",
+  "email": "i@mandrigin.ru",
+  "dependentChangeType": "none"
+}
