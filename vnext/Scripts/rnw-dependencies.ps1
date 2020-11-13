@@ -84,7 +84,7 @@ function InstallVS {
 function CheckNode {
     try {
         $v = (Get-Command node -ErrorAction Stop).Version.Major
-        return $v -eq 12 -or $v -eq 13
+        return $v -eq 12 -or $v -eq 13 -or $v eq 14
     } catch {
         return $false;
     }
@@ -169,7 +169,7 @@ $requirements = @(
         Install = { InstallVS };
     },
     @{
-        Name = 'NodeJS 12 or 13 installed';
+        Name = 'NodeJS 12, 13 or 14 installed';
         Tags = @('appDev');
         Valid = CheckNode;
         Install = { choco install -y nodejs.install --version=12.9.1 };
