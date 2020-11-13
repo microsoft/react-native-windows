@@ -101,6 +101,15 @@ jobs:
           contents: |
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
+      
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Governance Detection'
+        inputs:
+          alertWarningLevel: Medium
+          scanType: 'Register'
+          # Uncomment this once we have codesigning working
+          # ${{ if endsWith(variables['Build.SourceBranchName'], '-stable') }}: # Fail on stable release builds
+          #   failOnAlert: true
 
   - job: RnwNativeBuildUniversal
     displayName: Build Universal
@@ -150,6 +159,15 @@ jobs:
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
             Microsoft.ReactNative.Managed.CodeGen\**
+      
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Governance Detection'
+        inputs:
+          alertWarningLevel: Medium
+          scanType: 'Register'
+          # Uncomment this once we have codesigning working
+          # ${{ if endsWith(variables['Build.SourceBranchName'], '-stable') }}: # Fail on stable release builds
+          #   failOnAlert: true
 
     # Disable for now, not sure this works on github projects anyway.
     # - task: PublishSymbols@2
