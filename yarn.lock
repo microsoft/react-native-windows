@@ -2079,9 +2079,9 @@
   integrity sha512-ebDJ9b0e702Yr7pWgB0jzm+CX4Srzz8RcXtLJDJB+BSccqMa36uyH/zUsSYao5+BD1ytv3k3rPYCq4mAE1hsXA==
 
 "@types/async@^3.2.3":
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/@types/async/-/async-3.2.3.tgz#c56f5e0fc02f8b37196f79239cc857e789b97bb4"
-  integrity sha512-deXFjLZc1h6SOh3hicVgD+S2EAkhSBGX/vdlD4nTzCjjOFQ+bfNiXocQ21xJjFAUwqaCeyvOQMgrnbg4QEV63A==
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/@types/async/-/async-3.2.4.tgz#706101f4d1f66c1a8dcbcedb05528ad73b08230e"
+  integrity sha512-2c14HTaCn6tlb7bnqJGeH5JJGHZmyrkDD3EYe1NYBYjuY4+2EmMg8pjau2HvVz8+ANmO+DieV95H8PlzbK383g==
 
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
   version "7.1.9"
