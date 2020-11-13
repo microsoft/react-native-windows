@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add win32 exports required for internal usage",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch",
+  "date": "2020-11-13T16:40:27.402Z"
+}
