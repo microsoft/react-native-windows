@@ -305,6 +305,10 @@
     <ClCompile Include="GlyphViewManager.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\ReactRootViewTagGenerator.cpp" />
+    <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
+    <ClCompile Include="Views\PaperShadowNode.cpp" />
+    <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -654,6 +658,11 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="GlyphViewManager.h" />
+    <ClInclude Include="Modules\ReactRootViewTagGenerator.h" />
+    <ClInclude Include="Modules\PaperUIManagerModule.h" />
+    <ClInclude Include="Views\PaperShadowNode.h" />
+    <ClInclude Include="Views\ShadowNodeRegistry.h" />
+    <ClInclude Include="DocString.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -689,6 +698,7 @@
     </Midl>
     <Midl Include="IViewManagerCore.idl" />
     <Midl Include="JsiApi.idl" />
+    <Midl Include="DocString.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />
