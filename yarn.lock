@@ -1667,9 +1667,9 @@
     regenerator-runtime "^0.13.3"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.9.30"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.9.30.tgz#76e87501330f66aef7fa85d782d57a125c185da0"
-  integrity sha512-dFp2OqWkPlLQEyR4KDLB7NWnTz52B8EBLD+BdTz8tCMa7sR5e9FZ2RQJrN4L114BanNjJY0OBBceTje+U/dLYg==
+  version "7.9.31"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.9.31.tgz#7841d6b2ecf8c0fd451fedf72b50d759ed975b01"
+  integrity sha512-cNiZ9VLWSOk9EIrfDafVbTi6Qi+geDHvpIcfA3dxGf/uqB+qunqd/oiqIVp54jYIVlAgjoQTq7p7TWHjA8uxGw==
   dependencies:
     "@microsoft/api-extractor-model" "7.10.10"
     "@microsoft/tsdoc" "0.12.19"
