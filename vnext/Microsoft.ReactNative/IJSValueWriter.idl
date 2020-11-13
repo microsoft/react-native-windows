@@ -1,24 +1,48 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "DocString.h"
+
 namespace Microsoft.ReactNative {
 
   // Writer for JSON-like streams or tree structures
   [webhosthidden]
+  DOC_STRING("``IJSValueWriter`` is used to read data from JavaScript in custom native modules.  It acts as a stream and supports all the types in [`JSValueType`](JSValueType.md).")
   interface IJSValueWriter {
+    DOC_STRING("Write a null value.")
     void WriteNull();
+
+    DOC_STRING("Write a boolean value.")
     void WriteBoolean(Boolean value);
+
+    DOC_STRING("Write a number value from an integer.")
     void WriteInt64(Int64 value);
+
+    DOC_STRING("Write a number value from a double.")
     void WriteDouble(Double value);
+
+    DOC_STRING("Write a string value")
     void WriteString(String value);
+
+    DOC_STRING("Start writing an object.")
     void WriteObjectBegin();
+
+    DOC_STRING("Write a property within an object.  This should then be followed by writing the value of that property.")
     void WritePropertyName(String name);
+
+    DOC_STRING("Complete writing an object.")
     void WriteObjectEnd();
+
+    DOC_STRING("Start writing an array.")
     void WriteArrayBegin();
+
+    DOC_STRING("Complete writing an array.")
     void WriteArrayEnd();
   }
 
   // Use this delegate to pass arbitrary value to ABI API.
   // In a function that implements the delegate use the provided writer to stream custom values.
+  DOC_STRING("Use this delegate to pass arbitrary value to ABI API. \n\
+In a function that implements the delegate use the provided writer to stream custom values.")
   delegate void JSValueArgWriter(IJSValueWriter writer);
 } // namespace Microsoft.ReactNative
