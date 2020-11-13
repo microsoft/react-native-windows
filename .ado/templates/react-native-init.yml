@@ -66,9 +66,10 @@ steps:
       npx --no-install beachball publish --branch origin/$(System.PullRequest.TargetBranch) --no-push --registry http://localhost:4873 --yes --access public $(extraPublishArgs)
     displayName: Publish packages to verdaccio
 
+  # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
   - task: NuGetToolInstaller@0
     inputs:
-      versionSpec: ">=4.6.0"
+      versionSpec: ">=5.8.0"
 
   # We force the usage of npm instead of yarn becuase yarn has fragility issues when redirected to a different server (such as verdaccio)
   - task: CmdLine@2
