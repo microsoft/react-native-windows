@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 13 Nov 2020 05:05:57 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.35",
+      "version": "0.0.0-canary.35",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update nuget version in preparation of VS16.8 which has a breaking change compatibility issue with earlier nuget versoins",
+            "author": "dannyvv@microsoft.com",
+            "commit": "4ca4c37a5fabbe453e6ef991f1a5e8b4edbef2c6",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Update nuget version in preparation of VS16.8 which has a breaking change compatibility issue with earlier nuget versoins",
+            "author": "dannyvv@microsoft.com",
+            "commit": "4ca4c37a5fabbe453e6ef991f1a5e8b4edbef2c6",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Nov 2020 05:05:57 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.34",
       "version": "0.0.0-canary.34",

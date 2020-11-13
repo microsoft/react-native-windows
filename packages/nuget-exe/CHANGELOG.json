@@ -2,6 +2,27 @@
   "name": "nuget-exe",
   "entries": [
     {
+      "date": "Fri, 13 Nov 2020 05:05:57 GMT",
+      "tag": "nuget-exe_v5.8.0",
+      "version": "5.8.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update nuget version in preparation of VS16.8 which has a breaking change compatibility issue with earlier nuget versoins",
+            "author": "dannyvv@microsoft.com",
+            "commit": "4ca4c37a5fabbe453e6ef991f1a5e8b4edbef2c6",
+            "package": "nuget-exe"
+          },
+          {
+            "comment": "Update nuget version in preparation of VS16.8 which has a breaking change compatibility issue with earlier nuget versoins",
+            "author": "dannyvv@microsoft.com",
+            "commit": "4ca4c37a5fabbe453e6ef991f1a5e8b4edbef2c6",
+            "package": "nuget-exe"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Oct 2020 05:06:32 GMT",
       "tag": "nuget-exe_v4.9.2",
       "version": "4.9.2",

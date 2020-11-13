@@ -29,6 +29,11 @@ function setExitProcessWithError(loggingWasEnabled: boolean): void {
     console.log(
       `Re-run the command with ${chalk.bold('--logging')} for more information`,
     );
+    if (Telemetry.client) {
+      console.log(
+        `Your session id was ${Telemetry.client.commonProperties.sessionId}`,
+      );
+    }
   }
   process.exitCode = 1;
 }

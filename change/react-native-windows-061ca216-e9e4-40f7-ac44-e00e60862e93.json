@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add a custom WinRT attribute to be used to store documentation strings for WinRT types",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

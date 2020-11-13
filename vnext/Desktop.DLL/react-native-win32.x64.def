@@ -43,6 +43,11 @@ EXPORTS
 ?makeConversionError@folly@@YA?AVConversionError@1@W4ConversionCode@1@V?$Range@PEBD@1@@Z
 ?moduleNames@ModuleRegistry@react@facebook@@QEAA?AV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@XZ
 ?name@?$TypeInfo@UObjectImpl@dynamic@folly@@@dynamic@folly@@2QEBDEB
+?name@?$TypeInfo@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@dynamic@folly@@2QEBDEB
+?name@?$TypeInfo@V?$vector@Udynamic@folly@@V?$allocator@Udynamic@folly@@@std@@@std@@@dynamic@folly@@2QEBDEB
+?name@?$TypeInfo@_J@dynamic@folly@@2QEBDEB
+?name@?$TypeInfo@_N@dynamic@folly@@2QEBDEB
+?name@?$TypeInfo@N@dynamic@folly@@2QEBDEB
 ?assertionFailure@detail@folly@@YAXPEBD00I0H@Z
 ?parseJson@folly@@YA?AUdynamic@1@V?$Range@PEBD@1@@Z
 ?setGlobalVariable@Instance@react@facebook@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@5@@Z
@@ -63,6 +68,7 @@ EXPORTS
 ??0NetworkingModule@React@Microsoft@@QEAA@XZ
 ?CreateAsyncStorageModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PEB_W@Z
 ?MakeJSQueueThread@uwp@react@@YA?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
+?Hash128@SpookyHashV2@hash@folly@@SAXPEBX_KPEA_K2@Z
 ??1Instance@react@facebook@@QEAA@XZ
 ?invokeAsync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXXZ@std@@@Z
 ?invokeSync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXXZ@std@@@Z
