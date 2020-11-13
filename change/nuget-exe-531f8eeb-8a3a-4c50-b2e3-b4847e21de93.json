@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update nuget version in preparation of VS16.8 which has a breaking change compatibility issue with earlier nuget versoins",
+  "packageName": "nuget-exe",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
