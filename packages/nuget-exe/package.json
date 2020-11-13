@@ -2,6 +2,7 @@
   "name": "nuget-exe",
   "version": "5.8.0-0",
   "description": "Repackaged NuGet.exe binary",
+  "private": true,
   "main": "nuget-5.8.0.exe",
   "repository": "https://github.com/microsoft/react-native-windows",
   "license": "MIT",
