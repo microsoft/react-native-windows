@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Embed documentation of WinRT APIs in the winmd",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
