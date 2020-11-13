@@ -6,6 +6,8 @@
 #include <Views/ShadowNodeBase.h>
 #include "TouchEventHandler.h"
 
+#include <Fabric/FabricUIManagerModule.h>
+#include <Fabric/ViewComponentView.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
 #include <UI.Xaml.Controls.h>
@@ -19,6 +21,11 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Input.h>
+
+#pragma warning(push)
+#pragma warning(disable : 4244 4305)
+#include <react/renderer/components/view/TouchEventEmitter.h>
+#pragma warning(pop)
 
 #ifdef WINUI3_PREVIEW3
 #include <winrt/Microsoft.UI.Input2.Experimental.h>
@@ -333,23 +340,112 @@ folly::dynamic TouchEventHandler::GetPointerJson(const ReactPointer &pointer, in
   return json;
 }
 
+// This work should probably be delegated to the CompnentViews
+facebook::react::SharedEventEmitter EventEmitterForElement(
+    std::shared_ptr<FabricUIManager> &uimanager,
+    facebook::react::Tag tag) noexcept {
+  auto &registry = uimanager->GetViewRegistry();
+
+  auto descriptor = registry.componentViewDescriptorWithTag(tag);
+  auto view = std::static_pointer_cast<BaseComponentView const>(descriptor.view);
+  auto emitter = view->GetEventEmitter();
+  if (emitter)
+    return emitter;
+
+  auto element = view->Element();
+  while (auto parent = element.Parent()) {
+    if (element = parent.try_as<xaml::FrameworkElement>()) {
+      auto boxedTag = element.Tag();
+      if (boxedTag) {
+        if (tag = winrt::unbox_value<facebook::react::Tag>(element.Tag()))
+          return EventEmitterForElement(uimanager, tag);
+      }
+    }
+  }
+  return nullptr;
+}
+
+facebook::react::Touch TouchEventHandler::TouchForPointer(const ReactPointer &pointer) noexcept {
+  facebook::react::Touch t;
+  t.force = pointer.pressure;
+  t.identifier = static_cast<int>(pointer.identifier);
+  t.pagePoint.x = pointer.positionRoot.X; // TODO: This should be relative to the rootview, not the XAML tree
+  t.pagePoint.y = pointer.positionRoot.Y; // TODO: This should be relative to the rootview, not the XAML tree
+  t.screenPoint.x = pointer.positionRoot.X;
+  t.screenPoint.y = pointer.positionRoot.Y;
+  t.offsetPoint.x = pointer.positionView.X;
+  t.offsetPoint.y = pointer.positionView.Y;
+  t.target = static_cast<facebook::react::Tag>(pointer.target);
+  t.timestamp = static_cast<facebook::react::Float>(pointer.timestamp);
+  return t;
+}
+
 void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex) {
   folly::dynamic changedIndices = folly::dynamic::array();
   changedIndices.push_back(pointerIndex);
 
-  auto touches = folly::dynamic::array();
-  for (const auto &pointer : m_pointers) {
-    folly::dynamic touch = GetPointerJson(pointer, pointer.target);
-    touches.push_back(touch);
+  auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+      winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()));
+
+  if (fabricuiManager) {
+    std::unordered_set<facebook::react::SharedTouchEventEmitter> uniqueEventEmitters = {};
+    std::vector<facebook::react::SharedTouchEventEmitter> emittersForIndex;
+
+    facebook::react::TouchEvent te;
+
+    size_t index = 0;
+    for (const auto &pointer : m_pointers) {
+      te.touches.insert(TouchForPointer(pointer));
+      if (pointerIndex == index++)
+        te.changedTouches.insert(TouchForPointer(pointer));
+
+      auto emitter = std::static_pointer_cast<facebook::react::TouchEventEmitter>(
+          std::const_pointer_cast<facebook::react::EventEmitter>(
+              EventEmitterForElement(fabricuiManager, static_cast<facebook::react::Tag>(pointer.target))));
+      emittersForIndex.push_back(emitter);
+      if (emitter)
+        uniqueEventEmitters.insert(emitter);
+    }
+
+    for (const auto emitter : uniqueEventEmitters) {
+      te.targetTouches.clear();
+      index = 0;
+      for (const auto &pointer : m_pointers) {
+        auto pointerEmitter = emittersForIndex[index++];
+        if (emitter == pointerEmitter)
+          te.targetTouches.insert(TouchForPointer(pointer));
+      }
+
+      switch (eventType) {
+        case TouchEventType::Start:
+          emitter->onTouchStart(te);
+          break;
+        case TouchEventType::Move:
+          emitter->onTouchMove(te);
+          break;
+        case TouchEventType::End:
+          emitter->onTouchEnd(te);
+          break;
+        case TouchEventType::Cancel:
+          emitter->onTouchCancel(te);
+          break;
+      }
+    }
+  } else {
+    auto touches = folly::dynamic::array();
+    for (const auto &pointer : m_pointers) {
+      folly::dynamic touch = GetPointerJson(pointer, pointer.target);
+      touches.push_back(touch);
+    }
+
+    // Package up parameters and invoke the JS event emitter
+    const char *eventName = GetTouchEventTypeName(eventType);
+    if (eventName == nullptr)
+      return;
+    folly::dynamic params = folly::dynamic::array(eventName, std::move(touches), std::move(changedIndices));
+
+    m_context->CallJSFunction("RCTEventEmitter", "receiveTouches", std::move(params));
   }
-
-  // Package up parameters and invoke the JS event emitter
-  const char *eventName = GetTouchEventTypeName(eventType);
-  if (eventName == nullptr)
-    return;
-  folly::dynamic params = folly::dynamic::array(eventName, std::move(touches), std::move(changedIndices));
-
-  m_context->CallJSFunction("RCTEventEmitter", "receiveTouches", std::move(params));
 }
 
 bool TouchEventHandler::DispatchBackEvent() {

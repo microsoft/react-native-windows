@@ -166,6 +166,8 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       const std::string &moduleName,
       const folly::dynamic &initialProps) noexcept;
 
+  const ComponentViewRegistry &GetViewRegistry() const noexcept;
+
  private:
   void installFabricUIManager() noexcept;
   void initiateTransaction(facebook::react::MountingCoordinator::Shared const &mountingCoordinator);

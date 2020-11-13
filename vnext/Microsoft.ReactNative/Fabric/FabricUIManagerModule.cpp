@@ -14,6 +14,7 @@
 #include <JSI/jsi.h>
 #include <Modules\NativeUIManager.h>
 #include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Media.h>
 #include <Views/ViewManager.h>
 #include <XamlUtils.h>
 #include <react/renderer/core/EventBeat.h>
@@ -72,12 +73,33 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
   AsyncEventBeat(
       facebook::react::EventBeat::SharedOwnerBox const &ownerBox,
       // EventBeatManager *eventBeatManager,
+      const winrt::Microsoft::ReactNative::ReactContext &context,
       facebook::react::RuntimeExecutor runtimeExecutor,
       std::weak_ptr<FabricUIManager> uiManager)
       : EventBeat(ownerBox),
+        m_context(context),
         // eventBeatManager_(eventBeatManager),
         runtimeExecutor_(runtimeExecutor),
         uiManager_(uiManager) {
+    m_context.UIDispatcher().Post([this, uiManager, ownerBox = ownerBox_]() {
+      auto owner = ownerBox->owner.lock();
+      if (!owner) {
+        return;
+      }
+
+      // TODO: should use something other than CompositionTarget::Rendering ... not sure where to plug this in yet
+      // Getting the beat running to unblock basic events
+      m_rendering = xaml::Media::CompositionTarget::Rendering(
+          winrt::auto_revoke, [this, ownerBox](const winrt::IInspectable &, const winrt::IInspectable & /*args*/) {
+            auto owner = ownerBox->owner.lock();
+            if (!owner) {
+              return;
+            }
+
+            tick();
+          });
+    });
+
     // eventBeatManager->addObserver(*this);
   }
 
@@ -113,6 +135,8 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
 
  private:
   // EventBeatManager *eventBeatManager_;
+  xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
   facebook::react::RuntimeExecutor runtimeExecutor_;
   std::weak_ptr<FabricUIManager> uiManager_;
 };
@@ -173,15 +197,17 @@ void FabricUIManager::installFabricUIManager( // in android this is Binding::ins
 
   // TODO: T31905686 Create synchronous Event Beat
   facebook::react::EventBeat::Factory synchronousBeatFactory =
-      [/*eventBeatManager,*/ runtimeExecutor,
-       localUIManager = weak_from_this()](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
-        return std::make_unique<AsyncEventBeat>(ownerBox, /* eventBeatManager, */ runtimeExecutor, localUIManager);
+      [/*eventBeatManager,*/ runtimeExecutor, localUIManager = weak_from_this(), context = m_context](
+          facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
+        return std::make_unique<AsyncEventBeat>(
+            ownerBox, /* eventBeatManager, */ context, runtimeExecutor, localUIManager);
       };
 
   facebook::react::EventBeat::Factory asynchronousBeatFactory =
-      [/*eventBeatManager,*/ runtimeExecutor,
-       localUIManager = weak_from_this()](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
-        return std::make_unique<AsyncEventBeat>(ownerBox, /* eventBeatManager, */ runtimeExecutor, localUIManager);
+      [/*eventBeatManager,*/ runtimeExecutor, localUIManager = weak_from_this(), context = m_context](
+          facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
+        return std::make_unique<AsyncEventBeat>(
+            ownerBox, /* eventBeatManager, */ context, runtimeExecutor, localUIManager);
       };
 
   contextContainer->insert("ReactNativeConfig", config);
@@ -237,6 +263,10 @@ void FabricUIManager::installFabricUIManager( // in android this is Binding::ins
     */
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
       toolbox, (/*animationDriver_ ? animationDriver_.get() :*/ nullptr), this);
+}
+
+const ComponentViewRegistry &FabricUIManager::GetViewRegistry() const noexcept {
+  return m_registry;
 }
 
 void FabricUIManager::startSurface(

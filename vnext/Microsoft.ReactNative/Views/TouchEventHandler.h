@@ -9,6 +9,10 @@
 #include <optional>
 #include <set>
 #include "XamlView.h"
+#pragma warning(push)
+#pragma warning(disable : 4244)
+#include <react/renderer/components/view/Touch.h>
+#pragma warning(pop)
 
 namespace winrt {
 using namespace Windows::UI;
@@ -71,6 +75,7 @@ class TouchEventHandler {
   UpdateReactPointer(ReactPointer &pointer, const winrt::PointerRoutedEventArgs &args, xaml::UIElement sourceElement);
   void UpdatePointersInViews(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::UIElement sourceElement);
 
+  facebook::react::Touch TouchForPointer(const ReactPointer &pointer) noexcept;
   enum class TouchEventType { Start = 0, End, Move, Cancel, PointerEntered, PointerExited, PointerMove };
   void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
   void DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex);

@@ -22,8 +22,6 @@ TextMeasurement TextLayoutManager::measure(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
     LayoutConstraints layoutConstraints) const {
-  assert(attributedStringBox.getValue().getFragments().size() == 1);
-
   IDWriteFactory *pDWriteFactory;
   DWriteCreateFactory(
       DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown **>(&pDWriteFactory));
@@ -62,8 +60,6 @@ TextMeasurement TextLayoutManager::measure(
   }
 
   /*
-  
-
         // Get line bounds
   float baseline;
   float lineAdvance;

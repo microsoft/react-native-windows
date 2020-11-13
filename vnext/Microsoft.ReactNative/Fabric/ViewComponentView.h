@@ -17,6 +17,7 @@ namespace Microsoft::ReactNative {
 struct BaseComponentView : IComponentView {
   virtual const xaml::FrameworkElement Element() const noexcept = 0;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
+  const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
 
  protected:
   facebook::react::SharedViewEventEmitter m_eventEmitter;

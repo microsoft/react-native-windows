@@ -66,11 +66,11 @@ void ParagraphComponentView::updateState(
     facebook::react::State::Shared const &oldState) noexcept {
   const auto &newState = *std::static_pointer_cast<facebook::react::ParagraphShadowNode::ConcreteState const>(state);
 
-  // Only handle single fragments right now
-  assert(newState.getData().attributedString.getFragments().size() == 1);
-  auto fragment = newState.getData().attributedString.getFragments()[0];
-
-  m_element.Text(Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string));
+  // Only handle single/empty fragments right now -- ignore the other fragments
+  m_element.Text(
+      newState.getData().attributedString.getFragments().size()
+          ? Microsoft::Common::Unicode::Utf8ToUtf16(newState.getData().attributedString.getFragments()[0].string)
+          : L"");
 }
 void ParagraphComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,

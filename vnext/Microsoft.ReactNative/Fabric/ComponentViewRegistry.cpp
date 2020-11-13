@@ -45,8 +45,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
   return it.first->second;
 }
 
-ComponentViewDescriptor const &ComponentViewRegistry::componentViewDescriptorWithTag(
-    facebook::react::Tag tag) noexcept {
+ComponentViewDescriptor const &ComponentViewRegistry::componentViewDescriptorWithTag(facebook::react::Tag tag) const
+    noexcept {
   auto iterator = m_registry.find(tag);
   assert(iterator != m_registry.end());
   return iterator->second;

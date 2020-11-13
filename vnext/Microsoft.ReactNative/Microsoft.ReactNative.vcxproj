@@ -406,6 +406,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\iostextinput\TextInputProps.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\iostextinput\TextInputShadowNode.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\AccessibilityProps.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\TouchEventEmitter.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\ViewEventEmitter.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\ViewProps.cpp" DisableSpecificWarnings="4244;4459;4715;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\ViewShadowNode.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>

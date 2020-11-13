@@ -25,7 +25,7 @@ class ComponentViewRegistry final {
   ComponentViewDescriptor const &dequeueComponentViewWithComponentHandle(
       facebook::react::ComponentHandle componentHandle,
       facebook::react::Tag tag) noexcept;
-  ComponentViewDescriptor const &componentViewDescriptorWithTag(facebook::react::Tag tag) noexcept;
+  ComponentViewDescriptor const &componentViewDescriptorWithTag(facebook::react::Tag tag) const noexcept;
   void enqueueComponentViewWithComponentHandle(
       facebook::react::ComponentHandle componentHandle,
       facebook::react::Tag tag,

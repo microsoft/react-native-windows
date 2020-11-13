@@ -15,6 +15,10 @@ void BaseComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared
   m_eventEmitter = std::static_pointer_cast<facebook::react::ViewEventEmitter const>(eventEmitter);
 }
 
+const facebook::react::SharedViewEventEmitter &BaseComponentView::GetEventEmitter() const noexcept {
+  return m_eventEmitter;
+}
+
 ViewComponentView::ViewComponentView() {
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;
