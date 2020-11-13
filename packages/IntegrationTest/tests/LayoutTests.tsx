@@ -81,21 +81,19 @@ componentTest('VerifyMeasureOnScaledComponent', ({pass}) => {
   const ref = useRef<React.Component<any> & Readonly<NativeMethods>>(null);
   useEffect(() => {
     onNativeRender(() => {
-      onNativeRender(() => {
-        // https://github.com/microsoft/react-native-windows/issues/6530: Currently RNW does not scale the result in measure... which matches react-native-web, but not android/iOS
-        ref.current!.measure((_x, _y, width, height) => {
-          assert.equal(
-            width,
-            50,
-            'Components with 50% scale should not scale width on measure call',
-          );
-          assert.equal(
-            height,
-            50,
-            'Components with 50% scale should not scale height on measure call',
-          );
-          pass();
-        });
+      // https://github.com/microsoft/react-native-windows/issues/6530: Currently RNW does not scale the result in measure... which matches react-native-web, but not android/iOS
+      ref.current!.measure((_x, _y, width, height) => {
+        assert.equal(
+          width,
+          50,
+          'Components with 50% scale should scale width on measure call, so this value should be 25 but currently RNW does not scale the value - See Issue 6530',
+        );
+        assert.equal(
+          height,
+          50,
+          'Components with 50% scale should scale height on measure call, so this value should be 25 but currently RNW does not scale the value - See Issue 6530',
+        );
+        pass();
       });
     });
   });
