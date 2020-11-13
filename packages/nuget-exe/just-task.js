@@ -9,7 +9,7 @@ const fs = require('fs');
 const https = require('https');
 const {argv, task, cleanTask, logger, option} = require('just-scripts');
 
-const NUGET_VERSION = '5.8.0';
+const NUGET_VERSION = '4.9.2';
 const nugetBinary = `./nuget-${NUGET_VERSION}.exe`;
 const nugetUrl = `https://dist.nuget.org/win-x86-commandline/v${NUGET_VERSION}/nuget.exe`;
 

@@ -1,9 +1,8 @@
 {
   "name": "nuget-exe",
-  "version": "5.8.0-0",
+  "version": "4.9.2",
   "description": "Repackaged NuGet.exe binary",
-  "private": true,
-  "main": "nuget-5.8.0.exe",
+  "main": "nuget-4.9.2.exe",
   "repository": "https://github.com/microsoft/react-native-windows",
   "license": "MIT",
   "scripts": {
@@ -14,6 +13,6 @@
     "just-scripts": "^0.36.1"
   },
   "files": [
-    "nuget-5.8.0.exe"
+    "nuget-4.9.2.exe"
   ]
 }
