@@ -8,7 +8,7 @@
     <ItemGroup>
       <_EnsureJavaScriptCodeUpToDateInputFiles Include="$(MSBuildThisFileDirectory)yarn.lock" />
       <_EnsureJavaScriptCodeUpToDateInputFiles Include="$(MSBuildThisFileDirectory)\**\package.json" Exclude="$(MSBuildThisFileDirectory)\node_modules\**" />
-      <_EnsureJavaScriptCodeUpToDateOutputFiles Include="@(_EnsureJavaScriptCodeUpToDateInputFiles->'$(RootIntDir)\JsUpToDateCheck\%(RecursiveDir)%(Filename)%(Extension)')" />
+      <_EnsureJavaScriptCodeUpToDateOutputFiles Include="@(_EnsureJavaScriptCodeUpToDateInputFiles->'$(RootIntDir)\JsUpToDateCheck\%(RecursiveDir)%(Filename)%(Extension).dummy')" />
     </ItemGroup>
   </Target>
 
