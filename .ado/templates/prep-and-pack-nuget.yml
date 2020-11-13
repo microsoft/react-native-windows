@@ -52,6 +52,9 @@ steps:
         codesignNuget: ${{ parameters.signMicrosoft }}
 
   - ${{ if eq(parameters.packMicrosoftReactNativeManaged, true) }}:
+    - powershell: |
+        Copy-Item $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref\Microsoft.ReactNative.Managed.dll -Destination $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref.anycpu\Microsoft.ReactNative.Managed.dll
+      displayName: Copy the x64/release ref assembly to anycpu folder
     - template: prep-and-pack-single.yml
       parameters:
         packageId: Microsoft.ReactNative.Managed
