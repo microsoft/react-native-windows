@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Remove api-extractor/api-documenter",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none"
+}
