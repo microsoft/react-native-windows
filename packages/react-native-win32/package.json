@@ -12,7 +12,6 @@
     "flow-check": "flow check",
     "lint:fix": "just-scripts lint:fix",
     "lint": "just-scripts lint",
-    "api": "just-scripts api",
     "run-win32-dev-web": "npx @office-iss/rex-win32@0.62.12-devmain.13422.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --useDevMain --useWebDebugger",
     "run-win32-devmain": "npx @office-iss/rex-win32@0.62.12-devmain.13422.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --useDevMain",
     "run-win32": "npx @office-iss/rex-win32@0.62.12-devmain.13422.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev",
