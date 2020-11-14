@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 14 Nov 2020 05:04:43 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.36",
+      "version": "0.0.0-canary.36",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "print out sessionId when erroring out in run-windows so people can choose to let us know when filing bugs",
+            "author": "asklar@microsoft.com",
+            "commit": "bc6b6b7ff6122a412ddee38276a9816cdd1c52ea",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 13 Nov 2020 05:05:57 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.35",
       "version": "0.0.0-canary.35",

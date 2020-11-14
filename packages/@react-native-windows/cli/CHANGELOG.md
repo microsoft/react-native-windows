@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 13 Nov 2020 05:05:57 GMT and should not be manually modified.
+This log was last generated on Sat, 14 Nov 2020 05:04:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.36
+
+Sat, 14 Nov 2020 05:04:43 GMT
+
+### Changes
+
+- print out sessionId when erroring out in run-windows so people can choose to let us know when filing bugs (asklar@microsoft.com)
 
 ## 0.0.0-canary.35
 

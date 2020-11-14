@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 12 Nov 2020 05:05:57 GMT and should not be manually modified.
+This log was last generated on Sat, 14 Nov 2020 05:04:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.205
+
+Sat, 14 Nov 2020 05:04:43 GMT
+
+### Changes
+
+- Add a custom WinRT attribute to be used to store documentation strings for WinRT types (asklar@microsoft.com)
+- Add win32 exports required for internal usage (email not defined)
+- Fix appstate module (30809111+acoates-ms@users.noreply.github.com)
+- Add Targets to check that developers have run yarn install before building (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.203
 

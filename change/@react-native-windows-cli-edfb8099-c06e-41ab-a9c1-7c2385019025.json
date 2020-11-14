@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "print out sessionId when erroring out in run-windows so people can choose to let us know when filing bugs",
-  "packageName": "@react-native-windows/cli",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

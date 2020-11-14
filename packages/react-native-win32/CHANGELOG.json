@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 14 Nov 2020 05:04:43 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.63",
+      "version": "0.0.0-canary.63",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove api-extractor/api-documenter",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a2f696fb256a321903e5881cda090d131ef6e9bb",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Nov 2020 05:05:57 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.63",
       "version": "0.0.0-canary.63",

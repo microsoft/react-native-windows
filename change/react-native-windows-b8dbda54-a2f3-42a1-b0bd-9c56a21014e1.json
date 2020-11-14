@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add Targets to check that developers have run yarn install before building",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

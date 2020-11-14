@@ -2,6 +2,47 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 14 Nov 2020 05:04:43 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.205",
+      "version": "0.0.0-canary.205",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add a custom WinRT attribute to be used to store documentation strings for WinRT types",
+            "author": "asklar@microsoft.com",
+            "commit": "c2f334b7ac4e56888ac58800d354b4cac240ed9a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add win32 exports required for internal usage",
+            "author": "email not defined",
+            "commit": "26921dd05542920fe1ca540d0d993b667fd8a53e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix appstate module",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "49bae72d9f1f5b2f8a91be275c3a998bd31664eb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add Targets to check that developers have run yarn install before building",
+            "author": "dannyvv@microsoft.com",
+            "commit": "360a47d5af854f7e50a07495f8af6ac339b5403e",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Remove api-extractor/api-documenter",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a2f696fb256a321903e5881cda090d131ef6e9bb",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Nov 2020 05:05:57 GMT",
       "tag": "react-native-windows_v0.0.0-canary.203",
       "version": "0.0.0-canary.203",
