@@ -65,12 +65,12 @@ async function nugetRestore(nugetPath, slnFile, verbose, msbuildVersion) {
 }
 
 async function restoreNuGetPackages(options, slnFile, verbose) {
-  const nugetPath = path.join(os.tmpdir(), 'nuget.4.9.2.exe');
+  const nugetPath = path.join(os.tmpdir(), 'nuget.5.8.0.exe');
 
   if (!(await existsAsync(nugetPath))) {
     const spinner = newSpinner('Downloading NuGet Binary');
     await downloadFileWithRetry(
-      'https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe',
+      'https://dist.nuget.org/win-x86-commandline/v5.8.0/nuget.exe',
       nugetPath,
       1 /*retries*/,
     );
