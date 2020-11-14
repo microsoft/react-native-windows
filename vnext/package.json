@@ -7,11 +7,10 @@
     "url": "git@github.com:microsoft/react-native-windows.git",
     "directory": "vnext"
   },
-  "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
+  "description": "React Native for Windows",
   "main": "./index.windows.js",
   "typings": "./typings-index.d.ts",
   "scripts": {
-    "api": "just-scripts api",
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
@@ -56,8 +55,6 @@
     "ws": "^6.1.4"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.3.8",
-    "@microsoft/api-extractor": "^7.3.8",
     "@rnw-scripts/eslint-config": "0.1.4",
     "@types/react": "16.9.0",
     "@types/react-native": "^0.63.18",

@@ -769,11 +769,6 @@ jobs:
         inputs:
           script: yarn validate-overrides
 
-      - task: CmdLine@2
-        displayName: yarn api
-        inputs:
-          script: yarn api
-
       # Run unbroken checking local files before installing packages to avoid scanning node_modules
       # The exclusions of unbroken don't support wildcards yet and we have many throughout the repo
       - task: CmdLine@2
