@@ -61,7 +61,7 @@ export class Telemetry {
 function getAnonymizedPath(filepath: string): string {
   const projectRoot = process.cwd().toLowerCase();
   filepath = filepath.replace(/\//g, '\\');
-  const knownPathsVars = ['appdata', 'localappdata', 'userprofile'];
+  const knownPathsVars = ['AppData', 'LocalAppData', 'UserProfile'];
   if (filepath.toLowerCase().startsWith(projectRoot)) {
     const ext = path.extname(filepath);
     const rest = filepath.slice(projectRoot.length);
@@ -151,8 +151,8 @@ export function sanitizeEnvelope(envelope: any /*context: any*/): boolean {
 
 export function isMSFTInternal(): boolean {
   return (
-    process.env.USERDNSDOMAIN !== undefined &&
-    process.env.USERDNSDOMAIN.toLowerCase().endsWith('.microsoft.com')
+    process.env.UserDNSDomain !== undefined &&
+    process.env.UserDNSDomain.toLowerCase().endsWith('.microsoft.com')
   );
 }
 
