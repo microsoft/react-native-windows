@@ -60,6 +60,7 @@ export class Telemetry {
 
 function getAnonymizedPath(filepath: string): string {
   const projectRoot = process.cwd().toLowerCase();
+  filepath = filepath.replace(/\//g, '\\');
   const knownPathsVars = ['appdata', 'localappdata', 'userprofile'];
   if (filepath.toLowerCase().startsWith(projectRoot)) {
     const ext = path.extname(filepath);
@@ -92,7 +93,7 @@ function getAnonymizedPath(filepath: string): string {
 export function sanitizeMessage(msg: string): string {
   const parts = msg.split(/['[\]"]/g);
   const clean = [];
-  const pathRegEx = /[A-Za-z]:\\([^<>:;,?"*\t\r\n|/\\]+\\)+([^<>:;,?"*\t\r\n|/]+)/gi;
+  const pathRegEx = /([A-Za-z]:|\\)[\\/]([^<>:;,?"*\t\r\n|/\\]+[\\/])+([^<>:;,?"*\t\r\n|]+\/?)/gi;
   for (const part of parts) {
     if (pathRegEx.test(part)) {
       pathRegEx.lastIndex = -1;

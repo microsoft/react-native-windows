@@ -127,6 +127,28 @@ test('Sanitize message, other path', () => {
       })`);
 });
 
+test('Sanitize message, forward slashes', () => {
+  expect(
+    sanitizeMessage(
+      `EPERM: operation not permitted, scandir  ${process.env.USERPROFILE!.replace(
+        /\\/g,
+        '/',
+      )}/source/repos/rn2/wintest/windows/packages/boost.1.72.0.0/lib/native/include`,
+    ),
+  ).toEqual(
+    `EPERM: operation not permitted, scandir  [userprofile]\\???(${
+      (
+        process.env.USERPROFILE +
+        '/source/repos/rn2/wintest/windows/packages/boost.1.72.0.0/lib/native/include'
+      ).length
+    })`,
+  );
+});
+
+test('Sanitize message, file share path', () => {
+  expect(sanitizeMessage(`\\\\server\\share`)).toEqual('[path]');
+});
+
 test('Sanitize stack frame', () => {
   const emptyFrame: appInsights.Contracts.StackFrame = {
     level: 0,
