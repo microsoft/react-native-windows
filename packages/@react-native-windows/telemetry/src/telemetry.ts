@@ -91,6 +91,8 @@ function getAnonymizedPath(filepath: string): string {
  * @param msg the string to sanitize
  */
 export function sanitizeMessage(msg: string): string {
+  const cpuThreadId = /^\d+(:\d+)?>/g;
+  msg = msg.replace(cpuThreadId, '');
   const parts = msg.split(/['[\]"]/g);
   const clean = [];
   const pathRegEx = /([A-Za-z]:|\\)[\\/]([^<>:;,?"*\t\r\n|/\\]+[\\/])+([^<>:;,?"*\t\r\n|]+\/?)/gi;
@@ -130,6 +132,12 @@ export function sanitizeFrame(frame: any): void {
   frame.assembly = '';
 }
 
+export function tryGetErrorCode(msg: string): string | undefined {
+  const errorRegEx = /error (\w+\d+):/gi;
+  const m = errorRegEx.exec(msg);
+  return m ? m[1] : undefined;
+}
+
 /**
  * Remove PII from exceptions' stack traces and messages
  * @param envelope the telemetry envelope. Provided by AppInsights.
@@ -141,7 +149,8 @@ export function sanitizeEnvelope(envelope: any /*context: any*/): boolean {
       for (const frame of exception.parsedStack) {
         sanitizeFrame(frame);
       }
-
+      const errorCode = tryGetErrorCode(exception.message);
+      data.properties.errorCode = errorCode;
       exception.message = sanitizeMessage(exception.message);
     }
   }
