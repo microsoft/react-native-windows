@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.63] Allow NodeJS 14",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
