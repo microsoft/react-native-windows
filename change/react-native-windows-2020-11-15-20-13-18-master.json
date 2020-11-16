@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix Publish pipeline due to moved file",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-11-16T04:13:18.166Z"
+}
