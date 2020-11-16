@@ -29,7 +29,7 @@ steps:
       parameters:
         packageId: ${{parameters.desktopId}}
         packageVersion: ${{parameters.npmVersion}}
-        slices: ''
+        slices: ${{ parameters.slices }}
         buildProperties: 'CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}}'
 
   - ${{ if eq(parameters.packMicrosoftReactNative, true) }}:
