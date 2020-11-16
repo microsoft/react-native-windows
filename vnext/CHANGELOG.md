@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 14 Nov 2020 05:04:43 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Nov 2020 05:06:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.206
+
+Mon, 16 Nov 2020 05:06:18 GMT
+
+### Changes
+
+- Update Managed ref assemblies to be AnpCpu (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.205
 

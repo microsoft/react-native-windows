@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 16 Nov 2020 05:06:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.206",
+      "version": "0.0.0-canary.206",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update Managed ref assemblies to be AnpCpu",
+            "author": "dannyvv@microsoft.com",
+            "commit": "3f0f4636e5803ffd01abc141741015aa61dfef2e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 14 Nov 2020 05:04:43 GMT",
       "tag": "react-native-windows_v0.0.0-canary.205",
       "version": "0.0.0-canary.205",

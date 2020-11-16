@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update Managed ref assemblies to be AnpCpu",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-11-13T18:57:08.827Z"
-}
