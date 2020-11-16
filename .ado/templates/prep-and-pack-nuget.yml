@@ -54,7 +54,8 @@ steps:
   - ${{ if eq(parameters.packMicrosoftReactNativeManaged, true) }}:
     # Since we custom patch the nuget packages for PR valdation
     - powershell: |
-        Copy-Item $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref\Microsoft.ReactNative.Managed.dll -Destination $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref.anycpu\Microsoft.ReactNative.Managed.dll
+        mkdir $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref.anycpu
+        Copy-Item $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref\Microsoft.ReactNative.Managed.dll -Destination $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref.anycpu
       displayName: Copy the x64/release ref assembly to anycpu folder
     - template: prep-and-pack-single.yml
       parameters:
