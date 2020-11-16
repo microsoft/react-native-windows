@@ -7,17 +7,26 @@ import "IReactModuleBuilder.idl";
 import "IViewManager.idl";
 #endif
 
+#include "DocString.h"
+
 namespace Microsoft.ReactNative {
 
+  DOC_STRING("Provides information about a custom native module.  See [`IReactModuleBuilder`](IReactModuleBuilder.md).")
   delegate Object ReactModuleProvider(IReactModuleBuilder moduleBuilder);
+
 #ifndef CORE_ABI
+  DOC_STRING("Provides information about a custom view manager.  See [`IViewManager`](IViewManager.md).")
   delegate IViewManager ReactViewManagerProvider();
 #endif
 
   [webhosthidden]
+  DOC_STRING("A `ReactPackageBuilder` provides the react instance with all the native modules and view managers that will be available in the React instance.")
   interface IReactPackageBuilder {
+    DOC_STRING("Adds a custom native module. See [`ReactModuleProvider`](#reactmoduleprovider).")
     void AddModule(String moduleName, ReactModuleProvider moduleProvider);
+
 #ifndef CORE_ABI
+    DOC_STRING("Adds a custom native module. See [`ReactViewManagerProvider`](#reactviewmanagerprovider).")
     void AddViewManager(String viewManagerName, ReactViewManagerProvider viewManagerProvider);
 #endif
   }

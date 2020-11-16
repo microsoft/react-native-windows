@@ -4,16 +4,21 @@
 import "IReactContext.idl";
 
 #include "NamespaceRedirect.h"
+#include "DocString.h"
 
 namespace Microsoft.ReactNative {
 
   [default_interface]
   [webhosthidden]
+  DOC_STRING("Provides access to XAML UI-specific functionality. It provides access to APIs to get a XAML element from a react tag, and to dispatch events to JS components.")
   runtimeclass XamlUIService {
+    DOC_STRING("Use this method to gain access to the `XamlUIService` from a `ReactContext`.")
     static XamlUIService FromContext(IReactContext context);
 
+    DOC_STRING("Get the backing XAML element from a react tag.")
     XAML_NAMESPACE.DependencyObject ElementFromReactTag(Int64 reactTag);
 
+    DOC_STRING("Dispatch an event to a JS component.")
     // Dispatch UI event. This method is to be moved to IReactViewContext.
     void DispatchEvent(XAML_NAMESPACE.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
 

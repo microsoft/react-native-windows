@@ -1,10 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "DocString.h"
+
 namespace Microsoft.ReactNative {
 
   // The delegate is used to create property value on-demand.
   [webhosthidden]
+  DOC_STRING("This delegate is used to create a property value on-demand.")
   delegate Object ReactCreatePropertyValue();
 
   // Namespace for the property name.
@@ -33,9 +36,11 @@ namespace Microsoft.ReactNative {
   // It is expected that there will be no direct use of this interface.
   // Ideally, all usage should happen through a strongly typed accessors.
   [webhosthidden]
+  DOC_STRING("`IReactPropertyBag` provides a thread-safe property storage. Properties are identified by an instance of `IReactPropertyName`. It is expected that there will be no direct use of this interface. Ideally, all usage should happen through strongly-typed accessors.")
   interface IReactPropertyBag
   {
-    // Get property value by its name. It returns null if the property does not exist.
+    // Get a property's value. It returns null if the property does not exist.
+    DOC_STRING("Get a property's value. It returns null if the property does not exist.")
     Object Get(IReactPropertyName name);
 
     // Get property value for the property name.
@@ -44,12 +49,20 @@ namespace Microsoft.ReactNative {
     // The createValue is called outside of lock. It is possible that its
     // result is not used in case if other thread sets the property value before
     // the created value is applied.
+    DOC_STRING("Get a property's value. If the property does not exist, this method creates it by calling the `createValue` delegate. \
+The function may return null if the `createValue` returns null when called.\
+The `createValue` is called outside of any locks. \
+It is possible that its result is not used in case another thread sets the property value before the created value is applied.")
     Object GetOrCreate(IReactPropertyName name, ReactCreatePropertyValue createValue);
 
     // Set property value for the property name.
     // It returns previously stored property value.
     // It returns null if property did not exist.
     // If the new value is null, then the property is removed.
+    DOC_STRING("Set a property's value. \
+It returns the previously-stored property value. \
+It returns null if the property did not exist. \
+If the new value is null, then the property is removed.")
     Object Set(IReactPropertyName name, Object value);
   }
 
