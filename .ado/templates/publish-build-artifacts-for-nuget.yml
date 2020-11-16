@@ -9,7 +9,7 @@ steps:
     displayName: Copy NuGet header files
     inputs:
       filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
-      arguments: -TargetRoot $(Build.StagingDirectory)
+      arguments: -TargetRoot $(Build.StagingDirectory) -BuildRoot $(Build.SourcesDirectory)\vnext\target
     condition: ${{ parameters.layoutHeaders }}
 
   - task: CopyFiles@2
