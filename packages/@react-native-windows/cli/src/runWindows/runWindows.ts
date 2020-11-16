@@ -4,9 +4,11 @@
  * @format
  */
 
+import * as crypto from 'crypto';
 import * as fs from 'fs';
+import * as path from 'path';
 import {
-  telemetryClient,
+  Telemetry,
   isMSFTInternal,
   getDiskFreeSpace,
 } from '@react-native-windows/telemetry';
@@ -29,6 +31,11 @@ function setExitProcessWithError(loggingWasEnabled: boolean): void {
     console.log(
       `Re-run the command with ${chalk.bold('--logging')} for more information`,
     );
+    if (Telemetry.client) {
+      console.log(
+        `Your session id was ${Telemetry.client.commonProperties.sessionId}`,
+      );
+    }
   }
   process.exitCode = 1;
 }
@@ -68,11 +75,13 @@ async function runWindows(
   config: Config,
   options: RunWindowsOptions,
 ) {
-  if (!options.telemetry || process.env.AGENT_NAME) {
+  if (!options.telemetry) {
     if (options.logging) {
       console.log('Disabling telemetry');
     }
-    telemetryClient.config.disableAppInsights = true;
+    Telemetry.disable();
+  } else {
+    Telemetry.setup();
   }
 
   // https://github.com/yarnpkg/yarn/issues/8334 - Yarn on Windows breaks apps that read from the environment variables
@@ -93,7 +102,7 @@ async function runWindows(
       sdks.forEach(version => console.log('    ' + version));
       return;
     } catch (e) {
-      telemetryClient.trackException({exception: e});
+      Telemetry.client?.trackException({exception: e});
       newError('Unable to print environment info.\n' + e.toString());
       return setExitProcessWithError(options.logging);
     }
@@ -103,11 +112,11 @@ async function runWindows(
   try {
     await runWindowsInternal(args, config, options);
   } catch (e) {
-    telemetryClient.trackException({exception: e});
+    Telemetry.client?.trackException({exception: e});
     runWindowsError = e;
     return setExitProcessWithError(options.logging);
   } finally {
-    telemetryClient.trackEvent({
+    Telemetry.client?.trackEvent({
       name: 'run-windows',
       properties: {
         release: options.release,
@@ -143,10 +152,36 @@ async function runWindows(
         totalMem: totalmem(),
         diskFree: getDiskFreeSpace(__dirname),
         cpus: cpus().length,
+        project: await getAnonymizedProjectName(config.root),
       },
     });
-    telemetryClient.flush();
+    Telemetry.client?.flush();
   }
+}
+
+export async function getAnonymizedProjectName(
+  projectRoot: string,
+): Promise<string | null> {
+  const projectJsonPath = path.join(projectRoot, 'package.json');
+  if (!fs.existsSync(projectJsonPath)) {
+    return null;
+  }
+
+  const projectJson = JSON.parse(
+    (await fs.promises.readFile(projectJsonPath)).toString(),
+  );
+
+  const projectName = projectJson.name;
+  if (typeof projectName !== 'string') {
+    return null;
+  }
+
+  // Ensure the project name cannot be reverse engineered to avoid leaking PII
+  return crypto
+    .createHash('sha256')
+    .update(projectName)
+    .digest('hex')
+    .toString();
 }
 
 async function runWindowsInternal(

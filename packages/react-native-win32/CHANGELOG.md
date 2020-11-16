@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 31 Oct 2020 05:06:50 GMT and should not be manually modified.
+This log was last generated on Thu, 12 Nov 2020 05:05:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.63
+
+Thu, 12 Nov 2020 05:05:57 GMT
+
+### Changes
+
+- Add Keyboard Events to TextWin32 (krsiler@microsoft.com)
 
 ## 0.0.0-canary.62
 

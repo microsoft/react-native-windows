@@ -1,8 +1,68 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 07 Nov 2020 05:04:58 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Nov 2020 17:37:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.208
+
+Mon, 16 Nov 2020 17:37:03 GMT
+
+### Changes
+
+- Fix publish (dannyvv@microsoft.com)
+
+## 0.0.0-canary.207
+
+Mon, 16 Nov 2020 14:39:19 GMT
+
+### Changes
+
+- Fix Publish pipeline due to moved file (dannyvv@microsoft.com)
+
+## 0.0.0-canary.206
+
+Mon, 16 Nov 2020 05:06:18 GMT
+
+### Changes
+
+- Update Managed ref assemblies to be AnpCpu (dannyvv@microsoft.com)
+
+## 0.0.0-canary.205
+
+Sat, 14 Nov 2020 05:04:43 GMT
+
+### Changes
+
+- Add a custom WinRT attribute to be used to store documentation strings for WinRT types (asklar@microsoft.com)
+- Add win32 exports required for internal usage (email not defined)
+- Fix appstate module (30809111+acoates-ms@users.noreply.github.com)
+- Add Targets to check that developers have run yarn install before building (dannyvv@microsoft.com)
+
+## 0.0.0-canary.203
+
+Thu, 12 Nov 2020 05:05:57 GMT
+
+### Changes
+
+- Add Keyboard Events to TextWin32 (krsiler@microsoft.com)
+
+## 0.0.0-canary.202
+
+Wed, 11 Nov 2020 05:05:29 GMT
+
+### Changes
+
+- Remove Build-Time Native Code Patching (ngerlem@microsoft.com)
+
+## 0.0.0-canary.201
+
+Tue, 10 Nov 2020 05:05:13 GMT
+
+### Changes
+
+- Exclude *projectimports.zip from devmode metro config (asklar@microsoft.com)
+- add force_layout to TextInput (igklemen@microsoft.com)
 
 ## 0.0.0-canary.200
 

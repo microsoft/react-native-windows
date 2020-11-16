@@ -4,8 +4,8 @@ react-native-windows is a monorepo with several [packages](https://github.com/mi
 # Installation of npm dependencies
 react-native-windows uses [yarn workspaces](https://legacy.yarnpkg.com/en/docs/workspaces/) to install all react-native-windows npm dependencies.  See "workspaces" prop inside [package.json](https://github.com/microsoft/react-native-windows/blob/master/package.json).
 
-# Lerna Build
-react-native-windows uses [lerna](https://github.com/lerna/lerna) to build all the "non-native" parts of react-native-windows.  See "scripts" prop inside  [package.json](https://github.com/microsoft/react-native-windows/blob/master/package.json).  Also see [lerna.json](https://github.com/microsoft/react-native-windows/blob/master/lerna.json).
+# Lage Build
+react-native-windows uses [lage](https://microsoft.github.io/lage/) to build all the "non-native" parts of react-native-windows.  See "scripts" prop inside  [package.json](https://github.com/microsoft/react-native-windows/blob/master/package.json).  Also see [laga.config.js](https://github.com/microsoft/react-native-windows/blob/master/lage.config.js).
 
 # Beachball publishing
 TODO - add details

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <!-- This target is used to compute the inputs and outputs for incrementally running the Yarn up to date check.-->
+  <Target
+    Name="EnsureJavaScriptCodeUpToDateInputAndOutputs"
+    >
+    <ItemGroup>
+      <_EnsureJavaScriptCodeUpToDateInputFiles Include="$(MSBuildThisFileDirectory)yarn.lock" />
+      <_EnsureJavaScriptCodeUpToDateInputFiles Include="$(MSBuildThisFileDirectory)\**\package.json" Exclude="$(MSBuildThisFileDirectory)\node_modules\**" />
+      <_EnsureJavaScriptCodeUpToDateOutputFiles Include="@(_EnsureJavaScriptCodeUpToDateInputFiles->'$(RootIntDir)\JsUpToDateCheck\%(RecursiveDir)%(Filename)%(Extension).dummy')" />
+    </ItemGroup>
+  </Target>
+
+  <!-- This target checks if Yarn install needs to run or not. This is a common cause of failed builds for developers not used to running it after syncing... -->
+  <Target
+    Name="EnsureJavaScriptCodeUpToDate"
+    BeforeTargets="BeforeBuild"
+    DependsOnTargets="EnsureJavaScriptCodeUpToDateInputAndOutputs"
+    Inputs="@(_EnsureJavaScriptCodeUpToDateInputFiles)"
+    Outputs="@(_EnsureJavaScriptCodeUpToDateOutputFiles)"
+    >
+
+    <Message Text="Checking if yarn is 'up to date' by running a 'dry-run' version of `yarn install` and checking the exit code" />
+    <Exec 
+      ContinueOnError="True"
+      Command="npx yarn install --offline --cache-folder $(RootIntDir)\JsUpToDateCheck\Cache"
+      WorkingDirectory="$(MSBuildThisFileDirectory)"
+      >
+      <Output TaskParameter="ExitCode" ItemName="_YarnExitCode"/>
+    </Exec>
+
+    <!-- Fail the build if yarn needs to install packages. -->
+    <Error 
+      Condition="'%(_YarnExitCode.Identity)' != '0'"
+      Text="Yarn packages are out of date. Please run `yarn install &amp;&amp; yarn build` in the root of the repo to ensure the generated files are up to date" 
+    />
+
+    <!-- 
+      Copy the yarn.lock file to prevent this task from running over and over again, and only rerun the check with yarn.lock or any package.json changes. 
+      This will likely miss a few corner cases with local changes to package.json but should catch the most important case after syncing
+    -->
+    <Copy
+      Condition="'%(_YarnExitCode.Identity)' == '0'"
+      SourceFiles="@(_EnsureJavaScriptCodeUpToDateInputFiles)"
+      DestinationFiles="@(_EnsureJavaScriptCodeUpToDateOutputFiles)"
+      SkipUnchangedFiles="true" />
+    <!-- We have to touch the outputs to ensure up to date incrementaility works-->
+    <Touch Files="@(_EnsureJavaScriptCodeUpToDateOutputFiles)" />
+
+  </Target>
+
+
+</Project>

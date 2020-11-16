@@ -22,7 +22,7 @@
     },
     {
       "type": "patch",
-      "file": "DeforkingPatches/ReactCommon/yoga/yoga/Yoga.cpp",
+      "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseHash": "caab3561363f0adf848ffd7da38f07aad5bb70cb",
       "issue": 3994

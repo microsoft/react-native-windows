@@ -15,8 +15,6 @@ const {
   argv,
   tscTask,
   eslintTask,
-  apiExtractorVerifyTask,
-  apiExtractorUpdateTask,
 } = require('just-scripts');
 const {execSync} = require('child_process');
 const fs = require('fs');
@@ -24,17 +22,6 @@ const copyRNLibaries = require('./Scripts/copyRNLibraries');
 
 option('production');
 option('clean');
-option('ci');
-
-task('apiExtractorVerify', apiExtractorVerifyTask());
-task('apiExtractorUpdate', apiExtractorUpdateTask());
-
-task('apiDocumenter', () => {
-  require('child_process').execSync(
-    'npx @microsoft/api-documenter markdown -i temp -o ../docs/api',
-    {stdio: 'inherit'},
-  );
-});
 
 task(
   'codegen',
@@ -87,7 +74,6 @@ task(
     'copyReadmeAndLicenseFromRoot',
     'compileTsPlatformOverrides',
     'codegen',
-    condition('apiExtractorVerify', () => argv().ci),
   ),
 );
 
@@ -95,5 +81,3 @@ task('clean', series('cleanRnLibraries'));
 
 task('lint', series('eslint', 'flow-check'));
 task('lint:fix', series('eslint:fix'));
-
-task('api', series('apiExtractorUpdate', 'apiDocumenter'));

@@ -1,3 +1,8 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+#pragma once
+
 #include <dispatchQueue/dispatchQueue.h>
 
 namespace facebook::react {
@@ -13,7 +18,7 @@ struct IJSCallInvokerQueueScheduler : IUnknown {
 };
 
 Mso::CntPtr<IDispatchQueueScheduler> MakeJSCallInvokerScheduler(
-    std::shared_ptr<facebook::react::CallInvoker> callInvoker,
+    std::shared_ptr<facebook::react::CallInvoker> &&callInvoker,
     Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
     Mso::Promise<void> &&whenQuit = nullptr) noexcept;
 } // namespace Mso

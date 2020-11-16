@@ -412,7 +412,6 @@ void ReactInstanceWin::Initialize() noexcept {
                 Mso::Copy(m_batchingUIThread),
                 std::move(devSettings));
 
-            m_instance.Exchange(Mso::Copy(instanceWrapper->GetInstance()));
             m_instanceWrapper.Exchange(std::move(instanceWrapper));
 
             // Eagerly init the FabricUI binding
@@ -592,16 +591,37 @@ void ReactInstanceWin::InitJSMessageThread() noexcept {
       Mso::Copy(m_whenDestroyed));
   auto jsDispatchQueue = Mso::DispatchQueue::MakeCustomQueue(Mso::CntPtr(scheduler));
 
-  // Create MessageQueueThread for the DispatchQueue
-  VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");
+  static bool old = false;
+  if (old) {
+    auto jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
 
-  auto jsDispatcher =
-      winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
-  m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
+    // Create MessageQueueThread for the DispatchQueue
+    VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");
 
-  m_jsMessageThread.Exchange(qi_cast<Mso::IJSCallInvokerQueueScheduler>(scheduler.Get())->GetMessageQueue());
+    auto jsDispatcher =
+        winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
+    m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
 
-  m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
+    m_jsMessageThread.Exchange(std::make_shared<MessageDispatchQueue>(
+        jsDispatchQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError), Mso::Copy(m_whenDestroyed)));
+    m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
+  } else {
+    auto scheduler = Mso::MakeJSCallInvokerScheduler(
+        m_instance.Load()->getJSCallInvoker(),
+        Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
+        Mso::Copy(m_whenDestroyed));
+    auto jsDispatchQueue = Mso::DispatchQueue::MakeCustomQueue(Mso::CntPtr(scheduler));
+
+    // Create MessageQueueThread for the DispatchQueue
+    VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");
+
+    auto jsDispatcher =
+        winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
+    m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
+
+    m_jsMessageThread.Exchange(qi_cast<Mso::IJSCallInvokerQueueScheduler>(scheduler.Get())->GetMessageQueue());
+    m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
+  }
 }
 
 void ReactInstanceWin::InitNativeMessageThread() noexcept {

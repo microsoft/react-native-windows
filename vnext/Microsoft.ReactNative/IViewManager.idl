@@ -4,11 +4,14 @@
 import "IViewManagerCore.idl";
 
 #include "NamespaceRedirect.h"
+#include "DocString.h"
 
 namespace Microsoft.ReactNative
 {
 
   [webhosthidden]
+  DOC_STRING("See the documentation of [Native UI Components](view-managers.md) for information on how to author a view manager.\n\
+>**This documentation and the underlying platform code is a work in progress.**")
   interface IViewManager
   {
     String Name { get; };

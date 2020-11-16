@@ -3,16 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "lerna run build --stream -- --color",
-    "lint": "lerna run lint --parallel -- --color",
-    "lint:fix": "lerna run lint:fix --parallel -- --color",
-    "api": "lerna run api --parallel -- --color",
-    "buildci": "lerna run build --stream -- --ci",
+    "build": "lage build -- --color",
+    "lint": "lage lint --verbose -- --color",
+    "lint:fix": "lage lint:fix -- --color",
     "change": "beachball change",
-    "clean": "lerna run clean --parallel -- --color",
+    "clean": "lage clean -- --color",
     "format": "format-files -i -style=file -assume-filename=../.clang-format",
     "format:verify": "format-files -i -style=file -assume-filename=../.clang-format -verify",
-    "test": "lerna run test --parallel -- --color",
+    "test": "lage test --verbose -- --color",
     "validate-overrides": "react-native-platform-override validate --color"
   },
   "repository": {
@@ -32,7 +30,7 @@
   "devDependencies": {
     "beachball": "^1.32.0",
     "husky": "^4.2.5",
-    "lerna": "^3.16.1"
+    "lage": "^0.24.0"
   },
   "resolutions": {
     "@wdio/appium-service": "5.12.1",
@@ -52,6 +50,7 @@
     "appium-tizen-driver": "1.1.1-stub.0",
     "eslint-plugin-react": "^7.14.1",
     "eslint-plugin-react-hooks": "4.0.7",
+    "kind-of": "6.0.3",
     "node-fetch": "2.6.1",
     "webdriver": "git+https://github.com/react-native-windows/webdriver.git",
     "webdriverio": "5.12.1",

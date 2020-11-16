@@ -23,9 +23,6 @@
     <WinVer>_WIN32_WINNT_WIN8</WinVer>
   </PropertyGroup>
 
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\ReactPatches.targets" />
-
-
   <PropertyGroup>
     <!-- Enables React-Native-Windows ETW Provider : React-Native-Windows-Provider  -->
     <ENABLE_ETW_TRACING Condition="'$(ENABLE_ETW_TRACING)' == ''">true</ENABLE_ETW_TRACING>

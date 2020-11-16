@@ -22,12 +22,6 @@ export const SHOWPASSWORD_ON_LOGIN = 'ShowPassword';
 // Accessibility
 export const ACCESSBILITY_TESTPAGE = 'AccessiblityTestPage';
 
-// Direct Manipulation Page
-export const DIRECT_MANIPULATION_TESTPAGE = 'LegacyDirectManipulationTest';
-export const MEASURE_IN_WINDOW_BUTTON = 'MeasureInWindow';
-export const MEASURE_LAYOUT_BUTTON = 'MeasureLayout';
-export const DIRECT_MANIPULATION_RESULT = 'DirectManipulationResult';
-
 // Image Test Page
 export const IMAGE_TESTPAGE = 'LegacyImageTest';
 export const IMAGE_CHANGE_BORDER = 'ChangeBorder';
@@ -38,11 +32,6 @@ export const IMAGE_CONTAINER = 'ImageContainer';
 // Control Style Test Page
 export const CONTROL_STYLE_TESTPAGE = 'LegacyControlStyleTest';
 export const SHOWBORDER_ON_CONTROLSTYLE = 'ShowBorder';
-
-// TransformTestPage
-export const TRANSFORM_TESTPAGE = 'LegacyTransformTest';
-export const TRANSFORM_TEST_RESULT = 'TransfromTestResult';
-export const APPLY_SCALE_TRANSFORM_BUTTON = 'ApplyScaleTransformButton';
 
 // Text backgroundColor Page
 export const TEXT_BACKGROUND_COLOR_TESTPAGE = '<LegacyTextBackgroundColorTest>';

@@ -138,20 +138,12 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples-win/LegacyTests/ControlStyleTestPage'),
   },
   {
-    key: 'LegacyTransformTest',
-    module: require('../examples-win/LegacyTests/TransformTestPage'),
-  },
-  {
     key: 'LegacyTextInputTest',
     module: require('../examples-win/LegacyTests/TextInputTestPage'),
   },
   {
     key: 'LegacyLoginTest',
     module: require('../examples-win/LegacyTests/LoginTestPage'),
-  },
-  {
-    key: 'LegacyDirectManipulationTest',
-    module: require('../examples-win/LegacyTests/DirectManipulationTestPage'),
   },
   {
     key: 'LegacyImageTest',

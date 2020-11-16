@@ -1,17 +1,16 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.200",
+  "version": "0.0.0-canary.208",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git@github.com:microsoft/react-native-windows.git",
     "directory": "vnext"
   },
-  "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
+  "description": "React Native for Windows",
   "main": "./index.windows.js",
   "typings": "./typings-index.d.ts",
   "scripts": {
-    "api": "just-scripts api",
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
@@ -25,7 +24,7 @@
     "@react-native-community/cli": "^4.13.0",
     "@react-native-community/cli-platform-android": "^4.13.0",
     "@react-native-community/cli-platform-ios": "^4.13.0",
-    "@react-native-windows/cli": "0.0.0-canary.32",
+    "@react-native-windows/cli": "0.0.0-canary.37",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "1.0.0",
     "@react-native/polyfills": "1.0.0",
@@ -56,8 +55,6 @@
     "ws": "^6.1.4"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.3.8",
-    "@microsoft/api-extractor": "^7.3.8",
     "@rnw-scripts/eslint-config": "0.1.4",
     "@types/react": "16.9.0",
     "@types/react-native": "^0.63.18",

@@ -2,6 +2,51 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 16 Nov 2020 14:39:19 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.8",
+      "version": "0.0.0-canary.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "anonymize paths with forward slashes and file shares",
+            "author": "asklar@microsoft.com",
+            "commit": "04e766ef7304d0852a06e772cbfc1982897a3808",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Nov 2020 05:05:57 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.7",
+      "version": "0.0.0-canary.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Disable telemetry in other CI systems",
+            "author": "asklar@microsoft.com",
+            "commit": "bcda5759d5d1bed770e7a8524e5cc3f94cbc0c6a",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Nov 2020 05:05:29 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.6",
+      "version": "0.0.0-canary.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Silence warnings from appinsights in production",
+            "author": "asklar@microsoft.com",
+            "commit": "1893d23fce2daedbf55ae90c5f6775141400f401",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Nov 2020 05:04:58 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.5",
       "version": "0.0.0-canary.5",

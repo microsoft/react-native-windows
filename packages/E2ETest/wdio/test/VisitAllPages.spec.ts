@@ -30,10 +30,8 @@ const componentExamples = [
   'TransparentHitTestExample',
   'View',
   //  'LegacyControlStyleTest',
-  //  'LegacyTransformTest',
   //  'LegacyTextInputTest',
   //  'LegacyLoginTest',
-  //  'LegacyDirectManipulationTest',
   //  'LegacyImageTest',
   //  'LegacyAccessibilityTest',
 ];

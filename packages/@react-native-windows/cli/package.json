@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.32",
+  "version": "0.0.0-canary.37",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,14 +17,14 @@
     "watch": "just-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/telemetry": "^0.0.0-canary.5",
+    "@react-native-windows/telemetry": "^0.0.0-canary.8",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
     "envinfo": "^7.5.0",
     "glob": "^7.1.1",
     "inquirer": "^3.0.6",
     "mustache": "^4.0.1",
-    "nuget-exe": "4.9.2",
+    "nuget-exe": "5.8.0",
     "ora": "^3.4.0",
     "semver": "^7.3.2",
     "shelljs": "^0.8.4",

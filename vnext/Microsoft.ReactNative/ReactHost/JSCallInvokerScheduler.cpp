@@ -12,7 +12,7 @@ namespace Mso {
 struct JSCallInvokerScheduler
     : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDispatchQueueScheduler, IJSCallInvokerQueueScheduler> {
   JSCallInvokerScheduler(
-      std::shared_ptr<facebook::react::CallInvoker> &callInvoker,
+      std::shared_ptr<facebook::react::CallInvoker> &&callInvoker,
       Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
       Mso::Promise<void> &&whenQuit) noexcept;
   ~JSCallInvokerScheduler() noexcept override;
@@ -45,7 +45,7 @@ std::shared_ptr<facebook::react::MessageQueueThread> JSCallInvokerScheduler::Get
 //=============================================================================
 
 JSCallInvokerScheduler::JSCallInvokerScheduler(
-    std::shared_ptr<facebook::react::CallInvoker> &callInvoker,
+    std::shared_ptr<facebook::react::CallInvoker> &&callInvoker,
     Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
     Mso::Promise<void> &&whenQuit) noexcept
     : m_callInvoker(callInvoker) {
@@ -70,11 +70,13 @@ bool JSCallInvokerScheduler::IsSerial() noexcept {
 }
 
 void JSCallInvokerScheduler::Post() noexcept {
-  m_jsMessageThread->DispatchQueue().Post([this]() {
-    if (auto queue = m_queue.GetStrongPtr()) {
-      Mso::DispatchTask task;
-      if (queue->TryDequeTask(task)) {
-        m_callInvoker->invokeAsync(std::move(task));
+  m_jsMessageThread->DispatchQueue().Post([wkThis = Mso::WeakPtr<JSCallInvokerScheduler>(this)]() {
+    if (auto stringThis = wkThis.GetStrongPtr()) {
+      if (auto queue = stringThis->m_queue.GetStrongPtr()) {
+        Mso::DispatchTask task;
+        if (queue->TryDequeTask(task)) {
+          stringThis->m_callInvoker->invokeAsync(std::move(task));
+        }
       }
     }
   });
@@ -89,11 +91,11 @@ void JSCallInvokerScheduler::AwaitTermination() noexcept {
 }
 
 Mso::CntPtr<IDispatchQueueScheduler> MakeJSCallInvokerScheduler(
-    std::shared_ptr<facebook::react::CallInvoker> callInvoker,
+    std::shared_ptr<facebook::react::CallInvoker> &&callInvoker,
     Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
     Mso::Promise<void> &&whenQuit) noexcept {
   return Mso::Make<JSCallInvokerScheduler, IDispatchQueueScheduler>(
-      callInvoker, std::move(errorHandler), std::move(whenQuit));
+      std::move(callInvoker), std::move(errorHandler), std::move(whenQuit));
 }
 
 } // namespace Mso
