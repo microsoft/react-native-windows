@@ -398,14 +398,8 @@ jobs:
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
-        X86Release:
-          BuildConfiguration: Release
-          BuildPlatform: x86
         ARM64Debug:
           BuildConfiguration: Debug
-          BuildPlatform: ARM64
-        ARM64Release:
-          BuildConfiguration: Release
           BuildPlatform: ARM64
     pool:
       vmImage: $(VmImage)
@@ -783,6 +777,37 @@ jobs:
         inputs:
           script: npx unbroken -q --allow-local-line-sections
         continueOnError: true
+
+ - job: PackDesktop
+    variables:
+      - template: variables/vs2019.yml
+    displayName: Pack Desktop NuGet Package
+    dependsOn: RNWDesktopPR
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    steps:
+      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+        clean: true # whether to fetch clean each time
+        fetchDepth: 2 # the depth of commits to ask Git to fetch
+        lfs: false # whether to download Git-LFS files
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      - task: NuGetToolInstaller@0
+        inputs:
+          versionSpec: ">=5.8.0"
+
+      - template: prep-and-pack-nuget.yml
+        parameters:
+          packDesktop: true
+          packMicrosoftReactNative: false
+          packMicrosoftReactNativeCxx: false
+          packMicrosoftReactNativeManaged: false
+          packMicrosoftReactNativeManagedCodeGen: false
+          slices: '("x64.Debug","x64.Release", "x86.Debug", "ARM64.debug")'
 
   - template: templates/e2e-test-job.yml
     parameters:
