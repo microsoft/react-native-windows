@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 10 Nov 2020 16:50:27 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Nov 2020 15:06:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.4
+
+Mon, 16 Nov 2020 15:06:51 GMT
+
+### Patches
+
+- port nuget 5.8 fix to 0.63 (asklar@microsoft.com)
+- Fix run-windows Warnings Using Node 14 (ngerlem@microsoft.com)
+- Disable telemetry in other CI systems (asklar@microsoft.com)
 
 ## 0.63.3
 
