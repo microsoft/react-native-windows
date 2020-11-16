@@ -800,7 +800,7 @@ jobs:
         inputs:
           versionSpec: ">=5.8.0"
 
-      - template: prep-and-pack-nuget.yml
+      - template: templates/prep-and-pack-nuget.yml
         parameters:
           packDesktop: true
           packMicrosoftReactNative: false
