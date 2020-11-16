@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "anonymize paths with forward slashes and file shares",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

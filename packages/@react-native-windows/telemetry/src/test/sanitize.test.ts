@@ -10,6 +10,7 @@ import {
   sanitizeMessage,
   sanitizeEnvelope,
   sanitizeFrame,
+  tryGetErrorCode,
 } from '../telemetry';
 import * as appInsights from 'applicationinsights';
 import {basename} from 'path';
@@ -108,23 +109,57 @@ test('Sanitize message, other path', () => {
     sanitizeMessage(
       `Cannot find module 'react-native/package.json'
       Require stack:
-      - ${process.env.APPDATA}\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\lib-commonjs\\Cli.js
-      - ${process.env.APPDATA}\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\bin.js`,
+      - ${process.env.AppData}\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\lib-commonjs\\Cli.js
+      - ${process.env.AppData}\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\bin.js`,
     ),
   ).toEqual(`Cannot find module  react-native/package.json 
       Require stack:
-      - [appdata]\\???(${
+      - [AppData]\\???(${
         (
-          process.env.APPDATA +
+          process.env.AppData +
           '\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\lib-commonjs\\Cli.js'
         ).length
       })
-      - [appdata]\\???(${
+      - [AppData]\\???(${
         (
-          process.env.APPDATA +
+          process.env.AppData +
           '\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\bin.js'
         ).length
       })`);
+});
+
+test('Sanitize message, forward slashes', () => {
+  expect(
+    sanitizeMessage(
+      `EPERM: operation not permitted, scandir  ${process.env.UserProfile!.replace(
+        /\\/g,
+        '/',
+      )}/source/repos/rn2/wintest/windows/packages/boost.1.72.0.0/lib/native/include`,
+    ),
+  ).toEqual(
+    `EPERM: operation not permitted, scandir  [UserProfile]\\???(${
+      (
+        process.env.UserProfile +
+        '/source/repos/rn2/wintest/windows/packages/boost.1.72.0.0/lib/native/include'
+      ).length
+    })`,
+  );
+});
+
+test('Sanitize message, file share path', () => {
+  expect(sanitizeMessage(`\\\\server\\share`)).toEqual('[path]');
+});
+
+test('Sanitize message, with cpu/thread id', () => {
+  expect(sanitizeMessage('5>This is an error')).toEqual('This is an error');
+
+  expect(sanitizeMessage('5:42>This is an error')).toEqual('This is an error');
+});
+
+test('Error code', () => {
+  expect(tryGetErrorCode('foo bar error FOO2020: the thing')).toEqual(
+    'FOO2020',
+  );
 });
 
 test('Sanitize stack frame', () => {
@@ -231,9 +266,26 @@ test('thrown exception a->b, hello world', done => {
   done();
 });
 
+test('throw exception with error code', done => {
+  Telemetry.client!.addTelemetryProcessor((envelope, _) => {
+    const data = (envelope.data as any).baseData;
+    expect(data.properties.errorCode).toEqual('FOO2020');
+    return true;
+  });
+
+  try {
+    throw new Error('hello from an error FOO2020: the error string');
+  } catch (e) {
+    Telemetry.client!.trackException({exception: e});
+    Telemetry.client!.flush();
+  }
+  Telemetry.client!.clearTelemetryProcessors();
+  Telemetry.client!.addTelemetryProcessor(sanitizeEnvelope);
+  done();
+});
+
 test('thrown exception a->b, hello path', done => {
   let pass = false;
-
   Telemetry.client!.addTelemetryProcessor((envelope, _) => {
     if (envelope.data.baseType === 'ExceptionData') {
       const data = (envelope.data as any).baseData;
