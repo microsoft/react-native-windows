@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 09 Nov 2020 16:48:39 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Nov 2020 15:07:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.16
+
+Mon, 16 Nov 2020 15:07:00 GMT
+
+### Patches
+
+- [0.62] port nuget 5.8.0 fix to 0.62 (dannyvv@microsoft.com)
 
 ## 0.62.15
 

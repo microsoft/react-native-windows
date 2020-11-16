@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 16 Nov 2020 15:07:00 GMT",
+      "tag": "react-native-windows_v0.62.16",
+      "version": "0.62.16",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.62] port nuget 5.8.0 fix to 0.62",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ad86b1044bfa240308fef5848bac90389345a173",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 09 Nov 2020 16:48:39 GMT",
       "tag": "react-native-windows_v0.62.15",
       "version": "0.62.15",
