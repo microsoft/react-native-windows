@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 16 Nov 2020 14:39:19 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.207",
+      "version": "0.0.0-canary.207",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Publish pipeline due to moved file",
+            "author": "dannyvv@microsoft.com",
+            "commit": "087385fd91682875524a8d049941ae3e5af241ae",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Nov 2020 05:06:18 GMT",
       "tag": "react-native-windows_v0.0.0-canary.206",
       "version": "0.0.0-canary.206",
