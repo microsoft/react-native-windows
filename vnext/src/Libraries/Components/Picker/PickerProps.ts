@@ -18,6 +18,7 @@ export interface IPickerProps extends ViewProps {
   // tslint:disable-next-line:no-any
   selectedValue?: any;
   enabled?: boolean;
+  placeholder?: string;
   prompt?: string;
   testID?: string;
   onChange?: (event: IPickerChangeEvent) => void;

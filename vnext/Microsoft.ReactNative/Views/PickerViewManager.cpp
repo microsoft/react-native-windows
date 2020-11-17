@@ -131,6 +131,12 @@ void PickerShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueOb
     } else if (propertyName == "items") {
       m_items = propertyValue.AsArray().Copy();
       RepopulateItems();
+    } else if (propertyName == "placeholder") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+        combobox.PlaceholderText(react::uwp::asHstring(propertyValue));
+      } else if (propertyValue.IsNull()) {
+        combobox.ClearValue(xaml::Controls::ComboBox::PlaceholderTextProperty());
+      }
     }
   }
 
@@ -194,6 +200,7 @@ void PickerViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSV
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"items", L"array");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"selectedIndex", L"number");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"text", L"string");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"placeholder", L"string");
 }
 
 ShadowNode *PickerViewManager::createShadow() const {
