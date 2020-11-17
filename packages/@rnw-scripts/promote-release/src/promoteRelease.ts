@@ -52,6 +52,9 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
 
     console.log('Updating package versions...');
     await updatePackageVersions(`${argv.rnVersion}.0-preview.0`);
+
+    console.log('Setting packages published from master as private...');
+    await markMasterPackagesPrivate();
   }
 
   console.log('Committing changes...');
@@ -202,6 +205,21 @@ async function updatePackageVersions(version: string) {
 
       await pkg.mergeProps({[field]: dependencies});
     }
+  }
+}
+
+/**
+ * Sets all packages that are published from our master branch as private, to
+ * avoid bumping and publishing them from our stable branch. Beachball will
+ * ensure we do not depend on any of these in our published packages.
+ */
+async function markMasterPackagesPrivate() {
+  const masterPublishedPackages = await enumerateLocalPackages(
+    async pkg => !pkg.json.promoteRelease && !pkg.json.private,
+  );
+
+  for (const pkg of masterPublishedPackages) {
+    await pkg.assignProps({private: true});
   }
 }
 
