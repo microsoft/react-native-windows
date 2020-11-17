@@ -54,16 +54,17 @@ function getPkgVersion(pkgName: string): string {
   return '';
 }
 
-enum RunWindowsPhase {
-  None = 0,
-  AutoLink = 1,
-  FindBuildTools = 2,
-  // NuGetRestore = 3, (Removed)
-  FindSolution = 4,
-  Deploy = 5,
-}
+/**
+ * Labels used by telemtry to represent current operation
+ */
+type RunWindowsPhase =
+  | 'None'
+  | 'AutoLink'
+  | 'FindBuildTools'
+  | 'FindSolution'
+  | 'Deploy';
 
-let runWindowsPhase = RunWindowsPhase.None;
+let runWindowsPhase: RunWindowsPhase = 'None';
 /**
  * Performs build deploy and launch of RNW apps.
  * @param args Unprocessed args passed from react-native CLI.
@@ -148,7 +149,7 @@ async function runWindows(
         msftInternal: isMSFTInternal(),
         durationInSecs: process.uptime(),
         success: runWindowsError === undefined,
-        phase: RunWindowsPhase[runWindowsPhase],
+        phase: runWindowsPhase,
         totalMem: totalmem(),
         diskFree: getDiskFreeSpace(__dirname),
         cpus: cpus().length,
@@ -206,14 +207,14 @@ async function runWindowsInternal(
       proj: options.proj,
       sln: options.sln,
     };
-    runWindowsPhase = RunWindowsPhase.AutoLink;
+    runWindowsPhase = 'AutoLink';
     await autoLinkCommand.func(autolinkArgs, autolinkConfig, autoLinkOptions);
   } else {
     newInfo('Autolink step is skipped');
   }
 
   let buildTools: MSBuildTools;
-  runWindowsPhase = RunWindowsPhase.FindBuildTools;
+  runWindowsPhase = 'FindBuildTools';
   try {
     buildTools = MSBuildTools.findAvailableVersion(options.arch, verbose);
   } catch (error) {
@@ -232,7 +233,7 @@ async function runWindowsInternal(
   }
 
   if (options.build) {
-    runWindowsPhase = RunWindowsPhase.FindSolution;
+    runWindowsPhase = 'FindSolution';
     if (!slnFile) {
       newError(
         'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
@@ -248,7 +249,7 @@ async function runWindowsInternal(
     msBuildProps.RunAutolinkCheck = 'false';
 
     try {
-      runWindowsPhase = RunWindowsPhase.FindSolution;
+      runWindowsPhase = 'FindSolution';
       await build.buildSolution(
         buildTools,
         slnFile!,
@@ -276,7 +277,7 @@ async function runWindowsInternal(
   await deploy.startServerInNewWindow(options, verbose);
 
   if (options.deploy) {
-    runWindowsPhase = RunWindowsPhase.FindSolution;
+    runWindowsPhase = 'FindSolution';
     if (!slnFile) {
       newError(
         'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
@@ -285,7 +286,7 @@ async function runWindowsInternal(
     }
 
     try {
-      runWindowsPhase = RunWindowsPhase.Deploy;
+      runWindowsPhase = 'Deploy';
       if (options.device || options.emulator || options.target) {
         await deploy.deployToDevice(options, verbose);
       } else {

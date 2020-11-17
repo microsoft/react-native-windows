@@ -158,10 +158,10 @@ export default class MSBuildTools {
       'Microsoft.Component.MSBuild',
       getVCToolsByArch(buildArch),
     ];
-    const version = process.env.VisualStudioVersion || '16.0';
+    const minVersion = process.env.VisualStudioVersion || '16.5';
     const vsInstallation = findLatestVsInstall({
       requires,
-      version,
+      minVersion,
       verbose,
       prerelease,
     });
@@ -173,7 +173,7 @@ export default class MSBuildTools {
         );
       } else {
         throw new Error(
-          'MSBuild tools not found. Make sure all required components have been installed',
+          `Could not find MSBuild with VCTools for Visual Studio ${minVersion} or later. Make sure all required components have been installed`,
         );
       }
     }
@@ -185,10 +185,10 @@ export default class MSBuildTools {
 
     if (fs.existsSync(toolsPath)) {
       newSuccess(
-        `Found MSBuild v${version} at ${toolsPath} (${vsInstallation.installationVersion})`,
+        `Found compatible MSBuild at ${toolsPath} (${vsInstallation.installationVersion})`,
       );
       return new MSBuildTools(
-        version,
+        minVersion,
         toolsPath,
         vsInstallation.installationVersion,
       );
