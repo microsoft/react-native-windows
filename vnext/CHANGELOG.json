@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 17 Nov 2020 05:05:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.209",
+      "version": "0.0.0-canary.209",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Embed documentation of WinRT APIs in the winmd",
+            "author": "asklar@microsoft.com",
+            "commit": "da3bfb6defd16cec04eb609babc5dfde5e28f576",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "JSDispatcher should use JSCallInvoker internally",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "cb6ffd64596a491cb2c636804f7bfe7df8cea34a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Nov 2020 17:37:03 GMT",
       "tag": "react-native-windows_v0.0.0-canary.208",
       "version": "0.0.0-canary.208",

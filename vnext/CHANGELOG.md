@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 16 Nov 2020 17:37:03 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Nov 2020 05:05:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.209
+
+Tue, 17 Nov 2020 05:05:00 GMT
+
+### Changes
+
+- Embed documentation of WinRT APIs in the winmd (asklar@microsoft.com)
+- JSDispatcher should use JSCallInvoker internally (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.208
 
