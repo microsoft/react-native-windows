@@ -133,7 +133,7 @@ export function sanitizeFrame(frame: any): void {
 }
 
 export function tryGetErrorCode(msg: string): string | undefined {
-  const errorRegEx = /error (\w+\d+):/gi;
+  const errorRegEx = /error (\w+\d+)[\s:]/gi;
   const m = errorRegEx.exec(msg);
   return m ? m[1] : undefined;
 }
