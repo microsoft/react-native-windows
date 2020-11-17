@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Mark packages published from master as private when cutting branch",
+  "packageName": "@rnw-scripts/promote-release",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
