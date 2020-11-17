@@ -190,9 +190,6 @@ void FabricUIManager::installFabricUIManager( // in android this is Binding::ins
   std::lock_guard<std::mutex> schedulerLock(m_schedulerMutex);
 
   facebook::react::ContextContainer::Shared contextContainer = std::make_shared<facebook::react::ContextContainer>();
-
-  // auto sharedJSMessageQueueThread =
-  // std::make_shared<JMessageQueueThread>(jsMessageQueueThread);
   auto runtimeExecutor = SchedulerSettings::GetRuntimeExecutor(m_context.Properties());
 
   // TODO: T31905686 Create synchronous Event Beat
@@ -211,9 +208,6 @@ void FabricUIManager::installFabricUIManager( // in android this is Binding::ins
       };
 
   contextContainer->insert("ReactNativeConfig", config);
-  // Only used by android view components.. probably do not need
-  // We will store FabricUIManager in the context propertybag if needed.
-  // contextContainer->insert("FabricUIManager", javaUIManager_);
 
   // Keep reference to config object and cache some feature flags here
   m_reactNativeConfig = config;
