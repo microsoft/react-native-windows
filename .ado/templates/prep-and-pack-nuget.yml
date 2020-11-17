@@ -20,11 +20,12 @@ steps:
       artifact: ReactWindows
       path: $(System.DefaultWorkingDirectory)/ReactWindows
 
-  - powershell: |
-      (Get-Content -Path $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets
-    displayName: Patch version check file with version ${{parameters.npmVersion}}
+  - ${{ if or(parameters.packMicrosoftReactNative, parameters.packMicrosoftReactNativeCxx, parameters.packMicrosoftReactNativeManaged, parameters.packMicrosoftReactNativeManagedCodeGen) }}:
+    - powershell: |
+        (Get-Content -Path $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets
+      displayName: Patch version check file with version ${{parameters.npmVersion}}
 
-  - ${{ if eq(parameters.packDesktop, true) }}:
+  - ${{ if parameters.packDesktop }}:
     - template: prep-and-pack-single.yml
       parameters:
         packageId: ${{parameters.desktopId}}
@@ -32,7 +33,7 @@ steps:
         slices: ${{ coalesce(parameters.slices, '("x64.Debug", "x86.Debug", "ARM64.Debug", "x64.Release","x86.Release", "ARM64.Release")') }}
         buildProperties: 'CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}}'
 
-  - ${{ if eq(parameters.packMicrosoftReactNative, true) }}:
+  - ${{ if parameters.packMicrosoftReactNative }}:
     - template: prep-and-pack-single.yml
       parameters:
         packageId: Microsoft.ReactNative
@@ -42,7 +43,7 @@ steps:
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}
 
-  - ${{ if eq(parameters.packMicrosoftReactNativeCxx, true) }}:
+  - ${{ if parameters.packMicrosoftReactNativeCxx }}:
     - template: prep-and-pack-single.yml
       parameters:
         packageId: Microsoft.ReactNative.Cxx
@@ -51,7 +52,7 @@ steps:
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
         codesignNuget: ${{ parameters.signMicrosoft }}
 
-  - ${{ if eq(parameters.packMicrosoftReactNativeManaged, true) }}:
+  - ${{ if parameters.packMicrosoftReactNativeManaged }}:
     - template: prep-and-pack-single.yml
       parameters:
         packageId: Microsoft.ReactNative.Managed
@@ -61,7 +62,7 @@ steps:
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}
 
-  - ${{ if eq(parameters.packMicrosoftReactNativeManagedCodeGen, true) }}:
+  - ${{ if parameters.packMicrosoftReactNativeManagedCodeGen }}:
     - template: prep-and-pack-single.yml
       parameters:
         packageId: Microsoft.ReactNative.Managed.CodeGen

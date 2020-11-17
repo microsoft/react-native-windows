@@ -807,7 +807,7 @@ jobs:
           packMicrosoftReactNativeCxx: false
           packMicrosoftReactNativeManaged: false
           packMicrosoftReactNativeManagedCodeGen: false
-          slices: '("x64.Debug", "x64.Release", "x86.Debug", "ARM64.debug")'
+          slices: '("x64.Debug", "x64.Release", "x86.Debug", "ARM64.Debug")'
 
   - template: templates/e2e-test-job.yml
     parameters:
