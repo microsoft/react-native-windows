@@ -2,3 +2,4 @@
 	path = GitModules/Folly
 	url = https://github.com/facebook/folly.git
 	branch = master
+	shallow = true
