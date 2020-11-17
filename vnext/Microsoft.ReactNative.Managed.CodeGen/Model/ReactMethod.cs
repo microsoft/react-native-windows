@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Microsoft.ReactNative.Managed.CodeGen.Model
 {
-  public class ReactMethod
+  internal class ReactMethod
   {
     public IMethodSymbol Method { get; }
 

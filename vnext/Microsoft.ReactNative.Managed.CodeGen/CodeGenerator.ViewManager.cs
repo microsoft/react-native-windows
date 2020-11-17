@@ -13,7 +13,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
   /// <summary>
   /// Code generation for View Managers
   /// </summary>
-  public partial class CodeGenerator
+  internal partial class CodeGenerator
   {
     internal MemberDeclarationSyntax CreateViewManagers(IEnumerable<INamedTypeSymbol> viewManagers)
     {

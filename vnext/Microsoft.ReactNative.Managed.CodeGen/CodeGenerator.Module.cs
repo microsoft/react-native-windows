@@ -14,7 +14,7 @@ using static Microsoft.ReactNative.Managed.CodeGen.SyntaxHelpers;
 
 namespace Microsoft.ReactNative.Managed.CodeGen
 {
-  public partial class CodeGenerator
+  internal partial class CodeGenerator
   {
     internal MemberDeclarationSyntax CreateModules(IEnumerable<ReactModule> modules)
     {

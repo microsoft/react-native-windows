@@ -10,7 +10,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
   /// <summary>
   /// Little helper to measure and print durations of phases of execution
   /// </summary>
-  public readonly struct ConsoleMeasurement : IDisposable
+  internal readonly struct ConsoleMeasurement : IDisposable
   {
     private readonly Stopwatch m_stopWatch;
 

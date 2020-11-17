@@ -13,7 +13,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     /// Captures the options needed to run the Code Generators.
     /// This class is typically populated from the commandline arguments
     /// </summary>
-    public class Options
+    internal class Options
     {
         private const string m_defaultName = "Microsoft.ReactNative.Managed.CodeGen";
 

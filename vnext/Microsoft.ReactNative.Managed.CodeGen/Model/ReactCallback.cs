@@ -7,7 +7,7 @@ using System.Diagnostics.ContractsLight;
 
 namespace Microsoft.ReactNative.Managed.CodeGen.Model
 {
-  public abstract class ReactCallback
+  internal abstract class ReactCallback
   {
     public ISymbol Symbol { get; }
 

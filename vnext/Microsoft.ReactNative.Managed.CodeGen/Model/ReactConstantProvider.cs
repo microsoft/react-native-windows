@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Microsoft.ReactNative.Managed.CodeGen.Model
 {
-  public class ReactConstantProvider
+  internal class ReactConstantProvider
   {
     public IMethodSymbol Method { get; }
 

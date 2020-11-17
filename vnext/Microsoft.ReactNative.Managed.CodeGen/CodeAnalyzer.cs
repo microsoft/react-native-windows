@@ -22,7 +22,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     /// <summary>
     /// Primary class 
     /// </summary>
-    public class CodeAnalyzer
+    internal class CodeAnalyzer
     {
         public int ConcurrencyLevel { get; set; } = DataflowBlockOptions.Unbounded;
 

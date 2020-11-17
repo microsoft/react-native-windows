@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.ReactNative.Managed.CodeGen
 {
-  public class Program
+  internal class Program
   {
     /// <summary>
     /// Main entry point

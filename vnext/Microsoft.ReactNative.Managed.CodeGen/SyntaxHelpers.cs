@@ -15,7 +15,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
   /// This class adds some extra convenience helpers. The method names typically follow the
   /// naming convention used in Roslyn but sets common defaults.
   /// </summary>
-  public static class SyntaxHelpers
+  internal static class SyntaxHelpers
   {
     private static readonly SymbolDisplayFormat s_symbolFormat = SymbolDisplayFormat.FullyQualifiedFormat;
 

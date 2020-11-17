@@ -6,7 +6,7 @@ using System.Diagnostics.ContractsLight;
 
 namespace Microsoft.ReactNative.Managed.CodeGen.Model
 {
-  public class ReactConstant
+  internal class ReactConstant
   {
     public ISymbol Symbol { get; }
 

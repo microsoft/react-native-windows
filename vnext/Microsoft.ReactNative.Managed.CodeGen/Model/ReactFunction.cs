@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 
 namespace Microsoft.ReactNative.Managed.CodeGen.Model
 {
-  public class ReactFunction : ReactCallback
+  internal class ReactFunction : ReactCallback
   {
     public ReactFunction(ISymbol symbol, ImmutableArray<IParameterSymbol> callbackParameters, string name, string emitterName)
       : base(symbol, callbackParameters, name, emitterName)

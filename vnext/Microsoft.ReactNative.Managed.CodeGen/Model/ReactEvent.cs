@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 
 namespace Microsoft.ReactNative.Managed.CodeGen.Model
 {
-  public class ReactEvent : ReactCallback
+  internal class ReactEvent : ReactCallback
   {
     public ReactEvent(ISymbol symbol, ImmutableArray<IParameterSymbol> callbackParameters, string name, string emitterName)
     : base(symbol, callbackParameters, name, emitterName)

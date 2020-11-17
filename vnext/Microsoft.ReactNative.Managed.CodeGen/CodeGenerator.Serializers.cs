@@ -16,7 +16,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
   /// <summary>
   /// Code generation for serialization
   /// </summary>
-  public partial class CodeGenerator
+  internal partial class CodeGenerator
   {
     internal IEnumerable<MemberDeclarationSyntax> CreateSerializers(IEnumerable<INamedTypeSymbol> typesToSerialize)
     {

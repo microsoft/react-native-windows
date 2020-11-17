@@ -16,7 +16,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
   /// <summary>
   /// Class to generate code given the passed in models
   /// </summary>
-  public partial class CodeGenerator
+  internal partial class CodeGenerator
   {
     internal readonly ReactTypes ReactTypes;
 

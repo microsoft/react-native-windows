@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.ReactNative.Managed.CodeGen.Model
 {
-  public class ReactAssembly
+  internal class ReactAssembly
   {
     public ICollection<INamedTypeSymbol> ViewManagers { get; } = new List<INamedTypeSymbol>();
 

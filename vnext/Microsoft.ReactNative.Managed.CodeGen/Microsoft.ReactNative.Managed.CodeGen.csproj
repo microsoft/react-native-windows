@@ -16,6 +16,10 @@
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <DocumentationFile>$(OutDir)\Microsoft.ReactNative.Managed.CodeGen.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <!--
       This file is linked because we want to use this to ensure the names of the code we parse line up and gives us compile errors if not.
@@ -65,11 +69,7 @@
   <!-- 
     This is used during the PR build to ensure we have the artifacts published during the build.
   -->
-  <Target 
-    Name="PublishToolDuringBuild" 
-    DependsOnTargets="Publish" 
-    AfterTargets="Build" 
-    Condition="'$(PublishToolDuringBuild)' == 'true' and '$(Platform)' == 'x64'">
+  <Target Name="PublishToolDuringBuild" DependsOnTargets="Publish" AfterTargets="Build" Condition="'$(PublishToolDuringBuild)' == 'true' and '$(Platform)' == 'x64'">
   </Target>
 
   <!-- Override -->

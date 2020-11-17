@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.ReactNative.Managed.CodeGen
 {
-    public class App
+    internal class App
     {
         private readonly CancellationToken m_cancellationToken;
 

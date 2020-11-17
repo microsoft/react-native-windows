@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Microsoft.ReactNative.Managed.CodeGen.Commandline
 {
-  public class Parser
+  internal class Parser
   {
     internal static bool TryParseArgs(IEnumerable<string> args, out IList<ParsedArgument> parsedArgs)
     {

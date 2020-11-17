@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Microsoft.ReactNative.Managed.CodeGen.Model
 {
-  public class ReactModule
+  internal class ReactModule
   {
     public INamedTypeSymbol ModuleType { get; }
 

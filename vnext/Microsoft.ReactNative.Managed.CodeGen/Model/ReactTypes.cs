@@ -13,7 +13,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
     /// Helper class that stores all types needed for analysis and code generation
     /// from Microsoft.ReactNative and Microsoft.ReactNative.Managed
     /// </summary>
-    public class ReactTypes
+    internal class ReactTypes
     {
         private const string m_ReactNativeAssemblyName = "Microsoft.ReactNative";
         private const string m_ReactNativeNamespace = "Microsoft.ReactNative";
