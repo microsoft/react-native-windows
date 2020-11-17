@@ -8,7 +8,7 @@ import * as path from 'path';
 
 import MSBuildTools from './msbuildtools';
 import Version from './version';
-import {commandWithProgress, newSpinner, newError} from './commandWithProgress';
+import {newError} from './commandWithProgress';
 import {RunWindowsOptions, BuildConfig, BuildArch} from '../runWindowsOptions';
 import {Config} from '@react-native-community/cli-types';
 
@@ -19,7 +19,7 @@ export async function buildSolution(
   buildArch: BuildArch,
   msBuildProps: Record<string, string>,
   verbose: boolean,
-  target?: string,
+  target: 'build' | 'deploy',
   buildLogDirectory?: string,
   singleproc?: boolean,
 ) {
@@ -40,26 +40,6 @@ export async function buildSolution(
     target,
     buildLogDirectory,
     singleproc,
-  );
-}
-
-export async function restoreNuGetPackages(
-  slnFile: string,
-  buildTools: MSBuildTools,
-  verbose: boolean,
-) {
-  const text = 'Restoring NuGet packages ';
-  const spinner = newSpinner(text);
-  await commandWithProgress(
-    spinner,
-    text,
-    buildTools.msbuildPath,
-    [
-      slnFile,
-      '/restore',
-      '/p:RestorePackagesConfig=true'
-    ],
-    verbose,
   );
 }
 

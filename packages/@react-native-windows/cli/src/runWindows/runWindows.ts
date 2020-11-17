@@ -55,12 +55,12 @@ function getPkgVersion(pkgName: string): string {
 }
 
 enum RunWindowsPhase {
-  None,
-  AutoLink,
-  FindBuildTools,
-  NuGetRestore,
-  FindSolution,
-  Deploy,
+  None = 0,
+  AutoLink = 1,
+  FindBuildTools = 2,
+  // NuGetRestore = 3, (Removed)
+  FindSolution = 4,
+  Deploy = 5,
 }
 
 let runWindowsPhase = RunWindowsPhase.None;
@@ -240,14 +240,6 @@ async function runWindowsInternal(
       throw new Error('Cannot find solution file');
     }
 
-    try {
-      runWindowsPhase = RunWindowsPhase.NuGetRestore;
-      await build.restoreNuGetPackages(slnFile!, buildTools, verbose);
-    } catch (e) {
-      newError('Failed to restore the NuGet packages: ' + e.toString());
-      throw e;
-    }
-
     // Get build/deploy options
     const buildType = deploy.getBuildConfiguration(options);
     let msBuildProps = build.parseMsBuildProps(options);
@@ -264,7 +256,7 @@ async function runWindowsInternal(
         options.arch,
         msBuildProps,
         verbose,
-        undefined, // build the default target
+        'build',
         options.buildLogDirectory,
         options.singleproc,
       );

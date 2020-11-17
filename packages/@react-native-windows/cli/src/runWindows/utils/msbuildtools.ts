@@ -54,7 +54,7 @@ export default class MSBuildTools {
     buildArch: BuildArch,
     msBuildProps: Record<string, string>,
     verbose: boolean,
-    target: string | undefined,
+    target: 'build' | 'deploy',
     buildLogDirectory: string | undefined,
     singleproc?: boolean,
   ) {
@@ -97,8 +97,10 @@ export default class MSBuildTools {
       args.push('/maxCpuCount');
     }
 
-    if (target) {
-      args.push(`/t:${target}`);
+    if (target === 'build') {
+      args.push('/restore', '/p:RestorePackagesConfig=true');
+    } else if (target === 'deploy') {
+      args.push(`/t:Deploy`);
     }
 
     if (msBuildProps) {
@@ -119,7 +121,7 @@ export default class MSBuildTools {
     }
 
     const progressName =
-      target === 'Deploy' ? 'Deploying Solution' : 'Building Solution';
+      target === 'deploy' ? 'Deploying Solution' : 'Building Solution';
     const spinner = newSpinner(progressName);
     try {
       await commandWithProgress(
