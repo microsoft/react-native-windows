@@ -63,7 +63,7 @@ jobs:
     steps:
       - checkout: self
         clean: false
-        submodules: true
+        submodules: false
 
       - task: PowerShell@2
         displayName: "Check if this environment meets the development dependencies"
@@ -144,7 +144,7 @@ jobs:
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
             Microsoft.ReactNative.Managed.CodeGen\**
-
+      
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: 'Component Governance Detection'
         inputs:
