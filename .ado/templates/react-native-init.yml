@@ -72,7 +72,7 @@ steps:
     inputs:
       versionSpec: ">=5.8.0"
 
-  - ${{ if parameters.useNuGet }}:
+  - ${{ if (eq(parameters.useNuGet, true)}}:
     - template: prep-and-pack-nuget.yml
       parameters:
         npmVersion: $(npmVersion)
