@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Tue, 10 Nov 2020 16:50:27 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Nov 2020 15:06:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.3
+
+Mon, 16 Nov 2020 15:06:51 GMT
+
+### Patches
+
+- Disable telemetry in other CI systems (asklar@microsoft.com)
 
 ## 0.63.2
 

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 16 Nov 2020 15:06:51 GMT",
+      "tag": "@react-native-windows/telemetry_v0.63.3",
+      "version": "0.63.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Disable telemetry in other CI systems",
+            "author": "asklar@microsoft.com",
+            "commit": "a2f05ca82e62bfa517f79cf309b7134066fe9b30",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Nov 2020 16:50:27 GMT",
       "tag": "@react-native-windows/telemetry_v0.63.2",
       "version": "0.63.2",

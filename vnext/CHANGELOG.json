@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 16 Nov 2020 15:06:51 GMT",
+      "tag": "react-native-windows_v0.63.9",
+      "version": "0.63.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.63] Allow NodeJS 14",
+            "author": "asklar@microsoft.com",
+            "commit": "ec6e1c5c1be9bd5236fdd1287a2c2fedbd0bb79a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Don't return an error if AsyncStorage is empty",
+            "author": "i@mandrigin.ru",
+            "commit": "ee1f66943c6044e6e513f3687640f94f15f6a8c5",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Nov 2020 16:50:27 GMT",
       "tag": "react-native-windows_v0.63.8",
       "version": "0.63.8",
