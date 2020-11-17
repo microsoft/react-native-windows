@@ -441,7 +441,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx\react\renderer\graphics\Color.cpp" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Transform.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Transform.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\Differentiator.cpp" DisableSpecificWarnings="4244;4267;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingCoordinator.cpp" DisableSpecificWarnings="4244;4459;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingTransaction.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>

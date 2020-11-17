@@ -589,11 +589,6 @@ void ReactInstanceWin::InitJSMessageThread() noexcept {
       m_instance.Load()->getJSCallInvoker(),
       Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
       Mso::Copy(m_whenDestroyed));
-
-  auto scheduler = Mso::MakeJSCallInvokerScheduler(
-      m_instance.Load()->getJSCallInvoker(),
-      Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
-      Mso::Copy(m_whenDestroyed));
   auto jsDispatchQueue = Mso::DispatchQueue::MakeCustomQueue(Mso::CntPtr(scheduler));
 
   // Create MessageQueueThread for the DispatchQueue
