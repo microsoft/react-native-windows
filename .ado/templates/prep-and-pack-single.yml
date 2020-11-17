@@ -17,7 +17,7 @@ steps:
       arguments: -nuspec $(System.DefaultWorkingDirectory)/ReactWindows/${{parameters.packageId}}.nuspec -outfile $(System.DefaultWorkingDirectory)/ReactWindows/${{parameters.packageId}}.nuspec -slices ${{ parameters.slices }} -debug
     condition: and(succeeded(), ne('', '${{ parameters.slices }}'))
 
-  - ${{ if (eq(parameters.codesignBinaries, true)}}:
+  - ${{ if eq(parameters.codesignBinaries, true)}}:
     - task: PkgESCodeSign@10
       displayName: '${{ parameters.packageId }} CodeSign Binaries'
       inputs:
@@ -34,7 +34,7 @@ steps:
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.packageId }};${{ parameters.buildProperties }}
   
-  - ${{ if (eq(parameters.codesignNuget, true)}}:
+  - ${{ if eq(parameters.codesignNuget, true)}}:
     - task: PkgESCodeSign@10
       displayName: '${{ parameters.packageId }} CodeSign NuGet'
       inputs:
