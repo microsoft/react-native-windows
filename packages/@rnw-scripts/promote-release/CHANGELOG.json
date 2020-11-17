@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Tue, 17 Nov 2020 19:12:07 GMT",
+      "tag": "@rnw-scripts/promote-release_v0.2.9",
+      "version": "0.2.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Mark packages published from master as private when cutting branch",
+            "author": "ngerlem@microsoft.com",
+            "commit": "65d0686b73863ea5e11aabc6b482193500b7462b",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Oct 2020 05:06:32 GMT",
       "tag": "@rnw-scripts/promote-release_v0.2.7",
       "version": "0.2.7",
