@@ -53,15 +53,11 @@ export async function restoreNuGetPackages(
   await commandWithProgress(
     spinner,
     text,
-    require.resolve('nuget-exe'),
+    buildTools.msbuildPath,
     [
-      'restore',
-      `${slnFile}`,
-      '-NonInteractive',
-      '-Verbosity',
-      verbose ? 'normal' : 'quiet',
-      '-MSBuildVersion',
-      buildTools.installationVersion,
+      slnFile,
+      '/restore',
+      '/p:RestorePackagesConfig=true'
     ],
     verbose,
   );
