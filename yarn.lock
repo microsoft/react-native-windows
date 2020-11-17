@@ -10755,6 +10755,11 @@ npm-run-path@^4.0.0:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
+nuget-exe@5.8.0:
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/nuget-exe/-/nuget-exe-5.8.0.tgz#45287c4ad8308a5a7057913b32c08998fe7fdc82"
+  integrity sha512-m95SBWa+SJNOfR0GTwdQ3OwK2915Ts3XvajYx0iaOZYydwvz6reJyptiNGf+HQhvTe5viNiRAmGXxNww9obZjw==
+
 nullthrows@1.1.1, nullthrows@^1.1.0, nullthrows@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/nullthrows/-/nullthrows-1.1.1.tgz#7818258843856ae971eae4208ad7d7eb19a431b1"
