@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 14 Nov 2020 05:04:43 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Nov 2020 05:05:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.38
+
+Tue, 17 Nov 2020 05:05:00 GMT
+
+### Changes
+
+- Collect anonymized project name (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.36
 
