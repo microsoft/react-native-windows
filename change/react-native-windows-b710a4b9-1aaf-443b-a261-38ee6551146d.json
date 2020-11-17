@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "mark all classes in codegen intended to be internal as such",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
