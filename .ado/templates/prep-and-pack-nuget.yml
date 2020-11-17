@@ -5,7 +5,7 @@ parameters:
   nugetroot: $(System.DefaultWorkingDirectory)\ReactWindows
   desktopId: 'OfficeReact.Win32'
   microsoftRNId: 'Microsoft.ReactNative'
-  slices: '("x64.Release","x86.Release", "ARM.Release", "ARM64.Release")'
+  slices: ''
   packDesktop: true
   packMicrosoftReactNative: true
   packMicrosoftReactNativeCxx: true
@@ -20,16 +20,17 @@ steps:
       artifact: ReactWindows
       path: $(System.DefaultWorkingDirectory)/ReactWindows
 
-  - powershell: |
-      (Get-Content -Path $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets
-    displayName: Patch version check file with version ${{parameters.npmVersion}}
+  - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true)) }}:
+    - powershell: |
+        (Get-Content -Path $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets
+      displayName: Patch version check file with version ${{parameters.npmVersion}}
 
   - ${{ if eq(parameters.packDesktop, true) }}:
     - template: prep-and-pack-single.yml
       parameters:
         packageId: ${{parameters.desktopId}}
         packageVersion: ${{parameters.npmVersion}}
-        slices: ''
+        slices: ${{ coalesce(parameters.slices, '("x64.Debug", "x86.Debug", "ARM64.Debug", "x64.Release","x86.Release", "ARM64.Release")') }}
         buildProperties: 'CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}}'
 
   - ${{ if eq(parameters.packMicrosoftReactNative, true) }}:
@@ -37,7 +38,7 @@ steps:
       parameters:
         packageId: Microsoft.ReactNative
         packageVersion: ${{parameters.npmVersion}}
-        slices:  ${{ parameters.slices }}
+        slices: ${{ coalesce(parameters.slices, '("x64.Release","x86.Release", "ARM.Release", "ARM64.Release")') }}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}
@@ -66,7 +67,7 @@ steps:
       parameters:
         packageId: Microsoft.ReactNative.Managed
         packageVersion: ${{parameters.npmVersion}}
-        slices:  ${{ parameters.slices }}
+        slices: ${{ coalesce(parameters.slices, '("x64.Release","x86.Release", "ARM.Release", "ARM64.Release")') }}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}
