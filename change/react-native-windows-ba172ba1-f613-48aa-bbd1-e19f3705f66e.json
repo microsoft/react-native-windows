@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Exclude Beast WebSocket from build by default.",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
