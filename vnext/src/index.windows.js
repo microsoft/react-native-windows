@@ -503,6 +503,12 @@ module.exports = {
 
   // Additional windows exports (Typescript components exported as flow any)
   get DatePicker(): any {
+    warnOnce(
+      'datepicker-moved',
+      'DatePicker has been extracted from react-native-windows and will be removed in a future release. ' +
+        "It can now be installed and imported as DateTimePicker from '@react-native-community/datetimepicker'. " +
+        'See https://github.com/react-native-datetimepicker/datetimepicker',
+    );
     return (require('./Libraries/Components/DatePicker/DatePicker'): any)
       .DatePicker;
   },
@@ -513,6 +519,12 @@ module.exports = {
     return require('./Libraries/Components/Glyph/Glyph').Glyph;
   },
   get PickerWindows(): any {
+    warnOnce(
+      'picker-windows-moved',
+      'PickerWindows has been extracted from react-native-windows and will be removed in a future release. ' +
+        "It can now be installed and imported as Picker from '@react-native-picker/picker'. " +
+        'See https://github.com/react-native-picker/picker',
+    );
     return require('./Libraries/Components/Picker/PickerWindows').Picker;
   },
   get Popup(): any {
