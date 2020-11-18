@@ -20,7 +20,7 @@ steps:
       artifact: ReactWindows
       path: $(System.DefaultWorkingDirectory)/ReactWindows
 
-  - powershell: PowerShell@2
+  - task: PowerShell@2
     displayName: Layout NuGet header files
     inputs:
       filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
