@@ -16,17 +16,8 @@ namespace Microsoft::React {
 
 /*static*/
 shared_ptr<IWebSocketResource> IWebSocketResource::Make(string &&urlString) {
-  if (!GetRuntimeOptionBool("UseBeastWebSocket")) {
-    std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
-    if (GetRuntimeOptionBool("WebSocket.AcceptSelfSigned")) {
-      certExceptions.emplace_back(
-          winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult::Untrusted);
-      certExceptions.emplace_back(
-          winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult::InvalidName);
-    }
-    return make_shared<WinRTWebSocketResource>(std::move(urlString), std::move(certExceptions));
-  } else {
-    #if ENABLE_BEAST
+#if ENABLE_BEAST
+  if (GetRuntimeOptionBool("UseBeastWebSocket")) {
     Url url(std::move(urlString));
 
     if (url.scheme == "ws") {
@@ -42,10 +33,19 @@ shared_ptr<IWebSocketResource> IWebSocketResource::Make(string &&urlString) {
     } else {
       throw std::invalid_argument((string("Incorrect URL scheme: ") + url.scheme).c_str());
     }
-    #else
-    return nullptr;
-    #endif
+  } else {
+#endif // ENABLE_BEAST
+    std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
+    if (GetRuntimeOptionBool("WebSocket.AcceptSelfSigned")) {
+      certExceptions.emplace_back(
+          winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult::Untrusted);
+      certExceptions.emplace_back(
+          winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult::InvalidName);
+    }
+    return make_shared<WinRTWebSocketResource>(std::move(urlString), std::move(certExceptions));
+#if ENABLE_BEAST
   }
+#endif // ENABLE_BEAST
 }
 
 #pragma endregion IWebSocketResource static members
