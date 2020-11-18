@@ -36,7 +36,7 @@ TEST_CLASS(BaseWebSocketTest){
     ws->SetOnConnect([]() {});
     ws->SetOnPing([]() {});
     ws->SetOnSend([](size_t length) {});
-    ws->SetOnMessage([](size_t length, const string &buffer) {});
+    ws->SetOnMessage([](size_t length, const string &buffer, bool isBinary) {});
     ws->SetOnClose([](CloseCode, const string &) {});
     ws->SetOnError([](const Error &error) {});
   }
