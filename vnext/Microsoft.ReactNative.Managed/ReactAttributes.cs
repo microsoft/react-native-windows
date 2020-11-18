@@ -8,8 +8,12 @@ using System;
 
 namespace Microsoft.ReactNative.Managed
 {
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <publicapi>true</publicapi>
   [AttributeUsage(AttributeTargets.Class)]
-  public class ReactModuleAttribute : Attribute
+  public sealed class ReactModuleAttribute : Attribute
   {
     public ReactModuleAttribute(string moduleName = null)
     {
@@ -21,13 +25,21 @@ namespace Microsoft.ReactNative.Managed
     public string EventEmitterName { get; set; }
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <publicapi>true</publicapi>
   [AttributeUsage(AttributeTargets.Method)]
-  public class ReactInitializerAttribute : Attribute
+  public sealed class ReactInitializerAttribute : Attribute
   {
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <publicapi>true</publicapi>
   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-  public class ReactConstantAttribute : Attribute
+  public sealed class ReactConstantAttribute : Attribute
   {
     public ReactConstantAttribute(string constantName = null)
     {
@@ -37,13 +49,21 @@ namespace Microsoft.ReactNative.Managed
     public string ConstantName { get; set; }
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <publicapi>true</publicapi>
   [AttributeUsage(AttributeTargets.Method)]
-  public class ReactConstantProviderAttribute : Attribute
+  public sealed class ReactConstantProviderAttribute : Attribute
   {
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <publicapi>true</publicapi>
   [AttributeUsage(AttributeTargets.Method)]
-  public class ReactMethodAttribute : Attribute
+  public sealed class ReactMethodAttribute : Attribute
   {
     public ReactMethodAttribute(string methodName = null)
     {
@@ -53,8 +73,12 @@ namespace Microsoft.ReactNative.Managed
     public string MethodName { get; set; }
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <publicapi>true</publicapi>
   [AttributeUsage(AttributeTargets.Method)]
-  public class ReactSyncMethodAttribute : Attribute
+  public sealed class ReactSyncMethodAttribute : Attribute
   {
     public ReactSyncMethodAttribute(string methodName = null)
     {
@@ -64,8 +88,12 @@ namespace Microsoft.ReactNative.Managed
     public string MethodName { get; set; }
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <publicapi>true</publicapi>
   [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-  public class ReactEventAttribute : Attribute
+  public sealed class ReactEventAttribute : Attribute
   {
     public ReactEventAttribute(string eventName = null)
     {
@@ -77,8 +105,12 @@ namespace Microsoft.ReactNative.Managed
     public string EventEmitterName { get; set; }
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <publicapi>true</publicapi>
   [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-  public class ReactFunctionAttribute : Attribute
+  public sealed class ReactFunctionAttribute : Attribute
   {
     public ReactFunctionAttribute(string functionName = null)
     {

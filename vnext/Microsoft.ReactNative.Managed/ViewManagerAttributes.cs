@@ -5,8 +5,12 @@ using System;
 
 namespace Microsoft.ReactNative.Managed
 {
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <publicapi>true</publicapi>
   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-  public class ViewManagerExportedViewConstantAttribute : Attribute
+  public sealed class ViewManagerExportedViewConstantAttribute : Attribute
   {
     public string ConstantName { get; set; }
 
@@ -18,8 +22,12 @@ namespace Microsoft.ReactNative.Managed
     }
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <publicapi>true</publicapi>
   [AttributeUsage(AttributeTargets.Method)]
-  public class ViewManagerPropertyAttribute : Attribute
+  public sealed class ViewManagerPropertyAttribute : Attribute
   {
     public string PropertyName { get; set; }
 
@@ -38,8 +46,12 @@ namespace Microsoft.ReactNative.Managed
     }
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <publicapi>true</publicapi>
   [AttributeUsage(AttributeTargets.Method)]
-  public class ViewManagerCommandAttribute : Attribute
+  public sealed class ViewManagerCommandAttribute : Attribute
   {
     public string CommandName { get; set; }
 
@@ -51,7 +63,11 @@ namespace Microsoft.ReactNative.Managed
     }
   }
 
-  public class ViewManagerExportedDirectEventTypeConstantAttribute : Attribute
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <publicapi>true</publicapi>
+  public sealed class ViewManagerExportedDirectEventTypeConstantAttribute : Attribute
   {
     public string EventName { get; private set; }
 
@@ -66,8 +82,12 @@ namespace Microsoft.ReactNative.Managed
     }
   }
 
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <publicapi>true</publicapi>
   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-  public class ViewManagerExportedBubblingEventTypeConstantAttribute : Attribute
+  public sealed class ViewManagerExportedBubblingEventTypeConstantAttribute : Attribute
   {
     public string EventName { get; private set; }
 

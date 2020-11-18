@@ -15,10 +15,10 @@ namespace Microsoft.ReactNative.Managed
     private static readonly Assembly s_currentAssembly = typeof(ReactPackageBuilderExtensions).Assembly;
 
     /// <summary>
-    /// This caches for each assembly (keyed on location
+    /// This caches for each assembly (keyed on location)
     /// </summary>
     /// <remarks>
-    /// We use concurrentDictionary instead of ConcurrentBag due to it's performance charateristics.
+    /// We use concurrentDictionary instead of ConcurrentBag for better performance.
     /// </remarks>
     private static readonly ConcurrentDictionary<Assembly, Lazy<Dictionary<string, AttributedModule>>> s_registeredAssemblies =
       new ConcurrentDictionary<Assembly, Lazy<Dictionary<string, AttributedModule>>>();

@@ -16,10 +16,6 @@
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <DocumentationFile>$(OutDir)\Microsoft.ReactNative.Managed.CodeGen.xml</DocumentationFile>
-  </PropertyGroup>
-
   <ItemGroup>
     <!--
       This file is linked because we want to use this to ensure the names of the code we parse line up and gives us compile errors if not.
