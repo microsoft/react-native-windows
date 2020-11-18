@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use MSBuild Builtin Support for NuGet Restore",
-  "packageName": "@react-native-windows/cli",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-11-17T15:29:32.169Z"
-}

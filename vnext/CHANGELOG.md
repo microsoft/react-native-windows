@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 17 Nov 2020 05:05:00 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Nov 2020 03:10:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.211
+
+Wed, 18 Nov 2020 03:10:51 GMT
+
+### Changes
+
+- CornerRadius only exists on RS5, restore the behavior to gracefully degrade on older OS releases (asklar@microsoft.com)
+- Check for VS >= 16.5 (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.209
 

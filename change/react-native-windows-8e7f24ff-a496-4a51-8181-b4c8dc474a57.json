@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Check for VS >= 16.5",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

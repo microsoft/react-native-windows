@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "CornerRadius only exists on RS5, restore the behavior to gracefully degrade on older OS releases",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

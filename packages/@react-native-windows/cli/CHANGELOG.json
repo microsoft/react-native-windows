@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 18 Nov 2020 03:10:51 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.39",
+      "version": "0.0.0-canary.39",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use MSBuild Builtin Support for NuGet Restore",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e1821b205f26bd1f05c466b03f45b61ec7a3bb5e",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Nov 2020 05:05:00 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.38",
       "version": "0.0.0-canary.38",
