@@ -13,7 +13,7 @@ steps:
     displayName: '${{ parameters.packageId }} - Strip slices from nuspec'
     inputs:
       targetType: filePath
-      filePath: $(System.DefaultWorkingDirectory)\ReactWindows\StripAdditionalPlatformsFromNuspec.ps1
+      filePath: vnext\Scripts\StripAdditionalPlatformsFromNuspec.ps1
       arguments: -nuspec $(System.DefaultWorkingDirectory)/ReactWindows/${{parameters.packageId}}.nuspec -outfile $(System.DefaultWorkingDirectory)/ReactWindows/${{parameters.packageId}}.nuspec -slices ${{ parameters.slices }} -debug
     condition: and(succeeded(), ne('', '${{ parameters.slices }}'))
 

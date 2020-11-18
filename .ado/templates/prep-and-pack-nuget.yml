@@ -20,6 +20,12 @@ steps:
       artifact: ReactWindows
       path: $(System.DefaultWorkingDirectory)/ReactWindows
 
+  - powershell: PowerShell@2
+    displayName: Layout NuGet header files
+    inputs:
+      filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
+      arguments: -TargetRoot $(System.DefaultWorkingDirectory)/ReactWindows
+
   - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true)) }}:
     - powershell: |
         (Get-Content -Path $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets

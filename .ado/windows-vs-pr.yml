@@ -39,7 +39,6 @@ jobs:
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
-          LayoutHeaders: true
         #X86Release:
         #  BuildConfiguration: Release
         #  BuildPlatform: x86
@@ -139,7 +138,6 @@ jobs:
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
           artifactName: ReactWindows
-          layoutHeaders: eq('true', variables['LayoutHeaders'])
           contents: |
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**

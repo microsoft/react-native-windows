@@ -1,17 +1,8 @@
 parameters:
   artifactName:
   contents:
-  layoutHeaders: false
 
 steps:
-  # Prepare headers for NuGet deployment
-  - task: PowerShell@2
-    displayName: Copy NuGet header files
-    inputs:
-      filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
-      arguments: -TargetRoot $(Build.StagingDirectory)
-    condition: ${{ parameters.layoutHeaders }}
-
   - task: CopyFiles@2
     displayName: Copy NuGet artifacts
     inputs:
