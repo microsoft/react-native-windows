@@ -26,6 +26,7 @@ shared_ptr<IWebSocketResource> IWebSocketResource::Make(string &&urlString) {
     }
     return make_shared<WinRTWebSocketResource>(std::move(urlString), std::move(certExceptions));
   } else {
+    #if ENABLE_BEAST
     Url url(std::move(urlString));
 
     if (url.scheme == "ws") {
@@ -41,6 +42,9 @@ shared_ptr<IWebSocketResource> IWebSocketResource::Make(string &&urlString) {
     } else {
       throw std::invalid_argument((string("Incorrect URL scheme: ") + url.scheme).c_str());
     }
+    #else
+    return nullptr;
+    #endif
   }
 }
 
