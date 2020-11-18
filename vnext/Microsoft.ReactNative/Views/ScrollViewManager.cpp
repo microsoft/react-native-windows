@@ -10,8 +10,8 @@
 #include "Impl/ScrollViewUWPImplementation.h"
 #include "ScrollViewManager.h"
 
-#include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Core.h>
+#include <winrt/Windows.UI.Xaml.Input.h>
 
 namespace Microsoft::ReactNative {
 
