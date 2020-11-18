@@ -311,7 +311,7 @@ export async function deployToDesktop(
       options.arch,
       {DeployLayout: 'true'},
       verbose,
-      'Deploy',
+      'deploy',
       options.buildLogDirectory,
     );
   }

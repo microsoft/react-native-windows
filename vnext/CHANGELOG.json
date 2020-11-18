@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 18 Nov 2020 03:10:51 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.211",
+      "version": "0.0.0-canary.211",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "CornerRadius only exists on RS5, restore the behavior to gracefully degrade on older OS releases",
+            "author": "asklar@microsoft.com",
+            "commit": "48d7aa630fdda8645ff90602ad6d15e7b7670c51",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Check for VS >= 16.5",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e1821b205f26bd1f05c466b03f45b61ec7a3bb5e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Nov 2020 05:05:00 GMT",
       "tag": "react-native-windows_v0.0.0-canary.209",
       "version": "0.0.0-canary.209",
