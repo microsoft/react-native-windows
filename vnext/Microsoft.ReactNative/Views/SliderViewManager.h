@@ -17,7 +17,6 @@ class SliderViewManager : public ControlViewManager {
   void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
   ShadowNode *createShadow() const override;
-  YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
  protected:
   bool UpdateProperty(
