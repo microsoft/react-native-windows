@@ -272,8 +272,11 @@ JsiAbiRuntimeHolder ::~JsiAbiRuntimeHolder() noexcept {
 // JsiAbiRuntime implementation
 //===========================================================================
 
-// This map allows us to associate JsiAbiRuntime with JsiRuntime.
-// TODO: store JsiAbiRuntime* in JsiRuntime instance.
+// The tls_jsiAbiRuntimeMap map allows us to associate JsiAbiRuntime with JsiRuntime.
+// The association is thread-specific and DLL-specific.
+// It is thread specific because we want to have the safe access only in JS thread.
+// It is DLL-specific because JsiAbiRuntime is not ABI-safe and each module DLL will
+// have their own JsiAbiRuntime instance.
 static thread_local std::map<void *, JsiAbiRuntime *> *tls_jsiAbiRuntimeMap{nullptr};
 
 JsiAbiRuntime::JsiAbiRuntime(JsiRuntime const &runtime) noexcept : m_runtime{runtime} {
