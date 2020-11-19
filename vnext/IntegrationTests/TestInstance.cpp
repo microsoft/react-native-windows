@@ -30,7 +30,6 @@ folly::dynamic TestViewManager::GetCommands() const {
 }
 
 folly::dynamic TestViewManager::GetNativeProps() const {
-  // TODO: RCTView generated view config for validAttributes does not match native, missing: dummyprop
   return folly::dynamic::object("dummyprop", "string");
 }
 
