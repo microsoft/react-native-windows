@@ -3,8 +3,6 @@
 
 namespace Microsoft.ReactNative
 {
-  interface IJsiRuntime;
-
   // JsiByteArrayUser delegate receives a range of bytes as a byte array.
   // The array of bytes is implemented in ABI as two parameters: array length and a pointer to the array start.
   // It effectively provides a 'view' to the byte array provided by the delegate invoker.

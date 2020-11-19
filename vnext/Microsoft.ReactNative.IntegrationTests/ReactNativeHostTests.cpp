@@ -5,6 +5,7 @@
 #include <NativeModules.h>
 #include <winrt/Windows.System.h>
 #include "MockReactPackageProvider.h"
+
 using namespace React;
 
 namespace ReactNativeIntegrationTests {
@@ -12,8 +13,15 @@ namespace ReactNativeIntegrationTests {
 REACT_MODULE(TestHostModule)
 struct TestHostModule {
   REACT_INIT(Initialize)
-  void Initialize(ReactContext const & /*reactContext*/) noexcept {
+  void Initialize(ReactContext const &reactContext) noexcept {
     TestHostModule::Instance.set_value(*this);
+
+    bool jsiExecuted{false};
+    reactContext.ExecuteJsi([&](facebook::jsi::Runtime &runtime) {
+      jsiExecuted = true;
+      TestCheckEqual("ChakraRuntime", runtime.description());
+    });
+    TestCheck(jsiExecuted);
   }
 
   REACT_FUNCTION(addValues, L"addValues", L"TestHostModuleFunctions")
@@ -72,7 +80,7 @@ TEST_CLASS (ReactNativeHostTests) {
     TestCheckEqual(std::wstring_view{path}, (std::wstring_view)host.InstanceSettings().BundleRootPath());
   }
 
-  SKIPTESTMETHOD(JsFunctionCall_Succeeds) {
+  TEST_METHOD(JsFunctionCall_Succeeds) {
     std::future<TestHostModule &> testHostModule = TestHostModule::Instance.get_future();
     std::future<int> returnValue = TestHostModule::IntReturnValue.get_future();
 
@@ -94,6 +102,8 @@ TEST_CLASS (ReactNativeHostTests) {
       host.InstanceSettings().UseFastRefresh(false);
       host.InstanceSettings().UseLiveReload(false);
       host.InstanceSettings().EnableDeveloperMenu(false);
+
+      host.InstanceSettings().UseDirectDebugger(true);
 
       host.LoadInstance();
     });

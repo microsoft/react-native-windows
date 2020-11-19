@@ -64,6 +64,8 @@
 #include <tuple>
 #include "ChakraRuntimeHolder.h"
 
+#include "JsiApi.h"
+
 namespace Microsoft::ReactNative {
 
 void AddStandardViewManagers(
@@ -380,6 +382,8 @@ void ReactInstanceWin::Initialize() noexcept {
                     devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
                 break;
             }
+
+            m_jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
           }
 
           try {
@@ -539,6 +543,12 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
 
   // Make sure that the instance is not destroyed yet
   if (auto instance = m_instance.Exchange(nullptr)) {
+    {
+      // Release the JSI runtime
+      std::scoped_lock lock{m_mutex};
+      m_jsiRuntimeHolder = nullptr;
+      m_jsiRuntime = nullptr;
+    }
     // Release the message queues before the ui manager and instance.
     m_nativeMessageThread.Exchange(nullptr);
     m_jsMessageThread.Exchange(nullptr);
@@ -810,6 +820,31 @@ void ReactInstanceWin::CallJsFunction(
 void ReactInstanceWin::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept {
   folly::dynamic params = folly::dynamic::array(viewTag, std::move(eventName), std::move(eventData));
   CallJsFunction("RCTEventEmitter", "receiveEvent", std::move(params));
+}
+
+winrt::Microsoft::ReactNative::JsiRuntime ReactInstanceWin::JsiRuntime() noexcept {
+  std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> jsiRuntimeHolder;
+  {
+    std::scoped_lock lock{m_mutex};
+    if (m_jsiRuntime) {
+      return m_jsiRuntime;
+    } else {
+      jsiRuntimeHolder = m_jsiRuntimeHolder;
+    }
+  }
+
+  auto jsiRuntime = jsiRuntimeHolder ? jsiRuntimeHolder->getRuntime() : nullptr;
+
+  {
+    std::scoped_lock lock{m_mutex};
+    if (!m_jsiRuntime && jsiRuntime) {
+      // Set only if other thread did not do it yet.
+      m_jsiRuntime = winrt::make<winrt::Microsoft::ReactNative::implementation::JsiRuntime>(
+          std::move(jsiRuntimeHolder), std::move(jsiRuntime));
+    }
+
+    return m_jsiRuntime;
+  }
 }
 
 std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() noexcept {

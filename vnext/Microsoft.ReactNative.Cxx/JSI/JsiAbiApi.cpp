@@ -12,14 +12,14 @@ namespace winrt::Microsoft::ReactNative {
 
 // The macro to simplify recording JSI exceptions.
 // It looks strange to keep the normal structure of the try/catch in code.
-#define JSI_RUNTIME_SET_ERROR(runtime)                            \
-facebook::jsi::JSError const &jsError) {                          \
-    JsiAbiRuntime::FromJsiRuntime(runtime)->SetJsiError(jsError); \
-    throw;                                                        \
-  }                                                               \
-  catch (std::exception const &ex) {                              \
-    JsiAbiRuntime::FromJsiRuntime(runtime)->SetJsiError(ex);      \
-    throw;                                                        \
+#define JSI_RUNTIME_SET_ERROR(runtime)                                       \
+facebook::jsi::JSError const &jsError) {                                     \
+    JsiAbiRuntime::GetOrCreateFromJsiRuntime(runtime)->SetJsiError(jsError); \
+    throw;                                                                   \
+  }                                                                          \
+  catch (std::exception const &ex) {                                         \
+    JsiAbiRuntime::GetOrCreateFromJsiRuntime(runtime)->SetJsiError(ex);      \
+    throw;                                                                   \
   } catch (...
 
 //===========================================================================
@@ -103,7 +103,7 @@ JsiHostObjectWrapper::~JsiHostObjectWrapper() noexcept {
 }
 
 JsiValueRef JsiHostObjectWrapper::GetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name) try {
-  JsiAbiRuntime *rt = JsiAbiRuntime::FromJsiRuntime(runtime);
+  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetOrCreateFromJsiRuntime(runtime)};
   JsiAbiRuntime::PropNameIDRef nameRef{name};
   return JsiAbiRuntime::DetachJsiValueRef(m_hostObject->get(*rt, nameRef));
 } catch (JSI_RUNTIME_SET_ERROR(runtime)) {
@@ -114,7 +114,7 @@ void JsiHostObjectWrapper::SetProperty(
     JsiRuntime const &runtime,
     JsiPropertyIdRef const &name,
     JsiValueRef const &value) try {
-  JsiAbiRuntime *rt = JsiAbiRuntime::FromJsiRuntime(runtime);
+  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetOrCreateFromJsiRuntime(runtime)};
   m_hostObject->set(*rt, JsiAbiRuntime::PropNameIDRef{name}, JsiAbiRuntime::ValueRef(value));
 } catch (JSI_RUNTIME_SET_ERROR(runtime)) {
   throw;
@@ -122,7 +122,7 @@ void JsiHostObjectWrapper::SetProperty(
 
 Windows::Foundation::Collections::IVector<JsiPropertyIdRef> JsiHostObjectWrapper::GetPropertyIds(
     JsiRuntime const &runtime) try {
-  JsiAbiRuntime *rt = JsiAbiRuntime::FromJsiRuntime(runtime);
+  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetOrCreateFromJsiRuntime(runtime)};
   auto names = m_hostObject->getPropertyNames(*rt);
   std::vector<JsiPropertyIdRef> result;
   result.reserve(names.size());
@@ -203,7 +203,7 @@ JsiHostFunctionWrapper::~JsiHostFunctionWrapper() noexcept {
 
 JsiValueRef JsiHostFunctionWrapper::
 operator()(JsiRuntime const &runtime, JsiValueRef const &thisArg, array_view<JsiValueRef const> args) try {
-  JsiAbiRuntime *rt = JsiAbiRuntime::FromJsiRuntime(runtime);
+  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetOrCreateFromJsiRuntime(runtime)};
   JsiAbiRuntime::ValueRefArray valueRefArgs{args};
   return JsiAbiRuntime::DetachJsiValueRef(
       m_hostFunction(*rt, JsiAbiRuntime::ValueRef{thisArg}, valueRefArgs.Data(), valueRefArgs.Size()));
@@ -242,30 +242,74 @@ operator()(JsiRuntime const &runtime, JsiValueRef const &thisArg, array_view<Jsi
 }
 
 //===========================================================================
+// JsiAbiRuntimeHolder implementation
+//===========================================================================
+
+JsiAbiRuntimeHolder::JsiAbiRuntimeHolder(std::unique_ptr<JsiAbiRuntime> jsiRuntime) noexcept
+    : m_jsiRuntime{std::move(jsiRuntime)}, m_isOwning{true} {}
+
+JsiAbiRuntimeHolder::JsiAbiRuntimeHolder(JsiAbiRuntime *jsiRuntime) noexcept : m_jsiRuntime{jsiRuntime} {}
+
+JsiAbiRuntimeHolder::operator bool() noexcept {
+  return m_jsiRuntime != nullptr;
+}
+
+JsiAbiRuntime &JsiAbiRuntimeHolder::operator*() noexcept {
+  return *m_jsiRuntime;
+}
+
+JsiAbiRuntime *JsiAbiRuntimeHolder::operator->() noexcept {
+  return m_jsiRuntime.get();
+}
+
+JsiAbiRuntimeHolder ::~JsiAbiRuntimeHolder() noexcept {
+  if (!m_isOwning) {
+    m_jsiRuntime.release();
+  }
+}
+
+//===========================================================================
 // JsiAbiRuntime implementation
 //===========================================================================
 
-/*static*/ std::mutex JsiAbiRuntime::s_mutex;
-/*static*/ std::map<void *, JsiAbiRuntime *> JsiAbiRuntime::s_jsiAbiRuntimeMap;
+static thread_local std::map<void *, JsiAbiRuntime *> *tls_jsiAbiRuntimeMap{nullptr};
 
 JsiAbiRuntime::JsiAbiRuntime(JsiRuntime const &runtime) noexcept : m_runtime{runtime} {
-  std::scoped_lock lock{s_mutex};
-  s_jsiAbiRuntimeMap.try_emplace(get_abi(runtime), this);
+  VerifyElseCrashSz(
+      GetFromJsiRuntime(runtime) == nullptr,
+      "We can have only one instance of JsiAbiRuntime for JsiRuntime in the thread.");
+  if (!tls_jsiAbiRuntimeMap) {
+    tls_jsiAbiRuntimeMap = new std::map<void *, JsiAbiRuntime *>();
+  }
+  tls_jsiAbiRuntimeMap->try_emplace(get_abi(runtime), this);
 }
 
 JsiAbiRuntime::~JsiAbiRuntime() {
-  std::scoped_lock lock{s_mutex};
-  s_jsiAbiRuntimeMap.erase(get_abi(m_runtime));
+  VerifyElseCrashSz(
+      GetFromJsiRuntime(m_runtime) != nullptr, "JsiAbiRuntime must be called in the same thread where it was created.");
+  tls_jsiAbiRuntimeMap->erase(get_abi(m_runtime));
+  if (tls_jsiAbiRuntimeMap->empty()) {
+    delete tls_jsiAbiRuntimeMap;
+    tls_jsiAbiRuntimeMap = nullptr;
+  }
 }
 
-/*static*/ JsiAbiRuntime *JsiAbiRuntime::FromJsiRuntime(JsiRuntime const &jsiRuntime) noexcept {
-  std::scoped_lock lock{s_mutex};
-  auto it = s_jsiAbiRuntimeMap.find(get_abi(jsiRuntime));
-  if (it != s_jsiAbiRuntimeMap.end()) {
-    return it->second;
-  } else {
-    return nullptr;
+/*static*/ JsiAbiRuntime *JsiAbiRuntime::GetFromJsiRuntime(JsiRuntime const &runtime) noexcept {
+  if (tls_jsiAbiRuntimeMap) {
+    auto it = tls_jsiAbiRuntimeMap->find(get_abi(runtime));
+    if (it != tls_jsiAbiRuntimeMap->end()) {
+      return it->second;
+    }
   }
+  return nullptr;
+}
+
+/*static*/ JsiAbiRuntimeHolder JsiAbiRuntime::GetOrCreateFromJsiRuntime(JsiRuntime const &runtime) noexcept {
+  JsiAbiRuntimeHolder result{GetFromJsiRuntime(runtime)};
+  if (!result) {
+    result = std::make_unique<JsiAbiRuntime>(runtime);
+  }
+  return result;
 }
 
 Value JsiAbiRuntime::evaluateJavaScript(const std::shared_ptr<const Buffer> &buffer, const std::string &sourceURL) try {
@@ -279,8 +323,8 @@ Value JsiAbiRuntime::evaluateJavaScript(const std::shared_ptr<const Buffer> &buf
 std::shared_ptr<const PreparedJavaScript> JsiAbiRuntime::prepareJavaScript(
     const std::shared_ptr<const Buffer> &buffer,
     std::string sourceURL) try {
-  return std::make_shared<JsiPreparedJavaScriptWrapper>(m_runtime.PrepareJavaScript(
-      winrt::make<JsiByteBufferWrapper>(m_runtime, std::move(buffer)), to_hstring(sourceURL)));
+  return std::make_shared<JsiPreparedJavaScriptWrapper>(
+      m_runtime.PrepareJavaScript(winrt::make<JsiByteBufferWrapper>(m_runtime, buffer), to_hstring(sourceURL)));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;

@@ -12,6 +12,7 @@
 #include <CppWinRTIncludes.h>
 #endif
 #include <string_view>
+#include "JSI/JsiAbiApi.h"
 #include "JSValueWriter.h"
 #include "ReactNotificationService.h"
 #include "ReactPropertyBag.h"
@@ -48,6 +49,23 @@ struct ReactContext {
 
   ReactDispatcher JSDispatcher() const noexcept {
     return ReactDispatcher{m_handle.JSDispatcher()};
+  }
+
+  // Call provided lambda with the facebook::jsi::Runtime& parameter.
+  // For example: context.ExecuteJsi([](facebook::jsi::Runtime& runtime){...})
+  // The code is executed synchronously if it is already in JSDispatcher, or asynchronously otherwise.
+  template <class TCodeWithRuntime>
+  void ExecuteJsi(TCodeWithRuntime const &code) const {
+    ReactDispatcher jsDispatcher = JSDispatcher();
+    if (jsDispatcher.HasThreadAccess()) {
+      code(*JsiAbiRuntime::GetOrCreateFromJsiRuntime(
+          m_handle.JsiRuntime())); // Execute immediately if we are in JS thread.
+    } else {
+      // Otherwise, schedule work in JS thread.
+      jsDispatcher.Post([ context = ReactContext{*this}, code ]() noexcept {
+        code(*JsiAbiRuntime::GetOrCreateFromJsiRuntime(context.m_handle.JsiRuntime()));
+      });
+    }
   }
 
   // Call methodName JS function of module with moduleName.

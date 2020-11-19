@@ -4,6 +4,7 @@
 import "IJSValueWriter.idl";
 import "IReactNotificationService.idl";
 import "IReactPropertyBag.idl";
+import "JsiApi.idl";
 
 #ifndef CORE_ABI
 #include "NamespaceRedirect.h"
@@ -46,6 +47,9 @@ The subscriptions added to the `IReactInstanceSettings.Notifications` are kept a
     // Get ReactDispatcherHelper::JSDispatcherProperty from the Properties property bag.
     DOC_STRING("Get `ReactDispatcherHelper::JSDispatcherProperty` from the Properties property bag.")
     IReactDispatcher JSDispatcher { get; };
+
+    DOC_STRING("Get the JSI runtime for the running React instance. It can be null if Web debugging is used.")
+    JsiRuntime JsiRuntime { get; };
 
 #ifndef CORE_ABI
     // Deprecated: Use DispatchEvent on XamlUIService instead
