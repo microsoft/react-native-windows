@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 18 Nov 2020 03:10:51 GMT and should not be manually modified.
+This log was last generated on Thu, 19 Nov 2020 05:06:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.212
+
+Thu, 19 Nov 2020 05:06:10 GMT
+
+### Changes
+
+- Exclude Beast WebSocket from build by default. (julio.rocha@microsoft.com)
+- fix typo (igklemen@microsoft.com)
+- Add Yellowbox warnings for WIndows Variants of Lean Core Components (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.211
 

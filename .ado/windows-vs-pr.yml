@@ -782,7 +782,9 @@ jobs:
     variables:
       - template: variables/vs2019.yml
     displayName: Pack Desktop NuGet Package
-    dependsOn: RNWDesktopPR
+    dependsOn:
+      - RNWDesktopPR
+      - RNWUniversalPR # Needed to have artifacts uploaded from LayoutHeaders
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)

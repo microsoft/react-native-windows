@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix Typo in msbuild comment",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 19 Nov 2020 05:06:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.212",
+      "version": "0.0.0-canary.212",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Exclude Beast WebSocket from build by default.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "9d0fe830918e9a31d0f5d99ea1b97d8ac53840db",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix typo",
+            "author": "igklemen@microsoft.com",
+            "commit": "23f88d9a3e4f20d77464117768abacb9c0687d68",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add Yellowbox warnings for WIndows Variants of Lean Core Components",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d4956198d07f4d55bf355f77e7affa025fd36a30",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix Typo in msbuild comment",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ab8ddeb29b2968f20aea532cef28ad0573f14c0b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Nov 2020 03:10:51 GMT",
       "tag": "react-native-windows_v0.0.0-canary.211",
       "version": "0.0.0-canary.211",
