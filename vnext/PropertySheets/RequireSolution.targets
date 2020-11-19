@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation. All rights reserved.
+ Licensed under the MIT License.. 
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="RequireSolutionTargets" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>The property SolutionDir is blank. This project requires being built via a valid solution file.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="'$(SolutionDir)' == ''" Text="$(ErrorText)" />
+  </Target>
+
+</Project>
