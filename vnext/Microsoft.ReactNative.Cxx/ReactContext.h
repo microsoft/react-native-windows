@@ -58,12 +58,15 @@ struct ReactContext {
   void ExecuteJsi(TCodeWithRuntime const &code) const {
     ReactDispatcher jsDispatcher = JSDispatcher();
     if (jsDispatcher.HasThreadAccess()) {
-      code(*JsiAbiRuntime::GetOrCreateFromJsiRuntime(
-          m_handle.JsiRuntime())); // Execute immediately if we are in JS thread.
+      if (auto runtime = JsiAbiRuntime::GetOrCreate(m_handle.JsiRuntime())) {
+        code(*runtime); // Execute immediately if we are in JS thread.
+      }
     } else {
       // Otherwise, schedule work in JS thread.
       jsDispatcher.Post([ context = ReactContext{*this}, code ]() noexcept {
-        code(*JsiAbiRuntime::GetOrCreateFromJsiRuntime(context.m_handle.JsiRuntime()));
+        if (auto runtime = JsiAbiRuntime::GetOrCreate(context.m_handle.JsiRuntime())) {
+          code(*runtime);
+        }
       });
     }
   }

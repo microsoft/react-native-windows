@@ -12,14 +12,14 @@ namespace winrt::Microsoft::ReactNative {
 
 // The macro to simplify recording JSI exceptions.
 // It looks strange to keep the normal structure of the try/catch in code.
-#define JSI_RUNTIME_SET_ERROR(runtime)                                       \
-facebook::jsi::JSError const &jsError) {                                     \
-    JsiAbiRuntime::GetOrCreateFromJsiRuntime(runtime)->SetJsiError(jsError); \
-    throw;                                                                   \
-  }                                                                          \
-  catch (std::exception const &ex) {                                         \
-    JsiAbiRuntime::GetOrCreateFromJsiRuntime(runtime)->SetJsiError(ex);      \
-    throw;                                                                   \
+#define JSI_RUNTIME_SET_ERROR(runtime)                         \
+facebook::jsi::JSError const &jsError) {                       \
+    JsiAbiRuntime::GetOrCreate(runtime)->SetJsiError(jsError); \
+    throw;                                                     \
+  }                                                            \
+  catch (std::exception const &ex) {                           \
+    JsiAbiRuntime::GetOrCreate(runtime)->SetJsiError(ex);      \
+    throw;                                                     \
   } catch (...
 
 //===========================================================================
@@ -103,7 +103,7 @@ JsiHostObjectWrapper::~JsiHostObjectWrapper() noexcept {
 }
 
 JsiValueRef JsiHostObjectWrapper::GetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name) try {
-  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetOrCreateFromJsiRuntime(runtime)};
+  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetOrCreate(runtime)};
   JsiAbiRuntime::PropNameIDRef nameRef{name};
   return JsiAbiRuntime::DetachJsiValueRef(m_hostObject->get(*rt, nameRef));
 } catch (JSI_RUNTIME_SET_ERROR(runtime)) {
@@ -114,7 +114,7 @@ void JsiHostObjectWrapper::SetProperty(
     JsiRuntime const &runtime,
     JsiPropertyIdRef const &name,
     JsiValueRef const &value) try {
-  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetOrCreateFromJsiRuntime(runtime)};
+  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetOrCreate(runtime)};
   m_hostObject->set(*rt, JsiAbiRuntime::PropNameIDRef{name}, JsiAbiRuntime::ValueRef(value));
 } catch (JSI_RUNTIME_SET_ERROR(runtime)) {
   throw;
@@ -122,7 +122,7 @@ void JsiHostObjectWrapper::SetProperty(
 
 Windows::Foundation::Collections::IVector<JsiPropertyIdRef> JsiHostObjectWrapper::GetPropertyIds(
     JsiRuntime const &runtime) try {
-  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetOrCreateFromJsiRuntime(runtime)};
+  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetOrCreate(runtime)};
   auto names = m_hostObject->getPropertyNames(*rt);
   std::vector<JsiPropertyIdRef> result;
   result.reserve(names.size());
@@ -203,7 +203,7 @@ JsiHostFunctionWrapper::~JsiHostFunctionWrapper() noexcept {
 
 JsiValueRef JsiHostFunctionWrapper::
 operator()(JsiRuntime const &runtime, JsiValueRef const &thisArg, array_view<JsiValueRef const> args) try {
-  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetOrCreateFromJsiRuntime(runtime)};
+  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetOrCreate(runtime)};
   JsiAbiRuntime::ValueRefArray valueRefArgs{args};
   return JsiAbiRuntime::DetachJsiValueRef(
       m_hostFunction(*rt, JsiAbiRuntime::ValueRef{thisArg}, valueRefArgs.Data(), valueRefArgs.Size()));
@@ -295,7 +295,7 @@ JsiAbiRuntime::~JsiAbiRuntime() {
 }
 
 /*static*/ JsiAbiRuntime *JsiAbiRuntime::GetFromJsiRuntime(JsiRuntime const &runtime) noexcept {
-  if (tls_jsiAbiRuntimeMap) {
+  if (tls_jsiAbiRuntimeMap && runtime) {
     auto it = tls_jsiAbiRuntimeMap->find(get_abi(runtime));
     if (it != tls_jsiAbiRuntimeMap->end()) {
       return it->second;
@@ -304,9 +304,9 @@ JsiAbiRuntime::~JsiAbiRuntime() {
   return nullptr;
 }
 
-/*static*/ JsiAbiRuntimeHolder JsiAbiRuntime::GetOrCreateFromJsiRuntime(JsiRuntime const &runtime) noexcept {
+/*static*/ JsiAbiRuntimeHolder JsiAbiRuntime::GetOrCreate(JsiRuntime const &runtime) noexcept {
   JsiAbiRuntimeHolder result{GetFromJsiRuntime(runtime)};
-  if (!result) {
+  if (!result && runtime) {
     result = std::make_unique<JsiAbiRuntime>(runtime);
   }
   return result;
