@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Integrate 11/18 RN Nightly Build 🎉",
+  "packageName": "@rnw-scripts/eslint-config",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Integrate 11/18 RN Nightly Build 🎉",
+  "packageName": "@rnw-scripts/find-repo-root",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none"
+}

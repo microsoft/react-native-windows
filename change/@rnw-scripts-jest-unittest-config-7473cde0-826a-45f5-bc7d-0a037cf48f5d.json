@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Integrate 11/18 RN Nightly Build 🎉",
+  "packageName": "@rnw-scripts/jest-unittest-config",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none"
+}
