@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add ReactContext::ExecuteJsi method to use JSI in NativeModules",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
