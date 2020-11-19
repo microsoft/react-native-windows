@@ -1,29 +1,21 @@
 {
   "includePatterns": [
     ".flowconfig",
-    "flow-typed",
     "src/**"
   ],
-  "baseVersion": "0.0.0-77f7658e4",
+  "baseVersion": "0.0.0-19d4cc2d4",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "7f31832893b66db402c57bc4c1194fec7cca56e4"
-    },
-    {
-      "type": "copy",
-      "directory": "flow-typed",
-      "baseDirectory": "flow-typed",
-      "baseHash": "ea9220b9644559edb09e929872d37774e783d757",
-      "issue": 6139
+      "baseHash": "adba67efd9973702f45a234e13a291155d0e56f1"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "073219bedb8f92d04fb2f60636df7314b8c243b7"
+      "baseHash": "60f46e1ea481e2e6c0673dfc5f9a74da68ae3400"
     },
     {
       "type": "patch",
@@ -42,7 +34,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseHash": "525b7ac5ec31febba5f57c8faa7ccc9a6e0fa34c"
+      "baseHash": "739dfa774136768251847ae0f3900990b0b0f0c1"
     },
     {
       "type": "patch",
@@ -154,7 +146,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "309ff04ae5312224c992b9119a12c691149280cd"
+      "baseHash": "97e9917d3fa2dbe2fe6c03c4264f756634026796"
     },
     {
       "type": "patch",
@@ -235,7 +227,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "9bd6a85eef7bb41373df9eb7dd9b21a986848cbd",
+      "baseHash": "8d053f7bcb66ea71fd361a5c882e4142b5977202",
       "issue": 4320
     },
     {
@@ -246,7 +238,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/NativeImageLoaderWin32.js",
       "baseFile": "Libraries/Image/NativeImageLoaderIOS.js",
-      "baseHash": "6161ce89a0b45b24e8df69aa108af22a7b591483",
+      "baseHash": "50b70af2498caf216229426a1b74b1d3d3ee5334",
       "issue": 4320
     },
     {
