@@ -17,9 +17,11 @@ struct TestHostModule {
     TestHostModule::Instance.set_value(*this);
 
     bool jsiExecuted{false};
-    reactContext.ExecuteJsi([&](facebook::jsi::Runtime &runtime) {
+    reactContext.ExecuteJsi([&](facebook::jsi::Runtime &rt) {
       jsiExecuted = true;
-      TestCheckEqual("ChakraRuntime", runtime.description());
+      auto eval = rt.global().getPropertyAsFunction(rt, "eval");
+      auto addFunc = eval.call(rt, "(function(x, y) { return x + y; })").getObject(rt).getFunction(rt);
+      TestCheckEqual(7, addFunc.call(rt, 3, 4).getNumber());
     });
     TestCheck(jsiExecuted);
   }
