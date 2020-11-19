@@ -2,9 +2,12 @@
 #include "WebSocketServer.h"
 
 #include <boost/asio/bind_executor.hpp>
+#include <boost/asio/strand.hpp>
 #include <boost/beast/core/buffers_to_string.hpp>
 
 using namespace boost::asio;
+
+namespace websocket = boost::beast::websocket;
 
 using boost::beast::bind_front_handler;
 using boost::beast::ssl_stream;
@@ -14,7 +17,8 @@ using std::function;
 using std::string;
 using std::vector;
 
-namespace websocket = boost::beast::websocket;
+using Error = Microsoft::React::IWebSocketResource::Error;
+using ErrorType = Microsoft::React::IWebSocketResource::ErrorType;
 
 namespace Microsoft::React::Test
 {
@@ -24,7 +28,7 @@ namespace Microsoft::React::Test
 template <typename SocketLayer>
 BaseWebSocketSession<SocketLayer>::BaseWebSocketSession(WebSocketServiceCallbacks& callbacks)
   : m_callbacks{callbacks}
-  , m_state{State::Stopped} {}
+  , m_state{State::Stopped}{}
 
 template <typename SocketLayer>
 BaseWebSocketSession<SocketLayer>::~BaseWebSocketSession() {}
@@ -38,6 +42,10 @@ void BaseWebSocketSession<SocketLayer>::Start()
 template <typename SocketLayer>
 void BaseWebSocketSession<SocketLayer>::Accept()
 {
+  // Turn off the timeout on the tcp_stream, because
+  // the websocket stream has its own timeout system.
+  boost::beast::get_lowest_layer(*m_stream).expires_never();
+
   m_stream->set_option(
     websocket::stream_base::timeout::suggested(boost::beast::role_type::server)
   );
@@ -64,7 +72,12 @@ template <typename SocketLayer>
 void BaseWebSocketSession<SocketLayer>::OnAccept(error_code ec)
 {
   if (ec)
-    return; // TODO: fail
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
+    return;
+  }
 
   m_state = State::Started;
 
@@ -93,7 +106,13 @@ void BaseWebSocketSession<SocketLayer>::OnRead(error_code ec, size_t /*transferr
     return;
 
   if (ec)
-    return; // TODO: fail instead
+  {
+    if (ec.value() != error::connection_reset &&
+        ec.value() != error::connection_aborted &&
+        ec.value() != 335544539 /*short read*/)
+      if (m_callbacks.OnError)
+        m_callbacks.OnError({ec.message(), ErrorType::Receive});
+  }
 
   if (m_stream->got_binary())
   {
@@ -139,7 +158,13 @@ template <typename SocketLayer>
 void BaseWebSocketSession<SocketLayer>::OnWrite(error_code ec, size_t /*transferred*/)
 {
   if (ec)
-    return; // TODO: fail
+  {
+    if (ec.value() != error::operation_aborted)
+      if (m_callbacks.OnError)
+        m_callbacks.OnError({ec.message(), ErrorType::Send});
+
+    return;
+  }
 
   // Clear outgoing message contents.
   m_message.clear();
@@ -154,14 +179,14 @@ void BaseWebSocketSession<SocketLayer>::OnWrite(error_code ec, size_t /*transfer
 WebSocketSession::WebSocketSession(ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks)
   : BaseWebSocketSession(callbacks)
 {
-  m_stream = std::make_shared<websocket::stream<boost::beast::tcp_stream>>(std::move(socket));
+  m_stream = std::make_shared<websocket::stream<tcp_stream>>(std::move(socket));
 }
 
 WebSocketSession::~WebSocketSession() {}
 
 #pragma region BaseWebSocketSession
 
-std::shared_ptr<BaseWebSocketSession<boost::beast::tcp_stream>> WebSocketSession::SharedFromThis() /*override*/
+std::shared_ptr<BaseWebSocketSession<tcp_stream>> WebSocketSession::SharedFromThis() /*override*/
 {
   return this->shared_from_this();
 }
@@ -174,6 +199,7 @@ std::shared_ptr<BaseWebSocketSession<boost::beast::tcp_stream>> WebSocketSession
 
 SecureWebSocketSession::SecureWebSocketSession(ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks)
   : BaseWebSocketSession(callbacks)
+  , m_context{ssl::context::tlsv12}
 {
   // Initialize SSL context.
   string const cert =
@@ -238,17 +264,15 @@ SecureWebSocketSession::SecureWebSocketSession(ip::tcp::socket socket, WebSocket
       "XgdewtScX7P5ltOMhhcWS4Og+qZn18a3kwIBAg==\n"
       "-----END DH PARAMETERS-----\n";
 
-  auto context = ssl::context(ssl::context::sslv23);
-
   // TODO: Remove if not used.
-  context.set_password_callback([](size_t, ssl::context_base::password_purpose) { return "test"; });
+  m_context.set_password_callback([](size_t, ssl::context_base::password_purpose) { return "test"; });
 
-  context.set_options(ssl::context::default_workarounds | ssl::context::no_sslv2 | ssl::context::single_dh_use);
-  context.use_certificate_chain(buffer(cert.data(), cert.size()));
-  context.use_private_key(buffer(key.data(), key.size()), ssl::context::file_format::pem);
-  context.use_tmp_dh(buffer(dh.data(), dh.size()));
+  m_context.set_options(ssl::context::default_workarounds | ssl::context::no_sslv2 | ssl::context::single_dh_use);
+  m_context.use_certificate_chain(buffer(cert.data(), cert.size()));
+  m_context.use_private_key(buffer(key.data(), key.size()), ssl::context::file_format::pem);
+  m_context.use_tmp_dh(buffer(dh.data(), dh.size()));
 
-  m_stream = std::make_shared<websocket::stream<ssl_stream<tcp_stream>>>(std::move(socket), context);
+  m_stream = std::make_shared<websocket::stream<ssl_stream<tcp_stream>>>(std::move(socket), m_context);
 }
 
 SecureWebSocketSession::~SecureWebSocketSession() {}
@@ -276,7 +300,13 @@ void SecureWebSocketSession::Start() /*override*/
 void SecureWebSocketSession::OnSslHandshake(error_code ec)
 {
   if (ec)
+  {
+    if (ec.value() != 335544539 /*short read*/) // See https://github.com/boostorg/beast/issues/1123
+      if (m_callbacks.OnError)
+        m_callbacks.OnError({ec.message(), ErrorType::Handshake});
+
     return;
+  }
 
   Accept();
 }
@@ -288,29 +318,45 @@ void SecureWebSocketSession::OnSslHandshake(error_code ec)
 #pragma region WebSocketServer
 
 WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
-  : m_acceptor{m_context}, m_sessions{}, m_isSecure{isSecure}
+  : m_acceptor{make_strand(m_context)}, m_sessions{}, m_isSecure{isSecure}
 {
   ip::tcp::endpoint ep{ip::make_address("0.0.0.0"), port};
   error_code ec;
 
   m_acceptor.open(ep.protocol(), ec);
-  if (ec) {
-    return; // TODO: handle
+  if (ec)
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
+    return;
   }
 
   m_acceptor.set_option(socket_base::reuse_address(true), ec);
-  if (ec) {
-    return; // TODO: handle
+  if (ec)
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
+    return;
   }
 
   m_acceptor.bind(ep, ec);
-  if (ec) {
-    return; // TODO: handle
+  if (ec)
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
+    return;
   }
 
   m_acceptor.listen(socket_base::max_listen_connections, ec);
-  if (ec) {
-    return; // TODO: handle
+  if (ec)
+  {
+    if (m_callbacks.OnError)
+      m_callbacks.OnError({ec.message(), ErrorType::Connection});
+
+    return;
   }
 }
 
@@ -347,23 +393,25 @@ void WebSocketServer::Stop()
 
 void WebSocketServer::OnAccept(error_code ec, ip::tcp::socket socket)
 {
-  if (ec) {
-    // TODO: fail
-  }
-  else
+  if (ec)
   {
-    std::shared_ptr<IWebSocketSession> session;
-    if (m_isSecure)
-      session = std::shared_ptr<IWebSocketSession>(new SecureWebSocketSession(std::move(socket), m_callbacks));
-    else
-      session = std::shared_ptr<IWebSocketSession>(new WebSocketSession(std::move(socket), m_callbacks));
+    if (ec.value() != error::operation_aborted)
+      if (m_callbacks.OnError)
+        m_callbacks.OnError({ec.message(), ErrorType::Connection});
 
-    m_sessions.push_back(session);
-    session->Start();
+    return;
   }
 
-  // TODO: Accept again.
-  // Accept();
+  std::shared_ptr<IWebSocketSession> session;
+  if (m_isSecure)
+    session = std::shared_ptr<IWebSocketSession>(new SecureWebSocketSession(std::move(socket), m_callbacks));
+  else
+    session = std::shared_ptr<IWebSocketSession>(new WebSocketSession(std::move(socket), m_callbacks));
+
+  m_sessions.push_back(session);
+  session->Start();
+
+  Accept();
 }
 
 void WebSocketServer::SetOnConnection(function<void()>&& func)
