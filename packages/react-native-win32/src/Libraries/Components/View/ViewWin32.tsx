@@ -98,7 +98,6 @@ export const ViewWin32 = React.forwardRef(
                 null
                 );              
             }
-
           };
         }
       },
