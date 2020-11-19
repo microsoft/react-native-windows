@@ -272,9 +272,12 @@ JsiAbiRuntimeHolder ::~JsiAbiRuntimeHolder() noexcept {
 // JsiAbiRuntime implementation
 //===========================================================================
 
+// This map allows us to associate JsiAbiRuntime with JsiRuntime.
+// TODO: store JsiAbiRuntime* in JsiRuntime instance.
 static thread_local std::map<void *, JsiAbiRuntime *> *tls_jsiAbiRuntimeMap{nullptr};
 
 JsiAbiRuntime::JsiAbiRuntime(JsiRuntime const &runtime) noexcept : m_runtime{runtime} {
+  VerifyElseCrashSz(runtime, "JSI runtime is null");
   VerifyElseCrashSz(
       GetFromJsiRuntime(runtime) == nullptr,
       "We can have only one instance of JsiAbiRuntime for JsiRuntime in the thread.");
@@ -306,7 +309,7 @@ JsiAbiRuntime::~JsiAbiRuntime() {
 
 /*static*/ JsiAbiRuntimeHolder JsiAbiRuntime::GetOrCreate(JsiRuntime const &runtime) noexcept {
   JsiAbiRuntimeHolder result{GetFromJsiRuntime(runtime)};
-  if (!result && runtime) {
+  if (!result) {
     result = std::make_unique<JsiAbiRuntime>(runtime);
   }
   return result;
