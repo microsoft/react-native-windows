@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix typo",
-  "packageName": "react-native-windows",
-  "email": "igklemen@microsoft.com",
-  "dependentChangeType": "patch"
-}
