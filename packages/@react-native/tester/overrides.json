@@ -1,18 +1,18 @@
 {
-  "baseVersion": "0.0.0-77f7658e4",
+  "baseVersion": "0.0.0-19d4cc2d4",
   "overrides": [
     {
       "type": "copy",
       "directory": "js",
       "baseDirectory": "packages/rn-tester/js",
-      "baseHash": "f6f05f3b3d36676535f480e169c13ed49a4c20e8",
+      "baseHash": "30fafd39dae1f39e7504174365aa3f594f57c831",
       "issue": 4054
     },
     {
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "e8f37cfed49f60fcd15af6468c9700b2bf14e946",
+      "baseHash": "aa754486bc846ca20486fa12f887b58f8dc40084",
       "issue": 4054
     }
   ]

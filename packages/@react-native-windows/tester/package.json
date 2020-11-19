@@ -14,15 +14,15 @@
     "@react-native/tester": "0.0.1"
   },
   "peerDependencies": {
-    "react-native": "0.0.0-77f7658e4",
+    "react-native": "0.0.0-19d4cc2d4",
     "react-native-windows": "^0.0.0-canary.213"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "0.1.4",
     "@rnw-scripts/ts-config": "0.1.0",
-    "eslint": "6.8.0",
+    "eslint": "7.12.0",
     "just-scripts": "^0.44.7",
-    "react-native": "0.0.0-77f7658e4",
+    "react-native": "0.0.0-19d4cc2d4",
     "react-native-platform-override": "^0.4.1",
     "react-native-windows": "^0.0.0-canary.213",
     "typescript": "^3.8.3"

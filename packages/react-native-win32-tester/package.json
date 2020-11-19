@@ -15,15 +15,15 @@
   },
   "peerDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.63",
-    "react-native": "0.0.0-77f7658e4"
+    "react-native": "0.0.0-19d4cc2d4"
   },
   "devDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.63",
     "@rnw-scripts/eslint-config": "0.1.4",
     "@rnw-scripts/ts-config": "0.1.0",
-    "eslint": "6.8.0",
+    "eslint": "7.12.0",
     "just-scripts": "^0.44.7",
-    "react-native": "0.0.0-77f7658e4",
+    "react-native": "0.0.0-19d4cc2d4",
     "react-native-platform-override": "^0.4.1",
     "typescript": "^3.8.3"
   }
