@@ -72,6 +72,14 @@
       "issue": 4578
     },
     {
+      "type": "platform",
+      "file": "IntegrationTests/websocket_integration_test_server_binary.js"
+    },
+    {
+      "type": "platform",
+      "file": "IntegrationTests/WebSocketBinaryTest.js"
+    },
+    {
       "type": "copy",
       "file": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.windows.js",
       "baseFile": "Libraries\\Components\\AccessibilityInfo\\AccessibilityInfo.android.js",

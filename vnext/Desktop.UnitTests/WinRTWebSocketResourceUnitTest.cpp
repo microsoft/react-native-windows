@@ -28,6 +28,8 @@ IAsyncAction DoNothingAsync() {
 
 IAsyncAction ThrowAsync() {
   throw winrt::hresult_error(winrt::hresult(E_FAIL), L"Expected Failure");
+
+  co_return;
 }
 
 } // namespace
@@ -35,6 +37,9 @@ IAsyncAction ThrowAsync() {
 namespace Microsoft::React::Test {
 TEST_CLASS (WinRTWebSocketResourceUnitTest) {
   TEST_METHOD(ConnectSucceeds) {
+    // Microsoft C++ Unit Test Framework does not properly log full test names.
+    Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::ConnectSucceeds");
+
     bool connected = true;
     string errorMessage;
     auto imws{winrt::make<MockMessageWebSocket>()};
@@ -58,12 +63,10 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     Assert::IsTrue(connected);
   }
 
-  // TODO: Re-enable. Fails in x86|Release.
-  //      Hangs due to exception not being caught within WinRTWebSocketResource::PerformConnect.
   BEGIN_TEST_METHOD_ATTRIBUTE(ConnectFails)
-  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(ConnectFails) {
+    Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::ConnectFails");
     bool connected = false;
     string errorMessage;
     auto imws{winrt::make<MockMessageWebSocket>()};
@@ -82,11 +85,12 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     rc->Connect({}, {});
     rc->Close(CloseCode::Normal, {});
 
-    Assert::AreNotEqual({}, errorMessage);
+    Assert::AreEqual({"Expected Failure"}, errorMessage);
     Assert::IsFalse(connected);
   }
 
   TEST_METHOD(InternalSocketThrowsHResult) {
+    Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::InternalSocketThrowsHResult");
     shared_ptr<WinRTWebSocketResource> rc;
 
     auto lambda = [&rc]() mutable {

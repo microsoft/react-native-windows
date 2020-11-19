@@ -24,7 +24,7 @@ TEST_CLASS(WebSocketTest) {
     ws->SetOnConnect([]() {});
     ws->SetOnPing([]() {});
     ws->SetOnSend([](size_t length) {});
-    ws->SetOnMessage([](std::size_t length, const string &buffer) {});
+    ws->SetOnMessage([](std::size_t length, const string &buffer, bool isBinary) {});
     ws->SetOnClose([](IWebSocketResource::CloseCode, const string &) {});
     ws->SetOnError([](const IWebSocketResource::Error &error) {});
   }
@@ -48,7 +48,7 @@ TEST_CLASS(WebSocketTest) {
   // TEST_METHOD(WebSocketTest_SendAndReceive)
   {
     auto ws = std::make_shared<Beast::WebSocketResource>(Url("ws://localhost:5555/"));
-    ws->SetOnMessage([](size_t size, const string &message) {
+    ws->SetOnMessage([](size_t size, const string &message, bool isBinary) {
       // EXPECT_EQ("uppercaseme_response", ss.str());//TODO: Check test server.
       // Sending back "hello".
       Assert::AreEqual(

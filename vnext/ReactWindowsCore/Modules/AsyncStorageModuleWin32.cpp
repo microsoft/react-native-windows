@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #include "pch.h"
 
 #include "AsyncStorageModuleWin32.h"
@@ -103,7 +106,7 @@ bool CheckArgs(sqlite3 *db, folly::dynamic &args, const CxxModule::Callback &cal
 // Commit() has not been called, rolls back the transactions
 // The provided sqlite connection handle & Callback must outlive
 // the Sqlite3Transaction object
-class Sqlite3Transaction {
+class Sqlite3Transaction final {
   sqlite3 *m_db{nullptr};
   const CxxModule::Callback *m_callback{nullptr};
 
@@ -116,12 +119,12 @@ class Sqlite3Transaction {
     }
   }
   Sqlite3Transaction(const Sqlite3Transaction &) = delete;
-  Sqlite3Transaction(Sqlite3Transaction &&other) : m_db(other.m_db), m_callback(other.m_callback) {
+  Sqlite3Transaction(Sqlite3Transaction &&other) noexcept : m_db(other.m_db), m_callback(other.m_callback) {
     other.m_db = nullptr;
     other.m_callback = nullptr;
   }
   Sqlite3Transaction &operator=(const Sqlite3Transaction &) = delete;
-  Sqlite3Transaction &operator=(Sqlite3Transaction &&rhs) {
+  Sqlite3Transaction &operator=(Sqlite3Transaction &&rhs) noexcept {
     if (this != &rhs) {
       Commit();
       std::swap(m_db, rhs.m_db);
@@ -242,7 +245,7 @@ AsyncStorageModuleWin32::~AsyncStorageModuleWin32() {
     // condition_variable for the async task to acknowledge cancellation by
     // nulling out m_action. Once m_action is null, it is safe to proceed
     // wth closing the DB connection
-    winrt::slim_shared_lock_guard guard{m_lock};
+    winrt::slim_lock_guard guard{m_lock};
     swap(tasks, m_tasks);
     if (m_action) {
       m_action.Cancel();
