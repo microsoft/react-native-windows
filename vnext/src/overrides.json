@@ -73,15 +73,11 @@
     },
     {
       "type": "platform",
-      "file": "src/IntegrationTests/websocket_integration_test_server_binary.js"
+      "file": "IntegrationTests/websocket_integration_test_server_binary.js"
     },
     {
       "type": "platform",
-      "file": "src/IntegrationTests/WebSocketBinaryTest.js"
-    },
-    {
-      "type": "platform",
-      "file": "src/IntegrationTests/XHRTest.js"
+      "file": "IntegrationTests/WebSocketBinaryTest.js"
     },
     {
       "type": "copy",
