@@ -270,19 +270,19 @@ The simplest way to do this is to get <a href="https://raw.githubusercontent.com
 <p>Open your project file (<code>windows\MyLibrary\MyLibrary.vcxproj</code> for C++ or <code>windows\MyLibrary\MyLibrary.csproj</code> for C#) in a text editor.</p>
 <p>You're going to insert the following:</p>
 <pre><code class="hljs css language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">PropertyGroup</span> <span class="hljs-attr">Label</span>=<span class="hljs-string">"ReactNativeWindowsProps"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">ReactNativeWindowsDir</span> <span class="hljs-attr">Condition</span>=<span class="hljs-string">"'$(ReactNativeWindowsDir)' == ''"</span>&gt;</span>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\<span class="hljs-tag">&lt;/<span class="hljs-name">ReactNativeWindowsDir</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">ReactNativeWindowsDir</span> <span class="hljs-attr">Condition</span>=<span class="hljs-string">"'$(ReactNativeWindowsDir)' == ''"</span>&gt;</span>$([MSBuild]::GetDirectoryNameOfFileAbove($(SolutionDir), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\<span class="hljs-tag">&lt;/<span class="hljs-name">ReactNativeWindowsDir</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">PropertyGroup</span>&gt;</span>
 </code></pre>
 <p><strong>For C++ projects:</strong></p>
 <pre><code class="hljs css language-diff">&lt;Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" /&gt;
 <span class="hljs-addition">+&lt;PropertyGroup Label="ReactNativeWindowsProps"&gt;</span>
-<span class="hljs-addition">+  &lt;ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''"&gt;$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\&lt;/ReactNativeWindowsDir&gt;</span>
+<span class="hljs-addition">+  &lt;ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''"&gt;$([MSBuild]::GetDirectoryNameOfFileAbove($(SolutionDir), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\&lt;/ReactNativeWindowsDir&gt;</span>
 <span class="hljs-addition">+&lt;/PropertyGroup&gt;</span>
 </code></pre>
 <p><strong>For C# projects:</strong></p>
 <pre><code class="hljs css language-diff">&lt;Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" /&gt;
 <span class="hljs-addition">+&lt;PropertyGroup Label="ReactNativeWindowsProps"&gt;</span>
-<span class="hljs-addition">+  &lt;ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''"&gt;$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\&lt;/ReactNativeWindowsDir&gt;</span>
+<span class="hljs-addition">+  &lt;ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''"&gt;$([MSBuild]::GetDirectoryNameOfFileAbove($(SolutionDir), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\&lt;/ReactNativeWindowsDir&gt;</span>
 <span class="hljs-addition">+&lt;/PropertyGroup&gt;</span>
 </code></pre>
 <p>Now you'll want to replace later path references in the file like <code>..\..\node_modules\react-native-windows\Microsoft.ReactNative</code> with <code>$(ReactNativeWindowsDir)\Microsoft.ReactNative</code>:</p>
