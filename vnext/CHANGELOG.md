@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 19 Nov 2020 05:06:10 GMT and should not be manually modified.
+This log was last generated on Thu, 19 Nov 2020 17:13:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.213
+
+Thu, 19 Nov 2020 17:13:10 GMT
+
+### Changes
+
+- Update Nuget publish to not overwrite the created anycpu version (dannyvv@microsoft.com)
+- Use lessthrow_await_adapter for WebSocketJSExecutor::ConnectAsync (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.212
 

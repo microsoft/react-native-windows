@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update Nuget publish to not overwrite the created anycpu version",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

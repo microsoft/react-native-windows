@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 19 Nov 2020 17:13:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.213",
+      "version": "0.0.0-canary.213",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update Nuget publish to not overwrite the created anycpu version",
+            "author": "dannyvv@microsoft.com",
+            "commit": "44b3782cfc475e79e1f2d950adac72d45a143391",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use lessthrow_await_adapter for WebSocketJSExecutor::ConnectAsync",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a6e254b5b085588b8478e9926a38adfb400943de",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 19 Nov 2020 05:06:10 GMT",
       "tag": "react-native-windows_v0.0.0-canary.212",
       "version": "0.0.0-canary.212",
