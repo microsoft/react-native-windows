@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.214",
+      "version": "0.0.0-canary.214",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "WinUI 3 Preview 3 support",
+            "author": "asklar@microsoft.com",
+            "commit": "cb9bcfe320446b021924ec8bc8e32c383202bdb7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update lib template to default prefer RNW dir of consuming app",
+            "author": "jthysell@microsoft.com",
+            "commit": "5348e4c1ed16f781071c53c2cd73bb0ba837b7f2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 19 Nov 2020 17:13:10 GMT",
       "tag": "react-native-windows_v0.0.0-canary.213",
       "version": "0.0.0-canary.213",

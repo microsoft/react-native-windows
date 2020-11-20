@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@rnw-scripts/eslint-config_v0.1.5",
+      "version": "0.1.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@rnw-scripts/eslint-config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 01 Oct 2020 05:08:11 GMT",
       "tag": "@rnw-scripts/eslint-config_v0.1.4",
       "version": "0.1.4",

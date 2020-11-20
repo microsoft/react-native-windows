@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Integrate 11/18 RN Nightly Build 🎉",
-  "packageName": "@rnw-scripts/babel-node-config",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

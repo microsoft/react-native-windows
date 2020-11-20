@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "react-native-windows-init_v0.1.36",
+      "version": "0.1.36",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Nov 2020 05:05:57 GMT",
       "tag": "react-native-windows-init_v0.1.35",
       "version": "0.1.35",

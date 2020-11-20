@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@rnw-scripts/promote-release_v0.2.10",
+      "version": "0.2.10",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Nov 2020 19:12:07 GMT",
       "tag": "@rnw-scripts/promote-release_v0.2.9",
       "version": "0.2.9",

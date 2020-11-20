@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.40",
+      "version": "0.0.0-canary.40",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Nov 2020 03:10:51 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.39",
       "version": "0.0.0-canary.39",

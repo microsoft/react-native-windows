@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.17",
+      "version": "0.0.17",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Oct 2020 05:06:28 GMT",
       "tag": "@rnw-scripts/integrate-rn_v0.0.15",
       "version": "0.0.15",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update lib template to default prefer RNW dir of consuming app",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
