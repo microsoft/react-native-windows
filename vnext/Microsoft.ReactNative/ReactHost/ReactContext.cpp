@@ -49,6 +49,18 @@ void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly
 #endif
 }
 
+winrt::Microsoft::ReactNative::JsiRuntime ReactContext::JsiRuntime() const noexcept {
+#ifndef CORE_ABI // requires instance
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->JsiRuntime();
+  } else {
+    return nullptr;
+  }
+#else
+  return nullptr;
+#endif
+}
+
 #ifndef CORE_ABI
 ReactInstanceState ReactContext::State() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {

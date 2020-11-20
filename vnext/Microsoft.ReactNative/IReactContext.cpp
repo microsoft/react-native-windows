@@ -68,6 +68,10 @@ void ReactContext::EmitJSEvent(
   m_context->CallJSFunction(to_string(eventEmitterName), "emit", std::move(params));
 }
 
+ReactNative::JsiRuntime ReactContext::JsiRuntime() noexcept {
+  return m_context->JsiRuntime();
+}
+
 #ifndef CORE_ABI
 bool ReactContext::UseWebDebugger() const noexcept {
   return m_context->UseWebDebugger();
