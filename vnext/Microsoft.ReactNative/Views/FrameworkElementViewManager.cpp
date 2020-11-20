@@ -229,7 +229,7 @@ bool FrameworkElementViewManager::UpdateProperty(
           if (!element.IsLoaded()) {
             element.Loaded([=](auto sender, auto&&) -> auto {
               ApplyTransformMatrix(sender.as<xaml::UIElement>(), nodeToUpdate, transformMatrix);
-             });
+            });
           } else {
             ApplyTransformMatrix(element, nodeToUpdate, transformMatrix);
           }
