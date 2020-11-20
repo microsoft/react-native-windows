@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "WinUI 3 Preview 3 support",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
