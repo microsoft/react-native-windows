@@ -11,11 +11,11 @@ import "IViewManager.idl";
 
 namespace Microsoft.ReactNative {
 
-  DOC_STRING("Provides information about a custom native module.  See [`IReactModuleBuilder`](IReactModuleBuilder.md).")
+  DOC_STRING("Provides information about a custom native module.  See [`IReactModuleBuilder`](IReactModuleBuilder).")
   delegate Object ReactModuleProvider(IReactModuleBuilder moduleBuilder);
 
 #ifndef CORE_ABI
-  DOC_STRING("Provides information about a custom view manager.  See [`IViewManager`](IViewManager.md).")
+  DOC_STRING("Provides information about a custom view manager.  See [`IViewManager`](IViewManager).")
   delegate IViewManager ReactViewManagerProvider();
 #endif
 

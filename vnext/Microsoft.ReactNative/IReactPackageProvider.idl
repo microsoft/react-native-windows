@@ -11,7 +11,7 @@ namespace Microsoft.ReactNative {
   [webhosthidden]
   DOC_STRING("This interface is to be implemented by package creators.")
   interface IReactPackageProvider {
-    DOC_STRING("Provides a [`IReactPackageBuilder`](IReactPackageBuilder.md) which the app or package will use to register custom native modules and view managers.")
+    DOC_STRING("Provides a [`IReactPackageBuilder`](IReactPackageBuilder) which the app or package will use to register custom native modules and view managers.")
     void CreatePackage(IReactPackageBuilder packageBuilder);
   };
 

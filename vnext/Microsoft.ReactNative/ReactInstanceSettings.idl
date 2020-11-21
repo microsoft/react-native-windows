@@ -43,7 +43,7 @@ namespace Microsoft.ReactNative {
   {
     ReactInstanceSettings();
 
-    DOC_STRING("Properties are shared with [`IReactContext.Properties`](IReactContext.md#properties). It can be used to configure and share values and state between components.")
+    DOC_STRING("Properties are shared with [`IReactContext.Properties`](IReactContext#properties-1). It can be used to configure and share values and state between components.")
     IReactPropertyBag Properties { get; };
 
     DOC_STRING("Provides access to the `IReactNotificationService`, which allows easy communication between custom native modules or view managers.")
@@ -57,6 +57,7 @@ namespace Microsoft.ReactNative {
 
     // Deprecated - use JavaScriptBundleFile instead
     DOC_STRING("Name of the JavaScript bundle file.  If [`JavaScriptBundleFile`](#javascriptbundlefile) is specified it is used instead.")
+    [deprecated("use JavaScriptBundleFile instead", deprecate, 1)]
     String JavaScriptMainModuleName { get; set; };
 
     DOC_STRING("The name of the JavaScript bundle file to load. This should be a relative path from [`BundleRootPath`](#bundlerootpath).  `.bundle` will be appended to the end, when looking for the bundle file.")
@@ -87,7 +88,8 @@ For Chakra this enables you to debug the JS runtime directly within your app usi
 ***Note: this is not supported with the Chakra JS engine which is the currently used JavaScript engine***")
     Boolean DebuggerBreakOnNextLine { get; set; };
 
-    DOC_STRING("This controls if the JavaScript bridge should use the newer JSI runtime or use the legacy executor.  The JSI runtime is used by default, and the legacy executor will be removed in a future release. **It is not recommended to change this setting.**")
+    DOC_STRING("This controls if the JavaScript bridge should use the newer JSI runtime or use the legacy executor.  The JSI runtime is used by default, and the legacy executor will be removed in a future release. \n\
+> **It is not recommended to change this setting.**")
     Boolean UseJsi { get; set; };
 
     DOC_STRING("Flag controlling whether the JavaScript engine uses JIT compilation.")
@@ -100,16 +102,15 @@ Subsequent runs of the application should be faster as the JavaScript will be lo
     DOC_DEFAULT("false")
     Boolean EnableByteCodeCaching { get; set; };
 
-    DOC_STRING("This controls whether various developer experience features are available for this instance.  In particular the developer menu, the default `RedBox` experience and the loading UI during bundle load.\n\
-> This property will be removed in a future version of **react-native-windows**\n\
-This property has been replaced by [`UseDeveloperSupport`](#usedevelopersupport). In the 0.63 both properties will do the same thing.")
+    DOC_STRING("This controls whether various developer experience features are available for this instance.  In particular the developer menu, the default `RedBox` experience and the loading UI during bundle load.")
+    [deprecated("This property has been replaced by[`UseDeveloperSupport`](#usedevelopersupport). In version 0.63 both properties will do the same thing.", deprecate, 1)]
     Boolean EnableDeveloperMenu { get; set; };
 
     DOC_STRING("Set this to a location the application has write access to in order for bytecode to be successfully cached. See [`EnableByteCodeCaching`](#enablebytecodecaching).")
     String ByteCodeFileUri { get; set; };
 
-    DOC_STRING("When using a [`UseFastRefresh`](#usefastrefresh), [`UseLiveReload`](#uselivereload) or [`UseWebDebugger`](#usewebdebugger) this is the server that will be used to load the bundle from.\n\
-> This has been replaced with `SourceBundleHost` and `SourceBundlePort` and will be removed in a future version.\n")
+    DOC_STRING("When using a [`UseFastRefresh`](#usefastrefresh), [`UseLiveReload`](#uselivereload) or [`UseWebDebugger`](#usewebdebugger) this is the server that will be used to load the bundle from.")
+    [deprecated("This has been replaced with [`SourceBundleHost`](#sourcebundlehost) and [`SourceBundlePort`](#sourcebundleport) and will be removed in a future version.", deprecate, 1)]
     DOC_DEFAULT("localhost:8081")
     String DebugHost { get; set; };
 
@@ -124,10 +125,10 @@ This property has been replaced by [`UseDeveloperSupport`](#usedevelopersupport)
     DOC_DEFAULT("9229")
     UInt16 DebuggerPort { get; set; };
 
-    DOC_STRING("Provides an extension point to allow custom error handling within the react instance. See [`IRedBoxHandler`](IRedBoxHandler.md) for more information.")
+    DOC_STRING("Provides an extension point to allow custom error handling within the react instance. See [`IRedBoxHandler`](IRedBoxHandler) for more information.")
     IRedBoxHandler RedBoxHandler { get; set; };
 
-    DOC_STRING("Control the main UI dispatcher to be used by the React instance.  If the `ReactSettingsInstance` object is initially created on a UI thread, then this will default to that thread.  The value provided here will be available to native modules and view managers using [`IReactContext.UIDispatcher`](IReactContext.md#uidispatcher)")
+    DOC_STRING("Control the main UI dispatcher to be used by the React instance.  If the `ReactSettingsInstance` object is initially created on a UI thread, then this will default to that thread.  The value provided here will be available to native modules and view managers using [`IReactContext.UIDispatcher`](IReactContext#uidispatcher)")
     IReactDispatcher UIDispatcher { get; set; };
 
     DOC_STRING("When using a [`UseFastRefresh`](#usefastrefresh), [`UseLiveReload`](#uselivereload) or [`UseWebDebugger`](#usewebdebugger) this is the server hostname that will be used to load the bundle from.")
