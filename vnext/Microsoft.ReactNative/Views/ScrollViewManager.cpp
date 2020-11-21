@@ -9,9 +9,11 @@
 #include <Views/ShadowNodeBase.h>
 #include "Impl/ScrollViewUWPImplementation.h"
 #include "ScrollViewManager.h"
+#include <Utils/Helpers.h>
 
 #include <winrt/Windows.UI.Core.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
+#include <winrt/Windows.ApplicationModel.Resources.Core.h>
+#include <UI.Xaml.Input.h>
 
 namespace Microsoft::ReactNative {
 
@@ -134,14 +136,15 @@ void ScrollViewShadowNode::createView() {
 void ScrollViewShadowNode::OnPreviewKeyDown(
     const winrt::IInspectable &sender,
     const xaml::Input::KeyRoutedEventArgs &e) {
-  auto senderFrameworkElement = sender.try_as<winrt::FrameworkElement>();
+  auto senderFrameworkElement = sender.try_as<xaml::FrameworkElement>();
   auto xamlRoot = senderFrameworkElement.XamlRoot();
   auto focusedElement =
-      xaml::Input::FocusManager::GetFocusedElement(xamlRoot).try_as<winrt::Windows::UI::Xaml::DependencyObject>();
+      xaml::Input::FocusManager::GetFocusedElement(xamlRoot).try_as<xaml::DependencyObject>();
   auto findNextElementOptions = xaml::Input::FindNextElementOptions();
   findNextElementOptions.SearchRoot(xamlRoot.Content());
-  auto previousKey = m_isHorizontal ? winrt::Windows::System::VirtualKey::Left : winrt::Windows::System::VirtualKey::Up;
-  auto nextKey = m_isHorizontal ? winrt::Windows::System::VirtualKey::Right : winrt::Windows::System::VirtualKey::Down;
+
+  auto previousKey = m_isHorizontal ? winrt::system::VirtualKey::Left : winrt::system::VirtualKey::Up;
+  auto nextKey = m_isHorizontal ? winrt::system::VirtualKey::Right : winrt::system::VirtualKey::Down;
 
   if (e.Key() == previousKey) {
     auto firstFocusableElement =
@@ -159,25 +162,31 @@ void ScrollViewShadowNode::OnPreviewKeyDown(
       xaml::Input::FocusManager::TryMoveFocus(xaml::Input::FocusNavigationDirection::Next, findNextElementOptions);
       e.Handled(true);
     }
-  } else if (e.Key() == winrt::Windows::System::VirtualKey::Tab) {
-    auto const &coreWindow = winrt::CoreWindow::GetForCurrentThread();
-    auto isShiftDown = KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::Windows::System::VirtualKey::Shift);
+  } else if (e.Key() == winrt::system::VirtualKey::Tab) {
+    if (react::uwp::IsXamlIsland()) {
+      auto const &coreWindow = winrt::CoreWindow::GetForCurrentThread();
+      auto isShiftDown = KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::system::VirtualKey::Shift);
 
-    winrt::Point anchorTopLeft = winrt::Point(0, 0);
-    xaml::Media::GeneralTransform transform = senderFrameworkElement.TransformToVisual(xamlRoot.Content());
-    winrt::Point anchorTopLeftConverted = transform.TransformPoint(anchorTopLeft);
-    auto exclusionRect = winrt::Rect(
-        anchorTopLeftConverted.X,
-        anchorTopLeftConverted.Y,
-        static_cast<float>(senderFrameworkElement.Width()),
-        static_cast<float>(senderFrameworkElement.Height()));
-    findNextElementOptions.ExclusionRect(exclusionRect);
+      winrt::Point anchorTopLeft = winrt::Point(0, 0);
+      xaml::Media::GeneralTransform transform = senderFrameworkElement.TransformToVisual(xamlRoot.Content());
+      winrt::Point anchorTopLeftConverted = transform.TransformPoint(anchorTopLeft);
+      auto exclusionRect = winrt::Rect(
+          anchorTopLeftConverted.X,
+          anchorTopLeftConverted.Y,
+          static_cast<float>(senderFrameworkElement.ActualWidth()),
+          static_cast<float>(senderFrameworkElement.ActualHeight()));
+      findNextElementOptions.ExclusionRect(exclusionRect);
 
-    auto nextElement = xaml::Input::FocusManager::FindNextElement(
-        isShiftDown ? xaml::Input::FocusNavigationDirection::Up : xaml::Input::FocusNavigationDirection::Down,
-        findNextElementOptions);
-    xaml::Input::FocusManager::TryFocusAsync(nextElement, winrt::FocusState::Programmatic);
-    e.Handled(true);
+      auto nextElement = xaml::Input::FocusManager::FindNextElement(
+          isShiftDown ? xaml::Input::FocusNavigationDirection::Up : xaml::Input::FocusNavigationDirection::Down,
+          findNextElementOptions);
+      if (nextElement) {
+        xaml::Input::FocusManager::TryFocusAsync(nextElement, winrt::FocusState::Programmatic);
+        e.Handled(true);
+      }
+    } else {
+        // TODO - need an alternative to winrt::CoreWindow::GetForCurrentThread(); for XAML Islands.
+    }
   }
 }
 
@@ -224,18 +233,17 @@ void ScrollViewShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSVal
     } else if (propertyName == "isFlatList") {
       const auto [valid, isFlatList] = getPropertyAndValidity(propertyValue, true);
       if (valid && isFlatList) {
-        // We use the XAMl ScrollViewer for both the RN ScrollView and FlatList - need arrow navigation of FlatList
-        // entries.
+        // We use the XAMl ScrollViewer for both the RN ScrollView and FlatList - need arrow navigation in FlatList only.
         m_PreviewKeyDownRevoker = scrollViewer.PreviewKeyDown(
-            winrt::auto_revoke, [=](const winrt::IInspectable &sender, const xaml::Input::KeyRoutedEventArgs &e) {
+            winrt::auto_revoke, [=](const auto &sender, const auto &e) {
               OnPreviewKeyDown(sender, e);
             });
         m_GettingFocusRevoker = scrollViewer.GettingFocus(
-            winrt::auto_revoke, [=](const winrt::IInspectable &sender, const xaml::Input::GettingFocusEventArgs &e) {
+            winrt::auto_revoke, [=](const auto &sender, const auto &e) {
               OnGettingFocus(sender, e);
             });
         m_LosingFocusRevoker = scrollViewer.LosingFocus(
-            winrt::auto_revoke, [=](const winrt::IInspectable &sender, const xaml::Input::LosingFocusEventArgs &e) {
+            winrt::auto_revoke, [=](const auto &sender, const auto &e) {
               OnLosingFocus(sender, e);
             });
       }

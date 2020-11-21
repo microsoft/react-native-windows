@@ -1,3 +1,4 @@
+
 /**
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
@@ -12,9 +13,111 @@ import {
   TextInput,
   Keyboard,
   View,
+  ScrollView,
+  Text,
   KeyboardAvoidingView,
+  requireNativeComponent,
+  FlatList
 } from 'react-native';
 
+const FocusZoneView = requireNativeComponent(
+      'FocusZoneView'
+    );
+
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+];
+
+function onButtonPress(buttonName) {
+  Alert.alert(`${buttonName} has been pressed!`);
+}
 export default class Bootstrap extends React.Component<{}, any> {
   componentDidMount() {
     Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
@@ -46,15 +149,165 @@ export default class Bootstrap extends React.Component<{}, any> {
     this.setState({passwordHidden: !previousState});
   };
 
+
+  Item = ({ title }) => (
+  <View style={styles.item}>
+    <Text style={styles.title}>{title}</Text>
+  </View>
+);
+
   render() {
     return (
+      <>
+      {/* <FocusZoneView>
+      <ScrollView style={styles.container}>
+        <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                title="Press Me"
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                title="Press Me"
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                title="Press Me"
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                title="Press Me"
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                title="Press Me"
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                title="Press Me"
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                title="Press Me"
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                title="Press Me"
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                title="Press Me"
+              />
+</ScrollView>
+      </FocusZoneView> */}
+      <FocusZoneView>
+      <FlatList
+        data={DATA}
+        renderItem={({ item }) => (
+          <Button title={item.title} onPress={() => onButtonPress('Simple')}></Button>
+        )}
+        keyExtractor={item => item.id}
+        />
+        </FocusZoneView>
       <View style={styles.container}>
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           placeholder={'MultiLine'}
           multiline={true}
-        />
-        <TextInput
+        /> */}
+        {/* <TextInput
           style={styles.input}
           placeholder={'ReadOnly'}
           editable={false}
@@ -88,7 +341,7 @@ export default class Bootstrap extends React.Component<{}, any> {
           style={styles.input}
           autoCapitalize="characters"
           placeholder={'autoCapitalize characters'}
-        />
+        /> */}
         <TextInput
           style={styles.input}
           placeholder={this.state.passwordHidden ? 'Password' : 'Text'}
@@ -110,27 +363,89 @@ export default class Bootstrap extends React.Component<{}, any> {
           }
           onPress={this.onPressShowPassword}
         />
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior="padding"
-          enabled>
-          <TextInput
-            style={styles.input}
-            placeholder={'KeyboardAvoidingView padding'}
-          />
-        </KeyboardAvoidingView>
       </View>
+      {/* <FocusZoneView >
+        <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                title="Press Me"
+              />
+              <Button
+                onPress={() => onButtonPress('Simple')}
+                testID="simple_button"
+                
+                title="Press Me"
+                
+              />
+              
+      </FocusZoneView> */}
+      </>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 23,
+    //height: 250,
+    //paddingTop: 350,
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   input: {
     margin: 5,

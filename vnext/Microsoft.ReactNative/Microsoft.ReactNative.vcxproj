@@ -325,6 +325,7 @@
     <ClInclude Include="Views\KeyboardEventHandler.h" />
     <ClInclude Include="Views\PaperShadowNode.h" />
     <ClInclude Include="Views\PickerViewManager.h" />
+    <ClInclude Include="Views\FocusZoneViewManager.h" />
     <ClInclude Include="Views\PopupViewManager.h" />
     <ClInclude Include="Views\RawTextViewManager.h" />
     <ClInclude Include="Views\ReactRootControl.h" />
@@ -519,6 +520,7 @@
     <ClCompile Include="Views\RefreshControlManager.cpp" />
     <ClCompile Include="Views\RootViewManager.cpp" />
     <ClCompile Include="Views\ScrollContentViewManager.cpp" />
+    <ClCompile Include="Views\FocusZoneViewManager.cpp" />
     <ClCompile Include="Views\ScrollViewManager.cpp" />
     <ClCompile Include="Views\ShadowNodeBase.cpp" />
     <ClCompile Include="Views\ShadowNodeRegistry.cpp" />

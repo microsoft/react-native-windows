@@ -26,6 +26,7 @@
 #include <Views/TextViewManager.h>
 #include <Views/ViewViewManager.h>
 #include <Views/VirtualTextViewManager.h>
+#include <Views/FocusZoneViewManager.h>
 
 namespace Microsoft::ReactNative {
 
@@ -50,6 +51,7 @@ void AddStandardViewManagers(
   viewManagers.push_back(std::make_unique<VirtualTextViewManager>(context));
   viewManagers.push_back(std::make_unique<RefreshControlViewManager>(context));
   viewManagers.push_back(std::make_unique<GlyphViewManager>(context));
+  viewManagers.push_back(std::make_unique<FocusZoneViewManager>(context));
 }
 
 } // namespace Microsoft::ReactNative

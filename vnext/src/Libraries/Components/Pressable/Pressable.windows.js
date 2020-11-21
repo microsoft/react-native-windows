@@ -187,14 +187,16 @@ function Pressable(props: Props, forwardedRef): React.Node {
 
   // [Windows
   const _onBlur = (event: BlurEvent) => {
-    TextInputState.blurInput(viewRef.current);
+    //TextInputState.blurInput(viewRef.current);
+    console.log('_onBlur');
     if (props.onBlur) {
       props.onBlur(event);
     }
   };
 
   const _onFocus = (event: FocusEvent) => {
-    TextInputState.focusInput(viewRef.current);
+    //TextInputState.focusInput(viewRef.current);
+    console.log('_onFocus');
     if (props.onFocus) {
       props.onFocus(event);
     }
