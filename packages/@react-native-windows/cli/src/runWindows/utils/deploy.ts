@@ -231,7 +231,6 @@ export async function deployToDesktop(
     windowsConfig && windowsConfig.project && windowsConfig.project.projectName
       ? windowsConfig.project.projectName
       : options.proj!;
-  const appPackageFolder = getAppPackage(options, projectName);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options, projectName);
   const appxManifest = parseAppxManifest(appxManifestPath);
@@ -239,9 +238,6 @@ export async function deployToDesktop(
     return x.name === 'Identity';
   })[0];
   const appName = identity.attributes.Name;
-  const script = glob.sync(
-    path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
-  )[0];
 
   const vsVersion = buildTools.installationVersion;
   if (vsVersion.startsWith('16.5') || vsVersion.startsWith('16.6')) {
@@ -266,7 +262,7 @@ export async function deployToDesktop(
     );
   }
 
-  const args = [];
+  let args = [];
   if (options.remoteDebugging) {
     args.push('--remote-debugging');
   }
@@ -276,20 +272,24 @@ export async function deployToDesktop(
   }
 
   await runPowerShellScriptFunction(
-    'Removing old version of the app',
-    windowsStoreAppUtils,
-    `Uninstall-App ${appName}`,
-    verbose,
-  );
-
-  await runPowerShellScriptFunction(
     'Enabling Developer Mode',
     windowsStoreAppUtils,
     'EnableDevMode',
     verbose,
   );
 
+  const appPackageFolder = getAppPackage(options, projectName);
+
   if (options.release) {
+    await runPowerShellScriptFunction(
+        'Removing old version of the app',
+        windowsStoreAppUtils,
+        `Uninstall-App ${appName}`,
+        verbose,
+      ); 
+    const script = glob.sync(
+      path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
+    )[0];
     await runPowerShellScriptFunction(
       'Installing new version of the app',
       windowsStoreAppUtils,
@@ -297,23 +297,38 @@ export async function deployToDesktop(
       verbose,
     );
   } else {
-    // Install the app package's dependencies before attempting to deploy.
-    await runPowerShellScriptFunction(
-      'Installing dependent framework packages',
-      windowsStoreAppUtils,
-      `Install-AppDependencies ${appxManifestPath} ${appPackageFolder} ${options.arch}`,
-      verbose,
-    );
-    await build.buildSolution(
-      buildTools,
-      slnFile,
-      'Debug',
-      options.arch,
-      {DeployLayout: 'true'},
-      verbose,
-      'deploy',
-      options.buildLogDirectory,
-    );
+    const appxRecipe = path.join(path.dirname(appxManifestPath), `${projectName}.build.appxrecipe`);
+    const deployAppxRecipe_exe = `${buildTools.installationVersion}\\Common7\\IDE\\DeployAppRecipe.exe`;
+    if (fs.existsSync(deployAppxRecipe_exe)) {
+      await commandWithProgress(
+        newSpinner('Deploying'),
+        'Deploying',
+        deployAppxRecipe_exe,
+        [
+          appxRecipe
+        ],
+        verbose,
+      );
+    } else {
+      // Install the app package's dependencies before attempting to deploy.
+      await runPowerShellScriptFunction(
+        'Installing dependent framework packages',
+        windowsStoreAppUtils,
+        `Install-AppDependencies ${appxManifestPath} ${appPackageFolder} ${options.arch}`,
+        verbose,
+      );
+      await build.buildSolution(
+        buildTools,
+        slnFile,
+        options.release ? 'Release' : 'Debug',
+        options.arch,
+        {DeployLayout: 'true'},
+        verbose,
+        'deploy',
+        options.buildLogDirectory,
+      );
+
+    }
   }
 
   const appFamilyName = execSync(
