@@ -138,14 +138,11 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
 void ViewPanel::InvalidateForArrange(xaml::UIElement element) {
   // If the element's position has changed, we must invalidate the parent for arrange,
   // as it's the parent's responsibility to arrange its children.
-  auto parent = VisualTreeHelper::GetParent(element);
-  if (parent) {
-    parent.try_as<xaml::UIElement>().InvalidateArrange();
+  if (auto parent = VisualTreeHelper::GetParent(element)) {
+    if (auto parentUIE = parent.try_as<xaml::UIElement>()) {
+      parentUIE.InvalidateArrange();
+    }
   }
-
-  // Also update Canvas.Top/Left as we actually use that for XAML Arrange
-  Canvas::SetTop(element, ViewPanel::GetTop(element));
-  Canvas::SetLeft(element, ViewPanel::GetLeft(element));
 }
 
 winrt::Size ViewPanel::MeasureOverride(winrt::Size /*availableSize*/) {
@@ -198,8 +195,8 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize) {
     childWidth = std::max<double>(0.0f, childWidth);
     childHeight = std::max<double>(0.0f, childHeight);
 
-    float adjustedLeft = static_cast<float>(Canvas::GetLeft(child)) - outerBorderLeft;
-    float adjustedTop = static_cast<float>(Canvas::GetTop(child)) - outerBorderTop;
+    float adjustedLeft = static_cast<float>(ViewPanel::GetLeft(child)) - outerBorderLeft;
+    float adjustedTop = static_cast<float>(ViewPanel::GetTop(child)) - outerBorderTop;
 
     child.Arrange(
         winrt::Rect(adjustedLeft, adjustedTop, static_cast<float>(childWidth), static_cast<float>(childHeight)));
