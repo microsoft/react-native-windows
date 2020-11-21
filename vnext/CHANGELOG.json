@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 21 Nov 2020 05:05:40 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.215",
+      "version": "0.0.0-canary.215",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add ReactContext::ExecuteJsi method to use JSI in NativeModules",
+            "author": "vmorozov@microsoft.com",
+            "commit": "d7cdd84367953a02848f1c19ee509e0ab5af2ad7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Nov 2020 05:08:43 GMT",
       "tag": "react-native-windows_v0.0.0-canary.214",
       "version": "0.0.0-canary.214",

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 20 Nov 2020 05:08:43 GMT and should not be manually modified.
+This log was last generated on Sat, 21 Nov 2020 05:05:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.215
+
+Sat, 21 Nov 2020 05:05:40 GMT
+
+### Changes
+
+- Add ReactContext::ExecuteJsi method to use JSI in NativeModules (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.214
 
