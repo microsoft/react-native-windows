@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix panels with transforms leaking",
+  "packageName": "react-native-windows",
+  "email": "stecrain@microsoft.com",
+  "dependentChangeType": "patch"
+}
