@@ -87,7 +87,7 @@ to ensure that no handler is invoked after the Unsubscribe method call.")
     // using the ReactPropertyBagHelper.CreatePropertyBag method.
     DOC_STRING("Send the notification with `notificationName`. The sender is the object that sends notification and can be null. The `data` is the data \
 associated with the notification and can be null. Consider using [`IReactPropertyBag`](IReactPropertyBag) for sending semi-structured data. \
-It can be created using the [`ReactPropertyBagHelper.CreatePropertyBag`](ReactPropertyBagHelper.md#createPropertyBag) method.")
+It can be created using the [`ReactPropertyBagHelper.CreatePropertyBag`](ReactPropertyBagHelper#createPropertyBag) method.")
     void SendNotification(IReactPropertyName notificationName, Object sender, Object data);
   }
 
