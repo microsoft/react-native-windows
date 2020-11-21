@@ -298,17 +298,22 @@ export async function deployToDesktop(
     );
   } else {
     const appxRecipe = path.join(path.dirname(appxManifestPath), `${projectName}.build.appxrecipe`);
-    const deployAppxRecipe_exe = `${buildTools.installationVersion}\\Common7\\IDE\\DeployAppRecipe.exe`;
+    const IDE_folder = `${buildTools.installationPath}\\Common7\\IDE`;
+    const deployAppxRecipe_exe = `${IDE_folder}\\DeployAppRecipe.exe`;
     if (fs.existsSync(deployAppxRecipe_exe)) {
+      // Need fix for VS's DeployAppxRecipe to return error code on failure and to be able to be run from any directory
+      const oldDir = process.cwd();
+      process.chdir(IDE_folder);
       await commandWithProgress(
         newSpinner('Deploying'),
-        'Deploying',
+        `Deploying ${appxRecipe}`,
         deployAppxRecipe_exe,
         [
-          appxRecipe
+          appxRecipe,
         ],
         verbose,
       );
+      process.chdir(oldDir);
     } else {
       // Install the app package's dependencies before attempting to deploy.
       await runPowerShellScriptFunction(
