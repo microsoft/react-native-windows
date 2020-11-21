@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix links in some docs, mark APIs as deprecated or experimental as appropriate",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
