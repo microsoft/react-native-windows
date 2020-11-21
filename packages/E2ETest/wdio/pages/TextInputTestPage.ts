@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  */
 
-import { BasePage, By } from './BasePage';
+import { BasePage, by } from './BasePage';
 import {
   TEXTINPUT_ON_TEXTINPUT,
   ML_TEXTINPUT_ON_TEXTINPUT,
@@ -60,19 +60,19 @@ class TextInputTestPage extends BasePage {
   }
 
   private get textInput() {
-    return By(TEXTINPUT_ON_TEXTINPUT);
+    return by(TEXTINPUT_ON_TEXTINPUT);
   }
 
   private get curTextInput() {
-    return By(CURTEXT_ON_TEXTINPUT);
+    return by(CURTEXT_ON_TEXTINPUT);
   }
 
   private get multiLineTextInput() {
-    return By(ML_TEXTINPUT_ON_TEXTINPUT);
+    return by(ML_TEXTINPUT_ON_TEXTINPUT);
   }
 
   private get autoCapTextInput() {
-    return By(CAP_TEXTINPUT_ON_TEXTINPUT);
+    return by(CAP_TEXTINPUT_ON_TEXTINPUT);
   }
 }
 

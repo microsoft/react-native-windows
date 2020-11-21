@@ -54,7 +54,7 @@ function enumerateTypeScriptFiles(rootPath: string): string[] {
   const files = walkdir.sync(rootPath, {return_object: true});
   return Object.entries(files).flatMap(([filePath, stat]) => {
     if (
-      (stat.isFile && filePath.endsWith('.ts')) ||
+      (stat.isFile() && filePath.endsWith('.ts')) ||
       filePath.endsWith('.tsx')
     ) {
       return [filePath];

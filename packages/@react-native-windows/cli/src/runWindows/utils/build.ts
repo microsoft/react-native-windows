@@ -112,12 +112,12 @@ export function getAppProjectFile(options: RunWindowsOptions, config: Config) {
 export function parseMsBuildProps(
   options: RunWindowsOptions,
 ): Record<string, string> {
-  let result: Record<string, string> = {};
+  const result: Record<string, string> = {};
   if (options.msbuildprops) {
     const props = options.msbuildprops.split(',');
-    for (let i = 0; i < props.length; i++) {
-      const prop = props[i].split('=');
-      result[prop[0]] = prop[1];
+    for (const prop of props) {
+      const propAssignment = prop.split('=');
+      result[propAssignment[0]] = propAssignment[1];
     }
   }
   return result;

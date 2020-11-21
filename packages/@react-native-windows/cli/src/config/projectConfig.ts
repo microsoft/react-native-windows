@@ -92,21 +92,21 @@ export function projectConfigWindows(
     return null;
   }
 
-  var result: DeepPartial<WindowsProjectConfig> = {
+  const result: DeepPartial<WindowsProjectConfig> = {
     folder: folder,
     sourceDir: path.relative(folder, sourceDir),
   };
 
-  var validProject = false;
+  let validProject = false;
 
   if (usingManualOverride) {
     // Manual override, try to use it for solutionFile
     if (!('solutionFile' in userConfig)) {
       result.solutionFile =
         'Error: Solution file is required but not specified in react-native.config.';
-    } else if (userConfig.solutionFile === null) {
+    } else if (!userConfig.solutionFile) {
       result.solutionFile =
-        'Error: Solution file is null in react-native.config.';
+        'Error: Solution file is not defined in react-native.config.';
     } else {
       result.solutionFile = userConfig.solutionFile;
     }
@@ -127,9 +127,10 @@ export function projectConfigWindows(
           projectFile:
             'Error: Project file is required for project in react-native.config.',
         };
-      } else if (userConfig.project.projectFile === null) {
+      } else if (!userConfig.project.projectFile) {
         result.project = {
-          projectFile: 'Error: Project file is null in react-native.config.',
+          projectFile:
+            'Error: Project file is not defined in react-native.config.',
         };
       } else {
         result.project = {

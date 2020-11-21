@@ -27,15 +27,15 @@ const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
  */
 export default class GitReactFileRepository
   implements VersionedReactFileRepository {
-  private fileRepo: FileSystemRepository;
-  private gitClient: simplegit.SimpleGit;
+  private readonly fileRepo: FileSystemRepository;
+  private readonly gitClient: simplegit.SimpleGit;
   private checkedOutVersion?: string;
   private static githubToken?: string;
 
   // We need to ensure it is impossible to check out a new React Native
   // version while an operation hasn't yet finished. We queue each operation to
   // ensure they are performed atomically.
-  private batchingQueue: BatchingQueue<string>;
+  private readonly batchingQueue: BatchingQueue<string>;
 
   private constructor(gitDirectory: string, gitClient: simplegit.SimpleGit) {
     this.batchingQueue = new BatchingQueue();

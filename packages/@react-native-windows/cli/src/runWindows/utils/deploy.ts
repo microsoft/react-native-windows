@@ -79,7 +79,7 @@ function getAppPackage(
     const rootGlob = `${options.root}/windows/{*/AppPackages,AppPackages/*}`;
     const newGlob = `${rootGlob}/*_${
       options.arch === 'x86' ? '{Win32,x86}' : options.arch
-    }_${options.release ? '' : 'Debug_'}Test`;
+    }_Test`;
 
     const result = glob.sync(newGlob);
     if (result.length > 1 && projectName) {
@@ -128,7 +128,7 @@ function getAppxManifestPath(
   if (globs.length === 1 || !projectName) {
     appxPath = globs[0];
   } else {
-    const filteredGlobs = globs.filter(x => x.indexOf(projectName) !== -1);
+    const filteredGlobs = globs.filter(x => x.includes(projectName));
     if (filteredGlobs.length > 1) {
       newWarn(
         `More than one appxmanifest for ${projectName}: ${filteredGlobs.join(
@@ -178,7 +178,7 @@ export async function deployToDevice(
   const deployTool = new WinAppDeployTool();
   const appxManifest = getAppxManifest(options);
   const shouldLaunch = shouldLaunchApp(options);
-  const identity = appxManifest.root.children.filter(function(x) {
+  const identity = appxManifest.root.children.filter(x => {
     return x.name === 'mp:PhoneIdentity';
   })[0];
   const appName = identity.attributes.PhoneProductId;
@@ -235,7 +235,7 @@ export async function deployToDesktop(
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options, projectName);
   const appxManifest = parseAppxManifest(appxManifestPath);
-  const identity = appxManifest.root.children.filter(function(x) {
+  const identity = appxManifest.root.children.filter(x => {
     return x.name === 'Identity';
   })[0];
   const appName = identity.attributes.Name;
@@ -266,7 +266,7 @@ export async function deployToDesktop(
     );
   }
 
-  let args = [];
+  const args = [];
   if (options.remoteDebugging) {
     args.push('--remote-debugging');
   }
@@ -307,7 +307,7 @@ export async function deployToDesktop(
     await build.buildSolution(
       buildTools,
       slnFile,
-      options.release ? 'Release' : 'Debug',
+      'Release',
       options.arch,
       {DeployLayout: 'true'},
       verbose,

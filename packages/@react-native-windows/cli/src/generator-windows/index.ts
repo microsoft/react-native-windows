@@ -32,7 +32,6 @@ async function generateCertificate(
   currentUser: string,
 ): Promise<string | null> {
   console.log('Generating self-signed certificate...');
-  let toCopyTempKey = false;
   if (os.platform() === 'win32') {
     try {
       const timeout = 10000; // 10 seconds;
@@ -59,30 +58,18 @@ async function generateCertificate(
       );
       return thumbprint;
     } catch (err) {
-      console.log(
-        chalk.yellow(
-          'Failed to generate Self-signed certificate. Using Default Certificate. Use Visual Studio to renew it.',
-        ),
-      );
-      toCopyTempKey = true;
+      console.log(chalk.yellow('Failed to generate Self-signed certificate.'));
     }
-  } else {
-    console.log(
-      chalk.yellow('Using Default Certificate. Use Visual Studio to renew it.'),
-    );
-    toCopyTempKey = true;
   }
-  if (toCopyTempKey) {
-    await copyAndReplaceWithChangedCallback(
-      path.join(srcPath, 'keys', 'MyApp_TemporaryKey.pfx'),
-      destPath,
-      path.join(
-        windowsDir,
-        newProjectName,
-        newProjectName + '_TemporaryKey.pfx',
-      ),
-    );
-  }
+
+  console.log(
+    chalk.yellow('Using Default Certificate. Use Visual Studio to renew it.'),
+  );
+  await copyAndReplaceWithChangedCallback(
+    path.join(srcPath, 'keys', 'MyApp_TemporaryKey.pfx'),
+    destPath,
+    path.join(windowsDir, newProjectName, newProjectName + '_TemporaryKey.pfx'),
+  );
 
   return null;
 }
@@ -110,6 +97,8 @@ function pascalCase(str: string) {
   return camelCase[0].toUpperCase() + camelCase.substr(1);
 }
 
+// Existing high cyclomatic complexity
+// eslint-disable-next-line complexity
 export async function copyProjectTemplateAndReplace(
   srcRootPath: string,
   destPath: string,
@@ -455,7 +444,7 @@ export async function copyProjectTemplateAndReplace(
 
   // shared proj
   if (fs.existsSync(path.join(sharedPath, projDir))) {
-    let sharedProjMappings = [];
+    const sharedProjMappings = [];
 
     // Once we are publishing to nuget.org, this shouldn't be needed anymore
     if (options.experimentalNuGetDependency) {

@@ -122,7 +122,7 @@ export async function generateWindows(
         cliVersion = rnwCliPkgJson.version;
       } catch {}
       const optScrubbed = scrubOptions(options);
-      Telemetry.client?.trackEvent({
+      Telemetry.client.trackEvent({
         name: 'generate-windows',
         properties: {
           error: error,
@@ -132,7 +132,7 @@ export async function generateWindows(
         },
       });
 
-      Telemetry.client?.flush();
+      Telemetry.client.flush();
     }
   }
 }

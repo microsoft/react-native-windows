@@ -101,7 +101,7 @@ export async function addOverride(
   manifestPath: string,
 ): Promise<void> {
   const {manifest} = await createManifestContext(manifestPath);
-  await manifest.addOverride(override);
+  manifest.addOverride(override);
   await Serialized.writeManifestToFile(manifest.serialize(), manifestPath);
 }
 
@@ -183,7 +183,7 @@ export async function upgradeOverrides(
   // check out for future upgrades.
   const upToDateOverrides = [
     ..._.difference(
-      await ctx.manifest.listOverrides(),
+      ctx.manifest.listOverrides(),
       validationErrors.map(err => ctx.manifest.findOverride(err.overrideName)!),
     ).map(ovr => ovr.name()),
 
