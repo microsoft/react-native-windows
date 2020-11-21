@@ -52,7 +52,7 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
     xaml::DependencyPropertyChangedEventArgs e) {
   auto element{sender.as<xaml::UIElement>()};
   if (element != nullptr)
-    element.InvalidateArrange();
+    InvalidateForArrange(element);
 }
 
 /*static*/ xaml::DependencyProperty ViewPanel::ViewBackgroundProperty() {
@@ -127,12 +127,25 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
 
 /*static*/ void ViewPanel::SetTop(xaml::UIElement const &element, double value) {
   element.SetValue(TopProperty(), winrt::box_value<double>(value));
-  element.InvalidateArrange();
+  InvalidateForArrange(element);
 }
 
 /*static*/ void ViewPanel::SetLeft(xaml::UIElement const &element, double value) {
   element.SetValue(LeftProperty(), winrt::box_value<double>(value));
-  element.InvalidateArrange();
+  InvalidateForArrange(element);
+}
+
+void ViewPanel::InvalidateForArrange(xaml::UIElement element) {
+  // If the element's position has changed, we must invalidate the parent for arrange,
+  // as it's the parent's responsibility to arrange its children.
+  auto parent = VisualTreeHelper::GetParent(element);
+  if (parent) {
+    parent.try_as<xaml::UIElement>().InvalidateArrange();
+  }
+
+  // Also update Canvas.Top/Left as we actually use that for XAML Arrange
+  Canvas::SetTop(element, ViewPanel::GetTop(element));
+  Canvas::SetLeft(element, ViewPanel::GetLeft(element));
 }
 
 winrt::Size ViewPanel::MeasureOverride(winrt::Size /*availableSize*/) {
@@ -185,8 +198,8 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize) {
     childWidth = std::max<double>(0.0f, childWidth);
     childHeight = std::max<double>(0.0f, childHeight);
 
-    float adjustedLeft = static_cast<float>(ViewPanel::GetLeft(child)) - outerBorderLeft;
-    float adjustedTop = static_cast<float>(ViewPanel::GetTop(child)) - outerBorderTop;
+    float adjustedLeft = static_cast<float>(Canvas::GetLeft(child)) - outerBorderLeft;
+    float adjustedTop = static_cast<float>(Canvas::GetTop(child)) - outerBorderTop;
 
     child.Arrange(
         winrt::Rect(adjustedLeft, adjustedTop, static_cast<float>(childWidth), static_cast<float>(childHeight)));
