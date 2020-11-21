@@ -22,11 +22,11 @@ namespace Microsoft.ReactNative {
   [webhosthidden]
   DOC_STRING("A `ReactPackageBuilder` provides the react instance with all the native modules and view managers that will be available in the React instance.")
   interface IReactPackageBuilder {
-    DOC_STRING("Adds a custom native module. See [`ReactModuleProvider`](#reactmoduleprovider).")
+    DOC_STRING("Adds a custom native module. See [`ReactModuleProvider`](ReactModuleProvider).")
     void AddModule(String moduleName, ReactModuleProvider moduleProvider);
 
 #ifndef CORE_ABI
-    DOC_STRING("Adds a custom native module. See [`ReactViewManagerProvider`](#reactviewmanagerprovider).")
+    DOC_STRING("Adds a custom native module. See [`ReactViewManagerProvider`](ReactViewManagerProvider).")
     void AddViewManager(String viewManagerName, ReactViewManagerProvider viewManagerProvider);
 #endif
   }

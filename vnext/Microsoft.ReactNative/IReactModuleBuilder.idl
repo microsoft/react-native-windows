@@ -48,7 +48,7 @@ namespace Microsoft.ReactNative {
 See [Native Modules](native-module) for more usage information.")
   interface IReactModuleBuilder {
 
-    DOC_STRING("An initializer is a method that will be called when the react instance starts.  It provides the native module with the [`IReactContext`](IReactContext) for the running instance. See [`InitializerDelegate`](#initializerdelegate).")
+    DOC_STRING("An initializer is a method that will be called when the react instance starts.  It provides the native module with the [`IReactContext`](IReactContext) for the running instance. See [`InitializerDelegate`](InitializerDelegate).")
     void AddInitializer(InitializerDelegate initializer);
 
     DOC_STRING("The JavaScript values written by the [`ConstantProviderDelegate`](ConstantProviderDelegate) will be available as constants on the native module is JavaScript.")
