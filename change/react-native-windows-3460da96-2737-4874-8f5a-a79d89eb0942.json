@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix invalidation bug and use Canvas.Top/Left",
+  "packageName": "react-native-windows",
+  "email": "kmelmon@microsoft.com",
+  "dependentChangeType": "patch"
+}
