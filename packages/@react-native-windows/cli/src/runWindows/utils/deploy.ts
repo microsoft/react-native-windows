@@ -307,7 +307,7 @@ export async function deployToDesktop(
     await build.buildSolution(
       buildTools,
       slnFile,
-      'Release',
+      'Debug',
       options.arch,
       {DeployLayout: 'true'},
       verbose,

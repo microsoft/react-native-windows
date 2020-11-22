@@ -72,7 +72,7 @@ export default class MSBuildTools {
     const errorLog = logPrefix + '.err';
     const warnLog = logPrefix + '.wrn';
 
-    const localBinLog = `:${target}.binlog`;
+    const localBinLog = target === 'build' ? '' : 'deploy.binlog';
     const binlog = buildLogDirectory ? `:${logPrefix}.binlog` : localBinLog;
 
     const args = [
