@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 22 Nov 2020 05:06:06 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.216",
+      "version": "0.0.0-canary.216",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix invalidation bug and use Canvas.Top/Left",
+            "author": "kmelmon@microsoft.com",
+            "commit": "af5d422ce09852091f46571ddcf0d6771d1ec02d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix panels with transforms leaking",
+            "author": "stecrain@microsoft.com",
+            "commit": "d1d39f81105682cbb485121e0f12f3f195820d20",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Nov 2020 05:05:40 GMT",
       "tag": "react-native-windows_v0.0.0-canary.215",
       "version": "0.0.0-canary.215",
