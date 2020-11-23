@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 23 Nov 2020 15:07:17 GMT",
+      "tag": "react-native-windows_v0.62.17",
+      "version": "0.62.17",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use HRESULT instead of catching exceptions for WebSocket APIs (#5174)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "498eafc1a036e99a10436b95dad62de623a3697b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Nov 2020 15:07:00 GMT",
       "tag": "react-native-windows_v0.62.16",
       "version": "0.62.16",

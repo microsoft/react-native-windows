@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 16 Nov 2020 15:07:00 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Nov 2020 15:07:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.17
+
+Mon, 23 Nov 2020 15:07:17 GMT
+
+### Patches
+
+- Use HRESULT instead of catching exceptions for WebSocket APIs (#5174) (julio.rocha@microsoft.com)
 
 ## 0.62.16
 
