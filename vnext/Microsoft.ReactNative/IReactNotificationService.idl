@@ -11,7 +11,7 @@ namespace Microsoft.ReactNative {
   // A subscription to a notification.
   // The subscription is removed when this object is deleted or the Unsubscribe method is called.
   [webhosthidden]
-  DOC_STRING("A subscription to a notification. The subscription is removed when this object is deleted or the [`Unsubscribe`](#Unsubscribe) method is called.")
+  DOC_STRING("A subscription to a notification. The subscription is removed when this object is deleted or the @.Unsubscribe method is called.")
   interface IReactNotificationSubscription
   {
     // Name of the notification.
@@ -20,7 +20,7 @@ namespace Microsoft.ReactNative {
 
     // The IReactDispatcher provided when the notification subscription created.
     // All notifications will be handled using this dispatcher.
-    DOC_STRING("The [`IReactDispatcher`](IReactDispatcher.md) provided when the notification subscription created. All notifications will be handled using this dispatcher.")
+    DOC_STRING("The @IReactDispatcher provided when the notification subscription created. All notifications will be handled using this dispatcher.")
     IReactDispatcher Dispatcher { get; };
 
     // True if the subscription is still active.
@@ -34,8 +34,8 @@ namespace Microsoft.ReactNative {
     // Consider calling the Unsubscribe method and the handler in the same IReactDispatcher
     // to ensure that no handler is invoked after the Unsubscribe method call.
     DOC_STRING("Remove the subscription. Because of the multi-threaded nature of the notifications, the handler can be still called \
-after the Unsubscribe method called if the IsSubscribed property is already checked. \
-Consider calling the Unsubscribe method and the handler in the same [`IReactDispatcher`](IReactDispatcher.md) \
+after the Unsubscribe method called if the @.IsSubscribed property is already checked. \
+Consider calling the Unsubscribe method and the handler in the same @IReactDispatcher \
 to ensure that no handler is invoked after the Unsubscribe method call.")
     void Unsubscribe();
   }
@@ -72,11 +72,11 @@ to ensure that no handler is invoked after the Unsubscribe method call.")
     // The method returns IReactNotificationSubscription that must be kept alive while the subscription
     // is active. The subscription is removed when the IReactNotificationSubscription is destroyed.
     DOC_STRING("Subscribe to a notification. \
-    The `notificationName` is a non-null property name and can belong to a specific namespace. \n\
-    The dispatcher is used to call notification handlers. If it is null, then the handler is called synchronously. \
-    The handler is a delegate that can be implemented as a lambda to handle notifications. \
-    The method returns a [`IReactNotificationSubscription`](IReactNotificationSubscription.md) that must be kept alive while the subscription \
-    is active. The subscription is removed when the [`IReactNotificationSubscription`](IReactNotificationSubscription.md) is destroyed.")
+The `notificationName` is a non-null property name and can belong to a specific namespace. \n\
+The dispatcher is used to call notification handlers. If it is null, then the handler is called synchronously. \
+The handler is a delegate that can be implemented as a lambda to handle notifications. \
+The method returns a @IReactNotificationSubscription that must be kept alive while the subscription \
+is active. The subscription is removed when the @IReactNotificationSubscription is destroyed.")
     IReactNotificationSubscription Subscribe(
       IReactPropertyName notificationName, IReactDispatcher dispatcher, ReactNotificationHandler handler);
 
@@ -86,8 +86,8 @@ to ensure that no handler is invoked after the Unsubscribe method call.")
     // Consider using IReactPropertyBag for sending semi-structured data. It can be created
     // using the ReactPropertyBagHelper.CreatePropertyBag method.
     DOC_STRING("Send the notification with `notificationName`. The sender is the object that sends notification and can be null. The `data` is the data \
-associated with the notification and can be null. Consider using [`IReactPropertyBag`](IReactPropertyBag.md) for sending semi-structured data. \
-It can be created using the [`ReactPropertyBagHelper.CreatePropertyBag`](ReactPropertyBagHelper.md#CreatePropertyBag) method.")
+associated with the notification and can be null. Consider using @IReactPropertyBag for sending semi-structured data. \
+It can be created using the @ReactPropertyBagHelper.CreatePropertyBag method.")
     void SendNotification(IReactPropertyName notificationName, Object sender, Object data);
   }
 

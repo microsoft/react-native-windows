@@ -1,8 +1,25 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 20 Nov 2020 05:08:43 GMT and should not be manually modified.
+This log was last generated on Sun, 22 Nov 2020 05:06:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.216
+
+Sun, 22 Nov 2020 05:06:06 GMT
+
+### Changes
+
+- fix invalidation bug and use Canvas.Top/Left (kmelmon@microsoft.com)
+- fix panels with transforms leaking (stecrain@microsoft.com)
+
+## 0.0.0-canary.215
+
+Sat, 21 Nov 2020 05:05:40 GMT
+
+### Changes
+
+- Add ReactContext::ExecuteJsi method to use JSI in NativeModules (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.214
 

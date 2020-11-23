@@ -9,27 +9,28 @@ namespace Microsoft.ReactNative {
 
   [webhosthidden]
   [default_interface]
-  DOC_STRING("`ReactApplication` provides a base application class for use in applications that are entirely written in React Native. `ReactApplication` will load the React instance on launch of your app for you and provide accessors to your application's [`ReactInstanceSettings`](ReactInstanceSettings.md) and [`ReactNativeHost`](ReactNativeHost.md) to customize your React instance.")
+  DOC_STRING("`ReactApplication` provides a base application class for use in applications that are entirely written in React Native. `ReactApplication` will load the React instance on launch of your app for you and provide accessors to your application's @ReactInstanceSettings and @ReactNativeHost to customize your React instance.")
   unsealed runtimeclass ReactApplication : XAML_NAMESPACE.Application {
     ReactApplication();
 
-    DOC_STRING("Provides access to your application's [`ReactInstanceSettings`](ReactInstanceSettings.md).  Generally, changes to these settings will not take effect if the React instance is already loaded, unless the React instance is reloaded, so most settings should be set in your applications constructor.")
+    DOC_STRING("Provides access to your application's @ReactInstanceSettings.  Generally, changes to these settings will not take effect if the React instance is already loaded, unless the React instance is reloaded, so most settings should be set in your applications constructor.")
     ReactInstanceSettings InstanceSettings { get; set; };
 
-    DOC_STRING("Provides access to the list of `IReactPackageProvider`'s that the instance will use to provide native modules to the application. This can be used to register additional package providers, such as package providers from community modules. See [`ReactNativeHost`](ReactNativeHost.md) for more information.")
+    DOC_STRING("Provides access to the list of `IReactPackageProvider`'s that the instance will use to provide native modules to the application. This can be used to register additional package providers, such as package providers from community modules. See @ReactNativeHost for more information.")
     IVector<IReactPackageProvider> PackageProviders { get; };
 
-    DOC_STRING("Access to the [`ReactNativeHost`](ReactNativeHost.md) of your application.")
+    DOC_STRING("Access to the @ReactNativeHost of your application.")
     ReactNativeHost Host { get; };
 
-    DOC_STRING("Should the developer experience features such as the developer menu and `RedBox` be enabled.  See [`ReactInstanceSettings.UseDeveloperSupport`](ReactInstanceSettings.md#usedevelopersupport).")
+    DOC_STRING("Should the developer experience features such as the developer menu and `RedBox` be enabled.  See @ReactInstanceSettings.UseDeveloperSupport.")
     Boolean UseDeveloperSupport { get; set; };
 
     // Deprecated - Use JavaScriptBundleFile instead
-    DOC_STRING("See [`ReactInstanceSettings.JavaScriptMainModuleName`](ReactInstanceSettings.md#javascriptmainmodulename).")
+    DOC_STRING("See @ReactInstanceSettings.JavaScriptMainModuleName.")
+    [deprecated("Use @.JavaScriptBundleFile instead", deprecate, 1)]
     String JavaScriptMainModuleName { get; set; };
 
-    DOC_STRING("See [`ReactInstanceSettings.JavaScriptBundleFile`](ReactInstanceSettings.md#javascriptbundlefile).")
+    DOC_STRING("See @ReactInstanceSettings.JavaScriptBundleFile.")
     String JavaScriptBundleFile { get; set; };
   }
 } // namespace Microsoft.ReactNative
