@@ -19,7 +19,7 @@
 
   <PropertyGroup Condition="'$(UseWinUI3)'!='true'">
     <WinUIPackageName>Microsoft.UI.Xaml</WinUIPackageName>
-    <WinUIPackageVersion>2.3.191129002</WinUIPackageVersion>
+    <WinUIPackageVersion>2.5.0-prerelease.201027002</WinUIPackageVersion>
     <!-- In WinUI 2.x, the props file is imported for us by the targets file -->
     <WinUIPackageProps />
   </PropertyGroup>
