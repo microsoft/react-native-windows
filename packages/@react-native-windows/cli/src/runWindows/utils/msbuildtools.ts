@@ -61,7 +61,6 @@ export default class MSBuildTools {
     newSuccess(`Found Solution: ${slnFile}`);
     newInfo(`Build configuration: ${buildType}`);
     newInfo(`Build platform: ${buildArch}`);
-    newInfo(`Build target: ${target}`);
 
     const verbosityOption = verbose ? 'normal' : 'minimal';
     const logPrefix = path.join(
