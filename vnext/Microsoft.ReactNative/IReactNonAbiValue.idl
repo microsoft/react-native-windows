@@ -11,7 +11,7 @@ namespace Microsoft.ReactNative {
   // need to go through the EXE/DLL boundary.
   [webhosthidden]
   DOC_STRING("`IReactNonAbiValue` helps wrap a non-ABI-safe C++ value into an `IInspectable` object. Use it to handle native module lifetime. \
-It also can be used to store values in the [`IReactPropertyBag`](IReactPropertyBag.md) that do not need to go through the EXE/DLL boundary.")
+It also can be used to store values in the @IReactPropertyBag that do not need to go through the EXE/DLL boundary.")
   interface IReactNonAbiValue
   {
     // Get a pointer to the stored value.
