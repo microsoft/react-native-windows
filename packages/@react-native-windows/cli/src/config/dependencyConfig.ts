@@ -142,15 +142,15 @@ export function dependencyConfigWindows(
     if (!('sourceDir' in userConfig)) {
       sourceDir =
         'Error: Source dir is required if projects are specified, but it is not specified in react-native.config.';
-    } else if (!userConfig.sourceDir) {
+    } else if (userConfig.sourceDir === null) {
       sourceDir =
-        'Error: Source dir is required if projects are specified, but it is not defined in react-native.config.';
+        'Error: Source dir is required if projects are specified, but it is null in react-native.config.';
     } else {
       sourceDir = path.join(folder, userConfig.sourceDir!);
     }
   } else if (!usingManualProjectsOverride) {
     // No manually provided projects, try to find sourceDir
-    if ('sourceDir' in userConfig && userConfig.sourceDir) {
+    if ('sourceDir' in userConfig && userConfig.sourceDir !== null) {
       sourceDir = path.join(folder, userConfig.sourceDir!);
     } else {
       sourceDir = configUtils.findWindowsFolder(folder);

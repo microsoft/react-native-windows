@@ -4,6 +4,11 @@
  * @format
  */
 
+// Types in this file are inaccurate compared to usage in terms of falsiness.
+// We should try to rewrite some of this to do automated schema validation to
+// guarantee correct types
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+
 import * as path from 'path';
 
 import * as configUtils from './configUtils';
@@ -104,9 +109,9 @@ export function projectConfigWindows(
     if (!('solutionFile' in userConfig)) {
       result.solutionFile =
         'Error: Solution file is required but not specified in react-native.config.';
-    } else if (!userConfig.solutionFile) {
+    } else if (userConfig.solutionFile === null) {
       result.solutionFile =
-        'Error: Solution file is not defined in react-native.config.';
+        'Error: Solution file is null in react-native.config.';
     } else {
       result.solutionFile = userConfig.solutionFile;
     }
@@ -127,10 +132,9 @@ export function projectConfigWindows(
           projectFile:
             'Error: Project file is required for project in react-native.config.',
         };
-      } else if (!userConfig.project.projectFile) {
+      } else if (userConfig.project.projectFile === null) {
         result.project = {
-          projectFile:
-            'Error: Project file is not defined in react-native.config.',
+          projectFile: 'Error: Project file is null in react-native.config.',
         };
       } else {
         result.project = {
