@@ -71,7 +71,7 @@ export const ViewWin32 = React.forwardRef(
      */
     const focusRef = React.useRef<ViewWin32>();
 
-    const _setNativeRef = setAndForwardRef({
+    const setNativeRef = setAndForwardRef({
       getForwardedRef: () => ref,
       setLocalRef: localRef => {
         focusRef.current = localRef;
@@ -92,7 +92,7 @@ export const ViewWin32 = React.forwardRef(
       },
     });
 
-    return <View ref={_setNativeRef}
+    return <View ref={setNativeRef}
     {...(rest as InnerViewWin32Props)}
     {...((labeledByTarget !== null) ? {accessibilityLabeledBy:labeledByTarget} : {})}
     {...((describedByTarget !== null) ? {accessibilityDescribedBy:describedByTarget} : {})}

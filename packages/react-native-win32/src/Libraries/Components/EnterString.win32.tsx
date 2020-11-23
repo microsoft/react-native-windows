@@ -97,12 +97,12 @@ export default class EnterString extends React.Component<IEnterStringProps, {}> 
   public render() {
     const args = { ...this.props };
     if (args.onChanged) {
-      args.onChanged = this._on_changed_native.bind(this);
+      args.onChanged = this._onChangedNative.bind(this);
     } // TODO how should this work without the cast
 
     return <EnterStringNative {...(args as any) as IEnterStringNativeProps} />;  }
 
-  private _on_changed_native(event: NativeSyntheticEvent<INativeOnChangedEventArgs>) {
+  private _onChangedNative(event: NativeSyntheticEvent<INativeOnChangedEventArgs>) {
     if (this.props.onChanged) {
       this.props.onChanged(event.nativeEvent.text);
     }

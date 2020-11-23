@@ -72,6 +72,7 @@ function extractComponents(file: File): TestComponent[] {
   const components: TestComponent[] = [];
 
   traverse(file, {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     CallExpression: nodePath => {
       if (
         nodePath.node.callee.type === 'Identifier' &&
