@@ -128,7 +128,7 @@ Subsequent runs of the application should be faster as the JavaScript will be lo
     DOC_STRING("Provides an extension point to allow custom error handling within the react instance. See @IRedBoxHandler for more information.")
     IRedBoxHandler RedBoxHandler { get; set; };
 
-    DOC_STRING("Control the main UI dispatcher to be used by the React instance.  If the @ReactSettingsInstance object is initially created on a UI thread, then this will default to that thread.  The value provided here will be available to native modules and view managers using @IReactContext.UIDispatcher")
+    DOC_STRING("Control the main UI dispatcher to be used by the React instance.  If the @ReactInstanceSettings object is initially created on a UI thread, then this will default to that thread.  The value provided here will be available to native modules and view managers using @IReactContext.UIDispatcher")
     IReactDispatcher UIDispatcher { get; set; };
 
     DOC_STRING("When using a @.UseFastRefresh, @.UseLiveReload or @.UseWebDebugger this is the server hostname that will be used to load the bundle from.")

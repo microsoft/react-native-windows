@@ -52,7 +52,7 @@ namespace Microsoft.ReactNative {
     DOC_STRING("This will contain the component stack where the error occurred, which can help identify the component that is producing the error")
     String ComponentStack { get; };
 
-    DOC_STRING("This Id can be used in @.UpdateError to identify which error is being updated.  For native errors, this is currently always `0`, and @.UpdateError will never be called.")
+    DOC_STRING("This Id can be used in @IRedBoxHandler.UpdateError to identify which error is being updated.  For native errors, this is currently always `0`, and @IRedBoxHandler.UpdateError will never be called.")
     UInt32 Id { get; };
 
     DOC_STRING("For JavaScript errors, this will contain the call stack of where the error occurred.")
