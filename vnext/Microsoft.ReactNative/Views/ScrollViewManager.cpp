@@ -5,15 +5,15 @@
 
 #include <JSValueWriter.h>
 #include <JsiWriter.h>
+#include <Utils/Helpers.h>
 #include <Views/SIPEventHandler.h>
 #include <Views/ShadowNodeBase.h>
 #include "Impl/ScrollViewUWPImplementation.h"
 #include "ScrollViewManager.h"
-#include <Utils/Helpers.h>
 
-#include <winrt/Windows.UI.Core.h>
-#include <winrt/Windows.ApplicationModel.Resources.Core.h>
 #include <UI.Xaml.Input.h>
+#include <winrt/Windows.ApplicationModel.Resources.Core.h>
+#include <winrt/Windows.UI.Core.h>
 
 namespace Microsoft::ReactNative {
 
@@ -48,9 +48,6 @@ class ScrollViewShadowNode : public ShadowNodeBase {
       T defaultValue);
   void SetScrollMode(const winrt::ScrollViewer &scrollViewer);
   void UpdateZoomMode(const winrt::ScrollViewer &scrollViewer);
-  void OnPreviewKeyDown(const winrt::IInspectable &sender, const xaml::Input::KeyRoutedEventArgs &e);
-  void OnLosingFocus(const winrt::IInspectable &sender, const xaml::Input::LosingFocusEventArgs &e);
-  void OnGettingFocus(const winrt::IInspectable &sender, const xaml::Input::GettingFocusEventArgs &e);
 
   float m_zoomFactor{1.0f};
   bool m_isScrollingFromInertia = false;
@@ -133,78 +130,6 @@ void ScrollViewShadowNode::createView() {
       });
 }
 
-void ScrollViewShadowNode::OnPreviewKeyDown(
-    const winrt::IInspectable &sender,
-    const xaml::Input::KeyRoutedEventArgs &e) {
-  auto senderFrameworkElement = sender.try_as<xaml::FrameworkElement>();
-  auto xamlRoot = senderFrameworkElement.XamlRoot();
-  auto focusedElement =
-      xaml::Input::FocusManager::GetFocusedElement(xamlRoot).try_as<xaml::DependencyObject>();
-  auto findNextElementOptions = xaml::Input::FindNextElementOptions();
-  findNextElementOptions.SearchRoot(xamlRoot.Content());
-
-  auto previousKey = m_isHorizontal ? winrt::system::VirtualKey::Left : winrt::system::VirtualKey::Up;
-  auto nextKey = m_isHorizontal ? winrt::system::VirtualKey::Right : winrt::system::VirtualKey::Down;
-
-  if (e.Key() == previousKey) {
-    auto firstFocusableElement =
-        xaml::Input::FocusManager::FindFirstFocusableElement(senderFrameworkElement).try_as<xaml::DependencyObject>();
-    auto isFirstElementFocused = firstFocusableElement == focusedElement;
-    if (!isFirstElementFocused) {
-      xaml::Input::FocusManager::TryMoveFocus(xaml::Input::FocusNavigationDirection::Previous, findNextElementOptions);
-      e.Handled(true);
-    }
-  } else if (e.Key() == nextKey) {
-    auto lastFocusableElement =
-        xaml::Input::FocusManager::FindLastFocusableElement(senderFrameworkElement).try_as<winrt::DependencyObject>();
-    auto isLastElementFocused = lastFocusableElement == focusedElement;
-    if (!isLastElementFocused) {
-      xaml::Input::FocusManager::TryMoveFocus(xaml::Input::FocusNavigationDirection::Next, findNextElementOptions);
-      e.Handled(true);
-    }
-  } else if (e.Key() == winrt::system::VirtualKey::Tab) {
-    if (react::uwp::IsXamlIsland()) {
-      auto const &coreWindow = winrt::CoreWindow::GetForCurrentThread();
-      auto isShiftDown = KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::system::VirtualKey::Shift);
-
-      winrt::Point anchorTopLeft = winrt::Point(0, 0);
-      xaml::Media::GeneralTransform transform = senderFrameworkElement.TransformToVisual(xamlRoot.Content());
-      winrt::Point anchorTopLeftConverted = transform.TransformPoint(anchorTopLeft);
-      auto exclusionRect = winrt::Rect(
-          anchorTopLeftConverted.X,
-          anchorTopLeftConverted.Y,
-          static_cast<float>(senderFrameworkElement.ActualWidth()),
-          static_cast<float>(senderFrameworkElement.ActualHeight()));
-      findNextElementOptions.ExclusionRect(exclusionRect);
-
-      auto nextElement = xaml::Input::FocusManager::FindNextElement(
-          isShiftDown ? xaml::Input::FocusNavigationDirection::Up : xaml::Input::FocusNavigationDirection::Down,
-          findNextElementOptions);
-      if (nextElement) {
-        xaml::Input::FocusManager::TryFocusAsync(nextElement, winrt::FocusState::Programmatic);
-        e.Handled(true);
-      }
-    } else {
-        // TODO - need an alternative to winrt::CoreWindow::GetForCurrentThread(); for XAML Islands.
-    }
-  }
-}
-
-void ScrollViewShadowNode::OnGettingFocus(
-    const winrt::IInspectable &sender,
-    const xaml::Input::GettingFocusEventArgs &e) {
-  if (e.FocusState() != winrt::FocusState::Programmatic && m_lastSelectedItem.get() != nullptr &&
-      e.NewFocusedElement() != m_lastSelectedItem.get()) {
-    e.TrySetNewFocusedElement(m_lastSelectedItem.get());
-  }
-}
-
-void ScrollViewShadowNode::OnLosingFocus(
-    const winrt::IInspectable &sender,
-    const xaml::Input::LosingFocusEventArgs &e) {
-  m_lastSelectedItem = e.OldFocusedElement();
-}
-
 void ScrollViewShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_updating = true;
 
@@ -229,23 +154,6 @@ void ScrollViewShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSVal
       if (valid) {
         m_isScrollingEnabled = scrollEnabled;
         SetScrollMode(scrollViewer);
-      }
-    } else if (propertyName == "isFlatList") {
-      const auto [valid, isFlatList] = getPropertyAndValidity(propertyValue, true);
-      if (valid && isFlatList) {
-        // We use the XAMl ScrollViewer for both the RN ScrollView and FlatList - need arrow navigation in FlatList only.
-        m_PreviewKeyDownRevoker = scrollViewer.PreviewKeyDown(
-            winrt::auto_revoke, [=](const auto &sender, const auto &e) {
-              OnPreviewKeyDown(sender, e);
-            });
-        m_GettingFocusRevoker = scrollViewer.GettingFocus(
-            winrt::auto_revoke, [=](const auto &sender, const auto &e) {
-              OnGettingFocus(sender, e);
-            });
-        m_LosingFocusRevoker = scrollViewer.LosingFocus(
-            winrt::auto_revoke, [=](const auto &sender, const auto &e) {
-              OnLosingFocus(sender, e);
-            });
       }
     } else if (propertyName == "showsHorizontalScrollIndicator") {
       const auto [valid, showsHorizontalScrollIndicator] = getPropertyAndValidity(propertyValue, true);
@@ -522,7 +430,6 @@ void ScrollViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSV
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"snapToStart", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"snapToEnd", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"pagingEnabled", L"boolean");
-  winrt::Microsoft::ReactNative::WriteProperty(writer, L"isFlatList", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"keyboardDismissMode", L"string");
 }
 

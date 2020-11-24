@@ -3,11 +3,10 @@
 
 #pragma once
 
-#include <Views/ViewPanel.h>
-#include "Views/ViewViewManager.h"
-#include <winrt/Windows.UI.Xaml.h>
 #include <Views/ShadowNodeBase.h>
-
+#include <Views/ViewPanel.h>
+#include <winrt/Windows.UI.Xaml.h>
+#include "Views/ViewViewManager.h"
 
 namespace winrt {
 using ContentControl = winrt::Windows::UI::Xaml::Controls::ContentControl;
@@ -49,6 +48,6 @@ class FocusZoneViewManager : public ViewViewManager {
   ShadowNode *createShadow() const override;
 };
 
-}
+} // namespace Microsoft::ReactNative
 
 // @generated SignedSource<<9b821f0216bf3cad2629d3d373cb14bd>>

@@ -12,6 +12,7 @@
 #include <Views/ActivityIndicatorViewManager.h>
 #include <Views/DatePickerViewManager.h>
 #include <Views/FlyoutViewManager.h>
+#include <Views/FocusZoneViewManager.h>
 #include <Views/Image/ImageViewManager.h>
 #include <Views/PickerViewManager.h>
 #include <Views/PopupViewManager.h>
@@ -26,7 +27,6 @@
 #include <Views/TextViewManager.h>
 #include <Views/ViewViewManager.h>
 #include <Views/VirtualTextViewManager.h>
-#include <Views/FocusZoneViewManager.h>
 
 namespace Microsoft::ReactNative {
 

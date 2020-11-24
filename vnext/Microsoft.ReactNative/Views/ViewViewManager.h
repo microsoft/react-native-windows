@@ -3,25 +3,22 @@
 
 #pragma once
 
-#include "ViewViewManager.h"
-#include "ViewControl.h"
-#include <cdebug.h>
-#include <Views/FrameworkElementViewManager.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
+#include <Utils/PropertyUtils.h>
+#include <Views/FrameworkElementViewManager.h>
+#include <Views/ShadowNodeBase.h>
 #include <Views/ViewPanel.h>
-#include "DynamicAutomationProperties.h"
+#include <cdebug.h>
 #include <inspectable.h>
 #include <unicode.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
-#include <Utils/PropertyUtils.h>
-#include <Views/ShadowNodeBase.h>
 #include <winstring.h>
+#include "DynamicAutomationProperties.h"
+#include "ViewControl.h"
+#include "ViewViewManager.h"
 namespace Microsoft::ReactNative {
-
-class ViewShadowNode;
-// ViewShadowNode
 
 class ViewShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;

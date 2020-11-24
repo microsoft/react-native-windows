@@ -31,7 +31,6 @@
 
 namespace Microsoft::ReactNative {
 
-
 // ViewPanel uses a ViewBackground property, not Background, so need to
 // specialize
 // PropertyUtils' TryUpdateBackgroundBrush to use ViewBackground.

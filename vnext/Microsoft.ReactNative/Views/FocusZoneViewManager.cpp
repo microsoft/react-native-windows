@@ -11,8 +11,8 @@
 
 #include <Modules/NativeUIManager.h>
 #include <Utils/AccessibilityUtils.h>
-#include <Utils/PropertyUtils.h>
 #include <Utils/Helpers.h>
+#include <Utils/PropertyUtils.h>
 
 #include <INativeUIManager.h>
 #include <IReactInstance.h>
@@ -20,9 +20,9 @@
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Core.h>
 
-#include <winrt/Windows.ApplicationModel.Resources.Core.h>
-#include <UI.Xaml.Input.h>
 #include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Input.h>
+#include <winrt/Windows.ApplicationModel.Resources.Core.h>
 
 namespace winrt {
 using namespace Windows::Foundation;
@@ -31,7 +31,7 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Media;
-} 
+} // namespace winrt
 
 namespace Microsoft {
 namespace ReactNative {
@@ -40,15 +40,12 @@ void FocusZoneViewShadowNode::createView() {
   Super::createView();
 
   auto panel = GetViewPanel();
-  m_panelKeyDownRevoker = panel.PreviewKeyDown(
-      winrt::auto_revoke,
-      [=](const winrt::IInspectable &sender, const xaml::Input::KeyRoutedEventArgs &e) { OnKeyDown(sender, e); });
-  m_panelGettingFocusRevoker = panel.GettingFocus(
-      winrt::auto_revoke,
-      [=](const winrt::IInspectable &sender, const xaml::Input::GettingFocusEventArgs &e) { OnGettingFocus(sender, e); });
-  m_panelLosingFocusRevoker = panel.LosingFocus(
-      winrt::auto_revoke,
-      [=](const winrt::IInspectable &sender, const xaml::Input::LosingFocusEventArgs &e) { OnLosingFocus(sender, e); });
+  m_panelKeyDownRevoker =
+      panel.PreviewKeyDown(winrt::auto_revoke, [=](const auto &sender, const auto &e) { OnKeyDown(sender, e); });
+  m_panelGettingFocusRevoker =
+      panel.GettingFocus(winrt::auto_revoke, [=](const auto &sender, const auto &e) { OnGettingFocus(sender, e); });
+  m_panelLosingFocusRevoker =
+      panel.LosingFocus(winrt::auto_revoke, [=](const auto &sender, const auto &e) { OnLosingFocus(sender, e); });
 }
 
 void FocusZoneViewShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
@@ -101,25 +98,13 @@ void FocusZoneViewShadowNode::OnKeyDown(const winrt::IInspectable &sender, const
       auto exclusionRect = winrt::Rect(
           anchorTopLeftConverted.X,
           anchorTopLeftConverted.Y,
-          static_cast<float>(senderFrameworkElement.ActualWidth()),
-          static_cast<float>(senderFrameworkElement.ActualHeight()));
+          static_cast<float>(senderFrameworkElement.Width()),
+          static_cast<float>(senderFrameworkElement.Height()));
       findNextElementOptions.ExclusionRect(exclusionRect);
 
       auto nextElement = xaml::Input::FocusManager::FindNextElement(
           isShiftDown ? xaml::Input::FocusNavigationDirection::Up : xaml::Input::FocusNavigationDirection::Down,
           findNextElementOptions);
-      //auto flowDirectionSetting =
-      //    winrt::Windows::ApplicationModel::Resources::Core::ResourceContext::GetForCurrentView()
-      //        .QualifierValues()
-      //        .Lookup(L"LayoutDirection");
-
-      //// TODO handle TTBLTR  && TTBRTL
-      //// extrazct to funciton
-      //if (flowDirectionSetting == L"RLT" && m_isHorizontal) {
-      //  auto tmp = nextKey;
-      //  nextKey = previousKey;
-      //  previousKey = nextKey;
-      //}
       if (nextElement) {
         xaml::Input::FocusManager::TryFocusAsync(nextElement, winrt::FocusState::Programmatic);
         e.Handled(true);
@@ -147,8 +132,7 @@ void FocusZoneViewShadowNode::OnLosingFocus(
 
 // FocusZoneViewManager
 
-FocusZoneViewManager::FocusZoneViewManager(const Mso::React::IReactContext &context)
-    : Super(context) {}
+FocusZoneViewManager::FocusZoneViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const wchar_t *FocusZoneViewManager::GetName() const {
   return L"FocusZoneView";
@@ -163,6 +147,5 @@ ShadowNode *FocusZoneViewManager::createShadow() const {
   return new FocusZoneViewShadowNode();
 }
 
-} // namespace uwp
-} // namespace react
-
+} // namespace ReactNative
+} // namespace Microsoft

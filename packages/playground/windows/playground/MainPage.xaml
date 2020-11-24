@@ -66,6 +66,7 @@
                     <ComboBoxItem Content="Samples\control" />
                     <ComboBoxItem Content="Samples\flexbox" />
                     <ComboBoxItem Content="Samples\focusTest" />
+                    <ComboBoxItem Content="Samples\focusZone" />
                     <ComboBoxItem Content="Samples\geosample" />
                     <ComboBoxItem Content="Samples\image" />
                     <ComboBoxItem Content="Samples\index" />
