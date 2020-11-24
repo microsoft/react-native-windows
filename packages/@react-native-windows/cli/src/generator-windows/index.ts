@@ -213,7 +213,7 @@ export async function copyProjectTemplateAndReplace(
     },
     {
       id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
-      version: options.useWinUI3 ? winui3Version : '2.3.191129002',
+      version: options.useWinUI3 ? winui3Version : '2.5.0-prerelease.201027002',
       hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
       hasTargets: false,
     },
