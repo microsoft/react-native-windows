@@ -26,11 +26,6 @@
 
 namespace winrt {
 using namespace Windows::Foundation;
-using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Controls::Primitives;
-using namespace Windows::UI::Xaml::Media;
 } // namespace winrt
 
 namespace Microsoft {
@@ -56,6 +51,8 @@ void FocusZoneViewShadowNode::updateProperties(winrt::Microsoft::ReactNative::JS
     if (propertyName == "focusDirection") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         m_isHorizontal = propertyValue.AsString() == "horizontal";
+      } else {
+        m_isHorizontal = false;
       }
     }
   }
@@ -81,7 +78,7 @@ void FocusZoneViewShadowNode::OnKeyDown(const winrt::IInspectable &sender, const
     }
   } else if (e.Key() == nextKey) {
     auto lastFocusableElement =
-        xaml::Input::FocusManager::FindLastFocusableElement(senderFrameworkElement).try_as<winrt::DependencyObject>();
+        xaml::Input::FocusManager::FindLastFocusableElement(senderFrameworkElement).try_as<xaml::DependencyObject>();
     auto isLastElementFocused = lastFocusableElement == focusedElement;
     if (!isLastElementFocused) {
       xaml::Input::FocusManager::TryMoveFocus(xaml::Input::FocusNavigationDirection::Next, findNextElementOptions);
@@ -89,7 +86,7 @@ void FocusZoneViewShadowNode::OnKeyDown(const winrt::IInspectable &sender, const
     }
   } else if (e.Key() == winrt::system::VirtualKey::Tab) {
     if (!react::uwp::IsXamlIsland()) {
-      auto const &coreWindow = winrt::CoreWindow::GetForCurrentThread();
+      auto const &coreWindow = ui::Core::CoreWindow::GetForCurrentThread();
       auto isShiftDown = KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::system::VirtualKey::Shift);
 
       winrt::Point anchorTopLeft = winrt::Point(0, 0);
@@ -98,19 +95,19 @@ void FocusZoneViewShadowNode::OnKeyDown(const winrt::IInspectable &sender, const
       auto exclusionRect = winrt::Rect(
           anchorTopLeftConverted.X,
           anchorTopLeftConverted.Y,
-          static_cast<float>(senderFrameworkElement.Width()),
-          static_cast<float>(senderFrameworkElement.Height()));
+          static_cast<float>(senderFrameworkElement.ActualWidth()),
+          static_cast<float>(senderFrameworkElement.ActualHeight()));
       findNextElementOptions.ExclusionRect(exclusionRect);
 
       auto nextElement = xaml::Input::FocusManager::FindNextElement(
           isShiftDown ? xaml::Input::FocusNavigationDirection::Up : xaml::Input::FocusNavigationDirection::Down,
           findNextElementOptions);
       if (nextElement) {
-        xaml::Input::FocusManager::TryFocusAsync(nextElement, winrt::FocusState::Programmatic);
+        xaml::Input::FocusManager::TryFocusAsync(nextElement, xaml::FocusState::Programmatic);
         e.Handled(true);
       }
     } else {
-      // TODO - need an alternative to winrt::CoreWindow::GetForCurrentThread(); for XAML Islands.
+      // TODO - need an alternative to ui::Core::CoreWindow::GetForCurrentThread(); for XAML Islands.
     }
   }
 }

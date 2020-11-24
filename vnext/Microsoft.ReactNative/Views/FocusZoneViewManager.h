@@ -15,7 +15,7 @@ using namespace winrt::Windows::UI::Xaml;
 
 namespace Microsoft::ReactNative {
 
-class FocusZoneViewShadowNode : public ViewShadowNode {
+class FocusZoneViewShadowNode final : public ViewShadowNode {
   using Super = ViewShadowNode;
 
  public:
@@ -30,7 +30,7 @@ class FocusZoneViewShadowNode : public ViewShadowNode {
   void OnLosingFocus(const winrt::IInspectable &sender, const xaml::Input::LosingFocusEventArgs &e);
 
   bool m_isHorizontal = false;
-  winrt::weak_ref<winrt::DependencyObject> m_lastElement = nullptr;
+  winrt::weak_ref<xaml::DependencyObject> m_lastElement = nullptr;
   xaml::UIElement::PreviewKeyDown_revoker m_panelKeyDownRevoker{};
   xaml::UIElement::GettingFocus_revoker m_panelGettingFocusRevoker{};
   xaml::UIElement::LosingFocus_revoker m_panelLosingFocusRevoker{};

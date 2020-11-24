@@ -2,27 +2,20 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "ViewViewManager.h"
-#include <cdebug.h>
 
-#include "ViewControl.h"
-
-#include "DynamicAutomationProperties.h"
-
-#include <JSValueWriter.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
 #include <Utils/AccessibilityUtils.h>
 #include <Utils/PropertyUtils.h>
+#include <cdebug.h>
 
 #include <INativeUIManager.h>
 #include <IReactInstance.h>
+#include <JSValueWriter.h>
 
-#include <inspectable.h>
-#include <unicode.h>
-#include <winrt/Windows.System.h>
-#include <winrt/Windows.UI.Xaml.Interop.h>
-#include <winstring.h>
+#include "DynamicAutomationProperties.h"
+#include "ViewControl.h"
+#include "ViewViewManager.h"
 
 #if defined(_DEBUG)
 // Currently only used for tagging controls in debug
@@ -30,6 +23,212 @@
 #endif
 
 namespace Microsoft::ReactNative {
+
+// ViewShadowNode
+void ViewShadowNode::createView() {
+  Super::createView();
+
+  auto panel = GetViewPanel();
+
+  react::uwp::DynamicAutomationProperties::SetAccessibilityInvokeEventHandler(panel, [=]() {
+    if (OnClick())
+      DispatchEvent("topClick", std::move(folly::dynamic::object("target", m_tag)));
+    else
+      DispatchEvent("topAccessibilityTap", std::move(folly::dynamic::object("target", m_tag)));
+  });
+
+  react::uwp::DynamicAutomationProperties::SetAccessibilityActionEventHandler(
+      panel, [=](winrt::react::uwp::AccessibilityAction const &action) {
+        folly::dynamic eventData = folly::dynamic::object("target", m_tag);
+
+        eventData.insert(
+            "actionName",
+            action.Label.empty() ? react::uwp::HstringToDynamic(action.Name)
+                                 : react::uwp::HstringToDynamic(action.Label));
+
+        DispatchEvent("topAccessibilityAction", std::move(eventData));
+      });
+}
+
+void ViewShadowNode::dispatchCommand(
+    const std::string &commandId,
+    winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
+  if (commandId == "focus") {
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+      uiManager->focus(m_tag);
+    }
+  } else if (commandId == "blur") {
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+      uiManager->blur(m_tag);
+    }
+  } else {
+    Super::dispatchCommand(commandId, std::move(commandArgs));
+  }
+}
+
+bool ViewShadowNode::IsControl() {
+  return m_isControl;
+}
+void ViewShadowNode::IsControl(bool isControl) {
+  m_isControl = isControl;
+}
+
+bool ViewShadowNode::HasOuterBorder() {
+  return m_hasOuterBorder;
+}
+void ViewShadowNode::HasOuterBorder(bool hasOuterBorder) {
+  m_hasOuterBorder = hasOuterBorder;
+}
+
+bool ViewShadowNode::EnableFocusRing() {
+  return m_enableFocusRing;
+}
+void ViewShadowNode::EnableFocusRing(bool enable) {
+  m_enableFocusRing = enable;
+
+  if (IsControl())
+    GetControl().UseSystemFocusVisuals(m_enableFocusRing);
+}
+
+int32_t ViewShadowNode::TabIndex() {
+  return m_tabIndex;
+}
+void ViewShadowNode::TabIndex(int32_t tabIndex) {
+  m_tabIndex = tabIndex;
+
+  if (IsControl())
+    GetControl().TabIndex(m_tabIndex);
+}
+
+bool ViewShadowNode::OnClick() const {
+  return m_onClick;
+}
+void ViewShadowNode::OnClick(bool isSet) {
+  m_onClick = isSet;
+}
+
+bool ViewShadowNode::IsFocusable() const {
+  return m_isFocusable;
+}
+void ViewShadowNode::IsFocusable(bool isFocusable) {
+  m_isFocusable = isFocusable;
+}
+
+bool ViewShadowNode::IsHitTestBrushRequired() const {
+  return IsRegisteredForMouseEvents();
+}
+
+void ViewShadowNode::AddView(ShadowNode &child, int64_t index) {
+  const auto &view = static_cast<ShadowNodeBase &>(child).GetView();
+  if (view.try_as<xaml::UIElement>() == nullptr) {
+    const auto &ii = view.as<winrt::IInspectable>();
+    auto name = winrt::get_class_name(ii);
+    YellowBox(
+        std::string("ViewViewManager::AddView expected a UIElement but got a ") +
+        Microsoft::Common::Unicode::Utf16ToUtf8(name.c_str()));
+  }
+
+  GetViewPanel().InsertAt(static_cast<uint32_t>(index), view.as<xaml::UIElement>());
+}
+
+void ViewShadowNode::RemoveChildAt(int64_t indexToRemove) {
+  if (indexToRemove == static_cast<uint32_t>(indexToRemove))
+    GetViewPanel().RemoveAt(static_cast<uint32_t>(indexToRemove));
+}
+
+void ViewShadowNode::removeAllChildren() {
+  GetViewPanel().Clear();
+
+  XamlView current = m_view;
+
+  // TODO NOW: Why do we do this? Removal of children doesn't seem to imply we
+  // tear down the infrastr
+  if (IsControl()) {
+    if (auto control = m_view.try_as<xaml::Controls::ContentControl>()) {
+      current = control.Content().as<XamlView>();
+      control.Content(nullptr);
+    } else {
+      std::string name = Microsoft::Common::Unicode::Utf16ToUtf8(winrt::get_class_name(current).c_str());
+      cdebug << "Tearing down, IsControl=true but the control is not a ContentControl, it's a " << name << std::endl;
+    }
+  }
+
+  if (HasOuterBorder()) {
+    if (auto border = current.try_as<xaml::Controls::Border>()) {
+      border.Child(nullptr);
+    }
+  }
+}
+
+void ViewShadowNode::ReplaceChild(const XamlView &oldChildView, const XamlView &newChildView) {
+  auto pPanel = GetViewPanel();
+  if (pPanel != nullptr) {
+    uint32_t index;
+    if (pPanel.Children().IndexOf(oldChildView.as<xaml::UIElement>(), index)) {
+      pPanel.RemoveAt(index);
+      pPanel.InsertAt(index, newChildView.as<xaml::UIElement>());
+    } else {
+      assert(false);
+    }
+  }
+}
+
+void ViewShadowNode::RefreshProperties() {
+  // The view may have been replaced, so transfer properties stored on the
+  // shadow node to the view
+  EnableFocusRing(EnableFocusRing());
+  TabIndex(TabIndex());
+  static_cast<FrameworkElementViewManager *>(GetViewManager())->RefreshTransformMatrix(this);
+}
+
+winrt::react::uwp::ViewPanel ViewShadowNode::GetViewPanel() {
+  XamlView current = m_view;
+
+  if (IsControl()) {
+    if (auto control = m_view.try_as<xaml::Controls::ContentControl>()) {
+      current = control.Content().as<XamlView>();
+    }
+  }
+
+  if (HasOuterBorder()) {
+    if (auto border = current.try_as<xaml::Controls::Border>()) {
+      current = border.Child().try_as<XamlView>();
+    }
+  }
+
+  auto panel = current.try_as<winrt::react::uwp::ViewPanel>();
+  assert(panel != nullptr);
+
+  return panel;
+}
+
+winrt::react::uwp::ViewControl ViewShadowNode::GetControl() {
+  return IsControl() ? m_view.as<winrt::react::uwp::ViewControl>() : nullptr;
+}
+
+XamlView ViewShadowNode::CreateViewControl() {
+  auto contentControl = winrt::make<winrt::react::uwp::implementation::ViewControl>();
+
+  m_contentControlGotFocusRevoker = contentControl.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
+    if (args.OriginalSource().try_as<xaml::UIElement>() == contentControl.as<xaml::UIElement>()) {
+      auto tag = m_tag;
+      DispatchEvent("topFocus", std::move(folly::dynamic::object("target", tag)));
+    }
+  });
+
+  m_contentControlLostFocusRevoker = contentControl.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
+    if (args.OriginalSource().try_as<xaml::UIElement>() == contentControl.as<xaml::UIElement>()) {
+      auto tag = m_tag;
+      DispatchEvent("topBlur", std::move(folly::dynamic::object("target", tag)));
+    }
+  });
+
+  return contentControl.try_as<XamlView>();
+}
+
+void ViewShadowNode::DispatchEvent(std::string &&eventName, folly::dynamic &&eventData) {
+  GetViewManager()->GetReactContext().DispatchEvent(m_tag, std::move(eventName), std::move(eventData));
+}
 
 // ViewPanel uses a ViewBackground property, not Background, so need to
 // specialize

@@ -21,68 +21,49 @@ const FocusZoneView = requireNativeComponent('FocusZoneView');
 
 const DATA = [
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     title: 'First Item',
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
     title: 'Second Item',
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    title: 'Fourth Item',
   },
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
+    title: 'Fifth Item',
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
+    title: 'Sixth Item',
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    title: 'Seventh Item',
   },
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
+    title: 'Eighth Item',
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
+    title: 'Nineth Item',
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    title: 'Tenth Item',
   },
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
+    title: 'Eleventh Item',
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
+    title: 'Twelfth Item',
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    title: 'Thirteenth Item',
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
+    title: 'Fourteenth Item',
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    title: 'Fifteenth Item',
   },
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
+    title: 'Sixteenth Item',
   },
 ];
 
@@ -93,12 +74,6 @@ export default class Bootstrap extends React.Component<{}, any> {
     eventSwitchIsOn: false,
     eventSwitchRegressionIsOn: true,
   };
-
-  Item = ({title}) => (
-    <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
-    </View>
-  );
 
   render() {
     return (
@@ -123,7 +98,6 @@ export default class Bootstrap extends React.Component<{}, any> {
             renderItem={({item}) => (
               <Button title={item.title} onPress={() => console.log('test')} />
             )}
-            keyExtractor={item => item.id}
           />
         </FocusZoneView>
 
