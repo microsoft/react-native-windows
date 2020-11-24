@@ -179,8 +179,7 @@ export type ViewWin32OmitTypes = RN.ViewPropsAndroid &
  * Properties for ViewWin32 component
  */
 export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>, BasePropsWin32 {
-  // tslint:disable-next-line no-reserved-keywords -- type name matching facebook implementation
-  type?: React.ElementType;
+   type?: React.ElementType;
   children?: React.ReactNode;
   accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
   /**

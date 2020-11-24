@@ -61,19 +61,17 @@ export default class MSBuildTools {
     newSuccess(`Found Solution: ${slnFile}`);
     newInfo(`Build configuration: ${buildType}`);
     newInfo(`Build platform: ${buildArch}`);
-    if (target) {
-      newInfo(`Build target: ${target}`);
-    }
+
     const verbosityOption = verbose ? 'normal' : 'minimal';
     const logPrefix = path.join(
       buildLogDirectory || os.tmpdir(),
-      `msbuild_${process.pid}${target ? '_' + target : ''}`,
+      `msbuild_${process.pid}_${target}`,
     );
 
     const errorLog = logPrefix + '.err';
     const warnLog = logPrefix + '.wrn';
 
-    const localBinLog = target ? `:${target}.binlog` : '';
+    const localBinLog = target === 'build' ? '' : ':deploy.binlog';
     const binlog = buildLogDirectory ? `:${logPrefix}.binlog` : localBinLog;
 
     const args = [
@@ -99,15 +97,13 @@ export default class MSBuildTools {
 
     if (target === 'build') {
       args.push('/restore', '/p:RestorePackagesConfig=true');
-    } else if (target === 'deploy') {
+    } else {
       args.push(`/t:Deploy`);
     }
 
-    if (msBuildProps) {
-      Object.keys(msBuildProps).forEach(function(key) {
-        args.push(`/p:${key}=${msBuildProps[key]}`);
-      });
-    }
+    Object.keys(msBuildProps).forEach(key => {
+      args.push(`/p:${key}=${msBuildProps[key]}`);
+    });
 
     try {
       checkRequirements.isWinSdkPresent('10.0');

@@ -16,14 +16,12 @@ import { requireNativeComponent } from 'react-native';
 
 import { ITouchableNativeFeedbackProps } from './TouchableNativeFeedback.Props';
 
-let RCTTouchableNativeFeedback: React.ComponentClass<ITouchableNativeFeedbackProps>;
-
 class TouchableNativeFeedback extends React.Component<ITouchableNativeFeedbackProps, {}> {
   public render() {
     return <RCTTouchableNativeFeedback {...this.props}>{this.props.children}</RCTTouchableNativeFeedback>;
   }
 }
 
-RCTTouchableNativeFeedback = requireNativeComponent('RCTTouchableNativeFeedback');
+const RCTTouchableNativeFeedback = requireNativeComponent('RCTTouchableNativeFeedback');
 
 export = TouchableNativeFeedback;

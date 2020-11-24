@@ -4,6 +4,11 @@
  * @format
  */
 
+// Types in this file are inaccurate compared to usage in terms of falsiness.
+// We should try to rewrite some of this to do automated schema validation to
+// guarantee correct types
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+
 import * as path from 'path';
 
 import * as configUtils from './configUtils';
@@ -106,6 +111,8 @@ export interface WindowsDependencyConfig {
  * @param userConfig A manually specified override config.
  * @return The config if any RNW native modules exist.
  */
+// Disabled due to existing high cyclomatic complexity
+// eslint-disable-next-line complexity
 export function dependencyConfigWindows(
   folder: string,
   userConfig: Partial<WindowsDependencyConfig> | null = {},
@@ -120,7 +127,7 @@ export function dependencyConfigWindows(
   const usingManualNugetPackagesOverride =
     'nugetPackages' in userConfig && Array.isArray(userConfig.nugetPackages);
 
-  var result: WindowsDependencyConfig = {
+  const result: WindowsDependencyConfig = {
     folder,
     projects: usingManualProjectsOverride ? userConfig.projects! : [],
     solutionFile: null,
@@ -175,7 +182,7 @@ export function dependencyConfigWindows(
 
   const usingManualSolutionFile = 'solutionFile' in userConfig;
 
-  var solutionFile = null;
+  let solutionFile = null;
   if (usingManualSolutionFile && userConfig.solutionFile !== null) {
     // Manually provided solutionFile, so extract it
     solutionFile = path.join(sourceDir, userConfig.solutionFile!);
@@ -198,9 +205,10 @@ export function dependencyConfigWindows(
       'directDependency',
     ];
 
-    for (let project of result.projects) {
+    for (const project of result.projects) {
       // Verifying (req) items
-      var errorFound = false;
+      let errorFound = false;
+
       alwaysRequired.forEach(item => {
         if (!(item in project)) {
           (project[
@@ -265,10 +273,10 @@ export function dependencyConfigWindows(
 
       const directDependency = true;
 
-      let cppHeaders: string[] = [];
-      let cppPackageProviders: string[] = [];
-      let csNamespaces: string[] = [];
-      let csPackageProviders: string[] = [];
+      const cppHeaders: string[] = [];
+      const cppPackageProviders: string[] = [];
+      const csNamespaces: string[] = [];
+      const csPackageProviders: string[] = [];
 
       if (projectNamespace !== null) {
         const cppNamespace = projectNamespace.replace(/\./g, '::');

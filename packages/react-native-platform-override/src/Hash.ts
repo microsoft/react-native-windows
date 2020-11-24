@@ -15,7 +15,7 @@ import isutf8 from 'isutf8';
  * Creates a hash from content, attempting to normalize for line-feeds
  */
 export class Hasher {
-  private hash: crypto.Hash;
+  private readonly hash: crypto.Hash;
 
   constructor() {
     this.hash = crypto.createHash('sha1');

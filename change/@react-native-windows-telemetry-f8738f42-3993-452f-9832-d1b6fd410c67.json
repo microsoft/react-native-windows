@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixup naming convention rules",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}

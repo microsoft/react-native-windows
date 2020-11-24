@@ -29,7 +29,7 @@ const VERIFY_FLAG = '-verify';
 function main() {
   // Run clang-format.
   try {
-    let verify = process.argv.indexOf(VERIFY_FLAG) > 0;
+    const verify = process.argv.indexOf(VERIFY_FLAG) > 0;
     const args = process.argv.slice(2).filter(_ => _ !== VERIFY_FLAG);
 
     // Pass all arguments to clang-format, including e.g. -version etc.
@@ -114,10 +114,10 @@ function spawnClangFormat(
   );
 
   // split file array into chunks of 30
-  let i,
-    j,
-    chunks = [],
-    chunkSize = 30;
+  let i: number;
+  let j: number;
+  const chunks = [];
+  const chunkSize = 30;
 
   for (i = 0, j = files.length; i < j; i += chunkSize) {
     chunks.push(files.slice(i, i + chunkSize));
@@ -125,12 +125,12 @@ function spawnClangFormat(
 
   // launch a new process for each chunk
   async.series<number, Error>(
-    chunks.map(function(chunk) {
+    chunks.map(chunk => {
       return function(callback) {
         const clangFormatProcess = spawn(nativeBinary, args.concat(chunk), {
           stdio: stdio,
         });
-        clangFormatProcess.on('close', function(exit) {
+        clangFormatProcess.on('close', exit => {
           if (exit !== 0) {
             callback(errorFromExitCode(exit));
           } else {
@@ -139,7 +139,7 @@ function spawnClangFormat(
         });
       };
     }),
-    function(err) {
+    err => {
       if (err) {
         done(err);
         return;

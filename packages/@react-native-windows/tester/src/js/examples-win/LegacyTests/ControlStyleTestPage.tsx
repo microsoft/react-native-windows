@@ -56,7 +56,7 @@ export function ControlStyleTestPage() {
   const [showRoundBorder, setShowRoundBorder] = useState(false);
 
   const onPressShowRoundBorder = () => {
-    var previousState = showRoundBorder;
+    const previousState = showRoundBorder;
     setShowRoundBorder(!previousState);
   };
 

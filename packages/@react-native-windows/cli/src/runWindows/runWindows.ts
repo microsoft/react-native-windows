@@ -121,7 +121,6 @@ async function runWindows(
       name: 'run-windows',
       properties: {
         release: options.release,
-        root: options.root !== undefined,
         arch: options.arch,
         singleproc: options.singleproc,
         emulator: options.emulator,
@@ -243,7 +242,7 @@ async function runWindowsInternal(
 
     // Get build/deploy options
     const buildType = deploy.getBuildConfiguration(options);
-    let msBuildProps = build.parseMsBuildProps(options);
+    const msBuildProps = build.parseMsBuildProps(options);
 
     // Disable the autolink check since we just ran it
     msBuildProps.RunAutolinkCheck = 'false';
