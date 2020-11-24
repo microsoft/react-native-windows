@@ -23,7 +23,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref\Microsoft.ReactNative.Managed.dll" target="ref\uap10.0"/>
+    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref.anycpu\Microsoft.ReactNative.Managed.dll" target="ref\uap10.0"/>
     <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.xml" target="ref\uap10.0"/> 
 
     <file src="$nugetroot$\ARM\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" target="runtimes\win10-arm\native" />
