@@ -5,6 +5,11 @@
     <WinUI3Version>3.0.0-preview3.201113.0</WinUI3Version>
   </PropertyGroup>
 
+  <PropertyGroup Label="WinUI2x versioning">
+		<!--This value is also used by the CLI, see /packages/@react-native-windows/generate-windows -->
+    <WinUI2xVersion>2.5.0-prerelease.201027002</WinUI2xVersion>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(UseWinUI3)'=='true'">
     <WinUIPackageName>Microsoft.WinUI</WinUIPackageName>
     <WinUIPackageVersion>$(WinUI3Version)</WinUIPackageVersion>
@@ -19,7 +24,7 @@
 
   <PropertyGroup Condition="'$(UseWinUI3)'!='true'">
     <WinUIPackageName>Microsoft.UI.Xaml</WinUIPackageName>
-    <WinUIPackageVersion>2.5.0-prerelease.201027002</WinUIPackageVersion>
+    <WinUIPackageVersion>$(WinUI2xVersion)</WinUIPackageVersion>
     <!-- In WinUI 2.x, the props file is imported for us by the targets file -->
     <WinUIPackageProps />
   </PropertyGroup>

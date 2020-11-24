@@ -195,7 +195,16 @@ export async function copyProjectTemplateAndReplace(
     'WinUI3Version',
     winui3PropsPath,
   );
-
+  const winui2xPropsPath = require.resolve(
+    'react-native-windows/PropertySheet/WinUI.props',
+    {paths: [process.cwd()]},
+  );
+  const winui2xProps = readProjectFile(winui2xPropsPath);
+  const winui2xVersion = findPropertyValue(
+    winui2xProps,
+    'WinUI2xVersion',
+    winui2xPropsPath,
+  );
   const csNugetPackages: NugetPackage[] = [
     {
       id: 'Microsoft.NETCore.UniversalWindowsPlatform',
@@ -213,7 +222,7 @@ export async function copyProjectTemplateAndReplace(
     },
     {
       id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
-      version: options.useWinUI3 ? winui3Version : '2.5.0-prerelease.201027002',
+      version: options.useWinUI3 ? winui3Version : winui2xVersion,
       hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
       hasTargets: false,
     },
