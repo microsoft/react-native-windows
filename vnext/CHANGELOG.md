@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 22 Nov 2020 05:06:06 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Nov 2020 05:08:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.217
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Changes
+
+- Fix links in some docs, mark APIs as deprecated or experimental as appropriate (asklar@microsoft.com)
+- Don't run bundling when doing intellisense builds (asklar@microsoft.com)
+- Add more eslint rules (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.216
 

@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.217",
+      "version": "0.0.0-canary.217",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix links in some docs, mark APIs as deprecated or experimental as appropriate",
+            "author": "asklar@microsoft.com",
+            "commit": "b88d4d705fe8c2e8c57b2db910025137042fc53b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Don't run bundling when doing intellisense builds",
+            "author": "asklar@microsoft.com",
+            "commit": "4c5e26c142496d2260536cc19ee56d59753bedb9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 22 Nov 2020 05:06:06 GMT",
       "tag": "react-native-windows_v0.0.0-canary.216",
       "version": "0.0.0-canary.216",

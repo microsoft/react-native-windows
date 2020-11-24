@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/package-utils",
   "entries": [
     {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "@rnw-scripts/package-utils_v0.0.11",
+      "version": "0.0.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "@rnw-scripts/package-utils"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Nov 2020 05:08:43 GMT",
       "tag": "@rnw-scripts/package-utils_v0.0.10",
       "version": "0.0.10",
