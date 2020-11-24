@@ -1061,9 +1061,9 @@
     "@babel/types" "^7.10.4"
 
 "@babel/traverse@^7.0.0", "@babel/traverse@^7.1.0", "@babel/traverse@^7.10.4", "@babel/traverse@^7.11.5", "@babel/traverse@^7.12.1", "@babel/traverse@^7.7.0", "@babel/traverse@^7.7.4":
-  version "7.12.7"
-  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.12.7.tgz#572a722408681cef17d6b0bef69ef2e728ca69f1"
-  integrity sha512-nMWaqsQEeSvMNypswUDzjqQ+0rR6pqCtoQpsqGJC4/Khm9cISwPTSpai57F6/jDaOoEGz8yE/WxcO3PV6tKSmQ==
+  version "7.12.8"
+  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.12.8.tgz#c1c2983bf9ba0f4f0eaa11dff7e77fa63307b2a4"
+  integrity sha512-EIRQXPTwFEGRZyu6gXbjfpNORN1oZvwuzJbxcXjAgWV0iqXYDszN1Hx3FVm6YgZfu1ZQbCVAk3l+nIw95Xll9Q==
   dependencies:
     "@babel/code-frame" "^7.10.4"
     "@babel/generator" "^7.12.5"
