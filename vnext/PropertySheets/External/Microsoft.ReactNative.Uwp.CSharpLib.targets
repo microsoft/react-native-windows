@@ -23,4 +23,6 @@
   <Target Name="Deploy" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ManagedCodeGen\Microsoft.ReactNative.Managed.CodeGen.targets" 
           Condition="'$(ReactNativeCodeGenEnabled)' == 'true' and '$(UseExperimentalNuget)' != 'true'" />
+
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\RequireSolution.targets" />
 </Project>

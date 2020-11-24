@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation. All rights reserved.
+ Licensed under the MIT License.. 
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="RequireSolutionTargets" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>The property {0} is not defined. This project requires being built via a valid solution file.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="'$(SolutionPath)' == '' OR '$(SolutionPath)' == '*Undefined*'" Text="$([System.String]::Format('$(ErrorText)', 'SolutionPath'))" />
+    <Error Condition="'$(SolutionDir)' == '' OR '$(SolutionDir)' == '*Undefined*'" Text="$([System.String]::Format('$(ErrorText)', 'SolutionDir'))" />
+    <Error Condition="'$(SolutionFileName)' == '' OR '$(SolutionFileName)' == '*Undefined*'" Text="$([System.String]::Format('$(ErrorText)', 'SolutionFileName'))" />
+  </Target>
+
+</Project>

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add error for users who try to build apps/libs via project instead of solution",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
