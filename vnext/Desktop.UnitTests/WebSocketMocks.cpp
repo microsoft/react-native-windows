@@ -22,16 +22,16 @@ void MockWebSocketResource::Ping() noexcept /*override*/
     return Mocks.Ping();
 }
 
-void MockWebSocketResource::Send(const string &message) noexcept /*override*/
+void MockWebSocketResource::Send(string &&message) noexcept /*override*/
 {
   if (Mocks.Send)
-    return Mocks.Send(message);
+    return Mocks.Send(std::move(message));
 }
 
-void MockWebSocketResource::SendBinary(const string &message) noexcept /*override*/
+void MockWebSocketResource::SendBinary(string &&message) noexcept /*override*/
 {
   if (Mocks.SendBinary)
-    return Mocks.SendBinary(message);
+    return Mocks.SendBinary(std::move(message));
 }
 
 void MockWebSocketResource::Close(CloseCode code, const string &reason) noexcept /*override*/
@@ -72,7 +72,7 @@ void MockWebSocketResource::SetOnSend(function<void(size_t)> &&handler) noexcept
   m_writeHandler = std::move(handler);
 }
 
-void MockWebSocketResource::SetOnMessage(function<void(size_t, const string &)> &&handler) noexcept /*override*/
+void MockWebSocketResource::SetOnMessage(function<void(size_t, const string &, bool)> &&handler) noexcept /*override*/
 {
   if (Mocks.SetOnMessage)
     return Mocks.SetOnMessage(std::move(handler));
@@ -113,9 +113,9 @@ void MockWebSocketResource::OnSend(size_t size) {
     m_writeHandler(size);
 }
 
-void MockWebSocketResource::OnMessage(size_t size, const string &message) {
+void MockWebSocketResource::OnMessage(size_t size, const string &message, bool isBinary) {
   if (m_readHandler)
-    m_readHandler(size, message);
+    m_readHandler(size, message, isBinary);
 }
 
 void MockWebSocketResource::OnClose(CloseCode code, const string &reason) {

@@ -60,7 +60,8 @@ export class Telemetry {
 
 function getAnonymizedPath(filepath: string): string {
   const projectRoot = process.cwd().toLowerCase();
-  const knownPathsVars = ['appdata', 'localappdata', 'userprofile'];
+  filepath = filepath.replace(/\//g, '\\');
+  const knownPathsVars = ['AppData', 'LocalAppData', 'UserProfile'];
   if (filepath.toLowerCase().startsWith(projectRoot)) {
     const ext = path.extname(filepath);
     const rest = filepath.slice(projectRoot.length);
@@ -90,9 +91,11 @@ function getAnonymizedPath(filepath: string): string {
  * @param msg the string to sanitize
  */
 export function sanitizeMessage(msg: string): string {
+  const cpuThreadId = /^\d+(:\d+)?>/g;
+  msg = msg.replace(cpuThreadId, '');
   const parts = msg.split(/['[\]"]/g);
   const clean = [];
-  const pathRegEx = /[A-Za-z]:\\([^<>:;,?"*\t\r\n|/\\]+\\)+([^<>:;,?"*\t\r\n|/]+)/gi;
+  const pathRegEx = /([A-Za-z]:|\\)[\\/]([^<>:;,?"*\t\r\n|/\\]+[\\/])+([^<>:;,?"*\t\r\n|]+\/?)/gi;
   for (const part of parts) {
     if (pathRegEx.test(part)) {
       pathRegEx.lastIndex = -1;
@@ -129,6 +132,12 @@ export function sanitizeFrame(frame: any): void {
   frame.assembly = '';
 }
 
+export function tryGetErrorCode(msg: string): string | undefined {
+  const errorRegEx = /error (\w+\d+)[\s:]/gi;
+  const m = errorRegEx.exec(msg);
+  return m ? m[1] : undefined;
+}
+
 /**
  * Remove PII from exceptions' stack traces and messages
  * @param envelope the telemetry envelope. Provided by AppInsights.
@@ -140,7 +149,8 @@ export function sanitizeEnvelope(envelope: any /*context: any*/): boolean {
       for (const frame of exception.parsedStack) {
         sanitizeFrame(frame);
       }
-
+      const errorCode = tryGetErrorCode(exception.message);
+      data.properties.errorCode = errorCode;
       exception.message = sanitizeMessage(exception.message);
     }
   }
@@ -150,8 +160,8 @@ export function sanitizeEnvelope(envelope: any /*context: any*/): boolean {
 
 export function isMSFTInternal(): boolean {
   return (
-    process.env.USERDNSDOMAIN !== undefined &&
-    process.env.USERDNSDOMAIN.toLowerCase().endsWith('.microsoft.com')
+    process.env.UserDNSDomain !== undefined &&
+    process.env.UserDNSDomain.toLowerCase().endsWith('.microsoft.com')
   );
 }
 

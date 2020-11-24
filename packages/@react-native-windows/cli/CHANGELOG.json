@@ -2,6 +2,54 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 18 Nov 2020 01:36:10 GMT",
+      "tag": "@react-native-windows/cli_v0.63.5",
+      "version": "0.63.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use NuGet 5.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cf6968c74de9c98712799a4ed9ed5b185d831da0",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Collect anonymized project name",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3b3e2a99d940f2938573eddcc98a82222dd0be32",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 16 Nov 2020 15:06:51 GMT",
+      "tag": "@react-native-windows/cli_v0.63.4",
+      "version": "0.63.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "port nuget 5.8 fix to 0.63",
+            "author": "asklar@microsoft.com",
+            "commit": "e641354eba2900de4691774a32c37a0cd4b5a875",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Fix run-windows Warnings Using Node 14",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d779979723f01d2ff4c66a7790d5ca278921520e",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Disable telemetry in other CI systems",
+            "author": "asklar@microsoft.com",
+            "commit": "a2f05ca82e62bfa517f79cf309b7134066fe9b30",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Nov 2020 16:50:27 GMT",
       "tag": "@react-native-windows/cli_v0.63.3",
       "version": "0.63.3",

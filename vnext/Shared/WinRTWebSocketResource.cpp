@@ -1,25 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-// clang-format off
 #include "WinRTWebSocketResource.h"
 
-#include <Unicode.h>
 #include <Utilities.h>
+#include <Utils/CppWinrtLessExceptions.h>
 
 // Windows API
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
-#include <RestrictedErrorInfo.h>
 
-// Standard Library
-#include <future>
-
-using Microsoft::Common::Unicode::Utf8ToUtf16;
-using Microsoft::Common::Unicode::Utf16ToUtf8;
 using Microsoft::Common::Utilities::CheckedReinterpretCast;
 
 using std::function;
+using std::lock_guard;
+using std::mutex;
 using std::size_t;
 using std::string;
 using std::vector;
@@ -40,74 +35,70 @@ using winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 using winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult;
 using winrt::Windows::Storage::Streams::DataWriter;
+using winrt::Windows::Storage::Streams::DataWriterStoreOperation;
 using winrt::Windows::Storage::Streams::IDataReader;
 using winrt::Windows::Storage::Streams::IDataWriter;
 using winrt::Windows::Storage::Streams::UnicodeEncoding;
 
-namespace
-{
-  ///
-  /// Implements an awaiter for Mso::DispatchQueue
-  ///
-  auto resume_in_queue(const Mso::DispatchQueue& queue)
-  {
-    struct awaitable
-    {
-      awaitable(const Mso::DispatchQueue& queue)
-        : m_queue{ queue }
-      {
-      }
+namespace {
+///
+/// Implements an awaiter for Mso::DispatchQueue
+///
+auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
+  struct awaitable {
+    awaitable(const Mso::DispatchQueue &queue) noexcept : m_queue{queue} {}
 
-      bool await_ready() const noexcept
-      {
-        return false;
-      }
+    bool await_ready() const noexcept {
+      return false;
+    }
 
-      void await_resume() const noexcept {}
+    void await_resume() const noexcept {}
 
-      void await_suspend(std::experimental::coroutine_handle<> resume)
-      {
-        m_callback = [context = resume.address()]() noexcept
-        {
-          std::experimental::coroutine_handle<>::from_address(context)();
-        };
-        m_queue.Post(std::move(m_callback));
-      }
+    void await_suspend(std::experimental::coroutine_handle<> resume) noexcept {
+      m_callback = [context = resume.address()]() noexcept {
+        std::experimental::coroutine_handle<>::from_address(context)();
+      };
+      m_queue.Post(std::move(m_callback));
+    }
 
-    private:
-      Mso::DispatchQueue m_queue;
-      Mso::VoidFunctor m_callback;
-    };
+   private:
+    Mso::DispatchQueue m_queue;
+    Mso::VoidFunctor m_callback;
+  };
 
-    return awaitable{ queue };
-  }
+  return awaitable{queue};
 }
+} // namespace
 
-namespace Microsoft::React
-{
+namespace Microsoft::React {
 
-WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, IDataWriter&& writer, Uri&& uri, vector<ChainValidationResult> &&certExeptions) noexcept
-  : m_uri{ std::move(uri) }
-  , m_socket{ std::move(socket) }
-  , m_writer{ std::move(writer) }
-{
-  m_socket.MessageReceived({ this, &WinRTWebSocketResource::OnMessageReceived });
+WinRTWebSocketResource::WinRTWebSocketResource(
+    IMessageWebSocket &&socket,
+    IDataWriter &&writer,
+    Uri &&uri,
+    vector<ChainValidationResult> &&certExeptions) noexcept
+    : m_uri{std::move(uri)}, m_socket{std::move(socket)}, m_writer{std::move(writer)} {
+  m_socket.MessageReceived({this, &WinRTWebSocketResource::OnMessageReceived});
 
-  for (auto certException : certExeptions)
-  {
+  for (const auto &certException : certExeptions) {
     m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
   }
 }
 
-WinRTWebSocketResource::WinRTWebSocketResource(IMessageWebSocket&& socket, Uri&& uri, vector<ChainValidationResult> certExeptions) noexcept
-  : WinRTWebSocketResource(std::move(socket), DataWriter{ socket.OutputStream() }, std::move(uri), std::move(certExeptions))
-{
-}
+WinRTWebSocketResource::WinRTWebSocketResource(
+    IMessageWebSocket &&socket,
+    Uri &&uri,
+    vector<ChainValidationResult> certExeptions) noexcept
+    : WinRTWebSocketResource(
+          std::move(socket),
+          DataWriter{socket.OutputStream()},
+          std::move(uri),
+          std::move(certExeptions)) {}
 
-WinRTWebSocketResource::WinRTWebSocketResource(const string& urlString, vector<ChainValidationResult> &&certExeptions) noexcept
-  : WinRTWebSocketResource(MessageWebSocket{}, Uri{ Utf8ToUtf16(urlString) }, std::move(certExeptions))
-{
-}
+WinRTWebSocketResource::WinRTWebSocketResource(
+    const string &urlString,
+    vector<ChainValidationResult> &&certExeptions) noexcept
+    : WinRTWebSocketResource(MessageWebSocket{}, Uri{winrt::to_hstring(urlString)}, std::move(certExeptions)) {}
 
 WinRTWebSocketResource::~WinRTWebSocketResource() noexcept /*override*/
 {
@@ -118,26 +109,31 @@ WinRTWebSocketResource::~WinRTWebSocketResource() noexcept /*override*/
 
 #pragma region Private members
 
-IAsyncAction WinRTWebSocketResource::PerformConnect() noexcept
-{
+IAsyncAction WinRTWebSocketResource::PerformConnect() noexcept {
   auto self = shared_from_this();
-  try
-  {
-    co_await resume_background();
 
-    co_await self->m_socket.ConnectAsync(self->m_uri);
+  co_await resume_background();
 
-    self->m_readyState = ReadyState::Open;
-    if (self->m_connectHandler)
-    {
-      self->m_connectHandler();
+  try {
+    auto async = self->m_socket.ConnectAsync(self->m_uri);
+
+    co_await lessthrow_await_adapter<IAsyncAction>{async};
+
+    auto result = async.ErrorCode();
+    if (result >= 0) {
+      self->m_readyState = ReadyState::Open;
+      if (self->m_connectHandler) {
+        self->m_connectHandler();
+      }
+    } else {
+      if (self->m_errorHandler) {
+        auto error = winrt::hresult_error(result, winrt::hresult_error::from_abi);
+        self->m_errorHandler({winrt::to_string(error.message()), ErrorType::Connection});
+      }
     }
-  }
-  catch (hresult_error const& e)
-  {
-    if (self->m_errorHandler)
-    {
-      self->m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Connection });
+  } catch (hresult_error const &e) {
+    if (self->m_errorHandler) {
+      self->m_errorHandler({winrt::to_string(e.message()), ErrorType::Connection});
     }
   }
 
@@ -146,161 +142,139 @@ IAsyncAction WinRTWebSocketResource::PerformConnect() noexcept
   self->m_connectRequested = false;
 }
 
-fire_and_forget WinRTWebSocketResource::PerformPing() noexcept
-{
+fire_and_forget WinRTWebSocketResource::PerformPing() noexcept {
   auto self = shared_from_this();
-  try
-  {
-    co_await resume_background();
 
-    co_await resume_on_signal(self->m_connectPerformed.get());
+  co_await resume_background();
 
-    if (self->m_readyState != ReadyState::Open)
-    {
-      self = nullptr;
-      co_return;
-    }
+  co_await resume_on_signal(self->m_connectPerformed.get());
 
+  if (self->m_readyState != ReadyState::Open) {
+    self = nullptr;
+    co_return;
+  }
+
+  try {
     self->m_socket.Control().MessageType(SocketMessageType::Utf8);
 
     string s{};
     winrt::array_view<const uint8_t> arr(
-      CheckedReinterpretCast<const uint8_t*>(s.c_str()),
-      CheckedReinterpretCast<const uint8_t*>(s.c_str()) + s.length());
+        CheckedReinterpretCast<const uint8_t *>(s.c_str()),
+        CheckedReinterpretCast<const uint8_t *>(s.c_str()) + s.length());
     self->m_writer.WriteBytes(arr);
 
-    co_await self->m_writer.StoreAsync();
+    auto async = self->m_writer.StoreAsync();
 
-    if (self->m_pingHandler)
-    {
-      self->m_pingHandler();
+    co_await lessthrow_await_adapter<DataWriterStoreOperation>{async};
+
+    auto result = async.ErrorCode();
+    if (result >= 0) {
+      if (self->m_pingHandler) {
+        self->m_pingHandler();
+      }
+    } else {
+      if (self->m_errorHandler) {
+        auto error = winrt::hresult_error(result, winrt::hresult_error::from_abi);
+        self->m_errorHandler({winrt::to_string(error.message()), ErrorType::Ping});
+      }
     }
-  }
-  catch (hresult_error const& e)
-  {
-    if (self->m_errorHandler)
-    {
-      self->m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Ping });
+  } catch (hresult_error const &e) {
+    if (self->m_errorHandler) {
+      self->m_errorHandler({winrt::to_string(e.message()), ErrorType::Ping});
     }
   }
 }
 
-fire_and_forget WinRTWebSocketResource::PerformWrite() noexcept
-{
+fire_and_forget WinRTWebSocketResource::PerformWrite(string &&message, bool isBinary) noexcept {
   auto self = shared_from_this();
-  if (self->m_writeQueue.empty())
   {
+    auto guard = lock_guard<mutex>{m_writeQueueMutex};
+    m_writeQueue.emplace(std::move(message), isBinary);
+  }
+
+  co_await resume_background();
+
+  co_await resume_on_signal(self->m_connectPerformed.get()); // Ensure connection attempt has finished
+
+  co_await resume_in_queue(self->m_dispatchQueue); // Ensure writes happen sequentially
+
+  if (self->m_readyState != ReadyState::Open) {
+    self = nullptr;
     co_return;
   }
 
-  try
-  {
-    co_await resume_background();
-
-    co_await resume_on_signal(self->m_connectPerformed.get());  // Ensure connection attempt has finished
-
-    co_await resume_in_queue(self->m_dispatchQueue);            // Ensure writes happen sequentially
-
-    if (self->m_readyState != ReadyState::Open)
-    {
-      self = nullptr;
-      co_return;
-    }
-
+  try {
     size_t length;
-    std::pair<string, bool> front;
-    bool popped = self->m_writeQueue.try_pop(front);
-    if (!popped)
+    string messageLocal;
+    bool isBinaryLocal;
     {
-      throw hresult_error(E_FAIL, L"Could not retrieve outgoing message.");
+      auto guard = lock_guard<mutex>{m_writeQueueMutex};
+      std::tie(messageLocal, isBinaryLocal) = m_writeQueue.front();
+      m_writeQueue.pop();
     }
 
-    auto [message, isBinary] = std::move(front);
-
-    if (isBinary)
-    {
+    if (isBinaryLocal) {
       self->m_socket.Control().MessageType(SocketMessageType::Binary);
 
-      auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(std::move(message)));
+      auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(messageLocal));
       length = buffer.Length();
       self->m_writer.WriteBuffer(buffer);
-    }
-    else
-    {
+    } else {
       self->m_socket.Control().MessageType(SocketMessageType::Utf8);
 
-      //TODO: Use char_t instead of uint8_t?
-      length = message.size();
-      winrt::array_view<const uint8_t> arr(
-        CheckedReinterpretCast<const uint8_t*>(message.c_str()),
-        CheckedReinterpretCast<const uint8_t*>(message.c_str()) + message.length());
-      self->m_writer.WriteBytes(arr);
+      // TODO: Use char_t instead of uint8_t?
+      length = messageLocal.size();
+      winrt::array_view<const uint8_t> view(
+          CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()),
+          CheckedReinterpretCast<const uint8_t *>(messageLocal.c_str()) + messageLocal.length());
+      self->m_writer.WriteBytes(view);
     }
 
-    co_await self->m_writer.StoreAsync();
+    auto async = self->m_writer.StoreAsync();
 
-    if (self->m_writeHandler)
-    {
-      self->m_writeHandler(length);
+    co_await lessthrow_await_adapter<DataWriterStoreOperation>{async};
+
+    auto result = async.ErrorCode();
+    if (result >= 0) {
+      if (self->m_writeHandler) {
+        self->m_writeHandler(length);
+      }
+    } else {
+      if (self->m_errorHandler) {
+        auto error = winrt::hresult_error(result, winrt::hresult_error::from_abi);
+        self->m_errorHandler({winrt::to_string(error.message()), ErrorType::Send});
+      }
     }
-  }
-  catch (hresult_error const& e)
-  {
-    if (self->m_errorHandler)
-    {
-      self->m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Ping });
+  } catch (std::exception const &e) {
+    if (self->m_errorHandler) {
+      self->m_errorHandler({e.what(), ErrorType::Ping});
+    }
+  } catch (hresult_error const &e) {
+    // TODO: Remove after fixing unit tests exceptions.
+    if (self->m_errorHandler) {
+      self->m_errorHandler({winrt::to_string(e.message()), ErrorType::Ping});
     }
   }
 }
 
-fire_and_forget WinRTWebSocketResource::PerformClose() noexcept
-{
+fire_and_forget WinRTWebSocketResource::PerformClose() noexcept {
   co_await resume_background();
 
   co_await resume_on_signal(m_connectPerformed.get());
 
-  try
-  {
-    m_socket.Close(static_cast<uint16_t>(m_closeCode), Utf8ToUtf16(m_closeReason));
+  try {
+    m_socket.Close(static_cast<uint16_t>(m_closeCode), winrt::to_hstring(m_closeReason));
 
-    if (m_closeHandler)
-    {
+    if (m_closeHandler) {
       m_closeHandler(m_closeCode, m_closeReason);
     }
-  }
-  catch (winrt::hresult_invalid_argument const& e)
-  {
-    if (m_errorHandler)
-    {
-      string message;
-
-      auto restricted = e.try_as<IRestrictedErrorInfo>();
-      BSTR description;
-      HRESULT error;
-      BSTR restrictedDesc;
-      BSTR capabilitySid;
-      if (SUCCEEDED(restricted->GetErrorDetails(&description, &error, &restrictedDesc, &capabilitySid)))
-      {
-        message = Utf16ToUtf8(description) + ": " + Utf16ToUtf8(restrictedDesc);
-      }
-      else
-      {
-        message = Utf16ToUtf8(e.message());
-      }
-      // BSTR's allocated memory must be explicitly released.
-      // See https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/allocating-and-releasing-memory-for-a-bstr
-      SysFreeString(description);
-      SysFreeString(restrictedDesc);
-      SysFreeString(capabilitySid);
-
-      m_errorHandler({ std::move(message), ErrorType::Close });
+  } catch (winrt::hresult_invalid_argument const &e) {
+    if (m_errorHandler) {
+      m_errorHandler({winrt::to_string(e.message()), ErrorType::Close});
     }
-  }
-  catch (hresult_error const& e)
-  {
-    if (m_errorHandler)
-    {
-      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Close });
+  } catch (hresult_error const &e) {
+    if (m_errorHandler) {
+      m_errorHandler({winrt::to_string(e.message()), ErrorType::Close});
     }
   }
 
@@ -308,48 +282,39 @@ fire_and_forget WinRTWebSocketResource::PerformClose() noexcept
   m_closePerformed.Set();
 }
 
-void WinRTWebSocketResource::OnMessageReceived(IWebSocket const& sender, IMessageWebSocketMessageReceivedEventArgs const& args)
-{
-  try
-  {
+void WinRTWebSocketResource::OnMessageReceived(
+    IWebSocket const &sender,
+    IMessageWebSocketMessageReceivedEventArgs const &args) {
+  try {
     string response;
     IDataReader reader = args.GetDataReader();
     auto len = reader.UnconsumedBufferLength();
-    if (args.MessageType() == SocketMessageType::Utf8)
-    {
+    if (args.MessageType() == SocketMessageType::Utf8) {
       reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       vector<uint8_t> data(len);
       reader.ReadBytes(data);
 
-      response = string(CheckedReinterpretCast<char*>(data.data()), data.size());
-    }
-    else
-    {
+      response = string(CheckedReinterpretCast<char *>(data.data()), data.size());
+    } else {
       auto buffer = reader.ReadBuffer(len);
       winrt::hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
 
-      response = Utf16ToUtf8(std::wstring_view(data));
+      response = winrt::to_string(std::wstring_view(data));
     }
 
-    if (m_readHandler)
-    {
-      m_readHandler(response.length(), response);
+    if (m_readHandler) {
+      m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
     }
-  }
-  catch (hresult_error const& e)
-  {
-    if (m_errorHandler)
-    {
-      m_errorHandler({ Utf16ToUtf8(e.message()), ErrorType::Receive });
+  } catch (hresult_error const &e) {
+    if (m_errorHandler) {
+      m_errorHandler({winrt::to_string(e.message()), ErrorType::Receive});
     }
   }
 }
 
-void WinRTWebSocketResource::Synchronize() noexcept
-{
+void WinRTWebSocketResource::Synchronize() noexcept {
   // Ensure sequence of other operations
-  if (m_connectRequested)
-  {
+  if (m_connectRequested) {
     m_connectPerformedPromise.get_future().wait();
   }
 }
@@ -358,47 +323,36 @@ void WinRTWebSocketResource::Synchronize() noexcept
 
 #pragma region IWebSocketResource
 
-void WinRTWebSocketResource::Connect(const Protocols& protocols, const Options& options) noexcept
-{
+void WinRTWebSocketResource::Connect(const Protocols &protocols, const Options &options) noexcept {
   m_readyState = ReadyState::Connecting;
 
-  for (const auto& header : options)
-  {
-    m_socket.SetRequestHeader(header.first, Utf8ToUtf16(header.second));
+  for (const auto &header : options) {
+    m_socket.SetRequestHeader(header.first, winrt::to_hstring(header.second));
   }
 
   winrt::Windows::Foundation::Collections::IVector<winrt::hstring> supportedProtocols =
-    m_socket.Control().SupportedProtocols();
-  for (const auto& protocol : protocols)
-  {
-    supportedProtocols.Append(Utf8ToUtf16(protocol));
+      m_socket.Control().SupportedProtocols();
+  for (const auto &protocol : protocols) {
+    supportedProtocols.Append(winrt::to_hstring(protocol));
   }
 
   m_connectRequested = true;
   PerformConnect();
 }
 
-void WinRTWebSocketResource::Ping() noexcept
-{
+void WinRTWebSocketResource::Ping() noexcept {
   PerformPing();
 }
 
-void WinRTWebSocketResource::Send(const string& message) noexcept
-{
-  m_writeQueue.push({ message, false });
-
-  PerformWrite();
+void WinRTWebSocketResource::Send(string &&message) noexcept {
+  PerformWrite(std::move(message), false);
 }
 
-void WinRTWebSocketResource::SendBinary(const string& base64String) noexcept
-{
-  m_writeQueue.push({ base64String, true });
-
-  PerformWrite();
+void WinRTWebSocketResource::SendBinary(string &&base64String) noexcept {
+  PerformWrite(std::move(base64String), true);
 }
 
-void WinRTWebSocketResource::Close(CloseCode code, const string& reason) noexcept
-{
+void WinRTWebSocketResource::Close(CloseCode code, const string &reason) noexcept {
   if (m_readyState == ReadyState::Closing || m_readyState == ReadyState::Closed)
     return;
 
@@ -410,41 +364,34 @@ void WinRTWebSocketResource::Close(CloseCode code, const string& reason) noexcep
   PerformClose();
 }
 
-IWebSocketResource::ReadyState WinRTWebSocketResource::GetReadyState() const noexcept
-{
+IWebSocketResource::ReadyState WinRTWebSocketResource::GetReadyState() const noexcept {
   return m_readyState;
 }
 
-void WinRTWebSocketResource::SetOnConnect(function<void()>&& handler) noexcept
-{
+void WinRTWebSocketResource::SetOnConnect(function<void()> &&handler) noexcept {
   m_connectHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnPing(function<void()>&& handler) noexcept
-{
+void WinRTWebSocketResource::SetOnPing(function<void()> &&handler) noexcept {
   m_pingHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnSend(function<void(size_t)>&& handler) noexcept
-{
+void WinRTWebSocketResource::SetOnSend(function<void(size_t)> &&handler) noexcept {
   m_writeHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string&)>&& handler) noexcept
-{
+void WinRTWebSocketResource::SetOnMessage(function<void(size_t, const string &, bool isBinary)> &&handler) noexcept {
   m_readHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnClose(function<void(CloseCode, const string&)>&& handler) noexcept
-{
+void WinRTWebSocketResource::SetOnClose(function<void(CloseCode, const string &)> &&handler) noexcept {
   m_closeHandler = std::move(handler);
 }
 
-void WinRTWebSocketResource::SetOnError(function<void(Error&&)>&& handler) noexcept
-{
+void WinRTWebSocketResource::SetOnError(function<void(Error &&)> &&handler) noexcept {
   m_errorHandler = std::move(handler);
 }
 
 #pragma endregion IWebSocketResource
 
-}// namespace Microsoft::React
+} // namespace Microsoft::React

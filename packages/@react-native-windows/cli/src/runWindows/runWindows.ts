@@ -4,7 +4,9 @@
  * @format
  */
 
+import * as crypto from 'crypto';
 import * as fs from 'fs';
+import * as path from 'path';
 import {
   Telemetry,
   isMSFTInternal,
@@ -135,10 +137,36 @@ async function runWindows(
         totalMem: totalmem(),
         diskFree: getDiskFreeSpace(__dirname),
         cpus: cpus().length,
+        project: await getAnonymizedProjectName(config.root),
       },
     });
     Telemetry.client?.flush();
   }
+}
+
+export async function getAnonymizedProjectName(
+  projectRoot: string,
+): Promise<string | null> {
+  const projectJsonPath = path.join(projectRoot, 'package.json');
+  if (!fs.existsSync(projectJsonPath)) {
+    return null;
+  }
+
+  const projectJson = JSON.parse(
+    (await fs.promises.readFile(projectJsonPath)).toString(),
+  );
+
+  const projectName = projectJson.name;
+  if (typeof projectName !== 'string') {
+    return null;
+  }
+
+  // Ensure the project name cannot be reverse engineered to avoid leaking PII
+  return crypto
+    .createHash('sha256')
+    .update(projectName)
+    .digest('hex')
+    .toString();
 }
 
 async function runWindowsInternal(

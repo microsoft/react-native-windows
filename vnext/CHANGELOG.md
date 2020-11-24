@@ -1,8 +1,27 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 10 Nov 2020 16:50:27 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Nov 2020 01:36:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.10
+
+Wed, 18 Nov 2020 01:36:10 GMT
+
+### Patches
+
+- Use HRESULT instead of catching exceptions for WebSocket APIs (#5174) (julio.rocha@microsoft.com)
+- Add win32 exports required for internal usage (email not defined)
+- CornerRadius only exists on RS5, restore the behavior to gracefully degrade on older OS releases (asklar@microsoft.com)
+
+## 0.63.9
+
+Mon, 16 Nov 2020 15:06:51 GMT
+
+### Patches
+
+- [0.63] Allow NodeJS 14 (asklar@microsoft.com)
+- Don't return an error if AsyncStorage is empty (i@mandrigin.ru)
 
 ## 0.63.8
 

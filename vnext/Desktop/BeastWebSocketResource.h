@@ -22,7 +22,7 @@ class BaseWebSocketResource : public IWebSocketResource {
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
   std::function<void(std::size_t)> m_writeHandler;
-  std::function<void(std::size_t, const std::string &)> m_readHandler;
+  std::function<void(std::size_t, const std::string &, bool)> m_readHandler;
   std::function<void(CloseCode, const std::string &)> m_closeHandler;
 
   Url m_url;
@@ -166,12 +166,12 @@ class BaseWebSocketResource : public IWebSocketResource {
   /// <summary>
   /// <see cref="IWebSocketResource::Send" />
   /// </summary>
-  void Send(const std::string &message) noexcept override;
+  void Send(std::string &&message) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::SendBinary" />
   /// </summary>
-  void SendBinary(const std::string &base64String) noexcept override;
+  void SendBinary(std::string &&base64String) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::Close" />
@@ -198,7 +198,7 @@ class BaseWebSocketResource : public IWebSocketResource {
   /// <summary>
   /// <see cref="IWebSocketResource::SetOnMessage" />
   /// </summary>
-  void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&handler) noexcept override;
+  void SetOnMessage(std::function<void(std::size_t, const std::string &, bool isBinary)> &&handler) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::SetOnClose" />
