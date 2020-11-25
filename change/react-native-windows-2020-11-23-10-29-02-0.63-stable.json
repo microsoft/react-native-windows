@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.63] Make ref assembly of MS.RN.Managed nuget anycpu",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-11-23T18:29:02.784Z"
-}

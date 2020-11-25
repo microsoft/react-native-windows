@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 25 Nov 2020 03:02:04 GMT",
+      "tag": "react-native-windows_v0.63.11",
+      "version": "0.63.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.63] Make ref assembly of MS.RN.Managed nuget anycpu",
+            "author": "dannyvv@microsoft.com",
+            "commit": "0bf1d3fb14e525e9e42df1465cec5a4e73fe9bb9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Nov 2020 01:36:10 GMT",
       "tag": "react-native-windows_v0.63.10",
       "version": "0.63.10",

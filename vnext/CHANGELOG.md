@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 18 Nov 2020 01:36:10 GMT and should not be manually modified.
+This log was last generated on Wed, 25 Nov 2020 03:02:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.11
+
+Wed, 25 Nov 2020 03:02:04 GMT
+
+### Patches
+
+- [0.63] Make ref assembly of MS.RN.Managed nuget anycpu (dannyvv@microsoft.com)
 
 ## 0.63.10
 
