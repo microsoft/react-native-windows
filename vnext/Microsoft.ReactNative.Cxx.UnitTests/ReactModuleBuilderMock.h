@@ -111,6 +111,10 @@ struct ReactModuleBuilderMock {
 struct ReactContextMock : implements<ReactContextMock, IReactContext> {
   ReactContextMock(ReactModuleBuilderMock *builderMock) noexcept;
 
+  IReactSettingsSnapshot SettingsSnapshot() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
   IReactPropertyBag Properties() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
@@ -127,7 +131,7 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
     VerifyElseCrashSz(false, "Not implemented");
   }
 
-  JsiRuntime JsiRuntime() noexcept {
+  IInspectable JSRuntime() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
 

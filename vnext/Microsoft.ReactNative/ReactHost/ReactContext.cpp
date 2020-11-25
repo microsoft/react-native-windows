@@ -4,9 +4,98 @@
 #include "ReactContext.h"
 #include <winrt/Microsoft.ReactNative.h>
 #include "Microsoft.ReactNative/IReactNotificationService.h"
+#include "MsoUtils.h"
 #include "ReactInstanceWin.h"
 
 namespace Mso::React {
+
+//=============================================================================================
+// ReactSettingsSnapshot implementation
+//=============================================================================================
+
+#ifndef CORE_ABI // requires instance
+
+ReactSettingsSnapshot::ReactSettingsSnapshot(Mso::WeakPtr<ReactInstanceWin> &&reactInstance) noexcept
+    : m_reactInstance{std::move(reactInstance)} {}
+
+bool ReactSettingsSnapshot::UseWebDebugger() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->UseWebDebugger();
+  }
+  return false;
+}
+
+bool ReactSettingsSnapshot::UseFastRefresh() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->UseFastRefresh();
+  }
+  return false;
+}
+
+bool ReactSettingsSnapshot::UseDirectDebugger() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->UseDirectDebugger();
+  }
+  return false;
+}
+
+bool ReactSettingsSnapshot::DebuggerBreakOnNextLine() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->DebuggerBreakOnNextLine();
+  }
+  return false;
+}
+
+uint16_t ReactSettingsSnapshot::DebuggerPort() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->DebuggerPort();
+  }
+  return 0;
+}
+
+std::string ReactSettingsSnapshot::DebugBundlePath() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->DebugBundlePath();
+  }
+  return {};
+}
+
+std::string ReactSettingsSnapshot::BundleRootPath() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->BundleRootPath();
+  }
+  return {};
+}
+
+std::string ReactSettingsSnapshot::SourceBundleHost() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->SourceBundleHost();
+  }
+  return {};
+}
+
+uint16_t ReactSettingsSnapshot::SourceBundlePort() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->SourceBundlePort();
+  }
+  return 0;
+}
+
+std::string ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->JavaScriptBundleFile();
+  }
+  return {};
+}
+
+bool ReactSettingsSnapshot::UseDeveloperSupport() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->UseDeveloperSupport();
+  }
+  return false;
+}
+
+#endif
 
 //=============================================================================================
 // ReactContext implementation
@@ -16,7 +105,13 @@ ReactContext::ReactContext(
     Mso::WeakPtr<ReactInstanceWin> &&reactInstance,
     winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
     winrt::Microsoft::ReactNative::IReactNotificationService const &notifications) noexcept
-    : m_reactInstance{std::move(reactInstance)}, m_properties{properties}, m_notifications{notifications} {}
+    : m_reactInstance{std::move(reactInstance)},
+#ifndef CORE_ABI
+      m_settings{Mso::Make<ReactSettingsSnapshot>(Mso::Copy(m_reactInstance))},
+#endif
+      m_properties{properties},
+      m_notifications{notifications} {
+}
 
 void ReactContext::Destroy() noexcept {
   if (auto notificationService =
@@ -86,81 +181,8 @@ std::shared_ptr<facebook::react::Instance> ReactContext::GetInnerInstance() cons
   return nullptr;
 }
 
-bool ReactContext::UseWebDebugger() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->UseWebDebugger();
-  }
-  return false;
-}
-
-bool ReactContext::UseFastRefresh() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->UseFastRefresh();
-  }
-  return false;
-}
-
-bool ReactContext::UseDirectDebugger() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->UseDirectDebugger();
-  }
-  return false;
-}
-
-bool ReactContext::DebuggerBreakOnNextLine() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->DebuggerBreakOnNextLine();
-  }
-  return false;
-}
-
-uint16_t ReactContext::DebuggerPort() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->DebuggerPort();
-  }
-  return 0;
-}
-
-std::string ReactContext::DebugBundlePath() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->DebugBundlePath();
-  }
-  return {};
-}
-
-std::string ReactContext::BundleRootPath() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->BundleRootPath();
-  }
-  return {};
-}
-
-std::string ReactContext::SourceBundleHost() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->SourceBundleHost();
-  }
-  return {};
-}
-
-uint16_t ReactContext::SourceBundlePort() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->SourceBundlePort();
-  }
-  return 0;
-}
-
-std::string ReactContext::JavaScriptBundleFile() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->JavaScriptBundleFile();
-  }
-  return {};
-}
-
-bool ReactContext::UseDeveloperSupport() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->UseDeveloperSupport();
-  }
-  return false;
+IReactSettingsSnapshot const &ReactContext::SettingsSnapshot() const noexcept {
+  return *m_settings;
 }
 
 #endif

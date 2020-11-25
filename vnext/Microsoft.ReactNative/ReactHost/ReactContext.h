@@ -13,6 +13,29 @@ namespace Mso::React {
 
 class ReactInstanceWin;
 
+#ifndef CORE_ABI
+class ReactSettingsSnapshot final : public Mso::UnknownObject<IReactSettingsSnapshot> {
+ public:
+  ReactSettingsSnapshot(Mso::WeakPtr<ReactInstanceWin> &&reactInstance) noexcept;
+
+ public: // IReactSettingsSnapshot
+  bool UseWebDebugger() const noexcept override;
+  bool UseFastRefresh() const noexcept override;
+  bool UseDirectDebugger() const noexcept override;
+  bool DebuggerBreakOnNextLine() const noexcept override;
+  uint16_t DebuggerPort() const noexcept override;
+  std::string DebugBundlePath() const noexcept override;
+  std::string BundleRootPath() const noexcept override;
+  std::string SourceBundleHost() const noexcept override;
+  uint16_t SourceBundlePort() const noexcept override;
+  std::string JavaScriptBundleFile() const noexcept override;
+  bool UseDeveloperSupport() const noexcept override;
+
+ private:
+  Mso::WeakPtr<ReactInstanceWin> m_reactInstance;
+};
+#endif
+
 class ReactContext final : public Mso::UnknownObject<IReactContext> {
  public:
   ReactContext(
@@ -35,22 +58,14 @@ class ReactContext final : public Mso::UnknownObject<IReactContext> {
   ReactInstanceState State() const noexcept override;
   bool IsLoaded() const noexcept override;
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override;
-
-  bool UseWebDebugger() const noexcept override;
-  bool UseFastRefresh() const noexcept override;
-  bool UseDirectDebugger() const noexcept override;
-  bool DebuggerBreakOnNextLine() const noexcept override;
-  uint16_t DebuggerPort() const noexcept override;
-  std::string DebugBundlePath() const noexcept override;
-  std::string BundleRootPath() const noexcept override;
-  std::string SourceBundleHost() const noexcept override;
-  uint16_t SourceBundlePort() const noexcept override;
-  std::string JavaScriptBundleFile() const noexcept override;
-  bool UseDeveloperSupport() const noexcept override;
+  IReactSettingsSnapshot const &SettingsSnapshot() const noexcept override;
 #endif
 
  private:
   Mso::WeakPtr<ReactInstanceWin> m_reactInstance;
+#ifndef CORE_ABI
+  Mso::CntPtr<ReactSettingsSnapshot> m_settings;
+#endif
   winrt::Microsoft::ReactNative::IReactPropertyBag m_properties;
   winrt::Microsoft::ReactNative::IReactNotificationService m_notifications;
 };
