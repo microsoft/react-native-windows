@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 26 Nov 2020 05:06:06 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.219",
+      "version": "0.0.0-canary.219",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Refactor ReactContext API",
+            "author": "vmorozov@microsoft.com",
+            "commit": "37f158b2e193c0a562fa31665be636f866ceb2a5",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 25 Nov 2020 05:06:16 GMT",
       "tag": "react-native-windows_v0.0.0-canary.218",
       "version": "0.0.0-canary.218",
