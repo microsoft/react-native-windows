@@ -8,17 +8,15 @@
 import * as React from 'react';
 import {IKeyboardProps} from './KeyboardExtProps';
 
-export const supportKeyboard = <P extends object>(
+export const supportKeyboard = <P extends Record<string, any>>(
   WrappedComponent: React.ComponentType<P>,
 ) => {
   interface IForwardRefProps {
-    // tslint:disable-next-line:no-any
     forwardedRef: React.Ref<any>;
   }
 
   // children is used to avoid error: Property 'children' does not exist on type 'IntrinsicAttributes & ViewProps &
   // IKeyboardProps & RefAttributes<any>
-  // tslint:disable-next-line:no-any
   type PropsWithoutForwardedRef = P & IKeyboardProps & {children?: any};
   type PropsWithForwardedRef = PropsWithoutForwardedRef & IForwardRefProps;
 
@@ -29,7 +27,6 @@ export const supportKeyboard = <P extends object>(
     }
   }
 
-  // tslint:disable-next-line:no-any
   return React.forwardRef(
     (props: PropsWithoutForwardedRef, ref: React.Ref<any>) => {
       return <SupportKeyboard {...props} forwardedRef={ref} />;

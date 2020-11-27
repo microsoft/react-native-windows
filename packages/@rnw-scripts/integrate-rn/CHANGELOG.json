@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.18",
+      "version": "0.0.18",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Nov 2020 05:08:43 GMT",
       "tag": "@rnw-scripts/integrate-rn_v0.0.17",
       "version": "0.0.17",

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.41",
+      "version": "0.0.0-canary.41",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Nov 2020 05:08:43 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.40",
       "version": "0.0.0-canary.40",

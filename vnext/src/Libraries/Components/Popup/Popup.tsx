@@ -38,7 +38,6 @@ export class Popup extends React.Component<IPopupProps, IPopupTargetState> {
     // Check if we're given a new target property; we need to resolve it to a node handle before render
     if (prevState.targetRef !== nextProps.target) {
       // Map the 'target' property to a node tag to use in the native layer
-      /* tslint:disable-next-line no-any */
       const newTarget: number | null = findNodeHandle(
         nextProps.target as
           | null

@@ -52,7 +52,7 @@ namespace Microsoft.ReactNative {
     DOC_STRING("This will contain the component stack where the error occurred, which can help identify the component that is producing the error")
     String ComponentStack { get; };
 
-    DOC_STRING("This Id can be used in [`UpdateError`](#updateerror) to identify which error is being updated.  For native errors, this is currently always `0`, and [`UpdateError`](#updateerror) will never be called.")
+    DOC_STRING("This Id can be used in @IRedBoxHandler.UpdateError to identify which error is being updated.  For native errors, this is currently always `0`, and @IRedBoxHandler.UpdateError will never be called.")
     UInt32 Id { get; };
 
     DOC_STRING("For JavaScript errors, this will contain the call stack of where the error occurred.")
@@ -85,8 +85,7 @@ class MyRedBoxHandler : IRedBoxHandler
       innerHandler = defaultHandler;
     }
 
-   public
-    void ShowNewError(IRedBoxErrorInfo info, RedBoxErrorType type) {
+   public void ShowNewError(IRedBoxErrorInfo info, RedBoxErrorType type) {
       /-/ Dont report non-fatal errors (optional)
       if (type != RedBoxErrorType.JavaScriptSoft)
         ReportErrorToMyErrorReportingSystem(info, type);
@@ -96,8 +95,7 @@ class MyRedBoxHandler : IRedBoxHandler
         innerHandler.ShowNewError(info, type);
     }
 
-   public
-    bool IsDevSupportEnabled {
+   public bool IsDevSupportEnabled {
       get;
     }
     {
@@ -107,20 +105,17 @@ class MyRedBoxHandler : IRedBoxHandler
       return true;
     }
 
-   public
-    void UpdateError(IRedBoxErrorInfo info) {
+   public void UpdateError(IRedBoxErrorInfo info) {
       if (innerHandler.IsDevSupportEnabled)
         innerHandler.UpdateError(info);
     }
 
-   public
-    void DismissRedBox() {
+   public void DismissRedBox() {
       if (innerHandler.IsDevSupportEnabled)
         innerHandler.DismissRedBox();
     }
 
-   private
-    IRedBoxHandler innerHandler;
+   private IRedBoxHandler innerHandler;
 }
 
 
@@ -136,7 +131,7 @@ RegisterMyRedBoxHandler()
     DOC_STRING("This method is called when an error is initially hit.")
     void ShowNewError(IRedBoxErrorInfo info, RedBoxErrorType type);
 
-    DOC_STRING("This property will control if errors should be reported to the handler.  If this returns false, [`ShowNewError`](#shownewerror) and [`UpdateError`](#updateerror) will not be called.")
+    DOC_STRING("This property will control if errors should be reported to the handler.  If this returns false, @.ShowNewError and @.UpdateError will not be called.")
     Boolean IsDevSupportEnabled { get; };
 
     DOC_STRING("This method is called when updated information about an error has been resolved.  For JavaScript errors, this is called if source map information was able to be resolved to provide a more useful call stack.")
@@ -149,7 +144,7 @@ RegisterMyRedBoxHandler()
   runtimeclass RedBoxHelper {
     RedBoxHelper();
 
-    DOC_STRING("This provides access to the default `IRedBoxHandler`. This can be used to display the default `RedBox` as part of a custom `RedBoxHandler` implementation.")
+    DOC_STRING("This provides access to the default @IRedBoxHandler. This can be used to display the default `RedBox` as part of a custom `RedBoxHandler` implementation.")
     static IRedBoxHandler CreateDefaultHandler(Microsoft.ReactNative.ReactNativeHost host);
   }
 

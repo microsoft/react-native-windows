@@ -5,7 +5,7 @@
  * @format
  */
 
-import { BasePage, By } from './BasePage';
+import { BasePage, by } from './BasePage';
 import {
   APIS_NAV_BUTTON,
   COMPONENTS_NAV_BUTTON,
@@ -15,22 +15,22 @@ import {
 class HomePage extends BasePage {
   goToComponentExample(example: string) {
     this.waitForElementLoaded(COMPONENTS_NAV_BUTTON);
-    By(COMPONENTS_NAV_BUTTON).click();
+    by(COMPONENTS_NAV_BUTTON).click();
     this.goToExampleOnCurrentTab(example);
   }
 
   goToApiExample(example: string) {
     this.waitForElementLoaded(APIS_NAV_BUTTON);
-    By(APIS_NAV_BUTTON).click();
+    by(APIS_NAV_BUTTON).click();
     this.goToExampleOnCurrentTab(example);
   }
 
   private goToExampleOnCurrentTab(example: string) {
     // Filter the list down to the one test, to improve the stability of selectors
     this.waitForElementLoaded(TESTER_LIST_SEARCH_BOX);
-    const editBox = By(TESTER_LIST_SEARCH_BOX);
+    const editBox = by(TESTER_LIST_SEARCH_BOX);
     editBox.setValue(example);
-    const pageItem = By(example);
+    const pageItem = by(example);
     pageItem.click();
 
     // Make sure we've launched the example by waiting until the search box is

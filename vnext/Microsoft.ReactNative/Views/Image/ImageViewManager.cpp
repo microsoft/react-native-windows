@@ -165,7 +165,7 @@ void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, r
 
 void ImageViewManager::setSource(winrt::Grid grid, const winrt::Microsoft::ReactNative::JSValue &data) {
   auto sources{json_type_traits<std::vector<react::uwp::ReactImageSource>>::parseJson(data)};
-  sources[0].bundleRootPath = GetReactContext().BundleRootPath();
+  sources[0].bundleRootPath = GetReactContext().SettingsSnapshot().BundleRootPath();
 
   if (sources[0].packagerAsset && sources[0].uri.find("file://") == 0) {
     sources[0].uri.replace(0, 7, sources[0].bundleRootPath);

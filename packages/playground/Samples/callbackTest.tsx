@@ -21,11 +21,11 @@ export default class Bootstrap extends React.Component<
 
     NativeModules.ReadingPane.CurrentConversation(
       (js: {Subject: string; Messages: string[]}) =>
-        this.LoadedConversation(js),
+        this.loadedConversation(js),
     );
   }
 
-  LoadedConversation(js: {Subject: string; Messages: string[]}) {
+  loadedConversation(js: {Subject: string; Messages: string[]}) {
     this.setState({
       subject: js.Subject,
       msgs: js.Messages,
