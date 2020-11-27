@@ -18,7 +18,7 @@ namespace Microsoft.ReactNative {
 
   // Forward only reader for JSON like streams or trees.
   [webhosthidden]
-  DOC_STRING("`IJSIValueReader` is used to read data from JavaScript in custom native modules.  It acts as a stream and supports all the types in [`JSValueType`](JSValueType.md).")
+  DOC_STRING("`IJSIValueReader` is used to read data from JavaScript in custom native modules.  It acts as a stream and supports all the types in @JSValueType.")
   interface IJSValueReader {
     DOC_STRING("Returns the type of the current value.")
     JSValueType ValueType { get; };

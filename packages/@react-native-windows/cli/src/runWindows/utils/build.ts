@@ -8,7 +8,7 @@ import * as path from 'path';
 
 import MSBuildTools from './msbuildtools';
 import Version from './version';
-import {commandWithProgress, newSpinner, newError} from './commandWithProgress';
+import {newError} from './commandWithProgress';
 import {RunWindowsOptions, BuildConfig, BuildArch} from '../runWindowsOptions';
 import {Config} from '@react-native-community/cli-types';
 
@@ -19,7 +19,7 @@ export async function buildSolution(
   buildArch: BuildArch,
   msBuildProps: Record<string, string>,
   verbose: boolean,
-  target?: string,
+  target: 'build' | 'deploy',
   buildLogDirectory?: string,
   singleproc?: boolean,
 ) {
@@ -40,30 +40,6 @@ export async function buildSolution(
     target,
     buildLogDirectory,
     singleproc,
-  );
-}
-
-export async function restoreNuGetPackages(
-  slnFile: string,
-  buildTools: MSBuildTools,
-  verbose: boolean,
-) {
-  const text = 'Restoring NuGet packages ';
-  const spinner = newSpinner(text);
-  await commandWithProgress(
-    spinner,
-    text,
-    require.resolve('nuget-exe'),
-    [
-      'restore',
-      `${slnFile}`,
-      '-NonInteractive',
-      '-Verbosity',
-      verbose ? 'normal' : 'quiet',
-      '-MSBuildVersion',
-      buildTools.installationVersion,
-    ],
-    verbose,
   );
 }
 
@@ -136,12 +112,12 @@ export function getAppProjectFile(options: RunWindowsOptions, config: Config) {
 export function parseMsBuildProps(
   options: RunWindowsOptions,
 ): Record<string, string> {
-  let result: Record<string, string> = {};
+  const result: Record<string, string> = {};
   if (options.msbuildprops) {
     const props = options.msbuildprops.split(',');
-    for (let i = 0; i < props.length; i++) {
-      const prop = props[i].split('=');
-      result[prop[0]] = prop[1];
+    for (const prop of props) {
+      const propAssignment = prop.split('=');
+      result[propAssignment[0]] = propAssignment[1];
     }
   }
   return result;

@@ -13,7 +13,7 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct AsyncStorageSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+struct AsyncSQLiteDBStorageSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(React::JSValueArray, Callback<React::JSValue>) noexcept>{0, L"multiGet"},
       Method<void(React::JSValueArray, Callback<React::JSValue>) noexcept>{1, L"multiSet"},
@@ -25,7 +25,7 @@ struct AsyncStorageSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
-    constexpr auto methodCheckResults = CheckMethods<TModule, AsyncStorageSpec>();
+    constexpr auto methodCheckResults = CheckMethods<TModule, AsyncSQLiteDBStorageSpec>();
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,

@@ -301,6 +301,29 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
   }
 
+  class ReactSettingsSnapshot : IReactSettingsSnapshot
+  {
+    public bool DebuggerBreakOnNextLine => throw new NotImplementedException();
+
+    public ushort DebuggerPort => throw new NotImplementedException();
+
+    public bool UseDirectDebugger => throw new NotImplementedException();
+
+    public bool UseFastRefresh => throw new NotImplementedException();
+
+    public bool UseWebDebugger => throw new NotImplementedException();
+
+    public string BundleRootPath => throw new NotImplementedException();
+
+    public string DebugBundlePath => throw new NotImplementedException();
+
+    public string JavaScriptBundleFile => throw new NotImplementedException();
+
+    public string SourceBundleHost => throw new NotImplementedException();
+
+    public ushort SourceBundlePort => throw new NotImplementedException();
+  }
+
   class ReactContextMock : IReactContext
   {
     private readonly ReactModuleBuilderMock m_builder;
@@ -310,6 +333,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       m_builder = builder;
     }
 
+    public IReactSettingsSnapshot SettingsSnapshot => throw new NotImplementedException();
+
     public IReactPropertyBag Properties { get; } = ReactPropertyBagHelper.CreatePropertyBag();
 
     public IReactNotificationService Notifications { get; } = ReactNotificationServiceHelper.CreateNotificationService();
@@ -317,6 +342,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public IReactDispatcher UIDispatcher => Properties.Get(ReactDispatcherHelper.UIDispatcherProperty) as IReactDispatcher;
 
     public IReactDispatcher JSDispatcher => Properties.Get(ReactDispatcherHelper.JSDispatcherProperty) as IReactDispatcher;
+
+    public Object JSRuntime => throw new NotImplementedException();
 
     public void DispatchEvent(FrameworkElement view, string eventName, JSValueArgWriter eventDataArgWriter)
     {
@@ -332,25 +359,5 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_builder.EmitJSEvent(eventEmitterName, eventName, paramsArgWriter);
     }
-
-    bool IReactContext.DebuggerBreakOnNextLine => throw new NotImplementedException();
-
-    ushort IReactContext.DebuggerPort => throw new NotImplementedException();
-
-    bool IReactContext.UseDirectDebugger => throw new NotImplementedException();
-
-    bool IReactContext.UseFastRefresh => throw new NotImplementedException();
-
-    bool IReactContext.UseWebDebugger => throw new NotImplementedException();
-
-    string IReactContext.BundleRootPath => throw new NotImplementedException();
-
-    string IReactContext.DebugBundlePath => throw new NotImplementedException();
-
-    string IReactContext.JavaScriptBundleFile => throw new NotImplementedException();
-
-    string IReactContext.SourceBundleHost => throw new NotImplementedException();
-
-    ushort IReactContext.SourceBundlePort => throw new NotImplementedException();
   }
 }

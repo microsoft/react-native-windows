@@ -1,8 +1,32 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 14 Nov 2020 05:04:43 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Nov 2020 05:08:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.41
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Changes
+
+- Add more eslint rules (ngerlem@microsoft.com)
+
+## 0.0.0-canary.39
+
+Wed, 18 Nov 2020 03:10:51 GMT
+
+### Changes
+
+- Use MSBuild Builtin Support for NuGet Restore (ngerlem@microsoft.com)
+
+## 0.0.0-canary.38
+
+Tue, 17 Nov 2020 05:05:00 GMT
+
+### Changes
+
+- Collect anonymized project name (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.36
 

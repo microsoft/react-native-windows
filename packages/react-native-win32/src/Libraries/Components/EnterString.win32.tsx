@@ -28,8 +28,6 @@ interface IEnterStringNativeProps /*extends React.ClassAttributes<React.View>*/ 
   onChanged?: (event: NativeSyntheticEvent<INativeOnChangedEventArgs>) => void;
 }
 
-let RCTEnterString: React.ComponentClass<IEnterStringNativeProps>;
-
 class EnterStringNative extends React.Component<IEnterStringNativeProps, {}> {
   // mixins: [NativeMethodsMixin],
 
@@ -49,7 +47,7 @@ class EnterStringNative extends React.Component<IEnterStringNativeProps, {}> {
   },
   */
 
-  /* tslint:disable-next-line:no-any */ // TODO figure out how to get a real type here
+ // TODO figure out how to get a real type here
   public static propTypes: any = {
     // React.ValidationMap<IEnterStringNativeProps> = {
     // ...View.propTypes,
@@ -86,7 +84,7 @@ class EnterStringNative extends React.Component<IEnterStringNativeProps, {}> {
   }
 }
 
-RCTEnterString = requireNativeComponent('RCTEnterString');
+const RCTEnterString = requireNativeComponent('RCTEnterString');
 
 export default class EnterString extends React.Component<IEnterStringProps, {}> {
   public static DefaultProps: IEnterStringProps = {
@@ -99,13 +97,12 @@ export default class EnterString extends React.Component<IEnterStringProps, {}> 
   public render() {
     const args = { ...this.props };
     if (args.onChanged) {
-      args.onChanged = this._on_changed_native.bind(this);
+      args.onChanged = this._onChangedNative.bind(this);
     } // TODO how should this work without the cast
 
-    return <EnterStringNative {...(args as any) as IEnterStringNativeProps} />; // tslint:disable-line:no-any
-  }
+    return <EnterStringNative {...(args as any) as IEnterStringNativeProps} />;  }
 
-  private _on_changed_native(event: NativeSyntheticEvent<INativeOnChangedEventArgs>) {
+  private _onChangedNative(event: NativeSyntheticEvent<INativeOnChangedEventArgs>) {
     if (this.props.onChanged) {
       this.props.onChanged(event.nativeEvent.text);
     }

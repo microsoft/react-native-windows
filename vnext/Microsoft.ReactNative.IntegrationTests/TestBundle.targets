@@ -2,6 +2,7 @@
 	<Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
 	<Target
 		Name="MakeTestBundles"
+		Condition="'$(DesignTimeBuild)' != 'true'"
 		BeforeTargets="PrepareForBuild"
 		Inputs="@(JsBundleEntry)"
 		Outputs="@(JsBundleEntry->'$(OutputPath)%(Filename).bundle')">

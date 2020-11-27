@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include <JSI/JsiApi.h>
 #include <NativeModules.h>
 #include <winrt/Windows.System.h>
 #include "MockReactPackageProvider.h"
+
 using namespace React;
 
 namespace ReactNativeIntegrationTests {
@@ -12,8 +14,17 @@ namespace ReactNativeIntegrationTests {
 REACT_MODULE(TestHostModule)
 struct TestHostModule {
   REACT_INIT(Initialize)
-  void Initialize(ReactContext const & /*reactContext*/) noexcept {
+  void Initialize(ReactContext const &reactContext) noexcept {
     TestHostModule::Instance.set_value(*this);
+
+    bool jsiExecuted{false};
+    ExecuteJsi(reactContext, [&](facebook::jsi::Runtime &rt) {
+      jsiExecuted = true;
+      auto eval = rt.global().getPropertyAsFunction(rt, "eval");
+      auto addFunc = eval.call(rt, "(function(x, y) { return x + y; })").getObject(rt).getFunction(rt);
+      TestCheckEqual(7, addFunc.call(rt, 3, 4).getNumber());
+    });
+    TestCheck(jsiExecuted);
   }
 
   REACT_FUNCTION(addValues, L"addValues", L"TestHostModuleFunctions")
@@ -72,7 +83,7 @@ TEST_CLASS (ReactNativeHostTests) {
     TestCheckEqual(std::wstring_view{path}, (std::wstring_view)host.InstanceSettings().BundleRootPath());
   }
 
-  SKIPTESTMETHOD(JsFunctionCall_Succeeds) {
+  TEST_METHOD(JsFunctionCall_Succeeds) {
     std::future<TestHostModule &> testHostModule = TestHostModule::Instance.get_future();
     std::future<int> returnValue = TestHostModule::IntReturnValue.get_future();
 
@@ -94,6 +105,8 @@ TEST_CLASS (ReactNativeHostTests) {
       host.InstanceSettings().UseFastRefresh(false);
       host.InstanceSettings().UseLiveReload(false);
       host.InstanceSettings().EnableDeveloperMenu(false);
+
+      host.InstanceSettings().UseDirectDebugger(true);
 
       host.LoadInstance();
     });

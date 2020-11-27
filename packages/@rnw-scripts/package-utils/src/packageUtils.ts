@@ -21,7 +21,7 @@ const getMonorepoPackages: (
  * Represents an NPM package
  */
 export class NpmPackage {
-  private pkgPath: string;
+  private readonly pkgPath: string;
   protected pkgJson: any;
 
   /**
@@ -54,12 +54,16 @@ export class WritableNpmPackage extends NpmPackage {
    */
   static async fromPath(pkgPath: string): Promise<WritableNpmPackage | null> {
     const jsonPath = path.join(pkgPath, 'package.json');
-    const jsonBuffer = await fs.promises.readFile(jsonPath);
-    if (!jsonBuffer) {
-      return null;
-    }
+    try {
+      const jsonBuffer = await fs.promises.readFile(jsonPath);
+      return new WritableNpmPackage(pkgPath, JSON.parse(jsonBuffer.toString()));
+    } catch (ex) {
+      if (ex.code === 'ENOENT') {
+        return null;
+      }
 
-    return new WritableNpmPackage(pkgPath, JSON.parse(jsonBuffer.toString()));
+      throw ex;
+    }
   }
 
   /**

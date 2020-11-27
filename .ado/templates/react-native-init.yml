@@ -83,7 +83,7 @@ steps:
   - powershell: |
       Write-Host "##vso[task.setvariable variable=localProjectType]${{ parameters.projectType}}"
 
-  # We force the usage of npm instead of yarn becuase yarn has fragility issues when redirected to a different server (such as verdaccio)
+  # We force the usage of npm instead of yarn because yarn has fragility issues when redirected to a different server (such as verdaccio)
   - task: CmdLine@2
     displayName: Init new app project
     inputs:
