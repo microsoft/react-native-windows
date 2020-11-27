@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Don't run bundling when doing intellisense builds",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

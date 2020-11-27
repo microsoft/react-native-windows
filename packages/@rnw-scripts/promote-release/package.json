@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/promote-release",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -13,14 +13,14 @@
     "promote-release": "./bin.js"
   },
   "dependencies": {
-    "@rnw-scripts/find-repo-root": "^0.0.13",
-    "@rnw-scripts/package-utils": "^0.0.10",
+    "@rnw-scripts/find-repo-root": "^0.0.14",
+    "@rnw-scripts/package-utils": "^0.0.11",
     "chalk": "^4.1.0",
     "simple-git": "^1.131.0",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "0.1.5",
+    "@rnw-scripts/eslint-config": "0.1.6",
     "@rnw-scripts/just-task": "0.0.6",
     "@rnw-scripts/ts-config": "0.1.0",
     "@types/chalk": "^2.2.0",

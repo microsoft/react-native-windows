@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/format-files
 
-This log was last generated on Thu, 01 Oct 2020 05:08:11 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Nov 2020 05:08:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.13
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Patches
+
+- Add more eslint rules (ngerlem@microsoft.com)
 
 ## 0.0.11
 
