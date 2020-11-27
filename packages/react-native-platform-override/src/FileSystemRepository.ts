@@ -15,7 +15,7 @@ import {WritableFileRepository} from './FileRepository';
  * Allows reading phsyical files based on a passed in directory
  */
 export default class FileSystemRepository implements WritableFileRepository {
-  private baseDir: string;
+  private readonly baseDir: string;
 
   constructor(baseDir: string) {
     this.baseDir = baseDir;

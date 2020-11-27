@@ -85,17 +85,8 @@ struct IReactInstance : IUnknown {
   virtual void DetachRootView(facebook::react::IReactRootView *rootView) noexcept = 0;
 };
 
-MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
-struct IReactContext : IUnknown {
-  virtual winrt::Microsoft::ReactNative::IReactNotificationService Notifications() const noexcept = 0;
-  virtual winrt::Microsoft::ReactNative::IReactPropertyBag Properties() const noexcept = 0;
-  virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) const noexcept = 0;
-  virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept = 0;
-  virtual winrt::Microsoft::ReactNative::JsiRuntime JsiRuntime() const noexcept = 0;
-#ifndef CORE_ABI
-  virtual ReactInstanceState State() const noexcept = 0;
-  virtual bool IsLoaded() const noexcept = 0;
-  virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept = 0;
+MSO_GUID(IReactSettingsSnapshot, "6652bb2e-4c5e-49f7-b642-e817b0fef4de")
+struct IReactSettingsSnapshot : IUnknown {
   virtual bool UseWebDebugger() const noexcept = 0;
   virtual bool UseFastRefresh() const noexcept = 0;
   virtual bool UseDirectDebugger() const noexcept = 0;
@@ -107,7 +98,20 @@ struct IReactContext : IUnknown {
   virtual uint16_t SourceBundlePort() const noexcept = 0;
   virtual std::string JavaScriptBundleFile() const noexcept = 0;
   virtual bool UseDeveloperSupport() const noexcept = 0;
+};
 
+MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
+struct IReactContext : IUnknown {
+  virtual winrt::Microsoft::ReactNative::IReactNotificationService Notifications() const noexcept = 0;
+  virtual winrt::Microsoft::ReactNative::IReactPropertyBag Properties() const noexcept = 0;
+  virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) const noexcept = 0;
+  virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept = 0;
+  virtual winrt::Microsoft::ReactNative::JsiRuntime JsiRuntime() const noexcept = 0;
+#ifndef CORE_ABI
+  virtual ReactInstanceState State() const noexcept = 0;
+  virtual bool IsLoaded() const noexcept = 0;
+  virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept = 0;
+  virtual IReactSettingsSnapshot const &SettingsSnapshot() const noexcept = 0;
 #endif
 };
 

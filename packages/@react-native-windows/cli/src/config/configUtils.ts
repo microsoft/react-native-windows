@@ -83,7 +83,7 @@ export function findSolutionFiles(winFolder: string): string[] {
     return [allSolutions[0]];
   }
 
-  var solutionFiles = [];
+  const solutionFiles = [];
 
   // Try to find any solution file that appears to be a React Native solution
   for (const solutionFile of allSolutions) {
@@ -136,7 +136,7 @@ export function findDependencyProjectFiles(winFolder: string): string[] {
     return [];
   }
 
-  var dependencyProjectFiles = [];
+  const dependencyProjectFiles = [];
 
   // Try to find any project file that appears to be a dependency project
   for (const projectFile of allProjects) {
@@ -189,7 +189,7 @@ export function findAppProjectFiles(winFolder: string): string[] {
     return [];
   }
 
-  var appProjectFiles = [];
+  const appProjectFiles = [];
 
   // Try to find any project file that appears to be an app project
   for (const projectFile of allProjects) {
@@ -236,7 +236,7 @@ export function tryFindPropertyValue(
   projectContents: Node,
   propertyName: string,
 ): string | null {
-  var nodes = msbuildSelect(
+  const nodes = msbuildSelect(
     `//msbuild:PropertyGroup/msbuild:${propertyName}`,
     projectContents,
   );
@@ -271,7 +271,7 @@ export function importProjectExists(
   projectContents: Node,
   projectName: string,
 ): boolean {
-  var nodes = msbuildSelect(
+  const nodes = msbuildSelect(
     `//msbuild:Import[contains(@Project,'${projectName}')]`,
     projectContents,
   );

@@ -31,6 +31,8 @@ export interface IDatePickerChangeEvent {
   };
 }
 
+// Enum already part of our public API
+// eslint-disable-next-line no-restricted-syntax
 export enum DayOfWeek {
   Sunday = 0,
   Monday = 1,

@@ -34,8 +34,8 @@ export type CallStackFrame = {
 };
 
 export default class IntegrationTestClient {
-  private socket: Socket;
-  private commandQueue: SerialQueue;
+  private readonly socket: Socket;
+  private readonly commandQueue: SerialQueue;
 
   private constructor(socket: Socket) {
     this.socket = socket;

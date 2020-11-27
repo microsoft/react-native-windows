@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include <JSI/JsiApi.h>
 #include <NativeModules.h>
 #include <winrt/Windows.System.h>
 #include "MockReactPackageProvider.h"
@@ -17,7 +18,7 @@ struct TestHostModule {
     TestHostModule::Instance.set_value(*this);
 
     bool jsiExecuted{false};
-    reactContext.ExecuteJsi([&](facebook::jsi::Runtime &rt) {
+    ExecuteJsi(reactContext, [&](facebook::jsi::Runtime &rt) {
       jsiExecuted = true;
       auto eval = rt.global().getPropertyAsFunction(rt, "eval");
       auto addFunc = eval.call(rt, "(function(x, y) { return x + y; })").getObject(rt).getFunction(rt);

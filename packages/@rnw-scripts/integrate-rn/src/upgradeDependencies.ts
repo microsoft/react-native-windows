@@ -65,7 +65,7 @@ export default async function upgradeDependencies(
     outOfTreePlatform: OUT_OF_TREE_PLATFORMS.includes(pkg.json.name),
   }));
 
-  const newDeps = await calcPackageDependencies(
+  const newDeps = calcPackageDependencies(
     newReactNativeVersion,
     reactNativeDiff,
     repoConfigDiff,

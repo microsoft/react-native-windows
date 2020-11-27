@@ -34,24 +34,24 @@ const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   : 'http://registry.npmjs.org';
 const npm = new Registry({registry: NPM_REGISTRY_URL});
 
-enum ExitCode {
-  SUCCESS = 0,
-  UNSUPPORTED_VERSION_RN = 3,
-  USER_CANCEL = 4,
-  NO_REACTNATIVE_FOUND = 5,
-  UNKNOWN_ERROR = 6,
-  NO_PACKAGE_JSON = 7,
-  NO_LATEST_RNW = 8,
-  NO_AUTO_MATCHING_RNW = 9,
-  INCOMPATIBLE_OPTIONS = 10,
-  DEVMODE_VERSION_MISMATCH = 11,
-  NO_REACTNATIVE_DEPENDENCIES = 12,
-}
+const ExitCode = {
+  SUCCESS: 0,
+  UNSUPPORTED_VERSION_RN: 3,
+  USER_CANCEL: 4,
+  NO_REACTNATIVE_FOUND: 5,
+  UNKNOWN_ERROR: 6,
+  NO_PACKAGE_JSON: 7,
+  NO_LATEST_RNW: 8,
+  NO_AUTO_MATCHING_RNW: 9,
+  INCOMPATIBLE_OPTIONS: 10,
+  DEVMODE_VERSION_MISMATCH: 11,
+  NO_REACTNATIVE_DEPENDENCIES: 12,
+};
 
 class UserError extends Error {
-  exitCode: ExitCode;
+  exitCode: number;
 
-  constructor(exitCode: ExitCode, message?: string) {
+  constructor(exitCode: number, message?: string) {
     super(message);
     this.exitCode = exitCode;
   }
@@ -243,7 +243,7 @@ function getLatestMatchingVersion(
       // as it fails to return pre-release versions
       npm.packages.releases(
         pkg,
-        (err: any, details: {[key: string]: object}) => {
+        (err: any, details: {[key: string]: Record<string, any>} | null) => {
           if (err) {
             reject(err);
           } else if (details) {
@@ -252,7 +252,7 @@ function getLatestMatchingVersion(
               const candidates = versions
                 .filter(v => semver.satisfies(v, versionSemVer))
                 .sort(semver.rcompare);
-              if (candidates && candidates.length > 0) {
+              if (candidates.length > 0) {
                 resolve(candidates[0]);
                 return;
               }
@@ -365,7 +365,7 @@ function installReactNativeWindows(
     internalError('Unable to find package.json');
   }
 
-  let pkgJson = require(pkgJsonPath);
+  const pkgJson = require(pkgJsonPath);
 
   // check how react-native is installed
   if ('dependencies' in pkgJson && 'react-native' in pkgJson.dependencies) {
@@ -415,14 +415,14 @@ function getRNWInitVersion(): string {
   return '';
 }
 
-function setExit(exitCode: ExitCode, error?: String): void {
+function setExit(exitCode: number, error?: string): void {
   if (!process.exitCode || process.exitCode === ExitCode.SUCCESS) {
     Telemetry.client?.trackEvent({
       name: 'init-exit',
       properties: {
         durationInSecs: process.uptime(),
         msftInternal: isMSFTInternal(),
-        exitCode: ExitCode[exitCode],
+        exitCode: exitCode,
         rnwinitVersion: getRNWInitVersion(),
         errorMessage: error,
       },
@@ -434,7 +434,7 @@ function setExit(exitCode: ExitCode, error?: String): void {
 /**
  * Throws a user or setup error
  */
-function userError(text: string, exitCode: ExitCode): never {
+function userError(text: string, exitCode: number): never {
   throw new UserError(exitCode, text);
 }
 
