@@ -57,14 +57,6 @@
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
-; Ignore unexpected extra "@providesModule"
-.*/node_modules/.*/node_modules/fbjs/.*
-
-; These should not be required directly
-; require from fbjs/lib instead: require('fbjs/lib/warning')
-.*/node_modules/warning/.*
-
-
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/vnext/src/.*
 
@@ -86,9 +78,6 @@ flow/
 [options]
 emoji=true
 
-esproposal.optional_chaining=enable
-esproposal.nullish_coalescing=enable
-
 exact_by_default=true
 
 module.file_ext=.js
@@ -109,8 +98,6 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
-well_formed_exports=true
-types_first=true
 experimental.abstract_locations=true
 
 [lints]
@@ -134,4 +121,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.132.0
+^0.138.0

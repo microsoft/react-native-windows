@@ -250,7 +250,7 @@ class TouchableExamples extends React.Component<{}, any> {
     );
   }
 
-  private press = () => {
+  private readonly press = () => {
     this.setState({pressedCount: this.state.pressedCount + 1});
   };
 }
@@ -270,7 +270,7 @@ class AccessibilityStateExamples extends React.Component {
   };
 
   public render() {
-    var selectableItems = [{}, {}, {}];
+    const selectableItems = [{}, {}, {}];
     return (
       <View>
         <Text>
@@ -463,17 +463,17 @@ class AccessibilityStateExamples extends React.Component {
     );
   }
 
-  private disablePress = () => {
+  private readonly disablePress = () => {
     this.setState({viewDisabled: !this.state.viewDisabled});
   };
 
-  private selectPress = (index: number) => {
-    let tmp = this.state.itemsSelected;
+  private readonly selectPress = (index: number) => {
+    const tmp = this.state.itemsSelected;
     tmp[index] = !tmp[index];
     this.setState({itemsSelected: tmp});
   };
 
-  private checkedPress = () => {
+  private readonly checkedPress = () => {
     let newChecked = this.state.viewChecked + 1;
     if (newChecked === 3) {
       newChecked = 0;
@@ -481,22 +481,22 @@ class AccessibilityStateExamples extends React.Component {
     this.setState({viewChecked: newChecked});
   };
 
-  private busyPress = () => {
+  private readonly busyPress = () => {
     this.setState({viewBusy: !this.state.viewBusy});
   };
 
-  private collapsePress = () => {
+  private readonly collapsePress = () => {
     this.setState({viewCollapsed: !this.state.viewCollapsed});
   };
 
-  private rangePress = () => {
+  private readonly rangePress = () => {
     this.setState({viewRangeNow: this.state.viewRangeNow + 1});
   };
 }
 
 class AccessibilityListExamples extends React.Component {
   public render() {
-    var items = [{}, {}, {}];
+    const items = [{}, {}, {}];
     return (
       <View>
         <Text>
@@ -555,6 +555,7 @@ class AccessibilityListExamples extends React.Component {
 
 export const displayName = (_undefined?: string) => {};
 export const title = 'Accessibility Windows';
+export const category = 'Basic';
 export const description = 'Usage of accessibility properties.';
 export const examples = [
   {

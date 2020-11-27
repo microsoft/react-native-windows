@@ -47,6 +47,10 @@ struct UIManager final {
   REACT_SYNC_METHOD(getConstantsForViewManager)
   winrt::Microsoft::ReactNative::JSValueObject getConstantsForViewManager(std::string viewManagerName) noexcept;
 
+  // Not part of the spec, but core polyfils this on the JS side.
+  REACT_SYNC_METHOD(getViewManagerConfig)
+  winrt::Microsoft::ReactNative::JSValueObject getViewManagerConfig(std::string viewManagerName) noexcept;
+
   REACT_SYNC_METHOD(getDefaultEventTypes)
   winrt::Microsoft::ReactNative::JSValueArray getDefaultEventTypes() noexcept;
 
@@ -130,6 +134,9 @@ struct UIManager final {
 
   REACT_METHOD(replaceExistingNonRootView)
   void replaceExistingNonRootView(double reactTag, double newReactTag) noexcept;
+
+  REACT_METHOD(removeRootView)
+  void removeRootView(double reactTag) noexcept;
 
   REACT_METHOD(setChildren)
   void setChildren(double containerTag, winrt::Microsoft::ReactNative::JSValueArray &&reactTags) noexcept;

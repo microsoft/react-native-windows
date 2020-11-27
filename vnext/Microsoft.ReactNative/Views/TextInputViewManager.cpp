@@ -117,6 +117,10 @@ class TextInputShadowNode : public ShadowNodeBase {
     return true;
   }
 
+  virtual bool NeedsForceLayout() override {
+    return true;
+  }
+
  private:
   void dispatchTextInputChangeEvent(winrt::hstring newText);
   void registerEvents();
@@ -703,7 +707,6 @@ ShadowNode *TextInputViewManager::createShadow() const {
 
 XamlView TextInputViewManager::CreateViewCore(int64_t /*tag*/) {
   xaml::Controls::TextBox textBox;
-  textBox.TabIndex(0);
   return textBox;
 }
 

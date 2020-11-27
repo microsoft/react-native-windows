@@ -48,8 +48,8 @@ struct JsiError : JsiErrorT<JsiError> {
 
 struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   JsiRuntime(
-      std::shared_ptr<::Microsoft::JSI::ChakraRuntimeHolder> runtimeHolder,
-      std::shared_ptr<facebook::jsi::Runtime> runtime) noexcept;
+      std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> &&runtimeHolder,
+      std::shared_ptr<facebook::jsi::Runtime> &&runtime) noexcept;
   ~JsiRuntime() noexcept;
 
   static ReactNative::JsiRuntime FromRuntime(facebook::jsi::Runtime &runtime) noexcept;
@@ -142,7 +142,7 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   void SetError(facebook::jsi::JSINativeException const &nativeException) noexcept;
 
  private:
-  std::shared_ptr<::Microsoft::JSI::ChakraRuntimeHolder> m_runtimeHolder;
+  std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> m_runtimeHolder;
   std::shared_ptr<facebook::jsi::Runtime> m_runtime;
   std::mutex m_mutex;
   ReactNative::JsiError m_error{nullptr};

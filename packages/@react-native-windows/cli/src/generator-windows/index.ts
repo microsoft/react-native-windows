@@ -32,7 +32,6 @@ async function generateCertificate(
   currentUser: string,
 ): Promise<string | null> {
   console.log('Generating self-signed certificate...');
-  let toCopyTempKey = false;
   if (os.platform() === 'win32') {
     try {
       const timeout = 10000; // 10 seconds;
@@ -59,30 +58,18 @@ async function generateCertificate(
       );
       return thumbprint;
     } catch (err) {
-      console.log(
-        chalk.yellow(
-          'Failed to generate Self-signed certificate. Using Default Certificate. Use Visual Studio to renew it.',
-        ),
-      );
-      toCopyTempKey = true;
+      console.log(chalk.yellow('Failed to generate Self-signed certificate.'));
     }
-  } else {
-    console.log(
-      chalk.yellow('Using Default Certificate. Use Visual Studio to renew it.'),
-    );
-    toCopyTempKey = true;
   }
-  if (toCopyTempKey) {
-    await copyAndReplaceWithChangedCallback(
-      path.join(srcPath, 'keys', 'MyApp_TemporaryKey.pfx'),
-      destPath,
-      path.join(
-        windowsDir,
-        newProjectName,
-        newProjectName + '_TemporaryKey.pfx',
-      ),
-    );
-  }
+
+  console.log(
+    chalk.yellow('Using Default Certificate. Use Visual Studio to renew it.'),
+  );
+  await copyAndReplaceWithChangedCallback(
+    path.join(srcPath, 'keys', 'MyApp_TemporaryKey.pfx'),
+    destPath,
+    path.join(windowsDir, newProjectName, newProjectName + '_TemporaryKey.pfx'),
+  );
 
   return null;
 }
@@ -110,6 +97,8 @@ function pascalCase(str: string) {
   return camelCase[0].toUpperCase() + camelCase.substr(1);
 }
 
+// Existing high cyclomatic complexity
+// eslint-disable-next-line complexity
 export async function copyProjectTemplateAndReplace(
   srcRootPath: string,
   destPath: string,
@@ -140,7 +129,7 @@ export async function copyProjectTemplateAndReplace(
   // Similar to the above, but we want to retain namespace separators
   if (projectType === 'lib') {
     namespace = namespace
-      .split(/[\.\:]+/)
+      .split(/[.:]+/)
       .map(pascalCase)
       .join('.');
   }
@@ -160,7 +149,6 @@ export async function copyProjectTemplateAndReplace(
   }
   if (options.useWinUI3) {
     console.log('Using experimental WinUI3 dependency.');
-    fs.writeFileSync(path.join(destPath, windowsDir, 'UseWinUI3'), '');
   }
   const projDir = 'proj';
   const srcPath = path.join(srcRootPath, `${language}-${projectType}`);
@@ -191,10 +179,11 @@ export async function copyProjectTemplateAndReplace(
     {paths: [process.cwd()]},
   );
   const winui3Props = readProjectFile(winui3PropsPath);
-  const winui3Version = findPropertyValue(winui3Props, 'WinUI3Version');
-  if (winui3Version === null) {
-    throw new Error('Unable to find WinUI3 version from property sheets');
-  }
+  const winui3Version = findPropertyValue(
+    winui3Props,
+    'WinUI3Version',
+    winui3PropsPath,
+  );
 
   const csNugetPackages: NugetPackage[] = [
     {
@@ -240,6 +229,15 @@ export async function copyProjectTemplateAndReplace(
     });
   }
 
+  if (options.useHermes) {
+    cppNugetPackages.push({
+      id: 'ReactNative.Hermes.Windows',
+      version: '0.7.1',
+      hasProps: false,
+      hasTargets: true,
+    });
+  }
+
   const templateVars: Record<string, any> = {
     useMustache: true,
     regExpPatternsToRemove: ['//\\sclang-format\\s(on|off)\\s'],
@@ -265,6 +263,7 @@ export async function copyProjectTemplateAndReplace(
 
     // cpp template variables
     useWinUI3: options.useWinUI3,
+    useHermes: options.useHermes,
     xamlNamespace: xamlNamespace,
     xamlNamespaceCpp: xamlNamespaceCpp,
     cppNugetPackages: cppNugetPackages,
@@ -273,9 +272,10 @@ export async function copyProjectTemplateAndReplace(
     csNugetPackages: csNugetPackages,
 
     // autolinking template variables
+    autolinkPropertiesForProps: '',
     autolinkProjectReferencesForTargets: '',
     autolinkCsUsingNamespaces: '',
-    autolinkCsReactPacakgeProviders: '',
+    autolinkCsReactPackageProviders: '',
     autolinkCppIncludes: '',
     autolinkCppPackageProviders:
       '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: vnext\local-cli\runWindows\utils\autolink.js
@@ -286,7 +286,12 @@ export async function copyProjectTemplateAndReplace(
       ? [
           // app common mappings
           {
-            from: path.join(srcRootPath, 'metro.config.js'),
+            from: path.join(
+              srcRootPath,
+              options.useDevMode
+                ? 'metro.devMode.config.js'
+                : 'metro.config.js',
+            ),
             to: 'metro.config.js',
           },
           {
@@ -439,24 +444,31 @@ export async function copyProjectTemplateAndReplace(
 
   // shared proj
   if (fs.existsSync(path.join(sharedPath, projDir))) {
+    const sharedProjMappings = [];
+
     // Once we are publishing to nuget.org, this shouldn't be needed anymore
     if (options.experimentalNuGetDependency) {
-      const nugetMappings = [
-        {
-          from: path.join(sharedPath, projDir, 'NuGet.Config'),
-          to: path.join(windowsDir, 'NuGet.Config'),
-        },
-      ];
+      sharedProjMappings.push({
+        from: path.join(sharedPath, projDir, 'NuGet.Config'),
+        to: path.join(windowsDir, 'NuGet.Config'),
+      });
+    }
 
-      for (const mapping of nugetMappings) {
-        await copyAndReplaceWithChangedCallback(
-          mapping.from,
-          destPath,
-          mapping.to,
-          templateVars,
-          options.overwrite,
-        );
-      }
+    if (fs.existsSync(path.join(sharedPath, projDir, 'BuildFlags.props'))) {
+      sharedProjMappings.push({
+        from: path.join(sharedPath, projDir, 'BuildFlags.props'),
+        to: path.join(windowsDir, 'BuildFlags.props'),
+      });
+    }
+
+    for (const mapping of sharedProjMappings) {
+      await copyAndReplaceWithChangedCallback(
+        mapping.from,
+        destPath,
+        mapping.to,
+        templateVars,
+        options.overwrite,
+      );
     }
   }
 

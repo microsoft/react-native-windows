@@ -4,9 +4,14 @@
  * @format
  */
 
+// Types in this file are inaccurate compared to usage in terms of falsiness.
+// We should try to rewrite some of this to do automated schema validation to
+// guarantee correct types
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+
 import * as path from 'path';
 
-import * as configUtils from './configUtils.js';
+import * as configUtils from './configUtils';
 
 /*
 
@@ -55,6 +60,7 @@ export interface Project {
   projectName: string;
   projectLang: 'cpp' | 'cs' | null;
   projectGuid: string | null;
+  projectTypeGuid?: string;
 }
 
 export interface WindowsProjectConfig {
@@ -74,7 +80,7 @@ type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
  */
 export function projectConfigWindows(
   folder: string,
-  userConfig: Partial<WindowsProjectConfig> = {},
+  userConfig: Partial<WindowsProjectConfig> | null = {},
 ): WindowsProjectConfig | null {
   if (userConfig === null) {
     return null;
@@ -91,12 +97,12 @@ export function projectConfigWindows(
     return null;
   }
 
-  var result: DeepPartial<WindowsProjectConfig> = {
+  const result: DeepPartial<WindowsProjectConfig> = {
     folder: folder,
-    sourceDir: sourceDir.substr(folder.length + 1),
+    sourceDir: path.relative(folder, sourceDir),
   };
 
-  var validProject = false;
+  let validProject = false;
 
   if (usingManualOverride) {
     // Manual override, try to use it for solutionFile

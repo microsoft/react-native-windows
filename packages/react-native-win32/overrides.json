@@ -1,29 +1,21 @@
 {
   "includePatterns": [
     ".flowconfig",
-    "flow-typed",
     "src/**"
   ],
-  "baseVersion": "0.0.0-9b973f32e",
+  "baseVersion": "0.0.0-19d4cc2d4",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a02ec80bfa99acea12365f29e51b898a074e362a"
-    },
-    {
-      "type": "copy",
-      "directory": "flow-typed",
-      "baseDirectory": "flow-typed",
-      "baseHash": "f1491d073bd76e90b6c185d818ec807ac52346b9",
-      "issue": 6139
+      "baseHash": "adba67efd9973702f45a234e13a291155d0e56f1"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "717b73b2397607b3d0a74534cc3360a1be627906"
+      "baseHash": "60f46e1ea481e2e6c0673dfc5f9a74da68ae3400"
     },
     {
       "type": "patch",
@@ -42,7 +34,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseHash": "525b7ac5ec31febba5f57c8faa7ccc9a6e0fa34c"
+      "baseHash": "739dfa774136768251847ae0f3900990b0b0f0c1"
     },
     {
       "type": "patch",
@@ -154,7 +146,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "05c8c1e9142210b472c9c1ce891314b786ecc50f"
+      "baseHash": "97e9917d3fa2dbe2fe6c03c4264f756634026796"
     },
     {
       "type": "patch",
@@ -235,7 +227,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "9bd6a85eef7bb41373df9eb7dd9b21a986848cbd",
+      "baseHash": "8d053f7bcb66ea71fd361a5c882e4142b5977202",
       "issue": 4320
     },
     {
@@ -246,7 +238,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/NativeImageLoaderWin32.js",
       "baseFile": "Libraries/Image/NativeImageLoaderIOS.js",
-      "baseHash": "6161ce89a0b45b24e8df69aa108af22a7b591483",
+      "baseHash": "50b70af2498caf216229426a1b74b1d3d3ee5334",
       "issue": 4320
     },
     {
@@ -358,7 +350,7 @@
       "type": "copy",
       "file": "src/Libraries/Utilities/BackHandler.win32.js",
       "baseFile": "Libraries/Utilities/BackHandler.android.js",
-      "baseHash": "69605da09902165f866377d7eda5897029ef4d62",
+      "baseHash": "972b0cbe23ba57207ee7c855975c0b3d4c28f0d2",
       "issue": 4629
     },
     {
@@ -383,7 +375,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.win32.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
-      "baseHash": "750d5a0afc192d9ec98c27d28402285c9e3155a0"
+      "baseHash": "1e689ecb36aaa20e7b60b5f6e7620785e3826e0a"
     },
     {
       "type": "platform",

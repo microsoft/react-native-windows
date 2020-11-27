@@ -17,7 +17,7 @@ class AnchoredPopupExample extends React.Component<
   {},
   IAnchoredPopupExampleState
 > {
-  private _textInput: React.RefObject<TextInput>;
+  private readonly _textInput: React.RefObject<TextInput>;
 
   public state: IAnchoredPopupExampleState = {
     showPopup: false,
@@ -131,7 +131,8 @@ class PopupPlacementExample extends React.Component<
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<Popup>';
+export const title = 'Popup';
+export const category = 'UI';
 export const description =
   'Displays content on top of existing content, within the bounds of the application window.';
 export const examples = [

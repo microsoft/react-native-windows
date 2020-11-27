@@ -19,11 +19,6 @@ const TextAncestor = require('../../Text/TextAncestor');
 const TextInputState = require('./TextInputState');
 const TouchableWithoutFeedback = require('../Touchable/TouchableWithoutFeedback');
 
-// [Windows
-const requireNativeComponent = require('../../ReactNative/requireNativeComponent');
-import codegenNativeCommands from '../../Utilities/codegenNativeCommands';
-// Windows]
-
 const invariant = require('invariant');
 const nullthrows = require('nullthrows');
 const setAndForwardRef = require('../../Utilities/setAndForwardRef');
@@ -66,10 +61,9 @@ if (Platform.OS === 'android') {
 }
 // [Windows
 else if (Platform.OS === 'windows') {
-  WindowsTextInput = requireNativeComponent('RCTTextInput');
-  WindowsTextInputCommands = codegenNativeCommands<
-    TextInputNativeCommands<HostComponent<any>>,
-  >({supportedCommands: ['focus', 'blur', 'setTextAndSelection']});
+  WindowsTextInput = require('./WindowsTextInputNativeComponent').default;
+  WindowsTextInputCommands = require('./WindowsTextInputNativeComponent')
+    .Commands;
 }
 // Windows]
 
@@ -502,6 +496,7 @@ export type Props = $ReadOnly<{|
    * The following values work on Android only:
    *
    * - `visible-password`
+   *
    */
   keyboardType?: ?KeyboardType,
 
@@ -585,6 +580,16 @@ export type Props = $ReadOnly<{|
    * Callback that is called when text input ends.
    */
   onEndEditing?: ?(e: EditingEvent) => mixed,
+
+  /**
+   * Called when a touch is engaged.
+   */
+  onPressIn?: ?(event: PressEvent) => mixed,
+
+  /**
+   * Called when a touch is released.
+   */
+  onPressOut?: ?(event: PressEvent) => mixed,
 
   /**
    * Callback that is called when the text input selection is changed.
@@ -698,7 +703,12 @@ export type Props = $ReadOnly<{|
 
   /**
    * If `true`, caret is hidden. The default value is `false`.
-   * This property is supported only for single-line TextInput component on iOS.
+   *
+   * On Android devices manufactured by Xiaomi with Android Q,
+   * when keyboardType equals 'email-address'this will be set
+   * in native to 'true' to prevent a system related crash. This
+   * will cause cursor to be diabled as a side-effect.
+   *
    */
   caretHidden?: ?boolean,
 
@@ -1169,6 +1179,8 @@ function InternalTextInput(props: Props): React.Node {
       <TouchableWithoutFeedback
         onLayout={props.onLayout}
         onPress={_onPress}
+        onPressIn={props.onPressIn}
+        onPressOut={props.onPressOut}
         accessible={props.accessible}
         accessibilityLabel={props.accessibilityLabel}
         accessibilityRole={props.accessibilityRole}
@@ -1186,20 +1198,26 @@ const ExportedForwardRef: React.AbstractComponent<
   React.ElementConfig<typeof InternalTextInput>,
   React.ElementRef<HostComponent<mixed>> & ImperativeMethods,
 > = React.forwardRef(function TextInput(
-  props,
+  {
+    allowFontScaling = true,
+    rejectResponderTermination = true,
+    underlineColorAndroid = 'transparent',
+    ...restProps
+  },
   forwardedRef: ReactRefSetter<
     React.ElementRef<HostComponent<mixed>> & ImperativeMethods,
   >,
 ) {
-  return <InternalTextInput {...props} forwardedRef={forwardedRef} />;
+  return (
+    <InternalTextInput
+      allowFontScaling={allowFontScaling}
+      rejectResponderTermination={rejectResponderTermination}
+      underlineColorAndroid={underlineColorAndroid}
+      {...restProps}
+      forwardedRef={forwardedRef}
+    />
+  );
 });
-
-// $FlowFixMe
-ExportedForwardRef.defaultProps = {
-  allowFontScaling: true,
-  rejectResponderTermination: true,
-  underlineColorAndroid: 'transparent',
-};
 
 // TODO: Deprecate this
 // $FlowFixMe

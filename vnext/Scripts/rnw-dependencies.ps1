@@ -58,7 +58,7 @@ function CheckVS {
     if (!(Test-Path $vsWhere)) {
         return $false;
     }
-    $output = & $vsWhere -version 16 -requires $vsComponents -property productPath
+    $output = & $vsWhere -version 16.5 -requires $vsComponents -property productPath
 
     return ($output -ne $null) -and (Test-Path $output);
 }
@@ -67,8 +67,8 @@ function InstallVS {
     $installerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer";
     $vsWhere = "$installerPath\vswhere.exe"
     if (Test-Path $vsWhere) {
-        $channelId = & $vsWhere -version 16 -property channelId
-        $productId = & $vsWhere -version 16 -property productId
+        $channelId = & $vsWhere -version 16.5 -property channelId
+        $productId = & $vsWhere -version 16.5 -property productId
     }
 
     if (!(Test-Path $vsWhere) -or ($channelId -eq $null) -or ($productId -eq $null)) {
@@ -79,8 +79,8 @@ function InstallVS {
         } else {
             & choco install -y visualstudio2019community
         }
-        $channelId = & $vsWhere -version 16 -property channelId
-        $productId = & $vsWhere -version 16 -property productId
+        $channelId = & $vsWhere -version 16.5 -property channelId
+        $productId = & $vsWhere -version 16.5 -property productId
     }
 
     $vsInstaller = "$installerPath\vs_installer.exe"
@@ -93,7 +93,7 @@ function InstallVS {
 function CheckNode {
     try {
         $v = (Get-Command node -ErrorAction Stop).Version.Major
-        return $v -eq 12 -or $v -eq 13
+        return $v -eq 12 -or $v -eq 13 -or $v -eq 14
     } catch {
         return $false;
     }
@@ -172,13 +172,13 @@ $requirements = @(
         Install = { choco install -y git };
     },
     @{
-        Name = 'VS 2019 with UWP and Desktop/C++';
+        Name = 'Visual Studio >= 16.5 with UWP and Desktop/C++';
         Tags = @('appDev', 'vs2019');
         Valid = CheckVS;
         Install = { InstallVS };
     },
     @{
-        Name = 'NodeJS 12 or 13 installed';
+        Name = 'NodeJS 12, 13 or 14 installed';
         Tags = @('appDev');
         Valid = CheckNode;
         Install = { choco install -y nodejs.install --version=12.9.1 };
@@ -267,7 +267,7 @@ function IsElevated {
     return [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544");
 }
 
-if (!(IsElevated)) {
+if (!($NoPrompt) -and !(IsElevated)) {
     Write-Output "rnw-dependencies - this script must run elevated. Exiting.";
     return;
 }

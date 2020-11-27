@@ -46,20 +46,20 @@ const styles = StyleSheet.create({
   },
 });
 
-enum operators {
-  clearEntry = 'CE',
-  clear = 'C',
-  backspace = '⌫',
-  decimal = '.',
-  sign = '±',
-  add = '+',
-  subtract = '−',
-  multiply = '×',
-  divide = '÷',
-  equals = '=',
-}
+const operators = {
+  clearEntry: 'CE',
+  clear: 'C',
+  backspace: '⌫',
+  decimal: '.',
+  sign: '±',
+  add: '+',
+  subtract: '−',
+  multiply: '×',
+  divide: '÷',
+  equals: ':',
+};
 
-var calc = {
+const calc = {
   stackValue: NaN,
   pendingOperator: '',
   decimalPressed: false,
@@ -91,6 +91,8 @@ export default class Bootstrap extends React.Component {
     displayText: '0',
   };
 
+  // Existing high cyclomatic complexity
+  // eslint-disable-next-line complexity
   buttonPress(btn: string) {
     let text = this.state.displayText;
 
@@ -112,7 +114,7 @@ export default class Bootstrap extends React.Component {
 
           if (text.length === 0) {
             text = '0';
-          } else if (text[text.length - 1] === operators.decimal) {
+          } else if (text.endsWith(operators.decimal)) {
             text = text.substring(0, text.length - 1);
           }
 
@@ -122,7 +124,7 @@ export default class Bootstrap extends React.Component {
     } else if (btn === operators.decimal) {
       // Decimal
       if (isFinite(Number(text))) {
-        if (!calc.decimalPressed && text.indexOf(operators.decimal) === -1) {
+        if (!calc.decimalPressed && !text.includes(operators.decimal)) {
           calc.decimalPressed = true;
         }
       }
@@ -178,11 +180,11 @@ export default class Bootstrap extends React.Component {
     this.setState({displayText: '0'});
   }
 
-  computeAndUpdate(nextOperator: operators) {
+  computeAndUpdate(nextOperator: string) {
     if (!isNaN(calc.stackValue)) {
       // There's something on the stack, let's compute
       let o1 = calc.stackValue;
-      let o2 = Number(this.state.displayText);
+      const o2 = Number(this.state.displayText);
 
       if (calc.pendingOperator === operators.add) {
         o1 = o1 + o2;
@@ -196,7 +198,7 @@ export default class Bootstrap extends React.Component {
 
       calc.stackValue = o1;
     } else {
-      let num = Number(this.state.displayText);
+      const num = Number(this.state.displayText);
       calc.stackValue = num;
     }
     calc.pendingOperator = nextOperator;

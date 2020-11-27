@@ -2,6 +2,677 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 26 Nov 2020 05:06:06 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.219",
+      "version": "0.0.0-canary.219",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Refactor ReactContext API",
+            "author": "vmorozov@microsoft.com",
+            "commit": "37f158b2e193c0a562fa31665be636f866ceb2a5",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 25 Nov 2020 05:06:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.218",
+      "version": "0.0.0-canary.218",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add error for users who try to build apps/libs via project instead of solution",
+            "author": "jthysell@microsoft.com",
+            "commit": "6f10d9ff0e632ac6e54aafb20735551b8b9ac76b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.217",
+      "version": "0.0.0-canary.217",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix links in some docs, mark APIs as deprecated or experimental as appropriate",
+            "author": "asklar@microsoft.com",
+            "commit": "b88d4d705fe8c2e8c57b2db910025137042fc53b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Don't run bundling when doing intellisense builds",
+            "author": "asklar@microsoft.com",
+            "commit": "4c5e26c142496d2260536cc19ee56d59753bedb9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 22 Nov 2020 05:06:06 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.216",
+      "version": "0.0.0-canary.216",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix invalidation bug and use Canvas.Top/Left",
+            "author": "kmelmon@microsoft.com",
+            "commit": "af5d422ce09852091f46571ddcf0d6771d1ec02d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix panels with transforms leaking",
+            "author": "stecrain@microsoft.com",
+            "commit": "d1d39f81105682cbb485121e0f12f3f195820d20",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 21 Nov 2020 05:05:40 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.215",
+      "version": "0.0.0-canary.215",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add ReactContext::ExecuteJsi method to use JSI in NativeModules",
+            "author": "vmorozov@microsoft.com",
+            "commit": "d7cdd84367953a02848f1c19ee509e0ab5af2ad7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.214",
+      "version": "0.0.0-canary.214",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "WinUI 3 Preview 3 support",
+            "author": "asklar@microsoft.com",
+            "commit": "cb9bcfe320446b021924ec8bc8e32c383202bdb7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update lib template to default prefer RNW dir of consuming app",
+            "author": "jthysell@microsoft.com",
+            "commit": "5348e4c1ed16f781071c53c2cd73bb0ba837b7f2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 19 Nov 2020 17:13:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.213",
+      "version": "0.0.0-canary.213",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update Nuget publish to not overwrite the created anycpu version",
+            "author": "dannyvv@microsoft.com",
+            "commit": "44b3782cfc475e79e1f2d950adac72d45a143391",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use lessthrow_await_adapter for WebSocketJSExecutor::ConnectAsync",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a6e254b5b085588b8478e9926a38adfb400943de",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 19 Nov 2020 05:06:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.212",
+      "version": "0.0.0-canary.212",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Exclude Beast WebSocket from build by default.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "9d0fe830918e9a31d0f5d99ea1b97d8ac53840db",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix typo",
+            "author": "igklemen@microsoft.com",
+            "commit": "23f88d9a3e4f20d77464117768abacb9c0687d68",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add Yellowbox warnings for WIndows Variants of Lean Core Components",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d4956198d07f4d55bf355f77e7affa025fd36a30",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix Typo in msbuild comment",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ab8ddeb29b2968f20aea532cef28ad0573f14c0b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Nov 2020 03:10:51 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.211",
+      "version": "0.0.0-canary.211",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "CornerRadius only exists on RS5, restore the behavior to gracefully degrade on older OS releases",
+            "author": "asklar@microsoft.com",
+            "commit": "48d7aa630fdda8645ff90602ad6d15e7b7670c51",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Check for VS >= 16.5",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e1821b205f26bd1f05c466b03f45b61ec7a3bb5e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Nov 2020 05:05:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.209",
+      "version": "0.0.0-canary.209",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Embed documentation of WinRT APIs in the winmd",
+            "author": "asklar@microsoft.com",
+            "commit": "da3bfb6defd16cec04eb609babc5dfde5e28f576",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "JSDispatcher should use JSCallInvoker internally",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "cb6ffd64596a491cb2c636804f7bfe7df8cea34a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 16 Nov 2020 17:37:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.208",
+      "version": "0.0.0-canary.208",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix publish",
+            "author": "dannyvv@microsoft.com",
+            "commit": "86a4e2390c093e17376d5a3fa0b8d182b340f35f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 16 Nov 2020 14:39:19 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.207",
+      "version": "0.0.0-canary.207",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Publish pipeline due to moved file",
+            "author": "dannyvv@microsoft.com",
+            "commit": "087385fd91682875524a8d049941ae3e5af241ae",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 16 Nov 2020 05:06:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.206",
+      "version": "0.0.0-canary.206",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update Managed ref assemblies to be AnpCpu",
+            "author": "dannyvv@microsoft.com",
+            "commit": "3f0f4636e5803ffd01abc141741015aa61dfef2e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 14 Nov 2020 05:04:43 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.205",
+      "version": "0.0.0-canary.205",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add a custom WinRT attribute to be used to store documentation strings for WinRT types",
+            "author": "asklar@microsoft.com",
+            "commit": "c2f334b7ac4e56888ac58800d354b4cac240ed9a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add win32 exports required for internal usage",
+            "author": "email not defined",
+            "commit": "26921dd05542920fe1ca540d0d993b667fd8a53e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix appstate module",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "49bae72d9f1f5b2f8a91be275c3a998bd31664eb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add Targets to check that developers have run yarn install before building",
+            "author": "dannyvv@microsoft.com",
+            "commit": "360a47d5af854f7e50a07495f8af6ac339b5403e",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Remove api-extractor/api-documenter",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a2f696fb256a321903e5881cda090d131ef6e9bb",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Nov 2020 05:05:57 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.203",
+      "version": "0.0.0-canary.203",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Keyboard Events to TextWin32",
+            "author": "krsiler@microsoft.com",
+            "commit": "e08b7dcdee2549eac8b1deb810330129653fb825",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Nov 2020 05:05:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.202",
+      "version": "0.0.0-canary.202",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Build-Time Native Code Patching",
+            "author": "ngerlem@microsoft.com",
+            "commit": "22344de3666eac9111e7a6ecd9092a9bc8cae250",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Remove buildci to allow JSChecks build caching for lint",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0111551952af4d6206cedb47021e9d324bb8ed5b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Nov 2020 05:05:13 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.201",
+      "version": "0.0.0-canary.201",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Exclude *projectimports.zip from devmode metro config",
+            "author": "asklar@microsoft.com",
+            "commit": "68c0f6771cabe9b8e229f4819d78664172655e85",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add force_layout to TextInput",
+            "author": "igklemen@microsoft.com",
+            "commit": "0cb92959fe1209b226968efc4fa85250d17a820f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Nov 2020 05:04:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.200",
+      "version": "0.0.0-canary.200",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Bundling With \"react-native-windows-init --useDevMode\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7b32b0f8664e30335c1057df27ea6f83412138a0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Couple of minor cleanups to prep for fabric PR",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "942f8d4e99fd91943fdab69e4e5fecea2d793113",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix PR validation by removing legacy generated header file",
+            "author": "dannyvv@microsoft.com",
+            "commit": "141fc8f228dac9b392d650ff4b4389155e4f1f29",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Clear Unused Native Module Specs",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f120ea9ab98de1a625573ec4d2a38c25ada83769",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add Code for Static Option to Land",
+            "author": "chiara.mooney@gmail.com",
+            "commit": "4f72d7a5822dbd9323a29fae158180aa80bd7aa2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Nov 2020 05:05:45 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.197",
+      "version": "0.0.0-canary.197",
+      "comments": {
+        "none": [
+          {
+            "comment": "Don't return an error if AsyncStorage is empty",
+            "author": "i@mandrigin.ru",
+            "commit": "1771e5b39d2d59e21720b4d48b85d1f118b052d9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[Fix PR] Update dependencies script to support new ADO images that don't have node 12",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d97aacfe8e6ad323ac080ad3c0e572dc2d043b40",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 Nov 2020 05:10:08 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.196",
+      "version": "0.0.0-canary.196",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Autolinking fixes for C++ / C# interop",
+            "author": "jthysell@microsoft.com",
+            "commit": "b9f4e16f85015e09225374ec738e4f974d53d963",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Set `Content-Length` on the content object and not on the request.",
+            "author": "i@mandrigin.ru",
+            "commit": "f9cd16bb9aa16933533309750f63e2d0ca83d8a2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 03 Nov 2020 16:52:55 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.195",
+      "version": "0.0.0-canary.195",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix Nuget Publish to handle moved files",
+            "author": "dannyvv@microsoft.com",
+            "commit": "a65ab875069ba99299488a24ef0851cda7f5ae5b",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Update Microsoft.ReactNative NuGet Package to only contain release bits",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ef289da94cb27408cd3bfe9b0ca2ee56934ae750",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add ReactNativeHost::FromContext method",
+            "author": "vmorozov@microsoft.com",
+            "commit": "e0f279a253a013a89473a7e8ac0a7c3da67e41c0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 01 Nov 2020 05:05:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.194",
+      "version": "0.0.0-canary.194",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update V8 and Hermes package versions",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "2821026a7ba9aa3cae4b9c592e0b6215faea2b78",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 31 Oct 2020 05:06:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.193",
+      "version": "0.0.0-canary.193",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Initialize UIManager turbomodule eagerly",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "8831df009e59ef494fdaabbe50ca8178a7fe02b6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 10/5 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "af3c428d350acf192e7663c0fd38c4536d6facb9",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fix publish job by updating path of moved header file",
+            "author": "dannyvv@microsoft.com",
+            "commit": "330212738d25e7bb8c29392c24fd1443f03007b9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 30 Oct 2020 05:07:51 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.192",
+      "version": "0.0.0-canary.192",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable Hermes Bytecode Compilation and SourceMap Creation as Part of Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f9ba026cad45a4d30c95e3a7d2efb7ba28a1b9f7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update Template Metro Config to Enable Inline Requires By Default",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8c6c44575c77cf2dddd0be0512e5a139c8f64bdb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 9/17 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2e8b1d34263f940d46583dad0b9c252b9549f8d9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Oct 2020 05:05:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.191",
+      "version": "0.0.0-canary.191",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Better error handling of Views inside Text components",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "776e348f599f7fb8655bb34a9d7b921b6a8daeaf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow Hermes to be used in C++ projects without modifying source code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7e9d80e59fd0b8ca7549eda1a7d5cefc32d6cfbe",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate Additional RNTester Refactoring (9/2 Nightly RN Build)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "34d003379dbc928f9698735b2e81dbab8f384832",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 28 Oct 2020 05:04:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.190",
+      "version": "0.0.0-canary.190",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Implement backgroundColor for Text.",
+            "author": "igklemen@microsoft.com",
+            "commit": "d9e784fcfc077529a3f844a4e0f42174e8fae671",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Move UIManager to JSI",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "9fb5f9a22b7e5acee1259108da54f350cf00c275",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Followup from #6289",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "48f6f67fc14f3f7a7c33e8a1b3c62e8e64882bd8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[Win32] Export createUIManagerModule that takes a uiQueue",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "6b415659aa017dbc41e3f28e817fb768a8e80435",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 27 Oct 2020 05:04:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.189",
+      "version": "0.0.0-canary.189",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Don't require elevation just to check dev dependencies",
+            "author": "asklar@microsoft.com",
+            "commit": "a1d37568673072f9e7fbd7f44a52857c2dd6035b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 24 Oct 2020 05:07:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.188",
+      "version": "0.0.0-canary.188",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix tab ordering on ScrollViewer, TextInput, and Picker",
+            "author": "kmelmon@microsoft.com",
+            "commit": "f9981681a4e202f2f936519c1be6fe7fb17aba52",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate RNTester Redesign (8/26 Nightly Build)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8ed62998598e6249c4a9cfb9db1e84d53d9fb541",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix failing unit tests",
+            "author": "vmorozov@microsoft.com",
+            "commit": "df7b389ae2459161943e579d5b8f284ebf36cb51",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Ensure that destruction of animation nodes happen on UI thread",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "1519ad7bb2a0eb105602b4524a3264c9da6893bd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 23 Oct 2020 05:04:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.187",
+      "version": "0.0.0-canary.187",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable onFocus() and onBlur() callbacks on Pressable. Allow calling .focus() and .blur() on Pressable.",
+            "author": "igklemen@microsoft.com",
+            "commit": "a8e7166c6b76d1457db12ac1504b164c0c4d3cf0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Oct 2020 05:06:28 GMT",
       "tag": "react-native-windows_v0.0.0-canary.186",
       "version": "0.0.0-canary.186",

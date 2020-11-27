@@ -31,7 +31,7 @@ interface IFocusableComponentState {
 
 class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentState> {
   private _focusTarget: ViewWin32 = null;
-  private _labeledBy: React.RefObject<ViewWin32>;
+  private readonly _labeledBy: React.RefObject<ViewWin32>;
 
   public constructor(props) {
     super(props);
@@ -62,23 +62,23 @@ class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentSta
     );
   }
 
-  private _setRef = (ref: ViewWin32) => {
+  private readonly _setRef = (ref: ViewWin32) => {
     this._focusTarget = ref;
   };
 
-  private _onPress = () => {
+  private readonly _onPress = () => {
     if (this._focusTarget !== undefined) {
       this._focusTarget.focus();
     }
   };
 
-  private _onFocus = () => {
+  private readonly _onFocus = () => {
     this.setState({
       hasFocus: true,
     });
   };
 
-  private _onBlur = () => {
+  private readonly _onBlur = () => {
     this.setState({
       hasFocus: false,
     });
@@ -134,23 +134,23 @@ class KeyboardTestComponent extends React.Component<{}, IFocusableComponentState
     );
   }
 
-  private _onFocus = () => {
+  private readonly _onFocus = () => {
     this.setState({
       hasFocus: true,
     });
   };
 
-  private _onBlur = () => {
+  private readonly _onBlur = () => {
     this.setState({
       hasFocus: false,
     });
   };
 
-  private _onKeyUp = (ev: IKeyboardEvent) => {
+  private readonly _onKeyUp = (ev: IKeyboardEvent) => {
     this.setState({ lastKeyUp: ev.nativeEvent.key, lastKeyDown: null });
   };
 
-  private _onKeyDown = (ev: IKeyboardEvent) => {
+  private readonly _onKeyDown = (ev: IKeyboardEvent) => {
     this.setState({ lastKeyDown: ev.nativeEvent.key, lastKeyUp: null });
   };
 }
@@ -175,10 +175,10 @@ class HoverTestComponent extends React.Component<IHoverComponentProps, IFocusabl
       />
     );
   }
-  private _onMouseLeave = () => {
+  private readonly _onMouseLeave = () => {
     this.setState({ hasFocus: false });
   };
-  private _onMouseEnter = () => {
+  private readonly _onMouseEnter = () => {
     this.setState({ hasFocus: true });
   };
 }
@@ -245,7 +245,7 @@ const CursorExample: React.FunctionComponent = () => {
   );
 }
 
-export const title = '<ViewWin32>';
+export const title = 'ViewWin32';
 export const displayName = 'ViewWin32 Example';
 export const description = 'All the stock View props plus Win32 specific ones';
 export const examples = [

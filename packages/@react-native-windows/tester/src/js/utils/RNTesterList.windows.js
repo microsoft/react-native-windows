@@ -12,42 +12,52 @@ import type {RNTesterExample} from '../types/RNTesterTypes';
 const ComponentExamples: Array<RNTesterExample> = [
   {
     key: 'ActivityIndicatorExample',
+    category: 'UI',
     module: require('../examples/ActivityIndicator/ActivityIndicatorExample'),
   },
   {
     key: 'ButtonExample',
+    category: 'UI',
     module: require('../examples/Button/ButtonExample'),
   },
   {
-    key: 'CustomViewExample',
-    module: require('../examples-win/CustomView/CustomViewExample'),
+    key: 'FlatListExample',
+    category: 'ListView',
+    module: require('../examples/FlatList/FlatListExample'),
   },
   {
     key: 'DatePickerExample',
+    category: 'UI',
     module: require('../examples-win/DatePicker/DatePickerExample'),
   },
   {
     key: 'FastTextExample',
+    category: 'Basic',
     module: require('../examples-win/FastText/FastTextExample'),
   },
   {
-    key: 'FlatListExample',
-    module: require('../examples/FlatList/FlatListExample'),
-  },
-  {
     key: 'FlyoutExample',
+    category: 'UI',
     module: require('../examples-win/Flyout/FlyoutExample'),
   },
   {
     key: 'GlyphExample',
+    category: 'UI',
     module: require('../examples-win/Glyph/GlyphExample'),
   },
   {
     key: 'ImageExample',
+    category: 'Basic',
     module: require('../examples/Image/ImageExample'),
   },
+  // {
+  //   key: 'ModalExample',
+  //   category: 'UI',
+  //   module: require('../examples/Modal/ModalExample'),
+  // },
   {
     key: 'MultiColumnExample',
+    category: 'ListView',
     module: require('../examples/MultiColumn/MultiColumnExample'),
   },
   {
@@ -55,51 +65,63 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
   },
   {
-    key: 'PickerExample',
-    module: require('../examples/Picker/PickerExample'),
-  },
-  {
     key: 'PickerWindowsExample',
+    category: 'UI',
     module: require('../examples-win/Picker/PickerWindowsExample'),
   },
   {
     key: 'PressableExample',
+    category: 'UI',
     module: require('../examples/Pressable/PressableExample'),
   },
   {
     key: 'PopupExample',
+    category: 'UI',
     module: require('../examples-win/Popup/PopupExample'),
   },
   {
     key: 'KeyboardExtensionExample',
+    category: 'Basic',
     module: require('../examples-win/Keyboard/KeyboardExtensionExample'),
   },
   {
+    key: 'ScrollViewExample',
+    category: 'Basic',
+    module: require('../examples/ScrollView/ScrollViewExample'),
+  },
+  {
     key: 'ScrollViewSimpleExample',
+    category: 'Basic',
     module: require('../examples/ScrollView/ScrollViewSimpleExample'),
   },
   {
     key: 'SectionListExample',
+    category: 'ListView',
     module: require('../examples/SectionList/SectionListExample'),
   },
   {
     key: 'SwitchExample',
+    category: 'UI',
     module: require('../examples/Switch/SwitchExample'),
   },
   {
     key: 'TextExample',
+    category: 'Basic',
     module: require('../examples-win/Text/TextExample'),
   },
   {
     key: 'TextInputExample',
+    category: 'Basic',
     module: require('../examples/TextInput/TextInputExample'),
   },
   {
     key: 'TouchableExample',
+    category: 'UI',
     module: require('../examples/Touchable/TouchableExample'),
   },
   {
     key: 'TransferProperties',
+    category: 'Basic',
     module: require('../examples-win/TransferProperties/TransferPropertiesExample'),
   },
   {
@@ -108,138 +130,12 @@ const ComponentExamples: Array<RNTesterExample> = [
   },
   {
     key: 'ViewExample',
+    category: 'Basic',
     module: require('../examples/View/ViewExample'),
-  },
-];
-
-const APIExamples: Array<RNTesterExample> = [
-  {
-    key: 'KeyboardFocusExample',
-    module: require('../examples-win/Keyboard/KeyboardFocusExample'),
-  },
-  {
-    key: 'AccessibilityExample',
-    module: require('../examples/Accessibility/AccessibilityExample'),
-  },
-  {
-    key: 'AccessibilityExampleWindows',
-    module: require('../examples-win/Accessibility/AccessibilityExampleWindows'),
-  },
-  {
-    key: 'AccessibilityInfo',
-    module: require('../examples-win/Accessibility/AccessibilityInfoExample'),
-  },
-  {
-    key: 'AsyncStorageExampleWindows',
-    module: require('../examples-win/AsyncStorage/AsyncStorageExampleWindows'),
-  },
-  {
-    key: 'AlertExample',
-    module: require('../examples/Alert/AlertExample'),
-  },
-  {
-    key: 'AnimatedExample',
-    module: require('../examples/Animated/AnimatedExample'),
-  },
-  {
-    key: 'Animation - GratuitousAnimation',
-    module: require('../examples/Animated/AnimatedGratuitousApp/AnExApp'),
-  },
-  {
-    key: 'AppearanceExample',
-    module: require('../examples/Appearance/AppearanceExample'),
-  },
-  {
-    key: 'AppStateExample',
-    module: require('../examples/AppState/AppStateExample'),
-  },
-  {
-    key: 'BorderExample',
-    module: require('../examples/Border/BorderExample'),
-  },
-  {
-    key: 'BoxShadowExample - Windows NotYetImplemented',
-    module: require('../examples/BoxShadow/BoxShadowExample'),
-  },
-  {
-    key: 'ClipboardExample',
-    module: require('../examples/Clipboard/ClipboardExample'),
-  },
-  {
-    key: 'CrashExample',
-    module: require('../examples/Crash/CrashExample'),
-  },
-  {
-    key: 'DevSettings',
-    module: require('../examples/DevSettings/DevSettingsExample'),
-  },
-  {
-    key: 'Dimensions',
-    module: require('../examples/Dimensions/DimensionsExample'),
-  },
-  {
-    key: 'KeyboardExample',
-    module: require('../examples-win/Keyboard/KeyboardExample'),
-  },
-  {
-    key: 'LayoutEventsExample',
-    module: require('../examples/Layout/LayoutEventsExample'),
-  },
-  {
-    key: 'LinkingExample',
-    module: require('../examples/Linking/LinkingExample'),
-  },
-  {
-    key: 'LayoutExample',
-    module: require('../examples/Layout/LayoutExample'),
-  },
-  {
-    key: 'MouseExample',
-    module: require('../examples-win/Mouse/MouseExample'),
-  },
-  {
-    key: 'NativeAnimationsExample',
-    module: require('../examples/NativeAnimation/NativeAnimationsExample'),
-  },
-  {
-    key: 'PanResponderExample',
-    module: require('../examples/PanResponder/PanResponderExample'),
-  },
-  {
-    key: 'PlatformColorExample',
-    module: require('../examples/PlatformColor/PlatformColorExample'),
-  },
-  {
-    key: 'PointerEventsExample',
-    module: require('../examples/PointerEvents/PointerEventsExample'),
-  },
-  {
-    key: 'RTLExample',
-    module: require('../examples/RTL/RTLExample'),
-  },
-  {
-    key: 'ShareExample',
-    module: require('../examples/Share/ShareExample'),
-  },
-  {
-    key: 'TimerExample',
-    module: require('../examples/Timer/TimerExample'),
-  },
-  {
-    key: 'TransformExample',
-    module: require('../examples/Transform/TransformExample'),
-  },
-  {
-    key: 'WebSocketExample',
-    module: require('../examples/WebSocket/WebSocketExample'),
   },
   {
     key: 'LegacyControlStyleTest',
     module: require('../examples-win/LegacyTests/ControlStyleTestPage'),
-  },
-  {
-    key: 'LegacyTransformTest',
-    module: require('../examples-win/LegacyTests/TransformTestPage'),
   },
   {
     key: 'LegacyTextInputTest',
@@ -250,10 +146,6 @@ const APIExamples: Array<RNTesterExample> = [
     module: require('../examples-win/LegacyTests/LoginTestPage'),
   },
   {
-    key: 'LegacyDirectManipulationTest',
-    module: require('../examples-win/LegacyTests/DirectManipulationTestPage'),
-  },
-  {
     key: 'LegacyImageTest',
     module: require('../examples-win/LegacyTests/ImageTestPage'),
   },
@@ -261,17 +153,172 @@ const APIExamples: Array<RNTesterExample> = [
     key: 'LegacyAccessibilityTest',
     module: require('../examples-win/LegacyTests/AccessibilityTestPage'),
   },
-  // TODO:  TurboModuleExample crashes the app if web debugging is turned on
-  //  {
-  //    key: 'TurboModuleExample',
-  //    module: require('../examples/TurboModule/TurboModuleExample'),
-  //  },
+  {
+    key: 'LegacyTextBackgroundColorTest',
+    module: require('../examples-win/LegacyTests/TextBackgroundColorTestPage'),
+  },
+];
+
+const APIExamples: Array<RNTesterExample> = [
+  {
+    key: 'KeyboardFocusExample',
+    category: 'Basic',
+    module: require('../examples-win/Keyboard/KeyboardFocusExample'),
+  },
+  {
+    key: 'AccessibilityExample',
+    category: 'Basic',
+    module: require('../examples/Accessibility/AccessibilityExample'),
+  },
+  {
+    key: 'AccessibilityExampleWindows',
+    category: 'Basic',
+    module: require('../examples-win/Accessibility/AccessibilityExampleWindows'),
+  },
+  {
+    key: 'AccessibilityInfo',
+    category: 'Basic',
+    module: require('../examples-win/Accessibility/AccessibilityInfoExample'),
+  },
+  {
+    key: 'AsyncStorageExampleWindows',
+    category: 'Basic',
+    module: require('../examples-win/AsyncStorage/AsyncStorageExampleWindows'),
+  },
+  {
+    key: 'AlertExample',
+    category: 'UI',
+    module: require('../examples/Alert/AlertExample'),
+  },
+  {
+    key: 'AnimatedExample',
+    category: 'UI',
+    module: require('../examples/Animated/AnimatedExample'),
+  },
+  {
+    key: 'Animation - GratuitousAnimation',
+    category: 'UI',
+    module: require('../examples/Animated/AnimatedGratuitousApp/AnExApp'),
+  },
+  {
+    key: 'AppearanceExample',
+    category: 'UI',
+    module: require('../examples/Appearance/AppearanceExample'),
+  },
+  {
+    key: 'AppStateExample',
+    category: 'Basic',
+    module: require('../examples/AppState/AppStateExample'),
+  },
+  {
+    key: 'BorderExample',
+    category: 'UI',
+    module: require('../examples/Border/BorderExample'),
+  },
+  {
+    key: 'CrashExample',
+    category: 'Basic',
+    module: require('../examples/Crash/CrashExample'),
+  },
+  {
+    key: 'DevSettings',
+    category: 'Basic',
+    module: require('../examples/DevSettings/DevSettingsExample'),
+  },
+  {
+    key: 'Dimensions',
+    category: 'UI',
+    module: require('../examples/Dimensions/DimensionsExample'),
+  },
+  {
+    key: 'KeyboardExample',
+    module: require('../examples-win/Keyboard/KeyboardExample'),
+  },
+  {
+    key: 'LayoutEventsExample',
+    category: 'UI',
+    module: require('../examples/Layout/LayoutEventsExample'),
+  },
+  {
+    key: 'LinkingExample',
+    category: 'Basic',
+    module: require('../examples/Linking/LinkingExample'),
+  },
+  // {
+  //   key: 'LayoutAnimationExample',
+  //   category: 'UI',
+  //   module: require('../examples/Layout/LayoutAnimationExample'),
+  // },
+  {
+    key: 'LayoutExample',
+    category: 'UI',
+    module: require('../examples/Layout/LayoutExample'),
+  },
+  {
+    key: 'MouseExample',
+    category: 'Basic',
+    module: require('../examples-win/Mouse/MouseExample'),
+  },
+  {
+    key: 'NativeAnimationsExample',
+    category: 'UI',
+    module: require('../examples/NativeAnimation/NativeAnimationsExample'),
+  },
+  {
+    key: 'PanResponderExample',
+    category: 'Basic',
+    module: require('../examples/PanResponder/PanResponderExample'),
+  },
+  {
+    key: 'PlatformColorExample',
+    category: 'UI',
+    module: require('../examples/PlatformColor/PlatformColorExample'),
+  },
+  {
+    key: 'PointerEventsExample',
+    category: 'Basic',
+    module: require('../examples/PointerEvents/PointerEventsExample'),
+  },
+  {
+    key: 'RTLExample',
+    category: 'Basic',
+    module: require('../examples/RTL/RTLExample'),
+  },
+  {
+    key: 'ShareExample',
+    category: 'Basic',
+    module: require('../examples/Share/ShareExample'),
+  },
+  {
+    key: 'TimerExample',
+    category: 'UI',
+    module: require('../examples/Timer/TimerExample'),
+  },
+  {
+    key: 'TransformExample',
+    category: 'UI',
+    module: require('../examples/Transform/TransformExample'),
+  },
+  {
+    key: 'WebSocketExample',
+    category: 'Basic',
+    module: require('../examples/WebSocket/WebSocketExample'),
+  },
   /* TODO: ? XHRExample requires CameraRoll access
   {
     key: 'XHRExample',
+    category: 'Basic',
     module: require('../examples/XHR/XHRExample'),
   },*/
 ];
+
+if (global.__turboModuleProxy) {
+  APIExamples.push({
+    key: 'TurboModuleExample',
+    category: 'Basic',
+    module: require('../examples/TurboModule/TurboModuleExample'),
+  });
+}
 
 const Modules: any = {};
 

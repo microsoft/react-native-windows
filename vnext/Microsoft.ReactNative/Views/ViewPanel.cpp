@@ -52,7 +52,7 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
     xaml::DependencyPropertyChangedEventArgs e) {
   auto element{sender.as<xaml::UIElement>()};
   if (element != nullptr)
-    element.InvalidateArrange();
+    InvalidateForArrange(element);
 }
 
 /*static*/ xaml::DependencyProperty ViewPanel::ViewBackgroundProperty() {
@@ -127,12 +127,22 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
 
 /*static*/ void ViewPanel::SetTop(xaml::UIElement const &element, double value) {
   element.SetValue(TopProperty(), winrt::box_value<double>(value));
-  element.InvalidateArrange();
+  InvalidateForArrange(element);
 }
 
 /*static*/ void ViewPanel::SetLeft(xaml::UIElement const &element, double value) {
   element.SetValue(LeftProperty(), winrt::box_value<double>(value));
-  element.InvalidateArrange();
+  InvalidateForArrange(element);
+}
+
+void ViewPanel::InvalidateForArrange(xaml::UIElement element) {
+  // If the element's position has changed, we must invalidate the parent for arrange,
+  // as it's the parent's responsibility to arrange its children.
+  if (auto parent = VisualTreeHelper::GetParent(element)) {
+    if (auto parentUIE = parent.try_as<xaml::UIElement>()) {
+      parentUIE.InvalidateArrange();
+    }
+  }
 }
 
 winrt::Size ViewPanel::MeasureOverride(winrt::Size /*availableSize*/) {

@@ -4,7 +4,6 @@
 #include "pch.h"
 
 #include <IReactInstance.h>
-#include <IUIManager.h>
 #include <Modules/NativeUIManager.h>
 #include <ViewManagerProvider.h>
 

@@ -1,8 +1,56 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Thu, 01 Oct 2020 05:08:11 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Nov 2020 05:08:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.37
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Patches
+
+- Add more eslint rules (ngerlem@microsoft.com)
+
+## 0.1.35
+
+Thu, 12 Nov 2020 05:05:57 GMT
+
+### Patches
+
+- Disable telemetry in other CI systems (asklar@microsoft.com)
+
+## 0.1.34
+
+Wed, 11 Nov 2020 05:05:29 GMT
+
+### Patches
+
+- Don't initialize AppInsights when passing no-telemetry (asklar@microsoft.com)
+
+## 0.1.33
+
+Sat, 07 Nov 2020 05:04:58 GMT
+
+### Patches
+
+- Fix Bundling With "react-native-windows-init --useDevMode" (ngerlem@microsoft.com)
+
+## 0.1.32
+
+Thu, 05 Nov 2020 05:05:45 GMT
+
+### Patches
+
+- Add telemetry to react-native-windows CLI (asklar@microsoft.com)
+
+## 0.1.31
+
+Thu, 29 Oct 2020 05:05:49 GMT
+
+### Patches
+
+- Allow Hermes to be used in C++ projects without modifying source code (ngerlem@microsoft.com)
 
 ## 0.1.30
 

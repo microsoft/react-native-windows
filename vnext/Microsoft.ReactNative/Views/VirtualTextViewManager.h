@@ -16,6 +16,14 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   TransformableText transformableText{};
 
   void AddView(ShadowNode &child, int64_t index) override;
+
+  struct HighlightData {
+    std::vector<HighlightData> data;
+    size_t spanIdx = 0;
+    std::optional<winrt::Windows::UI::Color> color;
+  };
+
+  HighlightData m_highlightData;
 };
 
 class VirtualTextViewManager : public ViewManagerBase {

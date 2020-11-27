@@ -12,7 +12,7 @@
 const RNTesterPage = require('../../components/RNTesterPage');
 const React = require('react');
 
-const infoLog = require('../../../../../Libraries/Utilities/infoLog');
+const infoLog = require('react-native/Libraries/Utilities/infoLog');
 
 const {
   FooterComponent,
@@ -177,7 +177,8 @@ const styles = StyleSheet.create({
   },
 });
 
-exports.title = '<FlatList> - MultiColumn';
+exports.title = 'FlatList - MultiColumn';
+exports.category = 'ListView';
 exports.description = 'Performant, scrollable grid of data.';
 exports.examples = [
   {

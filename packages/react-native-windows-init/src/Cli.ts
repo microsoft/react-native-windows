@@ -13,9 +13,16 @@ import * as validUrl from 'valid-url';
 import * as prompts from 'prompts';
 import * as findUp from 'find-up';
 import * as chalk from 'chalk';
-
 // @ts-ignore
 import * as Registry from 'npm-registry';
+
+import {Telemetry, isMSFTInternal} from '@react-native-windows/telemetry';
+
+/**
+ * Important:
+ * Do not use process.exit() in this script as it will prevent telemetry from being sent.
+ * See https://github.com/microsoft/ApplicationInsights-node.js/issues/580
+ */
 
 import requireGenerateWindows from './requireGenerateWindows';
 
@@ -26,6 +33,29 @@ const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   ? npmConfReg
   : 'http://registry.npmjs.org';
 const npm = new Registry({registry: NPM_REGISTRY_URL});
+
+const ExitCode = {
+  SUCCESS: 0,
+  UNSUPPORTED_VERSION_RN: 3,
+  USER_CANCEL: 4,
+  NO_REACTNATIVE_FOUND: 5,
+  UNKNOWN_ERROR: 6,
+  NO_PACKAGE_JSON: 7,
+  NO_LATEST_RNW: 8,
+  NO_AUTO_MATCHING_RNW: 9,
+  INCOMPATIBLE_OPTIONS: 10,
+  DEVMODE_VERSION_MISMATCH: 11,
+  NO_REACTNATIVE_DEPENDENCIES: 12,
+};
+
+class UserError extends Error {
+  exitCode: number;
+
+  constructor(exitCode: number, message?: string) {
+    super(message);
+    this.exitCode = exitCode;
+  }
+}
 
 const argv = yargs
   .version(false)
@@ -44,6 +74,12 @@ const argv = yargs
       type: 'boolean',
       describe: 'Enables logging.',
       default: false,
+    },
+    telemetry: {
+      type: 'boolean',
+      describe:
+        'Controls sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
+      default: true,
     },
     language: {
       type: 'string',
@@ -67,6 +103,12 @@ const argv = yargs
       describe:
         '[Experimental] change to start consuming a NuGet containing a pre-built dll version of Microsoft.ReactNative',
       hidden: true,
+      default: false,
+    },
+    useHermes: {
+      type: 'boolean',
+      describe:
+        'Use Hermes instead of Chakra as the JS engine (supported on 0.64+)',
       default: false,
     },
     useWinUI3: {
@@ -106,16 +148,14 @@ if (argv.verbose) {
   console.log(argv);
 }
 
-const EXITCODE_UNSUPPORTED_VERION_RN = 3;
-const EXITCODE_USER_CANCEL = 4;
-const EXITCODE_NO_REACTNATIVE_FOUND = 5;
-const EXITCODE_UNKNOWN_ERROR = 6;
-const EXITCODE_NO_PACKAGE_JSON = 7;
-const EXITCODE_NO_LATEST_RNW = 8;
-const EXITCODE_NO_AUTO_MATCHING_RNW = 9;
-const EXITCODE_INCOMPATIBLE_OPTIONS = 10;
-const EXITCODE_DEVMODE_VERSION_MISMATCH = 11;
-const EXITCODE_NO_REACTNATIVE_DEPENDENCIES = 12;
+if (!argv.telemetry) {
+  if (argv.verbose) {
+    console.log('Disabling telemetry');
+  }
+  Telemetry.disable();
+} else {
+  Telemetry.setup();
+}
 
 function getReactNativeProjectName(): string {
   console.log('Reading project name from package.json...');
@@ -124,7 +164,7 @@ function getReactNativeProjectName(): string {
   if (!pkgJsonPath) {
     userError(
       'Unable to find package.json.  This should be run from within an existing react-native project.',
-      EXITCODE_NO_PACKAGE_JSON,
+      ExitCode.NO_PACKAGE_JSON,
     );
   }
   let name = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8')).name;
@@ -152,7 +192,7 @@ function getReactNativeVersion(): string {
 
   userError(
     'Must be run from a project that already depends on react-native, and has react-native installed.',
-    EXITCODE_NO_REACTNATIVE_FOUND,
+    ExitCode.NO_REACTNATIVE_FOUND,
   );
 }
 
@@ -174,7 +214,7 @@ function getDefaultReactNativeWindowsSemVerForReactNativeVersion(
     )} react-native-windows supports react-native versions ${chalk.cyan(
       '>=0.60',
     )}`,
-    EXITCODE_UNSUPPORTED_VERION_RN,
+    ExitCode.UNSUPPORTED_VERSION_RN,
   );
 }
 
@@ -203,7 +243,7 @@ function getLatestMatchingVersion(
       // as it fails to return pre-release versions
       npm.packages.releases(
         pkg,
-        (err: any, details: {[key: string]: object}) => {
+        (err: any, details: {[key: string]: Record<string, any>} | null) => {
           if (err) {
             reject(err);
           } else if (details) {
@@ -212,7 +252,7 @@ function getLatestMatchingVersion(
               const candidates = versions
                 .filter(v => semver.satisfies(v, versionSemVer))
                 .sort(semver.rcompare);
-              if (candidates && candidates.length > 0) {
+              if (candidates.length > 0) {
                 resolve(candidates[0]);
                 return;
               }
@@ -265,7 +305,7 @@ async function getLatestRNWVersion(): Promise<string> {
   if (!rnwLatestVersion) {
     userError(
       'Error: No version of react-native-windows@latest found',
-      EXITCODE_NO_LATEST_RNW,
+      ExitCode.NO_LATEST_RNW,
     );
   }
   return rnwLatestVersion;
@@ -303,14 +343,14 @@ function installReactNativeWindows(
     if (version && version !== rnwVersion) {
       userError(
         `Requested react-native-windows version: '${version}' does not match version '${rnwVersion}' of the linked module. When using '--useDevMode' you do not need to pass a version. If you do, you should pass '--version ${rnwVersion}'`,
-        EXITCODE_DEVMODE_VERSION_MISMATCH,
+        ExitCode.DEVMODE_VERSION_MISMATCH,
       );
     } else if (!version) {
       version = rnwVersion;
     }
   } else if (!version) {
     internalError(
-      'Unexpected error ecountered. If you are able, please file an issue on: https://github.com/microsoft/react-native-windows/issues/new/choose',
+      'Unexpected error encountered. If you are able, please file an issue on: https://github.com/microsoft/react-native-windows/issues/new/choose',
     );
   }
 
@@ -325,7 +365,7 @@ function installReactNativeWindows(
     internalError('Unable to find package.json');
   }
 
-  let pkgJson = require(pkgJsonPath);
+  const pkgJson = require(pkgJsonPath);
 
   // check how react-native is installed
   if ('dependencies' in pkgJson && 'react-native' in pkgJson.dependencies) {
@@ -346,8 +386,8 @@ function installReactNativeWindows(
     );
   } else {
     userError(
-      "Unable to find 'react-native' in package.json's dependencies or devDepenencies. This should be run from within an existing react-native app or lib.",
-      EXITCODE_NO_REACTNATIVE_DEPENDENCIES,
+      "Unable to find 'react-native' in package.json's dependencies or devDependencies. This should be run from within an existing react-native app or lib.",
+      ExitCode.NO_REACTNATIVE_DEPENDENCIES,
     );
   }
 
@@ -362,12 +402,40 @@ function installReactNativeWindows(
   );
 }
 
+function getRNWInitVersion(): string {
+  try {
+    const pkgJson = require('../package.json');
+    if (
+      pkgJson.name === 'react-native-windows-init' &&
+      pkgJson.version !== undefined
+    ) {
+      return pkgJson.version;
+    }
+  } catch {}
+  return '';
+}
+
+function setExit(exitCode: number, error?: string): void {
+  if (!process.exitCode || process.exitCode === ExitCode.SUCCESS) {
+    Telemetry.client?.trackEvent({
+      name: 'init-exit',
+      properties: {
+        durationInSecs: process.uptime(),
+        msftInternal: isMSFTInternal(),
+        exitCode: exitCode,
+        rnwinitVersion: getRNWInitVersion(),
+        errorMessage: error,
+      },
+    });
+    process.exitCode = exitCode;
+  }
+}
+
 /**
- * Prints error message for a user error and exits the process with the given exitcode
+ * Throws a user or setup error
  */
 function userError(text: string, exitCode: number): never {
-  console.error(chalk.redBright('[Error] ' + text));
-  process.exit(exitCode);
+  throw new UserError(exitCode, text);
 }
 
 /**
@@ -394,7 +462,21 @@ function isProjectUsingYarn(cwd: string): boolean {
     if (argv.useWinUI3 && argv.experimentalNuGetDependency) {
       userError(
         "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNuGetDependency' are incompatible",
-        EXITCODE_INCOMPATIBLE_OPTIONS,
+        ExitCode.INCOMPATIBLE_OPTIONS,
+      );
+    }
+
+    if (argv.useHermes && argv.experimentalNuGetDependency) {
+      userError(
+        "Error: Incompatible options specified. Options '--useHermes' and '--experimentalNuGetDependency' are incompatible",
+        ExitCode.INCOMPATIBLE_OPTIONS,
+      );
+    }
+
+    if (argv.useHermes && argv.language === 'cs') {
+      userError(
+        "Error: '--useHermes' is not yet compatible with C# projects",
+        ExitCode.INCOMPATIBLE_OPTIONS,
       );
     }
 
@@ -431,7 +513,7 @@ function isProjectUsingYarn(cwd: string): boolean {
               'react-native',
             )} and try again.
   `,
-            EXITCODE_NO_AUTO_MATCHING_RNW,
+            ExitCode.NO_AUTO_MATCHING_RNW,
           );
         }
       }
@@ -480,7 +562,7 @@ function isProjectUsingYarn(cwd: string): boolean {
           ).confirm;
 
           if (!confirm) {
-            process.exit(EXITCODE_USER_CANCEL);
+            userError('User canceled', ExitCode.USER_CANCEL);
           }
         }
       }
@@ -496,12 +578,24 @@ function isProjectUsingYarn(cwd: string): boolean {
       projectType: argv.projectType as 'lib' | 'app',
       experimentalNuGetDependency: argv.experimentalNuGetDependency,
       useWinUI3: argv.useWinUI3,
+      useHermes: argv.useHermes,
+      useDevMode: argv.useDevMode,
       nuGetTestVersion: argv.nuGetTestVersion,
       nuGetTestFeed: argv.nuGetTestFeed,
+      telemetry: argv.telemetry,
     });
+    return setExit(ExitCode.SUCCESS);
   } catch (error) {
-    console.error(chalk.red(error.message));
-    console.error(error);
-    process.exit(EXITCODE_UNKNOWN_ERROR);
+    const exitCode =
+      error instanceof UserError
+        ? (error as UserError).exitCode
+        : ExitCode.UNKNOWN_ERROR;
+    if (exitCode !== ExitCode.SUCCESS) {
+      console.error(chalk.red(error.message));
+      console.error(error);
+    }
+    setExit(exitCode, error.message);
+  } finally {
+    Telemetry.client?.flush();
   }
 })();

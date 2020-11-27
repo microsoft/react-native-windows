@@ -589,8 +589,15 @@ bool ChakraRuntime::instanceOf(const facebook::jsi::Object &obj, const facebook:
 }
 
 void ChakraRuntime::RewriteErrorMessage(JsValueRef jsError) {
-  const JsValueRef message = GetProperty(jsError, m_propertyId.message);
-  if (GetValueType(message) == JsValueType::JsString) {
+  // The code below must work correctly even if the 'message' getter throws.
+  // In case when it throws, we ignore that exception.
+  JsValueRef message{JS_INVALID_REFERENCE};
+  JsErrorCode errorCode = JsGetProperty(jsError, m_propertyId.message, &message);
+  if (errorCode != JsNoError) {
+    // If the 'message' property getter throws, then we clear the exception and ignore it.
+    JsValueRef ignoreJSError{JS_INVALID_REFERENCE};
+    JsGetAndClearException(&ignoreJSError);
+  } else if (GetValueType(message) == JsValueType::JsString) {
     // JSI unit tests expect V8 or JSC like message for stack overflow.
     if (StringToPointer(message) == L"Out of stack space") {
       SetProperty(jsError, m_propertyId.message, PointerToString(L"RangeError : Maximum call stack size exceeded"));
@@ -704,11 +711,18 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
       return RunInMethodContext("HostObject::get", [&]() {
         return chakraRuntime->ToJsValueRef(hostObject->get(*chakraRuntime, propertyId));
       });
-    } else if (
-        GetValueType(propertyName) == JsValueType::JsSymbol &&
-        GetPropertyIdFromSymbol(propertyName) == chakraRuntime->m_propertyId.hostObjectSymbol) {
-      // The special property to retrieve the target object.
-      return target;
+    } else if (GetValueType(propertyName) == JsValueType::JsSymbol) {
+      const auto chakraPropertyId = GetPropertyIdFromSymbol(propertyName);
+      if (chakraPropertyId == chakraRuntime->m_propertyId.hostObjectSymbol) {
+        // The special property to retrieve the target object.
+        return target;
+      } else {
+        auto const &hostObject = *static_cast<std::shared_ptr<facebook::jsi::HostObject> *>(GetExternalData(target));
+        const PropNameIDView propertyId{chakraPropertyId};
+        return RunInMethodContext("HostObject::get", [&]() {
+          return chakraRuntime->ToJsValueRef(hostObject->get(*chakraRuntime, propertyId));
+        });
+      }
     }
 
     return static_cast<JsValueRef>(chakraRuntime->m_undefinedValue);

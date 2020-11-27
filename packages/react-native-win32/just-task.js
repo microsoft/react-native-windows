@@ -16,23 +16,10 @@ const {
   argv,
   tscTask,
   eslintTask,
-  apiExtractorVerifyTask,
-  apiExtractorUpdateTask,
 } = require('just-scripts');
 
 option('production');
 option('clean');
-option('ci');
-
-task('apiExtractorVerify', apiExtractorVerifyTask());
-task('apiExtractorUpdate', apiExtractorUpdateTask());
-
-task('apiDocumenter', () => {
-  require('child_process').execSync(
-    'npx @microsoft/api-documenter markdown -i temp -o docs/api',
-    {stdio: 'inherit'},
-  );
-});
 
 task('eslint', eslintTask());
 task('eslint:fix', eslintTask({fix: true}));
@@ -66,10 +53,7 @@ function ensureDirectoryExists(filePath) {
 
 task('prepareBundle', () => {
   ensureDirectoryExists(
-    path.resolve(
-      __dirname,
-      'dist/win32/dev/RNTester/js/RNTesterApp.win32.bundle',
-    ),
+    path.resolve(__dirname, 'dist/win32/dev/js/RNTesterApp.win32.bundle'),
   );
 });
 
@@ -79,11 +63,8 @@ task(
     condition('clean', () => argv().clean),
     'copyRNLibraries',
     'ts',
-    condition('apiExtractorVerify', () => argv().ci),
   ),
 );
 
 task('lint', series('eslint', 'flow-check'));
 task('lint:fix', series('eslint:fix'));
-
-task('api', series('apiExtractorUpdate', 'apiDocumenter'));

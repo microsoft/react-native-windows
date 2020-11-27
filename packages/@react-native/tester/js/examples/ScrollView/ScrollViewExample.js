@@ -23,10 +23,12 @@ const {
 
 const nullthrows = require('nullthrows');
 
-import type {ViewStyleProp} from '../../../../../Libraries/StyleSheet/StyleSheet';
+import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 exports.displayName = 'ScrollViewExample';
-exports.title = '<ScrollView>';
+exports.title = 'ScrollView';
+exports.documentationURL = 'https://reactnative.dev/docs/scrollview';
+exports.category = 'Basic';
 exports.description =
   'Component that enables scrolling through child components';
 exports.examples = [

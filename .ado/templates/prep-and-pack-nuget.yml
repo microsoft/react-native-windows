@@ -1,11 +1,11 @@
 parameters:
   publishCommitId: '0'
   npmVersion: '0.0.1-pr'
-  # Note: NuGet pack expects platform-specific file spearators ('\' on Windows).
+  # Note: NuGet pack expects platform-specific file separators ('\' on Windows).
   nugetroot: $(System.DefaultWorkingDirectory)\ReactWindows
   desktopId: 'OfficeReact.Win32'
   microsoftRNId: 'Microsoft.ReactNative'
-  slices: '("x64.Release", "x64.Debug", "x86.Release", "x86.Debug", "ARM.Release", "ARM.Debug", "ARM64.Release", "ARM64.Debug")'
+  slices: ''
   packDesktop: true
   packMicrosoftReactNative: true
   packMicrosoftReactNativeCxx: true
@@ -20,16 +20,17 @@ steps:
       artifact: ReactWindows
       path: $(System.DefaultWorkingDirectory)/ReactWindows
 
-  - powershell: |
-      (Get-Content -Path $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets
-    displayName: Patch version check file with version ${{parameters.npmVersion}}
+  - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true)) }}:
+    - powershell: |
+        (Get-Content -Path $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets
+      displayName: Patch version check file with version ${{parameters.npmVersion}}
 
   - ${{ if eq(parameters.packDesktop, true) }}:
     - template: prep-and-pack-single.yml
       parameters:
         packageId: ${{parameters.desktopId}}
         packageVersion: ${{parameters.npmVersion}}
-        slices: ''
+        slices: ${{ coalesce(parameters.slices, '("x64.Debug", "x86.Debug", "ARM64.Debug", "x64.Release","x86.Release", "ARM64.Release")') }}
         buildProperties: 'CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}}'
 
   - ${{ if eq(parameters.packMicrosoftReactNative, true) }}:
@@ -37,7 +38,7 @@ steps:
       parameters:
         packageId: Microsoft.ReactNative
         packageVersion: ${{parameters.npmVersion}}
-        slices:  ${{ parameters.slices }}
+        slices: ${{ coalesce(parameters.slices, '("x64.Release","x86.Release", "ARM.Release", "ARM64.Release")') }}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}
@@ -52,11 +53,21 @@ steps:
         codesignNuget: ${{ parameters.signMicrosoft }}
 
   - ${{ if eq(parameters.packMicrosoftReactNativeManaged, true) }}:
+    # Since we custom patch the nuget packages for PR valdation
+    - powershell: |
+        If (Test-Path -Path $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref.anycpu\Microsoft.ReactNative.Managed.dll) {
+          Write-Host Skipping copy of ref to ref.anycpu because it already exists and is already msil
+        } else {
+          Write-Host Copying ref to ref.anycpu because it does not yet exist
+          mkdir $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref.anycpu
+          Copy-Item $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref\Microsoft.ReactNative.Managed.dll -Destination $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref.anycpu
+        }
+      displayName: Copy the x64/release ref assembly to anycpu folder
     - template: prep-and-pack-single.yml
       parameters:
         packageId: Microsoft.ReactNative.Managed
         packageVersion: ${{parameters.npmVersion}}
-        slices:  ${{ parameters.slices }}
+        slices: ${{ coalesce(parameters.slices, '("x64.Release","x86.Release", "ARM.Release", "ARM64.Release")') }}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}

@@ -144,6 +144,12 @@ jobs:
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
             Microsoft.ReactNative.Managed.CodeGen\**
+      
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Governance Detection'
+        inputs:
+          alertWarningLevel: Medium
+          scanType: 'Register'
 
   - job: RNW_WinUI3
     variables:
@@ -392,14 +398,8 @@ jobs:
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
-        X86Release:
-          BuildConfiguration: Release
-          BuildPlatform: x86
         ARM64Debug:
           BuildConfiguration: Debug
-          BuildPlatform: ARM64
-        ARM64Release:
-          BuildConfiguration: Release
           BuildPlatform: ARM64
     pool:
       vmImage: $(VmImage)
@@ -486,6 +486,12 @@ jobs:
           contents: |
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
+
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Governance Detection'
+        inputs:
+          alertWarningLevel: Medium
+          scanType: 'Register'
 
   - job: CliInit
     variables:
@@ -646,6 +652,35 @@ jobs:
           continueOnBuildFailure: true # See issue #6129
           projectType: app
 
+  - job: CliInitHermes
+    variables:
+      - template: variables/vs2019.yml
+    displayName: Verify react-native init Hermes
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    strategy:
+      matrix:
+        X64DebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: x64
+        X86ReleaseCpp:
+          language: cpp
+          configuration: Release
+          platform: x86
+    timeoutInMinutes: 50 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    pool:
+      vmImage: $(VmImage)
+    steps:
+      - template: templates/react-native-init.yml
+        parameters:
+          language: $(language)
+          configuration: $(configuration)
+          platform: $(platform)
+          additionalInitArguments: --useHermes
+          projectType: app
+
   - job: CliInitExperimental
     variables:
       - template: variables/vs2019.yml
@@ -704,9 +739,9 @@ jobs:
           script: npx --no-install beachball check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
-        displayName: yarn buildci
+        displayName: yarn build
         inputs:
-          script: yarn buildci
+          script: yarn build
 
       - task: CmdLine@2
         displayName: yarn format:verify
@@ -728,11 +763,6 @@ jobs:
         inputs:
           script: yarn validate-overrides
 
-      - task: CmdLine@2
-        displayName: yarn api
-        inputs:
-          script: yarn api
-
       # Run unbroken checking local files before installing packages to avoid scanning node_modules
       # The exclusions of unbroken don't support wildcards yet and we have many throughout the repo
       - task: CmdLine@2
@@ -747,6 +777,39 @@ jobs:
         inputs:
           script: npx unbroken -q --allow-local-line-sections
         continueOnError: true
+
+  - job: PackDesktop
+    variables:
+      - template: variables/vs2019.yml
+    displayName: Pack Desktop NuGet Package
+    dependsOn:
+      - RNWDesktopPR
+      - RNWUniversalPR # Needed to have artifacts uploaded from LayoutHeaders
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    steps:
+      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+        clean: true # whether to fetch clean each time
+        fetchDepth: 2 # the depth of commits to ask Git to fetch
+        lfs: false # whether to download Git-LFS files
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      - task: NuGetToolInstaller@0
+        inputs:
+          versionSpec: ">=5.8.0"
+
+      - template: templates/prep-and-pack-nuget.yml
+        parameters:
+          packDesktop: true
+          packMicrosoftReactNative: false
+          packMicrosoftReactNativeCxx: false
+          packMicrosoftReactNativeManaged: false
+          packMicrosoftReactNativeManagedCodeGen: false
+          slices: '("x64.Debug", "x64.Release", "x86.Debug", "ARM64.Debug")'
 
   - template: templates/e2e-test-job.yml
     parameters:

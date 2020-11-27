@@ -1,8 +1,261 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 22 Oct 2020 05:06:28 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Nov 2020 05:06:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.219
+
+Thu, 26 Nov 2020 05:06:06 GMT
+
+### Changes
+
+- Refactor ReactContext API (vmorozov@microsoft.com)
+
+## 0.0.0-canary.218
+
+Wed, 25 Nov 2020 05:06:16 GMT
+
+### Changes
+
+- Add error for users who try to build apps/libs via project instead of solution (jthysell@microsoft.com)
+
+## 0.0.0-canary.217
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Changes
+
+- Fix links in some docs, mark APIs as deprecated or experimental as appropriate (asklar@microsoft.com)
+- Don't run bundling when doing intellisense builds (asklar@microsoft.com)
+- Add more eslint rules (ngerlem@microsoft.com)
+
+## 0.0.0-canary.216
+
+Sun, 22 Nov 2020 05:06:06 GMT
+
+### Changes
+
+- fix invalidation bug and use Canvas.Top/Left (kmelmon@microsoft.com)
+- fix panels with transforms leaking (stecrain@microsoft.com)
+
+## 0.0.0-canary.215
+
+Sat, 21 Nov 2020 05:05:40 GMT
+
+### Changes
+
+- Add ReactContext::ExecuteJsi method to use JSI in NativeModules (vmorozov@microsoft.com)
+
+## 0.0.0-canary.214
+
+Fri, 20 Nov 2020 05:08:43 GMT
+
+### Changes
+
+- WinUI 3 Preview 3 support (asklar@microsoft.com)
+- Update lib template to default prefer RNW dir of consuming app (jthysell@microsoft.com)
+- Integrate 11/18 RN Nightly Build 🎉 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.213
+
+Thu, 19 Nov 2020 17:13:10 GMT
+
+### Changes
+
+- Update Nuget publish to not overwrite the created anycpu version (dannyvv@microsoft.com)
+- Use lessthrow_await_adapter for WebSocketJSExecutor::ConnectAsync (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.212
+
+Thu, 19 Nov 2020 05:06:10 GMT
+
+### Changes
+
+- Exclude Beast WebSocket from build by default. (julio.rocha@microsoft.com)
+- fix typo (igklemen@microsoft.com)
+- Add Yellowbox warnings for WIndows Variants of Lean Core Components (ngerlem@microsoft.com)
+
+## 0.0.0-canary.211
+
+Wed, 18 Nov 2020 03:10:51 GMT
+
+### Changes
+
+- CornerRadius only exists on RS5, restore the behavior to gracefully degrade on older OS releases (asklar@microsoft.com)
+- Check for VS >= 16.5 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.209
+
+Tue, 17 Nov 2020 05:05:00 GMT
+
+### Changes
+
+- Embed documentation of WinRT APIs in the winmd (asklar@microsoft.com)
+- JSDispatcher should use JSCallInvoker internally (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.208
+
+Mon, 16 Nov 2020 17:37:03 GMT
+
+### Changes
+
+- Fix publish (dannyvv@microsoft.com)
+
+## 0.0.0-canary.207
+
+Mon, 16 Nov 2020 14:39:19 GMT
+
+### Changes
+
+- Fix Publish pipeline due to moved file (dannyvv@microsoft.com)
+
+## 0.0.0-canary.206
+
+Mon, 16 Nov 2020 05:06:18 GMT
+
+### Changes
+
+- Update Managed ref assemblies to be AnpCpu (dannyvv@microsoft.com)
+
+## 0.0.0-canary.205
+
+Sat, 14 Nov 2020 05:04:43 GMT
+
+### Changes
+
+- Add a custom WinRT attribute to be used to store documentation strings for WinRT types (asklar@microsoft.com)
+- Add win32 exports required for internal usage (email not defined)
+- Fix appstate module (30809111+acoates-ms@users.noreply.github.com)
+- Add Targets to check that developers have run yarn install before building (dannyvv@microsoft.com)
+
+## 0.0.0-canary.203
+
+Thu, 12 Nov 2020 05:05:57 GMT
+
+### Changes
+
+- Add Keyboard Events to TextWin32 (krsiler@microsoft.com)
+
+## 0.0.0-canary.202
+
+Wed, 11 Nov 2020 05:05:29 GMT
+
+### Changes
+
+- Remove Build-Time Native Code Patching (ngerlem@microsoft.com)
+
+## 0.0.0-canary.201
+
+Tue, 10 Nov 2020 05:05:13 GMT
+
+### Changes
+
+- Exclude *projectimports.zip from devmode metro config (asklar@microsoft.com)
+- add force_layout to TextInput (igklemen@microsoft.com)
+
+## 0.0.0-canary.200
+
+Sat, 07 Nov 2020 05:04:58 GMT
+
+### Changes
+
+- Fix Bundling With "react-native-windows-init --useDevMode" (ngerlem@microsoft.com)
+- Couple of minor cleanups to prep for fabric PR (30809111+acoates-ms@users.noreply.github.com)
+- Fix PR validation by removing legacy generated header file (dannyvv@microsoft.com)
+- Clear Unused Native Module Specs (ngerlem@microsoft.com)
+
+## 0.0.0-canary.196
+
+Wed, 04 Nov 2020 05:10:08 GMT
+
+### Changes
+
+- Autolinking fixes for C++ / C# interop (jthysell@microsoft.com)
+
+## 0.0.0-canary.195
+
+Tue, 03 Nov 2020 16:52:55 GMT
+
+### Changes
+
+- Update Microsoft.ReactNative NuGet Package to only contain release bits (dannyvv@microsoft.com)
+- Add ReactNativeHost::FromContext method (vmorozov@microsoft.com)
+
+## 0.0.0-canary.194
+
+Sun, 01 Nov 2020 05:05:46 GMT
+
+### Changes
+
+- Update V8 and Hermes package versions (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.193
+
+Sat, 31 Oct 2020 05:06:50 GMT
+
+### Changes
+
+- Initialize UIManager turbomodule eagerly (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 10/5 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.192
+
+Fri, 30 Oct 2020 05:07:51 GMT
+
+### Changes
+
+- Enable Hermes Bytecode Compilation and SourceMap Creation as Part of Build (ngerlem@microsoft.com)
+- Update Template Metro Config to Enable Inline Requires By Default (ngerlem@microsoft.com)
+- Integrate 9/17 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.191
+
+Thu, 29 Oct 2020 05:05:49 GMT
+
+### Changes
+
+- Better error handling of Views inside Text components (30809111+acoates-ms@users.noreply.github.com)
+- Allow Hermes to be used in C++ projects without modifying source code (ngerlem@microsoft.com)
+- Integrate Additional RNTester Refactoring (9/2 Nightly RN Build) (ngerlem@microsoft.com)
+
+## 0.0.0-canary.190
+
+Wed, 28 Oct 2020 05:04:32 GMT
+
+### Changes
+
+- Implement backgroundColor for Text. (igklemen@microsoft.com)
+- Move UIManager to JSI (30809111+acoates-ms@users.noreply.github.com)
+- Followup from #6289 (30809111+acoates-ms@users.noreply.github.com)
+- [Win32] Export createUIManagerModule that takes a uiQueue (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.189
+
+Tue, 27 Oct 2020 05:04:48 GMT
+
+### Changes
+
+- Don't require elevation just to check dev dependencies (asklar@microsoft.com)
+
+## 0.0.0-canary.188
+
+Sat, 24 Oct 2020 05:07:36 GMT
+
+### Changes
+
+- fix tab ordering on ScrollViewer, TextInput, and Picker (kmelmon@microsoft.com)
+- Integrate RNTester Redesign (8/26 Nightly Build) (ngerlem@microsoft.com)
+- Fix failing unit tests (vmorozov@microsoft.com)
+- Ensure that destruction of animation nodes happen on UI thread (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.187
+
+Fri, 23 Oct 2020 05:04:37 GMT
+
+### Changes
+
+- Enable onFocus() and onBlur() callbacks on Pressable. Allow calling .focus() and .blur() on Pressable. (igklemen@microsoft.com)
 
 ## 0.0.0-canary.186
 

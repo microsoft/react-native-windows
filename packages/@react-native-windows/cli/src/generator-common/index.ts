@@ -78,7 +78,7 @@ type ContentChangedCallback = (
  *        If null, files will be overwritten.
  *        Function(path, 'identical' | 'changed' | 'new') => 'keep' | 'overwrite'
  */
-async function copyAndReplace(
+export async function copyAndReplace(
   srcPath: string,
   destPath: string,
   replacements: Replacements,
@@ -93,7 +93,7 @@ async function copyAndReplace(
   }
 
   const extension = path.extname(srcPath);
-  if (binaryExtensions.indexOf(extension) !== -1) {
+  if (binaryExtensions.includes(extension)) {
     // Binary file
     let shouldOverwrite = 'overwrite';
     if (contentChangedCallback) {
@@ -123,7 +123,7 @@ async function copyAndReplace(
   } else {
     // Text file
     const srcPermissions = fs.statSync(srcPath).mode;
-    let content = resolveContents(srcPath, replacements);
+    const content = resolveContents(srcPath, replacements);
 
     let shouldOverwrite = 'overwrite';
     if (contentChangedCallback) {
@@ -285,7 +285,7 @@ async function upgradeFileContentChangedCallback(
         `You can see the new version here: ${absoluteSrcFilePath}`,
     );
 
-    const {shoudReplace} = await inquirer.prompt([
+    const {shouldReplace} = await inquirer.prompt([
       {
         name: 'shouldReplace',
         type: 'confirm',
@@ -294,7 +294,7 @@ async function upgradeFileContentChangedCallback(
       },
     ]);
 
-    return shoudReplace ? 'overwrite' : 'keep';
+    return shouldReplace ? 'overwrite' : 'keep';
   }
   if (contentChanged === 'identical') {
     return 'keep';

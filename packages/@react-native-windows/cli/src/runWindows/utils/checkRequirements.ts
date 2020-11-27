@@ -50,8 +50,8 @@ function getInstalledWindowsSdks(): Version[] {
   }
 
   const re = /\\Microsoft SDKs\\Windows\\v(\d+\.\d+)\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
-  let match: RegExpExecArray;
-  while ((match = re.exec(output)!)) {
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(output))) {
     const sdkPath = match[2];
     if (shell.test('-e', path.join(sdkPath, 'SDKManifest.xml'))) {
       const sdkVersion = Version.tryParse(match[1]);

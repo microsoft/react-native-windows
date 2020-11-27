@@ -76,6 +76,8 @@ function translateSpecFunctionParam(
       // TODO we have more information here, and could create a more specific type
       return 'React::JSValueObject';
     case 'ReservedFunctionValueTypeAnnotation':
+      // (#6597)
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (param.typeAnnotation.name !== 'RootTag')
         throw new Error(
           `Unknown reserved function: ${param.typeAnnotation.name} in translateSpecFunctionParam`,
@@ -114,6 +116,8 @@ function translateFunctionParam(param: FunctionTypeAnnotationParam): string {
       // TODO we have more information here, and could create a more specific type
       return 'React::JSValueObject &&';
     case 'ReservedFunctionValueTypeAnnotation':
+      // (#6597)
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (param.typeAnnotation.name !== 'RootTag')
         throw new Error(
           `Unknown reserved function: ${param.typeAnnotation.name} in translateFunctionParam`,
@@ -152,6 +156,8 @@ function translateSpecReturnType(
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValueObject';
     case 'ReservedFunctionValueTypeAnnotation':
+      // (#6597)
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (type.name !== 'RootTag')
         throw new Error(
           `Unknown reserved function: ${type.name} in translateSpecReturnType`,
@@ -190,6 +196,8 @@ function translateImplReturnType(
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValueObject';
     case 'ReservedFunctionValueTypeAnnotation':
+      // (#6597)
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (type.name !== 'RootTag')
         throw new Error(
           `Unknown reserved function: ${type.name} in translateSpecReturnType`,
@@ -232,20 +240,20 @@ function isPromise(prop: MethodTypeShape) {
 }
 
 function getPossibleMethodSignatures(prop: MethodTypeShape): string[] {
-  let args = translateArgs(prop.typeAnnotation.params);
+  const args = translateArgs(prop.typeAnnotation.params);
   if (isPromise(prop)) {
     // Sadly, currently, the schema doesn't currently provide us information on the type of the promise.
     args.push('React::ReactPromise<React::JSValue> &&result');
   }
 
   // TODO be much more exhastive on the possible method signatures that can be used..
-  let sig = `REACT_${isMethodSync(prop) ? 'SYNC_' : ''}METHOD(${
+  const sig = `REACT_${isMethodSync(prop) ? 'SYNC_' : ''}METHOD(${
     prop.name
   }) ${translateImplReturnType(prop.typeAnnotation.returnTypeAnnotation)} ${
     prop.name
   }(${args.join(', ')}) noexcept { /* implementation */ }}`;
 
-  let staticsig = `REACT_${isMethodSync(prop) ? 'SYNC_' : ''}METHOD(${
+  const staticsig = `REACT_${isMethodSync(prop) ? 'SYNC_' : ''}METHOD(${
     prop.name
   }) static ${translateImplReturnType(
     prop.typeAnnotation.returnTypeAnnotation,
@@ -268,7 +276,7 @@ function renderProperties(
   return properties
     .filter(prop => prop.name !== 'getConstants')
     .map((prop, index) => {
-      let params = prop.typeAnnotation.params;
+      const params = prop.typeAnnotation.params;
 
       const traversedArgs = translateSpecArgs(params);
 
@@ -303,7 +311,7 @@ export function createNM2Generator({namespace}: {namespace: string}) {
     schema: SchemaType,
     _moduleSpecName: string,
   ): FilesOutput => {
-    let files = new Map<string, string>();
+    const files = new Map<string, string>();
 
     const nativeModules = Object.keys(schema.modules)
       .map(moduleName => {

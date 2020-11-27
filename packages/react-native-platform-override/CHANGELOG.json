@@ -2,6 +2,51 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "react-native-platform-override_v0.4.3",
+      "version": "0.4.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "react-native-platform-override_v0.4.2",
+      "version": "0.4.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Oct 2020 05:05:49 GMT",
+      "tag": "react-native-platform-override_v0.4.1",
+      "version": "0.4.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Better Override Validation Messages When Errors Exist in Multiple Packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "efae6f59fc50b57b8f122c2d5c663e14e3fdef6a",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Oct 2020 05:05:24 GMT",
       "tag": "react-native-platform-override_v0.4.0",
       "version": "0.4.0",

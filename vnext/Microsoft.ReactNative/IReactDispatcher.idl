@@ -2,20 +2,26 @@
 // Licensed under the MIT License.
 
 import "IReactPropertyBag.idl";
+#include "DocString.h"
 
 namespace Microsoft.ReactNative {
 
   // The delegate is used to create property value on-demand.
   [webhosthidden]
+  DOC_STRING("The delegate is used to create property value on-demand.")
   delegate void ReactDispatcherCallback();
 
   [webhosthidden]
+  DOC_STRING("`IReactDispatcher` provides the core threading/task management interface for ensuring code happens in the right order on the right thread. \
+One primary dispatcher that applications may require is the @IReactContext.UIDispatcher which provides native modules access to the UI thread associated with this react instance.   Another one is the @IReactContext.JSDispatcher which allows apps to post tasks to the JS engine thread.")
   interface IReactDispatcher
   {
     // True if dispatcher uses current thread.
+    DOC_STRING("`true` if the dispatcher uses current thread.")
     Boolean HasThreadAccess { get; };
 
     // Post task for the asynchronous execution.
+    DOC_STRING("Post a task to the dispatcher.  This callback will be called asynchronously on the thread/queue associated with this dispatcher.")
     void Post(ReactDispatcherCallback callback);
   }
 

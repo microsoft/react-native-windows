@@ -261,13 +261,18 @@ class PickerEditableExample extends React.Component<{}, any> {
     );
   }
 
-  private onValueChange = (selected: string, _index: number, text: string) => {
+  private readonly onValueChange = (
+    selected: string,
+    _index: number,
+    text: string,
+  ) => {
     this.setState({selected, text});
   };
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<PickerWindows>';
+export const title = 'PickerWindows';
+export const category = 'UI';
 export const description =
   'Render lists of selectable options with UWP ComboBox.';
 export const examples = [

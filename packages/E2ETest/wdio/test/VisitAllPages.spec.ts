@@ -1,49 +1,53 @@
 /**
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
+ * @format
  */
 
 import HomePage from '../pages/HomePage';
 
-let pages = [
-  '<ActivityIndicator>',
-  '<Button>',
-  //  'Custom Views',
-  '<DatePicker>',
+const componentExamples = [
+  'ActivityIndicator',
+  'Button',
+  'DatePicker',
   'Fast Path Texts',
-  '<FlatList>',
-  '<Flyout>',
-  '<Glyph> UWP',
-  '<Image>',
-  //  '<FlatList> - MultiColumn',
+  'FlatList',
+  'Flyout',
+  'Glyph UWP',
+  'Image',
+  //  'FlatList - MultiColumn',
   'New App Screen',
-  '<Picker>',
-  '<PickerWindows>',
-  '<Pressable>',
-  '<Popup>',
-  'Keyboard extension Example',
-  '<ScrollViewSimpleExample>',
-  //  '<SectionList>',
-  '<Switch>',
-  '<Text>',
-  '<TextInput>',
-  //'<Touchable*> and onPress',
-  '<TransferProperties>',
-  '<TransparentHitTestExample>',
-  '<View>',
+  'PickerWindows',
+  'Pressable',
+  'Popup',
+  'ScrollViewSimpleExample',
+  //  'SectionList',
+  'Switch',
+  'Text',
+  'TextInput',
+  //'Touchable* and onPress',
+  'TransferProperties',
+  'TransparentHitTestExample',
+  'View',
+  //  'LegacyControlStyleTest',
+  //  'LegacyTextInputTest',
+  //  'LegacyLoginTest',
+  //  'LegacyImageTest',
+  //  'LegacyAccessibilityTest',
+];
+
+const apiExamples = [
   'Keyboard Focus Example',
   'Accessibility',
   'AccessibilityInfo',
   'Accessibility Windows',
   'AsyncStorage Windows',
-  'Alert',
+  'Alerts',
   'Animated - Examples',
   'Animated - Gratuitous App',
   'Appearance',
   'AppState',
   'Border',
-  'Box Shadow',
-  'Clipboard',
   'Crash',
   'DevSettings',
   'Dimensions',
@@ -61,21 +65,11 @@ let pages = [
   'Timers',
   'WebSocket',
   'Transforms',
-  //  '<LegacyControlStyleTest>',
-  //  '<LegacyTransformTest>',
-  //  '<LegacyTextInputTest>',
-  //  '<LegacyLoginTest>',
-  //  '<LegacyDirectManipulationTest>',
-  //  '<LegacyImageTest>',
-  //  '<LegacyAccessibilityTest>',
 ];
 
 describe('VisitAllPagesTest', () => {
-  pages.forEach(function(page) {
-    it(page, () => {
-      console.log('loading page ' + page);
-      HomePage.goToTestPage(page);
-      HomePage.backToHomePage();
-    });
-  });
+  componentExamples.forEach(ex =>
+    it(ex, () => HomePage.goToComponentExample(ex))
+  );
+  apiExamples.forEach(ex => it(ex, () => HomePage.goToApiExample(ex)));
 });

@@ -19,8 +19,8 @@ class DeviceInfo {
     public readonly guid: string,
     public readonly ip: string,
 
-    private index: number,
-    private type: string,
+    private readonly index: number,
+    private readonly type: string,
   ) {}
 
   toString() {
@@ -29,7 +29,7 @@ class DeviceInfo {
 }
 
 export default class WinAppDeployTool {
-  private path: string;
+  private readonly path: string;
 
   constructor() {
     const programFilesPath =
@@ -57,9 +57,8 @@ export default class WinAppDeployTool {
 
     if (target === 'emulator') {
       const sortedList = devices.sort(sortDevices);
-      for (let i = 0; i < sortedList.length; i++) {
-        const sortedItem = sortedList[i];
-        if (sortedItem.toString().indexOf(target) > -1) {
+      for (const sortedItem of sortedList) {
+        if (sortedItem.toString().includes(target)) {
           return sortedItem;
         }
       }

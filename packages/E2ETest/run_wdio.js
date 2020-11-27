@@ -54,22 +54,6 @@ function selectSpecs(folder) {
 let opts = selectSpecs(specFolder);
 console.log(`Selected tests: ${opts}`);
 
-function ensureRunningInHyperV() {
-  const baseboardMfr = child_process
-    .execSync('powershell.exe -NoProfile (gwmi Win32_BaseBoard).Manufacturer')
-    .toString()
-    .replace(/[\r\n]/, '');
-  if (!baseboardMfr.startsWith('Microsoft Corporation')) {
-    console.log(`Not running in HyperV. Mfr = ${baseboardMfr}`);
-    const answer = prompt(
-      'E2ETest is meant to be run in a HyperV VM. Continue? (Y/N)'
-    );
-    if (answer.toUpperCase() !== 'Y') {
-      process.exit(0);
-    }
-  }
-}
-
 const Launcher = require('@wdio/cli').default;
 
 const wdio = new Launcher('wdio.conf.js', { specs: opts });
@@ -143,8 +127,6 @@ function doProcess(code) {
 }
 
 function runWdio() {
-  ensureRunningInHyperV();
-
   // Ensure that directory exists for error screenshots to be saved to
   if (!fs.existsSync(path.resolve(__dirname, 'errorShots'))) {
     fs.mkdirSync(path.resolve(__dirname, 'errorShots'));

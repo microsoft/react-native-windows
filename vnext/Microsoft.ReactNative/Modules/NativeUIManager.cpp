@@ -3,17 +3,17 @@
 
 #include "pch.h"
 
-#include "Modules/I18nManagerModule.h"
-#include "NativeUIManager.h"
-
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
 #include <Views/ShadowNodeBase.h>
+#include "Modules/I18nManagerModule.h"
+#include "NativeUIManager.h"
 
 #include "CppWinRTIncludes.h"
 #include "IXamlRootView.h"
 #include "QuirkSettings.h"
+#include "ReactRootViewTagGenerator.h"
 #include "Unicode.h"
 
 namespace winrt {
@@ -129,12 +129,10 @@ XamlView NativeUIManager::reactPeerOrContainerFrom(xaml::FrameworkElement fe) {
   return nullptr;
 }
 
-NativeUIManager::NativeUIManager(Mso::React::IReactContext *reactContext) {
-  m_context = reactContext;
-
+NativeUIManager::NativeUIManager(winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : m_context(reactContext) {
   m_yogaConfig = YGConfigNew();
-  if (React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(
-          React::ReactPropertyBag(m_context->Properties())))
+  if (React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(m_context.Properties()))
     YGConfigSetUseLegacyStretchBehaviour(m_yogaConfig, true);
 
 #if defined(_DEBUG)
@@ -186,8 +184,7 @@ void NativeUIManager::destroyRootShadowNode(ShadowNode *node) {
 }
 
 int64_t NativeUIManager::AddMeasuredRootView(facebook::react::IReactRootView *rootView) {
-  auto tag = m_nextRootTag;
-  m_nextRootTag += RootViewTagIncrement;
+  auto tag = getNextRootViewTag();
 
   int64_t width = rootView->GetActualWidth();
   int64_t height = rootView->GetActualHeight();
@@ -223,9 +220,7 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
 
   // Push the appropriate FlowDirection into the root view.
   view.as<xaml::FrameworkElement>().FlowDirection(
-      I18nManager::IsRTL(winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))
-          ? xaml::FlowDirection::RightToLeft
-          : xaml::FlowDirection::LeftToRight);
+      I18nManager::IsRTL(m_context.Properties()) ? xaml::FlowDirection::RightToLeft : xaml::FlowDirection::LeftToRight);
 
   m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node(m_yogaConfig));
 
@@ -235,10 +230,6 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
   // Add listener to size change so we can redo the layout when that happens
   m_sizeChangedVector.push_back(
       view.as<xaml::FrameworkElement>().SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) { DoLayout(); }));
-}
-
-void NativeUIManager::destroy() {
-  delete this;
 }
 
 void NativeUIManager::removeRootView(Microsoft::ReactNative::ShadowNode &shadow) {
@@ -526,6 +517,8 @@ static void StyleYogaNode(
         position = YGPositionTypeRelative;
       else if (value == "absolute")
         position = YGPositionTypeAbsolute;
+      else if (value == "static")
+        position = YGPositionTypeStatic;
       else
         assert(false);
 
@@ -943,15 +936,14 @@ winrt::Windows::Foundation::Rect GetRectOfElementInParentCoords(
 void NativeUIManager::measure(
     ShadowNode &shadowNode,
     ShadowNode &shadowRoot,
-    std::function<void(double left, double top, double width, double height, double pageX, double pageY)> const
-        &callback) {
+    std::function<void(double left, double top, double width, double height, double pageX, double pageY)> &&callback) {
   std::vector<folly::dynamic> args;
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
   auto feView = view.try_as<xaml::FrameworkElement>();
   if (feView == nullptr) {
-    callback(0, 0, 0, 0, 0, 0);
+    m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0, 0); });
     return;
   }
 
@@ -980,7 +972,7 @@ void NativeUIManager::measure(
       feRootView = xamlRootView.as<xaml::FrameworkElement>();
     }
     if (feRootView == nullptr) {
-      callback(0, 0, 0, 0, 0, 0);
+      m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0, 0); });
       return;
     }
   }
@@ -991,12 +983,14 @@ void NativeUIManager::measure(
   // this is exactly, but it is not used anyway.
   //  Either codify this non-use or determine if and how we can send the needed
   //  data.
-  callback(0.0, 0.0, rectInParentCoords.Width, rectInParentCoords.Height, rectInParentCoords.X, rectInParentCoords.Y);
+  m_context.JSDispatcher().Post([callback = std::move(callback), react = rectInParentCoords]() {
+    callback(0, 0, react.Width, react.Height, react.X, react.Y);
+  });
 }
 
 void NativeUIManager::measureInWindow(
     ShadowNode &shadowNode,
-    std::function<void(double x, double y, double width, double height)> const &callback) {
+    std::function<void(double x, double y, double width, double height)> &&callback) {
   std::vector<folly::dynamic> args;
 
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
@@ -1005,18 +999,21 @@ void NativeUIManager::measureInWindow(
     auto windowTransform = view.TransformToVisual(xaml::Window::Current().Content());
     auto positionInWindow = windowTransform.TransformPoint({0, 0});
 
-    callback(positionInWindow.X, positionInWindow.Y, view.ActualWidth(), view.ActualHeight());
+    m_context.JSDispatcher().Post(
+        [callback = std::move(callback), pos = positionInWindow, w = view.ActualWidth(), h = view.ActualHeight()]() {
+          callback(pos.X, pos.Y, w, h);
+        });
     return;
   }
 
-  callback(0, 0, 0, 0);
+  m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0); });
 }
 
 void NativeUIManager::measureLayout(
     ShadowNode &shadowNode,
     ShadowNode &ancestorNode,
-    std::function<void(React::JSValue const &)> const &errorCallback,
-    std::function<void(double left, double top, double width, double height)> const &callback) {
+    std::function<void(React::JSValue const &)> &&errorCallback,
+    std::function<void(double left, double top, double width, double height)> &&callback) {
   std::vector<folly::dynamic> args;
   try {
     const auto &target = static_cast<ShadowNodeBase &>(shadowNode);
@@ -1029,12 +1026,15 @@ void NativeUIManager::measureLayout(
     const auto height = static_cast<float>(targetElement.ActualHeight());
     const auto transformedBounds = ancestorTransform.TransformBounds(winrt::Rect(0, 0, width, height));
 
-    callback(transformedBounds.X, transformedBounds.Y, transformedBounds.Width, transformedBounds.Height);
+    m_context.JSDispatcher().Post([callback = std::move(callback), rect = transformedBounds]() {
+      callback(rect.X, rect.Y, rect.Width, rect.Height);
+    });
   } catch (winrt::hresult_error const &e) {
-    const auto &msg = e.message();
-    auto writer = React::MakeJSValueTreeWriter();
-    writer.WriteString(msg);
-    errorCallback(React::TakeJSValue(writer));
+    m_context.JSDispatcher().Post([errorCallback = std::move(errorCallback), msg = e.message()]() {
+      auto writer = React::MakeJSValueTreeWriter();
+      writer.WriteString(msg);
+      errorCallback(React::TakeJSValue(writer));
+    });
   }
 }
 
@@ -1042,13 +1042,13 @@ void NativeUIManager::findSubviewIn(
     ShadowNode &shadowNode,
     float x,
     float y,
-    std::function<void(double nativeViewTag, double left, double top, double width, double height)> const &callback) {
+    std::function<void(double nativeViewTag, double left, double top, double width, double height)> &&callback) {
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
   auto rootUIView = view.as<xaml::UIElement>();
   if (rootUIView == nullptr) {
-    callback(0, 0, 0, 0, 0);
+    m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0); });
     return;
   }
 
@@ -1077,17 +1077,19 @@ void NativeUIManager::findSubviewIn(
   }
 
   if (foundElement == nullptr) {
-    callback(0, 0, 0, 0, 0);
+    m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0); });
     return;
   }
 
-  auto box = GetRectOfElementInParentCoords(foundElement, rootUIView);
-  callback(static_cast<double>(foundTag), box.X, box.Y, box.Width, box.Height);
+  m_context.JSDispatcher().Post(
+      [callback = std::move(callback), foundTag, box = GetRectOfElementInParentCoords(foundElement, rootUIView)]() {
+        callback(static_cast<double>(foundTag), box.X, box.Y, box.Width, box.Height);
+      });
 }
 
 void NativeUIManager::focus(int64_t reactTag) {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(reactTag))) {
-    xaml::Input::FocusManager::TryFocusAsync(shadowNode->GetView(), winrt::FocusState::Programmatic);
+    xaml::Input::FocusManager::TryFocusAsync(shadowNode->GetView(), winrt::FocusState::Keyboard);
   }
 }
 

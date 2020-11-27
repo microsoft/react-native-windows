@@ -142,26 +142,30 @@ async function validateManifests(opts: {
   await spinnerGuard(spinner, async () => {
     // Perform validation sequentially because validation has internal
     // concurrency
-    const allManifestErrors = [];
+    const errors: ValidationError[] = [];
     for (const manifest of manifests) {
       spinner.text = `Validating ${manifest}`;
       spinner.start();
 
-      const errors = await Api.validateManifest(manifest, opts);
-      if (errors.length !== 0) {
-        allManifestErrors.push({manifest, errors});
+      const manifestErrors = await Api.validateManifest(manifest, opts);
+      if (manifestErrors.length !== 0) {
+        errors.push(
+          // Add the manifest path to the override name to disambiguate between different packages
+          ...manifestErrors.map(e => ({
+            ...e,
+            overrideName: path.join(path.dirname(manifest), e.overrideName),
+          })),
+        );
       }
     }
 
-    if (allManifestErrors.length === 0) {
+    if (errors.length === 0) {
       spinner.text = 'Validation succeeded';
       spinner.succeed();
     } else {
       spinner.text = 'Validation failed';
       spinner.fail();
-      for (const manifestErrors of allManifestErrors) {
-        await printValidationErrors(manifestErrors);
-      }
+      await printValidationErrors(errors);
       process.exitCode = 1;
     }
   });
@@ -308,11 +312,8 @@ function printUpgradeStats(
 /**
  * Prints validation errors in a user-readable form to stderr
  */
-async function printValidationErrors(manifestErrors: {
-  manifest: string;
-  errors: ValidationError[];
-}) {
-  if (Object.keys(manifestErrors).length === 0) {
+async function printValidationErrors(errors: ValidationError[]) {
+  if (errors.length === 0) {
     return;
   }
 
@@ -323,49 +324,49 @@ async function printValidationErrors(manifestErrors: {
 
   printErrorType(
     'missingFromManifest',
-    manifestErrors,
+    errors,
     `Found override files that aren't listed in the manifest. Overrides can be added to the manifest by using 'npx ${npmPackage.name} add <override>':`,
   );
 
   printErrorType(
     'overrideNotFound',
-    manifestErrors,
+    errors,
     `Found overrides in the manifest that don't exist on disk. Remove existing overrides using 'npx ${npmPackage.name} remove <override>':`,
   );
 
   printErrorType(
     'baseNotFound',
-    manifestErrors,
+    errors,
     `Found overrides whose base files do not exist. Remove existing overrides using 'npx ${npmPackage.name} remove <override>':`,
   );
 
   printErrorType(
     'outOfDate',
-    manifestErrors,
+    errors,
     `Found overrides whose original files have changed. Upgrade overrides using 'npx ${npmPackage.name} upgrade':`,
   );
 
   printErrorType(
     'overrideDifferentFromBase',
-    manifestErrors,
+    errors,
     'The following overrides should be an exact copy of their base files. Ensure overrides are up to date or revert changes:',
   );
 
   printErrorType(
     'overrideSameAsBase',
-    manifestErrors,
+    errors,
     'The following overrides are identical to their base files. Please remove them or set their type to "copy":',
   );
 
   printErrorType(
     'expectedFile',
-    manifestErrors,
+    errors,
     'The following overrides should operate on files, but list directories:',
   );
 
   printErrorType(
     'expectedDirectory',
-    manifestErrors,
+    errors,
     'The following overrides should operate on directories, but listed files:',
   );
 }
@@ -375,10 +376,10 @@ async function printValidationErrors(manifestErrors: {
  */
 function printErrorType(
   type: ValidationError['type'],
-  manifestErrors: {manifest: string; errors: ValidationError[]},
+  errors: ValidationError[],
   message: string,
 ) {
-  const filteredErrors = manifestErrors.errors.filter(err => err.type === type);
+  const filteredErrors = errors.filter(err => err.type === type);
   filteredErrors.sort((a, b) =>
     a.overrideName.localeCompare(b.overrideName, 'en'),
   );
@@ -386,10 +387,7 @@ function printErrorType(
   if (filteredErrors.length > 0) {
     console.error(chalk.red(message));
     filteredErrors.forEach(err => {
-      const longOverrideName = path.resolve(
-        path.join(path.dirname(manifestErrors.manifest), err.overrideName),
-      );
-      console.error(` - ${longOverrideName}`);
+      console.error(` - ${err.overrideName}`);
     });
     console.error();
   }

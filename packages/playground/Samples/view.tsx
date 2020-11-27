@@ -165,11 +165,7 @@ export default class Bootstrap extends React.Component<
                   ? styles.radial
                   : styles.noBorder
                 : null
-            }
-            {...{
-              // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-              focusable: true,
-            }}>
+            }>
             <Text style={styles.child}>The Text</Text>
           </View>
         </View>

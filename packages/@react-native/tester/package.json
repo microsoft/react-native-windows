@@ -7,17 +7,20 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git@github.com:facebook/react-native.git"
+    "url": "git@github.com:facebook/react-native.git",
+    "directory": "packages/rn-tester"
   },
   "dependencies": {
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"
   },
   "peerDependencies": {
-    "react": "16.13.1",
-    "react-native": "0.0.0-9b973f32e"
+    "react": "17.0.1",
+    "react-native": "*"
   },
   "devDependencies": {
-    "react-native-platform-override": "^0.4.0"
+    "connect": "^3.6.5",
+    "detox": "16.7.2",
+    "ws": "^6.1.4"
   }
 }

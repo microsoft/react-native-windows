@@ -38,7 +38,7 @@ export default class FlexboxLayoutPlayground extends React.Component<
 
   _onClick() {
     this.setState(s => {
-      let state = {...s};
+      const state = {...s};
 
       if (state.currentAlignStyle === styles.endAlignStyle) {
         state.currentAlignStyle = styles.emptyStyle;

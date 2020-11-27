@@ -2,6 +2,147 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.65",
+      "version": "0.0.0-canary.65",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.64",
+      "version": "0.0.0-canary.64",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 14 Nov 2020 05:04:43 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.63",
+      "version": "0.0.0-canary.63",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove api-extractor/api-documenter",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a2f696fb256a321903e5881cda090d131ef6e9bb",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Nov 2020 05:05:57 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.63",
+      "version": "0.0.0-canary.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Keyboard Events to TextWin32",
+            "author": "krsiler@microsoft.com",
+            "commit": "e08b7dcdee2549eac8b1deb810330129653fb825",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Nov 2020 05:05:29 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.62",
+      "version": "0.0.0-canary.62",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove buildci to allow JSChecks build caching for lint",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0111551952af4d6206cedb47021e9d324bb8ed5b",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 31 Oct 2020 05:06:50 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.62",
+      "version": "0.0.0-canary.62",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 10/5 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "af3c428d350acf192e7663c0fd38c4536d6facb9",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 30 Oct 2020 05:07:51 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.61",
+      "version": "0.0.0-canary.61",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 9/17 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2e8b1d34263f940d46583dad0b9c252b9549f8d9",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Oct 2020 05:05:49 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.60",
+      "version": "0.0.0-canary.60",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Better error handling of Views inside Text components",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "776e348f599f7fb8655bb34a9d7b921b6a8daeaf",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate Additional RNTester Refactoring (9/2 Nightly RN Build)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "34d003379dbc928f9698735b2e81dbab8f384832",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 24 Oct 2020 05:07:36 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.59",
+      "version": "0.0.0-canary.59",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate RNTester Redesign (8/26 Nightly Build)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8ed62998598e6249c4a9cfb9db1e84d53d9fb541",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Oct 2020 05:06:28 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.58",
       "version": "0.0.0-canary.58",

@@ -8,6 +8,10 @@
 using namespace winrt::Microsoft::ReactNative;
 
 struct ReactContextStub : implements<ReactContextStub, IReactContext> {
+  IReactSettingsSnapshot SettingsSnapshot() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
   IReactPropertyBag Properties() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
@@ -21,6 +25,10 @@ struct ReactContextStub : implements<ReactContextStub, IReactContext> {
   }
 
   IReactDispatcher JSDispatcher() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  IInspectable JSRuntime() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
 
@@ -49,7 +57,9 @@ struct ReactContextStub : implements<ReactContextStub, IReactContext> {
     Module = eventEmitterName;
     Method = eventName;
     auto writer = MakeJSValueTreeWriter();
+    writer.WriteArrayBegin();
     paramsArgWriter(writer);
+    writer.WriteArrayEnd();
     Args = TakeJSValue(writer);
   }
 
@@ -234,10 +244,8 @@ TEST_CLASS (ReactContextTest) {
     TestCheckEqual(77u, reactContextMock->Args[0]["prop2"]);
 
     context.EmitJSEvent(L"module1", L"event1", [](IJSValueWriter const &writer) {
-      writer.WriteArrayBegin();
       WriteValue(writer, 10u);
       WriteValue(writer, 19);
-      writer.WriteArrayEnd();
     });
     TestCheckEqual(10u, reactContextMock->Args[0]);
     TestCheckEqual(19, reactContextMock->Args[1]);

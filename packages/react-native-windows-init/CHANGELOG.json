@@ -2,6 +2,111 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "react-native-windows-init_v0.1.37",
+      "version": "0.1.37",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "react-native-windows-init_v0.1.36",
+      "version": "0.1.36",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Nov 2020 05:05:57 GMT",
+      "tag": "react-native-windows-init_v0.1.35",
+      "version": "0.1.35",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Disable telemetry in other CI systems",
+            "author": "asklar@microsoft.com",
+            "commit": "bcda5759d5d1bed770e7a8524e5cc3f94cbc0c6a",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Nov 2020 05:05:29 GMT",
+      "tag": "react-native-windows-init_v0.1.34",
+      "version": "0.1.34",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Don't initialize AppInsights when passing no-telemetry",
+            "author": "asklar@microsoft.com",
+            "commit": "1893d23fce2daedbf55ae90c5f6775141400f401",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Nov 2020 05:04:58 GMT",
+      "tag": "react-native-windows-init_v0.1.33",
+      "version": "0.1.33",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Bundling With \"react-native-windows-init --useDevMode\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7b32b0f8664e30335c1057df27ea6f83412138a0",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Nov 2020 05:05:45 GMT",
+      "tag": "react-native-windows-init_v0.1.32",
+      "version": "0.1.32",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add telemetry to react-native-windows CLI",
+            "author": "asklar@microsoft.com",
+            "commit": "61cc42e7f9b4dec313597fba6e99c6f22badbf7e",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Oct 2020 05:05:49 GMT",
+      "tag": "react-native-windows-init_v0.1.31",
+      "version": "0.1.31",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow Hermes to be used in C++ projects without modifying source code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7e9d80e59fd0b8ca7549eda1a7d5cefc32d6cfbe",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Oct 2020 05:06:32 GMT",
       "tag": "react-native-windows-init_v0.1.30",
       "version": "0.1.30",

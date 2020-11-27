@@ -15,23 +15,28 @@ import type {RNTesterExample} from '../types/RNTesterTypes';
 const ComponentExamples: Array<RNTesterExample> = [
   {
     key: 'ActivityIndicatorExample',
+    category: 'UI',
     module: require('../examples/ActivityIndicator/ActivityIndicatorExample'),
   },
   {
     key: 'ButtonExample',
+    category: 'UI',
     module: require('../examples/Button/ButtonExample'),
   },
   /*
   {
     key: 'FlatListExample',
+    category: 'ListView',
     module: require('../examples/FlatList/FlatListExample'),
   },
   {
     key: 'ImageExample',
+    category: 'Basic',
     module: require('../examples/Image/ImageExample'),
   },
   {
     key: 'MultiColumnExample',
+    category: 'ListView',
     module: require('../examples/MultiColumn/MultiColumnExample'),
   }*/
   {
@@ -39,11 +44,8 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
   },
   {
-    key: 'PickerExample',
-    module: require('../examples/Picker/PickerExample'),
-  },
-  {
     key: 'PressableExample',
+    category: 'UI',
     module: require('../examples/Pressable/PressableExample'),
   },
   {
@@ -52,10 +54,12 @@ const ComponentExamples: Array<RNTesterExample> = [
   },
   {
     key: 'ScrollViewSimpleExample',
+    category: 'Basic',
     module: require('../examples/ScrollView/ScrollViewSimpleExample'),
   } /*
   {
     key: 'SectionListExample',
+    category: 'ListView',
     module: require('../examples/SectionList/SectionListExample'),
   }*/,
   {
@@ -64,6 +68,7 @@ const ComponentExamples: Array<RNTesterExample> = [
   },
   {
     key: 'TouchableExample',
+    category: 'UI',
     module: require('../examples/Touchable/TouchableExample'),
   },
   {
@@ -72,6 +77,7 @@ const ComponentExamples: Array<RNTesterExample> = [
   },
   {
     key: 'ViewExample',
+    category: 'Basic',
     module: require('../examples/View/ViewExample'),
   },
   {
@@ -80,6 +86,7 @@ const ComponentExamples: Array<RNTesterExample> = [
   },
   {
     key: 'TextInputExample',
+    category: 'Basic',
     module: require('@office-iss/react-native-win32/Libraries/Components/TextInput/Tests/TextInputTest'),
   },
   {
@@ -95,6 +102,7 @@ const ComponentExamples: Array<RNTesterExample> = [
 const APIExamples: Array<RNTesterExample> = [
   {
     key: 'AccessibilityExample',
+    category: 'Basic',
     module: require('../examples/Accessibility/AccessibilityExample'),
   },
   {
@@ -103,88 +111,97 @@ const APIExamples: Array<RNTesterExample> = [
   },
   {
     key: 'AlertExample',
+    category: 'UI',
     module: require('../examples/Alert/AlertExample'),
   },
   {
     key: 'AnimatedExample',
+    category: 'UI',
     module: require('../examples/Animated/AnimatedExample'),
   },
   {
     key: 'Animation - GratuitousAnimation',
+    category: 'UI',
     module: require('../examples/Animated/AnimatedGratuitousApp/AnExApp'),
   },
   {
     key: 'AppearanceExample',
+    category: 'UI',
     module: require('../examples/Appearance/AppearanceExample'),
   },
   {
     key: 'AppStateExample',
+    category: 'Basic',
     module: require('../examples/AppState/AppStateExample'),
   },
   {
     key: 'BorderExample',
+    category: 'UI',
     module: require('../examples/Border/BorderExample'),
   },
   {
-    key: 'BoxShadowExample',
-    module: require('../examples/BoxShadow/BoxShadowExample'),
-  } /*
-  {
-    key: 'ClipboardExample',
-    module: require('../examples/Clipboard/ClipboardExample'),
-  }*/,
-  {
     key: 'CrashExample',
+    category: 'Basic',
     module: require('../examples/Crash/CrashExample'),
   },
   {
     key: 'DevSettings',
+    category: 'Basic',
     module: require('../examples/DevSettings/DevSettingsExample'),
   },
   {
     key: 'Dimensions',
+    category: 'UI',
     module: require('../examples/Dimensions/DimensionsExample'),
   },
   {
     key: 'LayoutEventsExample',
+    category: 'UI',
     module: require('../examples/Layout/LayoutEventsExample'),
   },
   {
     key: 'LinkingExample',
+    category: 'Basic',
     module: require('../examples/Linking/LinkingExample'),
   },
-
   {
     key: 'LayoutExample',
+    category: 'UI',
     module: require('../examples/Layout/LayoutExample'),
   } /*
   {
     key: 'NativeAnimationsExample',
+    category: 'UI',
     module: require('../examples/NativeAnimation/NativeAnimationsExample'),
   }*/,
   {
     key: 'PanResponderExample',
+    category: 'Basic',
     module: require('../examples/PanResponder/PanResponderExample'),
   },
-
   {
     key: 'PlatformColorExample',
+    category: 'UI',
     module: require('../examples/PlatformColor/PlatformColorExample'),
   },
   {
     key: 'PointerEventsExample',
+    category: 'Basic',
     module: require('../examples/PointerEvents/PointerEventsExample'),
   } /*
   {
     key: 'RTLExample',
+    category: 'Basic',
     module: require('../examples/RTL/RTLExample'),
   }*/,
   {
     key: 'ShareExample',
+    category: 'Basic',
     module: require('../examples/Share/ShareExample'),
   },
   {
     key: 'TimerExample',
+    category: 'UI',
     module: require('../examples/Timer/TimerExample'),
   },
 
@@ -194,19 +211,25 @@ const APIExamples: Array<RNTesterExample> = [
   },
   {
     key: 'TransformExample',
+    category: 'UI',
     module: require('../examples/Transform/TransformExample'),
   } /*
   {
     key: 'WebSocketExample',
+    category: 'Basic',
     module: require('../examples/WebSocket/WebSocketExample'),
-  },
-  {
-    key: 'TurboModuleExample',
-    module: require('../examples/TurboModule/TurboModuleExample'),
   }*/,
 ];
 
-const Modules: {...} = {};
+if (global.__turboModuleProxy) {
+  APIExamples.push({
+    key: 'TurboModuleExample',
+    category: 'Basic',
+    module: require('../examples/TurboModule/TurboModuleExample'),
+  });
+}
+
+const Modules: any = {};
 
 APIExamples.concat(ComponentExamples).forEach(Example => {
   Modules[Example.key] = Example.module;

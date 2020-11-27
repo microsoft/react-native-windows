@@ -80,12 +80,18 @@ std::weak_ptr<NativeUIManager> GetNativeUIManager(const Mso::React::IReactContex
 class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, public INativeUIManagerHost {
  public:
   UIManagerModule() {}
+  ~UIManagerModule() {
+    m_nodeRegistry.removeAllRootViews([this](int64_t rootViewTag) { removeRootView(rootViewTag); });
+    m_nodeRegistry.ForAllNodes([this](int64_t tag, shadow_ptr const &shadowNode) noexcept {
+      DropView(tag, false, true);
+    });
+    m_nativeUIManager->setHost(nullptr);
+  }
 
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
     m_context = reactContext;
 
-    auto contextSelf = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactContext>(m_context.Handle());
-    m_nativeUIManager = std::make_shared<NativeUIManager>(&contextSelf->GetInner());
+    m_nativeUIManager = std::make_shared<NativeUIManager>(reactContext);
 
     m_context.Properties().Set(NativeUIManagerProperty(), std::weak_ptr<NativeUIManager>(m_nativeUIManager));
 
@@ -94,7 +100,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     m_nativeUIManager->setHost(this);
   }
 
-  React::JSValueObject getConstantsForViewManager(std::string &viewManagerName) noexcept {
+  React::JSValueObject getConstantsForViewManager(std::string &&viewManagerName) noexcept {
     const IViewManager *vm = GetViewManager(viewManagerName);
 
     auto writer = winrt::Microsoft::ReactNative::MakeJSValueTreeWriter();
@@ -159,12 +165,12 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   void findSubviewIn(
       int64_t reactTag,
       React::JSValueArray &&point,
-      std::function<void(double nativeViewTag, double left, double top, double width, double height)> const
-          &callback) noexcept {
+      std::function<void(double nativeViewTag, double left, double top, double width, double height)>
+          &&callback) noexcept {
     auto &node = m_nodeRegistry.getNode(reactTag);
     float x = static_cast<float>(point[0]);
     float y = static_cast<float>(point[1]);
-    m_nativeUIManager->findSubviewIn(node, x, y, callback);
+    m_nativeUIManager->findSubviewIn(node, x, y, std::move(callback));
   }
 
   void dispatchViewManagerCommand(
@@ -180,8 +186,8 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
 
   void measure(
       int64_t reactTag,
-      std::function<void(double left, double top, double width, double height, double pageX, double pageY)> const
-          &callback) noexcept {
+      std::function<void(double left, double top, double width, double height, double pageX, double pageY)>
+          &&callback) noexcept {
     auto &node = m_nodeRegistry.getNode(reactTag);
     int64_t rootTag = reactTag;
     while (true) {
@@ -192,14 +198,14 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     }
     auto &rootNode = m_nodeRegistry.getNode(rootTag);
 
-    m_nativeUIManager->measure(node, rootNode, callback);
+    m_nativeUIManager->measure(node, rootNode, std::move(callback));
   }
 
   void measureInWindow(
       int64_t reactTag,
-      std::function<void(double x, double y, double width, double height)> const &callback) noexcept {
+      std::function<void(double x, double y, double width, double height)> &&callback) noexcept {
     auto &node = m_nodeRegistry.getNode(reactTag);
-    m_nativeUIManager->measureInWindow(node, callback);
+    m_nativeUIManager->measureInWindow(node, std::move(callback));
   }
 
   void viewIsDescendantOf(
@@ -213,17 +219,17 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   void measureLayout(
       int64_t reactTag,
       int64_t ancestorReactTag,
-      std::function<void(React::JSValue const &)> const &errorCallback,
-      std::function<void(double left, double top, double width, double height)> const &callback) noexcept {
+      std::function<void(React::JSValue const &)> &&errorCallback,
+      std::function<void(double left, double top, double width, double height)> &&callback) noexcept {
     auto &node = m_nodeRegistry.getNode(reactTag);
     auto &ancestorNode = m_nodeRegistry.getNode(ancestorReactTag);
-    m_nativeUIManager->measureLayout(node, ancestorNode, errorCallback, callback);
+    m_nativeUIManager->measureLayout(node, ancestorNode, std::move(errorCallback), std::move(callback));
   }
 
   void measureLayoutRelativeToParent(
       int64_t reactTag,
-      std::function<void(React::JSValue const &)> const &errorCallback,
-      std::function<void(React::JSValue const &)> const &callback) noexcept {
+      std::function<void(React::JSValue const &)> &&errorCallback,
+      std::function<void(React::JSValue const &)> &&callback) noexcept {
     assert(false);
     // TODO
   }
@@ -238,9 +244,9 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
 
   void configureNextLayoutAnimation(
       React::JSValueObject &&config,
-      std::function<void()> const &callback,
-      std::function<void(React::JSValue const &)> const &errorCallback) noexcept {
-    m_nativeUIManager->configureNextLayoutAnimation(std::move(config), callback, errorCallback);
+      std::function<void()> &&callback,
+      std::function<void(React::JSValue const &)> &&errorCallback) noexcept {
+    m_nativeUIManager->configureNextLayoutAnimation(std::move(config), std::move(callback), std::move(errorCallback));
   }
 
   void removeSubviewsFromContainerWithID(int64_t containerID) noexcept {
@@ -269,6 +275,15 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
 
     std::vector<int64_t> emptyVec;
     manageChildren(parent.m_tag, emptyVec, emptyVec, tagToAdd, indicesToAdd, indicesToRemove);
+  }
+
+  void removeRootView(int64_t rootViewTag) noexcept {
+    m_nativeUIManager->ensureInBatch();
+    auto &node = m_nodeRegistry.getRoot(rootViewTag);
+    m_nativeUIManager->removeRootView(node);
+    DropView(rootViewTag, true);
+    m_nodeRegistry.removeRootView(rootViewTag);
+    m_nativeUIManager->destroyRootShadowNode(&node);
   }
 
   void setChildren(int64_t containerTag, React::JSValueArray &&reactTags) noexcept {
@@ -506,7 +521,11 @@ void UIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext const &re
 }
 
 React::JSValueObject UIManager::getConstantsForViewManager(std::string viewManagerName) noexcept {
-  return m_module->getConstantsForViewManager(viewManagerName);
+  return m_module->getConstantsForViewManager(std::move(viewManagerName));
+}
+
+React::JSValueObject UIManager::getViewManagerConfig(std::string viewManagerName) noexcept {
+  return getConstantsForViewManager(std::move(viewManagerName));
 }
 
 void UIManager::ConstantsViaConstantsProvider(
@@ -717,6 +736,14 @@ void UIManager::replaceExistingNonRootView(double reactTag, double newReactTag) 
           module->replaceExistingNonRootView(static_cast<int64_t>(reactTag), static_cast<int64_t>(newReactTag));
         }
       }));
+}
+
+void UIManager::removeRootView(double reactTag) noexcept {
+  m_batchingUIMessageQueue->runOnQueue(Mso::VoidFunctor([m = std::weak_ptr<UIManagerModule>(m_module), reactTag]() {
+    if (auto module = m.lock()) {
+      module->removeRootView(static_cast<int64_t>(reactTag));
+    }
+  }));
 }
 
 void UIManager::setChildren(double containerTag, React::JSValueArray &&reactTags) noexcept {

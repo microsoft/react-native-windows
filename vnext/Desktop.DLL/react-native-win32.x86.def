@@ -19,7 +19,7 @@ EXPORTS
 ??8dynamic@folly@@QBE_NABU01@@Z
 ??Adynamic@folly@@QGAEAAU01@V?$Range@PBD@1@@Z
 ?CreateMemoryTracker@react@facebook@@YG?AV?$shared_ptr@VMemoryTracker@react@facebook@@@std@@$$QAV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
-?CreateReactInstance@react@facebook@@YG?AV?$shared_ptr@UInstanceWrapper@react@facebook@@@std@@$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@4@$$QAV?$vector@V?$tuple@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$function@$$A6G?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@std@@V?$allocator@V?$tuple@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$function@$$A6G?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@std@@@2@@4@V?$shared_ptr@VTurboModuleRegistry@react@facebook@@@4@$$QAV?$unique_ptr@UInstanceCallback@react@facebook@@U?$default_delete@UInstanceCallback@react@facebook@@@std@@@4@V?$shared_ptr@VMessageQueueThread@react@facebook@@@4@4V?$shared_ptr@UDevSettings@react@facebook@@@4@@Z
+?CreateReactInstance@react@facebook@@YG?AV?$shared_ptr@UInstanceWrapper@react@facebook@@@std@@$$QAV?$shared_ptr@VInstance@react@facebook@@@4@$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@4@$$QAV?$vector@V?$tuple@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$function@$$A6G?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@std@@V?$allocator@V?$tuple@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$function@$$A6G?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@std@@@2@@4@V?$shared_ptr@VTurboModuleRegistry@react@facebook@@@4@$$QAV?$unique_ptr@UInstanceCallback@react@facebook@@U?$default_delete@UInstanceCallback@react@facebook@@@std@@@4@V?$shared_ptr@VMessageQueueThread@react@facebook@@@4@5V?$shared_ptr@UDevSettings@react@facebook@@@4@@Z
 ?GetConstants@ViewManagerBase@react@facebook@@UBE?AUdynamic@folly@@XZ
 ?InitializeLogging@react@facebook@@YGX$$QAV?$function@$$A6GXW4RCTLogLevel@react@facebook@@PBD@Z@std@@@Z
 ?InitializeTracing@react@facebook@@YGXPAUINativeTraceHandler@12@@Z
@@ -33,6 +33,7 @@ EXPORTS
 ?createI18nModule@windows@react@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$unique_ptr@UII18nModule@windows@react@@U?$default_delete@UII18nModule@windows@react@@@std@@@4@@Z
 ?createIUIManager@react@facebook@@YG?AV?$shared_ptr@VIUIManager@react@facebook@@@std@@$$QAV?$vector@V?$unique_ptr@VIViewManager@react@facebook@@U?$default_delete@VIViewManager@react@facebook@@@std@@@std@@V?$allocator@V?$unique_ptr@VIViewManager@react@facebook@@U?$default_delete@VIViewManager@react@facebook@@@std@@@std@@@2@@4@PAUINativeUIManager@12@@Z
 ?createUIManagerModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
+?createUIManagerModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@$$QAV?$shared_ptr@VIUIManager@react@facebook@@@4@$$QAV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?destroy@dynamic@folly@@AAEXXZ
 ?dispatchCommand@ShadowNode@react@facebook@@UAEXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABUdynamic@folly@@@Z
 ?getModuleRegistry@Instance@react@facebook@@QAEAAVModuleRegistry@23@XZ
@@ -42,6 +43,11 @@ EXPORTS
 ?loadScriptFromString@Instance@react@facebook@@QAEXV?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@std@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@_N@Z
 ?makeConversionError@folly@@YG?AVConversionError@1@W4ConversionCode@1@V?$Range@PBD@1@@Z
 ?name@?$TypeInfo@UObjectImpl@dynamic@folly@@@dynamic@folly@@2QBDB
+?name@?$TypeInfo@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@dynamic@folly@@2QBDB
+?name@?$TypeInfo@_J@dynamic@folly@@2QBDB
+?name@?$TypeInfo@_N@dynamic@folly@@2QBDB
+?name@?$TypeInfo@N@dynamic@folly@@2QBDB
+?name@?$TypeInfo@V?$vector@Udynamic@folly@@V?$allocator@Udynamic@folly@@@std@@@std@@@dynamic@folly@@2QBDB
 ?parseJson@folly@@YG?AUdynamic@1@V?$Range@PBD@1@@Z
 ?setGlobalVariable@Instance@react@facebook@@QAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@5@@Z
 ?size@dynamic@folly@@QBEIXZ
@@ -61,6 +67,11 @@ EXPORTS
 ?Make@IHttpResource@React@Microsoft@@SG?AV?$unique_ptr@UIHttpResource@React@Microsoft@@U?$default_delete@UIHttpResource@React@Microsoft@@@std@@@std@@XZ
 ??0NetworkingModule@React@Microsoft@@QAE@XZ
 ?MakeJSQueueThread@uwp@react@@YG?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
+?Hash128@SpookyHashV2@hash@folly@@SGXPBXIPA_K1@Z
+?assertionFailure@detail@folly@@YGXPBD00I0H@Z
+??1Instance@react@facebook@@QAE@XZ
+?invokeAsync@JSCallInvoker@Instance@react@facebook@@UAEX$$QAV?$function@$$A6GXXZ@std@@@Z
+?invokeSync@JSCallInvoker@Instance@react@facebook@@UAEX$$QAV?$function@$$A6GXXZ@std@@@Z
 
 _YGAlignToString@4
 _YGAssert@8

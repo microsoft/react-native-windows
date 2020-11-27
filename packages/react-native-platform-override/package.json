@@ -1,6 +1,6 @@
 {
   "name": "react-native-platform-override",
-  "version": "0.4.0",
+  "version": "0.4.3",
   "description": "react-native-platform-override offers CLI tools to manage Javascript overrides in out-of-tree React Native platforms",
   "license": "MIT",
   "main": "./lib-commonjs/Api.js",
@@ -22,7 +22,7 @@
     "react-native-platform-override": "./bin.js"
   },
   "dependencies": {
-    "@rnw-scripts/package-utils": "^0.0.9",
+    "@rnw-scripts/package-utils": "^0.0.11",
     "async": "^3.2.0",
     "chalk": "^4.1.0",
     "fp-ts": "^2.5.0",
@@ -42,7 +42,7 @@
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
-    "@rnw-scripts/eslint-config": "0.1.4",
+    "@rnw-scripts/eslint-config": "0.1.6",
     "@rnw-scripts/jest-unittest-config": "0.1.1",
     "@rnw-scripts/just-task": "0.0.6",
     "@rnw-scripts/ts-config": "0.1.0",
@@ -61,8 +61,8 @@
     "@types/yargs": "^15.0.5",
     "babel-jest": "^26.3.0",
     "diff-match-patch": "^1.0.4",
-    "eslint": "6.8.0",
-    "jest": "^26.4.2",
+    "eslint": "7.12.0",
+    "jest": "^26.5.2",
     "just-scripts": "^0.44.7",
     "minimatch": "^3.0.4",
     "prettier": "1.19.1",

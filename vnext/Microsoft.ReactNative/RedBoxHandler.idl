@@ -3,37 +3,138 @@
 
 import "ReactNativeHost.idl";
 
+#include "DocString.h"
+
 namespace Microsoft.ReactNative {
 
   enum RedBoxErrorType {
+    DOC_STRING("A JS Exception was thrown and not caught or otherwise fatal error")
     JavaScriptFatal, // A JS Exception was thrown or otherwise fatal error
+
+    DOC_STRING("An error coming from JS that isn't fatal, such as `console.error`")
     JavaScriptSoft, // An error coming from JS that isn't fatal, such as console.error
+
+    DOC_STRING("An error happened in native code")
     Native,
   };
 
-  [webhosthidden] interface IRedBoxErrorFrameInfo {
+  [webhosthidden]
+  DOC_STRING("This object represents a single frame within the call stack of an error.")
+  interface IRedBoxErrorFrameInfo {
+    DOC_STRING("The file location of this frame")
     String File { get; };
+
+    DOC_STRING("The method name of this frame")
     String Method { get; };
+
+    DOC_STRING("The line number within the file")
     UInt32 Line { get; };
+
+    DOC_STRING("The column within the line")
     UInt32 Column { get; };
+
+    DOC_STRING("True if this frame is part of the internals of `react-native`, that is likely not useful for the developer to see.")
     Boolean Collapse { get; };
   }
 
-  [webhosthidden] interface IRedBoxErrorInfo {
+  [webhosthidden]
+  DOC_STRING("This object provides information about the error.  For JavaScript errors, a call stack is also provided.")
+  interface IRedBoxErrorInfo {
+    DOC_STRING("The error message.")
     String Message { get; };
+
+    DOC_STRING("If the message was adjusted for formatting, or otherwise processed, this contains the message before those modifications")
     String OriginalMessage { get; };
+
+    DOC_STRING("An identifier for this error.")
     String Name { get; };
+
+    DOC_STRING("This will contain the component stack where the error occurred, which can help identify the component that is producing the error")
     String ComponentStack { get; };
+
+    DOC_STRING("This Id can be used in @IRedBoxHandler.UpdateError to identify which error is being updated.  For native errors, this is currently always `0`, and @IRedBoxHandler.UpdateError will never be called.")
     UInt32 Id { get; };
+
+    DOC_STRING("For JavaScript errors, this will contain the call stack of where the error occurred.")
     IVectorView<IRedBoxErrorFrameInfo> Callstack { get; };
+
+    DOC_STRING("Provides access to extra data attached to the error.  Adding additional data to the errors is not yet part of the stable API.")
     IJSValueReader ExtraData { get; };
   }
 
   [webhosthidden]
+#ifdef USE_DOCSTRING
+  [doc_string(
+    "`IRedBoxHandler` provides an extension point to allow custom error handling within the React instance.  This can be useful if you have an existing error reporting system that you want React errors to be reported to.  The default implementation of `RedBoxHandler` shows an error messages in a error screen that covers the whole application window.
+
+-- Insert Screenshot here --
+
+If you want to maintain the existing `RedBox` behaviors, and also report errors to your own reporting system, your implementation can call into the default `RedBoxHandler`, which can be obtained by calling :
+
+```csharp
+RedBoxHelper::CreateDefaultHandler(Host);
+```
+
+Sample settings up a `RedBoxHandler` that reports errors to an external system, and displays the default `RedBox` experience within the application:
+
+```csharp
+
+class MyRedBoxHandler : IRedBoxHandler
+{
+    MyRedBoxHandler(IRedBoxHandler defaultHandler) {
+      innerHandler = defaultHandler;
+    }
+
+   public void ShowNewError(IRedBoxErrorInfo info, RedBoxErrorType type) {
+      /-/ Dont report non-fatal errors (optional)
+      if (type != RedBoxErrorType.JavaScriptSoft)
+        ReportErrorToMyErrorReportingSystem(info, type);
+
+      /-/ Display errors in app if the instance is running with DevSupportEnabled
+      if (innerHandler.IsDevSupportEnabled)
+        innerHandler.ShowNewError(info, type);
+    }
+
+   public bool IsDevSupportEnabled {
+      get;
+    }
+    {
+      /-/ The default handler will return true if the instance has DevSupport turned on
+      /-/ But if you want to record error information in released versions of your app
+      /-/ Then you should return true here, so that all errors get reported.
+      return true;
+    }
+
+   public void UpdateError(IRedBoxErrorInfo info) {
+      if (innerHandler.IsDevSupportEnabled)
+        innerHandler.UpdateError(info);
+    }
+
+   public void DismissRedBox() {
+      if (innerHandler.IsDevSupportEnabled)
+        innerHandler.DismissRedBox();
+    }
+
+   private IRedBoxHandler innerHandler;
+}
+
+
+RegisterMyRedBoxHandler()
+{
+    Host.InstanceSettings.RedBoxHandler = new MyRedBoxHandler(RedBoxHelper.CreateDefaultHandler(Host));
+}
+
+```")]
+#endif
   interface IRedBoxHandler 
   {
+    DOC_STRING("This method is called when an error is initially hit.")
     void ShowNewError(IRedBoxErrorInfo info, RedBoxErrorType type);
+
+    DOC_STRING("This property will control if errors should be reported to the handler.  If this returns false, @.ShowNewError and @.UpdateError will not be called.")
     Boolean IsDevSupportEnabled { get; };
+
+    DOC_STRING("This method is called when updated information about an error has been resolved.  For JavaScript errors, this is called if source map information was able to be resolved to provide a more useful call stack.")
     void UpdateError(IRedBoxErrorInfo info);
     void DismissRedBox();
   }
@@ -42,6 +143,8 @@ namespace Microsoft.ReactNative {
   [default_interface]
   runtimeclass RedBoxHelper {
     RedBoxHelper();
+
+    DOC_STRING("This provides access to the default @IRedBoxHandler. This can be used to display the default `RedBox` as part of a custom `RedBoxHandler` implementation.")
     static IRedBoxHandler CreateDefaultHandler(Microsoft.ReactNative.ReactNativeHost host);
   }
 

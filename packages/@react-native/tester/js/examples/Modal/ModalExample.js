@@ -27,7 +27,9 @@ const Item = Picker.Item;
 
 exports.displayName = (undefined: ?string);
 exports.framework = 'React';
-exports.title = '<Modal>';
+exports.title = 'Modal';
+exports.category = 'UI';
+exports.documentationURL = 'https://reactnative.dev/docs/modal';
 exports.description = 'Component for presenting modal views.';
 
 class Button extends React.Component<$FlowFixMeProps, $FlowFixMeState> {
@@ -77,7 +79,7 @@ class ModalExample extends React.Component<{...}, $FlowFixMeState> {
     modalVisible: false,
     transparent: false,
     presentationStyle: 'fullScreen',
-    selectedSupportedOrientation: 0,
+    selectedSupportedOrientation: '0',
     currentOrientation: 'unknown',
   };
 
@@ -128,7 +130,7 @@ class ModalExample extends React.Component<{...}, $FlowFixMeState> {
           onRequestClose={() => this._setModalVisible(false)}
           supportedOrientations={
             supportedOrientationsPickerValues[
-              this.state.selectedSupportedOrientation
+              Number(this.state.selectedSupportedOrientation)
             ]
           }
           onOrientationChange={evt =>
@@ -220,12 +222,12 @@ class ModalExample extends React.Component<{...}, $FlowFixMeState> {
               this.setState({selectedSupportedOrientation: i})
             }
             itemStyle={styles.pickerItem}>
-            <Item label="Portrait" value={0} />
-            <Item label="Landscape" value={1} />
-            <Item label="Landscape left" value={2} />
-            <Item label="Portrait and landscape right" value={3} />
-            <Item label="Portrait and landscape" value={4} />
-            <Item label="Default supportedOrientations" value={5} />
+            <Item label="Portrait" value={'0'} />
+            <Item label="Landscape" value={'1'} />
+            <Item label="Landscape left" value={'2'} />
+            <Item label="Portrait and landscape right" value={'3'} />
+            <Item label="Portrait and landscape" value={'4'} />
+            <Item label="Default supportedOrientations" value={'5'} />
           </Picker>
         </View>
       </View>

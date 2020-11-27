@@ -13,7 +13,7 @@
 const RNTesterPage = require('../../components/RNTesterPage');
 const React = require('react');
 
-const infoLog = require('../../../../../Libraries/Utilities/infoLog');
+const infoLog = require('react-native/Libraries/Utilities/infoLog');
 
 const {
   FooterComponent,
@@ -272,7 +272,9 @@ const styles = StyleSheet.create({
   },
 });
 
-exports.title = '<FlatList>';
+exports.title = 'FlatList';
+exports.category = 'ListView';
+exports.documentationURL = 'https://reactnative.dev/docs/flatlist';
 exports.description = 'Performant, scrollable list of data.';
 exports.simpleExampleContainer = true;
 exports.examples = [

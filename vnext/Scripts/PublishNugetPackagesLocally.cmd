@@ -70,7 +70,7 @@ echo Invoking publish nuget packages with: %0 %*
     )
 
 
-call :ProcessNuget Microsoft.ReactNative                 strip
+call :ProcessNuget Microsoft.ReactNative                 strip -preferRelease $true
 call :ProcessNuget Microsoft.ReactNative.Cxx             nostrip
 call :ProcessNuget Microsoft.ReactNative.Managed         strip -preferRelease $true
 call :ProcessNuget Microsoft.ReactNative.Managed.CodeGen nostrip

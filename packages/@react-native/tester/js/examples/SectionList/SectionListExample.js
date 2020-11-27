@@ -12,7 +12,7 @@
 const RNTesterPage = require('../../components/RNTesterPage');
 const React = require('react');
 
-const infoLog = require('../../../../../Libraries/Utilities/infoLog');
+const infoLog = require('react-native/Libraries/Utilities/infoLog');
 
 const {
   HeaderComponent,
@@ -290,7 +290,9 @@ const styles = StyleSheet.create({
   },
 });
 
-exports.title = '<SectionList>';
+exports.title = 'SectionList';
+exports.category = 'ListView';
+exports.documentationURL = 'https://reactnative.dev/docs/sectionlist';
 exports.description = 'Performant, scrollable list of data.';
 exports.examples = [
   {

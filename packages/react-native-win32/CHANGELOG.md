@@ -1,8 +1,65 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 22 Oct 2020 05:06:28 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Nov 2020 05:08:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.65
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Changes
+
+- Add more eslint rules (ngerlem@microsoft.com)
+
+## 0.0.0-canary.64
+
+Fri, 20 Nov 2020 05:08:43 GMT
+
+### Changes
+
+- Integrate 11/18 RN Nightly Build 🎉 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.63
+
+Thu, 12 Nov 2020 05:05:57 GMT
+
+### Changes
+
+- Add Keyboard Events to TextWin32 (krsiler@microsoft.com)
+
+## 0.0.0-canary.62
+
+Sat, 31 Oct 2020 05:06:50 GMT
+
+### Changes
+
+- Integrate 10/5 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.61
+
+Fri, 30 Oct 2020 05:07:51 GMT
+
+### Changes
+
+- Integrate 9/17 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.60
+
+Thu, 29 Oct 2020 05:05:49 GMT
+
+### Changes
+
+- Better error handling of Views inside Text components (30809111+acoates-ms@users.noreply.github.com)
+- Integrate Additional RNTester Refactoring (9/2 Nightly RN Build) (ngerlem@microsoft.com)
+
+## 0.0.0-canary.59
+
+Sat, 24 Oct 2020 05:07:36 GMT
+
+### Changes
+
+- Integrate RNTester Redesign (8/26 Nightly Build) (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.58
 

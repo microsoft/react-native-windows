@@ -11,6 +11,7 @@
 #include <yoga/yoga.h>
 
 #include <ReactHost/React.h>
+#include <nativemodules.h>
 #include <map>
 #include <memory>
 #include <vector>
@@ -31,15 +32,14 @@ typedef std::unique_ptr<YGNode, YogaNodeDeleter> YogaNodePtr;
 
 class NativeUIManager final : public INativeUIManager {
  public:
-  NativeUIManager(Mso::React::IReactContext *reactContext);
+  NativeUIManager(winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   // INativeUIManager
   ShadowNode *createRootShadowNode(facebook::react::IReactRootView *rootView) override;
   void configureNextLayoutAnimation(
       winrt::Microsoft::ReactNative::JSValueObject && /*config*/,
-      std::function<void()> const & /*callback*/,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const & /*errorCallback*/) override{};
-  void destroy() override;
+      std::function<void()> && /*callback*/,
+      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> && /*errorCallback*/) override{};
   void destroyRootShadowNode(ShadowNode *) override;
   void removeRootView(ShadowNode &rootshadow) override;
   void setHost(INativeUIManagerHost *host) override;
@@ -57,21 +57,21 @@ class NativeUIManager final : public INativeUIManager {
   void measure(
       ShadowNode &shadowNode,
       ShadowNode &shadowRoot,
-      std::function<void(double left, double top, double width, double height, double pageX, double pageY)> const
-          &callback) override;
+      std::function<void(double left, double top, double width, double height, double pageX, double pageY)> &&callback)
+      override;
   void measureInWindow(
       Microsoft::ReactNative::ShadowNode &shadowNode,
-      std::function<void(double x, double y, double width, double height)> const &callback) override;
+      std::function<void(double x, double y, double width, double height)> &&callback) override;
   void measureLayout(
       ShadowNode &shadowNode,
       ShadowNode &ancestorNode,
-      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &errorCallback,
-      std::function<void(double left, double top, double width, double height)> const &callback) override;
+      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> &&errorCallback,
+      std::function<void(double left, double top, double width, double height)> &&callback) override;
   void findSubviewIn(
       ShadowNode &shadowNode,
       float x,
       float y,
-      std::function<void(double nativeViewTag, double left, double top, double width, double height)> const &callback)
+      std::function<void(double nativeViewTag, double left, double top, double width, double height)> &&callback)
       override;
 
   void focus(int64_t reactTag) override;
@@ -102,11 +102,9 @@ class NativeUIManager final : public INativeUIManager {
 
  private:
   INativeUIManagerHost *m_host = nullptr;
-  Mso::CntPtr<Mso::React::IReactContext> m_context;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
   YGConfigRef m_yogaConfig;
   bool m_inBatch = false;
-  int64_t m_nextRootTag = 101;
-  static const int64_t RootViewTagIncrement = 10;
 
   std::map<int64_t, YogaNodePtr> m_tagsToYogaNodes;
   std::map<int64_t, std::unique_ptr<YogaContext>> m_tagsToYogaContext;

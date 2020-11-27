@@ -16,7 +16,7 @@
     yarn
     yarn build
     ```
-Note that react-native-windows is a monorepo and relies on monorepo tools like yarn and lerna.  See [this page](Monorepo.md) for more details.
+Note that react-native-windows is a monorepo and relies on monorepo tools like yarn and lage.  See [this page](monorepo.md) for more details.
 
 # Running the Playground app
   There are two ways to run the app.  In a fully managed easy way, or by manually running all the required steps:

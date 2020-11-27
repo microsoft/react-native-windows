@@ -56,7 +56,7 @@ export function ControlStyleTestPage() {
   const [showRoundBorder, setShowRoundBorder] = useState(false);
 
   const onPressShowRoundBorder = () => {
-    var previousState = showRoundBorder;
+    const previousState = showRoundBorder;
     setShowRoundBorder(!previousState);
   };
 
@@ -112,7 +112,7 @@ export function ControlStyleTestPage() {
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<LegacyControlStyleTest>';
+export const title = 'LegacyControlStyleTest';
 export const description = 'Legacy e2e test for Control Styles';
 export const examples = [
   {

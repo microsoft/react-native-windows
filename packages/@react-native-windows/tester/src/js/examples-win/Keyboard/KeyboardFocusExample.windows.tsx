@@ -60,7 +60,6 @@ interface IKeyboardFocusComponentState {
 const pickerRef = React.createRef<Picker>();
 const viewWindowsRef = React.createRef<ViewWindows>();
 const textInputRef = React.createRef<TextInput>();
-// tslint:disable-next-line
 const textInputRef2 = React.createRef<any>();
 const touchableHighlightRef = React.createRef<TouchableHighlight>();
 const touchableOpacityRef = React.createRef<TouchableOpacity>();
@@ -176,11 +175,11 @@ class KeyboardFocusExample extends React.Component<
     );
   }
 
-  private _textInputKeyDown = (ev: IKeyboardEvent) => {
+  private readonly _textInputKeyDown = (ev: IKeyboardEvent) => {
     this.setState({keyOnKeyDown: ev.nativeEvent.key});
   };
 
-  private _selectionChanged = (selected: string) => {
+  private readonly _selectionChanged = (selected: string) => {
     switch (selected) {
       case 'View':
         viewWindowsRef.current && viewWindowsRef.current.focus();
@@ -217,24 +216,24 @@ class KeyboardFocusExample extends React.Component<
     }
   };
 
-  private _touchableHighlightFocus = () => {
+  private readonly _touchableHighlightFocus = () => {
     this.setState({focusMessageHighlight: 'TouchableHighlight onFocus'});
   };
-  private _touchableHighlightBlur = () => {
+  private readonly _touchableHighlightBlur = () => {
     this.setState({focusMessageHighlight: 'TouchableHighlight onBlur'});
   };
-  private _touchableOpacityFocus = () => {
+  private readonly _touchableOpacityFocus = () => {
     this.setState({focusMessageOpacity: 'TouchableOpacity onFocus'});
   };
-  private _touchableOpacityBlur = () => {
+  private readonly _touchableOpacityBlur = () => {
     this.setState({focusMessageOpacity: 'TouchableOpacity onBlur'});
   };
-  private _touchableWithoutFeedbackFocus = () => {
+  private readonly _touchableWithoutFeedbackFocus = () => {
     this.setState({
       focusMessageWithoutFeedback: 'TouchableWithoutFeedback onFocus',
     });
   };
-  private _touchableWithoutFeedbackBlur = () => {
+  private readonly _touchableWithoutFeedbackBlur = () => {
     this.setState({
       focusMessageWithoutFeedback: 'TouchableWithoutFeedback onBlur',
     });
@@ -242,6 +241,7 @@ class KeyboardFocusExample extends React.Component<
 }
 export const displayName = (_undefined?: string) => {};
 export const title = 'Keyboard Focus Example';
+export const category = 'Basic';
 export const description = 'Demo of keyboard focus.';
 export const examples = [
   {

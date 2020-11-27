@@ -39,9 +39,9 @@ class AsyncStorageExample extends React.Component<
 
   private updateAsyncStorageData(key: string, value: string) {
     this.setState(prevState => {
-      let asyncStorageData = [...prevState.asyncStorageData];
+      const asyncStorageData = [...prevState.asyncStorageData];
       let foundVal = false;
-      for (let kvp of asyncStorageData) {
+      for (const kvp of asyncStorageData) {
         if (kvp[0] === key) {
           kvp[1] = value;
           foundVal = true;
@@ -59,7 +59,7 @@ class AsyncStorageExample extends React.Component<
     return () => {
       void AsyncStorage.removeItem(key);
       this.setState(prevState => {
-        let asyncStorageData = prevState.asyncStorageData.filter(
+        const asyncStorageData = prevState.asyncStorageData.filter(
           kvp => kvp[0] !== key,
         );
         return {asyncStorageData: asyncStorageData};
@@ -67,20 +67,20 @@ class AsyncStorageExample extends React.Component<
     };
   }
 
-  private setName = (name: string) => {
+  private readonly setName = (name: string) => {
     this.setState({name: name});
   };
 
-  private setValue = (value: string) => {
+  private readonly setValue = (value: string) => {
     this.setState({value: value});
   };
 
-  private onAddEntryPress = () => {
+  private readonly onAddEntryPress = () => {
     void AsyncStorage.setItem(this.state.name, this.state.value);
     this.updateAsyncStorageData(this.state.name, this.state.value);
   };
 
-  private onClearAllKeysPress = () => {
+  private readonly onClearAllKeysPress = () => {
     void AsyncStorage.clear();
     this.setState({asyncStorageData: []});
   };
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
 
 export const displayName = (_undefined?: string) => {};
 export const title = 'AsyncStorage Windows';
+export const category = 'Basic';
 export const description = 'Usage of AsyncStorage';
 export const examples = [
   {

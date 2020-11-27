@@ -61,9 +61,9 @@ export function ImageTestPage() {
   const [rltMode, setRtlMode] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const onPressBorder = () => {
-    var previousImageBorderState = imageWithBorder;
+    const previousImageBorderState = imageWithBorder;
     setImageBorder(!previousImageBorderState);
-    var previousClickCount = clickCount;
+    const previousClickCount = clickCount;
     setClickCount(previousClickCount + 1);
   };
 
@@ -127,7 +127,7 @@ export function ImageTestPage() {
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<LegacyImageTest>';
+export const title = 'LegacyImageTest';
 export const description = 'Legacy e2e test for Image';
 export const examples = [
   {

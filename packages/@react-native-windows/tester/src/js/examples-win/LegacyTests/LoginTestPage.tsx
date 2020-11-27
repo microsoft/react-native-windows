@@ -50,7 +50,7 @@ export function LoginTestPage() {
   const [passwordHidden, setPasswordHidden] = useState(true);
 
   const onPressShowPassword = () => {
-    var previousState = passwordHidden;
+    const previousState = passwordHidden;
     setPasswordHidden(!previousState);
   };
 
@@ -105,7 +105,7 @@ export function LoginTestPage() {
 
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<LegacyLoginTest>';
+export const title = 'LegacyLoginTest';
 export const description = 'Legacy e2e test for TextInput with password';
 export const examples = [
   {

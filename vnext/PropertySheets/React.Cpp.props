@@ -21,22 +21,10 @@
   <PropertyGroup Label="Desktop">
     <!-- See https://docs.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt -->
     <WinVer>_WIN32_WINNT_WIN8</WinVer>
+    <EnableBeast Condition="'$(EnableBeast)' == ''">0</EnableBeast>
   </PropertyGroup>
 
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\ReactPatches.targets" />
-
   <PropertyGroup>
-    <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
-    <HERMES_Version Condition="'$(HERMES_Version)' == ''">0.6.1</HERMES_Version>
-    <HERMES_Package Condition="'$(HERMES_Package)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HERMES_Version)</HERMES_Package>
-    <!-- TODO: Can we automatically distinguish between uwp and win32 here? -->
-    <HERMES_ARCH Condition="'$(HERMES_ARCH)' == ''">uwp</HERMES_ARCH>
-
-    <USE_V8 Condition="('$(USE_V8)' == '') OR ('$(Platform)' == 'ARM')">false</USE_V8>
-    <V8_Version Condition="'$(V8_Version)' == ''">0.64.2</V8_Version>
-    <V8_Package Condition="'$(V8_Package)' == '' AND '$(V8AppPlatform)' == 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8_Version)</V8_Package>
-    <V8_Package Condition="'$(V8_Package)' == '' AND '$(V8AppPlatform)' != 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.UWP.$(V8_Version)</V8_Package>
-
     <!-- Enables React-Native-Windows ETW Provider : React-Native-Windows-Provider  -->
     <ENABLE_ETW_TRACING Condition="'$(ENABLE_ETW_TRACING)' == ''">true</ENABLE_ETW_TRACING>
 
@@ -52,8 +40,14 @@
     <ClCompile>
       <PreprocessorDefinitions Condition="'$(ENABLE_ETW_TRACING)'=='true'">ENABLE_ETW_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)'=='true'">ENABLE_JS_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions Condition="'$(UseHermes)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 
@@ -112,6 +106,8 @@
         $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeDir)\ReactCommon\jsi;
         $(ReactNativeDir)\ReactCommon\jsiexecutor;
+        $(ReactNativeDir)\ReactCommon\react\nativemodule\core;
+        $(ReactNativeDir)\ReactCommon\react\nativemodule\samples;
         $(ReactNativeDir)\ReactCommon\reactperflogger;
         $(ReactNativeDir)\ReactCommon\runtimeexecutor;
         %(AdditionalIncludeDirectories);

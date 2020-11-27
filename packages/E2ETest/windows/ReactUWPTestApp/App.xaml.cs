@@ -6,6 +6,7 @@ using System;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Graphics.Display;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Microsoft.ReactNative.Managed;
@@ -57,6 +58,12 @@ namespace ReactUWPTestApp
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             base.OnLaunched(e);
+
+            // RNTester will load the most recently visited example page (or a provided link to an example) if
+            // reopened. Clear local storage to suppress that behavior and always go to the example list first.
+            // #6319 Tracks a better way to do this
+            ApplicationData.Current.ClearAsync().AsTask().Wait();
+
             var frame = Window.Current.Content as Frame;
             if (frame == null)
             {

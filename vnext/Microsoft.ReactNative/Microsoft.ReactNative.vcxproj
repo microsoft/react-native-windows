@@ -20,6 +20,7 @@
     <CppWinRTLibs>true</CppWinRTLibs>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(SolutionDir)\BuildFlags.props" Condition="Exists('$(SolutionDir)\BuildFlags.props')" />
   <Import Project="$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props')" />
   <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props')" />
   <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props')" />
@@ -155,6 +156,9 @@
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Midl>
+      <PreprocessorDefinitions>USE_DOCSTRING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <ClCompile>
@@ -180,6 +184,7 @@
       <DependentUpon>DevMenuControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="DocString.h" />
     <ClInclude Include="DynamicReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClInclude>
@@ -245,6 +250,7 @@
     <ClInclude Include="Modules\LinkingManagerModule.h" />
     <ClInclude Include="Modules\LogBoxModule.h" />
     <ClInclude Include="Modules\NativeUIManager.h" />
+    <ClInclude Include="Modules\ReactRootViewTagGenerator.h" />
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="Modules\PaperUIManagerModule.h" />
     <ClInclude Include="Modules\WebSocketModuleUwp.h" />
@@ -317,6 +323,7 @@
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
     <ClInclude Include="Views\IXamlRootView.h" />
     <ClInclude Include="Views\KeyboardEventHandler.h" />
+    <ClInclude Include="Views\PaperShadowNode.h" />
     <ClInclude Include="Views\PickerViewManager.h" />
     <ClInclude Include="Views\PopupViewManager.h" />
     <ClInclude Include="Views\RawTextViewManager.h" />
@@ -325,7 +332,6 @@
     <ClInclude Include="Views\RootViewManager.h" />
     <ClInclude Include="Views\ScrollContentViewManager.h" />
     <ClInclude Include="Views\ScrollViewManager.h" />
-    <ClInclude Include="Views\ShadowNode.h" />
     <ClInclude Include="Views\ShadowNodeBase.h" />
     <ClInclude Include="Views\ShadowNodeRegistry.h" />
     <ClInclude Include="Views\SIPEventHandler.h" />
@@ -441,6 +447,7 @@
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
     <ClCompile Include="Modules\LogBoxModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
+    <ClCompile Include="Modules\ReactRootViewTagGenerator.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="Modules\WebSocketModuleUwp.cpp" />
@@ -462,6 +469,7 @@
     <ClCompile Include="ReactHost\AsyncActionQueue.cpp" />
     <ClCompile Include="ReactHost\JSBundle.cpp" />
     <ClCompile Include="ReactHost\JSBundle_Win32.cpp" />
+    <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp" />
     <ClCompile Include="ReactHost\MsoUtils.cpp" />
     <ClCompile Include="ReactHost\ReactContext.cpp" />
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
@@ -503,6 +511,7 @@
     <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp" />
     <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
     <ClCompile Include="Views\KeyboardEventHandler.cpp" />
+    <ClCompile Include="Views\PaperShadowNode.cpp" />
     <ClCompile Include="Views\PickerViewManager.cpp" />
     <ClCompile Include="Views\PopupViewManager.cpp" />
     <ClCompile Include="Views\RawTextViewManager.cpp" />
@@ -511,7 +520,6 @@
     <ClCompile Include="Views\RootViewManager.cpp" />
     <ClCompile Include="Views\ScrollContentViewManager.cpp" />
     <ClCompile Include="Views\ScrollViewManager.cpp" />
-    <ClCompile Include="Views\ShadowNode.cpp" />
     <ClCompile Include="Views\ShadowNodeBase.cpp" />
     <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
     <ClCompile Include="Views\SIPEventHandler.cpp" />
@@ -561,6 +569,7 @@
       <DependentUpon>DevMenuControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
+    <Midl Include="DocString.idl" />
     <Midl Include="IReactNonAbiValue.idl" />
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
@@ -651,8 +660,8 @@
     <Import Project="$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)\packages\boost.1.72.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="$(SolutionDir)packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets" Condition="Exists('$(SolutionDir)packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" />
-    <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets') AND '$(USE_V8)' == 'true'" />
-    <Import Project="$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets') AND '$(USE_HERMES)' == 'true'" />
+    <Import Project="$(V8Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets" Condition="Exists('$(V8Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets') AND '$(UseV8)' == 'true'" />
+    <Import Project="$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets') AND '$(UseHermes)' == 'true'" />
     <Import Project="$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
@@ -665,8 +674,8 @@
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200615.7\build\native\Microsoft.Windows.CppWinRT.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets'))" />
-    <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets'))" />
-    <Error Condition="!Exists('$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets') AND '$(USE_HERMES)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(HERMES_Package)\build\native\ReactNative.Hermes.Windows.targets'))" />
+    <Error Condition="!Exists('$(V8Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets') AND '$(UseV8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets'))" />
+    <Error Condition="!Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets') AND '$(UseHermes)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets'))" />
     <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props'))" />
     <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets'))" />
     <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props'))" />

@@ -1,0 +1,140 @@
+{
+  "name": "@react-native-windows/telemetry",
+  "entries": [
+    {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.10",
+      "version": "0.0.0-canary.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixup naming convention rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.9",
+      "version": "0.0.0-canary.9",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 16 Nov 2020 14:39:19 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.8",
+      "version": "0.0.0-canary.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "anonymize paths with forward slashes and file shares",
+            "author": "asklar@microsoft.com",
+            "commit": "04e766ef7304d0852a06e772cbfc1982897a3808",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Nov 2020 05:05:57 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.7",
+      "version": "0.0.0-canary.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Disable telemetry in other CI systems",
+            "author": "asklar@microsoft.com",
+            "commit": "bcda5759d5d1bed770e7a8524e5cc3f94cbc0c6a",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Nov 2020 05:05:29 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.6",
+      "version": "0.0.0-canary.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Silence warnings from appinsights in production",
+            "author": "asklar@microsoft.com",
+            "commit": "1893d23fce2daedbf55ae90c5f6775141400f401",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Nov 2020 05:04:58 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.5",
+      "version": "0.0.0-canary.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix casing of msft domain",
+            "author": "asklar@microsoft.com",
+            "commit": "038cecd6638df6df39988fca433a104e82b3423e",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Nov 2020 05:06:31 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.4",
+      "version": "0.0.0-canary.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove roleInstance property",
+            "author": "asklar@microsoft.com",
+            "commit": "9254556d1726e6bec145a50c9935fae868060444",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Nov 2020 17:30:59 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.3",
+      "version": "0.0.0-canary.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "sanitize paths in other drives too",
+            "author": "asklar@microsoft.com",
+            "commit": "10d82a2167557800fd518a13c170bdc7e7bffc14",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Nov 2020 05:05:45 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.2",
+      "version": "0.0.0-canary.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Create telemetry package",
+            "author": "asklar@microsoft.com",
+            "commit": "61cc42e7f9b4dec313597fba6e99c6f22badbf7e",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    }
+  ]
+}
