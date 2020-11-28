@@ -1198,26 +1198,20 @@ const ExportedForwardRef: React.AbstractComponent<
   React.ElementConfig<typeof InternalTextInput>,
   React.ElementRef<HostComponent<mixed>> & ImperativeMethods,
 > = React.forwardRef(function TextInput(
-  {
-    allowFontScaling = true,
-    rejectResponderTermination = true,
-    underlineColorAndroid = 'transparent',
-    ...restProps
-  },
+  props,
   forwardedRef: ReactRefSetter<
     React.ElementRef<HostComponent<mixed>> & ImperativeMethods,
   >,
 ) {
-  return (
-    <InternalTextInput
-      allowFontScaling={allowFontScaling}
-      rejectResponderTermination={rejectResponderTermination}
-      underlineColorAndroid={underlineColorAndroid}
-      {...restProps}
-      forwardedRef={forwardedRef}
-    />
-  );
+  return <InternalTextInput {...props} forwardedRef={forwardedRef} />;
 });
+
+// $FlowFixMe
+ExportedForwardRef.defaultProps = {
+  allowFontScaling: true,
+  rejectResponderTermination: true,
+  underlineColorAndroid: 'transparent',
+};
 
 // TODO: Deprecate this
 // $FlowFixMe

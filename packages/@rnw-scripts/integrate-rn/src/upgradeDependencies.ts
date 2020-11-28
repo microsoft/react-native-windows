@@ -366,6 +366,9 @@ function ensureValidReactNativePeerDep(
   // If we have a range, such as in our stable branches, only bump if needed,
   // as changing the peer depenedncy is a breaking change.
   if (
+    // Semver satisfaction logic for * is too strict, so we need to special
+    // case it https://github.com/npm/node-semver/issues/130
+    pkg.peerDependencies['react-native'] === '*' ||
     semver.satisfies(
       newReactNativeVersion,
       pkg.peerDependencies['react-native'],
@@ -396,7 +399,12 @@ function ensureReactNativePeerDepsSatisfied(
   for (const [dep, rnDepVersion] of Object.entries(rnPeerDeps)) {
     if (!pkg.dependencies[dep]) {
       pkg.dependencies[dep] = rnDepVersion;
-    } else if (!semver.satisfies(pkg.dependencies[dep], rnDepVersion)) {
+    } else if (
+      // Semver satisfaction logic for * is too strict, so we need to special
+      // case it https://github.com/npm/node-semver/issues/130
+      rnDepVersion !== '*' &&
+      !semver.satisfies(pkg.dependencies[dep], rnDepVersion)
+    ) {
       pkg.dependencies[dep] = bumpSemver(pkg.dependencies[dep], rnDepVersion);
     }
   }

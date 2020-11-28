@@ -3,19 +3,19 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-19d4cc2d4",
+  "baseVersion": "0.64.0-rc.1",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "adba67efd9973702f45a234e13a291155d0e56f1"
+      "baseHash": "f9db807ce20ebbe378680b4131f7b40e14ab523f"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "60f46e1ea481e2e6c0673dfc5f9a74da68ae3400"
+      "baseHash": "64001fe0d4f24d7219d2b6f3c4c1fa0c0c8a88ea"
     },
     {
       "type": "patch",
@@ -146,7 +146,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "97e9917d3fa2dbe2fe6c03c4264f756634026796"
+      "baseHash": "309ff04ae5312224c992b9119a12c691149280cd"
     },
     {
       "type": "patch",
@@ -227,7 +227,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "8d053f7bcb66ea71fd361a5c882e4142b5977202",
+      "baseHash": "9bd6a85eef7bb41373df9eb7dd9b21a986848cbd",
       "issue": 4320
     },
     {
@@ -238,7 +238,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/NativeImageLoaderWin32.js",
       "baseFile": "Libraries/Image/NativeImageLoaderIOS.js",
-      "baseHash": "50b70af2498caf216229426a1b74b1d3d3ee5334",
+      "baseHash": "6161ce89a0b45b24e8df69aa108af22a7b591483",
       "issue": 4320
     },
     {

@@ -72,40 +72,7 @@ function isCodegenDeclaration(declaration) {
   return false;
 }
 
-function isTurboModuleRequire(path) {
-  if (path.node.type !== 'CallExpression') {
-    return false;
-  }
-
-  const callExpression = path.node;
-
-  if (callExpression.callee.type !== 'MemberExpression') {
-    return false;
-  }
-
-  const memberExpression = callExpression.callee;
-  if (
-    !(
-      memberExpression.object.type === 'Identifier' &&
-      memberExpression.object.name === 'TurboModuleRegistry'
-    )
-  ) {
-    return false;
-  }
-
-  if (
-    !(
-      memberExpression.property.type === 'Identifier' &&
-      (memberExpression.property.name === 'get' ||
-        memberExpression.property.name === 'getEnforcing')
-    )
-  ) {
-    return false;
-  }
-  return true;
-}
-
-module.exports = function({parse, types: t}) {
+module.exports = function(context) {
   return {
     pre(state) {
       this.code = state.code;
@@ -113,11 +80,6 @@ module.exports = function({parse, types: t}) {
       this.defaultExport = null;
       this.commandsExport = null;
       this.codeInserted = false;
-
-      /**
-       * TurboModule JS Codegen State
-       */
-      this.turboModuleRequireCallExpressions = [];
     },
     visitor: {
       ExportNamedDeclaration(path) {
@@ -175,67 +137,19 @@ module.exports = function({parse, types: t}) {
           this.defaultExport = path;
         }
       },
-
-      CallExpression(path) {
-        if (isTurboModuleRequire(path)) {
-          this.turboModuleRequireCallExpressions.push(path);
-        }
-      },
-
       Program: {
-        exit(path) {
+        exit() {
           if (this.defaultExport) {
             const viewConfig = generateViewConfig(this.filename, this.code);
             this.defaultExport.replaceWithMultiple(
               // [Win adding filename param see: https://github.com/facebook/react-native/pull/29230
-              parse(viewConfig, {filename: this.filename}).program.body,
+              context.parse(viewConfig, {filename: this.filename}).program.body,
               // Win]
             );
             if (this.commandsExport != null) {
               this.commandsExport.remove();
             }
             this.codeInserted = true;
-          }
-
-          /**
-           * Insert the TurboModule schema into the TurboModuleRegistry.(get|getEnforcing)
-           * call.
-           */
-          if (this.turboModuleRequireCallExpressions.length > 0) {
-            const schema = parseString(this.code, this.filename);
-            const hasteModuleName = basename(this.filename).replace(
-              /\.js$/,
-              '',
-            );
-            const actualSchema = schema.modules[hasteModuleName];
-
-            if (actualSchema.type !== 'NativeModule') {
-              throw path.buildCodeFrameError(
-                `Detected NativeModule require in module '${hasteModuleName}', but generated schema wasn't for a NativeModule.`,
-              );
-            }
-
-            path.pushContainer(
-              'body',
-              parse(
-                `function __getModuleSchema() {
-                  if (!(global.RN$JSTurboModuleCodegenEnabled === true)) {
-                    return undefined;
-                  }
-
-                  return ${JSON.stringify(actualSchema, null, 2)};
-                }`,
-              ).program.body[0],
-            );
-
-            this.turboModuleRequireCallExpressions.forEach(
-              callExpressionPath => {
-                callExpressionPath.pushContainer(
-                  'arguments',
-                  t.callExpression(t.identifier('__getModuleSchema'), []),
-                );
-              },
-            );
           }
         },
       },

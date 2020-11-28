@@ -7,13 +7,13 @@
   "excludePatterns": [
     "**/*.windesktop.js"
   ],
-  "baseVersion": "0.0.0-19d4cc2d4",
+  "baseVersion": "0.64.0-rc.1",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "adba67efd9973702f45a234e13a291155d0e56f1"
+      "baseHash": "f9db807ce20ebbe378680b4131f7b40e14ab523f"
     },
     {
       "type": "patch",
@@ -40,7 +40,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "ff8d45f38fc62dbf4eb6c93db5377d79089ef0dd",
+      "baseHash": "02590f3430fb57fcd954357c9dbeeaa8bdc01d06",
       "issue": 5430
     },
     {
@@ -54,7 +54,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "60f46e1ea481e2e6c0673dfc5f9a74da68ae3400"
+      "baseHash": "64001fe0d4f24d7219d2b6f3c4c1fa0c0c8a88ea"
     },
     {
       "type": "platform",
@@ -237,7 +237,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "97e9917d3fa2dbe2fe6c03c4264f756634026796"
+      "baseHash": "309ff04ae5312224c992b9119a12c691149280cd"
     },
     {
       "type": "patch",
@@ -316,7 +316,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "8d053f7bcb66ea71fd361a5c882e4142b5977202",
+      "baseHash": "9bd6a85eef7bb41373df9eb7dd9b21a986848cbd",
       "issue": 4590
     },
     {
