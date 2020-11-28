@@ -11,5 +11,6 @@
   },
   "peerDependencies": {
     "just-scripts": "^0.44.7"
-  }
+  },
+  "private": true
 }

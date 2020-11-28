@@ -34,5 +34,6 @@
   "files": [
     "bin.js",
     "lib-commonjs"
-  ]
+  ],
+  "private": true
 }

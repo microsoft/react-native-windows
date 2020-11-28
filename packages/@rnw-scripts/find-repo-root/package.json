@@ -30,5 +30,6 @@
   },
   "files": [
     "lib-commonjs"
-  ]
+  ],
+  "private": true
 }
