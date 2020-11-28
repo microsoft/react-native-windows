@@ -5,7 +5,7 @@
  * @format
  */
 const path = require('path');
-const blacklist = require('metro-config/src/defaults/blacklist');
+const exclusionList = require('metro-config/src/defaults/exclusionList');
 const rnwPath = path.resolve(__dirname, '../../vnext');
 
 module.exports = {
@@ -22,7 +22,7 @@ module.exports = {
       // Redirect metro to rnwPath instead of node_modules/react-native-windows, since metro doesn't like symlinks
       'react-native-windows': rnwPath,
     },
-    blacklistRE: blacklist([
+    blockList: exclusionList([
       // Avoid error EBUSY: resource busy or locked, open 'D:\a\1\s\packages\E2ETest\msbuild.ProjectImports.zip' in pipeline
       /.*\.ProjectImports\.zip/,
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
