@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 Nov 2020 05:06:06 GMT and should not be manually modified.
+This log was last generated on Mon, 30 Nov 2020 10:25:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.1
+
+Mon, 30 Nov 2020 10:25:30 GMT
+
+### Changes
+
+- Promote 0.64 to preview (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.219
 

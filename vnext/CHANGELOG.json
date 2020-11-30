@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 Nov 2020 10:25:30 GMT",
+      "tag": "react-native-windows_v0.64.0-preview.1",
+      "version": "0.64.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Promote 0.64 to preview",
+            "author": "ngerlem@microsoft.com",
+            "commit": "572d1309a54727cb07024b0ba68af74e1c9a3f67",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Nov 2020 05:06:06 GMT",
       "tag": "react-native-windows_v0.0.0-canary.219",
       "version": "0.0.0-canary.219",
