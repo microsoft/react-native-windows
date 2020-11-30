@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 25 Nov 2020 03:02:04 GMT",
+      "tag": "react-native-windows_v0.63.11",
+      "version": "0.63.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.63] Make ref assembly of MS.RN.Managed nuget anycpu",
+            "author": "dannyvv@microsoft.com",
+            "commit": "0bf1d3fb14e525e9e42df1465cec5a4e73fe9bb9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Nov 2020 01:36:10 GMT",
+      "tag": "react-native-windows_v0.63.10",
+      "version": "0.63.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use HRESULT instead of catching exceptions for WebSocket APIs (#5174)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "14b7bbc8d7fb649a185e1ec0a002fc74bd487f0a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add win32 exports required for internal usage",
+            "author": "email not defined",
+            "commit": "4be642933c668bf27f221e35266b04efa891c3c7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "CornerRadius only exists on RS5, restore the behavior to gracefully degrade on older OS releases",
+            "author": "asklar@microsoft.com",
+            "commit": "5ed2b9b800e1d4ed4ab26d42fbeda098692ff2a6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Nov 2020 15:06:51 GMT",
       "tag": "react-native-windows_v0.63.9",
       "version": "0.63.9",

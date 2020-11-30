@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 18 Nov 2020 01:36:10 GMT",
+      "tag": "@react-native-windows/cli_v0.63.5",
+      "version": "0.63.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use NuGet 5.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cf6968c74de9c98712799a4ed9ed5b185d831da0",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Collect anonymized project name",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3b3e2a99d940f2938573eddcc98a82222dd0be32",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Nov 2020 15:06:51 GMT",
       "tag": "@react-native-windows/cli_v0.63.4",
       "version": "0.63.4",

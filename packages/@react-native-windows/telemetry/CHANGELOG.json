@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Wed, 18 Nov 2020 01:36:10 GMT",
+      "tag": "@react-native-windows/telemetry_v0.63.4",
+      "version": "0.63.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "anonymize paths with forward slashes and file shares and extract errorcodes from errors",
+            "author": "asklar@microsoft.com",
+            "commit": "b307988c8a7b0a0f3ba9c0479191725e513a4695",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Nov 2020 15:06:51 GMT",
       "tag": "@react-native-windows/telemetry_v0.63.3",
       "version": "0.63.3",
