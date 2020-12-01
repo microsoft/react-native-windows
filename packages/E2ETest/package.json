@@ -50,6 +50,7 @@
     "tsconfig-paths": "^3.8.0",
     "typescript": "^3.8.3",
     "webdriverio": "^6.9.0",
-    "wdio-winappdriver-service": "^0.1.0"
+    "wdio-winappdriver-service": "^0.1.0",
+    "wdio-ywinappdriver-service": "^0.2.54"
   }
 }

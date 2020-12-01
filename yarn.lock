@@ -11246,6 +11246,14 @@ wdio-winappdriver-service@^0.1.0:
     "@wdio/logger" "^6.8.0"
     fs-extra "^9.0.1"
 
+wdio-ywinappdriver-service@^0.2.54:
+  version "0.2.54"
+  resolved "https://registry.yarnpkg.com/wdio-ywinappdriver-service/-/wdio-ywinappdriver-service-0.2.54.tgz#8e1e5064bf64820521fab6f990085bf82678cbb7"
+  integrity sha512-MF0Jvm/jBFnqPeYzrNLhQ+Fg12MeQbvQPrWlJP2LUk4pEkT3B6+NWblrWEnh0d3aKO1kjr0v+fTm6x26cV8xxg==
+  dependencies:
+    "@wdio/logger" "^6.8.0"
+    fs-extra "^9.0.1"
+
 webdriver@6.10.4:
   version "6.10.4"
   resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-6.10.4.tgz#f4ef0a81f7e82d1c0e83ce17c03befec877115aa"

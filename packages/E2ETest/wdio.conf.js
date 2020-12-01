@@ -127,7 +127,7 @@ exports.config = {
   // commands. Instead, they hook themselves up into the test process.
   services: [
     [
-      'winappdriver',
+      'ywinappdriver',
       {
         logPath: './reports/',
       },
