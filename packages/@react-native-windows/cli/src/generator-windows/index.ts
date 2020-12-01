@@ -34,11 +34,9 @@ async function generateCertificate(
   console.log('Generating self-signed certificate...');
   if (os.platform() === 'win32') {
     try {
-      const timeout = 10000; // 10 seconds;
       const thumbprint = childProcess
         .execSync(
           `powershell -NoProfile -Command "Write-Output (New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject 'CN=${currentUser}' -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3', '2.5.29.19={text}Subject Type:End Entity') -CertStoreLocation 'Cert:\\CurrentUser\\My').Thumbprint"`,
-          {timeout},
         )
         .toString()
         .trim();
@@ -51,7 +49,6 @@ async function generateCertificate(
           newProjectName,
           newProjectName,
         )}_TemporaryKey.pfx -Password $pwd"`,
-        {timeout},
       );
       console.log(
         chalk.green('Self-signed certificate generated successfully.'),
