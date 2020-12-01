@@ -198,6 +198,8 @@ exports.config = {
   before: function(capabilities, specs) {
     // require('ts-node/register');
     require('ts-node').register({ files: true });
+    //implicit wait for 5 seconds
+    browser.setTimeout({ implicit: 5000 });
   },
   /**
    * Runs before a WebdriverIO command gets executed.
