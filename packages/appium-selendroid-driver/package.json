@@ -1,7 +1,0 @@
-{
-  "name": "appium-selendroid-driver",
-  "version": "1.13.4-stub.0",
-  "private": true,
-  "description": "Stub package form appium-android-driver while we're stuck on an old version of Appium with insecure dependency tree",
-  "license": "MIT"
-}
