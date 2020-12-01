@@ -137,7 +137,7 @@ jobs:
         displayName: "Show winappdriver log"
         inputs:
           targetType: "inline"
-          script: "Get-Content packages/E2ETest/reports/winappdriver.txt | foreach {Write-Output $_}"
+          script: "Get-Content packages/E2ETest/reports/winappdriver.log | foreach {Write-Output $_}"
         condition: failed()
 
       - task: PowerShell@2

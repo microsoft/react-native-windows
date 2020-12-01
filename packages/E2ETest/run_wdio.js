@@ -94,7 +94,10 @@ function parseLog(logfile) {
 
 function parseLogs() {
   const reportsDir = path.join(__dirname, 'reports');
-  const logs = fs.readdirSync(reportsDir).filter(x => x.endsWith('.log'));
+  const logs = fs
+    .readdirSync(reportsDir)
+    .filter(x => x.endsWith('.log'))
+    .filter(x => x !== 'winappdriver.log');
   const names = logs
     .map(x => parseLog(path.join(reportsDir, x)))
     .filter(x => x !== null && x !== '');
