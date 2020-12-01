@@ -1,7 +1,0 @@
-{
-  "name": "appium-android-driver",
-  "version": "4.12.0-stub.0",
-  "private": true,
-  "description": "Stub package form appium-android-driver while we're stuck on an old version of Appium with insecure dependency tree",
-  "license": "MIT"
-}
