@@ -70,7 +70,7 @@ exports.config = {
       maxInstances: 1,
 
       app: 'ReactUWPTestApp_cezq6h4ygq1hw!App',
-      'winAppDriver:experimental-w3c': true,
+      'ms:experimental-webdriver': true,
     },
     // {
     //     // maxInstances can get overwritten per capability. So if you have an in house Selenium
