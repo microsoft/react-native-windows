@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 Nov 2020 05:06:06 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Dec 2020 05:05:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.220
+
+Tue, 01 Dec 2020 05:05:07 GMT
+
+### Changes
+
+- document react_struct (igklemen@microsoft.com)
 
 ## 0.0.0-canary.219
 
