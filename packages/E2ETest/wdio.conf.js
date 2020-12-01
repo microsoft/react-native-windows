@@ -1,3 +1,5 @@
+require('ts-node').register({ transpileOnly: true });
+
 const baseUrl = 'https://webdriver.io';
 
 exports.config = {
