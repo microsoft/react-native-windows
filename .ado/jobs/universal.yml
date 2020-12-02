@@ -156,7 +156,7 @@ jobs:
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
           arguments: -NoPrompt -Tags buildLab
           
-      - template: prepare-env.yml
+      - template: ../templates/prepare-env.yml
         parameters:
           yarnBuildCmd: build
           
