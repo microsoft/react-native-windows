@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Remove Sporaddic Assert on Instance Reload from TimingModule",
   "packageName": "react-native-windows",
   "email": "ngerlem@microsoft.com",

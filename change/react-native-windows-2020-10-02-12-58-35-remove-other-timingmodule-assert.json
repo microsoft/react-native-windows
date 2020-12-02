@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Remove the other TimingModule Assertion",
   "packageName": "react-native-windows",
   "email": "ngerlem@microsoft.com",
