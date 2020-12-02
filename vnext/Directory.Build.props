@@ -42,8 +42,10 @@
     <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(RootOutDir)\$(Platform)\$(Configuration)</BaseOutDir>
     <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(RootOutDir)\x86\$(Configuration)</BaseOutDir>
 
-    <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir>
-    <OutDir>$(BaseOutDir)\$(ProjectName)\</OutDir>
+    <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir> <!-- for vcxproj -->
+    <OutDir>$(BaseOutDir)\$(ProjectName)\</OutDir> <!-- for vcxproj -->
+    <IntermediateOutputPath>$(OutDir)</IntermediateOutputPath> <!-- for csproj -->
+    <OutputPath>$(OutDir)</OutputPath> <!-- for csproj -->
     <PublishDir>$(OutDir)\Publish\</PublishDir>
 
     <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
