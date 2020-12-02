@@ -72,6 +72,9 @@ jobs:
           yarnBuildCmd: build
           project: vnext/Microsoft.ReactNative.sln
 
+      - script: dir $(Build.SourcesDirectory)\vnext /s/b 
+        displayName: List files VNext
+
       - task: PublishPipelineArtifact@1
         displayName: "Publish binaries for testing"
         inputs:
@@ -168,6 +171,9 @@ jobs:
         inputs:
           targetPath: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           artifactName: "Universal-$(BuildPlatform)-$(BuildConfiguration)"
+
+      - script: dir $(Build.SourcesDirectory)\vnext /s/b 
+        displayName: List files VNext
 
       - powershell: |
           Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
