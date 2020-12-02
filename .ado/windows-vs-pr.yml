@@ -26,7 +26,7 @@ jobs:
 
   - template: jobs/universal.yml
     parameters:
-      buildEnvironment: PullRequest
+      buildEnvironment: Continuous
 
   # - template: jobs/desktop.yml
   #   parameters:
