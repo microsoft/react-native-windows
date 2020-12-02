@@ -151,10 +151,10 @@ jobs:
             scanType: 'Register'
 
   - job: UniversalBuild
-    dependson: 
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    dependsOn: 
       - ${{ each obj in parameters.buildMatrixPR }}:
         - UniversalBuild${{ obj.BuildPlatform }}${{ obj.BuildConfiguration }}
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
