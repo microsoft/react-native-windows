@@ -55,7 +55,9 @@ async function generateCertificate(
       );
       return thumbprint;
     } catch (err) {
-      console.log(chalk.yellow('Unable to generate the self-signed certificate:'));
+      console.log(
+        chalk.yellow('Unable to generate the self-signed certificate:'),
+      );
       console.log(chalk.red(err));
     }
   }
