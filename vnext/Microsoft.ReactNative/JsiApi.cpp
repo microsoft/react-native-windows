@@ -312,13 +312,27 @@ facebook::jsi::JSError const &jsError) {                             \
 /*static*/ std::mutex JsiRuntime::s_mutex;
 /*static*/ std::map<uintptr_t, weak_ref<ReactNative::JsiRuntime>> JsiRuntime::s_jsiRuntimeMap;
 
-/*static*/ ReactNative::JsiRuntime JsiRuntime::FromRuntime(facebook::jsi::Runtime &runtime) noexcept {
+/*static*/ ReactNative::JsiRuntime JsiRuntime::FromRuntime(facebook::jsi::Runtime &jsiRuntime) noexcept {
   std::scoped_lock lock{s_mutex};
-  auto it = s_jsiRuntimeMap.find(reinterpret_cast<uintptr_t>(&runtime));
+  auto it = s_jsiRuntimeMap.find(reinterpret_cast<uintptr_t>(&jsiRuntime));
   if (it != s_jsiRuntimeMap.end()) {
     return it->second.get();
   } else {
     return nullptr;
+  }
+}
+
+/*static*/ ReactNative::JsiRuntime JsiRuntime::GetOrCreate(
+    std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+    std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept {
+  std::scoped_lock lock{s_mutex};
+  auto it = s_jsiRuntimeMap.find(reinterpret_cast<uintptr_t>(jsiRuntime.get()));
+  if (it != s_jsiRuntimeMap.end()) {
+    return it->second.get();
+  } else {
+    ReactNative::JsiRuntime abiJsiResult{make<JsiRuntime>(Mso::Copy(jsiRuntimeHolder), Mso::Copy(jsiRuntime))};
+    s_jsiRuntimeMap.try_emplace(reinterpret_cast<uintptr_t>(jsiRuntime.get()), abiJsiResult);
+    return abiJsiResult;
   }
 }
 

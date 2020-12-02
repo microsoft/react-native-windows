@@ -53,6 +53,9 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   ~JsiRuntime() noexcept;
 
   static ReactNative::JsiRuntime FromRuntime(facebook::jsi::Runtime &runtime) noexcept;
+  static ReactNative::JsiRuntime GetOrCreate(
+      std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+      std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept;
 
  public: // JsiRuntime
   static Microsoft::ReactNative::JsiRuntime MakeChakraRuntime();

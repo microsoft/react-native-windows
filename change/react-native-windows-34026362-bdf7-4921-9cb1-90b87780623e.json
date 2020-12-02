@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix getting JsiRuntime for host functions",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
