@@ -6,7 +6,7 @@ jobs:
     displayName: Pack Desktop NuGet Package
     dependsOn:
       - Desktop
-      - Universal # Needed to have artifacts uploaded from LayoutHeaders
+      - UniversalBuild # Needed to have artifacts uploaded from LayoutHeaders
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)

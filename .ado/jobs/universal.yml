@@ -5,16 +5,9 @@ parameters:
     values: 
      - PullRequest 
      - Continuous 
-   
-jobs:
-  - job: Universal
-    variables:
-      - template: ../variables/vs2019.yml
-    displayName: Universal
-    dependsOn:
-     - Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    strategy:
+  - name: buildMatrix
+    type: object
+    default:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         # Start Continuous only
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
@@ -50,6 +43,17 @@ jobs:
             BuildConfiguration: Release
             BuildPlatform: x86
         # End Continuous only
+      
+    
+jobs:
+  - job: UniversalBuild
+    variables:
+      - template: ../variables/vs2019.yml
+    displayName: Universal Build
+    dependsOn:
+     - Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    strategy: $(buildMatrix)
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
