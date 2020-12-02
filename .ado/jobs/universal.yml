@@ -5,31 +5,13 @@ parameters:
     values: 
      - PullRequest 
      - Continuous 
-  - name: buildMatrix
+  - name: buildMatrixPR
     type: object
     default:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        # Start Continuous only
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          ArmDebug:
-            BuildConfiguration: Debug
-            BuildPlatform: ARM
-        # End Continuous only
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
-        # Start Continuous only
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          Arm64Debug:
-            BuildConfiguration: Debug
-            BuildPlatform: ARM64
-          Arm64Release:
-            BuildConfiguration: Release
-            BuildPlatform: ARM64
-          X64Debug:
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-        # End Continuous only
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
@@ -37,13 +19,35 @@ parameters:
           BuildConfiguration: Debug
           BuildPlatform: x86
           LayoutHeaders: true
-        # Start Continuous only
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          X86Release:
-            BuildConfiguration: Release
-            BuildPlatform: x86
-        # End Continuous only
-      
+  - name: buildMatrixCI
+    type: object
+    default:
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: ARM
+        Arm64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM64
+        Arm64Release:
+          BuildConfiguration: Release
+          BuildPlatform: ARM64
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+          LayoutHeaders: true
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
     
 jobs:
   - job: UniversalBuild
@@ -53,7 +57,11 @@ jobs:
     dependsOn:
      - Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    strategy: $(buildMatrix)
+    strategy:
+      ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+        ${{ parameters.buildMatrixCI }}
+      ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
+        ${{ parameters.buildMatrixPR }}
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60

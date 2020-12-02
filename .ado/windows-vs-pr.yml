@@ -22,36 +22,36 @@ jobs:
           targetType: filePath
           filePath: .ado/shouldSkipPRBuild.ps1
 
-  - template: jobs/jschecks.yml
+  # - template: jobs/jschecks.yml
 
   - template: jobs/universal.yml
     parameters:
       buildEnvironment: PullRequest
 
-  - template: jobs/desktop.yml
-    parameters:
-      buildEnvironment: PullRequest
+  # - template: jobs/desktop.yml
+  #   parameters:
+  #     buildEnvironment: PullRequest
 
-  - template: jobs/nuget-desktop.yml
+  # - template: jobs/nuget-desktop.yml
 
-  - template: jobs/cli-init.yml
-    parameters:
-      buildEnvironment: PullRequest
+  # - template: jobs/cli-init.yml
+  #   parameters:
+  #     buildEnvironment: PullRequest
 
-  - template: jobs/playground.yml
-    parameters:
-      buildEnvironment: PullRequest
+  # - template: jobs/playground.yml
+  #   parameters:
+  #     buildEnvironment: PullRequest
 
-  - template: jobs/sample-apps.yml
-    parameters:
-      buildEnvironment: PullRequest
+  # - template: jobs/sample-apps.yml
+  #   parameters:
+  #     buildEnvironment: PullRequest
 
-  - template: jobs/e2e-test.yml
-    parameters:
-      buildEnvironment: PullRequest
+  # - template: jobs/e2e-test.yml
+  #   parameters:
+  #     buildEnvironment: PullRequest
 
-  - template: jobs/integration-test.yml
-    parameters:
-      buildEnvironment: PullRequest
+  # - template: jobs/integration-test.yml
+  #   parameters:
+  #     buildEnvironment: PullRequest
 
-  - template: jobs/macos-tests.yml
+  # - template: jobs/macos-tests.yml
