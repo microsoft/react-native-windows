@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove the timeout from self-signed certificate generating",
+  "packageName": "@react-native-windows/cli",
+  "email": "Bartosz.Klonowski@callstack.com",
+  "dependentChangeType": "patch"
+}
