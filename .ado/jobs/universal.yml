@@ -7,10 +7,10 @@ parameters:
      - Continuous 
    
 jobs:
-  - job: Universal
+  - job: UniversalBuild
     variables:
       - template: ../variables/vs2019.yml
-    displayName: Universal
+    displayName: Universal Build
     dependsOn:
      - Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
@@ -72,6 +72,93 @@ jobs:
           yarnBuildCmd: build
           project: vnext/Microsoft.ReactNative.sln
 
+      - task: PublishPipelineArtifact@1
+        displayName: "Publish binaries for testing"
+        inputs:
+          targetPath: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          artifactName: "Universal-$(BuildPlatform)-$(BuildConfiguration)"
+
+      - template: ../templates/publish-build-artifacts-for-nuget.yml
+        parameters:
+          artifactName: ReactWindows
+          layoutHeaders: eq('true', variables.LayoutHeaders)
+          contents: |
+            Microsoft.ReactNative\**
+            Microsoft.ReactNative.Managed\**
+            Microsoft.ReactNative.Managed.CodeGen\**
+      
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Governance Detection'
+        inputs:
+          alertWarningLevel: Medium
+          scanType: 'Register'
+
+  - job: UniversalTest
+    variables:
+      - template: ../variables/vs2019.yml
+    displayName: Universal Test
+    dependsOn:
+     - UniversalBuild
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    strategy:
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+        # Start Continuous only
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+          ArmDebug:
+            BuildConfiguration: Debug
+            BuildPlatform: ARM
+        # End Continuous only
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: ARM
+        # Start Continuous only
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+          Arm64Debug:
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64
+          Arm64Release:
+            BuildConfiguration: Release
+            BuildPlatform: ARM64
+          X64Debug:
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+        # End Continuous only
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+          LayoutHeaders: true
+        # Start Continuous only
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+          X86Release:
+            BuildConfiguration: Release
+            BuildPlatform: x86
+        # End Continuous only
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 5
+
+    steps:
+      - checkout: self
+        clean: false
+        submodules: false
+
+      - task: PowerShell@2
+        displayName: "Check if this environment meets the development dependencies"
+        inputs:
+          targetType: filePath
+          filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
+          arguments: -NoPrompt -Tags buildLab
+
+      - task: DownloadPipelineArtifact@1
+        displayName: "Download binaries for testing"
+        inputs:
+          targetPath: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          artifactName: "Universal-$(BuildPlatform)-$(BuildConfiguration)"
+
       - powershell: |
           Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
           Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
@@ -130,18 +217,4 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
         condition: and(succeeded(), eq(variables.BuildPlatform, 'x64'))
-
-      - template: ../templates/publish-build-artifacts-for-nuget.yml
-        parameters:
-          artifactName: ReactWindows
-          layoutHeaders: eq('true', variables.LayoutHeaders)
-          contents: |
-            Microsoft.ReactNative\**
-            Microsoft.ReactNative.Managed\**
-            Microsoft.ReactNative.Managed.CodeGen\**
-      
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: 'Component Governance Detection'
-        inputs:
-          alertWarningLevel: Medium
-          scanType: 'Register'
+  
