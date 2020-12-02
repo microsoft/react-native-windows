@@ -153,6 +153,8 @@ jobs:
   - job: UniversalBuild
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     displayName: Universal Build Convergence
+    variables:
+      - template: ../variables/vs2019.yml
     dependsOn: 
       - ${{ each obj in parameters.buildMatrixPR }}:
         - UniversalBuild${{ obj.BuildPlatform }}${{ obj.BuildConfiguration }}
