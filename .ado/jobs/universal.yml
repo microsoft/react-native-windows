@@ -155,7 +155,11 @@ jobs:
           targetType: filePath
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
           arguments: -NoPrompt -Tags buildLab
-
+          
+      - template: prepare-env.yml
+        parameters:
+          yarnBuildCmd: build
+          
       - task: NuGetCommand@2
         displayName: NuGet restore
         inputs:
