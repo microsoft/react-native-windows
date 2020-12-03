@@ -101,7 +101,11 @@ jobs:
     displayName: Universal Test
     dependsOn:
      - UniversalBuild
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    condition: |
+      and( 
+        ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+        in( dependencies.UniversalBuild.result, 'Succeeded', 'Skipped')
+      )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         # Start Continuous only
