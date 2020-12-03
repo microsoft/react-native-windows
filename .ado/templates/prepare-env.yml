@@ -28,6 +28,10 @@ steps:
     inputs:
       versionSpec: ">=5.8.0"
 
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x' 
+
   - template: yarn-install.yml
 
   - task: CmdLine@2
