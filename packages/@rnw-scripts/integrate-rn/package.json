@@ -21,7 +21,7 @@
     "ora": "^3.4.0",
     "react-native-platform-override": "^0.4.3",
     "semver": "^7.3.2",
-    "yargs": "^15.3.1"
+    "yargs": "^15.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

@@ -135,16 +135,10 @@ const argv = yargs
       describe:
         '[internalTesting] Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
       hidden: true,
-      default: false,
       conflicts: 'version',
     },
   })
-  .check(a => {
-    if (a._.length !== 0) {
-      throw `Unrecognized option ${a._}`;
-    }
-    return true;
-  }).argv;
+  .strict(true).argv;
 
 if (argv.verbose) {
   console.log(argv);
@@ -446,7 +440,7 @@ function isProjectUsingYarn(cwd: string): boolean {
   try {
     const name = getReactNativeProjectName();
     const ns = argv.namespace || name;
-    const useDevMode = argv.useDevMode;
+    const useDevMode = !!argv.useDevMode;
     let version = argv.version;
 
     if (argv.useWinUI3 && argv.experimentalNuGetDependency) {
@@ -569,7 +563,7 @@ function isProjectUsingYarn(cwd: string): boolean {
       experimentalNuGetDependency: argv.experimentalNuGetDependency,
       useWinUI3: argv.useWinUI3,
       useHermes: argv.useHermes,
-      useDevMode: argv.useDevMode,
+      useDevMode: useDevMode,
       nuGetTestVersion: argv.nuGetTestVersion,
       nuGetTestFeed: argv.nuGetTestFeed,
       telemetry: argv.telemetry,
