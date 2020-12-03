@@ -50,8 +50,7 @@ jobs:
             BuildConfiguration: Release
             BuildPlatform: x86
         # End Continuous only
-    pool:
-      vmImage: $(VmImage)
+    pool: windevbuildagents
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
 
