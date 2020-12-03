@@ -37,6 +37,7 @@ parameters:
           - BuildConfiguration: Release
             BuildPlatform: x86
     
+    
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ each obj in config.Matrix }}:
