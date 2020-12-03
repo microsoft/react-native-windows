@@ -519,9 +519,10 @@ function toCppNamespace(namespace: string) {
 export async function installScriptsAndDependencies(options: {
   verbose: boolean;
 }) {
-  const projectPackage = (await WritableNpmPackage.fromPath(
-    path.join(process.cwd(), 'package.json'),
-  ))!;
+  const projectPackage = await WritableNpmPackage.fromPath(process.cwd());
+  if (!projectPackage) {
+    throw new Error('The current directory is not the root of an npm package');
+  }
 
   await projectPackage.mergeProps({
     scripts: {windows: 'react-native run-windows'},
