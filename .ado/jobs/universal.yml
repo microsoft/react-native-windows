@@ -103,7 +103,7 @@ jobs:
      - UniversalBuild
     condition: |
       and( 
-        ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+        ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ),
         in( dependencies.UniversalBuild.result, 'Succeeded', 'Skipped')
       )
     strategy:
