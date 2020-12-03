@@ -160,6 +160,17 @@ jobs:
       - template: ../templates/prepare-env.yml
         parameters:
           yarnBuildCmd: build
+
+      - powershell: |
+          $RegistryKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
+          if (-not(Test-Path -Path $RegistryKeyPath)) {
+              New-Item -Path $RegistryKeyPath -ItemType Directory -Force
+          }
+          $value = get-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -ErrorAction SilentlyContinue
+          if (($value -eq $null) -or ($value.AllowDevelopmentWithoutDevLicense -ne 1)) {
+              Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1 -ErrorAction Stop
+          }
+        displayName: Enable developer mode
           
       - task: NuGetCommand@2
         displayName: NuGet restore
