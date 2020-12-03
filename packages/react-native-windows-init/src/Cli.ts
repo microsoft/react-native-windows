@@ -79,7 +79,7 @@ const argv = yargs
       type: 'boolean',
       describe:
         'Controls sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
-      default: true,
+      default: false,
     },
     language: {
       type: 'string',
