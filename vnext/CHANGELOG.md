@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 30 Nov 2020 10:25:30 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Dec 2020 23:33:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.2
+
+Thu, 03 Dec 2020 23:33:37 GMT
+
+### Changes
+
+- Fix multicore build, missing dependency on Folly (dannyvv@microsoft.com)
 
 ## 0.64.0-preview.1
 
