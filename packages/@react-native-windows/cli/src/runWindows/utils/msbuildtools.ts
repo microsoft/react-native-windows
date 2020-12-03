@@ -36,14 +36,11 @@ export default class MSBuildTools {
     public readonly installationVersion: string,
   ) {}
 
-   /**
-    * @returns directory where x86 msbuild can be found
-    */
-   msbuildPath() {
-    return path.join(
-      this.installationPath,
-      'MSBuild/Current/Bin',
-    );
+  /**
+   * @returns directory where x86 msbuild can be found
+   */
+  msbuildPath() {
+    return path.join(this.installationPath, 'MSBuild/Current/Bin');
   }
 
   cleanProject(slnFile: string) {
@@ -164,7 +161,7 @@ export default class MSBuildTools {
       'Microsoft.Component.MSBuild',
       getVCToolsByArch(buildArch),
     ];
-    const minVersion = process.env.VisualStudioVersion || '16.9';
+    const minVersion = process.env.VisualStudioVersion || '16.7';
     const vsInstallation = findLatestVsInstall({
       requires,
       minVersion,

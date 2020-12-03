@@ -25,6 +25,7 @@ import {BuildConfig, RunWindowsOptions} from '../runWindowsOptions';
 import MSBuildTools from './msbuildtools';
 import {Config} from '@react-native-community/cli-types';
 import {WindowsProjectConfig} from '../../config/projectConfig';
+import Version from './version';
 
 function pushd(pathArg: string): () => void {
   const cwd = process.cwd();
@@ -239,9 +240,9 @@ export async function deployToDesktop(
   })[0];
   const appName = identity.attributes.Name;
 
-  // const vsVersion = buildTools.installationVersion;
+  const vsVersion = Version.fromString(buildTools.installationVersion);
 
-  let args = [];
+  const args = [];
   if (options.remoteDebugging) {
     args.push('--remote-debugging');
   }
@@ -261,11 +262,11 @@ export async function deployToDesktop(
 
   if (options.release) {
     await runPowerShellScriptFunction(
-        'Removing old version of the app',
-        windowsStoreAppUtils,
-        `Uninstall-App ${appName}`,
-        verbose,
-      ); 
+      'Removing old version of the app',
+      windowsStoreAppUtils,
+      `Uninstall-App ${appName}`,
+      verbose,
+    );
     const script = glob.sync(
       path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
     )[0];
@@ -276,17 +277,22 @@ export async function deployToDesktop(
       verbose,
     );
   } else {
-    const appxRecipe = path.join(path.dirname(appxManifestPath), `${projectName}.build.appxrecipe`);
-    const IDE_folder = `${buildTools.installationPath}\\Common7\\IDE`;
-    const deployAppxRecipe_exe = `${IDE_folder}\\DeployAppRecipe.exe`;
-    if (fs.existsSync(deployAppxRecipe_exe)) {
+    // If we have DeployAppRecipe.exe, use it (start in 16.9 Preview 2, don't use 16.8 even if it's there as that version has bugs)
+    const appxRecipe = path.join(
+      path.dirname(appxManifestPath),
+      `${projectName}.build.appxrecipe`,
+    );
+    const ideFolder = `${buildTools.installationPath}\\Common7\\IDE`;
+    const deployAppxRecipeExePath = `${ideFolder}\\DeployAppRecipe.exe`;
+    if (
+      vsVersion.gte(Version.fromString('16.9.30801.93')) &&
+      fs.existsSync(deployAppxRecipeExePath)
+    ) {
       await commandWithProgress(
         newSpinner('Deploying'),
         `Deploying ${appxRecipe}`,
-        deployAppxRecipe_exe,
-        [
-          appxRecipe,
-        ],
+        deployAppxRecipeExePath,
+        [appxRecipe],
         verbose,
       );
     } else {
@@ -300,14 +306,13 @@ export async function deployToDesktop(
       await build.buildSolution(
         buildTools,
         slnFile,
-        options.release ? 'Release' : 'Debug',
+        /* options.release ? 'Release' : */ 'Debug',
         options.arch,
         {DeployLayout: 'true'},
         verbose,
         'deploy',
         options.buildLogDirectory,
       );
-
     }
   }
 
