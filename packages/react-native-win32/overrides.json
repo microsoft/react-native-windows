@@ -375,8 +375,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.win32.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
-      "baseVersion": "0.0.0-19d4cc2d4",
-      "baseHash": "1e689ecb36aaa20e7b60b5f6e7620785e3826e0a"
+      "baseHash": "5330352b660b0a0ab7dcea5117dddfadadbe2e78"
     },
     {
       "type": "platform",

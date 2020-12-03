@@ -36,7 +36,8 @@
     <UseDevBundle Condition="'$(UseDevBundle)' == '' and '$(Configuration)' != 'Debug'">false</UseDevBundle>
 
     <!-- Extra arguments to pass to the bundler command -->
-    <BundlerExtraArgs Condition="'$(BundlerExtraArgs)' == ''"></BundlerExtraArgs>
+    <BundlerExtraArgs Condition="'$(BundlerExtraArgs)' == '' AND '$(UseHermes)' != 'true'"></BundlerExtraArgs>
+    <BundlerExtraArgs Condition="'$(BundlerExtraArgs)' == '' AND '$(UseHermes)' == 'true'">--minify false</BundlerExtraArgs>
 
     <!-- Command to use to create a bundle -->
     <BundleCliCommand Condition="'$(BundleCliCommand)' == ''">npx --no-install react-native bundle</BundleCliCommand>

@@ -33,8 +33,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseVersion": "0.0.0-19d4cc2d4",
-      "baseHash": "8ea168883110c0e81240341ae460a92aaf8f8ce8",
+      "baseHash": "9995fd5764d9b3ea8c7d3f9c4979eefc4e5e3d78",
       "issue": 5430
     },
     {
@@ -353,8 +352,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseVersion": "0.0.0-19d4cc2d4",
-      "baseHash": "a72811cd104bb575d0ab2659343dc2ea11c6b674"
+      "baseHash": "1911105ff7796cfeef6db832ec0bd6a53d7622ac"
     },
     {
       "type": "derived",
@@ -395,8 +393,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.windows.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
-      "baseVersion": "0.0.0-19d4cc2d4",
-      "baseHash": "1e689ecb36aaa20e7b60b5f6e7620785e3826e0a"
+      "baseHash": "5330352b660b0a0ab7dcea5117dddfadadbe2e78"
     },
     {
       "type": "platform",
