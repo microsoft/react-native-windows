@@ -17,8 +17,26 @@ test('hashContent - Different Strings', () => {
   expect(hashContent('a')).not.toBe(hashContent('b'));
 });
 
-test('hashContent - Insensitive to Line Ending Type', () => {
+test('hashContent - Default insensitive to Line Ending Type', () => {
   expect(hashContent('a\r\n')).toBe(hashContent('a\n'));
+});
+
+test('hashContent - Explicit sensitive', () => {
+  expect(hashContent('a\r\n', {insensitivity: 'none'})).not.toBe(
+    hashContent('a\n', {insensitivity: 'none'}),
+  );
+});
+
+test('hashContent - Explicit line-ending insensitive', () => {
+  expect(hashContent('a\r\n', {insensitivity: 'line-ending'})).toBe(
+    hashContent('a\n', {insensitivity: 'line-ending'}),
+  );
+});
+
+test('hashContent - Explicit whitespace insensitive', () => {
+  expect(hashContent('  a \r\n   ', {insensitivity: 'whitespace'})).toBe(
+    hashContent('a\n', {insensitivity: 'whitespace'}),
+  );
 });
 
 test('hashContent - Same between strings and string buffers', () => {

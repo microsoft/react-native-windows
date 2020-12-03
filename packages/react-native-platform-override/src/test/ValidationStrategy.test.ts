@@ -335,6 +335,20 @@ test('overrideDifferentFromBase - Different Line Endings', async () => {
   ).toEqual([{type: 'overrideSameAsBase', overrideName: 'foo.windows.js'}]);
 });
 
+test('overrideDifferentFromBase - Different Whitespace', async () => {
+  expect(
+    await ValidationStrategies.overrideDifferentFromBase(
+      'foo.windows.js',
+      'foo.js',
+    ).validate(
+      new MockWritableFileRepository([
+        {filename: 'foo.windows.js', content: ' A B C D\n'},
+      ]),
+      new MockReactFileRepository([{filename: 'foo.js', content: 'ABCD\r\n'}]),
+    ),
+  ).toEqual([{type: 'overrideSameAsBase', overrideName: 'foo.windows.js'}]);
+});
+
 test('overrideDifferentFromBase - File Not A Copy', async () => {
   expect(
     await ValidationStrategies.overrideDifferentFromBase(

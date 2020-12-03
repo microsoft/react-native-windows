@@ -11,29 +11,52 @@ import {normalizePath, unixPath} from './PathUtils';
 import FileRepository from './FileRepository';
 import isutf8 from 'isutf8';
 
+export type HashOpts = {
+  /**
+   * What differences between files should we be insensitive to when generating
+   * a hash? Defaults to line-ending insensitivity
+   */
+  insensitivity?: 'none' | 'line-ending' | 'whitespace';
+};
+
+/**
+ * Normalize content according to insensitivty rules
+ */
+function normalizeContent(
+  content: string | Buffer,
+  opts: HashOpts,
+): string | Buffer {
+  if (
+    opts.insensitivity === 'none' ||
+    (typeof content !== 'string' && !isutf8(content))
+  ) {
+    return content;
+  }
+
+  switch (opts.insensitivity || 'line-ending') {
+    case 'line-ending':
+      // Convert to CRLF for legacy hash stability
+      return content.toString('utf8').replace(/(?<!\r)\n/g, '\r\n');
+
+    case 'whitespace':
+      return content.toString('utf8').replace(/\s/g, '');
+  }
+}
+
 /**
  * Creates a hash from content, attempting to normalize for line-feeds
  */
 export class Hasher {
   private readonly hash: crypto.Hash;
+  private readonly hashOpts: HashOpts;
 
-  constructor() {
+  constructor(hashOpts?: HashOpts) {
     this.hash = crypto.createHash('sha1');
+    this.hashOpts = hashOpts || {};
   }
 
   feedContent(content: string | Buffer): Hasher {
-    if (typeof content === 'string' || isutf8(content)) {
-      // Content is valid UTF8. Normalize line endings
-      const normalizedStr = content
-        .toString('utf8')
-        .replace(/(?<!\r)\n/g, '\r\n');
-
-      this.hash.update(normalizedStr);
-    } else {
-      // Content is binary. Hash the raw bytes
-      this.hash.update(content);
-    }
-
+    this.hash.update(normalizeContent(content, this.hashOpts));
     return this;
   }
 
@@ -45,8 +68,8 @@ export class Hasher {
 /**
  * Convenience helper which hashes a single buffer
  */
-export function hashContent(content: string | Buffer): string {
-  return new Hasher().feedContent(content).digest();
+export function hashContent(content: string | Buffer, opts?: HashOpts): string {
+  return new Hasher(opts).feedContent(content).digest();
 }
 
 /**
@@ -55,6 +78,7 @@ export function hashContent(content: string | Buffer): string {
 export async function hashFileOrDirectory(
   name: string,
   repo: FileRepository,
+  opts?: HashOpts,
 ): Promise<string | null> {
   const type = await repo.stat(name);
   if (type === 'none') {
@@ -62,9 +86,9 @@ export async function hashFileOrDirectory(
   }
 
   if (type === 'file') {
-    return hashContent((await repo.readFile(name))!);
+    return hashContent((await repo.readFile(name))!, opts);
   } else {
-    const hasher = new Hasher();
+    const hasher = new Hasher(opts);
     const subfiles = await repo.listFiles([`${unixPath(name)}/**`]);
 
     for (const file of subfiles.sort()) {
