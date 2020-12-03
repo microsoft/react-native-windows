@@ -143,6 +143,22 @@ jobs:
               #   inputs:
               #     alertWarningLevel: Medium
               #     scanType: 'Register'
+          - job: UniversalTest${{ obj.BuildPlatform }}${{ obj.BuildConfiguration }}
+            variables:
+              - template: ../variables/vs2019.yml
+            displayName: Universal Test ${{ obj.BuildPlatform }}${{ obj.BuildConfiguration }}
+            dependsOn:
+              - UniversalBuild${{ obj.BuildPlatform }}${{ obj.BuildConfiguration }}
+            condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+            pool:
+              vmImage: $(VmImage)
+            timeoutInMinutes: 60
+            cancelTimeoutInMinutes: 5
+
+            steps:
+              - checkout: self
+                clean: false
+                submodules: false
 
   - job: UniversalBuild
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
