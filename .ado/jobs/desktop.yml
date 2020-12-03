@@ -103,20 +103,20 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
 
-      - template: ../templates/stop-packagers.yml
-
       - task: PowerShell@2
         displayName: Set up test servers
         inputs:
           targetType: filePath # filePath | inline
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
           arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
+        condition: false # windesktop is no longer bundling
 
       - task: PowerShell@2
         displayName: Check the metro bundle server
         inputs:
           targetType: 'inline'
           script: Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
+        condition: false # windesktop is no longer bundling
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
@@ -132,8 +132,9 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
+        condition: false # windesktop is no longer bundling
         # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
-        condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
+        # condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
 
       - template: ../templates/stop-packagers.yml
 
