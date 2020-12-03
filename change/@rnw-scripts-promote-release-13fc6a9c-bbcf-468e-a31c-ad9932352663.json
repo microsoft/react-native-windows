@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update V8 package version; pass debuggerBreakOnNextLine property",
-  "packageName": "@rnw-scripts/promote-release",
-  "email": "tudor.mihai@microsoft.com",
-  "dependentChangeType": "patch"
-}
