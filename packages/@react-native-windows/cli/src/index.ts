@@ -6,7 +6,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import {CodedError, Telemetry} from '@react-native-windows/telemetry';
+import {Telemetry} from '@react-native-windows/telemetry';
 
 import {
   copyProjectTemplateAndReplace,
