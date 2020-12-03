@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix multicore build, missing dependency on Folly",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
