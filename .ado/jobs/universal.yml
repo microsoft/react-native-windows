@@ -40,7 +40,7 @@ parameters:
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ each obj in config.Matrix }}:
-        ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
+       # ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
           - job: UniversalBuild${{ obj.BuildPlatform }}${{ obj.BuildConfiguration }}
             variables:
               - template: ../variables/vs2019.yml
