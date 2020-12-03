@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Ensure windows script added on init",
+  "packageName": "@react-native-windows/cli",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
