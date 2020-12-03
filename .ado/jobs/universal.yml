@@ -40,8 +40,8 @@ parameters:
     
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
-    - ${{ each obj in config.Matrix }}:
-      - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
+    - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
+      - ${{ each obj in config.Matrix }}:
           - job: UniversalBuild${{ obj.BuildPlatform }}${{ obj.BuildConfiguration }}
             variables:
               - template: ../variables/vs2019.yml
@@ -168,8 +168,8 @@ jobs:
       - template: ../variables/vs2019.yml
     dependsOn: 
       - ${{ each config in parameters.buildMatrix }}:
-        - ${{ each obj in config.Matrix }}:
-          - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
+        - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
+          - ${{ each obj in config.Matrix }}:
             - UniversalBuild${{ obj.BuildPlatform }}${{ obj.BuildConfiguration }}
     pool:
       vmImage: $(VmImage)
