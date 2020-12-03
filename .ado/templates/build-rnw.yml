@@ -57,7 +57,6 @@ steps:
         /p:BaseIntDir=$(BaseIntDir)
         /p:PublishToolDuringBuild=true
         /p:EnableSourceLink=true
-        /p:UseMultiToolTask=true
         /bl:${{ parameters.BuildLogDirectory }}\MsBuild.binlog
         /flp1:errorsonly;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.err
         /flp2:warningsonly;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.wrn
