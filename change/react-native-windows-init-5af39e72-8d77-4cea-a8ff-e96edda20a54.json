@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Allow unreleased RNW versions with react-native-windows-init --useDevMode",
+  "packageName": "react-native-windows-init",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
