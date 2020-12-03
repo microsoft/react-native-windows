@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 03 Dec 2020 05:06:17 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Dec 2020 21:43:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.221
+
+Thu, 03 Dec 2020 21:43:48 GMT
+
+### Changes
+
+- Fix version (ngerlem@microsoft.com)
+- Update V8 package version; pass debuggerBreakOnNextLine property (tudor.mihai@microsoft.com)
 
 ## 0.0.0
 

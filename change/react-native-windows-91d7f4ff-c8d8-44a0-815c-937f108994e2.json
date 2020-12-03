@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update V8 package version; pass debuggerBreakOnNextLine property",
-  "packageName": "react-native-windows",
-  "email": "tudor.mihai@microsoft.com",
-  "dependentChangeType": "patch"
-}
