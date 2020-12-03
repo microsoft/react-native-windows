@@ -5,150 +5,155 @@ parameters:
     values: 
      - PullRequest 
      - Continuous 
-  - name: buildMatrixPR
+  - name: buildMatrix
     type: object
     default:
-      - BuildConfiguration: Release
-        BuildPlatform: ARM
-      - BuildConfiguration: Release
-        BuildPlatform: x64
-      - BuildConfiguration: Debug
-        BuildPlatform: x86
-        LayoutHeaders: true
-  - name: buildMatrixCI
-    type: object
-    default:
-      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM
-        ArmRelease:
-          BuildConfiguration: Release
-          BuildPlatform: ARM
-        Arm64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM64
-        Arm64Release:
-          BuildConfiguration: Release
-          BuildPlatform: ARM64
-        X64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x64
-        X64Release:
-          BuildConfiguration: Release
-          BuildPlatform: x64
-        X86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
-          LayoutHeaders: true
-        X86Release:
-          BuildConfiguration: Release
-          BuildPlatform: x86
+      - BuildEnvironment: PullRequest
+        Matrix:
+          ArmRelease:
+            BuildConfiguration: Release
+            BuildPlatform: ARM
+          X64Release:
+            BuildConfiguration: Release
+            BuildPlatform: x64
+          X86Debug:
+            BuildConfiguration: Debug
+            BuildPlatform: x86
+            LayoutHeaders: true
+      - BuildEnvironment: Continuous
+        Matrix:
+          ArmDebug:
+            BuildConfiguration: Debug
+            BuildPlatform: ARM
+          ArmRelease:
+            BuildConfiguration: Release
+            BuildPlatform: ARM
+          Arm64Debug:
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64
+          Arm64Release:
+            BuildConfiguration: Release
+            BuildPlatform: ARM64
+          X64Debug:
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+          X64Release:
+            BuildConfiguration: Release
+            BuildPlatform: x64
+          X86Debug:
+            BuildConfiguration: Debug
+            BuildPlatform: x86
+            LayoutHeaders: true
+          X86Release:
+            BuildConfiguration: Release
+            BuildPlatform: x86
     
 jobs:
-  - ${{ each obj in parameters.buildMatrixPR }}:
-    - job: UniversalBuild${{ obj.BuildPlatform }}${{ obj.BuildConfiguration }}
-      variables:
-        - template: ../variables/vs2019.yml
-      displayName: Universal Build ${{ obj.BuildPlatform }}${{ obj.BuildConfiguration }}
-      dependsOn:
-        - Setup
-      condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-      pool:
-        vmImage: $(VmImage)
-      timeoutInMinutes: 60
-      cancelTimeoutInMinutes: 5
+  - ${{ each config in parameters.buildMatrix }}:
+      ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
+      - ${{ each obj in config.Matrix }}:
+        - job: UniversalBuild${{ obj.BuildPlatform }}${{ obj.BuildConfiguration }}
+          variables:
+            - template: ../variables/vs2019.yml
+          displayName: Universal Build ${{ obj.BuildPlatform }}${{ obj.BuildConfiguration }}
+          dependsOn:
+            - Setup
+          condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+          pool:
+            vmImage: $(VmImage)
+          timeoutInMinutes: 60
+          cancelTimeoutInMinutes: 5
 
-      steps:
-        - checkout: self
-          clean: false
-          submodules: false
+          steps:
+            - checkout: self
+              clean: false
+              submodules: false
 
-        # - task: PowerShell@2
-        #   displayName: "Check if this environment meets the development dependencies"
-        #   inputs:
-        #     targetType: filePath
-        #     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
-        #     arguments: -NoPrompt -Tags buildLab
+            # - task: PowerShell@2
+            #   displayName: "Check if this environment meets the development dependencies"
+            #   inputs:
+            #     targetType: filePath
+            #     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
+            #     arguments: -NoPrompt -Tags buildLab
 
-        # - template: ../templates/build-rnw.yml
-        #   parameters:
-        #     yarnBuildCmd: build
-        #     project: vnext/Microsoft.ReactNative.sln
+            # - template: ../templates/build-rnw.yml
+            #   parameters:
+            #     yarnBuildCmd: build
+            #     project: vnext/Microsoft.ReactNative.sln
 
-        # - powershell: |
-        #     Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
-        #     Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
-        #     Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
-        #   displayName: Set GoogleTestAdapterPath
+            # - powershell: |
+            #     Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
+            #     Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
+            #     Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
+            #   displayName: Set GoogleTestAdapterPath
 
-        # - task: VSTest@2
-        #   displayName: Run Universal Unit Tests (Native)
-        #   timeoutInMinutes: 5 # Set smaller timeout , due to hangs
-        #   inputs:
-        #     testSelector: testAssemblies
-        #     testAssemblyVer2: |
-        #       Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
-        #       Microsoft.ReactNative.IntegrationTests/Microsoft.ReactNative.IntegrationTests.exe
-        #       Mso.UnitTests/Mso.UnitTests.exe
-        #     pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
-        #     searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ obj.BuildPlatform }}/${{ obj.BuildConfiguration }}
-        #     runTestsInIsolation: true
-        #     platform: ${{ obj.BuildPlatform }}
-        #     configuration: ${{ obj.BuildConfiguration }}
-        #     publishRunAttachments: true
-        #     collectDumpOn: onAbortOnly
-        #     vsTestVersion: latest
-        #   condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+            # - task: VSTest@2
+            #   displayName: Run Universal Unit Tests (Native)
+            #   timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+            #   inputs:
+            #     testSelector: testAssemblies
+            #     testAssemblyVer2: |
+            #       Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
+            #       Microsoft.ReactNative.IntegrationTests/Microsoft.ReactNative.IntegrationTests.exe
+            #       Mso.UnitTests/Mso.UnitTests.exe
+            #     pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+            #     searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ obj.BuildPlatform }}/${{ obj.BuildConfiguration }}
+            #     runTestsInIsolation: true
+            #     platform: ${{ obj.BuildPlatform }}
+            #     configuration: ${{ obj.BuildConfiguration }}
+            #     publishRunAttachments: true
+            #     collectDumpOn: onAbortOnly
+            #     vsTestVersion: latest
+            #   condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
-        # - task: VSTest@2
-        #   displayName: Run Universal Unit Tests (UWP)
-        #   timeoutInMinutes: 5 # Set smaller timeout , due to hangs
-        #   inputs:
-        #     testSelector: testAssemblies
-        #     testAssemblyVer2: |
-        #       Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
-        #     searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ obj.BuildPlatform }}/${{ obj.BuildConfiguration }}
-        #     runTestsInIsolation: true
-        #     platform: ${{ obj.BuildPlatform }}
-        #     configuration: ${{ obj.BuildConfiguration }}
-        #     publishRunAttachments: true
-        #     codeCoverageEnabled: true
-        #     collectDumpOn: onAbortOnly
-        #     vsTestVersion: latest
-        #   condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+            # - task: VSTest@2
+            #   displayName: Run Universal Unit Tests (UWP)
+            #   timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+            #   inputs:
+            #     testSelector: testAssemblies
+            #     testAssemblyVer2: |
+            #       Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
+            #     searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ obj.BuildPlatform }}/${{ obj.BuildConfiguration }}
+            #     runTestsInIsolation: true
+            #     platform: ${{ obj.BuildPlatform }}
+            #     configuration: ${{ obj.BuildConfiguration }}
+            #     publishRunAttachments: true
+            #     codeCoverageEnabled: true
+            #     collectDumpOn: onAbortOnly
+            #     vsTestVersion: latest
+            #   condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
-        # - task: VSTest@2
-        #   displayName: Run Universal Unit Tests (NetCore)
-        #   timeoutInMinutes: 5 # Set smaller timeout , due to hangs
-        #   inputs:
-        #     testSelector: testAssemblies
-        #     testAssemblyVer2: |
-        #       Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
-        #     searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ obj.BuildPlatform }}/${{ obj.BuildConfiguration }}
-        #     runTestsInIsolation: true
-        #     platform: ${{ obj.BuildPlatform }}
-        #     configuration: ${{ obj.BuildConfiguration }}
-        #     publishRunAttachments: true
-        #     codeCoverageEnabled: true
-        #     collectDumpOn: onAbortOnly
-        #     vsTestVersion: latest
-        #   condition: and(succeeded(), eq(variables.BuildPlatform, 'x64'))
+            # - task: VSTest@2
+            #   displayName: Run Universal Unit Tests (NetCore)
+            #   timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+            #   inputs:
+            #     testSelector: testAssemblies
+            #     testAssemblyVer2: |
+            #       Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
+            #     searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ obj.BuildPlatform }}/${{ obj.BuildConfiguration }}
+            #     runTestsInIsolation: true
+            #     platform: ${{ obj.BuildPlatform }}
+            #     configuration: ${{ obj.BuildConfiguration }}
+            #     publishRunAttachments: true
+            #     codeCoverageEnabled: true
+            #     collectDumpOn: onAbortOnly
+            #     vsTestVersion: latest
+            #   condition: and(succeeded(), eq(variables.BuildPlatform, 'x64'))
 
-        # - template: ../templates/publish-build-artifacts-for-nuget.yml
-        #   parameters:
-        #     artifactName: ReactWindows
-        #     layoutHeaders: eq('true', variables.LayoutHeaders)
-        #     contents: |
-        #       Microsoft.ReactNative\**
-        #       Microsoft.ReactNative.Managed\**
-        #       Microsoft.ReactNative.Managed.CodeGen\**
-        
-        # - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        #   displayName: 'Component Governance Detection'
-        #   inputs:
-        #     alertWarningLevel: Medium
-        #     scanType: 'Register'
+            # - template: ../templates/publish-build-artifacts-for-nuget.yml
+            #   parameters:
+            #     artifactName: ReactWindows
+            #     layoutHeaders: eq('true', variables.LayoutHeaders)
+            #     contents: |
+            #       Microsoft.ReactNative\**
+            #       Microsoft.ReactNative.Managed\**
+            #       Microsoft.ReactNative.Managed.CodeGen\**
+            
+            # - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+            #   displayName: 'Component Governance Detection'
+            #   inputs:
+            #     alertWarningLevel: Medium
+            #     scanType: 'Register'
 
   - job: UniversalBuild
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
