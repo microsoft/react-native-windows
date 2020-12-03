@@ -11,6 +11,7 @@ import {
   Telemetry,
   isMSFTInternal,
   getDiskFreeSpace,
+  CodedError,
 } from '@react-native-windows/telemetry';
 
 import * as build from './utils/build';
@@ -107,7 +108,7 @@ async function runWindows(
       sdks.forEach(version => console.log('    ' + version));
       return;
     } catch (e) {
-      Telemetry.client?.trackException({exception: e});
+      Telemetry.trackException(e);
       newError('Unable to print environment info.\n' + e.toString());
       return setExitProcessWithError(options.logging);
     }
@@ -117,7 +118,7 @@ async function runWindows(
   try {
     await runWindowsInternal(args, config, options);
   } catch (e) {
-    Telemetry.client?.trackException({exception: e});
+    Telemetry.trackException(e);
     runWindowsError = e;
     if (!hasRunRnwDependencies) {
       const rnwPkgJsonPath = require.resolve(
@@ -259,7 +260,7 @@ async function runWindowsInternal(
       newError(
         'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
       );
-      throw new Error('Cannot find solution file');
+      throw new CodedError('NoSolution', 'Cannot find solution file');
     }
 
     // Get build/deploy options
@@ -303,7 +304,7 @@ async function runWindowsInternal(
       newError(
         'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
       );
-      throw new Error('Cannot find solution file');
+      throw new CodedError('NoSolution', 'Cannot find solution file');
     }
 
     try {

@@ -6,7 +6,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import {Telemetry} from '@react-native-windows/telemetry';
+import {CodedError, Telemetry} from '@react-native-windows/telemetry';
 
 import {
   copyProjectTemplateAndReplace,
@@ -100,7 +100,7 @@ export async function generateWindows(
     );
   } catch (e) {
     error = e;
-    Telemetry.client?.trackException({exception: error});
+    Telemetry.trackException(error);
     throw e;
   } finally {
     if (Telemetry.client) {

@@ -8,6 +8,7 @@ import {spawn, SpawnOptions} from 'child_process';
 import * as ora from 'ora';
 import * as spinners from 'cli-spinners';
 import * as chalk from 'chalk';
+import {CodedError, CodedErrorType} from '@react-native-windows/telemetry';
 
 function setSpinnerText(spinner: ora.Ora, prefix: string, text: string) {
   text = prefix + spinnerString(text);
@@ -46,6 +47,7 @@ export async function runPowerShellScriptFunction(
   script: string | null,
   funcName: string,
   verbose: boolean,
+  errorCategory: CodedErrorType,
 ) {
   try {
     const printException = verbose ? '$_;' : '';
@@ -61,11 +63,12 @@ export async function runPowerShellScriptFunction(
         `${importScript}try { ${funcName} -ErrorAction Stop; $lec = $LASTEXITCODE; } catch { $lec = 1; ${printException} }; exit $lec`,
       ],
       verbose,
+      errorCategory,
     );
   } catch {
     // The error output from the process will be shown if verbose is set.
     // We don't capture the process output if verbose is set, but at least we have the task name in text, so throw that.
-    throw new Error(taskDescription);
+    throw new CodedError(errorCategory, taskDescription);
   }
 }
 
@@ -75,6 +78,7 @@ export function commandWithProgress(
   command: string,
   args: string[],
   verbose: boolean,
+  errorCategory: CodedErrorType,
 ) {
   return new Promise((resolve, reject) => {
     const spawnOptions: SpawnOptions = verbose ? {stdio: 'inherit'} : {};
@@ -98,7 +102,11 @@ export function commandWithProgress(
         if (text) {
           setSpinnerText(spinner, taskDoingName + ': ERROR: ', firstErrorLine);
         }
-        reject(new Error(firstErrorLine));
+        reject(
+          new CodedError(errorCategory, firstErrorLine, {
+            taskName: taskDoingName,
+          }),
+        );
       });
     }
     cp.on('error', e => {
@@ -106,14 +114,16 @@ export function commandWithProgress(
         console.error(chalk.red(e.toString()));
       }
       spinner.fail(e.toString());
-      reject(e);
+      const ce = new CodedError(errorCategory, e.message);
+      ce.stack = e.stack;
+      reject(ce);
     }).on('close', code => {
       if (code === 0) {
         spinner.succeed(taskDoingName);
         resolve();
       } else {
         spinner.fail();
-        reject(new Error(`${taskDoingName} returned error code ${code}`));
+        reject(new CodedError(errorCategory, `${taskDoingName} ${code}`));
       }
     });
   });
