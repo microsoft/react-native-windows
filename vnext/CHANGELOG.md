@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 01 Dec 2020 05:05:07 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Dec 2020 05:06:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Thu, 03 Dec 2020 05:06:17 GMT
+
+### Changes
+
+- Fix getting JsiRuntime for host functions (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.220
 

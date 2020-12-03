@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 24 Nov 2020 05:08:17 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Dec 2020 05:06:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.42
+
+Thu, 03 Dec 2020 05:06:17 GMT
+
+### Changes
+
+- Remove the timeout from self-signed certificate generating (Bartosz.Klonowski@callstack.com)
 
 ## 0.0.0-canary.41
 
