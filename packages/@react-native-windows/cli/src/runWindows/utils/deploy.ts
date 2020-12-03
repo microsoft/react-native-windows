@@ -239,28 +239,7 @@ export async function deployToDesktop(
   })[0];
   const appName = identity.attributes.Name;
 
-  const vsVersion = buildTools.installationVersion;
-  if (vsVersion.startsWith('16.5') || vsVersion.startsWith('16.6')) {
-    // VS 16.5 and 16.6 introduced a regression in packaging where the certificates created in the UI will render the package uninstallable.
-    // This will be fixed in 16.7. In the meantime we need to copy the Add-AppDevPackage that has the fix for this EKU issue:
-    // https://developercommunity.visualstudio.com/content/problem/1012921/uwp-packaging-generates-incompatible-certificate.html
-    if (verbose) {
-      newWarn(
-        'Applying Add-AppDevPackage.ps1 workaround for VS 16.5-16.6 bug - see https://developercommunity.visualstudio.com/content/problem/1012921/uwp-packaging-generates-incompatible-certificate.html',
-      );
-    }
-    fs.copyFileSync(
-      path.join(
-        path.resolve(__dirname),
-        '..',
-        '..',
-        '..',
-        'powershell',
-        'Add-AppDevPackage.ps1',
-      ),
-      script,
-    );
-  }
+  // const vsVersion = buildTools.installationVersion;
 
   let args = [];
   if (options.remoteDebugging) {
@@ -301,9 +280,6 @@ export async function deployToDesktop(
     const IDE_folder = `${buildTools.installationPath}\\Common7\\IDE`;
     const deployAppxRecipe_exe = `${IDE_folder}\\DeployAppRecipe.exe`;
     if (fs.existsSync(deployAppxRecipe_exe)) {
-      // Need fix for VS's DeployAppxRecipe to return error code on failure and to be able to be run from any directory
-      const oldDir = process.cwd();
-      process.chdir(IDE_folder);
       await commandWithProgress(
         newSpinner('Deploying'),
         `Deploying ${appxRecipe}`,
@@ -313,7 +289,6 @@ export async function deployToDesktop(
         ],
         verbose,
       );
-      process.chdir(oldDir);
     } else {
       // Install the app package's dependencies before attempting to deploy.
       await runPowerShellScriptFunction(
