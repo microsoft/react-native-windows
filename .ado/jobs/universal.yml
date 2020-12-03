@@ -71,9 +71,6 @@ jobs:
           yarnBuildCmd: build
           project: vnext/Microsoft.ReactNative.sln
 
-      - script: dir $(Build.SourcesDirectory)\vnext /s/b 
-        displayName: List files VNext
-
       - task: PublishPipelineArtifact@1
         displayName: "Publish binaries for testing"
         inputs:
@@ -142,8 +139,9 @@ jobs:
             BuildConfiguration: Release
             BuildPlatform: x86
         # End Continuous only
-    pool:
-      vmImage: $(VmImage)
+    # Note: The windev build agents have the enlistment on the c-drive, where the hosted agents have it on the d-drive
+    # UWP Places absolute paths in some of the files, so we have to run the tests on the same layout of the drives we had build on.
+    pool: windevbuildagents
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
 
@@ -178,9 +176,6 @@ jobs:
         inputs:
           targetPath: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           artifactName: "Universal-$(BuildPlatform)-$(BuildConfiguration)"
-
-      - script: dir $(Build.SourcesDirectory)\vnext /s/b 
-        displayName: List files VNext
 
       - powershell: |
           Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
