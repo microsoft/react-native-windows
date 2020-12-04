@@ -30,7 +30,7 @@
     <HERMES_ARCH Condition="'$(HERMES_ARCH)' == ''">uwp</HERMES_ARCH>
 
     <USE_V8 Condition="('$(USE_V8)' == '') OR ('$(Platform)' == 'ARM')">false</USE_V8>
-    <V8_Version Condition="'$(V8_Version)' == ''">0.63.1</V8_Version>
+    <V8_Version Condition="'$(V8_Version)' == ''">0.63.3</V8_Version>
     <V8_Package Condition="'$(V8_Package)' == '' AND '$(V8AppPlatform)' == 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8_Version)</V8_Package>
     <V8_Package Condition="'$(V8_Package)' == '' AND '$(V8AppPlatform)' != 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.UWP.$(V8_Version)</V8_Package>
 
