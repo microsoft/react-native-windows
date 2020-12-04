@@ -38,10 +38,11 @@ steps:
       configuration: $(BuildConfiguration)
       clean: false # Optional
       maximumCpuCount: false # Optional
-      restoreNugetPackages: true # Optional
       createLogFile: true
       logFileVerbosity: detailed
       msbuildArgs:
+        /restore
+        /p:RestorePackagesConfig=true
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:BaseIntDir=$(BaseIntDir)
