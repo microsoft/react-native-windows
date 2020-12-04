@@ -173,6 +173,7 @@ void V8JSIRuntimeHolder::initRuntime() noexcept {
     args.inspectorPort = debuggerPort_;
 
   args.enableInspector = useDirectDebugger_;
+  args.waitForDebugger = debuggerBreakOnNextLine_;
 
   args.foreground_task_runner =
       std::make_unique<TaskRunnerAdapter>(std::make_shared<ReactQueueBackedTaskRunner>(jsQueue_));
