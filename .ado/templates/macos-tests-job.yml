@@ -1,11 +1,6 @@
-parameters:
-  name: ''
-
 jobs:
-  - job: ${{ parameters.name }}
+  - job: MacTests
     displayName: macOS Tests
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
 
     variables:
       - template: ../variables/macos.yml

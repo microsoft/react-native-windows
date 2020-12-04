@@ -4,9 +4,6 @@ jobs:
     variables:
       - template: ../variables/vs2019.yml
     displayName: JavaScript Checks
-    dependsOn: 
-      - Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling

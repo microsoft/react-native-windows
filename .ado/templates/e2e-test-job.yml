@@ -6,8 +6,6 @@ parameters:
 jobs:
   - job: ${{ parameters.name }}
     displayName: E2E Test
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
 
     variables:
       - template: ../variables/vs2019.yml

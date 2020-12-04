@@ -11,9 +11,6 @@ jobs:
     variables:
       - template: ../variables/vs2019.yml
     displayName: Verify Cli
-    dependsOn:
-     - Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         # Start Continuous only
@@ -192,9 +189,6 @@ jobs:
     variables:
       - template: ../variables/vs2019.yml
     displayName: Verify Cli
-    dependsOn:
-     - Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86DebugCppWinUI3:
@@ -228,20 +222,14 @@ jobs:
           additionalRunArguments: $(additionalRunArguments)
           continueOnBuildFailure: true # See issue #6129
 
+
   # We unfortunately can't add the nuget ones to the existing matrix above because Azure DevOps does not allow the dependsOn to be dynamic based on matrix expansion
   - job: CliInitNuGet
     variables:
       - template: ../variables/vs2019.yml
     displayName: Verify Cli
     dependsOn:
-      - Setup
       - UniversalBuild
-    condition: |
-      and
-      (
-        ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ),
-        in(dependencies.Universal.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
-      )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X64DebugCppNuget:

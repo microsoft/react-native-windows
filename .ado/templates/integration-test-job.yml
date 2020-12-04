@@ -5,8 +5,6 @@ parameters:
 jobs:
   - job: ${{ parameters.name }}
     displayName: Integration Test
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
 
     variables:
       - template: ../variables/vs2019.yml

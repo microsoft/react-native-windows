@@ -10,48 +10,61 @@ variables:
   - template: variables/msbuild.yml
   - group: platform-override-zero-permission-token
 
-jobs:
-  - job: Setup
-    variables:
-      - template: variables/vs2019.yml
-    steps:
-      - task: powershell@2
-        name: checkPayload
-        displayName: "Check if build is required for this PR"
-        inputs:
-          targetType: filePath
-          filePath: .ado/shouldSkipPRBuild.ps1
+stages:
+  - stage: Setup
+    jobs:
+      - job: Setup
+        variables:
+          - template: variables/vs2019.yml
+        steps:
+          - task: powershell@2
+            name: checkPayload
+            displayName: "Check if build is required for this PR"
+            inputs:
+              targetType: filePath
+              filePath: .ado/shouldSkipPRBuild.ps1
 
-  - template: jobs/jschecks.yml
+  - stage: Build
+    displayName: Build and Cli
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    jobs:
+      - template: jobs/universal.yml
+        parameters:
+          buildEnvironment: PullRequest
 
-  - template: jobs/universal.yml
-    parameters:
-      buildEnvironment: PullRequest
+      - template: jobs/desktop.yml
+        parameters:
+          buildEnvironment: PullRequest
+  
+      - template: jobs/nuget-desktop.yml
 
-  - template: jobs/desktop.yml
-    parameters:
-      buildEnvironment: PullRequest
+      # It would be nice to have this in a separate stage, but the nuget cli tests depend on the Universal build.
+      - template: jobs/cli-init.yml
+        parameters:
+          buildEnvironment: PullRequest
 
-  - template: jobs/nuget-desktop.yml
+  - stage: IntegrationTests
+    displayName: Integration Tests
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'False' )
+    jobs:
+      - template: jobs/jschecks.yml
 
-  - template: jobs/cli-init.yml
-    parameters:
-      buildEnvironment: PullRequest
+      - template: jobs/macos-tests.yml
 
-  - template: jobs/playground.yml
-    parameters:
-      buildEnvironment: PullRequest
+      - template: jobs/playground.yml
+        parameters:
+          buildEnvironment: PullRequest
 
-  - template: jobs/sample-apps.yml
-    parameters:
-      buildEnvironment: PullRequest
+      - template: jobs/sample-apps.yml
+        parameters:
+          buildEnvironment: PullRequest
 
-  - template: jobs/e2e-test.yml
-    parameters:
-      buildEnvironment: PullRequest
+      - template: jobs/e2e-test.yml
+        parameters:
+          buildEnvironment: PullRequest
 
-  - template: jobs/integration-test.yml
-    parameters:
-      buildEnvironment: PullRequest
-
-  - template: jobs/macos-tests.yml
+      - template: jobs/integration-test.yml
+        parameters:
+          buildEnvironment: PullRequest
