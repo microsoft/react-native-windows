@@ -72,7 +72,9 @@ jobs:
         parameters:
           yarnBuildCmd: build
           project: vnext/ReactWindows-Desktop.sln
-
+          buildPlatform: $(BuildPlatform)
+          buildConfiguration: $(BuildConfiguration)
+          
       - task: CmdLine@2
         displayName: Build react-native-win32 RNTester bundle
         inputs:
@@ -140,6 +142,8 @@ jobs:
       - template: ../templates/publish-build-artifacts-for-nuget.yml
         parameters:
           artifactName: ReactWindows
+          buildPlatform: $(BuildPlatform)
+          buildConfiguration: $(BuildConfiguration)
           contents: |
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**

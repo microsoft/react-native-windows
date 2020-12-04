@@ -9,10 +9,11 @@ parameters:
   msBuildArchitecture: $(MSBuildArchitecture)
   preferredToolArchitecture: $(MSBuildPreferredToolArchitecture)
   platformToolset: $(MSBuildPlatformToolset)
+  buildPlatform: x64
+  buildConfiguration: Debug
   msbuildArguments: ''
   yarnBuildCmd: build
-  BuildLogDirectory: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
-
+  multicoreBuild: false
 
   # Visual Studio Installer
   vsComponents: ''
@@ -20,6 +21,10 @@ parameters:
   installVsComponents: false
 
 steps:
+  - powershell: |
+      Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.buildPlatform }}\${{ parameters.buildConfiguration }}\BuildLogs"
+    displayName: Set Log directory
+
   - template: prepare-env.yml
     parameters:
       vsComponents: ${{ parameters.vsComponents }}
@@ -44,10 +49,10 @@ steps:
       solution: ${{parameters.project }}
       vsVersion: ${{parameters.msbuildVersion}}
       msbuildArchitecture: ${{parameters.msBuildArchitecture}}
-      platform: $(BuildPlatform)
-      configuration: $(BuildConfiguration)
+      platform: ${{ parameters.buildPlatform }}
+      configuration: ${{ parameters.buildConfiguration }}
       clean: false # Optional
-      maximumCpuCount: false # Optional
+      maximumCpuCount: ${{ parameters.multicoreBuild }} # Optional
       restoreNugetPackages: false # Optional
       createLogFile: true
       logFileVerbosity: detailed
@@ -57,12 +62,12 @@ steps:
         /p:BaseIntDir=$(BaseIntDir)
         /p:PublishToolDuringBuild=true
         /p:EnableSourceLink=true
-        /bl:${{ parameters.BuildLogDirectory }}\MsBuild.binlog
-        /flp1:errorsonly;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.err
-        /flp2:warningsonly;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.wrn
-        /flp3:verbosity=diagnostic;logfile=${{ parameters.BuildLogDirectory }}\MsBuild.log
+        /bl:$(BuildLogDirectory)\MsBuild.binlog
+        /flp1:errorsonly;logfile=$(BuildLogDirectory)\MsBuild.err
+        /flp2:warningsonly;logfile=$(BuildLogDirectory)\MsBuild.wrn
+        /flp3:verbosity=diagnostic;logfile=$(BuildLogDirectory)\MsBuild.log
         ${{parameters.msbuildArguments}}
 
   - template: upload-build-logs.yml
     parameters:
-      buildLogDirectory: '${{ parameters.BuildLogDirectory }}'
+      buildLogDirectory: $(BuildLogDirectory)
