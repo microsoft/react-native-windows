@@ -93,7 +93,7 @@ export async function copyAndReplace(
   }
 
   const extension = path.extname(srcPath);
-  if (binaryExtensions.indexOf(extension) !== -1) {
+  if (binaryExtensions.includes(extension)) {
     // Binary file
     let shouldOverwrite = 'overwrite';
     if (contentChangedCallback) {
@@ -123,7 +123,7 @@ export async function copyAndReplace(
   } else {
     // Text file
     const srcPermissions = fs.statSync(srcPath).mode;
-    let content = resolveContents(srcPath, replacements);
+    const content = resolveContents(srcPath, replacements);
 
     let shouldOverwrite = 'overwrite';
     if (contentChangedCallback) {

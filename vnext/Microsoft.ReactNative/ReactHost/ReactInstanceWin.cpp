@@ -8,6 +8,7 @@
 #include <Base/CoreNativeModules.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
+#include <comUtil/qiCast.h>
 
 #include <XamlUIService.h>
 #include "ReactErrorProvider.h"
@@ -26,6 +27,7 @@
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
 
+#include <JSCallInvokerScheduler.h>
 #include <Shared/DevServerHelper.h>
 #include <Views/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
@@ -61,6 +63,8 @@
 
 #include <tuple>
 #include "ChakraRuntimeHolder.h"
+
+#include "JsiApi.h"
 
 namespace Microsoft::ReactNative {
 
@@ -378,6 +382,8 @@ void ReactInstanceWin::Initialize() noexcept {
                     devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
                 break;
             }
+
+            m_jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
           }
 
           try {
@@ -385,6 +391,7 @@ void ReactInstanceWin::Initialize() noexcept {
             m_options.TurboModuleProvider->SetReactContext(
                 winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
             auto instanceWrapper = facebook::react::CreateReactInstance(
+                std::shared_ptr<facebook::react::Instance>(strongThis->m_instance.Load()),
                 std::string(), // bundleRootPath
                 std::move(cxxModules),
                 m_options.TurboModuleProvider,
@@ -393,7 +400,6 @@ void ReactInstanceWin::Initialize() noexcept {
                 Mso::Copy(m_batchingUIThread),
                 std::move(devSettings));
 
-            m_instance.Exchange(Mso::Copy(instanceWrapper->GetInstance()));
             m_instanceWrapper.Exchange(std::move(instanceWrapper));
 
             if (auto onCreated = m_options.OnInstanceCreated.Get()) {
@@ -537,6 +543,12 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
 
   // Make sure that the instance is not destroyed yet
   if (auto instance = m_instance.Exchange(nullptr)) {
+    {
+      // Release the JSI runtime
+      std::scoped_lock lock{m_mutex};
+      m_jsiRuntimeHolder = nullptr;
+      m_jsiRuntime = nullptr;
+    }
     // Release the message queues before the ui manager and instance.
     m_nativeMessageThread.Exchange(nullptr);
     m_jsMessageThread.Exchange(nullptr);
@@ -556,18 +568,39 @@ ReactInstanceState ReactInstanceWin::State() const noexcept {
 }
 
 void ReactInstanceWin::InitJSMessageThread() noexcept {
-  auto jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
+  m_instance.Exchange(std::make_shared<facebook::react::Instance>());
 
-  // Create MessageQueueThread for the DispatchQueue
-  VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");
+  static bool old = false;
+  if (old) {
+    auto jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
 
-  auto jsDispatcher =
-      winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
-  m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
+    // Create MessageQueueThread for the DispatchQueue
+    VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");
 
-  m_jsMessageThread.Exchange(std::make_shared<MessageDispatchQueue>(
-      jsDispatchQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError), Mso::Copy(m_whenDestroyed)));
-  m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
+    auto jsDispatcher =
+        winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
+    m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
+
+    m_jsMessageThread.Exchange(std::make_shared<MessageDispatchQueue>(
+        jsDispatchQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError), Mso::Copy(m_whenDestroyed)));
+    m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
+  } else {
+    auto scheduler = Mso::MakeJSCallInvokerScheduler(
+        m_instance.Load()->getJSCallInvoker(),
+        Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
+        Mso::Copy(m_whenDestroyed));
+    auto jsDispatchQueue = Mso::DispatchQueue::MakeCustomQueue(Mso::CntPtr(scheduler));
+
+    // Create MessageQueueThread for the DispatchQueue
+    VerifyElseCrashSz(jsDispatchQueue, "m_jsDispatchQueue must not be null");
+
+    auto jsDispatcher =
+        winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
+    m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
+
+    m_jsMessageThread.Exchange(qi_cast<Mso::IJSCallInvokerQueueScheduler>(scheduler.Get())->GetMessageQueue());
+    m_jsDispatchQueue.Exchange(std::move(jsDispatchQueue));
+  }
 }
 
 void ReactInstanceWin::InitNativeMessageThread() noexcept {
@@ -787,6 +820,31 @@ void ReactInstanceWin::CallJsFunction(
 void ReactInstanceWin::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept {
   folly::dynamic params = folly::dynamic::array(viewTag, std::move(eventName), std::move(eventData));
   CallJsFunction("RCTEventEmitter", "receiveEvent", std::move(params));
+}
+
+winrt::Microsoft::ReactNative::JsiRuntime ReactInstanceWin::JsiRuntime() noexcept {
+  std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> jsiRuntimeHolder;
+  {
+    std::scoped_lock lock{m_mutex};
+    if (m_jsiRuntime) {
+      return m_jsiRuntime;
+    } else {
+      jsiRuntimeHolder = m_jsiRuntimeHolder;
+    }
+  }
+
+  auto jsiRuntime = jsiRuntimeHolder ? jsiRuntimeHolder->getRuntime() : nullptr;
+
+  {
+    std::scoped_lock lock{m_mutex};
+    if (!m_jsiRuntime && jsiRuntime) {
+      // Set only if other thread did not do it yet.
+      m_jsiRuntime = winrt::make<winrt::Microsoft::ReactNative::implementation::JsiRuntime>(
+          std::move(jsiRuntimeHolder), std::move(jsiRuntime));
+    }
+
+    return m_jsiRuntime;
+  }
 }
 
 std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() noexcept {

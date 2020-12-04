@@ -54,26 +54,24 @@ export default class MSBuildTools {
     buildArch: BuildArch,
     msBuildProps: Record<string, string>,
     verbose: boolean,
-    target: string | undefined,
+    target: 'build' | 'deploy',
     buildLogDirectory: string | undefined,
     singleproc?: boolean,
   ) {
     newSuccess(`Found Solution: ${slnFile}`);
     newInfo(`Build configuration: ${buildType}`);
     newInfo(`Build platform: ${buildArch}`);
-    if (target) {
-      newInfo(`Build target: ${target}`);
-    }
+
     const verbosityOption = verbose ? 'normal' : 'minimal';
     const logPrefix = path.join(
       buildLogDirectory || os.tmpdir(),
-      `msbuild_${process.pid}${target ? '_' + target : ''}`,
+      `msbuild_${process.pid}_${target}`,
     );
 
     const errorLog = logPrefix + '.err';
     const warnLog = logPrefix + '.wrn';
 
-    const localBinLog = target ? `:${target}.binlog` : '';
+    const localBinLog = target === 'build' ? '' : ':deploy.binlog';
     const binlog = buildLogDirectory ? `:${logPrefix}.binlog` : localBinLog;
 
     const args = [
@@ -97,15 +95,15 @@ export default class MSBuildTools {
       args.push('/maxCpuCount');
     }
 
-    if (target) {
-      args.push(`/t:${target}`);
+    if (target === 'build') {
+      args.push('/restore', '/p:RestorePackagesConfig=true');
+    } else {
+      args.push(`/t:Deploy`);
     }
 
-    if (msBuildProps) {
-      Object.keys(msBuildProps).forEach(function(key) {
-        args.push(`/p:${key}=${msBuildProps[key]}`);
-      });
-    }
+    Object.keys(msBuildProps).forEach(key => {
+      args.push(`/p:${key}=${msBuildProps[key]}`);
+    });
 
     try {
       checkRequirements.isWinSdkPresent('10.0');
@@ -119,7 +117,7 @@ export default class MSBuildTools {
     }
 
     const progressName =
-      target === 'Deploy' ? 'Deploying Solution' : 'Building Solution';
+      target === 'deploy' ? 'Deploying Solution' : 'Building Solution';
     const spinner = newSpinner(progressName);
     try {
       await commandWithProgress(
@@ -156,10 +154,10 @@ export default class MSBuildTools {
       'Microsoft.Component.MSBuild',
       getVCToolsByArch(buildArch),
     ];
-    const version = process.env.VisualStudioVersion || '16.0';
+    const minVersion = process.env.VisualStudioVersion || '16.5';
     const vsInstallation = findLatestVsInstall({
       requires,
-      version,
+      minVersion,
       verbose,
       prerelease,
     });
@@ -171,7 +169,7 @@ export default class MSBuildTools {
         );
       } else {
         throw new Error(
-          'MSBuild tools not found. Make sure all required components have been installed',
+          `Could not find MSBuild with VCTools for Visual Studio ${minVersion} or later. Make sure all required components have been installed`,
         );
       }
     }
@@ -183,10 +181,10 @@ export default class MSBuildTools {
 
     if (fs.existsSync(toolsPath)) {
       newSuccess(
-        `Found MSBuild v${version} at ${toolsPath} (${vsInstallation.installationVersion})`,
+        `Found compatible MSBuild at ${toolsPath} (${vsInstallation.installationVersion})`,
       );
       return new MSBuildTools(
-        version,
+        minVersion,
         toolsPath,
         vsInstallation.installationVersion,
       );

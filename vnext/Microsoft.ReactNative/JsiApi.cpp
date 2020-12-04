@@ -330,15 +330,15 @@ ReactNative::JsiRuntime JsiRuntime::MakeChakraRuntime() {
   auto runtimeHolder = std::make_shared<::Microsoft::JSI::ChakraRuntimeHolder>(
       std::move(devSettings), std::move(jsThread), nullptr, nullptr);
   auto runtime = runtimeHolder->getRuntime();
-  ReactNative::JsiRuntime result{make<JsiRuntime>(std::move(runtimeHolder), runtime)};
+  ReactNative::JsiRuntime result{make<JsiRuntime>(std::move(runtimeHolder), Mso::Copy(runtime))};
   std::scoped_lock lock{s_mutex};
   s_jsiRuntimeMap.try_emplace(reinterpret_cast<uintptr_t>(runtime.get()), result);
   return result;
 }
 
 JsiRuntime::JsiRuntime(
-    std::shared_ptr<::Microsoft::JSI::ChakraRuntimeHolder> runtimeHolder,
-    std::shared_ptr<facebook::jsi::Runtime> runtime) noexcept
+    std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> &&runtimeHolder,
+    std::shared_ptr<facebook::jsi::Runtime> &&runtime) noexcept
     : m_runtimeHolder{std::move(runtimeHolder)}, m_runtime{std::move(runtime)} {}
 
 JsiRuntime::~JsiRuntime() noexcept {

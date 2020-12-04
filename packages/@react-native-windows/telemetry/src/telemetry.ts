@@ -65,12 +65,12 @@ function getAnonymizedPath(filepath: string): string {
   if (filepath.toLowerCase().startsWith(projectRoot)) {
     const ext = path.extname(filepath);
     const rest = filepath.slice(projectRoot.length);
-    const node_modules = '\\node_modules\\';
+    const nodeModules = '\\node_modules\\';
     // this is in the project dir but not under node_modules
     if (rest.toLowerCase().startsWith('\\windows\\')) {
       return `[windows]\\???${ext}(${filepath.length})`;
-    } else if (rest.toLowerCase().startsWith(node_modules)) {
-      return 'node_modules' + rest.slice(node_modules.length - 1);
+    } else if (rest.toLowerCase().startsWith(nodeModules)) {
+      return 'node_modules' + rest.slice(nodeModules.length - 1);
     } else {
       return `[project_dir]\\???${ext}(${filepath.length})`;
     }

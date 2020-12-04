@@ -4,6 +4,11 @@
  * @format
  */
 
+// Types in this file are inaccurate compared to usage in terms of falsiness.
+// We should try to rewrite some of this to do automated schema validation to
+// guarantee correct types
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+
 import * as fs from 'fs';
 import * as path from 'path';
 import * as chalk from 'chalk';
@@ -65,7 +70,7 @@ function getNormalizedContents(
   replacements: generatorCommon.Replacements,
 ) {
   // Template files are CRLF, JS-generated replacements are LF, normalize replacements to CRLF
-  for (var key in replacements) {
+  for (const key of Object.keys(replacements)) {
     replacements[key] = replacements[key].replace(/\n/g, '\r\n');
   }
 
@@ -118,6 +123,8 @@ function updateFile(
  * @param config Config passed from react-native CLI.
  * @param options Options passed from react-native CLI.
  */
+// Disabling lint warnings due to high existing cyclomatic complexity
+// eslint-disable-next-line complexity
 async function updateAutoLink(
   args: string[],
   config: Config,
@@ -129,7 +136,7 @@ async function updateAutoLink(
 
   const checkMode = options.check;
 
-  var changesNecessary = false;
+  let changesNecessary = false;
 
   const spinner = newSpinner(
     checkMode ? 'Checking auto-linked files...' : 'Auto-linking...',
@@ -245,9 +252,9 @@ async function updateAutoLink(
 
     const dependenciesConfig = config.dependencies;
 
-    let windowsDependencies: Record<string, WindowsDependencyConfig> = {};
+    const windowsDependencies: Record<string, WindowsDependencyConfig> = {};
 
-    for (const dependencyName in dependenciesConfig) {
+    for (const dependencyName of Object.keys(dependenciesConfig)) {
       const windowsDependency: WindowsDependencyConfig | undefined =
         dependenciesConfig[dependencyName].platforms.windows;
 
@@ -258,7 +265,7 @@ async function updateAutoLink(
         );
         verboseMessage(windowsDependency, verbose);
 
-        var dependencyIsValid = true;
+        let dependencyIsValid = true;
 
         dependencyIsValid = !!(
           dependencyIsValid &&
@@ -299,7 +306,7 @@ async function updateAutoLink(
       let csUsingNamespaces = '';
       let csReactPackageProviders = '';
 
-      for (const dependencyName in windowsDependencies) {
+      for (const dependencyName of Object.keys(windowsDependencies)) {
         windowsDependencies[dependencyName].projects.forEach(project => {
           if (project.directDependency) {
             csUsingNamespaces += `\n\n// Namespaces from ${dependencyName}`;
@@ -343,7 +350,7 @@ async function updateAutoLink(
       let cppIncludes = '';
       let cppPackageProviders = '';
 
-      for (const dependencyName in windowsDependencies) {
+      for (const dependencyName of Object.keys(windowsDependencies)) {
         windowsDependencies[dependencyName].projects.forEach(project => {
           if (project.directDependency) {
             cppIncludes += `\n\n// Includes from ${dependencyName}`;
@@ -393,10 +400,10 @@ async function updateAutoLink(
 
     // Generating props for app project consumption
     let propertiesForProps = '';
-    let csModuleNames: string[] = [];
+    const csModuleNames: string[] = [];
 
     if (projectLang === 'cpp') {
-      for (const dependencyName in windowsDependencies) {
+      for (const dependencyName of Object.keys(windowsDependencies)) {
         windowsDependencies[dependencyName].projects.forEach(project => {
           if (project.directDependency && project.projectLang === 'cs') {
             csModuleNames.push(project.projectName);
@@ -437,7 +444,7 @@ async function updateAutoLink(
     // Generating targets for app project consumption
     let projectReferencesForTargets = '';
 
-    for (const dependencyName in windowsDependencies) {
+    for (const dependencyName of Object.keys(windowsDependencies)) {
       windowsDependencies[dependencyName].projects.forEach(project => {
         if (project.directDependency) {
           const dependencyProjectFile = path.join(
@@ -484,9 +491,9 @@ async function updateAutoLink(
       changesNecessary;
 
     // Generating project entries for solution
-    let projectsForSolution: Project[] = [];
+    const projectsForSolution: Project[] = [];
 
-    for (const dependencyName in windowsDependencies) {
+    for (const dependencyName of Object.keys(windowsDependencies)) {
       // Process dependency projects
       windowsDependencies[dependencyName].projects.forEach(project => {
         const dependencyProjectFile = path.join(
@@ -543,7 +550,7 @@ async function updateAutoLink(
     });
 
     spinner.succeed();
-    var endTime = performance.now();
+    const endTime = performance.now();
 
     if (!changesNecessary) {
       console.log(
@@ -577,7 +584,7 @@ async function updateAutoLink(
     }
   } catch (e) {
     spinner.fail();
-    var endTime = performance.now();
+    const endTime = performance.now();
     console.log(
       `${chalk.red('Error:')} ${e.toString()}. (${Math.round(
         endTime - startTime,

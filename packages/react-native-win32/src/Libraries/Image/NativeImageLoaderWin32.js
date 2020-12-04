@@ -33,6 +33,11 @@ export interface Spec extends TurboModule {
     ...
   }>;
   +prefetchImage: (uri: string) => Promise<boolean>;
+  +prefetchImageWithMetadata?: (
+    uri: string,
+    queryRootName: string,
+    rootTag: number,
+  ) => Promise<boolean>;
   +queryCache: (uris: Array<string>) => Promise<Object>;
   // Win32]
 }

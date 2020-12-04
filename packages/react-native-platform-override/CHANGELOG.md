@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Thu, 29 Oct 2020 05:05:49 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Nov 2020 05:08:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.4.3
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Patches
+
+- Add more eslint rules (ngerlem@microsoft.com)
 
 ## 0.4.1
 

@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "chai": "^4.2.0",
-    "react": "16.13.1",
-    "react-native": "0.0.0-77f7658e4",
-    "react-native-windows": "^0.0.0-canary.208"
+    "react": "17.0.1",
+    "react-native": "0.0.0-19d4cc2d4",
+    "react-native-windows": "^0.0.0-canary.219"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -21,7 +21,7 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/traverse": "^7.11.5",
-    "@rnw-scripts/eslint-config": "^0.1.4",
+    "@rnw-scripts/eslint-config": "^0.1.6",
     "@rnw-scripts/just-task": "^0.0.6",
     "@rnw-scripts/ts-config": "^0.1.0",
     "@types/chai": "^4.2.12",
@@ -30,8 +30,8 @@
     "@types/react-native": "^0.63.18",
     "@types/ws": "^7.2.6",
     "babel-jest": "^26.3.0",
-    "eslint": "6.8.0",
-    "jest": "^26.4.2",
+    "eslint": "7.12.0",
+    "jest": "^26.5.2",
     "just-scripts": "^0.44.7",
     "ora": "^3.4.0",
     "prettier": "1.19.1",

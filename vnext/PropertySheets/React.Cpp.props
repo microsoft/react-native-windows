@@ -21,6 +21,7 @@
   <PropertyGroup Label="Desktop">
     <!-- See https://docs.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt -->
     <WinVer>_WIN32_WINNT_WIN8</WinVer>
+    <EnableBeast Condition="'$(EnableBeast)' == ''">0</EnableBeast>
   </PropertyGroup>
 
   <PropertyGroup>

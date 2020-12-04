@@ -64,7 +64,7 @@ export default interface Override {
  * Platform overrides represent logic not derived from upstream sources.
  */
 export class PlatformOverride implements Override {
-  private overrideFile: string;
+  private readonly overrideFile: string;
 
   constructor(args: {file: string}) {
     this.overrideFile = normalizePath(args.file);
@@ -332,11 +332,11 @@ export class PatchOverride extends BaseFileOverride {
  * DirectoryCopy overrides copy files from an upstream directory
  */
 export class DirectoryCopyOverride implements Override {
-  private directory: string;
-  private baseDirectory: string;
-  private baseVersion: string;
-  private baseHash: string;
-  private issue?: number;
+  private readonly directory: string;
+  private readonly baseDirectory: string;
+  private readonly baseVersion: string;
+  private readonly baseHash: string;
+  private readonly issue?: number;
 
   constructor(args: {
     directory: string;

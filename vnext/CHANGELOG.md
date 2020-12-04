@@ -1,8 +1,98 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 16 Nov 2020 17:37:03 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Nov 2020 05:06:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.219
+
+Thu, 26 Nov 2020 05:06:06 GMT
+
+### Changes
+
+- Refactor ReactContext API (vmorozov@microsoft.com)
+
+## 0.0.0-canary.218
+
+Wed, 25 Nov 2020 05:06:16 GMT
+
+### Changes
+
+- Add error for users who try to build apps/libs via project instead of solution (jthysell@microsoft.com)
+
+## 0.0.0-canary.217
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Changes
+
+- Fix links in some docs, mark APIs as deprecated or experimental as appropriate (asklar@microsoft.com)
+- Don't run bundling when doing intellisense builds (asklar@microsoft.com)
+- Add more eslint rules (ngerlem@microsoft.com)
+
+## 0.0.0-canary.216
+
+Sun, 22 Nov 2020 05:06:06 GMT
+
+### Changes
+
+- fix invalidation bug and use Canvas.Top/Left (kmelmon@microsoft.com)
+- fix panels with transforms leaking (stecrain@microsoft.com)
+
+## 0.0.0-canary.215
+
+Sat, 21 Nov 2020 05:05:40 GMT
+
+### Changes
+
+- Add ReactContext::ExecuteJsi method to use JSI in NativeModules (vmorozov@microsoft.com)
+
+## 0.0.0-canary.214
+
+Fri, 20 Nov 2020 05:08:43 GMT
+
+### Changes
+
+- WinUI 3 Preview 3 support (asklar@microsoft.com)
+- Update lib template to default prefer RNW dir of consuming app (jthysell@microsoft.com)
+- Integrate 11/18 RN Nightly Build 🎉 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.213
+
+Thu, 19 Nov 2020 17:13:10 GMT
+
+### Changes
+
+- Update Nuget publish to not overwrite the created anycpu version (dannyvv@microsoft.com)
+- Use lessthrow_await_adapter for WebSocketJSExecutor::ConnectAsync (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.212
+
+Thu, 19 Nov 2020 05:06:10 GMT
+
+### Changes
+
+- Exclude Beast WebSocket from build by default. (julio.rocha@microsoft.com)
+- fix typo (igklemen@microsoft.com)
+- Add Yellowbox warnings for WIndows Variants of Lean Core Components (ngerlem@microsoft.com)
+
+## 0.0.0-canary.211
+
+Wed, 18 Nov 2020 03:10:51 GMT
+
+### Changes
+
+- CornerRadius only exists on RS5, restore the behavior to gracefully degrade on older OS releases (asklar@microsoft.com)
+- Check for VS >= 16.5 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.209
+
+Tue, 17 Nov 2020 05:05:00 GMT
+
+### Changes
+
+- Embed documentation of WinRT APIs in the winmd (asklar@microsoft.com)
+- JSDispatcher should use JSCallInvoker internally (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.208
 
