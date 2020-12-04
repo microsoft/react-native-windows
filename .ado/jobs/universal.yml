@@ -139,9 +139,8 @@ jobs:
             BuildConfiguration: Release
             BuildPlatform: x86
         # End Continuous only
-    # Note: The windev build agents have the enlistment on the c-drive, where the hosted agents have it on the d-drive
-    # UWP Places absolute paths in some of the files, so we have to run the tests on the same layout of the drives we had build on.
-    pool: windevbuildagents
+    pool:
+      vmImage: $(VmImage)
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
 
@@ -150,28 +149,28 @@ jobs:
         clean: false
         submodules: false
 
-      # - task: PowerShell@2
-      #   displayName: "Check if this environment meets the development dependencies"
-      #   inputs:
-      #     targetType: filePath
-      #     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
-      #     arguments: -NoPrompt -Tags buildLab
+      - task: PowerShell@2
+        displayName: "Check if this environment meets the development dependencies"
+        inputs:
+          targetType: filePath
+          filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
+          arguments: -NoPrompt -Tags buildLab
           
       - template: ../templates/prepare-env.yml
         parameters:
           yarnBuildCmd: build
 
-      - powershell: |
-          $RegistryKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
-          if (-not(Test-Path -Path $RegistryKeyPath)) {
-              New-Item -Path $RegistryKeyPath -ItemType Directory -Force
-          }
-          $value = get-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -ErrorAction SilentlyContinue
-          if (($value -eq $null) -or ($value.AllowDevelopmentWithoutDevLicense -ne 1)) {
-              Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1 -ErrorAction Stop
-          }
-        displayName: Enable developer mode
-          
+      # - powershell: |
+      #     $RegistryKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
+      #     if (-not(Test-Path -Path $RegistryKeyPath)) {
+      #         New-Item -Path $RegistryKeyPath -ItemType Directory -Force
+      #     }
+      #     $value = get-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -ErrorAction SilentlyContinue
+      #     if (($value -eq $null) -or ($value.AllowDevelopmentWithoutDevLicense -ne 1)) {
+      #         Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1 -ErrorAction Stop
+      #     }
+      #   displayName: Enable developer mode
+
       - task: NuGetCommand@2
         displayName: NuGet restore
         inputs:
@@ -187,6 +186,15 @@ jobs:
         inputs:
           targetPath: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           artifactName: "Universal-$(BuildPlatform)-$(BuildConfiguration)"
+
+      # The WinDevBuild Agents run on the c-drive and the hosted agetns run on the d-drive.
+      # Some of the output files have the c-drive expanded in the outputs, whcih results in file not found errors when running tests
+      # This script fixes those files to point to the d-drive of the hosted agents.
+      # We unfortunately can't run the tests on the windev build pool because it lacks UI support
+      - powershell: |
+          Get-ChildItem *.appxrecipe -recurse | ForEach { (Get-Content -Path $_) -replace "c:\\a\\1\\s", "d:\a\1\s" | Set-Content -Path $_ }
+        displayName: Fix Paths from c:\ to d:\ for appx files
+
 
       - powershell: |
           Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
