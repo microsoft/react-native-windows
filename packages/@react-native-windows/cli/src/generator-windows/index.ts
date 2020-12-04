@@ -174,25 +174,20 @@ export async function copyProjectTemplateAndReplace(
     : 'Windows.UI.Xaml';
   const xamlNamespaceCpp = toCppNamespace(xamlNamespace);
 
-  const winui3PropsPath = require.resolve(
+  const winuiPropsPath = require.resolve(
     'react-native-windows/PropertySheets/WinUI.props',
     {paths: [process.cwd()]},
   );
-  const winui3Props = readProjectFile(winui3PropsPath);
+  const winuiProps = readProjectFile(winui3PropsPath);
   const winui3Version = findPropertyValue(
-    winui3Props,
+    winuiProps,
     'WinUI3Version',
-    winui3PropsPath,
+    winuiPropsPath,
   );
-  const winui2xPropsPath = require.resolve(
-    'react-native-windows/PropertySheets/WinUI.props',
-    {paths: [process.cwd()]},
-  );
-  const winui2xProps = readProjectFile(winui2xPropsPath);
   const winui2xVersion = findPropertyValue(
-    winui2xProps,
+    winuiProps,
     'WinUI2xVersion',
-    winui2xPropsPath,
+    winuiPropsPath,
   );
   const csNugetPackages: NugetPackage[] = [
     {
