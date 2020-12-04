@@ -157,7 +157,7 @@ export const runWindowsOptions: CommandOption[] = [
     name: '--no-telemetry',
     description:
       'Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
-    default: false,
+    default: true,
   },
 ];
 

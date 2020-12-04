@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 18 Nov 2020 01:36:10 GMT and should not be manually modified.
+This log was last generated on Fri, 04 Dec 2020 00:20:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.6
+
+Fri, 04 Dec 2020 00:20:35 GMT
+
+### Patches
+
+- [0.63] Update cli telemetry defaults (jthysell@microsoft.com)
 
 ## 0.63.5
 
