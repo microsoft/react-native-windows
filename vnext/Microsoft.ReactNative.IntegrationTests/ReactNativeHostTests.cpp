@@ -15,14 +15,24 @@ REACT_MODULE(TestHostModule)
 struct TestHostModule {
   REACT_INIT(Initialize)
   void Initialize(ReactContext const &reactContext) noexcept {
+    using namespace facebook::jsi;
     TestHostModule::Instance.set_value(*this);
 
     bool jsiExecuted{false};
-    ExecuteJsi(reactContext, [&](facebook::jsi::Runtime &rt) {
+    ExecuteJsi(reactContext, [&](Runtime &rt) {
       jsiExecuted = true;
       auto eval = rt.global().getPropertyAsFunction(rt, "eval");
       auto addFunc = eval.call(rt, "(function(x, y) { return x + y; })").getObject(rt).getFunction(rt);
       TestCheckEqual(7, addFunc.call(rt, 3, 4).getNumber());
+
+      Function hostGreeter = Function::createFromHostFunction(
+          rt,
+          PropNameID::forAscii(rt, "multFunc"),
+          1,
+          [](Runtime &rt, const Value & /*thisVal*/, const Value *args, size_t /*count*/) {
+            return Value{rt, String::createFromUtf8(rt, "Hello " + args[0].getString(rt).utf8(rt))};
+          });
+      TestCheckEqual("Hello boss", hostGreeter.call(rt, "boss").getString(rt).utf8(rt));
     });
     TestCheck(jsiExecuted);
   }

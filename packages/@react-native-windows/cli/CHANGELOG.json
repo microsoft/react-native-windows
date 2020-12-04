@@ -2,6 +2,36 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 03 Dec 2020 21:43:48 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.43",
+      "version": "0.0.0-canary.43",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update cli telemetry defaults",
+            "author": "jthysell@microsoft.com",
+            "commit": "6b349f3d89cc055157b3a8d0f0e75622082878c6",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Dec 2020 05:06:17 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.42",
+      "version": "0.0.0-canary.42",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove the timeout from self-signed certificate generating",
+            "author": "Bartosz.Klonowski@callstack.com",
+            "commit": "63d5e9fdecb5dd009fb839899f04747c63251e36",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Nov 2020 05:08:17 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.41",
       "version": "0.0.0-canary.41",
