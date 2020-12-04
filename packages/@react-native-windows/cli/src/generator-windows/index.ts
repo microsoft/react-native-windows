@@ -178,7 +178,7 @@ export async function copyProjectTemplateAndReplace(
     'react-native-windows/PropertySheets/WinUI.props',
     {paths: [process.cwd()]},
   );
-  const winuiProps = readProjectFile(winui3PropsPath);
+  const winuiProps = readProjectFile(winuiPropsPath);
   const winui3Version = findPropertyValue(
     winuiProps,
     'WinUI3Version',
