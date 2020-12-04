@@ -56,9 +56,6 @@
               variables:
                 - template: ../variables/vs2019.yml
               displayName: Universal Build ${{ matrix.Name }}
-              dependsOn:
-                - Setup
-              condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
               pool: windevbuildagents
               timeoutInMinutes: 60
               cancelTimeoutInMinutes: 5
@@ -106,12 +103,6 @@
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
                 - UniversalBuild${{ matrix.Name }}
-              condition: 
-                and
-                (
-                  ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ),
-                  in(dependencies.UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
-                )
               pool:
                 vmImage: $(VmImage)
               timeoutInMinutes: 60
