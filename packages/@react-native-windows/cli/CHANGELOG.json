@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 04 Dec 2020 00:24:03 GMT",
+      "tag": "@react-native-windows/cli_v0.64.0-preview.2",
+      "version": "0.64.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[0.64] Update cli telemetry defaults",
+            "author": "jthysell@microsoft.com",
+            "commit": "240316809666ff01965b34aa57bbb3209adac6b6",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Nov 2020 10:25:30 GMT",
       "tag": "@react-native-windows/cli_v0.64.0-preview.1",
       "version": "0.64.0-preview.1",

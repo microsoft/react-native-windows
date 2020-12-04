@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 04 Dec 2020 00:24:03 GMT",
+      "tag": "react-native-windows_v0.64.0-preview.2",
+      "version": "0.64.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix multicore build, missing dependency on Folly",
+            "author": "dannyvv@microsoft.com",
+            "commit": "e243fbadccfe6fc8834900788b7b48184f2596ea",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Nov 2020 10:25:30 GMT",
       "tag": "react-native-windows_v0.64.0-preview.1",
       "version": "0.64.0-preview.1",
