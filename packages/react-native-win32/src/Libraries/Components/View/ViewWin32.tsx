@@ -81,24 +81,29 @@ export const ViewWin32 = React.forwardRef(
          */
         if (localRef)
         {
-          localRef.focus = (usePoliteFocus?: boolean) => {
-            if(usePoliteFocus)
-            {
-              NativeModules.UIManager.dispatchViewManagerCommand(
-                findNodeHandle(localRef),
-                NativeModules.UIManager.getViewManagerConfig('RCTView').Commands.politefocus,
-                null
-                );
-            }
-            else
-            {
-              NativeModules.UIManager.dispatchViewManagerCommand(
-                findNodeHandle(localRef),
-                NativeModules.UIManager.getViewManagerConfig('RCTView').Commands.focus,
-                null
-                );              
-            }
+          localRef.focus = () => {
+            NativeModules.UIManager.dispatchViewManagerCommand(
+              findNodeHandle(localRef),
+              NativeModules.UIManager.getViewManagerConfig('RCTView').Commands.focus,
+              null
+              );              
           };
+
+          localRef.politeFocus = () => {
+            NativeModules.UIManager.dispatchViewManagerCommand(
+              findNodeHandle(localRef),
+              NativeModules.UIManager.getViewManagerConfig('RCTView').Commands.politefocus,
+              null
+              );            
+          }
+                 
+          localRef.aggressiveFocus = () => {
+            NativeModules.UIManager.dispatchViewManagerCommand(
+              findNodeHandle(localRef),
+              NativeModules.UIManager.getViewManagerConfig('RCTView').Commands.aggressivefocus,
+              null
+              );             
+          }
         }
       },
     });
