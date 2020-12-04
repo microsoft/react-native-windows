@@ -89,6 +89,24 @@ export const ViewWin32 = React.forwardRef(
               );
           };
         }
+
+        // Polite focus functionality - Window does not take focus
+        localRef.politeFocus = () => {
+          NativeModules.UIManager.dispatchViewManagerCommand(
+            findNodeHandle(localRef),
+            NativeModules.UIManager.getViewManagerConfig('RCTView').Commands.politefocus,
+            null
+            );
+        };
+
+        // Aggressive focus functionality - Window does take focus
+        localRef.aggressiveFocus = () => {
+          NativeModules.UIManager.dispatchViewManagerCommand(
+            findNodeHandle(localRef),
+            NativeModules.UIManager.getViewManagerConfig('RCTView').Commands.aggressivefocus,
+            null
+            );
+        };        
       },
     });
 
