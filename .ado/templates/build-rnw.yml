@@ -28,16 +28,6 @@ steps:
       yarnBuildCmd: ${{ parameters.yarnBuildCmd }}
       debug: ${{ parameters.debug }}
 
-  - task: NuGetCommand@2
-    displayName: NuGet restore
-    inputs:
-      command: restore
-      restoreSolution: ${{parameters.project }}
-      feedsToUse: config
-      nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
-      restoreDirectory: packages/
-      verbosityRestore: Detailed # Options: quiet, normal, detailed
-
   - task: VSBuild@1
     displayName: VSBuild ${{parameters.project}}
     inputs:
@@ -48,7 +38,7 @@ steps:
       configuration: $(BuildConfiguration)
       clean: false # Optional
       maximumCpuCount: false # Optional
-      restoreNugetPackages: false # Optional
+      restoreNugetPackages: true # Optional
       createLogFile: true
       logFileVerbosity: detailed
       msbuildArgs:
