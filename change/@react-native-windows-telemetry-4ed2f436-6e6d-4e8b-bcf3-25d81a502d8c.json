@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Manual bump of @react-native-windows/telemetry to cause dependents to be republished",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
