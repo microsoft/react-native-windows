@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 03 Dec 2020 21:43:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.221",
+      "version": "0.0.0-canary.221",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix version",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0230d2952b0075f3d2405a8d9389c0b36b1d3c43",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 package version; pass debuggerBreakOnNextLine property",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "094da3ede2e1f2097cc2ed7567335d0f8226e473",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Dec 2020 05:06:17 GMT",
+      "tag": "react-native-windows_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix getting JsiRuntime for host functions",
+            "author": "vmorozov@microsoft.com",
+            "commit": "5dbcffc0e8a317a6bcb15be06da768cd72588716",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Dec 2020 05:05:07 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.220",
+      "version": "0.0.0-canary.220",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "document react_struct",
+            "author": "igklemen@microsoft.com",
+            "commit": "38ba78b79fdea1086e3fe3fa082848ea56159922",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Nov 2020 05:06:06 GMT",
       "tag": "react-native-windows_v0.0.0-canary.219",
       "version": "0.0.0-canary.219",

@@ -1,8 +1,33 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 Nov 2020 05:06:06 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Dec 2020 21:43:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.221
+
+Thu, 03 Dec 2020 21:43:48 GMT
+
+### Changes
+
+- Fix version (ngerlem@microsoft.com)
+- Update V8 package version; pass debuggerBreakOnNextLine property (tudor.mihai@microsoft.com)
+
+## 0.0.0
+
+Thu, 03 Dec 2020 05:06:17 GMT
+
+### Changes
+
+- Fix getting JsiRuntime for host functions (vmorozov@microsoft.com)
+
+## 0.0.0-canary.220
+
+Tue, 01 Dec 2020 05:05:07 GMT
+
+### Changes
+
+- document react_struct (igklemen@microsoft.com)
 
 ## 0.0.0-canary.219
 

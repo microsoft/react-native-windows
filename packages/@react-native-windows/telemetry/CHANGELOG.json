@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 03 Dec 2020 23:59:32 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.11",
+      "version": "0.0.0-canary.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Manual bump of @react-native-windows/telemetry to cause dependents to be republished",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90ba61f3e43eafcac9e45b7c740bbfbda77fd5a1",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Nov 2020 05:08:17 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.10",
       "version": "0.0.0-canary.10",
