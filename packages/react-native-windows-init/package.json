@@ -25,7 +25,7 @@
     "prompts": "^2.3.0",
     "semver": "^7.3.2",
     "valid-url": "^1.0.9",
-    "yargs": "^15.3.1"
+    "yargs": "^15.4.1"
   },
   "devDependencies": {
     "@react-native-windows/cli": "0.0.0-canary.44",

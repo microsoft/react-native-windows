@@ -44,7 +44,6 @@ const exitCodes = {
   NO_LATEST_RNW: 8,
   NO_AUTO_MATCHING_RNW: 9,
   INCOMPATIBLE_OPTIONS: 10,
-  DEVMODE_VERSION_MISMATCH: 11,
   NO_REACTNATIVE_DEPENDENCIES: 12,
 };
 
@@ -136,15 +135,10 @@ const argv = yargs
       describe:
         '[internalTesting] Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
       hidden: true,
-      default: false,
+      conflicts: 'version',
     },
   })
-  .check(a => {
-    if (a._.length !== 0) {
-      throw `Unrecognized option ${a._}`;
-    }
-    return true;
-  }).argv;
+  .strict(true).argv;
 
 if (argv.verbose) {
   console.log(argv);
@@ -337,19 +331,7 @@ function installReactNativeWindows(
   if (useDevMode) {
     const packageCmd = isProjectUsingYarn(cwd) ? 'yarn' : 'npm';
     execSync(`${packageCmd} link react-native-windows`, execOptions);
-    const rnwPkgJsonPath = require.resolve(
-      'react-native-windows/package.json',
-      {paths: [cwd]},
-    );
-    const rnwVersion = require(rnwPkgJsonPath).version;
-    if (version && version !== rnwVersion) {
-      userError(
-        `Requested react-native-windows version: '${version}' does not match version '${rnwVersion}' of the linked module. When using '--useDevMode' you do not need to pass a version. If you do, you should pass '--version ${rnwVersion}'`,
-        'DEVMODE_VERSION_MISMATCH',
-      );
-    } else if (!version) {
-      version = rnwVersion;
-    }
+    version = '*';
   } else if (!version) {
     internalError(
       'Unexpected error encountered. If you are able, please file an issue on: https://github.com/microsoft/react-native-windows/issues/new/choose',
@@ -458,7 +440,7 @@ function isProjectUsingYarn(cwd: string): boolean {
   try {
     const name = getReactNativeProjectName();
     const ns = argv.namespace || name;
-    const useDevMode = argv.useDevMode;
+    const useDevMode = !!argv.useDevMode;
     let version = argv.version;
 
     if (argv.useWinUI3 && argv.experimentalNuGetDependency) {
@@ -581,7 +563,7 @@ function isProjectUsingYarn(cwd: string): boolean {
       experimentalNuGetDependency: argv.experimentalNuGetDependency,
       useWinUI3: argv.useWinUI3,
       useHermes: argv.useHermes,
-      useDevMode: argv.useDevMode,
+      useDevMode: useDevMode,
       nuGetTestVersion: argv.nuGetTestVersion,
       nuGetTestFeed: argv.nuGetTestFeed,
       telemetry: argv.telemetry,
