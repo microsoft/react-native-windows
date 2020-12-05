@@ -14,9 +14,8 @@ export const CodedErrors = {
   NoLatestReactNativeWindows: 5,
   NoAutoMatchingReactNativeWindows: 6,
   IncompatibleOptions: 7,
-  DevModeVersionMismatch: 8,
-  NoReactNativeDependencies: 9,
-  NoMatchingPackageVersion: 10,
+  NoReactNativeDependencies: 8,
+  NoMatchingPackageVersion: 9,
   /// run-windows
   NoSolution: 100,
   /// Project generation
