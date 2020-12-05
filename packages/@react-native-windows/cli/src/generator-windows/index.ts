@@ -21,6 +21,7 @@ import {
   copyAndReplaceWithChangedCallback,
 } from '../generator-common';
 import {GenerateOptions} from '..';
+import {findPackage, WritableNpmPackage} from '@rnw-scripts/package-utils';
 
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';
@@ -519,53 +520,46 @@ function toCppNamespace(namespace: string) {
   return namespace.replace(/\./g, '::');
 }
 
-export function installDependencies(options: {verbose: boolean}) {
-  const cwd = process.cwd();
-
-  // Extract react-native peer dependency version
-  const rnwPackageJsonPath = require.resolve(
-    'react-native-windows/package.json',
-    {paths: [process.cwd()]},
-  );
-  const rnwPackageJson = JSON.parse(
-    fs.readFileSync(rnwPackageJsonPath, {encoding: 'UTF8'}),
-  );
-  let rnPeerDependency = rnwPackageJson.peerDependencies['react-native'];
-  const depDelim = ' || ';
-  const delimIndex = rnPeerDependency.indexOf(depDelim);
-  if (delimIndex !== -1) {
-    rnPeerDependency = rnPeerDependency.slice(0, delimIndex);
+export async function installScriptsAndDependencies(options: {
+  verbose: boolean;
+}) {
+  const projectPackage = await WritableNpmPackage.fromPath(process.cwd());
+  if (!projectPackage) {
+    throw new Error('The current directory is not the root of an npm package');
   }
 
-  const rnPackageJsonPath = require.resolve('react-native/package.json', {
-    paths: [process.cwd()],
+  await projectPackage.mergeProps({
+    scripts: {windows: 'react-native run-windows'},
   });
-  const rnPackageJson = JSON.parse(
-    fs.readFileSync(rnPackageJsonPath, {encoding: 'UTF8'}),
-  );
 
-  if (!semver.satisfies(rnPackageJson.version, rnPeerDependency)) {
+  const rnwPackage = await findPackage('react-native-windows');
+  if (!rnwPackage) {
+    throw new Error('Could not locate the package for react-native-windows');
+  }
+
+  const rnPackage = await findPackage('react-native');
+  if (!rnPackage) {
+    throw new Error('Could not locate the package for react-native');
+  }
+
+  const rnPeerDependency = rnwPackage.json.peerDependencies['react-native'];
+
+  if (
+    !semver.satisfies(rnPackage.json.version, rnPeerDependency) &&
+    projectPackage.json.dependencies?.['react-native']
+  ) {
     console.log(
       chalk.green('Installing a compatible version of react-native:'),
     );
     console.log(chalk.white(`    ${rnPeerDependency}`));
 
     // Patch package.json to have proper react-native version and install
-    const projectPackageJsonPath = path.join(cwd, 'package.json');
-    const projectPackageJson = JSON.parse(
-      fs.readFileSync(projectPackageJsonPath, {encoding: 'UTF8'}),
-    );
-    projectPackageJson.scripts.windows = 'react-native run-windows';
-    if (projectPackageJson.hasOwnProperty('dependencies')) {
-      projectPackageJson.dependencies['react-native'] = rnPeerDependency;
-    }
-    fs.writeFileSync(
-      projectPackageJsonPath,
-      JSON.stringify(projectPackageJson, null, 2),
-    );
+    await projectPackage.mergeProps({
+      dependencies: {'react-native': rnPeerDependency},
+    });
 
     // Install dependencies using correct package manager
-    const isYarn = fs.existsSync(path.join(cwd, 'yarn.lock'));
+    const isYarn = fs.existsSync(path.join(process.cwd(), 'yarn.lock'));
     childProcess.execSync(
       isYarn ? 'yarn' : 'npm i',
       options.verbose ? {stdio: 'inherit'} : {},
