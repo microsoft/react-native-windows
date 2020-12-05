@@ -76,13 +76,6 @@ export function ControlStyleTestPage() {
           editable={false}
         />
 
-        <TextInput
-          style={showRoundBorder ? styles.roundBorder : styles.regularBorder}
-          placeholder="Password"
-          placeholderTextColor="rgba(225,225,225,0.7)"
-          secureTextEntry={true}
-          editable={false}
-        />
         <DatePicker
           style={showRoundBorder ? styles.roundBorder : styles.regularBorder}
         />
