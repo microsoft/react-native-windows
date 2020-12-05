@@ -3,19 +3,19 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-19d4cc2d4",
+  "baseVersion": "0.0.0-c901c1fbc",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "adba67efd9973702f45a234e13a291155d0e56f1"
+      "baseHash": "79e242949bec3a348543ff8b03dc144a87332934"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "60f46e1ea481e2e6c0673dfc5f9a74da68ae3400"
+      "baseHash": "64001fe0d4f24d7219d2b6f3c4c1fa0c0c8a88ea"
     },
     {
       "type": "patch",
@@ -195,7 +195,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.win32.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseHash": "8d5d480284b4cdaf7d8d86935967370d455b7b68"
+      "baseHash": "a4e696834cba3bfe5a5057f44f928e481109f2b8"
     },
     {
       "type": "platform",
@@ -375,7 +375,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.win32.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
-      "baseHash": "1e689ecb36aaa20e7b60b5f6e7620785e3826e0a"
+      "baseHash": "5330352b660b0a0ab7dcea5117dddfadadbe2e78"
     },
     {
       "type": "platform",

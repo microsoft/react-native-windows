@@ -22,7 +22,7 @@
     "@react-native-windows/tester": "0.0.1",
     "prompt-sync": "^4.2.0",
     "react": "17.0.1",
-    "react-native": "0.0.0-19d4cc2d4",
+    "react-native": "0.0.0-c901c1fbc",
     "react-native-windows": "0.0.0-canary.222"
   },
   "devDependencies": {

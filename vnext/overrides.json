@@ -7,13 +7,13 @@
   "excludePatterns": [
     "**/*.windesktop.js"
   ],
-  "baseVersion": "0.0.0-19d4cc2d4",
+  "baseVersion": "0.0.0-c901c1fbc",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "adba67efd9973702f45a234e13a291155d0e56f1"
+      "baseHash": "79e242949bec3a348543ff8b03dc144a87332934"
     },
     {
       "type": "patch",
@@ -33,7 +33,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "8ea168883110c0e81240341ae460a92aaf8f8ce8",
+      "baseHash": "9995fd5764d9b3ea8c7d3f9c4979eefc4e5e3d78",
       "issue": 5430
     },
     {
@@ -47,14 +47,14 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/package.json",
       "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseHash": "79c93a93901ea104514e60466b539e4b1e6c0aa6",
+      "baseHash": "d491012387a81a906bf4b1c2378b2591470d9543",
       "issue": 5430
     },
     {
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "60f46e1ea481e2e6c0673dfc5f9a74da68ae3400"
+      "baseHash": "64001fe0d4f24d7219d2b6f3c4c1fa0c0c8a88ea"
     },
     {
       "type": "platform",
@@ -277,7 +277,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.windows.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseHash": "8d5d480284b4cdaf7d8d86935967370d455b7b68"
+      "baseHash": "a4e696834cba3bfe5a5057f44f928e481109f2b8"
     },
     {
       "type": "patch",
@@ -352,7 +352,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "a72811cd104bb575d0ab2659343dc2ea11c6b674"
+      "baseHash": "1911105ff7796cfeef6db832ec0bd6a53d7622ac"
     },
     {
       "type": "derived",
@@ -393,7 +393,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.windows.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
-      "baseHash": "1e689ecb36aaa20e7b60b5f6e7620785e3826e0a"
+      "baseHash": "5330352b660b0a0ab7dcea5117dddfadadbe2e78"
     },
     {
       "type": "platform",
