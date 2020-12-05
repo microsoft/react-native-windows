@@ -16,7 +16,7 @@
             - Name: X64Release
               BuildConfiguration: Release
               BuildPlatform: X64
-            - Name: X64Release
+            - Name: X64Debug
               BuildConfiguration: Debug
               BuildPlatform: X86
               LayoutHeaders: true
