@@ -1,8 +1,24 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Tue, 01 Dec 2020 05:05:07 GMT and should not be manually modified.
+This log was last generated on Fri, 04 Dec 2020 00:10:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.41
+
+Fri, 04 Dec 2020 00:10:06 GMT
+
+### Patches
+
+- Force republish (ngerlem@microsoft.com)
+
+## 0.1.40
+
+Thu, 03 Dec 2020 21:43:48 GMT
+
+### Patches
+
+- Update cli telemetry defaults (jthysell@microsoft.com)
 
 ## 0.1.38
 
