@@ -542,7 +542,7 @@ export async function installScriptsAndDependencies(options: {
 
   if (
     !semver.satisfies(rnPackage.json.version, rnPeerDependency) &&
-    projectPackage.json?.dependencies?.['react-native']
+    projectPackage.json.dependencies?.['react-native']
   ) {
     console.log(
       chalk.green('Installing a compatible version of react-native:'),
