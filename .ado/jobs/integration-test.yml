@@ -15,15 +15,15 @@ jobs:
     strategy:
       matrix:
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          Arm:
+          ARM:
             BuildPlatform: ARM
-          Arm64:
+          ARM64:
             BuildPlatform: ARM64
         # End Continuous only
-        x64:
+        X64:
           BuildPlatform: x64
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          x86:
+          X86:
             BuildPlatform: x86
         # End Continuous only
 

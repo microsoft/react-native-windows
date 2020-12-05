@@ -89,6 +89,8 @@ jobs:
       - template: templates/build-rnw.yml
         parameters:
           project: vnext/ReactWindows-Desktop.sln
+          buildPlatform: $(BuildPlatform)
+          buildConfiguration: $(BuildConfiguration)
           msbuildArguments:
             /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
             /p:RNW_PKG_VERSION_MAJOR="$(RNW_PKG_VERSION_MAJOR)"
@@ -98,6 +100,8 @@ jobs:
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
           artifactName: ReactWindows
+          buildPlatform: $(BuildPlatform)
+          buildConfiguration: $(BuildConfiguration)
           contents: |
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
@@ -150,10 +154,14 @@ jobs:
       - template: templates/build-rnw.yml
         parameters:
           project: vnext/Microsoft.ReactNative.sln
+          buildPlatform: $(BuildPlatform)
+          buildConfiguration: $(BuildConfiguration)
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
           artifactName: ReactWindows
+          buildPlatform: $(BuildPlatform)
+          buildConfiguration: $(BuildConfiguration)
           layoutHeaders: eq('true', variables['LayoutHeaders'])
           contents: |
             Microsoft.ReactNative\**
