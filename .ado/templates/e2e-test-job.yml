@@ -1,7 +1,7 @@
 #
 parameters:
   name: ''
-  BuildPlatform: x86 # ARM, x86, x64
+  BuildPlatform: X86 # Arm, X86, X64
 
 jobs:
   - job: ${{ parameters.name }}

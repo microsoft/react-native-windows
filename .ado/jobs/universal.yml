@@ -10,41 +10,52 @@
       default:
         - BuildEnvironment: PullRequest
           Matrix:
-            - BuildConfiguration: Release
+            - Name: ArmRelease
+              BuildConfiguration: Release
               BuildPlatform: ARM
-            - BuildConfiguration: Release
-              BuildPlatform: x64
-            - BuildConfiguration: Debug
-              BuildPlatform: x86
+            - Name: X64Release
+              BuildConfiguration: Release
+              BuildPlatform: X64
+            - Name: X64Release
+              BuildConfiguration: Debug
+              BuildPlatform: X86
               LayoutHeaders: true
         - BuildEnvironment: Continuous
           Matrix:
-            - BuildConfiguration: Debug
+            - Name: ArmDebug
+              BuildConfiguration: Debug
               BuildPlatform: ARM
-            - BuildConfiguration: Release
+            - Name: ArmRelease
+              BuildConfiguration: Release
               BuildPlatform: ARM
-            - BuildConfiguration: Debug
+            - Name: Arm64RDebug
+              BuildConfiguration: Debug
               BuildPlatform: ARM64
-            - BuildConfiguration: Release
+            - Name: Arm64Release
+              BuildConfiguration: Release
               BuildPlatform: ARM64
-            - BuildConfiguration: Debug
-              BuildPlatform: x64
-            - BuildConfiguration: Release
-              BuildPlatform: x64
-            - BuildConfiguration: Debug
-              BuildPlatform: x86
+            - Name: X64Debug
+              BuildConfiguration: Debug
+              BuildPlatform: X64
+            - Name: X64Release
+              BuildConfiguration: Release
+              BuildPlatform: X64
+            - Name: X86Debug
+              BuildConfiguration: Debug
+              BuildPlatform: X86
               LayoutHeaders: true
-            - BuildConfiguration: Release
-              BuildPlatform: x86
+            - Name: X86Release
+              BuildConfiguration: Release
+              BuildPlatform: X86
       
   jobs:
     - ${{ each config in parameters.buildMatrix }}:
       - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
         - ${{ each matrix in config.Matrix }}:
-            - job: UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
+            - job: UniversalBuild${{ matrix.Name }}
               variables:
                 - template: ../variables/vs2019.yml
-              displayName: Universal Build ${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
+              displayName: Universal Build ${{ matrix.Name }}
               dependsOn:
                 - Setup
               condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
@@ -76,7 +87,7 @@
                     artifactName: ReactWindows
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
-                    layoutHeaders: eq('true', variables.LayoutHeaders)
+                    layoutHeaders: ${{ matrix.LayoutHeaders }}
                     contents: |
                       Microsoft.ReactNative\**
                       Microsoft.ReactNative.Managed\**
@@ -89,12 +100,12 @@
                     scanType: 'Register'
 
                 
-            - job: UniversalTest${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
+            - job: UniversalTest${{ matrix.Name }}
               variables:
                 - template: ../variables/vs2019.yml
-              displayName: Universal Test ${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
+              displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
-                - UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
+                - UniversalBuild${{ matrix.Name }}
               condition: 
                 and
                 (
@@ -215,7 +226,7 @@
         - ${{ each config in parameters.buildMatrix }}:
           - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
             - ${{ each matrix in config.Matrix }}:
-              - UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
+              - UniversalBuild${{ matrix.Name }}
       pool:
         vmImage: $(VmImage)
       timeoutInMinutes: 60
