@@ -2,6 +2,36 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 04 Dec 2020 00:10:06 GMT",
+      "tag": "react-native-windows-init_v0.1.41",
+      "version": "0.1.41",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Force republish",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d44b2f23bec2319aa2d4fe7ac0aeadd772b9d579",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Dec 2020 21:43:48 GMT",
+      "tag": "react-native-windows-init_v0.1.40",
+      "version": "0.1.40",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update cli telemetry defaults",
+            "author": "jthysell@microsoft.com",
+            "commit": "6b349f3d89cc055157b3a8d0f0e75622082878c6",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Dec 2020 05:05:07 GMT",
       "tag": "react-native-windows-init_v0.1.38",
       "version": "0.1.38",
