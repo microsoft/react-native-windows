@@ -39,7 +39,10 @@ function normalizeContent(
       return content.toString('utf8').replace(/(?<!\r)\n/g, '\r\n');
 
     case 'whitespace':
-      return content.toString('utf8').replace(/\s/g, '');
+      return content
+        .toString('utf8')
+        .trim()
+        .replace(/\s+/g, ' ');
   }
 }
 

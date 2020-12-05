@@ -34,8 +34,14 @@ test('hashContent - Explicit line-ending insensitive', () => {
 });
 
 test('hashContent - Explicit whitespace insensitive', () => {
-  expect(hashContent('  a \r\n   ', {insensitivity: 'whitespace'})).toBe(
+  expect(hashContent('a \r\n   ', {insensitivity: 'whitespace'})).toBe(
     hashContent('a\n', {insensitivity: 'whitespace'}),
+  );
+});
+
+test('hashContent - Explicit whitespace insensitive 2', () => {
+  expect(hashContent('b a \r\n   ', {insensitivity: 'whitespace'})).not.toBe(
+    hashContent('ba\n', {insensitivity: 'whitespace'}),
   );
 });
 

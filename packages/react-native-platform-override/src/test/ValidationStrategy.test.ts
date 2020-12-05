@@ -342,9 +342,9 @@ test('overrideDifferentFromBase - Different Whitespace', async () => {
       'foo.js',
     ).validate(
       new MockWritableFileRepository([
-        {filename: 'foo.windows.js', content: ' A B C D\n'},
+        {filename: 'foo.windows.js', content: ' A   B \r\n C D\n'},
       ]),
-      new MockReactFileRepository([{filename: 'foo.js', content: 'ABCD\r\n'}]),
+      new MockReactFileRepository([{filename: 'foo.js', content: 'A B C D '}]),
     ),
   ).toEqual([{type: 'overrideSameAsBase', overrideName: 'foo.windows.js'}]);
 });
