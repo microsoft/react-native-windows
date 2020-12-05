@@ -71,14 +71,6 @@ jobs:
 
       - template: ../templates/prepare-env.yml
 
-      - task: NuGetCommand@2
-        displayName: NuGet restore - SampleApps
-        inputs:
-          command: restore
-          restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-        condition: succeeded()
-
       - task: CmdLine@2
         displayName: run-windows (Debug)
         inputs:

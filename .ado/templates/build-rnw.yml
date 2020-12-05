@@ -33,16 +33,6 @@ steps:
       yarnBuildCmd: ${{ parameters.yarnBuildCmd }}
       debug: ${{ parameters.debug }}
 
-  - task: NuGetCommand@2
-    displayName: NuGet restore
-    inputs:
-      command: restore
-      restoreSolution: ${{parameters.project }}
-      feedsToUse: config
-      nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
-      restoreDirectory: packages/
-      verbosityRestore: Detailed # Options: quiet, normal, detailed
-
   - task: VSBuild@1
     displayName: VSBuild ${{parameters.project}}
     inputs:
@@ -57,6 +47,8 @@ steps:
       createLogFile: true
       logFileVerbosity: detailed
       msbuildArgs:
+        /restore
+        /p:RestorePackagesConfig=true
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:BaseIntDir=$(BaseIntDir)
