@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "TagProperty only exists on FrameworkElement and hyperlinks aren't FE",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
