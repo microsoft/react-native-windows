@@ -245,6 +245,7 @@ export async function copyProjectTemplateAndReplace(
     csNugetPackages: csNugetPackages,
 
     // autolinking template variables
+    autolinkPropertiesForProps: '',
     autolinkProjectReferencesForTargets: '',
     autolinkCsUsingNamespaces: '',
     autolinkCsReactPackageProviders: '',
