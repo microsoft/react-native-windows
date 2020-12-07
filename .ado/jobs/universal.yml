@@ -55,6 +55,8 @@
             - job: UniversalBuild${{ matrix.Name }}
               variables:
                 - template: ../variables/vs2019.yml
+                - name: NUGET_PACKAGES
+                  value: c:\.nuget
               displayName: Universal Build ${{ matrix.Name }}
               dependsOn:
                 - Setup
@@ -102,6 +104,8 @@
             - job: UniversalTest${{ matrix.Name }}
               variables:
                 - template: ../variables/vs2019.yml
+                - name: NUGET_PACKAGES
+                  value: c:\.nuget
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
                 - UniversalBuild${{ matrix.Name }}
