@@ -32,7 +32,31 @@ struct TestHostModule {
           [](Runtime &rt, const Value & /*thisVal*/, const Value *args, size_t /*count*/) {
             return Value{rt, String::createFromUtf8(rt, "Hello " + args[0].getString(rt).utf8(rt))};
           });
-      TestCheckEqual("Hello boss", hostGreeter.call(rt, "boss").getString(rt).utf8(rt));
+      TestCheckEqual("Hello World", hostGreeter.call(rt, "World").getString(rt).utf8(rt));
+      TestCheck(hostGreeter.getHostFunction(rt) != nullptr);
+
+      Function hostGreater2 = hostGreeter.getFunction(rt);
+      TestCheck(hostGreater2.isHostFunction(rt));
+      TestCheckEqual("Hello World", hostGreater2.call(rt, "World").getString(rt).utf8(rt));
+      TestCheck(hostGreater2.getHostFunction(rt) != nullptr);
+
+      class GreeterHostObject : public HostObject {
+        Value get(Runtime &rt, const PropNameID &) override {
+          return String::createFromAscii(rt, "Hello");
+        }
+        void set(Runtime &, const PropNameID &, const Value &) override {}
+      };
+
+      Object hostObjGreeter = Object::createFromHostObject(rt, std::make_shared<GreeterHostObject>());
+      TestCheckEqual(
+          "Hello", hostObjGreeter.getProperty(rt, PropNameID::forAscii(rt, "someProp")).getString(rt).utf8(rt));
+      TestCheck(hostObjGreeter.getHostObject(rt) != nullptr);
+
+      Object hostObjGreeter2 = Value{rt, hostObjGreeter}.getObject(rt);
+      TestCheck(hostObjGreeter2.isHostObject(rt));
+      TestCheckEqual(
+          "Hello", hostObjGreeter2.getProperty(rt, PropNameID::forAscii(rt, "someProp")).getString(rt).utf8(rt));
+      TestCheck(hostObjGreeter2.getHostObject(rt) != nullptr);
     });
     TestCheck(jsiExecuted);
   }
