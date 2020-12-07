@@ -69,8 +69,8 @@ stages:
         parameters:
           buildEnvironment: PullRequest
 
-  - stage: CLI 🖥
-    displayName: Integration Tests
+  - stage: CLI
+    displayName: Cli 🖥
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'False' )
     jobs:
