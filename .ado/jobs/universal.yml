@@ -152,6 +152,8 @@
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}"
 
+                - script: dir c:\.nuget /s/b
+
                 # The WinDevBuild Agents run on the c-drive and the hosted agents run on the d-drive.
                 # Some of the output files have the c-drive expanded in the outputs, which results in file not found errors when running tests
                 # This script fixes those files to point to the d-drive of the hosted agents.
@@ -166,7 +168,11 @@
                     $encodedWorkingDir = $workingDir -replace "\\", "\\\\"
                     $encodedWinDevWorkingDir = $winDevWorkingDir -replace "\\", "\\\\"
                     
+                    Get-ChildItem *.dev.json,*.appxrecipe -recurse | ForEach { Get-Content -Path $_ | Write-Host }
+
                     Get-ChildItem *.dev.json,*.appxrecipe -recurse | ForEach { (((Get-Content -Path $_) -replace $winDevWorkingDir, $workingDir) -replace $encodedWinDevWorkingDir, $encodedWorkingDir) -replace $encodedWinDevUser, $encodedUser | Set-Content -Path $_ }
+
+                    Get-ChildItem *.dev.json,*.appxrecipe -recurse | ForEach { Get-Content -Path $_ | Write-Host }
                   displayName: Fix Paths in appx files to deal with different enlistments between agent types.
 
                 - powershell: |
