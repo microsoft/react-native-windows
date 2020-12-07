@@ -8,46 +8,6 @@ This document will attempt to capture what's needed within React Native for Wind
 - Ensuring mouse behavior is consistent across the two platforms we support
 - Once our two desktop platforms are aligned with React Native Web, we upstream this implementation to core [issue TBD]()
 
-## `hovered`
-Property on `Pressable` that determines whether or not the mouse is currently within the bounds of the designated content.
-
-| TYPE | REQUIRED | PLATFORM |
-|:--:|:--|:--|
-| boolean | Yes | Windows, macOS |
-
-[React Native Web](https://github.com/necolas/react-native-web/commit/1afd9de0455965a852bad42ad2ffab957f7ffca0#diff-9fe3ab194c72e9837a8ffc3e7c44f33d) introduced  `hovered` on `Pressable` to enable common mouse scenarios. In order to align and make this complete the work is as follows:
-
-- Windows has added `hovered` and marked `onMouseEnter/Leave` as to be deprecated [issue TBD]()
-- Add `hovered` to `Pressable` [issue TBD]()
-- macOS has added 'hovered' and marked their View component implementation of `onMouseEnter/Leave` as deprecated [issue TBD]()
-
-### `hovered` example
-
-``` js
-<Pressable style={({ hovered, pressed, focused }) => {
-          console.log(focused);
-          let backgroundColor = 'white';
-          if (hovered) {
-            backgroundColor = 'lightgray';
-          }
-          if (pressed) {
-            backgroundColor = 'lightblue';
-          }
-          return {
-            padding: 10,
-            margin: 10,
-            borderWidth: 1,
-            borderColor: focused ? 'red' : null,
-            backgroundColor,
-            outlineWidth: 0
-          };
-        }}
-      >
-      <Text>Nested pressables</Text>
-    </Pressable>
-  </Pressable>
-</View>
-```
 
 ## Outstanding issues
 There are some outstanding issues that need to be address specifically for desktop scenarios when it comes to fully implementing mouse hover and leave behavior. They are as follows:
@@ -66,26 +26,37 @@ The below will need to be implemented for macOS as well [issue TBD]()
 |:---:|:----:|:-------:|----|
 | onPointerOver | IPointerEvent | void | Fires when a pointing device is moved within the hit test boundaries of a element. |
 | onPointerLeave | IPointerEvent | void | Fires when a pointing device is moved out of the hit test boundaries of an element and all of its children. |
+| onPointerUp | IPointerEvent | void | Fires when a pointing device's button (or buttons) return to negative from being non-negative. |
+| onPointerDown | IPointerEvent | void | Fires when a pointing device's button (or buttons) state is non-negative. |
 
-### Example
+### IPointerEvent Events
 
 ``` js
-<View onPointerOver={this._onPointerOver} />
-
-private onPointerOver_ = (event: IPointerEvent) => {
-  this.setState({ lastKeyDown: event.nativeEvent.key });
-};
+export type MouseEvent = SyntheticEvent<
+  $ReadOnly<{|      
+    pointerType: string,
+    pointerOver: boolean,
+    pointerLeave: boolean,
+    pointerUp: boolean,
+    pointerDown: boolean,
+    timestamp: number,
+    force: number,
+    identifier: number,
+    pageX: number,
+    pageY: number,
+    locationX: number,
+    locationY: number,
+  |}>,
+>;
 ```
 
 ### Callbacks NOT being implemented
-The following are outstanding events that we are *not* looking to implement at this time. But should be represented as possible callbacks that can be revisited later.
+The following are outstanding events that we are *not* looking to implement at this time. But should be represented as possible callbacks that can be implemented at a later date.
 
 | API | Args | Returns | Description |
 |:---:|:----:|:-------:|----|
 | onPointerEnter | IPointerEvent | void | Fires when a pointing device is moved into the hit test boundaries of an element, including its children.|
-| onPointerDown | IPointerEvent | void | Fires when a pointing device's button (or buttons) state is non-negative. |
 | onPointerMove | IPointerEvent | void | Fires when a pointer changes coordinates when within the hit test boundaries of an element.|
-| onPointerUp | IPointerEvent | void | Fires when a pointing device's button (or buttons) return to negative from being non-negative. |
 | onPointerOverCapture | IPointerEvent | void | Occurs when the `onPointerOver` event is being routed. `onPointerOver` is the corresponding bubbling event. |
 | onPointerEnterCapture | IPointerEvent | void | Occurs when the `onPointerEnter` event is being routed. `onPointerEnter` is the corresponding bubbling event.|
 | onPointerDownCapture | IPointerEvent | void | Occurs when the `onPointerDown` event is being routed. `onPointerDown` is the corresponding bubbling event. |
@@ -105,3 +76,50 @@ To co-ordinate the handoffs of these pointer events between the native layer and
 Where `IHandledPointerEvents` is a new type which takes the following parameters:
 - A constrained string parameter named `pointerState` to declare the pointer state (Over, Hover, Out) that is of interest to the JS layer
 - An `eventPhase` parameter of type `EventPhase` to declare the routing phase of interest to the JS layer.
+
+## `hovered`, `pressed`, and `focused` for Styling Mouse States
+Property on `Pressable` that determines whether or not the mouse is currently within the bounds of the designated content. **To enable styling scenarios only**.
+
+| TYPE | REQUIRED | PLATFORM |
+|:--:|:--|:--|
+| boolean | Yes | Windows, macOS |
+| pressed | Yes | Windows, macOS |
+| focused | Yes | Windows, macOS |
+
+[React Native Web](https://github.com/necolas/react-native-web/commit/1afd9de0455965a852bad42ad2ffab957f7ffca0#diff-9fe3ab194c72e9837a8ffc3e7c44f33d) introduced `hovered`, `pressed`, and `focused` style property on `Pressable` to enable common mouse scenario visuals. In order to align and make this complete the work is as follows:
+
+- Add `hovered` to `Pressable` style for macOS and Windows [issue TBD]()
+- Add `pressed` to `Pressable` style for macOS and Windows [issue TBD]()
+- Add `focused` to `Pressable` style for macOS and Windows [issue TBD]()
+
+### Example
+
+``` js
+<Pressable
+  accessibilityRole="none"
+  onLongPress={handlePress('longPress - inner')}
+  onPress={handlePress('press - inner')}
+  onPressIn={handlePress('pressIn - inner')}
+  onPressOut={handlePress('pressOut - inner')}
+  style={({ hovered, pressed, focused }) => {
+    console.log(focused);
+    let backgroundColor = 'white';
+    if (hovered) {
+      backgroundColor = 'lightgray';
+    }
+    if (pressed) {
+      backgroundColor = 'lightblue';
+    }
+    return {
+      padding: 10,
+      margin: 10,
+      borderWidth: 1,
+      borderColor: focused ? 'red' : null,
+      backgroundColor,
+      outlineWidth: 0
+    };
+  }}
+>
+  <Text>Pressable Text</Text>
+</Pressable>
+```
