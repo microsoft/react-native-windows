@@ -98,7 +98,6 @@
                   inputs:
                     alertWarningLevel: Medium
                     scanType: 'Register'
-
                 
             - job: UniversalTest${{ matrix.Name }}
               variables:
@@ -154,7 +153,16 @@
                 # This script fixes those files to point to the d-drive of the hosted agents.
                 # We unfortunately can't run the tests on the WinDev  build pool because it lacks UI support
                 - powershell: |
-                    Get-ChildItem *.appxrecipe -recurse | ForEach { (Get-Content -Path $_) -replace "c:\\a\\1\\s", "$(System.DefaultWorkingDirectory)" | Set-Content -Path $_ }
+                    $encodedWinDevUser = "c:\\\\Users\\\\AzDevOps"
+                    $encodedUser = "$Env:HOMEDRIVE\$Env:HOMEPATH" -replace "\\", "\\\\"
+                    
+                    $winDevWorkingDir = "c:\\a\\1\\s"
+                    $workingDir = "$(System.DefaultWorkingDirectory)"
+
+                    $encodedWorkingDir = $workingDir -replace "\\", "\\\\"
+                    $encodedWinDevWorkingDir = $winDevWorkingDir -replace "\\", "\\\\"
+                    
+                    Get-ChildItem *.dev.json,*.appxrecipe -recurse | ForEach { (((Get-Content -Path $_) -replace $winDevWorkingDir, $workingDir) -replace $encodedWinDevWorkingDir, $encodedWorkingDir) -replace $encodedWinDevUser, $encodedUser | Set-Content -Path $_ }
                   displayName: Fix Paths in appx files to deal with different enlistments between agent types.
 
                 - powershell: |
