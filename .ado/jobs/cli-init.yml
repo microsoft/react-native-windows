@@ -4,6 +4,7 @@ parameters:
     default : PullRequest
     values: 
      - PullRequest 
+     - PullRequestNuget
      - Continuous 
   
 jobs:
@@ -11,6 +12,7 @@ jobs:
     variables:
       - template: ../variables/vs2019.yml
     displayName: Verify Cli
+    condition: neq('${{ parameters.buildEnvironment }}', 'PullRequestNuget')
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         # Start Continuous only
@@ -189,6 +191,7 @@ jobs:
     variables:
       - template: ../variables/vs2019.yml
     displayName: Verify Cli
+    condition: neq('${{ parameters.buildEnvironment }}', 'PullRequestNuget')
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86DebugCppWinUI3:
@@ -228,6 +231,7 @@ jobs:
     variables:
       - template: ../variables/vs2019.yml
     displayName: Verify Cli
+    condition: neq('${{ parameters.buildEnvironment }}', 'PullRequest')
     dependsOn:
       - UniversalBuild
     strategy:
