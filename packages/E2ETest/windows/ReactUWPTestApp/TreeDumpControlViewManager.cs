@@ -237,10 +237,10 @@ namespace TreeDumpLibrary
         private static IList<Inline> GetInlines(StorageFile masterFile, StorageFile outFile, UIElement anchor)
         {
             Hyperlink masterLink = new Hyperlink();
-            masterLink.Click += (_1, _2) => { Windows.System.Launcher.LaunchFileAsync(masterFile); };
+            masterLink.Click += async (_1, _2) => { await Windows.System.Launcher.LaunchFileAsync(masterFile); };
             masterLink.Inlines.Add(new Run() { Text = "master" });
             Hyperlink outLink = new Hyperlink();
-            outLink.Click += (_1, _2) => { Windows.System.Launcher.LaunchFileAsync(outFile); };
+            outLink.Click += async (_1, _2) => { await Windows.System.Launcher.LaunchFileAsync(outFile); };
             outLink.Inlines.Add(new Run() { Text = "output" });
             List<Inline> inlines = new List<Inline>()
             {

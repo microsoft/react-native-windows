@@ -9,8 +9,16 @@ namespace Microsoft::ReactNative {
 
 using XamlView = xaml::DependencyObject;
 
+inline winrt::IPropertyValue GetTagAsPropertyValue(xaml::FrameworkElement fe) {
+  assert(fe);
+  return fe.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+}
+
 inline int64_t GetTag(XamlView view) {
-  return view.GetValue(xaml::FrameworkElement::TagProperty()).as<winrt::IPropertyValue>().GetInt64();
+  if (auto fe = view.try_as<xaml::FrameworkElement>()) {
+    return GetTagAsPropertyValue(fe).GetInt64();
+  }
+  return 0;
 }
 
 inline void SetTag(XamlView view, int64_t tag) {
@@ -29,11 +37,6 @@ inline bool IsValidTag(winrt::IPropertyValue value) {
 inline int64_t GetTag(winrt::IPropertyValue value) {
   assert(value);
   return value.GetInt64();
-}
-
-inline winrt::IPropertyValue GetTagAsPropertyValue(xaml::FrameworkElement fe) {
-  assert(fe);
-  return fe.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
 }
 
 xaml::XamlRoot TryGetXamlRoot(const XamlView &view);
