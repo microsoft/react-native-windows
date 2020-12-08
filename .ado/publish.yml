@@ -3,6 +3,7 @@ name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 variables:
   - template: variables/msbuild.yml
   - template: variables/vs2017.yml
+  - group: RNW Secrets
 
 trigger:
   batch: true
@@ -23,7 +24,6 @@ jobs:
       - checkout: self
         clean: true
         submodules: false
-        persistCredentials: true
 
       - template: templates/configure-git.yml
 
