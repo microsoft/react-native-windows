@@ -47,7 +47,7 @@ jobs:
       - task: CmdLine@2
         displayName: Beachball Publish
         inputs:
-          script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public $(extraPublishArgs)
+          script: npx --no-install beachball publish --no-publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public $(extraPublishArgs)
 
       - task: CmdLine@2
         displayName: Create GitHub Release
