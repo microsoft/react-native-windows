@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 04 Dec 2020 00:20:35 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Dec 2020 03:34:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.7
+
+Tue, 08 Dec 2020 03:34:05 GMT
+
+### Patches
+
+- [0.63] Autolinking fixes for C++ / C# interop (jthysell@microsoft.com)
 
 ## 0.63.6
 

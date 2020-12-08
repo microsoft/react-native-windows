@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 25 Nov 2020 03:02:04 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Dec 2020 03:34:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.13
+
+Tue, 08 Dec 2020 03:34:05 GMT
+
+### Patches
+
+- Remove the other TimingModule Assertion (ngerlem@microsoft.com)
+- [0.63] Autolinking fixes for C++ / C# interop (jthysell@microsoft.com)
+- Remove Sporaddic Assert on Instance Reload from TimingModule (ngerlem@microsoft.com)
 
 ## 0.63.11
 

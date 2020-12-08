@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 08 Dec 2020 03:34:05 GMT",
+      "tag": "react-native-windows_v0.63.13",
+      "version": "0.63.13",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Remove the other TimingModule Assertion",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fd799f0bbd1ad5b3d71ec3cc44dace9d0ba6ecf5",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.63] Autolinking fixes for C++ / C# interop",
+            "author": "jthysell@microsoft.com",
+            "commit": "fa5c5ff8371332679988232abb9c0e0ecd269411",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove Sporaddic Assert on Instance Reload from TimingModule",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fd799f0bbd1ad5b3d71ec3cc44dace9d0ba6ecf5",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 25 Nov 2020 03:02:04 GMT",
       "tag": "react-native-windows_v0.63.11",
       "version": "0.63.11",
