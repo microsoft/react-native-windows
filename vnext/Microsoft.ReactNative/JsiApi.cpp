@@ -342,7 +342,12 @@ facebook::jsi::JSError const &jsError) {                             \
 /*static*/ ReactNative::JsiRuntime JsiRuntime::Create(
     std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
     std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept {
-  auto buffer = std::make_shared<facebook::jsi::StringBuffer>(R"JS(
+  // There are some functions that we cannot do using JSI such as
+  // defining a property or using Symbol as a key.
+  // The __jsi_api defines functions to associate a hostFunctionId with a function object
+  // in a way that it is not discoverable by other components.
+  // We use a unique symbol and make read-only, non-enumerable, and non-configurable (deletable).
+  auto jsiPalBuffer = std::make_shared<facebook::jsi::StringBuffer>(R"JS(
       var __jsi_pal = function() {
         var hostFunctionId = Symbol('hostFunctionId');
         return {
@@ -351,7 +356,8 @@ facebook::jsi::JSError const &jsError) {                             \
         };
       }();
     )JS");
-  jsiRuntime->evaluateJavaScript(buffer, "JSI_PAL");
+  // TODO: consider implementing this script as a resource file and loading it with the resource URL.
+  jsiRuntime->evaluateJavaScript(jsiPalBuffer, "Form_JSI_API_not_a_real_file");
   ReactNative::JsiRuntime abiJsiResult{make<JsiRuntime>(Mso::Copy(jsiRuntimeHolder), Mso::Copy(jsiRuntime))};
   std::scoped_lock lock{s_mutex};
   s_jsiRuntimeMap.try_emplace(reinterpret_cast<uintptr_t>(jsiRuntime.get()), abiJsiResult);

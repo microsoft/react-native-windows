@@ -147,8 +147,9 @@ operator()(JsiRuntime const &runtime, JsiValueRef const &thisArg, array_view<Jsi
 }
 
 /*static*/ HostFunctionType &JsiHostFunctionWrapper::GetHostFunction(JsiHostFunction const &hostFunction) noexcept {
-  void *hostFunctonAbi = get_abi(hostFunction);
-  JsiHostFunctionWrapper *self = static_cast<impl::delegate<JsiHostFunction, JsiHostFunctionWrapper> *>(hostFunctonAbi);
+  void *hostFunctionAbi = get_abi(hostFunction);
+  JsiHostFunctionWrapper *self =
+      static_cast<impl::delegate<JsiHostFunction, JsiHostFunctionWrapper> *>(hostFunctionAbi);
   return self->m_hostFunction;
 }
 
