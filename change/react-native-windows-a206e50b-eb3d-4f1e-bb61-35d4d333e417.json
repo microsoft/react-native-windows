@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix destruction of UIManager in UI thread",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

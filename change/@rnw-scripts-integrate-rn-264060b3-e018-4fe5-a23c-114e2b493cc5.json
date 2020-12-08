@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bump yargs to 15.4.1",
-  "packageName": "@rnw-scripts/integrate-rn",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

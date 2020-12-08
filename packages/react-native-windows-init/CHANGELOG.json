@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "react-native-windows-init_v0.1.42",
+      "version": "0.1.42",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow unreleased RNW versions with react-native-windows-init --useDevMode",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fa34591ac86ea25e1e92a807864ba71480046a27",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Dec 2020 00:10:06 GMT",
       "tag": "react-native-windows-init_v0.1.41",
       "version": "0.1.41",

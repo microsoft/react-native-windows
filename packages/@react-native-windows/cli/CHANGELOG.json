@@ -2,6 +2,34 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.45",
+      "version": "0.0.0-canary.45",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "commit": "56d2170d526548052de30c3648d40cc47e683a6e",
+            "package": "@react-native-windows/cli"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Change from Manually Entered Version to Reference to WinUI.props",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "4dcb62a74ed1536b38d2b348506cb9a55ea87a55",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Ensure windows script added on init",
+            "author": "ngerlem@microsoft.com",
+            "commit": "92ed26927664ee91fb7447b0b3ba67fab410ed74",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Dec 2020 21:43:48 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.43",
       "version": "0.0.0-canary.43",

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Fri, 04 Dec 2020 00:10:06 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.42
+
+Tue, 08 Dec 2020 03:20:37 GMT
+
+### Patches
+
+- Allow unreleased RNW versions with react-native-windows-init --useDevMode (ngerlem@microsoft.com)
 
 ## 0.1.41
 

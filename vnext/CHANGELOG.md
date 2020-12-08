@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 03 Dec 2020 21:43:48 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.223
+
+Tue, 08 Dec 2020 03:20:37 GMT
+
+### Changes
+
+- Split out Universal build in Build and Test and have the Build run on the windev build agents (dannyvv@microsoft.com)
+- TagProperty only exists on FrameworkElement and hyperlinks aren't FE (asklar@microsoft.com)
+- Integrate 12/2 Nightly Build (ngerlem@microsoft.com)
+- Fix multicore build, missing dependency on Folly (dannyvv@microsoft.com)
+- Upgrade Min WinUI Version to 2.5 (34109996+chiaramooney@users.noreply.github.com)
+- Fix destruction of UIManager in UI thread (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.221
 

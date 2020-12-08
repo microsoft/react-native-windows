@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 03 Dec 2020 21:43:48 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.45
+
+Tue, 08 Dec 2020 03:20:37 GMT
+
+### Changes
+
+- Change from Manually Entered Version to Reference to WinUI.props (34109996+chiaramooney@users.noreply.github.com)
+- Ensure windows script added on init (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.43
 

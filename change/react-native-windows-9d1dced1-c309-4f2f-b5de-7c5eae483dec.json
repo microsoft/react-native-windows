@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrade Min WinUI Version to 2.5",
-  "packageName": "react-native-windows",
-  "email": "34109996+chiaramooney@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

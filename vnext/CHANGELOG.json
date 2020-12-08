@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.223",
+      "version": "0.0.0-canary.223",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Split out Universal build in Build and Test and have the Build run on the windev build agents",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d5922eec4026745338546de8f5115cf29d78e0e8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "TagProperty only exists on FrameworkElement and hyperlinks aren't FE",
+            "author": "asklar@microsoft.com",
+            "commit": "7d293b35946f417e3928811c53c9707c953335c7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 12/2 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "56d2170d526548052de30c3648d40cc47e683a6e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix multicore build, missing dependency on Folly",
+            "author": "dannyvv@microsoft.com",
+            "commit": "de717f2c40ff8c663fdb1acd25e41fa72ea2e967",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Upgrade Min WinUI Version to 2.5",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "4dcb62a74ed1536b38d2b348506cb9a55ea87a55",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix destruction of UIManager in UI thread",
+            "author": "vmorozov@microsoft.com",
+            "commit": "932eb5f017589480d6848e58b689d43ee12bef87",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Dec 2020 21:43:48 GMT",
       "tag": "react-native-windows_v0.0.0-canary.221",
       "version": "0.0.0-canary.221",

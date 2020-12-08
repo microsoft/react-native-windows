@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Split out Universal build in Build and Test and have the Build run on the windev build agents",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}
