@@ -89,18 +89,8 @@ JsiPreparedJavaScript const &JsiPreparedJavaScriptWrapper::Get() const noexcept 
 // JsiHostObjectWrapper implementation
 //===========================================================================
 
-/*static*/ std::mutex JsiHostObjectWrapper::s_mutex;
-/*static*/ std::map<uint64_t, JsiHostObjectWrapper *> JsiHostObjectWrapper::s_objectDataToObjectWrapper;
-
 JsiHostObjectWrapper::JsiHostObjectWrapper(std::shared_ptr<HostObject> &&hostObject) noexcept
     : m_hostObject(std::move(hostObject)) {}
-
-JsiHostObjectWrapper::~JsiHostObjectWrapper() noexcept {
-  if (m_objectData.Data) {
-    std::scoped_lock lock{s_mutex};
-    s_objectDataToObjectWrapper.erase(m_objectData.Data);
-  }
-}
 
 JsiValueRef JsiHostObjectWrapper::GetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name) try {
   JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetOrCreate(runtime)};
@@ -135,71 +125,16 @@ Windows::Foundation::Collections::IVector<JsiPropertyIdRef> JsiHostObjectWrapper
   throw;
 }
 
-/*static*/ void JsiHostObjectWrapper::RegisterHostObject(
-    JsiObjectRef const &objectData,
-    JsiHostObjectWrapper *hostObject) noexcept {
-  std::scoped_lock lock{s_mutex};
-  s_objectDataToObjectWrapper[objectData.Data] = hostObject;
-  hostObject->m_objectData = objectData;
-}
-
-/*static*/ bool JsiHostObjectWrapper::IsHostObject(JsiObjectRef const &objectData) noexcept {
-  std::scoped_lock lock{s_mutex};
-  auto it = s_objectDataToObjectWrapper.find(objectData.Data);
-  return it != s_objectDataToObjectWrapper.end();
-}
-
-/*static*/ std::shared_ptr<HostObject> JsiHostObjectWrapper::GetHostObject(JsiObjectRef const &objectData) noexcept {
-  auto it = s_objectDataToObjectWrapper.find(objectData.Data);
-  if (it != s_objectDataToObjectWrapper.end()) {
-    return it->second->m_hostObject;
-  } else {
-    return nullptr;
-  }
+std::shared_ptr<facebook::jsi::HostObject> const &JsiHostObjectWrapper::HostObjectSharedPtr() noexcept {
+  return m_hostObject;
 }
 
 //===========================================================================
 // JsiHostFunctionWrapper implementation
 //===========================================================================
 
-/*static*/ std::mutex JsiHostFunctionWrapper::s_functionMutex;
-/*static*/ std::atomic<uint32_t> JsiHostFunctionWrapper::s_functionIdGenerator;
-/*static*/ std::map<uint32_t, JsiHostFunctionWrapper *> JsiHostFunctionWrapper::s_functionIdToFunctionWrapper;
-/*static*/ std::map<uint64_t, JsiHostFunctionWrapper *> JsiHostFunctionWrapper::s_functionDataToFunctionWrapper;
-
-JsiHostFunctionWrapper::JsiHostFunctionWrapper(HostFunctionType &&hostFunction, uint32_t functionId) noexcept
-    : m_hostFunction{std::move(hostFunction)}, m_functionId{functionId} {
-  VerifyElseCrashSz(functionId, "Function Id must be not zero");
-  std::scoped_lock lock{s_functionMutex};
-  s_functionIdToFunctionWrapper[functionId] = this;
-}
-
-JsiHostFunctionWrapper::JsiHostFunctionWrapper(JsiHostFunctionWrapper &&other) noexcept
-    : m_hostFunction{std::move(other.m_hostFunction)},
-      m_functionId{std::exchange(other.m_functionId, 0)},
-      m_functionData{std::exchange(other.m_functionData, {0})} {
-  std::scoped_lock lock{s_functionMutex};
-  if (m_functionId) {
-    s_functionIdToFunctionWrapper[m_functionId] = this;
-  }
-  if (m_functionData.Data) {
-    s_functionDataToFunctionWrapper[m_functionData.Data] = this;
-  }
-}
-
-JsiHostFunctionWrapper::~JsiHostFunctionWrapper() noexcept {
-  if (m_functionId || m_functionData.Data) {
-    std::scoped_lock lock{s_functionMutex};
-    auto it1 = s_functionIdToFunctionWrapper.find(m_functionId);
-    if (it1 != s_functionIdToFunctionWrapper.end()) {
-      s_functionIdToFunctionWrapper.erase(it1);
-    }
-    auto it2 = s_functionDataToFunctionWrapper.find(m_functionData.Data);
-    if (it2 != s_functionDataToFunctionWrapper.end()) {
-      s_functionDataToFunctionWrapper.erase(it2);
-    }
-  }
-}
+JsiHostFunctionWrapper::JsiHostFunctionWrapper(HostFunctionType &&hostFunction) noexcept
+    : m_hostFunction{std::move(hostFunction)} {}
 
 JsiValueRef JsiHostFunctionWrapper::
 operator()(JsiRuntime const &runtime, JsiValueRef const &thisArg, array_view<JsiValueRef const> args) try {
@@ -211,34 +146,11 @@ operator()(JsiRuntime const &runtime, JsiValueRef const &thisArg, array_view<Jsi
   throw;
 }
 
-/*static*/ uint32_t JsiHostFunctionWrapper::GetNextFunctionId() noexcept {
-  return ++s_functionIdGenerator;
-}
-
-/*static*/ void JsiHostFunctionWrapper::RegisterHostFunction(
-    uint32_t functionId,
-    JsiObjectRef const &functionData) noexcept {
-  std::scoped_lock lock{s_functionMutex};
-  auto it = s_functionIdToFunctionWrapper.find(functionId);
-  VerifyElseCrashSz(it != s_functionIdToFunctionWrapper.end(), "Function Id is not found.");
-  JsiHostFunctionWrapper *functionWrapper = it->second;
-  s_functionDataToFunctionWrapper[functionData.Data] = functionWrapper;
-  functionWrapper->m_functionData = functionData;
-}
-
-/*static*/ bool JsiHostFunctionWrapper::IsHostFunction(JsiObjectRef const &functionData) noexcept {
-  std::scoped_lock lock{s_functionMutex};
-  return s_functionDataToFunctionWrapper.find(functionData.Data) != s_functionDataToFunctionWrapper.end();
-}
-
-/*static*/ HostFunctionType &JsiHostFunctionWrapper::GetHostFunction(JsiObjectRef const &functionData) noexcept {
-  std::scoped_lock lock{s_functionMutex};
-  auto it = s_functionDataToFunctionWrapper.find(functionData.Data);
-  if (it != s_functionDataToFunctionWrapper.end()) {
-    return it->second->m_hostFunction;
-  }
-
-  VerifyElseCrashSz(false, "Function is not a host function");
+/*static*/ HostFunctionType &JsiHostFunctionWrapper::GetHostFunction(JsiHostFunction const &hostFunction) noexcept {
+  void *hostFunctionAbi = get_abi(hostFunction);
+  JsiHostFunctionWrapper *self =
+      static_cast<impl::delegate<JsiHostFunction, JsiHostFunctionWrapper> *>(hostFunctionAbi);
+  return self->m_hostFunction;
 }
 
 //===========================================================================
@@ -490,7 +402,6 @@ Object JsiAbiRuntime::createObject() try {
 Object JsiAbiRuntime::createObject(std::shared_ptr<HostObject> ho) try {
   auto hostObjectWrapper = winrt::make<JsiHostObjectWrapper>(std::move(ho));
   Object result = MakeObject(m_runtime.CreateObjectWithHostObject(hostObjectWrapper));
-  JsiHostObjectWrapper::RegisterHostObject(AsJsiObjectRef(result), get_self<JsiHostObjectWrapper>(hostObjectWrapper));
   return result;
 } catch (hresult_error const &) {
   RethrowJsiError();
@@ -498,14 +409,23 @@ Object JsiAbiRuntime::createObject(std::shared_ptr<HostObject> ho) try {
 }
 
 std::shared_ptr<HostObject> JsiAbiRuntime::getHostObject(const Object &obj) try {
-  return JsiHostObjectWrapper::GetHostObject(AsJsiObjectRef(obj));
+  std::shared_ptr<HostObject> result;
+  if (auto jsiHostObject = m_runtime.GetHostObject(AsJsiObjectRef(obj))) {
+    if (auto wrapper = get_self<JsiHostObjectWrapper>(jsiHostObject)) {
+      result = wrapper->HostObjectSharedPtr();
+    }
+  }
+  return result;
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 HostFunctionType &JsiAbiRuntime::getHostFunction(const Function &func) try {
-  return JsiHostFunctionWrapper::GetHostFunction(AsJsiObjectRef(func));
+  if (auto jsiHostFunction = m_runtime.GetHostFunction(AsJsiObjectRef(func))) {
+    return JsiHostFunctionWrapper::GetHostFunction(jsiHostFunction);
+  }
+  throw winrt::hresult_invalid_argument(L"Not a host function");
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -588,7 +508,7 @@ bool JsiAbiRuntime::isHostObject(const Object &obj) const try {
 }
 
 bool JsiAbiRuntime::isHostFunction(const Function &func) const try {
-  return JsiHostFunctionWrapper::IsHostFunction(AsJsiObjectRef(func));
+  return m_runtime.IsHostFunction(AsJsiObjectRef(func));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -665,11 +585,8 @@ Function JsiAbiRuntime::createFunctionFromHostFunction(
     const PropNameID &name,
     unsigned int paramCount,
     HostFunctionType func) try {
-  uint32_t functionId = JsiHostFunctionWrapper::GetNextFunctionId();
-  Function result = MakeFunction(m_runtime.CreateFunctionFromHostFunction(
-      AsJsiPropertyIdRef(name), paramCount, JsiHostFunctionWrapper(std::move(func), functionId)));
-  JsiHostFunctionWrapper::RegisterHostFunction(functionId, AsJsiObjectRef(result));
-  return result;
+  return MakeFunction(m_runtime.CreateFunctionFromHostFunction(
+      AsJsiPropertyIdRef(name), paramCount, JsiHostFunctionWrapper{std::move(func)}));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
