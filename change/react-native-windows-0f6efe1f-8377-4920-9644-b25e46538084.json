@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Introduce reader/writer for winrt::hstring",
+  "packageName": "react-native-windows",
+  "email": "Bartosz.Klonowski@callstack.com",
+  "dependentChangeType": "none"
+}
