@@ -13,3 +13,6 @@ steps:
 
   - script: git fetch
     displayName: Testing git permissions
+
+  - script: type .git\config
+    displayName: Type git config

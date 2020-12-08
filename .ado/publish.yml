@@ -33,7 +33,6 @@ jobs:
       - checkout: self
         clean: true
         submodules: false
-        persistCredentials: true
 
       - template: templates/configure-git.yml
 
