@@ -41,11 +41,11 @@ jobs:
       - script: yarn build
         displayName: yarn build
 
-      - script: npx --no-install --no-push beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags
+      - script: npx --no-install beachball publish --no-push --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags
         displayName: Beachball Publish (Master Branch)
         condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
-      - script: npx --no-install --no-push beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
+      - script: npx --no-install beachball publish --no-push --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
         displayName: Beachball Publish (Stable Branch)
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
