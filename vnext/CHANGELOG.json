@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 08 Dec 2020 02:46:32 GMT",
+      "tag": "react-native-windows_v0.62.18",
+      "version": "0.62.18",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.62] Update V8 package version",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "5a2048a4d8ed9f27f18a4362171a36062a62d134",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Nov 2020 15:07:17 GMT",
       "tag": "react-native-windows_v0.62.17",
       "version": "0.62.17",
