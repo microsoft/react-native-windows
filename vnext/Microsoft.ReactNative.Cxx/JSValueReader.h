@@ -56,6 +56,7 @@ void ReadValue(TJSValue const &jsValue, /*out*/ T &value) noexcept;
 
 void ReadValue(IJSValueReader const &reader, /*out*/ std::string &value) noexcept;
 void ReadValue(IJSValueReader const &reader, /*out*/ std::wstring &value) noexcept;
+void ReadValue(IJSValueReader const &reader, /*out*/ winrt::hstring &value) noexcept;
 void ReadValue(IJSValueReader const &reader, /*out*/ bool &value) noexcept;
 void ReadValue(IJSValueReader const &reader, /*out*/ int8_t &value) noexcept;
 void ReadValue(IJSValueReader const &reader, /*out*/ int16_t &value) noexcept;
@@ -176,6 +177,26 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ std::wstring &value)
       value = std::to_wstring(reader.GetDouble());
       value.erase(value.find_last_not_of('0') + 1, std::wstring::npos);
       value.erase(value.find_last_not_of('.') + 1, std::wstring::npos);
+      break;
+    default:
+      value = L"";
+      break;
+  }
+}
+
+inline void ReadValue(IJSValueReader const &reader, /*out*/ winrt::hstring &value) noexcept {
+  switch (reader.ValueType()) {
+    case JSValueType::String:
+      value = reader.GetString();
+      break;
+    case JSValueType::Boolean:
+      value = reader.GetBoolean() ? L"true" : L"false";
+      break;
+    case JSValueType::Int64:
+      value = to_hstring(reader.GetInt64());
+      break;
+    case JSValueType::Double:
+      value = to_hstring(reader.GetDouble());
       break;
     default:
       value = L"";
