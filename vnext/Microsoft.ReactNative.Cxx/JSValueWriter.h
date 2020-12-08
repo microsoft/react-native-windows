@@ -89,7 +89,7 @@ inline void WriteValue(IJSValueWriter const &writer, T const &value) noexcept {
   writer.WriteString(value);
 }
 
-inline void WriteValue(IJSValueWriter const& writer, const winrt::hstring value) noexcept {
+inline void WriteValue(IJSValueWriter const &writer, const winrt::hstring value) noexcept {
   writer.WriteString(value);
 }
 
