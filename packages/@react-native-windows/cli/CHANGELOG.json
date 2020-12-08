@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 08 Dec 2020 04:33:16 GMT",
+      "tag": "@react-native-windows/cli_v0.63.7",
+      "version": "0.63.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.63] Autolinking fixes for C++ / C# interop",
+            "author": "jthysell@microsoft.com",
+            "commit": "fa5c5ff8371332679988232abb9c0e0ecd269411",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Dec 2020 00:20:35 GMT",
       "tag": "@react-native-windows/cli_v0.63.6",
       "version": "0.63.6",

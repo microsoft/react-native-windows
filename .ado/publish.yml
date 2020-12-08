@@ -4,6 +4,7 @@ variables:
   - template: variables/msbuild.yml
   - template: variables/release.yml
   - template: variables/vs2019.yml
+  - group: RNW Secrets
 
 schedules:
 - cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
@@ -32,7 +33,6 @@ jobs:
       - checkout: self
         clean: true
         submodules: false
-        persistCredentials: true
 
       - template: templates/configure-git.yml
 
@@ -51,7 +51,7 @@ jobs:
       - task: CmdLine@2
         displayName: Create GitHub Release
         inputs:
-          script: npx $(githubReleaseNpxArgs) @rnw-scripts/create-github-releases --authToken $(GITHUB_API)
+          script: npx $(githubReleaseNpxArgs) @rnw-scripts/create-github-releases --authToken $(githubAuthToken)
 
       - task: CmdLine@2
         displayName: Set Version Env Vars
