@@ -3,6 +3,7 @@ name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 variables:
   - template: variables/msbuild.yml
   - template: variables/vs2017.yml
+  - group: RNW Secrets
 
 schedules:
 - cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
