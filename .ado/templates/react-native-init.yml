@@ -54,11 +54,11 @@ steps:
         start-process npx -ArgumentList @('verdaccio', '--config', './.ado/verdaccio/config.yaml')
 
   - script: |
-      node .ado/waitForVerdaccio.js
+      node .ado/scripts/waitForVerdaccio.js
     displayName: Wait for verdaccio server to boot
 
   - script: |
-      node .ado/npmAddUser.js user pass mail@nomail.com http://localhost:4873
+      node .ado/scripts/npmAddUser.js user pass mail@nomail.com http://localhost:4873
     displayName: Add npm user to verdaccio
 
   - script: |
@@ -139,7 +139,7 @@ steps:
     displayName: List Visual Studio Components
     inputs:
       targetType: filePath
-      filePath: $(Build.SourcesDirectory)/.ado/VSComponentList.ps1
+      filePath: $(Build.SourcesDirectory)/.ado/scripts/VSComponentList.ps1
     condition: and(succeeded(), ${{ parameters.listVsComponents }})
 
   - task: PowerShell@2
@@ -155,19 +155,19 @@ steps:
   - task: CmdLine@2
     displayName: Set LocalDumps for cl.exe
     inputs:
-      script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd cl
+      script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd cl
       workingDirectory: $(Build.SourcesDirectory)
 
   - task: CmdLine@2
     displayName: Set LocalDumps for link.exe
     inputs:
-      script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd link
+      script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd link
       workingDirectory: $(Build.SourcesDirectory)
 
   - task: CmdLine@2
     displayName: Set LocalDumps for msbuild.exe
     inputs:
-      script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd msbuild
+      script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd msbuild
       workingDirectory: $(Build.SourcesDirectory)
 
   # Work around issue of parameters not getting expanded in conditions properly

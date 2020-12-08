@@ -48,7 +48,7 @@ jobs:
           Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\$(BuildPlatform)\BuildLogs"
         displayName: Set BuildLogDirectory
 
-      - script: .ado\SetupLocalDumps.cmd integrationtest
+      - script: .ado\scripts\SetupLocalDumps.cmd integrationtest
         displayName: Set LocalDumps
 
       # The build is more likely to crash after we've started other bits that
