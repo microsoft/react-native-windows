@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Use whitespace insensitive compare for indentical override detection",
-  "packageName": "react-native-platform-override",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,27 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "react-native-platform-override_v0.4.4",
+      "version": "0.4.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use whitespace insensitive compare for indentical override detection",
+            "author": "ngerlem@microsoft.com",
+            "commit": "bad8fe175ffe24b8c33c85fee7fda61e3a9c9050",
+            "package": "react-native-platform-override"
+          },
+          {
+            "comment": "Bump yargs to 15.4.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fa34591ac86ea25e1e92a807864ba71480046a27",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Nov 2020 05:08:17 GMT",
       "tag": "react-native-platform-override_v0.4.3",
       "version": "0.4.3",

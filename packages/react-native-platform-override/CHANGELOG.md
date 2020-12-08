@@ -1,8 +1,17 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Tue, 24 Nov 2020 05:08:17 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.4.4
+
+Tue, 08 Dec 2020 03:20:37 GMT
+
+### Patches
+
+- Use whitespace insensitive compare for indentical override detection (ngerlem@microsoft.com)
+- Bump yargs to 15.4.1 (ngerlem@microsoft.com)
 
 ## 0.4.3
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix dependency syncing for wildcard peer dependencies",
-  "packageName": "@rnw-scripts/integrate-rn",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
