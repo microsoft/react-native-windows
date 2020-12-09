@@ -11,11 +11,15 @@
 
 // facebook::jsi::Runtime hides all methods that we need to call.
 // We "open" them up here by redeclaring the private and protected keywords.
+#pragma push_macro("private")
+#pragma push_macro("protected")
 #define private public
 #define protected public
 #include "jsi/jsi.h"
 #undef protected
 #undef private
+#pragma pop_macro("protected")
+#pragma pop_macro("private")
 
 #include "ChakraRuntimeHolder.h"
 
@@ -53,6 +57,12 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   ~JsiRuntime() noexcept;
 
   static ReactNative::JsiRuntime FromRuntime(facebook::jsi::Runtime &runtime) noexcept;
+  static ReactNative::JsiRuntime GetOrCreate(
+      std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+      std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept;
+  static ReactNative::JsiRuntime Create(
+      std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+      std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept;
 
  public: // JsiRuntime
   static Microsoft::ReactNative::JsiRuntime MakeChakraRuntime();
@@ -137,6 +147,15 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   void SetError(JsiErrorType errorType, hstring const &errorDetails, JsiValueRef const &value) noexcept;
   static void RethrowJsiError(facebook::jsi::Runtime &runtime);
 
+ public:
+  struct HostFunctionCleaner {
+    HostFunctionCleaner(int64_t hostFunctionId);
+    ~HostFunctionCleaner();
+
+   private:
+    int64_t m_hostFunctionId{0};
+  };
+
  private:
   void SetError(facebook::jsi::JSError const &jsError) noexcept;
   void SetError(facebook::jsi::JSINativeException const &nativeException) noexcept;
@@ -148,7 +167,9 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   ReactNative::JsiError m_error{nullptr};
 
   static std::mutex s_mutex;
-  static std::map<uintptr_t, winrt::weak_ref<ReactNative::JsiRuntime>> s_jsiRuntimeMap;
+  static std::unordered_map<uintptr_t, winrt::weak_ref<ReactNative::JsiRuntime>> s_jsiRuntimeMap;
+  static std::unordered_map<int64_t, ReactNative::JsiHostFunction> s_jsiHostFunctionMap;
+  static int64_t s_jsiNextHostFunctionId;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
