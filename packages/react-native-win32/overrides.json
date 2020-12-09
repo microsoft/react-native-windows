@@ -366,6 +366,10 @@
       "baseHash": "6a61022dbe92a0683a82669ace739fc7ca110c7d"
     },
     {
+      "type": "platform",
+      "file": "src/Libraries/Utilities/FocusManager.win32.js"
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/Utilities/NativePlatformConstantsWin.js",
       "baseFile": "Libraries/Utilities/NativePlatformConstantsIOS.js",
