@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 09 Dec 2020 05:07:19 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.46",
+      "version": "0.0.0-canary.46",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Deploy using VS tool",
+            "author": "asklar@microsoft.com",
+            "commit": "7a1b140baaec45d2582901b30010497ab12bd8da",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Dec 2020 03:20:37 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.45",
       "version": "0.0.0-canary.45",
