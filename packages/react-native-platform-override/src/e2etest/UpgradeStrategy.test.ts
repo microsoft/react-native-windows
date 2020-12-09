@@ -15,7 +15,8 @@ import UpgradeStrategy, {
 import {acquireGitRepo, usingFiles} from './Resource';
 import GitReactFileRepository from '../GitReactFileRepository';
 import {hashFileOrDirectory} from '../Hash';
-import isutf8 from 'isutf8';
+
+import isUtf8 = require("isutf8")
 
 let gitReactRepo: GitReactFileRepository;
 let disposeReactRepo: () => Promise<void>;
@@ -337,7 +338,7 @@ async function evaluateStrategy(opts: {
       path.join(__dirname, 'collateral', referenceFile),
     );
 
-    if (isutf8(actualContent) && isutf8(expectedContent)) {
+    if (isUtf8(actualContent) && isUtf8(expectedContent)) {
       expect(actualContent.toString().replace(/\r\n/g, '\n')).toBe(
         expectedContent.toString().replace(/\r\n/g, '\n'),
       );
