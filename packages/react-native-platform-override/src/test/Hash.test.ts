@@ -7,7 +7,8 @@
 
 import {Hasher, hashContent, hashFileOrDirectory} from '../Hash';
 import MockFileRepository from './MockFileRepository';
-import isutf8 from 'isutf8';
+
+import isUtf8 = require("isutf8")
 
 test('hashContent - Same String', () => {
   expect(hashContent('a')).toBe(hashContent('a'));
@@ -63,8 +64,8 @@ test('hashContent - Different Binary (Not UTF8)', () => {
   const binary2 = Buffer.from(new Int8Array([0xff, 1, 42]));
 
   // Make sure we really are testing invalid strings
-  expect(isutf8(binary1)).toBe(false);
-  expect(isutf8(binary2)).toBe(false);
+  expect(isUtf8(binary1)).toBe(false);
+  expect(isUtf8(binary2)).toBe(false);
 
   expect(hashContent(Buffer.from(binary1))).not.toBe(
     hashContent(Buffer.from(binary2)),
