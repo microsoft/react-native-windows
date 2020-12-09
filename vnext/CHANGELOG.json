@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 09 Dec 2020 05:07:19 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.224",
+      "version": "0.0.0-canary.224",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix getting host objects and functions in JSI ABI",
+            "author": "vmorozov@microsoft.com",
+            "commit": "311f2ff7d48adc487fd04dd209298df19c2d3622",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Dec 2020 03:20:37 GMT",
       "tag": "react-native-windows_v0.0.0-canary.223",
       "version": "0.0.0-canary.223",

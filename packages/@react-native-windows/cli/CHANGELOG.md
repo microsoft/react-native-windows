@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Dec 2020 05:07:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.46
+
+Wed, 09 Dec 2020 05:07:19 GMT
+
+### Changes
+
+- Deploy using VS tool (asklar@microsoft.com)
 
 ## 0.0.0-canary.45
 

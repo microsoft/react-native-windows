@@ -22,7 +22,7 @@ stages:
             displayName: "Check if build is required for this PR"
             inputs:
               targetType: filePath
-              filePath: .ado/shouldSkipPRBuild.ps1
+              filePath: .ado/scripts/shouldSkipPRBuild.ps1
 
   - stage: Build
     displayName: Build 🔨
@@ -78,4 +78,3 @@ stages:
       - template: jobs/cli-init.yml
         parameters:
           buildEnvironment: PullRequest
-

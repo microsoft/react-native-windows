@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Dec 2020 05:07:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.224
+
+Wed, 09 Dec 2020 05:07:19 GMT
+
+### Changes
+
+- Fix getting host objects and functions in JSI ABI (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.223
 

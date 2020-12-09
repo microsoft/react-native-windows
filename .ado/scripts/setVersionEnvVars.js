@@ -4,7 +4,7 @@ const path = require('path');
 const child_process = require('child_process');
 const semver = require('semver');
 
-const pkgJsonPath = path.resolve(__dirname, "../vnext/package.json");
+const pkgJsonPath = path.resolve(__dirname, "../../vnext/package.json");
 const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
 
 // Record commit number, so that additional build tasks can record that commit in the NuGet

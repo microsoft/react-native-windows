@@ -6638,9 +6638,9 @@ has@^1.0.3:
     function-bind "^1.1.1"
 
 hermes-engine@~0.7.0:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/hermes-engine/-/hermes-engine-0.7.1.tgz#a71a5db33b222733dc8ca7544810cea48deafed0"
-  integrity sha512-EMCzVxcjn1zKWF/YqJsOgEpOLzuYCQ75t+9S7oiMN1mXYzq2Y6+ftgo1MR/6cR77PtgHfDBlDv3DGGV0gtbPbw==
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/hermes-engine/-/hermes-engine-0.7.2.tgz#303cd99d23f68e708b223aec2d49d5872985388b"
+  integrity sha512-E2DkRaO97gwL98LPhgfkMqhHiNsrAjIfEk3wWYn2Y31xdkdWn0572H7RnVcGujMJVqZNJvtknxlpsUb8Wzc3KA==
 
 hermes-profile-transformer@^0.0.6:
   version "0.0.6"
