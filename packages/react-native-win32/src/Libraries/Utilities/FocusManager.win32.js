@@ -7,7 +7,7 @@ import { findNodeHandle, NativeModules } from 'react-native';
 */
 class FocusManager {
 
-    // This function takes in a ref and a bool value. If setWindowFocus = true, call aggressive focus.
+    // This function takes in a ref to a React Component and a bool value. If setWindowFocus = true, call aggressive focus.
     // Else, call polite focus
     static Focus(ref, setWindowFocus)
     {
