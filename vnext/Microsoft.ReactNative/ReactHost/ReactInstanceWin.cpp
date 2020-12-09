@@ -839,8 +839,8 @@ winrt::Microsoft::ReactNative::JsiRuntime ReactInstanceWin::JsiRuntime() noexcep
     std::scoped_lock lock{m_mutex};
     if (!m_jsiRuntime && jsiRuntime) {
       // Set only if other thread did not do it yet.
-      m_jsiRuntime = winrt::make<winrt::Microsoft::ReactNative::implementation::JsiRuntime>(
-          std::move(jsiRuntimeHolder), std::move(jsiRuntime));
+      m_jsiRuntime =
+          winrt::Microsoft::ReactNative::implementation::JsiRuntime::GetOrCreate(jsiRuntimeHolder, jsiRuntime);
     }
 
     return m_jsiRuntime;

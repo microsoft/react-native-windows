@@ -9,6 +9,7 @@ using namespace std;
 #include <algorithm>
 #include <iostream>
 
+#include <Threading/MessageDispatchQueue.h>
 #include <unicode.h>
 #include "ShadowNode.h"
 #include "ShadowNodeRegistry.h"
@@ -459,7 +460,11 @@ UIManagerModule::UIManagerModule(
 UIManagerModule::~UIManagerModule() noexcept {
   if (m_uiQueue) {
     // To make sure that we destroy UI components in UI thread.
-    m_uiQueue->runOnQueue([manager = std::move(m_manager)]() {});
+    // We cannot use the m_uiQueue->runOnQueue directly because
+    // the UI MessageQueueThread is already stopped.
+    std::static_pointer_cast<Mso::React::MessageDispatchQueue>(m_uiQueue)
+        ->DispatchQueue()
+        .Post([manager = std::move(m_manager)]() noexcept {});
   }
 }
 
