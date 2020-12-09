@@ -62,6 +62,7 @@ import typeof DeviceInfo from './Libraries/Utilities/DeviceInfo';
 import typeof DevSettings from './Libraries/Utilities/DevSettings';
 import typeof Dimensions from './Libraries/Utilities/Dimensions';
 import typeof Easing from './Libraries/Animated/Easing';
+import typeof FocusManager from './Libraries/Utilities/FocusManager';
 import typeof ReactNative from './Libraries/Renderer/shims/ReactNative';
 import typeof I18nManager from './Libraries/ReactNative/I18nManager';
 import typeof ImagePickerIOS from './Libraries/Image/ImagePickerIOS';
@@ -141,6 +142,9 @@ module.exports = {
   // $FlowFixMe[value-as-type]
   get DrawerLayoutAndroid(): DrawerLayoutAndroid {
     return require('./Libraries/Components/DrawerAndroid/DrawerLayoutAndroid');
+  },
+  get FocusManager(): FocusManager {
+    return require('./Libraries/Utilities/FocusManager');
   },
   get FlatList(): FlatList {
     return require('./Libraries/Lists/FlatList');
