@@ -23,8 +23,8 @@ template <class T, std::enable_if_t<std::is_convertible_v<T, std::string_view>, 
 void WriteValue(IJSValueWriter const &writer, T const &value) noexcept;
 template <class T, std::enable_if_t<std::is_convertible_v<T, std::wstring_view>, int> = 1>
 void WriteValue(IJSValueWriter const &writer, T const &value) noexcept;
-void WriteValue(IJSValueWriter const &writer, winrt::hstring value) noexcept;
-void WriteValue(IJSValueWriter const &writer, const winrt::param::hstring value) noexcept;
+void WriteValue(IJSValueWriter const &writer, winrt::hstring const &value) noexcept;
+void WriteValue(IJSValueWriter const &writer, winrt::param::hstring const &value) noexcept;
 void WriteValue(IJSValueWriter const &writer, bool value) noexcept;
 void WriteValue(IJSValueWriter const &writer, int8_t value) noexcept;
 void WriteValue(IJSValueWriter const &writer, int16_t value) noexcept;
@@ -89,11 +89,11 @@ inline void WriteValue(IJSValueWriter const &writer, T const &value) noexcept {
   writer.WriteString(value);
 }
 
-inline void WriteValue(IJSValueWriter const &writer, const winrt::hstring value) noexcept {
+inline void WriteValue(IJSValueWriter const &writer, winrt::hstring const &value) noexcept {
   writer.WriteString(value);
 }
 
-inline void WriteValue(IJSValueWriter const &writer, const winrt::param::hstring value) noexcept {
+inline void WriteValue(IJSValueWriter const &writer, winrt::param::hstring const &value) noexcept {
   writer.WriteString(value);
 }
 

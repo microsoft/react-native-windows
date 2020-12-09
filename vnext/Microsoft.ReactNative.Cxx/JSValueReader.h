@@ -195,9 +195,13 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ winrt::hstring &valu
     case JSValueType::Int64:
       value = to_hstring(reader.GetInt64());
       break;
-    case JSValueType::Double:
-      value = to_hstring(reader.GetDouble());
+    case JSValueType::Double: {
+      std::wstring conversionValue = std::to_wstring(reader.GetDouble());
+      conversionValue.erase(conversionValue.find_last_not_of('0') + 1, std::wstring::npos);
+      conversionValue.erase(conversionValue.find_last_not_of('.') + 1, std::wstring::npos);
+      value = conversionValue;
       break;
+    }
     default:
       value = L"";
       break;
