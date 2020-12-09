@@ -20,7 +20,7 @@ jobs:
         displayName: "Check if build is required for this PR"
         inputs:
           targetType: filePath
-          filePath: .ado/shouldSkipPRBuild.ps1
+          filePath: .ado/scripts/shouldSkipPRBuild.ps1
 
   - template: jobs/jschecks.yml
 

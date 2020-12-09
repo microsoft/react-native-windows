@@ -5,6 +5,6 @@ steps:
     displayName: Set version variables
     name: setVersionEnvVars
     inputs:
-      script: node ./.ado/setVersionEnvVars.js
+      script: node ./.ado/scripts/setVersionEnvVars.js
     env:
       RUNNER_TEMP: $(Build.StagingDirectory)

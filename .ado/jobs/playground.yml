@@ -93,7 +93,7 @@ jobs:
 
         continueOnError: true # See issue #6129
 
-      - powershell: $(Build.SourcesDirectory)/.ado/TestWACK.ps1 $(BuildPlatform) $(BuildConfiguration) $(Build.StagingDirectory)\WACK
+      - powershell: $(Build.SourcesDirectory)/.ado/scripts/TestWACK.ps1 $(BuildPlatform) $(BuildConfiguration) $(Build.StagingDirectory)\WACK
         displayName: Test WACK
         condition: and(succeeded(), eq(variables.TestWACK, true))
 
