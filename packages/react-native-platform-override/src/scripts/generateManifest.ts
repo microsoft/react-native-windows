@@ -18,7 +18,8 @@ import GitReactFileRepository from '../GitReactFileRepository';
 import {diff_match_patch} from 'diff-match-patch';
 import {getInstalledRNVersion} from '../PackageUtils';
 import {hashContent} from '../Hash';
-import isutf8 from 'isutf8';
+
+import isUtf8 = require("isutf8")
 
 const {extensions, directory} = yargs
   .options({
@@ -204,7 +205,7 @@ function computeSimilarity(
   override: Buffer,
   source: Buffer,
 ): {similar: boolean; editDistance: number} {
-  if (!isutf8(override) || !isutf8(source)) {
+  if (!isUtf8(override) || !isUtf8(source)) {
     return {similar: false, editDistance: NaN};
   }
 

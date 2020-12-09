@@ -29,7 +29,7 @@ import upgradeDependencies from './upgradeDependencies';
 (async () => {
   const {argv} = yargs
     .check(args => {
-      if (args._.length === 1 && semver.valid(args._[0])) {
+      if (args._.length === 1 && semver.valid(<string>args._[0])) {
         return true;
       } else {
         throw new Error('Usage: integrate-rn <version>');
@@ -37,7 +37,7 @@ import upgradeDependencies from './upgradeDependencies';
     })
     .showHelpOnFail(false);
 
-  const version = argv._[0];
+  const version = <string>argv._[0];
 
   await funcStep(
     `Updating packages and dependants to react-native@${version}`,
