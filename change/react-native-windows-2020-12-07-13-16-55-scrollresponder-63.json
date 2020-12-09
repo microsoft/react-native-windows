@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Fix Clicks/Taps Being Eaten",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-12-07T21:16:55.561Z"
+}

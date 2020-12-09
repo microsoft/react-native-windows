@@ -139,6 +139,10 @@
       "issue": "LEGACY_FIXME"
     },
     {
+      "type": "platform",
+      "file": "src/Libraries/Components/ScrollResponder.win32.js"
+    },
+    {
       "type": "copy",
       "file": "src/Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.js",
       "baseFile": "Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.android.js",
