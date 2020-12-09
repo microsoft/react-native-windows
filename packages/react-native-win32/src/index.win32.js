@@ -143,9 +143,6 @@ module.exports = {
   get DrawerLayoutAndroid(): DrawerLayoutAndroid {
     return require('./Libraries/Components/DrawerAndroid/DrawerLayoutAndroid');
   },
-  get FocusManager(): FocusManager {
-    return require('./Libraries/Utilities/FocusManager');
-  },
   get FlatList(): FlatList {
     return require('./Libraries/Lists/FlatList');
   },
@@ -350,6 +347,9 @@ module.exports = {
   },
   get findNodeHandle(): $PropertyType<ReactNative, 'findNodeHandle'> {
     return require('./Libraries/Renderer/shims/ReactNative').findNodeHandle;
+  },
+  get FocusManager(): FocusManager {
+    return require('./Libraries/Utilities/FocusManager');
   },
   get I18nManager(): I18nManager {
     return require('./Libraries/ReactNative/I18nManager');
