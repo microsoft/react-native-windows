@@ -163,6 +163,17 @@ exports.config = {
   jasmineNodeOpts: {
     // Needs to be longer than the 1m webdriverio timeout to let its errors be propgated
     defaultTimeoutInterval: 100000,
+    expectationResultHandler: function(passed, assertion) {
+      /**
+       * only take screenshot if assertion failed
+       */
+      if (passed) {
+        return;
+      }
+
+      let name = 'ERROR-' + Date.now();
+      browser.saveScreenshot('./errorShots/' + name + '.png');
+    },
   },
 
   //
@@ -237,12 +248,8 @@ exports.config = {
    * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
    * @param {Object} test test details
    */
-  afterTest: function(test) {
-    if (test.error !== undefined) {
-      let name = 'ERROR-' + Date.now();
-      browser.saveScreenshot('./errorShots/' + name + '.png');
-    }
-  },
+  // afterTest: function(test) {
+  // },
   /**
    * Hook that gets executed after the suite has ended
    * @param {Object} suite suite details
