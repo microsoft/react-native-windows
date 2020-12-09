@@ -87,8 +87,8 @@ export const ViewWin32 = React.forwardRef(
               NativeModules.UIManager.getViewManagerConfig('RCTView').Commands.focus,
               null
               );
-          };      
-        }       
+          };
+        }
       },
     });
 
