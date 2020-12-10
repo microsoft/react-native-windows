@@ -9,7 +9,7 @@ export default class FocusManager {
 
     // This function takes in a ref to a React Component and a bool value. If setWindowFocus = true, call aggressive focus.
     // Else, call polite focus
-    static Focus(ref, setWindowFocus)
+    static focus(ref, setWindowFocus)
     {
         if(ref)
         {
