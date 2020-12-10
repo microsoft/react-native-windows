@@ -16,7 +16,7 @@ import {acquireGitRepo, usingFiles} from './Resource';
 import GitReactFileRepository from '../GitReactFileRepository';
 import {hashFileOrDirectory} from '../Hash';
 
-import isUtf8 = require("isutf8")
+import isUtf8 = require('isutf8');
 
 let gitReactRepo: GitReactFileRepository;
 let disposeReactRepo: () => Promise<void>;

@@ -19,7 +19,7 @@ import {diff_match_patch} from 'diff-match-patch';
 import {getInstalledRNVersion} from '../PackageUtils';
 import {hashContent} from '../Hash';
 
-import isUtf8 = require("isutf8")
+import isUtf8 = require('isutf8');
 
 const {extensions, directory} = yargs
   .options({
