@@ -8,6 +8,7 @@
 
 'use strict';
 
+import * as React from 'react';
 import {findNodeHandle, NativeModules} from 'react-native';
 
 /*
@@ -17,7 +18,7 @@ class FocusManager {
   // This function takes in a ref to a React Component and a bool value. If setWindowFocus = true, call aggressive focus.
   // Else, call polite focus
 
-  static focus(ref: any, setWindowFocus: boolean) {
+  static focus(ref: React.Ref<any>, setWindowFocus: boolean) {
     if (ref) {
       if (setWindowFocus) {
         NativeModules.UIManager.dispatchViewManagerCommand(
