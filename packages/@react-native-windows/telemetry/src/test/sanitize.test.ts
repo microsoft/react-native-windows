@@ -244,8 +244,8 @@ test('thrown exception a->b, hello world', done => {
 
       const filename = basename(__filename);
       expect(stack[0].method).toEqual('b');
-      expect(stack[1].method).toEqual('b');
-      expect(stack[2].method).toEqual('Object.a');
+      expect(stack[1].method).toEqual('a');
+      expect(stack[2].method).toEqual('Object.<anonymous>');
       expect(stack[0].fileName).toEqual(`test\\${filename}`);
       expect(stack[1].fileName).toEqual(`test\\${filename}`);
       expect(stack[2].fileName).toEqual(`test\\${filename}`);
@@ -301,8 +301,8 @@ test('thrown exception a->b, hello path', done => {
 
       const filename = basename(__filename);
       expect(stack[0].method).toEqual('b');
-      expect(stack[1].method).toEqual('b');
-      expect(stack[2].method).toEqual('Object.a');
+      expect(stack[1].method).toEqual('a');
+      expect(stack[2].method).toEqual('Object.<anonymous>');
       expect(stack[0].fileName).toEqual(`test\\${filename}`);
       expect(stack[1].fileName).toEqual(`test\\${filename}`);
       expect(stack[2].fileName).toEqual(`test\\${filename}`);
