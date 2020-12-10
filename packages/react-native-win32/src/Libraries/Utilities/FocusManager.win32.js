@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
- * @flow strict-local
+ * @flow
  * @format
  */
 
@@ -16,7 +16,8 @@ import {findNodeHandle, NativeModules} from 'react-native';
 class FocusManager {
   // This function takes in a ref to a React Component and a bool value. If setWindowFocus = true, call aggressive focus.
   // Else, call polite focus
-  static focus(ref, setWindowFocus) {
+
+  static focus(ref: any, setWindowFocus: boolean) {
     if (ref) {
       if (setWindowFocus) {
         NativeModules.UIManager.dispatchViewManagerCommand(
