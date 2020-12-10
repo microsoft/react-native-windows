@@ -187,8 +187,6 @@ jasmine runs in a child node process, so the "autoAttachChildProcesses" : true i
 
 # More about E2E test
 
-Note: Appium is finally removed from the project in [PR 6636](https://github.com/microsoft/react-native-windows/pull/6636). So wdio send message to WinAppDriver directly. Instead of Appium service, [WinAppDriver service](https://github.com/licanhua/wdio-winappdriver-service) is used to launch and stop WinAppDriver during the testing.
-
 ## Technical Decisions
 
 ### MSTest vs node test runner
