@@ -2,9 +2,10 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
+ * @flow strict-local
  * @format
- * @flow
  */
+
 'use strict';
 
 import {findNodeHandle, NativeModules} from 'react-native';
