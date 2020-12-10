@@ -10,7 +10,7 @@ import * as path from 'path';
 import {normalizePath, unixPath} from './PathUtils';
 import FileRepository from './FileRepository';
 
-import isUtf8 = require("isutf8")
+import isUtf8 = require('isutf8');
 
 export type HashOpts = {
   /**
