@@ -423,6 +423,10 @@
       "issue": "LEGACY_FIXME"
     },
     {
+      "type": "platform",
+      "file": "src/Libraries/Utilities/FocusManager.win32.js"
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/Utilities/NativePlatformConstantsWin.js",
       "baseFile": "Libraries/Utilities/NativePlatformConstantsIOS.js",
