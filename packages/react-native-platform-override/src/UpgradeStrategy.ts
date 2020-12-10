@@ -11,7 +11,7 @@ import {WritableFileRepository, bindVersion} from './FileRepository';
 import GitReactFileRepository from './GitReactFileRepository';
 import {hashFileOrDirectory} from './Hash';
 
-import isUtf8 = require("isutf8")
+import isUtf8 = require('isutf8');
 
 export interface UpgradeResult {
   overrideName: string;

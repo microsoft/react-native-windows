@@ -8,7 +8,7 @@
 import {Hasher, hashContent, hashFileOrDirectory} from '../Hash';
 import MockFileRepository from './MockFileRepository';
 
-import isUtf8 = require("isutf8")
+import isUtf8 = require('isutf8');
 
 test('hashContent - Same String', () => {
   expect(hashContent('a')).toBe(hashContent('a'));

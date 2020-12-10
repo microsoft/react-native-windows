@@ -187,8 +187,6 @@ jasmine runs in a child node process, so the "autoAttachChildProcesses" : true i
 
 # More about E2E test
 
-Note: Appium is finally removed from the project in [PR 6636](https://github.com/microsoft/react-native-windows/pull/6636). So wdio send message to WinAppDriver directly. Instead of Appium service, [WinAppDriver service](https://github.com/licanhua/wdio-winappdriver-service) is used to launch and stop WinAppDriver during the testing.
-
 ## Technical Decisions
 
 ### MSTest vs node test runner
@@ -196,9 +194,11 @@ Note: Appium is finally removed from the project in [PR 6636](https://github.com
 A `node` test runner is the first choice since we started the investigation for E2E test. React Native apps are written in JavaScript and it&#39;s a good choose to select a JavaScript framework to author the test case. It would be more friendly to the community, so MSTest with C# is excluded in our option.
 
 ### Appium
-[Appium](http://appium.io/) is a W3C-standards based technology based on Selenium, a popular test technology for the web.  Appium supports Windows as well as Android, iOS, and MacOS.  It's recommended that you get some training on this technology before writing tests.  Plurualsight has some great courses, see:  
-[Appium the Big Picture](https://app.pluralsight.com/player?course=appium-big-picture&author=marcel-devries&name=6d3fc4a8-e30e-41f2-aaaf-252483d2b017&clip=5&mode=live)  
-[Getting Started with Appium](https://www.pluralsight.com/courses/getting-started-ui-testing-appium)  
+[Appium](http://appium.io/) is a W3C-standards based technology based on Selenium, a popular test technology for the web.  Appium supports Windows as well as Android, iOS, and MacOS.
+Because WinAppDriver implements part of W3C-standards, appium is an optional component in Windows.
+
+Note: Appium is finally removed from RNW project in [PR 6636](https://github.com/microsoft/react-native-windows/pull/6636). So wdio communicates with WinAppDriver directly. Instead of Appium service, [WinAppDriver service](https://github.com/licanhua/wdio-winappdriver-service) is used to launch and stop WinAppDriver during the testing.
+
 
 ### WinAppDriver + WebDriverIO + Jasmine
 There is not existing example we can follow to setup E2E testing on Windows for React Native, and I spent weeks to investigate, test and prototype for our E2E. Hereafter I explain what kind of decisions I made and why I made these decisions
@@ -245,9 +245,7 @@ There are two possible setup in dev environment based on with/without appium:
 - Option 2
 ![SetupOptions1](img/SetupOptions2.png)
 
-Option 1 is recommended and implemented by default. Appium and WinAppDriver are launched before spec is executed and they are killed after the spec is finished.
-
-Option 2 is for advance user only. Each time we release a new WinAppDriver, we also need to update code on Appium. Before Appium has a new release, option 2 is the only way to verify the new features provides by WinAppDriver.
+Because of project [wdio-winappdriver-service](https://github.com/licanhua/wdio-winappdriver-service), option 2 is recommended and implemented in RNW e2e testing. 
 
 If `yarn install` is run as admin privilege, WinAppDriver would be installed automatically, otherwise you need to install WinAppDriver manually.
 
@@ -298,16 +296,6 @@ A unique `accessiblity id`/`testID` per Window is recommended for React Native W
 | $(&#39;~AppNameTitle&#39;) | accessibility id |
 | $(&#39;TextBlock&#39;) | class name |
 
-### [Locators selenium-appium supports](https://github.com/react-native-windows/selenium-appium/blob/master/src/by2.ts) for selenium-webdriver
-
-| **Client API by Example** | **Locator Strategy** |
-| --- | --- |
-| By2.nativeAccessibilityId(&#39;AppNameTitle&#39;) | accessibility id |
-| By2.nativeClassName(&#39;TextBlock&#39;) | class name |
-| By2.nativeXpath(&#39;//Button[0]&#39;) | xpath |
-| By2.nativeName(&#39;Calculator&#39;) | name |
-| By2.nativeId(&#39;42.333896.3.1&#39;) | id |
-
 ## Timers
 
 1. wdio.conf.js (see [https://webdriver.io/docs/timeouts.html](https://webdriver.io/docs/timeouts.html) )
@@ -347,22 +335,15 @@ LoginPage.waitForPageLoaded(15000)
 
 ### Capabilities
 
-capabilities are the configuration which appium/WinAppDriver used to identify the app and launch the app. Below configurations supports both with and without appium in the setup.
-
-**&#39;appium:app&#39;** is used by appium when the setup is WebDriverIO <-> Appium <-> WinAppDriver,
-
-**&#39;app&#39;** is used for directly connection between WebDriverIO <-> WinAppDriver.
+capabilities are the configuration which WinAppDriver used to identify the app and launch the app. Below configurations supports without appium in the setup.
+`ms:experimental-webdriver` is an mandatory setting to make WinAppDriver use W3C protocol.
 
 ```
   capabilities: [
   {
       maxInstances: 1,
-      platformName: 'windows',
-      'appium:deviceName': 'WindowsPC',
-      'appium:app': 'ReactUWPTestApp_cezq6h4ygq1hw!App',
-      'deviceName': 'WindowsPC',
-      'app': 'ReactUWPTestApp_cezq6h4ygq1hw!App',
-      'winAppDriver:experimental-w3c': true,
+      app: 'ReactUWPTestApp_cezq6h4ygq1hw!App',
+      'ms:experimental-webdriver': true,
   },
 
 ```
@@ -378,38 +359,18 @@ capabilities are the configuration which appium/WinAppDriver used to identify th
     waitforTimeout: 10000,
 ```
 
-### appium service
+### winappdriver service
 
-Below configuration lets the framework launch/kill appium automatically during the testing, and logs are saved as `reports\appium.txt`.
+Below configuration lets the framework launch/kill winappdriver automatically during the testing, and logs are saved as `reports\winappdriver.txt`.
 
 ```
     port: 4723,
-    services: ['appium'],
-    appium: {
+    services: ['winappdriver'],
+    winappdriver: {
         logPath: './reports/',
-        args: {
-            port: '4723',
-        }
     },
 
 ```
-
-But the log like below is not that readable because it has a lot of control characters which is used by terminal.
-
- ![Bad Readability](img/BadReadability.png)
-
-You could get nice output if you launch the appium by yourself:
-
-1. Modify the configuration and remove `appium` from services
-```
-services: [],
-```
-
-2. Start appium by yourself
-```
-.\node\_modules\.bin\appium
-```
-
 ### Test framework
 ```
 framework: 'jasmine'
