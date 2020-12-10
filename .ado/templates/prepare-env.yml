@@ -40,8 +40,8 @@ steps:
 
   # For Appium windows we have to depend on a node package that depends on python (gyp) to perform some install scripts
   - script: |
-      nuget.exe install python -ExcludeVersion -OutputDirectory $(Build.SourceDirectory)\Python
-      npm config set python $(Build.SourceDirectory)/Python/python/tools/python.exe
+      nuget.exe install python -ExcludeVersion -OutputDirectory $(Build.SourcesDirectory)\Python
+      npm config set python $(Build.SourcesDirectory)/Python/python/tools/python.exe
     displayName: Get Python
 
   - template: yarn-install.yml
