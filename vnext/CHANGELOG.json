@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 11 Dec 2020 17:51:41 GMT",
+      "tag": "react-native-windows_v0.63.14",
+      "version": "0.63.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Clicks/Taps Being Eaten",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3eaab0dfa8d304c3ff98768d6b564f0c4fb55cd6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix destruction of UIManager in UI thread (#6680)",
+            "author": "vmorozov@microsoft.com",
+            "commit": "3838b7053bafb9cd4462689279c8ad6df07334d1",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Dec 2020 04:33:16 GMT",
       "tag": "react-native-windows_v0.63.13",
       "version": "0.63.13",

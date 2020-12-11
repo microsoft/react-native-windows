@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 08 Dec 2020 04:33:16 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Dec 2020 17:51:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.14
+
+Fri, 11 Dec 2020 17:51:41 GMT
+
+### Patches
+
+- Fix Clicks/Taps Being Eaten (ngerlem@microsoft.com)
+- Fix destruction of UIManager in UI thread (#6680) (vmorozov@microsoft.com)
 
 ## 0.63.13
 

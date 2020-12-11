@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 11 Dec 2020 17:51:41 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.3",
+      "version": "0.63.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Taps/Clicks Being Eaten in 0.63",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3eaab0dfa8d304c3ff98768d6b564f0c4fb55cd6",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Nov 2020 16:50:27 GMT",
       "tag": "@office-iss/react-native-win32_v0.63.2",
       "version": "0.63.2",

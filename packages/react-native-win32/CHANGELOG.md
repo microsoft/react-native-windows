@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 10 Nov 2020 16:50:27 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Dec 2020 17:51:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.3
+
+Fri, 11 Dec 2020 17:51:41 GMT
+
+### Patches
+
+- Fix Taps/Clicks Being Eaten in 0.63 (ngerlem@microsoft.com)
 
 ## 0.63.2
 
