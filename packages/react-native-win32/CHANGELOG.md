@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Dec 2020 05:05:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.67
+
+Fri, 11 Dec 2020 05:05:56 GMT
+
+### Changes
+
+- Adding FocusManager API for polite/aggresive focus for win32 (safreibe@microsoft.com)
 
 ## 0.0.0-canary.66
 
