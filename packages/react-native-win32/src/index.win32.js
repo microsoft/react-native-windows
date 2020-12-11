@@ -62,6 +62,7 @@ import typeof DeviceInfo from './Libraries/Utilities/DeviceInfo';
 import typeof DevSettings from './Libraries/Utilities/DevSettings';
 import typeof Dimensions from './Libraries/Utilities/Dimensions';
 import typeof Easing from './Libraries/Animated/Easing';
+import typeof FocusManager from './Libraries/Utilities/FocusManager';
 import typeof ReactNative from './Libraries/Renderer/shims/ReactNative';
 import typeof I18nManager from './Libraries/ReactNative/I18nManager';
 import typeof ImagePickerIOS from './Libraries/Image/ImagePickerIOS';
@@ -346,6 +347,9 @@ module.exports = {
   },
   get findNodeHandle(): $PropertyType<ReactNative, 'findNodeHandle'> {
     return require('./Libraries/Renderer/shims/ReactNative').findNodeHandle;
+  },
+  get FocusManager(): FocusManager {
+    return require('./Libraries/Utilities/FocusManager');
   },
   get I18nManager(): I18nManager {
     return require('./Libraries/ReactNative/I18nManager');
