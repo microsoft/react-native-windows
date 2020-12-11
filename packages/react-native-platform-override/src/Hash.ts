@@ -10,7 +10,9 @@ import * as path from 'path';
 import {normalizePath, unixPath} from './PathUtils';
 import FileRepository from './FileRepository';
 
-import isUtf8 = require('isutf8');
+// This has to be a const as @babel/plugin-transform-typescript used by testing does not spoort the default import
+// This has to be require because we are targetting ES6
+const isUtf8 = require('isutf8');
 
 export type HashOpts = {
   /**

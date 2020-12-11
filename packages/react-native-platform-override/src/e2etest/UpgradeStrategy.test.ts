@@ -16,7 +16,9 @@ import {acquireGitRepo, usingFiles} from './Resource';
 import GitReactFileRepository from '../GitReactFileRepository';
 import {hashFileOrDirectory} from '../Hash';
 
-import isUtf8 = require('isutf8');
+// This has to be a const as @babel/plugin-transform-typescript used by testing does not spoort the default import
+// This has to be require because we are targetting ES6
+const isUtf8 = require('isutf8');
 
 let gitReactRepo: GitReactFileRepository;
 let disposeReactRepo: () => Promise<void>;
