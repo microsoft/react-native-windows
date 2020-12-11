@@ -451,6 +451,9 @@ TEST_CLASS (JSValueReaderTest) {
     WriteProperty(writer, L"StringValue1", "");
     WriteProperty(writer, L"StringValue2", "5");
     WriteProperty(writer, L"StringValue3", "Hello");
+    WriteProperty(writer, L"StringValue4", L"Hello wchar_t type!");
+    WriteProperty(writer, L"StringValue5", winrt::hstring{L"Hello winrt::hstring type!"});
+    WriteProperty(writer, L"StringValue6", winrt::param::hstring{L"Hello winrt::param::hstring type!"});
     WriteProperty(writer, L"BoolValue1", false);
     WriteProperty(writer, L"BoolValue2", true);
     WriteProperty(writer, L"IntValue1", 0);
@@ -463,6 +466,9 @@ TEST_CLASS (JSValueReaderTest) {
     TestCheck(jsValue["StringValue1"] == "");
     TestCheck(jsValue["StringValue2"] == "5");
     TestCheck(jsValue["StringValue3"] == "Hello");
+    TestCheck(jsValue["StringValue4"] == "Hello wchar_t type!");
+    TestCheck(jsValue["StringValue5"] == "Hello winrt::hstring type!");
+    TestCheck(jsValue["StringValue6"] == "Hello winrt::param::hstring type!");
     TestCheck(jsValue["BoolValue1"] == false);
     TestCheck(jsValue["BoolValue2"] == true);
     TestCheck(jsValue["IntValue1"] == 0);
