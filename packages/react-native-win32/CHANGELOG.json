@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 11 Dec 2020 05:05:56 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.67",
+      "version": "0.0.0-canary.67",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding FocusManager API for polite/aggresive focus for win32",
+            "author": "safreibe@microsoft.com",
+            "commit": "e71e867d69fe89746f448cdf802941fb44f3af21",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Dec 2020 03:20:37 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.66",
       "version": "0.0.0-canary.66",
