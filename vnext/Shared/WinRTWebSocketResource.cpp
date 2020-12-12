@@ -10,6 +10,9 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 
+// Standard Library
+#include <sstream>
+
 using Microsoft::Common::Utilities::CheckedReinterpretCast;
 
 using std::function;
@@ -128,12 +131,16 @@ IAsyncAction WinRTWebSocketResource::PerformConnect() noexcept {
     } else {
       if (self->m_errorHandler) {
         auto error = winrt::hresult_error(result, winrt::hresult_error::from_abi);
-        self->m_errorHandler({winrt::to_string(error.message()), ErrorType::Connection});
+        std::stringstream hexCode;
+        hexCode << "[0x" << std::hex << error.code() << "] ";
+        self->m_errorHandler({hexCode.str() + winrt::to_string(error.message()), ErrorType::Connection});
       }
     }
   } catch (hresult_error const &e) {
     if (self->m_errorHandler) {
-      self->m_errorHandler({winrt::to_string(e.message()), ErrorType::Connection});
+      std::stringstream hexCode;
+      hexCode << "[0x" << std::hex << e.code() << "] ";
+      self->m_errorHandler({hexCode.str() + winrt::to_string(e.message()), ErrorType::Connection});
     }
   }
 
@@ -175,12 +182,16 @@ fire_and_forget WinRTWebSocketResource::PerformPing() noexcept {
     } else {
       if (self->m_errorHandler) {
         auto error = winrt::hresult_error(result, winrt::hresult_error::from_abi);
-        self->m_errorHandler({winrt::to_string(error.message()), ErrorType::Ping});
+        std::stringstream hexCode;
+        hexCode << "[0x" << std::hex << error.code() << "] ";
+        self->m_errorHandler({hexCode.str() + winrt::to_string(error.message()), ErrorType::Ping});
       }
     }
   } catch (hresult_error const &e) {
     if (self->m_errorHandler) {
-      self->m_errorHandler({winrt::to_string(e.message()), ErrorType::Ping});
+      std::stringstream hexCode;
+      hexCode << "[0x" << std::hex << e.code() << "] ";
+      self->m_errorHandler({hexCode.str() + winrt::to_string(e.message()), ErrorType::Ping});
     }
   }
 }
@@ -242,7 +253,9 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string &&message, bool isBi
     } else {
       if (self->m_errorHandler) {
         auto error = winrt::hresult_error(result, winrt::hresult_error::from_abi);
-        self->m_errorHandler({winrt::to_string(error.message()), ErrorType::Send});
+        std::stringstream hexCode;
+        hexCode << "[0x" << std::hex << error.code() << "] ";
+        self->m_errorHandler({hexCode.str() + winrt::to_string(error.message()), ErrorType::Send});
       }
     }
   } catch (std::exception const &e) {
@@ -252,7 +265,9 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string &&message, bool isBi
   } catch (hresult_error const &e) {
     // TODO: Remove after fixing unit tests exceptions.
     if (self->m_errorHandler) {
-      self->m_errorHandler({winrt::to_string(e.message()), ErrorType::Ping});
+      std::stringstream hexCode;
+      hexCode << "[0x" << std::hex << e.code() << "] ";
+      self->m_errorHandler({hexCode.str() + winrt::to_string(e.message()), ErrorType::Ping});
     }
   }
 }
@@ -274,7 +289,9 @@ fire_and_forget WinRTWebSocketResource::PerformClose() noexcept {
     }
   } catch (hresult_error const &e) {
     if (m_errorHandler) {
-      m_errorHandler({winrt::to_string(e.message()), ErrorType::Close});
+      std::stringstream hexCode;
+      hexCode << "[0x" << std::hex << e.code() << "] ";
+      m_errorHandler({hexCode.str() + winrt::to_string(e.message()), ErrorType::Close});
     }
   }
 
@@ -307,7 +324,9 @@ void WinRTWebSocketResource::OnMessageReceived(
     }
   } catch (hresult_error const &e) {
     if (m_errorHandler) {
-      m_errorHandler({winrt::to_string(e.message()), ErrorType::Receive});
+      std::stringstream hexCode;
+      hexCode << "[0x" << std::hex << e.code() << "] ";
+      m_errorHandler({hexCode.str() + winrt::to_string(e.message()), ErrorType::Receive});
     }
   }
 }
