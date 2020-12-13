@@ -46,11 +46,6 @@
             <uap:Logo>images\icon.png</uap:Logo>
             <uap:SupportedFileTypes>
               <uap:FileType>.json</uap:FileType>
-            </uap:SupportedFileTypes>
-          </uap:FileTypeAssociation>
-          <uap:FileTypeAssociation Name="err">
-            <uap:Logo>images\icon.png</uap:Logo>
-            <uap:SupportedFileTypes>
               <uap:FileType>.err</uap:FileType>
             </uap:SupportedFileTypes>
           </uap:FileTypeAssociation>
