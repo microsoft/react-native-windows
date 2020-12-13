@@ -42,10 +42,16 @@
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="txt">
+          <uap:FileTypeAssociation Name="json">
             <uap:Logo>images\icon.png</uap:Logo>
             <uap:SupportedFileTypes>
-              <uap:FileType>.txt</uap:FileType>
+              <uap:FileType>.json</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+          <uap:FileTypeAssociation Name="err">
+            <uap:Logo>images\icon.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.err</uap:FileType>
             </uap:SupportedFileTypes>
           </uap:FileTypeAssociation>
         </uap:Extension>
