@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Specify full path when bundling",
+  "packageName": "react-native-platform-override",
+  "email": "asklar@winse.microsoft.com",
+  "dependentChangeType": "none"
+}
