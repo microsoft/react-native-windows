@@ -101,18 +101,12 @@ jobs:
           targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump/reports
         condition: succeededOrFailed()
 
-      - task: CmdLine@2
-        displayName: dir documents
-        inputs:
-          script: dir /s $(UserProfile)\Documents
-          workingDirectory: packages/E2ETest
-        condition: succeededOrFailed()
-
       - task: CopyFiles@2
         displayName: Copy tree dump output files
         inputs:
-          sourceFolder: $(UserProfile)\Documents
+          sourceFolder: $(UserProfile)\Documents\ReactUWPTestApp_cezq6h4ygq1hw!App
           targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
+          contents: TreeDump\**
         condition: succeededOrFailed()
 
       - task: CopyFiles@2
