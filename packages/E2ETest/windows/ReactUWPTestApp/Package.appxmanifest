@@ -42,7 +42,7 @@
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="json">
+          <uap:FileTypeAssociation Name="e2etest">
             <uap:Logo>images\icon.png</uap:Logo>
             <uap:SupportedFileTypes>
               <uap:FileType>.json</uap:FileType>
