@@ -52,8 +52,11 @@
     <!-- Optional config file for the bundle command (metro will use metro.config.js by default) -->
     <BundleConfigFile Condition="'$(BundleConfigFile)' == ''"/>
 
+    <FullOutDir Condition="'$([System.IO.Path]::GetFullPath($(OutDir)))' == '$(OutDir)'">$(OutDir)</FullOutDir>
+    <FullOutDir Condition="'$([System.IO.Path]::GetFullPath($(OutDir)))' != '$(OutDir)'">$(ProjectDir)$(OutDir)</FullOutDir>
+    
     <!-- Location where source map file for the JS bundle will be created -->
-    <BundleSourceMapDir Condition="'$(BundleSourceMapDir)' == ''">$([MSBuild]::NormalizePath('$(SolutionDir)$(OutDir)\sourcemaps\react'))</BundleSourceMapDir>
+    <BundleSourceMapDir Condition="'$(BundleSourceMapDir)' == ''">$([MSBuild]::NormalizePath('$(FullOutDir)\sourcemaps\react'))</BundleSourceMapDir>
 
     <!-- Base (extensionless) filename for bundle sourcemaps -->
     <BaseBundleSourceMap Condition="'$(BaseBundleSourceMap)' == ''">$(BundleSourceMapDir)\$(BundleAssetName)</BaseBundleSourceMap>
