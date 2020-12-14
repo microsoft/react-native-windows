@@ -1,9 +1,23 @@
 name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
+parameters:
+- name: skipNpmPublish
+  displayName: Skip Npm Publish
+  type: boolean
+  default: false
+- name: skipGitPush
+  displayName: Skip Git Push
+  type: boolean
+  default: false
+
 variables:
   - template: variables/msbuild.yml
   - template: variables/vs2019.yml
   - group: RNW Secrets
+  - name: SkipNpmPublishArgs
+    value: ''
+  - name: SkipGitPushPublishArgs
+    value: ''
 
 schedules:
 - cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
@@ -40,17 +54,30 @@ jobs:
       - script: yarn build
         displayName: yarn build
 
-      - script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags
+      - script: |
+          echo ##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish
+        displayName: Enable No-Publish
+        condition: ${{ parameters.skipNpmPublish }}
+
+      - script: |
+          echo ##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push
+        displayName: Enable No-Publish
+        condition: ${{ parameters.skipGitPush }}
+
+      - script: yarn build
+        displayName: yarn build
+
+      - script: npx --no-install beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags
         displayName: Beachball Publish (Master Branch)
         condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
-      - script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
+      - script: npx --no-install beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
         displayName: Beachball Publish (Stable Branch)
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
       - script: npx --ignore-existing @rnw-scripts/create-github-releases --authToken $(githubAuthToken)
         displayName: Create GitHub Releases for New Tags (Stable Branch)
-        condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
+        condition: ${{ and(succeeded(), not(parameters.skipGitPush), ne(variables['Build.SourceBranchName'], 'master')) }}
 
       - template: templates/set-version-vars.yml
 
