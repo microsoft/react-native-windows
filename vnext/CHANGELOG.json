@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 14 Dec 2020 05:04:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.224",
+      "version": "0.0.0-canary.224",
+      "comments": {
+        "none": [
+          {
+            "comment": "Introduce reader/writer for winrt::hstring",
+            "author": "Bartosz.Klonowski@callstack.com",
+            "commit": "f7a502f2ad13395fb1635b4ce70b0ca45914becd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Dec 2020 05:07:19 GMT",
       "tag": "react-native-windows_v0.0.0-canary.224",
       "version": "0.0.0-canary.224",
