@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 14 Dec 2020 15:06:53 GMT",
+      "tag": "react-native-windows_v0.64.0-preview.3",
+      "version": "0.64.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix getting JsiRuntime for host functions",
+            "author": "vmorozov@microsoft.com",
+            "commit": "89d69d59389874dfa0b609b61bb5837f949239cf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix getting host objects and functions in JSI ABI",
+            "author": "vmorozov@microsoft.com",
+            "commit": "89d69d59389874dfa0b609b61bb5837f949239cf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix destruction of UIManager in UI thread",
+            "author": "vmorozov@microsoft.com",
+            "commit": "89d69d59389874dfa0b609b61bb5837f949239cf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Dec 2020 00:24:03 GMT",
       "tag": "react-native-windows_v0.64.0-preview.2",
       "version": "0.64.0-preview.2",

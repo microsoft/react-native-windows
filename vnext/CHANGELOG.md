@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 04 Dec 2020 00:24:03 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Dec 2020 15:06:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.3
+
+Mon, 14 Dec 2020 15:06:53 GMT
+
+### Changes
+
+- Fix getting JsiRuntime for host functions (vmorozov@microsoft.com)
+- Fix getting host objects and functions in JSI ABI (vmorozov@microsoft.com)
+- Fix destruction of UIManager in UI thread (vmorozov@microsoft.com)
 
 ## 0.64.0-preview.2
 

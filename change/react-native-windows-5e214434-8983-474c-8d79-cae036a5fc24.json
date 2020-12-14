@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix getting host objects and functions in JSI ABI",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
