@@ -6,7 +6,7 @@
 
 export const CodedErrors = {
   Success: 0,
-  /// init
+  // init
   UnsupportedReactNativeVersion: 1,
   UserCancel: 2,
   NoReactNativeFound: 3,
@@ -16,29 +16,29 @@ export const CodedErrors = {
   IncompatibleOptions: 7,
   NoReactNativeDependencies: 8,
   NoMatchingPackageVersion: 9,
-  /// run-windows
+  // run-windows
   NoSolution: 100,
-  /// Project generation
+  // Project generation
   NoPropertyInProject: 200,
   CopyProjectTemplateNoSourcePath: 201,
   CopyProjectTemplateNoDestPath: 202,
   CopyProjectTemplateNoProjectName: 203,
-  /// Config and Autolinking
+  // Config and Autolinking
   NoWindowsConfig: 300,
   IncompleteConfig: 301,
   InvalidConfig: 302,
   NeedAutolinking: 303,
   AddProjectToSolution: 304,
   Autolinking: 305,
-  /// SDK requirements
+  // SDK requirements
   MinSDKVersionNotMet: 400,
   BadSDKVersionFormat: 401,
   NoSDK: 402,
-  /// Build
+  // Build
   NoMSBuild: 500,
   NoVSWhere: 501,
   MSBuildError: 502,
-  /// Deploy
+  // Deploy
   NoAppPackage: 600,
   NoAppxManifest: 601,
   NoDevice: 602,
@@ -51,10 +51,10 @@ export const CodedErrors = {
   CheckNetIsolationFailure: 709,
   InstallAppToDeviceFailure: 710,
   UninstallAppOnDeviceFailure: 711,
-  /// Others
+  // Others
   AppStartupFailure: 700,
 
-  ///
+  //
   Unknown: -1,
 };
 
