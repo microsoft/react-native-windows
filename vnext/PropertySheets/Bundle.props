@@ -36,7 +36,6 @@
     <UseDevBundle Condition="'$(UseDevBundle)' == '' and '$(Configuration)' != 'Debug'">false</UseDevBundle>
 
     <!-- Extra arguments to pass to the bundler command -->
-    <BundlerExtraArgs Condition="'$(BundlerExtraArgs)' == '' AND '$(UseHermes)' != 'true'"/>
     <BundlerExtraArgs Condition="'$(BundlerExtraArgs)' == '' AND '$(UseHermes)' == 'true'">--minify false</BundlerExtraArgs>
 
     <!-- Command to use to create a bundle -->
@@ -48,9 +47,6 @@
     <!-- Entry file of the JS bundle. Defaults to use index.windows.js if it exists, otherwise index.js -->
     <BundleEntryFile Condition="'$(BundleEntryFile)' == '' and Exists('$(BundleCommandWorkingDir)\index.windows.js')">index.windows.js</BundleEntryFile>
     <BundleEntryFile Condition="'$(BundleEntryFile)' == ''">index.js</BundleEntryFile>
-
-    <!-- Optional config file for the bundle command (metro will use metro.config.js by default) -->
-    <BundleConfigFile Condition="'$(BundleConfigFile)' == ''"/>
 
     <FullOutDir Condition="'$([System.IO.Path]::GetFullPath($(OutDir)))' == '$(OutDir)'">$(OutDir)</FullOutDir>
     <FullOutDir Condition="'$([System.IO.Path]::GetFullPath($(OutDir)))' != '$(OutDir)'">$(ProjectDir)$(OutDir)</FullOutDir>
@@ -76,7 +72,6 @@
     <HermesCompilerCommand Condition="'$(HermesCompilerCommand)' == ''">$(HermesPackage)\tools\hermes.exe</HermesCompilerCommand>
 
     <!-- Flags passed to Hermes when compiling a bundle -->
-    <HermesCompilerFlags Condition="'$(HermesCompilerFlags)' == '' AND '$(Configuration)' == 'Debug'"/>
     <HermesCompilerFlags Condition="'$(HermesCompilerFlags)' == '' AND '$(Configuration)' != 'Debug'">-O</HermesCompilerFlags>
 
   </PropertyGroup>
