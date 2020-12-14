@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Specify full path when bundling",
-  "packageName": "@rnw-scripts/integrate-rn",
-  "email": "asklar@winse.microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Specify full path when bundling",
-  "packageName": "@react-native-windows/cli",
-  "email": "asklar@winse.microsoft.com",
-  "dependentChangeType": "none"
-}

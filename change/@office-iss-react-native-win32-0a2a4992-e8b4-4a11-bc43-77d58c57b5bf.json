@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Specify full path when bundling",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "asklar@winse.microsoft.com",
-  "dependentChangeType": "none"
-}

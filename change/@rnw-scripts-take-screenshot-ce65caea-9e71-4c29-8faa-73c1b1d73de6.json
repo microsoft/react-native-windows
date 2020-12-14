@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Specify full path when bundling",
-  "packageName": "@rnw-scripts/take-screenshot",
-  "email": "asklar@winse.microsoft.com",
-  "dependentChangeType": "none"
-}
