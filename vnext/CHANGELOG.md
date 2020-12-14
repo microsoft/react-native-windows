@@ -1,8 +1,195 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 10 Nov 2020 05:05:13 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Dec 2020 05:07:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.224
+
+Wed, 09 Dec 2020 05:07:19 GMT
+
+### Changes
+
+- Fix getting host objects and functions in JSI ABI (vmorozov@microsoft.com)
+
+## 0.0.0-canary.223
+
+Tue, 08 Dec 2020 03:20:37 GMT
+
+### Changes
+
+- Split out Universal build in Build and Test and have the Build run on the windev build agents (dannyvv@microsoft.com)
+- TagProperty only exists on FrameworkElement and hyperlinks aren't FE (asklar@microsoft.com)
+- Integrate 12/2 Nightly Build (ngerlem@microsoft.com)
+- Fix multicore build, missing dependency on Folly (dannyvv@microsoft.com)
+- Upgrade Min WinUI Version to 2.5 (34109996+chiaramooney@users.noreply.github.com)
+- Fix destruction of UIManager in UI thread (vmorozov@microsoft.com)
+
+## 0.0.0-canary.221
+
+Thu, 03 Dec 2020 21:43:48 GMT
+
+### Changes
+
+- Fix version (ngerlem@microsoft.com)
+- Update V8 package version; pass debuggerBreakOnNextLine property (tudor.mihai@microsoft.com)
+
+## 0.0.0
+
+Thu, 03 Dec 2020 05:06:17 GMT
+
+### Changes
+
+- Fix getting JsiRuntime for host functions (vmorozov@microsoft.com)
+
+## 0.0.0-canary.220
+
+Tue, 01 Dec 2020 05:05:07 GMT
+
+### Changes
+
+- document react_struct (igklemen@microsoft.com)
+
+## 0.0.0-canary.219
+
+Thu, 26 Nov 2020 05:06:06 GMT
+
+### Changes
+
+- Refactor ReactContext API (vmorozov@microsoft.com)
+
+## 0.0.0-canary.218
+
+Wed, 25 Nov 2020 05:06:16 GMT
+
+### Changes
+
+- Add error for users who try to build apps/libs via project instead of solution (jthysell@microsoft.com)
+
+## 0.0.0-canary.217
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Changes
+
+- Fix links in some docs, mark APIs as deprecated or experimental as appropriate (asklar@microsoft.com)
+- Don't run bundling when doing intellisense builds (asklar@microsoft.com)
+- Add more eslint rules (ngerlem@microsoft.com)
+
+## 0.0.0-canary.216
+
+Sun, 22 Nov 2020 05:06:06 GMT
+
+### Changes
+
+- fix invalidation bug and use Canvas.Top/Left (kmelmon@microsoft.com)
+- fix panels with transforms leaking (stecrain@microsoft.com)
+
+## 0.0.0-canary.215
+
+Sat, 21 Nov 2020 05:05:40 GMT
+
+### Changes
+
+- Add ReactContext::ExecuteJsi method to use JSI in NativeModules (vmorozov@microsoft.com)
+
+## 0.0.0-canary.214
+
+Fri, 20 Nov 2020 05:08:43 GMT
+
+### Changes
+
+- WinUI 3 Preview 3 support (asklar@microsoft.com)
+- Update lib template to default prefer RNW dir of consuming app (jthysell@microsoft.com)
+- Integrate 11/18 RN Nightly Build 🎉 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.213
+
+Thu, 19 Nov 2020 17:13:10 GMT
+
+### Changes
+
+- Update Nuget publish to not overwrite the created anycpu version (dannyvv@microsoft.com)
+- Use lessthrow_await_adapter for WebSocketJSExecutor::ConnectAsync (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.212
+
+Thu, 19 Nov 2020 05:06:10 GMT
+
+### Changes
+
+- Exclude Beast WebSocket from build by default. (julio.rocha@microsoft.com)
+- fix typo (igklemen@microsoft.com)
+- Add Yellowbox warnings for WIndows Variants of Lean Core Components (ngerlem@microsoft.com)
+
+## 0.0.0-canary.211
+
+Wed, 18 Nov 2020 03:10:51 GMT
+
+### Changes
+
+- CornerRadius only exists on RS5, restore the behavior to gracefully degrade on older OS releases (asklar@microsoft.com)
+- Check for VS >= 16.5 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.209
+
+Tue, 17 Nov 2020 05:05:00 GMT
+
+### Changes
+
+- Embed documentation of WinRT APIs in the winmd (asklar@microsoft.com)
+- JSDispatcher should use JSCallInvoker internally (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.208
+
+Mon, 16 Nov 2020 17:37:03 GMT
+
+### Changes
+
+- Fix publish (dannyvv@microsoft.com)
+
+## 0.0.0-canary.207
+
+Mon, 16 Nov 2020 14:39:19 GMT
+
+### Changes
+
+- Fix Publish pipeline due to moved file (dannyvv@microsoft.com)
+
+## 0.0.0-canary.206
+
+Mon, 16 Nov 2020 05:06:18 GMT
+
+### Changes
+
+- Update Managed ref assemblies to be AnpCpu (dannyvv@microsoft.com)
+
+## 0.0.0-canary.205
+
+Sat, 14 Nov 2020 05:04:43 GMT
+
+### Changes
+
+- Add a custom WinRT attribute to be used to store documentation strings for WinRT types (asklar@microsoft.com)
+- Add win32 exports required for internal usage (email not defined)
+- Fix appstate module (30809111+acoates-ms@users.noreply.github.com)
+- Add Targets to check that developers have run yarn install before building (dannyvv@microsoft.com)
+
+## 0.0.0-canary.203
+
+Thu, 12 Nov 2020 05:05:57 GMT
+
+### Changes
+
+- Add Keyboard Events to TextWin32 (krsiler@microsoft.com)
+
+## 0.0.0-canary.202
+
+Wed, 11 Nov 2020 05:05:29 GMT
+
+### Changes
+
+- Remove Build-Time Native Code Patching (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.201
 

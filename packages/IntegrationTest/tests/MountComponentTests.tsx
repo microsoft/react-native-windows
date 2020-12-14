@@ -31,7 +31,8 @@ function mountAndMeasure(
     useEffect(() => {
       onNativeRender(() => {
         // Not all components offer forwarded refs to native components. Only
-        // try to measure those who do.
+        // try to measure those who do. Typings aren't great here...
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!ref.current!.measure) {
           pass();
           return;

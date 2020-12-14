@@ -76,7 +76,7 @@ export function commandWithProgress(
   args: string[],
   verbose: boolean,
 ) {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     const spawnOptions: SpawnOptions = verbose ? {stdio: 'inherit'} : {};
 
     if (verbose) {
@@ -95,9 +95,6 @@ export function commandWithProgress(
         if (!firstErrorLine) {
           firstErrorLine = text;
         }
-        if (verbose) {
-          console.error(chalk.red(text));
-        }
         if (text) {
           setSpinnerText(spinner, taskDoingName + ': ERROR: ', firstErrorLine);
         }
@@ -110,13 +107,13 @@ export function commandWithProgress(
       }
       spinner.fail(e.toString());
       reject(e);
-    }).on('close', function(code) {
+    }).on('close', code => {
       if (code === 0) {
         spinner.succeed(taskDoingName);
         resolve();
       } else {
         spinner.fail();
-        reject();
+        reject(new Error(`${taskDoingName} returned error code ${code}`));
       }
     });
   });

@@ -2,6 +2,96 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 03 Dec 2020 23:59:32 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.11",
+      "version": "0.0.0-canary.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Manual bump of @react-native-windows/telemetry to cause dependents to be republished",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90ba61f3e43eafcac9e45b7c740bbfbda77fd5a1",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.10",
+      "version": "0.0.0-canary.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixup naming convention rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.9",
+      "version": "0.0.0-canary.9",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 16 Nov 2020 14:39:19 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.8",
+      "version": "0.0.0-canary.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "anonymize paths with forward slashes and file shares",
+            "author": "asklar@microsoft.com",
+            "commit": "04e766ef7304d0852a06e772cbfc1982897a3808",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Nov 2020 05:05:57 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.7",
+      "version": "0.0.0-canary.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Disable telemetry in other CI systems",
+            "author": "asklar@microsoft.com",
+            "commit": "bcda5759d5d1bed770e7a8524e5cc3f94cbc0c6a",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Nov 2020 05:05:29 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.6",
+      "version": "0.0.0-canary.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Silence warnings from appinsights in production",
+            "author": "asklar@microsoft.com",
+            "commit": "1893d23fce2daedbf55ae90c5f6775141400f401",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Nov 2020 05:04:58 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.5",
       "version": "0.0.0-canary.5",

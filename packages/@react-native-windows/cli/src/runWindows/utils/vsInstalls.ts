@@ -85,7 +85,7 @@ export function enumerateVsInstalls(opts: {
  */
 export function findLatestVsInstall(opts: {
   requires?: string[];
-  version?: string;
+  minVersion?: string;
   verbose?: boolean;
   prerelease?: boolean;
 }): VisualStudioInstallation | null {

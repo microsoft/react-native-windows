@@ -171,9 +171,10 @@ static facebook::jsi::Value &&ToValue(JsiValueRef &&value) noexcept {
   return reinterpret_cast<facebook::jsi::Value &&>(value);
 }
 
-static facebook::jsi::HostFunctionType MakeHostFunction(Microsoft::ReactNative::JsiHostFunction const &hostFunc) {
-  // TODO: implement host function mapping
-  return [hostFunc](
+static facebook::jsi::HostFunctionType MakeHostFunction(
+    Microsoft::ReactNative::JsiHostFunction const &hostFunc,
+    std::shared_ptr<JsiRuntime::HostFunctionCleaner> &&cleaner) {
+  return [hostFunc, cleaner](
              facebook::jsi::Runtime &runtime,
              facebook::jsi::Value const &thisVal,
              facebook::jsi::Value const *args,
@@ -310,16 +311,57 @@ facebook::jsi::JSError const &jsError) {                             \
   } catch (...
 
 /*static*/ std::mutex JsiRuntime::s_mutex;
-/*static*/ std::map<uintptr_t, weak_ref<ReactNative::JsiRuntime>> JsiRuntime::s_jsiRuntimeMap;
+/*static*/ std::unordered_map<uintptr_t, weak_ref<ReactNative::JsiRuntime>> JsiRuntime::s_jsiRuntimeMap;
+/*static*/ std::unordered_map<int64_t, ReactNative::JsiHostFunction> JsiRuntime::s_jsiHostFunctionMap;
+/*static*/ int64_t JsiRuntime::s_jsiNextHostFunctionId{0};
 
-/*static*/ ReactNative::JsiRuntime JsiRuntime::FromRuntime(facebook::jsi::Runtime &runtime) noexcept {
+/*static*/ ReactNative::JsiRuntime JsiRuntime::FromRuntime(facebook::jsi::Runtime &jsiRuntime) noexcept {
   std::scoped_lock lock{s_mutex};
-  auto it = s_jsiRuntimeMap.find(reinterpret_cast<uintptr_t>(&runtime));
+  auto it = s_jsiRuntimeMap.find(reinterpret_cast<uintptr_t>(&jsiRuntime));
   if (it != s_jsiRuntimeMap.end()) {
     return it->second.get();
   } else {
     return nullptr;
   }
+}
+
+/*static*/ ReactNative::JsiRuntime JsiRuntime::GetOrCreate(
+    std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+    std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept {
+  {
+    std::scoped_lock lock{s_mutex};
+    auto it = s_jsiRuntimeMap.find(reinterpret_cast<uintptr_t>(jsiRuntime.get()));
+    if (it != s_jsiRuntimeMap.end()) {
+      return it->second.get();
+    }
+  }
+
+  return Create(jsiRuntimeHolder, jsiRuntime);
+}
+
+/*static*/ ReactNative::JsiRuntime JsiRuntime::Create(
+    std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+    std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept {
+  // There are some functions that we cannot do using JSI such as
+  // defining a property or using Symbol as a key.
+  // The __jsi_api defines functions to associate a hostFunctionId with a function object
+  // in a way that it is not discoverable by other components.
+  // We use a unique symbol and make read-only, non-enumerable, and non-configurable (deletable).
+  auto jsiPalBuffer = std::make_shared<facebook::jsi::StringBuffer>(R"JS(
+      var __jsi_pal = function() {
+        var hostFunctionId = Symbol('hostFunctionId');
+        return {
+          getHostFunctionId: function(func) { return func[hostFunctionId]; },
+          setHostFunctionId: function(func, id) { Object.defineProperty(func, hostFunctionId, { value: id }); }
+        };
+      }();
+    )JS");
+  // TODO: consider implementing this script as a resource file and loading it with the resource URL.
+  jsiRuntime->evaluateJavaScript(jsiPalBuffer, "Form_JSI_API_not_a_real_file");
+  ReactNative::JsiRuntime abiJsiResult{make<JsiRuntime>(Mso::Copy(jsiRuntimeHolder), Mso::Copy(jsiRuntime))};
+  std::scoped_lock lock{s_mutex};
+  s_jsiRuntimeMap.try_emplace(reinterpret_cast<uintptr_t>(jsiRuntime.get()), abiJsiResult);
+  return abiJsiResult;
 }
 
 ReactNative::JsiRuntime JsiRuntime::MakeChakraRuntime() {
@@ -330,15 +372,12 @@ ReactNative::JsiRuntime JsiRuntime::MakeChakraRuntime() {
   auto runtimeHolder = std::make_shared<::Microsoft::JSI::ChakraRuntimeHolder>(
       std::move(devSettings), std::move(jsThread), nullptr, nullptr);
   auto runtime = runtimeHolder->getRuntime();
-  ReactNative::JsiRuntime result{make<JsiRuntime>(std::move(runtimeHolder), runtime)};
-  std::scoped_lock lock{s_mutex};
-  s_jsiRuntimeMap.try_emplace(reinterpret_cast<uintptr_t>(runtime.get()), result);
-  return result;
+  return Create(runtimeHolder, runtime);
 }
 
 JsiRuntime::JsiRuntime(
-    std::shared_ptr<::Microsoft::JSI::ChakraRuntimeHolder> runtimeHolder,
-    std::shared_ptr<facebook::jsi::Runtime> runtime) noexcept
+    std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> &&runtimeHolder,
+    std::shared_ptr<facebook::jsi::Runtime> &&runtime) noexcept
     : m_runtimeHolder{std::move(runtimeHolder)}, m_runtime{std::move(runtime)} {}
 
 JsiRuntime::~JsiRuntime() noexcept {
@@ -564,8 +603,20 @@ IJsiHostObject JsiRuntime::GetHostObject(JsiObjectRef obj) try {
 
 JsiHostFunction JsiRuntime::GetHostFunction(JsiObjectRef func) try {
   auto funcPtr = AsPointerValue(func);
-  // auto hostFunction = m_runtime->getHostFunction(AsFunction(func));
-  // TODO: implement mapping
+  auto const &jsiFunc = AsFunction(&funcPtr);
+  auto &rt = *m_runtime;
+  int64_t hostFunctionId = static_cast<int64_t>(rt.global()
+                                                    .getPropertyAsObject(rt, "__jsi_pal")
+                                                    .getPropertyAsFunction(rt, "getHostFunctionId")
+                                                    .call(rt, jsiFunc)
+                                                    .getNumber());
+  {
+    std::scoped_lock lock{m_mutex};
+    auto it = s_jsiHostFunctionMap.find(hostFunctionId);
+    if (it != s_jsiHostFunctionMap.end()) {
+      return it->second;
+    }
+  }
   return nullptr;
 } catch (JSI_SET_ERROR) {
   throw;
@@ -694,13 +745,33 @@ void JsiRuntime::SetValueAtIndex(JsiObjectRef arr, uint32_t index, JsiValueRef c
   throw;
 }
 
+JsiRuntime::HostFunctionCleaner::HostFunctionCleaner(int64_t hostFunctionId) : m_hostFunctionId{hostFunctionId} {}
+
+JsiRuntime::HostFunctionCleaner::~HostFunctionCleaner() {
+  std::scoped_lock lock{s_mutex};
+  s_jsiHostFunctionMap.erase(m_hostFunctionId);
+}
+
 JsiObjectRef JsiRuntime::CreateFunctionFromHostFunction(
     JsiPropertyIdRef propNameId,
     uint32_t paramCount,
     JsiHostFunction const &hostFunc) try {
+  int64_t hostFunctionId;
+  {
+    std::scoped_lock lock{s_mutex};
+    hostFunctionId = ++s_jsiNextHostFunctionId;
+    s_jsiHostFunctionMap[hostFunctionId] = hostFunc;
+  }
+  auto cleaner = std::make_shared<HostFunctionCleaner>(hostFunctionId);
+  auto &rt = *m_runtime;
   auto propertyIdPtr = AsPointerValue(propNameId);
-  return MakeJsiFunctionData(
-      m_runtime->createFunctionFromHostFunction(AsPropNameID(&propertyIdPtr), paramCount, MakeHostFunction(hostFunc)));
+  auto func = rt.createFunctionFromHostFunction(
+      AsPropNameID(&propertyIdPtr), paramCount, MakeHostFunction(hostFunc, std::move(cleaner)));
+  rt.global()
+      .getPropertyAsObject(rt, "__jsi_pal")
+      .getPropertyAsFunction(rt, "setHostFunctionId")
+      .call(rt, func, static_cast<double>(hostFunctionId));
+  return MakeJsiFunctionData(std::move(func));
 } catch (JSI_SET_ERROR) {
   throw;
 }

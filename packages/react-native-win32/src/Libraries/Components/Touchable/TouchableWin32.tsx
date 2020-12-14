@@ -190,7 +190,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   private _positionOnActivate: IPosition;
   private _dimensionsOnActivate: IDimensions;
 
-  private _internalRef: React.RefObject<ViewWin32>
+  private readonly _internalRef: React.RefObject<ViewWin32>
 
   constructor(props) {
     super(props);
@@ -272,26 +272,26 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   /**
    * The rejectResponderTermination prop provides a way to accept/reject termination requests
    */
-  private _touchableHandleResponderTerminationRequest = (): boolean => {
+  private readonly _touchableHandleResponderTerminationRequest = (): boolean => {
     return !this.props.rejectResponderTermination;
   };
 
   /**
    * Only reject an opportunity to become the responder on bubble if disabled
    */
-  private _touchableHandleStartShouldSetResponder = (): boolean => {
+  private readonly _touchableHandleStartShouldSetResponder = (): boolean => {
     return !this.props.disabled;
   };
 
   /** TODO: Long press cancel as a prop may be a good idea */
-  private _touchableLongPressCancelsPress = (): boolean => {
+  private readonly _touchableLongPressCancelsPress = (): boolean => {
     return true;
   };
 
   /**
    * On responder being granted, state and local data need to be set
    */
-  private _touchableHandleResponderGrant = (e: IPressEvent): void => {
+  private readonly _touchableHandleResponderGrant = (e: IPressEvent): void => {
     const dispatchID = findNodeHandle(e.currentTarget);
     e.persist();
 
@@ -323,7 +323,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   /**
    * Handle responder release
    */
-  private _touchableHandleResponderRelease = (e: IPressEvent) => {
+  private readonly _touchableHandleResponderRelease = (e: IPressEvent) => {
     this._pressInLocation = null;
     this._receiveSignal('RESPONDER_RELEASE', e);
   };
@@ -331,7 +331,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   /**
    * Handle responder terminate
    */
-  private _touchableHandleResponderTerminate = (e: IPressEvent) => {
+  private readonly _touchableHandleResponderTerminate = (e: IPressEvent) => {
     this._pressInLocation = null;
     this._receiveSignal('RESPONDER_TERMINATED', e);
   };
@@ -339,7 +339,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   /**
    * Handles move events
    */
-  private _touchableHandleResponderMove = (e: IPressEvent) => {
+  private readonly _touchableHandleResponderMove = (e: IPressEvent) => {
     if (!this._positionOnActivate) {
       return;
     }
@@ -403,7 +403,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
    * Used while performing side effects during state transitions,
    * to maintain proper bounding dimensions and positional information
    */
-  private _remeasureMetricsOnActivation = () => {
+  private readonly _remeasureMetricsOnActivation = () => {
     const tag = this._responderID;
     if (tag === null) {
       return;
@@ -415,7 +415,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   /**
    * Callback into measure, see _remeasureMetricsOnActivation
    */
-  private _handleQueryLayout = (l: number, t: number, w: number, h: number, globalX: number, globalY: number) => {
+  private readonly _handleQueryLayout = (l: number, t: number, w: number, h: number, globalX: number, globalY: number) => {
     if (!l && !t && !w && !h && !globalX && !globalY) {
       return;
     }
@@ -424,12 +424,12 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     this._dimensionsOnActivate = BoundingDimensions.getPooled(w, h);
   };
 
-  private _handleDelay = (e: IPressEvent) => {
+  private readonly _handleDelay = (e: IPressEvent) => {
     this._touchableDelayTimeout = null;
     this._receiveSignal('DELAY', e);
   };
 
-  private _handleLongDelay = (e: IPressEvent) => {
+  private readonly _handleLongDelay = (e: IPressEvent) => {
     this._longPressDelayTimeout = null;
     const currState = this._touchState;
 
@@ -450,7 +450,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   /**
    * Manages state transitions
    */
-  private _receiveSignal = (signal: ISignal, e: IPressEvent) => {
+  private readonly _receiveSignal = (signal: ISignal, e: IPressEvent) => {
     const responderID = this._responderID;
     const currState = this._touchState;
     const nextState: IState = transitions[currState] ? transitions[currState][signal] : null;
@@ -470,16 +470,16 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     }
   };
 
-  private _cancelLongPressDelayTimeout = () => {
+  private readonly _cancelLongPressDelayTimeout = () => {
     this._longPressDelayTimeout && clearTimeout(this._longPressDelayTimeout);
     this._longPressDelayTimeout = null;
   };
 
-  private _isHighlight = (state: IState) => {
+  private readonly _isHighlight = (state: IState) => {
     return state === 'RESPONDER_ACTIVE_PRESS_IN' || state === 'RESPONDER_ACTIVE_LONG_PRESS_IN';
   };
 
-  private _savePressInLocation = (e: IPressEvent) => {
+  private readonly _savePressInLocation = (e: IPressEvent) => {
     const touch = extractSingleTouch(e);
     const pageX = touch && touch.pageX;
     const pageY = touch && touch.pageY;
@@ -488,7 +488,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     this._pressInLocation = { pageX, pageY, locationX, locationY };
   };
 
-  private _getDistanceBetweenPoints = (aX: number, aY: number, bX: number, bY: number): number => {
+  private readonly _getDistanceBetweenPoints = (aX: number, aY: number, bX: number, bY: number): number => {
     const deltaX = aX - bX;
     const deltaY = aY - bY;
     return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -498,7 +498,9 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
    * Any highlighting/visual effects is done here,
    * This is also where press callbacks are invoked from
    */
-  private _performSideEffectsForTransition = (currState: IState, nextState: IState, signal: ISignal, e: IPressEvent) => {
+  // Existing high cyclomatic complexity
+  // eslint-disable-next-line complexity
+  private readonly _performSideEffectsForTransition = (currState: IState, nextState: IState, signal: ISignal, e: IPressEvent) => {
     const currIsHighlight = this._isHighlight(currState);
     const newIsHighlight = this._isHighlight(nextState);
 
@@ -545,13 +547,13 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     this._touchableDelayTimeout = null;
   };
 
-  private _startHighlight = (e: IPressEvent) => {
+  private readonly _startHighlight = (e: IPressEvent) => {
     this._savePressInLocation(e);
     this.setState({ isPressed: true });
     this.props.touchableHandleActivePressIn && this.props.touchableHandleActivePressIn(e);
   };
 
-  private _endHighlight = (e: IPressEvent) => {
+  private readonly _endHighlight = (e: IPressEvent) => {
     function _handler() {
       this.props.touchableHandleActivePressOut(e);
     }
@@ -566,27 +568,27 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     }
   };
 
-  private _onMouseEnter = () => {
+  private readonly _onMouseEnter = () => {
     this.setState({ isHovered: true });
     this.props.onMouseEnter && this.props.onMouseEnter();
   };
 
-  private _onMouseLeave = () => {
+  private readonly _onMouseLeave = () => {
     this.setState({ isHovered: false });
     this.props.onMouseLeave && this.props.onMouseLeave();
   };
 
-  private _onFocus = (ev: NativeSyntheticEvent<{}>) => {
+  private readonly _onFocus = (ev: NativeSyntheticEvent<{}>) => {
     this.setState({ isFocused: true });
     this.props.onFocus && this.props.onFocus(ev);
   };
 
-  private _onBlur = (ev: NativeSyntheticEvent<{}>) => {
+  private readonly _onBlur = (ev: NativeSyntheticEvent<{}>) => {
     this.setState({ isFocused: false });
     this.props.onBlur && this.props.onBlur(ev);
   };
 
-  private _onKeyDown = (ev: IKeyboardEvent) => {
+  private readonly _onKeyDown = (ev: IKeyboardEvent) => {
     if (this._filterOnKey(ev)) {
       this.setState({ isKeyPressed: true });
       this.props.touchableHandleKeyPressDown && this.props.touchableHandleKeyPressDown(ev);
@@ -595,7 +597,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     this.props.onKeyDown && this.props.onKeyDown(ev);
   };
 
-  private _onKeyUp = (ev: IKeyboardEvent) => {
+  private readonly _onKeyUp = (ev: IKeyboardEvent) => {
     if (this._filterOnKey(ev)) {
       this.setState({ isKeyPressed: false });
       this.props.touchableHandleKeyPress && this.props.touchableHandleKeyPress(ev);
@@ -604,7 +606,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     this.props.onKeyUp && this.props.onKeyUp(ev);
   };
 
-  private _deriveStateFromInternalState = (): ITouchableWin32State => {
+  private readonly _deriveStateFromInternalState = (): ITouchableWin32State => {
     return {
       isPressed: this.state.isPressed || this.state.isKeyPressed,
       isHovered: this.state.isHovered,
@@ -612,7 +614,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     };
   }
 
-  private _filterOnKey = (ev: IKeyboardEvent): boolean => {
+  private readonly _filterOnKey = (ev: IKeyboardEvent): boolean => {
     if (this.props.filterKeys) {
       return this.props.filterKeys(ev.nativeEvent.key);
     }

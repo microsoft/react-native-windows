@@ -2,6 +2,51 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "@rnw-scripts/promote-release_v0.2.12",
+      "version": "0.2.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump yargs to 15.4.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fa34591ac86ea25e1e92a807864ba71480046a27",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@rnw-scripts/promote-release_v0.2.10",
+      "version": "0.2.10",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Nov 2020 19:12:07 GMT",
+      "tag": "@rnw-scripts/promote-release_v0.2.9",
+      "version": "0.2.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Mark packages published from master as private when cutting branch",
+            "author": "ngerlem@microsoft.com",
+            "commit": "65d0686b73863ea5e11aabc6b482193500b7462b",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Oct 2020 05:06:32 GMT",
       "tag": "@rnw-scripts/promote-release_v0.2.7",
       "version": "0.2.7",

@@ -1,8 +1,48 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 31 Oct 2020 05:06:50 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Dec 2020 05:05:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.67
+
+Fri, 11 Dec 2020 05:05:56 GMT
+
+### Changes
+
+- Adding FocusManager API for polite/aggresive focus for win32 (safreibe@microsoft.com)
+
+## 0.0.0-canary.66
+
+Tue, 08 Dec 2020 03:20:37 GMT
+
+### Changes
+
+- Integrate 12/2 Nightly Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.65
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Changes
+
+- Add more eslint rules (ngerlem@microsoft.com)
+
+## 0.0.0-canary.64
+
+Fri, 20 Nov 2020 05:08:43 GMT
+
+### Changes
+
+- Integrate 11/18 RN Nightly Build 🎉 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.63
+
+Thu, 12 Nov 2020 05:05:57 GMT
+
+### Changes
+
+- Add Keyboard Events to TextWin32 (krsiler@microsoft.com)
 
 ## 0.0.0-canary.62
 

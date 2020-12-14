@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/find-repo-root",
   "entries": [
     {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@rnw-scripts/find-repo-root_v0.0.13",
+      "version": "0.0.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@rnw-scripts/find-repo-root"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Oct 2020 05:05:24 GMT",
       "tag": "@rnw-scripts/find-repo-root_v0.0.12",
       "version": "0.0.12",

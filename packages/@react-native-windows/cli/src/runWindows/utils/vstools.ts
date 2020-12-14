@@ -25,7 +25,7 @@ export const dotNetCoreProjectTypeGuid =
  */
 function linesContainsBlock(lines: string[], block: string[]): boolean {
   if (block.length > 0) {
-    var startIndex = lines.indexOf(block[0]);
+    const startIndex = lines.indexOf(block[0]);
 
     if (startIndex >= 0) {
       for (let i = 1; i < block.length; i++) {
@@ -108,7 +108,7 @@ export function addProjectToSolution(
     );
   }
 
-  let slnLines = fs
+  const slnLines = fs
     .readFileSync(slnFile)
     .toString()
     .split('\r\n');
@@ -151,7 +151,7 @@ export function addProjectToSolution(
     false,
   ).map(line => line.match(/\s+([\w|]+)\s=/)![1]);
 
-  let projectConfigLines: string[] = [];
+  const projectConfigLines: string[] = [];
 
   slnConfigs.forEach(slnConfig => {
     projectConfigLines.push(
@@ -175,7 +175,7 @@ export function addProjectToSolution(
   );
 
   projectConfigLines.forEach(projectConfigLine => {
-    if (slnLines.indexOf(projectConfigLine) < 0) {
+    if (!slnLines.includes(projectConfigLine)) {
       if (verbose) {
         const configLine = projectConfigLine.substr(
           projectConfigLine.indexOf('= ') + 2,

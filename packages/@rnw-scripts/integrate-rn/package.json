@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/integrate-rn",
-  "version": "0.0.16",
+  "version": "0.0.19",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -14,20 +14,20 @@
     "integrate-rn": "./bin.js"
   },
   "dependencies": {
-    "@rnw-scripts/find-repo-root": "^0.0.12",
-    "@rnw-scripts/package-utils": "^0.0.9",
+    "@rnw-scripts/find-repo-root": "^0.0.14",
+    "@rnw-scripts/package-utils": "^0.0.11",
     "async": "^3.2.0",
     "lodash": "^4.17.15",
     "ora": "^3.4.0",
-    "react-native-platform-override": "^0.4.1",
+    "react-native-platform-override": "^0.4.4",
     "semver": "^7.3.2",
-    "yargs": "^15.3.1"
+    "yargs": "^15.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
-    "@rnw-scripts/eslint-config": "0.1.4",
+    "@rnw-scripts/eslint-config": "0.1.6",
     "@rnw-scripts/jest-unittest-config": "0.1.1",
     "@rnw-scripts/just-task": "0.0.6",
     "@rnw-scripts/ts-config": "0.1.0",
@@ -38,8 +38,8 @@
     "@types/semver": "^7.3.3",
     "@types/yargs": "^15.0.5",
     "babel-jest": "^26.3.0",
-    "eslint": "6.8.0",
-    "jest": "^26.4.2",
+    "eslint": "7.12.0",
+    "jest": "^26.5.2",
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "typescript": "^3.8.3"

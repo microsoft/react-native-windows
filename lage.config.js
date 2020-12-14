@@ -19,7 +19,6 @@ module.exports = {
       'js/**',
       "lib/**",
       "lib-commonjs/**",
-      "nuget-4.9.2.exe",
     ],
   }
 };

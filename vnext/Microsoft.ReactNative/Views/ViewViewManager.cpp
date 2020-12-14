@@ -65,8 +65,10 @@ class ViewShadowNode : public ShadowNodeBase {
   }
 
   void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
-    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
-      uiManager->focus(m_tag);
+    if (commandId == "focus") {
+      if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+        uiManager->focus(m_tag);
+      }
     } else if (commandId == "blur") {
       if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
         uiManager->blur(m_tag);

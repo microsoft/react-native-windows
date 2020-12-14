@@ -3,11 +3,15 @@
 
 import "IReactPackageBuilder.idl";
 
+#include "DocString.h"
+
 namespace Microsoft.ReactNative {
 
   // This interface is to be implemented by package creators.
   [webhosthidden]
+  DOC_STRING("This interface is to be implemented by package creators.")
   interface IReactPackageProvider {
+    DOC_STRING("Provides a @IReactPackageBuilder which the app or package will use to register custom native modules and view managers.")
     void CreatePackage(IReactPackageBuilder packageBuilder);
   };
 

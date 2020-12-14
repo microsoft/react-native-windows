@@ -1,0 +1,21 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+/*
+  This exposes a custom WinRT attribute that can be applied to add documentation text used by winmd2markdown
+*/
+
+namespace Microsoft.ReactNative {
+
+  [attributeusage(target_runtimeclass, target_interface, target_struct, target_enum, target_delegate, target_field, target_property, target_method, target_event)]
+  [attributename("doc_string")]
+  attribute DocStringAttribute {
+    String Content;
+  }
+
+  [attributeusage(target_property, target_method)]
+  [attributename("doc_default")] attribute DocDefaultAttribute {
+    String Content;
+  }
+}
+

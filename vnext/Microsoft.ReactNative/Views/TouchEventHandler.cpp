@@ -20,8 +20,8 @@
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Input.h>
 
-#ifdef WINUI3_PREVIEW3
-#include <winrt/Microsoft.UI.Input2.Experimental.h>
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Input.Experimental.h>
 #endif
 
 namespace Microsoft::ReactNative {
@@ -200,7 +200,7 @@ TouchEventHandler::ReactPointer TouchEventHandler::CreateReactPointer(
   pointer.target = tag;
   pointer.identifier = m_touchId++;
   pointer.pointerId = point.PointerId();
-#ifndef WINUI3_PREVIEW3
+#ifndef USE_WINUI3
   pointer.deviceType = point.PointerDevice().PointerDeviceType();
 #else
   pointer.deviceType = point.PointerDeviceType();
@@ -209,9 +209,7 @@ TouchEventHandler::ReactPointer TouchEventHandler::CreateReactPointer(
   pointer.isRightButton = props.IsRightButtonPressed();
   pointer.isMiddleButton = props.IsMiddleButtonPressed();
   pointer.isHorizontalScrollWheel = props.IsHorizontalMouseWheel();
-#ifndef WINUI3_PREVIEW3
   pointer.isEraser = props.IsEraser();
-#endif
 
   UpdateReactPointer(pointer, args, sourceElement);
 
@@ -230,9 +228,7 @@ void TouchEventHandler::UpdateReactPointer(
   pointer.positionRoot = rootPoint.Position();
   pointer.positionView = point.Position();
   pointer.timestamp = point.Timestamp() / 1000; // us -> ms
-#ifndef WINUI3_PREVIEW3
   pointer.pressure = props.Pressure();
-#endif
   pointer.isBarrelButton = props.IsBarrelButtonPressed();
   pointer.shiftKey = 0 != (keyModifiers & static_cast<uint32_t>(winrt::Windows::System::VirtualKeyModifiers::Shift));
   pointer.ctrlKey = 0 != (keyModifiers & static_cast<uint32_t>(winrt::Windows::System::VirtualKeyModifiers::Control));
@@ -413,28 +409,29 @@ bool TouchEventHandler::TagFromOriginalSource(
   winrt::IPropertyValue tag(nullptr);
 
   while (sourceElement) {
-    tag = sourceElement.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
-    if (tag) {
-      // If a TextBlock was the UIElement event source, perform a more accurate hit test,
-      // searching for the tag of the nested Run/Span XAML elements that the user actually clicked.
-      // This is to support nested <Text> elements in React.
-      // Nested React <Text> elements get translated into nested XAML <Span> elements,
-      // while the content of the <Text> becomes a list of XAML <Run> elements.
-      // However, we should report the Text element as the target, not the contexts of the text.
-      if (const auto textBlock = sourceElement.try_as<xaml::Controls::TextBlock>()) {
-        const auto pointerPos = args.GetCurrentPoint(textBlock).RawPosition();
-        const auto inlines = textBlock.Inlines().GetView();
+    if (auto fe = sourceElement.try_as<xaml::FrameworkElement>()) {
+      tag = fe.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+      if (tag) {
+        // If a TextBlock was the UIElement event source, perform a more accurate hit test,
+        // searching for the tag of the nested Run/Span XAML elements that the user actually clicked.
+        // This is to support nested <Text> elements in React.
+        // Nested React <Text> elements get translated into nested XAML <Span> elements,
+        // while the content of the <Text> becomes a list of XAML <Run> elements.
+        // However, we should report the Text element as the target, not the contexts of the text.
+        if (const auto textBlock = sourceElement.try_as<xaml::Controls::TextBlock>()) {
+          const auto pointerPos = args.GetCurrentPoint(textBlock).RawPosition();
+          const auto inlines = textBlock.Inlines().GetView();
 
-        bool isHit = false;
-        const auto finerTag = TestHit(inlines, pointerPos, isHit);
-        if (finerTag) {
-          tag = finerTag;
+          bool isHit = false;
+          const auto finerTag = TestHit(inlines, pointerPos, isHit);
+          if (finerTag) {
+            tag = finerTag;
+          }
         }
+
+        break;
       }
-
-      break;
     }
-
     sourceElement = winrt::VisualTreeHelper::GetParent(sourceElement).try_as<xaml::UIElement>();
   }
 
@@ -464,9 +461,11 @@ winrt::IPropertyValue TouchEventHandler::TestHit(
         return resTag;
 
       if (isHit) {
-        tag = el.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
-        if (tag) {
-          return tag;
+        if (auto fe = el.try_as<xaml::FrameworkElement>()) {
+          tag = fe.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+          if (tag) {
+            return tag;
+          }
         }
       }
     } else if (const auto run = el.try_as<xaml::Documents::Run>()) {

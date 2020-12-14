@@ -22,7 +22,7 @@ export interface MockFile {
 export default class MockFileRepository implements FileRepository {
   protected files: MockFile[];
   protected emptyDirectories: string[];
-  private normalize: (file: string) => string;
+  private readonly normalize: (file: string) => string;
 
   constructor(
     files: MockFile[],

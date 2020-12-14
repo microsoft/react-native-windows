@@ -1,8 +1,64 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Sat, 07 Nov 2020 05:04:58 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.42
+
+Tue, 08 Dec 2020 03:20:37 GMT
+
+### Patches
+
+- Allow unreleased RNW versions with react-native-windows-init --useDevMode (ngerlem@microsoft.com)
+
+## 0.1.41
+
+Fri, 04 Dec 2020 00:10:06 GMT
+
+### Patches
+
+- Force republish (ngerlem@microsoft.com)
+
+## 0.1.40
+
+Thu, 03 Dec 2020 21:43:48 GMT
+
+### Patches
+
+- Update cli telemetry defaults (jthysell@microsoft.com)
+
+## 0.1.38
+
+Tue, 01 Dec 2020 05:05:07 GMT
+
+### Patches
+
+- Use strings for telem exit codes (ngerlem@microsoft.com)
+
+## 0.1.37
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Patches
+
+- Add more eslint rules (ngerlem@microsoft.com)
+
+## 0.1.35
+
+Thu, 12 Nov 2020 05:05:57 GMT
+
+### Patches
+
+- Disable telemetry in other CI systems (asklar@microsoft.com)
+
+## 0.1.34
+
+Wed, 11 Nov 2020 05:05:29 GMT
+
+### Patches
+
+- Don't initialize AppInsights when passing no-telemetry (asklar@microsoft.com)
 
 ## 0.1.33
 

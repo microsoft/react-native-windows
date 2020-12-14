@@ -4,17 +4,26 @@
 import "IReactPackageProvider.idl";
 import "ReactInstanceSettings.idl";
 
+#include "DocString.h"
+
 namespace Microsoft.ReactNative {
 
   [webhosthidden]
   [default_interface]
+  DOC_STRING("This is the main entry-point to create a react-native instance.  The `ReactNativeHost` object exists to configure the instance using @ReactInstanceSettings before its loaded, as well as enabling control of when to load the instance. \n\
+_In the future more lifecycle events will be added to this object to provide better information on when an instance is loaded and unloaded._")
   runtimeclass ReactNativeHost {
     ReactNativeHost();
 
+    DOC_STRING("Provides access to the list of `IReactPackageProvider`'s that the react instance will use to provide native modules to the application.  This can be used to register additional package providers, such as package providers from community modules or other shared libraries")
     IVector<IReactPackageProvider> PackageProviders { get; };
+
+    DOC_STRING("Provides access to your this host's @ReactInstanceSettings to configure the react instance.")
     ReactInstanceSettings InstanceSettings { get; set; };
 
     Windows.Foundation.IAsyncAction LoadInstance();
+
+    DOC_STRING("This is used to load the instance, which will create an instance of the JS engine and launch your JavaScript code.  If an instance of this host is already running, this will shutdown the already running instance, and load a new instance.")
     Windows.Foundation.IAsyncAction ReloadInstance();
     Windows.Foundation.IAsyncAction UnloadInstance();
 

@@ -2,6 +2,111 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 11 Dec 2020 05:05:56 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.67",
+      "version": "0.0.0-canary.67",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding FocusManager API for polite/aggresive focus for win32",
+            "author": "safreibe@microsoft.com",
+            "commit": "e71e867d69fe89746f448cdf802941fb44f3af21",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.66",
+      "version": "0.0.0-canary.66",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 12/2 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "56d2170d526548052de30c3648d40cc47e683a6e",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.65",
+      "version": "0.0.0-canary.65",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.64",
+      "version": "0.0.0-canary.64",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 14 Nov 2020 05:04:43 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.63",
+      "version": "0.0.0-canary.63",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove api-extractor/api-documenter",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a2f696fb256a321903e5881cda090d131ef6e9bb",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Nov 2020 05:05:57 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.63",
+      "version": "0.0.0-canary.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Keyboard Events to TextWin32",
+            "author": "krsiler@microsoft.com",
+            "commit": "e08b7dcdee2549eac8b1deb810330129653fb825",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Nov 2020 05:05:29 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.62",
+      "version": "0.0.0-canary.62",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove buildci to allow JSChecks build caching for lint",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0111551952af4d6206cedb47021e9d324bb8ed5b",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 31 Oct 2020 05:06:50 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.62",
       "version": "0.0.0-canary.62",

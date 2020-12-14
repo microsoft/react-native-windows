@@ -22,6 +22,7 @@ struct IReactRootView;
 class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_from_this<InstanceImpl> {
  public:
   static std::shared_ptr<InstanceImpl> MakeNoBundle(
+      std::shared_ptr<Instance> &&instance,
       std::string &&jsBundleBasePath,
       std::vector<
           std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
@@ -34,6 +35,7 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
       std::shared_ptr<IDevSupportManager> devManager) noexcept;
 
   static std::shared_ptr<InstanceImpl> MakeAndLoadBundle(
+      std::shared_ptr<Instance> &&instance,
       std::string &&jsBundleBasePath,
       std::string &&jsBundleRelativePath,
       std::vector<
@@ -60,6 +62,7 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
 
  private:
   InstanceImpl(
+      std::shared_ptr<Instance> &&instance,
       std::string &&jsBundleFile,
       std::vector<
           std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
@@ -72,6 +75,7 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
       std::shared_ptr<IDevSupportManager> devManager);
 
   InstanceImpl(
+      std::shared_ptr<Instance> &&instance,
       std::string &&jsBundleBasePath,
       std::string &&jsBundleRelativePath,
       std::vector<

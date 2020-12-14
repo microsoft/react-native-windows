@@ -39,7 +39,11 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
 void AppState::GetCurrentAppState(
     std::function<void(React::JSValue const &)> const &success,
     std::function<void(React::JSValue const &)> const &error) noexcept {
-  success(m_active ? "active" : "background");
+  auto writer = React::MakeJSValueTreeWriter();
+  writer.WriteObjectBegin();
+  React::WriteProperty(writer, "app_state", m_active ? "active" : "background");
+  writer.WriteObjectEnd();
+  success(React::TakeJSValue(writer));
 }
 
 void AppState::AddListener(std::string && /*eventName*/) noexcept {

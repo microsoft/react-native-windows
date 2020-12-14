@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Don't initialize AppInsights when passing no-telemetry",
-  "packageName": "@react-native-windows/cli",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

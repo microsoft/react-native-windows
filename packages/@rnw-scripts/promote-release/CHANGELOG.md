@@ -1,8 +1,24 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Thu, 01 Oct 2020 05:08:11 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.12
+
+Tue, 08 Dec 2020 03:20:37 GMT
+
+### Patches
+
+- Bump yargs to 15.4.1 (ngerlem@microsoft.com)
+
+## 0.2.9
+
+Tue, 17 Nov 2020 19:12:07 GMT
+
+### Patches
+
+- Mark packages published from master as private when cutting branch (ngerlem@microsoft.com)
 
 ## 0.2.7
 

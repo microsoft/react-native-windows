@@ -1,8 +1,98 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 07 Nov 2020 05:04:58 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Dec 2020 05:07:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.46
+
+Wed, 09 Dec 2020 05:07:19 GMT
+
+### Changes
+
+- Deploy using VS tool (asklar@microsoft.com)
+
+## 0.0.0-canary.45
+
+Tue, 08 Dec 2020 03:20:37 GMT
+
+### Changes
+
+- Change from Manually Entered Version to Reference to WinUI.props (34109996+chiaramooney@users.noreply.github.com)
+- Ensure windows script added on init (ngerlem@microsoft.com)
+
+## 0.0.0-canary.43
+
+Thu, 03 Dec 2020 21:43:48 GMT
+
+### Changes
+
+- Update cli telemetry defaults (jthysell@microsoft.com)
+
+## 0.0.0-canary.42
+
+Thu, 03 Dec 2020 05:06:17 GMT
+
+### Changes
+
+- Remove the timeout from self-signed certificate generating (Bartosz.Klonowski@callstack.com)
+
+## 0.0.0-canary.41
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Changes
+
+- Add more eslint rules (ngerlem@microsoft.com)
+
+## 0.0.0-canary.39
+
+Wed, 18 Nov 2020 03:10:51 GMT
+
+### Changes
+
+- Use MSBuild Builtin Support for NuGet Restore (ngerlem@microsoft.com)
+
+## 0.0.0-canary.38
+
+Tue, 17 Nov 2020 05:05:00 GMT
+
+### Changes
+
+- Collect anonymized project name (ngerlem@microsoft.com)
+
+## 0.0.0-canary.36
+
+Sat, 14 Nov 2020 05:04:43 GMT
+
+### Changes
+
+- print out sessionId when erroring out in run-windows so people can choose to let us know when filing bugs (asklar@microsoft.com)
+
+## 0.0.0-canary.35
+
+Fri, 13 Nov 2020 05:05:57 GMT
+
+### Changes
+
+- Update nuget version in preparation of VS16.8 which has a breaking change compatibility issue with earlier nuget versoins (dannyvv@microsoft.com)
+- Update nuget version in preparation of VS16.8 which has a breaking change compatibility issue with earlier nuget versoins (dannyvv@microsoft.com)
+
+## 0.0.0-canary.34
+
+Thu, 12 Nov 2020 05:05:57 GMT
+
+### Changes
+
+- Disable telemetry in other CI systems (asklar@microsoft.com)
+
+## 0.0.0-canary.33
+
+Wed, 11 Nov 2020 05:05:29 GMT
+
+### Changes
+
+- Don't initialize AppInsights when passing no-telemetry (asklar@microsoft.com)
 
 ## 0.0.0-canary.32
 

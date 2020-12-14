@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "DocString.h"
+
 namespace Microsoft.ReactNative {
 
   // Type of value read from JavaScript by IJSValueReader
@@ -16,13 +18,27 @@ namespace Microsoft.ReactNative {
 
   // Forward only reader for JSON like streams or trees.
   [webhosthidden]
+  DOC_STRING("`IJSIValueReader` is used to read data from JavaScript in custom native modules.  It acts as a stream and supports all the types in @JSValueType.")
   interface IJSValueReader {
+    DOC_STRING("Returns the type of the current value.")
     JSValueType ValueType { get; };
+
+    DOC_STRING("Returns whether there is another property in the current object.  If there is `propertyName` indicates the name of the property.")
     Boolean GetNextObjectProperty(out String propertyName);
+
+    DOC_STRING("Moves the reader to the next array item.  Returns if there is another item in the array.")
     Boolean GetNextArrayItem();
+
+    DOC_STRING("Gets the current string value.")
     String GetString();
+
+    DOC_STRING("Gets the current boolean value.")
     Boolean GetBoolean();
+
+    DOC_STRING("Gets the current number value as an int.")
     Int64 GetInt64();
+
+    DOC_STRING("Gets the current number value as a double.")
     Double GetDouble();
   }
 } // namespace Microsoft.ReactNative

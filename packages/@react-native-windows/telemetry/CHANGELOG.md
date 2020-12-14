@@ -1,8 +1,48 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Sat, 07 Nov 2020 05:04:58 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Dec 2020 23:59:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.11
+
+Thu, 03 Dec 2020 23:59:32 GMT
+
+### Changes
+
+- Manual bump of @react-native-windows/telemetry to cause dependents to be republished (ngerlem@microsoft.com)
+
+## 0.0.0-canary.10
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Changes
+
+- Fixup naming convention rules (ngerlem@microsoft.com)
+
+## 0.0.0-canary.8
+
+Mon, 16 Nov 2020 14:39:19 GMT
+
+### Changes
+
+- anonymize paths with forward slashes and file shares (asklar@microsoft.com)
+
+## 0.0.0-canary.7
+
+Thu, 12 Nov 2020 05:05:57 GMT
+
+### Changes
+
+- Disable telemetry in other CI systems (asklar@microsoft.com)
+
+## 0.0.0-canary.6
+
+Wed, 11 Nov 2020 05:05:29 GMT
+
+### Changes
+
+- Silence warnings from appinsights in production (asklar@microsoft.com)
 
 ## 0.0.0-canary.5
 

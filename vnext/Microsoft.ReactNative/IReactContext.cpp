@@ -10,7 +10,79 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-ReactContext::ReactContext(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept : m_context{std::move(context)} {}
+//=============================================================================
+// ReactSettingsSnapshot implementation
+//=============================================================================
+
+#ifndef CORE_ABI
+ReactSettingsSnapshot::ReactSettingsSnapshot(Mso::CntPtr<const Mso::React::IReactSettingsSnapshot> &&settings) noexcept
+    : m_settings{std::move(settings)} {}
+
+bool ReactSettingsSnapshot::UseWebDebugger() const noexcept {
+  return m_settings->UseWebDebugger();
+}
+
+bool ReactSettingsSnapshot::UseFastRefresh() const noexcept {
+  return m_settings->UseFastRefresh();
+}
+
+bool ReactSettingsSnapshot::UseDirectDebugger() const noexcept {
+  return m_settings->UseDirectDebugger();
+}
+
+bool ReactSettingsSnapshot::DebuggerBreakOnNextLine() const noexcept {
+  return m_settings->DebuggerBreakOnNextLine();
+}
+
+uint16_t ReactSettingsSnapshot::DebuggerPort() const noexcept {
+  return m_settings->DebuggerPort();
+}
+
+hstring ReactSettingsSnapshot::DebugBundlePath() const noexcept {
+  return winrt::to_hstring(m_settings->DebugBundlePath());
+}
+
+hstring ReactSettingsSnapshot::BundleRootPath() const noexcept {
+  return winrt::to_hstring(m_settings->BundleRootPath());
+}
+
+hstring ReactSettingsSnapshot::SourceBundleHost() const noexcept {
+  return winrt::to_hstring(m_settings->SourceBundleHost());
+}
+
+uint16_t ReactSettingsSnapshot::SourceBundlePort() const noexcept {
+  return m_settings->SourceBundlePort();
+}
+
+hstring ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {
+  return winrt::to_hstring(m_settings->JavaScriptBundleFile());
+}
+
+Mso::React::IReactSettingsSnapshot const &ReactSettingsSnapshot::GetInner() const noexcept {
+  return *m_settings;
+}
+
+#endif
+
+//=============================================================================
+// ReactContext implementation
+//=============================================================================
+
+ReactContext::ReactContext(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept : m_context {
+  std::move(context)
+}
+#ifndef CORE_ABI
+, m_settings {
+  winrt::make<ReactSettingsSnapshot>(&m_context->SettingsSnapshot())
+}
+#endif
+{}
+
+#ifndef CORE_ABI
+IReactSettingsSnapshot ReactContext::SettingsSnapshot() noexcept {
+  return m_settings;
+}
+#endif
 
 IReactPropertyBag ReactContext::Properties() noexcept {
   return m_context->Properties();
@@ -26,6 +98,10 @@ IReactDispatcher ReactContext::UIDispatcher() noexcept {
 
 IReactDispatcher ReactContext::JSDispatcher() noexcept {
   return Properties().Get(ReactDispatcherHelper::JSDispatcherProperty()).try_as<IReactDispatcher>();
+}
+
+IInspectable ReactContext::JSRuntime() noexcept {
+  return m_context->JsiRuntime();
 }
 
 #ifndef CORE_ABI
@@ -67,48 +143,6 @@ void ReactContext::EmitJSEvent(
   auto params = paramsWriter->TakeValue();
   m_context->CallJSFunction(to_string(eventEmitterName), "emit", std::move(params));
 }
-
-#ifndef CORE_ABI
-bool ReactContext::UseWebDebugger() const noexcept {
-  return m_context->UseWebDebugger();
-}
-
-bool ReactContext::UseFastRefresh() const noexcept {
-  return m_context->UseFastRefresh();
-}
-
-bool ReactContext::UseDirectDebugger() const noexcept {
-  return m_context->UseDirectDebugger();
-}
-
-bool ReactContext::DebuggerBreakOnNextLine() const noexcept {
-  return m_context->DebuggerBreakOnNextLine();
-}
-
-uint16_t ReactContext::DebuggerPort() const noexcept {
-  return m_context->DebuggerPort();
-}
-
-hstring ReactContext::DebugBundlePath() const noexcept {
-  return winrt::to_hstring(m_context->DebugBundlePath());
-}
-
-hstring ReactContext::BundleRootPath() const noexcept {
-  return winrt::to_hstring(m_context->BundleRootPath());
-}
-
-hstring ReactContext::SourceBundleHost() const noexcept {
-  return winrt::to_hstring(m_context->SourceBundleHost());
-}
-
-uint16_t ReactContext::SourceBundlePort() const noexcept {
-  return m_context->SourceBundlePort();
-}
-
-hstring ReactContext::JavaScriptBundleFile() const noexcept {
-  return winrt::to_hstring(m_context->JavaScriptBundleFile());
-}
-#endif
 
 Mso::React::IReactContext &ReactContext::GetInner() const noexcept {
   return *m_context;
