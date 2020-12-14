@@ -93,7 +93,7 @@ JsiHostObjectWrapper::JsiHostObjectWrapper(std::shared_ptr<HostObject> &&hostObj
     : m_hostObject(std::move(hostObject)) {}
 
 JsiValueRef JsiHostObjectWrapper::GetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name) try {
-  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetFromJsiRuntime(runtime)};
+  JsiAbiRuntime* rt{JsiAbiRuntime::GetFromJsiRuntime(runtime)};
   JsiAbiRuntime::PropNameIDRef nameRef{name};
   return JsiAbiRuntime::DetachJsiValueRef(m_hostObject->get(*rt, nameRef));
 } catch (JSI_RUNTIME_SET_ERROR(runtime)) {
@@ -104,7 +104,7 @@ void JsiHostObjectWrapper::SetProperty(
     JsiRuntime const &runtime,
     JsiPropertyIdRef const &name,
     JsiValueRef const &value) try {
-  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetFromJsiRuntime(runtime)};
+  JsiAbiRuntime *rt{JsiAbiRuntime::GetFromJsiRuntime(runtime)};
   m_hostObject->set(*rt, JsiAbiRuntime::PropNameIDRef{name}, JsiAbiRuntime::ValueRef(value));
 } catch (JSI_RUNTIME_SET_ERROR(runtime)) {
   throw;
@@ -112,7 +112,7 @@ void JsiHostObjectWrapper::SetProperty(
 
 Windows::Foundation::Collections::IVector<JsiPropertyIdRef> JsiHostObjectWrapper::GetPropertyIds(
     JsiRuntime const &runtime) try {
-  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetFromJsiRuntime(runtime)};
+  JsiAbiRuntime *rt{JsiAbiRuntime::GetFromJsiRuntime(runtime)};
   auto names = m_hostObject->getPropertyNames(*rt);
   std::vector<JsiPropertyIdRef> result;
   result.reserve(names.size());
@@ -138,7 +138,7 @@ JsiHostFunctionWrapper::JsiHostFunctionWrapper(HostFunctionType &&hostFunction) 
 
 JsiValueRef JsiHostFunctionWrapper::
 operator()(JsiRuntime const &runtime, JsiValueRef const &thisArg, array_view<JsiValueRef const> args) try {
-  JsiAbiRuntimeHolder rt{JsiAbiRuntime::GetFromJsiRuntime(runtime)};
+  JsiAbiRuntime *rt{JsiAbiRuntime::GetFromJsiRuntime(runtime)};
   JsiAbiRuntime::ValueRefArray valueRefArgs{args};
   return JsiAbiRuntime::DetachJsiValueRef(
       m_hostFunction(*rt, JsiAbiRuntime::ValueRef{thisArg}, valueRefArgs.Data(), valueRefArgs.Size()));
@@ -151,33 +151,6 @@ operator()(JsiRuntime const &runtime, JsiValueRef const &thisArg, array_view<Jsi
   JsiHostFunctionWrapper *self =
       static_cast<impl::delegate<JsiHostFunction, JsiHostFunctionWrapper> *>(hostFunctionAbi);
   return self->m_hostFunction;
-}
-
-//===========================================================================
-// JsiAbiRuntimeHolder implementation
-//===========================================================================
-
-JsiAbiRuntimeHolder::JsiAbiRuntimeHolder(std::unique_ptr<JsiAbiRuntime> jsiRuntime) noexcept
-    : m_jsiRuntime{std::move(jsiRuntime)}, m_isOwning{true} {}
-
-JsiAbiRuntimeHolder::JsiAbiRuntimeHolder(JsiAbiRuntime *jsiRuntime) noexcept : m_jsiRuntime{jsiRuntime} {}
-
-JsiAbiRuntimeHolder::operator bool() noexcept {
-  return m_jsiRuntime != nullptr;
-}
-
-JsiAbiRuntime &JsiAbiRuntimeHolder::operator*() noexcept {
-  return *m_jsiRuntime;
-}
-
-JsiAbiRuntime *JsiAbiRuntimeHolder::operator->() noexcept {
-  return m_jsiRuntime.get();
-}
-
-JsiAbiRuntimeHolder ::~JsiAbiRuntimeHolder() noexcept {
-  if (!m_isOwning) {
-    m_jsiRuntime.release();
-  }
 }
 
 //===========================================================================

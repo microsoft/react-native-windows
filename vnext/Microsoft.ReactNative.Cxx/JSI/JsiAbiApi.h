@@ -68,28 +68,6 @@ struct JsiHostFunctionWrapper {
   JsiObjectRef m_functionData{};
 };
 
-struct JsiAbiRuntime;
-
-// Keeps owning or not owning pointer to JsiAbiRuntime
-struct JsiAbiRuntimeHolder {
-  JsiAbiRuntimeHolder(std::unique_ptr<JsiAbiRuntime> jsiRuntime) noexcept;
-  JsiAbiRuntimeHolder(JsiAbiRuntime *jsiRuntime) noexcept;
-  ~JsiAbiRuntimeHolder() noexcept;
-
-  JsiAbiRuntimeHolder(JsiAbiRuntimeHolder const &) = delete;
-  JsiAbiRuntimeHolder &operator=(JsiAbiRuntimeHolder const &) = delete;
-  JsiAbiRuntimeHolder(JsiAbiRuntimeHolder &&) = default;
-  JsiAbiRuntimeHolder &operator=(JsiAbiRuntimeHolder &&) = default;
-
-  explicit operator bool() noexcept;
-  JsiAbiRuntime &operator*() noexcept;
-  JsiAbiRuntime *operator->() noexcept;
-
- private:
-  std::unique_ptr<JsiAbiRuntime> m_jsiRuntime;
-  bool m_isOwning{false};
-};
-
 // JSI runtime implementation as a wrapper for the ABI-safe JsiRuntime.
 struct JsiAbiRuntime : facebook::jsi::Runtime {
   JsiAbiRuntime(JsiRuntime const &runtime) noexcept;
