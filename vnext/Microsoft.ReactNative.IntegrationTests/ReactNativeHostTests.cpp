@@ -18,8 +18,10 @@ struct TestHostModule {
     using namespace facebook::jsi;
     TestHostModule::Instance.set_value(*this);
 
+    Runtime *jsiRuntime{nullptr};
     bool jsiExecuted{false};
     ExecuteJsi(reactContext, [&](Runtime &rt) {
+      jsiRuntime = &rt;
       jsiExecuted = true;
       auto eval = rt.global().getPropertyAsFunction(rt, "eval");
       auto addFunc = eval.call(rt, "(function(x, y) { return x + y; })").getObject(rt).getFunction(rt);
@@ -57,6 +59,14 @@ struct TestHostModule {
       TestCheckEqual(
           "Hello", hostObjGreeter2.getProperty(rt, PropNameID::forAscii(rt, "someProp")).getString(rt).utf8(rt));
       TestCheck(hostObjGreeter2.getHostObject(rt) != nullptr);
+    });
+    TestCheck(jsiExecuted);
+
+    jsiExecuted = false;
+    ExecuteJsi(reactContext, [&](Runtime &rt) {
+      jsiExecuted = true;
+      // Make sure that our ReactContext offers the same facebook::jsi::Runtime
+      TestCheckEqual(jsiRuntime, &rt);
     });
     TestCheck(jsiExecuted);
   }

@@ -98,9 +98,6 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   // Get JsiAbiRuntime from JsiRuntime in current thread.
   static JsiAbiRuntime *GetFromJsiRuntime(JsiRuntime const &runtime) noexcept;
 
-  // Get JsiAbiRuntime from JsiRuntime in current thread or create a new one.
-  static JsiAbiRuntimeHolder GetOrCreate(JsiRuntime const &runtime) noexcept;
-
   facebook::jsi::Value evaluateJavaScript(
       const std::shared_ptr<const facebook::jsi::Buffer> &buffer,
       const std::string &sourceURL) override;
