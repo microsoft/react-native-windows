@@ -175,6 +175,7 @@ void ViewManagerBase::GetExportedCustomDirectEventTypeConstants(
   const PCWSTR eventNames[] = {// Generic events
                                L"Layout",
                                L"MouseEnter",
+                               L"MouseLeave",
                                L"AccessibilityAction"};
 
   for (auto &eventBaseName : eventNames) {
