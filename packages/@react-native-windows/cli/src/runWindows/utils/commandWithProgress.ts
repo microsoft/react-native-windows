@@ -123,7 +123,14 @@ export function commandWithProgress(
         resolve();
       } else {
         spinner.fail();
-        reject(new CodedError(errorCategory, `${taskDoingName} ${code}`));
+        reject(
+          new CodedError(
+            errorCategory,
+            `${taskDoingName} - error code ${code}`,
+            {
+              errorCode: code,
+          }),
+        );
       }
     });
   });

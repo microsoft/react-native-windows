@@ -51,6 +51,8 @@ export const CodedErrors = {
   CheckNetIsolationFailure: 709,
   InstallAppToDeviceFailure: 710,
   UninstallAppOnDeviceFailure: 711,
+  DeployRecipeFailure: 712,
+
   // Others
   AppStartupFailure: 700,
 

@@ -260,7 +260,6 @@ export async function deployToDesktop(
     args.push('--direct-debugging', options.directDebugging.toString());
   }
 
-
   await runPowerShellScriptFunction(
     'Enabling Developer Mode',
     windowsStoreAppUtils,
@@ -269,20 +268,22 @@ export async function deployToDesktop(
     'EnableDevModeFailure',
   );
 
+  const appPackageFolder = getAppPackage(options, projectName);
+
   if (options.release) {
-      await runPowerShellScriptFunction(
-          'Removing old version of the app',
-          windowsStoreAppUtils,
-          `Uninstall-App ${appName}`,
-          verbose,
-          'RemoveOldAppVersionFailure',
-      );
+    await runPowerShellScriptFunction(
+      'Removing old version of the app',
+      windowsStoreAppUtils,
+      `Uninstall-App ${appName}`,
+      verbose,
+      'RemoveOldAppVersionFailure',
+    );
 
-      const script = glob.sync(
-          path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
-      )[0];
+    const script = glob.sync(
+      path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
+    )[0];
 
-      await runPowerShellScriptFunction(
+    await runPowerShellScriptFunction(
       'Installing new version of the app',
       windowsStoreAppUtils,
       `Install-App "${script}" -Force`,
@@ -307,6 +308,7 @@ export async function deployToDesktop(
         deployAppxRecipeExePath,
         [appxRecipe],
         verbose,
+        'DeployRecipeFailure',
       );
     } else {
       // Install the app package's dependencies before attempting to deploy.
