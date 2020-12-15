@@ -32,6 +32,12 @@ Object.defineProperty(Index, 'ButtonWin32', {
   },
 });
 
+Object.defineProperty(Index, 'FocusManager', {
+  get: () => {
+    return require('./Libraries/Utilities/FocusManager').FocusManager;
+  },
+});
+
 Object.defineProperty(Index, 'TouchableWin32', {
   get: () => {
     return require('./Libraries/Components/Touchable/TouchableWin32').TouchableWin32;
