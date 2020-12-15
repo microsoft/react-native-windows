@@ -10,6 +10,9 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 
+// Standard Library
+#include <sstream>
+
 using Microsoft::Common::Utilities::CheckedReinterpretCast;
 
 using std::function;
@@ -67,7 +70,18 @@ auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
   };
 
   return awaitable{queue};
+} // resume_in_queue
+
+string HResultToString(hresult_error const &e) {
+  std::stringstream hexCode;
+  hexCode << "[0x" << std::hex << e.code() << "] ";
+  return hexCode.str() + winrt::to_string(e.message());
 }
+
+string HResultToString(hresult &&result) {
+  return HResultToString(hresult_error(std::move(result), hresult_error::from_abi));
+}
+
 } // namespace
 
 namespace Microsoft::React {
@@ -127,13 +141,12 @@ IAsyncAction WinRTWebSocketResource::PerformConnect() noexcept {
       }
     } else {
       if (self->m_errorHandler) {
-        auto error = winrt::hresult_error(result, winrt::hresult_error::from_abi);
-        self->m_errorHandler({winrt::to_string(error.message()), ErrorType::Connection});
+        self->m_errorHandler({HResultToString(std::move(result)), ErrorType::Connection});
       }
     }
   } catch (hresult_error const &e) {
     if (self->m_errorHandler) {
-      self->m_errorHandler({winrt::to_string(e.message()), ErrorType::Connection});
+      self->m_errorHandler({HResultToString(e), ErrorType::Connection});
     }
   }
 
@@ -174,13 +187,12 @@ fire_and_forget WinRTWebSocketResource::PerformPing() noexcept {
       }
     } else {
       if (self->m_errorHandler) {
-        auto error = winrt::hresult_error(result, winrt::hresult_error::from_abi);
-        self->m_errorHandler({winrt::to_string(error.message()), ErrorType::Ping});
+        self->m_errorHandler({HResultToString(std::move(result)), ErrorType::Ping});
       }
     }
   } catch (hresult_error const &e) {
     if (self->m_errorHandler) {
-      self->m_errorHandler({winrt::to_string(e.message()), ErrorType::Ping});
+      self->m_errorHandler({HResultToString(e), ErrorType::Ping});
     }
   }
 }
@@ -241,8 +253,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string &&message, bool isBi
       }
     } else {
       if (self->m_errorHandler) {
-        auto error = winrt::hresult_error(result, winrt::hresult_error::from_abi);
-        self->m_errorHandler({winrt::to_string(error.message()), ErrorType::Send});
+        self->m_errorHandler({HResultToString(std::move(result)), ErrorType::Send});
       }
     }
   } catch (std::exception const &e) {
@@ -252,7 +263,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string &&message, bool isBi
   } catch (hresult_error const &e) {
     // TODO: Remove after fixing unit tests exceptions.
     if (self->m_errorHandler) {
-      self->m_errorHandler({winrt::to_string(e.message()), ErrorType::Ping});
+      self->m_errorHandler({HResultToString(e), ErrorType::Ping});
     }
   }
 }
@@ -274,7 +285,7 @@ fire_and_forget WinRTWebSocketResource::PerformClose() noexcept {
     }
   } catch (hresult_error const &e) {
     if (m_errorHandler) {
-      m_errorHandler({winrt::to_string(e.message()), ErrorType::Close});
+      m_errorHandler({HResultToString(e), ErrorType::Close});
     }
   }
 
@@ -307,7 +318,7 @@ void WinRTWebSocketResource::OnMessageReceived(
     }
   } catch (hresult_error const &e) {
     if (m_errorHandler) {
-      m_errorHandler({winrt::to_string(e.message()), ErrorType::Receive});
+      m_errorHandler({HResultToString(e), ErrorType::Receive});
     }
   }
 }
