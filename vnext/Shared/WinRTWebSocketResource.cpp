@@ -70,7 +70,7 @@ auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
   };
 
   return awaitable{queue};
-}// resume_in_queue
+} // resume_in_queue
 
 string HResultToString(hresult_error const &e) {
   std::stringstream hexCode;
