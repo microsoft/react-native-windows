@@ -59,7 +59,7 @@ namespace Microsoft.ReactNative {
     IReactDispatcher UIDispatcher { get; };
 
     DOC_STRING(
-      "Get the JS thread dispatcher. \n "
+      "Get the JS thread dispatcher. \n"
       "It is a shortcut for the `ReactDispatcherHelper::JSDispatcherProperty` from the @.Properties property bag.")
     IReactDispatcher JSDispatcher { get; };
 
