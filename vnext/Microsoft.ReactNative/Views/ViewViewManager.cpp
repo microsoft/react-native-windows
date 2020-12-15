@@ -418,11 +418,9 @@ bool ViewViewManager::UpdateProperty(
       else if (propertyValue.IsNull())
         pViewShadowNode->EnableFocusRing(false);
     } else if (propertyName == "tabIndex") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-        auto tabIndex = propertyValue.AsDouble();
-        if (tabIndex == static_cast<int32_t>(tabIndex)) {
-          pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
-        }
+      auto tabIndex = propertyValue.AsInt64();
+      if (tabIndex == static_cast<int32_t>(tabIndex)) {
+        pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
       } else if (propertyValue.IsNull()) {
         pViewShadowNode->TabIndex(std::numeric_limits<std::int32_t>::max());
       }
