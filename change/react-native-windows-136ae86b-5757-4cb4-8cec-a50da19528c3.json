@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fix tabINdex property for Button",
+  "comment": "Fix tabIndex property for Button",
   "packageName": "react-native-windows",
   "email": "igklemen@microsoft.com",
   "dependentChangeType": "patch"
