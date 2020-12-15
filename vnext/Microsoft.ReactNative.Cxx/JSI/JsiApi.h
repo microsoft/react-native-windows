@@ -44,13 +44,15 @@ facebook::jsi::Runtime &GetOrCreateContextRuntime(ReactContext const &context) n
     // We remove the JSI runtime from properties when React instance is destroyed.
     auto destroyInstanceNotificationId{
         ReactNotificationId<InstanceDestroyedEventArgs>{L"ReactNative.InstanceSettings", L"InstanceDestroyed"}};
-    context.Notifications().Subscribe(destroyInstanceNotificationId, jsDispatcher, [
-      context,
-      jsiRuntimeProperty
-    ](IInspectable const & /*sender*/, ReactNotificationArgs<InstanceDestroyedEventArgs> const &args) noexcept {
-      context.Properties().Remove(jsiRuntimeProperty);
-      args.Subscription().Unsubscribe(); // Unsubscribe after we handle the notification.
-    });
+    context.Notifications().Subscribe(
+        destroyInstanceNotificationId,
+        jsDispatcher,
+        [ context, jsiRuntimeProperty ](
+            winrt::Windows::Foundation::IInspectable const & /*sender*/,
+            ReactNotificationArgs<InstanceDestroyedEventArgs> const &args) noexcept {
+          context.Properties().Remove(jsiRuntimeProperty);
+          args.Subscription().Unsubscribe(); // Unsubscribe after we handle the notification.
+        });
   }
 
   return *runtime;
