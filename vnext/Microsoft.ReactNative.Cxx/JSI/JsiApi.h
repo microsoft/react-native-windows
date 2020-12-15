@@ -34,8 +34,8 @@ facebook::jsi::Runtime &GetOrCreateContextRuntime(ReactContext const &context) n
     // We want to keep the JSI runtime while current instance is alive.
     // The JSI runtime object must be local to our DLL.
     // We create a property name based on the current DLL handle.
-    HMODULE currentDll = reinterpret_cast<HMODULE>(&__ImageBase);
-    std::wstring jsiRuntimeLocalName = L"jsiRuntime_" + std::to_wstring(reinterpret_cast<uintptr_t>(currentDll));
+    HMODULE currentDllHanlde = reinterpret_cast<HMODULE>(&__ImageBase);
+    std::wstring jsiRuntimeLocalName = L"jsiRuntime_" + std::to_wstring(reinterpret_cast<uintptr_t>(currentDllHanlde));
     using ValueType = ReactNonAbiValue<std::unique_ptr<JsiAbiRuntime>>;
     ReactPropertyId<ValueType> jsiRuntimeProperty{L"ReactNative.InstanceData", jsiRuntimeLocalName.c_str()};
     ValueType runtimeValue{std::in_place, std::move(runtimeHolder)};

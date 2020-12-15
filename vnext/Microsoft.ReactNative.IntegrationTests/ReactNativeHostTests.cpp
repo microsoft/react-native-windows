@@ -20,6 +20,7 @@ struct TestHostModule {
 
     Runtime *jsiRuntime{nullptr};
     bool jsiExecuted{false};
+    // The JSI executed synchronously here because we are in JS thread.
     ExecuteJsi(reactContext, [&](Runtime &rt) {
       jsiRuntime = &rt;
       jsiExecuted = true;
@@ -63,9 +64,9 @@ struct TestHostModule {
     TestCheck(jsiExecuted);
 
     jsiExecuted = false;
+    // Make sure that we use the same facebook::jsi::Runtime when we run second time.
     ExecuteJsi(reactContext, [&](Runtime &rt) {
       jsiExecuted = true;
-      // Make sure that our ReactContext offers the same facebook::jsi::Runtime
       TestCheckEqual(jsiRuntime, &rt);
     });
     TestCheck(jsiExecuted);
