@@ -69,7 +69,7 @@ exports.config = {
       // 5 instances get started at a time.
       maxInstances: 1,
 
-      app: 'ReactUWPTestApp_kc2bncckyf4ap!App',
+      app: 'ReactUWPTestApp_cezq6h4ygq1hw!App',
       'ms:experimental-webdriver': true,
     },
     // {

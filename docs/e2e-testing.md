@@ -342,7 +342,7 @@ capabilities are the configuration which WinAppDriver used to identify the app a
   capabilities: [
   {
       maxInstances: 1,
-      app: 'ReactUWPTestApp_kc2bncckyf4ap!App',
+      app: 'ReactUWPTestApp_cezq6h4ygq1hw!App',
       'ms:experimental-webdriver': true,
   },
 
@@ -422,7 +422,7 @@ The best way to do this is by letting the CI run and fail, then downloading the 
 When an output doesn't match its master, a file with `.err` extension will be produced under the `TreeDump` folder in the `ReactUWPTestAppTreeDump` artifact. The content of the `.err` file will usually just say:
 
 ```txt
-Tree dump file does not match master at C:\Program Files\WindowsApps\ReactUWPTestApp_1.0.0.0_x64__kc2bncckyf4ap\Assets\TreeDump\masters\ControlStyleRoundBorder.json - See output at C:\Users\VssAdministrator\AppData\Local\Packages\ReactUWPTestApp_kc2bncckyf4ap\LocalState\TreeDump\ControlStyleRoundBorder.json
+Tree dump file does not match master at C:\Program Files\WindowsApps\ReactUWPTestApp_1.0.0.0_x64__cezq6h4ygq1hw\Assets\TreeDump\masters\ControlStyleRoundBorder.json - See output at C:\Users\VssAdministrator\Documents\ReactUWPTestApp_cezq6h4ygq1hw\LocalState\TreeDump\ControlStyleRoundBorder.json
 ```
 
 ![Errors](img/e2e-errors.png)

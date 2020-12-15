@@ -9,9 +9,6 @@ parameters:
 jobs:
   - job: IntegrationTest
     displayName: Integration Test
-    dependsOn:
-      - Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:

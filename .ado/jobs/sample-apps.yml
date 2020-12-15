@@ -13,9 +13,6 @@ jobs:
       - name: BuildLogDirectory
         value: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
     displayName: Sample Apps
-    dependsOn: 
-      - Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         # Start Continuous only

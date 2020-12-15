@@ -2009,9 +2009,9 @@
     "@types/node" "*"
 
 "@types/react-native@^0.63.18":
-  version "0.63.37"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.37.tgz#c43df90c9d3cc082a97a49a53e989de26cb8ab45"
-  integrity sha512-xr9SZG7tQQBKT6840tAGaWEC65D2gjyxZtuZxz631UgeW1ofItuu9HMVhoyYqot2hRSa6Q4YC8FYkRVUpM53/w==
+  version "0.63.40"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.40.tgz#66b11824a6aadb0dde0db87bd8aff58165c7a8f8"
+  integrity sha512-y98TQBjfncIrdDrwIhxcmcad1gHKNfUKFnCBk3heYy0Gvt6BNcBeSKRvACV4cf6R1K/cNJMoS3rjaMvYhQyAgw==
   dependencies:
     "@types/react" "*"
 
@@ -5834,9 +5834,9 @@ human-signals@^1.1.1:
   integrity sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
 
 husky@^4.2.5:
-  version "4.3.5"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-4.3.5.tgz#ab8d2a0eb6b62fef2853ee3d442c927d89290902"
-  integrity sha512-E5S/1HMoDDaqsH8kDF5zeKEQbYqe3wL9zJDyqyYqc8I4vHBtAoxkDBGXox0lZ9RI+k5GyB728vZdmnM4bYap+g==
+  version "4.3.6"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-4.3.6.tgz#ebd9dd8b9324aa851f1587318db4cccb7665a13c"
+  integrity sha512-o6UjVI8xtlWRL5395iWq9LKDyp/9TE7XMOTvIpEVzW638UcGxTmV5cfel6fsk/jbZSTlvfGVJf2svFtybcIZag==
   dependencies:
     chalk "^4.0.0"
     ci-info "^2.0.0"

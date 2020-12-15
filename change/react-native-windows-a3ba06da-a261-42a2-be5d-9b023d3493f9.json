@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix facebook::jsi::Runtime lifetime for ABI JSI",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -7,7 +7,6 @@ jobs:
     dependsOn:
       - Desktop
       - UniversalBuild # Needed to have artifacts uploaded from LayoutHeaders
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
