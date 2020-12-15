@@ -3782,9 +3782,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.32.0:
-  version "1.44.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.44.0.tgz#25f2745acff96ebfc7a35e9487452ce265087f02"
-  integrity sha512-nfkokpGEq3qCqQXSI7WuUEZNhp54FdRH4ZdiDmpys3abnWooNiiuWitX5vAESEWARk4ZpOLcDzsMM17PmCaYkg==
+  version "1.48.0"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.48.0.tgz#3089d8eaf19f9a2c7f52d0a6723df17658cca7eb"
+  integrity sha512-vRwCE6CqpNm+Ez7dvBpaNReroFpt17lWokh9HxKHtbz8E1pQh/wWBsi8Ol04+OcMGFb5hJWcort7bc0WLJw9uQ==
   dependencies:
     cosmiconfig "^6.0.0"
     execa "^4.0.3"
