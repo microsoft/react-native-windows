@@ -93,7 +93,7 @@ JsiHostObjectWrapper::JsiHostObjectWrapper(std::shared_ptr<HostObject> &&hostObj
     : m_hostObject(std::move(hostObject)) {}
 
 JsiValueRef JsiHostObjectWrapper::GetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name) try {
-  JsiAbiRuntime* rt{JsiAbiRuntime::GetFromJsiRuntime(runtime)};
+  JsiAbiRuntime *rt{JsiAbiRuntime::GetFromJsiRuntime(runtime)};
   JsiAbiRuntime::PropNameIDRef nameRef{name};
   return JsiAbiRuntime::DetachJsiValueRef(m_hostObject->get(*rt, nameRef));
 } catch (JSI_RUNTIME_SET_ERROR(runtime)) {
