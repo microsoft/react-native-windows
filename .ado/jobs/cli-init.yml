@@ -1,276 +1,271 @@
 parameters:
   - name: buildEnvironment
     type: string
-    default : PullRequest
+    default: PullRequest
     values: 
      - PullRequest 
+     - PullRequestNuGet
      - Continuous 
+  - name: buildNuGetOnly
+    type: boolean
+    default: false
   
 jobs:
-  - job: CliInit
-    variables:
-      - template: ../variables/vs2019.yml
-    displayName: Verify Cli
-    dependsOn:
-     - Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    strategy:
-      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        # Start Continuous only
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          ArmDebugCpp:
+  - ${{ if not(parameters.buildNuGetOnly) }}:
+    - job: CliInit
+      variables:
+        - template: ../variables/vs2019.yml
+      displayName: Verify Cli
+      strategy:
+        matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+          # Start Continuous only
+          ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+            ArmDebugCpp:
+              language: cpp
+              configuration: Debug
+              platform: arm
+              projectType: app
+              additionalInitArguments:
+              additionalRunArguments:
+            ArmDebugCs:
+              language: cs
+              configuration: Debug
+              platform: arm
+              projectType: app
+              additionalInitArguments:
+              additionalRunArguments:
+          # END Continuous only
+          ArmReleaseCpp:
             language: cpp
-            configuration: Debug
+            configuration: Release
             platform: arm
             projectType: app
             additionalInitArguments:
-            additionalRunArguments:
-          ArmDebugCs:
+            additionalRunArguments: --no-deploy
+          ArmReleaseCs:
             language: cs
-            configuration: Debug
+            configuration: Release
             platform: arm
             projectType: app
             additionalInitArguments:
+            additionalRunArguments: --no-deploy
+          # Start Continuous only
+          ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+            Arm64DebugCpp:
+              language: cpp
+              configuration: Debug
+              platform: arm64
+              projectType: app
+              additionalInitArguments:
+              additionalRunArguments:
+            Arm64DebugCs:
+              language: cs
+              configuration: Debug
+              platform: arm64
+              projectType: app
+              additionalInitArguments:
+              additionalRunArguments:
+            Arm64ReleaseCpp:
+              language: cpp
+              configuration: Release
+              platform: arm64
+              projectType: app
+              additionalInitArguments:
+              additionalRunArguments:
+            Arm64ReleaseCs:
+              language: cs
+              configuration: Release
+              platform: arm64
+              projectType: app
+              additionalInitArguments:
+              additionalRunArguments:
+          # End Continuous only
+          X64ReleaseCpp:
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            additionalInitArguments:
             additionalRunArguments:
-        # END Continuous only
-        ArmReleaseCpp:
-          language: cpp
-          configuration: Release
-          platform: arm
-          projectType: app
-          additionalInitArguments:
-          additionalRunArguments: --no-deploy
-        ArmReleaseCs:
-          language: cs
-          configuration: Release
-          platform: arm
-          projectType: app
-          additionalInitArguments:
-          additionalRunArguments: --no-deploy
-        # Start Continuous only
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          Arm64DebugCpp:
+          X64ReleaseCs:
+            language: cs
+            configuration: Release
+            platform: x64
+            projectType: app
+            additionalInitArguments:
+            additionalRunArguments:
+          X86DebugCpp:
             language: cpp
             configuration: Debug
-            platform: arm64
+            platform: x86
             projectType: app
-            additionalInitArguments:
+            additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
             additionalRunArguments:
-          Arm64DebugCs:
+          X86DebugCs:
             language: cs
             configuration: Debug
-            platform: arm64
-            projectType: app
-            additionalInitArguments:
-            additionalRunArguments:
-          Arm64ReleaseCpp:
-            language: cpp
-            configuration: Release
-            platform: arm64
-            projectType: app
-            additionalInitArguments:
-            additionalRunArguments:
-          Arm64ReleaseCs:
-            language: cs
-            configuration: Release
-            platform: arm64
-            projectType: app
-            additionalInitArguments:
-            additionalRunArguments:
-        # End Continuous only
-        X64ReleaseCpp:
-          language: cpp
-          configuration: Release
-          platform: x64
-          projectType: app
-          additionalInitArguments:
-          additionalRunArguments:
-        X64ReleaseCs:
-          language: cs
-          configuration: Release
-          platform: x64
-          projectType: app
-          additionalInitArguments:
-          additionalRunArguments:
-        X86DebugCpp:
-          language: cpp
-          configuration: Debug
-          platform: x86
-          projectType: app
-          additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
-          additionalRunArguments:
-        X86DebugCs:
-          language: cs
-          configuration: Debug
-          platform: x86
-          projectType: app
-          additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
-          additionalRunArguments:
-        # Start Continuous only
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          X86ReleaseCpp:
-            language: cpp
-            configuration: Release
             platform: x86
             projectType: app
-            additionalInitArguments:
+            additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
             additionalRunArguments:
-          X86ReleaseCs:
-            language: cs
-            configuration: Release
+          # Start Continuous only
+          ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+            X86ReleaseCpp:
+              language: cpp
+              configuration: Release
+              platform: x86
+              projectType: app
+              additionalInitArguments:
+              additionalRunArguments:
+            X86ReleaseCs:
+              language: cs
+              configuration: Release
+              platform: x86
+              projectType: app
+              additionalInitArguments:
+              additionalRunArguments:
+            X64DebugCpp:
+              language: cpp
+              configuration: Debug
+              platform: x64
+              projectType: app
+              additionalInitArguments:
+              additionalRunArguments:
+            X64DebugCs:
+              language: cs
+              configuration: Debug
+              platform: x64
+              projectType: app
+              additionalInitArguments:
+              additionalRunArguments:
+          # End Continuous only
+
+          X86DebugCppLib:
+            language: cpp
+            configuration: Debug
             platform: x86
-            projectType: app
+            projectType: lib
             additionalInitArguments:
-            additionalRunArguments:
-          X64DebugCpp:
+            additionalRunArguments: --no-autolink --no-deploy
+          X86DebugCsLib:
+            language: cs
+            configuration: Debug
+            platform: x86
+            projectType: lib
+            additionalInitArguments:
+            additionalRunArguments: --no-autolink --no-deploy
+
+          X64DebugCppHermes:
             language: cpp
             configuration: Debug
             platform: x64
             projectType: app
             additionalInitArguments:
             additionalRunArguments:
-          X64DebugCs:
-            language: cs
-            configuration: Debug
-            platform: x64
+          X86ReleaseCppHermes:
+            language: cpp
+            configuration: Release
+            platform: x86
             projectType: app
             additionalInitArguments:
             additionalRunArguments:
-        # End Continuous only
+            continueOnBuildFailure: true # See issue #6129
+      pool:
+        vmImage: $(VmImage)
+      timeoutInMinutes: 60
+      cancelTimeoutInMinutes: 5
 
-        X86DebugCppLib:
-          language: cpp
-          configuration: Debug
-          platform: x86
-          projectType: lib
-          additionalInitArguments:
-          additionalRunArguments: --no-autolink --no-deploy
-        X86DebugCsLib:
-          language: cs
-          configuration: Debug
-          platform: x86
-          projectType: lib
-          additionalInitArguments:
-          additionalRunArguments: --no-autolink --no-deploy
-
-        X64DebugCppHermes:
-          language: cpp
-          configuration: Debug
-          platform: x64
-          projectType: app
-          additionalInitArguments:
-          additionalRunArguments:
-        X86ReleaseCppHermes:
-          language: cpp
-          configuration: Release
-          platform: x86
-          projectType: app
-          additionalInitArguments:
-          additionalRunArguments:
-          continueOnBuildFailure: true # See issue #6129
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 60
-    cancelTimeoutInMinutes: 5
-
-    steps:
-      # We unfortunately can't inline the template here because WinUI needs continueOnBuildFailure and ADO does not allow that variable to be an expression
-      # We can take out that part when we have better agents.
-      - template: ../templates/react-native-init.yml
-        parameters:
-          language: $(language)
-          configuration: $(configuration)
-          platform: $(platform)
-          projectType: $(projectType)    
-          additionalInitArguments: $(additionalInitArguments)
-          additionalRunArguments: $(additionalRunArguments)
-          continueOnBuildFailure: ${{ eq('$(continueOnBuildFailure)', 'true')}}
+      steps:
+        # We unfortunately can't inline the template here because WinUI needs continueOnBuildFailure and ADO does not allow that variable to be an expression
+        # We can take out that part when we have better agents.
+        - template: ../templates/react-native-init.yml
+          parameters:
+            language: $(language)
+            configuration: $(configuration)
+            platform: $(platform)
+            projectType: $(projectType)    
+            additionalInitArguments: $(additionalInitArguments)
+            additionalRunArguments: $(additionalRunArguments)
+            continueOnBuildFailure: ${{ eq('$(continueOnBuildFailure)', 'true')}}
 
   # We unfortunately can't add the winUI3 ones to the existing matrix above because Auzre DevOps has problems with expressions for continueOnError.
   # We have to place this as a value
-  - job: CliInitWinUI3
-    variables:
-      - template: ../variables/vs2019.yml
-    displayName: Verify Cli
-    dependsOn:
-     - Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    strategy:
-      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        X86DebugCppWinUI3:
-          language: cpp
-          configuration: Debug
-          platform: x86
-          projectType: app
-          additionalInitArguments: --useWinUI3 true
-          additionalRunArguments:
-          
-        X86DebugCsWinUI3:
-          language: cs
-          configuration: Debug
-          platform: x86
-          projectType: app
-          additionalInitArguments: --useWinUI3 true
-          additionalRunArguments:
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 60
-    cancelTimeoutInMinutes: 5
+  - ${{ if not(parameters.buildNuGetOnly) }}:
+    - job: CliInitWinUI3
+      variables:
+        - template: ../variables/vs2019.yml
+      displayName: Verify Cli
+      strategy:
+        matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+          X86DebugCppWinUI3:
+            language: cpp
+            configuration: Debug
+            platform: x86
+            projectType: app
+            additionalInitArguments: --useWinUI3 true
+            additionalRunArguments:
+            
+          X86DebugCsWinUI3:
+            language: cs
+            configuration: Debug
+            platform: x86
+            projectType: app
+            additionalInitArguments: --useWinUI3 true
+            additionalRunArguments:
+      pool:
+        vmImage: $(VmImage)
+      timeoutInMinutes: 60
+      cancelTimeoutInMinutes: 5
 
-    steps:          
-      - template: ../templates/react-native-init.yml
-        parameters:
-          language: $(language)
-          configuration: $(configuration)
-          platform: $(platform)
-          projectType: $(projectType)    
-          additionalInitArguments: $(additionalInitArguments)
-          additionalRunArguments: $(additionalRunArguments)
-          continueOnBuildFailure: true # See issue #6129
+      steps:          
+        - template: ../templates/react-native-init.yml
+          parameters:
+            language: $(language)
+            configuration: $(configuration)
+            platform: $(platform)
+            projectType: $(projectType)    
+            additionalInitArguments: $(additionalInitArguments)
+            additionalRunArguments: $(additionalRunArguments)
+            continueOnBuildFailure: true # See issue #6129
+
 
   # We unfortunately can't add the nuget ones to the existing matrix above because Azure DevOps does not allow the dependsOn to be dynamic based on matrix expansion
-  - job: CliInitNuGet
-    variables:
-      - template: ../variables/vs2019.yml
-    displayName: Verify Cli
-    dependsOn:
-      - Setup
-      - UniversalBuild
-    condition: |
-      and
-      (
-        ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ),
-        in(dependencies.Universal.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
-      )
-    strategy:
-      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        X64DebugCppNuget:
-          language: cpp
-          configuration: Debug
-          platform: x86
-          projectType: app
-          additionalInitArguments:
-          additionalRunArguments:
-        X64DebugCsNuget:
-          language: cs
-          configuration: Debug
-          platform: x86
-          projectType: app
-          additionalInitArguments:
-          additionalRunArguments:
+  - ${{ if parameters.buildNuGetOnly }}:
+    - job: CliInitNuGet
+      variables:
+        - template: ../variables/vs2019.yml
+      displayName: Verify Cli
+      dependsOn:
+        - UniversalBuild
+      strategy:
+        matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+          X64DebugCppNuget:
+            language: cpp
+            configuration: Debug
+            platform: x86
+            projectType: app
+            additionalInitArguments:
+            additionalRunArguments:
+          X64DebugCsNuget:
+            language: cs
+            configuration: Debug
+            platform: x86
+            projectType: app
+            additionalInitArguments:
+            additionalRunArguments:
 
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 60
-    cancelTimeoutInMinutes: 5
+      pool:
+        vmImage: $(VmImage)
+      timeoutInMinutes: 60
+      cancelTimeoutInMinutes: 5
 
-    steps:
-      - template: ../templates/react-native-init.yml
-        parameters:
-          language: $(language)
-          configuration: $(configuration)
-          platform: $(platform)
-          projectType: $(projectType)    
-          additionalInitArguments: $(additionalInitArguments)
-          additionalRunArguments: $(additionalRunArguments)
-          useNuGet: true
+      steps:
+        - template: ../templates/react-native-init.yml
+          parameters:
+            language: $(language)
+            configuration: $(configuration)
+            platform: $(platform)
+            projectType: $(projectType)    
+            additionalInitArguments: $(additionalInitArguments)
+            additionalRunArguments: $(additionalRunArguments)
+            useNuGet: true

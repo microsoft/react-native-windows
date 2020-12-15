@@ -10,9 +10,6 @@ parameters:
 jobs:
   - job: E2ETest
     displayName: E2E Test
-    dependsOn:
-      - Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:

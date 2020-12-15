@@ -12,9 +12,6 @@ jobs:
     variables:
       - template: ../variables/vs2019.yml
     displayName: Playground
-    dependsOn:
-      - Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86DebugUnivesal:
