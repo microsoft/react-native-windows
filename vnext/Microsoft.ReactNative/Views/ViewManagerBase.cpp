@@ -172,10 +172,11 @@ void ViewManagerBase::GetExportedCustomBubblingEventTypeConstants(
 
 void ViewManagerBase::GetExportedCustomDirectEventTypeConstants(
     const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
-  const PCWSTR eventNames[] = {// Generic events
-                               L"Layout",
-                               L"MouseEnter",
-                               L"AccessibilityAction"};
+  constexpr PCWSTR eventNames[] = {// Generic events
+                                   L"Layout",
+                                   L"MouseEnter",
+                                   L"MouseLeave",
+                                   L"AccessibilityAction"};
 
   for (auto &eventBaseName : eventNames) {
     using namespace std::string_literals;
