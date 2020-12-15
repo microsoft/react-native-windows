@@ -129,7 +129,8 @@ export function commandWithProgress(
             `${taskDoingName} - error code ${code}`,
             {
               errorCode: code,
-          }),
+            },
+          ),
         );
       }
     });
