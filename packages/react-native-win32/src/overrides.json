@@ -473,7 +473,7 @@
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Utilities/FocusManager.win32.js"
+      "file": "Libraries\\Utilities\\FocusManager.win32.js"
     },
     {
       "type": "derived",
