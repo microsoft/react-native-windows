@@ -87,8 +87,6 @@ untyped-type-import
 [version]
 <<<<<<< Upstream
 ^0.113.0
-||||||| base
-^0.105.0
 =======
 Conflicting edit
 >>>>>>> Override
