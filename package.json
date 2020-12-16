@@ -37,6 +37,9 @@
     "eslint-plugin-react-hooks": "4.0.7",
     "kind-of": "6.0.3",
     "node-fetch": "2.6.1",
+    "node-notifier": "^9.0.0",
+    "webdriver": "git+https://github.com/react-native-windows/webdriver.git",
+    "webdriverio": "5.12.1",
     "yargs-parser": "^18.1.1"
   },
   "beachball": {
