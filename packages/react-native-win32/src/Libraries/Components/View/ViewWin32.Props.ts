@@ -97,6 +97,7 @@ export type AccessibilityAnnotationInfo = Readonly<{
   typeName?: string;
   author?: string;
   dateTime?: string;
+  target?: string;
 }>;
 
 export type AccessibilityActionName =
