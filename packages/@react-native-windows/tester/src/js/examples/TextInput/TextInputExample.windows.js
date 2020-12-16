@@ -131,6 +131,31 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
   }
 }
 
+class PressInOutEvents extends React.Component<
+  $FlowFixMeProps,
+  $FlowFixMeState,
+> {
+  constructor(props) {
+    super(props);
+    this.state = {text: 'PressIn/PressOut message'};
+  }
+  render() {
+    return (
+      <View>
+        <Text>{this.state.text}</Text>
+        <TextInput
+          placeholder="Click inside the box to observe events being fired."
+          style={[styles.singleLineWithHeightTextInput]}
+          onPressIn={() =>
+            this.setState({text: 'Holding down the click/touch'})
+          }
+          onPressOut={() => this.setState({text: 'Released click/touch'})}
+        />
+      </View>
+    );
+  }
+}
+
 const styles = StyleSheet.create({
   multiline: {
     height: 60,
@@ -422,6 +447,12 @@ exports.examples = ([
     title: 'Toggle Default Padding',
     render: function(): React.Node {
       return <ToggleDefaultPaddingExample />;
+    },
+  },
+  {
+    title: 'onPressIn, onPressOut events',
+    render: function(): React.Node {
+      return <PressInOutEvents />;
     },
   },
 ]: Array<RNTesterExampleModuleItem>);
