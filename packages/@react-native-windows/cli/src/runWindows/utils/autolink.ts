@@ -561,17 +561,20 @@ async function updateAutoLink(
         )}ms)`,
       );
     } else if (checkMode) {
+      // Just log a warning here to be bubbled up into VS, otherwise the build will fail.
+      const autolinkCommand = 'npx react-native autolink-windows';
+      const autolinkArgs = `--sln "${path.relative(
+        windowsAppConfig.folder,
+        solutionFile,
+      )}" --proj "${path.relative(windowsAppConfig.folder, projectFile)}"`;
       console.log(
         `${chalk.yellow(
           'Warning:',
         )} Auto-linking changes were necessary but ${chalk.bold(
           '--check',
         )} specified. Run ${chalk.bold(
-          "'npx react-native autolink-windows'",
+          `'${autolinkCommand} ${autolinkArgs}'`,
         )} to apply the changes. (${Math.round(endTime - startTime)}ms)`,
-      );
-      throw new Error(
-        'Auto-linking changes were necessary but --check was specified',
       );
     } else {
       console.log(
