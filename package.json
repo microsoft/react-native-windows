@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "lage build -- --color",
+    "build": "lage build",
     "lint": "lage lint --verbose -- --color",
     "lint:fix": "lage lint:fix -- --color",
     "change": "beachball change",
