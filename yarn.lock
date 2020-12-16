@@ -2204,9 +2204,9 @@
   integrity sha1-Hs9SYhKZ5luFU3Qzf7Ef0tEGb8E=
 
 "@types/react-native@^0.63.18":
-  version "0.63.40"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.40.tgz#66b11824a6aadb0dde0db87bd8aff58165c7a8f8"
-  integrity sha512-y98TQBjfncIrdDrwIhxcmcad1gHKNfUKFnCBk3heYy0Gvt6BNcBeSKRvACV4cf6R1K/cNJMoS3rjaMvYhQyAgw==
+  version "0.63.41"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.41.tgz#edbb25d9b5b9f7288b61ef4763f3a11eb658ec24"
+  integrity sha512-9w7Il4S2cKJvP/2ZWO66O+9/U8dBCcgycbnIpjsrP4DlN4UTw9VXjSGWSICXh4UNXScKyKWg8FoXkz7fI9ZVWQ==
   dependencies:
     "@types/react" "*"
 
