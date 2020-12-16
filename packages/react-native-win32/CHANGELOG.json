@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 16 Dec 2020 23:41:15 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.5",
+      "version": "0.62.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.62] Win32 Polite/Aggressive Focus API",
+            "author": "dannyvv@microsoft.com",
+            "commit": "a2fdc09a104f4984ad72699153d862a114ddf2c3",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Oct 2020 14:04:36 GMT",
       "tag": "@office-iss/react-native-win32_v0.62.4",
       "version": "0.62.4",
