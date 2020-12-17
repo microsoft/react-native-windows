@@ -10,7 +10,7 @@ export type TextWin32OmitTypes = Omit<RN.TextPropsAndroid, SharedTextPropsAndroi
   Omit<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> &
   OmittedAccessibilityPropsWin32;
 
-export type SharedTextPropsAndroidandWin32 = {
+export type SharedTextPropsAndroidAndWin32 = {
   selectable?: boolean;
 };
 
