@@ -46,12 +46,16 @@ export function resolveContents(
   if (content.includes('\r\n')) {
     // CRLF file, make sure multiline replacements are also CRLF
     for (const key of Object.keys(replacements)) {
-      replacements[key] = replacements[key].replace(/([^\r]?)\n/g, '$1\r\n');
+      if (typeof replacements[key] === 'string') {
+        replacements[key] = replacements[key].replace(/([^\r]?)\n/g, '$1\r\n');
+      }
     }
   } else {
     // LF file, make sure multiline replacements are also LF
     for (const key of Object.keys(replacements)) {
-      replacements[key] = replacements[key].replace(/\r\n/g, '\n');
+      if (typeof replacements[key] === 'string') {
+        replacements[key] = replacements[key].replace(/\r\n/g, '\n');
+      }
     }
   }
 
