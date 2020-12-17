@@ -245,7 +245,7 @@ export async function copyProjectTemplateAndReplace(
 
   const templateVars: Record<string, any> = {
     useMustache: true,
-    regExpPatternsToRemove: ['//\\sclang-format\\s(on|off)\\s'],
+    regExpPatternsToRemove: ['//\\sclang-format\\s(on|off)\\s*'], // CODESYNC: vnext\local-cli\runWindows\utils\autolink.js
 
     name: newProjectName,
     namespace: namespace,
