@@ -15,7 +15,7 @@
   },
   "peerDependencies": {
     "react-native": "0.0.0-c901c1fbc",
-    "react-native-windows": "^0.0.0-canary.224"
+    "react-native-windows": "^0.0.0-canary.225"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "0.1.6",
@@ -23,8 +23,8 @@
     "eslint": "7.12.0",
     "just-scripts": "^0.44.7",
     "react-native": "0.0.0-c901c1fbc",
-    "react-native-platform-override": "^0.4.4",
-    "react-native-windows": "^0.0.0-canary.224",
+    "react-native-platform-override": "^0.4.5",
+    "react-native-windows": "^0.0.0-canary.225",
     "typescript": "^3.8.3"
   }
 }

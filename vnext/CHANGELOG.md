@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 09 Dec 2020 05:07:19 GMT and should not be manually modified.
+This log was last generated on Fri, 18 Dec 2020 19:23:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.225
+
+Fri, 18 Dec 2020 19:23:58 GMT
+
+### Changes
+
+- Specify full path when bundling (asklar@winse.microsoft.com)
+- Fix tabIndex property for Button (igklemen@microsoft.com)
+- Show HRESULT code as part of error message (julio.rocha@microsoft.com)
+- In Xaml, IsTabStop makes a control be able to receive focus or not so we also need to set it when IsFocusable is set. (lamdoan@microsoft.com)
+- Fix RedBox on topMouseLeave event. (igklemen@microsoft.com)
+- Add onPressIn / onPressOut events to TextInput (igklemen@microsoft.com)
+- Fix facebook::jsi::Runtime lifetime for ABI JSI (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.224
 

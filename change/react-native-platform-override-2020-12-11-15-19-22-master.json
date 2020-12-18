@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix missing dependency / race condition in pacakge.json",
-  "packageName": "react-native-platform-override",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-12-11T23:19:22.676Z"
-}
