@@ -1,12 +1,12 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 16 Dec 2020 23:41:15 GMT and should not be manually modified.
+This log was last generated on Fri, 18 Dec 2020 23:26:43 GMT and should not be manually modified.
 
 <!-- Start content -->
 
 ## 0.62.5
 
-Wed, 16 Dec 2020 23:41:15 GMT
+Fri, 18 Dec 2020 23:26:43 GMT
 
 ### Patches
 
