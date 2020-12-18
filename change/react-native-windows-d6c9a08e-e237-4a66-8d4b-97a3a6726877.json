@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[0.64] Make package config more strict",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
