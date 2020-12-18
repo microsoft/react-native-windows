@@ -226,7 +226,8 @@ async function runWindowsInternal(
         verbose,
         true, // preRelease
       );
-    } catch {
+    } catch (e) {
+      newError(e.message);
       throw error;
     }
   }
