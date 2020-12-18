@@ -80,7 +80,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\Shared\tracing;$(ReactNativeWindowsDir)include\Shared;$(ReactNativeWindowsDir)JSI\Shared;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\Shared\tracing;$(ReactNativeWindowsDir)include\Shared;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -218,6 +218,7 @@
     <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
+    <ClCompile Include="JSI\ChakraJsiRuntime_core.cpp" />
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />
     <ClCompile Include="ViewManager.cpp" />
