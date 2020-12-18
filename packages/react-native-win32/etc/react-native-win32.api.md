@@ -449,7 +449,7 @@ export type SharedAccessibilityPropsIOSandWin32 = {
 };
 
 // @public (undocumented)
-export type SharedTextPropsAndroidAndWin32 = {
+export type SharedTextPropsAndroidandWin32 = {
     selectable?: boolean;
 };
 
@@ -464,7 +464,7 @@ export class TextWin32 extends React_2.Component<ITextWin32Props, {}> {
 }
 
 // @public (undocumented)
-export type TextWin32OmitTypes = Omit_3<RN.TextPropsAndroid, SharedTextPropsAndroidAndWin32> & RN.TextPropsIOS & RN.AccessibilityPropsAndroid & Omit_3<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> & OmittedAccessibilityPropsWin32;
+export type TextWin32OmitTypes = Omit_3<RN.TextPropsAndroid, SharedTextPropsAndroidandWin32> & RN.TextPropsIOS & RN.AccessibilityPropsAndroid & Omit_3<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> & OmittedAccessibilityPropsWin32;
 
 // Warning: (ae-forgotten-export) The symbol "IInternalTouchableWin32State" needs to be exported by the entry point typings-index.d.ts
 //

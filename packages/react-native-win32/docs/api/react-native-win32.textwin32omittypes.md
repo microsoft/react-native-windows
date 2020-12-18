@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type TextWin32OmitTypes = Omit<RN.TextPropsAndroid, SharedTextPropsAndroidAndWin32> & RN.TextPropsIOS & RN.AccessibilityPropsAndroid & Omit<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> & OmittedAccessibilityPropsWin32;
+export declare type TextWin32OmitTypes = Omit<RN.TextPropsAndroid, SharedTextPropsAndroidandWin32> & RN.TextPropsIOS & RN.AccessibilityPropsAndroid & Omit<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> & OmittedAccessibilityPropsWin32;
 ```

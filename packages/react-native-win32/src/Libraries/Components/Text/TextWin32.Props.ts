@@ -4,13 +4,13 @@ import { SharedAccessibilityPropsIOSandWin32, OmittedAccessibilityPropsWin32, Ba
 // removes from interface T the members of interface K
 type Omit<T, K> = Pick<T, Exclude<keyof T, keyof K>>;
 
-export type TextWin32OmitTypes = Omit<RN.TextPropsAndroid, SharedTextPropsAndroidAndWin32> &
+export type TextWin32OmitTypes = Omit<RN.TextPropsAndroid, SharedTextPropsAndroidandWin32> &
   RN.TextPropsIOS &
   RN.AccessibilityPropsAndroid &
   Omit<RN.AccessibilityPropsIOS, SharedAccessibilityPropsIOSandWin32> &
   OmittedAccessibilityPropsWin32;
 
-export type SharedTextPropsAndroidAndWin32 = {
+export type SharedTextPropsAndroidandWin32 = {
   selectable?: boolean;
 };
 
