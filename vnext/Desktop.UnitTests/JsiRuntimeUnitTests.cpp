@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <chrono>
 #include <functional>
+#include <map>
 #include <thread>
 #include <unordered_map>
 #include <unordered_set>
@@ -84,6 +85,12 @@ TEST_CLASS(JsiRuntimeUnitTests) {
     bool checkValue(const Value &value, const std::string &jsValue) {
       // TODO (yicyao): Should we use === instead of == here?
       return function("function(value) { return value == " + jsValue + "; }").call(rt, value).getBool();
+    }
+
+    TEST_METHOD(JsiRuntimeUnitTests_RuntimeTest) {
+      rt.evaluateJavaScript(std::make_unique<StringBuffer>("x = 1"), "");
+      auto i = rt.global().getProperty(rt, "x").getNumber();
+      Assert::AreEqual(rt.global().getProperty(rt, "x").getNumber(), static_cast<double>(1));
     }
 
     TEST_METHOD(JsiRuntimeUnitTests_PropNameIDTest) {
@@ -391,591 +398,572 @@ TEST_CLASS(JsiRuntimeUnitTests) {
       Assert::IsTrue(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "c_prop")).getBool());
       Assert::IsFalse(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "not_existing")).getBool());
     }
-};
 
+    TEST_METHOD(JsiRuntimeUnitTests_Chakra_ArrayTest) {
+      eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
 
-//TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
-//  rt.evaluateJavaScript(std::make_unique<StringBuffer>("x = 1"), "");
-//  auto i = rt.global().getProperty(rt, "x").getNumber();
-//  EXPECT_EQ(rt.global().getProperty(rt, "x").getNumber(), 1);
-//}
-
-
-/*
-TEST_P(JsiRuntimeUnitTests_Chakra, ArrayTest) {
-  eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
-
-  Object x = rt.global().getPropertyAsObject(rt, "x");
-  Array names = x.getPropertyNames(rt);
-  EXPECT_EQ(names.size(rt), 4);
-  std::unordered_set<std::string> strNames;
-  for (size_t i = 0; i < names.size(rt); ++i) {
-    Value n = names.getValueAtIndex(rt, i);
-    EXPECT_TRUE(n.isString());
-    strNames.insert(n.getString(rt).utf8(rt));
-  }
-
-  EXPECT_EQ(strNames.size(), 4);
-  EXPECT_EQ(strNames.count("1"), 1);
-  EXPECT_EQ(strNames.count("3"), 1);
-  EXPECT_EQ(strNames.count("5"), 1);
-  EXPECT_EQ(strNames.count("seven"), 1);
-
-  Object seven = x.getPropertyAsObject(rt, "seven");
-  Array arr = seven.getArray(rt);
-
-  EXPECT_EQ(arr.size(rt), 2);
-  EXPECT_EQ(arr.getValueAtIndex(rt, 0).getString(rt).utf8(rt), "eight");
-  EXPECT_EQ(arr.getValueAtIndex(rt, 1).getString(rt).utf8(rt), "nine");
-  // TODO: test out of range
-
-  EXPECT_EQ(x.getPropertyAsObject(rt, "seven").getArray(rt).size(rt), 2);
-
-  // Check that property access with both symbols and strings can access
-  // array values.
-  EXPECT_EQ(seven.getProperty(rt, "0").getString(rt).utf8(rt), "eight");
-  EXPECT_EQ(seven.getProperty(rt, "1").getString(rt).utf8(rt), "nine");
-  seven.setProperty(rt, "1", "modified");
-  EXPECT_EQ(seven.getProperty(rt, "1").getString(rt).utf8(rt), "modified");
-  EXPECT_EQ(arr.getValueAtIndex(rt, 1).getString(rt).utf8(rt), "modified");
-  EXPECT_EQ(seven.getProperty(rt, PropNameID::forAscii(rt, "0")).getString(rt).utf8(rt), "eight");
-  seven.setProperty(rt, PropNameID::forAscii(rt, "0"), "modified2");
-  EXPECT_EQ(arr.getValueAtIndex(rt, 0).getString(rt).utf8(rt), "modified2");
-
-  Array alpha = Array(rt, 4);
-  EXPECT_TRUE(alpha.getValueAtIndex(rt, 0).isUndefined());
-  EXPECT_TRUE(alpha.getValueAtIndex(rt, 3).isUndefined());
-  EXPECT_EQ(alpha.size(rt), 4);
-  alpha.setValueAtIndex(rt, 0, "a");
-  alpha.setValueAtIndex(rt, 1, "b");
-  EXPECT_EQ(alpha.length(rt), 4);
-  alpha.setValueAtIndex(rt, 2, "c");
-  alpha.setValueAtIndex(rt, 3, "d");
-  EXPECT_EQ(alpha.size(rt), 4);
-
-  EXPECT_TRUE(function("function (arr) { return "
-                       "arr.length == 4 && "
-                       "['a','b','c','d'].every(function(v,i) { return v === arr[i]}); }")
-                  .call(rt, alpha)
-                  .getBool());
-
-  Array alpha2 = Array(rt, 1);
-  alpha2 = std::move(alpha);
-  EXPECT_EQ(alpha2.size(rt), 4);
-}
-
-TEST_P(JsiRuntimeUnitTests, FunctionTest) {
-  // test move ctor
-  Function fmove = function("function() { return 1 }");
-  {
-    Function g = function("function() { return 2 }");
-    fmove = std::move(g);
-  }
-  EXPECT_EQ(fmove.call(rt).getNumber(), 2);
-
-  // This tests all the function argument converters, and all the
-  // non-lvalue overloads of call().
-  Function f = function(
-      "function(n, b, d, df, i, s1, s2, s3, o, a, f, v) { return "
-      "n === null && "
-      "b === true && "
-      "d === 3.14 && "
-      "Math.abs(df - 2.71) < 0.001 && "
-      "i === 17 && "
-      "s1 == 's1' && "
-      "s2 == 's2' && "
-      "s3 == 's3' && "
-      "typeof o == 'object' && "
-      "Array.isArray(a) && "
-      "typeof f == 'function' && "
-      "v == 42 }");
-  std::string s3 = "s3";
-  EXPECT_TRUE(f.call(
-                   rt,
-                   nullptr,
-                   true,
-                   3.14,
-                   2.71f,
-                   17,
-                   "s1",
-                   String::createFromAscii(rt, "s2"),
-                   s3,
-                   Object(rt),
-                   Array(rt, 1),
-                   function("function(){}"),
-                   Value(42))
-                  .getBool());
-
-  // lvalue overloads of call()
-  Function flv = function(
-      "function(s, o, a, f, v) { return "
-      "s == 's' && "
-      "typeof o == 'object' && "
-      "Array.isArray(a) && "
-      "typeof f == 'function' && "
-      "v == 42 }");
-
-  String s = String::createFromAscii(rt, "s");
-  Object o = Object(rt);
-  Array a = Array(rt, 1);
-  Value v = 42;
-  EXPECT_TRUE(flv.call(rt, s, o, a, f, v).getBool());
-
-  Function f1 = function("function() { return 1; }");
-  Function f2 = function("function() { return 2; }");
-  f2 = std::move(f1);
-  EXPECT_EQ(f2.call(rt).getNumber(), 1);
-}
-
-TEST_P(JsiRuntimeUnitTests, FunctionThisTest) {
-  Function checkPropertyFunction = function("function() { return this.a === 'a_property' }");
-
-  Object jsObject = Object(rt);
-  jsObject.setProperty(rt, "a", String::createFromUtf8(rt, "a_property"));
-
-  // class APropertyHostObject : public HostObject {
-  //  Value get(Runtime& rt, const PropNameID& sym) override {
-  //    return String::createFromUtf8(rt, "a_property");
-  //  }
-
-  //  void set(Runtime&, const PropNameID&, const Value&) override {}
-  //};
-  // Object hostObject =
-  //  Object::createFromHostObject(rt, std::make_shared<APropertyHostObject>());
-
-  EXPECT_TRUE(checkPropertyFunction.callWithThis(rt, jsObject).getBool());
-  // EXPECT_TRUE(checkPropertyFunction.callWithThis(rt, hostObject).getBool());
-  EXPECT_FALSE(checkPropertyFunction.callWithThis(rt, Array(rt, 5)).getBool());
-  EXPECT_FALSE(checkPropertyFunction.call(rt).getBool());
-}
-
-TEST_P(JsiRuntimeUnitTests, FunctionConstructorTest) {
-  Function ctor = function(
-      "function (a) {"
-      "  if (typeof a !== 'undefined') {"
-      "   this.pika = a;"
-      "  }"
-      "}");
-  ctor.getProperty(rt, "prototype").getObject(rt).setProperty(rt, "pika", "chu");
-  auto empty = ctor.callAsConstructor(rt);
-  ASSERT_TRUE(empty.isObject());
-  auto emptyObj = std::move(empty).getObject(rt);
-  EXPECT_EQ(emptyObj.getProperty(rt, "pika").getString(rt).utf8(rt), "chu");
-  auto who = ctor.callAsConstructor(rt, "who");
-  ASSERT_TRUE(who.isObject());
-  auto whoObj = std::move(who).getObject(rt);
-  EXPECT_EQ(whoObj.getProperty(rt, "pika").getString(rt).utf8(rt), "who");
-
-  auto instanceof = function("function (o, b) { return o instanceof b; }");
-  EXPECT_TRUE(instanceof.call(rt, emptyObj, ctor).getBool());
-  EXPECT_TRUE(instanceof.call(rt, whoObj, ctor).getBool());
-
-  auto dateCtor = rt.global().getPropertyAsFunction(rt, "Date");
-  auto date = dateCtor.callAsConstructor(rt);
-  EXPECT_TRUE(date.isObject());
-  EXPECT_TRUE(instanceof.call(rt, date, dateCtor).getBool());
-  // Sleep for 50 milliseconds
-  std::this_thread::sleep_for(std::chrono::milliseconds(50));
-  EXPECT_GE(
-      function("function (d) { return (new Date()).getTime() - d.getTime(); }").call(rt, date).getNumber(),
-      // We use 48 here because sleep_for is not very precise,
-      // and this test is not about timing precision.
-      48);
-}
-
-TEST_P(JsiRuntimeUnitTests, InstanceOfTest) {
-  auto ctor = function("function Rick() { this.say = 'wubalubadubdub'; }");
-  auto newObj = function("function (ctor) { return new ctor(); }");
-  auto instance = newObj.call(rt, ctor).getObject(rt);
-  EXPECT_TRUE(instance.instanceOf(rt, ctor));
-  EXPECT_EQ(instance.getProperty(rt, "say").getString(rt).utf8(rt), "wubalubadubdub");
-  EXPECT_FALSE(Object(rt).instanceOf(rt, ctor));
-  EXPECT_TRUE(ctor.callAsConstructor(rt, nullptr, 0).getObject(rt).instanceOf(rt, ctor));
-}
-
-TEST_P(JsiRuntimeUnitTests_Chakra, HostFunctionTest) {
-  auto one = std::make_shared<int>(1);
-  Function plusOne = Function::createFromHostFunction(
-      rt,
-      PropNameID::forAscii(rt, "plusOne"),
-      2,
-      [one, savedRt = &rt](Runtime &rt, const Value &thisVal, const Value *args, size_t count) {
-        EXPECT_EQ(savedRt, &rt);
-        // We don't know if we're in strict mode or not, so it's either global
-        // or undefined.
-        EXPECT_TRUE(Value::strictEquals(rt, thisVal, rt.global()) || thisVal.isUndefined());
-        return *one + args[0].getNumber() + args[1].getNumber();
-      });
-
-  EXPECT_EQ(plusOne.call(rt, 1, 2).getNumber(), 4);
-  EXPECT_TRUE(checkValue(plusOne.call(rt, 3, 5), "9"));
-  rt.global().setProperty(rt, "plusOne", plusOne);
-  EXPECT_TRUE(eval("plusOne(20, 300) == 321").getBool());
-
-  Function dot = Function::createFromHostFunction(
-      rt, PropNameID::forAscii(rt, "dot"), 2, [](Runtime &rt, const Value &thisVal, const Value *args, size_t count) {
-        EXPECT_TRUE(Value::strictEquals(rt, thisVal, rt.global()) || thisVal.isUndefined());
-        if (count != 2) {
-          throw std::runtime_error("expected 2 args");
-        }
-        std::string ret = args[0].getString(rt).utf8(rt) + "." + args[1].getString(rt).utf8(rt);
-        return String::createFromUtf8(rt, reinterpret_cast<const uint8_t *>(ret.data()), ret.size());
-      });
-
-  rt.global().setProperty(rt, "cons", dot);
-  EXPECT_TRUE(eval("cons('left', 'right') == 'left.right'").getBool());
-  EXPECT_TRUE(eval("cons.name == 'dot'").getBool());
-  // TODO: Chakra(Core)'s APIs can only create host functions that
-  // takes in no parameters. The arugmenst needed for the host function are
-  // passed through the arguments object. Disabling this test for now.
-  // EXPECT_TRUE(eval("cons.length == 2").getBool());
-  EXPECT_TRUE(eval("cons instanceof Function").getBool());
-  EXPECT_TRUE(eval("(function() {"
-                   "  try {"
-                   "    cons('fail'); return false;"
-                   "  } catch (e) {"
-                   "    return ((e instanceof Error) &&"
-                   "            (e.message == 'Exception in HostFunction: ' +"
-                   "                          'expected 2 args'));"
-                   "  }})()")
-                  .getBool());
-
-  Function coolify = Function::createFromHostFunction(
-      rt,
-      PropNameID::forAscii(rt, "coolify"),
-      0,
-      [](Runtime &rt, const Value &thisVal, const Value *args, size_t count) {
-        EXPECT_EQ(count, 0);
-        std::string ret = thisVal.toString(rt).utf8(rt) + " is cool";
-        return String::createFromUtf8(rt, reinterpret_cast<const uint8_t *>(ret.data()), ret.size());
-      });
-  rt.global().setProperty(rt, "coolify", coolify);
-  EXPECT_TRUE(eval("coolify.name == 'coolify'").getBool());
-  EXPECT_TRUE(eval("coolify.length == 0").getBool());
-  EXPECT_TRUE(eval("coolify.bind('R&M')() == 'R&M is cool'").getBool());
-  EXPECT_TRUE(eval("(function() {"
-                   "  var s = coolify.bind(function(){})();"
-                   "  return s.lastIndexOf(' is cool') == (s.length - 8);"
-                   "})()")
-                  .getBool());
-
-  Function lookAtMe = Function::createFromHostFunction(
-      rt,
-      PropNameID::forAscii(rt, "lookAtMe"),
-      0,
-      [](Runtime &rt, const Value &thisVal, const Value *args, size_t count) -> Value {
-        EXPECT_TRUE(thisVal.isObject());
-        EXPECT_EQ(thisVal.getObject(rt).getProperty(rt, "name").getString(rt).utf8(rt), "mr.meeseeks");
-        return Value();
-      });
-  rt.global().setProperty(rt, "lookAtMe", lookAtMe);
-  EXPECT_TRUE(eval("lookAtMe.bind({'name': 'mr.meeseeks'})()").isUndefined());
-
-  struct Callable {
-    Callable(std::string s) : str(s) {}
-
-    Value operator()(Runtime &rt, const Value &, const Value *args, size_t count) {
-      if (count != 1) {
-        return Value();
+      Object x = rt.global().getPropertyAsObject(rt, "x");
+      Array names = x.getPropertyNames(rt);
+      Assert::AreEqual(names.size(rt), static_cast<size_t>(4));
+      std::unordered_set<std::string> strNames;
+      for (size_t i = 0; i < names.size(rt); ++i) {
+        Value n = names.getValueAtIndex(rt, i);
+        Assert::IsTrue(n.isString());
+        strNames.insert(n.getString(rt).utf8(rt));
       }
-      return String::createFromUtf8(rt, args[0].toString(rt).utf8(rt) + " was called with " + str);
+
+      Assert::AreEqual(strNames.size(), static_cast<size_t>(4));
+      Assert::AreEqual(strNames.count("1"), static_cast<size_t>(1));
+      Assert::AreEqual(strNames.count("3"), static_cast<size_t>(1));
+      Assert::AreEqual(strNames.count("5"), static_cast<size_t>(1));
+      Assert::AreEqual(strNames.count("seven"), static_cast<size_t>(1));
+
+      Object seven = x.getPropertyAsObject(rt, "seven");
+      Array arr = seven.getArray(rt);
+
+      Assert::AreEqual(arr.size(rt), static_cast<size_t>(2));
+      Assert::AreEqual(arr.getValueAtIndex(rt, 0).getString(rt).utf8(rt), {"eight"});
+      Assert::AreEqual(arr.getValueAtIndex(rt, 1).getString(rt).utf8(rt), {"nine"});
+      // TODO: test out of range
+
+      Assert::AreEqual(x.getPropertyAsObject(rt, "seven").getArray(rt).size(rt), static_cast<size_t>(2));
+
+      // Check that property access with both symbols and strings can access
+      // array values.
+      Assert::AreEqual(seven.getProperty(rt, "0").getString(rt).utf8(rt), {"eight"});
+      Assert::AreEqual(seven.getProperty(rt, "1").getString(rt).utf8(rt), {"nine"});
+      seven.setProperty(rt, "1", "modified");
+      Assert::AreEqual(seven.getProperty(rt, "1").getString(rt).utf8(rt), {"modified"});
+      Assert::AreEqual(arr.getValueAtIndex(rt, 1).getString(rt).utf8(rt), {"modified"});
+      Assert::AreEqual(seven.getProperty(rt, PropNameID::forAscii(rt, "0")).getString(rt).utf8(rt), {"eight"});
+      seven.setProperty(rt, PropNameID::forAscii(rt, "0"), "modified2");
+      Assert::AreEqual(arr.getValueAtIndex(rt, 0).getString(rt).utf8(rt), {"modified2"});
+
+      Array alpha = Array(rt, 4);
+      Assert::IsTrue(alpha.getValueAtIndex(rt, 0).isUndefined());
+      Assert::IsTrue(alpha.getValueAtIndex(rt, 3).isUndefined());
+      Assert::AreEqual(alpha.size(rt), static_cast<size_t>(4));
+      alpha.setValueAtIndex(rt, 0, "a");
+      alpha.setValueAtIndex(rt, 1, "b");
+      Assert::AreEqual(alpha.length(rt), static_cast<size_t>(4));
+      alpha.setValueAtIndex(rt, 2, "c");
+      alpha.setValueAtIndex(rt, 3, "d");
+      Assert::AreEqual(alpha.size(rt), static_cast<size_t>(4));
+
+      Assert::IsTrue(function("function (arr) { return "
+                           "arr.length == 4 && "
+                           "['a','b','c','d'].every(function(v,i) { return v === arr[i]}); }")
+                      .call(rt, alpha)
+                      .getBool());
+
+      Array alpha2 = Array(rt, 1);
+      alpha2 = std::move(alpha);
+      Assert::AreEqual(alpha2.size(rt), static_cast<size_t>(4));
     }
 
-    std::string str;
-  };
+    TEST_METHOD(JsiRuntimeUnitTests_FunctionTest) {
+      // test move ctor
+      Function fmove = function("function() { return 1 }");
+      {
+        Function g = function("function() { return 2 }");
+        fmove = std::move(g);
+      }
+      Assert::AreEqual(fmove.call(rt).getNumber(), static_cast<double>(2));
 
-  Function callable =
-      Function::createFromHostFunction(rt, PropNameID::forAscii(rt, "callable"), 1, Callable("std::function::target"));
-  EXPECT_EQ(
-      function("function (f) { return f('A cat'); }").call(rt, callable).getString(rt).utf8(rt),
-      "A cat was called with std::function::target");
-  EXPECT_TRUE(callable.isHostFunction(rt));
-  // TODO: Chakra(Core)Runtime currently does not support getHostFunction.
-  // EXPECT_NE(callable.getHostFunction(rt).target<Callable>(), nullptr);
+      // This tests all the function argument converters, and all the
+      // non-lvalue overloads of call().
+      Function f = function(
+          "function(n, b, d, df, i, s1, s2, s3, o, a, f, v) { return "
+          "n === null && "
+          "b === true && "
+          "d === 3.14 && "
+          "Math.abs(df - 2.71) < 0.001 && "
+          "i === 17 && "
+          "s1 == 's1' && "
+          "s2 == 's2' && "
+          "s3 == 's3' && "
+          "typeof o == 'object' && "
+          "Array.isArray(a) && "
+          "typeof f == 'function' && "
+          "v == 42 }");
+      std::string s3 = "s3";
+      Assert::IsTrue(f.call(
+                       rt,
+                       nullptr,
+                       true,
+                       3.14,
+                       2.71f,
+                       17,
+                       "s1",
+                       String::createFromAscii(rt, "s2"),
+                       s3,
+                       Object(rt),
+                       Array(rt, 1),
+                       function("function(){}"),
+                       Value(42))
+                      .getBool());
 
-  std::string strval = "strval1";
-  auto getter = Object(rt);
-  getter.setProperty(
-      rt,
-      "get",
-      Function::createFromHostFunction(
+      // lvalue overloads of call()
+      Function flv = function(
+          "function(s, o, a, f, v) { return "
+          "s == 's' && "
+          "typeof o == 'object' && "
+          "Array.isArray(a) && "
+          "typeof f == 'function' && "
+          "v == 42 }");
+
+      String s = String::createFromAscii(rt, "s");
+      Object o = Object(rt);
+      Array a = Array(rt, 1);
+      Value v = 42;
+      Assert::IsTrue(flv.call(rt, s, o, a, f, v).getBool());
+
+      Function f1 = function("function() { return 1; }");
+      Function f2 = function("function() { return 2; }");
+      f2 = std::move(f1);
+      Assert::AreEqual(f2.call(rt).getNumber(), static_cast<double>(1));
+    }
+
+    TEST_METHOD(JsiRuntimeUnitTests_FunctionThisTest) {
+      Function checkPropertyFunction = function("function() { return this.a === 'a_property' }");
+
+      Object jsObject = Object(rt);
+      jsObject.setProperty(rt, "a", String::createFromUtf8(rt, "a_property"));
+
+      // class APropertyHostObject : public HostObject {
+      //  Value get(Runtime& rt, const PropNameID& sym) override {
+      //    return String::createFromUtf8(rt, "a_property");
+      //  }
+
+      //  void set(Runtime&, const PropNameID&, const Value&) override {}
+      //};
+      // Object hostObject =
+      //  Object::createFromHostObject(rt, std::make_shared<APropertyHostObject>());
+
+      Assert::IsTrue(checkPropertyFunction.callWithThis(rt, jsObject).getBool());
+      // Assert::IsTrue(checkPropertyFunction.callWithThis(rt, hostObject).getBool());
+      Assert::IsFalse(checkPropertyFunction.callWithThis(rt, Array(rt, 5)).getBool());
+      Assert::IsFalse(checkPropertyFunction.call(rt).getBool());
+    }
+
+    TEST_METHOD(JsiRuntimeUnitTests_FunctionConstructorTest) {
+      Function ctor = function(
+          "function (a) {"
+          "  if (typeof a !== 'undefined') {"
+          "   this.pika = a;"
+          "  }"
+          "}");
+      ctor.getProperty(rt, "prototype").getObject(rt).setProperty(rt, "pika", "chu");
+      auto empty = ctor.callAsConstructor(rt);
+      Assert::IsTrue(empty.isObject());
+      auto emptyObj = std::move(empty).getObject(rt);
+      Assert::AreEqual(emptyObj.getProperty(rt, "pika").getString(rt).utf8(rt), {"chu"});
+      auto who = ctor.callAsConstructor(rt, "who");
+      Assert::IsTrue(who.isObject());
+      auto whoObj = std::move(who).getObject(rt);
+      Assert::AreEqual(whoObj.getProperty(rt, "pika").getString(rt).utf8(rt), {"who"});
+
+      auto instanceof = function("function (o, b) { return o instanceof b; }");
+      Assert::IsTrue(instanceof.call(rt, emptyObj, ctor).getBool());
+      Assert::IsTrue(instanceof.call(rt, whoObj, ctor).getBool());
+
+      auto dateCtor = rt.global().getPropertyAsFunction(rt, "Date");
+      auto date = dateCtor.callAsConstructor(rt);
+      Assert::IsTrue(date.isObject());
+      Assert::IsTrue(instanceof.call(rt, date, dateCtor).getBool());
+      // Sleep for 50 milliseconds
+      std::this_thread::sleep_for(std::chrono::milliseconds(50));
+      Assert::IsTrue(
+          function("function (d) { return (new Date()).getTime() - d.getTime(); }").call(rt, date).getNumber() >=
+          // We use 48 here because sleep_for is not very precise,
+          // and this test is not about timing precision.
+          48);
+    }
+
+    TEST_METHOD(JsiRuntimeUnitTests_InstanceOfTest) {
+      auto ctor = function("function Rick() { this.say = 'wubalubadubdub'; }");
+      auto newObj = function("function (ctor) { return new ctor(); }");
+      auto instance = newObj.call(rt, ctor).getObject(rt);
+      Assert::IsTrue(instance.instanceOf(rt, ctor));
+      Assert::AreEqual(instance.getProperty(rt, "say").getString(rt).utf8(rt), {"wubalubadubdub"});
+      Assert::IsFalse(Object(rt).instanceOf(rt, ctor));
+      Assert::IsTrue(ctor.callAsConstructor(rt, nullptr, 0).getObject(rt).instanceOf(rt, ctor));
+    }
+
+    TEST_METHOD(JsiRuntimeUnitTests_Chakra_HostFunctionTest) {
+      auto one = std::make_shared<int>(1);
+      Function plusOne = Function::createFromHostFunction(
           rt,
-          PropNameID::forAscii(rt, "getter"),
-          1,
-          [&strval](Runtime &rt, const Value &thisVal, const Value *args, size_t count) -> Value {
-            return String::createFromUtf8(rt, strval);
-          }));
-  auto obj = Object(rt);
-  rt.global()
-      .getPropertyAsObject(rt, "Object")
-      .getPropertyAsFunction(rt, "defineProperty")
-      .call(rt, obj, "prop", getter);
-  EXPECT_TRUE(function("function(value) { return value.prop == 'strval1'; }").call(rt, obj).getBool());
-  strval = "strval2";
-  EXPECT_TRUE(function("function(value) { return value.prop == 'strval2'; }").call(rt, obj).getBool());
-}
+          PropNameID::forAscii(rt, "plusOne"),
+          2,
+          [one, savedRt = &rt](Runtime &rt, const Value &thisVal, const Value *args, size_t count) {
+            Assert::IsTrue(savedRt == &rt);
+            // We don't know if we're in strict mode or not, so it's either global
+            // or undefined.
+            Assert::IsTrue(Value::strictEquals(rt, thisVal, rt.global()) || thisVal.isUndefined());
+            return *one + args[0].getNumber() + args[1].getNumber();
+          });
 
-TEST_P(JsiRuntimeUnitTests, ValueTest) {
-  EXPECT_TRUE(checkValue(Value::undefined(), "undefined"));
-  EXPECT_TRUE(checkValue(Value(), "undefined"));
-  EXPECT_TRUE(checkValue(Value::null(), "null"));
-  EXPECT_TRUE(checkValue(nullptr, "null"));
+      Assert::AreEqual(plusOne.call(rt, 1, 2).getNumber(), static_cast<double>(4));
+      Assert::IsTrue(checkValue(plusOne.call(rt, 3, 5), "9"));
+      rt.global().setProperty(rt, "plusOne", plusOne);
+      Assert::IsTrue(eval("plusOne(20, 300) == 321").getBool());
 
-  EXPECT_TRUE(checkValue(Value(false), "false"));
-  EXPECT_TRUE(checkValue(false, "false"));
-  EXPECT_TRUE(checkValue(true, "true"));
+      Function dot = Function::createFromHostFunction(
+          rt,
+          PropNameID::forAscii(rt, "dot"),
+          2,
+          [](Runtime &rt, const Value &thisVal, const Value *args, size_t count) {
+            Assert::IsTrue(Value::strictEquals(rt, thisVal, rt.global()) || thisVal.isUndefined());
+            if (count != 2) {
+              throw std::runtime_error("expected 2 args");
+            }
+            std::string ret = args[0].getString(rt).utf8(rt) + "." + args[1].getString(rt).utf8(rt);
+            return String::createFromUtf8(rt, reinterpret_cast<const uint8_t *>(ret.data()), ret.size());
+          });
 
-  EXPECT_TRUE(checkValue(Value(1.5), "1.5"));
-  EXPECT_TRUE(checkValue(2.5, "2.5"));
+      rt.global().setProperty(rt, "cons", dot);
+      Assert::IsTrue(eval("cons('left', 'right') == 'left.right'").getBool());
+      Assert::IsTrue(eval("cons.name == 'dot'").getBool());
+      // TODO: Chakra(Core)'s APIs can only create host functions that
+      // takes in no parameters. The arugmenst needed for the host function are
+      // passed through the arguments object. Disabling this test for now.
+      // Assert::IsTrue(eval("cons.length == 2").getBool());
+      Assert::IsTrue(eval("cons instanceof Function").getBool());
+      Assert::IsTrue(eval("(function() {"
+                       "  try {"
+                       "    cons('fail'); return false;"
+                       "  } catch (e) {"
+                       "    return ((e instanceof Error) &&"
+                       "            (e.message == 'Exception in HostFunction: ' +"
+                       "                          'expected 2 args'));"
+                       "  }})()")
+                      .getBool());
 
-  EXPECT_TRUE(checkValue(Value(10), "10"));
-  EXPECT_TRUE(checkValue(20, "20"));
-  EXPECT_TRUE(checkValue(30, "30"));
+      Function coolify = Function::createFromHostFunction(
+          rt,
+          PropNameID::forAscii(rt, "coolify"),
+          0,
+          [](Runtime &rt, const Value &thisVal, const Value *args, size_t count) {
+            Assert::IsTrue(count, 0);
+            std::string ret = thisVal.toString(rt).utf8(rt) + " is cool";
+            return String::createFromUtf8(rt, reinterpret_cast<const uint8_t *>(ret.data()), ret.size());
+          });
+      rt.global().setProperty(rt, "coolify", coolify);
+      Assert::IsTrue(eval("coolify.name == 'coolify'").getBool());
+      Assert::IsTrue(eval("coolify.length == 0").getBool());
+      Assert::IsTrue(eval("coolify.bind('R&M')() == 'R&M is cool'").getBool());
+      Assert::IsTrue(eval("(function() {"
+                       "  var s = coolify.bind(function(){})();"
+                       "  return s.lastIndexOf(' is cool') == (s.length - 8);"
+                       "})()")
+                      .getBool());
 
-  // rvalue implicit conversion
-  EXPECT_TRUE(checkValue(String::createFromAscii(rt, "one"), "'one'"));
-  // lvalue explicit copy
-  String s = String::createFromAscii(rt, "two");
-  EXPECT_TRUE(checkValue(Value(rt, s), "'two'"));
+      Function lookAtMe = Function::createFromHostFunction(
+          rt,
+          PropNameID::forAscii(rt, "lookAtMe"),
+          0,
+          [](Runtime &rt, const Value &thisVal, const Value *args, size_t count) -> Value {
+            Assert::IsTrue(thisVal.isObject());
+            Assert::AreEqual(thisVal.getObject(rt).getProperty(rt, "name").getString(rt).utf8(rt), {"mr.meeseeks"});
+            return Value();
+          });
+      rt.global().setProperty(rt, "lookAtMe", lookAtMe);
+      Assert::IsTrue(eval("lookAtMe.bind({'name': 'mr.meeseeks'})()").isUndefined());
 
-  {
-    // rvalue assignment of trivial value
-    Value v1 = 100;
-    Value v2 = String::createFromAscii(rt, "hundred");
-    v2 = std::move(v1);
-    EXPECT_TRUE(v2.isNumber());
-    EXPECT_EQ(v2.getNumber(), 100);
-  }
+      struct Callable {
+        Callable(std::string s) : str(s) {}
 
-  {
-    // rvalue assignment of js heap value
-    Value v1 = String::createFromAscii(rt, "hundred");
-    Value v2 = 100;
-    v2 = std::move(v1);
-    EXPECT_TRUE(v2.isString());
-    EXPECT_EQ(v2.getString(rt).utf8(rt), "hundred");
-  }
+        Value operator()(Runtime &rt, const Value &, const Value *args, size_t count) {
+          if (count != 1) {
+            return Value();
+          }
+          return String::createFromUtf8(rt, args[0].toString(rt).utf8(rt) + " was called with " + str);
+        }
 
-  Object o = Object(rt);
-  EXPECT_TRUE(function("function(value) { return typeof(value) == 'object'; }").call(rt, Value(rt, o)).getBool());
+        std::string str;
+      };
 
-  uint8_t utf8[] = "[null, 2, \"c\", \"emoji: \xf0\x9f\x86\x97\", {}]";
+      Function callable = Function::createFromHostFunction(
+          rt, PropNameID::forAscii(rt, "callable"), 1, Callable("std::function::target"));
+      Assert::AreEqual(
+          function("function (f) { return f('A cat'); }").call(rt, callable).getString(rt).utf8(rt),
+          {"A cat was called with std::function::target"});
+      Assert::IsTrue(callable.isHostFunction(rt));
+      // TODO: Chakra(Core)Runtime currently does not support getHostFunction.
+      // EXPECT_NE(callable.getHostFunction(rt).target<Callable>(), nullptr);
 
-  EXPECT_TRUE(function("function (arr) { return "
-                       "Array.isArray(arr) && "
-                       "arr.length == 5 && "
-                       "arr[0] === null && "
-                       "arr[1] == 2 && "
-                       "arr[2] == 'c' && "
-                       "arr[3] == 'emoji: \\uD83C\\uDD97' && "
-                       "typeof arr[4] == 'object'; }")
-                  .call(rt, Value::createFromJsonUtf8(rt, utf8, sizeof(utf8) - 1))
-                  .getBool());
+      std::string strval = "strval1";
+      auto getter = Object(rt);
+      getter.setProperty(
+          rt,
+          "get",
+          Function::createFromHostFunction(
+              rt,
+              PropNameID::forAscii(rt, "getter"),
+              1,
+              [&strval](Runtime &rt, const Value &thisVal, const Value *args, size_t count) -> Value {
+                return String::createFromUtf8(rt, strval);
+              }));
+      auto obj = Object(rt);
+      rt.global()
+          .getPropertyAsObject(rt, "Object")
+          .getPropertyAsFunction(rt, "defineProperty")
+          .call(rt, obj, "prop", getter);
+      Assert::IsTrue(function("function(value) { return value.prop == 'strval1'; }").call(rt, obj).getBool());
+      strval = "strval2";
+      Assert::IsTrue(function("function(value) { return value.prop == 'strval2'; }").call(rt, obj).getBool());
+    }
 
-  EXPECT_TRUE(eval("undefined").isUndefined());
-  EXPECT_TRUE(eval("null").isNull());
-  EXPECT_TRUE(eval("true").isBool());
-  EXPECT_TRUE(eval("false").isBool());
-  EXPECT_TRUE(eval("123").isNumber());
-  EXPECT_TRUE(eval("123.4").isNumber());
-  EXPECT_TRUE(eval("'str'").isString());
-  // "{}" returns undefined.  empty code block?
-  EXPECT_TRUE(eval("({})").isObject());
-  EXPECT_TRUE(eval("[]").isObject());
-  EXPECT_TRUE(eval("(function(){})").isObject());
+    TEST_METHOD(JsiRuntimeUnitTests_ValueTest) {
+      Assert::IsTrue(checkValue(Value::undefined(), "undefined"));
+      Assert::IsTrue(checkValue(Value(), "undefined"));
+      Assert::IsTrue(checkValue(Value::null(), "null"));
+      Assert::IsTrue(checkValue(nullptr, "null"));
 
-  EXPECT_EQ(eval("123").getNumber(), 123);
-  EXPECT_EQ(eval("123.4").getNumber(), 123.4);
-  EXPECT_EQ(eval("'str'").getString(rt).utf8(rt), "str");
-  EXPECT_TRUE(eval("[]").getObject(rt).isArray(rt));
+      Assert::IsTrue(checkValue(Value(false), "false"));
+      Assert::IsTrue(checkValue(false, "false"));
+      Assert::IsTrue(checkValue(true, "true"));
 
-  EXPECT_EQ(eval("456").asNumber(), 456);
-  EXPECT_THROW(eval("'word'").asNumber(), JSIException);
-  EXPECT_EQ(eval("({1:2, 3:4})").asObject(rt).getProperty(rt, "1").getNumber(), 2);
-  EXPECT_THROW(eval("'oops'").asObject(rt), JSIException);
+      Assert::IsTrue(checkValue(Value(1.5), "1.5"));
+      Assert::IsTrue(checkValue(2.5, "2.5"));
 
-  EXPECT_EQ(eval("['zero',1,2,3]").toString(rt).utf8(rt), "zero,1,2,3");
-}
+      Assert::IsTrue(checkValue(Value(10), "10"));
+      Assert::IsTrue(checkValue(20, "20"));
+      Assert::IsTrue(checkValue(30, "30"));
 
-TEST_P(JsiRuntimeUnitTests, EqualsTest) {
-  EXPECT_TRUE(Object::strictEquals(rt, rt.global(), rt.global()));
-  EXPECT_TRUE(Value::strictEquals(rt, 1, 1));
-  EXPECT_FALSE(Value::strictEquals(rt, true, 1));
-  EXPECT_FALSE(Value::strictEquals(rt, true, false));
-  EXPECT_TRUE(Value::strictEquals(rt, false, false));
-  EXPECT_FALSE(Value::strictEquals(rt, nullptr, 1));
-  EXPECT_TRUE(Value::strictEquals(rt, nullptr, nullptr));
-  EXPECT_TRUE(Value::strictEquals(rt, Value::undefined(), Value()));
-  EXPECT_TRUE(Value::strictEquals(rt, rt.global(), Value(rt.global())));
-  EXPECT_FALSE(
-      Value::strictEquals(rt, std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()));
-  EXPECT_FALSE(Value::strictEquals(
-      rt, std::numeric_limits<double>::signaling_NaN(), std::numeric_limits<double>::signaling_NaN()));
-  EXPECT_TRUE(Value::strictEquals(rt, +0.0, -0.0));
-  EXPECT_TRUE(Value::strictEquals(rt, -0.0, +0.0));
+      // rvalue implicit conversion
+      Assert::IsTrue(checkValue(String::createFromAscii(rt, "one"), "'one'"));
+      // lvalue explicit copy
+      String s = String::createFromAscii(rt, "two");
+      Assert::IsTrue(checkValue(Value(rt, s), "'two'"));
 
-  Function noop = Function::createFromHostFunction(
-      rt, PropNameID::forAscii(rt, "noop"), 0, [](const Runtime &, const Value &, const Value *, size_t) {
-        return Value();
-      });
-  auto noopDup = Value(rt, noop).getObject(rt);
-  EXPECT_TRUE(Object::strictEquals(rt, noop, noopDup));
-  EXPECT_TRUE(Object::strictEquals(rt, noopDup, noop));
-  EXPECT_FALSE(Object::strictEquals(rt, noop, rt.global()));
-  EXPECT_TRUE(Object::strictEquals(rt, noop, noop));
-  EXPECT_TRUE(Value::strictEquals(rt, Value(rt, noop), Value(rt, noop)));
-
-  String str = String::createFromAscii(rt, "rick");
-  String strDup = String::createFromAscii(rt, "rick");
-  String otherStr = String::createFromAscii(rt, "morty");
-  EXPECT_TRUE(String::strictEquals(rt, str, str));
-  EXPECT_TRUE(String::strictEquals(rt, str, strDup));
-  EXPECT_TRUE(String::strictEquals(rt, strDup, str));
-  EXPECT_FALSE(String::strictEquals(rt, str, otherStr));
-  EXPECT_TRUE(Value::strictEquals(rt, Value(rt, str), Value(rt, str)));
-  EXPECT_FALSE(Value::strictEquals(rt, Value(rt, str), Value(rt, noop)));
-  EXPECT_FALSE(Value::strictEquals(rt, Value(rt, str), 1.0));
-}
-
-TEST_P(JsiRuntimeUnitTests, ExceptionStackTraceTest) {
-  static const char invokeUndefinedScript[] =
-      "function hello() {"
-      "  var a = {}; a.log(); }"
-      "function world() { hello(); }"
-      "world()";
-  std::string stack;
-  try {
-    rt.evaluateJavaScript(std::make_unique<StringBuffer>(invokeUndefinedScript), "");
-  } catch (JSError &e) {
-    stack = e.getStack();
-  }
-  EXPECT_NE(stack.find("world"), std::string::npos);
-}
-
-namespace {
-
-unsigned countOccurences(const std::string &of, const std::string &in) {
-  unsigned occurences = 0;
-  std::string::size_type lastOccurence = -1;
-  while ((lastOccurence = in.find(of, lastOccurence + 1)) != std::string::npos) {
-    occurences++;
-  }
-  return occurences;
-}
-
-} // namespace
-
-TEST_P(JsiRuntimeUnitTests, JSErrorsArePropagatedNicely) {
-  unsigned callsBeforeError = 5;
-
-  Function sometimesThrows = function(
-      "function sometimesThrows(shouldThrow, callback) {"
-      "  if (shouldThrow) {"
-      "    throw Error('Omg, what a nasty exception')"
-      "  }"
-      "  callback(callback);"
-      "}");
-
-  Function callback = Function::createFromHostFunction(
-      rt,
-      PropNameID::forAscii(rt, "callback"),
-      0,
-      [&sometimesThrows, &callsBeforeError](Runtime &rt, const Value &thisVal, const Value *args, size_t count) {
-        return sometimesThrows.call(rt, --callsBeforeError == 0, args[0]);
-      });
-
-  try {
-    sometimesThrows.call(rt, false, callback);
-  } catch (JSError &error) {
-    // V8 will include the previous exception messages upon rethrow from native to JS
-    EXPECT_PRED_FORMAT2(::testing::IsSubstring, "Omg, what a nasty exception", error.getMessage());
-    EXPECT_GE(countOccurences("sometimesThrows", error.getStack()), 6);
-
-    // system JSC JSI does not implement host function names
-    // EXPECT_EQ(countOccurences("callback", error.getStack(rt)), 5);
-  }
-}
-
-TEST_P(JsiRuntimeUnitTests, JSErrorsCanBeConstructedWithStack) {
-  auto err = JSError(rt, "message", "stack");
-  EXPECT_EQ(err.getMessage(), "message");
-  EXPECT_EQ(err.getStack(), "stack");
-}
-
-TEST_P(JsiRuntimeUnitTests, ScopeDoesNotCrashTest) {
-  Scope scope(rt);
-  Object o(rt);
-}
-
-TEST_P(JsiRuntimeUnitTests, ScopeDoesNotCrashWhenValueEscapes) {
-  Value v;
-  Scope::callInNewScope(rt, [&]() {
-    Object o(rt);
-    o.setProperty(rt, "a", 5);
-    v = std::move(o);
-  });
-  EXPECT_EQ(v.getObject(rt).getProperty(rt, "a").getNumber(), 5);
-}
-
-// Verifies you can have a host object that emulates a normal object
-TEST_P(JsiRuntimeUnitTests, HostObjectWithValueMembers) {
-  class Bag : public HostObject {
-   public:
-    Bag() = default;
-
-    const Value &operator[](const std::string &name) const {
-      auto iter = data_.find(name);
-      if (iter == data_.end()) {
-        return undef_;
+      {
+        // rvalue assignment of trivial value
+        Value v1 = 100;
+        Value v2 = String::createFromAscii(rt, "hundred");
+        v2 = std::move(v1);
+        Assert::IsTrue(v2.isNumber());
+        Assert::AreEqual(v2.getNumber(), static_cast<double>(100));
       }
-      return iter->second;
+
+      {
+        // rvalue assignment of js heap value
+        Value v1 = String::createFromAscii(rt, "hundred");
+        Value v2 = 100;
+        v2 = std::move(v1);
+        Assert::IsTrue(v2.isString());
+        Assert::AreEqual(v2.getString(rt).utf8(rt), {"hundred"});
+      }
+
+      Object o = Object(rt);
+      Assert::IsTrue(function("function(value) { return typeof(value) == 'object'; }").call(rt, Value(rt, o)).getBool());
+
+      uint8_t utf8[] = "[null, 2, \"c\", \"emoji: \xf0\x9f\x86\x97\", {}]";
+
+      Assert::IsTrue(function("function (arr) { return "
+                           "Array.isArray(arr) && "
+                           "arr.length == 5 && "
+                           "arr[0] === null && "
+                           "arr[1] == 2 && "
+                           "arr[2] == 'c' && "
+                           "arr[3] == 'emoji: \\uD83C\\uDD97' && "
+                           "typeof arr[4] == 'object'; }")
+                      .call(rt, Value::createFromJsonUtf8(rt, utf8, sizeof(utf8) - 1))
+                      .getBool());
+
+      Assert::IsTrue(eval("undefined").isUndefined());
+      Assert::IsTrue(eval("null").isNull());
+      Assert::IsTrue(eval("true").isBool());
+      Assert::IsTrue(eval("false").isBool());
+      Assert::IsTrue(eval("123").isNumber());
+      Assert::IsTrue(eval("123.4").isNumber());
+      Assert::IsTrue(eval("'str'").isString());
+      // "{}" returns undefined.  empty code block?
+      Assert::IsTrue(eval("({})").isObject());
+      Assert::IsTrue(eval("[]").isObject());
+      Assert::IsTrue(eval("(function(){})").isObject());
+
+      Assert::AreEqual(eval("123").getNumber(), static_cast<double>(123));
+      Assert::AreEqual(eval("123.4").getNumber(), 123.4);
+      Assert::AreEqual(eval("'str'").getString(rt).utf8(rt), {"str"});
+      Assert::IsTrue(eval("[]").getObject(rt).isArray(rt));
+
+      Assert::AreEqual(eval("456").asNumber(), static_cast<double>(456));
+      Assert::ExpectException<JSIException>([this]() { eval("'word'").asNumber(); });
+      Assert::AreEqual(eval("({1:2, 3:4})").asObject(rt).getProperty(rt, "1").getNumber(), static_cast<double>(2));
+      Assert::ExpectException<JSIException>([this]() { eval("'oops'").asObject(rt); });
+
+      Assert::AreEqual(eval("['zero',1,2,3]").toString(rt).utf8(rt), {"zero,1,2,3"});
     }
 
-   protected:
-    Value get(Runtime &rt, const PropNameID &name) override {
-      return Value(rt, (*this)[name.utf8(rt)]);
+    TEST_METHOD(JsiRuntimeUnitTests_EqualsTest) {
+      Assert::IsTrue(Object::strictEquals(rt, rt.global(), rt.global()));
+      Assert::IsTrue(Value::strictEquals(rt, 1, 1));
+      Assert::IsFalse(Value::strictEquals(rt, true, 1));
+      Assert::IsFalse(Value::strictEquals(rt, true, false));
+      Assert::IsTrue(Value::strictEquals(rt, false, false));
+      Assert::IsFalse(Value::strictEquals(rt, nullptr, 1));
+      Assert::IsTrue(Value::strictEquals(rt, nullptr, nullptr));
+      Assert::IsTrue(Value::strictEquals(rt, Value::undefined(), Value()));
+      Assert::IsTrue(Value::strictEquals(rt, rt.global(), Value(rt.global())));
+      Assert::IsFalse(
+          Value::strictEquals(rt, std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()));
+      Assert::IsFalse(Value::strictEquals(
+          rt, std::numeric_limits<double>::signaling_NaN(), std::numeric_limits<double>::signaling_NaN()));
+      Assert::IsTrue(Value::strictEquals(rt, +0.0, -0.0));
+      Assert::IsTrue(Value::strictEquals(rt, -0.0, +0.0));
+
+      Function noop = Function::createFromHostFunction(
+          rt, PropNameID::forAscii(rt, "noop"), 0, [](const Runtime &, const Value &, const Value *, size_t) {
+            return Value();
+          });
+      auto noopDup = Value(rt, noop).getObject(rt);
+      Assert::IsTrue(Object::strictEquals(rt, noop, noopDup));
+      Assert::IsTrue(Object::strictEquals(rt, noopDup, noop));
+      Assert::IsFalse(Object::strictEquals(rt, noop, rt.global()));
+      Assert::IsTrue(Object::strictEquals(rt, noop, noop));
+      Assert::IsTrue(Value::strictEquals(rt, Value(rt, noop), Value(rt, noop)));
+
+      String str = String::createFromAscii(rt, "rick");
+      String strDup = String::createFromAscii(rt, "rick");
+      String otherStr = String::createFromAscii(rt, "morty");
+      Assert::IsTrue(String::strictEquals(rt, str, str));
+      Assert::IsTrue(String::strictEquals(rt, str, strDup));
+      Assert::IsTrue(String::strictEquals(rt, strDup, str));
+      Assert::IsFalse(String::strictEquals(rt, str, otherStr));
+      Assert::IsTrue(Value::strictEquals(rt, Value(rt, str), Value(rt, str)));
+      Assert::IsFalse(Value::strictEquals(rt, Value(rt, str), Value(rt, noop)));
+      Assert::IsFalse(Value::strictEquals(rt, Value(rt, str), 1.0));
     }
 
-    void set(Runtime &rt, const PropNameID &name, const Value &val) override {
-      data_.emplace(name.utf8(rt), Value(rt, val));
+    TEST_METHOD(JsiRuntimeUnitTests_ExceptionStackTraceTest) {
+      static const char invokeUndefinedScript[] =
+          "function hello() {"
+          "  var a = {}; a.log(); }"
+          "function world() { hello(); }"
+          "world()";
+      std::string stack;
+      try {
+        rt.evaluateJavaScript(std::make_unique<StringBuffer>(invokeUndefinedScript), "");
+      } catch (JSError &e) {
+        stack = e.getStack();
+      }
+      Assert::AreNotEqual(stack.find("world"), std::string::npos);
     }
 
-    Value undef_;
-    std::map<std::string, Value> data_;
-  };
+    TEST_METHOD(JsiRuntimeUnitTests_JSErrorsArePropagatedNicely) {
+      unsigned callsBeforeError = 5;
 
-  auto sharedBag = std::make_shared<Bag>();
-  auto &bag = *sharedBag;
-  Object jsbag = Object::createFromHostObject(rt, std::move(sharedBag));
-  auto set = function(
-      "function (o) {"
-      "  o.foo = 'bar';"
-      "  o.count = 37;"
-      "  o.nul = null;"
-      "  o.iscool = true;"
-      "  o.obj = { 'foo': 'bar' };"
-      "}");
-  set.call(rt, jsbag);
-  auto checkFoo = function("function (o) { return o.foo === 'bar'; }");
-  auto checkCount = function("function (o) { return o.count === 37; }");
-  auto checkNul = function("function (o) { return o.nul === null; }");
-  auto checkIsCool = function("function (o) { return o.iscool === true; }");
-  auto checkObj = function(
-      "function (o) {"
-      "  return (typeof o.obj) === 'object' && o.obj.foo === 'bar';"
-      "}");
-  // Check this looks good from js
-  EXPECT_TRUE(checkFoo.call(rt, jsbag).getBool());
-  EXPECT_TRUE(checkCount.call(rt, jsbag).getBool());
-  EXPECT_TRUE(checkNul.call(rt, jsbag).getBool());
-  EXPECT_TRUE(checkIsCool.call(rt, jsbag).getBool());
-  EXPECT_TRUE(checkObj.call(rt, jsbag).getBool());
+      Function sometimesThrows = function(
+          "function sometimesThrows(shouldThrow, callback) {"
+          "  if (shouldThrow) {"
+          "    throw Error('Omg, what a nasty exception')"
+          "  }"
+          "  callback(callback);"
+          "}");
 
-  // Check this looks good from c++
-  EXPECT_EQ(bag["foo"].getString(rt).utf8(rt), "bar");
-  EXPECT_EQ(bag["count"].getNumber(), 37);
-  EXPECT_TRUE(bag["nul"].isNull());
-  EXPECT_TRUE(bag["iscool"].getBool());
-  EXPECT_EQ(bag["obj"].getObject(rt).getProperty(rt, "foo").getString(rt).utf8(rt), "bar");
-}
-*/
+      Function callback = Function::createFromHostFunction(
+          rt,
+          PropNameID::forAscii(rt, "callback"),
+          0,
+          [&sometimesThrows, &callsBeforeError](Runtime &rt, const Value &thisVal, const Value *args, size_t count) {
+            return sometimesThrows.call(rt, --callsBeforeError == 0, args[0]);
+          });
+
+      try {
+        sometimesThrows.call(rt, false, callback);
+      } catch (JSError &error) {
+        // V8 will include the previous exception messages upon rethrow from native to JS
+        //TODO
+        //EXPECT_PRED_FORMAT2(::testing::IsSubstring, "Omg, what a nasty exception", error.getMessage());
+        Assert::IsTrue(countOccurences("sometimesThrows", error.getStack()) >= 6);
+
+        // system JSC JSI does not implement host function names
+        // EXPECT_EQ(countOccurences("callback", error.getStack(rt)), 5);
+      }
+    }
+
+    TEST_METHOD(JsiRuntimeUnitTests_JSErrorsCanBeConstructedWithStack) {
+      auto err = JSError(rt, "message", "stack");
+      Assert::AreEqual(err.getMessage(), {"message"});
+      Assert::AreEqual(err.getStack(), {"stack"});
+    }
+
+    TEST_METHOD(JsiRuntimeUnitTests_ScopeDoesNotCrashTest) {
+      Scope scope(rt);
+      Object o(rt);
+    }
+
+    TEST_METHOD(JsiRuntimeUnitTests_ScopeDoesNotCrashWhenValueEscapes) {
+      Value v;
+      Scope::callInNewScope(rt, [&]() {
+        Object o(rt);
+        o.setProperty(rt, "a", 5);
+        v = std::move(o);
+      });
+      Assert::AreEqual(v.getObject(rt).getProperty(rt, "a").getNumber(), static_cast<double>(5));
+    }
+
+    // Verifies you can have a host object that emulates a normal object
+    TEST_METHOD(JsiRuntimeUnitTests_HostObjectWithValueMembers) {
+      class Bag : public HostObject {
+       public:
+        Bag() = default;
+
+        const Value &operator[](const std::string &name) const {
+          auto iter = data_.find(name);
+          if (iter == data_.end()) {
+            return undef_;
+          }
+          return iter->second;
+        }
+
+       protected:
+        Value get(Runtime &rt, const PropNameID &name) override {
+          return Value(rt, (*this)[name.utf8(rt)]);
+        }
+
+        void set(Runtime &rt, const PropNameID &name, const Value &val) override {
+          data_.emplace(name.utf8(rt), Value(rt, val));
+        }
+
+        Value undef_;
+        std::map<std::string, Value> data_;
+      };
+
+      auto sharedBag = std::make_shared<Bag>();
+      auto &bag = *sharedBag;
+      Object jsbag = Object::createFromHostObject(rt, std::move(sharedBag));
+      auto set = function(
+          "function (o) {"
+          "  o.foo = 'bar';"
+          "  o.count = 37;"
+          "  o.nul = null;"
+          "  o.iscool = true;"
+          "  o.obj = { 'foo': 'bar' };"
+          "}");
+      set.call(rt, jsbag);
+      auto checkFoo = function("function (o) { return o.foo === 'bar'; }");
+      auto checkCount = function("function (o) { return o.count === 37; }");
+      auto checkNul = function("function (o) { return o.nul === null; }");
+      auto checkIsCool = function("function (o) { return o.iscool === true; }");
+      auto checkObj = function(
+          "function (o) {"
+          "  return (typeof o.obj) === 'object' && o.obj.foo === 'bar';"
+          "}");
+      // Check this looks good from js
+      Assert::IsTrue(checkFoo.call(rt, jsbag).getBool());
+      Assert::IsTrue(checkCount.call(rt, jsbag).getBool());
+      Assert::IsTrue(checkNul.call(rt, jsbag).getBool());
+      Assert::IsTrue(checkIsCool.call(rt, jsbag).getBool());
+      Assert::IsTrue(checkObj.call(rt, jsbag).getBool());
+
+      // Check this looks good from c++
+      Assert::AreEqual(bag["foo"].getString(rt).utf8(rt), {"bar"});
+      Assert::AreEqual(bag["count"].getNumber(), static_cast<double>(37));
+      Assert::IsTrue(bag["nul"].isNull());
+      Assert::IsTrue(bag["iscool"].getBool());
+      Assert::AreEqual(bag["obj"].getObject(rt).getProperty(rt, "foo").getString(rt).utf8(rt), {"bar"});
+    }
+};
