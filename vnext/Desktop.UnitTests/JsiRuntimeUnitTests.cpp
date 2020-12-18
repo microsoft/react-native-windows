@@ -4,6 +4,7 @@
 #include <jsi/jsi.h>
 #include <JSI/ChakraRuntimeArgs.h>
 #include <JSI/ChakraRuntimeFactory.h>
+#include <Threading/MessageQueueThreadFactory.h>
 #include <CppUnitTest.h>
 #include <MemoryTracker.h>
 
@@ -21,6 +22,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using facebook::react::CreateMemoryTracker;
 using facebook::react::MessageQueueThread;
 using Microsoft::JSI::ChakraRuntimeArgs;
+using react::uwp::MakeJSQueueThread;
 using std::make_shared;
 using std::shared_ptr;
 using std::string;
@@ -48,10 +50,9 @@ vector<RuntimeFactory> runtimeGenerators() {
     ChakraRuntimeArgs args{};
 
     //TODO
-    //args.jsQueue = std::make_shared<TestMessageQueueThread>();
+    args.jsQueue = MakeJSQueueThread();
 
-    //shared_ptr<MessageQueueThread> memoryTrackerCallbackQueue = make_shared<TestMessageQueueThread>();
-    shared_ptr<MessageQueueThread> memoryTrackerCallbackQueue;
+    shared_ptr<MessageQueueThread> memoryTrackerCallbackQueue = MakeJSQueueThread();
 
     args.memoryTracker = CreateMemoryTracker(std::move(memoryTrackerCallbackQueue));
 
@@ -652,7 +653,7 @@ TEST_CLASS(JsiRuntimeUnitTests) {
       rt.global().setProperty(rt, "coolify", coolify);
       Assert::IsTrue(eval("coolify.name == 'coolify'").getBool());
       Assert::IsTrue(eval("coolify.length == 0").getBool());
-      Assert::IsTrue(eval("coolify.bind('R&M')() == 'R&M is cool'").getBool());
+      Assert::IsTrue(eval("coolify.bind('R&M')() == 'R&M is cool'").getBool());//TODO: Debug!
       Assert::IsTrue(eval("(function() {"
                        "  var s = coolify.bind(function(){})();"
                        "  return s.lastIndexOf(' is cool') == (s.length - 8);"
