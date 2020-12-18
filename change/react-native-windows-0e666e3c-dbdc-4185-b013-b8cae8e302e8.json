@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Add Keyboard Events to TextWin32",
   "packageName": "react-native-windows",
   "email": "krsiler@microsoft.com",
