@@ -77,7 +77,7 @@ This package provides Win32 specific components and provides JS implementations 
 |  [ITransitions](./react-native-win32.itransitions.md) | Map of State to \[Signal to State\], describing state transition maps |
 |  [OmittedAccessibilityPropsWin32](./react-native-win32.omittedaccessibilitypropswin32.md) |  |
 |  [SharedAccessibilityPropsIOSandWin32](./react-native-win32.sharedaccessibilitypropsiosandwin32.md) |  |
-|  [SharedTextPropsAndroidAndWin32](./react-native-win32.SharedTextPropsAndroidAndWin32.md) |  |
+|  [SharedTextPropsAndroidAndWin32](./react-native-win32.sharedtextpropsandroidandwin32.md) |  |
 |  [TextStyle](./react-native-win32.textstyle.md) | Role-based text style names. |
 |  [TextWin32OmitTypes](./react-native-win32.textwin32omittypes.md) |  |
 |  [UseFrom](./react-native-win32.usefrom.md) | All of TOrigin except Key from TUse |

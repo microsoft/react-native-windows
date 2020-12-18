@@ -34,6 +34,7 @@ export type AccessibilityAnnotationInfo = Readonly<{
     typeName?: string;
     author?: string;
     dateTime?: string;
+    target?: string;
 }>;
 
 // @public (undocumented)
