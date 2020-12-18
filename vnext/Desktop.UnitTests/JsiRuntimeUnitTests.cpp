@@ -1,14 +1,11 @@
-/*
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
-#include "JsiRuntimeUnitTests.h"
-
-#include <gtest/gtest.h>
 #include <jsi/jsi.h>
+#include <JSI/ChakraRuntimeArgs.h>
+#include <JSI/ChakraRuntimeFactory.h>
+#include <CppUnitTest.h>
+#include <MemoryTracker.h>
 
 #include <stdlib.h>
 #include <chrono>
@@ -18,46 +15,120 @@
 #include <unordered_set>
 
 using namespace facebook::jsi;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
-  rt.evaluateJavaScript(std::make_unique<StringBuffer>("x = 1"), "");
-  auto i = rt.global().getProperty(rt, "x").getNumber();
-  EXPECT_EQ(rt.global().getProperty(rt, "x").getNumber(), 1);
+using facebook::react::CreateMemoryTracker;
+using facebook::react::MessageQueueThread;
+using Microsoft::JSI::ChakraRuntimeArgs;
+using std::make_shared;
+using std::shared_ptr;
+using std::string;
+using std::unique_ptr;
+using std::vector;
+
+using RuntimeFactory = std::function<std::unique_ptr<facebook::jsi::Runtime>()>;
+
+namespace {
+
+#pragma warning(push)
+#pragma warning(disable : 4245)
+unsigned countOccurences(const std::string &of, const std::string &in) {
+  unsigned occurences = 0;
+  std::string::size_type lastOccurence = -1;
+  while ((lastOccurence = in.find(of, lastOccurence + 1)) != std::string::npos) {
+    occurences++;
+  }
+  return occurences;
+}
+#pragma warning(pop)
+
+vector<RuntimeFactory> runtimeGenerators() {
+  return {[]() -> unique_ptr<Runtime> {
+    ChakraRuntimeArgs args{};
+
+    //TODO
+    //args.jsQueue = std::make_shared<TestMessageQueueThread>();
+
+    //shared_ptr<MessageQueueThread> memoryTrackerCallbackQueue = make_shared<TestMessageQueueThread>();
+    shared_ptr<MessageQueueThread> memoryTrackerCallbackQueue;
+
+    args.memoryTracker = CreateMemoryTracker(std::move(memoryTrackerCallbackQueue));
+
+    return makeChakraRuntime(std::move(args));
+  }};
 }
 
-TEST_P(JsiRuntimeUnitTests, PropNameIDTest) {
-  // This is a little weird to test, because it doesn't really exist
-  // in JS yet.  All I can do is create them, compare them, and
-  // receive one as an argument to a HostObject.
+} // namespace
 
-  PropNameID quux = PropNameID::forAscii(rt, "quux1", 4);
-  PropNameID movedQuux = std::move(quux);
-  EXPECT_EQ(movedQuux.utf8(rt), "quux");
-  movedQuux = PropNameID::forAscii(rt, "quux2");
-  EXPECT_EQ(movedQuux.utf8(rt), "quux2");
-  PropNameID copiedQuux = PropNameID(rt, movedQuux);
-  EXPECT_TRUE(PropNameID::compare(rt, movedQuux, copiedQuux));
+TEST_CLASS(JsiRuntimeUnitTests) {
+ private:
+  // The order of these member variable declarations is important because they
+  // need to be initialized in this order.
+  RuntimeFactory m_factory;
+  unique_ptr<Runtime> m_runtimePtr;
+  Runtime &rt;
 
-  EXPECT_TRUE(PropNameID::compare(rt, movedQuux, movedQuux));
-  EXPECT_TRUE(PropNameID::compare(rt, movedQuux, PropNameID::forAscii(rt, std::string("quux2"))));
-  EXPECT_FALSE(PropNameID::compare(rt, movedQuux, PropNameID::forAscii(rt, std::string("foo"))));
-  uint8_t utf8[] = {0xF0, 0x9F, 0x86, 0x97};
-  PropNameID utf8PropNameID = PropNameID::forUtf8(rt, utf8, sizeof(utf8));
-  EXPECT_EQ(utf8PropNameID.utf8(rt), u8"\U0001F197");
-  EXPECT_TRUE(PropNameID::compare(rt, utf8PropNameID, PropNameID::forUtf8(rt, utf8, sizeof(utf8))));
-  PropNameID nonUtf8PropNameID = PropNameID::forUtf8(rt, "meow");
-  EXPECT_TRUE(PropNameID::compare(rt, nonUtf8PropNameID, PropNameID::forAscii(rt, "meow")));
-  EXPECT_EQ(nonUtf8PropNameID.utf8(rt), "meow");
-  PropNameID strPropNameID = PropNameID::forString(rt, String::createFromAscii(rt, "meow"));
-  EXPECT_TRUE(PropNameID::compare(rt, nonUtf8PropNameID, strPropNameID));
+  public:
+  JsiRuntimeUnitTests() : m_factory {runtimeGenerators()[0]}, m_runtimePtr {m_factory()}, rt {*m_runtimePtr}
+  {}
 
-  auto names = PropNameID::names(rt, "Ala", std::string("ma"), PropNameID::forAscii(rt, "kota"));
-  EXPECT_EQ(names.size(), 3);
-  EXPECT_TRUE(PropNameID::compare(rt, names[0], PropNameID::forAscii(rt, "Ala")));
-  EXPECT_TRUE(PropNameID::compare(rt, names[1], PropNameID::forAscii(rt, "ma")));
-  EXPECT_TRUE(PropNameID::compare(rt, names[2], PropNameID::forAscii(rt, "kota")));
-}
+  private:
+    Value eval(const char* code) {
+     return rt.global().getPropertyAsFunction(rt, "eval").call(rt, code);
+    }
 
+    Function function(const string& code) {
+      return eval(("(" + code + ")").c_str()).getObject(rt).getFunction(rt);
+    }
+
+    bool checkValue(const Value &value, const std::string &jsValue) {
+      // TODO (yicyao): Should we use === instead of == here?
+      return function("function(value) { return value == " + jsValue + "; }").call(rt, value).getBool();
+    }
+
+    TEST_METHOD(JsiRuntimeUnitTests_PropNameIDTest) {
+      // This is a little weird to test, because it doesn't really exist
+      // in JS yet.  All I can do is create them, compare them, and
+      // receive one as an argument to a HostObject.
+
+      PropNameID quux = PropNameID::forAscii(rt, "quux1", 4);
+      PropNameID movedQuux = std::move(quux);
+      Assert::AreEqual(movedQuux.utf8(rt), {"quux"});
+      movedQuux = PropNameID::forAscii(rt, "quux2");
+      Assert::AreEqual(movedQuux.utf8(rt), {"quux2"});
+      PropNameID copiedQuux = PropNameID(rt, movedQuux);
+      Assert::IsTrue(PropNameID::compare(rt, movedQuux, copiedQuux));
+
+      Assert::IsTrue(PropNameID::compare(rt, movedQuux, movedQuux));
+      Assert::IsTrue(PropNameID::compare(rt, movedQuux, PropNameID::forAscii(rt, std::string("quux2"))));
+      Assert::IsFalse(PropNameID::compare(rt, movedQuux, PropNameID::forAscii(rt, std::string("foo"))));
+      uint8_t utf8[] = {0xF0, 0x9F, 0x86, 0x97};
+      PropNameID utf8PropNameID = PropNameID::forUtf8(rt, utf8, sizeof(utf8));
+      Assert::AreEqual(utf8PropNameID.utf8(rt), {u8"\U0001F197"});
+      Assert::IsTrue(PropNameID::compare(rt, utf8PropNameID, PropNameID::forUtf8(rt, utf8, sizeof(utf8))));
+      PropNameID nonUtf8PropNameID = PropNameID::forUtf8(rt, "meow");
+      Assert::IsTrue(PropNameID::compare(rt, nonUtf8PropNameID, PropNameID::forAscii(rt, "meow")));
+      Assert::AreEqual(nonUtf8PropNameID.utf8(rt), {"meow"});
+      PropNameID strPropNameID = PropNameID::forString(rt, String::createFromAscii(rt, "meow"));
+      Assert::IsTrue(PropNameID::compare(rt, nonUtf8PropNameID, strPropNameID));
+
+      auto names = PropNameID::names(rt, "Ala", std::string("ma"), PropNameID::forAscii(rt, "kota"));
+      Assert::AreEqual(names.size(), static_cast<size_t>(3));
+      Assert::IsTrue(PropNameID::compare(rt, names[0], PropNameID::forAscii(rt, "Ala")));
+      Assert::IsTrue(PropNameID::compare(rt, names[1], PropNameID::forAscii(rt, "ma")));
+      Assert::IsTrue(PropNameID::compare(rt, names[2], PropNameID::forAscii(rt, "kota")));
+    }
+};
+
+
+//TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
+//  rt.evaluateJavaScript(std::make_unique<StringBuffer>("x = 1"), "");
+//  auto i = rt.global().getProperty(rt, "x").getNumber();
+//  EXPECT_EQ(rt.global().getProperty(rt, "x").getNumber(), 1);
+//}
+
+
+/*
 TEST_P(JsiRuntimeUnitTests, StringTest) {
   EXPECT_TRUE(checkValue(String::createFromAscii(rt, "foobar", 3), "'foo'"));
   EXPECT_TRUE(checkValue(String::createFromAscii(rt, "foobar"), "'foobar'"));
@@ -904,3 +975,4 @@ TEST_P(JsiRuntimeUnitTests, HostObjectWithValueMembers) {
   EXPECT_TRUE(bag["iscool"].getBool());
   EXPECT_EQ(bag["obj"].getObject(rt).getProperty(rt, "foo").getString(rt).utf8(rt), "bar");
 }
+*/
