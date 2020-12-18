@@ -118,6 +118,279 @@ TEST_CLASS(JsiRuntimeUnitTests) {
       Assert::IsTrue(PropNameID::compare(rt, names[1], PropNameID::forAscii(rt, "ma")));
       Assert::IsTrue(PropNameID::compare(rt, names[2], PropNameID::forAscii(rt, "kota")));
     }
+
+    TEST_METHOD(JsiRuntimeUnitTests_StringTest) {
+      Assert::IsTrue(checkValue(String::createFromAscii(rt, "foobar", 3), "'foo'"));
+      Assert::IsTrue(checkValue(String::createFromAscii(rt, "foobar"), "'foobar'"));
+
+      std::string baz = "baz";
+      Assert::IsTrue(checkValue(String::createFromAscii(rt, baz), "'baz'"));
+
+      uint8_t utf8[] = {0xF0, 0x9F, 0x86, 0x97};
+      Assert::IsTrue(checkValue(String::createFromUtf8(rt, utf8, sizeof(utf8)), "'\\uD83C\\uDD97'"));
+
+      Assert::AreEqual(eval("'quux'").getString(rt).utf8(rt), {"quux"});
+      Assert::AreEqual(eval("'\\u20AC'").getString(rt).utf8(rt), {"\xe2\x82\xac"});
+
+      String quux = String::createFromAscii(rt, "quux");
+      String movedQuux = std::move(quux);
+      Assert::AreEqual(movedQuux.utf8(rt), {"quux"});
+      movedQuux = String::createFromAscii(rt, {"quux2"});
+      Assert::AreEqual(movedQuux.utf8(rt), {"quux2"});
+    }
+
+    TEST_METHOD(JsiRuntimeUnitTests_ObjectTest) {
+      eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
+      Object x = rt.global().getPropertyAsObject(rt, "x");
+      Assert::AreEqual(x.getPropertyNames(rt).size(rt), static_cast<size_t>(4));
+      Assert::IsTrue(x.hasProperty(rt, "1"));
+      Assert::IsTrue(x.hasProperty(rt, PropNameID::forAscii(rt, "1")));
+      Assert::IsFalse(x.hasProperty(rt, "2"));
+      Assert::IsFalse(x.hasProperty(rt, PropNameID::forAscii(rt, "2")));
+      Assert::IsTrue(x.hasProperty(rt, "3"));
+      Assert::IsTrue(x.hasProperty(rt, PropNameID::forAscii(rt, "3")));
+      Assert::IsTrue(x.hasProperty(rt, "seven"));
+      Assert::IsTrue(x.hasProperty(rt, PropNameID::forAscii(rt, "seven")));
+      Assert::AreEqual(x.getProperty(rt, "1").getNumber(), static_cast<double>(2));
+      Assert::AreEqual(x.getProperty(rt, PropNameID::forAscii(rt, "1")).getNumber(), static_cast<double>(2));
+      Assert::AreEqual(x.getProperty(rt, "3").getNumber(), static_cast<double>(4));
+      Value five = 5;
+      Assert::AreEqual(x.getProperty(rt, PropNameID::forString(rt, five.toString(rt))).getString(rt).utf8(rt), {"six"});
+
+      x.setProperty(rt, "ten", 11);
+      Assert::AreEqual(x.getPropertyNames(rt).size(rt), static_cast<size_t>(5));
+      Assert::IsTrue(eval("x.ten == 11").getBool());
+
+      x.setProperty(rt, "e_as_float", 2.71f);
+      Assert::IsTrue(eval("Math.abs(x.e_as_float - 2.71) < 0.001").getBool());
+
+      x.setProperty(rt, "e_as_double", 2.71);
+      Assert::IsTrue(eval("x.e_as_double == 2.71").getBool());
+
+      uint8_t utf8[] = {0xF0, 0x9F, 0x86, 0x97};
+      String nonAsciiName = String::createFromUtf8(rt, utf8, sizeof(utf8));
+      x.setProperty(rt, PropNameID::forString(rt, nonAsciiName), "emoji");
+      Assert::AreEqual(x.getPropertyNames(rt).size(rt), static_cast<size_t>(8));
+      Assert::IsTrue(eval("x['\\uD83C\\uDD97'] == 'emoji'").getBool());
+
+      Object seven = x.getPropertyAsObject(rt, "seven");
+      Assert::IsTrue(seven.isArray(rt));
+      Object evalf = rt.global().getPropertyAsObject(rt, "eval");
+      Assert::IsTrue(evalf.isFunction(rt));
+
+      Object movedX = Object(rt);
+      movedX = std::move(x);
+      Assert::AreEqual(movedX.getPropertyNames(rt).size(rt), static_cast<size_t>(8));
+      Assert::AreEqual(movedX.getProperty(rt, "1").getNumber(), static_cast<double>(2));
+
+      Object obj = Object(rt);
+      obj.setProperty(rt, "roses", "red");
+      obj.setProperty(rt, "violets", "blue");
+      Object oprop = Object(rt);
+      obj.setProperty(rt, "oprop", oprop);
+      obj.setProperty(rt, "aprop", Array(rt, 1));
+
+      Assert::IsTrue(function("function (obj) { return "
+                           "obj.roses == 'red' && "
+                           "obj['violets'] == 'blue' && "
+                           "typeof obj.oprop == 'object' && "
+                           "Array.isArray(obj.aprop); }")
+                      .call(rt, obj)
+                      .getBool());
+
+      // Check that getPropertyNames doesn't return non-enumerable
+      // properties.
+      obj = function(
+                "function () {"
+                "  obj = {};"
+                "  obj.a = 1;"
+                "  Object.defineProperty(obj, 'b', {"
+                "    enumerable: false,"
+                "    value: 2"
+                "  });"
+                "  return obj;"
+                "}")
+                .call(rt)
+                .getObject(rt);
+      Assert::AreEqual(obj.getProperty(rt, "a").getNumber(), static_cast<double>(1));
+      Assert::AreEqual(obj.getProperty(rt, "b").getNumber(), static_cast<double>(2));
+      Array names = obj.getPropertyNames(rt);
+      Assert::AreEqual(names.size(rt), static_cast<size_t>(1));
+      Assert::AreEqual(names.getValueAtIndex(rt, 0).getString(rt).utf8(rt), {"a"});
+    }
+
+    //TEST_METHOD(JsiRuntimeUnitTests_Chakra_HostObjectTest) {
+    //  class ConstantHostObject : public HostObject {
+    //    Value get(Runtime &, const PropNameID &sym) override {
+    //      return 9000;
+    //    }
+
+    //    void set(Runtime &, const PropNameID &, const Value &) override {}
+    //  };
+
+    //  Object cho = Object::createFromHostObject(rt, std::make_shared<ConstantHostObject>());
+    //  Assert::IsTrue(function("function (obj) { return obj.someRandomProp == 9000; }").call(rt, cho).getBool());
+    //  Assert::IsTrue(cho.isHostObject(rt));
+    //  //TODO
+    //  //Assert::IsTrue(cho.getHostObject<ConstantHostObject>(rt).get() != nullptr);
+
+    //  struct SameRuntimeHostObject : HostObject {
+    //    SameRuntimeHostObject(Runtime &rt) : rt_(rt){};
+
+    //    Value get(Runtime &rt, const PropNameID &sym) override {
+    //      Assert::AreEqual(&rt, &rt_);
+    //      return Value();
+    //    }
+
+    //    void set(Runtime &rt, const PropNameID &name, const Value &value) override {
+    //      Assert::AreEqual(&rt, &rt_);
+    //    }
+
+    //    std::vector<PropNameID> getPropertyNames(Runtime &rt) override {
+    //      Assert::AreEqual(&rt, &rt_);
+    //      return {};
+    //    }
+
+    //    Runtime &rt_;
+    //  };
+
+    //  Object srho = Object::createFromHostObject(rt, std::make_shared<SameRuntimeHostObject>(rt));
+    //  // Test get's Runtime is as expected
+    //  function("function (obj) { return obj.isSame; }").call(rt, srho);
+    //  // ... and set
+    //  function("function (obj) { obj['k'] = 'v'; }").call(rt, srho);
+    //  // ... and getPropertyNames
+    //  function("function (obj) { for (k in obj) {} }").call(rt, srho);
+
+    //  class TwiceHostObject : public HostObject {
+    //    Value get(Runtime &rt, const PropNameID &sym) override {
+    //      return String::createFromUtf8(rt, sym.utf8(rt) + sym.utf8(rt));
+    //    }
+
+    //    void set(Runtime &, const PropNameID &, const Value &) override {}
+    //  };
+
+    //  Object tho = Object::createFromHostObject(rt, std::make_shared<TwiceHostObject>());
+    //  Assert::IsTrue(function("function (obj) { return obj.abc == 'abcabc'; }").call(rt, tho).getBool());
+    //  Assert::IsTrue(function("function (obj) { return obj['def'] == 'defdef'; }").call(rt, tho).getBool());
+    //  Assert::IsTrue(function("function (obj) { return obj[12] === '1212'; }").call(rt, tho).getBool());
+    //  Assert::IsTrue(tho.isHostObject(rt));
+    //  //TODO
+    //  //Assert::IsTrue(std::dynamic_pointer_cast<ConstantHostObject>(tho.getHostObject(rt)) == nullptr);
+    //  //Assert::IsTrue(tho.getHostObject<TwiceHostObject>(rt).get() != nullptr);
+
+    //  class PropNameIDHostObject : public HostObject {
+    //    Value get(Runtime &rt, const PropNameID &sym) override {
+    //      if (PropNameID::compare(rt, sym, PropNameID::forAscii(rt, "undef"))) {
+    //        return Value::undefined();
+    //      } else {
+    //        return PropNameID::compare(rt, sym, PropNameID::forAscii(rt, "somesymbol"));
+    //      }
+    //    }
+
+    //    void set(Runtime &, const PropNameID &, const Value &) override {}
+    //  };
+
+    //  Object sho = Object::createFromHostObject(rt, std::make_shared<PropNameIDHostObject>());
+    //  Assert::IsTrue(sho.isHostObject(rt));
+    //  Assert::IsTrue(function("function (obj) { return obj.undef; }").call(rt, sho).isUndefined());
+    //  Assert::IsTrue(function("function (obj) { return obj.somesymbol; }").call(rt, sho).getBool());
+    //  Assert::IsFalse(function("function (obj) { return obj.notsomuch; }").call(rt, sho).getBool());
+
+    //  class BagHostObject : public HostObject {
+    //   public:
+    //    const std::string &getThing() {
+    //      return bag_["thing"];
+    //    }
+
+    //   private:
+    //    Value get(Runtime &rt, const PropNameID &sym) override {
+    //      if (sym.utf8(rt) == "thing") {
+    //        return String::createFromUtf8(rt, bag_[sym.utf8(rt)]);
+    //      }
+    //      return Value::undefined();
+    //    }
+
+    //    void set(Runtime &rt, const PropNameID &sym, const Value &val) override {
+    //      std::string key(sym.utf8(rt));
+    //      if (key == "thing") {
+    //        bag_[key] = val.toString(rt).utf8(rt);
+    //      }
+    //    }
+
+    //    std::unordered_map<std::string, std::string> bag_;
+    //  };
+
+    //  std::shared_ptr<BagHostObject> shbho = std::make_shared<BagHostObject>();
+    //  Object bho = Object::createFromHostObject(rt, shbho);
+    //  Assert::IsTrue(bho.isHostObject(rt));
+    //  Assert::IsTrue(function("function (obj) { return obj.undef; }").call(rt, bho).isUndefined());
+    //  Assert::AreEqual(
+    //      function("function (obj) { obj.thing = 'hello'; return obj.thing; }").call(rt, bho).toString(rt).utf8(rt),
+    //      {"hello"});
+    //  Assert::AreEqual(shbho->getThing(), {"hello"});
+
+    //  class ThrowingHostObject : public HostObject {
+    //    Value get(Runtime &rt, const PropNameID &sym) override {
+    //      throw std::runtime_error("Cannot get");
+    //    }
+
+    //    void set(Runtime &rt, const PropNameID &sym, const Value &val) override {
+    //      throw std::runtime_error("Cannot set");
+    //    }
+    //  };
+
+    //  Object thro = Object::createFromHostObject(rt, std::make_shared<ThrowingHostObject>());
+    //  Assert::IsTrue(thro.isHostObject(rt));
+    //  std::string exc;
+    //  try {
+    //    function("function (obj) { return obj.thing; }").call(rt, thro);
+    //  } catch (const JSError &ex) {
+    //    exc = ex.what();
+    //  }
+    //  Assert::AreNotEqual(exc.find("Cannot get"), std::string::npos);
+    //  exc = "";
+    //  try {
+    //    function("function (obj) { obj.thing = 'hello'; }").call(rt, thro);
+    //  } catch (const JSError &ex) {
+    //    exc = ex.what();
+    //  }
+    //  Assert::AreNotEqual(exc.find("Cannot set"), std::string::npos);
+
+    //  class NopHostObject : public HostObject {};
+    //  Object nopHo = Object::createFromHostObject(rt, std::make_shared<NopHostObject>());
+    //  Assert::IsTrue(nopHo.isHostObject(rt));
+    //  Assert::IsTrue(function("function (obj) { return obj.thing; }").call(rt, nopHo).isUndefined());
+
+    //  std::string nopExc;
+    //  try {
+    //    function("function (obj) { obj.thing = 'pika'; }").call(rt, nopHo);
+    //  } catch (const JSError &ex) {
+    //    nopExc = ex.what();
+    //  }
+    //  Assert::AreNotEqual(nopExc.find("TypeError: "), std::string::npos);
+
+    //  class HostObjectWithPropertyNames : public HostObject {
+    //    std::vector<PropNameID> getPropertyNames(Runtime &rt) override {
+    //      return PropNameID::names(rt, "a_prop", "1", "false", "a_prop", "3", "c_prop");
+    //    }
+    //  };
+
+    //  Object howpn = Object::createFromHostObject(rt, std::make_shared<HostObjectWithPropertyNames>());
+    //  Assert::IsTrue(
+    //      function("function (o) { return Object.getOwnPropertyNames(o).length == 5 }").call(rt, howpn).getBool());
+
+    //  auto hasOwnPropertyName = function(
+    //      "function (o, p) {"
+    //      "  return Object.getOwnPropertyNames(o).indexOf(p) >= 0"
+    //      "}");
+    //  Assert::IsTrue(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "a_prop")).getBool());
+    //  Assert::IsTrue(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "1")).getBool());
+    //  Assert::IsTrue(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "false")).getBool());
+    //  Assert::IsTrue(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "3")).getBool());
+    //  Assert::IsTrue(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "c_prop")).getBool());
+    //  Assert::IsFalse(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "not_existing")).getBool());
+    //}
 };
 
 
@@ -129,276 +402,6 @@ TEST_CLASS(JsiRuntimeUnitTests) {
 
 
 /*
-TEST_P(JsiRuntimeUnitTests, StringTest) {
-  EXPECT_TRUE(checkValue(String::createFromAscii(rt, "foobar", 3), "'foo'"));
-  EXPECT_TRUE(checkValue(String::createFromAscii(rt, "foobar"), "'foobar'"));
-
-  std::string baz = "baz";
-  EXPECT_TRUE(checkValue(String::createFromAscii(rt, baz), "'baz'"));
-
-  uint8_t utf8[] = {0xF0, 0x9F, 0x86, 0x97};
-  EXPECT_TRUE(checkValue(String::createFromUtf8(rt, utf8, sizeof(utf8)), "'\\uD83C\\uDD97'"));
-
-  EXPECT_EQ(eval("'quux'").getString(rt).utf8(rt), "quux");
-  EXPECT_EQ(eval("'\\u20AC'").getString(rt).utf8(rt), "\xe2\x82\xac");
-
-  String quux = String::createFromAscii(rt, "quux");
-  String movedQuux = std::move(quux);
-  EXPECT_EQ(movedQuux.utf8(rt), "quux");
-  movedQuux = String::createFromAscii(rt, "quux2");
-  EXPECT_EQ(movedQuux.utf8(rt), "quux2");
-}
-
-TEST_P(JsiRuntimeUnitTests, ObjectTest) {
-  eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
-  Object x = rt.global().getPropertyAsObject(rt, "x");
-  EXPECT_EQ(x.getPropertyNames(rt).size(rt), 4);
-  EXPECT_TRUE(x.hasProperty(rt, "1"));
-  EXPECT_TRUE(x.hasProperty(rt, PropNameID::forAscii(rt, "1")));
-  EXPECT_FALSE(x.hasProperty(rt, "2"));
-  EXPECT_FALSE(x.hasProperty(rt, PropNameID::forAscii(rt, "2")));
-  EXPECT_TRUE(x.hasProperty(rt, "3"));
-  EXPECT_TRUE(x.hasProperty(rt, PropNameID::forAscii(rt, "3")));
-  EXPECT_TRUE(x.hasProperty(rt, "seven"));
-  EXPECT_TRUE(x.hasProperty(rt, PropNameID::forAscii(rt, "seven")));
-  EXPECT_EQ(x.getProperty(rt, "1").getNumber(), 2);
-  EXPECT_EQ(x.getProperty(rt, PropNameID::forAscii(rt, "1")).getNumber(), 2);
-  EXPECT_EQ(x.getProperty(rt, "3").getNumber(), 4);
-  Value five = 5;
-  EXPECT_EQ(x.getProperty(rt, PropNameID::forString(rt, five.toString(rt))).getString(rt).utf8(rt), "six");
-
-  x.setProperty(rt, "ten", 11);
-  EXPECT_EQ(x.getPropertyNames(rt).size(rt), 5);
-  EXPECT_TRUE(eval("x.ten == 11").getBool());
-
-  x.setProperty(rt, "e_as_float", 2.71f);
-  EXPECT_TRUE(eval("Math.abs(x.e_as_float - 2.71) < 0.001").getBool());
-
-  x.setProperty(rt, "e_as_double", 2.71);
-  EXPECT_TRUE(eval("x.e_as_double == 2.71").getBool());
-
-  uint8_t utf8[] = {0xF0, 0x9F, 0x86, 0x97};
-  String nonAsciiName = String::createFromUtf8(rt, utf8, sizeof(utf8));
-  x.setProperty(rt, PropNameID::forString(rt, nonAsciiName), "emoji");
-  EXPECT_EQ(x.getPropertyNames(rt).size(rt), 8);
-  EXPECT_TRUE(eval("x['\\uD83C\\uDD97'] == 'emoji'").getBool());
-
-  Object seven = x.getPropertyAsObject(rt, "seven");
-  EXPECT_TRUE(seven.isArray(rt));
-  Object evalf = rt.global().getPropertyAsObject(rt, "eval");
-  EXPECT_TRUE(evalf.isFunction(rt));
-
-  Object movedX = Object(rt);
-  movedX = std::move(x);
-  EXPECT_EQ(movedX.getPropertyNames(rt).size(rt), 8);
-  EXPECT_EQ(movedX.getProperty(rt, "1").getNumber(), 2);
-
-  Object obj = Object(rt);
-  obj.setProperty(rt, "roses", "red");
-  obj.setProperty(rt, "violets", "blue");
-  Object oprop = Object(rt);
-  obj.setProperty(rt, "oprop", oprop);
-  obj.setProperty(rt, "aprop", Array(rt, 1));
-
-  EXPECT_TRUE(function("function (obj) { return "
-                       "obj.roses == 'red' && "
-                       "obj['violets'] == 'blue' && "
-                       "typeof obj.oprop == 'object' && "
-                       "Array.isArray(obj.aprop); }")
-                  .call(rt, obj)
-                  .getBool());
-
-  // Check that getPropertyNames doesn't return non-enumerable
-  // properties.
-  obj = function(
-            "function () {"
-            "  obj = {};"
-            "  obj.a = 1;"
-            "  Object.defineProperty(obj, 'b', {"
-            "    enumerable: false,"
-            "    value: 2"
-            "  });"
-            "  return obj;"
-            "}")
-            .call(rt)
-            .getObject(rt);
-  EXPECT_EQ(obj.getProperty(rt, "a").getNumber(), 1);
-  EXPECT_EQ(obj.getProperty(rt, "b").getNumber(), 2);
-  Array names = obj.getPropertyNames(rt);
-  EXPECT_EQ(names.size(rt), 1);
-  EXPECT_EQ(names.getValueAtIndex(rt, 0).getString(rt).utf8(rt), "a");
-}
-
-TEST_P(JsiRuntimeUnitTests_Chakra, HostObjectTest) {
-  class ConstantHostObject : public HostObject {
-    Value get(Runtime &, const PropNameID &sym) override {
-      return 9000;
-    }
-
-    void set(Runtime &, const PropNameID &, const Value &) override {}
-  };
-
-  Object cho = Object::createFromHostObject(rt, std::make_shared<ConstantHostObject>());
-  EXPECT_TRUE(function("function (obj) { return obj.someRandomProp == 9000; }").call(rt, cho).getBool());
-  EXPECT_TRUE(cho.isHostObject(rt));
-  EXPECT_TRUE(cho.getHostObject<ConstantHostObject>(rt).get() != nullptr);
-
-  struct SameRuntimeHostObject : HostObject {
-    SameRuntimeHostObject(Runtime &rt) : rt_(rt){};
-
-    Value get(Runtime &rt, const PropNameID &sym) override {
-      EXPECT_EQ(&rt, &rt_);
-      return Value();
-    }
-
-    void set(Runtime &rt, const PropNameID &name, const Value &value) override {
-      EXPECT_EQ(&rt, &rt_);
-    }
-
-    std::vector<PropNameID> getPropertyNames(Runtime &rt) override {
-      EXPECT_EQ(&rt, &rt_);
-      return {};
-    }
-
-    Runtime &rt_;
-  };
-
-  Object srho = Object::createFromHostObject(rt, std::make_shared<SameRuntimeHostObject>(rt));
-  // Test get's Runtime is as expected
-  function("function (obj) { return obj.isSame; }").call(rt, srho);
-  // ... and set
-  function("function (obj) { obj['k'] = 'v'; }").call(rt, srho);
-  // ... and getPropertyNames
-  function("function (obj) { for (k in obj) {} }").call(rt, srho);
-
-  class TwiceHostObject : public HostObject {
-    Value get(Runtime &rt, const PropNameID &sym) override {
-      return String::createFromUtf8(rt, sym.utf8(rt) + sym.utf8(rt));
-    }
-
-    void set(Runtime &, const PropNameID &, const Value &) override {}
-  };
-
-  Object tho = Object::createFromHostObject(rt, std::make_shared<TwiceHostObject>());
-  EXPECT_TRUE(function("function (obj) { return obj.abc == 'abcabc'; }").call(rt, tho).getBool());
-  EXPECT_TRUE(function("function (obj) { return obj['def'] == 'defdef'; }").call(rt, tho).getBool());
-  EXPECT_TRUE(function("function (obj) { return obj[12] === '1212'; }").call(rt, tho).getBool());
-  EXPECT_TRUE(tho.isHostObject(rt));
-  EXPECT_TRUE(std::dynamic_pointer_cast<ConstantHostObject>(tho.getHostObject(rt)) == nullptr);
-  EXPECT_TRUE(tho.getHostObject<TwiceHostObject>(rt).get() != nullptr);
-
-  class PropNameIDHostObject : public HostObject {
-    Value get(Runtime &rt, const PropNameID &sym) override {
-      if (PropNameID::compare(rt, sym, PropNameID::forAscii(rt, "undef"))) {
-        return Value::undefined();
-      } else {
-        return PropNameID::compare(rt, sym, PropNameID::forAscii(rt, "somesymbol"));
-      }
-    }
-
-    void set(Runtime &, const PropNameID &, const Value &) override {}
-  };
-
-  Object sho = Object::createFromHostObject(rt, std::make_shared<PropNameIDHostObject>());
-  EXPECT_TRUE(sho.isHostObject(rt));
-  EXPECT_TRUE(function("function (obj) { return obj.undef; }").call(rt, sho).isUndefined());
-  EXPECT_TRUE(function("function (obj) { return obj.somesymbol; }").call(rt, sho).getBool());
-  EXPECT_FALSE(function("function (obj) { return obj.notsomuch; }").call(rt, sho).getBool());
-
-  class BagHostObject : public HostObject {
-   public:
-    const std::string &getThing() {
-      return bag_["thing"];
-    }
-
-   private:
-    Value get(Runtime &rt, const PropNameID &sym) override {
-      if (sym.utf8(rt) == "thing") {
-        return String::createFromUtf8(rt, bag_[sym.utf8(rt)]);
-      }
-      return Value::undefined();
-    }
-
-    void set(Runtime &rt, const PropNameID &sym, const Value &val) override {
-      std::string key(sym.utf8(rt));
-      if (key == "thing") {
-        bag_[key] = val.toString(rt).utf8(rt);
-      }
-    }
-
-    std::unordered_map<std::string, std::string> bag_;
-  };
-
-  std::shared_ptr<BagHostObject> shbho = std::make_shared<BagHostObject>();
-  Object bho = Object::createFromHostObject(rt, shbho);
-  EXPECT_TRUE(bho.isHostObject(rt));
-  EXPECT_TRUE(function("function (obj) { return obj.undef; }").call(rt, bho).isUndefined());
-  EXPECT_EQ(
-      function("function (obj) { obj.thing = 'hello'; return obj.thing; }").call(rt, bho).toString(rt).utf8(rt),
-      "hello");
-  EXPECT_EQ(shbho->getThing(), "hello");
-
-  class ThrowingHostObject : public HostObject {
-    Value get(Runtime &rt, const PropNameID &sym) override {
-      throw std::runtime_error("Cannot get");
-    }
-
-    void set(Runtime &rt, const PropNameID &sym, const Value &val) override {
-      throw std::runtime_error("Cannot set");
-    }
-  };
-
-  Object thro = Object::createFromHostObject(rt, std::make_shared<ThrowingHostObject>());
-  EXPECT_TRUE(thro.isHostObject(rt));
-  std::string exc;
-  try {
-    function("function (obj) { return obj.thing; }").call(rt, thro);
-  } catch (const JSError &ex) {
-    exc = ex.what();
-  }
-  EXPECT_NE(exc.find("Cannot get"), std::string::npos);
-  exc = "";
-  try {
-    function("function (obj) { obj.thing = 'hello'; }").call(rt, thro);
-  } catch (const JSError &ex) {
-    exc = ex.what();
-  }
-  EXPECT_NE(exc.find("Cannot set"), std::string::npos);
-
-  class NopHostObject : public HostObject {};
-  Object nopHo = Object::createFromHostObject(rt, std::make_shared<NopHostObject>());
-  EXPECT_TRUE(nopHo.isHostObject(rt));
-  EXPECT_TRUE(function("function (obj) { return obj.thing; }").call(rt, nopHo).isUndefined());
-
-  std::string nopExc;
-  try {
-    function("function (obj) { obj.thing = 'pika'; }").call(rt, nopHo);
-  } catch (const JSError &ex) {
-    nopExc = ex.what();
-  }
-  EXPECT_NE(nopExc.find("TypeError: "), std::string::npos);
-
-  class HostObjectWithPropertyNames : public HostObject {
-    std::vector<PropNameID> getPropertyNames(Runtime &rt) override {
-      return PropNameID::names(rt, "a_prop", "1", "false", "a_prop", "3", "c_prop");
-    }
-  };
-
-  Object howpn = Object::createFromHostObject(rt, std::make_shared<HostObjectWithPropertyNames>());
-  EXPECT_TRUE(function("function (o) { return Object.getOwnPropertyNames(o).length == 5 }").call(rt, howpn).getBool());
-
-  auto hasOwnPropertyName = function(
-      "function (o, p) {"
-      "  return Object.getOwnPropertyNames(o).indexOf(p) >= 0"
-      "}");
-  EXPECT_TRUE(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "a_prop")).getBool());
-  EXPECT_TRUE(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "1")).getBool());
-  EXPECT_TRUE(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "false")).getBool());
-  EXPECT_TRUE(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "3")).getBool());
-  EXPECT_TRUE(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "c_prop")).getBool());
-  EXPECT_FALSE(hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "not_existing")).getBool());
-}
-
 TEST_P(JsiRuntimeUnitTests_Chakra, ArrayTest) {
   eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
 
