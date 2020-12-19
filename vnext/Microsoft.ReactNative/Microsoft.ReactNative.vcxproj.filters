@@ -309,6 +309,7 @@
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="Views\PaperShadowNode.cpp" />
     <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
+    <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
