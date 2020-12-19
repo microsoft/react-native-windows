@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Print error message when vswhere is missing",
+  "packageName": "@react-native-windows/cli",
+  "email": "asklar@winse.microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-12-18T12:39:08.986Z"
+}
