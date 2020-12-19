@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 19 Dec 2020 05:06:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.226",
+      "version": "0.0.0-canary.226",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make package config more strict",
+            "author": "dannyvv@microsoft.com",
+            "commit": "a0cee0f7c33a0fb8a59f897c2873ada727f07555",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Dec 2020 19:23:58 GMT",
       "tag": "react-native-windows_v0.0.0-canary.225",
       "version": "0.0.0-canary.225",
