@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-#include <gtest/gtest.h>
 #include <JSI/ChakraRuntimeArgs.h>
 #include <JSI/ChakraRuntimeFactory.h>
+#include <gtest/gtest.h>
 #include "jsi/test/testlib.h"
 
 using namespace Microsoft::JSI;
