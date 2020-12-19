@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Consolidate JSI projects",
+  "packageName": "@rnw-scripts/integrate-rn",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}

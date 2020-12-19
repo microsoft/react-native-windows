@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Consolidate JSI projects",
+  "packageName": "react-native-platform-override",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
