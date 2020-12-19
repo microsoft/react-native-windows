@@ -198,8 +198,13 @@ async function runWindowsInternal(
   }
 
   let buildTools: MSBuildTools;
-  runWindowsPhase = RunWindowsPhase.FindBuildTools;
-  buildTools = MSBuildTools.findAvailableVersion(options.arch, verbose);
+  try {
+    runWindowsPhase = RunWindowsPhase.FindBuildTools;
+    buildTools = MSBuildTools.findAvailableVersion(options.arch, verbose);
+  } catch (e) {
+    newError(e.message);
+    throw e;
+  }
 
   if (options.build) {
     runWindowsPhase = RunWindowsPhase.FindSolution;
