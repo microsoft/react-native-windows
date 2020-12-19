@@ -310,6 +310,9 @@
     <ClCompile Include="Views\PaperShadowNode.cpp" />
     <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
     <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp" />
+    <ClCompile Include="JSI\ChakraJsiRuntime_edgemode.cpp">
+      <Filter>JSI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -742,6 +745,9 @@
     </Filter>
     <Filter Include="Views\Impl">
       <UniqueIdentifier>{b0b76275-4a16-4939-87ee-f777cb189114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JSI">
+      <UniqueIdentifier>{24290499-e864-407e-89c0-473f2b8dbb6e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

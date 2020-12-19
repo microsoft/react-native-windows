@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ChakraRuntime.h"
-
-#include "ByteArrayBuffer.h"
+#include <JSI/ChakraRuntime.h>
+#include <JSI/ByteArrayBuffer.h>
 #include "Unicode.h"
 
 #if !defined(CHAKRACORE)

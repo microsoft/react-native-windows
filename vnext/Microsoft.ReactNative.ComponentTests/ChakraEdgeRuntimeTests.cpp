@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 #include <gtest/gtest.h>
-#include "ChakraRuntimeArgs.h"
-#include "ChakraRuntimeFactory.h"
+#include <JSI/ChakraRuntimeArgs.h>
+#include <JSI/ChakraRuntimeFactory.h>
 #include "jsi/test/testlib.h"
 
 using namespace Microsoft::JSI;
