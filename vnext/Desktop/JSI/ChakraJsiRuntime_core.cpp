@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include <JSI/ByteArrayBuffer.h>
 #include <JSI/ChakraRuntime.h>
 #include <JSI/ChakraRuntimeFactory.h>
-#include <JSI/ByteArrayBuffer.h>
 
 #include <cxxreact/MessageQueueThread.h>
 #include "Unicode.h"
