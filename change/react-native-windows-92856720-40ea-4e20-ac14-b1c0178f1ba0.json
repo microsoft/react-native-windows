@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix RedBox on topMouseLeave event.",
-  "packageName": "react-native-windows",
-  "email": "igklemen@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Specify full path when bundling",
+  "comment": "Make package config more strict",
   "packageName": "react-native-windows",
-  "email": "asklar@winse.microsoft.com",
+  "email": "dannyvv@microsoft.com",
   "dependentChangeType": "patch"
 }

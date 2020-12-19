@@ -77,7 +77,7 @@ jobs:
 
       - script: npx --ignore-existing @rnw-scripts/create-github-releases --authToken $(githubAuthToken)
         displayName: Create GitHub Releases for New Tags (Stable Branch)
-        condition: ${{ and(succeeded(), not(parameters.skipGitPush), ne(variables['Build.SourceBranchName'], 'master')) }}
+        condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ ne(variables['Build.SourceBranchName'], 'master') }} )
 
       - template: templates/set-version-vars.yml
 
