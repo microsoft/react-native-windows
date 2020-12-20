@@ -36,7 +36,6 @@ jobs:
     steps:
       - checkout: self
         clean: true
-        fetchDepth: 1 # the depth of commits to ask Git to fetch
         submodules: false
             
       - template: ../templates/prepare-env.yml
