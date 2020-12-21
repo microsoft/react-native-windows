@@ -44,7 +44,9 @@
       Condition="'%(_YarnExitCode.Identity)' == '0'"
       SourceFiles="@(_EnsureJavaScriptCodeUpToDateInputFiles)"
       DestinationFiles="@(_EnsureJavaScriptCodeUpToDateOutputFiles)"
-      SkipUnchangedFiles="true" />
+      SkipUnchangedFiles="true"
+      Retries="5"
+      RetryDelayMilliseconds="100" />
     <!-- We have to touch the outputs to ensure up to date incrementaility works-->
     <Touch Files="@(_EnsureJavaScriptCodeUpToDateOutputFiles)" />
 
