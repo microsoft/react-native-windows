@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Update Nuget to 2.5.0",
+  "packageName": "@rnw-scripts/integrate-rn",
+  "email": "34109996+chiaramooney@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
