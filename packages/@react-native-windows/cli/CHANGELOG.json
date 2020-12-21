@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 21 Dec 2020 15:05:53 GMT",
+      "tag": "@react-native-windows/cli_v0.64.0-preview.3",
+      "version": "0.64.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Print error message when missing vswhere/msbuild",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "99f8d819117d65b3fcd8fc8f0c6b09651b02749e",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Dec 2020 00:24:03 GMT",
       "tag": "@react-native-windows/cli_v0.64.0-preview.2",
       "version": "0.64.0-preview.2",

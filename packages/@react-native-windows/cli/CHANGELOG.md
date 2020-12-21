@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 04 Dec 2020 00:24:03 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Dec 2020 15:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.3
+
+Mon, 21 Dec 2020 15:05:53 GMT
+
+### Changes
+
+- Print error message when missing vswhere/msbuild (asklar@winse.microsoft.com)
 
 ## 0.64.0-preview.2
 

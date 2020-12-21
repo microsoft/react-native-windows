@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 14 Dec 2020 15:06:53 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Dec 2020 15:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.4
+
+Mon, 21 Dec 2020 15:05:53 GMT
+
+### Changes
+
+- Fix RedBox on topMouseLeave event. (igklemen@microsoft.com)
+- Fix facebook::jsi::Runtime lifetime for ABI JSI (vmorozov@microsoft.com)
+- [0.64] Make package config more strict (dannyvv@microsoft.com)
 
 ## 0.64.0-preview.3
 

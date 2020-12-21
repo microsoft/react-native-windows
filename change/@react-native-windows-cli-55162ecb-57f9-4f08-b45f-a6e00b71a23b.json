@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Print error message when missing vswhere/msbuild",
-  "packageName": "@react-native-windows/cli",
-  "email": "asklar@winse.microsoft.com",
-  "dependentChangeType": "patch"
-}

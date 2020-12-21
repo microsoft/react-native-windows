@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Dec 2020 15:05:53 GMT",
+      "tag": "react-native-windows_v0.64.0-preview.4",
+      "version": "0.64.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix RedBox on topMouseLeave event.",
+            "author": "igklemen@microsoft.com",
+            "commit": "2c7df87e38d1210e66496ad7dfac7104b586c2bb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix facebook::jsi::Runtime lifetime for ABI JSI",
+            "author": "vmorozov@microsoft.com",
+            "commit": "89657e9bd9c24e6ae8eabb3ffb2ea018da57f5e5",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Make package config more strict",
+            "author": "dannyvv@microsoft.com",
+            "commit": "524246d517e2cdf12093e2c48f266500ac4a3287",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Dec 2020 15:06:53 GMT",
       "tag": "react-native-windows_v0.64.0-preview.3",
       "version": "0.64.0-preview.3",

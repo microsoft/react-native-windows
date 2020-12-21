@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 14 Dec 2020 15:06:53 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Dec 2020 15:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.3
+
+Mon, 21 Dec 2020 15:05:53 GMT
+
+### Changes
+
+- Add target prop to AccessibilityAnnotationInfo (krsiler@microsoft.com)
 
 ## 0.64.0-preview.2
 
