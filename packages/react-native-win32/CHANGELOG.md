@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 18 Dec 2020 23:26:43 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Dec 2020 15:06:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.6
+
+Mon, 21 Dec 2020 15:06:18 GMT
+
+### Patches
+
+- Add Keyboard Events to TextWin32 (krsiler@microsoft.com)
+- Add target prop to AccessibilityAnnotationInfo (krsiler@microsoft.com)
 
 ## 0.62.5
 

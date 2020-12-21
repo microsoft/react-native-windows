@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 10 Dec 2020 19:36:00 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Dec 2020 15:06:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.19
+
+Mon, 21 Dec 2020 15:06:18 GMT
+
+### Patches
+
+- Add Keyboard Events to TextWin32 (krsiler@microsoft.com)
 
 ## 0.62.18
 
