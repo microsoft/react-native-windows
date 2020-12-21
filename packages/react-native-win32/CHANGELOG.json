@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 21 Dec 2020 15:06:05 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.4",
+      "version": "0.63.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.63] Win32 Polite/Aggressive Focus API (#6711)",
+            "author": "dannyvv@microsoft.com",
+            "commit": "5197a09ea758cc9822d4cd6003f549e6513d456a",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Add additional props to TextWin32 and ViewWin32",
+            "author": "krsiler@microsoft.com",
+            "commit": "19f16ead323894f74ac2c89e132ae189b75ab480",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Dec 2020 17:51:41 GMT",
       "tag": "@office-iss/react-native-win32_v0.63.3",
       "version": "0.63.3",

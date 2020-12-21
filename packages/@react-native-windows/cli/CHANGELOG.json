@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 21 Dec 2020 15:06:05 GMT",
+      "tag": "@react-native-windows/cli_v0.63.8",
+      "version": "0.63.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Print error message when vswhere is missing",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "e92a1112c0e28a4894b6641a5e29f6c8e92c2337",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "[0.63] Make package config more strict",
+            "author": "dannyvv@microsoft.com",
+            "commit": "1ce6142137eea3e2b455638a3a3d34f1c739b0ef",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Dec 2020 04:33:16 GMT",
       "tag": "@react-native-windows/cli_v0.63.7",
       "version": "0.63.7",

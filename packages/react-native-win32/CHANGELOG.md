@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 11 Dec 2020 17:51:41 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Dec 2020 15:06:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.4
+
+Mon, 21 Dec 2020 15:06:05 GMT
+
+### Patches
+
+- [0.63] Win32 Polite/Aggressive Focus API (#6711) (dannyvv@microsoft.com)
+- Add additional props to TextWin32 and ViewWin32 (krsiler@microsoft.com)
 
 ## 0.63.3
 

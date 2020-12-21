@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 08 Dec 2020 04:33:16 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Dec 2020 15:06:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.8
+
+Mon, 21 Dec 2020 15:06:05 GMT
+
+### Patches
+
+- Print error message when vswhere is missing (asklar@winse.microsoft.com)
+- [0.63] Make package config more strict (dannyvv@microsoft.com)
 
 ## 0.63.7
 
