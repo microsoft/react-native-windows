@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 21 Dec 2020 15:06:18 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.6",
+      "version": "0.62.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add Keyboard Events to TextWin32",
+            "author": "krsiler@microsoft.com",
+            "commit": "fca0941130bc229296c7f9a0120edef78be58e18",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Add target prop to AccessibilityAnnotationInfo",
+            "author": "krsiler@microsoft.com",
+            "commit": "fca0941130bc229296c7f9a0120edef78be58e18",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Dec 2020 23:26:43 GMT",
       "tag": "@office-iss/react-native-win32_v0.62.5",
       "version": "0.62.5",
