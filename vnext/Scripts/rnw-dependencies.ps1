@@ -9,6 +9,9 @@ param(
     [String[]]$Tags = @('appDev')
 )
 
+# CODESYNC \packages\@react-native-windows\cli\src\runWindows\runWindows.ts
+$MarkerFile = "$env:LOCALAPPDATA\rnw-dependencies.txt"
+
 # Create a set to handle with case insensitivy of the tags
 $tagsToInclude = New-Object System.Collections.Generic.HashSet[string]([System.StringComparer]::OrdinalIgnorecase)
 foreach ($tag in $Tags) { $tagsToInclude.Add($tag) | Out-null }
@@ -181,7 +184,7 @@ $requirements = @(
         Name = 'NodeJS 12, 13 or 14 installed';
         Tags = @('appDev');
         Valid = CheckNode;
-        Install = { choco install -y nodejs.install --version=12.9.1 };
+        Install = { choco install -y nodejs-lts };
     },
     @{
         Name = 'Chrome';
@@ -287,6 +290,10 @@ foreach ($req in $requirements)
     }
 }
 
+if (Test-Path $MarkerFile) {
+    Remove-Item $MarkerFile
+}
+
 foreach ($req in $filteredRequirements)
 {
     Write-Host -NoNewline "Checking $($req.Name)    ";
@@ -324,6 +331,7 @@ if ($NeedsRerun -ne 0) {
     throw;
 } else {
     Write-Output "All mandatory requirements met";
+    $Tags | Out-File $MarkerFile
     return;
 }
 
