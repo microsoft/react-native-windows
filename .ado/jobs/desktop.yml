@@ -2,10 +2,10 @@ parameters:
   - name: buildEnvironment
     type: string
     default : PullRequest
-    values: 
-     - PullRequest 
-     - Continuous 
-     
+    values:
+     - PullRequest
+     - Continuous
+
 jobs:
   - job: Desktop
     variables:
@@ -19,6 +19,9 @@ jobs:
           (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
           (FullyQualifiedName!~WebSocketModule_)&
           (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
+      - name: Desktop.UnitTests.Filter
+        value: >
+          (FullyQualifiedName!~PreparedJavaScriptSourceTest)
     displayName: Desktop
     strategy:
       matrix:
@@ -71,7 +74,7 @@ jobs:
           project: vnext/ReactWindows-Desktop.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
-          
+
       - task: CmdLine@2
         displayName: Build react-native-win32 RNTester bundle
         inputs:
@@ -92,8 +95,10 @@ jobs:
           testSelector: testAssemblies
           testAssemblyVer2: |
             React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
+            ReactCommon.UnitTests/ReactCommon.UnitTests.exe
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          testFiltercriteria: $(Desktop.UnitTests.Filter)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
