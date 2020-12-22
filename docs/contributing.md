@@ -38,7 +38,7 @@ Run `yarn lint:fix` if making JS/TS changes.
 If you made API changes, run `yarn api` to update the auto-generated API docs.
 
 ### Provide changelog information
-Run `yarn change` in the root of the repo.
+Run `yarn change --branch upstream/master` in the root of the repo.
 
 ### Creating a Pull Request
 
