@@ -95,9 +95,6 @@
       <ExcludedFromBuild Condition="'$(EnableBeast)' == 0">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="BytecodeUnitTests.cpp" />
-    <ClCompile Include="ChakraCoreRuntimeUnitTests.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="EmptyUIManagerModule.cpp" />
     <ClCompile Include="JsiRuntimeUnitTests.cpp" />
     <ClCompile Include="LayoutAnimationTests.cpp" />

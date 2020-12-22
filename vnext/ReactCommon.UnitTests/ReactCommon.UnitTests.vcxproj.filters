@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\jsi\jsi\test\testlib.cpp">
+      <Filter>jsi\jsi\test</Filter>
+    </ClCompile>
+    <ClCompile Include="ChakraCoreRuntimeUnitTests.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\jsi\jsi\test\testlib.h">
+      <Filter>jsi\jsi\test</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="jsi">
+      <UniqueIdentifier>{cb6089d5-c5db-4090-93b4-2454ca9411bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jsi\jsi">
+      <UniqueIdentifier>{e7404bfd-2078-4f21-81dd-6740d2f30e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jsi\jsi\test">
+      <UniqueIdentifier>{1b90a59e-0d8e-43e4-92d7-a4f846a5716c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

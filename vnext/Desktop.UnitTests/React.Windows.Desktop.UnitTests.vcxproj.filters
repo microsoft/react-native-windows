@@ -58,9 +58,6 @@
     <ClCompile Include="JsiRuntimeUnitTests.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>
-    <ClCompile Include="ChakraCoreRuntimeUnitTests.cpp">
-      <Filter>Unit Tests</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
