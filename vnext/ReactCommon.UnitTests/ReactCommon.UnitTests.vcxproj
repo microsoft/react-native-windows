@@ -12,7 +12,7 @@
     </ProjectConfiguration>
     <!-- #2702: We need to figure out how we want to consume the Google Test'
     NuGet for Win32. For now, we do not build this project for Win32. -->
-    </ItemGroup>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{b0941079-7441-4a69-868c-fe5ec62c2e9e}</ProjectGuid>
     <UseV8>true</UseV8>
@@ -30,7 +30,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)Shared;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)Shared;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemGroup>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.h" />
@@ -38,6 +38,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\tests\ImageTest.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\tests\ViewTest.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="ChakraCoreRuntimeUnitTests.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">

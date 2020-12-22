@@ -3,16 +3,18 @@
   <ItemGroup>
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\jsi\jsi\test\testlib.cpp">
-      <Filter>jsi\jsi\test</Filter>
-    </ClCompile>
     <ClCompile Include="ChakraCoreRuntimeUnitTests.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.cpp" />
+    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\react\renderer\components\view\tests\ViewTest.cpp">
+      <Filter>react\render\components\view\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\react\renderer\components\image\tests\ImageTest.cpp">
+      <Filter>react\render\components\image\tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\jsi\jsi\test\testlib.h">
-      <Filter>jsi\jsi\test</Filter>
-    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -26,6 +28,27 @@
     </Filter>
     <Filter Include="jsi\jsi\test">
       <UniqueIdentifier>{1b90a59e-0d8e-43e4-92d7-a4f846a5716c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react">
+      <UniqueIdentifier>{3f10f518-fa16-4c4f-9d88-1abfdd912f69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\render">
+      <UniqueIdentifier>{f500d53c-7528-40cb-9768-6af72549e91a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\render\components">
+      <UniqueIdentifier>{31736348-c0d2-45b3-a772-43da6c48d3c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\render\components\view">
+      <UniqueIdentifier>{3e52b062-a70f-4046-8f51-6009f51402b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\render\components\view\tests">
+      <UniqueIdentifier>{3affad7d-2956-461f-93cf-bc4066681f12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\render\components\image">
+      <UniqueIdentifier>{f4c16e06-4016-43c7-a73e-0bc325d7ec3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\render\components\image\tests">
+      <UniqueIdentifier>{7c7f43d9-9977-4d60-818a-de8a19c2baa1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
