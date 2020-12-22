@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Disable JSUpToDateCheck in design builds, ensure projects like e2etest don't spit out the sentinel files to the root of the drive",
+  "packageName": "react-native-windows",
+  "email": "asklar@winse.microsoft.com",
+  "dependentChangeType": "patch"
+}
