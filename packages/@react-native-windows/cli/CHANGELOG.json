@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 19 Dec 2020 05:06:39 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.47",
+      "version": "0.0.0-canary.47",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Print error message when missing vswhere/msbuild",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "8657f47a22562fc126a29f6a648c2698edb704ce",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Dec 2020 05:07:19 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.46",
       "version": "0.0.0-canary.46",

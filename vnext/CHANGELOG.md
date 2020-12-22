@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 18 Dec 2020 19:23:58 GMT and should not be manually modified.
+This log was last generated on Sat, 19 Dec 2020 05:06:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.226
+
+Sat, 19 Dec 2020 05:06:39 GMT
+
+### Changes
+
+- Make package config more strict (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.225
 
