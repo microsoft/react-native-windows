@@ -45,7 +45,10 @@ std::vector<RuntimeFactory> runtimeGenerators() {
 
 } // namespace facebook::jsi
 
-INSTANTIATE_TEST_CASE_P(ChakraRuntimeTest_Base, JsiRuntimeUnitTests, ::testing::ValuesIn(facebook::jsi::runtimeGenerators()));
+INSTANTIATE_TEST_CASE_P(
+    ChakraRuntimeTest_Base,
+    JsiRuntimeUnitTests,
+    ::testing::ValuesIn(facebook::jsi::runtimeGenerators()));
 INSTANTIATE_TEST_CASE_P(
     ChakraRuntimeTest,
     JsiRuntimeUnitTests_Chakra,
