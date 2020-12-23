@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 23 Dec 2020 05:07:22 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.48",
+      "version": "0.0.0-canary.48",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Check whether dependencies have been installed",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "6426dbcfaadf0ceacc3e21c83a9aecc1ae17ac4b",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 19 Dec 2020 05:06:39 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.47",
       "version": "0.0.0-canary.47",

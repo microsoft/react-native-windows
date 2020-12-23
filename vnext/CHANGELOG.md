@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 19 Dec 2020 05:06:39 GMT and should not be manually modified.
+This log was last generated on Wed, 23 Dec 2020 05:07:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.227
+
+Wed, 23 Dec 2020 05:07:22 GMT
+
+### Changes
+
+- Disable JSUpToDateCheck in design builds, ensure projects like e2etest don't spit out the sentinel files to the root of the drive (asklar@winse.microsoft.com)
+- Check whether dependencies have been installed (asklar@winse.microsoft.com)
+- Update Nuget to 2.5.0 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.226
 
