@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Consolidate JSI projects",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
