@@ -122,7 +122,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\tests\FabricUIManagerTest.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="ChakraCoreRuntimeUnitTests.cpp" />
+    <ClCompile Include="JsiRuntimeGenerators.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="ChakraCoreRuntimeUnitTests.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\tests\RecoverableErrorTest.cpp">
       <Filter>cxxreact\tests</Filter>
     </ClCompile>
@@ -108,6 +107,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.cpp">
       <Filter>jsi\jsi\test</Filter>
     </ClCompile>
+    <ClCompile Include="JsiRuntimeGenerators.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
