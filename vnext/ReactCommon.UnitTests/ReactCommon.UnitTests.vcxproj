@@ -33,7 +33,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.h" />
-    <ClInclude Include="JsiRuntimeUnitTests.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

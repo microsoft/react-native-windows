@@ -1,5 +1,4 @@
-#include "JsiRuntimeUnitTests.h"
-
+#include <jsi/jsi/test/testlib.h>
 #include <JSI/ChakraRuntimeArgs.h>
 #include <JSI/ChakraRuntimeFactory.h>
 #include "MemoryTracker.h"

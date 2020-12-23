@@ -114,7 +114,6 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.h">
       <Filter>jsi\jsi\test</Filter>
     </ClInclude>
-    <ClInclude Include="JsiRuntimeUnitTests.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
