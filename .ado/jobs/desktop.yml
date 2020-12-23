@@ -24,8 +24,8 @@ jobs:
       # PreparedJavaScriptSourceTest  - Asserts/Fails under JSI/ChakraCore
       - name: Desktop.UnitTests.Filter
         value: >
-          (FullyQualifiedName!~HostFunctionTest)
-          (FullyQualifiedName!~HostObjectProtoTest)
+          (FullyQualifiedName!~HostFunctionTest)&
+          (FullyQualifiedName!~HostObjectProtoTest)&
           (FullyQualifiedName!~PreparedJavaScriptSourceTest)
     displayName: Desktop
     strategy:
