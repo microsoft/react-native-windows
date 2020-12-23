@@ -18,6 +18,7 @@ Sample applications are not covered.
 - [Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj](#Microsoft.ReactNative.Managed)
 - [Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems](#Microsoft.ReactNative.SharedManaged)
 - [ReactCommon\ReactCommon.vcxproj](#ReactCommon)
+- [ReactCommon.UnitTests\ReactCommon.UnitTests.vcxproj](#ReactCommon.UnitTests)
 - [Shared\Shared.vcxitems](#Microsoft.ReactNative.Shared)
 
 ## Common Projects
@@ -87,6 +88,11 @@ Set of isolated (mocked) tests for types defined in [React.Windows.Desktop](#Rea
 Set of component tests that validate functionality against external runtime components
 (i.e. networking servers, file system, React Native applications, external processes).\
 Validates [React.Windows.Desktop.DLL](#React.Windows.Desktop.DLL).
+
+### ReactCommon.UnitTests
+*Google Test Application*\
+Gathers tests within `react-native\ReactCommon`.\
+Its main purpose is to validate JSI with any given engine (V8, ChakraCore, etc).
 
 ### FollyWin32
 *Static Library*\
