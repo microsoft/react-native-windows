@@ -19,6 +19,7 @@
     DependsOnTargets="EnsureJavaScriptCodeUpToDateInputAndOutputs"
     Inputs="@(_EnsureJavaScriptCodeUpToDateInputFiles)"
     Outputs="@(_EnsureJavaScriptCodeUpToDateOutputFiles)"
+    Condition="'$(DesignTimeBuild)'==''"
     >
 
     <Message Text="Checking if yarn is 'up to date' by running a 'dry-run' version of `yarn install` and checking the exit code" />
