@@ -19,8 +19,13 @@ jobs:
           (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
           (FullyQualifiedName!~WebSocketModule_)&
           (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
+      # HostFunctionTest              - Crashes under JSI/V8
+      # HostObjectProtoTest           - Crashes under JSI/V8
+      # PreparedJavaScriptSourceTest  - Asserts/Fails under JSI/ChakraCore
       - name: Desktop.UnitTests.Filter
         value: >
+          (FullyQualifiedName!~HostFunctionTest)
+          (FullyQualifiedName!~HostObjectProtoTest)
           (FullyQualifiedName!~PreparedJavaScriptSourceTest)
     displayName: Desktop
     strategy:

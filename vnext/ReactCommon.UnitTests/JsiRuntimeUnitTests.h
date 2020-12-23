@@ -4,8 +4,7 @@
 
 #include <jsi/jsi.h>
 
-#include <gtest/gtest.h>
-
+// Standard Library
 #include <functional>
 #include <memory>
 
@@ -36,8 +35,5 @@ class JsiRuntimeUnitTests : public ::testing::TestWithParam<RuntimeFactory> {
   std::unique_ptr<Runtime> runtime;
   Runtime &rt;
 };
-
-// V8 doesn't currently pass all the tests (particularly around hostobjects), move those out into _Chakra for now
-class JsiRuntimeUnitTests_Chakra : public JsiRuntimeUnitTests {};
 
 } // namespace facebook::jsi
