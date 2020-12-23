@@ -88,7 +88,9 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\tests\traitCastTest.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\tests\DebugStringConvertibleTest.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\tests\DebugStringConvertibleTest.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)' != 'Debug'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\element\tests\ElementTest.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
