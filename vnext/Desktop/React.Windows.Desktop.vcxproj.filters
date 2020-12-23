@@ -28,6 +28,9 @@
     <Filter Include="Source Files\Modules">
       <UniqueIdentifier>{56988676-220f-43a7-b8b1-8ecc51158498}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\JSI">
+      <UniqueIdentifier>{c610d916-3a3d-4617-bab1-ddec02729037}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="..\Microsoft.ReactNative\IJSValueReader.idl">
@@ -160,6 +163,13 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowNode.cpp" />
+    <ClCompile Include="ShadowNodeRegistry.cpp" />
+    <ClCompile Include="ViewManager.cpp" />
+    <ClCompile Include="Modules\UIManagerModule.cpp" />
+    <ClCompile Include="JSI\ChakraJsiRuntime_core.cpp">
+      <Filter>Source Files\JSI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

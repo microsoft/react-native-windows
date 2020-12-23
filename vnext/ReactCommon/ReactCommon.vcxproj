@@ -154,6 +154,10 @@
     <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\TransactionTelemetry.cpp" />
     <!--
       Using Strict FloatingPointModel on x64 to workaround a compiler issue, See https://github.com/microsoft/react-native-windows/issues/4122
       Using a patched copy of Yoga due to https://github.com/microsoft/react-native-windows/issues/3994

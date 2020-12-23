@@ -60,7 +60,6 @@
         WIN32;
         BOOST_ASIO_HAS_IOCP;
         FOLLY_NO_CONFIG;
-        GTEST_LANG_CXX11=1;
         NOMINMAX;
         CHAKRACORE;
         RN_EXPORT=;

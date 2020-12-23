@@ -12,111 +12,96 @@ Sample applications are not covered.
 - [Desktop.UnitTests\React.Windows.Desktop.UnitTests.vcxproj](#React.Windows.Desktop.UnitTests)
 - [Folly\Folly.vcxproj](#Folly)
 - [FollyWin32\FollyWin32.vcxproj](#FollyWin32)
-- [IntegrationTestScripts\IntegrationTests.njsproj](#IntegrationTests-Node-Project)
 - [IntegrationTests\React.Windows.IntegrationTests.vcxproj](#React.Windows.IntegrationTests)
-- [JSI\Desktop\JSI.Desktop.vcxproj](#JSI.Desktop)
-- [JSI\Shared\JSI.Shared.vcxitems](#JSI.Shared)
-- [JSI\Universal\JSI.Universal.vcxproj](#JSI.Universal)
-- [JSI.Desktop.UnitTests\JSI.Desktop.UnitTests](#JSI.Desktop.UnitTests)
 - **[Microsoft.ReactNative\Microsoft.ReactNative.vcxproj](#Microsoft.ReactNative)**
 - [Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems](#Microsoft.ReactNative.Cxx)
 - [Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj](#Microsoft.ReactNative.Managed)
 - [Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems](#Microsoft.ReactNative.SharedManaged)
 - [ReactCommon\ReactCommon.vcxproj](#ReactCommon)
-- [Shared\Shared.vcxitems](#Shared)
+- [ReactCommon.UnitTests\ReactCommon.UnitTests.vcxproj](#ReactCommon.UnitTests)
+- [Shared\Shared.vcxitems](#Microsoft.ReactNative.Shared)
 
 ## Common Projects
 
 ### Common
-*Static Library*<br/>
-Functionality shared between React and JSI projects that do not depend on React or JSI functionality.
+*Static Library*\
+Functionality shared between React and JSI projects.
 
-### Shared
-*Shared Items (no build artifact)*<br/>
+### Microsoft.ReactNative.Shared
+*Shared Items (no build artifact)*\
 Holds sources common to both Windows variants, that require different build configuration
 (i.e. compiler flags, language standard).
 
 ### ReactCommon
-*Static Library*<br/>
-React Native core, cross-platform C++ types and interfaces.<br/>
-Sources provided as part of the `react-native` Node dependency. Not part of this repository.<br/>
+*Static Library*\
+React Native core, cross-platform C++ types and interfaces.\
+Sources provided as part of the `react-native` Node dependency. Not part of this repository.\
 See https://github.com/facebook/react-native/tree/v0.62.0/ReactCommon.
 
 ### Folly
-*Static Library*<br/>
-Folly variant type system for JavaScript/C++ interoperability.<br/>
+*Static Library*\
+Folly variant type system for JavaScript/C++ interoperability.\
 Sources provided as part of the `react-native` Node dependency. Not part of this repository.
 
 ### Chakra
-*Shared Items (no build artifact)*<br/>
+*Shared Items (no build artifact)*\
 ChakraCore bridging layer. May use different compiler flags between Windows variants.
 
-### JSI.Shared
-*Shared Items (no build artifact)*<br/>
-Code shared between [JSI\Desktop\JSI.Desktop.vcxproj](#JSI.Desktop) and [JSI\Universal\JSI.Universal.vcxproj](#JSI.Universal).
-
 ### Microsoft.ReactNative.Cxx
-*Shared Items (no build artifact)*<br/>
+*Shared Items (no build artifact)*\
 Contains helpers to simplify authoring C++/WinRT native modules on top of [Microsoft.ReactNative](#Microsoft.ReactNative).
 
 ### Microsoft.ReactNative.Managed
-*Managed Library*<br/>
+*Managed Library*\
 Contains helpers to simplify authoring C# native modules on top of [Microsoft.ReactNative](#Microsoft.ReactNative).
 
 ### Microsoft.ReactNative.SharedManaged
 Deprecated: This is still here so that customers get a specific error message on how to upgrade their project.
 
 ### React.Windows.IntegrationTests
-*Static Library*<br/>
+*Static Library*\
 Common framework for running out of process and/or full React instance testing.
 
 ### IntegrationTests (Node Project)
-*MSBuild Node project. For reading/editing purposes only (no build artifact)*<br/>
+*MSBuild Node project. For reading/editing purposes only (no build artifact)*\
 Set of JavaScript component tests for [RNTester](https://github.com/facebook/react-native/tree/v0.62.0/RNTester).
-Sources provided as part of the `react-native` Node dependency. Not part of this repository.<br/>
+Sources provided as part of the `react-native` Node dependency. Not part of this repository.\
 See https://github.com/facebook/react-native/tree/v0.62.0/IntegrationTests.
 
 ## Windows Desktop Projects
 
 ### React.Windows.Desktop
-*Static Library*<br/>
+*Static Library*\
 Set of Native Modules, View Managers and Executors for Windows Desktop.
 
 ### React.Windows.Desktop.DLL
-*Dynamic Library*<br/>
-Shared library that exports the intended public API surface for [React.Windows.Desktop](#React.Windows.Desktop).<br/>
+*Dynamic Library*\
+Shared library that exports the intended public API surface for [React.Windows.Desktop](#React.Windows.Desktop).\
 **Main artifact to use in Windows Desktop applications.**
 
 ### React.Windows.Desktop.UnitTests
-*VSTest Dynamic Library*<br/>
+*VSTest Dynamic Library*\
 Set of isolated (mocked) tests for types defined in [React.Windows.Desktop](#React.Windows.Desktop).
 
 ### React.Windows.Desktop.IntegrationTests
-*VSTest Dynamic Library*<br/>
+*VSTest Dynamic Library*\
 Set of component tests that validate functionality against external runtime components
-(i.e. networking servers, file system, React Native applications, external processes).<br/>
+(i.e. networking servers, file system, React Native applications, external processes).\
 Validates [React.Windows.Desktop.DLL](#React.Windows.Desktop.DLL).
 
-### JSI.Desktop
-*Static Library*<br/>
-ChakraCore based JSI::Runtime implementation.
-
-### JSI.Desktop.UnitTests
-*Google Test Executable*<br/>
-Set of unit tests for jsi::runtime.
+### ReactCommon.UnitTests
+*Google Test Application*\
+Gathers tests within `react-native\ReactCommon`.\
+Its main purpose is to validate JSI with any given engine (V8, ChakraCore, etc).
 
 ### FollyWin32
-*Static Library*<br/>
-Superset of Folly APIs only available and required by [React.Windows.Desktop](#React.Windows.Desktop).<br/>
+*Static Library*\
+Superset of Folly APIs only available and required by [React.Windows.Desktop](#React.Windows.Desktop).\
 Sources provided as part of the `react-native` Node dependency. Not part of this repository.
 
 ## Windows Universal Projects
 
 ### Microsoft.ReactNative
 *Windows Runtime Component*</br>
-The primary Windows Universal entry point and public API surface for React Native Windows.<br/>
+The primary Windows Universal entry point and public API surface for React Native Windows.\
 **Main artifact to use in Windows Universal applications.**
-
-### JSI.Universal
-*Static Library*<br/>
-Chakra based JSI::Runtime implementation.

@@ -1,7 +1,6 @@
-#include "JsiRuntimeUnitTests.h"
-
-#include "JSI/Shared/ChakraRuntimeArgs.h"
-#include "JSI/Shared/ChakraRuntimeFactory.h"
+#include <JSI/ChakraRuntimeArgs.h>
+#include <JSI/ChakraRuntimeFactory.h>
+#include <jsi/jsi/test/testlib.h>
 #include "MemoryTracker.h"
 #if defined(USE_V8)
 #include <V8JsiRuntime.h>
@@ -11,12 +10,9 @@
 // there.
 #include <Threading/MessageQueueThreadFactory.h>
 
-#include <gtest/gtest.h>
-
+// Standard Library
 #include <vector>
 
-using facebook::jsi::JsiRuntimeUnitTests;
-using facebook::jsi::JsiRuntimeUnitTests_Chakra;
 using facebook::jsi::Runtime;
 using facebook::jsi::RuntimeFactory;
 using facebook::react::CreateMemoryTracker;
@@ -27,8 +23,15 @@ using react::uwp::MakeJSQueueThread;
 
 // TODO: #2729 We need to add tests for ChakraCoreRuntime specific
 // behaviors such as ScriptStore. This may require us to bring back JSITestBase.
-
+namespace facebook::jsi {
 std::vector<RuntimeFactory> runtimeGenerators() {
+#if defined(USE_V8)
+  return {[]() -> std::unique_ptr<Runtime> {
+    v8runtime::V8RuntimeArgs args;
+
+    return v8runtime::makeV8Runtime(std::move(args));
+  }};
+#else
   return {[]() -> std::unique_ptr<Runtime> {
     ChakraRuntimeArgs args{};
 
@@ -40,20 +43,7 @@ std::vector<RuntimeFactory> runtimeGenerators() {
 
     return makeChakraRuntime(std::move(args));
   }};
+#endif // defined(USE_V8)
 }
 
-INSTANTIATE_TEST_CASE_P(ChakraRuntimeTest_Base, JsiRuntimeUnitTests, ::testing::ValuesIn(runtimeGenerators()));
-INSTANTIATE_TEST_CASE_P(ChakraRuntimeTest, JsiRuntimeUnitTests_Chakra, ::testing::ValuesIn(runtimeGenerators()));
-
-#if defined(USE_V8)
-
-RuntimeFactory getV8Runtime() {
-  return []() -> std::unique_ptr<Runtime> {
-    v8runtime::V8RuntimeArgs args;
-
-    return v8runtime::makeV8Runtime(std::move(args));
-  };
-}
-
-INSTANTIATE_TEST_CASE_P(V8RuntimeTest, JsiRuntimeUnitTests, ::testing::Values(getV8Runtime()));
-#endif
+} // namespace facebook::jsi
