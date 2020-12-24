@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 24 Dec 2020 05:06:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.228",
+      "version": "0.0.0-canary.228",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Consolidate JSI projects",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "18c8a47af1327a71f27243de8d8852c7973cab40",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 23 Dec 2020 05:07:22 GMT",
       "tag": "react-native-windows_v0.0.0-canary.227",
       "version": "0.0.0-canary.227",
