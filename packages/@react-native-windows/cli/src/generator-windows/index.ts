@@ -240,7 +240,7 @@ export async function copyProjectTemplateAndReplace(
 
   const templateVars: Record<string, any> = {
     useMustache: true,
-    regExpPatternsToRemove: ['//\\sclang-format\\s(on|off)\\s'],
+    regExpPatternsToRemove: [],
 
     name: newProjectName,
     namespace: namespace,

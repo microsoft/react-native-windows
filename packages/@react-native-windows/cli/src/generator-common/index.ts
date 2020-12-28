@@ -43,6 +43,22 @@ export function resolveContents(
 ): string {
   let content = fs.readFileSync(srcPath, 'utf8');
 
+  if (content.includes('\r\n')) {
+    // CRLF file, make sure multiline replacements are also CRLF
+    for (const key of Object.keys(replacements)) {
+      if (typeof replacements[key] === 'string') {
+        replacements[key] = replacements[key].replace(/(?<!\r)\n/g, '\r\n');
+      }
+    }
+  } else {
+    // LF file, make sure multiline replacements are also LF
+    for (const key of Object.keys(replacements)) {
+      if (typeof replacements[key] === 'string') {
+        replacements[key] = replacements[key].replace(/\r\n/g, '\n');
+      }
+    }
+  }
+
   if (replacements.useMustache) {
     content = mustache.render(content, replacements);
     (replacements.regExpPatternsToRemove || []).forEach(regexPattern => {
