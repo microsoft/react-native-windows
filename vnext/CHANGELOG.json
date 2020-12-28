@@ -2,6 +2,114 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 24 Dec 2020 05:06:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.228",
+      "version": "0.0.0-canary.228",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Consolidate JSI projects",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "18c8a47af1327a71f27243de8d8852c7973cab40",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Dec 2020 05:07:22 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.227",
+      "version": "0.0.0-canary.227",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Disable JSUpToDateCheck in design builds, ensure projects like e2etest don't spit out the sentinel files to the root of the drive",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "edd958e99b69df5404fea4aee51a81be1a868118",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Check whether dependencies have been installed",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "6426dbcfaadf0ceacc3e21c83a9aecc1ae17ac4b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update Nuget to 2.5.0",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "28c89fcab5dd7959d52103677df10a812dca3387",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 19 Dec 2020 05:06:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.226",
+      "version": "0.0.0-canary.226",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make package config more strict",
+            "author": "dannyvv@microsoft.com",
+            "commit": "a0cee0f7c33a0fb8a59f897c2873ada727f07555",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 18 Dec 2020 19:23:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.225",
+      "version": "0.0.0-canary.225",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Specify full path when bundling",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "70bcb8ce07d0933c86e502126568feb3738053f5",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix tabIndex property for Button",
+            "author": "igklemen@microsoft.com",
+            "commit": "0ea24437ec44ddf53422052f2b1b0bd4fc9e6c8c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Show HRESULT code as part of error message",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "3ab97beb8e79958d564b27fa5219e2c55bd6f5e9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "In Xaml, IsTabStop makes a control be able to receive focus or not so we also need to set it when IsFocusable is set.",
+            "author": "lamdoan@microsoft.com",
+            "commit": "3af5ca95b3cb631b982329feca896fc6c8dce0cc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix RedBox on topMouseLeave event.",
+            "author": "igklemen@microsoft.com",
+            "commit": "70b36b6618bd973535ece0470385022c2cf17e8a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add onPressIn / onPressOut events to TextInput",
+            "author": "igklemen@microsoft.com",
+            "commit": "fd48c99e5e6b1fefbcdaf05fe1c61489474880a1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix facebook::jsi::Runtime lifetime for ABI JSI",
+            "author": "vmorozov@microsoft.com",
+            "commit": "1b65c3be0bf26bef94602792853df5a5952a39d5",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Dec 2020 05:04:10 GMT",
       "tag": "react-native-windows_v0.0.0-canary.224",
       "version": "0.0.0-canary.224",

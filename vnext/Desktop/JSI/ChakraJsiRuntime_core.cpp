@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ChakraRuntime.h"
-#include "ChakraRuntimeFactory.h"
+#include <JSI/ByteArrayBuffer.h>
+#include <JSI/ChakraRuntime.h>
+#include <JSI/ChakraRuntimeFactory.h>
 
 #include <cxxreact/MessageQueueThread.h>
-#include "ByteArrayBuffer.h"
 #include "Unicode.h"
 
 // This file contains non-edge-mode (or win32) implementations.

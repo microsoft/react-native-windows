@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Fri, 18 Dec 2020 19:23:58 GMT",
+      "tag": "react-native-platform-override_v0.4.5",
+      "version": "0.4.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix missing dependency / race condition in pacakge.json",
+            "author": "dannyvv@microsoft.com",
+            "commit": "697dfc78e9a443756bf44b9cfd9c4c67cff82d0f",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Dec 2020 03:20:37 GMT",
       "tag": "react-native-platform-override_v0.4.4",
       "version": "0.4.4",

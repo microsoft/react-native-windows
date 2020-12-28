@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
+This log was last generated on Fri, 18 Dec 2020 19:23:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.4.5
+
+Fri, 18 Dec 2020 19:23:58 GMT
+
+### Patches
+
+- Fix missing dependency / race condition in pacakge.json (dannyvv@microsoft.com)
 
 ## 0.4.4
 

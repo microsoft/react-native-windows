@@ -355,6 +355,22 @@ void TextInputShadowNode::registerEvents() {
           }
         });
   }
+
+  control.as<xaml::UIElement>().AddHandler(
+      xaml::UIElement::PointerPressedEvent(),
+      winrt::box_value(xaml::Input::PointerEventHandler([=](auto &&, xaml::Input::PointerRoutedEventArgs const &args) {
+        folly::dynamic eventData = folly::dynamic::object("target", tag);
+        GetViewManager()->GetReactContext().DispatchEvent(tag, "topTextInputPressIn", std::move(eventData));
+      })),
+      true);
+
+  control.as<xaml::UIElement>().AddHandler(
+      xaml::UIElement::PointerReleasedEvent(),
+      winrt::box_value(xaml::Input::PointerEventHandler([=](auto &&, xaml::Input::PointerRoutedEventArgs const &args) {
+        folly::dynamic eventData = folly::dynamic::object("target", tag);
+        GetViewManager()->GetReactContext().DispatchEvent(tag, "topTextInputPressOut", std::move(eventData));
+      })),
+      true);
 }
 
 xaml::Shapes::Shape TextInputShadowNode::FindCaret(xaml::DependencyObject element) {
@@ -688,6 +704,8 @@ void TextInputViewManager::GetExportedCustomDirectEventTypeConstants(
                                L"SelectionChange",
                                L"ContentSizeChange",
                                L"KeyPress",
+                               L"PressIn",
+                               L"PressOut",
                                L"OnScroll",
                                L"SubmitEditing"};
 
