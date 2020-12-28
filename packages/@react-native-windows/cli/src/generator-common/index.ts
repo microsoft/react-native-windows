@@ -47,7 +47,7 @@ export function resolveContents(
     // CRLF file, make sure multiline replacements are also CRLF
     for (const key of Object.keys(replacements)) {
       if (typeof replacements[key] === 'string') {
-        replacements[key] = replacements[key].replace(/([^\r]?)\n/g, '$1\r\n');
+        replacements[key] = replacements[key].replace(/(?<!\r)\n/g, '\r\n');
       }
     }
   } else {

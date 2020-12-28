@@ -371,7 +371,6 @@ async function updateAutoLink(
 
       const cppContents = generatorCommon.resolveContents(srcCppFile, {
         useMustache: true,
-        regExpPatternsToRemove: [new RegExp('//\\sclang-format\\s(on|off)\\s*')],  // CODESYNC: vnext\local-cli\generator-windows\index.js
         autolinkCppIncludes: cppIncludes,
         autolinkCppPackageProviders: cppPackageProviders,
       });
