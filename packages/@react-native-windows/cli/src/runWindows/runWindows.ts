@@ -94,6 +94,10 @@ async function runWindows(
   delete process.env.NPM_CONFIG_CACHE;
   delete process.env.NPM_CONFIG_PREFIX;
 
+  const hasRunRnwDependencies =
+    process.env.LocalAppData &&
+    fs.existsSync(path.join(process.env.LocalAppData, 'rnw-dependencies.txt')); // CODESYNC \vnext\scripts\rnw-dependencies.ps1
+
   if (options.info) {
     try {
       const output = await info.getEnvironmentInfo();
@@ -115,6 +119,22 @@ async function runWindows(
   } catch (e) {
     Telemetry.client?.trackException({exception: e});
     runWindowsError = e;
+    if (!hasRunRnwDependencies) {
+      const rnwPkgJsonPath = require.resolve(
+        'react-native-windows/package.json',
+        {
+          paths: [process.cwd(), __dirname],
+        },
+      );
+      const rnwDependenciesPath = path.join(
+        path.dirname(rnwPkgJsonPath),
+        'scripts/rnw-dependencies.ps1',
+      );
+
+      newError(
+        `Please install the necessary dependencies by running ${rnwDependenciesPath} from an elevated PowerShell prompt.\nFor more information, go to http://aka.ms/rnw-deps`,
+      );
+    }
     return setExitProcessWithError(options.logging);
   } finally {
     Telemetry.client?.trackEvent({
@@ -153,6 +173,7 @@ async function runWindows(
         diskFree: getDiskFreeSpace(__dirname),
         cpus: cpus().length,
         project: await getAnonymizedProjectName(config.root),
+        hasRunRnwDependencies: hasRunRnwDependencies,
       },
     });
     Telemetry.client?.flush();
@@ -226,7 +247,8 @@ async function runWindowsInternal(
         verbose,
         true, // preRelease
       );
-    } catch {
+    } catch (e) {
+      newError(e.message);
       throw error;
     }
   }

@@ -1,8 +1,48 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 09 Dec 2020 05:07:19 GMT and should not be manually modified.
+This log was last generated on Thu, 24 Dec 2020 05:06:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.228
+
+Thu, 24 Dec 2020 05:06:00 GMT
+
+### Changes
+
+- Consolidate JSI projects (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.227
+
+Wed, 23 Dec 2020 05:07:22 GMT
+
+### Changes
+
+- Disable JSUpToDateCheck in design builds, ensure projects like e2etest don't spit out the sentinel files to the root of the drive (asklar@winse.microsoft.com)
+- Check whether dependencies have been installed (asklar@winse.microsoft.com)
+- Update Nuget to 2.5.0 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.226
+
+Sat, 19 Dec 2020 05:06:39 GMT
+
+### Changes
+
+- Make package config more strict (dannyvv@microsoft.com)
+
+## 0.0.0-canary.225
+
+Fri, 18 Dec 2020 19:23:58 GMT
+
+### Changes
+
+- Specify full path when bundling (asklar@winse.microsoft.com)
+- Fix tabIndex property for Button (igklemen@microsoft.com)
+- Show HRESULT code as part of error message (julio.rocha@microsoft.com)
+- In Xaml, IsTabStop makes a control be able to receive focus or not so we also need to set it when IsFocusable is set. (lamdoan@microsoft.com)
+- Fix RedBox on topMouseLeave event. (igklemen@microsoft.com)
+- Add onPressIn / onPressOut events to TextInput (igklemen@microsoft.com)
+- Fix facebook::jsi::Runtime lifetime for ABI JSI (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.224
 

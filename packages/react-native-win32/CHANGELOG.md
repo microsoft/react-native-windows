@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 11 Dec 2020 05:05:56 GMT and should not be manually modified.
+This log was last generated on Fri, 18 Dec 2020 19:23:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.68
+
+Fri, 18 Dec 2020 19:23:58 GMT
+
+### Changes
+
+- Add target prop to AccessibilityAnnotationInfo (krsiler@microsoft.com)
 
 ## 0.0.0-canary.67
 
