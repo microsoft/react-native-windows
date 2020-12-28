@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 21 Dec 2020 15:06:18 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Dec 2020 15:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.20
+
+Mon, 28 Dec 2020 15:05:53 GMT
+
+### Patches
+
+- [0.62] Make package config more strict (dannyvv@microsoft.com)
 
 ## 0.62.19
 

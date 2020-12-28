@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Dec 2020 15:05:53 GMT",
+      "tag": "react-native-windows_v0.62.20",
+      "version": "0.62.20",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.62] Make package config more strict",
+            "author": "dannyvv@microsoft.com",
+            "commit": "cffd205226a662320bb22b25fcb3cec13c6066d4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Dec 2020 15:06:18 GMT",
       "tag": "react-native-windows_v0.62.19",
       "version": "0.62.19",
