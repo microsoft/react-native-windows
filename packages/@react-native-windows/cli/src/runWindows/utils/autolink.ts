@@ -48,26 +48,6 @@ function verboseMessage(message: any, verbose: boolean) {
 }
 
 /**
- * Loads a source template file and performs the given replacements, normalizing CRLF.
- * @param srcFile Path to the source file.
- * @param replacements e.g. {'TextToBeReplaced': 'Replacement'}
- * @return The contents of the file with the replacements applied.
- */
-function getNormalizedContents(
-  srcFile: string,
-  replacements: generatorCommon.Replacements,
-) {
-  // Template files are CRLF, JS-generated replacements are LF, normalize replacements to CRLF
-  for (var key in replacements) {
-    replacements[key] = replacements[key].replace(/\n/g, '\r\n');
-  }
-
-  replacements.useMustache = true;
-
-  return generatorCommon.resolveContents(srcFile, replacements);
-}
-
-/**
  * Updates the target file with the expected contents if it's different.
  * @param filePath Path to the target file to update.
  * @param expectedContents The expected contents of the file.
@@ -286,7 +266,7 @@ async function updateAutoLink(
       }
     }
 
-    // Generating cs/h files for app code consumption
+    // Generating cs/cpp files for app code consumption
     if (projectLang === 'cs') {
       let csUsingNamespaces = '';
       let csReactPackageProviders = '';
@@ -318,7 +298,8 @@ async function updateAutoLink(
         verbose,
       );
 
-      const csContents = getNormalizedContents(srcCsFile, {
+      const csContents = generatorCommon.resolveContents(srcCsFile, {
+        useMustache: true,
         autolinkCsUsingNamespaces: csUsingNamespaces,
         autolinkCsReactPackageProviders: csReactPackageProviders,
       });
@@ -368,7 +349,8 @@ async function updateAutoLink(
         verbose,
       );
 
-      const cppContents = getNormalizedContents(srcCppFile, {
+      const cppContents = generatorCommon.resolveContents(srcCppFile, {
+        useMustache: true,
         autolinkCppIncludes: cppIncludes,
         autolinkCppPackageProviders: cppPackageProviders,
       });
@@ -413,7 +395,8 @@ async function updateAutoLink(
       verbose,
     );
 
-    const propsContents = getNormalizedContents(srcPropsFile, {
+    const propsContents = generatorCommon.resolveContents(srcPropsFile, {
+      useMustache: true,
       autolinkPropertiesForProps: propertiesForProps,
     });
 
@@ -462,7 +445,8 @@ async function updateAutoLink(
       verbose,
     );
 
-    const targetContents = getNormalizedContents(srcTargetFile, {
+    const targetContents = generatorCommon.resolveContents(srcTargetFile, {
+      useMustache: true,
       autolinkProjectReferencesForTargets: projectReferencesForTargets,
     });
 
