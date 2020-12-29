@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 29 Dec 2020 05:06:55 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.49",
+      "version": "0.0.0-canary.49",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix newline issues in new cli project generated files",
+            "author": "jthysell@microsoft.com",
+            "commit": "0f148d489cfc3806fa44a06a61cfe07ba42b17d3",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 23 Dec 2020 05:07:22 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.48",
       "version": "0.0.0-canary.48",

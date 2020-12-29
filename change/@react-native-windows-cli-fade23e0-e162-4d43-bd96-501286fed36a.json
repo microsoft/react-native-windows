@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix newline issues in new cli project generated files",
-  "packageName": "@react-native-windows/cli",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
