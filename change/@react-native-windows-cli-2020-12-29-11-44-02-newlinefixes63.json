@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "[0.63] Fix newline issues in new cli project generated files (#6768)",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-12-29T19:44:02.267Z"
+}
