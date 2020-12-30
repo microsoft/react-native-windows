@@ -3,6 +3,7 @@
 
 #include <JSI/ByteArrayBuffer.h>
 #include <JSI/ChakraRuntime.h>
+#include <cxxreact/MessageQueueThread.h>
 #include "Unicode.h"
 
 #if !defined(CHAKRACORE)
@@ -11,7 +12,25 @@
 namespace Microsoft::JSI {
 
 void ChakraRuntime::setupNativePromiseContinuation() noexcept {
-  // NOP
+  JsSetPromiseContinuationCallback(PromiseContinuationCallback, this);
+}
+
+// ES6 Promise callback
+void CALLBACK ChakraRuntime::PromiseContinuationCallback(JsValueRef funcRef, void *callbackState) noexcept {
+  ChakraRuntime *runtime = static_cast<ChakraRuntime *>(callbackState);
+  runtime->PromiseContinuation(funcRef);
+}
+
+void ChakraRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
+  if (runtimeArgs().jsQueue) {
+    JsAddRef(funcRef, nullptr);
+    runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
+      JsValueRef undefinedValue;
+      JsGetUndefinedValue(&undefinedValue);
+      ChakraVerifyJsErrorElseThrow(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
+      JsRelease(funcRef, nullptr);
+    });
+  }
 }
 
 void ChakraRuntime::startDebuggingIfNeeded() {

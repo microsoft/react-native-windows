@@ -12,6 +12,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp">
+      <Filter>TurboModule</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.cpp">
+      <Filter>TurboModule</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ReactCommon\TurboModuleUtils.cpp">
+      <Filter>TurboModule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
@@ -112,7 +121,22 @@
     <ClInclude Include="$(JSI_SourcePath)\jsi\instrumentation.h">
       <Filter>JSI</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiApi.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h">
+      <Filter>TurboModule</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h">
+      <Filter>TurboModule</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.h">
+      <Filter>TurboModule</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleProvider.h">
+      <Filter>TurboModule</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactCommon\TurboModuleUtils.h">
+      <Filter>TurboModule</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.h">
       <Filter>JSI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -123,5 +147,11 @@
     <Filter Include="UI">
       <UniqueIdentifier>{acac5f8a-4b6a-4139-9b74-6e3c36aceb20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TurboModule">
+      <UniqueIdentifier>{b5c0294c-d72f-44fa-8509-369f7d3e4a56}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)README.md" />
   </ItemGroup>
 </Project>

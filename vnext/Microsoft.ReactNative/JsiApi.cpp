@@ -23,22 +23,6 @@ struct JsiPreparedJavaScript : JsiPreparedJavaScriptT<JsiPreparedJavaScript> {
   std::shared_ptr<facebook::jsi::PreparedJavaScript const> m_js;
 };
 
-// Wraps up the IJsiHostObject
-struct HostObjectWrapper : facebook::jsi::HostObject {
-  HostObjectWrapper(Microsoft::ReactNative::IJsiHostObject const &hostObject) noexcept;
-
-  facebook::jsi::Value get(facebook::jsi::Runtime &runtime, const facebook::jsi::PropNameID &name) override;
-  void set(facebook::jsi::Runtime &, const facebook::jsi::PropNameID &name, const facebook::jsi::Value &value) override;
-  std::vector<facebook::jsi::PropNameID> getPropertyNames(facebook::jsi::Runtime &runtime) override;
-
-  Microsoft::ReactNative::IJsiHostObject const &Get() const noexcept {
-    return m_hostObject;
-  }
-
- private:
-  Microsoft::ReactNative::IJsiHostObject m_hostObject;
-};
-
 struct JsiBufferWrapper : facebook::jsi::Buffer {
   JsiBufferWrapper(array_view<const uint8_t> bytes) : m_bytes{bytes} {}
 
