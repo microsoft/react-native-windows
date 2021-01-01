@@ -9,18 +9,6 @@
 #include <unordered_map>
 #include "winrt/Microsoft.ReactNative.h"
 
-// facebook::jsi::Runtime hides all methods that we need to call.
-// We "open" them up here by redeclaring the private and protected keywords.
-#pragma push_macro("private")
-#pragma push_macro("protected")
-#define private public
-#define protected public
-#include "jsi/jsi.h"
-#undef protected
-#undef private
-#pragma pop_macro("protected")
-#pragma pop_macro("private")
-
 #include "ChakraRuntimeHolder.h"
 
 namespace facebook::jsi {
@@ -51,7 +39,7 @@ struct JsiError : JsiErrorT<JsiError> {
 };
 
 // Wraps up the IJsiHostObject
-struct HostObjectWrapper : facebook::jsi::HostObject {
+struct HostObjectWrapper final : facebook::jsi::HostObject {
   HostObjectWrapper(Microsoft::ReactNative::IJsiHostObject const &hostObject) noexcept;
 
   facebook::jsi::Value get(facebook::jsi::Runtime &runtime, const facebook::jsi::PropNameID &name) override;
@@ -65,6 +53,8 @@ struct HostObjectWrapper : facebook::jsi::HostObject {
  private:
   Microsoft::ReactNative::IJsiHostObject m_hostObject;
 };
+
+struct RuntimeAccessor;
 
 struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   JsiRuntime(
@@ -179,6 +169,7 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
  private:
   std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> m_runtimeHolder;
   std::shared_ptr<facebook::jsi::Runtime> m_runtime;
+  RuntimeAccessor *m_runtimeAccessor{};
   std::mutex m_mutex;
   ReactNative::JsiError m_error{nullptr};
 
