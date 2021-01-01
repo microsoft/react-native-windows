@@ -5,7 +5,6 @@
 #include "AutolinkedNativeModules.g.h"
 #include "ReactPackageProvider.h"
 
-// clang-format off
 using namespace winrt::{{ namespaceCpp }};
 using namespace winrt::{{ namespaceCpp }}::implementation;
 using namespace winrt;
