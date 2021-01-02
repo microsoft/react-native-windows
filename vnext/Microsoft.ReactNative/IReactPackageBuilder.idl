@@ -20,23 +20,24 @@ namespace Microsoft.ReactNative
 #endif
 
   [webhosthidden]
-  DOC_STRING("Build ReactNative package with the set of native modules and view managers.")
+  DOC_STRING("Builds ReactNative package with the set of native modules and view managers.")
   interface IReactPackageBuilder
   {
-    DOC_STRING("Add a custom native module.  See @ReactModuleProvider.")
+    DOC_STRING("Adds a custom native module.  See @ReactModuleProvider.")
     void AddModule(String moduleName, ReactModuleProvider moduleProvider);
 
 #ifndef CORE_ABI
-    DOC_STRING("Add a custom native module.  See @ReactViewManagerProvider.")
+    DOC_STRING("Adds a custom view manager.  See @ReactViewManagerProvider.")
     void AddViewManager(String viewManagerName, ReactViewManagerProvider viewManagerProvider);
 #endif
   }
 
   [webhosthidden]
+  [experimental]
   DOC_STRING("Experimental extensions to the @IReactPackageBuilder.")
   interface IReactPackageBuilderExperimental requires IReactPackageBuilder
   {
-    DOC_STRING("Add a custom TurboModule that uses direct access to JS Engine API.")
+    DOC_STRING("Adds a custom TurboModule that uses direct access to JS Engine API.")
     void AddTurboModule(String moduleName, ReactModuleProvider moduleProvider);
   }
 } // namespace Microsoft.ReactNative

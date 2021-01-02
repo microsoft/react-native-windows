@@ -12,7 +12,7 @@
 #include <cassert>
 #include <string>
 
-// RNW changes: commended out the unused include that creates unnecessary dependency on folly
+// RNW changes: commented out the unused include that creates unnecessary dependency on Folly.
 //#include <folly/Optional.h>
 #include <jsi/jsi.h>
 

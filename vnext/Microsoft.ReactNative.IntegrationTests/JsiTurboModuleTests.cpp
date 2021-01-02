@@ -23,6 +23,7 @@
 #include <TurboModuleProvider.h> // It is RNW specific
 
 #include <condition_variable>
+#include <limits>
 #include <mutex>
 #include <sstream>
 #include <string>
@@ -338,10 +339,10 @@ TEST_CLASS (JsiTurboModuleTests) {
         TestAction{"getBool result", false},
         TestAction{"getNumber called", 5.0},
         TestAction{"getNumber result", 5.0},
-        TestAction{"getNumber called", NAN},
-        TestAction{"getNumber result", NAN},
-        TestAction{"getNumber called", INFINITY},
-        TestAction{"getNumber result", INFINITY},
+        TestAction{"getNumber called", std::numeric_limits<double>::quiet_NaN()},
+        TestAction{"getNumber result", std::numeric_limits<double>::quiet_NaN()},
+        TestAction{"getNumber called", std::numeric_limits<double>::infinity()},
+        TestAction{"getNumber result", std::numeric_limits<double>::infinity()},
         TestAction{"getString called", "Hello"},
         TestAction{"getString result", "Hello"},
         TestAction{"getString called", ""},
