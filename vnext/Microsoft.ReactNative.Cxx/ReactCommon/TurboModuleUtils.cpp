@@ -1,4 +1,6 @@
 // This file is a copy from react-native NPM package to avoid dependency on folly.
+// It must be removed after the TurboModuleUtils.h file is fixed in react-native repo:
+// https://github.com/facebook/react-native/pull/30672
 
 /*
  * Copyright (c) Facebook, Inc. and its affiliates.

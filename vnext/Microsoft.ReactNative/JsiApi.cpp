@@ -43,6 +43,8 @@ struct JsiBufferWrapper : facebook::jsi::Buffer {
 // Helper methods
 //===========================================================================
 
+// PointerAccessor allows accessing protected ptr_ value of facebook::jsi::Pointer.
+// It contains all functions that use the protected ptr_ value.
 struct PointerAccessor : facebook::jsi::Pointer {
   static PointerAccessor const &AsPointerAccessor(facebook::jsi::Pointer const &pointer) noexcept {
     return static_cast<PointerAccessor const &>(pointer);
@@ -92,6 +94,10 @@ struct PointerAccessor : facebook::jsi::Pointer {
   }
 };
 
+// ValueAccessor provides access to private fields of facebook::jsi::Value.
+// We expect it to have the same layout as facebook::jsi::Value.
+// It is ugly, but faster than using the facebook::jsi::Value public API when we
+// convert between JsiValueRef and facebook::jsi::Value.
 struct ValueAccessor {
   static JsiValueRef ToJsiValueData(facebook::jsi::Value const &value) noexcept {
     ValueAccessor const &accessor = reinterpret_cast<ValueAccessor const &>(value);

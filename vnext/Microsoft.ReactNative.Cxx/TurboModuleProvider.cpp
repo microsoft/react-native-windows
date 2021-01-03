@@ -15,8 +15,11 @@ struct AbiCallInvoker final : facebook::react::CallInvoker {
   }
 
   void invokeSync(std::function<void()> &&func) override {
+    // Move the func into the local value to make sure it is destroyed here after the execution.
+    std::function<void()> localFunc{std::move(func)};
+
     if (m_jsDispatcher.HasThreadAccess()) {
-      func();
+      localFunc();
     } else {
       std::mutex mutex;
       std::condition_variable cv;
@@ -25,10 +28,10 @@ struct AbiCallInvoker final : facebook::react::CallInvoker {
 
       auto lock = std::unique_lock{mutex};
 
-      m_jsDispatcher.Post([&func, &mutex, &cv, &completed, &ex]() {
+      m_jsDispatcher.Post([&localFunc, &mutex, &cv, &completed, &ex]() {
         // Since this method is synchronous, we catch all func exceptions and rethrow them in this thread.
         try {
-          func();
+          localFunc();
         } catch (...) {
           ex = std::current_exception();
         }
@@ -44,9 +47,6 @@ struct AbiCallInvoker final : facebook::react::CallInvoker {
         std::rethrow_exception(ex);
       }
     }
-
-    // Since func is passed as an r-value, we want to clean it up in this method as we would move the value.
-    func = nullptr;
   }
 
  private:
