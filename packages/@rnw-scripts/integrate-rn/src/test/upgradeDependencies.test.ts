@@ -806,6 +806,23 @@ test('Generic package (Newer repo-config devDependency)', () => {
   expectSortedDeps(deps);
 });
 
+test('RN library (Wildcard peer dependency unchanged)', () => {
+  const libraryDeps: LocalPackageDeps = {
+    packageName: '@react-native/tester',
+    peerDependencies: {
+      'react-native': '*',
+    },
+    outOfTreePlatform: false,
+  };
+
+  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
+    libraryDeps,
+  ]);
+
+  expect(deps.length).toEqual(1);
+  expect(deps[0]).toEqual(libraryDeps);
+});
+
 test('Mixed types', () => {
   const outOfTreeDeps: LocalPackageDeps = {
     ...olderReactNative,

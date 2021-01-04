@@ -135,6 +135,13 @@ type ButtonProps = $ReadOnly<{|
     Used to locate this view in end-to-end tests.
    */
   testID?: ?string,
+
+  // [Windows
+  /**
+    Set the order in which elements receive focus when the user navigates through them by pressing Tab.
+   */
+  tabIndex?: ?number,
+  // Windows]
 |}>;
 
 /**
@@ -264,6 +271,7 @@ class Button extends React.Component<ButtonProps> {
       nextFocusUp,
       disabled,
       testID,
+      tabIndex,
     } = this.props;
     const buttonStyles = [styles.button];
     const textStyles = [styles.text];
@@ -304,6 +312,7 @@ class Button extends React.Component<ButtonProps> {
         testID={testID}
         disabled={disabled}
         onPress={onPress}
+        tabIndex={tabIndex}
         touchSoundDisabled={touchSoundDisabled}>
         <View style={buttonStyles}>
           <Text style={textStyles} disabled={disabled}>

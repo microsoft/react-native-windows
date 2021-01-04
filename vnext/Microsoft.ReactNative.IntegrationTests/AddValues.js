@@ -6,7 +6,10 @@ class TestHostModuleFunctions {
     }
 }
 
-global.__fbBatchedBridge.registerLazyCallableModule('TestHostModuleFunctions', () => new TestHostModuleFunctions());
+// Accessing TestHostModule has a side effect of initializing global.__fbBatchedBridge
+if (NativeModules.TestHostModule) {
+  global.__fbBatchedBridge.registerLazyCallableModule('TestHostModuleFunctions', () => new TestHostModuleFunctions());
 
-// Native modules are created on demand from JavaScript code.
-NativeModules.TestHostModule.start();
+  // Native modules are created on demand from JavaScript code.
+  NativeModules.TestHostModule.start();
+}

@@ -2,6 +2,96 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "react-native-windows-init_v0.1.42",
+      "version": "0.1.42",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow unreleased RNW versions with react-native-windows-init --useDevMode",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fa34591ac86ea25e1e92a807864ba71480046a27",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 04 Dec 2020 00:10:06 GMT",
+      "tag": "react-native-windows-init_v0.1.41",
+      "version": "0.1.41",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Force republish",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d44b2f23bec2319aa2d4fe7ac0aeadd772b9d579",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Dec 2020 21:43:48 GMT",
+      "tag": "react-native-windows-init_v0.1.40",
+      "version": "0.1.40",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update cli telemetry defaults",
+            "author": "jthysell@microsoft.com",
+            "commit": "6b349f3d89cc055157b3a8d0f0e75622082878c6",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Dec 2020 05:05:07 GMT",
+      "tag": "react-native-windows-init_v0.1.38",
+      "version": "0.1.38",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use strings for telem exit codes",
+            "author": "ngerlem@microsoft.com",
+            "commit": "55f266b1c6257b5503122b5fea8e1fa663127891",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "react-native-windows-init_v0.1.37",
+      "version": "0.1.37",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "react-native-windows-init_v0.1.36",
+      "version": "0.1.36",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Nov 2020 05:05:57 GMT",
       "tag": "react-native-windows-init_v0.1.35",
       "version": "0.1.35",

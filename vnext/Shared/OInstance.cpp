@@ -18,7 +18,7 @@
 #include "Chakra/ChakraExecutor.h"
 #include "Chakra/ChakraHelpers.h"
 #include "Chakra/ChakraUtils.h"
-#include "JSI/Shared/RuntimeHolder.h"
+#include "JSI/RuntimeHolder.h"
 
 #include <cxxreact/MessageQueueThread.h>
 #include <cxxreact/ModuleRegistry.h>
@@ -183,7 +183,8 @@ class OJSIExecutorFactory : public JSExecutorFactory {
                        const std::string &name, const jsi::Value *
                        /*schema*/) -> std::shared_ptr<TurboModule> { return turboModuleManager->getModule(name); };
 
-    TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::function(binding));
+    TurboModuleBinding::install(
+        *runtimeHolder_->getRuntime(), std::function(binding), false /*enableJSTurboModuleCodegen*/);
 
     // init TurboModule
     for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {

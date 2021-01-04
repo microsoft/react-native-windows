@@ -45,7 +45,7 @@ export default class Bootstrap extends React.Component<
 
   watchID: number;
 
-  ResetState() {
+  resetState() {
     this.setState({
       lat: '?',
       long: '?',
@@ -54,47 +54,47 @@ export default class Bootstrap extends React.Component<
     });
   }
 
-  OnRequestAuth() {
+  onRequestAuth() {
     // Instead of importing the Geolocation module, use browser polyfill
     navigator.geolocation.requestAuthorization();
 
-    this.ResetState();
+    this.resetState();
     this.setState({lastCmd: 'RequestAuth'});
   }
 
-  OnGetCurrentPos() {
+  onGetCurrentPos() {
     // Instead of importing the Geolocation module, use browser polyfill
     navigator.geolocation.getCurrentPosition(
       (result: GeoPos) => {
-        this.OnPosChanged(result);
+        this.onPosChanged(result);
       },
       (error: any) => {
         this.setState({lastError: error});
       },
     );
 
-    this.ResetState();
+    this.resetState();
     this.setState({lastCmd: 'GetCurrentPos'});
   }
 
-  OnStartWatching() {
+  onStartWatching() {
     this.watchID = navigator.geolocation.watchPosition((pos: GeoPos) => {
-      this.OnPosChanged(pos);
+      this.onPosChanged(pos);
     });
-    this.ResetState();
+    this.resetState();
     this.setState({lastCmd: 'StartWatching'});
   }
 
-  OnStopWatching() {
+  onStopWatching() {
     if (this.watchID !== -1) {
       navigator.geolocation.clearWatch(this.watchID);
     }
     this.watchID = -1;
-    this.ResetState();
+    this.resetState();
     this.setState({lastCmd: 'StopWatching'});
   }
 
-  OnPosChanged(pos: {
+  onPosChanged(pos: {
     coords: {latitude: string; longitude: string};
     timestamp: string;
   }) {
@@ -108,22 +108,22 @@ export default class Bootstrap extends React.Component<
   render() {
     return (
       <View style={styles.container}>
-        <TouchableWithoutFeedback onPress={() => this.OnRequestAuth()}>
+        <TouchableWithoutFeedback onPress={() => this.onRequestAuth()}>
           <View style={styles.fauxbutton}>
             <Text style={{textAlign: 'center'}}>Request Auth</Text>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => this.OnGetCurrentPos()}>
+        <TouchableWithoutFeedback onPress={() => this.onGetCurrentPos()}>
           <View style={styles.fauxbutton}>
             <Text style={{textAlign: 'center'}}>GetCurrentPosition</Text>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => this.OnStartWatching()}>
+        <TouchableWithoutFeedback onPress={() => this.onStartWatching()}>
           <View style={styles.fauxbutton}>
             <Text style={{textAlign: 'center'}}>StartWatching</Text>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => this.OnStopWatching()}>
+        <TouchableWithoutFeedback onPress={() => this.onStopWatching()}>
           <View style={styles.fauxbutton}>
             <Text style={{textAlign: 'center'}}>StopWatching</Text>
           </View>

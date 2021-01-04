@@ -21,6 +21,8 @@ import {
   copyAndReplaceWithChangedCallback,
 } from '../generator-common';
 import {GenerateOptions} from '..';
+import {CodedError} from '@react-native-windows/telemetry';
+import {findPackage, WritableNpmPackage} from '@rnw-scripts/package-utils';
 
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';
@@ -32,14 +34,11 @@ async function generateCertificate(
   currentUser: string,
 ): Promise<string | null> {
   console.log('Generating self-signed certificate...');
-  let toCopyTempKey = false;
   if (os.platform() === 'win32') {
     try {
-      const timeout = 10000; // 10 seconds;
       const thumbprint = childProcess
         .execSync(
           `powershell -NoProfile -Command "Write-Output (New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject 'CN=${currentUser}' -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3', '2.5.29.19={text}Subject Type:End Entity') -CertStoreLocation 'Cert:\\CurrentUser\\My').Thumbprint"`,
-          {timeout},
         )
         .toString()
         .trim();
@@ -52,7 +51,6 @@ async function generateCertificate(
           newProjectName,
           newProjectName,
         )}_TemporaryKey.pfx -Password $pwd"`,
-        {timeout},
       );
       console.log(
         chalk.green('Self-signed certificate generated successfully.'),
@@ -60,29 +58,20 @@ async function generateCertificate(
       return thumbprint;
     } catch (err) {
       console.log(
-        chalk.yellow(
-          'Failed to generate Self-signed certificate. Using Default Certificate. Use Visual Studio to renew it.',
-        ),
+        chalk.yellow('Unable to generate the self-signed certificate:'),
       );
-      toCopyTempKey = true;
+      console.log(chalk.red(err));
     }
-  } else {
-    console.log(
-      chalk.yellow('Using Default Certificate. Use Visual Studio to renew it.'),
-    );
-    toCopyTempKey = true;
   }
-  if (toCopyTempKey) {
-    await copyAndReplaceWithChangedCallback(
-      path.join(srcPath, 'keys', 'MyApp_TemporaryKey.pfx'),
-      destPath,
-      path.join(
-        windowsDir,
-        newProjectName,
-        newProjectName + '_TemporaryKey.pfx',
-      ),
-    );
-  }
+
+  console.log(
+    chalk.yellow('Using Default Certificate. Use Visual Studio to renew it.'),
+  );
+  await copyAndReplaceWithChangedCallback(
+    path.join(srcPath, 'keys', 'MyApp_TemporaryKey.pfx'),
+    destPath,
+    path.join(windowsDir, newProjectName, newProjectName + '_TemporaryKey.pfx'),
+  );
 
   return null;
 }
@@ -110,6 +99,8 @@ function pascalCase(str: string) {
   return camelCase[0].toUpperCase() + camelCase.substr(1);
 }
 
+// Existing high cyclomatic complexity
+// eslint-disable-next-line complexity
 export async function copyProjectTemplateAndReplace(
   srcRootPath: string,
   destPath: string,
@@ -118,15 +109,24 @@ export async function copyProjectTemplateAndReplace(
   options: GenerateOptions,
 ) {
   if (!srcRootPath) {
-    throw new Error('Need a path to copy from');
+    throw new CodedError(
+      'CopyProjectTemplateNoSourcePath',
+      'Need a path to copy from',
+    );
   }
 
   if (!destPath) {
-    throw new Error('Need a path to copy to');
+    throw new CodedError(
+      'CopyProjectTemplateNoDestPath',
+      'Need a path to copy to',
+    );
   }
 
   if (!newProjectName) {
-    throw new Error('Need a project name');
+    throw new CodedError(
+      'CopyProjectTemplateNoProjectName',
+      'Need a project name',
+    );
   }
 
   const projectType = options.projectType;
@@ -185,17 +185,21 @@ export async function copyProjectTemplateAndReplace(
     : 'Windows.UI.Xaml';
   const xamlNamespaceCpp = toCppNamespace(xamlNamespace);
 
-  const winui3PropsPath = require.resolve(
+  const winuiPropsPath = require.resolve(
     'react-native-windows/PropertySheets/WinUI.props',
     {paths: [process.cwd()]},
   );
-  const winui3Props = readProjectFile(winui3PropsPath);
+  const winuiProps = readProjectFile(winuiPropsPath);
   const winui3Version = findPropertyValue(
-    winui3Props,
+    winuiProps,
     'WinUI3Version',
-    winui3PropsPath,
+    winuiPropsPath,
   );
-
+  const winui2xVersion = findPropertyValue(
+    winuiProps,
+    'WinUI2xVersion',
+    winuiPropsPath,
+  );
   const csNugetPackages: NugetPackage[] = [
     {
       id: 'Microsoft.NETCore.UniversalWindowsPlatform',
@@ -213,7 +217,7 @@ export async function copyProjectTemplateAndReplace(
     },
     {
       id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
-      version: options.useWinUI3 ? winui3Version : '2.3.191129002',
+      version: options.useWinUI3 ? winui3Version : winui2xVersion,
       hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
       hasTargets: false,
     },
@@ -251,7 +255,7 @@ export async function copyProjectTemplateAndReplace(
 
   const templateVars: Record<string, any> = {
     useMustache: true,
-    regExpPatternsToRemove: ['//\\sclang-format\\s(on|off)\\s'],
+    regExpPatternsToRemove: [],
 
     name: newProjectName,
     namespace: namespace,
@@ -455,7 +459,7 @@ export async function copyProjectTemplateAndReplace(
 
   // shared proj
   if (fs.existsSync(path.join(sharedPath, projDir))) {
-    let sharedProjMappings = [];
+    const sharedProjMappings = [];
 
     // Once we are publishing to nuget.org, this shouldn't be needed anymore
     if (options.experimentalNuGetDependency) {
@@ -526,53 +530,46 @@ function toCppNamespace(namespace: string) {
   return namespace.replace(/\./g, '::');
 }
 
-export function installDependencies(options: {verbose: boolean}) {
-  const cwd = process.cwd();
-
-  // Extract react-native peer dependency version
-  const rnwPackageJsonPath = require.resolve(
-    'react-native-windows/package.json',
-    {paths: [process.cwd()]},
-  );
-  const rnwPackageJson = JSON.parse(
-    fs.readFileSync(rnwPackageJsonPath, {encoding: 'UTF8'}),
-  );
-  let rnPeerDependency = rnwPackageJson.peerDependencies['react-native'];
-  const depDelim = ' || ';
-  const delimIndex = rnPeerDependency.indexOf(depDelim);
-  if (delimIndex !== -1) {
-    rnPeerDependency = rnPeerDependency.slice(0, delimIndex);
+export async function installScriptsAndDependencies(options: {
+  verbose: boolean;
+}) {
+  const projectPackage = await WritableNpmPackage.fromPath(process.cwd());
+  if (!projectPackage) {
+    throw new Error('The current directory is not the root of an npm package');
   }
 
-  const rnPackageJsonPath = require.resolve('react-native/package.json', {
-    paths: [process.cwd()],
+  await projectPackage.mergeProps({
+    scripts: {windows: 'react-native run-windows'},
   });
-  const rnPackageJson = JSON.parse(
-    fs.readFileSync(rnPackageJsonPath, {encoding: 'UTF8'}),
-  );
 
-  if (!semver.satisfies(rnPackageJson.version, rnPeerDependency)) {
+  const rnwPackage = await findPackage('react-native-windows');
+  if (!rnwPackage) {
+    throw new Error('Could not locate the package for react-native-windows');
+  }
+
+  const rnPackage = await findPackage('react-native');
+  if (!rnPackage) {
+    throw new Error('Could not locate the package for react-native');
+  }
+
+  const rnPeerDependency = rnwPackage.json.peerDependencies['react-native'];
+
+  if (
+    !semver.satisfies(rnPackage.json.version, rnPeerDependency) &&
+    projectPackage.json.dependencies?.['react-native']
+  ) {
     console.log(
       chalk.green('Installing a compatible version of react-native:'),
     );
     console.log(chalk.white(`    ${rnPeerDependency}`));
 
     // Patch package.json to have proper react-native version and install
-    const projectPackageJsonPath = path.join(cwd, 'package.json');
-    const projectPackageJson = JSON.parse(
-      fs.readFileSync(projectPackageJsonPath, {encoding: 'UTF8'}),
-    );
-    projectPackageJson.scripts.windows = 'react-native run-windows';
-    if (projectPackageJson.hasOwnProperty('dependencies')) {
-      projectPackageJson.dependencies['react-native'] = rnPeerDependency;
-    }
-    fs.writeFileSync(
-      projectPackageJsonPath,
-      JSON.stringify(projectPackageJson, null, 2),
-    );
+    await projectPackage.mergeProps({
+      dependencies: {'react-native': rnPeerDependency},
+    });
 
     // Install dependencies using correct package manager
-    const isYarn = fs.existsSync(path.join(cwd, 'yarn.lock'));
+    const isYarn = fs.existsSync(path.join(process.cwd(), 'yarn.lock'));
     childProcess.execSync(
       isYarn ? 'yarn' : 'npm i',
       options.verbose ? {stdio: 'inherit'} : {},

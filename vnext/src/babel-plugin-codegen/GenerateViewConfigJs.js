@@ -104,24 +104,18 @@ function getReactDiffProcessValue(typeAnnotation) {
 }
 
 const componentTemplate = `
-const ::_COMPONENT_NAME_::ViewConfig = VIEW_CONFIG;
-
 let nativeComponentName = '::_COMPONENT_NAME_WITH_COMPAT_SUPPORT_::';
 ::_DEPRECATION_CHECK_::
-registerGeneratedViewConfig(nativeComponentName, ::_COMPONENT_NAME_::ViewConfig);
-
-export const __INTERNAL_VIEW_CONFIG = ::_COMPONENT_NAME_::ViewConfig;
-
-export default nativeComponentName;
+export default NativeComponentRegistry.get(nativeComponentName, () => VIEW_CONFIG);
 `.trim();
 
 const deprecatedComponentTemplate = `
 if (UIManager.getViewManagerConfig('::_COMPONENT_NAME_::')) {
   nativeComponentName = '::_COMPONENT_NAME_::';
-} else if (UIManager.getViewManagerConfig('::_COMPONENT_NAME_DEPRECATED_::')){
+} else if (UIManager.getViewManagerConfig('::_COMPONENT_NAME_DEPRECATED_::')) {
   nativeComponentName = '::_COMPONENT_NAME_DEPRECATED_::';
 } else {
-  throw new Error('Failed to find native component for either "::_COMPONENT_NAME_::" or "::_COMPONENT_NAME_DEPRECATED_::"')
+  throw new Error('Failed to find native component for either "::_COMPONENT_NAME_::" or "::_COMPONENT_NAME_DEPRECATED_::"');
 }
 `.trim();
 
@@ -187,9 +181,9 @@ function buildViewConfig(schema, componentName, component, imports) {
       case 'ReactNativeBuiltInType':
         switch (extendProps.knownTypeName) {
           case 'ReactNativeCoreViewProps':
-            // [Win: applied https://github.com/facebook/react-native/pull/29230
+            // [Win: applied https://github.com/facebook/react-native/pull/29230 (and updated after merge conflicts 😢)
             imports.add(
-              "const registerGeneratedViewConfig = require('react-native/Libraries/Utilities/registerGeneratedViewConfig');",
+              "const NativeComponentRegistry = require('react-native/Libraries/NativeComponent/NativeComponentRegistry');",
             );
             // Win]
 
@@ -339,14 +333,15 @@ module.exports = {
 
       const moduleResults = Object.keys(schema.modules)
         .map(moduleName => {
-          const components = schema.modules[moduleName].components;
-          // No components in this module
-          if (components == null) {
-            return null;
+          const module = schema.modules[moduleName];
+          if (module.type !== 'Component') {
+            return;
           }
 
+          const {components} = module;
+
           return Object.keys(components)
-            .map(componentName => {
+            .map((componentName: string) => {
               const component = components[componentName];
 
               const paperComponentName = component.paperComponentName

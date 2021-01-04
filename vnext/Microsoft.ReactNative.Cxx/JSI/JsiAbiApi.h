@@ -43,52 +43,29 @@ struct JsiPreparedJavaScriptWrapper : facebook::jsi::PreparedJavaScript {
 // An ABI-safe wrapper for facebook::jsi::HostObject.
 struct JsiHostObjectWrapper : implements<JsiHostObjectWrapper, IJsiHostObject> {
   JsiHostObjectWrapper(std::shared_ptr<facebook::jsi::HostObject> &&hostObject) noexcept;
-  ~JsiHostObjectWrapper() noexcept;
 
   JsiValueRef GetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name);
   void SetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name, JsiValueRef const &value);
   Windows::Foundation::Collections::IVector<JsiPropertyIdRef> GetPropertyIds(JsiRuntime const &runtime);
 
-  static void RegisterHostObject(JsiObjectRef const &objectData, JsiHostObjectWrapper *hostObject) noexcept;
-  static bool IsHostObject(JsiObjectRef const &objectData) noexcept;
-  static std::shared_ptr<facebook::jsi::HostObject> GetHostObject(JsiObjectRef const &objectData) noexcept;
+  std::shared_ptr<facebook::jsi::HostObject> const &HostObjectSharedPtr() noexcept;
 
  private:
   std::shared_ptr<facebook::jsi::HostObject> m_hostObject;
-  JsiObjectRef m_objectData{};
-
-  static std::mutex s_mutex;
-  static std::map<uint64_t, JsiHostObjectWrapper *> s_objectDataToObjectWrapper;
 };
 
 // The function object that wraps up the facebook::jsi::HostFunctionType
 struct JsiHostFunctionWrapper {
   // We only support new and move constructors.
-  JsiHostFunctionWrapper(facebook::jsi::HostFunctionType &&hostFunction, uint32_t functionId) noexcept;
-  JsiHostFunctionWrapper(JsiHostFunctionWrapper &&other) noexcept;
-  ~JsiHostFunctionWrapper() noexcept;
-
-  // Disable other ways to construct or modify the wrapper.
-  JsiHostFunctionWrapper &operator=(JsiHostFunctionWrapper &&other) = delete;
-  JsiHostFunctionWrapper(JsiHostFunctionWrapper const &other) = delete;
-  JsiHostFunctionWrapper &operator=(JsiHostFunctionWrapper const &other) = delete;
+  JsiHostFunctionWrapper(facebook::jsi::HostFunctionType &&hostFunction) noexcept;
 
   JsiValueRef operator()(JsiRuntime const &runtime, JsiValueRef const &thisArg, array_view<JsiValueRef const> args);
 
-  static uint32_t GetNextFunctionId() noexcept;
-  static void RegisterHostFunction(uint32_t functionId, JsiObjectRef const &func) noexcept;
-  static bool IsHostFunction(JsiObjectRef const &func) noexcept;
-  static facebook::jsi::HostFunctionType &GetHostFunction(JsiObjectRef const &func) noexcept;
+  static facebook::jsi::HostFunctionType &GetHostFunction(JsiHostFunction const &hostFunction) noexcept;
 
  private:
   facebook::jsi::HostFunctionType m_hostFunction;
   JsiObjectRef m_functionData{};
-  uint32_t m_functionId{};
-
-  static std::mutex s_functionMutex;
-  static std::atomic<uint32_t> s_functionIdGenerator;
-  static std::map<uint32_t, JsiHostFunctionWrapper *> s_functionIdToFunctionWrapper;
-  static std::map<uint64_t, JsiHostFunctionWrapper *> s_functionDataToFunctionWrapper;
 };
 
 // JSI runtime implementation as a wrapper for the ABI-safe JsiRuntime.
@@ -96,7 +73,8 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   JsiAbiRuntime(JsiRuntime const &runtime) noexcept;
   ~JsiAbiRuntime() noexcept;
 
-  static JsiAbiRuntime *FromJsiRuntime(JsiRuntime const &jsiRuntime) noexcept;
+  // Get JsiAbiRuntime from JsiRuntime in current thread.
+  static JsiAbiRuntime *GetFromJsiRuntime(JsiRuntime const &runtime) noexcept;
 
   facebook::jsi::Value evaluateJavaScript(
       const std::shared_ptr<const facebook::jsi::Buffer> &buffer,
@@ -308,9 +286,6 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
 
  private:
   JsiRuntime m_runtime;
-
-  static std::mutex s_mutex;
-  static std::map<void *, JsiAbiRuntime *> s_jsiAbiRuntimeMap;
 };
 
 } // namespace winrt::Microsoft::ReactNative

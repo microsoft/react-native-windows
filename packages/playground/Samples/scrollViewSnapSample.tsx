@@ -72,7 +72,7 @@ export default class Bootstrap extends React.Component<{}, any> {
     void wait(2000).then(() => this.setState({refreshing: false}));
   };
 
-  makeItems = (nItems: number, styles: Object): Array<any> => {
+  makeItems = (nItems: number, styles: Record<string, any>): Array<any> => {
     const items = [];
     for (let i = 0; i < nItems; i++) {
       items[i] = (

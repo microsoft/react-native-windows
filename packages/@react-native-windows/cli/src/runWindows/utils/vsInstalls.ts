@@ -4,6 +4,7 @@
  * @format
  */
 
+import {CodedError} from '@react-native-windows/telemetry';
 import {execSync} from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -36,7 +37,10 @@ function vsWhere(args: string[], verbose?: boolean): any[] {
   }
 
   if (!fs.existsSync(vsWherePath)) {
-    throw new Error(`Unable to find vswhere at ${vsWherePath}`);
+    throw new CodedError(
+      'NoVSWhere',
+      `Unable to find vswhere at ${vsWherePath}`,
+    );
   }
 
   const cmdline = `"${vsWherePath}" ${args.join(' ')} -format json -utf8`;
@@ -85,7 +89,7 @@ export function enumerateVsInstalls(opts: {
  */
 export function findLatestVsInstall(opts: {
   requires?: string[];
-  version?: string;
+  minVersion?: string;
   verbose?: boolean;
   prerelease?: boolean;
 }): VisualStudioInstallation | null {

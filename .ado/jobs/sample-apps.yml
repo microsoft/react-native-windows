@@ -1,0 +1,102 @@
+parameters:
+  - name: buildEnvironment
+    type: string
+    default : PullRequest
+    values: 
+     - PullRequest 
+     - Continuous 
+  
+jobs:
+  - job: SampleApps
+    variables:
+      - template: ../variables/vs2019.yml
+      - name: BuildLogDirectory
+        value: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
+    displayName: Sample Apps
+    strategy:
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+        # Start Continuous only
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+          ArmDebug:
+            BuildConfiguration: Debug
+            BuildPlatform: ARM
+            NoDeployOption:
+        # End Continuous only
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: ARM
+          NoDeployOption: --no-deploy
+        # Start Continuous only
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+          Arm64Debug:
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64
+            NoDeployOption:
+          Arm64Release:
+            BuildConfiguration: Release
+            BuildPlatform: ARM64
+            NoDeployOption:
+          X64Debug:
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            NoDeployOption:
+        # End Continuous only
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+          NoDeployOption:
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+          NoDeployOption:
+        # Start Continuous only
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+          X86Release:
+            BuildConfiguration: Release
+            BuildPlatform: x86
+            NoDeployOption:
+        # End Continuous only
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 5
+    pool:
+      vmImage: $(VmImage)
+
+    steps:
+      - checkout: self
+        clean: false
+        submodules: false
+
+      - template: ../templates/prepare-env.yml
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - SampleApps
+        inputs:
+          command: restore
+          restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+        condition: succeeded()
+
+      - task: CmdLine@2
+        displayName: run-windows (Debug)
+        inputs:
+          script: yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
+          workingDirectory: packages/microsoft-reactnative-sampleapps
+        condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'))
+
+      - task: CmdLine@2
+        displayName: run-windows (Release)
+        inputs:
+          script: yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --release --msbuildprops BaseIntDir=$(BaseIntDir)
+          workingDirectory: packages/microsoft-reactnative-sampleapps
+        condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'))
+
+      - task: CmdLine@2
+        displayName: Create SampleApp bundle
+        inputs:
+          script: yarn bundle-cpp --verbose
+          workingDirectory: packages\microsoft-reactnative-sampleapps
+        condition: succeeded()
+
+      - template: ../templates/upload-build-logs.yml
+        parameters:
+          buildLogDirectory: '$(BuildLogDirectory)'

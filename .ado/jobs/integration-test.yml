@@ -1,0 +1,132 @@
+parameters:
+  - name: buildEnvironment
+    type: string
+    default : PullRequest
+    values: 
+     - PullRequest 
+     - Continuous 
+
+jobs:
+  - job: IntegrationTest
+    displayName: Integration Test
+    strategy:
+      matrix:
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+          ARM:
+            BuildPlatform: ARM
+          ARM64:
+            BuildPlatform: ARM64
+        # End Continuous only
+        X64:
+          BuildPlatform: x64
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+          X86:
+            BuildPlatform: x86
+        # End Continuous only
+
+    variables:
+      - template: ../variables/vs2019.yml
+
+    pool:
+      vmImage: $(VmImage)
+
+    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+
+    steps:
+      - checkout: self
+        clean: true
+        submodules: false
+            
+      - template: ../templates/prepare-env.yml
+
+      - powershell: |
+          Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\$(BuildPlatform)\BuildLogs"
+        displayName: Set BuildLogDirectory
+
+      - script: .ado\scripts\SetupLocalDumps.cmd integrationtest
+        displayName: Set LocalDumps
+
+      # The build is more likely to crash after we've started other bits that
+      # take up memory. Do the expensive parts of the build first.
+      - script: yarn windows --no-launch --no-packager --no-deploy --no-autolink --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory)
+        displayName: yarn windows --no-launch
+        workingDirectory: packages/IntegrationTest
+
+      # This will normally be run during tests if it isn't already, but running
+      # it before helps avoid our window from being obscured.
+      - powershell: Start-Process CheckNetIsolation.exe -ArgumentList "LoopbackExempt","-is" -Verb runAs
+        displayName: Exempt loopback server
+
+      - powershell: Start-Process npm -ArgumentList "run","start"
+        displayName: Start packager
+        workingDirectory: packages/IntegrationTest
+
+      # Instance load may time out if the packager takes too long to return a
+      # bundle. Request the bundle ahead of time so that the instance will get
+      # it back quickly.
+      - powershell: |
+          while ($true) {
+            try {
+              Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/index.bundle?platform=windows&dev=true"
+              break
+            } catch [Exception] {
+              echo $_.Exception
+              Start-Sleep -s 1
+            }
+          }
+        displayName: Warm packager
+
+      # If a debugger isn't connected to the packager, the CLI will launch the
+      # default browser to go there. On Windows Server that means launching IE
+      # with a bunch of restrictions. Explicitly launch Chrome to the debugger
+      # UI instead.
+      - powershell: Start-Process chrome http://localhost:8081/debugger-ui/
+        displayName: Launch debugger-ui
+
+      # There's a slight race condition here, where we assume Chrome will open
+      # before this launches the app. This step takes ~1m on CI machines so it
+      # shouldn't be a practical concern.
+      - script: yarn windows --no-build --no-packager --no-autolink --arch $(BuildPlatform) --logging
+        displayName: yarn windows --no-build
+        workingDirectory: packages/IntegrationTest
+
+      - powershell: |
+          $wshell = New-Object -ComObject wscript.shell
+          $wshell.AppActivate('integrationtest')
+        displayName: Activate test window
+
+      # Wait a brief moment before taking a screenshot to give the bundle a chance to load
+      - powershell: Start-Sleep -s 5
+        displayName: Pause before screenshot
+
+      - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/before-test.png
+        displayName: Screenshot desktop before tests
+        condition: succeededOrFailed()
+
+      - script: yarn integration-test
+        displayName: yarn integration-test
+        workingDirectory: packages/IntegrationTest
+
+      - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/after-test.png
+        displayName: Screenshot desktop after tests
+        condition: succeededOrFailed()
+
+      - task: PublishPipelineArtifact@1
+        displayName: Upload targets
+        inputs:
+          artifactName: Targets - IntegrationTest-$(System.JobAttempt)
+          targetPath: packages/IntegrationTest/windows/$(BuildPlatform)/Debug/integrationtest
+        condition: failed()
+
+      - task: PublishPipelineArtifact@1
+        displayName: Upload screenshots
+        inputs:
+          artifactName: Screenshots - IntegrationTest-$(System.JobAttempt)
+          targetPath: $(Build.StagingDirectory)/Screenshots
+        condition: succeededOrFailed()
+
+      - template: ../templates/upload-build-logs.yml
+        parameters:
+          buildLogDirectory: '$(BuildLogDirectory)'
+          condition: succeededOrFailed()

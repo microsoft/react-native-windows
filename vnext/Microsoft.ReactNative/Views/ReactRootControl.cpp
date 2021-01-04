@@ -312,7 +312,7 @@ void ReactRootControl::ShowInstanceWaiting() noexcept {
 }
 
 void ReactRootControl::ShowInstanceLoading() noexcept {
-  if (!m_context->UseDeveloperSupport())
+  if (!m_context->SettingsSnapshot().UseDeveloperSupport())
     return;
 
   if (XamlView xamlRootView = m_weakXamlRootView.get()) {

@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-77f7658e4",
+  "baseVersion": "0.0.0-c901c1fbc",
   "overrides": [
     {
       "type": "patch",
@@ -16,55 +16,6 @@
     },
     {
       "type": "patch",
-      "file": "src/js/components/RNTesterExampleList.windows.js",
-      "baseFile": "packages/rn-tester/js/components/RNTesterExampleList.js",
-      "baseHash": "9e2583dfe4f3ce7119052e879a2a29ec6996b77f",
-      "issue": 5834
-    },
-    {
-      "type": "patch",
-      "file": "src/js/examples/FlatList/FlatListExample.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatListExample.js",
-      "baseHash": "a2f5e983022c17ce235322710ab5c76e16e83ea1",
-      "issue": 6210
-    },
-    {
-      "type": "patch",
-      "file": "src/js/examples/Image/ImageCapInsetsExample.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/Image/ImageCapInsetsExample.js",
-      "baseHash": "cdb507ee4ddbe10c69ec84ca7680914415df5490",
-      "issue": 6210
-    },
-    {
-      "type": "patch",
-      "file": "src/js/examples/MultiColumn/MultiColumnExample.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/MultiColumn/MultiColumnExample.js",
-      "baseHash": "478403003d167a0e3c5606e2c4f8b6e59808c199",
-      "issue": 6210
-    },
-    {
-      "type": "patch",
-      "file": "src/js/examples/NativeAnimation/NativeAnimationsExample.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/NativeAnimation/NativeAnimationsExample.js",
-      "baseHash": "ad58d177c6d53900a5c05aa7401a1fd0773ded8e",
-      "issue": 6210
-    },
-    {
-      "type": "patch",
-      "file": "src/js/examples/NewAppScreen/NewAppScreenExample.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/NewAppScreen/NewAppScreenExample.js",
-      "baseHash": "10b3c625f312a31f7c81f694618f6397ae7a79c6",
-      "issue": 6210
-    },
-    {
-      "type": "patch",
-      "file": "src/js/examples/PlatformColor/PlatformColorExample.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/PlatformColor/PlatformColorExample.js",
-      "baseHash": "db23f30353b5681f49f2835fb730ca647ce30bf6",
-      "issue": 6210
-    },
-    {
-      "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
       "baseHash": "40d09402c5fba75ff77f5262393452cc92ad1b1d",
@@ -72,24 +23,10 @@
     },
     {
       "type": "patch",
-      "file": "src/js/examples/SectionList/SectionListExample.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/SectionList/SectionListExample.js",
-      "baseHash": "2eca1a62c495209f4ecb4632ee59064e91b94b3b",
-      "issue": 6210
-    },
-    {
-      "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
       "baseHash": "af8b28c15a9b5729f3edd98731d5ee2a74ab6b17",
       "issue": 5688
-    },
-    {
-      "type": "patch",
-      "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
-      "baseHash": "526e6f816e5cc13b264d6eba2668022e276c778c",
-      "issue": 6210
     },
     {
       "type": "patch",

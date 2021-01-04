@@ -10,7 +10,7 @@
  * result/exception
  */
 export default class SerialQueue {
-  private actions: Array<() => Promise<void>> = [];
+  private readonly actions: Array<() => Promise<void>> = [];
 
   enqueue<T>(action: () => Promise<T>): Promise<T> {
     return new Promise((resolve, reject) => {

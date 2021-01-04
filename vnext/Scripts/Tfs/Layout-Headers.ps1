@@ -3,6 +3,7 @@
 
 param(
 	[string] $SourceRoot = ($PSScriptRoot | Split-Path | Split-Path | Split-Path),
+	[string] $BuildRoot = "$SourceRoot\vnext\target",
 	[string] $TargetRoot = "$SourceRoot\vnext\target",
 	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\vnext",
 	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\node_modules\react-native",	
@@ -15,6 +16,7 @@ $FollyVersion = $FollyVersion.Trim() # The extracted FollyVersion contains a spa
 [System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}";
 
 Write-Host "Source root: [$SourceRoot]"
+Write-Host "Build root: [$BuildRoot]"
 Write-Host "Destination root: [$TargetRoot]"
 Write-Host "React Native root: [$ReactNativeRoot]"
 
@@ -96,6 +98,13 @@ Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\jsi.h -Destination $
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\jsi-inl.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\threadsafe.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
 
+# Microsoft.ReactNative.CXX project TurboModule files
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\CallInvoker.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
+
 # NUSPEC
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\*.nuspec -Destination $TargetRoot
 
@@ -136,11 +145,11 @@ Copy-Item -Force -Path $ReactWindowsRoot\Folly\Folly.natvis -Destination (New-It
 # Therefore this step will simply ildasm and ilasm the reference assembly and store it as which strips the bitness and generates anycpu msil.
 # These reference assemblies are just regular assemblies but with empty bodies
 
-ForEach ($refFolder in (Get-ChildItem -Path  $TargetRoot -Recurse -Include "ref"))
+ForEach ($refFolder in (Get-ChildItem -Path  $BuildRoot -Recurse -Include "ref"))
 { 
 	ForEach ($refAsm in Get-ChildItem -Path $refFolder -Recurse  -Include "*.dll" ) 
 	{
-		$outputFolder=[System.IO.Path]::GetDirectoryName($refAsm) + ".anycpu";
+		$outputFolder=([System.IO.Path]::GetDirectoryName($refAsm)).Replace($BuildRoot, $TargetRoot) + ".anycpu";
 		$outputAsm = [System.IO.Path]::Combine($outputFolder, [System.IO.Path]::GetFileName($refAsm));
 		$outputIl = [System.IO.Path]::ChangeExtension($outputAsm, ".il");
 

@@ -2,6 +2,51 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 03 Dec 2020 23:59:32 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.11",
+      "version": "0.0.0-canary.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Manual bump of @react-native-windows/telemetry to cause dependents to be republished",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90ba61f3e43eafcac9e45b7c740bbfbda77fd5a1",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.10",
+      "version": "0.0.0-canary.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixup naming convention rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.9",
+      "version": "0.0.0-canary.9",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Nov 2020 14:39:19 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.8",
       "version": "0.0.0-canary.8",

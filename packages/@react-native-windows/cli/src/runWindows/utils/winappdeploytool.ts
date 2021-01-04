@@ -8,6 +8,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import {execSync} from 'child_process';
 import {newSpinner, commandWithProgress, newWarn} from './commandWithProgress';
+import {CodedError} from '@react-native-windows/telemetry';
 
 function sortDevices(l: DeviceInfo, r: DeviceInfo): number {
   return l.toString().length - r.toString().length;
@@ -19,8 +20,8 @@ class DeviceInfo {
     public readonly guid: string,
     public readonly ip: string,
 
-    private index: number,
-    private type: string,
+    private readonly index: number,
+    private readonly type: string,
   ) {}
 
   toString() {
@@ -29,7 +30,7 @@ class DeviceInfo {
 }
 
 export default class WinAppDeployTool {
-  private path: string;
+  private readonly path: string;
 
   constructor() {
     const programFilesPath =
@@ -52,14 +53,13 @@ export default class WinAppDeployTool {
     const devices = this.enumerateDevices();
 
     if (devices.length === 0) {
-      throw new Error('No devices found');
+      throw new CodedError('NoDevice', 'No devices found');
     }
 
     if (target === 'emulator') {
       const sortedList = devices.sort(sortDevices);
-      for (let i = 0; i < sortedList.length; i++) {
-        const sortedItem = sortedList[i];
-        if (sortedItem.toString().indexOf(target) > -1) {
+      for (const sortedItem of sortedList) {
+        if (sortedItem.toString().includes(target)) {
           return sortedItem;
         }
       }
@@ -74,7 +74,7 @@ export default class WinAppDeployTool {
     if (candidateList.length > 0) {
       return candidateList[0];
     } else {
-      throw new Error('No devices found');
+      throw new CodedError('NoDevice', 'No devices found');
     }
   }
 
@@ -92,7 +92,10 @@ export default class WinAppDeployTool {
     const devices = matchedLines.map((line, arrayIndex) => {
       const match = line.match(LINE_TEST);
       if (!match) {
-        throw new Error('Unexpected format of "devices" output');
+        throw new CodedError(
+          'InvalidDevicesOutput',
+          'Unexpected format of "devices" output',
+        );
       }
 
       const ip = match[1];
@@ -134,7 +137,14 @@ export default class WinAppDeployTool {
     if (pin) {
       args.push('-pin', pin.toString());
     }
-    await commandWithProgress(newSpinner(text), text, this.path, args, verbose);
+    await commandWithProgress(
+      newSpinner(text),
+      text,
+      this.path,
+      args,
+      verbose,
+      'InstallAppToDeviceFailure',
+    );
   }
 
   async uninstallAppPackage(
@@ -149,6 +159,7 @@ export default class WinAppDeployTool {
       this.path,
       `uninstall -package ${appName} -ip {$targetDevice.ip}`.split(' '),
       verbose,
+      'UninstallAppOnDeviceFailure',
     );
   }
 }

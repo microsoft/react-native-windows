@@ -2,6 +2,184 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 29 Dec 2020 05:06:55 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.49",
+      "version": "0.0.0-canary.49",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix newline issues in new cli project generated files",
+            "author": "jthysell@microsoft.com",
+            "commit": "0f148d489cfc3806fa44a06a61cfe07ba42b17d3",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Dec 2020 05:07:22 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.48",
+      "version": "0.0.0-canary.48",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Check whether dependencies have been installed",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "6426dbcfaadf0ceacc3e21c83a9aecc1ae17ac4b",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 19 Dec 2020 05:06:39 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.47",
+      "version": "0.0.0-canary.47",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Print error message when missing vswhere/msbuild",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "8657f47a22562fc126a29f6a648c2698edb704ce",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Dec 2020 05:07:19 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.46",
+      "version": "0.0.0-canary.46",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Deploy using VS tool",
+            "author": "asklar@microsoft.com",
+            "commit": "7a1b140baaec45d2582901b30010497ab12bd8da",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.45",
+      "version": "0.0.0-canary.45",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "commit": "56d2170d526548052de30c3648d40cc47e683a6e",
+            "package": "@react-native-windows/cli"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Change from Manually Entered Version to Reference to WinUI.props",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "4dcb62a74ed1536b38d2b348506cb9a55ea87a55",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Ensure windows script added on init",
+            "author": "ngerlem@microsoft.com",
+            "commit": "92ed26927664ee91fb7447b0b3ba67fab410ed74",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Dec 2020 21:43:48 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.43",
+      "version": "0.0.0-canary.43",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update cli telemetry defaults",
+            "author": "jthysell@microsoft.com",
+            "commit": "6b349f3d89cc055157b3a8d0f0e75622082878c6",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Dec 2020 05:06:17 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.42",
+      "version": "0.0.0-canary.42",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove the timeout from self-signed certificate generating",
+            "author": "Bartosz.Klonowski@callstack.com",
+            "commit": "63d5e9fdecb5dd009fb839899f04747c63251e36",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.41",
+      "version": "0.0.0-canary.41",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.40",
+      "version": "0.0.0-canary.40",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Nov 2020 03:10:51 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.39",
+      "version": "0.0.0-canary.39",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use MSBuild Builtin Support for NuGet Restore",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e1821b205f26bd1f05c466b03f45b61ec7a3bb5e",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Nov 2020 05:05:00 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.38",
+      "version": "0.0.0-canary.38",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Collect anonymized project name",
+            "author": "ngerlem@microsoft.com",
+            "commit": "29fca5ec1ec97494c4d64f8d8c370dc3206e070f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 14 Nov 2020 05:04:43 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.36",
       "version": "0.0.0-canary.36",

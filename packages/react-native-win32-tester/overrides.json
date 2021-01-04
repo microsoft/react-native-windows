@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.0.0-77f7658e4",
+  "baseVersion": "0.0.0-c901c1fbc",
   "overrides": [
     {
       "type": "patch",
@@ -32,27 +32,6 @@
       "file": "src/js/components/RNTesterExampleFilter.win32.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterExampleFilter.js",
       "baseHash": "20e35122c8529a5bf848f91d9ea9b85be3c23882"
-    },
-    {
-      "type": "patch",
-      "file": "src/js/examples/NewAppScreen/NewAppScreenExample.win32.js",
-      "baseFile": "packages/rn-tester/js/examples/NewAppScreen/NewAppScreenExample.js",
-      "baseHash": "10b3c625f312a31f7c81f694618f6397ae7a79c6",
-      "issue": 6210
-    },
-    {
-      "type": "patch",
-      "file": "src/js/examples/PlatformColor/PlatformColorExample.win32.js",
-      "baseFile": "packages/rn-tester/js/examples/PlatformColor/PlatformColorExample.js",
-      "baseHash": "db23f30353b5681f49f2835fb730ca647ce30bf6",
-      "issue": 6210
-    },
-    {
-      "type": "patch",
-      "file": "src/js/examples/TurboModule/SampleTurboModuleExample.win32.js",
-      "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
-      "baseHash": "526e6f816e5cc13b264d6eba2668022e276c778c",
-      "issue": 6210
     },
     {
       "type": "copy",

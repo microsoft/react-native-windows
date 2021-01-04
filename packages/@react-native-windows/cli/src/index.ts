@@ -10,7 +10,7 @@ import {Telemetry} from '@react-native-windows/telemetry';
 
 import {
   copyProjectTemplateAndReplace,
-  installDependencies,
+  installScriptsAndDependencies,
 } from './generator-windows';
 
 import {autoLinkCommand} from './runWindows/utils/autolink';
@@ -83,7 +83,7 @@ export async function generateWindows(
       fs.mkdirSync(projectDir);
     }
 
-    installDependencies(options);
+    await installScriptsAndDependencies(options);
 
     const rnwPackage = path.dirname(
       require.resolve('react-native-windows/package.json', {
@@ -100,7 +100,7 @@ export async function generateWindows(
     );
   } catch (e) {
     error = e;
-    Telemetry.client?.trackException({exception: error});
+    Telemetry.trackException(error);
     throw e;
   } finally {
     if (Telemetry.client) {
@@ -122,7 +122,7 @@ export async function generateWindows(
         cliVersion = rnwCliPkgJson.version;
       } catch {}
       const optScrubbed = scrubOptions(options);
-      Telemetry.client?.trackEvent({
+      Telemetry.client.trackEvent({
         name: 'generate-windows',
         properties: {
           error: error,
@@ -132,7 +132,7 @@ export async function generateWindows(
         },
       });
 
-      Telemetry.client?.flush();
+      Telemetry.client.flush();
     }
   }
 }

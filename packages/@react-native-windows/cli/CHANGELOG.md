@@ -1,8 +1,89 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 14 Nov 2020 05:04:43 GMT and should not be manually modified.
+This log was last generated on Tue, 29 Dec 2020 05:06:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.49
+
+Tue, 29 Dec 2020 05:06:55 GMT
+
+### Changes
+
+- Fix newline issues in new cli project generated files (jthysell@microsoft.com)
+
+## 0.0.0-canary.48
+
+Wed, 23 Dec 2020 05:07:22 GMT
+
+### Changes
+
+- Check whether dependencies have been installed (asklar@winse.microsoft.com)
+
+## 0.0.0-canary.47
+
+Sat, 19 Dec 2020 05:06:39 GMT
+
+### Changes
+
+- Print error message when missing vswhere/msbuild (asklar@winse.microsoft.com)
+
+## 0.0.0-canary.46
+
+Wed, 09 Dec 2020 05:07:19 GMT
+
+### Changes
+
+- Deploy using VS tool (asklar@microsoft.com)
+
+## 0.0.0-canary.45
+
+Tue, 08 Dec 2020 03:20:37 GMT
+
+### Changes
+
+- Change from Manually Entered Version to Reference to WinUI.props (34109996+chiaramooney@users.noreply.github.com)
+- Ensure windows script added on init (ngerlem@microsoft.com)
+
+## 0.0.0-canary.43
+
+Thu, 03 Dec 2020 21:43:48 GMT
+
+### Changes
+
+- Update cli telemetry defaults (jthysell@microsoft.com)
+
+## 0.0.0-canary.42
+
+Thu, 03 Dec 2020 05:06:17 GMT
+
+### Changes
+
+- Remove the timeout from self-signed certificate generating (Bartosz.Klonowski@callstack.com)
+
+## 0.0.0-canary.41
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Changes
+
+- Add more eslint rules (ngerlem@microsoft.com)
+
+## 0.0.0-canary.39
+
+Wed, 18 Nov 2020 03:10:51 GMT
+
+### Changes
+
+- Use MSBuild Builtin Support for NuGet Restore (ngerlem@microsoft.com)
+
+## 0.0.0-canary.38
+
+Tue, 17 Nov 2020 05:05:00 GMT
+
+### Changes
+
+- Collect anonymized project name (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.36
 

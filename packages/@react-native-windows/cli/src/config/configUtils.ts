@@ -10,6 +10,7 @@ import * as glob from 'glob';
 
 import {DOMParser} from 'xmldom';
 import * as xpath from 'xpath';
+import {CodedError} from '@react-native-windows/telemetry';
 
 const msbuildSelect = xpath.useNamespaces({
   msbuild: 'http://schemas.microsoft.com/developer/msbuild/2003',
@@ -83,7 +84,7 @@ export function findSolutionFiles(winFolder: string): string[] {
     return [allSolutions[0]];
   }
 
-  var solutionFiles = [];
+  const solutionFiles = [];
 
   // Try to find any solution file that appears to be a React Native solution
   for (const solutionFile of allSolutions) {
@@ -136,7 +137,7 @@ export function findDependencyProjectFiles(winFolder: string): string[] {
     return [];
   }
 
-  var dependencyProjectFiles = [];
+  const dependencyProjectFiles = [];
 
   // Try to find any project file that appears to be a dependency project
   for (const projectFile of allProjects) {
@@ -189,7 +190,7 @@ export function findAppProjectFiles(winFolder: string): string[] {
     return [];
   }
 
-  var appProjectFiles = [];
+  const appProjectFiles = [];
 
   // Try to find any project file that appears to be an app project
   for (const projectFile of allProjects) {
@@ -236,7 +237,7 @@ export function tryFindPropertyValue(
   projectContents: Node,
   propertyName: string,
 ): string | null {
-  var nodes = msbuildSelect(
+  const nodes = msbuildSelect(
     `//msbuild:PropertyGroup/msbuild:${propertyName}`,
     projectContents,
   );
@@ -256,7 +257,11 @@ export function findPropertyValue(
 ): string {
   const res = tryFindPropertyValue(projectContents, propertyName);
   if (!res) {
-    throw new Error(`Couldn't find property ${propertyName} from ${filePath}`);
+    throw new CodedError(
+      'NoPropertyInProject',
+      `Couldn't find property ${propertyName} from ${filePath}`,
+      {propertyName: propertyName},
+    );
   }
   return res;
 }
@@ -271,7 +276,7 @@ export function importProjectExists(
   projectContents: Node,
   projectName: string,
 ): boolean {
-  var nodes = msbuildSelect(
+  const nodes = msbuildSelect(
     `//msbuild:Import[contains(@Project,'${projectName}')]`,
     projectContents,
   );

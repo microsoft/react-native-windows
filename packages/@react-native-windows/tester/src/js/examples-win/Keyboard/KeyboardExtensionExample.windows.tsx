@@ -140,7 +140,7 @@ class ViewWindowsKeyboardExample extends React.Component<
     );
   }
 
-  private _onKeyUp = (ev: IKeyboardEvent) => {
+  private readonly _onKeyUp = (ev: IKeyboardEvent) => {
     this.setState({
       lastKeyUp: ev.nativeEvent.key,
       lastKeyDown: null,
@@ -149,7 +149,7 @@ class ViewWindowsKeyboardExample extends React.Component<
     });
   };
 
-  private _onKeyDown = (ev: IKeyboardEvent) => {
+  private readonly _onKeyDown = (ev: IKeyboardEvent) => {
     this.setState({
       lastKeyDown: ev.nativeEvent.key,
       lastKeyUp: null,
@@ -157,7 +157,7 @@ class ViewWindowsKeyboardExample extends React.Component<
       lastKeyUpCode: null,
     });
   };
-  private _onKeyUpCapture = (ev: IKeyboardEvent) => {
+  private readonly _onKeyUpCapture = (ev: IKeyboardEvent) => {
     this.setState({
       lastKeyUpCapture: ev.nativeEvent.key,
       lastKeyDownCapture: null,
@@ -166,7 +166,7 @@ class ViewWindowsKeyboardExample extends React.Component<
     });
   };
 
-  private _onKeyDownCapture = (ev: IKeyboardEvent) => {
+  private readonly _onKeyDownCapture = (ev: IKeyboardEvent) => {
     this.setState({
       lastKeyDownCapture: ev.nativeEvent.key,
       lastKeyUpCapture: null,

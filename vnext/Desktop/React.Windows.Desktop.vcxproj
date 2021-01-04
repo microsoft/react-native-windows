@@ -80,7 +80,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\Shared\tracing;$(ReactNativeWindowsDir)include\Shared;$(ReactNativeWindowsDir)JSI\Shared;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\Shared\tracing;$(ReactNativeWindowsDir)include\Shared;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -89,6 +89,7 @@
         CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
       -->
       <PreprocessorDefinitions>
+        ENABLE_BEAST=$(EnableBeast);
         BOOST_ASIO_HAS_IOCP;
         _WINSOCK_DEPRECATED_NO_WARNINGS;
         _WIN32_WINNT=$(WinVer);
@@ -193,6 +194,9 @@
     <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp">
       <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\JsiApi.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\JsiApi.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\JsiReader.cpp">
       <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
     </ClCompile>
@@ -217,6 +221,7 @@
     <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
+    <ClCompile Include="JSI\ChakraJsiRuntime_core.cpp" />
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />
     <ClCompile Include="ViewManager.cpp" />
@@ -229,7 +234,9 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="HttpResource.cpp" />
-    <ClCompile Include="BeastWebSocketResource.cpp" />
+    <ClCompile Include="BeastWebSocketResource.cpp">
+      <ExcludedFromBuild Condition="'$(EnableBeast)' == 0">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="WebSocketResourceFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -285,6 +292,9 @@
       <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\JsiApi.h">
+      <DependentUpon>..\Microsoft.ReactNative\JsiApi.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.h" />
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorInfo.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
@@ -307,9 +317,6 @@
     </ProjectReference>
     <ProjectReference Include="..\FollyWin32\FollyWin32.vcxproj">
       <Project>{74085F13-2DDE-45E5-A0CA-927AC9D0B953}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\JSI\Desktop\JSI.Desktop.vcxproj">
-      <Project>{17dd1b17-3094-40dd-9373-ac2497932eca}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</Project>

@@ -2,6 +2,57 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.19",
+      "version": "0.0.19",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix dependency syncing for wildcard peer dependencies",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8b609d177711bca1ad852978cbe9855257a519e3",
+            "package": "@rnw-scripts/integrate-rn"
+          },
+          {
+            "comment": "Bump yargs to 15.4.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fa34591ac86ea25e1e92a807864ba71480046a27",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.18",
+      "version": "0.0.18",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.17",
+      "version": "0.0.17",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Oct 2020 05:06:28 GMT",
       "tag": "@rnw-scripts/integrate-rn_v0.0.15",
       "version": "0.0.15",
