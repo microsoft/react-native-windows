@@ -9,6 +9,7 @@ import * as chalk from 'chalk';
 import * as inquirer from 'inquirer';
 import * as path from 'path';
 import * as mustache from 'mustache';
+import {CodedError} from '@react-native-windows/telemetry';
 
 /**
  * Text to replace, + config options
@@ -279,7 +280,8 @@ async function alwaysOverwriteContentChangedCallback(
   if (contentChanged === 'identical') {
     return 'keep';
   }
-  throw new Error(
+  throw new CodedError(
+    'Autolinking',
     `Unknown file changed state: ${relativeDestPath}, ${contentChanged}`,
   );
 }
@@ -315,7 +317,8 @@ async function upgradeFileContentChangedCallback(
   if (contentChanged === 'identical') {
     return 'keep';
   }
-  throw new Error(
+  throw new CodedError(
+    'Autolinking',
     `Unknown file changed state: ${relativeDestPath}, ${contentChanged}`,
   );
 }
