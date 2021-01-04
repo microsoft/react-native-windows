@@ -16,7 +16,7 @@ struct AbiCallInvoker final : facebook::react::CallInvoker {
 
   void invokeSync(std::function<void()> &&func) override {
     // Throwing an exception in this method matches the behavior of
-    // Instance::JSCallInvoker::invokeSync in react-native\ReactCommon\cxxreact\Instance.cpp 
+    // Instance::JSCallInvoker::invokeSync in react-native\ReactCommon\cxxreact\Instance.cpp
     throw std::runtime_error("Synchronous native -> JS calls are currently not supported.");
   }
 
