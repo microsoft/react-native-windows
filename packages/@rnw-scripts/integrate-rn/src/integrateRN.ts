@@ -12,10 +12,10 @@ import * as semver from 'semver';
 import * as yargs from 'yargs';
 
 import {
-  enumerateLocalPackages,
+  enumerateRepoPackages,
   NpmPackage,
   WritableNpmPackage,
-} from '@rnw-scripts/package-utils';
+} from '@react-native-windows/package-utils';
 
 import {
   upgradeOverrides,
@@ -59,7 +59,7 @@ import upgradeDependencies from './upgradeDependencies';
  * Enumerate packages subject to override validation
  */
 async function enumerateOverridePackages(): Promise<WritableNpmPackage[]> {
-  return await enumerateLocalPackages(isOverridePackage);
+  return await enumerateRepoPackages(isOverridePackage);
 }
 
 /**

@@ -8,7 +8,7 @@
 import * as _ from 'lodash';
 import * as fs from 'fs';
 import * as path from 'path';
-import findRepoRoot from '@rnw-scripts/find-repo-root';
+import findRepoRoot from '@react-native-windows/find-repo-root';
 
 const getMonorepoPackages: (
   root: string,
@@ -105,7 +105,7 @@ export class WritableNpmPackage extends NpmPackage {
  *
  * @param pred predicate describing whether to match a package
  */
-export async function enumerateLocalPackages(
+export async function enumerateRepoPackages(
   pred: (pkg: NpmPackage) => Promise<boolean> = async () => true,
 ): Promise<WritableNpmPackage[]> {
   const repoRoot = await findRepoRoot();
@@ -154,12 +154,10 @@ export async function findPackage(
 /**
  * Finds a monorepo-local package with a given name
  */
-export async function findLocalPackage(
+export async function findRepoPackage(
   name: string,
 ): Promise<WritableNpmPackage | null> {
-  const packages = await enumerateLocalPackages(
-    async p => p.json.name === name,
-  );
+  const packages = await enumerateRepoPackages(async p => p.json.name === name);
 
   if (packages.length === 0) {
     return null;

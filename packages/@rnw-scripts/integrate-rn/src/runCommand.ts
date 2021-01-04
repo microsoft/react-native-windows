@@ -6,7 +6,7 @@
  */
 
 import {exec, ExecOptions} from 'child_process';
-import findRepoRoot from '@rnw-scripts/find-repo-root';
+import findRepoRoot from '@react-native-windows/find-repo-root';
 
 /**
  * Run a command asyncronously, setting cwd to repo root if none is specified
