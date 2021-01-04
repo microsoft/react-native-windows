@@ -15,38 +15,9 @@ struct AbiCallInvoker final : facebook::react::CallInvoker {
   }
 
   void invokeSync(std::function<void()> &&func) override {
-    // Move the func into the local value to make sure it is destroyed here after the execution.
-    std::function<void()> localFunc{std::move(func)};
-
-    if (m_jsDispatcher.HasThreadAccess()) {
-      localFunc();
-    } else {
-      std::mutex mutex;
-      std::condition_variable cv;
-      bool completed{false};
-      std::exception_ptr ex;
-
-      auto lock = std::unique_lock{mutex};
-
-      m_jsDispatcher.Post([&localFunc, &mutex, &cv, &completed, &ex]() {
-        // Since this method is synchronous, we catch all func exceptions and rethrow them in this thread.
-        try {
-          localFunc();
-        } catch (...) {
-          ex = std::current_exception();
-        }
-
-        auto lock = std::unique_lock{mutex};
-        completed = true;
-        cv.notify_all();
-      });
-
-      cv.wait(lock, [&] { return completed; });
-
-      if (ex) {
-        std::rethrow_exception(ex);
-      }
-    }
+    // Throwing an exception in this method matches the behavior of
+    // Instance::JSCallInvoker::invokeSync in react-native\ReactCommon\cxxreact\Instance.cpp 
+    throw std::runtime_error("Synchronous native -> JS calls are currently not supported.");
   }
 
  private:
