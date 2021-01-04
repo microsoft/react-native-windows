@@ -1,11 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#pragma once
-#ifndef MICROSOFT_REACTNATIVE_JSI_JSIAPI
-#define MICROSOFT_REACTNATIVE_JSI_JSIAPI
-#include "../ReactContext.h"
-#include "JsiAbiApi.h"
+#include "pch.h"
+#include "JsiApiContext.h"
 
 // Use __ImageBase to get current DLL handle.
 // http://blogs.msdn.com/oldnewthing/archive/2004/10/25/247180.aspx
@@ -58,21 +55,4 @@ facebook::jsi::Runtime &GetOrCreateContextRuntime(ReactContext const &context) n
   return *runtime;
 }
 
-// Call provided lambda with the facebook::jsi::Runtime& parameter.
-// For example: ExecuteJsi(context, [](facebook::jsi::Runtime& runtime){...})
-// The code is executed synchronously if it is already in JSDispatcher, or asynchronously otherwise.
-template <class TCodeWithRuntime>
-void ExecuteJsi(ReactContext const &context, TCodeWithRuntime const &code) {
-  ReactDispatcher jsDispatcher = context.JSDispatcher();
-  if (jsDispatcher.HasThreadAccess()) {
-    // Execute immediately if we are in JS thread.
-    code(GetOrCreateContextRuntime(context));
-  } else {
-    // Otherwise, schedule work in JS thread.
-    jsDispatcher.Post([ context, code ]() noexcept { code(GetOrCreateContextRuntime(context)); });
-  }
-}
-
 } // namespace winrt::Microsoft::ReactNative
-
-#endif // MICROSOFT_REACTNATIVE_JSI_JSIAPI

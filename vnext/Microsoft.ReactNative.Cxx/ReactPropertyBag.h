@@ -71,6 +71,7 @@
 //
 
 #include <winrt/Microsoft.ReactNative.h>
+#include <winrt/Windows.Foundation.h>
 #include <optional>
 #include "ReactHandleHelper.h"
 #include "ReactNonAbiValue.h"
