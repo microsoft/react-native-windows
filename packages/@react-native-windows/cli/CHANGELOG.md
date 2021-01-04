@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 21 Dec 2020 15:05:53 GMT and should not be manually modified.
+This log was last generated on Mon, 04 Jan 2021 15:06:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.4
+
+Mon, 04 Jan 2021 15:06:23 GMT
+
+### Changes
+
+- Fix newline issues in new cli project generated files (#6768) (jthysell@microsoft.com)
 
 ## 0.64.0-preview.3
 

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 04 Jan 2021 15:06:23 GMT",
+      "tag": "@react-native-windows/cli_v0.64.0-preview.4",
+      "version": "0.64.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix newline issues in new cli project generated files (#6768)",
+            "author": "jthysell@microsoft.com",
+            "commit": "596f8cffeea16905a6de95ce544f0c11f158d201",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Dec 2020 15:05:53 GMT",
       "tag": "@react-native-windows/cli_v0.64.0-preview.3",
       "version": "0.64.0-preview.3",
