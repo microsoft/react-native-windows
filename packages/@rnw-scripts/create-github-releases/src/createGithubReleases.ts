@@ -19,7 +19,7 @@ import * as util from 'util';
 import * as yargs from 'yargs';
 
 import fetch from 'node-fetch';
-import findRepoRoot from '@rnw-scripts/find-repo-root';
+import findRepoRoot from '@react-native-windows/find-repo-root';
 
 const glob = util.promisify(require('glob').glob);
 

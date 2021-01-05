@@ -7,7 +7,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import {enumerateLocalPackages} from '@rnw-scripts/package-utils';
+import {enumerateRepoPackages} from '@react-native-windows/package-utils';
 
 /**
  * Search for a single manifest adjacent to the package above a directory or
@@ -45,7 +45,7 @@ export async function findAllManifests(): Promise<string[]> {
     return [path.join(packageDir, 'overrides.json')];
   }
 
-  const localPackages = await enumerateLocalPackages(pkg =>
+  const localPackages = await enumerateRepoPackages(pkg =>
     exists(path.join(pkg.path, 'overrides.json')),
   );
 
