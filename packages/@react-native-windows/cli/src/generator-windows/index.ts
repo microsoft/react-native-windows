@@ -538,7 +538,9 @@ export async function installScriptsAndDependencies(options: {
 }) {
   const projectPackage = await WritableNpmPackage.fromPath(process.cwd());
   if (!projectPackage) {
-    throw new Error('The current directory is not the root of an npm package');
+    throw new Error(
+      `The current directory '${process.cwd()}' is not the root of an npm package`,
+    );
   }
 
   await projectPackage.mergeProps({

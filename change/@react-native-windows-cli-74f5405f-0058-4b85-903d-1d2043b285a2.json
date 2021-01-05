@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Print cwd if generator cannot detect project package",
+  "packageName": "@react-native-windows/cli",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
