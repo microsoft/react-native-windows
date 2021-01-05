@@ -84,8 +84,7 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> EnableFabricProperty() noex
 }
 
 /*static*/ bool QuirkSettings::GetEnableFabric(ReactPropertyBag properties) noexcept {
-  // TODO: value_or should be false to not default to fabric!
-  return properties.Get(EnableFabricProperty()).value_or(true);
+  return properties.Get(EnableFabricProperty()).value_or(false);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
