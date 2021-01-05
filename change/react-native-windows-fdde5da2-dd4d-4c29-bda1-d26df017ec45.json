@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Show HRESULT code on WebSocket errors (#6734)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
