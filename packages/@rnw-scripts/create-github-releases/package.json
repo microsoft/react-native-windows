@@ -13,7 +13,7 @@
     "create-github-releases": "./bin.js"
   },
   "dependencies": {
-    "@rnw-scripts/find-repo-root": "^0.0.14",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.14",
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
     "lodash": "^4.17.15",

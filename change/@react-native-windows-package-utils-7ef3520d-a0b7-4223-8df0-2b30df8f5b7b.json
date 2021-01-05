@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Move some packages from @rnw-scripts to @react-native-windows",
+  "packageName": "@react-native-windows/package-utils",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -22,7 +22,10 @@ import {
 } from '../generator-common';
 import {GenerateOptions} from '..';
 import {CodedError} from '@react-native-windows/telemetry';
-import {findPackage, WritableNpmPackage} from '@rnw-scripts/package-utils';
+import {
+  findPackage,
+  WritableNpmPackage,
+} from '@react-native-windows/package-utils';
 
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';
