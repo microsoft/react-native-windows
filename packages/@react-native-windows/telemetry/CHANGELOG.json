@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 05 Jan 2021 05:06:42 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.12",
+      "version": "0.0.0-canary.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rework error reporting/telemetry to only log the minimal amount of data",
+            "author": "asklar@microsoft.com",
+            "commit": "226fc2c5f4fc300ad90bfc413d275e0fe0adf87f",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Dec 2020 23:59:32 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.11",
       "version": "0.0.0-canary.11",

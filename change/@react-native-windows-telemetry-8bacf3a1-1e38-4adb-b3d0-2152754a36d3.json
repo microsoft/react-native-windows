@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Rework error reporting/telemetry to only log the minimal amount of data",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
