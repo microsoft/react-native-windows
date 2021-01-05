@@ -25,6 +25,7 @@ import {BuildConfig, RunWindowsOptions} from '../runWindowsOptions';
 import MSBuildTools from './msbuildtools';
 import {Config} from '@react-native-community/cli-types';
 import {WindowsProjectConfig} from '../../config/projectConfig';
+import {CodedError} from '@react-native-windows/telemetry';
 import Version from './version';
 
 function pushd(pathArg: string): () => void {
@@ -96,7 +97,8 @@ function getAppPackage(
   }
 
   if (!appPackage) {
-    throw new Error(
+    throw new CodedError(
+      'NoAppPackage',
       `Unable to find app package using search path: "${appPackageGlob}"`,
     );
   }
@@ -141,7 +143,8 @@ function getAppxManifestPath(
   }
 
   if (!appxPath) {
-    throw new Error(
+    throw new CodedError(
+      'NoAppxManifest',
       `Unable to find AppxManifest from "${options.root}", using search path: "${appxManifestGlob}" `,
     );
   }
@@ -158,9 +161,15 @@ function getAppxManifest(options: RunWindowsOptions): parse.Document {
 
 function handleResponseError(e: Error): never {
   if (e.message.indexOf('Error code -2146233088')) {
-    throw new Error(`No Windows Mobile device was detected: ${e.message}`);
+    throw new CodedError(
+      'NoDevice',
+      `No Windows Mobile device was detected: ${e.message}`,
+    );
   } else {
-    throw new Error(`Unexpected error deploying app: ${e.message}`);
+    throw new CodedError(
+      'AppDidNotDeploy',
+      `Unexpected error deploying app: ${e.message}`,
+    );
   }
 }
 
@@ -256,6 +265,7 @@ export async function deployToDesktop(
     windowsStoreAppUtils,
     'EnableDevMode',
     verbose,
+    'EnableDevModeFailure',
   );
 
   const appPackageFolder = getAppPackage(options, projectName);
@@ -266,15 +276,19 @@ export async function deployToDesktop(
       windowsStoreAppUtils,
       `Uninstall-App ${appName}`,
       verbose,
+      'RemoveOldAppVersionFailure',
     );
+
     const script = glob.sync(
       path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
     )[0];
+
     await runPowerShellScriptFunction(
       'Installing new version of the app',
       windowsStoreAppUtils,
       `Install-App "${script}" -Force`,
       verbose,
+      'InstallAppFailure',
     );
   } else {
     // If we have DeployAppRecipe.exe, use it (start in 16.9 Preview 2, don't use 16.8 even if it's there as that version has bugs)
@@ -294,6 +308,7 @@ export async function deployToDesktop(
         deployAppxRecipeExePath,
         [appxRecipe],
         verbose,
+        'DeployRecipeFailure',
       );
     } else {
       // Install the app package's dependencies before attempting to deploy.
@@ -302,6 +317,7 @@ export async function deployToDesktop(
         windowsStoreAppUtils,
         `Install-AppDependencies ${appxManifestPath} ${appPackageFolder} ${options.arch}`,
         verbose,
+        'InstallAppDependenciesFailure',
       );
       await build.buildSolution(
         buildTools,
@@ -323,7 +339,8 @@ export async function deployToDesktop(
     .trim();
 
   if (!appFamilyName) {
-    throw new Error(
+    throw new CodedError(
+      'AppDidNotDeploy',
       'Fail to check the installed app, maybe developer mode is off on Windows',
     );
   }
@@ -337,6 +354,7 @@ export async function deployToDesktop(
     'CheckNetIsolation',
     `LoopbackExempt -a -n=${appFamilyName}`.split(' '),
     verbose,
+    'CheckNetIsolationFailure',
   );
 
   if (shouldLaunchApp(options)) {
@@ -345,6 +363,7 @@ export async function deployToDesktop(
       windowsStoreAppUtils,
       `Start-Locally ${appName} ${args}`,
       verbose,
+      'AppStartupFailure',
     );
   } else {
     newInfo('Skip the step to start the app');

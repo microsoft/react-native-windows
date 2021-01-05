@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 05 Jan 2021 05:06:42 GMT",
+      "tag": "react-native-windows-init_v0.1.43",
+      "version": "0.1.43",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Rework error reporting/telemetry to only log the minimal amount of data",
+            "author": "asklar@microsoft.com",
+            "commit": "226fc2c5f4fc300ad90bfc413d275e0fe0adf87f",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Dec 2020 03:20:37 GMT",
       "tag": "react-native-windows-init_v0.1.42",
       "version": "0.1.42",

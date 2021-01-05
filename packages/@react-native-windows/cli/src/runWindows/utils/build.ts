@@ -11,6 +11,7 @@ import Version from './version';
 import {newError} from './commandWithProgress';
 import {RunWindowsOptions, BuildConfig, BuildArch} from '../runWindowsOptions';
 import {Config} from '@react-native-community/cli-types';
+import {CodedError} from '@react-native-windows/telemetry';
 
 export async function buildSolution(
   buildTools: MSBuildTools,
@@ -26,7 +27,8 @@ export async function buildSolution(
   const minVersion = new Version(10, 0, 18362, 0);
   const allVersions = MSBuildTools.getAllAvailableUAPVersions();
   if (!allVersions.some(v => v.gte(minVersion))) {
-    throw new Error(
+    throw new CodedError(
+      'MinSDKVersionNotMet',
       'Must have a minimum Windows SDK version 10.0.18362.0 installed',
     );
   }
@@ -54,7 +56,10 @@ export function getAppSolutionFile(options: RunWindowsOptions, config: Config) {
   // Check the answer from react-native config
   const windowsAppConfig = config.project.windows;
   if (!windowsAppConfig) {
-    throw new Error("Couldn't determine Windows app config");
+    throw new CodedError(
+      'NoWindowsConfig',
+      "Couldn't determine Windows app config",
+    );
   }
   const configSolutionFile = windowsAppConfig.solutionFile;
 

@@ -21,6 +21,7 @@ import {
   copyAndReplaceWithChangedCallback,
 } from '../generator-common';
 import {GenerateOptions} from '..';
+import {CodedError} from '@react-native-windows/telemetry';
 import {
   findPackage,
   WritableNpmPackage,
@@ -111,15 +112,24 @@ export async function copyProjectTemplateAndReplace(
   options: GenerateOptions,
 ) {
   if (!srcRootPath) {
-    throw new Error('Need a path to copy from');
+    throw new CodedError(
+      'CopyProjectTemplateNoSourcePath',
+      'Need a path to copy from',
+    );
   }
 
   if (!destPath) {
-    throw new Error('Need a path to copy to');
+    throw new CodedError(
+      'CopyProjectTemplateNoDestPath',
+      'Need a path to copy to',
+    );
   }
 
   if (!newProjectName) {
-    throw new Error('Need a project name');
+    throw new CodedError(
+      'CopyProjectTemplateNoProjectName',
+      'Need a project name',
+    );
   }
 
   const projectType = options.projectType;

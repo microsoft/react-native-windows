@@ -91,9 +91,13 @@ const argv = yargs
 
   console.log('Listing tags...');
   const localTags = (await simplegit().tags()).all;
+  console.log(localTags.map(tag => `  - ${tag}`).join('\n'));
 
   console.log('Fetching releases...');
   const githubReleases = await fetchReleases(argv.authToken);
+  console.log(
+    githubReleases.map(release => `  - ${release.tag_name}`).join('\n'),
+  );
 
   for (const changelog of changelogs) {
     for (const release of aggregateReleases(changelog)) {

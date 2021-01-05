@@ -23,6 +23,7 @@ import {
 import {execSync} from 'child_process';
 import {BuildArch, BuildConfig} from '../runWindowsOptions';
 import {findLatestVsInstall} from './vsInstalls';
+import {CodedError} from '@react-native-windows/telemetry';
 
 export default class MSBuildTools {
   /**
@@ -133,6 +134,7 @@ export default class MSBuildTools {
         path.join(this.msbuildPath(), 'msbuild.exe'),
         [slnFile].concat(args),
         verbose,
+        'MSBuildError',
       );
     } catch (e) {
       let error = e;
@@ -140,7 +142,7 @@ export default class MSBuildTools {
         const firstMessage = (await fs.promises.readFile(errorLog))
           .toString()
           .split(EOL)[0];
-        error = new Error(firstMessage);
+        error = new CodedError('MSBuildError', firstMessage);
         error.logfile = errorLog;
       }
       throw error;
@@ -171,12 +173,16 @@ export default class MSBuildTools {
 
     if (!vsInstallation) {
       if (process.env.VisualStudioVersion != null) {
-        throw new Error(
+        throw new CodedError(
+          'NoMSBuild',
           `MSBuild tools not found for version ${process.env.VisualStudioVersion} (from environment). Make sure all required components have been installed`,
+          {VisualStudioVersionFromEnv: process.env.VisualStudioVersion},
         );
       } else {
-        throw new Error(
+        throw new CodedError(
+          'NoMSBuild',
           `Could not find MSBuild with VCTools for Visual Studio ${minVersion} or later. Make sure all required components have been installed`,
+          {minVersion: minVersion},
         );
       }
     }
@@ -196,7 +202,10 @@ export default class MSBuildTools {
         vsInstallation.installationVersion,
       );
     } else {
-      throw new Error(`MSBuild path '${toolsPath} does not exist'`);
+      throw new CodedError(
+        'NoMSBuild',
+        `MSBuild path '${toolsPath} does not exist'`,
+      );
     }
   }
 

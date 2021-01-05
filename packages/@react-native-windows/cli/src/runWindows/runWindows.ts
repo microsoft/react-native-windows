@@ -11,6 +11,9 @@ import {
   Telemetry,
   isMSFTInternal,
   getDiskFreeSpace,
+  CodedError,
+  CodedErrorType,
+  CodedErrors,
 } from '@react-native-windows/telemetry';
 
 import * as build from './utils/build';
@@ -26,7 +29,10 @@ import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
 import {autoLinkCommand} from './utils/autolink';
 import {totalmem, cpus} from 'os';
 
-function setExitProcessWithError(loggingWasEnabled: boolean): void {
+function setExitProcessWithError(
+  error: Error,
+  loggingWasEnabled: boolean,
+): void {
   if (!loggingWasEnabled) {
     console.log(
       `Re-run the command with ${chalk.bold('--logging')} for more information`,
@@ -37,7 +43,11 @@ function setExitProcessWithError(loggingWasEnabled: boolean): void {
       );
     }
   }
-  process.exitCode = 1;
+  if (error instanceof CodedError) {
+    process.exitCode = CodedErrors[error.name as CodedErrorType];
+  } else {
+    process.exitCode = 1;
+  }
 }
 
 function getPkgVersion(pkgName: string): string {
@@ -107,9 +117,9 @@ async function runWindows(
       sdks.forEach(version => console.log('    ' + version));
       return;
     } catch (e) {
-      Telemetry.client?.trackException({exception: e});
+      Telemetry.trackException(e);
       newError('Unable to print environment info.\n' + e.toString());
-      return setExitProcessWithError(options.logging);
+      return setExitProcessWithError(e, options.logging);
     }
   }
 
@@ -117,7 +127,7 @@ async function runWindows(
   try {
     await runWindowsInternal(args, config, options);
   } catch (e) {
-    Telemetry.client?.trackException({exception: e});
+    Telemetry.trackException(e);
     runWindowsError = e;
     if (!hasRunRnwDependencies) {
       const rnwPkgJsonPath = require.resolve(
@@ -135,7 +145,7 @@ async function runWindows(
         `Please install the necessary dependencies by running ${rnwDependenciesPath} from an elevated PowerShell prompt.\nFor more information, go to http://aka.ms/rnw-deps`,
       );
     }
-    return setExitProcessWithError(options.logging);
+    return setExitProcessWithError(e, options.logging);
   } finally {
     Telemetry.client?.trackEvent({
       name: 'run-windows',
@@ -259,7 +269,7 @@ async function runWindowsInternal(
       newError(
         'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
       );
-      throw new Error('Cannot find solution file');
+      throw new CodedError('NoSolution', 'Cannot find solution file');
     }
 
     // Get build/deploy options
@@ -303,7 +313,7 @@ async function runWindowsInternal(
       newError(
         'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
       );
-      throw new Error('Cannot find solution file');
+      throw new CodedError('NoSolution', 'Cannot find solution file');
     }
 
     try {
