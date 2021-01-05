@@ -1,6 +1,6 @@
 {
-  "name": "@rnw-scripts/package-utils",
-  "version": "0.0.11",
+  "name": "@react-native-windows/package-utils",
+  "version": "0.0.0-canary.11",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -11,7 +11,7 @@
   },
   "main": "lib-commonjs/packageUtils.js",
   "dependencies": {
-    "@rnw-scripts/find-repo-root": "^0.0.14",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.14",
     "get-monorepo-packages": "^1.2.0",
     "lodash": "^4.17.15"
   },
@@ -26,10 +26,14 @@
     "typescript": "^3.8.3"
   },
   "beachball": {
+    "defaultNpmTag": "canary",
     "disallowedChangeTypes": [
-      "major"
+      "major",
+      "minor",
+      "patch"
     ]
   },
+  "promoteRelease": true,
   "files": [
     "lib-commonjs"
   ]

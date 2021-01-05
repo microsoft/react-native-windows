@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 05 Jan 2021 05:06:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.230",
+      "version": "0.0.0-canary.230",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable support for C++ TurboModules",
+            "author": "vmorozov@microsoft.com",
+            "commit": "d8f2692dbbab5ccbb627b77830cc3e86b0c178e1",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Dec 2020 05:06:55 GMT",
       "tag": "react-native-windows_v0.0.0-canary.229",
       "version": "0.0.0-canary.229",

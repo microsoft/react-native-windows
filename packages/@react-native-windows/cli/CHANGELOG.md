@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 29 Dec 2020 05:06:55 GMT and should not be manually modified.
+This log was last generated on Tue, 05 Jan 2021 05:06:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.50
+
+Tue, 05 Jan 2021 05:06:42 GMT
+
+### Changes
+
+- Rework error reporting/telemetry to only log the minimal amount of data (asklar@microsoft.com)
 
 ## 0.0.0-canary.49
 

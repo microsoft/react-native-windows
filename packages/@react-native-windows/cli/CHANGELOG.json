@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 05 Jan 2021 05:06:42 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.50",
+      "version": "0.0.0-canary.50",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rework error reporting/telemetry to only log the minimal amount of data",
+            "author": "asklar@microsoft.com",
+            "commit": "226fc2c5f4fc300ad90bfc413d275e0fe0adf87f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Dec 2020 05:06:55 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.49",
       "version": "0.0.0-canary.49",

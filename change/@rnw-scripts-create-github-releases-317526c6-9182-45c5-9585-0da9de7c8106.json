@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Add some more logging to release creation script",
+  "comment": "Move some packages from @rnw-scripts to @react-native-windows",
   "packageName": "@rnw-scripts/create-github-releases",
   "email": "ngerlem@microsoft.com",
   "dependentChangeType": "patch"

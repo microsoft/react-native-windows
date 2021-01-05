@@ -9,10 +9,10 @@ import * as _ from 'lodash';
 import * as path from 'path';
 import * as semver from 'semver';
 import {
-  enumerateLocalPackages,
+  enumerateRepoPackages,
   findPackage,
-  findLocalPackage,
-} from '@rnw-scripts/package-utils';
+  findRepoPackage,
+} from '@react-native-windows/package-utils';
 import runCommand from './runCommand';
 import {upgradeOverrides} from 'react-native-platform-override';
 
@@ -60,7 +60,7 @@ export default async function upgradeDependencies(
 ) {
   const reactNativeDiff = await upgradeReactNative(newReactNativeVersion);
   const repoConfigDiff = await upgradeRepoConfig(newReactNativeVersion);
-  const localPackages = (await enumerateLocalPackages()).map(pkg => ({
+  const localPackages = (await enumerateRepoPackages()).map(pkg => ({
     ...extractPackageDeps(pkg.json),
     outOfTreePlatform: OUT_OF_TREE_PLATFORMS.includes(pkg.json.name),
   }));
@@ -72,7 +72,7 @@ export default async function upgradeDependencies(
     localPackages,
   );
 
-  const writablePackages = await enumerateLocalPackages();
+  const writablePackages = await enumerateRepoPackages();
   await Promise.all(
     newDeps.map(async deps => {
       const [writablePackage] = writablePackages.filter(
@@ -111,7 +111,7 @@ export default async function upgradeDependencies(
 async function upgradeReactNative(
   newReactNativeVersion: string,
 ): Promise<PackageDiff> {
-  const platformPackages = await enumerateLocalPackages(async pkg =>
+  const platformPackages = await enumerateRepoPackages(async pkg =>
     OUT_OF_TREE_PLATFORMS.includes(pkg.json.name),
   );
 
@@ -124,7 +124,7 @@ async function upgradeReactNative(
   const findRnOpts = {searchPath: platformPackages[0].path};
   const origJson = (await findPackage('react-native', findRnOpts))!.json;
 
-  for (const pkg of await enumerateLocalPackages()) {
+  for (const pkg of await enumerateRepoPackages()) {
     if (pkg.json.dependencies && pkg.json.dependencies['react-native']) {
       await pkg.mergeProps({
         dependencies: {
@@ -160,7 +160,7 @@ async function upgradeReactNative(
 async function upgradeRepoConfig(
   newReactNativeVersion: string,
 ): Promise<PackageDiff> {
-  const origPackage = (await findLocalPackage('@react-native/repo-config'))!;
+  const origPackage = (await findRepoPackage('@react-native/repo-config'))!;
 
   const upgradeResults = await upgradeOverrides(
     path.join(origPackage.path, 'overrides.json'),
@@ -176,7 +176,7 @@ async function upgradeRepoConfig(
     );
   }
 
-  const newPackage = (await findLocalPackage('@react-native/repo-config'))!;
+  const newPackage = (await findRepoPackage('@react-native/repo-config'))!;
   return extractPackageDiff(origPackage.json, newPackage.json);
 }
 
