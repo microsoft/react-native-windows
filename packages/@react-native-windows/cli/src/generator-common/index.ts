@@ -9,6 +9,7 @@ import * as chalk from 'chalk';
 import * as inquirer from 'inquirer';
 import * as path from 'path';
 import * as mustache from 'mustache';
+import {CodedError} from '@react-native-windows/telemetry';
 
 /**
  * Text to replace, + config options
@@ -42,6 +43,22 @@ export function resolveContents(
   replacements: Replacements,
 ): string {
   let content = fs.readFileSync(srcPath, 'utf8');
+
+  if (content.includes('\r\n')) {
+    // CRLF file, make sure multiline replacements are also CRLF
+    for (const key of Object.keys(replacements)) {
+      if (typeof replacements[key] === 'string') {
+        replacements[key] = replacements[key].replace(/(?<!\r)\n/g, '\r\n');
+      }
+    }
+  } else {
+    // LF file, make sure multiline replacements are also LF
+    for (const key of Object.keys(replacements)) {
+      if (typeof replacements[key] === 'string') {
+        replacements[key] = replacements[key].replace(/\r\n/g, '\n');
+      }
+    }
+  }
 
   if (replacements.useMustache) {
     content = mustache.render(content, replacements);
@@ -263,7 +280,8 @@ async function alwaysOverwriteContentChangedCallback(
   if (contentChanged === 'identical') {
     return 'keep';
   }
-  throw new Error(
+  throw new CodedError(
+    'Autolinking',
     `Unknown file changed state: ${relativeDestPath}, ${contentChanged}`,
   );
 }
@@ -299,7 +317,8 @@ async function upgradeFileContentChangedCallback(
   if (contentChanged === 'identical') {
     return 'keep';
   }
-  throw new Error(
+  throw new CodedError(
+    'Autolinking',
     `Unknown file changed state: ${relativeDestPath}, ${contentChanged}`,
   );
 }

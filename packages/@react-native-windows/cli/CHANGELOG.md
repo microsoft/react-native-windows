@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 23 Dec 2020 05:07:22 GMT and should not be manually modified.
+This log was last generated on Tue, 29 Dec 2020 05:06:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.49
+
+Tue, 29 Dec 2020 05:06:55 GMT
+
+### Changes
+
+- Fix newline issues in new cli project generated files (jthysell@microsoft.com)
 
 ## 0.0.0-canary.48
 

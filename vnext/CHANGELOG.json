@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 29 Dec 2020 05:06:55 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.229",
+      "version": "0.0.0-canary.229",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix newline issues in new cli project generated files",
+            "author": "jthysell@microsoft.com",
+            "commit": "0f148d489cfc3806fa44a06a61cfe07ba42b17d3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Dec 2020 05:06:00 GMT",
       "tag": "react-native-windows_v0.0.0-canary.228",
       "version": "0.0.0-canary.228",

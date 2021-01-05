@@ -10,6 +10,7 @@ import * as glob from 'glob';
 
 import {DOMParser} from 'xmldom';
 import * as xpath from 'xpath';
+import {CodedError} from '@react-native-windows/telemetry';
 
 const msbuildSelect = xpath.useNamespaces({
   msbuild: 'http://schemas.microsoft.com/developer/msbuild/2003',
@@ -256,7 +257,11 @@ export function findPropertyValue(
 ): string {
   const res = tryFindPropertyValue(projectContents, propertyName);
   if (!res) {
-    throw new Error(`Couldn't find property ${propertyName} from ${filePath}`);
+    throw new CodedError(
+      'NoPropertyInProject',
+      `Couldn't find property ${propertyName} from ${filePath}`,
+      {propertyName: propertyName},
+    );
   }
   return res;
 }

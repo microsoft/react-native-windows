@@ -25,6 +25,7 @@ import {
   ProjectDependency,
 } from '../../config/dependencyConfig';
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
+import {CodedError} from '@react-native-windows/telemetry';
 
 /**
  * Locates the react-native-windows directory
@@ -57,26 +58,6 @@ function verboseMessage(message: any, verbose: boolean) {
   if (verbose) {
     console.log(message);
   }
-}
-
-/**
- * Loads a source template file and performs the given replacements, normalizing CRLF.
- * @param srcFile Path to the source file.
- * @param replacements e.g. {'TextToBeReplaced': 'Replacement'}
- * @return The contents of the file with the replacements applied.
- */
-function getNormalizedContents(
-  srcFile: string,
-  replacements: generatorCommon.Replacements,
-) {
-  // Template files are CRLF, JS-generated replacements are LF, normalize replacements to CRLF
-  for (const key of Object.keys(replacements)) {
-    replacements[key] = replacements[key].replace(/\n/g, '\r\n');
-  }
-
-  replacements.useMustache = true;
-
-  return generatorCommon.resolveContents(srcFile, replacements);
 }
 
 /**
@@ -150,7 +131,8 @@ async function updateAutoLink(
     const projectConfig = config.project;
 
     if (!('windows' in projectConfig) || projectConfig.windows === null) {
-      throw new Error(
+      throw new CodedError(
+        'NoWindowsConfig',
         'Windows auto-link only supported on Windows app projects',
       );
     }
@@ -195,14 +177,20 @@ async function updateAutoLink(
 
     alwaysRequired.forEach(item => {
       if (!(item in windowsAppConfig) || windowsAppConfig[item] === null) {
-        throw new Error(
+        throw new CodedError(
+          'IncompleteConfig',
           `${item} is required but not specified by react-native config`,
+          {item: item},
         );
       } else if (
         typeof windowsAppConfig[item] === 'string' &&
         (windowsAppConfig[item] as string).startsWith('Error: ')
       ) {
-        throw new Error(`${item} invalid. ${windowsAppConfig[item]}`);
+        throw new CodedError(
+          'InvalidConfig',
+          `${item} invalid. ${windowsAppConfig[item]}`,
+          {item: item},
+        );
       }
     });
 
@@ -226,15 +214,19 @@ async function updateAutoLink(
         !(item in windowsAppProjectConfig) ||
         windowsAppProjectConfig[item] === null
       ) {
-        throw new Error(
+        throw new CodedError(
+          'IncompleteConfig',
           `project.${item} is required but not specified by react-native config`,
+          {item: item},
         );
       } else if (
         typeof windowsAppProjectConfig[item] === 'string' &&
         windowsAppProjectConfig[item]!.startsWith('Error: ')
       ) {
-        throw new Error(
+        throw new CodedError(
+          'InvalidConfig',
           `project.${item} invalid. ${windowsAppProjectConfig[item]}`,
+          {item: item},
         );
       }
     });
@@ -301,7 +293,7 @@ async function updateAutoLink(
       }
     }
 
-    // Generating cs/h files for app code consumption
+    // Generating cs/cpp files for app code consumption
     if (projectLang === 'cs') {
       let csUsingNamespaces = '';
       let csReactPackageProviders = '';
@@ -338,7 +330,8 @@ async function updateAutoLink(
         verbose,
       );
 
-      const csContents = getNormalizedContents(srcCsFile, {
+      const csContents = generatorCommon.resolveContents(srcCsFile, {
+        useMustache: true,
         autolinkCsUsingNamespaces: csUsingNamespaces,
         autolinkCsReactPackageProviders: csReactPackageProviders,
       });
@@ -388,7 +381,8 @@ async function updateAutoLink(
         verbose,
       );
 
-      const cppContents = getNormalizedContents(srcCppFile, {
+      const cppContents = generatorCommon.resolveContents(srcCppFile, {
+        useMustache: true,
         autolinkCppIncludes: cppIncludes,
         autolinkCppPackageProviders: cppPackageProviders,
       });
@@ -433,7 +427,8 @@ async function updateAutoLink(
       verbose,
     );
 
-    const propsContents = getNormalizedContents(srcPropsFile, {
+    const propsContents = generatorCommon.resolveContents(srcPropsFile, {
+      useMustache: true,
       autolinkPropertiesForProps: propertiesForProps,
     });
 
@@ -482,7 +477,8 @@ async function updateAutoLink(
       verbose,
     );
 
-    const targetContents = getNormalizedContents(srcTargetFile, {
+    const targetContents = generatorCommon.resolveContents(srcTargetFile, {
+      useMustache: true,
       autolinkProjectReferencesForTargets: projectReferencesForTargets,
     });
 
@@ -570,7 +566,8 @@ async function updateAutoLink(
           "'npx react-native autolink-windows'",
         )} to apply the changes. (${Math.round(endTime - startTime)}ms)`,
       );
-      throw new Error(
+      throw new CodedError(
+        'NeedAutolinking',
         'Auto-linking changes were necessary but --check was specified',
       );
     } else {

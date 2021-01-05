@@ -3,8 +3,6 @@
 #include "JSValue.h"
 #include "NativeModules.h"
 
-// clang-format off
-
 using namespace winrt::Microsoft::ReactNative;
 
 namespace winrt::{{ namespaceCpp }}
@@ -33,5 +31,3 @@ struct ReactNativeModule
 };
 
 } // namespace winrt::{{ namespaceCpp }}
-
-// clang-format on

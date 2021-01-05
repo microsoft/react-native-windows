@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <JSI/JsiApi.h>
+#include <JSI/JsiApiContext.h>
 #include <NativeModules.h>
 #include <winrt/Windows.System.h>
 #include "MockReactPackageProvider.h"
