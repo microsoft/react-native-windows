@@ -8,7 +8,7 @@
 
 #include <UI.Composition.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 // Expression for computing the center point of a UIElement, produces a vector3
 // with 2D translation to center.
@@ -58,4 +58,4 @@ comp::ExpressionAnimation ExpressionAnimationStore::GetTransformCenteringExpress
   return m_transformCenteringExpression;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

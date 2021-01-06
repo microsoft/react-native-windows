@@ -100,7 +100,7 @@ xaml::Media::Brush BrushFromColorObject(const winrt::Microsoft::ReactNative::JSV
   return BrushFromColorObject(winrt::to_hstring(v["windowsbrush"].AsString()));
 }
 
-winrt::Color ColorFromNumber(DWORD argb) {
+winrt::Color ColorFromNumber(DWORD argb) noexcept {
   return winrt::ColorHelper::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
 }
 

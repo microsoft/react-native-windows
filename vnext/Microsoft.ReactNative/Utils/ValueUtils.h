@@ -58,7 +58,7 @@ TimeSpanFromMs(double ms);
 
 winrt::Uri UriTryCreate(winrt::param::hstring const &uri);
 
-winrt::Windows::UI::Color ColorFromNumber(DWORD argb);
+winrt::Windows::UI::Color ColorFromNumber(DWORD argb) noexcept;
 xaml::Media::SolidColorBrush SolidColorBrushFrom(facebook::react::Color) noexcept;
 xaml::Media::SolidColorBrush SolidColorBrushFrom(facebook::react::SharedColor) noexcept;
 } // namespace react::uwp

@@ -275,19 +275,19 @@ void ViewManagerBase::DispatchCommand(
 }
 
 static const winrt::Microsoft::ReactNative::ReactPropertyId<
-    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<react::uwp::ExpressionAnimationStore>>>
+    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<ExpressionAnimationStore>>>
     &ExpressionAnimationStorePropertyId() noexcept {
   static const winrt::Microsoft::ReactNative::ReactPropertyId<
-      winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<react::uwp::ExpressionAnimationStore>>>
+      winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<ExpressionAnimationStore>>>
       prop{L"ReactNative.ViewManagerBase", L"ExpressionAnimationStore"};
   return prop;
 }
 
-std::shared_ptr<react::uwp::ExpressionAnimationStore> ViewManagerBase::GetExpressionAnimationStore() noexcept {
+std::shared_ptr<ExpressionAnimationStore> ViewManagerBase::GetExpressionAnimationStore() noexcept {
   return winrt::Microsoft::ReactNative::ReactPropertyBag(GetReactContext().Properties())
       .GetOrCreate(
           ExpressionAnimationStorePropertyId(),
-          []() { return std::make_shared<react::uwp::ExpressionAnimationStore>(); })
+          []() { return std::make_shared<ExpressionAnimationStore>(); })
       .Value();
 }
 

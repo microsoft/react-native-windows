@@ -10,13 +10,6 @@ namespace Microsoft::ReactNative {
 
 struct ComponentViewDescriptor final {
   std::shared_ptr<IComponentView> view{nullptr};
-
-  /*
-   * Indicates a requirement to call on the view methods from
-   * `RCTMountingTransactionObserving` protocol.
-   */
-  bool observesMountingTransactionWillMount{false};
-  bool observesMountingTransactionDidMount{false};
 };
 
 /* This could be expanded to have a pool of ComponentViewDescriptor's, like iOS does */

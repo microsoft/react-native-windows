@@ -9,7 +9,7 @@
 
 namespace Microsoft::ReactNative {
 
-class ReactNativeConfigProperties : public facebook::react::ReactNativeConfig {
+class ReactNativeConfigProperties final : public facebook::react::ReactNativeConfig {
  public:
   ReactNativeConfigProperties(winrt::Microsoft::ReactNative::ReactContext const &reactContext);
   virtual ~ReactNativeConfigProperties();

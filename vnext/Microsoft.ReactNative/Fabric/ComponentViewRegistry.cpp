@@ -41,7 +41,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
   }
 
   view->Element().Tag(winrt::box_value(tag));
-  auto it = m_registry.insert({tag, ComponentViewDescriptor{view, false, false}});
+  auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});
   return it.first->second;
 }
 

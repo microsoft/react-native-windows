@@ -14,7 +14,7 @@ namespace Microsoft::ReactNative {
 
 using RNComponentViewUpdateMask = std::uint_fast8_t;
 /*
- * Bitmask for all types of possible updates performing during mounting.
+ * Bitmask for all types of possible updates performed during mounting.
  */
 constexpr RNComponentViewUpdateMask RNComponentViewUpdateMaskNone{0};
 constexpr RNComponentViewUpdateMask RNComponentViewUpdateMaskProps{1 << 0};

@@ -331,21 +331,6 @@ struct RemoveDeleteMetadata {
   bool shouldDelete;
 };
 
-class RCTComponentViewDescriptor final {
- public:
-  /*
-   * Associated (and owned) native view instance.
-   */
-  xaml::UIElement view{nullptr};
-
-  /*
-   * Indicates a requirement to call on the view methods from
-   * `RCTMountingTransactionObserving` protocol.
-   */
-  bool observesMountingTransactionWillMount{false};
-  bool observesMountingTransactionDidMount{false};
-};
-
 void FabricUIManager::RCTPerformMountInstructions(
     facebook::react::ShadowViewMutationList const &mutations,
     // facebook::react::RCTComponentViewRegistry* registry,

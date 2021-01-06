@@ -879,21 +879,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
 
     auto rootTag = Microsoft::ReactNative::getNextRootViewTag();
-    /*
-    ThemedReactContext reactContext =
-        new ThemedReactContext(
-            mReactApplicationContext, rootView.getContext(), reactRootView.getSurfaceID());
-            */
-    // mMountingManager.addRootView(rootTag, rootView);
-    // String moduleName = reactRootView.getJSModuleName();
-    // mReactContextForRootTag.put(rootTag, reactContext);
-    // if (ENABLE_FABRIC_LOGS) {
-    //      FLog.d(TAG, "Starting surface for module: %s and reactTag: %d", moduleName, rootTag);
-    //}
     uiManager->startSurface(rootView, rootTag, rootView->JSComponentName(), std::move(initialProps));
-    // if (initialUITemplate != null) {
-    //      mBinding.renderTemplateToSurface(rootTag, initialUITemplate);
-    //}
 
   } else {
     if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*m_reactContext).lock()) {

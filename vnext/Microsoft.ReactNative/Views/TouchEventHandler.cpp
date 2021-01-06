@@ -380,10 +380,8 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
   folly::dynamic changedIndices = folly::dynamic::array();
   changedIndices.push_back(pointerIndex);
 
-  auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-      winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()));
-
-  if (fabricuiManager) {
+  if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+      winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
     std::unordered_set<facebook::react::SharedTouchEventEmitter> uniqueEventEmitters = {};
     std::vector<facebook::react::SharedTouchEventEmitter> emittersForIndex;
 
