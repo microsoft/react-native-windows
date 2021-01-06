@@ -30,6 +30,7 @@
   "devDependencies": {
     "beachball": "^1.32.0",
     "husky": "^4.2.5",
+    "unbroken": "1.0.24",
     "lage": "^0.24.0"
   },
   "resolutions": {
