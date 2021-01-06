@@ -1233,7 +1233,9 @@ class VirtualizedList extends React.PureComponent<Props, State> {
         // $FlowFixMe Invalid prop usage
         <ScrollView
           {...props}
+          // [Windows
           isFlatList={true}
+          // Windows]
           refreshControl={
             props.refreshControl == null ? (
               <RefreshControl
@@ -1249,7 +1251,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       );
     } else {
       // $FlowFixMe Invalid prop usage
-      return <ScrollView {...props} isFlatList={true} />;
+      return <ScrollView {...props} isFlatList={true} />; // [Windows]
     }
   };
 
