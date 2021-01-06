@@ -428,8 +428,8 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawEvent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawProps.cpp" DisableSpecificWarnings="4715;4244;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsKey.cpp" DisableSpecificWarnings="4244;4267;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsKeyMap.cpp" DisableSpecificWarnings="4244;4267;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsParser.cpp" DisableSpecificWarnings="4244;4267;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsKeyMap.cpp" DisableSpecificWarnings="4018;4244;4267;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsParser.cpp" DisableSpecificWarnings="4018;4244;4267;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNode.cpp" DisableSpecificWarnings="4018;4244;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeFamily.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>
@@ -442,7 +442,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx\react\renderer\graphics\Color.cpp" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Transform.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\Differentiator.cpp" DisableSpecificWarnings="4244;4267;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\Differentiator.cpp" DisableSpecificWarnings="4018;4244;4267;4389;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingCoordinator.cpp" DisableSpecificWarnings="4244;4459;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingTransaction.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowTree.cpp" DisableSpecificWarnings="4018;4244;%(DisableSpecificWarnings)"/>
