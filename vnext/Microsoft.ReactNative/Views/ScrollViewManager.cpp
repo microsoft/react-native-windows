@@ -223,12 +223,12 @@ void ScrollViewShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSVal
     } else if (propertyName == "isFlatList") {
       const auto [valid, isFlatList] = getPropertyAndValidity(propertyValue, true);
       if (valid && isFlatList) {
-        // We use the XAMl ScrollViewer for both the RN ScrollView and FlatList - need arrow navigation in FlatList
+        // We use the XAML ScrollViewer for both the RN ScrollView and FlatList - need arrow navigation in FlatList
         // only.
-        scrollViewer.Content().try_as<winrt::ContentControl>().TabFocusNavigation(
-            xaml::Input::KeyboardNavigationMode::Once);
-        scrollViewer.Content().try_as<winrt::ContentControl>().XYFocusKeyboardNavigation(
-            xaml::Input::XYFocusKeyboardNavigationMode::Enabled);
+        if (auto contentControl = scrollViewer.Content().try_as<winrt::ContentControl>()) {
+          contentControl.TabFocusNavigation(xaml::Input::KeyboardNavigationMode::Once);
+          contentControl.XYFocusKeyboardNavigation(xaml::Input::XYFocusKeyboardNavigationMode::Enabled);
+        }
       }
     }
   }
