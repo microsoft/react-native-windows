@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Jan 2021 05:06:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.13
+
+Wed, 06 Jan 2021 05:06:51 GMT
+
+### Patches
+
+- Move some packages from @rnw-scripts to @react-native-windows (ngerlem@microsoft.com)
 
 ## 0.2.12
 

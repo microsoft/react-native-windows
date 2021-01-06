@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Wed, 06 Jan 2021 05:06:51 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.21",
+      "version": "0.0.21",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Move some packages from @rnw-scripts to @react-native-windows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cd49e86e7bb698c318a776fa9b9142792196942f",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Dec 2020 03:20:37 GMT",
       "tag": "@rnw-scripts/integrate-rn_v0.0.19",
       "version": "0.0.19",

@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 06 Jan 2021 05:06:51 GMT",
+      "tag": "react-native-platform-override_v0.4.6",
+      "version": "0.4.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Move some packages from @rnw-scripts to @react-native-windows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cd49e86e7bb698c318a776fa9b9142792196942f",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Dec 2020 19:23:58 GMT",
       "tag": "react-native-platform-override_v0.4.5",
       "version": "0.4.5",
