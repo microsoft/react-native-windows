@@ -51,7 +51,9 @@ steps:
     inputs:
       targetType: inline
       script: |
-        start-process npx -ArgumentList @('verdaccio', '--config', './.ado/verdaccio/config.yaml')
+        start-process npx -ArgumentList @('verdaccio@4.10.0', '--config', './.ado/verdaccio/config.yaml')
+      # We use explicit version here rather than --no-install and have it in our package.json because it adds ~30 megs of extra npm dependencies
+      # that are only used in CI validation
 
   - script: |
       node .ado/scripts/waitForVerdaccio.js
@@ -87,14 +89,14 @@ steps:
   - task: CmdLine@2
     displayName: Init new app project
     inputs:
-      script: npx react-native init testcli --npm --template react-native@$(reactNativeDevDependency)
+      script: npx react-native@$(reactNativeDevDependency) init testcli --npm --template react-native@$(reactNativeDevDependency)
       workingDirectory: $(Agent.BuildDirectory)
     condition: and(succeeded(), eq(variables['localProjectType'], 'app'))
   
   - task: CmdLine@2
     displayName: Init new lib project
     inputs:
-      script: npx create-react-native-module --module-name "testcli" testcli
+      script: npx --no-install create-react-native-module --module-name "testcli" testcli
       workingDirectory: $(Agent.BuildDirectory)
     condition: and(succeeded(), eq(variables['localProjectType'], 'lib'))
   
@@ -119,14 +121,14 @@ steps:
   - task: CmdLine@2
     displayName: Apply windows template (with nuget)
     inputs:
-      script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+      script: npx --no-install react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), ${{ parameters.useNuGet }})
 
   - task: CmdLine@2
     displayName: Apply windows template (without nuget)
     inputs:
-      script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }}
+      script: npx --no-install react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
     condition: and(succeeded(), ${{ not(parameters.useNuGet) }})
 
@@ -179,7 +181,7 @@ steps:
   - task: CmdLine@2
     displayName: React Native Info
     inputs:
-      script: npx react-native info
+      script: npx --no-install react-native info
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - task: CmdLine@2
