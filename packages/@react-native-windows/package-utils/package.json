@@ -36,6 +36,5 @@
   "promoteRelease": true,
   "files": [
     "lib-commonjs"
-  ],
-  "private": true
+  ]
 }

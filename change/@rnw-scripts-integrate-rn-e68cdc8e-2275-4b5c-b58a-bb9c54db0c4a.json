@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Move some packages from @rnw-scripts to @react-native-windows",
-  "packageName": "@rnw-scripts/integrate-rn",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
