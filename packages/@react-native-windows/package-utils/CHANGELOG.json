@@ -1,0 +1,20 @@
+{
+  "name": "@react-native-windows/package-utils",
+  "entries": [
+    {
+      "date": "Wed, 06 Jan 2021 05:06:51 GMT",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.12",
+      "version": "0.0.0-canary.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move some packages from @rnw-scripts to @react-native-windows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cd49e86e7bb698c318a776fa9b9142792196942f",
+            "package": "@react-native-windows/package-utils"
+          }
+        ]
+      }
+    }
+  ]
+}

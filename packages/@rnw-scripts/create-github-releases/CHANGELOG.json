@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Wed, 06 Jan 2021 05:06:51 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v0.0.18",
+      "version": "0.0.18",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Move some packages from @rnw-scripts to @react-native-windows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cd49e86e7bb698c318a776fa9b9142792196942f",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 Jan 2021 05:06:42 GMT",
       "tag": "@rnw-scripts/create-github-releases_v0.0.17",
       "version": "0.0.17",
