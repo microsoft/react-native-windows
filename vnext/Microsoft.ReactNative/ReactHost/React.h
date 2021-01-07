@@ -22,7 +22,12 @@
 #undef GetCurrentTime
 #endif
 
+#ifndef CORE_ABI
+// The IReactInstance.h brings dependency on XAML. Exclude it for the UI technology independent code.
 #include <IReactInstance.h>
+#endif
+
+#include <Shared/IReactRootView.h>
 
 #include <ViewManagerProvider.h>
 #include <winrt/Microsoft.ReactNative.h>

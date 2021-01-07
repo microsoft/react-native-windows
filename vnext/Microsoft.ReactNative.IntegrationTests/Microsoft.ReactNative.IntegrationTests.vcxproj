@@ -108,6 +108,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="JsiRuntimeTests.cpp" />
+    <ClCompile Include="JsiTurboModuleTests.cpp" />
     <ClCompile Include="ReactInstanceSettingsTests.cpp" />
     <ClCompile Include="ReactNonAbiValueTests.cpp" />
     <ClCompile Include="ReactNotificationServiceTests.cpp" />
@@ -137,9 +138,11 @@
   <ItemGroup>
     <Manifest Include="Application.manifest" />
     <None Include="AddValues.js" />
+    <None Include="JsiTurboModuleTests.js" />
     <None Include="TurboModuleTests.js" />
     <None Include="packages.config" />
     <JsBundleEntry Include="AddValues.js" />
+    <JsBundleEntry Include="JsiTurboModuleTests.js" />
     <JsBundleEntry Include="TurboModuleTests.js" />
   </ItemGroup>
   <ItemGroup>
