@@ -8,6 +8,8 @@
 
 import * as RN from 'react-native';
 
+// Enum already part of public API
+// eslint-disable-next-line no-restricted-syntax
 export enum EventPhase {
   None = 0,
   Capturing,
@@ -15,6 +17,8 @@ export enum EventPhase {
   Bubbling,
 }
 
+// Enum already part of public API
+// eslint-disable-next-line no-restricted-syntax
 export enum HandledEventPhase {
   Capturing = EventPhase.Capturing,
   Bubbling = EventPhase.Bubbling,

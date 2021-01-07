@@ -8,6 +8,7 @@ import * as path from 'path';
 import {randomBytes} from 'crypto';
 import * as appInsights from 'applicationinsights';
 import {execSync} from 'child_process';
+import {CodedError} from './CodedError';
 
 export class Telemetry {
   static client?: appInsights.TelemetryClient | undefined = undefined;
@@ -19,7 +20,7 @@ export class Telemetry {
     Telemetry.shouldDisable = true;
   }
 
-  static setup() {
+  static setup(preserveMessages?: boolean) {
     if (Telemetry.isCI()) {
       this.disable();
       return;
@@ -36,6 +37,8 @@ export class Telemetry {
     if (Telemetry.shouldDisable) {
       Telemetry.disable();
     }
+    Telemetry.preserveMessages = preserveMessages ? true : false;
+
     if (process.env.RNW_CLI_TEST) {
       Telemetry.client.commonProperties.isTest = process.env.RNW_CLI_TEST;
     }
@@ -55,7 +58,28 @@ export class Telemetry {
       process.env.CI === 'true' // other CIs
     );
   }
+
+  static trackException(e: Error, properties?: Record<string, any>) {
+    const props: Record<string, any> = {};
+    if (e instanceof CodedError) {
+      Object.assign(props, (e as CodedError).data);
+    }
+
+    const syscallExceptionFieldsToCopy = ['errno', 'syscall', 'code'];
+    for (const f of syscallExceptionFieldsToCopy) {
+      if ((e as any)[f]) {
+        props[f] = [f];
+      }
+    }
+    Object.assign(props, props, properties);
+    Telemetry.client?.trackException({
+      exception: e,
+      properties: props,
+    });
+  }
+
   static shouldDisable: boolean = false;
+  static preserveMessages: boolean = false;
 }
 
 function getAnonymizedPath(filepath: string): string {
@@ -65,12 +89,12 @@ function getAnonymizedPath(filepath: string): string {
   if (filepath.toLowerCase().startsWith(projectRoot)) {
     const ext = path.extname(filepath);
     const rest = filepath.slice(projectRoot.length);
-    const node_modules = '\\node_modules\\';
+    const nodeModules = '\\node_modules\\';
     // this is in the project dir but not under node_modules
     if (rest.toLowerCase().startsWith('\\windows\\')) {
       return `[windows]\\???${ext}(${filepath.length})`;
-    } else if (rest.toLowerCase().startsWith(node_modules)) {
-      return 'node_modules' + rest.slice(node_modules.length - 1);
+    } else if (rest.toLowerCase().startsWith(nodeModules)) {
+      return 'node_modules' + rest.slice(nodeModules.length - 1);
     } else {
       return `[project_dir]\\???${ext}(${filepath.length})`;
     }
@@ -151,7 +175,15 @@ export function sanitizeEnvelope(envelope: any /*context: any*/): boolean {
       }
       const errorCode = tryGetErrorCode(exception.message);
       data.properties.errorCode = errorCode;
-      exception.message = sanitizeMessage(exception.message);
+      // CodedError has non-PII information in its 'type' member, plus optionally some more info in its 'data'.
+      // The message may contain PII information. This can be sanitized, but for now delete it.
+      // Note that the type of data.exceptions[0] is always going to be ExceptionDetails. It is not the original thrown exception.
+      // https://github.com/microsoft/ApplicationInsights-node.js/issues/707
+      if (Telemetry.preserveMessages) {
+        exception.message = sanitizeMessage(exception.message);
+      } else {
+        delete exception.message;
+      }
     }
   }
   delete envelope.tags['ai.cloud.roleInstance'];

@@ -38,7 +38,7 @@ export default class Bootstrap extends React.Component<
   }
 
   onMove(i: number) {
-    let newSquares = this.state.squares.slice();
+    const newSquares = this.state.squares.slice();
     const turn = this.whoseTurn();
     if (this.state.squares[i] || winner(this.state.squares)) {
       return null;
@@ -161,13 +161,13 @@ const winner = (squares: SquareValue[]) => {
     [2, 4, 6],
   ];
 
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
+  for (const line of lines) {
+    const [a, b, c] = line;
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a];
     }
   }
-  if (squares.indexOf(null) === -1) {
+  if (!squares.includes(null)) {
     return null;
   } // tie game
   return undefined;

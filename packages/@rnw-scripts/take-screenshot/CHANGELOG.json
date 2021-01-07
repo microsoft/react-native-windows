@@ -2,6 +2,36 @@
   "name": "@rnw-scripts/take-screenshot",
   "entries": [
     {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v0.0.5",
+      "version": "0.0.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump yargs to 15.4.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fa34591ac86ea25e1e92a807864ba71480046a27",
+            "package": "@rnw-scripts/take-screenshot"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v0.0.3",
+      "version": "0.0.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@rnw-scripts/take-screenshot"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Oct 2020 05:06:32 GMT",
       "tag": "@rnw-scripts/take-screenshot_v0.0.2",
       "version": "0.0.2",

@@ -17,7 +17,7 @@ class AnchoredPopupExample extends React.Component<
   {},
   IAnchoredPopupExampleState
 > {
-  private _textInput: React.RefObject<TextInput>;
+  private readonly _textInput: React.RefObject<TextInput>;
 
   public state: IAnchoredPopupExampleState = {
     showPopup: false,

@@ -8,6 +8,10 @@
 using namespace winrt::Microsoft::ReactNative;
 
 struct ReactContextStub : implements<ReactContextStub, IReactContext> {
+  IReactSettingsSnapshot SettingsSnapshot() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
   IReactPropertyBag Properties() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
@@ -21,6 +25,10 @@ struct ReactContextStub : implements<ReactContextStub, IReactContext> {
   }
 
   IReactDispatcher JSDispatcher() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  IInspectable JSRuntime() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
 

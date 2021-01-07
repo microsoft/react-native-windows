@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  */
 
-import { BasePage, By } from './BasePage';
+import { BasePage, by } from './BasePage';
 import {
   SHOW_IMAGE_BORDER,
   SET_RTL_MODE,
@@ -19,11 +19,11 @@ class ImageTestPage extends BasePage {
   }
 
   private get _imageBorder() {
-    return By(SHOW_IMAGE_BORDER);
+    return by(SHOW_IMAGE_BORDER);
   }
 
   private get _rtlButton() {
-    return By(SET_RTL_MODE);
+    return by(SET_RTL_MODE);
   }
 }
 

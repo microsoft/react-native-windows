@@ -14,9 +14,10 @@ import {
 } from '../telemetry';
 import * as appInsights from 'applicationinsights';
 import {basename} from 'path';
+import {CodedError} from '../CodedError';
 
 delete process.env.AGENT_NAME; // allow this test to run in Azure DevOps / GHA
-Telemetry.setup();
+Telemetry.setup(true);
 Telemetry.client!.config.disableAppInsights = true;
 
 test('Sanitize message, no-op', () => {
@@ -336,4 +337,43 @@ test('trackEvent should not identify roleInstance', () => {
   Telemetry.client!.flush();
   Telemetry.client!.clearTelemetryProcessors();
   Telemetry.client!.addTelemetryProcessor(sanitizeEnvelope);
+});
+
+/////////////////////////
+// CodedError tests
+test('No message', done => {
+  Telemetry.preserveMessages = false;
+  let pass = false;
+  Telemetry.client!.addTelemetryProcessor((envelope, _) => {
+    if (envelope.data.baseType === 'ExceptionData') {
+      const data = (envelope.data as any).baseData;
+      expect(data.exceptions).toBeDefined();
+      expect(data.exceptions.length).toEqual(1);
+      expect(data.exceptions[0].message).toBeUndefined();
+      expect(data.exceptions[0].typeName).toEqual('MSBuildError');
+      // This should be 42, but instead it is '42'
+      // https://github.com/microsoft/ApplicationInsights-node.js/issues/708
+      expect(data.properties.foo).toBeDefined();
+      expect(parseInt(data.properties.foo, 10)).toEqual(42);
+      pass = true;
+    }
+    return true;
+  });
+
+  try {
+    throw new CodedError('MSBuildError', 'Something secret', {
+      foo: 42,
+    });
+  } catch (e) {
+    Telemetry.client!.trackException({
+      exception: e,
+      properties: (e as CodedError).data,
+    });
+    Telemetry.client!.flush();
+  }
+
+  expect(pass).toEqual(true);
+  Telemetry.client!.clearTelemetryProcessors();
+  Telemetry.client!.addTelemetryProcessor(sanitizeEnvelope);
+  done();
 });

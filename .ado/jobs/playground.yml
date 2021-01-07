@@ -1,0 +1,110 @@
+parameters:
+  - name: buildEnvironment
+    type: string
+    default : PullRequest
+    values: 
+     - PullRequest 
+     - Continuous 
+  
+  
+jobs:
+  - job: Playground
+    variables:
+      - template: ../variables/vs2019.yml
+    displayName: Playground
+    strategy:
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+        X86DebugUnivesal:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+          SolutionFile: Playground.sln
+          TestWACK: true
+        X64ReleaseUniversal:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+          SolutionFile: Playground.sln
+          TestWACK: true
+        X86DebugWin32:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+          SolutionFile: Playground-Win32.sln
+        X64ReleaseWin32:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+          SolutionFile: Playground-Win32.sln
+        X86DebugWinUI3:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+          SolutionFile: Playground.sln
+          BuildWinUI3: true
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 5
+
+    steps:
+      - checkout: self
+        clean: false
+        submodules: false
+
+      - template: ../templates/prepare-env.yml
+
+      - task: CmdLine@2
+        displayName: No additional build properties
+        condition: not(eq(variables.BuildWinUI3, true))
+        inputs:
+          script: |
+            echo ##vso[task.setvariable variable=BuildWinUI3Properties]/p:NoAdditionalProperties=true
+
+      - task: CmdLine@2
+        displayName: Set additional build properties for WinUI3
+        condition: eq(variables.BuildWinUI3, true)
+        inputs:
+          script: |
+            echo ##vso[task.setvariable variable=BuildWinUI3Properties]/p:AppxPackageSigningEnabled=false /p:UseWinUI3=true
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - Playground
+        inputs:
+          command: restore
+          restoreSolution: packages/playground/windows/$(SolutionFile)
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+
+      - task: VSBuild@1
+        displayName: VSBuild - Playground
+        inputs:
+          solution: packages/playground/windows/$(SolutionFile)
+          vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          clean: true # Optional
+          maximumCpuCount: false # Optional
+          restoreNugetPackages: false # Optional
+          msbuildArgs:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
+            $(BuildWinUI3Properties)
+            /p:BaseIntDir=$(BaseIntDir) 
+
+        continueOnError: true # See issue #6129
+
+      - powershell: $(Build.SourcesDirectory)/.ado/scripts/TestWACK.ps1 $(BuildPlatform) $(BuildConfiguration) $(Build.StagingDirectory)\WACK
+        displayName: Test WACK
+        condition: and(succeeded(), eq(variables.TestWACK, true))
+
+      - task: PublishBuildArtifacts@1
+        displayName: Upload WACK report
+        condition: and(succeededOrFailed(), eq(variables.TestWACK, true))
+        inputs:
+          pathtoPublish: '$(Build.StagingDirectory)/WACK'
+          artifactName: 'WACK report $(BuildPlatform) $(BuildConfiguration) ($(System.JobAttempt))'
+
+      - task: PublishBuildArtifacts@1
+        displayName: Upload crash dumps
+        condition: and(failed(), eq(variables.BuildWinUI3, true))
+        inputs:
+          pathtoPublish: '$(Build.StagingDirectory)/CrashDumps/'
+          artifactName: 'Crash dumps - $(Agent.JobName)-$(System.JobAttempt)'
+

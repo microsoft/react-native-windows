@@ -50,7 +50,7 @@ export function LoginTestPage() {
   const [passwordHidden, setPasswordHidden] = useState(true);
 
   const onPressShowPassword = () => {
-    var previousState = passwordHidden;
+    const previousState = passwordHidden;
     setPasswordHidden(!previousState);
   };
 

@@ -42,4 +42,6 @@
   </Target>
 
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\CppAppConsumeCSharpModule.targets" />
+
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\RequireSolution.targets" />
 </Project>

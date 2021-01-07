@@ -85,7 +85,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     rc->Connect({}, {});
     rc->Close(CloseCode::Normal, {});
 
-    Assert::AreEqual({"Expected Failure"}, errorMessage);
+    Assert::AreEqual({"[0x80004005] Expected Failure"}, errorMessage);
     Assert::IsFalse(connected);
   }
 

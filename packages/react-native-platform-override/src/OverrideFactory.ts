@@ -52,8 +52,8 @@ export default interface OverrideFactory {
  * Conrete implementation of an OverrideFactory
  */
 export class OverrideFactoryImpl implements OverrideFactory {
-  private reactRepo: ReactFileRepository;
-  private overrideRepo: FileRepository;
+  private readonly reactRepo: ReactFileRepository;
+  private readonly overrideRepo: FileRepository;
 
   constructor(reactRepo: ReactFileRepository, overrideRepo: FileRepository) {
     this.reactRepo = reactRepo;

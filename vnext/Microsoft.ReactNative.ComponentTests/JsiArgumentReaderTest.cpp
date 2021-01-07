@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <ChakraRuntime.h>
+#include <JSI/ChakraRuntime.h>
 #include <JsiReader.h>
 #include <JsiWriter.h>
 #include "CommonReaderTest.h"

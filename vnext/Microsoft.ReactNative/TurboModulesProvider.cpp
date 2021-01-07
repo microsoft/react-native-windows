@@ -7,6 +7,7 @@
 #include "pch.h"
 #include "TurboModulesProvider.h"
 #include <ReactCommon/TurboModuleUtils.h>
+#include "JsiApi.h"
 #include "JsiReader.h"
 #include "JsiWriter.h"
 #ifdef __APPLE__
@@ -85,9 +86,16 @@ class TurboModuleImpl : public facebook::react::TurboModule {
       ReactModuleProvider reactModuleProvider)
       : facebook::react::TurboModule(name, jsInvoker), m_moduleBuilder(winrt::make<TurboModuleBuilder>(reactContext)) {
     providedModule = reactModuleProvider(m_moduleBuilder);
+    if (auto hostObject = providedModule.try_as<IJsiHostObject>()) {
+      m_hostObjectWrapper = std::make_shared<implementation::HostObjectWrapper>(hostObject);
+    }
   }
 
   std::vector<facebook::jsi::PropNameID> getPropertyNames(facebook::jsi::Runtime &rt) override {
+    if (m_hostObjectWrapper) {
+      return m_hostObjectWrapper->getPropertyNames(rt);
+    }
+
     std::vector<facebook::jsi::PropNameID> props;
     auto tmb = m_moduleBuilder.as<TurboModuleBuilder>();
     for (auto &it : tmb->m_methods) {
@@ -97,6 +105,10 @@ class TurboModuleImpl : public facebook::react::TurboModule {
   };
 
   facebook::jsi::Value get(facebook::jsi::Runtime &runtime, const facebook::jsi::PropNameID &propName) override {
+    if (m_hostObjectWrapper) {
+      return m_hostObjectWrapper->get(runtime, propName);
+    }
+
     // it is not safe to assume that "runtime" never changes, so members are not cached here
     auto tmb = m_moduleBuilder.as<TurboModuleBuilder>();
     auto key = propName.utf8(runtime);
@@ -277,9 +289,19 @@ class TurboModuleImpl : public facebook::react::TurboModule {
     return facebook::jsi::Value::undefined();
   }
 
+  void set(facebook::jsi::Runtime &rt, const facebook::jsi::PropNameID &name, const facebook::jsi::Value &value)
+      override {
+    if (m_hostObjectWrapper) {
+      return m_hostObjectWrapper->set(rt, name, value);
+    }
+
+    facebook::react::TurboModule::set(rt, name, value);
+  }
+
  private:
   IReactModuleBuilder m_moduleBuilder;
   IInspectable providedModule;
+  std::shared_ptr<implementation::HostObjectWrapper> m_hostObjectWrapper;
 };
 
 /*-------------------------------------------------------------------------------

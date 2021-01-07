@@ -9,8 +9,8 @@ import {TestBlock} from './TestDescription';
 import IntegrationTestRunner from './IntegrationTestRunner';
 import TestWebSocketServer from './TestWebSocketServer';
 
-let testRunner: IntegrationTestRunner;
-let websocketServer: TestWebSocketServer;
+let testRunner: IntegrationTestRunner | undefined;
+let websocketServer: TestWebSocketServer | undefined;
 
 beforeAll(async () => {
   testRunner = await IntegrationTestRunner.initialize('TestInstructions');
@@ -33,12 +33,12 @@ export function registerTests(blocks: TestBlock[]) {
         if (typeof component === 'string') {
           test(
             component,
-            async () => await testRunner.runTestComponent(component),
+            async () => await testRunner!.runTestComponent(component),
           );
         } else {
           test.skip(
             component.skip,
-            async () => await testRunner.runTestComponent(component.skip),
+            async () => await testRunner!.runTestComponent(component.skip),
           );
         }
       });

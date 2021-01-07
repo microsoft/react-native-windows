@@ -21,9 +21,9 @@ import {platform, tmpdir} from 'os';
  *   the pipe server)
  */
 export default class CrossProcessLock {
-  private ipcPath: string;
-  private server: net.Server;
-  private connections: Set<net.Socket>;
+  private readonly ipcPath: string;
+  private readonly server: net.Server;
+  private readonly connections: Set<net.Socket>;
 
   /**
    * Create the lock instance. Does not yet allocate any resources.

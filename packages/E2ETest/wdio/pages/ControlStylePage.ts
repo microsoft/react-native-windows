@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  */
 
-import { BasePage, By } from './BasePage';
+import { BasePage, by } from './BasePage';
 import { SHOWBORDER_ON_CONTROLSTYLE } from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 class ControlStyleTestPage extends BasePage {
@@ -12,7 +12,7 @@ class ControlStyleTestPage extends BasePage {
   }
 
   private get _controlBorder() {
-    return By(SHOWBORDER_ON_CONTROLSTYLE);
+    return by(SHOWBORDER_ON_CONTROLSTYLE);
   }
 }
 

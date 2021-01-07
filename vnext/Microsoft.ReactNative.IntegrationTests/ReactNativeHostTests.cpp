@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include <JSI/JsiApiContext.h>
 #include <NativeModules.h>
 #include <winrt/Windows.System.h>
 #include "MockReactPackageProvider.h"
+
 using namespace React;
 
 namespace ReactNativeIntegrationTests {
@@ -12,8 +14,62 @@ namespace ReactNativeIntegrationTests {
 REACT_MODULE(TestHostModule)
 struct TestHostModule {
   REACT_INIT(Initialize)
-  void Initialize(ReactContext const & /*reactContext*/) noexcept {
+  void Initialize(ReactContext const &reactContext) noexcept {
+    using namespace facebook::jsi;
     TestHostModule::Instance.set_value(*this);
+
+    Runtime *jsiRuntime{nullptr};
+    bool jsiExecuted{false};
+    // The JSI executed synchronously here because we are in JS thread.
+    ExecuteJsi(reactContext, [&](Runtime &rt) {
+      jsiRuntime = &rt;
+      jsiExecuted = true;
+      auto eval = rt.global().getPropertyAsFunction(rt, "eval");
+      auto addFunc = eval.call(rt, "(function(x, y) { return x + y; })").getObject(rt).getFunction(rt);
+      TestCheckEqual(7, addFunc.call(rt, 3, 4).getNumber());
+
+      Function hostGreeter = Function::createFromHostFunction(
+          rt,
+          PropNameID::forAscii(rt, "multFunc"),
+          1,
+          [](Runtime &rt, const Value & /*thisVal*/, const Value *args, size_t /*count*/) {
+            return Value{rt, String::createFromUtf8(rt, "Hello " + args[0].getString(rt).utf8(rt))};
+          });
+      TestCheckEqual("Hello World", hostGreeter.call(rt, "World").getString(rt).utf8(rt));
+      TestCheck(hostGreeter.getHostFunction(rt) != nullptr);
+
+      Function hostGreater2 = hostGreeter.getFunction(rt);
+      TestCheck(hostGreater2.isHostFunction(rt));
+      TestCheckEqual("Hello World", hostGreater2.call(rt, "World").getString(rt).utf8(rt));
+      TestCheck(hostGreater2.getHostFunction(rt) != nullptr);
+
+      class GreeterHostObject : public HostObject {
+        Value get(Runtime &rt, const PropNameID &) override {
+          return String::createFromAscii(rt, "Hello");
+        }
+        void set(Runtime &, const PropNameID &, const Value &) override {}
+      };
+
+      Object hostObjGreeter = Object::createFromHostObject(rt, std::make_shared<GreeterHostObject>());
+      TestCheckEqual(
+          "Hello", hostObjGreeter.getProperty(rt, PropNameID::forAscii(rt, "someProp")).getString(rt).utf8(rt));
+      TestCheck(hostObjGreeter.getHostObject(rt) != nullptr);
+
+      Object hostObjGreeter2 = Value{rt, hostObjGreeter}.getObject(rt);
+      TestCheck(hostObjGreeter2.isHostObject(rt));
+      TestCheckEqual(
+          "Hello", hostObjGreeter2.getProperty(rt, PropNameID::forAscii(rt, "someProp")).getString(rt).utf8(rt));
+      TestCheck(hostObjGreeter2.getHostObject(rt) != nullptr);
+    });
+    TestCheck(jsiExecuted);
+
+    jsiExecuted = false;
+    // Make sure that we use the same facebook::jsi::Runtime when we run second time.
+    ExecuteJsi(reactContext, [&](Runtime &rt) {
+      jsiExecuted = true;
+      TestCheckEqual(jsiRuntime, &rt);
+    });
+    TestCheck(jsiExecuted);
   }
 
   REACT_FUNCTION(addValues, L"addValues", L"TestHostModuleFunctions")
@@ -72,7 +128,7 @@ TEST_CLASS (ReactNativeHostTests) {
     TestCheckEqual(std::wstring_view{path}, (std::wstring_view)host.InstanceSettings().BundleRootPath());
   }
 
-  SKIPTESTMETHOD(JsFunctionCall_Succeeds) {
+  TEST_METHOD(JsFunctionCall_Succeeds) {
     std::future<TestHostModule &> testHostModule = TestHostModule::Instance.get_future();
     std::future<int> returnValue = TestHostModule::IntReturnValue.get_future();
 
@@ -94,6 +150,8 @@ TEST_CLASS (ReactNativeHostTests) {
       host.InstanceSettings().UseFastRefresh(false);
       host.InstanceSettings().UseLiveReload(false);
       host.InstanceSettings().EnableDeveloperMenu(false);
+
+      host.InstanceSettings().UseDirectDebugger(true);
 
       host.LoadInstance();
     });

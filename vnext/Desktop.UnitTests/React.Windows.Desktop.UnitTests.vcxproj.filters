@@ -46,9 +46,6 @@
     <ClCompile Include="WebSocketModuleTest.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>
-    <ClCompile Include="WebSocketTest.cpp">
-      <Filter>Unit Tests</Filter>
-    </ClCompile>
     <ClCompile Include="WinRTWebSocketResourceUnitTest.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>

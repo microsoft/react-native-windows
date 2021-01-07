@@ -9,13 +9,13 @@ import { TREE_DUMP_RESULT } from '@react-native-windows/tester/js/examples-win/L
 
 const ELEMENT_LOADED_TIMEOUT = 60000;
 
-export function By(testId: string): WebdriverIO.Element {
+export function by(testId: string): WebdriverIO.Element {
   return $('~' + testId);
 }
 
 export class BasePage {
   isElementLoaded(element: string): boolean {
-    return By(element).isDisplayed();
+    return by(element).isDisplayed();
   }
 
   waitForElementLoaded(element: string) {
@@ -43,6 +43,6 @@ export class BasePage {
   }
 
   private get treeDumpResult() {
-    return By(TREE_DUMP_RESULT);
+    return by(TREE_DUMP_RESULT);
   }
 }

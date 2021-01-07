@@ -53,10 +53,13 @@ const Platform = {
   },
   select: <A, N, D>(spec: PlatformSelectSpec<A, N, D>): A | N | D =>
     'windows' in spec
-      ? spec.windows
+      ? // $FlowFixMe[incompatible-return]
+        spec.windows
       : 'native' in spec
-      ? spec.native
-      : spec.default,
+      ? // $FlowFixMe[incompatible-return]
+        spec.native
+      : // $FlowFixMe[incompatible-return]
+        spec.default,
 };
 
 module.exports = Platform;

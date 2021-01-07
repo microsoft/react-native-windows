@@ -2,7 +2,6 @@
 
 #include "winrt/Microsoft.ReactNative.h"
 
-// clang-format off
 namespace winrt::{{ namespaceCpp }}::implementation
 {
     struct ReactPackageProvider : winrt::implements<ReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider>
@@ -12,4 +11,3 @@ namespace winrt::{{ namespaceCpp }}::implementation
     };
 } // namespace winrt::{{ namespaceCpp }}::implementation
 
-// clang-format on

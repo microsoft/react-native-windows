@@ -7,7 +7,7 @@ namespace Microsoft.ReactNative {
 
   // Writer for JSON-like streams or tree structures
   [webhosthidden]
-  DOC_STRING("`IJSValueWriter` is used to read data from JavaScript in custom native modules.  It acts as a stream and supports all the types in [`JSValueType`](JSValueType.md).")
+  DOC_STRING("`IJSValueWriter` is used to write JavaScript values from custom native modules.  It acts as a stream and supports all the types in @JSValueType.")
   interface IJSValueWriter {
     DOC_STRING("Write a null value.")
     void WriteNull();

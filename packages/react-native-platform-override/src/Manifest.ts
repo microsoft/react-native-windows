@@ -21,10 +21,10 @@ import {normalizePath} from './PathUtils';
  * performing aggregate operations on the overrides.
  */
 export default class Manifest {
-  private includePatterns?: string[];
-  private excludePatterns?: string[];
+  private readonly includePatterns?: string[];
+  private readonly excludePatterns?: string[];
   private baseVersion?: string;
-  private overrides: Override[];
+  private readonly overrides: Override[];
 
   /**
    * Construct the manifest

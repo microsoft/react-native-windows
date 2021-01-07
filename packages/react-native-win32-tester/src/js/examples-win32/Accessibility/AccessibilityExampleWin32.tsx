@@ -98,31 +98,31 @@ class ButtonExample extends React.Component<{}, IFocusableComponentState & IExpa
     }
   }
 
-  private _expand = () => {
+  private readonly _expand = () => {
     this.setState({
       expanded: true,
     });
   };
 
-  private _collapse = () => {
+  private readonly _collapse = () => {
     this.setState({
       expanded: false,
     });
   };
 
-  private _onFocus = () => {
+  private readonly _onFocus = () => {
     this.setState({
       hasFocus: true,
     });
   };
 
-  private _onBlur = () => {
+  private readonly _onBlur = () => {
     this.setState({
       hasFocus: false,
     });
   };
 
-  private _onPress = () => {
+  private readonly _onPress = () => {
     this.state.expanded ? this._collapse() : this._expand();
   };
 }
@@ -141,7 +141,7 @@ class MultiSelectionExample extends React.Component<{}, IMultiSelectionExampleSt
   }
 
   public handleAdd = item => {
-    if (this.state.selectedItems.indexOf(item) === -1) {
+    if (!this.state.selectedItems.includes(item)) {
       this.setState({
         selectedItems: this.state.selectedItems.concat([item]),
       });
@@ -149,7 +149,7 @@ class MultiSelectionExample extends React.Component<{}, IMultiSelectionExampleSt
   };
 
   public handleRemove = item => {
-    if (this.state.selectedItems.indexOf(item) > -1) {
+    if (this.state.selectedItems.includes(item)) {
       const array = [...this.state.selectedItems];
       const index = array.indexOf(item);
       array.splice(index, 1);
@@ -170,7 +170,7 @@ class MultiSelectionExample extends React.Component<{}, IMultiSelectionExampleSt
           size={3}
           addHandler={this.handleAdd}
           removeHandler={this.handleRemove}
-          isSelected={this.state.selectedItems.indexOf(1) > -1 ? true : false}
+          isSelected={this.state.selectedItems.includes(1) ? true : false}
         />
         <SelectionItemComponent
           value={2}
@@ -180,7 +180,7 @@ class MultiSelectionExample extends React.Component<{}, IMultiSelectionExampleSt
           size={3}
           addHandler={this.handleAdd}
           removeHandler={this.handleRemove}
-          isSelected={this.state.selectedItems.indexOf(2) > -1 ? true : false}
+          isSelected={this.state.selectedItems.includes(2) ? true : false}
         />
         <SelectionItemComponent
           value={3}
@@ -190,7 +190,7 @@ class MultiSelectionExample extends React.Component<{}, IMultiSelectionExampleSt
           size={3}
           addHandler={this.handleAdd}
           removeHandler={this.handleRemove}
-          isSelected={this.state.selectedItems.indexOf(3) > -1 ? true : false}
+          isSelected={this.state.selectedItems.includes(3) ? true : false}
         />
         <Text>Selected Items: {this.state.selectedItems.toString()}</Text>
       </ViewWin32>
@@ -287,13 +287,13 @@ class ListItem extends React.PureComponent<IListProps, IFocusableComponentState>
     );
   }
 
-  private _onFocus = () => {
+  private readonly _onFocus = () => {
     this.setState({
       hasFocus: true,
     });
   };
 
-  private _onBlur = () => {
+  private readonly _onBlur = () => {
     this.setState({
       hasFocus: false,
     });

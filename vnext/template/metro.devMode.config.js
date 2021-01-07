@@ -6,7 +6,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const blacklist = require('metro-config/src/defaults/blacklist');
+const exclusionList = require('metro-config/src/defaults/exclusionList');
 
 const rnwPath = fs.realpathSync(
   path.resolve(require.resolve('react-native-windows/package.json'), '..'),
@@ -21,7 +21,7 @@ module.exports = {
       // Redirect react-native-windows to avoid symlink (metro doesn't like symlinks)
       'react-native-windows': rnwPath,
     },
-    blacklistRE: blacklist([
+    blockList: exclusionList([
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
         `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,

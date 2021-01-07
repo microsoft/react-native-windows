@@ -6,7 +6,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const blacklist = require('metro-config/src/defaults/blacklist');
+const exclusionList = require('metro-config/src/defaults/exclusionList');
 const {resolve} = require('metro-resolver');
 
 const rnwPath = fs.realpathSync(
@@ -157,7 +157,7 @@ module.exports = {
       'react-native-windows': rnwPath,
       '@react-native-windows/tester': rnwTesterPath,
     },
-    blacklistRE: blacklist([
+    blockList: exclusionList([
       // Avoid error EBUSY: resource busy or locked, open 'D:\a\1\s\packages\playground\msbuild.ProjectImports.zip' in pipeline
       /.*\.ProjectImports\.zip/,
 

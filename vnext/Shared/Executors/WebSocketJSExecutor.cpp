@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <Utils/CppWinrtLessExceptions.h>
 #include <cxxreact/JSBigString.h>
 #include <cxxreact/RAMBundleRegistry.h>
 #include "WebSocketJSExecutor.h"
@@ -203,15 +204,22 @@ winrt::Windows::Foundation::IAsyncAction WebSocketJSExecutor::ConnectAsync(
   m_waitingForDebuggerCallback = waitingForDebuggerCallback;
 
   winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(webSocketServerUrl));
-  co_await m_socket.ConnectAsync(uri);
 
-  SetState(State::Connected);
+  auto async = m_socket.ConnectAsync(uri);
+  co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncAction>{async};
+  auto result = async.ErrorCode();
 
-  if (PrepareJavaScriptRuntime(250)) {
-    SetState(State::Running);
+  if (result >= 0) {
+    SetState(State::Connected);
+
+    if (PrepareJavaScriptRuntime(250)) {
+      SetState(State::Running);
+    } else {
+      m_state = State::Waiting;
+      OnWaitingForDebugger();
+    }
   } else {
-    m_state = State::Waiting;
-    OnWaitingForDebugger();
+    OnHitError(winrt::to_string(winrt::hresult_error(result, winrt::hresult_error::from_abi).message()));
   }
 }
 

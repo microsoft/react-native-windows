@@ -47,7 +47,7 @@
 //
 // REACT_STRUCT annotates a C++ struct that then can be serialized and deserialized with IJSValueReader and
 // IJSValueWriter. With the help of REACT_FIELD it generates FieldMap associated with the struct which then used by
-// ReactValue and ReactWrite methods.
+// ReactValue and ReactWrite methods. Cannot be nested inside REACT_MODULE.
 #define REACT_STRUCT(structType) INTERNAL_REACT_STRUCT(structType)
 
 // REACT_FIELD(field, [opt] fieldName)

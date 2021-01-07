@@ -4,6 +4,11 @@
  * @format
  */
 
+// Types in this file are inaccurate compared to usage in terms of falsiness.
+// We should try to rewrite some of this to do automated schema validation to
+// guarantee correct types
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+
 import * as fs from 'fs';
 import * as path from 'path';
 import * as chalk from 'chalk';
@@ -20,6 +25,7 @@ import {
   ProjectDependency,
 } from '../../config/dependencyConfig';
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
+import {CodedError} from '@react-native-windows/telemetry';
 
 /**
  * Locates the react-native-windows directory
@@ -52,26 +58,6 @@ function verboseMessage(message: any, verbose: boolean) {
   if (verbose) {
     console.log(message);
   }
-}
-
-/**
- * Loads a source template file and performs the given replacements, normalizing CRLF.
- * @param srcFile Path to the source file.
- * @param replacements e.g. {'TextToBeReplaced': 'Replacement'}
- * @return The contents of the file with the replacements applied.
- */
-function getNormalizedContents(
-  srcFile: string,
-  replacements: generatorCommon.Replacements,
-) {
-  // Template files are CRLF, JS-generated replacements are LF, normalize replacements to CRLF
-  for (var key in replacements) {
-    replacements[key] = replacements[key].replace(/\n/g, '\r\n');
-  }
-
-  replacements.useMustache = true;
-
-  return generatorCommon.resolveContents(srcFile, replacements);
 }
 
 /**
@@ -118,6 +104,8 @@ function updateFile(
  * @param config Config passed from react-native CLI.
  * @param options Options passed from react-native CLI.
  */
+// Disabling lint warnings due to high existing cyclomatic complexity
+// eslint-disable-next-line complexity
 async function updateAutoLink(
   args: string[],
   config: Config,
@@ -129,7 +117,7 @@ async function updateAutoLink(
 
   const checkMode = options.check;
 
-  var changesNecessary = false;
+  let changesNecessary = false;
 
   const spinner = newSpinner(
     checkMode ? 'Checking auto-linked files...' : 'Auto-linking...',
@@ -143,7 +131,8 @@ async function updateAutoLink(
     const projectConfig = config.project;
 
     if (!('windows' in projectConfig) || projectConfig.windows === null) {
-      throw new Error(
+      throw new CodedError(
+        'NoWindowsConfig',
         'Windows auto-link only supported on Windows app projects',
       );
     }
@@ -188,14 +177,20 @@ async function updateAutoLink(
 
     alwaysRequired.forEach(item => {
       if (!(item in windowsAppConfig) || windowsAppConfig[item] === null) {
-        throw new Error(
+        throw new CodedError(
+          'IncompleteConfig',
           `${item} is required but not specified by react-native config`,
+          {item: item},
         );
       } else if (
         typeof windowsAppConfig[item] === 'string' &&
         (windowsAppConfig[item] as string).startsWith('Error: ')
       ) {
-        throw new Error(`${item} invalid. ${windowsAppConfig[item]}`);
+        throw new CodedError(
+          'InvalidConfig',
+          `${item} invalid. ${windowsAppConfig[item]}`,
+          {item: item},
+        );
       }
     });
 
@@ -219,15 +214,19 @@ async function updateAutoLink(
         !(item in windowsAppProjectConfig) ||
         windowsAppProjectConfig[item] === null
       ) {
-        throw new Error(
+        throw new CodedError(
+          'IncompleteConfig',
           `project.${item} is required but not specified by react-native config`,
+          {item: item},
         );
       } else if (
         typeof windowsAppProjectConfig[item] === 'string' &&
         windowsAppProjectConfig[item]!.startsWith('Error: ')
       ) {
-        throw new Error(
+        throw new CodedError(
+          'InvalidConfig',
           `project.${item} invalid. ${windowsAppProjectConfig[item]}`,
+          {item: item},
         );
       }
     });
@@ -245,9 +244,9 @@ async function updateAutoLink(
 
     const dependenciesConfig = config.dependencies;
 
-    let windowsDependencies: Record<string, WindowsDependencyConfig> = {};
+    const windowsDependencies: Record<string, WindowsDependencyConfig> = {};
 
-    for (const dependencyName in dependenciesConfig) {
+    for (const dependencyName of Object.keys(dependenciesConfig)) {
       const windowsDependency: WindowsDependencyConfig | undefined =
         dependenciesConfig[dependencyName].platforms.windows;
 
@@ -258,7 +257,7 @@ async function updateAutoLink(
         );
         verboseMessage(windowsDependency, verbose);
 
-        var dependencyIsValid = true;
+        let dependencyIsValid = true;
 
         dependencyIsValid = !!(
           dependencyIsValid &&
@@ -294,12 +293,12 @@ async function updateAutoLink(
       }
     }
 
-    // Generating cs/h files for app code consumption
+    // Generating cs/cpp files for app code consumption
     if (projectLang === 'cs') {
       let csUsingNamespaces = '';
       let csReactPackageProviders = '';
 
-      for (const dependencyName in windowsDependencies) {
+      for (const dependencyName of Object.keys(windowsDependencies)) {
         windowsDependencies[dependencyName].projects.forEach(project => {
           if (project.directDependency) {
             csUsingNamespaces += `\n\n// Namespaces from ${dependencyName}`;
@@ -331,7 +330,8 @@ async function updateAutoLink(
         verbose,
       );
 
-      const csContents = getNormalizedContents(srcCsFile, {
+      const csContents = generatorCommon.resolveContents(srcCsFile, {
+        useMustache: true,
         autolinkCsUsingNamespaces: csUsingNamespaces,
         autolinkCsReactPackageProviders: csReactPackageProviders,
       });
@@ -343,7 +343,7 @@ async function updateAutoLink(
       let cppIncludes = '';
       let cppPackageProviders = '';
 
-      for (const dependencyName in windowsDependencies) {
+      for (const dependencyName of Object.keys(windowsDependencies)) {
         windowsDependencies[dependencyName].projects.forEach(project => {
           if (project.directDependency) {
             cppIncludes += `\n\n// Includes from ${dependencyName}`;
@@ -381,7 +381,8 @@ async function updateAutoLink(
         verbose,
       );
 
-      const cppContents = getNormalizedContents(srcCppFile, {
+      const cppContents = generatorCommon.resolveContents(srcCppFile, {
+        useMustache: true,
         autolinkCppIncludes: cppIncludes,
         autolinkCppPackageProviders: cppPackageProviders,
       });
@@ -393,10 +394,10 @@ async function updateAutoLink(
 
     // Generating props for app project consumption
     let propertiesForProps = '';
-    let csModuleNames: string[] = [];
+    const csModuleNames: string[] = [];
 
     if (projectLang === 'cpp') {
-      for (const dependencyName in windowsDependencies) {
+      for (const dependencyName of Object.keys(windowsDependencies)) {
         windowsDependencies[dependencyName].projects.forEach(project => {
           if (project.directDependency && project.projectLang === 'cs') {
             csModuleNames.push(project.projectName);
@@ -426,7 +427,8 @@ async function updateAutoLink(
       verbose,
     );
 
-    const propsContents = getNormalizedContents(srcPropsFile, {
+    const propsContents = generatorCommon.resolveContents(srcPropsFile, {
+      useMustache: true,
       autolinkPropertiesForProps: propertiesForProps,
     });
 
@@ -437,7 +439,7 @@ async function updateAutoLink(
     // Generating targets for app project consumption
     let projectReferencesForTargets = '';
 
-    for (const dependencyName in windowsDependencies) {
+    for (const dependencyName of Object.keys(windowsDependencies)) {
       windowsDependencies[dependencyName].projects.forEach(project => {
         if (project.directDependency) {
           const dependencyProjectFile = path.join(
@@ -475,7 +477,8 @@ async function updateAutoLink(
       verbose,
     );
 
-    const targetContents = getNormalizedContents(srcTargetFile, {
+    const targetContents = generatorCommon.resolveContents(srcTargetFile, {
+      useMustache: true,
       autolinkProjectReferencesForTargets: projectReferencesForTargets,
     });
 
@@ -484,9 +487,9 @@ async function updateAutoLink(
       changesNecessary;
 
     // Generating project entries for solution
-    let projectsForSolution: Project[] = [];
+    const projectsForSolution: Project[] = [];
 
-    for (const dependencyName in windowsDependencies) {
+    for (const dependencyName of Object.keys(windowsDependencies)) {
       // Process dependency projects
       windowsDependencies[dependencyName].projects.forEach(project => {
         const dependencyProjectFile = path.join(
@@ -543,7 +546,7 @@ async function updateAutoLink(
     });
 
     spinner.succeed();
-    var endTime = performance.now();
+    const endTime = performance.now();
 
     if (!changesNecessary) {
       console.log(
@@ -563,7 +566,8 @@ async function updateAutoLink(
           "'npx react-native autolink-windows'",
         )} to apply the changes. (${Math.round(endTime - startTime)}ms)`,
       );
-      throw new Error(
+      throw new CodedError(
+        'NeedAutolinking',
         'Auto-linking changes were necessary but --check was specified',
       );
     } else {
@@ -577,7 +581,7 @@ async function updateAutoLink(
     }
   } catch (e) {
     spinner.fail();
-    var endTime = performance.now();
+    const endTime = performance.now();
     console.log(
       `${chalk.red('Error:')} ${e.toString()}. (${Math.round(
         endTime - startTime,

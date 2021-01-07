@@ -1,7 +1,7 @@
 #pragma once
 
 #include "App.xaml.g.h"
-// clang-format off
+
 {{#useWinUI3}}
 namespace activation = winrt::Microsoft::UI::Xaml;
 {{/useWinUI3}}
@@ -21,5 +21,3 @@ namespace winrt::{{ namespaceCpp }}::implementation
         using super = AppT<App>;
     };
 } // namespace winrt::{{ namespaceCpp }}::implementation
-
-// clang-format on

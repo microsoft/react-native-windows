@@ -1,8 +1,32 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Thu, 01 Oct 2020 05:08:11 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Jan 2021 05:06:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.13
+
+Wed, 06 Jan 2021 05:06:51 GMT
+
+### Patches
+
+- Move some packages from @rnw-scripts to @react-native-windows (ngerlem@microsoft.com)
+
+## 0.2.12
+
+Tue, 08 Dec 2020 03:20:37 GMT
+
+### Patches
+
+- Bump yargs to 15.4.1 (ngerlem@microsoft.com)
+
+## 0.2.9
+
+Tue, 17 Nov 2020 19:12:07 GMT
+
+### Patches
+
+- Mark packages published from master as private when cutting branch (ngerlem@microsoft.com)
 
 ## 0.2.7
 

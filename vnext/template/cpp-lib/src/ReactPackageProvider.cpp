@@ -6,7 +6,6 @@
 
 #include "ReactNativeModule.h"
 
-// clang-format off
 using namespace winrt::Microsoft::ReactNative;
 
 namespace winrt::{{ namespaceCpp }}::implementation
@@ -18,5 +17,3 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuil
 }
 
 } // namespace winrt::{{ namespaceCpp }}::implementation
-
-// clang-format on

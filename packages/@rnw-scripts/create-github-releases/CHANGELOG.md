@@ -1,8 +1,32 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Thu, 01 Oct 2020 05:08:11 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Jan 2021 05:06:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.18
+
+Wed, 06 Jan 2021 05:06:51 GMT
+
+### Patches
+
+- Move some packages from @rnw-scripts to @react-native-windows (ngerlem@microsoft.com)
+
+## 0.0.17
+
+Tue, 05 Jan 2021 05:06:42 GMT
+
+### Patches
+
+- Add some more logging to release creation script (ngerlem@microsoft.com)
+
+## 0.0.16
+
+Tue, 08 Dec 2020 03:20:37 GMT
+
+### Patches
+
+- Bump yargs to 15.4.1 (ngerlem@microsoft.com)
 
 ## 0.0.12
 

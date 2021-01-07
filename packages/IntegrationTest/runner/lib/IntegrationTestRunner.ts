@@ -16,7 +16,7 @@ import IntegrationTestClient, {
 
 export default class IntegrationTestRunner {
   private connectionReset: boolean = false;
-  private constructor(private testClient: IntegrationTestClient) {}
+  private constructor(private readonly testClient: IntegrationTestClient) {}
 
   static async initialize(
     startingComponent: string,

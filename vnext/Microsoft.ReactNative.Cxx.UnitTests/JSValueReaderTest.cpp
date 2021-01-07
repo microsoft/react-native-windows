@@ -298,6 +298,7 @@ TEST_CLASS (JSValueReaderTest) {
       if (propertyName == L"StringValue1") {
         TestCheck(ReadValue<std::string>(reader) == "");
         TestCheck(ReadValue<std::wstring>(reader) == L"");
+        TestCheck(ReadValue<winrt::hstring>(reader) == L"");
         TestCheck(ReadValue<bool>(reader) == false);
         TestCheck(ReadValue<int8_t>(reader) == 0);
         TestCheck(ReadValue<int16_t>(reader) == 0);
@@ -313,6 +314,7 @@ TEST_CLASS (JSValueReaderTest) {
       } else if (propertyName == L"StringValue2") {
         TestCheck(ReadValue<std::string>(reader) == "5");
         TestCheck(ReadValue<std::wstring>(reader) == L"5");
+        TestCheck(ReadValue<winrt::hstring>(reader) == L"5");
         TestCheck(ReadValue<bool>(reader) == true);
         TestCheck(ReadValue<int8_t>(reader) == 5);
         TestCheck(ReadValue<int16_t>(reader) == 5);
@@ -328,6 +330,7 @@ TEST_CLASS (JSValueReaderTest) {
       } else if (propertyName == L"StringValue3") {
         TestCheck(ReadValue<std::string>(reader) == "Hello");
         TestCheck(ReadValue<std::wstring>(reader) == L"Hello");
+        TestCheck(ReadValue<winrt::hstring>(reader) == L"Hello");
         TestCheck(ReadValue<bool>(reader) == true);
         TestCheck(ReadValue<int8_t>(reader) == 0);
         TestCheck(ReadValue<int16_t>(reader) == 0);
@@ -343,6 +346,7 @@ TEST_CLASS (JSValueReaderTest) {
       } else if (propertyName == L"BoolValue1") {
         TestCheck(ReadValue<std::string>(reader) == "false");
         TestCheck(ReadValue<std::wstring>(reader) == L"false");
+        TestCheck(ReadValue<winrt::hstring>(reader) == L"false");
         TestCheck(ReadValue<bool>(reader) == false);
         TestCheck(ReadValue<int8_t>(reader) == 0);
         TestCheck(ReadValue<int16_t>(reader) == 0);
@@ -358,6 +362,7 @@ TEST_CLASS (JSValueReaderTest) {
       } else if (propertyName == L"BoolValue2") {
         TestCheck(ReadValue<std::string>(reader) == "true");
         TestCheck(ReadValue<std::wstring>(reader) == L"true");
+        TestCheck(ReadValue<winrt::hstring>(reader) == L"true");
         TestCheck(ReadValue<bool>(reader) == true);
         TestCheck(ReadValue<int8_t>(reader) == 1);
         TestCheck(ReadValue<int16_t>(reader) == 1);
@@ -373,6 +378,7 @@ TEST_CLASS (JSValueReaderTest) {
       } else if (propertyName == L"IntValue1") {
         TestCheck(ReadValue<std::string>(reader) == "0");
         TestCheck(ReadValue<std::wstring>(reader) == L"0");
+        TestCheck(ReadValue<winrt::hstring>(reader) == L"0");
         TestCheck(ReadValue<bool>(reader) == false);
         TestCheck(ReadValue<int8_t>(reader) == 0);
         TestCheck(ReadValue<int16_t>(reader) == 0);
@@ -388,6 +394,7 @@ TEST_CLASS (JSValueReaderTest) {
       } else if (propertyName == L"IntValue2") {
         TestCheck(ReadValue<std::string>(reader) == "42");
         TestCheck(ReadValue<std::wstring>(reader) == L"42");
+        TestCheck(ReadValue<winrt::hstring>(reader) == L"42");
         TestCheck(ReadValue<bool>(reader) == true);
         TestCheck(ReadValue<int8_t>(reader) == 42);
         TestCheck(ReadValue<int16_t>(reader) == 42);
@@ -403,6 +410,7 @@ TEST_CLASS (JSValueReaderTest) {
       } else if (propertyName == L"FloatValue") {
         TestCheck(ReadValue<std::string>(reader) == "3.14");
         TestCheck(ReadValue<std::wstring>(reader) == L"3.14");
+        TestCheck(ReadValue<winrt::hstring>(reader) == L"3.14");
         TestCheck(ReadValue<bool>(reader) == true);
         TestCheck(ReadValue<int8_t>(reader) == 3);
         TestCheck(ReadValue<int16_t>(reader) == 3);
@@ -418,6 +426,7 @@ TEST_CLASS (JSValueReaderTest) {
       } else if (propertyName == L"NullValue") {
         TestCheck(ReadValue<std::string>(reader) == "");
         TestCheck(ReadValue<std::wstring>(reader) == L"");
+        TestCheck(ReadValue<winrt::hstring>(reader) == L"");
         TestCheck(ReadValue<bool>(reader) == false);
         TestCheck(ReadValue<int8_t>(reader) == 0);
         TestCheck(ReadValue<int16_t>(reader) == 0);
@@ -442,6 +451,9 @@ TEST_CLASS (JSValueReaderTest) {
     WriteProperty(writer, L"StringValue1", "");
     WriteProperty(writer, L"StringValue2", "5");
     WriteProperty(writer, L"StringValue3", "Hello");
+    WriteProperty(writer, L"StringValue4", L"Hello wchar_t type!");
+    WriteProperty(writer, L"StringValue5", winrt::hstring{L"Hello winrt::hstring type!"});
+    WriteProperty(writer, L"StringValue6", winrt::param::hstring{L"Hello winrt::param::hstring type!"});
     WriteProperty(writer, L"BoolValue1", false);
     WriteProperty(writer, L"BoolValue2", true);
     WriteProperty(writer, L"IntValue1", 0);
@@ -454,6 +466,9 @@ TEST_CLASS (JSValueReaderTest) {
     TestCheck(jsValue["StringValue1"] == "");
     TestCheck(jsValue["StringValue2"] == "5");
     TestCheck(jsValue["StringValue3"] == "Hello");
+    TestCheck(jsValue["StringValue4"] == "Hello wchar_t type!");
+    TestCheck(jsValue["StringValue5"] == "Hello winrt::hstring type!");
+    TestCheck(jsValue["StringValue6"] == "Hello winrt::param::hstring type!");
     TestCheck(jsValue["BoolValue1"] == false);
     TestCheck(jsValue["BoolValue2"] == true);
     TestCheck(jsValue["IntValue1"] == 0);

@@ -165,3 +165,7 @@ bld/
 tsdoc-metadata.json
 *.dmp
 *.pp
+*.orig
+
+# cppwinrt
+nul

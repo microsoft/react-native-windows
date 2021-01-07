@@ -7,26 +7,26 @@ import "IReactContext.idl";
 
 #include "DocString.h"
 
-namespace Microsoft.ReactNative {
-
-  // A delegate that will set reactContext for a module.
-  // We use it for a stand-alone initialize method, strongly typed JS events and functions.
-  DOC_STRING("A delegate that will set `reactContext` for a module. We use it for a stand-alone initialize method, strongly typed JS events and functions.")
+namespace Microsoft.ReactNative
+{
+  DOC_STRING(
+    "A delegate that sets `reactContext` for a module.\n"
+    "We use it for a stand-alone initialize method, strongly typed JS events and functions.\n"
+    "Experimental code uses it to initialize TurboModule `CallInvoker`.")
   delegate void InitializerDelegate(IReactContext reactContext);
 
   // Native method return type.
-  enum MethodReturnType {
+  enum MethodReturnType
+  {
     Void,
     Callback,
     TwoCallbacks,
     Promise,
   };
 
-  // A callback to call JS code with results.
   DOC_STRING("A callback to call JS code with results.")
   delegate void MethodResultCallback(IJSValueWriter outputWriter);
 
-  // A delegate to call native asynchronous method.
   DOC_STRING("A delegate to call native asynchronous method.")
   delegate void MethodDelegate(
       IJSValueReader inputReader,
@@ -34,28 +34,31 @@ namespace Microsoft.ReactNative {
       MethodResultCallback resolve,
       MethodResultCallback reject);
 
-  // A delegate to call native synchronous method.
   DOC_STRING("A delegate to call native synchronous method.")
   delegate void SyncMethodDelegate(IJSValueReader inputReader, IJSValueWriter outputWriter);
 
-  // A delegate to gather constants from native modules.
-  DOC_STRING("A delegate to gather constants from native modules.")
+  DOC_STRING("A delegate to gather constants for the native module.")
   delegate void ConstantProviderDelegate(IJSValueWriter constantWriter);
 
-  // Builds native modules inside of React Native code based on the provided meta-data.
   [webhosthidden]
-  DOC_STRING("Builds native modules inside of React native code based on the provided meta-data. \
-See [Native Modules](native-modules.md) for more usage information.")
-  interface IReactModuleBuilder {
-
-    DOC_STRING("An initializer is a method that will be called when the react instance starts.  It provides the native module with the [`IReactContext`](IReactContext.md) for the running instance. See [`InitializerDelegate`](#initializerdelegate).")
+  DOC_STRING(
+    "Builds native module inside of ReactNative code based on the provided meta-data.\n"
+    "See [Native Modules](native-modules) for more usage information.")
+  interface IReactModuleBuilder
+  {
+    DOC_STRING(
+      "Adds an initializer method called on the native module initialization.\n"
+      "It provides the native module with the @IReactContext for the running ReactNative instance.  See @InitializerDelegate.\n"
+      "There can be multiple initializer methods which are called in the order they were registered.")
     void AddInitializer(InitializerDelegate initializer);
 
-    DOC_STRING("The [`JSValue`](JSValue.md) written by the [`ConstantProviderDelegate`](ConstantProviderDelegate.md) will be available as constants on the native module is JavaScript.")
+    DOC_STRING("Adds a constant provider method to define constants for the native module.  See @ConstantProviderDelegate.")
     void AddConstantProvider(ConstantProviderDelegate constantProvider);
+
+    DOC_STRING("Adds an asynchronous method to the native module.  See @MethodDelegate.")
     void AddMethod(String name, MethodReturnType returnType, MethodDelegate method);
 
-    DOC_STRING("Adds a synchronous method to the native module.  See [`SyncMethodDelegate`](SyncMethodDelegate.md).")
+    DOC_STRING("Adds a synchronous method to the native module.  See @SyncMethodDelegate.")
     void AddSyncMethod(String name, SyncMethodDelegate method);
   };
 } // namespace Microsoft.ReactNative

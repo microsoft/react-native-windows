@@ -6,8 +6,6 @@
 
 #include "App.h"
 
-// clang-format off
-
 using namespace winrt;
 using namespace {{ xamlNamespaceCpp }};
 
@@ -20,5 +18,3 @@ namespace winrt::{{ namespaceCpp }}::implementation
         ReactRootView().ReactNativeHost(app->Host());
     }
 }
-
-// clang-format on

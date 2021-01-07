@@ -2,7 +2,6 @@
 #include "MainPage.g.h"
 #include <winrt/Microsoft.ReactNative.h>
 
-// clang-format off
 namespace winrt::{{ namespaceCpp }}::implementation
 {
     struct MainPage : MainPageT<MainPage>
@@ -18,4 +17,3 @@ namespace winrt::{{ namespaceCpp }}::factory_implementation
     };
 }
 
-// clang-format on

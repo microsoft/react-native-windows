@@ -8,9 +8,9 @@
 
 module.exports = {
   extends: ['@rnw-scripts'],
-  rules:{ 
-    "sort-imports": "error",
+  rules: {
+    'sort-imports': 'error',
   },
   ignorePatterns: ['src/e2etest/collateral/**'],
-  parserOptions: {tsconfigRootDir : __dirname},
+  parserOptions: {tsconfigRootDir: __dirname},
 };

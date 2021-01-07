@@ -26,11 +26,6 @@ comp::Compositor GetCompositor(const XamlView &view) {
   if (auto window = xaml::Window::Current()) {
     return window.Compositor();
   }
-#ifdef USE_WINUI3
-  else if (auto root = TryGetXamlRoot(view)) {
-    return root.Compositor();
-  }
-#endif
   return GetCompositor();
 }
 

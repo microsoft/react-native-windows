@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 const Theming = NativeModules.Theming;
 
 const ifModuleAvailable = (wrappedComponent: JSX.Element) => {
-  return (Theming && wrappedComponent) || <Text>Theming Native Module not available</Text>;
+  return Theming ? wrappedComponent : <Text>Theming Native Module not available</Text>;
 };
 
 const RenderThemeFunction = () => {
@@ -49,7 +49,7 @@ const ThemingMethods: React.FunctionComponent<{}> = () => {
   );
 };
 
-const renderNestedObject = (obj: object) => {
+const renderNestedObject = (obj: Record<string, any>) => {
   return (
     <View style={styles.nestedContainer}>
       <ScrollView>
@@ -61,7 +61,7 @@ const renderNestedObject = (obj: object) => {
   );
 };
 
-const renderObject = (obj: object) => {
+const renderObject = (obj: Record<string, any>) => {
   const firstKey = Object.keys(obj)[0];
   const formattedOutput = JSON.stringify(obj)
     .replace(/],/g, '],\n\n')

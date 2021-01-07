@@ -55,35 +55,35 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
     );
   }
 
-  private _makeState = (select: SelectState): IButtonWin32State => {
+  private readonly _makeState = (select: SelectState): IButtonWin32State => {
     return {
       accessibilityState: {
-        disabled: this.props.disabled === true,
+        disabled: this.props.disabled,
         selected: select === SelectState.Selected,
       },
     };
   };
 
-  private _setState = (select: SelectState): void => {
+  private readonly _setState = (select: SelectState): void => {
     const state = this._makeState(select);
     this.setState(state);
   };
 
-  private _onFocus = (): void => {
+  private readonly _onFocus = (): void => {
     this._setState(SelectState.Selected);
     if (this.props.onFocus) {
       this.props.onFocus();
     }
   };
 
-  private _onBlur = (): void => {
+  private readonly _onBlur = (): void => {
     this._setState(SelectState.NotSelected);
     if (this.props.onBlur) {
       this.props.onBlur();
     }
   };
 
-  private _onTouchEnd = (event: RN.GestureResponderEvent): void => {
+  private readonly _onTouchEnd = (event: RN.GestureResponderEvent): void => {
     if (!this.props.disabled) {
       if (this.props.onPress) {
         this.props.onPress(event);

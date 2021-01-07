@@ -19,7 +19,7 @@ interface IFlyoutExampleState {
   placementOptions: Placement;
 }
 
-let placementValues: string[] = [
+const placementValues: string[] = [
   'top',
   'bottom',
   'left',
@@ -36,7 +36,6 @@ let placementValues: string[] = [
 ];
 
 class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
-  // tslint:disable-next-line:no-any
   private _anchor: any;
   private _anchorTwo: any;
 
@@ -218,7 +217,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
     );
   }
 
-  private _setRef = (textInput: TextInput) => {
+  private readonly _setRef = (textInput: TextInput) => {
     this._anchor = textInput;
   };
 

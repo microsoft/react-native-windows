@@ -121,7 +121,7 @@ function combineSchemas(files: string[]): SchemaType {
       if (
         contents &&
         (/export\s+default\s+\(?codegenNativeComponent</.test(contents) ||
-          /extends TurboModule/.test(contents))
+          contents.includes('extends TurboModule'))
       ) {
         const schema = parseFile(filename);
 

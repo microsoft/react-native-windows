@@ -5,7 +5,7 @@
 
 #include "ChakraRuntimeHolder.h"
 
-#include <JSI/Shared/ChakraRuntimeFactory.h>
+#include <JSI/ChakraRuntimeFactory.h>
 
 namespace Microsoft::JSI {
 

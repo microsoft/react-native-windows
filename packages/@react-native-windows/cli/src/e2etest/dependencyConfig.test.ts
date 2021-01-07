@@ -133,7 +133,7 @@ test.each(projects)(
 
     const userConfig: Partial<WindowsDependencyConfig> =
       rnc.dependency.platforms.windows;
-    let expectedConfig: WindowsDependencyConfig | null = rnc.expectedConfig;
+    const expectedConfig: WindowsDependencyConfig | null = rnc.expectedConfig;
 
     if (expectedConfig !== null) {
       expectedConfig.folder = folder;

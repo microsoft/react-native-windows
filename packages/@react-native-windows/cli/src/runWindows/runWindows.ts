@@ -11,6 +11,9 @@ import {
   Telemetry,
   isMSFTInternal,
   getDiskFreeSpace,
+  CodedError,
+  CodedErrorType,
+  CodedErrors,
 } from '@react-native-windows/telemetry';
 
 import * as build from './utils/build';
@@ -26,7 +29,10 @@ import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
 import {autoLinkCommand} from './utils/autolink';
 import {totalmem, cpus} from 'os';
 
-function setExitProcessWithError(loggingWasEnabled: boolean): void {
+function setExitProcessWithError(
+  error: Error,
+  loggingWasEnabled: boolean,
+): void {
   if (!loggingWasEnabled) {
     console.log(
       `Re-run the command with ${chalk.bold('--logging')} for more information`,
@@ -37,7 +43,11 @@ function setExitProcessWithError(loggingWasEnabled: boolean): void {
       );
     }
   }
-  process.exitCode = 1;
+  if (error instanceof CodedError) {
+    process.exitCode = CodedErrors[error.name as CodedErrorType];
+  } else {
+    process.exitCode = 1;
+  }
 }
 
 function getPkgVersion(pkgName: string): string {
@@ -54,16 +64,17 @@ function getPkgVersion(pkgName: string): string {
   return '';
 }
 
-enum RunWindowsPhase {
-  None,
-  AutoLink,
-  FindBuildTools,
-  NuGetRestore,
-  FindSolution,
-  Deploy,
-}
+/**
+ * Labels used by telemtry to represent current operation
+ */
+type RunWindowsPhase =
+  | 'None'
+  | 'AutoLink'
+  | 'FindBuildTools'
+  | 'FindSolution'
+  | 'Deploy';
 
-let runWindowsPhase = RunWindowsPhase.None;
+let runWindowsPhase: RunWindowsPhase = 'None';
 /**
  * Performs build deploy and launch of RNW apps.
  * @param args Unprocessed args passed from react-native CLI.
@@ -93,6 +104,10 @@ async function runWindows(
   delete process.env.NPM_CONFIG_CACHE;
   delete process.env.NPM_CONFIG_PREFIX;
 
+  const hasRunRnwDependencies =
+    process.env.LocalAppData &&
+    fs.existsSync(path.join(process.env.LocalAppData, 'rnw-dependencies.txt')); // CODESYNC \vnext\scripts\rnw-dependencies.ps1
+
   if (options.info) {
     try {
       const output = await info.getEnvironmentInfo();
@@ -102,9 +117,9 @@ async function runWindows(
       sdks.forEach(version => console.log('    ' + version));
       return;
     } catch (e) {
-      Telemetry.client?.trackException({exception: e});
+      Telemetry.trackException(e);
       newError('Unable to print environment info.\n' + e.toString());
-      return setExitProcessWithError(options.logging);
+      return setExitProcessWithError(e, options.logging);
     }
   }
 
@@ -112,15 +127,30 @@ async function runWindows(
   try {
     await runWindowsInternal(args, config, options);
   } catch (e) {
-    Telemetry.client?.trackException({exception: e});
+    Telemetry.trackException(e);
     runWindowsError = e;
-    return setExitProcessWithError(options.logging);
+    if (!hasRunRnwDependencies) {
+      const rnwPkgJsonPath = require.resolve(
+        'react-native-windows/package.json',
+        {
+          paths: [process.cwd(), __dirname],
+        },
+      );
+      const rnwDependenciesPath = path.join(
+        path.dirname(rnwPkgJsonPath),
+        'scripts/rnw-dependencies.ps1',
+      );
+
+      newError(
+        `Please install the necessary dependencies by running ${rnwDependenciesPath} from an elevated PowerShell prompt.\nFor more information, go to http://aka.ms/rnw-deps`,
+      );
+    }
+    return setExitProcessWithError(e, options.logging);
   } finally {
     Telemetry.client?.trackEvent({
       name: 'run-windows',
       properties: {
         release: options.release,
-        root: options.root !== undefined,
         arch: options.arch,
         singleproc: options.singleproc,
         emulator: options.emulator,
@@ -148,11 +178,12 @@ async function runWindows(
         msftInternal: isMSFTInternal(),
         durationInSecs: process.uptime(),
         success: runWindowsError === undefined,
-        phase: RunWindowsPhase[runWindowsPhase],
+        phase: runWindowsPhase,
         totalMem: totalmem(),
         diskFree: getDiskFreeSpace(__dirname),
         cpus: cpus().length,
         project: await getAnonymizedProjectName(config.root),
+        hasRunRnwDependencies: hasRunRnwDependencies,
       },
     });
     Telemetry.client?.flush();
@@ -206,14 +237,14 @@ async function runWindowsInternal(
       proj: options.proj,
       sln: options.sln,
     };
-    runWindowsPhase = RunWindowsPhase.AutoLink;
+    runWindowsPhase = 'AutoLink';
     await autoLinkCommand.func(autolinkArgs, autolinkConfig, autoLinkOptions);
   } else {
     newInfo('Autolink step is skipped');
   }
 
   let buildTools: MSBuildTools;
-  runWindowsPhase = RunWindowsPhase.FindBuildTools;
+  runWindowsPhase = 'FindBuildTools';
   try {
     buildTools = MSBuildTools.findAvailableVersion(options.arch, verbose);
   } catch (error) {
@@ -226,37 +257,30 @@ async function runWindowsInternal(
         verbose,
         true, // preRelease
       );
-    } catch {
+    } catch (e) {
+      newError(e.message);
       throw error;
     }
   }
 
   if (options.build) {
-    runWindowsPhase = RunWindowsPhase.FindSolution;
+    runWindowsPhase = 'FindSolution';
     if (!slnFile) {
       newError(
         'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
       );
-      throw new Error('Cannot find solution file');
-    }
-
-    try {
-      runWindowsPhase = RunWindowsPhase.NuGetRestore;
-      await build.restoreNuGetPackages(slnFile!, buildTools, verbose);
-    } catch (e) {
-      newError('Failed to restore the NuGet packages: ' + e.toString());
-      throw e;
+      throw new CodedError('NoSolution', 'Cannot find solution file');
     }
 
     // Get build/deploy options
     const buildType = deploy.getBuildConfiguration(options);
-    let msBuildProps = build.parseMsBuildProps(options);
+    const msBuildProps = build.parseMsBuildProps(options);
 
     // Disable the autolink check since we just ran it
     msBuildProps.RunAutolinkCheck = 'false';
 
     try {
-      runWindowsPhase = RunWindowsPhase.FindSolution;
+      runWindowsPhase = 'FindSolution';
       await build.buildSolution(
         buildTools,
         slnFile!,
@@ -264,7 +288,7 @@ async function runWindowsInternal(
         options.arch,
         msBuildProps,
         verbose,
-        undefined, // build the default target
+        'build',
         options.buildLogDirectory,
         options.singleproc,
       );
@@ -284,16 +308,16 @@ async function runWindowsInternal(
   await deploy.startServerInNewWindow(options, verbose);
 
   if (options.deploy) {
-    runWindowsPhase = RunWindowsPhase.FindSolution;
+    runWindowsPhase = 'FindSolution';
     if (!slnFile) {
       newError(
         'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
       );
-      throw new Error('Cannot find solution file');
+      throw new CodedError('NoSolution', 'Cannot find solution file');
     }
 
     try {
-      runWindowsPhase = RunWindowsPhase.Deploy;
+      runWindowsPhase = 'Deploy';
       if (options.device || options.emulator || options.target) {
         await deploy.deployToDevice(options, verbose);
       } else {

@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const rnwPath = __dirname;
 const {resolve} = require('metro-resolver');
-const blacklist = require('metro-config/src/defaults/blacklist');
+const exclusionList = require('metro-config/src/defaults/exclusionList');
 
 function reactNativePlatformResolver(platformImplementations) {
   return (context, _realModuleName, platform, moduleName) => {
@@ -50,7 +50,7 @@ module.exports = {
       // Redirect react-native-windows to this folder
       'react-native-windows': rnwPath,
     },
-    blacklistRE: blacklist([
+    blockList: exclusionList([
       // Avoid error EBUSY: resource busy or locked, open '...\vnext\msbuild.ProjectImports.zip' when building 'vnext\Microsoft.ReactNative.sln' with '/bl'
       /.*\.ProjectImports\.zip/,
     ]),

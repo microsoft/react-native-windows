@@ -261,7 +261,11 @@ class PickerEditableExample extends React.Component<{}, any> {
     );
   }
 
-  private onValueChange = (selected: string, _index: number, text: string) => {
+  private readonly onValueChange = (
+    selected: string,
+    _index: number,
+    text: string,
+  ) => {
     this.setState({selected, text});
   };
 }

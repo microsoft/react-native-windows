@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\tests\RecoverableErrorTest.cpp">
+      <Filter>cxxreact\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\tests\AttributedStringTest.cpp">
+      <Filter>react\renderer\attributedstring\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\tests\ParagraphAttributesTest.cpp">
+      <Filter>react\renderer\attributedstring\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\tests\TextAttributesTest.cpp">
+      <Filter>react\renderer\attributedstring\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\root\tests\RootShadowNodeTest.cpp">
+      <Filter>react\renderer\components\root\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\tests\ScrollViewTest.cpp">
+      <Filter>react\renderer\components\scrollview\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\slider\tests\SliderTest.cpp">
+      <Filter>react\renderer\components\slider</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\tests\ImageTest.cpp">
+      <Filter>react\renderer\components\image\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\tests\ViewTest.cpp">
+      <Filter>react\renderer\components\view\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\tests\ParagraphLocalDataTest.cpp">
+      <Filter>react\renderer\components\text\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\tests\TextTest.cpp">
+      <Filter>react\renderer\components\text\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\tests\LayoutTest.cpp">
+      <Filter>react\renderer\components\view\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\tests\ComponentDescriptorTest.cpp">
+      <Filter>react\renderer\core\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\tests\ConcreteShadowNodeTest.cpp">
+      <Filter>react\renderer\core\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\tests\FindNodeAtPointTest.cpp">
+      <Filter>react\renderer\core\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\tests\LayoutableShadowNodeTest.cpp">
+      <Filter>react\renderer\core\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\tests\PrimitivesTest.cpp">
+      <Filter>react\renderer\core\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\tests\RawPropsTest.cpp">
+      <Filter>react\renderer\core\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\tests\ShadowNodeFamilyTest.cpp">
+      <Filter>react\renderer\core\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\tests\ShadowNodeTest.cpp">
+      <Filter>react\renderer\core\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\tests\traitCastTest.cpp">
+      <Filter>react\renderer\core\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\tests\DebugStringConvertibleTest.cpp">
+      <Filter>react\renderer\debug\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\element\tests\ElementTest.cpp">
+      <Filter>react\renderer\element\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\tests\GraphicsTest.cpp">
+      <Filter>react\renderer\graphics\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\tests\TransformTest.cpp">
+      <Filter>react\renderer\graphics\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\tests\ImageManagerTest.cpp">
+      <Filter>react\renderer\imagemanager\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\tests\MapBufferTest.cpp">
+      <Filter>react\renderer\mapbuffer\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\tests\MountingTest.cpp">
+      <Filter>react\renderer\mounting\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\tests\ShadowTreeLifeCycleTest.cpp">
+      <Filter>react\renderer\mounting\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\tests\StateReconciliationTest.cpp">
+      <Filter>react\renderer\mounting\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\tests\TransactionTelemetryTest.cpp">
+      <Filter>react\renderer\mounting\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\templateprocessor\tests\UITemplateProcessorTest.cpp">
+      <Filter>react\renderer\templateprocessor\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\textlayoutmanager\tests\TextLayoutManagerTest.cpp">
+      <Filter>react\renderer\textlayoutmanager\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\tests\FabricUIManagerTest.cpp">
+      <Filter>react\renderer\uimanager\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.cpp">
+      <Filter>jsi\jsi\test</Filter>
+    </ClCompile>
+    <ClCompile Include="JsiRuntimeGenerators.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.h">
+      <Filter>jsi\jsi\test</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="jsi">
+      <UniqueIdentifier>{cb6089d5-c5db-4090-93b4-2454ca9411bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jsi\jsi">
+      <UniqueIdentifier>{e7404bfd-2078-4f21-81dd-6740d2f30e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jsi\jsi\test">
+      <UniqueIdentifier>{1b90a59e-0d8e-43e4-92d7-a4f846a5716c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react">
+      <UniqueIdentifier>{3f10f518-fa16-4c4f-9d88-1abfdd912f69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cxxreact">
+      <UniqueIdentifier>{0397df34-c101-48a4-9b45-305d02ca42f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cxxreact\tests">
+      <UniqueIdentifier>{9e50844b-fab6-4413-8430-7b996c2c9aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer">
+      <UniqueIdentifier>{f500d53c-7528-40cb-9768-6af72549e91a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\components">
+      <UniqueIdentifier>{31736348-c0d2-45b3-a772-43da6c48d3c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\components\view">
+      <UniqueIdentifier>{3e52b062-a70f-4046-8f51-6009f51402b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\components\view\tests">
+      <UniqueIdentifier>{3affad7d-2956-461f-93cf-bc4066681f12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\components\image">
+      <UniqueIdentifier>{f4c16e06-4016-43c7-a73e-0bc325d7ec3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\components\image\tests">
+      <UniqueIdentifier>{7c7f43d9-9977-4d60-818a-de8a19c2baa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\attributedstring">
+      <UniqueIdentifier>{34fd2ce3-42c8-4b5a-9480-c49310333e11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\attributedstring\tests">
+      <UniqueIdentifier>{50ef2307-ed02-4547-a84a-e92ae34e49f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\components\root">
+      <UniqueIdentifier>{f4b80efe-26ee-451e-b521-c4864a7d413b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\components\root\tests">
+      <UniqueIdentifier>{19fc2846-444f-4ea3-980d-28f31e6fbcae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\components\scrollview">
+      <UniqueIdentifier>{0944e953-4134-4d4c-904d-a6b2ac0ce382}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\components\scrollview\tests">
+      <UniqueIdentifier>{22c1c33f-8ed6-4ce7-8975-77b223121724}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\components\slider">
+      <UniqueIdentifier>{b484cd0c-6734-4d82-a1c2-5eaf993d07d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\components\text">
+      <UniqueIdentifier>{65fd0ce2-cadd-42d0-8ffd-528d1303d3ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\components\text\tests">
+      <UniqueIdentifier>{69163ea3-feaf-426c-a23a-cc7776bd386c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\core">
+      <UniqueIdentifier>{e0d4ebe8-ea7c-4728-a72c-a2e56e932794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\core\tests">
+      <UniqueIdentifier>{6a309d17-02d9-4cf0-8049-96a22a195d81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\debug">
+      <UniqueIdentifier>{235b3028-2ffc-46f4-bd1b-bbadf6a06b53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\debug\tests">
+      <UniqueIdentifier>{62d6189e-cfeb-4e09-9997-0cf21037c280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\element">
+      <UniqueIdentifier>{4f5689a3-b6e7-4120-8246-e03c0d5f6584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\element\tests">
+      <UniqueIdentifier>{182f1177-ce90-4a32-9391-3f07708e2fad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\graphics">
+      <UniqueIdentifier>{85187514-bd1a-4029-9a6b-79ceafc1ebc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\graphics\tests">
+      <UniqueIdentifier>{c89e3f26-bb05-478b-bfd8-ed38e613de2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\imagemanager">
+      <UniqueIdentifier>{d4a60114-ec7b-4ac9-a093-9e27887b7bf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\imagemanager\tests">
+      <UniqueIdentifier>{490b1d1b-a623-4cf0-a732-661b6ac424c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\mapbuffer">
+      <UniqueIdentifier>{96dff07a-fe25-4794-9d47-7b79782be969}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\mapbuffer\tests">
+      <UniqueIdentifier>{2b3daa6d-f671-4a4e-b22a-ca9b355c694e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\mounting">
+      <UniqueIdentifier>{17bb4a67-5fbc-462b-9c88-1a23e8fb75ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\mounting\tests">
+      <UniqueIdentifier>{36faa031-3b12-4898-a669-15c09cc00519}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\templateprocessor">
+      <UniqueIdentifier>{6e92cefe-b1a8-4be4-bc93-67f874bb8fb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\templateprocessor\tests">
+      <UniqueIdentifier>{4015be32-823a-4150-96a7-a4ff9836f6ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\textlayoutmanager">
+      <UniqueIdentifier>{64ab615b-830b-4ae4-b57e-8c769a12a7c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\textlayoutmanager\tests">
+      <UniqueIdentifier>{fadc78b2-c556-4d91-b30c-1904d1ecb05e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\uimanager">
+      <UniqueIdentifier>{c364d837-1e34-43a1-a869-4e92a618500c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\uimanager\tests">
+      <UniqueIdentifier>{9ba8f034-2040-4bc0-abcf-f3086f2a55e3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

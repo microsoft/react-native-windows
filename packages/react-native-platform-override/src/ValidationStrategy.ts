@@ -5,8 +5,8 @@
  * @format
  */
 
+import {HashOpts, hashFileOrDirectory} from './Hash';
 import {ReactFileRepository, WritableFileRepository} from './FileRepository';
-import {hashFileOrDirectory} from './Hash';
 
 export interface ValidationError {
   /**
@@ -174,11 +174,17 @@ export const ValidationStrategies = {
         return [];
       }
 
+      // There can be whitespace differences from merges that lead to
+      // semantically indentical files. Do a whitespace insensitive compare to
+      // determine if there is a difference.
+      const hashOpts: HashOpts = {insensitivity: 'whitespace'};
+
       const overrideHash = await hashFileOrDirectory(
         overrideName,
         overrideRepo,
+        hashOpts,
       );
-      const baseHash = await hashFileOrDirectory(base, reactRepo);
+      const baseHash = await hashFileOrDirectory(base, reactRepo, hashOpts);
       return overrideHash === baseHash
         ? [{type: 'overrideSameAsBase', overrideName}]
         : [];

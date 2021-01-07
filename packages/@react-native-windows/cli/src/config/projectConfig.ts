@@ -4,6 +4,11 @@
  * @format
  */
 
+// Types in this file are inaccurate compared to usage in terms of falsiness.
+// We should try to rewrite some of this to do automated schema validation to
+// guarantee correct types
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+
 import * as path from 'path';
 
 import * as configUtils from './configUtils';
@@ -92,12 +97,12 @@ export function projectConfigWindows(
     return null;
   }
 
-  var result: DeepPartial<WindowsProjectConfig> = {
+  const result: DeepPartial<WindowsProjectConfig> = {
     folder: folder,
     sourceDir: path.relative(folder, sourceDir),
   };
 
-  var validProject = false;
+  let validProject = false;
 
   if (usingManualOverride) {
     // Manual override, try to use it for solutionFile

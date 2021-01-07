@@ -11,7 +11,7 @@ import {Server} from 'ws';
  * A web socket server with behavior expected for the upstream WebSocketTest
  */
 export default class TestWebSocketServer {
-  private server: Server;
+  private readonly server: Server;
 
   private constructor(server: Server) {
     this.server = server;

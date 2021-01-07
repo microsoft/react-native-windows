@@ -8,10 +8,10 @@ const VERSION_EXPRESSION = /^\d{1,8}(\.\d{1,8}){0,3}$/;
 
 export default class Version {
   constructor(
-    private major: number,
-    private minor: number = 0,
-    private build: number = 0,
-    private qfe: number = 0,
+    private readonly major: number,
+    private readonly minor: number = 0,
+    private readonly build: number = 0,
+    private readonly qfe: number = 0,
   ) {}
 
   eq(other: Version): boolean {

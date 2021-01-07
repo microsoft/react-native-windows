@@ -3,8 +3,6 @@
 
 namespace Microsoft.ReactNative
 {
-  interface IJsiRuntime;
-
   // JsiByteArrayUser delegate receives a range of bytes as a byte array.
   // The array of bytes is implemented in ABI as two parameters: array length and a pointer to the array start.
   // It effectively provides a 'view' to the byte array provided by the delegate invoker.
@@ -91,9 +89,11 @@ namespace Microsoft.ReactNative
   {
   };
 
+  [experimental]
   delegate JsiValueRef JsiHostFunction(JsiRuntime runtime, JsiValueRef thisArg, JsiValueRef[] args);
 
   [webhosthidden]
+  [experimental]
   interface IJsiHostObject
   {
     JsiValueRef GetProperty(JsiRuntime runtime, JsiPropertyIdRef propertyId);
@@ -118,6 +118,7 @@ namespace Microsoft.ReactNative
   };
 
   [webhosthidden, default_interface]
+  [experimental]
   runtimeclass JsiRuntime
   {
     // TODO : replace with a registered factory method

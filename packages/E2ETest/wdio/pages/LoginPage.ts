@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  */
 
-import { BasePage, By } from './BasePage';
+import { BasePage, by } from './BasePage';
 import {
   USERNAME_ON_LOGIN,
   PASSWORD_ON_LOGIN,
@@ -36,23 +36,23 @@ class LoginPage extends BasePage {
   }
 
   private get _userName() {
-    return By(USERNAME_ON_LOGIN);
+    return by(USERNAME_ON_LOGIN);
   }
 
   private get _password() {
-    return By(PASSWORD_ON_LOGIN);
+    return by(PASSWORD_ON_LOGIN);
   }
 
   private get _submit() {
-    return By(SUBMIT_ON_LOGIN);
+    return by(SUBMIT_ON_LOGIN);
   }
 
   private get _showPassword() {
-    return By(SHOWPASSWORD_ON_LOGIN);
+    return by(SHOWPASSWORD_ON_LOGIN);
   }
 
   private get _loginResult() {
-    return By(LOGINRESULT_ON_LOGIN);
+    return by(LOGINRESULT_ON_LOGIN);
   }
 }
 

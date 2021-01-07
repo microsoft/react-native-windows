@@ -112,6 +112,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.cpp">
+      <Filter>Source Files\JSI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.cpp">
+      <Filter>Source Files\JSI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -161,6 +167,12 @@
     </Filter>
     <Filter Include="Header Files\Utils">
       <UniqueIdentifier>{2ad4b85f-faa4-4e14-905c-6c48c8ae1a20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\JSI">
+      <UniqueIdentifier>{07874914-e3b0-4d02-ad53-3518c2cb8cd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\JSI">
+      <UniqueIdentifier>{1a3ad55f-1297-41b3-ba2a-0f819e69270c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +340,27 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h">
+      <Filter>Header Files\JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.h">
+      <Filter>Header Files\JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.h">
+      <Filter>Header Files\JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeArgs.h">
+      <Filter>Header Files\JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeFactory.h">
+      <Filter>Header Files\JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h">
+      <Filter>Header Files\JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h">
+      <Filter>Header Files\JSI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

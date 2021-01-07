@@ -19,7 +19,14 @@ import type {RequestBody} from './convertRequestBody';
 
 class RCTNetworking extends NativeEventEmitter {
   constructor() {
-    super(RCTNetworkingNative);
+    const disableCallsIntoModule =
+      typeof global.__disableRCTNetworkingExtraneousModuleCalls === 'function'
+        ? global.__disableRCTNetworkingExtraneousModuleCalls()
+        : false;
+
+    super(RCTNetworkingNative, {
+      __SECRET_DISABLE_CALLS_INTO_MODULE_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: disableCallsIntoModule,
+    });
   }
 
   sendRequest(

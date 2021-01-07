@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <JSI/Shared/ScriptStore.h>
+#include <JSI/ScriptStore.h>
 #include <jsi/jsi.h>
 
 #include <algorithm>

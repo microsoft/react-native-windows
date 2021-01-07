@@ -18,10 +18,10 @@ import * as simplegit from 'simple-git/promise';
 import * as yargs from 'yargs';
 
 import {
-  enumerateLocalPackages,
+  enumerateRepoPackages,
   WritableNpmPackage,
-} from '@rnw-scripts/package-utils';
-import findRepoRoot from '@rnw-scripts/find-repo-root';
+} from '@react-native-windows/package-utils';
+import findRepoRoot from '@react-native-windows/find-repo-root';
 
 type ReleaseType = 'preview' | 'latest' | 'legacy';
 
@@ -52,6 +52,9 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
 
     console.log('Updating package versions...');
     await updatePackageVersions(`${argv.rnVersion}.0-preview.0`);
+
+    console.log('Setting packages published from master as private...');
+    await markMasterPackagesPrivate();
   }
 
   console.log('Committing changes...');
@@ -152,7 +155,7 @@ async function updateBeachballConfig(
  * Finds packages where we need to update version number + beachball config
  */
 async function enumeratePackagesToPromote(): Promise<WritableNpmPackage[]> {
-  return enumerateLocalPackages(async pkg => pkg.json.promoteRelease === true);
+  return enumerateRepoPackages(async pkg => pkg.json.promoteRelease === true);
 }
 
 /**
@@ -183,7 +186,7 @@ async function updatePackageVersions(version: string) {
 
   // We need to update anything that might have a dependency on what we just
   // bumped.
-  for (const pkg of await enumerateLocalPackages()) {
+  for (const pkg of await enumerateRepoPackages()) {
     for (const field of [
       'dependencies',
       'peerDependencies',
@@ -202,6 +205,21 @@ async function updatePackageVersions(version: string) {
 
       await pkg.mergeProps({[field]: dependencies});
     }
+  }
+}
+
+/**
+ * Sets all packages that are published from our master branch as private, to
+ * avoid bumping and publishing them from our stable branch. Beachball will
+ * ensure we do not depend on any of these in our published packages.
+ */
+async function markMasterPackagesPrivate() {
+  const masterPublishedPackages = await enumerateRepoPackages(
+    async pkg => !pkg.json.promoteRelease && !pkg.json.private,
+  );
+
+  for (const pkg of masterPublishedPackages) {
+    await pkg.assignProps({private: true});
   }
 }
 

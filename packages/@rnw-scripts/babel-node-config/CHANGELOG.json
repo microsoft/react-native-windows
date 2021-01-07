@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/babel-node-config",
   "entries": [
     {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@rnw-scripts/babel-node-config_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@rnw-scripts/babel-node-config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 01 Oct 2020 05:08:11 GMT",
       "tag": "@rnw-scripts/babel-node-config_v0.0.2",
       "version": "0.0.2",

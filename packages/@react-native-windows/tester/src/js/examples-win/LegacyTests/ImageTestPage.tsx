@@ -61,9 +61,9 @@ export function ImageTestPage() {
   const [rltMode, setRtlMode] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const onPressBorder = () => {
-    var previousImageBorderState = imageWithBorder;
+    const previousImageBorderState = imageWithBorder;
     setImageBorder(!previousImageBorderState);
-    var previousClickCount = clickCount;
+    const previousClickCount = clickCount;
     setClickCount(previousClickCount + 1);
   };
 

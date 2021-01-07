@@ -27,8 +27,8 @@
 
   <!--
     IMPORTANT: Traversals left in a directory will break some tools like midl, but we also cannot call
-    [MSBuild]::NormalizeDirectory on relative paths since cwd is not always correct. This logic should prfer to operate
-    on full paths annd avoid extra normalization.
+    [MSBuild]::NormalizeDirectory on relative paths since cwd is not always correct. This logic should prefer to operate
+    on full paths and avoid extra normalization.
   -->
   <PropertyGroup>
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$(MSBuildThisFileDirectory)</ReactNativeWindowsDir>

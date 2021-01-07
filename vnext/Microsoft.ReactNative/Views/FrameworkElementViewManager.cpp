@@ -227,8 +227,8 @@ bool FrameworkElementViewManager::UpdateProperty(
           transformMatrix.m44 = static_cast<float>(propertyValue[15].AsDouble());
 
           if (!element.IsLoaded()) {
-            element.Loaded([=](auto &&, auto &&) -> auto {
-              ApplyTransformMatrix(element, nodeToUpdate, transformMatrix);
+            element.Loaded([=](auto sender, auto &&) -> auto {
+              ApplyTransformMatrix(sender.as<xaml::UIElement>(), nodeToUpdate, transformMatrix);
             });
           } else {
             ApplyTransformMatrix(element, nodeToUpdate, transformMatrix);

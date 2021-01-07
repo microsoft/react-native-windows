@@ -2,6 +2,51 @@
   "name": "react-native-windows-codegen",
   "entries": [
     {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "react-native-windows-codegen_v0.1.11",
+      "version": "0.1.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump yargs to 15.4.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fa34591ac86ea25e1e92a807864ba71480046a27",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "react-native-windows-codegen_v0.1.10",
+      "version": "0.1.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "react-native-windows-codegen_v0.1.9",
+      "version": "0.1.9",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Nov 2020 05:04:58 GMT",
       "tag": "react-native-windows-codegen_v0.1.8",
       "version": "0.1.8",

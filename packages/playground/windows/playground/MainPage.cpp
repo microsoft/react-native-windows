@@ -78,19 +78,19 @@ void MainPage::OnLoadClick(
         if (auto strongThis = wkThis.get()) {
           args.Context().UIDispatcher().Post([wkThis, context = args.Context()]() {
             if (auto strongThis = wkThis.get()) {
-              strongThis->x_UseWebDebuggerCheckBox().IsChecked(context.UseWebDebugger());
-              strongThis->x_UseFastRefreshCheckBox().IsChecked(context.UseFastRefresh());
-              strongThis->x_UseDirectDebuggerCheckBox().IsChecked(context.UseDirectDebugger());
-              strongThis->x_BreakOnFirstLineCheckBox().IsChecked(context.DebuggerBreakOnNextLine());
-              auto debugBundlePath = context.DebugBundlePath();
+              strongThis->x_UseWebDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseWebDebugger());
+              strongThis->x_UseFastRefreshCheckBox().IsChecked(context.SettingsSnapshot().UseFastRefresh());
+              strongThis->x_UseDirectDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseDirectDebugger());
+              strongThis->x_BreakOnFirstLineCheckBox().IsChecked(context.SettingsSnapshot().DebuggerBreakOnNextLine());
+              auto debugBundlePath = context.SettingsSnapshot().DebugBundlePath();
               for (auto item : strongThis->x_entryPointCombo().Items()) {
                 if (winrt::unbox_value<winrt::hstring>(item.as<ComboBoxItem>().Content()) == debugBundlePath) {
                   strongThis->x_entryPointCombo().SelectedItem(item);
                   break;
                 }
               }
-              strongThis->x_DebuggerPort().Text(winrt::to_hstring(context.DebuggerPort()));
-              if (context.UseWebDebugger()) {
+              strongThis->x_DebuggerPort().Text(winrt::to_hstring(context.SettingsSnapshot().DebuggerPort()));
+              if (context.SettingsSnapshot().UseWebDebugger()) {
                 strongThis->RequestedTheme(xaml::ElementTheme::Light);
               } else {
                 strongThis->RequestedTheme(xaml::ElementTheme::Default);

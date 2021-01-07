@@ -39,6 +39,7 @@ node_modules
 /bots/node_modules/
 
 /flow
+/flow-typed
 /dist
 /IntegrationTests/*.command
 /IntegrationTests/*.js

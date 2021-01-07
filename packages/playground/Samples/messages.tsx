@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
 });
 
-var TextValues = [
+const TextValues = [
   'What time did the man go to the dentist?',
   "I don't know.",
   'Tooth hurt-y.',
@@ -73,9 +73,9 @@ var TextValues = [
   'Because if they had four, they would be chicken sedans!',
 ];
 
-var UserNameValues = ['Parent', 'Child'];
+const UserNameValues = ['Parent', 'Child'];
 
-var AvatarValues = [
+const AvatarValues = [
   require('./images/blueuser.png'),
   require('./images/reduser.png'),
 ];
@@ -103,7 +103,7 @@ function GetValue(index: number, values: Array<any>) {
 }
 
 function CreateMessage(id: number) {
-  let m = new Message();
+  const m = new Message();
   m.MessageId = 'm' + (id + 1);
   m.Text = GetValue(id, TextValues);
   m.UserName = GetValue(id, UserNameValues);
@@ -120,8 +120,8 @@ function CreateMessage(id: number) {
 }
 
 function LoadMessages(count: number) {
-  let messages = [];
-  for (var i = 0; i < count; i++) {
+  const messages = [];
+  for (let i = 0; i < count; i++) {
     messages[i] = CreateMessage(i);
   }
   return messages;

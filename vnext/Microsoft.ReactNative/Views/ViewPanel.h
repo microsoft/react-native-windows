@@ -91,6 +91,8 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
 
   void UpdateClip(winrt::Windows::Foundation::Size &finalSize);
 
+  static void InvalidateForArrange(xaml::UIElement element);
+
  private:
   bool m_propertiesChanged{false};
 

@@ -4,6 +4,7 @@
  * @format
  */
 
+import {CodedError} from '@react-native-windows/telemetry';
 import {execSync} from 'child_process';
 import * as path from 'path';
 import * as shell from 'shelljs';
@@ -50,13 +51,16 @@ function getInstalledWindowsSdks(): Version[] {
   }
 
   const re = /\\Microsoft SDKs\\Windows\\v(\d+\.\d+)\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
-  let match: RegExpExecArray;
-  while ((match = re.exec(output)!)) {
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(output))) {
     const sdkPath = match[2];
     if (shell.test('-e', path.join(sdkPath, 'SDKManifest.xml'))) {
       const sdkVersion = Version.tryParse(match[1]);
       if (!sdkVersion) {
-        throw new Error(`Unexpected SDK version format for '${match[1]}'`);
+        throw new CodedError(
+          'BadSDKVersionFormat',
+          `Unexpected SDK version format for '${match[1]}'`,
+        );
       }
       installedSdks.push(sdkVersion);
     }
@@ -80,7 +84,8 @@ function checkWinSdk(windowsTargetVersion: string): string {
   }
 
   const shortenedVersion = shortenVersion(requiredVersion);
-  throw new Error(
+  throw new CodedError(
+    'NoSDK',
     `Windows SDK not found. Ensure that you have installed Windows ${shortenedVersion} SDK along with Visual Studio or install Windows ${shortenedVersion} SDK separately from https://dev.windows.com/en-us/downloads`,
   );
 }

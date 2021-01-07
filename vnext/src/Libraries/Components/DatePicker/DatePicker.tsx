@@ -23,7 +23,6 @@ export class DatePicker extends React.Component<IDatePickerProps> {
     dateFormat: 'dayofweek day month',
   };
 
-  // tslint:disable-next-line:no-any
   private _rctDatePicker: any;
 
   public constructor(props: IDatePickerProps) {
@@ -64,11 +63,11 @@ export class DatePicker extends React.Component<IDatePickerProps> {
     );
   }
 
-  private _setRef = (datepicker: any /*RCTDatePicker*/) => {
+  private readonly _setRef = (datepicker: any /*RCTDatePicker*/) => {
     this._rctDatePicker = datepicker;
   };
 
-  private _onChange = (event: IDatePickerChangeEvent) => {
+  private readonly _onChange = (event: IDatePickerChangeEvent) => {
     if (this.props.selectedDate) {
       const propsTimeStamp = this.props.selectedDate.getTime();
       if (this._rctDatePicker) {

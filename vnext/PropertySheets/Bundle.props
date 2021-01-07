@@ -36,7 +36,7 @@
     <UseDevBundle Condition="'$(UseDevBundle)' == '' and '$(Configuration)' != 'Debug'">false</UseDevBundle>
 
     <!-- Extra arguments to pass to the bundler command -->
-    <BundlerExtraArgs Condition="'$(BundlerExtraArgs)' == ''"></BundlerExtraArgs>
+    <BundlerExtraArgs Condition="'$(BundlerExtraArgs)' == '' AND '$(UseHermes)' == 'true'">--minify false</BundlerExtraArgs>
 
     <!-- Command to use to create a bundle -->
     <BundleCliCommand Condition="'$(BundleCliCommand)' == ''">npx --no-install react-native bundle</BundleCliCommand>
@@ -48,15 +48,15 @@
     <BundleEntryFile Condition="'$(BundleEntryFile)' == '' and Exists('$(BundleCommandWorkingDir)\index.windows.js')">index.windows.js</BundleEntryFile>
     <BundleEntryFile Condition="'$(BundleEntryFile)' == ''">index.js</BundleEntryFile>
 
-    <!-- Optional config file for the bundle command (metro will use metro.config.js by default) -->
-    <BundleConfigFile Condition="'$(BundleConfigFile)' == ''"></BundleConfigFile>
-
+    <FullOutDir Condition="'$([System.IO.Path]::GetFullPath($(OutDir)))' == '$(OutDir)'">$(OutDir)</FullOutDir>
+    <FullOutDir Condition="'$([System.IO.Path]::GetFullPath($(OutDir)))' != '$(OutDir)'">$(ProjectDir)$(OutDir)</FullOutDir>
+    
     <!-- Location where source map file for the JS bundle will be created -->
-    <BundleSourceMapDir Condition="'$(BundleSourceMapDir)' == ''">$([MSBuild]::NormalizePath('$(OutDir)\sourcemaps\react'))</BundleSourceMapDir>
+    <BundleSourceMapDir Condition="'$(BundleSourceMapDir)' == ''">$([MSBuild]::NormalizePath('$(FullOutDir)\sourcemaps\react'))</BundleSourceMapDir>
 
     <!-- Base (extensionless) filename for bundle sourcemaps -->
     <BaseBundleSourceMap Condition="'$(BaseBundleSourceMap)' == ''">$(BundleSourceMapDir)\$(BundleAssetName)</BaseBundleSourceMap>
-    
+
     <!-- Source map file for the bundle (composed from packager + compiler if using Hermes) -->
     <BundleSourceMap Condition="'$(BundleSourceMap)' == ''">$(BaseBundleSourceMap).map</BundleSourceMap>
 
@@ -72,7 +72,6 @@
     <HermesCompilerCommand Condition="'$(HermesCompilerCommand)' == ''">$(HermesPackage)\tools\hermes.exe</HermesCompilerCommand>
 
     <!-- Flags passed to Hermes when compiling a bundle -->
-    <HermesCompilerFlags Condition="'$(HermesCompilerFlags)' == '' AND '$(Configuration)' == 'Debug'"></HermesCompilerFlags>
     <HermesCompilerFlags Condition="'$(HermesCompilerFlags)' == '' AND '$(Configuration)' != 'Debug'">-O</HermesCompilerFlags>
 
   </PropertyGroup>

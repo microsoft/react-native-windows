@@ -18,8 +18,8 @@
 
   <ItemGroup>
     <!--
-      This file is linked because we want to use this to esnure the names of the code we parse line up and gives us compile errors if not.
-      But we don't want to actually link against the Microsfot.ReactNative.Managed assembly becuase then we would have a cyclic dependency
+      This file is linked because we want to use this to ensure the names of the code we parse line up and gives us compile errors if not.
+      But we don't want to actually link against the Microsfot.ReactNative.Managed assembly because then we would have a cyclic dependency
       to compile-time generate the state for that assembly.
     -->
     <Compile Include="..\Microsoft.ReactNative.Managed\ReactAttributes.cs" Link="ReactAttributes.cs" />

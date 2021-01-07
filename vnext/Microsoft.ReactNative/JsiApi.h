@@ -9,14 +9,6 @@
 #include <unordered_map>
 #include "winrt/Microsoft.ReactNative.h"
 
-// facebook::jsi::Runtime hides all methods that we need to call.
-// We "open" them up here by redeclaring the private and protected keywords.
-#define private public
-#define protected public
-#include "jsi/jsi.h"
-#undef protected
-#undef private
-
 #include "ChakraRuntimeHolder.h"
 
 namespace facebook::jsi {
@@ -46,13 +38,37 @@ struct JsiError : JsiErrorT<JsiError> {
   std::optional<facebook::jsi::JSINativeException> const m_nativeException;
 };
 
+// Wraps up the IJsiHostObject
+struct HostObjectWrapper final : facebook::jsi::HostObject {
+  HostObjectWrapper(Microsoft::ReactNative::IJsiHostObject const &hostObject) noexcept;
+
+  facebook::jsi::Value get(facebook::jsi::Runtime &runtime, const facebook::jsi::PropNameID &name) override;
+  void set(facebook::jsi::Runtime &, const facebook::jsi::PropNameID &name, const facebook::jsi::Value &value) override;
+  std::vector<facebook::jsi::PropNameID> getPropertyNames(facebook::jsi::Runtime &runtime) override;
+
+  Microsoft::ReactNative::IJsiHostObject const &Get() const noexcept {
+    return m_hostObject;
+  }
+
+ private:
+  Microsoft::ReactNative::IJsiHostObject m_hostObject;
+};
+
+struct RuntimeAccessor;
+
 struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   JsiRuntime(
-      std::shared_ptr<::Microsoft::JSI::ChakraRuntimeHolder> runtimeHolder,
-      std::shared_ptr<facebook::jsi::Runtime> runtime) noexcept;
+      std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> &&runtimeHolder,
+      std::shared_ptr<facebook::jsi::Runtime> &&runtime) noexcept;
   ~JsiRuntime() noexcept;
 
   static ReactNative::JsiRuntime FromRuntime(facebook::jsi::Runtime &runtime) noexcept;
+  static ReactNative::JsiRuntime GetOrCreate(
+      std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+      std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept;
+  static ReactNative::JsiRuntime Create(
+      std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+      std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept;
 
  public: // JsiRuntime
   static Microsoft::ReactNative::JsiRuntime MakeChakraRuntime();
@@ -137,18 +153,30 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   void SetError(JsiErrorType errorType, hstring const &errorDetails, JsiValueRef const &value) noexcept;
   static void RethrowJsiError(facebook::jsi::Runtime &runtime);
 
+ public:
+  struct HostFunctionCleaner {
+    HostFunctionCleaner(int64_t hostFunctionId);
+    ~HostFunctionCleaner();
+
+   private:
+    int64_t m_hostFunctionId{0};
+  };
+
  private:
   void SetError(facebook::jsi::JSError const &jsError) noexcept;
   void SetError(facebook::jsi::JSINativeException const &nativeException) noexcept;
 
  private:
-  std::shared_ptr<::Microsoft::JSI::ChakraRuntimeHolder> m_runtimeHolder;
+  std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> m_runtimeHolder;
   std::shared_ptr<facebook::jsi::Runtime> m_runtime;
+  RuntimeAccessor *m_runtimeAccessor{};
   std::mutex m_mutex;
   ReactNative::JsiError m_error{nullptr};
 
   static std::mutex s_mutex;
-  static std::map<uintptr_t, winrt::weak_ref<ReactNative::JsiRuntime>> s_jsiRuntimeMap;
+  static std::unordered_map<uintptr_t, winrt::weak_ref<ReactNative::JsiRuntime>> s_jsiRuntimeMap;
+  static std::unordered_map<int64_t, ReactNative::JsiHostFunction> s_jsiHostFunctionMap;
+  static int64_t s_jsiNextHostFunctionId;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
