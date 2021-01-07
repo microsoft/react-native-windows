@@ -2,10 +2,10 @@ parameters:
   - name: buildEnvironment
     type: string
     default : PullRequest
-    values: 
-     - PullRequest 
-     - Continuous 
-  
+    values:
+     - PullRequest
+     - Continuous
+
 jobs:
   - job: SampleApps
     variables:
@@ -64,7 +64,7 @@ jobs:
     steps:
       - checkout: self
         clean: false
-        submodules: false
+        submodules: true
 
       - template: ../templates/prepare-env.yml
 

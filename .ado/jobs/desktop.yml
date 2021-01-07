@@ -71,7 +71,7 @@ jobs:
     steps:
       - checkout: self
         clean: false
-        submodules: false
+        submodules: true
 
       - template: ../templates/build-rnw.yml
         parameters:

@@ -2,9 +2,9 @@
     - name: buildEnvironment
       type: string
       default : PullRequest
-      values: 
-      - PullRequest 
-      - Continuous 
+      values:
+      - PullRequest
+      - Continuous
     - name: buildMatrix
       type: object
       default:
@@ -47,7 +47,7 @@
             - Name: X86Release
               BuildConfiguration: Release
               BuildPlatform: X86
-      
+
   jobs:
     - ${{ each config in parameters.buildMatrix }}:
       - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
@@ -63,7 +63,7 @@
               steps:
                 - checkout: self
                   clean: false
-                  submodules: false
+                  submodules: true
 
                 - template: ../templates/build-rnw.yml
                   parameters:
@@ -89,14 +89,14 @@
                       Microsoft.ReactNative\**
                       Microsoft.ReactNative.Managed\**
                       Microsoft.ReactNative.Managed.CodeGen\**
-                
+
                 - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
                   displayName: 'Component Governance Detection'
                   inputs:
                     alertWarningLevel: Medium
                     scanType: 'Register'
 
-                
+
             - job: UniversalTest${{ matrix.Name }}
               variables:
                 - template: ../variables/vs2019.yml
@@ -111,7 +111,7 @@
               steps:
                 - checkout: self
                   clean: false
-                  submodules: false
+                  submodules: true
 
                 - task: PowerShell@2
                   displayName: "Check if this environment meets the development dependencies"
@@ -119,7 +119,7 @@
                     targetType: filePath
                     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
-                    
+
                 - template: ../templates/prepare-env.yml
                   parameters:
                     yarnBuildCmd: build
@@ -133,7 +133,7 @@
                     nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
                     restoreDirectory: packages/
                     verbosityRestore: Detailed # Options: quiet, normal, detailed
-                    
+
                 - task: DownloadPipelineArtifact@1
                   displayName: "Download binaries for testing"
                   inputs:
@@ -213,7 +213,7 @@
       displayName: Universal Build 🏗
       variables:
         - template: ../variables/vs2019.yml
-      dependsOn: 
+      dependsOn:
         - ${{ each config in parameters.buildMatrix }}:
           - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
             - ${{ each matrix in config.Matrix }}:

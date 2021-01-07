@@ -45,7 +45,7 @@ jobs:
     steps:
       - checkout: self
         clean: true
-        submodules: false
+        submodules: true
 
       - template: templates/configure-git.yml
 
@@ -132,7 +132,7 @@ jobs:
           contents: |
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
-      
+
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: 'Component Governance Detection'
         inputs:
@@ -194,7 +194,7 @@ jobs:
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
             Microsoft.ReactNative.Managed.CodeGen\**
-      
+
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: 'Component Governance Detection'
         inputs:

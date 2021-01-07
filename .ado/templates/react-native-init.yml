@@ -35,7 +35,7 @@ steps:
     clean: true # whether to fetch clean each time
     # fetchDepth: 2 # the depth of commits to ask Git to fetch
     lfs: false # whether to download Git-LFS files
-    submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+    submodules: true # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
     persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
   # First do a build of the local package, since we point the cli at the local files, it needs to be pre-built
@@ -78,7 +78,7 @@ steps:
         npmVersion: $(npmVersion)
         packDesktop: false
         slices: '("${{ parameters.platform }}.${{ parameters.configuration }}")'
-  
+
   # Work around issue of parameters not getting expanded in conditions properly
   - powershell: |
       Write-Host "##vso[task.setvariable variable=localProjectType]${{ parameters.projectType}}"
@@ -90,14 +90,14 @@ steps:
       script: npx react-native init testcli --npm --template react-native@$(reactNativeDevDependency)
       workingDirectory: $(Agent.BuildDirectory)
     condition: and(succeeded(), eq(variables['localProjectType'], 'app'))
-  
+
   - task: CmdLine@2
     displayName: Init new lib project
     inputs:
       script: npx create-react-native-module --module-name "testcli" testcli
       workingDirectory: $(Agent.BuildDirectory)
     condition: and(succeeded(), eq(variables['localProjectType'], 'lib'))
-  
+
   - task: CmdLine@2
     displayName: Update lib project react and react-native dev versions
     inputs:

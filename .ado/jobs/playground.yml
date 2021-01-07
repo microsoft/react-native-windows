@@ -2,11 +2,11 @@ parameters:
   - name: buildEnvironment
     type: string
     default : PullRequest
-    values: 
-     - PullRequest 
-     - Continuous 
-  
-  
+    values:
+     - PullRequest
+     - Continuous
+
+
 jobs:
   - job: Playground
     variables:
@@ -45,7 +45,7 @@ jobs:
     steps:
       - checkout: self
         clean: false
-        submodules: false
+        submodules: true
 
       - template: ../templates/prepare-env.yml
 
@@ -86,7 +86,7 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             $(BuildWinUI3Properties)
-            /p:BaseIntDir=$(BaseIntDir) 
+            /p:BaseIntDir=$(BaseIntDir)
 
         continueOnError: true # See issue #6129
 

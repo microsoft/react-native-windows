@@ -15,8 +15,8 @@ jobs:
     steps:
       - checkout: self
         clean: true
-        submodules: false
-            
+        submodules: true
+
       - template: ../templates/yarn-install.yml
 
       - script: yarn build
