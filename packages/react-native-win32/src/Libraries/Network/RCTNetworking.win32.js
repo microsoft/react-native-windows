@@ -42,7 +42,7 @@ function generateRequestId(): number {
  * This class is a wrapper around the native RCTNetworking module. It adds a necessary unique
  * requestId to each network request that can be used to abort that request later on.
  */
-class RCTNetworking extends NativeEventEmitter {
+class RCTNetworking extends NativeEventEmitter<$FlowFixMe> {
   constructor() {
     super(RCTNetworkingNative); // [Win32] Use RCTNetworkingNative
   }

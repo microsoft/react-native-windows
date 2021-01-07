@@ -17,7 +17,7 @@ const RCTNetworkingNative = require('../BatchedBridge/NativeModules')
 
 import type {RequestBody} from './convertRequestBody';
 
-class RCTNetworking extends NativeEventEmitter {
+class RCTNetworking extends NativeEventEmitter<$FlowFixMe> {
   constructor() {
     const disableCallsIntoModule =
       typeof global.__disableRCTNetworkingExtraneousModuleCalls === 'function'
