@@ -9,13 +9,6 @@
   "overrides": [
     {
       "type": "patch",
-      "file": "src/js/components/ExamplePage.win32.js",
-      "baseFile": "packages/rn-tester/js/components/ExamplePage.js",
-      "baseHash": "2f160806d28cc1e9c176ddb732bd4150263aa476",
-      "issue": 4050
-    },
-    {
-      "type": "patch",
       "file": "src/js/components/ListExampleShared.win32.js",
       "baseFile": "packages/rn-tester/js/components/ListExampleShared.js",
       "baseHash": "d7be07e3fd8d9c1df8e23d5674ce3eb067d00865"
