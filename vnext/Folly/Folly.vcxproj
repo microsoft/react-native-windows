@@ -48,6 +48,7 @@
   </ItemGroup>
   <PropertyGroup>
     <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PatchFolly>true</PatchFolly>
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="$(FollyDir)\folly\lang\Assume.cpp" />
@@ -272,4 +273,8 @@
     <TemporaryFollyPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFollyUpdate\**\*.*" />
   </ItemGroup>
   <Target Name="Deploy" />
+  <!-- Reenable this task if we need to temporarily replace any folly files for fixes, while we wait for PRs to land in folly -->
+  <Target Name="ApplyFollyTemporaryPatch" BeforeTargets="PrepareForBuild" Condition="'$(PatchFolly)' == 'true'">
+    <Copy DestinationFiles="@(TemporaryFollyPatchFiles->'$(FollyDir)folly\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryFollyPatchFiles)" />
+  </Target>
 </Project>
