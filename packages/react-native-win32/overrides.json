@@ -363,8 +363,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Dimensions.win32.js",
       "baseFile": "Libraries/Utilities/Dimensions.js",
-      "baseVersion": "0.0.0-c901c1fbc",
-      "baseHash": "6a61022dbe92a0683a82669ace739fc7ca110c7d"
+      "baseHash": "a1279ad6d3738f5d5af7f332dc504bab5f764a10"
     },
     {
       "type": "platform",

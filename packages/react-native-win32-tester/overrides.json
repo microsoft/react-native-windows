@@ -11,8 +11,7 @@
       "type": "patch",
       "file": "src/js/components/ExamplePage.win32.js",
       "baseFile": "packages/rn-tester/js/components/ExamplePage.js",
-      "baseVersion": "0.0.0-c901c1fbc",
-      "baseHash": "929a58e006b074189564a856cfc5dd7a132205a6",
+      "baseHash": "2f160806d28cc1e9c176ddb732bd4150263aa476",
       "issue": 4050
     },
     {
