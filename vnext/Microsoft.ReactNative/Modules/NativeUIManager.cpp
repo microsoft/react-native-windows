@@ -275,7 +275,7 @@ static YGValue YGValueOrDefault(
     const winrt::Microsoft::ReactNative::JSValue &value,
     YGValue defaultValue,
     ShadowNodeBase &shadowNode,
-    const std::string& key) {
+    const std::string &key) {
   YGValue result = defaultValue;
 
   if (value.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
@@ -295,11 +295,9 @@ static YGValue YGValueOrDefault(
       return YGValue{static_cast<float>(pct.asDouble()), YGUnitPercent};
     }
     if (str.length() > 2 && (str.compare(str.length() - 2, 2, "pt") || str.compare(str.length() - 2, 2, "px"))) {
-    //if (str.length() > 2 && (str.substr((str.length() - 2), 2) == "px" || str.substr((str.length() - 2), 2) == "pt")) {
       shadowNode.RedBox(
-          "Value '" + value.AsString() + "' for " + key +
-          " is invalid. Cannot be converted to YGValue. '" + str.substr((str.length() - 2), 2) +
-          "' unit not needed. Simply use integer value.");
+          "Value '" + value.AsString() + "' for " + key + " is invalid. Cannot be converted to YGValue. '" +
+          str.substr((str.length() - 2), 2) + "' unit not needed. Simply use integer value.");
       return defaultValue;
     }
   }
