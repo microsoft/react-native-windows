@@ -46,6 +46,9 @@ task('eslint:fix', () => {
 task('copyFlowFiles', () => {
   return copyTask(['src/**/*.js'], '.');
 });
+task('copyTsTypeFiles', () => {
+  return copyTask(['src/**/*.d.ts'], '.');
+});
 task('copyPngFiles', () => {
   return copyTask(['src/**/*.png'], '.');
 });
@@ -96,6 +99,7 @@ task(
     condition('clean', () => argv().clean),
     'initRNLibraries',
     'copyFlowFiles',
+    'copyTsTypeFiles',
     'copyPngFiles',
     'ts',
     condition('apiExtractorVerify', () => argv().ci),

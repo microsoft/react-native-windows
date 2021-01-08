@@ -42,7 +42,7 @@
     },
     {
       "type": "platform",
-      "file": "Libraries\\StyleSheet\\NativeOrDynamicColorType.win32.js"
+      "file": "Libraries\\StyleSheet\\NativeOrDynamicColorType.win32.d.ts"
     },
     {
       "type": "platform",
