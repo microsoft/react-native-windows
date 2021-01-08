@@ -22,6 +22,7 @@ export declare type NativeOrDynamicColorType = {
   resource_paths?: Array<string>;
 };
 
-export declare function PlatformColor(
-  ...names: Array<string>
-): NativeOrDynamicColorType;
+// React-Native 0.63 introduced OpaqueColorValue, replacing the use of 'string' across color properties.
+// Since this is a backport for 0.62, rather than assert a type inconsistent with OpaqueColorValue or string,
+// we'll treat the return as any.
+export declare function PlatformColor(...names: Array<string>): any;
