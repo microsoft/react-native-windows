@@ -162,4 +162,8 @@ void ShadowNodeBase::YellowBox(const std::string &message) const noexcept {
   GetViewManager()->GetReactContext().CallJSFunction("RCTLog", "logToConsole", folly::dynamic::array("warn", message));
 }
 
+void ShadowNodeBase::RedBox(const std::string &message) const noexcept {
+  GetViewManager()->GetReactContext().CallJSFunction("RCTLog", "logToConsole", folly::dynamic::array("error", message));
+}
+
 } // namespace Microsoft::ReactNative
