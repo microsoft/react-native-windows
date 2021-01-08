@@ -352,8 +352,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseVersion": "0.0.0-c901c1fbc",
-      "baseHash": "1911105ff7796cfeef6db832ec0bd6a53d7622ac"
+      "baseHash": "c9a142fb3b2286a2541ec313cde34317f191460c"
     },
     {
       "type": "derived",
