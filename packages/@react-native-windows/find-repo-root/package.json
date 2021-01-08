@@ -1,6 +1,6 @@
 {
-  "name": "@rnw-scripts/package-utils",
-  "version": "0.0.11",
+  "name": "@react-native-windows/find-repo-root",
+  "version": "0.64.0-preview.0",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -9,29 +9,30 @@
     "lint:fix": "just-scripts lint:fix",
     "watch": "just-scripts watch"
   },
-  "main": "lib-commonjs/packageUtils.js",
+  "main": "lib-commonjs/findRepoRoot.js",
   "dependencies": {
-    "@rnw-scripts/find-repo-root": "^0.0.14",
-    "get-monorepo-packages": "^1.2.0",
-    "lodash": "^4.17.15"
+    "find-up": "^4.1.0"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "0.1.6",
     "@rnw-scripts/just-task": "0.0.6",
     "@rnw-scripts/ts-config": "0.1.0",
-    "@types/lodash": "^4.14.161",
+    "@types/find-up": "^4.0.0",
     "eslint": "7.12.0",
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "typescript": "^3.8.3"
   },
   "beachball": {
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
-      "major"
+      "major",
+      "minor",
+      "patch"
     ]
   },
+  "promoteRelease": true,
   "files": [
     "lib-commonjs"
-  ],
-  "private": true
+  ]
 }

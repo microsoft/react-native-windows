@@ -10,7 +10,7 @@ import {Telemetry} from '@react-native-windows/telemetry';
 
 import {
   copyProjectTemplateAndReplace,
-  installDependencies,
+  installScriptsAndDependencies,
 } from './generator-windows';
 
 import {autoLinkCommand} from './runWindows/utils/autolink';
@@ -83,7 +83,7 @@ export async function generateWindows(
       fs.mkdirSync(projectDir);
     }
 
-    installDependencies(options);
+    await installScriptsAndDependencies(options);
 
     const rnwPackage = path.dirname(
       require.resolve('react-native-windows/package.json', {
