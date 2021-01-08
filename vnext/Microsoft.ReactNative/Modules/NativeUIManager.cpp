@@ -271,7 +271,11 @@ static float NumberOrDefault(const winrt::Microsoft::ReactNative::JSValue &value
   return result;
 }
 
-static YGValue YGValueOrDefault(const winrt::Microsoft::ReactNative::JSValue &value, YGValue defaultValue, ShadowNodeBase& shadowNode, std::string key) {
+static YGValue YGValueOrDefault(
+    const winrt::Microsoft::ReactNative::JSValue &value,
+    YGValue defaultValue,
+    ShadowNodeBase &shadowNode,
+    const std::string& key) {
   YGValue result = defaultValue;
 
   if (value.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
@@ -290,13 +294,19 @@ static YGValue YGValueOrDefault(const winrt::Microsoft::ReactNative::JSValue &va
       folly::dynamic pct(str);
       return YGValue{static_cast<float>(pct.asDouble()), YGUnitPercent};
     }
-    if (str.length() > 2 && (str.substr((str.length() - 2), 2) == "px" || str.substr((str.length() - 2), 2) == "pt")) {
-      shadowNode.RedBox("Value '" + static_cast<std::string>(value.AsString()) + "' for " + key + " is invalid. Cannot be converted to YGValue. '" + str.substr((str.length() - 2), 2) + "' unit not needed. Simply use integer value.");
+    if (str.length() > 2 && (str.compare(str.length() - 2, 2, "pt") || str.compare(str.length() - 2, 2, "px"))) {
+    //if (str.length() > 2 && (str.substr((str.length() - 2), 2) == "px" || str.substr((str.length() - 2), 2) == "pt")) {
+      shadowNode.RedBox(
+          "Value '" + value.AsString() + "' for " + key +
+          " is invalid. Cannot be converted to YGValue. '" + str.substr((str.length() - 2), 2) +
+          "' unit not needed. Simply use integer value.");
       return defaultValue;
     }
   }
 
-  shadowNode.RedBox("Value '" + static_cast<std::string>(value.AsString()) + "' for " + key + " is invalid. Cannot be converted to YGValue. Did you forget the %? Otherwise, simply use integer value.");
+  shadowNode.RedBox(
+      "Value '" + value.AsString() + "' for " + key +
+      " is invalid. Cannot be converted to YGValue. Did you forget the %? Otherwise, simply use integer value.");
   return defaultValue;
 }
 
