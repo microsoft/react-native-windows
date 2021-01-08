@@ -1,4 +1,5 @@
 !**/node_modules
+!GitModules
 !vnext/packages
 !vnext/ReactCopies
 !packages/react-native-platform-override/node_modules

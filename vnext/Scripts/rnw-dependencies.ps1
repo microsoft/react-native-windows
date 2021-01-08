@@ -260,7 +260,7 @@ $requirements = @(
             Test-Path -Path react-native-windows
             } catch { $false };
         Install = {
-            & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git
+            & "${env:ProgramFiles}\Git\cmd\git.exe" clone --recurse-submodules https://github.com/microsoft/react-native-windows.git
         };
         Optional = $true
     }
