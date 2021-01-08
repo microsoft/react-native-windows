@@ -6,14 +6,11 @@ param(
 	[string] $BuildRoot = "$SourceRoot\vnext\target",
 	[string] $TargetRoot = "$SourceRoot\vnext\target",
 	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\vnext",
-	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\node_modules\react-native",	
+	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\node_modules\react-native",
 	[string[]] $Extensions = ('h', 'hpp', 'def')
 )
 
-[xml]$props = gc $PSScriptRoot\..\..\Directory.Build.props
-[string] $FollyVersion = $props.Project.PropertyGroup.FollyVersion;
-$FollyVersion = $FollyVersion.Trim() # The extracted FollyVersion contains a space at the end that isn't actually present, issue #6216
-[System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}";
+[System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\GitModules\Folly\folly";
 
 Write-Host "Source root: [$SourceRoot]"
 Write-Host "Build root: [$BuildRoot]"
@@ -132,7 +129,7 @@ Copy-Item -Force -Path $ReactWindowsRoot\Folly\Folly.natvis -Destination (New-It
 
 # Fix ref Assemblies to be AnyCpu
 
-# The reason for doing this here is that csc maintains the architecture of the ref assembly to match the implementation. It doesn't 
+# The reason for doing this here is that csc maintains the architecture of the ref assembly to match the implementation. It doesn't
 # automatically tag the ref as 'anycpu'. We use the ref assembly as the 'ref' in our nuget package. When the csc compiler
 # compiles for other specific platforms like Arm, the compiler will fail if a ref assembly is marked as x64.
 # The fix is to ensure that the 'ref' in the nuget package is marked as 'AnyCPU'.
@@ -146,8 +143,8 @@ Copy-Item -Force -Path $ReactWindowsRoot\Folly\Folly.natvis -Destination (New-It
 # These reference assemblies are just regular assemblies but with empty bodies
 
 ForEach ($refFolder in (Get-ChildItem -Path  $BuildRoot -Recurse -Include "ref"))
-{ 
-	ForEach ($refAsm in Get-ChildItem -Path $refFolder -Recurse  -Include "*.dll" ) 
+{
+	ForEach ($refAsm in Get-ChildItem -Path $refFolder -Recurse  -Include "*.dll" )
 	{
 		$outputFolder=([System.IO.Path]::GetDirectoryName($refAsm)).Replace($BuildRoot, $TargetRoot) + ".anycpu";
 		$outputAsm = [System.IO.Path]::Combine($outputFolder, [System.IO.Path]::GetFileName($refAsm));
@@ -158,5 +155,5 @@ ForEach ($refFolder in (Get-ChildItem -Path  $BuildRoot -Recurse -Include "ref")
 		Write-Host  $refAsm -> $outputIl
 		& "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\ilasm.exe" $outputIl /DLL /QUIET
 		Write-Host  $outputIl -> $outputAsm
-	} 
+	}
 }
