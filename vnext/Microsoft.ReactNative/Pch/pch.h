@@ -11,10 +11,6 @@
 #define WINRT_LEAN_AND_MEAN
 #endif
 
-//#ifndef NOGDI
-//#define NOGDI
-//#endif
-
 #undef WINAPI_FAMILY
 #define WINAPI_FAMILY WINAPI_FAMILY_DESKTOP_APP
 

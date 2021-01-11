@@ -879,6 +879,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
 
     auto rootTag = Microsoft::ReactNative::getNextRootViewTag();
+    rootView->SetTag(rootTag);
     uiManager->startSurface(rootView, rootTag, rootView->JSComponentName(), std::move(initialProps));
 
   } else {

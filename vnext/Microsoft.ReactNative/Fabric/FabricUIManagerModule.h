@@ -166,6 +166,11 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       const std::string &moduleName,
       const folly::dynamic &initialProps) noexcept;
 
+  void constraintSurfaceLayout(
+      facebook::react::SurfaceId surfaceId,
+      const facebook::react::LayoutConstraints &layoutConstraints,
+      const facebook::react::LayoutContext &layoutContext) const noexcept;
+
   const ComponentViewRegistry &GetViewRegistry() const noexcept;
 
  private:

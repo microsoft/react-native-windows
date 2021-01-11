@@ -291,12 +291,11 @@ void FabricUIManager::startSurface(
   // TODO scaling factor
   context.pointScaleFactor = 1; // pointScaleFactor_;
 
-  // TODO correct constaints, and add calls to measureSurfaceWithLayoutConstraints to update them
   facebook::react::LayoutConstraints constraints;
-  constraints.minimumSize.height = 0;
-  constraints.minimumSize.width = 0;
-  constraints.maximumSize.height = 500;
-  constraints.maximumSize.width = 500;
+  constraints.minimumSize.height = static_cast<facebook::react::Float>(rootFE.ActualHeight());
+  constraints.minimumSize.width = static_cast<facebook::react::Float>(rootFE.ActualWidth());
+  constraints.maximumSize.height = static_cast<facebook::react::Float>(rootFE.ActualHeight());
+  constraints.maximumSize.width = static_cast<facebook::react::Float>(rootFE.ActualWidth());
   constraints.layoutDirection = rootFE.FlowDirection() == xaml::FlowDirection::LeftToRight
       ? facebook::react::LayoutDirection::LeftToRight
       : facebook::react::LayoutDirection::RightToLeft;
@@ -311,6 +310,14 @@ void FabricUIManager::startSurface(
       context, // layout context
       {} // animationDriver_
   );
+}
+
+void FabricUIManager::constraintSurfaceLayout(
+  facebook::react::SurfaceId surfaceId,
+  const facebook::react::LayoutConstraints& layoutConstraints,
+  const facebook::react::LayoutContext& layoutContext) const noexcept
+{
+  m_scheduler->constraintSurfaceLayout(surfaceId, layoutConstraints, layoutContext);
 }
 
 void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {
