@@ -90,6 +90,12 @@ export enum EventPhase {
     None = 0
 }
 
+// @public (undocumented)
+export class FocusManager {
+  // (undocumented)
+  static focus(ref: React_2.Ref<any>, setWindowFocus: boolean): void;
+}
+
 // @public
 export type GradientColorStop = {
   color: string /*ColorValue*/ | number /*ProcessedColorValue*/;
