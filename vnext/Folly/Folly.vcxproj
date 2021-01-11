@@ -65,6 +65,7 @@
       <ObjectFileName>$(IntDir)\portabilityString.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="$(FollyDir)\folly\portability\SysResource.cpp"/>
+    <ClCompile Include="$(FollyDir)\folly\portability\Unistd.cpp"/>
     <ClCompile Include="$(FollyDir)\folly\Demangle.cpp" />
     <ClCompile Include="$(FollyDir)\folly\dynamic.cpp" />
     <ClCompile Include="$(FollyDir)\folly\json.cpp" />
