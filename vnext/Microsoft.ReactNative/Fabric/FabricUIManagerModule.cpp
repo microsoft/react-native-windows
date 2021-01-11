@@ -343,7 +343,6 @@ void FabricUIManager::RCTPerformMountInstructions(
     // facebook::react::RCTComponentViewRegistry* registry,
     // facebook::react::RCTMountingTransactionObserverCoordinator& observerCoordinator,
     facebook::react::SurfaceId surfaceId) {
-  // std::lock_guard<std::recursive_mutex> lock(m_commitMutex);
 
   for (auto const &mutation : mutations) {
     switch (mutation.type) {

@@ -198,8 +198,6 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
 
   std::unordered_map<facebook::react::SurfaceId, XamlView> m_surfaceRegistry;
 
-  std::recursive_mutex m_commitMutex;
-
   std::shared_ptr<const facebook::react::ReactNativeConfig> m_reactNativeConfig;
 
   // Inherited via SchedulerDelegate
