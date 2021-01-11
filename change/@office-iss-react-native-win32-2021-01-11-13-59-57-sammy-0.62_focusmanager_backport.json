@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Adding FocusManager typing",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "safreibe@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2021-01-11T21:59:57.003Z"
+}
