@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 21 Dec 2020 15:05:53 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Jan 2021 15:07:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.4
+
+Mon, 11 Jan 2021 15:07:12 GMT
+
+### Changes
+
+- Adding FocusManager type decl file (safreibe@microsoft.com)
 
 ## 0.64.0-preview.3
 

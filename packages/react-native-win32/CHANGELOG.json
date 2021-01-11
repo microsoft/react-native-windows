@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 11 Jan 2021 15:07:12 GMT",
+      "tag": "@office-iss/react-native-win32_v0.64.0-preview.4",
+      "version": "0.64.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding FocusManager type decl file",
+            "author": "safreibe@microsoft.com",
+            "commit": "bc159ec81e0d51ecf4b221644f30da43e6614832",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Dec 2020 15:05:53 GMT",
       "tag": "@office-iss/react-native-win32_v0.64.0-preview.3",
       "version": "0.64.0-preview.3",

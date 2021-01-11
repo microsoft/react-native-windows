@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 11 Jan 2021 15:07:12 GMT",
+      "tag": "react-native-windows_v0.64.0-preview.6",
+      "version": "0.64.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Specify full path when bundling",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "73087e76deecc931259c224afcd5f40f53afafb8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Enable support for C++ TurboModules",
+            "author": "vmorozov@microsoft.com",
+            "commit": "54b8873aa8993fa99837710099bf927c70200bfc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Show HRESULT code on WebSocket errors (#6734)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "c1c37c36defed8a2bef0e19d3ec0af8fbb71a2d0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Jan 2021 15:06:23 GMT",
       "tag": "react-native-windows_v0.64.0-preview.5",
       "version": "0.64.0-preview.5",

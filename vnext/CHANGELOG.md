@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 04 Jan 2021 15:06:23 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Jan 2021 15:07:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.6
+
+Mon, 11 Jan 2021 15:07:12 GMT
+
+### Changes
+
+- Specify full path when bundling (asklar@winse.microsoft.com)
+- Enable support for C++ TurboModules (vmorozov@microsoft.com)
+- Show HRESULT code on WebSocket errors (#6734) (julio.rocha@microsoft.com)
 
 ## 0.64.0-preview.5
 

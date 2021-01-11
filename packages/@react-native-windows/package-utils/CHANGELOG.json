@@ -1,0 +1,20 @@
+{
+  "name": "@react-native-windows/package-utils",
+  "entries": [
+    {
+      "date": "Mon, 11 Jan 2021 15:07:12 GMT",
+      "tag": "@react-native-windows/package-utils_v0.64.0-preview.1",
+      "version": "0.64.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move some packages from @rnw-scripts to @react-native-windows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f93d620fffa966707383dde28c818de152821160",
+            "package": "@react-native-windows/package-utils"
+          }
+        ]
+      }
+    }
+  ]
+}

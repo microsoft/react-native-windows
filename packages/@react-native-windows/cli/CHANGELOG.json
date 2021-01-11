@@ -2,6 +2,33 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 11 Jan 2021 15:07:12 GMT",
+      "tag": "@react-native-windows/cli_v0.64.0-preview.5",
+      "version": "0.64.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Print cwd if generator cannot detect project package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f93d620fffa966707383dde28c818de152821160",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Ensure windows script added on init",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f93d620fffa966707383dde28c818de152821160",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Move some packages from @rnw-scripts to @react-native-windows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f93d620fffa966707383dde28c818de152821160",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Jan 2021 15:06:23 GMT",
       "tag": "@react-native-windows/cli_v0.64.0-preview.4",
       "version": "0.64.0-preview.4",
