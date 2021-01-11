@@ -19,16 +19,17 @@ const SCREEN_READER_CHANGED_EVENT = 'screenReaderChanged';
 // Win32]
 
 import NativeAccessibilityInfo from './NativeAccessibilityInfo';
+import type {EventSubscription} from 'react-native/Libraries/vendor/emitter/EventEmitter';
 
 const REDUCE_MOTION_EVENT = 'reduceMotionDidChange';
 // const TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange'; [Win32]
 
-type ChangeEventName = $Keys<{
-  change: string,
-  reduceMotionChanged: string,
-  screenReaderChanged: string,
-  ...
-}>;
+type AccessibilityEventDefinitions = {
+  reduceMotionChanged: [boolean],
+  screenReaderChanged: [boolean],
+  // alias for screenReaderChanged
+  change: [boolean],
+};
 
 const _subscriptions = new Map();
 
@@ -106,7 +107,10 @@ const AccessibilityInfo = {
     return this.isScreenReaderEnabled;
   },
 
-  addEventListener: function<T>(eventName: ChangeEventName, handler: T): void {
+  addEventListener: function<K: $Keys<AccessibilityEventDefinitions>>(
+    eventName: K,
+    handler: (...$ElementType<AccessibilityEventDefinitions, K>) => void,
+  ): EventSubscription {
     let listener;
 
     if (eventName === 'change' || eventName === 'screenReaderChanged') {
@@ -123,11 +127,18 @@ const AccessibilityInfo = {
 
     // $FlowFixMe[escaped-generic]
     _subscriptions.set(handler, listener);
+
+    return {
+      remove: () => {
+        // $FlowIssue flow does not recognize handler properly
+        AccessibilityInfo.removeEventListener<K>(eventName, handler);
+      },
+    };
   },
 
-  removeEventListener: function<T>(
-    eventName: ChangeEventName,
-    handler: T,
+  removeEventListener: function<K: $Keys<AccessibilityEventDefinitions>>(
+    eventName: K,
+    handler: (...$ElementType<AccessibilityEventDefinitions, K>) => void,
   ): void {
     // $FlowFixMe[escaped-generic]
     const listener = _subscriptions.get(handler);

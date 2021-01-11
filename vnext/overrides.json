@@ -7,7 +7,7 @@
   "excludePatterns": [
     "**/*.windesktop.js"
   ],
-  "baseVersion": "0.0.0-d3a3ce857",
+  "baseVersion": "0.0.0-deda35134",
   "overrides": [
     {
       "type": "derived",
@@ -94,7 +94,7 @@
       "type": "copy",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseHash": "739dfa774136768251847ae0f3900990b0b0f0c1",
+      "baseHash": "b91fdc5e531daa8fac236898c80efe228bbdb8d7",
       "issue": 4578
     },
     {
@@ -327,7 +327,7 @@
       "type": "derived",
       "file": "src/Libraries/Network/RCTNetworkingWinShared.js",
       "baseFile": "Libraries/Network/RCTNetworking.ios.js",
-      "baseHash": "c1c00adf112f3d8c5481420ebfb914cfa0060acd"
+      "baseHash": "6fa09eb85703489e276a86973adb09df3607435c"
     },
     {
       "type": "patch",

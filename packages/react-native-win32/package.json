@@ -68,14 +68,14 @@
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "react": "17.0.1",
-    "react-native": "0.0.0-d3a3ce857",
+    "react-native": "0.0.0-deda35134",
     "react-native-platform-override": "^0.4.6",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "17.0.1",
-    "react-native": "0.0.0-d3a3ce857"
+    "react-native": "0.0.0-deda35134"
   },
   "beachball": {
     "defaultNpmTag": "canary",
