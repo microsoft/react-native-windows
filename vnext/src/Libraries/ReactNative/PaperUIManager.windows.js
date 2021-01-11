@@ -32,26 +32,7 @@ function getConstants(): Object {
   return NativeUIManagerConstants;
 }
 
-// $FlowFixMe
-const UIManagerJS = {};
-
-// [Windows The spread operator doesn't work on JSI turbomodules, so use this instead
-for (const propName of Object.getOwnPropertyNames(NativeUIManager)) {
-  // $FlowFixMe
-  UIManagerJS[propName] = NativeUIManager[propName];
-}
-// Windows]
-
-/* $FlowFixMe(>=0.123.0 site=react_native_fb) This comment suppresses an error
- * found when Flow v0.123.0 was deployed. To see the error, delete this comment
- * and run Flow. */
-//const UIManagerJS = {
-//  ...NativeUIManager,
-// $FlowFixMe
-UIManagerJS.getConstants = getConstants;
-//  },
-// $FlowFixMe
-UIManagerJS.getViewManagerConfig = function(viewManagerName: string): any {
+function getViewManagerConfig(viewManagerName: string): any {
   if (
     viewManagerConfigs[viewManagerName] === undefined &&
     NativeUIManager.getConstantsForViewManager
@@ -89,7 +70,29 @@ UIManagerJS.getViewManagerConfig = function(viewManagerName: string): any {
   }
 
   return viewManagerConfigs[viewManagerName];
-};
+}
+
+// $FlowFixMe
+const UIManagerJS = {};
+
+// [Windows The spread operator doesn't work on JSI turbomodules, so use this instead
+for (const propName of Object.getOwnPropertyNames(NativeUIManager)) {
+  // $FlowFixMe
+  UIManagerJS[propName] = NativeUIManager[propName];
+}
+// Windows]
+
+/* $FlowFixMe(>=0.123.0 site=react_native_fb) This comment suppresses an error
+ * found when Flow v0.123.0 was deployed. To see the error, delete this comment
+ * and run Flow. */
+//const UIManagerJS = {
+//  ...NativeUIManager,
+// $FlowFixMe
+UIManagerJS.getConstants = getConstants;
+//  },
+// $FlowFixMe
+UIManagerJS.getViewManagerConfig = getViewManagerConfig;
+
 //};
 
 // TODO (T45220498): Remove this.

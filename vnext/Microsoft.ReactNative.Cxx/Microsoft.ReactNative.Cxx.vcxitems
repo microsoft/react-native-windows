@@ -38,8 +38,7 @@
     <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\CallInvoker.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.h" />
-    <!-- TODO: change TurboModuleUtils.h to use the $(TurboModule_SourcePath) after we fix and 'de-fork' it. -->
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactCommon\TurboModuleUtils.h" />
+    <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CppWinRTIncludes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.h" />
@@ -102,8 +101,7 @@
       <DisableSpecificWarnings>4100;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <!-- TODO: change TurboModuleUtils.cpp to use the $(TurboModule_SourcePath) after we fix and 'de-fork' TurboModuleUtils.h. -->
-    <ClCompile Include="$(MSBuildThisFileDirectory)ReactCommon\TurboModuleUtils.cpp">
+    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.cpp">
       <DisableSpecificWarnings>4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>

@@ -7,13 +7,13 @@
   "excludePatterns": [
     "**/*.windesktop.js"
   ],
-  "baseVersion": "0.0.0-c901c1fbc",
+  "baseVersion": "0.0.0-d3a3ce857",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "79e242949bec3a348543ff8b03dc144a87332934"
+      "baseHash": "f0c6a0f78d1c12a6bd69371e56d1b24be3355a65"
     },
     {
       "type": "patch",
@@ -40,7 +40,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "ff8d45f38fc62dbf4eb6c93db5377d79089ef0dd",
+      "baseHash": "16491ec07d4102e2798f32749aeeaa10e7bb63d3",
       "issue": 5430
     },
     {
@@ -327,7 +327,7 @@
       "type": "derived",
       "file": "src/Libraries/Network/RCTNetworkingWinShared.js",
       "baseFile": "Libraries/Network/RCTNetworking.ios.js",
-      "baseHash": "4ffd52784e4f1c0f9d21e66fba5a09d21952ff1a"
+      "baseHash": "c1c00adf112f3d8c5481420ebfb914cfa0060acd"
     },
     {
       "type": "patch",
@@ -345,14 +345,14 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "e1418d31343ca11ce165a87f82224ccc8d801052",
+      "baseHash": "8ec1e8578c507df3e04f6e885822773388de008d",
       "issue": 4379
     },
     {
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "1911105ff7796cfeef6db832ec0bd6a53d7622ac"
+      "baseHash": "c9a142fb3b2286a2541ec313cde34317f191460c"
     },
     {
       "type": "derived",
@@ -374,7 +374,7 @@
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.windows.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
-      "baseHash": "e8f8ce02645228b423fdda317e5d1d9e69b54e6d"
+      "baseHash": "b1b07ee8ec52627ee47087032184fbd9e1254ba9"
     },
     {
       "type": "copy",
