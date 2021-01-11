@@ -71,6 +71,12 @@ export class ButtonWin32 extends React_2.Component<IButtonWin32Props, IButtonWin
 export type ButtonWin32OmitStyles = RN.TextStyleIOS & RN.TextStyleAndroid;
 
 // @public (undocumented)
+export type ColorStop = {
+  color: string | number | NativeOrDynamicColorType;
+  offset: number;
+};
+
+// @public (undocumented)
 export type Cursor = 'auto' | 'pointer';
 
 // @public (undocumented)
@@ -381,6 +387,15 @@ export interface IViewWin32Props extends Omit_2<RN.ViewProps, ViewWin32OmitTypes
 }
 
 // @public (undocumented)
+export type NativeOrDynamicColorType = {
+  // Necessary Gradient members
+  gradientDirection?: string;
+  colorStops?: Array<ColorStop>;
+  // Necessary PlatformColor members
+  resource_paths?: Array<string>;
+};
+
+// @public (undocumented)
 export type OmittedAccessibilityPropsWin32 = {
     accessibilityActions?: ReadonlyArray<RN.AccessibilityActionInfo>;
     accessibilityRole?: RN.AccessibilityRole;
@@ -425,6 +440,9 @@ export enum PersonaCoinSize {
     // (undocumented)
     small = 1
 }
+
+// @public (undocumented)
+export function PlatformColor(...names: Array<string>): any;
 
 // @public (undocumented)
 export type SharedAccessibilityPropsIOSandWin32 = {

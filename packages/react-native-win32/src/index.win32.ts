@@ -62,4 +62,11 @@ Object.defineProperty(Index, 'PersonaCoinPresence', {
   },
 });
 
+Object.defineProperty(Index, 'PlatformColor', {
+  get: () => {
+    return require('./Libraries/StyleSheet/NativeOrDynamicColorType.win32').PlatformColor;
+  },
+});
+
+
 export = Index;

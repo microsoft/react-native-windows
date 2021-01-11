@@ -42,6 +42,10 @@
     },
     {
       "type": "platform",
+      "file": "Libraries\\StyleSheet\\NativeOrDynamicColorType.win32.d.ts"
+    },
+    {
+      "type": "platform",
       "file": "Libraries\\Components\\Button\\ButtonWin32.tsx"
     },
     {
