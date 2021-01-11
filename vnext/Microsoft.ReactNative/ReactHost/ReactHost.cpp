@@ -1,10 +1,63 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "ReactHost.h"
 #include <Future/FutureWait.h>
+#include <winrt/Windows.Foundation.h>
 
 namespace Mso::React {
+
+//=============================================================================================
+// ReactOptions internal properties
+//=============================================================================================
+
+winrt::Microsoft::ReactNative::IReactPropertyName FastRefreshEnabledProperty() noexcept {
+  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
+      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.ReactOptions"),
+          L"FastRefreshEnabled");
+  return propName;
+}
+
+winrt::Microsoft::ReactNative::IReactPropertyName UseDeveloperSupportProperty() noexcept {
+  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
+      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.ReactOptions"),
+          L"UseDeveloperSupport");
+  return propName;
+}
+
+winrt::Microsoft::ReactNative::IReactPropertyName LiveReloadEnabledProperty() noexcept {
+  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
+      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.ReactOptions"),
+          L"LiveReloadEnabled");
+  return propName;
+}
+
+winrt::Microsoft::ReactNative::IReactPropertyName UseWebDebuggerProperty() noexcept {
+  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
+      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.ReactOptions"),
+          L"UseWebDebugger");
+  return propName;
+}
+
+winrt::Microsoft::ReactNative::IReactPropertyName DebuggerBreakOnNextLineProperty() noexcept {
+  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
+      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.ReactOptions"),
+          L"DebuggerBreakOnNextLine");
+  return propName;
+}
+
+winrt::Microsoft::ReactNative::IReactPropertyName UseDirectDebuggerProperty() noexcept {
+  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
+      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.ReactOptions"),
+          L"UseDirectDebugger");
+  return propName;
+}
 
 //=============================================================================================
 // ReactOptions implementation
@@ -21,6 +74,130 @@ LIBLET_PUBLICAPI ReactOptions &ReactOptions::AddFileJSBundle(
     std::string_view fileName) noexcept {
   this->JSBundles.push_back(MakeFileJSBundle(jsBundleId.data(), fileName.data()));
   return *this;
+}
+
+void ReactOptions::SetUseDeveloperSupport(bool enabled) noexcept {
+  Properties.Set(UseDeveloperSupportProperty(), winrt::box_value(enabled));
+}
+
+bool ReactOptions::UseDeveloperSupport() const noexcept {
+  return UseDeveloperSupport(Properties);
+}
+
+/*static*/ void ReactOptions::SetUseDeveloperSupport(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+    bool value) noexcept {
+  properties.Set(UseDeveloperSupportProperty(), winrt::box_value(value));
+}
+
+/*static*/ bool ReactOptions::UseDeveloperSupport(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
+  return winrt::unbox_value_or<bool>(properties.Get(UseDeveloperSupportProperty()), false);
+}
+
+/*static*/ void ReactOptions::SetUseFastRefresh(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+    bool value) noexcept {
+  properties.Set(FastRefreshEnabledProperty(), winrt::box_value(value));
+}
+
+/*static*/ bool ReactOptions::UseFastRefresh(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
+  return winrt::unbox_value_or<bool>(properties.Get(FastRefreshEnabledProperty()), false);
+}
+
+void ReactOptions::SetUseFastRefresh(bool enabled) noexcept {
+  Properties.Set(FastRefreshEnabledProperty(), winrt::box_value(enabled));
+}
+
+bool ReactOptions::UseFastRefresh() const noexcept {
+  return UseFastRefresh(Properties);
+}
+
+void ReactOptions::SetUseLiveReload(bool enabled) noexcept {
+  Properties.Set(LiveReloadEnabledProperty(), winrt::box_value(enabled));
+}
+
+/*static*/ void ReactOptions::SetUseLiveReload(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+    bool value) noexcept {
+  properties.Set(LiveReloadEnabledProperty(), winrt::box_value(value));
+}
+
+/*static*/ bool ReactOptions::UseLiveReload(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
+  return winrt::unbox_value_or<bool>(properties.Get(LiveReloadEnabledProperty()), false);
+}
+
+void ReactOptions::SetUseWebDebugger(bool enabled) noexcept {
+  SetUseWebDebugger(Properties, enabled);
+}
+
+bool ReactOptions::UseWebDebugger() const noexcept {
+  return UseWebDebugger(Properties);
+}
+
+/*static*/ void ReactOptions::SetUseWebDebugger(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+    bool value) noexcept {
+  properties.Set(UseWebDebuggerProperty(), winrt::box_value(value));
+
+  if (value) {
+    // Remote debugging is incompatible with direct debugging
+    SetUseDirectDebugger(properties, false);
+  }
+}
+
+/*static*/ bool ReactOptions::UseWebDebugger(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
+  return winrt::unbox_value_or<bool>(properties.Get(UseWebDebuggerProperty()), false);
+}
+
+bool ReactOptions::UseLiveReload() const noexcept {
+  return UseLiveReload(Properties);
+}
+
+void ReactOptions::SetDebuggerBreakOnNextLine(bool enabled) noexcept {
+  Properties.Set(DebuggerBreakOnNextLineProperty(), winrt::box_value(enabled));
+}
+
+bool ReactOptions::DebuggerBreakOnNextLine() const noexcept {
+  return DebuggerBreakOnNextLine(Properties);
+}
+
+/*static*/ void ReactOptions::SetDebuggerBreakOnNextLine(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+    bool value) noexcept {
+  properties.Set(DebuggerBreakOnNextLineProperty(), winrt::box_value(value));
+}
+
+/*static*/ bool ReactOptions::DebuggerBreakOnNextLine(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
+  return winrt::unbox_value_or<bool>(properties.Get(DebuggerBreakOnNextLineProperty()), false);
+}
+
+void ReactOptions::SetUseDirectDebugger(bool enabled) noexcept {
+  Properties.Set(UseDirectDebuggerProperty(), winrt::box_value(enabled));
+}
+
+bool ReactOptions::UseDirectDebugger() const noexcept {
+  return UseDirectDebugger(Properties);
+}
+
+/*static*/ void ReactOptions::SetUseDirectDebugger(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+    bool value) noexcept {
+  properties.Set(UseDirectDebuggerProperty(), winrt::box_value(value));
+
+  if (value) {
+    // Remote debugging is incompatible with direct debugging
+    SetUseWebDebugger(properties, false);
+  }
+}
+
+/*static*/ bool ReactOptions::UseDirectDebugger(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
+  return winrt::unbox_value_or<bool>(properties.Get(UseDirectDebuggerProperty()), false);
 }
 
 //=============================================================================================
@@ -154,12 +331,18 @@ Mso::Future<void> ReactHost::LoadInQueue(ReactOptions &&options) noexcept {
 
   Mso::Promise<void> whenCreated;
   Mso::Promise<void> whenLoaded;
+
+#ifndef CORE_ABI
+  // Requires MakeReactInstance which incurs platform-specific dependencies.
   m_reactInstance.Exchange(
       MakeReactInstance(*this, std::move(options), Mso::Copy(whenCreated), Mso::Copy(whenLoaded), [this]() noexcept {
         InvokeInQueue([this]() noexcept {
           ForEachViewHost([](auto &viewHost) noexcept { viewHost.UpdateViewInstanceInQueue(); });
         });
       }));
+#else
+  assert(false);
+#endif
 
   return whenCreated.AsFuture().Then(Mso::Executors::Inline{}, [ this, whenLoaded ]() noexcept {
     std::vector<Mso::Future<void>> initCompletionList;

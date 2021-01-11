@@ -1,0 +1,8 @@
+moduleBuilder.AddMethod("MyMethod", global::Microsoft.ReactNative.MethodReturnType.Promise, (global::Microsoft.ReactNative.IJSValueReader reader, global::Microsoft.ReactNative.IJSValueWriter writer, global::Microsoft.ReactNative.MethodResultCallback resolve, global::Microsoft.ReactNative.MethodResultCallback reject) =>
+{
+    global::Microsoft.ReactNative.Managed.JSValueReader.ReadArgs(reader);
+    global::System.Threading.Tasks.Task<global::System.Collections.Generic.IReadOnlyList<string>> result = module.Method();
+    global::Microsoft.ReactNative.Managed.ReactTaskExtensions.ContinueWith(result, writer, resolve, reject);
+}
+
+);

@@ -18,8 +18,8 @@ struct BlobModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void() noexcept>{0, L"addNetworkingHandler"},
       Method<void(double) noexcept>{1, L"addWebSocketHandler"},
       Method<void(double) noexcept>{2, L"removeWebSocketHandler"},
-      Method<void(JSValueObject, double) noexcept>{3, L"sendOverSocket"},
-      Method<void(JSValueArray, std::string) noexcept>{4, L"createFromParts"},
+      Method<void(React::JSValueObject, double) noexcept>{3, L"sendOverSocket"},
+      Method<void(React::JSValueArray, std::string) noexcept>{4, L"createFromParts"},
       Method<void(std::string) noexcept>{5, L"release"},
   };
 

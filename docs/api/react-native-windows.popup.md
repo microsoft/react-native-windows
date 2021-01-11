@@ -15,6 +15,7 @@ This is a controlled component that requires an `onDismiss` callback that update
 ```typescript
 export declare class Popup extends React.Component<IPopupProps, IPopupTargetState> 
 ```
+<b>Extends:</b> React.Component&lt;[IPopupProps](./react-native-windows.ipopupprops.md)<!-- -->, [IPopupTargetState](./react-native-windows.ipopuptargetstate.md)<!-- -->&gt;
 
 ## Constructors
 

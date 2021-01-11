@@ -1,0 +1,25 @@
+parameters:
+  buildLogDirectory: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
+
+steps:
+  - task: PublishBuildArtifacts@1
+    displayName: Upload build logs
+    condition:  succeededOrFailed()
+    inputs:
+      pathtoPublish: '${{ parameters.buildLogDirectory }}'
+      artifactName: 'Build logs - $(Agent.JobName)-$(System.JobAttempt)'
+
+  - task: CmdLine@2
+    displayName: dir CrashDumps
+    inputs:
+      script: dir $(Build.StagingDirectory)\CrashDumps /s
+      failOnStderr: false
+    condition:  failed()
+
+
+  - task: PublishBuildArtifacts@1
+    displayName: Upload crash dumps
+    inputs:
+      pathtoPublish: '$(Build.StagingDirectory)/CrashDumps'
+      artifactName: 'Crash dumps - $(Agent.JobName)-$(System.JobAttempt)'
+    condition: failed()

@@ -1,0 +1,80 @@
+{
+  "name": "@rnw-scripts/just-task",
+  "entries": [
+    {
+      "date": "Fri, 09 Oct 2020 05:06:32 GMT",
+      "tag": "@rnw-scripts/just-task_v0.0.6",
+      "version": "0.0.6",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update just-scipts (remove npm-registry-fetch)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "00b2d84b8effce0b7405a67bd4903eed88cb9aaf",
+            "package": "@rnw-scripts/just-task"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 24 Sep 2020 05:06:21 GMT",
+      "tag": "@rnw-scripts/just-task_v0.0.5",
+      "version": "0.0.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix test task when no tests present",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5a96480f422aa7c731d7febb900a3962e1265c08",
+            "package": "@rnw-scripts/just-task"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Sep 2020 05:08:52 GMT",
+      "tag": "@rnw-scripts/just-task_v0.0.3",
+      "version": "0.0.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Start Sharing Test Configuration Between Node Projects",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cf5770eaaaa2906c7d04f0e03749942fe44055d0",
+            "package": "@rnw-scripts/just-task"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Jul 2020 23:11:46 GMT",
+      "tag": "@rnw-scripts/just-task_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add watch script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "805f69dd9e566185d27890bc852abe766f035dfd",
+            "package": "@rnw-scripts/just-task"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Jul 2020 05:06:19 GMT",
+      "tag": "@rnw-scripts/just-task_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Share eslint and Typescript configs across packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "623ac46c0ade7fb8564e3a0c9e8345768c18feb6",
+            "package": "@rnw-scripts/just-task"
+          }
+        ]
+      }
+    }
+  ]
+}

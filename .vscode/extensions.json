@@ -2,6 +2,7 @@
   "recommendations": [
     "xaver.clang-format",
     "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "orta.vscode-jest",
   ]
 }

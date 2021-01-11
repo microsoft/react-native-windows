@@ -1,0 +1,524 @@
+{
+  "name": "react-native-platform-override",
+  "entries": [
+    {
+      "date": "Wed, 06 Jan 2021 05:06:51 GMT",
+      "tag": "react-native-platform-override_v0.4.6",
+      "version": "0.4.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Move some packages from @rnw-scripts to @react-native-windows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cd49e86e7bb698c318a776fa9b9142792196942f",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 18 Dec 2020 19:23:58 GMT",
+      "tag": "react-native-platform-override_v0.4.5",
+      "version": "0.4.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix missing dependency / race condition in pacakge.json",
+            "author": "dannyvv@microsoft.com",
+            "commit": "697dfc78e9a443756bf44b9cfd9c4c67cff82d0f",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "react-native-platform-override_v0.4.4",
+      "version": "0.4.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use whitespace insensitive compare for indentical override detection",
+            "author": "ngerlem@microsoft.com",
+            "commit": "bad8fe175ffe24b8c33c85fee7fda61e3a9c9050",
+            "package": "react-native-platform-override"
+          },
+          {
+            "comment": "Bump yargs to 15.4.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fa34591ac86ea25e1e92a807864ba71480046a27",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "react-native-platform-override_v0.4.3",
+      "version": "0.4.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "react-native-platform-override_v0.4.2",
+      "version": "0.4.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Oct 2020 05:05:49 GMT",
+      "tag": "react-native-platform-override_v0.4.1",
+      "version": "0.4.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Better Override Validation Messages When Errors Exist in Multiple Packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "efae6f59fc50b57b8f122c2d5c663e14e3fdef6a",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Oct 2020 05:05:24 GMT",
+      "tag": "react-native-platform-override_v0.4.0",
+      "version": "0.4.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Allow Multiple Manifests in Monorepos",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cd0d904f4779ef919654bc006c6d4525bbf1b724",
+            "package": "react-native-platform-override"
+          },
+          {
+            "comment": "Drop Issue Requirement from Override Manifest Schema Validation",
+            "author": "ngerlem@microsoft.com",
+            "commit": "79249d0429284d99952b922b88b4a109cb368031",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Oct 2020 05:06:32 GMT",
+      "tag": "react-native-platform-override_v0.3.3",
+      "version": "0.3.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update just-scipts (remove npm-registry-fetch)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "00b2d84b8effce0b7405a67bd4903eed88cb9aaf",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 03 Oct 2020 05:04:45 GMT",
+      "tag": "react-native-platform-override_v0.3.3",
+      "version": "0.3.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow Default baseVersion in Override Manfests",
+            "author": "ngerlem@microsoft.com",
+            "commit": "feca1c6fea43a0459c922e4af1c3daf5c3b65ec5",
+            "package": "react-native-platform-override"
+          },
+          {
+            "comment": "Add command to diff overrides",
+            "author": "ngerlem@microsoft.com",
+            "commit": "10f9b80d943ed34824132912a936fa1af7d0f8e0",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 02 Oct 2020 05:05:22 GMT",
+      "tag": "react-native-platform-override_v0.3.2",
+      "version": "0.3.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add some extra error handling to GitReactFileRepository",
+            "author": "ngerlem@microsoft.com",
+            "commit": "43cc1b4998ded80783c84b2b2544975dd900d68e",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "react-native-platform-override_v0.3.1",
+      "version": "0.3.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "react-native-platform-override"
+          },
+          {
+            "comment": "Fix applying patches when case is mismatched",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b111a2fa6e0ec245e87a653394105be1c98568ee",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 30 Sep 2020 05:06:49 GMT",
+      "tag": "react-native-platform-override_v0.3.0",
+      "version": "0.3.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "macOS Support",
+            "author": "nick@nickgerleman.com",
+            "commit": "64c111f645e82bb4d867d16254c3f6cf48e6dcc1",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 24 Sep 2020 05:06:21 GMT",
+      "tag": "react-native-platform-override_v0.2.8",
+      "version": "0.2.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Ignore filemode for Scratch Repository",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0ccff665e77368362e717eaa1957361d0e5217b8",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Sep 2020 04:46:10 GMT",
+      "tag": "react-native-platform-override_v0.2.7",
+      "version": "0.2.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix react-native-platform-override CLI",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5a62827572de5b1ea9fd27183260151b5c98404a",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "react-native-platform-override_v0.2.6",
+      "version": "0.2.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Sep 2020 22:03:37 GMT",
+      "tag": "react-native-platform-override_v0.2.5",
+      "version": "0.2.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Reconcile package versions",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8adedcfb2ce6492a4a7ede59e0f9188dc205d659",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Sep 2020 05:08:52 GMT",
+      "tag": "react-native-platform-override_v0.2.4",
+      "version": "0.2.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Start Sharing Test Configuration Between Node Projects",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cf5770eaaaa2906c7d04f0e03749942fe44055d0",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Sep 2020 05:06:35 GMT",
+      "tag": "react-native-platform-override_v0.2.3",
+      "version": "0.2.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Enable @typescript-eslint/no-floating-promises",
+            "author": "ngerlem@microsoft.com",
+            "commit": "62f3bb771a129f9cb81bd826827bf4001821a684",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "react-native-platform-override_v0.2.1",
+      "version": "0.2.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to eslint 6.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 12 Aug 2020 05:05:16 GMT",
+      "tag": "react-native-platform-override_v0.2.1",
+      "version": "0.2.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Switch react-native-platform-override collateral to avoid lockfile",
+            "author": "ngerlem@microsoft.com",
+            "commit": "179cc3c8738d9bef71d138f21e6faf12bff19a03",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Jul 2020 05:05:25 GMT",
+      "tag": "react-native-platform-override_v0.2.1",
+      "version": "0.2.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add Validation That Patch/Derived Overrides Aren't Identical to Their Originals",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ef655c95eb7adf7616f40f43a3b7def181d95d72",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 11 Jul 2020 05:09:38 GMT",
+      "tag": "react-native-platform-override_v0.2.0",
+      "version": "0.2.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Improve Override Upgrade Performance",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5c5438382e0d845e8c080c4806f25ba566612906",
+            "package": "react-native-platform-override"
+          },
+          {
+            "comment": "Support Directory Copy Overrides",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d799443d38020b5ba30c1062d8b43b151c1d7566",
+            "package": "react-native-platform-override"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Try to work around Pipelines Network Flakiness Causing Test Timeouts",
+            "author": "ngerlem@microsoft.com",
+            "commit": "db96d9962986ef1a0cc201bbfbc633e562c95371",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Jul 2020 01:27:37 GMT",
+      "tag": "react-native-platform-override_v0.1.1",
+      "version": "0.1.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Normalize override manifests to unix paths",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6010fa8b520def0c4566f84bc6c4d813e3fd7241",
+            "package": "react-native-platform-override"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Increase Timeout for react-native-platform-override e2etest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "28edae58b3ff838a08d54d2e0be0bfd0bcb648ba",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Jul 2020 23:11:46 GMT",
+      "tag": "react-native-platform-override_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add Support for Binary Overrides to react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "33b917ef5b5ab64821ee0c91e70fc9c4e2832ee8",
+            "package": "react-native-platform-override"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Create a Programmatic API for react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "805f69dd9e566185d27890bc852abe766f035dfd",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Jul 2020 05:06:19 GMT",
+      "tag": "react-native-platform-override_v0.0.8",
+      "version": "0.0.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Share eslint and Typescript configs across packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "623ac46c0ade7fb8564e3a0c9e8345768c18feb6",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 27 Jun 2020 03:29:52 GMT",
+      "tag": "react-native-platform-override_v0.0.7",
+      "version": "0.0.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Convert Repo Scripts To Published TypeScript Packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "44ee2b41c92250d1dfd767098e6d7cbf0ac01cfa",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 26 Jun 2020 23:59:27 GMT",
+      "tag": "react-native-platform-override_v0.0.6",
+      "version": "0.0.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Upgrade React Native to 3/22 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0727ffcb907673749ddbf43e7a7c0922957c9e82",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 26 Jun 2020 20:17:03 GMT",
+      "tag": "react-native-platform-override_v0.0.5",
+      "version": "0.0.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Ensure lib-commonjs is packaged into react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "697c8c38a355ca41e90250de71ed8d94247161cc",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 06 Jun 2020 00:05:20 GMT",
+      "tag": "react-native-platform-override_v0.0.4",
+      "version": "0.0.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Revise Architecture of react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "61e5ea7ee9b1f94dd1d5ef185936c7bd8c9448e5",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Jun 2020 00:07:29 GMT",
+      "tag": "react-native-platform-override_v0.0.3",
+      "version": "0.0.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow Override Tooling to Use Nightly Builds",
+            "author": "ngerlem@microsoft.com",
+            "commit": "20cc280c848a958a818c27853a827a92e253c8b9",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 May 2020 00:06:43 GMT",
+      "tag": "react-native-platform-override_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Rename override-tools to react-native-platform-override",
+            "author": "ngerlem@microsoft.com",
+            "commit": "85b01cb32e4b6c46aebb38bdcc5f612a616c856a",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    }
+  ]
+}

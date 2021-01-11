@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
  * @format
- * @flow
+ * @flow strict
  */
 
 'use strict';
@@ -20,9 +20,10 @@ export interface Spec extends TurboModule {
       patch: number,
       prerelease: ?number,
     |},
+    osVersion: number,
   |};
 }
 
-// Hack: This should be getEnforcing, but devmain won't pick up the native
-// module until they use the DLL for React Native Windows 0.61
-export default (TurboModuleRegistry.get<Spec>('PlatformConstants'): ?Spec);
+export default (TurboModuleRegistry.getEnforcing<Spec>(
+  'PlatformConstants',
+): Spec);

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SignConfigXML>
+  <job platform="" configuration="" dest="__INPATHROOT__" jobname="microsoftreactnative" approvers="">
+    <!-- Overwrite the input files to simplify downstream things like nuget package generation. -->
+
+    <!-- Is Authenticode right here? Do we need strong-signing for C# dlls? -->
+
+    <!-- Sign the release binaries -->
+    <file src="__INPATHROOT__\ARM\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" signType="AuthenticodeFormer" dest="__INPATHROOT__\ARM\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" />
+
+    <file src="__INPATHROOT__\ARM64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" signType="AuthenticodeFormer" dest="__INPATHROOT__\ARM64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" />
+
+    <file src="__INPATHROOT__\x86\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" signType="AuthenticodeFormer" dest="__INPATHROOT__\x86\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" />
+
+    <file src="__INPATHROOT__\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" signType="AuthenticodeFormer" dest="__INPATHROOT__\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" />
+
+    <!-- Sign the debug binaries? -->
+    <file src="__INPATHROOT__\ARM\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" signType="AuthenticodeFormer" dest="__INPATHROOT__\ARM\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" />
+
+    <file src="__INPATHROOT__\ARM64\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" signType="AuthenticodeFormer" dest="__INPATHROOT__\ARM64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" />
+
+    <file src="__INPATHROOT__\x86\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" signType="AuthenticodeFormer" dest="__INPATHROOT__\x86\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" />
+
+    <file src="__INPATHROOT__\x64\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" signType="AuthenticodeFormer" dest="__INPATHROOT__\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" />
+  </job>
+</SignConfigXML>

@@ -65,7 +65,7 @@ __pragma(warning(suppress : 4472)) enum class AssertResult : uint32_t {
 #endif // DEBUG
 #endif // C++
 
-// TODO: move this abstraction into compilerAdapters? Except it depends on windows - hmm
+// TODO: move this abstraction into compilerAdapters? Except it depends on Windows - hmm
 #if defined(__clang__) || defined(__cplusplus_cli) || defined(__INTELLISENSE__)
 #define AssertBreak(wzMsg) __debugbreak()
 #elif defined(_DBGRAISEASSERTIONFAILURE_)

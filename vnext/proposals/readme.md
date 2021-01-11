@@ -13,7 +13,7 @@ The proposal process here takes its inspiration from the react-native-community 
 
 ## Proposal process
 
-1. Follow the steps outlined in [Contribution guidelines](https://github.com/microsoft/react-native-windows/blob/master/vnext/docs/CONTRIBUTING.md) to set up your fork and branch to begin contributing.
+1. Follow the steps outlined in [Contribution guidelines](../../docs/contributing.md) to set up your fork and branch to begin contributing.
 
 2. Create a new folder for your proposal under the [active](active/readme.md) folder
 

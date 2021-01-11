@@ -14,6 +14,6 @@ export interface IFlyoutTargetState
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [target](./react-native-windows.iflyouttargetstate.target.md) | <code>number &#124; null</code> |  |
-|  [targetRef](./react-native-windows.iflyouttargetstate.targetref.md) | <code>React.ReactNode</code> |  |
+|  [target](./react-native-windows.iflyouttargetstate.target.md) | number \| null |  |
+|  [targetRef](./react-native-windows.iflyouttargetstate.targetref.md) | React.ReactNode |  |
 

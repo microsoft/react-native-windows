@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -27,12 +27,16 @@ struct Point {
 };
 
 // Sample REACT_MODULE
+// The important notes about the module class:
+// - The module class must have the REACT_MODULE attribute.
+// - All exported methods with custom attributes must be public and noexcept.
 
 REACT_MODULE(SampleModuleCppImpl, L"SampleModuleCpp");
 struct SampleModuleCppImpl {
 #pragma region Initialization
 
   REACT_INIT(Initialize)
+<<<<<<< HEAD
   void Initialize(ReactContext const &reactContext) noexcept {
     const ReactPropertyId<int> myProp1{L"Prop1"};
     const ReactPropertyId<winrt::hstring> myProp2{L"Prop2"};
@@ -40,8 +44,31 @@ struct SampleModuleCppImpl {
     DEBUG_OUTPUT("C++ Properties.Prop2:", winrt::to_string(*reactContext.Properties().Get(myProp2)));
 
     // Note that all notification subscriptions are removed automatically when React instance is unloaded.
+||||||| 811c767bf
+  void Initialize(ReactContext const & /*reactContext*/) noexcept {
+=======
+  void Initialize(ReactContext const &reactContext) noexcept {
+    m_reactContext = reactContext;
+
+    const ReactPropertyId<int> myProp1{L"Prop1"};
+    const ReactPropertyId<winrt::hstring> myProp2{L"Prop2"};
+    DEBUG_OUTPUT("C++ Properties.Prop1:", *reactContext.Properties().Get(myProp1));
+    DEBUG_OUTPUT("C++ Properties.Prop2:", winrt::to_string(*reactContext.Properties().Get(myProp2)));
+
+    const ReactNotificationId<int> cppTimerNotification{L"SampleModuleCppImpl", L"TimerNotification"};
+    const ReactNotificationId<int> csTimerNotification{L"SampleModuleCS", L"TimerNotification"};
+
+    // Note that all notification subscriptions are removed automatically when React instance is unloaded.
+    reactContext.Notifications().Subscribe(csTimerNotification, [
+    ](winrt::Windows::Foundation::IInspectable const &, ReactNotificationArgs<int> const &args) noexcept {
+      DEBUG_OUTPUT("C++ module, C# timer:", *args.Data());
+    });
+
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     m_timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
-        [this](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
+        [ this, cppTimerNotification, notifications = reactContext.Notifications() ](
+            const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
+          notifications.SendNotification(cppTimerNotification, m_timerCount);
           TimedEvent(++m_timerCount);
           if (m_timer && m_timerCount == 5) {
             m_timer.Cancel();
@@ -227,6 +254,28 @@ struct SampleModuleCppImpl {
   REACT_EVENT(TimedEvent, L"TimedEventCpp");
   std::function<void(int)> TimedEvent;
 
+  REACT_METHOD(EmitJSEvent1)
+  void EmitJSEvent1(int value) noexcept {
+    // Test the ReactContext::EmitJSEvent
+    m_reactContext.EmitJSEvent(L"RCTDeviceEventEmitter", L"EmitJSEvent1Cpp", value);
+  }
+
+  REACT_METHOD(EmitJSEvent2)
+  void EmitJSEvent2(int value1, int value2) noexcept {
+    // Test the ReactContext::EmitJSEvent
+    m_reactContext.EmitJSEvent(L"RCTDeviceEventEmitter", L"EmitJSEvent2Cpp", value1, value2);
+  }
+
+  REACT_METHOD(EmitJSEvent3)
+  void EmitJSEvent3(int value1, int value2) noexcept {
+    // Test the ReactContext::EmitJSEvent
+    m_reactContext.EmitJSEvent(
+        L"RCTDeviceEventEmitter", L"EmitJSEvent3Cpp", [&](IJSValueWriter const argWriter) noexcept {
+          WriteValue(argWriter, value1);
+          WriteValue(argWriter, value2);
+        });
+  }
+
 #pragma endregion
 
 #pragma region JS Functions
@@ -241,10 +290,62 @@ struct SampleModuleCppImpl {
 
 #pragma endregion
 
+  REACT_METHOD(ReloadInstance)
+  void ReloadInstance() noexcept {
+    ReactNativeHost::FromContext(m_reactContext.Handle()).ReloadInstance();
+  }
+
  private:
   winrt::Windows::System::Threading::ThreadPoolTimer m_timer{nullptr};
   int m_timerCount{0};
   static constexpr std::chrono::milliseconds TimedEventInterval{5000};
+  ReactContext m_reactContext;
+};
+
+// SampleSharedCppModule shows how to inherited native modules from std::enable_shared_from_this
+// to use weak_from_this() in event handlers. In this example we use notifications instead
+// of events just to show case the std::weak_ptr use.
+REACT_MODULE(SampleSharedCppModule);
+struct SampleSharedCppModule : std::enable_shared_from_this<SampleSharedCppModule> {
+  using IInspectable = winrt::Windows::Foundation::IInspectable;
+
+  // The Initialize method is called when React instance loaded JavaScript and the module is ready to use.
+  REACT_INIT(Initialize)
+  void Initialize(React::ReactContext const &reactContext) noexcept {
+    const ReactNotificationId<int> cppTimerNotification{L"SampleModuleCppImpl", L"TimerNotification"};
+    const ReactNotificationId<int> csTimerNotification{L"SampleModuleCS", L"TimerNotification"};
+
+    // Note that all notification subscriptions are removed automatically when React instance is unloaded.
+    reactContext.Notifications().Subscribe(
+        csTimerNotification,
+        [weakSelf = weak_from_this()](IInspectable const &, ReactNotificationArgs<int> const &args) noexcept {
+          if (auto strongSelf = weakSelf.lock()) {
+            strongSelf->ReportCSTimer(*args.Data());
+          }
+        });
+
+    reactContext.Notifications().Subscribe(
+        csTimerNotification,
+        [weakSelf = weak_from_this()](IInspectable const &, ReactNotificationArgs<int> const &args) noexcept {
+          if (auto strongSelf = weakSelf.lock()) {
+            strongSelf->ReportCppTimer(*args.Data());
+          }
+        });
+  }
+
+  void ReportCSTimer(int timerCount) noexcept {
+    DEBUG_OUTPUT("SampleSharedCppModule, C# timer:", timerCount);
+  }
+
+  void ReportCppTimer(int timerCount) noexcept {
+    DEBUG_OUTPUT("SampleSharedCppModule, C++ timer:", timerCount);
+  }
+
+  REACT_METHOD(SayHello)
+  std::string SayHello() noexcept {
+    // This method is currently unused
+    return "Hello";
+  }
 };
 
 // SampleSharedCppModule shows how to inherited native modules from std::enable_shared_from_this

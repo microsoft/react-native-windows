@@ -2,6 +2,8 @@ parameters:
   artifactName:
   contents:
   layoutHeaders: false
+  buildPlatform: x64
+  buildConfiguration: Debug
 
 steps:
   # Prepare headers for NuGet deployment
@@ -9,18 +11,19 @@ steps:
     displayName: Copy NuGet header files
     inputs:
       filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
-      arguments: -TargetRoot $(Build.StagingDirectory)
+      arguments: -TargetRoot $(Build.StagingDirectory) -BuildRoot $(Build.SourcesDirectory)\vnext\target
     condition: ${{ parameters.layoutHeaders }}
 
   - task: CopyFiles@2
     displayName: Copy NuGet artifacts
     inputs:
-      sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
-      targetFolder: $(Build.StagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)
+      sourceFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+      targetFolder: $(Build.StagingDirectory)/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
       contents: ${{parameters.contents}}
 
   - task: PublishBuildArtifacts@1
     displayName: "Publish Artifact: ${{parameters.artifactName}}"
     inputs:
       artifactName: ${{parameters.artifactName}}
-      pathtoPublish: $(Build.StagingDirectory)
+      pathToPublish: $(Build.StagingDirectory)
+      parralel: true

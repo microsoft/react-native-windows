@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct WebSocketModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string, JSValueArray, JSValueObject, double) noexcept>{0, L"connect"},
+      Method<void(std::string, React::JSValueArray, React::JSValueObject, double) noexcept>{0, L"connect"},
       Method<void(std::string, double) noexcept>{1, L"send"},
       Method<void(std::string, double) noexcept>{2, L"sendBinary"},
       Method<void(double) noexcept>{3, L"ping"},

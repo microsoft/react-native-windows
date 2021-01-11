@@ -1,0 +1,403 @@
+{
+  "includePatterns": [
+    ".flowconfig",
+    "ReactCopies/**",
+    "src/**"
+  ],
+  "excludePatterns": [
+    "**/*.windesktop.js"
+  ],
+  "baseVersion": "0.0.0-d3a3ce857",
+  "overrides": [
+    {
+      "type": "derived",
+      "file": ".flowconfig",
+      "baseFile": ".flowconfig",
+      "baseHash": "f0c6a0f78d1c12a6bd69371e56d1b24be3355a65"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/Yoga.cpp",
+      "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
+      "baseHash": "caab3561363f0adf848ffd7da38f07aad5bb70cb",
+      "issue": 3994
+    },
+    {
+      "type": "copy",
+      "directory": "ReactCopies/IntegrationTests",
+      "baseDirectory": "IntegrationTests",
+      "baseHash": "6bdccafa3426949558427b4f746ddef4e1ab6f27",
+      "issue": 4054
+    },
+    {
+      "type": "patch",
+      "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
+      "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
+      "baseHash": "9995fd5764d9b3ea8c7d3f9c4979eefc4e5e3d78",
+      "issue": 5430
+    },
+    {
+      "type": "patch",
+      "file": "src/babel-plugin-codegen/index.js",
+      "baseFile": "packages/babel-plugin-codegen/index.js",
+      "baseHash": "16491ec07d4102e2798f32749aeeaa10e7bb63d3",
+      "issue": 5430
+    },
+    {
+      "type": "patch",
+      "file": "src/babel-plugin-codegen/package.json",
+      "baseFile": "packages/babel-plugin-codegen/package.json",
+      "baseHash": "d491012387a81a906bf4b1c2378b2591470d9543",
+      "issue": 5430
+    },
+    {
+      "type": "derived",
+      "file": "src/index.windows.js",
+      "baseFile": "index.js",
+      "baseHash": "64001fe0d4f24d7219d2b6f3c4c1fa0c0c8a88ea"
+    },
+    {
+      "type": "platform",
+      "file": "src/IntegrationTests/DummyTest.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/IntegrationTests/LoggingTest.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/IntegrationTests/websocket_integration_test_server_binary.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/IntegrationTests/WebSocketBinaryTest.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/IntegrationTests/XHRTest.js"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Alert/Alert.windows.js",
+      "baseFile": "Libraries/Alert/Alert.js",
+      "baseHash": "b4867752830f6953516c5898a7e2fc0dc796dcfa"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/AppTheme/AppTheme.ts"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/AppTheme/AppThemeTypes.ts"
+    },
+    {
+      "type": "copy",
+      "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
+      "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
+      "baseHash": "739dfa774136768251847ae0f3900990b0b0f0c1",
+      "issue": 4578
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/Button.windows.js",
+      "baseFile": "Libraries/Components/Button.js",
+      "baseHash": "93f4b6047b238d31c2c72c44f11cd689c6a4b071"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/DatePicker/DatePicker.tsx"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/DatePicker/DatePickerIOS.windows.js",
+      "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
+      "baseHash": "218895e2a5f3d7614a2cb577da187800857850ea"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/DatePicker/DatePickerProps.ts"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/DatePickerAndroid/DatePickerAndroid.windows.js",
+      "baseFile": "Libraries/Components/DatePickerAndroid/DatePickerAndroid.ios.js",
+      "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.windows.js",
+      "baseFile": "Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.ios.js",
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Flyout/Flyout.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Flyout/FlyoutProps.ts"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Glyph/Glyph.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Glyph/GlyphProps.ts"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Keyboard/KeyboardExt.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Keyboard/KeyboardExtProps.ts"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/MaskedView/MaskedViewIOS.windows.js",
+      "baseFile": "Libraries/Components/MaskedView/MaskedViewIOS.android.js",
+      "baseHash": "0b409391c852a1001cee74a84414a13c4fe88f8b"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/Picker/Picker.windows.js",
+      "baseFile": "Libraries/Components/Picker/Picker.js",
+      "baseHash": "7de0b5df9c95cef31f2b484f264557c7a8049f74",
+      "issue": 4611
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/Picker/PickerAndroid.windows.js",
+      "baseFile": "Libraries/Components/Picker/PickerAndroid.ios.js",
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/Picker/PickerIOS.windows.js",
+      "baseFile": "Libraries/Components/Picker/PickerIOS.android.js",
+      "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Picker/PickerProps.ts"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/Picker/PickerWindows.tsx",
+      "baseFile": "Libraries/Components/Picker/PickerIOS.ios.js",
+      "baseHash": "1e006e9676afafaaa6a6003a82548743018e84a1",
+      "issue": 4611
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Popup/Popup.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Popup/PopupProps.ts"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/Pressable/Pressable.windows.js",
+      "baseFile": "Libraries/Components/Pressable/Pressable.js",
+      "baseHash": "53bc7996e0fa83128b846a04d0bcec972a406133"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.windows.js",
+      "baseFile": "Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.ios.js",
+      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/ProgressViewIOS/ProgressViewIOS.windows.js",
+      "baseFile": "Libraries/Components/ProgressViewIOS/ProgressViewIOS.android.js",
+      "baseHash": "f0b35fdee6b1c9e7bfe860a9e0aefc00337ea7fd"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/RefreshControl/RefreshControl.windows.js",
+      "baseFile": "Libraries/Components/RefreshControl/RefreshControl.js",
+      "baseHash": "0efdf9cc52f5411bbf296f92e30aa44f83668b45"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.windows.js",
+      "baseFile": "Libraries/Components/SafeAreaView/SafeAreaView.js",
+      "baseHash": "db15a0f43bd49e0be23b74b192fb28ee70fd3fee"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.windows.js",
+      "baseFile": "Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.android.js",
+      "baseHash": "37cea8b532ea4e4335120c6f8b2d3d3548e31b18"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
+      "baseFile": "Libraries/Components/TextInput/TextInput.js",
+      "baseHash": "97e9917d3fa2dbe2fe6c03c4264f756634026796"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/TextInput/TextInputState.windows.js",
+      "baseFile": "Libraries/Components/TextInput/TextInputState.js",
+      "baseHash": "e982deb23d7ad5312ab0c09508a6d58c152b5be7"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/TextInput/WindowsTextInputNativeComponent.js"
+    },
+    {
+      "type": "copy",
+      "file": "src/Libraries/Components/ToastAndroid/ToastAndroid.windows.js",
+      "baseFile": "Libraries/Components/ToastAndroid/ToastAndroid.ios.js",
+      "baseHash": "b0fea77dfa90389e101e6721bb095190dde82368"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/Touchable/TouchableHighlight.windows.js",
+      "baseFile": "Libraries/Components/Touchable/TouchableHighlight.js",
+      "baseHash": "d43a1d363a5d126211e8ef3a00237820bc81900a"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
+      "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
+      "baseHash": "cb05e3460bdc1fe0eabdd1149591fce9a0341678"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
+      "baseFile": "Libraries/Components/Touchable/TouchableWithoutFeedback.js",
+      "baseHash": "12c738a636fa6736871d74aee6c7ff3be8fe2e50"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.windows.js",
+      "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
+      "baseHash": "a4e696834cba3bfe5a5057f44f928e481109f2b8"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/View/View.windows.js",
+      "baseFile": "Libraries/Components/View/View.js",
+      "baseHash": "147459dc889f04f2405db051445833f791726895",
+      "issue": 5843
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
+      "baseFile": "Libraries/Components/View/ViewAccessibility.js",
+      "baseHash": "2d01902a9edd76f728e9044e2ed8a35d44f34424"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
+      "baseFile": "Libraries/Components/View/ViewPropTypes.js",
+      "baseHash": "2b12228aa1ab0e12844996a99ff5d38fbff689a1"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/View/ViewWindows.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/View/ViewWindowsProps.ts"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.windows.js",
+      "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js",
+      "baseHash": "c6d80f9ea60e5802d2e67ed50a78f2b6840d1162"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Image/Image.windows.js",
+      "baseFile": "Libraries/Image/Image.ios.js",
+      "baseHash": "8d053f7bcb66ea71fd361a5c882e4142b5977202",
+      "issue": 4590
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Network/RCTNetworking.windows.js"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Network/RCTNetworkingWinShared.js",
+      "baseFile": "Libraries/Network/RCTNetworking.ios.js",
+      "baseHash": "c1c00adf112f3d8c5481420ebfb914cfa0060acd"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/NewAppScreen/components/DebugInstructions.windows.js",
+      "baseFile": "Libraries/NewAppScreen/components/DebugInstructions.js",
+      "baseHash": "a9f4db370db2e34a8708abd57bc5a7ab5c44ccf1"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/NewAppScreen/components/ReloadInstructions.windows.js",
+      "baseFile": "Libraries/NewAppScreen/components/ReloadInstructions.js",
+      "baseHash": "39326801da6c9ce8c350aa8ba971be4a386499bc"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Pressability/Pressability.windows.js",
+      "baseFile": "Libraries/Pressability/Pressability.js",
+      "baseHash": "8ec1e8578c507df3e04f6e885822773388de008d",
+      "issue": 4379
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
+      "baseFile": "Libraries/ReactNative/PaperUIManager.js",
+      "baseHash": "c9a142fb3b2286a2541ec313cde34317f191460c"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Settings/Settings.windows.js",
+      "baseFile": "Libraries/Settings/Settings.android.js",
+      "baseHash": "00604dd0ab624b3f5b80d460f48dbc3ac7ee905d"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/StyleSheet/PlatformColorValueTypes.windows.js"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Text/Text.windows.js",
+      "baseFile": "Libraries/Text/Text.js",
+      "baseHash": "693cbdb6e94b08b691d8fbacd792bbf1f2c56927"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Types/CoreEventTypes.windows.js",
+      "baseFile": "Libraries/Types/CoreEventTypes.js",
+      "baseHash": "b1b07ee8ec52627ee47087032184fbd9e1254ba9"
+    },
+    {
+      "type": "copy",
+      "file": "src/Libraries/Utilities/BackHandler.windows.js",
+      "baseFile": "Libraries/Utilities/BackHandler.android.js",
+      "baseHash": "972b0cbe23ba57207ee7c855975c0b3d4c28f0d2",
+      "issue": 4629
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Utilities/NativePlatformConstantsWin.js",
+      "baseFile": "Libraries/Utilities/NativePlatformConstantsIOS.js",
+      "baseHash": "71ec2fb1dbf35d65562538d2c63d099ec1392d00"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Utilities/Platform.windows.js",
+      "baseFile": "Libraries/Utilities/Platform.android.js",
+      "baseHash": "5330352b660b0a0ab7dcea5117dddfadadbe2e78"
+    },
+    {
+      "type": "platform",
+      "file": "src/typings-index.ts"
+    }
+  ]
+}

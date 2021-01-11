@@ -1,0 +1,56 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "DynamicAutomationPeer.idl";
+#include "NamespaceRedirect.h"
+
+namespace Microsoft.ReactNative
+{
+  [default_interface]
+  [webhosthidden]
+  runtimeclass ViewPanel : XAML_NAMESPACE.Controls.Panel
+  {
+    // Constructors
+    ViewPanel();
+
+    // Public Methods
+    void InsertAt(UInt32 index, XAML_NAMESPACE.UIElement value);
+      void RemoveAt(UInt32 index);
+      void Clear();
+
+    void FinalizeProperties();
+      XAML_NAMESPACE.Controls.Border GetOuterBorder();
+
+    // Public Properties
+    XAML_NAMESPACE.Media.Brush ViewBackground { get; set; };
+    XAML_NAMESPACE.Thickness BorderThickness { get; set; };
+    XAML_NAMESPACE.Media.Brush BorderBrush { get; set; };
+    XAML_NAMESPACE.CornerRadius CornerRadius { get; set; };
+    Boolean ClipChildren { get; set; };
+
+    // ViewPanel Properties
+    static XAML_NAMESPACE.DependencyProperty ViewBackgroundProperty { get; };
+    static XAML_NAMESPACE.DependencyProperty BorderThicknessProperty { get; };
+    static XAML_NAMESPACE.DependencyProperty BorderBrushProperty { get; };
+    static XAML_NAMESPACE.DependencyProperty CornerRadiusProperty { get; };
+    static XAML_NAMESPACE.DependencyProperty ClipChildrenProperty { get; };
+
+    // Attached Properties
+    static XAML_NAMESPACE.DependencyProperty TopProperty { get; };
+    static void SetTop(XAML_NAMESPACE.UIElement element, Double value);
+    static Double GetTop(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty LeftProperty { get; };
+    static void SetLeft(XAML_NAMESPACE.UIElement element, Double value);
+    static Double GetLeft(XAML_NAMESPACE.UIElement element);
+  }
+
+  [default_interface]
+  [webhosthidden]
+  runtimeclass ViewControl : XAML_NAMESPACE.Controls.ContentControl
+  {
+    ViewControl();
+
+    ViewPanel GetPanel();
+  }
+}

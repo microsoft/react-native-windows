@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { StyleSheet, Text, TouchableHighlight } from 'react-native';
 import { ViewWin32 } from '../ViewWin32';
-import { IKeyboardEvent, IHandledKeyboardEvent } from '../ViewWin32.Props';
+import { Cursor, IKeyboardEvent, IHandledKeyboardEvent } from '../ViewWin32.Props';
 
 const styles = StyleSheet.create({
   border: {
@@ -31,8 +31,14 @@ interface IFocusableComponentState {
 
 class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentState> {
   private _focusTarget: ViewWin32 = null;
+<<<<<<< HEAD
   private _labeledBy: React.RefObject<ViewWin32>;
 
+||||||| 811c767bf
+=======
+  private readonly _labeledBy: React.RefObject<ViewWin32>;
+
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
   public constructor(props) {
     super(props);
     this.state = {
@@ -50,7 +56,7 @@ class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentSta
         </TouchableHighlight>
         <ViewWin32
           ref={this._setRef}
-          acceptsKeyboardFocus
+          focusable
           style={this.state.hasFocus ? { backgroundColor: '#aee8fcff' } : { backgroundColor: '#00000000' }}
           onFocus={this._onFocus}
           onBlur={this._onBlur}
@@ -62,23 +68,23 @@ class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentSta
     );
   }
 
-  private _setRef = (ref: ViewWin32) => {
+  private readonly _setRef = (ref: ViewWin32) => {
     this._focusTarget = ref;
   };
 
-  private _onPress = () => {
+  private readonly _onPress = () => {
     if (this._focusTarget !== undefined) {
       this._focusTarget.focus();
     }
   };
 
-  private _onFocus = () => {
+  private readonly _onFocus = () => {
     this.setState({
       hasFocus: true,
     });
   };
 
-  private _onBlur = () => {
+  private readonly _onBlur = () => {
     this.setState({
       hasFocus: false,
     });
@@ -113,7 +119,7 @@ class KeyboardTestComponent extends React.Component<{}, IFocusableComponentState
       <ViewWin32 keyDownEvents={handledNativeKeyboardEvents} keyUpEvents={handledNativeKeyboardEvents}>
         <ViewWin32
           style={this.state.hasFocus ? [styles.keyComponentRoot, styles.border] : styles.keyComponentRoot}
-          acceptsKeyboardFocus
+          focusable
           onKeyUp={this._onKeyUp}
           onKeyDown={this._onKeyDown}
           onFocus={this._onFocus}
@@ -134,23 +140,23 @@ class KeyboardTestComponent extends React.Component<{}, IFocusableComponentState
     );
   }
 
-  private _onFocus = () => {
+  private readonly _onFocus = () => {
     this.setState({
       hasFocus: true,
     });
   };
 
-  private _onBlur = () => {
+  private readonly _onBlur = () => {
     this.setState({
       hasFocus: false,
     });
   };
 
-  private _onKeyUp = (ev: IKeyboardEvent) => {
+  private readonly _onKeyUp = (ev: IKeyboardEvent) => {
     this.setState({ lastKeyUp: ev.nativeEvent.key, lastKeyDown: null });
   };
 
-  private _onKeyDown = (ev: IKeyboardEvent) => {
+  private readonly _onKeyDown = (ev: IKeyboardEvent) => {
     this.setState({ lastKeyDown: ev.nativeEvent.key, lastKeyUp: null });
   };
 }
@@ -175,10 +181,10 @@ class HoverTestComponent extends React.Component<IHoverComponentProps, IFocusabl
       />
     );
   }
-  private _onMouseLeave = () => {
+  private readonly _onMouseLeave = () => {
     this.setState({ hasFocus: false });
   };
-  private _onMouseEnter = () => {
+  private readonly _onMouseEnter = () => {
     this.setState({ hasFocus: true });
   };
 }
@@ -213,7 +219,39 @@ const ToolTipExample: React.FunctionComponent<{}> = () => {
   );
 };
 
-export const title = '<ViewWin32>';
+interface ICursorTestComponentProps {
+  cursor: Cursor
+}
+
+const CursorTestComponent: React.FunctionComponent<ICursorTestComponentProps> = (props) => {
+  return (
+    <ViewWin32 style={{flexDirection: 'column'}}>
+      <Text>{props.cursor}</Text>
+      <ViewWin32 cursor={props.cursor} style={styles.blackbox} />
+    </ViewWin32>
+  )
+}
+
+const CursorExample: React.FunctionComponent = () => {
+  return (
+    <ViewWin32 style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+      <CursorTestComponent cursor='auto' />
+      <CursorTestComponent cursor='default' />
+      <CursorTestComponent cursor='help' />
+      <CursorTestComponent cursor='nesw-resize' />
+      <CursorTestComponent cursor='not-allowed' />
+      <CursorTestComponent cursor='ns-resize' />
+      <CursorTestComponent cursor='nwse-resize' />
+      <CursorTestComponent cursor='pointer' />
+      <CursorTestComponent cursor='wait' />
+      <CursorTestComponent cursor='move' />
+      <CursorTestComponent cursor='text' />
+      <CursorTestComponent cursor='we-resize' />
+    </ViewWin32>
+  );
+}
+
+export const title = 'ViewWin32';
 export const displayName = 'ViewWin32 Example';
 export const description = 'All the stock View props plus Win32 specific ones';
 export const examples = [
@@ -249,6 +287,13 @@ export const examples = [
     description: 'Displays a tooltip on hover',
     render(): JSX.Element {
       return <ToolTipExample />;
+    },
+  },
+  {
+    title: 'Cursor example',
+    description: 'Each of these boxes should display a different cursor',
+    render(): JSX.Element {
+      return <CursorExample />;
     },
   },
 ];

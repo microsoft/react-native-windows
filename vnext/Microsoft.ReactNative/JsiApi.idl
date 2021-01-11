@@ -1,0 +1,206 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace Microsoft.ReactNative
+{
+  // JsiByteArrayUser delegate receives a range of bytes as a byte array.
+  // The array of bytes is implemented in ABI as two parameters: array length and a pointer to the array start.
+  // It effectively provides a 'view' to the byte array provided by the delegate invoker.
+  // This delegate helps returning byte array data without copying it.
+  // The decision to copy data is deferred to the code that implements the delegate.
+  //
+  // Note that the provided byte array is only valid while the delegate is called. Your code must
+  // copy data if it wants to store it for the later use. Otherwise it may cause issues due to the memory
+  // being overwritten after the call is completed. It may happen if the provided byte array was stored
+  // on the call stack or it was a managed memory pinned for the use and then unpinned after that.
+  delegate void JsiByteArrayUser(UInt8[] bytes);
+
+  // IJsiByteBuffer encapsulates a byte array buffer.
+  // It can be in-memory data, memory-mapped file, or a resource from a DLL.
+  // IJsiByteBuffer::GetData provides ABI-safe access to the encapsulated data with help of the
+  // JsiByteArrayUser delegate. The JsiByteArrayUser delegate provides a 'view' to the buffer data and
+  // does not copy the data.
+  //
+  // Note that the IJsiByteBuffer::GetData implementation could do some work before and after calling the
+  // JsiByteArrayUser delegate. For example, .Net implementation must pin the memory before the JsiByteArrayUser
+  // delegate call and unpin it after that. It means that the provided data is only valid while the
+  // JsiByteArrayUser delegate is being called.
+  [webhosthidden]
+  interface IJsiByteBuffer
+  {
+    // Size of the byte buffer data.
+    UInt32 Size { get; };
+
+    // Get access to the byte buffer data.
+    void GetData(JsiByteArrayUser useBytes);
+  };
+
+  // Type of the JavaScript value. It is currently matching the full JavaScript set of types except for the BigInt type.
+  enum JsiValueKind
+  {
+    Undefined,
+    Null,
+    Boolean,
+    Number,
+    Symbol,
+    String,
+    Object,
+  };
+
+  [webhosthidden]
+  struct JsiValueRef
+  {
+    JsiValueKind Kind;
+    UInt64 Data;
+  };
+
+  struct JsiSymbolRef
+  {
+    UInt64 Data;
+  };
+
+  struct JsiStringRef
+  {
+    UInt64 Data;
+  };
+
+  struct JsiObjectRef
+  {
+    UInt64 Data;
+  };
+
+  struct JsiWeakObjectRef
+  {
+    UInt64 Data;
+  };
+
+  struct JsiPropertyIdRef
+  {
+    UInt64 Data;
+  };
+
+  struct JsiScopeState
+  {
+    UInt64 Data;
+  };
+
+  [default_interface]
+  runtimeclass JsiPreparedJavaScript
+  {
+  };
+
+  [experimental]
+  delegate JsiValueRef JsiHostFunction(JsiRuntime runtime, JsiValueRef thisArg, JsiValueRef[] args);
+
+  [webhosthidden]
+  [experimental]
+  interface IJsiHostObject
+  {
+    JsiValueRef GetProperty(JsiRuntime runtime, JsiPropertyIdRef propertyId);
+    void SetProperty(JsiRuntime runtime, JsiPropertyIdRef propertyId, JsiValueRef value);
+    IVector<JsiPropertyIdRef> GetPropertyIds(JsiRuntime runtime);
+  };
+
+  enum JsiErrorType
+  {
+    JSError,         // JavaScript error
+    NativeException, // JSI native code exception
+  };
+
+  [webhosthidden, default_interface]
+  runtimeclass JsiError
+  {
+    JsiErrorType ErrorType { get; };
+    String ErrorDetails { get; };
+    String Message { get; };
+    String Stack { get; };
+    JsiValueRef Value { get; };
+  };
+
+  [webhosthidden, default_interface]
+  [experimental]
+  runtimeclass JsiRuntime
+  {
+    // TODO : replace with a registered factory method
+    static JsiRuntime MakeChakraRuntime();
+
+    JsiValueRef EvaluateJavaScript(IJsiByteBuffer buffer, String sourceUrl);
+    JsiPreparedJavaScript PrepareJavaScript(IJsiByteBuffer buffer, String sourceUrl);
+    JsiValueRef EvaluatePreparedJavaScript(JsiPreparedJavaScript js);
+    JsiObjectRef Global { get; };
+    String Description { get; };
+    Boolean IsInspectable { get; };
+
+    JsiSymbolRef CloneSymbol(JsiSymbolRef symbol);
+    JsiStringRef CloneString(JsiStringRef str);
+    JsiObjectRef CloneObject(JsiObjectRef obj);
+    JsiPropertyIdRef ClonePropertyId(JsiPropertyIdRef propertyId);
+
+    JsiPropertyIdRef CreatePropertyId(String name);
+    JsiPropertyIdRef CreatePropertyIdFromAscii(UInt8[] ascii);
+    JsiPropertyIdRef CreatePropertyIdFromUtf8(UInt8[] utf8);
+    JsiPropertyIdRef CreatePropertyIdFromString(JsiStringRef str);
+    String PropertyIdToString(JsiPropertyIdRef propertyId);
+    void PropertyIdToUtf8(JsiPropertyIdRef propertyId, JsiByteArrayUser useUtf8String);
+    Boolean PropertyIdEquals(JsiPropertyIdRef left, JsiPropertyIdRef right);
+
+    String SymbolToString(JsiSymbolRef symbol);
+    void SymbolToUtf8(JsiSymbolRef symbol, JsiByteArrayUser useUtf8String);
+
+    JsiStringRef CreateString(String value);
+    JsiStringRef CreateStringFromAscii(UInt8[] ascii);
+    JsiStringRef CreateStringFromUtf8(UInt8[] utf8);
+    String StringToString(JsiStringRef str);
+    void StringToUtf8(JsiStringRef str, JsiByteArrayUser useUtf8String);
+
+    JsiValueRef CreateValueFromJson(String json);
+    JsiValueRef CreateValueFromJsonUtf8(UInt8[] json);
+
+    JsiObjectRef CreateObject();
+    JsiObjectRef CreateObjectWithHostObject(IJsiHostObject hostObject);
+    IJsiHostObject GetHostObject(JsiObjectRef obj);
+    JsiHostFunction GetHostFunction(JsiObjectRef func);
+
+    JsiValueRef GetProperty(JsiObjectRef obj, JsiPropertyIdRef propertyId);
+    Boolean HasProperty(JsiObjectRef obj, JsiPropertyIdRef propertyId);
+    void SetProperty(JsiObjectRef obj, JsiPropertyIdRef propertyId, JsiValueRef value);
+    JsiObjectRef GetPropertyIdArray(JsiObjectRef obj);
+
+    Boolean IsArray(JsiObjectRef obj);
+    Boolean IsArrayBuffer(JsiObjectRef obj);
+    Boolean IsFunction(JsiObjectRef obj);
+    Boolean IsHostObject(JsiObjectRef obj);
+    Boolean IsHostFunction(JsiObjectRef obj);
+
+    JsiWeakObjectRef CreateWeakObject(JsiObjectRef obj);
+    JsiValueRef LockWeakObject(JsiWeakObjectRef weakObject);
+
+    JsiObjectRef CreateArray(UInt32 size);
+    UInt32 GetArraySize(JsiObjectRef arr);
+    UInt32 GetArrayBufferSize(JsiObjectRef arrayBuffer);
+    void GetArrayBufferData(JsiObjectRef arrayBuffer, JsiByteArrayUser useArrayBytes);
+    JsiValueRef GetValueAtIndex(JsiObjectRef arr, UInt32 index);
+    void SetValueAtIndex(JsiObjectRef arr, UInt32 index, JsiValueRef value);
+
+    JsiObjectRef CreateFunctionFromHostFunction(JsiPropertyIdRef funcName, UInt32 paramCount, JsiHostFunction hostFunc);
+    JsiValueRef Call(JsiObjectRef func, JsiValueRef thisArg, JsiValueRef[] args);
+    JsiValueRef CallAsConstructor(JsiObjectRef func, JsiValueRef[] args);
+
+    JsiScopeState PushScope();
+    void PopScope(JsiScopeState scopeState);
+
+    Boolean SymbolStrictEquals(JsiSymbolRef left, JsiSymbolRef right);
+    Boolean StringStrictEquals(JsiStringRef left, JsiStringRef right);
+    Boolean ObjectStrictEquals(JsiObjectRef left, JsiObjectRef right);
+
+    Boolean InstanceOf(JsiObjectRef obj, JsiObjectRef constructor);
+
+    void ReleaseSymbol(JsiSymbolRef symbol);
+    void ReleaseString(JsiStringRef str);
+    void ReleaseObject(JsiObjectRef obj);
+    void ReleasePropertyId(JsiPropertyIdRef propertyId);
+
+    JsiError GetAndClearError();
+    void SetError(JsiErrorType errorType, String errorDetails, JsiValueRef value);
+  };
+}

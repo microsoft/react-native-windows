@@ -1,0 +1,8 @@
+namespace {{ namespace }}
+{
+    [default_interface]
+    runtimeclass MainPage : {{ xamlNamespace }}.Controls.Page
+    {
+        MainPage();
+    }
+}

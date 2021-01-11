@@ -1,0 +1,64 @@
+
+jobs:
+  - job: JSChecks
+    variables:
+      - template: ../variables/vs2019.yml
+    displayName: JavaScript Checks
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    steps:
+      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+        clean: true # whether to fetch clean each time
+        fetchDepth: 2 # the depth of commits to ask Git to fetch
+        lfs: false # whether to download Git-LFS files
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      - template: ../templates/yarn-install.yml
+
+      - task: CmdLine@2
+        displayName: Check for change files
+        inputs:
+          script: npx --no-install beachball check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
+
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: yarn build
+
+      - task: CmdLine@2
+        displayName: yarn format:verify
+        inputs:
+          script: yarn format:verify
+
+      - task: CmdLine@2
+        displayName: yarn lint
+        inputs:
+          script: yarn lint
+
+      - task: CmdLine@2
+        displayName: yarn test
+        inputs:
+          script: yarn test
+
+      - task: CmdLine@2
+        displayName: yarn validate-overrides
+        inputs:
+          script: yarn validate-overrides
+
+      # Run unbroken checking local files before installing packages to avoid scanning node_modules
+      # The exclusions of unbroken don't support wildcards yet and we have many throughout the repo
+      - task: CmdLine@2
+        displayName: check local links in .md files
+        inputs:
+          script: npx --no-install unbroken -q --local-only --allow-local-line-sections
+
+      # This runs will check for web-links. If broken links are found, since external changes could affect this.
+      # It will report a warning if this step fails so we'll pay attention to fix quickly.
+      - task: CmdLine@2
+        displayName: check web links in .md files
+        inputs:
+          script: npx --no-install unbroken -q --allow-local-line-sections
+        continueOnError: true

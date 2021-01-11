@@ -55,7 +55,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(IncludePath);$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(FollyDir)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include\Shared;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -76,7 +76,6 @@
   <ItemGroup>
     <ClCompile Include="ControllableMessageQueueThread.cpp" />
     <ClCompile Include="TestInstance.cpp" />
-    <ClCompile Include="TestMessageQueueThread.cpp" />
     <ClCompile Include="TestModule.cpp" />
     <ClCompile Include="TestRootView.cpp" />
     <ClCompile Include="TestRunner.cpp" />
@@ -86,7 +85,6 @@
     <ClInclude Include="MockExecutorDelegate.h" />
     <ClInclude Include="TestInstance.h" />
     <ClInclude Include="TestModule.h" />
-    <ClInclude Include="TestMessageQueueThread.h" />
     <ClInclude Include="TestRootView.h" />
     <ClInclude Include="TestRunner.h" />
   </ItemGroup>

@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct DialogManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(JSValueObject, Callback<JSValue>, Callback<JSValue>) noexcept>{0, L"showAlert"},
+      Method<void(React::JSValueObject, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{0, L"showAlert"},
   };
 
   template <class TModule>

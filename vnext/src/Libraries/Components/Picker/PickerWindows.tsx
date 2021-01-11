@@ -1,12 +1,16 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
 'use strict';
 
 import * as React from 'react';
-import {requireNativeComponent, processColor} from 'react-native';
+import {
+  requireNativeComponent,
+  processColor,
+  ProcessedColorValue,
+} from 'react-native';
 import {
   IPickerItemProps,
   IPickerProps,
@@ -25,12 +29,10 @@ class PickerItem extends React.Component<IPickerItemProps> {
 
 export interface IPickerItemData {
   label: string;
-  // tslint:disable-next-line:no-any
   value?: any;
-  textColor?: number;
+  textColor?: ProcessedColorValue | null;
 }
 
-// tslint:disable-next-line:interface-name
 interface State {
   selectedIndex: number;
   items: IPickerItemData[];
@@ -51,7 +53,6 @@ type PickerPropsWithChildren = Readonly<{children?: React.ReactNode}> &
 export class Picker extends React.Component<IPickerProps, State> {
   public static Item = PickerItem;
 
-  // tslint:disable-next-line:no-any
   private _rctPicker: any;
 
   public static getDerivedStateFromProps(
@@ -101,11 +102,11 @@ export class Picker extends React.Component<IPickerProps, State> {
     );
   }
 
-  private _setRef = (comboBox: any /*RCTPicker*/) => {
+  private readonly _setRef = (comboBox: any /*RCTPicker*/) => {
     this._rctPicker = comboBox;
   };
 
-  private _onChange = (event: IPickerChangeEvent) => {
+  private readonly _onChange = (event: IPickerChangeEvent) => {
     if (this._rctPicker) {
       this._rctPicker.setNativeProps({
         selectedIndex: this.state.selectedIndex,

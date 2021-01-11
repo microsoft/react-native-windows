@@ -10,14 +10,13 @@
 
 'use strict';
 
-// [Windows remove .js
-import Pressability from '../../Pressability/Pressability';
+import Pressability, {
+  type PressabilityConfig,
+} from '../../Pressability/Pressability';
 import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
-import TVTouchable from './TVTouchable';
 import typeof TouchableWithoutFeedback from './TouchableWithoutFeedback';
-// Windows]
-import Animated from 'react-native/Libraries/Animated/src/Animated';
-import Easing from 'react-native/Libraries/Animated/src/Easing';
+import Animated from 'react-native/Libraries/Animated/Animated';
+import Easing from 'react-native/Libraries/Animated/Easing';
 import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
 import flattenStyle from 'react-native/Libraries/StyleSheet/flattenStyle';
 import Platform from '../../Utilities/Platform';
@@ -132,10 +131,9 @@ type State = $ReadOnly<{|
  *
  */
 class TouchableOpacity extends React.Component<Props, State> {
-  _tvTouchable: ?TVTouchable;
-
   state: State = {
     anim: new Animated.Value(this._getChildStyleOpacityWithDefault()),
+<<<<<<< HEAD
     pressability: new Pressability({
       getHitSlop: () => this.props.hitSlop,
       getLongPressDelayMS: () => {
@@ -152,6 +150,38 @@ class TouchableOpacity extends React.Component<Props, State> {
       getPressRectOffset: () => this.props.pressRetentionOffset,
       onMouseEnter: this.props.onMouseEnter, // [Windows]
       onMouseLeave: this.props.onMouseLeave, // [Windows]
+||||||| 811c767bf
+    pressability: new Pressability({
+      getHitSlop: () => this.props.hitSlop,
+      getLongPressDelayMS: () => {
+        if (this.props.delayLongPress != null) {
+          const maybeNumber = this.props.delayLongPress;
+          if (typeof maybeNumber === 'number') {
+            return maybeNumber;
+          }
+        }
+        return 500;
+      },
+      getPressDelayMS: () => this.props.delayPressIn,
+      getPressOutDelayMS: () => this.props.delayPressOut,
+      getPressRectOffset: () => this.props.pressRetentionOffset,
+=======
+    pressability: new Pressability(this._createPressabilityConfig()),
+  };
+
+  _createPressabilityConfig(): PressabilityConfig {
+    return {
+      cancelable: !this.props.rejectResponderTermination,
+      disabled: this.props.disabled,
+      hitSlop: this.props.hitSlop,
+      delayLongPress: this.props.delayLongPress,
+      delayPressIn: this.props.delayPressIn,
+      delayPressOut: this.props.delayPressOut,
+      minPressDuration: 0,
+      pressRectOffset: this.props.pressRetentionOffset,
+      onMouseEnter: this.props.onMouseEnter, // [Windows]
+      onMouseLeave: this.props.onMouseLeave, // [Windows]
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
       onBlur: event => {
         if (Platform.isTV) {
           this._opacityInactive(250);
@@ -168,16 +198,8 @@ class TouchableOpacity extends React.Component<Props, State> {
           this.props.onFocus(event);
         }
       },
-      onLongPress: event => {
-        if (this.props.onLongPress != null) {
-          this.props.onLongPress(event);
-        }
-      },
-      onPress: event => {
-        if (this.props.onPress != null) {
-          this.props.onPress(event);
-        }
-      },
+      onLongPress: this.props.onLongPress,
+      onPress: this.props.onPress,
       onPressIn: event => {
         this._opacityActive(
           event.dispatchConfig.registrationName === 'onResponderGrant'
@@ -194,11 +216,8 @@ class TouchableOpacity extends React.Component<Props, State> {
           this.props.onPressOut(event);
         }
       },
-      onResponderTerminationRequest: () =>
-        !this.props.rejectResponderTermination,
-      onStartShouldSetResponder: () => !this.props.disabled,
-    }),
-  };
+    };
+  }
 
   /**
    * Animate the touchable to a new opacity.
@@ -268,11 +287,6 @@ class TouchableOpacity extends React.Component<Props, State> {
         accessibilityPosInSet={this.props.accessibilityPosInSet} // [Windows]
         accessibilitySetSize={this.props.accessibilitySetSize} // [Windows]
         onAccessibilityTap={this.props.onAccessibilityTap} // [Windows]
-        acceptsKeyboardFocus={
-          (this.props.acceptsKeyboardFocus === undefined ||
-            this.props.acceptsKeyboardFocus === true) &&
-          !this.props.disabled
-        } // [Windows]
         tabIndex={this.props.tabIndex} // [Windows]
         tooltip={this.props.tooltip} // [Windows]
         onMouseEnter={this.props.onMouseEnter} // [Windows]
@@ -286,45 +300,18 @@ class TouchableOpacity extends React.Component<Props, State> {
     );
   }
 
-  componentDidMount(): void {
-    if (Platform.isTV) {
-      this._tvTouchable = new TVTouchable(this, {
-        getDisabled: () => this.props.disabled === true,
-        onBlur: event => {
-          if (this.props.onBlur != null) {
-            this.props.onBlur(event);
-          }
-        },
-        onFocus: event => {
-          if (this.props.onFocus != null) {
-            this.props.onFocus(event);
-          }
-        },
-        onPress: event => {
-          if (this.props.onPress != null) {
-            this.props.onPress(event);
-          }
-        },
-      });
-    }
-  }
-
   componentDidUpdate(prevProps: Props, prevState: State) {
+    this.state.pressability.configure(this._createPressabilityConfig());
     if (this.props.disabled !== prevProps.disabled) {
       this._opacityInactive(250);
     }
   }
 
   componentWillUnmount(): void {
-    if (Platform.isTV) {
-      if (this._tvTouchable != null) {
-        this._tvTouchable.destroy();
-      }
-    }
     this.state.pressability.reset();
   }
 }
 
 module.exports = (React.forwardRef((props, hostRef) => (
   <TouchableOpacity {...props} hostRef={hostRef} />
-)): React.ComponentType<$ReadOnly<$Diff<Props, {|hostRef: mixed|}>>>);
+)): React.AbstractComponent<$ReadOnly<$Diff<Props, {|hostRef: mixed|}>>>);

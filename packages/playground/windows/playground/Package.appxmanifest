@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
  <Identity
-    Name="a752ebd1-71f2-4731-af80-c81e1782cc2b"
-    Publisher="CN=playground"
+    Name="RNPlayground"
+    Publisher="CN=react-native-windows-testing"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="a752ebd1-71f2-4731-af80-c81e1782cc2b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>playground</DisplayName>
-    <PublisherDisplayName>RNWTest</PublisherDisplayName>
+    <PublisherDisplayName>react-native-windows-testing</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -45,5 +45,6 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
+    <Capability Name="privateNetworkClientServer"/>
   </Capabilities>
 </Package>

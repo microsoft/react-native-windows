@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -42,7 +42,7 @@ export default class Bootstrap extends React.Component<{}, any> {
   };
 
   onPressShowPassword = () => {
-    var previousState = this.state.passwordHidden;
+    const previousState = this.state.passwordHidden;
     this.setState({passwordHidden: !previousState});
   };
 

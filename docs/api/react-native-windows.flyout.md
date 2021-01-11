@@ -15,6 +15,7 @@ This is a controlled component that requires an `onDismiss` callback that update
 ```typescript
 export declare class Flyout extends React.Component<IFlyoutProps, IFlyoutTargetState> 
 ```
+<b>Extends:</b> React.Component&lt;[IFlyoutProps](./react-native-windows.iflyoutprops.md)<!-- -->, [IFlyoutTargetState](./react-native-windows.iflyouttargetstate.md)<!-- -->&gt;
 
 ## Constructors
 

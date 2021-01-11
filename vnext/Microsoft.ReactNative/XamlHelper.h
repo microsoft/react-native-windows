@@ -1,15 +1,16 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
 #include "XamlHelper.g.h"
+#include "Base/FollyIncludes.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
 struct XamlHelper : XamlHelperT<XamlHelper> {
   XamlHelper() = default;
 
-  static Windows::UI::Xaml::Media::Brush BrushFrom(JSValueArgWriter const &valueProvider) noexcept;
+  static xaml::Media::Brush BrushFrom(JSValueArgWriter const &valueProvider) noexcept;
   static Windows::UI::Color ColorFrom(JSValueArgWriter const &valueProvider) noexcept;
 
   static folly::dynamic GetFollyDynamicFromValueProvider(JSValueArgWriter const &valueProvider) noexcept;

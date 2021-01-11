@@ -1,85 +1,43 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
+ *
+ * @format
  */
 
-import { BasePage, By } from './BasePage';
-import TextInputTestPage from './TextInputTestPage';
+import { BasePage, by } from './BasePage';
 import {
-  TEXTINPUT_TESTPAGE,
-  LOGIN_TESTPAGE,
-  DIRECT_MANIPULATION_TESTPAGE,
-  IMAGE_TESTPAGE,
-  CONTROL_STYLE_TESTPAGE,
-  TRANSFORM_TESTPAGE,
-} from '../../app/Consts';
-import LoginPage from './LoginPage';
-import DirectManipulationPage from './DirectManipulationPage';
-import ImageTestPage from './ImageTestPage';
-import ControlStyleTestPage from './ControlStylePage';
+  APIS_NAV_BUTTON,
+  COMPONENTS_NAV_BUTTON,
+  TESTER_LIST_SEARCH_BOX,
+} from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 class HomePage extends BasePage {
-  backToHomePage() {
-    this.homeButton.click();
-    this.waitForPageLoaded();
+  goToComponentExample(example: string) {
+    this.waitForElementLoaded(COMPONENTS_NAV_BUTTON);
+    by(COMPONENTS_NAV_BUTTON).click();
+    this.goToExampleOnCurrentTab(example);
   }
 
-  isPageLoaded() {
-    return super.isPageLoaded() && this.testInputTestPageButton.isDisplayed();
+  goToApiExample(example: string) {
+    this.waitForElementLoaded(APIS_NAV_BUTTON);
+    by(APIS_NAV_BUTTON).click();
+    this.goToExampleOnCurrentTab(example);
   }
 
-  clickAndGoToTextInputPage() {
-    this.testInputTestPageButton.click();
-    TextInputTestPage.waitForPageLoaded();
-  }
+  private goToExampleOnCurrentTab(example: string) {
+    // Filter the list down to the one test, to improve the stability of selectors
+    this.waitForElementLoaded(TESTER_LIST_SEARCH_BOX);
+    const editBox = by(TESTER_LIST_SEARCH_BOX);
+    editBox.setValue(example);
+    const pageItem = by(example);
+    pageItem.click();
 
-  clickAndGotoLoginPage() {
-    this.loginTestPageButton.click();
-    LoginPage.waitForPageLoaded();
-  }
-
-  clickAndGotoDirectManipulationPage() {
-    this.directManipulationPageButton.click();
-    DirectManipulationPage.waitForPageLoaded();
-  }
-
-  clickAndGotoImagePage() {
-    this.ImagePageButton.click();
-    ImageTestPage.waitForPageLoaded();
-  }
-
-  clickAndGotoControlStylePage() {
-    this.ControlStylePageButton.click();
-    ControlStyleTestPage.waitForPageLoaded();
-  }
-
-  clickAndGotoTransformTestPage() {
-    this.TransformTestPageButton.click();
-    ControlStyleTestPage.waitForPageLoaded();
-  }
-
-  private get testInputTestPageButton() {
-    return By(TEXTINPUT_TESTPAGE);
-  }
-
-  private get loginTestPageButton() {
-    return By(LOGIN_TESTPAGE);
-  }
-
-  private get directManipulationPageButton() {
-    return By(DIRECT_MANIPULATION_TESTPAGE);
-  }
-
-  private get ImagePageButton() {
-    return By(IMAGE_TESTPAGE);
-  }
-
-  private get ControlStylePageButton() {
-    return By(CONTROL_STYLE_TESTPAGE);
-  }
-
-  private get TransformTestPageButton() {
-    return By(TRANSFORM_TESTPAGE);
+    // Make sure we've launched the example by waiting until the search box is
+    // no longer present, but make sure we haven't crashed by checking that nav
+    // buttons are still visible
+    this.waitForElementHidden(TESTER_LIST_SEARCH_BOX);
+    this.waitForElementLoaded(COMPONENTS_NAV_BUTTON);
   }
 }
 

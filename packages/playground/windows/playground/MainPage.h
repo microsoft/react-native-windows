@@ -6,26 +6,23 @@ namespace winrt::playground::implementation {
 struct MainPage : MainPageT<MainPage> {
   MainPage();
 
-  void OnLoadClick(
-      Windows::Foundation::IInspectable const & /*sender*/,
-      Windows::UI::Xaml::RoutedEventArgs const & /*args*/);
+  void OnLoadClick(Windows::Foundation::IInspectable const & /*sender*/, xaml::RoutedEventArgs const & /*args*/);
 
  private:
   Microsoft::ReactNative::ReactNativeHost Host() noexcept;
   Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
   Windows::Foundation::Collections::IVector<Microsoft::ReactNative::IReactPackageProvider> PackageProviders() noexcept;
 
-  Microsoft::ReactNative::ReactRootView m_reactRootView;
-  Microsoft::ReactNative::ReactNativeHost m_host;
   Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings;
   Windows::Foundation::Collections::IVector<Microsoft::ReactNative::IReactPackageProvider> m_packageProviders;
 
-  bool m_useWebDebugger{false};
+  winrt::hstring m_bundlerHostname;
 
  public:
   void x_entryPointCombo_SelectionChanged(
       winrt::Windows::Foundation::IInspectable const &sender,
-      winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const &e);
+      xaml::Controls::SelectionChangedEventArgs const &e);
+  void OnNavigatedTo(xaml::Navigation::NavigationEventArgs const &e);
 };
 
 } // namespace winrt::playground::implementation

@@ -1,0 +1,125 @@
+{
+  "name": "@rnw-scripts/package-utils",
+  "entries": [
+    {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "@rnw-scripts/package-utils_v0.0.11",
+      "version": "0.0.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "@rnw-scripts/package-utils"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@rnw-scripts/package-utils_v0.0.10",
+      "version": "0.0.10",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@rnw-scripts/package-utils"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Oct 2020 05:06:32 GMT",
+      "tag": "@rnw-scripts/package-utils_v0.0.8",
+      "version": "0.0.8",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update just-scipts (remove npm-registry-fetch)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "00b2d84b8effce0b7405a67bd4903eed88cb9aaf",
+            "package": "@rnw-scripts/package-utils"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "@rnw-scripts/package-utils_v0.0.8",
+      "version": "0.0.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "@rnw-scripts/package-utils"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "@rnw-scripts/package-utils_v0.0.6",
+      "version": "0.0.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "@rnw-scripts/package-utils"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Sep 2020 22:03:37 GMT",
+      "tag": "@rnw-scripts/package-utils_v0.0.5",
+      "version": "0.0.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Reconcile package versions",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8adedcfb2ce6492a4a7ede59e0f9188dc205d659",
+            "package": "@rnw-scripts/package-utils"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "@rnw-scripts/package-utils_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to eslint 6.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "@rnw-scripts/package-utils"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 11 Aug 2020 07:36:05 GMT",
+      "tag": "@rnw-scripts/package-utils_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Extract Package-Editing Utilities To Its Own Package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90e219bae44e65a905e6ade3b70727d202444a34",
+            "package": "@rnw-scripts/package-utils"
+          }
+        ]
+      }
+    }
+  ]
+}

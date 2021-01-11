@@ -1,10 +1,10 @@
 #pragma once
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
 
-#include <ReactWindowsCore/ViewManager.h>
+#include <Views/ViewManager.h>
 #include "ReactHost/React.h"
 
 #include <winrt/Microsoft.ReactNative.h>
@@ -12,9 +12,8 @@
 namespace winrt::Microsoft::ReactNative {
 
 class ViewManagersProvider final : public Mso::React::ViewManagerProvider2 {
-  std::vector<react::uwp::NativeViewManager> GetViewManagers(
-      Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
-      std::shared_ptr<react::uwp::IReactInstance> const &instance) override;
+  std::vector<std::unique_ptr<::Microsoft::ReactNative::IViewManager>> GetViewManagers(
+      Mso::CntPtr<Mso::React::IReactContext> const &reactContext) override;
 
  public:
   ViewManagersProvider() noexcept;

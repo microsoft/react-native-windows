@@ -3,24 +3,47 @@
   "version": "0.0.54",
   "private": true,
   "scripts": {
+    "bundle-win32": "just-scripts prepareBundleWin32 && npx react-native bundle --entry-file Samples\\rntester.tsx --bundle-output windows\\playground-win32\\Bundle\\Samples\\rntester.bundle --platform windows --assets-dest windows\\playground-win32\\Bundle",
     "start": "react-native start",
     "lint:fix": "just-scripts lint:fix",
     "lint": "just-scripts lint",
     "windows": "react-native run-windows"
   },
   "dependencies": {
+<<<<<<< HEAD
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-windows": "0.62.20"
+||||||| 811c767bf
+    "react": "16.9.0",
+    "react-native": "0.62.2",
+    "react-native-windows": "0.0.0-master.50"
+=======
+    "@react-native-windows/tester": "0.0.1",
+    "react": "17.0.1",
+    "react-native": "0.0.0-d3a3ce857",
+    "react-native-windows": "0.0.0-canary.231"
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
+    "@rnw-scripts/eslint-config": "0.1.6",
+    "@rnw-scripts/ts-config": "0.1.0",
     "@types/react": "16.9.0",
+<<<<<<< HEAD
     "@types/react-native": "^0.62.10",
     "just-scripts": "^0.36.1",
+||||||| 811c767bf
+    "@types/react-native": "^0.62.2",
+    "just-scripts": "^0.36.1",
+=======
+    "@types/react-native": "^0.63.18",
+    "eslint": "7.12.0",
+    "just-scripts": "^0.44.7",
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     "metro-react-native-babel-preset": "^0.56.0",
-    "react-test-renderer": "16.9.0",
-    "@react-native-community/eslint-config": "^1.0.0"
+    "prettier": "1.19.1",
+    "react-test-renderer": "17.0.1"
   }
 }

@@ -1,20 +1,46 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 #include "pch.h"
 #include "RedBox.h"
+#include <boost/algorithm/string.hpp>
 #include <functional/functor.h>
+<<<<<<< HEAD
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Data.Json.h>
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.System.h>
-#include <winrt/Windows.UI.Core.h>
-#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Documents.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
-#include <winrt/Windows.UI.Xaml.Markup.h>
-#include <winrt/Windows.Web.Http.h>
+||||||| 811c767bf
+#include <winrt/Windows.Data.Json.h>
+=======
+#include <regex>
+#include "Base/FollyIncludes.h"
+#include "DevServerHelper.h"
+#include "RedBoxErrorInfo.h"
+#include "Unicode.h"
 
+#include <winrt/Windows.Foundation.Collections.h>
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
+#include <winrt/Windows.Foundation.h>
+<<<<<<< HEAD
+#include <winrt/Windows.System.h>
+||||||| 811c767bf
+=======
+
+#ifndef CORE_ABI
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Documents.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Markup.h>
+#include <winrt/Windows.ApplicationModel.Core.h>
+#include <winrt/Windows.Data.Json.h>
+#include <winrt/Windows.System.h>
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
+#include <winrt/Windows.UI.Core.h>
+#include <winrt/Windows.Web.Http.h>
+#include "CppWinRTIncludes.h"
+#include "Utils/Helpers.h"
+#endif
+
+<<<<<<< HEAD
 #include <boost/algorithm/string.hpp>
 #include <regex>
 #include "Unicode.h"
@@ -25,6 +51,14 @@
 #include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
 
+||||||| 811c767bf
+#include <boost/algorithm/string.hpp>
+#include <regex>
+#include "Unicode.h"
+
+namespace xaml = winrt::Windows::UI::Xaml;
+=======
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 using namespace winrt::Windows::Foundation;
 
 namespace xaml {
@@ -33,6 +67,7 @@ using namespace winrt::Windows::UI::Xaml;
 
 namespace Mso::React {
 
+#ifndef CORE_ABI
 struct RedBox : public std::enable_shared_from_this<RedBox> {
   RedBox(
       const Mso::WeakPtr<IReactHost> &weakReactHost,
@@ -68,31 +103,32 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_popup = xaml::Controls::Primitives::Popup{};
 
     const winrt::hstring xamlString =
-        L"<Grid Background='{ThemeResource ContentDialogBackground}'"
-        L"  xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
-        L"  xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'"
-        L"  RequestedTheme='Dark'>"
-        L"  <Grid.ColumnDefinitions>"
-        L"    <ColumnDefinition Width='*'/>"
-        L"    <ColumnDefinition Width='*'/>"
-        L"  </Grid.ColumnDefinitions>"
-        L"  <Grid.RowDefinitions>"
-        L"    <RowDefinition Height='*'/>"
-        L"    <RowDefinition Height='Auto'/>"
-        L"  </Grid.RowDefinitions>"
-        L"  <ScrollViewer Grid.Row='0' Grid.ColumnSpan='2' HorizontalAlignment='Stretch'>"
-        L"    <StackPanel HorizontalAlignment='Stretch'>"
-        L"      <StackPanel Background='#EECC0000' HorizontalAlignment='Stretch' Padding='15,35,15,15' x:Name='StackPanelUpper'>"
-        L"        <TextBlock x:Name='ErrorMessageText' FontSize='14' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>"
-        L"        <Border Padding='15,15,15,0'/>"
-        L"        <TextBlock x:Name='ErrorStackText' FontSize='12' FontFamily='Consolas' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>"
-        L"      </StackPanel>"
-        L"      <StackPanel HorizontalAlignment='Stretch' x:Name='StackPanel' Margin='15' />"
-        L"    </StackPanel>"
-        L"  </ScrollViewer>"
-        L"  <Button x:Name='DismissButton' Grid.Row='1' Grid.Column='0' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Dismiss</Button>"
-        L"  <Button x:Name='ReloadButton' Grid.Row='1' Grid.Column='2' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Reload (NYI)</Button>"
-        L"</Grid>";
+        LR"(
+        <Grid Background='#1A1A1A'
+          xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
+          xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
+          RequestedTheme='Dark'>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width='*'/>
+            <ColumnDefinition Width='*'/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height='*'/>
+            <RowDefinition Height='Auto'/>
+          </Grid.RowDefinitions>
+          <ScrollViewer Grid.Row='0' Grid.ColumnSpan='2' HorizontalAlignment='Stretch'>
+            <StackPanel HorizontalAlignment='Stretch'>
+              <StackPanel Background='#D01926' HorizontalAlignment='Stretch' Padding='15,35,15,15' x:Name='StackPanelUpper'>
+                <TextBlock x:Name='ErrorMessageText' FontSize='14' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>
+                <Border Padding='15,15,15,0'/>
+                <TextBlock x:Name='ErrorStackText' FontSize='12' FontFamily='Consolas' Foreground='White' IsTextSelectionEnabled='true' TextWrapping='Wrap'/>
+              </StackPanel>
+              <StackPanel HorizontalAlignment='Stretch' x:Name='StackPanel' Margin='15' />
+            </StackPanel>
+          </ScrollViewer>
+          <Button x:Name='DismissButton' Grid.Row='1' Grid.Column='0' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Dismiss</Button>
+          <Button x:Name='ReloadButton' Grid.Row='1' Grid.Column='2' HorizontalAlignment='Stretch' Margin='15' Style='{StaticResource ButtonRevealStyle}'>Reload</Button>
+        </Grid>)";
 
     m_redboxContent = winrt::unbox_value<xaml::Controls::Grid>(xaml::Markup::XamlReader::Load(xamlString));
     m_errorMessageText = m_redboxContent.FindName(L"ErrorMessageText").as<xaml::Controls::TextBlock>();
@@ -113,16 +149,38 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     PopulateFrameStackUI();
     UpdateErrorMessageUI();
 
-    // Do some kind of sizing logic...
-    auto window = xaml::Window::Current();
-    auto windowBounds = window.Bounds();
-    m_redboxContent.MaxHeight(windowBounds.Height);
-    m_redboxContent.Height(windowBounds.Height);
-    m_redboxContent.MaxWidth(windowBounds.Width);
-    m_redboxContent.Width(windowBounds.Width);
-    m_tokenSizeChanged = window.SizeChanged(
-        [&](auto const & /*sender*/, winrt::Windows::UI::Core::WindowSizeChangedEventArgs const &args) {
-          WindowSizeChanged(args);
+    xaml::FrameworkElement root{nullptr};
+
+    if (react::uwp::Is19H1OrHigher()) {
+      // XamlRoot added in 19H1
+      if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
+        if (auto xamlRoot =
+                winrt::Microsoft::ReactNative::XamlUIService::GetXamlRoot(reactHost->Options().Properties)) {
+          m_popup.XamlRoot(xamlRoot);
+          root = xamlRoot.Content().as<xaml::FrameworkElement>();
+        }
+      }
+    }
+
+    if (!root) {
+      auto window = xaml::Window::Current();
+      root = window.Content().as<xaml::FrameworkElement>();
+    }
+
+    m_redboxContent.MaxHeight(root.ActualHeight());
+    m_redboxContent.Height(root.ActualHeight());
+    m_redboxContent.MaxWidth(root.ActualWidth());
+    m_redboxContent.Width(root.ActualWidth());
+
+    m_sizeChangedRevoker = root.SizeChanged(
+        winrt::auto_revoke,
+        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::SizeChangedEventArgs const &args) {
+          if (auto strongThis = wkThis.lock()) {
+            strongThis->m_redboxContent.MaxHeight(args.NewSize().Height);
+            strongThis->m_redboxContent.Height(args.NewSize().Height);
+            strongThis->m_redboxContent.MaxWidth(args.NewSize().Width);
+            strongThis->m_redboxContent.Width(args.NewSize().Width);
+          }
         });
 
     m_tokenClosed = m_popup.Closed([wkThis = std::weak_ptr(shared_from_this())](
@@ -147,7 +205,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_showing = false;
     m_dismissButton.Click(m_tokenDismiss);
     m_reloadButton.Click(m_tokenReload);
-    xaml::Window::Current().SizeChanged(m_tokenSizeChanged);
+    m_sizeChangedRevoker.revoke();
     m_popup.Closed(m_tokenClosed);
     m_redboxContent = nullptr;
     m_onClosedCallback(GetId());
@@ -171,111 +229,123 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 #define _MAKE_WIDE_STR(x) L##x
 #define MAKE_WIDE_STR(x) _MAKE_WIDE_STR(x)
 
+  void CreateWebView(xaml::Controls::Panel parent, const winrt::hstring &content) {
+#ifndef USE_WINUI3
+    xaml::Controls::WebView webView;
+#else
+    xaml::Controls::WebView2 webView;
+#endif
+
+    webView.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);
+    webView.VerticalAlignment(xaml::VerticalAlignment::Stretch);
+    webView.MinWidth(400);
+    auto dispatcher = winrt::system::DispatcherQueue::GetForCurrentThread();
+    // XAML doesn't currently provide a way to measure a WebView control,
+    // So we're going to tell the WebView to measure itself by running some javascript,
+    // and then we'll post a task back to XAML to set the XAML WebView minimum height.
+    // The HTML we get from Metro doesn't have any styling, so we'll take advantage of
+    // the fact that we're running javascript in the WebView, to set the
+    // foreground/background to match the rest of the RedBox.
+    // setProperty returns undefined so we continue the first expression with a comma
+    // whereas the height expression gets executed because of the ||
+    // (since the setProperty calls resulted in undefined).
+    // Finally, it's important to note that JS expressions of that are not of string type
+    // need to be manually converted to string for them to get marshaled properly back here.
+    webView.NavigationCompleted([=](IInspectable const &, auto const &) {
+      std::wstring jsExpression =
+          L"(document.body.style.setProperty('color', 'white'), "
+          L"document.body.style.setProperty('background', '#d01926')) "
+          L"|| document.documentElement.scrollHeight.toString()";
+
+#ifndef USE_WINUI3
+      auto async = webView.InvokeScriptAsync(L"eval", std::vector<winrt::hstring>{winrt::hstring { jsExpression }});
+#else
+      auto async = webView.ExecuteScriptAsync(std::wstring(L"eval(") + jsExpression + L")");
+#endif
+
+      async.Completed([=](IAsyncOperation<winrt::hstring> const &op, auto &&) {
+        auto result = op.GetResults();
+        int documentHeight = _wtoi(result.c_str());
+        dispatcher.TryEnqueue([=]() {
+          // Ensure the webview has a min height of the content it wants to show,
+          // and that the horizontal scrollbar that might exist, doesn't occlude the webview.
+          constexpr int horizontalScrollbarHeight = 12;
+          webView.MinHeight(documentHeight + horizontalScrollbarHeight);
+        });
+      });
+    });
+
+    m_stackPanel.Children().Clear();
+    m_stackPanel.Children().Append(webView);
+
+    webView.NavigateToString(content);
+  }
+
   void UpdateErrorMessageUI() noexcept {
     const std::regex colorsRegex(
         "\\x1b\\[[0-9;]*m"); // strip out console colors which is often added to JS error messages
     const std::string plain = std::regex_replace(m_errorInfo.Message, colorsRegex, "");
 
-    try {
-      auto json = folly::parseJson(plain);
-      if (json.count("type") && json["type"] == "InternalError") {
-        auto message = json["message"].asString();
-        m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
+    if (!plain.empty() && plain[0] == '{') {
+      try {
+        auto json = folly::parseJson(plain);
+        if (json.count("type") && json["type"] == "InternalError") {
+          auto message = json["message"].asString();
+          m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
 
-        if (IsMetroBundlerError(message, json["type"].asString())) {
-          xaml::Documents::Hyperlink link;
-          link.NavigateUri(Uri(MAKE_WIDE_STR(METRO_TROUBLESHOOTING_URL)));
-          xaml::Documents::Run linkRun;
+          if (IsMetroBundlerError(message, json["type"].asString())) {
+            xaml::Documents::Hyperlink link;
+            link.NavigateUri(Uri(MAKE_WIDE_STR(METRO_TROUBLESHOOTING_URL)));
+            xaml::Documents::Run linkRun;
 
-          linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
-          link.Foreground(
-              xaml::Media::SolidColorBrush(winrt::Windows::UI::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
-          link.Inlines().Append(linkRun);
-          xaml::Documents::Run normalRun;
-          normalRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See ")));
-          m_errorStackText.Inlines().Append(normalRun);
-          m_errorStackText.Inlines().Append(link);
-        } else {
-          m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString()));
+            linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
+            link.Foreground(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
+            link.Inlines().Append(linkRun);
+            xaml::Documents::Run normalRun;
+            normalRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See ")));
+            m_errorStackText.Inlines().Append(normalRun);
+            m_errorStackText.Inlines().Append(link);
+          } else {
+            m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString()));
+          }
+          return;
+        } else if (json.count("name") && boost::ends_with(json["name"].asString(), "Error")) {
+          auto message = std::regex_replace(json["message"].asString(), colorsRegex, "");
+          const auto originalStack = std::regex_replace(json["stack"].asString(), colorsRegex, "");
+
+          const auto errorName = json["name"].asString();
+          std::string stack;
+
+          const auto prefix = errorName + ": " + message;
+          if (boost::starts_with(originalStack, prefix)) {
+            stack = originalStack.substr(prefix.length());
+          } else {
+            constexpr char startOfStackTrace[] = "\n    at ";
+            stack = originalStack.substr(originalStack.find(startOfStackTrace) + 1);
+          }
+
+          m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
+          // Some messages (like SyntaxError) rely on fixed-width font to be properly formatted and indented.
+          m_errorMessageText.FontFamily(xaml::Media::FontFamily(L"Consolas"));
+
+          m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
+          return;
         }
-        return;
-      } else if (json.count("name") && boost::ends_with(json["name"].asString(), "Error")) {
-        auto message = std::regex_replace(json["message"].asString(), colorsRegex, "");
-        const auto originalStack = std::regex_replace(json["stack"].asString(), colorsRegex, "");
-
-        const auto errorName = json["name"].asString();
-        std::string stack;
-
-        const auto prefix = errorName + ": " + message;
-        if (boost::starts_with(originalStack, prefix)) {
-          stack = originalStack.substr(prefix.length());
-        } else {
-          constexpr char startOfStackTrace[] = "\n    at ";
-          stack = originalStack.substr(originalStack.find(startOfStackTrace) + 1);
-        }
-
-        m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(message));
-        // Some messages (like SyntaxError) rely on fixed-width font to be properly formatted and indented.
-        m_errorMessageText.FontFamily(xaml::Media::FontFamily(L"Consolas"));
-
-        m_errorStackText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(stack));
-        return;
-      }
-    } catch (...) {
-      std::string doctype = "<!DOCTYPE HTML>";
-      if (boost::istarts_with(plain, doctype)) {
-        auto webView = xaml::Controls::WebView(xaml::Controls::WebViewExecutionMode::SameThread);
-
-        winrt::hstring content(Microsoft::Common::Unicode::Utf8ToUtf16(plain.substr(doctype.length()).c_str()));
-
-        webView.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);
-        webView.VerticalAlignment(xaml::VerticalAlignment::Stretch);
-        webView.MinWidth(400);
-
-        m_stackPanel.Children().Clear();
-        m_stackPanel.Children().Append(webView);
-
-        auto dispatcher = winrt::Windows::System::DispatcherQueue::GetForCurrentThread();
-        // XAML doesn't currently provide a way to measure a WebView control,
-        // So we're going to tell the WebView to measure itself by running some javascript,
-        // and then we'll post a task back to XAML to set the XAML WebView minimum height.
-        // The HTML we get from Metro doesn't have any styling, so we'll take advantage of
-        // the fact that we're running javascript in the WebView, to set the
-        // foreground/background to match the rest of the RedBox.
-        // setProperty returns undefined so we continue the first expression with a comma
-        // whereas the height expression gets executed because of the ||
-        // (since the setProperty calls resulted in undefined).
-        // Finally, it's important to note that JS expressions of that are not of string type
-        // need to be manually converted to string for them to get marshaled properly back here.
-        webView.NavigationCompleted(
-            [=](IInspectable const &, xaml::Controls::WebViewNavigationCompletedEventArgs const &) {
-              // #eecc0000 ARGB is #be0000 RGB (background doesn't seem to allow alpha channel in WebView)
-              std::vector<winrt::hstring> args{
-                  L"(document.body.style.setProperty('color', 'white'), "
-                  L"document.body.style.setProperty('background', '#be0000')) "
-                  L"|| document.documentElement.scrollHeight.toString()"};
-              auto async = webView.InvokeScriptAsync(L"eval", std::move(args));
-
-              async.Completed([=](IAsyncOperation<winrt::hstring> const &op, auto &&state) {
-                auto result = op.GetResults();
-                int documentHeight = _wtoi(result.c_str());
-                dispatcher.TryEnqueue([=]() {
-                  // Ensure the webview has a min height of the content it wants to show,
-                  // and that the horizontal scrollbar that might exist, doesn't occlude the webview.
-                  constexpr int horizontalScrollbarHeight = 12;
-                  webView.MinHeight(documentHeight + horizontalScrollbarHeight);
-                });
-              });
-            });
-
-        webView.NavigateToString(content);
-
-        m_stackPanel.Margin(xaml::ThicknessHelper::FromUniformLength(0));
-        m_stackPanelUpper.Visibility(xaml::Visibility::Collapsed);
-
-        return;
+      } catch (...) {
       }
     }
+    std::string doctype = "<!DOCTYPE HTML>";
+    if (boost::istarts_with(plain, doctype)) {
+      winrt::hstring content(Microsoft::Common::Unicode::Utf8ToUtf16(plain.substr(doctype.length()).c_str()));
+
+      CreateWebView(m_stackPanel, content);
+
+      m_stackPanel.Margin(xaml::ThicknessHelper::FromUniformLength(0));
+      m_stackPanelUpper.Visibility(xaml::Visibility::Collapsed);
+
+      return;
+    }
+
     // fall back to displaying the raw message string
     m_errorMessageText.Text(Microsoft::Common::Unicode::Utf8ToUtf16(plain));
     m_errorStackText.Text(L"");
@@ -283,15 +353,16 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
   void PopulateFrameStackUI() noexcept {
     m_stackPanel.Children().Clear();
-    for (const auto frame : m_errorInfo.Callstack) {
+    for (const auto &frame : m_errorInfo.Callstack) {
       const winrt::hstring xamlFrameString =
-          L"<StackPanel Margin='0,5,0,5'"
-          L"  xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
-          L"  xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'"
-          L"  >"
-          L"  <TextBlock x:Name='MethodText' FontSize='14' Foreground='White' TextWrapping='Wrap' FontFamily='Consolas'/>"
-          L"  <TextBlock x:Name='FrameText' FontSize='14' Foreground='Gray' TextWrapping='Wrap' FontFamily='Consolas'/>"
-          L"</StackPanel>";
+          LR"(
+          <StackPanel Margin='0,5,0,5'
+            xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
+            xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
+            >
+            <TextBlock x:Name='MethodText' FontSize='14' Foreground='White' TextWrapping='Wrap' FontFamily='Consolas'/>
+            <TextBlock x:Name='FrameText' FontSize='14' Foreground='Gray' TextWrapping='Wrap' FontFamily='Consolas'/>
+          </StackPanel>)";
       auto frameContent =
           winrt::unbox_value<xaml::Controls::StackPanel>(xaml::Markup::XamlReader::Load(xamlFrameString));
       auto methodText = frameContent.FindName(L"MethodText").as<xaml::Controls::TextBlock>();
@@ -303,13 +374,9 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
                               IInspectable const & /*sender*/, xaml::Input::TappedRoutedEventArgs const & /*e*/) {
         if (auto reactHost = weakReactHost.GetStrongPtr()) {
           auto devSettings = reactHost->Options().DeveloperSettings;
-          std::string stackFrameUri = "http://";
-          stackFrameUri.append(devSettings.SourceBundleHost.empty() ? "localhost" : devSettings.SourceBundleHost);
-          stackFrameUri.append(":");
-          stackFrameUri.append(devSettings.SourceBundlePort.empty() ? "8081" : devSettings.SourceBundlePort);
-          stackFrameUri.append("/open-stack-frame");
-
-          Uri uri{Microsoft::Common::Unicode::Utf8ToUtf16(stackFrameUri)};
+          Uri uri{
+              Microsoft::Common::Unicode::Utf8ToUtf16(facebook::react::DevServerHelper::get_PackagerOpenStackFrameUrl(
+                  devSettings.SourceBundleHost, devSettings.SourceBundlePort))};
           winrt::Windows::Web::Http::HttpClient httpClient{};
           winrt::Windows::Data::Json::JsonObject payload{};
 
@@ -355,10 +422,10 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
   bool m_showing = false;
   Mso::Functor<void(uint32_t)> m_onClosedCallback;
+  xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::event_token m_tokenClosed;
   winrt::event_token m_tokenDismiss;
   winrt::event_token m_tokenReload;
-  winrt::event_token m_tokenSizeChanged;
   ErrorInfo m_errorInfo;
   Mso::WeakPtr<IReactHost> m_weakReactHost;
 };
@@ -366,6 +433,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 /*
  * This class is implemented such that the methods on IRedBoxHandler are thread safe.
  */
+<<<<<<< HEAD
 struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxHandler>, IRedBoxHandler {
   DefaultRedBoxHandler(Mso::WeakPtr<Mso::React::IReactHost> &&weakReactHost, Mso::DispatchQueue &&uiQueue) noexcept
       : m_weakReactHost{std::move(weakReactHost)}, m_uiQueue{std::move(uiQueue)} {}
@@ -373,18 +441,56 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
   ~DefaultRedBoxHandler() {
     // Hide any currently showing redBoxes
     std::vector<std::shared_ptr<RedBox>> redBoxes;
+||||||| 811c767bf
+struct RedBoxHandler : public std::enable_shared_from_this<RedBoxHandler>, IRedBoxHandler {
+  RedBoxHandler(
+      Mso::WeakPtr<Mso::React::IReactHost> weakReactHost,
+      std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue) noexcept
+      : m_weakReactHost(std::move(weakReactHost)), m_wkUIMessageQueue(std::move(uiMessageQueue)) {}
+
+  ~RedBoxHandler() {
+    // Hide any currently showing redboxes
+    std::vector<std::shared_ptr<RedBox>> redboxes;
+=======
+struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultRedBoxHandler>, IRedBoxHandler {
+  DefaultRedBoxHandler(Mso::WeakPtr<Mso::React::IReactHost> &&weakReactHost, Mso::DispatchQueue &&uiQueue) noexcept
+      : m_weakReactHost{std::move(weakReactHost)}, m_uiQueue{std::move(uiQueue)} {}
+
+  ~DefaultRedBoxHandler() {
+    // Hide any currently showing redBoxes
+    std::vector<std::shared_ptr<RedBox>> redBoxes;
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     {
       std::scoped_lock lock{m_lockRedBox};
       std::swap(m_redBoxes, redBoxes);
     }
+<<<<<<< HEAD
     m_uiQueue.Post([redBoxes = std::move(redBoxes)]() {
       for (const auto redBox : redBoxes) {
         redBox->Dismiss();
       }
     });
+||||||| 811c767bf
+=======
+    m_uiQueue.Post([redBoxes = std::move(redBoxes)]() {
+      for (const auto &redBox : redBoxes) {
+        redBox->Dismiss();
+      }
+    });
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
   }
 
   virtual void showNewError(ErrorInfo &&info, ErrorType /*exceptionType*/) override {
+    // Check if the rebox has been suppressed
+    if (!info.ExtraData.isNull()) {
+      auto iterator = info.ExtraData.find("suppressRedBox");
+      if (iterator != info.ExtraData.items().end()) {
+        if (iterator->second.asBool()) {
+          return;
+        }
+      }
+    }
+
     std::shared_ptr<RedBox> redbox(std::make_shared<RedBox>(
         m_weakReactHost,
         [wkthis = std::weak_ptr(shared_from_this())](uint32_t id) {
@@ -402,7 +508,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
 
   virtual bool isDevSupportEnabled() const override {
     if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
-      return reactHost->Options().DeveloperSettings.IsDevModeEnabled;
+      return Mso::React::ReactOptions::UseDeveloperSupport(reactHost->Options().Properties);
     }
 
     return false;
@@ -481,6 +587,7 @@ struct DefaultRedBoxHandler : public std::enable_shared_from_this<DefaultRedBoxH
   std::mutex m_lockRedBox;
   std::vector<std::shared_ptr<RedBox>> m_redBoxes; // Protected by m_lockRedBox
   const Mso::WeakPtr<IReactHost> m_weakReactHost;
+<<<<<<< HEAD
 };
 
 struct RedBoxErrorFrameInfo
@@ -568,17 +675,66 @@ struct RedBoxHandler : public Mso::React::IRedBoxHandler {
 
  private:
   winrt::Microsoft::ReactNative::IRedBoxHandler m_redBoxHandler;
+||||||| 811c767bf
+  const std::weak_ptr<facebook::react::MessageQueueThread> m_wkUIMessageQueue;
+=======
+};
+#endif
+
+struct RedBoxHandler final : public Mso::React::IRedBoxHandler {
+  RedBoxHandler(winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) : m_redBoxHandler(redBoxHandler) {}
+
+  static_assert(
+      static_cast<uint32_t>(Mso::React::ErrorType::JSFatal) ==
+      static_cast<uint32_t>(winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptFatal));
+  static_assert(
+      static_cast<uint32_t>(Mso::React::ErrorType::JSSoft) ==
+      static_cast<uint32_t>(winrt::Microsoft::ReactNative::RedBoxErrorType::JavaScriptSoft));
+  static_assert(
+      static_cast<uint32_t>(Mso::React::ErrorType::Native) ==
+      static_cast<uint32_t>(winrt::Microsoft::ReactNative::RedBoxErrorType::Native));
+
+  virtual void showNewError(Mso::React::ErrorInfo &&info, Mso::React::ErrorType errorType) override {
+    m_redBoxHandler.ShowNewError(
+        winrt::make<RedBoxErrorInfo>(std::move(info)),
+        static_cast<winrt::Microsoft::ReactNative::RedBoxErrorType>(static_cast<uint32_t>(errorType)));
+  }
+  virtual bool isDevSupportEnabled() const override {
+    return m_redBoxHandler.IsDevSupportEnabled();
+  }
+  virtual void updateError(Mso::React::ErrorInfo &&info) override {
+    m_redBoxHandler.UpdateError(winrt::make<RedBoxErrorInfo>(std::move(info)));
+  }
+
+  virtual void dismissRedbox() override {
+    m_redBoxHandler.DismissRedBox();
+  }
+
+ private:
+  winrt::Microsoft::ReactNative::IRedBoxHandler m_redBoxHandler;
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 };
 
 std::shared_ptr<IRedBoxHandler> CreateRedBoxHandler(
+<<<<<<< HEAD
     winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) noexcept {
   return std::make_shared<RedBoxHandler>(redBoxHandler);
 }
 
 std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(
+||||||| 811c767bf
+=======
+    winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) noexcept {
+  return std::make_shared<RedBoxHandler>(redBoxHandler);
+}
+
+#ifndef CORE_ABI
+std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     Mso::WeakPtr<IReactHost> &&weakReactHost,
     Mso::DispatchQueue &&uiQueue) noexcept {
   return std::make_shared<DefaultRedBoxHandler>(std::move(weakReactHost), std::move(uiQueue));
 }
+#endif
 
 } // namespace Mso::React

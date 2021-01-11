@@ -29,11 +29,11 @@ function reactNativePlatformResolver(platformImplementations) {
         }
       }
       let result = resolve(context, modifiedModuleName, platform);
-      context.resolveRequest = backupResolveRequest;
       return result;
     } catch (e) {
-      context.resolveRequest = backupResolveRequest;
       throw e;
+    } finally {
+      context.resolveRequest = backupResolveRequest;
     }
   };
 }

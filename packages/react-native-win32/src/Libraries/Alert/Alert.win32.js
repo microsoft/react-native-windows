@@ -11,8 +11,8 @@
 'use strict';
 
 // [Windows
-const NativeModules = require('../BatchedBridge/NativeModules');
-const PLYAlertManager = NativeModules.PLYAlertManager;
+import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
+const PLYAlertManager = TurboModuleRegistry.getEnforcing('Alert');
 // Windows]
 
 export type AlertType =
@@ -37,7 +37,7 @@ type Options = {
 /**
  * Launches an alert dialog with the specified title and message.
  *
- * See http://facebook.github.io/react-native/docs/alert.html
+ * See https://reactnative.dev/docs/alert.html
  */
 class Alert {
   static alert(

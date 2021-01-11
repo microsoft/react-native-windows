@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <UsingTask
+    TaskName="ExtractNpmVersion"
+    TaskFactory="RoslynCodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
+
+    <ParameterGroup>
+      <PackageJsonPath ParameterType="System.String" Required="true" />
+      <NpmName ParameterType="System.String" Output="true" />
+      <NpmVersion ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    
+    <Task>
+      <!-- <Reference Include="System.Runtime.Serialization.dll" /> -->
+
+      <Code Type="Class" Language="cs">
+<![CDATA[
+  using System;
+  using System.Data;
+  using System.IO;
+  using System.Runtime.Serialization;
+  using System.Runtime.Serialization.Json;
+
+    public class ExtractNpmVersion : Microsoft.Build.Utilities.Task {
+        [DataContract]
+        private class PackageJson {
+
+          [DataMember]
+          public string name { get; set; }
+
+          [DataMember]
+          public string version { get; set; }
+        }
+
+        public virtual string PackageJsonPath { get; set; }
+        public virtual string NpmName { get; set; }
+        public virtual string NpmVersion { get; set; }
+        
+        public override bool Execute() {
+          // This code uses DataContractJsonSerializer because that ships with all frameworks
+          // System.Text.Json or NewtonSoft would require a package depednency, which is pretty cumbersome today.
+          var jsonSerializer = new DataContractJsonSerializer(typeof(PackageJson));
+          using (var fileStream = new FileStream(PackageJsonPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+          {
+            var pkgJson = (PackageJson)jsonSerializer.ReadObject(fileStream);
+            NpmName = pkgJson.name;
+            NpmVersion = pkgJson.version;
+          }
+
+          return true;
+        }
+    }
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+  
+  <!-- This target checks if the npm package version matches the nuget package -->
+  <Target 
+    Name="ReactNativeWindowsVersionCheck" 
+    BeforeTargets="PrepareForBuild"
+    Condition="'$(ReactNativeWindowsAllowNugetNpmMismatch)' != 'true'"
+    >
+
+    <PropertyGroup>
+      <_ReactNativeWindowsVersionCheckNugetVersion>$$nuGetPackageVersion$$</_ReactNativeWindowsVersionCheckNugetVersion>
+    </PropertyGroup>
+   
+    <!-- Validate package.json file -->
+    <Error
+      Condition="'$(ReactNativeWindowsDir)' == ''"
+      Text="The project does not defined property 'ReactNativeWindowsDir'. This is required to be configured for any react-native-windows project."
+    />
+    
+    <PropertyGroup>
+      <_ReactNativeWindowsVersionCheckPackageJsonPath>$([System.IO.Path]::Combine($(ReactNativeWindowsDir), 'package.json'))</_ReactNativeWindowsVersionCheckPackageJsonPath>
+    </PropertyGroup>
+    
+    <Error
+      Condition="!Exists($(_ReactNativeWindowsVersionCheckPackageJsonPath))"
+      Text="The package.json file for react-native-windows could not be found at: '$(_ReactNativeWindowsVersionCheckPackageJsonPath)'"
+    />
+
+    <ExtractNpmVersion PackageJsonPath="$(_ReactNativeWindowsVersionCheckPackageJsonPath)">
+      <Output PropertyName="_ReactNativeWindowsVersionCheckNpmVersion" TaskParameter="NpmVersion" />
+      <Output PropertyName="_ReactNativeWindowsVersionCheckNpmName" TaskParameter="NpmName" />
+    </ExtractNpmVersion>
+  
+    <Message Text="Discovered package '$(_ReactNativeWindowsVersionCheckNpmName)' with version '$(_ReactNativeWindowsVersionCheckNpmVersion)'" Importance="High" />
+
+    <Error 
+      Condition="'$(_ReactNativeWindowsVersionCheckNpmName)' != 'react-native-windows'"
+      Text="Expected to find npm package 'react-native-windows' in '$(_ReactNativeWindowsVersionCheckPackageJsonPath)', encountered '$(_ReactNativeWindowsVersionCheckNpmName)'" />
+    <Error 
+      Condition="'$(_ReactNativeWindowsVersionCheckNpmVersion)' != '$(_ReactNativeWindowsVersionCheckNugetVersion)'"
+      Text="Mismatch detected between npm package versions and nuget package version.%0a    Npm:   '$(_ReactNativeWindowsVersionCheckNpmVersion)' - $(_ReactNativeWindowsVersionCheckPackageJsonPath)%0a    NuGet: '$(_ReactNativeWindowsVersionCheckNugetVersion)' - $(MSBuildProjectFile)%0aTo update the nuget version, please see https://microsoft.github.io/react-native-windows/docs/nuget-update for instructions." />
+  </Target>
+</Project>

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -160,7 +160,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
         reject("Already negative");
       }
     }
-
 
     public async void NegateAsyncCallbacks(int x, Action<int> resolve, Action<string> reject)
     {
@@ -757,7 +756,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       {
         var method = getMethod(m_module);
         TResult result = method();
-        outputWriter.WriteArgs(result);
+        outputWriter.WriteValue(result);
       });
     }
 
@@ -768,7 +767,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
         var method = getMethod(m_module);
         inputReader.ReadArgs(out T1 arg1);
         TResult result = method(arg1);
-        outputWriter.WriteArgs(result);
+        outputWriter.WriteValue(result);
       });
     }
 
@@ -779,7 +778,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
           var method = getMethod(m_module);
           inputReader.ReadArgs(out T1 arg1, out T2 arg2);
           TResult result = method(arg1, arg2);
-          outputWriter.WriteArgs(result);
+          outputWriter.WriteValue(result);
         });
     }
 
@@ -1530,7 +1529,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
           (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
-
 
     [TestMethod]
     public void TestMethodCall_StaticResolveSayHelloPromise()

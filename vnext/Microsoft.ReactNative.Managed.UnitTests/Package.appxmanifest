@@ -6,14 +6,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity Name="275f6fce-b23e-420f-a82a-1c30fb308a0f"
-            Publisher="CN=vmorozov"
+            Publisher="CN=react-native-windows-testing"
             Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="275f6fce-b23e-420f-a82a-1c30fb308a0f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Microsoft.ReactNative.Managed.UnitTests</DisplayName>
-    <PublisherDisplayName>vmorozov</PublisherDisplayName>
+    <PublisherDisplayName>react-native-windows-testing</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

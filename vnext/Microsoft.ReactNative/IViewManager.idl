@@ -1,40 +1,22 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import "IReactModuleBuilder.idl";
-import "IReactContext.idl";
+import "IViewManagerCore.idl";
+
+#include "NamespaceRedirect.h"
+#include "DocString.h"
 
 namespace Microsoft.ReactNative
 {
-  [webhosthidden]
-  enum ViewManagerPropertyType
-  {
-    Boolean,
-    Number,
-    String,
-    Array,
-    Map,
-    Color,
-  };
 
   [webhosthidden]
+  DOC_STRING("See the documentation of [Native UI Components](view-managers) for information on how to author a view manager.\n\
+>**This documentation and the underlying platform code is a work in progress.**")
   interface IViewManager
   {
     String Name { get; };
 
-    Windows.UI.Xaml.FrameworkElement CreateView();
-  }
-
-  [webhosthidden]
-  interface IViewManagerWithReactContext
-  {
-    IReactContext ReactContext { get; set; };
-  }
-
-  [webhosthidden]
-  interface IViewManagerWithExportedViewConstants
-  {
-    ConstantProviderDelegate ExportedViewConstants { get; };
+    XAML_NAMESPACE.FrameworkElement CreateView();
   }
 
   [webhosthidden]
@@ -42,7 +24,7 @@ namespace Microsoft.ReactNative
   {
     IMapView<String, ViewManagerPropertyType> NativeProps { get; };
 
-    void UpdateProperties(Windows.UI.Xaml.FrameworkElement view, IJSValueReader propertyMapReader);
+    void UpdateProperties(XAML_NAMESPACE.FrameworkElement view, IJSValueReader propertyMapReader);
   }
 
   [webhosthidden]
@@ -50,26 +32,18 @@ namespace Microsoft.ReactNative
   {
     IVectorView<String> Commands { get; };
 
-    void DispatchCommand(Windows.UI.Xaml.FrameworkElement view, String commandId, IJSValueReader commandArgsReader);
-  }
-
-  [webhosthidden]
-  interface IViewManagerWithExportedEventTypeConstants
-  {
-    ConstantProviderDelegate ExportedCustomBubblingEventTypeConstants { get; };
-
-    ConstantProviderDelegate ExportedCustomDirectEventTypeConstants { get; };
+    void DispatchCommand(XAML_NAMESPACE.FrameworkElement view, String commandId, IJSValueReader commandArgsReader);
   }
 
   [webhosthidden]
   interface IViewManagerWithChildren
   {
-    void AddView(Windows.UI.Xaml.FrameworkElement parent, Windows.UI.Xaml.UIElement child, Int64 index);
+    void AddView(XAML_NAMESPACE.FrameworkElement parent, XAML_NAMESPACE.UIElement child, Int64 index);
 
-    void RemoveAllChildren(Windows.UI.Xaml.FrameworkElement parent);
+    void RemoveAllChildren(XAML_NAMESPACE.FrameworkElement parent);
 
-    void RemoveChildAt(Windows.UI.Xaml.FrameworkElement parent, Int64 index);
+    void RemoveChildAt(XAML_NAMESPACE.FrameworkElement parent, Int64 index);
 
-    void ReplaceChild(Windows.UI.Xaml.FrameworkElement parent, Windows.UI.Xaml.UIElement oldChild, Windows.UI.Xaml.UIElement newChild);
+    void ReplaceChild(XAML_NAMESPACE.FrameworkElement parent, XAML_NAMESPACE.UIElement oldChild, XAML_NAMESPACE.UIElement newChild);
   }
 } // namespace Microsoft.ReactNative

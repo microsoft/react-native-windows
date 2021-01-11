@@ -1,9 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
+<<<<<<< HEAD
 This log was last generated on Mon, 21 Dec 2020 15:06:18 GMT and should not be manually modified.
+||||||| 811c767bf
+This log was last generated on Sat, 18 Apr 2020 00:04:34 GMT and should not be manually modified.
+=======
+This log was last generated on Sat, 09 Jan 2021 05:05:32 GMT and should not be manually modified.
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 
 <!-- Start content -->
 
+<<<<<<< HEAD
 ## 0.62.6
 
 Mon, 21 Dec 2020 15:06:18 GMT
@@ -118,6 +125,461 @@ Mon, 27 Apr 2020 06:53:05 GMT
 
 - Publish as 0.62 Preview (ngerlem@microsoft.com)
 
+||||||| 811c767bf
+=======
+## 0.0.0-canary.70
+
+Sat, 09 Jan 2021 05:05:32 GMT
+
+### Changes
+
+- Adding FocusManager type decl file (safreibe@microsoft.com)
+
+## 0.0.0-canary.68
+
+Fri, 18 Dec 2020 19:23:58 GMT
+
+### Changes
+
+- Add target prop to AccessibilityAnnotationInfo (krsiler@microsoft.com)
+
+## 0.0.0-canary.67
+
+Fri, 11 Dec 2020 05:05:56 GMT
+
+### Changes
+
+- Adding FocusManager API for polite/aggresive focus for win32 (safreibe@microsoft.com)
+
+## 0.0.0-canary.66
+
+Tue, 08 Dec 2020 03:20:37 GMT
+
+### Changes
+
+- Integrate 12/2 Nightly Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.65
+
+Tue, 24 Nov 2020 05:08:17 GMT
+
+### Changes
+
+- Add more eslint rules (ngerlem@microsoft.com)
+
+## 0.0.0-canary.64
+
+Fri, 20 Nov 2020 05:08:43 GMT
+
+### Changes
+
+- Integrate 11/18 RN Nightly Build 🎉 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.63
+
+Thu, 12 Nov 2020 05:05:57 GMT
+
+### Changes
+
+- Add Keyboard Events to TextWin32 (krsiler@microsoft.com)
+
+## 0.0.0-canary.62
+
+Sat, 31 Oct 2020 05:06:50 GMT
+
+### Changes
+
+- Integrate 10/5 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.61
+
+Fri, 30 Oct 2020 05:07:51 GMT
+
+### Changes
+
+- Integrate 9/17 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.60
+
+Thu, 29 Oct 2020 05:05:49 GMT
+
+### Changes
+
+- Better error handling of Views inside Text components (30809111+acoates-ms@users.noreply.github.com)
+- Integrate Additional RNTester Refactoring (9/2 Nightly RN Build) (ngerlem@microsoft.com)
+
+## 0.0.0-canary.59
+
+Sat, 24 Oct 2020 05:07:36 GMT
+
+### Changes
+
+- Integrate RNTester Redesign (8/26 Nightly Build) (ngerlem@microsoft.com)
+
+## 0.0.0-canary.58
+
+Thu, 22 Oct 2020 05:06:28 GMT
+
+### Changes
+
+- Integrate 8/25 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.57
+
+Wed, 21 Oct 2020 05:05:24 GMT
+
+### Changes
+
+- Drop Issue Requirement from Override Manifest Schema Validation (ngerlem@microsoft.com)
+
+## 0.0.0-canary.56
+
+Fri, 09 Oct 2020 05:06:32 GMT
+
+### Changes
+
+- Integrate 8/20 Nightly RN Build (Extract RNTester) (ngerlem@microsoft.com)
+
+## 0.0.0-canary.55
+
+Sat, 03 Oct 2020 05:04:45 GMT
+
+### Changes
+
+- Integrate 8/19 Nightly RN Build (ngerlem@microsoft.com)
+- Allow Default baseVersion in Override Manfests (ngerlem@microsoft.com)
+
+## 0.0.0-canary.54
+
+Fri, 02 Oct 2020 05:05:22 GMT
+
+### Changes
+
+- Integrate 8/5 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 8/17 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.53
+
+Thu, 01 Oct 2020 05:08:11 GMT
+
+### Changes
+
+- ESLint Fixup (ngerlem@microsoft.com)
+- Integrate 7/29 Nightly Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.52
+
+Wed, 30 Sep 2020 05:06:49 GMT
+
+### Changes
+
+- integrate RN 7/7 build (igklemen@microsoft.com)
+
+## 0.0.0-canary.51
+
+Fri, 25 Sep 2020 05:05:40 GMT
+
+### Changes
+
+- Supply UniversalApiContract for Platform.Version (ngerlem@microsoft.com)
+
+## 0.0.0-canary.49
+
+Tue, 22 Sep 2020 04:46:10 GMT
+
+### Changes
+
+- Upgrade react-native Typings (ngerlem@microsoft.com)
+
+## 0.0.0-canary.48
+
+Mon, 21 Sep 2020 05:06:22 GMT
+
+### Changes
+
+- Fixup eslint config (ngerlem@microsoft.com)
+
+## 0.0.0-canary.46
+
+Sat, 12 Sep 2020 05:08:52 GMT
+
+### Changes
+
+- Integrate 7/1 nightly RN build (igklemen@microsoft.com)
+
+## 0.0.0-canary.45
+
+Wed, 09 Sep 2020 05:06:35 GMT
+
+### Changes
+
+- Enable @typescript-eslint/no-floating-promises (ngerlem@microsoft.com)
+
+## 0.0.0-canary.44
+
+Wed, 02 Sep 2020 05:05:16 GMT
+
+### Changes
+
+- Integrate 6-18 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/25 Nightly RN Build (ngerlem@microsoft.com)
+- A couple of minor style changes in logbox to avoid win32 asserts. (acoates-ms@noreply.github.com)
+
+## 0.0.0-canary.43
+
+Thu, 27 Aug 2020 05:05:29 GMT
+
+### Changes
+
+- Fix TouchableWin32 Infinite Recursion on Click (ngerlem@microsoft.com)
+- Remove acceptsKeyboardFocus (for real this time) (ngerlem@microsoft.com)
+
+## 0.0.0-canary.42
+
+Wed, 26 Aug 2020 05:07:06 GMT
+
+### Changes
+
+- Fix bugs from acceptsKeyboardFocus to focusable deprecation (ngerlem@microsoft.com)
+
+## 0.0.0-canary.41
+
+Sat, 22 Aug 2020 05:07:27 GMT
+
+### Changes
+
+- Integrate 6/11 Nightly Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.40
+
+Fri, 21 Aug 2020 05:04:58 GMT
+
+### Changes
+
+- Integrate 5/28 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/4 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.39
+
+Thu, 20 Aug 2020 05:05:23 GMT
+
+### Changes
+
+- Integrate 5/16 Nightly RN Build (ngerlem@microsoft.com)
+- Publish TS files in src as they are references in sourcemaps (acoates-ms@noreply.github.com)
+
+## 0.0.0-canary.38
+
+Sat, 15 Aug 2020 05:05:18 GMT
+
+### Changes
+
+- Integrate 5/4 nightly build. (igklemen@microsoft.com)
+
+## 0.0.0-canary.37
+
+Fri, 14 Aug 2020 05:05:34 GMT
+
+### Changes
+
+- Integrate 4/29 Nightly Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.36
+
+Wed, 12 Aug 2020 05:05:16 GMT
+
+### Changes
+
+- Integrate 4/22 Nightly Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.35
+
+Tue, 11 Aug 2020 07:36:05 GMT
+
+### Changes
+
+- Keep dependencies in sync with react-native (ngerlem@microsoft.com)
+
+## 0.0.0-canary.34
+
+Tue, 28 Jul 2020 05:06:13 GMT
+
+### Changes
+
+- Update for promoteRelease changes (ngerlem@microsoft.com)
+
+## 0.0.0-canary.33
+
+Sun, 26 Jul 2020 05:06:58 GMT
+
+### Changes
+
+- Integrate Up To The Base of React Native 0.63 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.31
+
+Sun, 12 Jul 2020 05:05:04 GMT
+
+### Changes
+
+- Move index file to flow (acoates@microsoft.com)
+
+## 0.0.0-canary.29
+
+Wed, 08 Jul 2020 01:27:37 GMT
+
+### Changes
+
+- Add a bunch of deps we are using but not declaring (acoates@microsoft.com)
+
+## 0.0.0-canary.28
+
+Mon, 06 Jul 2020 23:11:46 GMT
+
+### Changes
+
+- Add Support for Binary Overrides to react-native-platform-override (ngerlem@microsoft.com)
+
+## 0.0.0-canary.27
+
+Wed, 01 Jul 2020 05:06:19 GMT
+
+### Changes
+
+- Migrate the local-cli to TypeScript (ngerlem@microsoft.com)
+- Update Alert.(windows|win32).js to enable turbo module (zihanc@microsoft.com)
+- Fix a few more casing typos (dannyvv@microsoft.com)
+- Share eslint and Typescript configs across packages (ngerlem@microsoft.com)
+
+## 0.0.0-canary.25
+
+Fri, 26 Jun 2020 23:59:27 GMT
+
+### Changes
+
+- Upgrade React Native to 3/22 Nightly Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.23
+
+Fri, 19 Jun 2020 00:07:58 GMT
+
+### Changes
+
+- Enable FastRefresh support (acoates@microsoft.com)
+
+## 0.0.0-canary.22
+
+Thu, 18 Jun 2020 00:07:44 GMT
+
+### Changes
+
+- Create Scripts for the Release Process (ngerlem@microsoft.com)
+
+## 0.0.0-canary.21
+
+Wed, 17 Jun 2020 00:05:39 GMT
+
+### Changes
+
+- Rename "master" packages to "canary" (ngerlem@microsoft.com)
+
+## 0.0.0-master.20
+
+Sat, 13 Jun 2020 00:09:11 GMT
+
+### Changes
+
+- Add focusRef prop to TouchableWin32 (taamireh@microsoft.com)
+
+## 0.0.0-master.19
+
+Wed, 10 Jun 2020 00:05:10 GMT
+
+### Changes
+
+- expand cursor prop + test comopnent (taamireh@microsoft.com)
+
+## 0.0.0-master.18
+
+Sat, 06 Jun 2020 00:05:20 GMT
+
+### Changes
+
+- Fix errant baseFile in platform override (ngerlem@microsoft.com)
+
+## 0.0.0-master.17
+
+Wed, 03 Jun 2020 00:05:25 GMT
+
+### Changes
+
+- Deprecate acceptsKeyboardFocus (kaigu@microsoft.com)
+
+## 0.0.0-master.14
+
+Sat, 23 May 2020 00:04:45 GMT
+
+### Changes
+
+- Move several stubs from TS to flow (acoates@microsoft.com)
+
+## 0.0.0-master.13
+
+Wed, 20 May 2020 00:04:49 GMT
+
+### Changes
+
+- Reduce need for custom metro configs (acoates@microsoft.com)
+
+## 0.0.0-master.12
+
+Tue, 19 May 2020 00:05:07 GMT
+
+### Changes
+
+- Adapt ViewWin32, etc to "accessibilityState" (ngerlem@microsoft.com)
+
+## 0.0.0-master.11
+
+Fri, 15 May 2020 00:04:44 GMT
+
+### Changes
+
+- Add win32-specific accessibility props Description, DescribedBy, and LabeledBy (ppatboyd@outlook.com)
+
+## 0.0.0-master.10
+
+Sat, 09 May 2020 00:04:42 GMT
+
+### Changes
+
+- Align local metro config with future CLI changes (acoates@microsoft.com)
+
+## 0.0.0-master.9
+
+Fri, 08 May 2020 00:05:16 GMT
+
+### Changes
+
+- Ensure InitializeCore is run before app code (acoates@microsoft.com)
+
+## 0.0.0-master.8
+
+Thu, 07 May 2020 00:05:07 GMT
+
+### Changes
+
+- Use inlineSourceMap and inlineSources to encode original TS into sourcemap (rezha@microsoft.com)
+
+## 0.0.0-master.7
+
+Thu, 30 Apr 2020 18:40:40 GMT
+
+### Changes
+
+- Package Fixes (ngerlem@microsoft.com)
+
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 ## 0.0.0-master.6
 
 Sat, 18 Apr 2020 00:04:34 GMT

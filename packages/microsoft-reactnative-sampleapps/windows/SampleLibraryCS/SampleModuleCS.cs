@@ -1,12 +1,12 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 using Microsoft.ReactNative;
 using Microsoft.ReactNative.Managed;
 using System;
 using System.Diagnostics;
-using System.Reflection;
 using System.Threading.Tasks;
+using Windows.Security.Cryptography.Core;
 using Windows.System.Threading;
 
 namespace SampleLibraryCS
@@ -27,11 +27,27 @@ namespace SampleLibraryCS
         [ReactInitializer]
         public void Initialize(ReactContext reactContext)
         {
+<<<<<<< HEAD
             Debug.WriteLine($"C# Properties.Prop1: {reactContext.Handle.Properties.Get(ReactPropertyBagHelper.GetName(null, "Prop1"))}");
             Debug.WriteLine($"C# Properties.Prop2: {reactContext.Handle.Properties.Get(ReactPropertyBagHelper.GetName(null, "Prop2"))}");
 
+||||||| 811c767bf
+=======
+            _reactContext = reactContext;
+
+            Debug.WriteLine($"C# Properties.Prop1: {reactContext.Handle.Properties.Get(ReactPropertyBagHelper.GetName(null, "Prop1"))}");
+            Debug.WriteLine($"C# Properties.Prop2: {reactContext.Handle.Properties.Get(ReactPropertyBagHelper.GetName(null, "Prop2"))}");
+
+            var cppTimerNotification = ReactPropertyBagHelper.GetName(ReactPropertyBagHelper.GetNamespace("SampleModuleCppImpl"), "TimerNotification");
+            var csTimerNotification = ReactPropertyBagHelper.GetName(ReactPropertyBagHelper.GetNamespace("SampleModuleCS"), "TimerNotification");
+
+            reactContext.Handle.Notifications.Subscribe(cppTimerNotification, null,
+                (object sender, IReactNotificationArgs args) => Debug.WriteLine($"C# module, C++ timer:: {args.Data}"));
+
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
             _timer = ThreadPoolTimer.CreatePeriodicTimer(new TimerElapsedHandler((timer) =>
             {
+                reactContext.Handle.Notifications.SendNotification(csTimerNotification, null, _timerCount);
                 TimedEvent?.Invoke(++_timerCount);
                 if (_timerCount == 5)
                 {
@@ -220,6 +236,35 @@ namespace SampleLibraryCS
 
         #endregion
 
+        #region Methods using Task
+
+        [ReactMethod]
+        public Task TaskNoArgs()
+        {
+            return Task<int>.Factory.StartNew(() => 42);
+        }
+
+        [ReactMethod]
+        public async Task TaskTwoArgs(int x, int y)
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(250));
+        }
+
+        [ReactMethod]
+        public Task<int> TaskOfTNoArgs()
+        {
+            return Task<int>.Factory.StartNew(() => 42);
+        }
+
+        [ReactMethod]
+        public async Task<int> TaskOfTTwoArgs(int x, int y)
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(250));
+            return x + y;
+        }
+
+        #endregion
+
         #region Synchronous Methods
 
         [ReactSyncMethod]
@@ -243,6 +288,31 @@ namespace SampleLibraryCS
         [ReactEvent("TimedEventCS")]
         public Action<int> TimedEvent { get; set; }
 
+        [ReactMethod]
+        public void EmitJSEvent1(int value)
+        {
+            // Test the ReactContext.EmitJSEvent
+            _reactContext.EmitJSEvent("RCTDeviceEventEmitter", "EmitJSEvent1CS", value);
+        }
+
+        [ReactMethod]
+        public void EmitJSEvent2(int value1, int value2)
+        {
+            // Test the ReactContext::EmitJSEvent
+            _reactContext.EmitJSEvent("RCTDeviceEventEmitter", "EmitJSEvent2CS", value1, value2);
+        }
+
+        [ReactMethod]
+        public void EmitJSEvent3(int value1, int value2)
+        {
+            // Test the ReactContext::EmitJSEvent
+            _reactContext.EmitJSEvent<JSValueArgWriter>("RCTDeviceEventEmitter", "EmitJSEvent3CS", (IJSValueWriter argWriter) =>
+            {
+                argWriter.WriteValue(value1);
+                argWriter.WriteValue(value2);
+            });
+        }
+
         #endregion
 
         #region JS Functions
@@ -259,8 +329,15 @@ namespace SampleLibraryCS
 
         #endregion
 
+        [ReactMethod]
+        public void ReloadInstance()
+        {
+            ReactNativeHost.FromContext(_reactContext.Handle).ReloadInstance();
+        }
+
         private ThreadPoolTimer _timer;
         private int _timerCount = 0;
         private const int TimedEventIntervalMS = 5000;
+        private ReactContext _reactContext;
     }
 }

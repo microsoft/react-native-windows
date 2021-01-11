@@ -1,21 +1,27 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
 
 #include "IReactInstanceInternal.h"
+#include "ReactContext.h"
 #include "ReactNativeHeaders.h"
 #include "React_win.h"
 #include "activeObject/activeObject.h"
 
-#include <Modules/AppStateModuleUwp.h>
+#ifndef CORE_ABI
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
-#include <Modules/DeviceInfoModule.h>
-#include <ReactUWP/Modules/I18nModule.h>
-#include "UwpReactInstanceProxy.h"
+#include <Modules/I18nManagerModule.h>
+#include <Views/ExpressionAnimationStore.h>
+#endif
 
 #include <tuple>
+
+namespace winrt::Microsoft::ReactNative {
+class NativeModulesProvider;
+class TurboModulesProvider;
+} // namespace winrt::Microsoft::ReactNative
 
 namespace Mso::React {
 
@@ -35,6 +41,7 @@ static_assert(
     static_cast<int32_t>(facebook::react::RCTLogLevel::Fatal) == static_cast<int32_t>(LogLevel::Fatal),
     "LogLevel::Fatal value must match");
 
+<<<<<<< HEAD
 class ReactInstanceWin;
 
 class ReactContext final : public Mso::UnknownObject<IReactContext> {
@@ -52,43 +59,75 @@ class ReactContext final : public Mso::UnknownObject<IReactContext> {
   Mso::WeakPtr<ReactInstanceWin> m_reactInstance;
   winrt::Microsoft::ReactNative::IReactPropertyBag m_properties;
 };
+||||||| 811c767bf
+class ReactInstanceWin;
+
+class ReactContext final : public Mso::UnknownObject<IReactContext> {
+ public:
+  ReactContext(Mso::WeakPtr<ReactInstanceWin> &&reactInstance) noexcept;
+
+ public: // IReactContext
+  void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept override;
+  void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept override;
+
+ private:
+  Mso::WeakPtr<ReactInstanceWin> m_reactInstance;
+};
+=======
+struct BridgeUIBatchInstanceCallback;
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 
 //! ReactInstance implementation for Windows that is managed by ReactHost.
-class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, ILegacyReactInstance> {
+class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> {
   using Super = ActiveObjectType;
+  friend BridgeUIBatchInstanceCallback;
 
  public: // IReactInstance
   const ReactOptions &Options() const noexcept override;
   ReactInstanceState State() const noexcept override;
-
- public: // IReactInstanceInternal
-  Mso::Future<void> Destroy() noexcept override;
-
- public: // ILegacyReactInstance
-  void CallJsFunction(std::string &&moduleName, std::string &&method, folly::dynamic &&params) noexcept override;
-  void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept override;
-  facebook::react::INativeUIManager *NativeUIManager() noexcept override;
-  std::shared_ptr<facebook::react::Instance> GetInnerInstance() noexcept override;
-  std::string GetBundleRootPath() noexcept override;
-  std::shared_ptr<react::uwp::IReactInstance> UwpReactInstance() noexcept override;
+  Mso::React::IReactContext &GetReactContext() const noexcept override;
   void AttachMeasuredRootView(
       facebook::react::IReactRootView *rootView,
       folly::dynamic &&initialProps) noexcept override;
   void DetachRootView(facebook::react::IReactRootView *rootView) noexcept override;
 
+ public: // IReactInstanceInternal
+  Mso::Future<void> Destroy() noexcept override;
+
+ public:
+  void CallJsFunction(std::string &&moduleName, std::string &&method, folly::dynamic &&params) noexcept;
+  void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept;
+  winrt::Microsoft::ReactNative::JsiRuntime JsiRuntime() noexcept;
+  std::shared_ptr<facebook::react::Instance> GetInnerInstance() noexcept;
+  bool IsLoaded() const noexcept;
+#ifndef CORE_ABI
+
+  bool UseWebDebugger() const noexcept;
+  bool UseFastRefresh() const noexcept;
+  bool UseDirectDebugger() const noexcept;
+  bool DebuggerBreakOnNextLine() const noexcept;
+  uint16_t DebuggerPort() const noexcept;
+  std::string DebugBundlePath() const noexcept;
+  std::string BundleRootPath() const noexcept;
+  std::string SourceBundleHost() const noexcept;
+  uint16_t SourceBundlePort() const noexcept;
+  std::string JavaScriptBundleFile() const noexcept;
+  bool UseDeveloperSupport() const noexcept;
+#endif
+
  private:
   friend MakePolicy;
-  // UwpReactInstance(
-  //    const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
-  //    const std::shared_ptr<ViewManagerProvider> &viewManagerProvider = nullptr);
   ReactInstanceWin(
       IReactHost &reactHost,
       ReactOptions const &options,
       Mso::Promise<void> &&whenCreated,
       Mso::Promise<void> &&whenLoaded,
       Mso::VoidFunctor &&updateUI) noexcept;
+  void LoadModules(
+      const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
+      const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept;
   void Initialize() noexcept override;
-  ~ReactInstanceWin() override;
+  ~ReactInstanceWin() noexcept override;
 
  private:
   void LoadJSBundles() noexcept;
@@ -97,9 +136,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   void InitUIMessageThread() noexcept;
   void InitUIManager() noexcept;
   std::string GetBytecodeFileName() noexcept;
-  std::string GetDebugHost() noexcept;
-  std::string GetSourceBundleHost() noexcept;
-  std::string GetSourceBundlePort() noexcept;
   std::function<void()> GetLiveReloadCallback() noexcept;
   std::function<void(std::string)> GetErrorCallback() noexcept;
   facebook::react::NativeLoggingHook GetLoggingCallback() noexcept;
@@ -135,8 +171,13 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   const Mso::Promise<void> m_whenCreated;
   const Mso::Promise<void> m_whenLoaded;
   const Mso::Promise<void> m_whenDestroyed;
-  const std::shared_ptr<react::uwp::UwpReactInstanceProxy> m_legacyInstance;
+
   const Mso::VoidFunctor m_updateUI;
+  const bool m_debuggerBreakOnNextLine : 1;
+  const bool m_isFastReloadEnabled : 1;
+  const bool m_isLiveReloadEnabled : 1;
+  const bool m_useDirectDebugger : 1;
+  const bool m_useWebDebugger : 1;
 
   const Mso::CntPtr<ReactContext> m_reactContext;
 
@@ -155,7 +196,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
                                                                                                              m_mutex};
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::MessageQueueThread>> m_uiMessageThread{Queue(),
                                                                                                          m_mutex};
-  const Mso::ActiveReadableField<std::shared_ptr<facebook::react::IUIManager>> m_uiManager{Queue(), m_mutex};
 
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::InstanceWrapper>> m_instanceWrapper{Queue(), m_mutex};
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::Instance>> m_instance{Queue(), m_mutex};
@@ -163,15 +203,24 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
 
   std::shared_ptr<facebook::react::MessageQueueThread> m_batchingUIThread;
 
-  std::shared_ptr<react::uwp::IReactInstance> m_legacyReactInstance;
-  std::shared_ptr<react::uwp::DeviceInfo> m_deviceInfo;
-  std::shared_ptr<facebook::react::AppState> m_appState;
   std::shared_ptr<IRedBoxHandler> m_redboxHandler;
+#ifndef CORE_ABI
   std::shared_ptr<react::uwp::AppTheme> m_appTheme;
   Mso::CntPtr<react::uwp::AppearanceChangeListener> m_appearanceListener;
+<<<<<<< HEAD
   std::string m_bundleRootPath;
   Mso::DispatchQueue m_uiQueue;
   std::deque<JSCallEntry> m_jsCallQueue;
+||||||| 811c767bf
+  std::string m_bundleRootPath;
+=======
+#endif
+  Mso::DispatchQueue m_uiQueue;
+  std::deque<JSCallEntry> m_jsCallQueue;
+
+  std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> m_jsiRuntimeHolder;
+  winrt::Microsoft::ReactNative::JsiRuntime m_jsiRuntime{nullptr};
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 };
 
 } // namespace Mso::React

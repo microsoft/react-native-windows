@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -158,6 +158,25 @@ void ReactContextMock::EmitJSEvent(
     hstring const &eventName,
     JSValueArgWriter const &paramsArgWriter) noexcept {
   m_builderMock->EmitJSEvent(eventEmitterName, eventName, paramsArgWriter);
+}
+
+Microsoft::ReactNative::IReactPropertyNamespace ReactPropertyBagHelper::GlobalNamespace() {
+  VerifyElseCrashSz(false, "Not implemented");
+}
+
+Microsoft::ReactNative::IReactPropertyNamespace ReactPropertyBagHelper::GetNamespace(
+    param::hstring const & /*namespaceName*/) {
+  VerifyElseCrashSz(false, "Not implemented");
+}
+
+Microsoft::ReactNative::IReactPropertyName ReactPropertyBagHelper::GetName(
+    Microsoft::ReactNative::IReactPropertyNamespace const & /*ns*/,
+    param::hstring const & /*localName*/) {
+  VerifyElseCrashSz(false, "Not implemented");
+}
+
+Microsoft::ReactNative::IReactPropertyBag ReactPropertyBagHelper::CreatePropertyBag() {
+  VerifyElseCrashSz(false, "Not implemented");
 }
 
 } // namespace winrt::Microsoft::ReactNative

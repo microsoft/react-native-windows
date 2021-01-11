@@ -1,0 +1,221 @@
+{
+  "name": "@rnw-scripts/integrate-rn",
+  "entries": [
+    {
+      "date": "Wed, 06 Jan 2021 05:06:51 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.21",
+      "version": "0.0.21",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Move some packages from @rnw-scripts to @react-native-windows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cd49e86e7bb698c318a776fa9b9142792196942f",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.19",
+      "version": "0.0.19",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix dependency syncing for wildcard peer dependencies",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8b609d177711bca1ad852978cbe9855257a519e3",
+            "package": "@rnw-scripts/integrate-rn"
+          },
+          {
+            "comment": "Bump yargs to 15.4.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fa34591ac86ea25e1e92a807864ba71480046a27",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.18",
+      "version": "0.0.18",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.17",
+      "version": "0.0.17",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Oct 2020 05:06:28 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.15",
+      "version": "0.0.15",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Make sure to update react-native devDependencies",
+            "author": "ngerlem@microsoft.com",
+            "commit": "14707bb11c4f1421c298cc10522fe9bdbf5098f2",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Oct 2020 05:05:24 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.14",
+      "version": "0.0.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update Package Syncing Algorithm",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cd0d904f4779ef919654bc006c6d4525bbf1b724",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Oct 2020 05:06:32 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.13",
+      "version": "0.0.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update just-scipts (remove npm-registry-fetch)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "00b2d84b8effce0b7405a67bd4903eed88cb9aaf",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 03 Oct 2020 05:04:45 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.13",
+      "version": "0.0.13",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow Missing react-native devDependencies",
+            "author": "ngerlem@microsoft.com",
+            "commit": "85360682867c1bc265da6730581df5994d679cda",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.11",
+      "version": "0.0.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.7",
+      "version": "0.0.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Sep 2020 22:03:37 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.6",
+      "version": "0.0.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Reconcile package versions",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8adedcfb2ce6492a4a7ede59e0f9188dc205d659",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to eslint 6.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 12 Aug 2020 05:05:16 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix integrate-rn bug with dependency syncing added late PR",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4af6037c9b5bb8f81668dd5b3466b758bae19e6b",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 11 Aug 2020 07:36:05 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Initial Version of Automatic React Native Integration Script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "90e219bae44e65a905e6ade3b70727d202444a34",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    }
+  ]
+}

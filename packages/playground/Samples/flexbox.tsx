@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -38,7 +38,7 @@ export default class FlexboxLayoutPlayground extends React.Component<
 
   _onClick() {
     this.setState(s => {
-      let state = {...s};
+      const state = {...s};
 
       if (state.currentAlignStyle === styles.endAlignStyle) {
         state.currentAlignStyle = styles.emptyStyle;

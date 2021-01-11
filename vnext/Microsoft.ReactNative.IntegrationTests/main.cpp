@@ -1,4 +1,6 @@
 #include "pch.h"
+
+#include "gtest/gtest.h"
 #include "motifCpp/gTestAdapter.h"
 
 int main(int argc, char **argv) {

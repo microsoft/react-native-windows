@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -17,8 +17,6 @@ class DesktopTestInstance : public ITestInstance {
 
 #pragma region ITestInstance members
 
-  void AttachMeasuredRootView(std::string &&appName) noexcept;
-  void DetachRootView() noexcept;
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override;
 
 #pragma endregion ITestInstance members

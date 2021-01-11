@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -6,7 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+#if !USE_WINUI3
 using Windows.UI.Xaml;
+#else
+using Microsoft.UI.Xaml;
+#endif
 
 namespace Microsoft.ReactNative.Managed.UnitTests
 {
@@ -225,7 +230,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     private static T GetResult<T>(IJSValueWriter writer)
     {
       var resulReader = new JSValueTreeReader((writer as JSValueTreeWriter).TakeValue());
-      resulReader.ReadArgs(out T result);
+      resulReader.ReadValue(out T result);
       return result;
     }
 
@@ -296,6 +301,29 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
   }
 
+  class ReactSettingsSnapshot : IReactSettingsSnapshot
+  {
+    public bool DebuggerBreakOnNextLine => throw new NotImplementedException();
+
+    public ushort DebuggerPort => throw new NotImplementedException();
+
+    public bool UseDirectDebugger => throw new NotImplementedException();
+
+    public bool UseFastRefresh => throw new NotImplementedException();
+
+    public bool UseWebDebugger => throw new NotImplementedException();
+
+    public string BundleRootPath => throw new NotImplementedException();
+
+    public string DebugBundlePath => throw new NotImplementedException();
+
+    public string JavaScriptBundleFile => throw new NotImplementedException();
+
+    public string SourceBundleHost => throw new NotImplementedException();
+
+    public ushort SourceBundlePort => throw new NotImplementedException();
+  }
+
   class ReactContextMock : IReactContext
   {
     private readonly ReactModuleBuilderMock m_builder;
@@ -305,10 +333,26 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       m_builder = builder;
     }
 
+<<<<<<< HEAD
     public IReactPropertyBag Properties { get; } = ReactPropertyBagHelper.CreatePropertyBag();
 
     public IReactDispatcher UIDispatcher => Properties.Get(ReactDispatcherHelper.UIDispatcherProperty) as IReactDispatcher;
 
+||||||| 811c767bf
+=======
+    public IReactSettingsSnapshot SettingsSnapshot => throw new NotImplementedException();
+
+    public IReactPropertyBag Properties { get; } = ReactPropertyBagHelper.CreatePropertyBag();
+
+    public IReactNotificationService Notifications { get; } = ReactNotificationServiceHelper.CreateNotificationService();
+
+    public IReactDispatcher UIDispatcher => Properties.Get(ReactDispatcherHelper.UIDispatcherProperty) as IReactDispatcher;
+
+    public IReactDispatcher JSDispatcher => Properties.Get(ReactDispatcherHelper.JSDispatcherProperty) as IReactDispatcher;
+
+    public Object JSRuntime => throw new NotImplementedException();
+
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     public void DispatchEvent(FrameworkElement view, string eventName, JSValueArgWriter eventDataArgWriter)
     {
       throw new NotImplementedException();

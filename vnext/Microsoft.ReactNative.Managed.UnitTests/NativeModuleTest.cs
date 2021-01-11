@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,6 +22,10 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [ReactInitializer]
     public void Initialize(ReactContext context)
     {
+      var assembly = typeof(Point).Assembly;
+      JSValueReaderGenerator.RegisterAssembly(assembly);
+      JSValueWriterGenerator.RegisterAssembly(assembly);
+
       IsInitialized = true;
       Assert.IsNotNull(context);
 
@@ -196,7 +200,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       }
     }
 
-
     [ReactMethod]
     public async void NegateAsyncCallbacks(int x, Action<int> resolve, Action<string> reject)
     {
@@ -262,7 +265,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
         reject("Already negative");
       }
     }
-
 
     [ReactMethod]
     public static void StaticResolveSayHelloCallbacks(Action<string> resolve, Action<string> _)
@@ -622,6 +624,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     [TestInitialize]
     public void Initialize()
     {
+      JSValueReaderGenerator.RegisterAssembly(typeof(Point).Assembly);
+      JSValueWriterGenerator.RegisterAssembly(typeof(Point).Assembly);
+
       m_moduleBuilderMock = new ReactModuleBuilderMock();
       m_moduleInfo = new ReactModuleInfo(typeof(SimpleNativeModule));
       m_module = m_moduleBuilderMock.CreateModule<SimpleNativeModule>(m_moduleInfo);
@@ -1018,6 +1023,80 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [TestMethod]
+    public void TestMethodCall_TwoCallbacksZeroArgs1()
+    {
+      m_moduleBuilderMock.Call2<Action, Action>(nameof(SimpleNativeModule.TwoCallbacksZeroArgs1),
+        () => { }, () => { Assert.Fail(); });
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_TwoCallbacksZeroArgs2()
+    {
+      m_moduleBuilderMock.Call2<Action, Action>(nameof(SimpleNativeModule.TwoCallbacksZeroArgs2),
+        () => { Assert.Fail(); }, () => { });
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_TwoCallbacksTwoArgs1()
+    {
+      m_moduleBuilderMock.Call2<Action<int, int>, Action<int, int>>(
+        nameof(SimpleNativeModule.TwoCallbacksTwoArgs1),
+        (int p1, int p2) =>
+        {
+          Assert.AreEqual(1, p1);
+          Assert.AreEqual(2, p2);
+        },
+        (int p1, int p2) => { Assert.Fail(); });
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_TwoCallbacksTwoArgs2()
+    {
+      m_moduleBuilderMock.Call2<Action<int, int>, Action<int, int>>(
+        nameof(SimpleNativeModule.TwoCallbacksTwoArgs2),
+        (int p1, int p2) => { Assert.Fail(); },
+        (int p1, int p2) =>
+        {
+          Assert.AreEqual(1, p1);
+          Assert.AreEqual(2, p2);
+        });
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_TwoCallbacksThreeArgs1()
+    {
+      m_moduleBuilderMock.Call2<Action<int, int, string>, Action<int, int, string>>(
+        nameof(SimpleNativeModule.TwoCallbacksThreeArgs1),
+        (int p1, int p2, string p3) =>
+        {
+          Assert.AreEqual(1, p1);
+          Assert.AreEqual(2, p2);
+          Assert.AreEqual("Hello", p3);
+        },
+        (int p1, int p2, string p3) => { Assert.Fail(); });
+      Assert.IsTrue(m_moduleBuilderMock.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_TwoCallbacksThreeArgs2()
+    {
+      m_moduleBuilderMock.Call2<Action<int, int, string>, Action<int, int, string>>(
+        nameof(SimpleNativeModule.TwoCallbacksThreeArgs2),
+        (int p1, int p2, string p3) => { Assert.Fail(); },
+        (int p1, int p2, string p3) =>
+        {
+          Assert.AreEqual(1, p1);
+          Assert.AreEqual(2, p2);
+          Assert.AreEqual("Hello", p3);
+        });
+      Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
+    }
+
+    [TestMethod]
     public void TestMethodCall_DividePromise()
     {
       m_moduleBuilderMock.Call2<int, int, Action<int>, Action<JSValue>>(nameof(SimpleNativeModule.DividePromise), 6, 2,
@@ -1178,7 +1257,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
           (JSValue error) => Assert.AreEqual("Odd unexpected", error["message"]));
       Assert.IsTrue(m_moduleBuilderMock.IsRejectCallbackCalled);
     }
-
 
     [TestMethod]
     public void TestMethodCall_StaticResolveSayHelloPromise()
@@ -1387,7 +1465,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       m_module.OnIntEventProp(42);
       Assert.IsTrue(eventRaised);
     }
-
 
     [TestMethod]
     public void TestEvent_NoArgEventProperty()

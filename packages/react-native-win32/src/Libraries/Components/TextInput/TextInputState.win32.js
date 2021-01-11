@@ -14,30 +14,63 @@
 
 'use strict';
 
+const React = require('react');
 const Platform = require('../../Utilities/Platform');
-const UIManager = require('../../ReactNative/UIManager');
+const {findNodeHandle} = require('../../Renderer/shims/ReactNative');
+import {Commands as AndroidTextInputCommands} from '../../Components/TextInput/AndroidTextInputNativeComponent';
+import {Commands as iOSTextInputCommands} from '../../Components/TextInput/RCTSingelineTextInputNativeComponent';
 
-let currentlyFocusedID: ?number = null;
+import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
+import {UIManager} from 'react-native';
+type ComponentRef = React.ElementRef<HostComponent<mixed>>;
+
+let currentlyFocusedInputRef: ?ComponentRef = null;
 const inputs = new Set();
+
+function currentlyFocusedInput(): ?ComponentRef {
+  return currentlyFocusedInputRef;
+}
 
 /**
  * Returns the ID of the currently focused text field, if one exists
  * If no text field is focused it returns null
  */
 function currentlyFocusedField(): ?number {
-  return currentlyFocusedID;
+  if (__DEV__) {
+    console.error(
+      'currentlyFocusedField is deprecated and will be removed in a future release. Use currentlyFocusedInput',
+    );
+  }
+
+  return findNodeHandle(currentlyFocusedInputRef);
+}
+
+function focusInput(textField: ?ComponentRef): void {
+  if (currentlyFocusedInputRef !== textField && textField != null) {
+    currentlyFocusedInputRef = textField;
+  }
+}
+
+function blurInput(textField: ?ComponentRef): void {
+  if (currentlyFocusedInputRef === textField && textField != null) {
+    currentlyFocusedInputRef = null;
+  }
 }
 
 function focusField(textFieldID: ?number): void {
-  if (currentlyFocusedID !== textFieldID && textFieldID != null) {
-    currentlyFocusedID = textFieldID;
+  if (__DEV__) {
+    console.error('focusField no longer works. Use focusInput');
   }
+
+  return;
 }
 
 function blurField(textFieldID: ?number) {
-  if (currentlyFocusedID === textFieldID && textFieldID != null) {
-    currentlyFocusedID = null;
+  if (__DEV__) {
+    console.error('blurField no longer works. Use blurInput');
   }
+
+  return;
 }
 
 /**
@@ -45,21 +78,34 @@ function blurField(textFieldID: ?number) {
  * Focuses the specified text field
  * noop if the text field was already focused
  */
-function focusTextInput(textFieldID: ?number) {
-  if (currentlyFocusedID !== textFieldID && textFieldID != null) {
-    focusField(textFieldID);
-    // [Windows
-    if (Platform.OS === 'ios' || Platform.OS === 'win32') {
-      // Windows]
-      UIManager.focus(textFieldID);
-    } else if (Platform.OS === 'android') {
-      UIManager.dispatchViewManagerCommand(
-        textFieldID,
-        UIManager.getViewManagerConfig('AndroidTextInput').Commands
-          .focusTextInput,
-        null,
+function focusTextInput(textField: ?ComponentRef) {
+  if (typeof textField === 'number') {
+    if (__DEV__) {
+      console.error(
+        'focusTextInput must be called with a host component. Passing a react tag is deprecated.',
       );
     }
+
+    return;
+  }
+
+  if (currentlyFocusedInputRef !== textField && textField != null) {
+    focusInput(textField);
+    if (Platform.OS === 'ios') {
+      // This isn't necessarily a single line text input
+      // But commands don't actually care as long as the thing being passed in
+      // actually has a command with that name. So this should work with single
+      // and multiline text inputs. Ideally we'll merge them into one component
+      // in the future.
+      iOSTextInputCommands.focus(textField);
+    } else if (Platform.OS === 'android') {
+      AndroidTextInputCommands.focus(textField);
+    }
+    // [Win32
+    else if (Platform.OS === 'win32') {
+      UIManager.focus(findNodeHandle(textField));
+    }
+    // Win32]
   }
 }
 
@@ -68,66 +114,112 @@ function focusTextInput(textFieldID: ?number) {
  * Unfocuses the specified text field
  * noop if it wasn't focused
  */
-function blurTextInput(textFieldID: ?number) {
-  if (currentlyFocusedID === textFieldID && textFieldID != null) {
-    blurField(textFieldID);
-    // [Windows
-    if (Platform.OS === 'ios' || Platform.OS === 'win32') {
-      // Windows]
-      UIManager.blur(textFieldID);
-    } else if (Platform.OS === 'android') {
-      UIManager.dispatchViewManagerCommand(
-        textFieldID,
-        UIManager.getViewManagerConfig('AndroidTextInput').Commands
-          .blurTextInput,
-        null,
+function blurTextInput(textField: ?ComponentRef) {
+  if (typeof textField === 'number') {
+    if (__DEV__) {
+      console.error(
+        'focusTextInput must be called with a host component. Passing a react tag is deprecated.',
       );
     }
+
+    return;
+  }
+
+  if (currentlyFocusedInputRef === textField && textField != null) {
+    blurInput(textField);
+    if (Platform.OS === 'ios') {
+      // This isn't necessarily a single line text input
+      // But commands don't actually care as long as the thing being passed in
+      // actually has a command with that name. So this should work with single
+      // and multiline text inputs. Ideally we'll merge them into one component
+      // in the future.
+      iOSTextInputCommands.blur(textField);
+    } else if (Platform.OS === 'android') {
+      AndroidTextInputCommands.blur(textField);
+    }
+    // [Win32
+    else if (Platform.OS === 'win32') {
+      UIManager.blur(findNodeHandle(textField));
+    }
+    // Win32]
   }
 }
 
-// [Windows/Android?
+// [Win32
 /**
- * @param {number} TextInputID id of the text field that has received focus
+ * @param {textField} textField id of the text field that has received focus
  * Should be called after the view has received focus and fired the onFocus event
  * noop if the focused text field is same
  */
-function setFocusedTextInput(textFieldID: ?number) {
-  if (currentlyFocusedID !== textFieldID && textFieldID !== null) {
-    currentlyFocusedID = textFieldID;
+function setFocusedTextInput(textField: ComponentRef) {
+  if (currentlyFocusedInputRef !== textField && textField !== null) {
+    currentlyFocusedInputRef = textField;
   }
 }
 
 /**
- * @param {number} TextInputID id of the text field whose focus has to be cleared
+ * @param {textField} textField id of the text field whose focus has to be cleared
  * Should be called after the view has cleared focus and fired the onFocus event
  * noop if the focused text field is not same
  */
-function clearFocusedTextInput(textFieldID: ?number) {
-  if (currentlyFocusedID === textFieldID && textFieldID !== null) {
-    currentlyFocusedID = null;
+function clearFocusedTextInput(textField: ComponentRef) {
+  if (currentlyFocusedInputRef === textField && textField !== null) {
+    currentlyFocusedInputRef = null;
   }
 }
-// Windows/Android?]
+// Win32]
 
-function registerInput(textFieldID: number) {
-  inputs.add(textFieldID);
+function registerInput(textField: ComponentRef) {
+  if (typeof textField === 'number') {
+    if (__DEV__) {
+      console.error(
+        'registerInput must be called with a host component. Passing a react tag is deprecated.',
+      );
+    }
+
+    return;
+  }
+
+  inputs.add(textField);
 }
 
-function unregisterInput(textFieldID: number) {
-  inputs.delete(textFieldID);
+function unregisterInput(textField: ComponentRef) {
+  if (typeof textField === 'number') {
+    if (__DEV__) {
+      console.error(
+        'unregisterInput must be called with a host component. Passing a react tag is deprecated.',
+      );
+    }
+
+    return;
+  }
+  inputs.delete(textField);
 }
 
-function isTextInput(textFieldID: number): boolean {
-  return inputs.has(textFieldID);
+function isTextInput(textField: ComponentRef): boolean {
+  if (typeof textField === 'number') {
+    if (__DEV__) {
+      console.error(
+        'isTextInput must be called with a host component. Passing a react tag is deprecated.',
+      );
+    }
+
+    return false;
+  }
+
+  return inputs.has(textField);
 }
 
 module.exports = {
+  currentlyFocusedInput,
+  focusInput,
+  blurInput,
+
   currentlyFocusedField,
   focusField,
   blurField,
-  setFocusedTextInput, // TODO(android ISS)
-  clearFocusedTextInput, // TODO(android ISS)
+  setFocusedTextInput, // [Win32]
+  clearFocusedTextInput, // [Win32]
   focusTextInput,
   blurTextInput,
   registerInput,

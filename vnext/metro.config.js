@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const rnwPath = __dirname;
+<<<<<<< HEAD
 const {resolve} = require('metro-resolver');
 
 function reactNativePlatformResolver(platformImplementations) {
@@ -31,6 +32,37 @@ function reactNativePlatformResolver(platformImplementations) {
     }
   };
 }
+||||||| 811c767bf
+=======
+const {resolve} = require('metro-resolver');
+const exclusionList = require('metro-config/src/defaults/exclusionList');
+
+function reactNativePlatformResolver(platformImplementations) {
+  return (context, _realModuleName, platform, moduleName) => {
+    let backupResolveRequest = context.resolveRequest;
+    delete context.resolveRequest;
+
+    try {
+      let modifiedModuleName = moduleName;
+      if (platformImplementations[platform]) {
+        if (moduleName === 'react-native') {
+          modifiedModuleName = platformImplementations[platform];
+        } else if (moduleName.startsWith('react-native/')) {
+          modifiedModuleName = `${
+            platformImplementations[platform]
+          }/${modifiedModuleName.slice('react-native/'.length)}`;
+        }
+      }
+      let result = resolve(context, modifiedModuleName, platform);
+      return result;
+    } catch (e) {
+      throw e;
+    } finally {
+      context.resolveRequest = backupResolveRequest;
+    }
+  };
+}
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 
 module.exports = {
   // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
@@ -49,6 +81,10 @@ module.exports = {
       // Redirect react-native-windows to this folder
       'react-native-windows': rnwPath,
     },
+    blockList: exclusionList([
+      // Avoid error EBUSY: resource busy or locked, open '...\vnext\msbuild.ProjectImports.zip' when building 'vnext\Microsoft.ReactNative.sln' with '/bl'
+      /.*\.ProjectImports\.zip/,
+    ]),
   },
 
   transformer: {

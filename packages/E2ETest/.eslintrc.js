@@ -1,6 +1,9 @@
-module.exports = { 
-  extends: "@react-native-community",
-  rules:{ 
-    "react-native/no-inline-styles" : 0,
-  }
+module.exports = {
+  extends: ['@rnw-scripts'],
+  parserOptions: { tsconfigRootDir: __dirname },
+  globals: {
+    $: 'readonly',
+    browser: 'readonly',
+    expect: 'readonly',
+  },
 };

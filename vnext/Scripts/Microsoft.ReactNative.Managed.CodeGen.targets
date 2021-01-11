@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation. All rights reserved.
+ Licensed under the MIT License.. 
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.VersionCheck.targets" />
+
+  <PropertyGroup>
+    <ReactNativeCodeGenEnabled Condition="'$(ReactNativeCodeGenEnabled)' == ''">false</ReactNativeCodeGenEnabled>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <_ReactNativeName>$(AssemblyName).ReactNativeCodeGen</_ReactNativeName>
+    <_ReactNativeCodeGenOutFolder>$([MSBuild]::NormalizeDirectory('$(MSBuildProjectDirectory)', '$(IntermediateOutputPath)', '$(_ReactNativeName)'))</_ReactNativeCodeGenOutFolder>
+
+    <ReactNativeCodeGenFile>$(_ReactNativeCodeGenOutFolder)$(_ReactNativeName).g.cs</ReactNativeCodeGenFile>
+    <_ReactNativeCodeGenResponseFile>$(_ReactNativeCodeGenOutFolder)$(_ReactNativeName).rsp</_ReactNativeCodeGenResponseFile>
+    <_ReactNativeCodeGenToolFolder>$([MSBuild]::NormalizeDirectory($(MSBuildThisFileDirectory)\..\tools))</_ReactNativeCodeGenToolFolder>
+    <_ReactNativeCodeGenToolExecutable>$(_ReactNativeCodeGenToolFolder)Microsoft.ReactNative.Managed.CodeGen.exe</_ReactNativeCodeGenToolExecutable>
+    
+    <PrepareResourcesDependsOn>
+      $(PrepareResourcesDependsOn);
+      ReactNativeManagedCodeGen
+    </PrepareResourcesDependsOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <_ReactNativeCodeGenToolFiles Include="$(_ReactNativeCodeGenToolFolder)**" />
+  </ItemGroup>
+
+  <Target 
+    Name="ReactNativeManagedCodeGen"
+    Inputs="$(MSBuildProjectFullPath);@(Compile);@(_ReactNativeCodeGenToolFiles)"
+    Outputs="$(ReactNativeCodeGenFile);$(_ReactNativeCodeGenResponseFile)" Condition="'$(DesignTimeBuild)' != 'true'">
+
+    <ItemGroup>
+      <_ReactNativeCodeGenDefineConstatnsAsItem Include="$(DefineConstants)" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ReactNativeCodeGenResponseFileLines Include="/ns:$(RootNamespace)" />
+      <_ReactNativeCodeGenResponseFileLines Include=" " />
+      <_ReactNativeCodeGenResponseFileLines Include="/o:$(ReactNativeCodeGenFile)" />
+      <_ReactNativeCodeGenResponseFileLines Include=" " />
+      <_ReactNativeCodeGenResponseFileLines Include="# Defines" />
+      <_ReactNativeCodeGenResponseFileLines Include="@(_ReactNativeCodeGenDefineConstatnsAsItem->'/d:%(Identity)')" />
+      <_ReactNativeCodeGenResponseFileLines Include=" " />
+      <_ReactNativeCodeGenResponseFileLines Include="# Source Files" />
+      <_ReactNativeCodeGenResponseFileLines Include="@(Compile->'/s:%(fullpath)')" />
+      <_ReactNativeCodeGenResponseFileLines Include=" " />
+      <_ReactNativeCodeGenResponseFileLines Include="# References" />
+      <_ReactNativeCodeGenResponseFileLines Include="@(ReferencePath->'/r:%(fullpath)')" />
+    </ItemGroup>
+
+    <MakeDir Directories="$(XamlGeneratedOutputPath)intermediatexaml\" />
+
+    <!-- Write the response file -->
+    <WriteLinesToFile File="$(_ReactNativeCodeGenResponseFile)" Lines="@(_ReactNativeCodeGenResponseFileLines)" WriteOnlyWhenDifferent="true" Encoding="Unicode"/>
+
+    <!-- Execute teh code generation /> -->
+    <Exec Command="$(_ReactNativeCodeGenToolExecutable) @$(_ReactNativeCodeGenResponseFile)" />
+
+    <ItemGroup>
+      <Compile Include="$(ReactNativeCodeGenFile)"/>
+      <FileWrites Include="$(ReactNativeCodeGenFile)" />
+      <FileWrites Include="$(_ReactNativeCodeGenResponseFile)" />
+    </ItemGroup>
+  </Target>
+</Project>

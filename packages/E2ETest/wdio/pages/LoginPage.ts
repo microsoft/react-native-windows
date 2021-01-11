@@ -1,22 +1,18 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
 
-import { BasePage, By } from './BasePage';
+import { BasePage, by } from './BasePage';
 import {
   USERNAME_ON_LOGIN,
   PASSWORD_ON_LOGIN,
   SUBMIT_ON_LOGIN,
   LOGINRESULT_ON_LOGIN,
   SHOWPASSWORD_ON_LOGIN,
-} from '../../app/Consts';
+} from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 class LoginPage extends BasePage {
-  isPageLoaded() {
-    return super.isPageLoaded() && this._userName.isDisplayed();
-  }
-
   setLoginInfo(userName: string, password: string) {
     this._userName.setValue(userName);
     this._password.setValue(password);
@@ -40,23 +36,23 @@ class LoginPage extends BasePage {
   }
 
   private get _userName() {
-    return By(USERNAME_ON_LOGIN);
+    return by(USERNAME_ON_LOGIN);
   }
 
   private get _password() {
-    return By(PASSWORD_ON_LOGIN);
+    return by(PASSWORD_ON_LOGIN);
   }
 
   private get _submit() {
-    return By(SUBMIT_ON_LOGIN);
+    return by(SUBMIT_ON_LOGIN);
   }
 
   private get _showPassword() {
-    return By(SHOWPASSWORD_ON_LOGIN);
+    return by(SHOWPASSWORD_ON_LOGIN);
   }
 
   private get _loginResult() {
-    return By(LOGINRESULT_ON_LOGIN);
+    return by(LOGINRESULT_ON_LOGIN);
   }
 }
 

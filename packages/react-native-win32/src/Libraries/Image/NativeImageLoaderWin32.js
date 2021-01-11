@@ -16,7 +16,10 @@ import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
 export interface Spec extends TurboModule {
   +getConstants: () => {||};
   // [Win32 uses callback instead of promise
-  +getSize: (uri: string, callback: (width: number, height: number, err?: string) => void) => void;
+  +getSize: (
+    uri: string,
+    callback: (width: number, height: number, err?: string) => void,
+  ) => void;
   // Win32]
 
   // [Win32 These aren't actually implemented, and will just blow up if called
@@ -30,6 +33,11 @@ export interface Spec extends TurboModule {
     ...
   }>;
   +prefetchImage: (uri: string) => Promise<boolean>;
+  +prefetchImageWithMetadata?: (
+    uri: string,
+    queryRootName: string,
+    rootTag: number,
+  ) => Promise<boolean>;
   +queryCache: (uris: Array<string>) => Promise<Object>;
   // Win32]
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "NativeTraceEventSource.g.h"
+#include "facebook.react.NativeTraceEventSource.g.h"
 
 namespace winrt::facebook::react::implementation {
 struct NativeTraceEventSource {

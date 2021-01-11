@@ -2,7 +2,7 @@
 
 #include "NativeTraceEventSource.h"
 
-#include "NativeTraceEventSource.g.cpp"
+#include "facebook.react.NativeTraceEventSource.g.cpp"
 
 #include <Tracing.h>
 #include <Unicode.h>

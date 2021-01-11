@@ -24,7 +24,7 @@ $PublicKeyTokens = @("31bf3856ad364e35")
 
 if ($buildNumber -notmatch "^\d{5,}$")
 {
-    Write-Host "ERROR: '$buildNumber' doesn't look like a windows build number"
+    Write-Host "ERROR: '$buildNumber' doesn't look like a Windows build number"
     Write-Host
     Exit 1
 }

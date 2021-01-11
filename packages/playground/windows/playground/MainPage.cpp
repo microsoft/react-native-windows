@@ -1,14 +1,15 @@
 #include "pch.h"
 #include "MainPage.h"
 #include "MainPage.g.cpp"
+#include <App.h>
 
 using namespace winrt;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::Foundation;
 using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Media;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Media;
 using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Graphics::Imaging;
@@ -38,52 +39,105 @@ MainPage::MainPage() {
 
 void MainPage::OnLoadClick(
     Windows::Foundation::IInspectable const & /*sender*/,
-    Windows::UI::Xaml::RoutedEventArgs const & /*args*/) {
+    xaml::RoutedEventArgs const & /*args*/) {
   auto host = Host();
-  auto bundleFile = unbox_value<hstring>(x_entryPointCombo().SelectedItem().as<ComboBoxItem>().Content());
+
+  winrt::hstring bundleFile;
+
+  if (auto cbi = x_entryPointCombo().SelectedItem().try_as<ComboBoxItem>()) {
+    bundleFile = unbox_value<hstring>(cbi.Content());
+  } else {
+    bundleFile = unbox_value<hstring>(x_entryPointCombo().SelectedItem());
+  }
   host.InstanceSettings().JavaScriptBundleFile(bundleFile);
-  auto mainComponentName = unbox_value<hstring>(x_rootComponentNameCombo().SelectedItem().as<ComboBoxItem>().Content());
-  host.InstanceSettings().MainComponentName(mainComponentName);
+
+  auto item = x_rootComponentNameCombo().SelectedItem();
+  winrt::hstring mainComponentName;
+  if (auto selected = item.try_as<ComboBoxItem>()) {
+    mainComponentName = unbox_value<hstring>(selected.Content());
+  } else {
+    mainComponentName = unbox_value<hstring>(item);
+  }
+  ReactRootView().ComponentName(mainComponentName);
+  ReactRootView().ReactNativeHost(host);
+
+  host.InstanceSettings().UseDeveloperSupport(true);
   host.InstanceSettings().UseWebDebugger(x_UseWebDebuggerCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseDirectDebugger(x_UseDirectDebuggerCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().DebuggerBreakOnNextLine(x_BreakOnFirstLineCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseFastRefresh(x_UseFastRefreshCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().DebuggerPort(static_cast<uint16_t>(std::stoi(std::wstring(x_DebuggerPort().Text()))));
+<<<<<<< HEAD
   host.InstanceSettings().JSIEngineOverride(
       static_cast<Microsoft::ReactNative::JSIEngine>(x_JsEngine().SelectedIndex()));
+||||||| 811c767bf
+=======
+  host.InstanceSettings().JSIEngineOverride(
+      static_cast<Microsoft::ReactNative::JSIEngine>(x_JsEngine().SelectedIndex()));
+  if (!m_bundlerHostname.empty()) {
+    host.InstanceSettings().DebugHost(m_bundlerHostname);
+  }
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 
+  host.InstanceSettings().InstanceCreated(
+      [wkThis = get_weak()](auto sender, winrt::Microsoft::ReactNative::InstanceCreatedEventArgs args) {
+        if (auto strongThis = wkThis.get()) {
+          args.Context().UIDispatcher().Post([wkThis, context = args.Context()]() {
+            if (auto strongThis = wkThis.get()) {
+              strongThis->x_UseWebDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseWebDebugger());
+              strongThis->x_UseFastRefreshCheckBox().IsChecked(context.SettingsSnapshot().UseFastRefresh());
+              strongThis->x_UseDirectDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseDirectDebugger());
+              strongThis->x_BreakOnFirstLineCheckBox().IsChecked(context.SettingsSnapshot().DebuggerBreakOnNextLine());
+              auto debugBundlePath = context.SettingsSnapshot().DebugBundlePath();
+              for (auto item : strongThis->x_entryPointCombo().Items()) {
+                if (winrt::unbox_value<winrt::hstring>(item.as<ComboBoxItem>().Content()) == debugBundlePath) {
+                  strongThis->x_entryPointCombo().SelectedItem(item);
+                  break;
+                }
+              }
+              strongThis->x_DebuggerPort().Text(winrt::to_hstring(context.SettingsSnapshot().DebuggerPort()));
+              if (context.SettingsSnapshot().UseWebDebugger()) {
+                strongThis->RequestedTheme(xaml::ElementTheme::Light);
+              } else {
+                strongThis->RequestedTheme(xaml::ElementTheme::Default);
+              }
+            }
+          });
+        }
+      });
   // Nudge the ReactNativeHost to create the instance and wrapping context
   host.ReloadInstance();
-
-  m_reactRootView = Microsoft::ReactNative::ReactRootView();
-  m_reactRootView.ComponentName(host.InstanceSettings().MainComponentName());
-  m_reactRootView.ReactNativeHost(host);
-
-  x_rootElement().Children().Clear();
-  x_rootElement().Children().Append(m_reactRootView);
 }
 
 void winrt::playground::implementation::MainPage::x_entryPointCombo_SelectionChanged(
     winrt::Windows::Foundation::IInspectable const & /*sender*/,
-    winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const & /*e*/) {
+    xaml::Controls::SelectionChangedEventArgs const & /*e*/) {
   if (x_rootComponentNameCombo()) {
-    auto bundleFile = unbox_value<hstring>(x_entryPointCombo().SelectedItem().as<ComboBoxItem>().Content());
-    if (std::wstring(bundleFile).compare(L"Samples\\rntester") == 0) {
-      x_rootComponentNameCombo().SelectedIndex(0);
-    } else {
-      x_rootComponentNameCombo().SelectedIndex(1);
+    auto item = x_entryPointCombo().SelectedItem();
+    if (item) {
+      winrt::IInspectable content;
+      if (auto cbi = item.try_as<ComboBoxItem>()) {
+        content = cbi.Content();
+      } else {
+        content = item;
+      }
+
+      auto selectedItem = winrt::to_string(winrt::unbox_value<winrt::hstring>(content));
+      if (selectedItem == "Samples\\rntester") {
+        x_rootComponentNameCombo().SelectedIndex(0);
+      } else {
+        x_rootComponentNameCombo().SelectedIndex(1);
+      }
     }
   }
 }
 
-Microsoft::ReactNative::ReactNativeHost MainPage::Host() noexcept {
-  if (!m_host) {
-    m_host = Microsoft::ReactNative::ReactNativeHost();
-    m_host.InstanceSettings(InstanceSettings());
-    m_host.PackageProviders(PackageProviders());
-  }
+void MainPage::OnNavigatedTo(xaml::Navigation::NavigationEventArgs const &e) {
+  m_bundlerHostname = unbox_value<hstring>(e.Parameter());
+}
 
-  return m_host;
+Microsoft::ReactNative::ReactNativeHost MainPage::Host() noexcept {
+  return Application::Current().as<App>()->Host();
 }
 
 Microsoft::ReactNative::ReactInstanceSettings MainPage::InstanceSettings() noexcept {

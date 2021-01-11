@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation. All rights reserved.
+ Licensed under the MIT License.. 
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Visual Studio has its own incremental build logic on top of MSBuild's that
+    will skip targets if it thinks inputs haven't changed. This falls over for
+    changes dependent on anything outside of our project. 
+  -->
+  <PropertyGroup>
+    <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
+  </PropertyGroup>
+
+  <Target Name="AutolinkCheck" BeforeTargets="PrepareForBuild" Condition="'$(RunAutolinkCheck)' == 'true'">
+    <Exec Command="$(AutolinkCommand) $(AutolinkCommandArgs)" WorkingDirectory="$(AutolinkCommandWorkingDir)" CustomWarningRegularExpression="Warning: " CustomErrorRegularExpression="Error: " />
+  </Target>
+</Project>

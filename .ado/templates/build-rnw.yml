@@ -9,8 +9,11 @@ parameters:
   msBuildArchitecture: $(MSBuildArchitecture)
   preferredToolArchitecture: $(MSBuildPreferredToolArchitecture)
   platformToolset: $(MSBuildPlatformToolset)
+  buildPlatform: x64
+  buildConfiguration: Debug
   msbuildArguments: ''
   yarnBuildCmd: build
+  multicoreBuild: false
 
   # Visual Studio Installer
   vsComponents: ''
@@ -18,6 +21,10 @@ parameters:
   installVsComponents: false
 
 steps:
+  - powershell: |
+      Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.buildPlatform }}\${{ parameters.buildConfiguration }}\BuildLogs"
+    displayName: Set Log directory
+
   - template: prepare-env.yml
     parameters:
       vsComponents: ${{ parameters.vsComponents }}
@@ -42,10 +49,10 @@ steps:
       solution: ${{parameters.project }}
       vsVersion: ${{parameters.msbuildVersion}}
       msbuildArchitecture: ${{parameters.msBuildArchitecture}}
-      platform: $(BuildPlatform)
-      configuration: $(BuildConfiguration)
+      platform: ${{ parameters.buildPlatform }}
+      configuration: ${{ parameters.buildConfiguration }}
       clean: false # Optional
-      maximumCpuCount: false # Optional
+      maximumCpuCount: ${{ parameters.multicoreBuild }} # Optional
       restoreNugetPackages: false # Optional
       createLogFile: true
       logFileVerbosity: detailed
@@ -53,12 +60,14 @@ steps:
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:BaseIntDir=$(BaseIntDir)
+        /p:PublishToolDuringBuild=true
+        /p:EnableSourceLink=true
+        /bl:$(BuildLogDirectory)\MsBuild.binlog
+        /flp1:errorsonly;logfile=$(BuildLogDirectory)\MsBuild.err
+        /flp2:warningsonly;logfile=$(BuildLogDirectory)\MsBuild.wrn
+        /flp3:verbosity=diagnostic;logfile=$(BuildLogDirectory)\MsBuild.log
         ${{parameters.msbuildArguments}}
 
-  - task: PublishBuildArtifacts@1
-    condition:  succeededOrFailed()
-    timeoutInMinutes: 10
-    inputs:
-      pathtoPublish: $(Build.SourcesDirectory)/${{parameters.project}}.log
-      artifactName: Detailed Logs for ${{parameters.project}} $(BuildConfiguration) $(BuildPlatform)
-      publishLocation: 'Container'
+  - template: upload-build-logs.yml
+    parameters:
+      buildLogDirectory: $(BuildLogDirectory)

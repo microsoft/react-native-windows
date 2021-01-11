@@ -1,85 +1,48 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
+ *
+ * @format
  */
-import {
-  REACT_CONTROL_ERROR_TEST_ID,
-  HOME_BUTTON,
-  TREE_DUMP_RESULT,
-} from '../../app/Consts';
 
-export function By(testId: string): WebdriverIO.Element {
+import { TREE_DUMP_RESULT } from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
+
+const ELEMENT_LOADED_TIMEOUT = 60000;
+
+export function by(testId: string): WebdriverIO.Element {
   return $('~' + testId);
 }
 
-export function wait(timeout: number) {
-  return new Promise(resolve => {
-    setTimeout(resolve, timeout);
-  });
-}
-
 export class BasePage {
-  isPageLoaded(): boolean {
-    return this.homeButton.isDisplayed();
+  isElementLoaded(element: string): boolean {
+    return by(element).isDisplayed();
   }
 
-  waitForPageLoaded(timeout?: number) {
+  waitForElementLoaded(element: string) {
     browser.waitUntil(
-      () => {
-        return this.isPagedLoadedOrLoadBundleError();
-      },
-      this.timeoutForPageLoaded(timeout),
-      'Wait for page ' + this.constructor.name + ' timeout'
+      () => this.isElementLoaded(element),
+      ELEMENT_LOADED_TIMEOUT,
+      `Failed to find element with testId "${element}" within ${ELEMENT_LOADED_TIMEOUT}ms`
     );
   }
 
-  getTreeDumpResult() {
-    var testResult = false;
-    const maxWait = 20;
-    var waitCount = 1;
-    do {
-      testResult = this.treeDumpResult.getText() == 'TreeDump:Passed';
-      if (!testResult) {
-        console.log(
-          '####Waiting for treedump comparison result ' +
-            waitCount +
-            '/' +
-            maxWait +
-            '...####'
-        );
-        wait(100);
-        waitCount += 1;
-      }
-    } while (waitCount <= maxWait && !testResult);
-
-    return testResult;
+  waitForElementHidden(element: string) {
+    browser.waitUntil(
+      () => !this.isElementLoaded(element),
+      ELEMENT_LOADED_TIMEOUT,
+      `Element with testId "${element}" was not hidden within ${ELEMENT_LOADED_TIMEOUT}ms`
+    );
   }
 
-  protected timeoutForPageLoaded(currentTimeout?: number) {
-    if (currentTimeout) return currentTimeout;
-    return this.waitforPageTimeout;
-  }
-
-  protected get homeButton() {
-    return By(HOME_BUTTON);
-  }
-
-  private get reactControlErrorMessage() {
-    return By(REACT_CONTROL_ERROR_TEST_ID);
-  }
-
-  private isPagedLoadedOrLoadBundleError(): boolean {
-    if (this.reactControlErrorMessage.isDisplayed()) {
-      throw "ReactControl doesn't load bundle successfully: " +
-        this.reactControlErrorMessage.getText();
-    }
-    return this.isPageLoaded();
+  waitForTreeDumpPassed(errorMessage: string) {
+    browser.waitUntil(
+      () => this.treeDumpResult.getText() === 'TreeDump:Passed',
+      ELEMENT_LOADED_TIMEOUT,
+      errorMessage
+    );
   }
 
   private get treeDumpResult() {
-    return By(TREE_DUMP_RESULT);
+    return by(TREE_DUMP_RESULT);
   }
-
-  // Default timeout for waitForPageLoaded command in PageObject
-  private waitforPageTimeout: number = 10000;
 }

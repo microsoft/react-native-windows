@@ -13,6 +13,7 @@ This control is used to render Glyphs from a Font file, which might be used simi
 ```typescript
 export declare class Glyph extends React.PureComponent<GlyphProps> 
 ```
+<b>Extends:</b> React.PureComponent&lt;GlyphProps&gt;
 
 ## Methods
 

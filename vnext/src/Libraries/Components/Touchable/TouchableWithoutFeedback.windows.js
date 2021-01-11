@@ -10,11 +10,10 @@
 
 'use strict';
 
-// [Windows Remove .js
-import Pressability from '../../Pressability/Pressability';
+import Pressability, {
+  type PressabilityConfig,
+} from '../../Pressability/Pressability';
 import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
-import TVTouchable from './TVTouchable';
-// Windows]
 import type {
   AccessibilityActionEvent,
   AccessibilityActionInfo,
@@ -30,7 +29,6 @@ import type {
   MouseEvent, // [Windows]
   PressEvent,
 } from '../../Types/CoreEventTypes';
-import Platform from '../../Utilities/Platform';
 import View from '../../Components/View/View';
 import * as React from 'react';
 
@@ -67,7 +65,6 @@ type Props = $ReadOnly<{|
   rejectResponderTermination?: ?boolean,
   testID?: ?string,
   touchSoundDisabled?: ?boolean,
-  acceptsKeyboardFocus?: ?boolean, // [Windows]
   accessibilityPosInSet?: ?number, // [Windows]
   accessibilitySetSize?: ?number, // [Windows]
   onAccessibilityTap?: ?() => void, // [Windows]
@@ -110,9 +107,8 @@ const PASSTHROUGH_PROPS = [
 ];
 
 class TouchableWithoutFeedback extends React.Component<Props, State> {
-  _tvTouchable: ?TVTouchable;
-
   state: State = {
+<<<<<<< HEAD
     pressability: new Pressability({
       getHitSlop: () => this.props.hitSlop,
       getLongPressDelayMS: () => {
@@ -164,6 +160,59 @@ class TouchableWithoutFeedback extends React.Component<Props, State> {
         !this.props.rejectResponderTermination,
       onStartShouldSetResponder: () => !this.props.disabled,
     }),
+||||||| 811c767bf
+    pressability: new Pressability({
+      getHitSlop: () => this.props.hitSlop,
+      getLongPressDelayMS: () => {
+        if (this.props.delayLongPress != null) {
+          const maybeNumber = this.props.delayLongPress;
+          if (typeof maybeNumber === 'number') {
+            return maybeNumber;
+          }
+        }
+        return 500;
+      },
+      getPressDelayMS: () => this.props.delayPressIn,
+      getPressOutDelayMS: () => this.props.delayPressOut,
+      getPressRectOffset: () => this.props.pressRetentionOffset,
+      getTouchSoundDisabled: () => this.props.touchSoundDisabled,
+      onBlur: event => {
+        if (this.props.onBlur != null) {
+          this.props.onBlur(event);
+        }
+      },
+      onFocus: event => {
+        if (this.props.onFocus != null) {
+          this.props.onFocus(event);
+        }
+      },
+      onLongPress: event => {
+        if (this.props.onLongPress != null) {
+          this.props.onLongPress(event);
+        }
+      },
+      onPress: event => {
+        if (this.props.onPress != null) {
+          this.props.onPress(event);
+        }
+      },
+      onPressIn: event => {
+        if (this.props.onPressIn != null) {
+          this.props.onPressIn(event);
+        }
+      },
+      onPressOut: event => {
+        if (this.props.onPressOut != null) {
+          this.props.onPressOut(event);
+        }
+      },
+      onResponderTerminationRequest: () =>
+        !this.props.rejectResponderTermination,
+      onStartShouldSetResponder: () => !this.props.disabled,
+    }),
+=======
+    pressability: new Pressability(createPressabilityConfig(this.props)),
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
   };
 
   render(): React.Node {
@@ -188,10 +237,6 @@ class TouchableWithoutFeedback extends React.Component<Props, State> {
     const elementProps: {[string]: mixed, ...} = {
       ...eventHandlersWithoutBlurAndFocus,
       accessible: this.props.accessible !== false,
-      acceptsKeyboardFocus:
-        (this.props.acceptsKeyboardFocus === undefined ||
-          this.props.acceptsKeyboardFocus === true) &&
-        !this.props.disabled, // [Windows]
       focusable:
         this.props.focusable !== false && this.props.onPress !== undefined,
     };
@@ -204,37 +249,35 @@ class TouchableWithoutFeedback extends React.Component<Props, State> {
     return React.cloneElement(element, elementProps, ...children);
   }
 
-  componentDidMount(): void {
-    if (Platform.isTV) {
-      this._tvTouchable = new TVTouchable(this, {
-        getDisabled: () => this.props.disabled === true,
-        onBlur: event => {
-          if (this.props.onBlur != null) {
-            this.props.onBlur(event);
-          }
-        },
-        onFocus: event => {
-          if (this.props.onFocus != null) {
-            this.props.onFocus(event);
-          }
-        },
-        onPress: event => {
-          if (this.props.onPress != null) {
-            this.props.onPress(event);
-          }
-        },
-      });
-    }
+  componentDidUpdate(): void {
+    this.state.pressability.configure(createPressabilityConfig(this.props));
   }
 
   componentWillUnmount(): void {
-    if (Platform.isTV) {
-      if (this._tvTouchable != null) {
-        this._tvTouchable.destroy();
-      }
-    }
     this.state.pressability.reset();
   }
+}
+
+function createPressabilityConfig(props: Props): PressabilityConfig {
+  return {
+    cancelable: !props.rejectResponderTermination,
+    disabled: props.disabled,
+    hitSlop: props.hitSlop,
+    delayLongPress: props.delayLongPress,
+    delayPressIn: props.delayPressIn,
+    delayPressOut: props.delayPressOut,
+    minPressDuration: 0,
+    pressRectOffset: props.pressRetentionOffset,
+    android_disableSound: props.touchSoundDisabled,
+    onBlur: props.onBlur,
+    onFocus: props.onFocus,
+    onLongPress: props.onLongPress,
+    onPress: props.onPress,
+    onPressIn: props.onPressIn,
+    onPressOut: props.onPressOut,
+    onMouseEnter: props.onMouseEnter, // [Windows]
+    onMouseLeave: props.onMouseLeave, // [Windows]
+  };
 }
 
 module.exports = TouchableWithoutFeedback;

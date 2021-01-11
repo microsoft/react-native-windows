@@ -1,0 +1,139 @@
+<UserControl
+    x:Class="Microsoft.ReactNative.DevMenuControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Microsoft.ReactNative"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel
+    xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
+    xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
+    Background='{ThemeResource ContentDialogBackground}'
+    HorizontalAlignment='Center'
+    MaxWidth='900'
+    MinHeight='480'
+    Margin='-10'
+  >
+        <StackPanel.Resources>
+            <StaticResource x:Key='ButtonRevealBackground' ResourceKey='AppBarButtonRevealBackground' />
+            <StaticResource x:Key='ButtonRevealBackgroundPointerOver' ResourceKey='AppBarButtonRevealBackgroundPointerOver' />
+            <StaticResource x:Key='ButtonRevealBackgroundPressed' ResourceKey='AppBarButtonRevealBackgroundPressed' />
+            <StaticResource x:Key='ButtonRevealBackgroundDisabled' ResourceKey='AppBarButtonRevealBackgroundDisabled' />
+            <StaticResource x:Key='ButtonForeground' ResourceKey='AppBarButtonForeground' />
+            <StaticResource x:Key='ButtonForegroundPointerOver' ResourceKey='AppBarButtonForegroundPointerOver' />
+            <StaticResource x:Key='ButtonForegroundPressed' ResourceKey='AppBarButtonForegroundPressed' />
+            <StaticResource x:Key='ButtonForegroundDisabled' ResourceKey='AppBarButtonForegroundDisabled' />
+            <StaticResource x:Key='ButtonRevealBorderBrush' ResourceKey='AppBarButtonRevealBorderBrush' />
+            <StaticResource x:Key='ButtonRevealBorderBrushPointerOver' ResourceKey='AppBarButtonRevealBorderBrushPointerOver' />
+            <StaticResource x:Key='ButtonRevealBorderBrushPressed' ResourceKey='AppBarButtonRevealBorderBrushPressed' />
+            <StaticResource x:Key='ButtonRevealBorderBrushDisabled' ResourceKey='AppBarButtonRevealBorderBrushDisabled' />
+        </StackPanel.Resources>
+        <StackPanel.Transitions>
+            <TransitionCollection>
+                <EntranceThemeTransition />
+            </TransitionCollection>
+        </StackPanel.Transitions>
+        <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='Reload' Style='{StaticResource ButtonRevealStyle}'>
+            <Grid HorizontalAlignment='Stretch'>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width='Auto'/>
+                    <ColumnDefinition Width='*'/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE72C;'/>
+                <TextBlock Grid.Column='1' Grid.Row='0'>Reload Javascript</TextBlock>
+                <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>Restarts the JS instance. Any javascript state will be lost.</TextBlock>
+            </Grid>
+        </Button>
+        <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='RemoteDebug' Style='{StaticResource ButtonRevealStyle}'>
+            <Grid HorizontalAlignment='Stretch'>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width='Auto'/>
+                    <ColumnDefinition Width='*'/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE8AF;'/>
+                <TextBlock Grid.Column='1' Grid.Row='0' x:Name='RemoteDebugText'/>
+                <TextBlock Grid.Column='1' Grid.Row='1' x:Name='RemoteDebugDesc' FontSize='12' Opacity='0.5' TextWrapping='Wrap'/>
+            </Grid>
+        </Button>
+        <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='DirectDebug' Style='{StaticResource ButtonRevealStyle}'>
+            <Grid HorizontalAlignment='Stretch'>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width='Auto'/>
+                    <ColumnDefinition Width='*'/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xEBE8;'/>
+                <TextBlock Grid.Column='1' Grid.Row='0' x:Name='DirectDebugText'/>
+                <TextBlock Grid.Column='1' Grid.Row='1' x:Name='DirectDebugDesc' FontSize='12' Opacity='0.5' TextWrapping='Wrap'/>
+            </Grid>
+        </Button>
+        <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='BreakOnNextLine' Style='{StaticResource ButtonRevealStyle}'>
+            <Grid HorizontalAlignment='Stretch'>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width='Auto'/>
+                    <ColumnDefinition Width='*'/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE769;'/>
+                <TextBlock Grid.Column='1' Grid.Row='0' x:Name='BreakOnNextLineText'/>
+                <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>If using V8/Hermes, the JS engine will break on the first statement, until you attach a debugger to it, and hit continue. (Requires Direct Debugging to be enabled)</TextBlock>
+            </Grid>
+        </Button>
+        <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='FastRefresh' Style='{StaticResource ButtonRevealStyle}'>
+            <Grid HorizontalAlignment='Stretch'>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width='Auto'/>
+                    <ColumnDefinition Width='*'/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xEC58;'/>
+                <TextBlock Grid.Column='1' Grid.Row='0' x:Name='FastRefreshText'/>
+                <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>When loading a bundle from a bundler server that is watching files, this will cause the instance to be reloaded with new bundles when a file changes.</TextBlock>
+            </Grid>
+        </Button>
+        <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='Inspector' Style='{StaticResource ButtonRevealStyle}'>
+            <Grid HorizontalAlignment='Stretch'>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width='Auto'/>
+                    <ColumnDefinition Width='*'/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE773;'/>
+                <TextBlock Grid.Column='1' Grid.Row='0' x:Name='InspectorText'>Toggle Inspector</TextBlock>
+                <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>Will bring up an overlay that lets you tap on any UI element and see information about it</TextBlock>
+            </Grid>
+        </Button>
+        <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='ConfigBundler' Style='{StaticResource ButtonRevealStyle}'>
+            <StackPanel Orientation="Horizontal">
+                <FontIcon  VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE713;'/>
+                <StackPanel>
+                    <TextBlock>Configure Bundler</TextBlock>
+                    <TextBlock FontSize='12' Opacity='0.5' TextWrapping='Wrap'>Provide a custom bundler address, port and entrypoint.</TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </Button>
+        <Button HorizontalAlignment='Stretch' x:Name='Cancel' Style='{StaticResource ButtonRevealStyle}'>Cancel</Button>
+    </StackPanel>
+</UserControl>

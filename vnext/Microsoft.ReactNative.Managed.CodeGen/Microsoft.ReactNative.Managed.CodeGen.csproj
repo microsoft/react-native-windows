@@ -1,0 +1,80 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Platforms>x64;x86;ARM;ARM64</Platforms>
+    <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
+
+    <Platform>x64</Platform>
+    <!-- We are a tool, so on all platforms force win-x64 -->
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+
+    <Nullable>enable</Nullable>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      This file is linked because we want to use this to ensure the names of the code we parse line up and gives us compile errors if not.
+      But we don't want to actually link against the Microsfot.ReactNative.Managed assembly because then we would have a cyclic dependency
+      to compile-time generate the state for that assembly.
+    -->
+    <Compile Include="..\Microsoft.ReactNative.Managed\ReactAttributes.cs" Link="ReactAttributes.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Humanizer" Version="2.8.11" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.7.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.7.0" />
+    <PackageReference Include="RuntimeContracts" Version="0.3.0" />
+
+    <!-- 
+      NuGet decides to pull in packages with issues. There is no seeming way to diagnose why NuGet is pulling in those versions. 
+      Running restore with -Verbosity Detailed and environment variables:
+       * NUGET_RESTORE_MSBUILD_ARGS=/bl:c:\temp\nuget.binlog
+       * NUGET_RESTORE_MSBUILD_VERBOSITY=diag
+      resulted in no mention of version 4.3.0 anywhere until NuGet just starts downloading it.
+      Therefore manually overriding the version so NuGet uses the latest.
+    -->
+     <PackageReference Include="System.Private.Uri" Version="4.3.2" />
+  </ItemGroup>
+
+  <!-- 
+    This target is used to ensure the tool is deployed and can be used from source.
+    It will return all deployed files so the caller can implement incrementality properly
+   -->
+  <Target Name="PublishTool" DependsOnTargets="Build;Publish" Returns="@(_PublishToolAllFiles)">
+    <ItemGroup>
+      <_PublishToolAllRelativePaths Include="$(PublishDir)\**" />
+      <_PublishToolAllFiles Include="@(_PublishToolAllRelativePaths->'%(fullpath)')" />
+    </ItemGroup>
+  </Target>
+
+  <!-- 
+    This target returns the location of the deployed executable.
+  -->
+  <Target Name="GetPublishedToolPath" DependsOnTargets="PublishTool" Returns="@(_PublishedToolExecutable)">
+    <ItemGroup>
+      <_PublishedToolExecutable Include="$([System.IO.Path]::GetFullPath('$(PublishDir)'))$(_DeploymentApplicationManifestIdentity)" />
+    </ItemGroup>
+  </Target>
+
+  <!-- 
+    This is used during the PR build to ensure we have the artifacts published during the build.
+  -->
+  <Target 
+    Name="PublishToolDuringBuild" 
+    DependsOnTargets="Publish" 
+    AfterTargets="Build" 
+    Condition="'$(PublishToolDuringBuild)' == 'true' and '$(Platform)' == 'x64'">
+  </Target>
+
+  <!-- Override -->
+  <Target Name="_CheckForMismatchingPlatform">
+  </Target>
+
+  <Target Name="Deploy" />
+</Project>

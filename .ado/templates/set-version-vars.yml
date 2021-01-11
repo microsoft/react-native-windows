@@ -1,0 +1,10 @@
+# Sets variables for package/commit versions
+
+steps:
+  - task: CmdLine@2
+    displayName: Set version variables
+    name: setVersionEnvVars
+    inputs:
+      script: node ./.ado/scripts/setVersionEnvVars.js
+    env:
+      RUNNER_TEMP: $(Build.StagingDirectory)

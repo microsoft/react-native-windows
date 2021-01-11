@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Flags can be added here to effect the compilation of Microsoft.ReactNative -->
+  <PropertyGroup Label="Microsoft.ReactNative Build Flags">
+    <UseWinUI3>{{useWinUI3}}</UseWinUI3>
+    <UseHermes>{{useHermes}}</UseHermes>
+  </PropertyGroup>
+
+</Project>

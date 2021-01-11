@@ -1,7 +1,0 @@
-**/node_modules
-wdio
-app
-wdio.conf.js
-hasteImpl.js
-metro.config.js
-postinstall.js

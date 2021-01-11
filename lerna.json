@@ -1,5 +1,11 @@
 {
-  "packages": ["packages/*", "vnext"],
+  "packages": [
+    "packages/*",
+    "packages/@react-native-windows/*",
+    "packages/@react-native/*",
+    "packages/@rnw-scripts/*",
+    "vnext"
+  ],
   "npmClient": "yarn",
   "useWorkspaces": true,
   "version": "0.0.0"

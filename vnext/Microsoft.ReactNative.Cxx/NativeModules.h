@@ -1,16 +1,27 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+// IMPORTANT: Before updating this file
+// please read react-native-windows repo:
+// vnext/Microsoft.ReactNative.Cxx/README.md
 
 #pragma once
+<<<<<<< HEAD
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.h>
 
+||||||| 811c767bf
+#include "winrt/Microsoft.ReactNative.h"
+
+=======
+#include <winrt/Windows.Foundation.h>
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 #include "JSValueReader.h"
 #include "JSValueWriter.h"
 #include "ModuleRegistration.h"
 #include "ReactContext.h"
 #include "ReactNonAbiValue.h"
 #include "ReactPromise.h"
+#include "winrt/Microsoft.ReactNative.h"
 
 #include <functional>
 #include <type_traits>
@@ -142,7 +153,7 @@
       "Method '" methodName "' does not match signature" REACT_SHOW_SYNC_METHOD_SIGNATURES(methodName, signatures));
 
 //
-// Code below helps to register React native modules and verify method signatures
+// Code below helps to register React Native modules and verify method signatures
 // against specification.
 //
 
@@ -212,7 +223,7 @@ struct CallbackCreator<TCallback<void(TArgs...)>> {
   static TCallback<void(TArgs...)> Create(
       IJSValueWriter const &argWriter,
       MethodResultCallback const &callback) noexcept {
-    return TCallback([ callback, argWriter ](TArgs... args) noexcept {
+    return TCallback<void(TArgs...)>([ callback, argWriter ](TArgs... args) noexcept {
       WriteArgs(argWriter, std::move(args)...);
       callback(argWriter);
     });
@@ -225,7 +236,7 @@ struct CallbackCreator<TCallback<void(TArgs...) noexcept>> {
   static TCallback<void(TArgs...)> Create(
       IJSValueWriter const &argWriter,
       MethodResultCallback const &callback) noexcept {
-    return TCallback([ callback, argWriter ](TArgs... args) noexcept {
+    return TCallback<void(TArgs...)>([ callback, argWriter ](TArgs... args) noexcept {
       WriteArgs(argWriter, std::move(args)...);
       callback(argWriter);
     });
@@ -266,16 +277,22 @@ constexpr size_t GetPromiseCount() noexcept {
 }
 
 template <class TResult>
-constexpr bool IsVoidResult() noexcept {
+constexpr bool IsVoidResultCheck() noexcept {
   return std::is_void_v<TResult> || std::is_same_v<TResult, winrt::fire_and_forget>;
 }
 
 template <class TResult, class TArg>
 constexpr void ValidateCoroutineArg() noexcept {
   if constexpr (std::is_same_v<TResult, fire_and_forget>) {
+    // unfortunately __PRETTY_FUNCTION__ is not able to be put after a string literal
+    // so no detail information is provided for macOS
     static_assert(
         !std::is_reference_v<TArg> && !std::is_pointer_v<TArg>,
-        "Coroutine parameter must be passed by value for safe access: " __FUNCSIG__);
+        "Coroutine parameter must be passed by value for safe access"
+#ifndef __APPLE__
+        ": " __FUNCSIG__
+#endif
+    );
   }
 }
 
@@ -447,7 +464,7 @@ struct ModuleMethodInfoBase;
 
 template <class TResult, class... TArgs>
 struct ModuleMethodInfoBase<TResult(TArgs...) noexcept> {
-  constexpr static bool IsVoidResult = IsVoidResult<TResult>();
+  constexpr static bool IsVoidResult = IsVoidResultCheck<TResult>();
   constexpr static size_t ArgCount = sizeof...(TArgs);
   using ArgTuple = std::tuple<RemoveConstRef<TArgs>...>;
   constexpr static size_t CallbackCount = GetCallbackCount<ArgTuple>();
@@ -619,7 +636,7 @@ struct ModuleSyncMethodInfo<TResult (TModule::*)(TArgs...) noexcept>
       ArgTuple typedArgs{};
       ReadArgs(argReader, std::get<I>(typedArgs)...);
       TResult result = (module->*method)(std::get<I>(std::move(typedArgs))...);
-      WriteArgs(argWriter, result);
+      WriteValue(argWriter, result);
     };
   }
 
@@ -647,7 +664,7 @@ struct ModuleSyncMethodInfo<TResult (*)(TArgs...) noexcept> : ModuleSyncMethodIn
       ArgTuple typedArgs{};
       ReadArgs(argReader, std::get<I>(typedArgs)...);
       TResult result = (*method)(std::get<I>(std::move(typedArgs))...);
-      WriteArgs(argWriter, result);
+      WriteValue(argWriter, result);
     };
   }
 
@@ -810,7 +827,7 @@ struct ReactMemberInfoIterator {
   static auto HasGetReactMemberAttribute(...) -> std::false_type;
 
   // Visit members in groups of 10 to avoid deep recursion.
-  template <int StartIndex, class TVisitor, int... I>
+  template <size_t StartIndex, class TVisitor, size_t... I>
   constexpr void ForEachMember(TVisitor &visitor, std::index_sequence<I...> *) noexcept {
     if constexpr (decltype(HasGetReactMemberAttribute(visitor, ReactAttributeId<StartIndex>{}))::value) {
       (GetMemberInfo<StartIndex + I>(visitor), ...);
@@ -859,7 +876,7 @@ struct ReactModuleBuilder {
   template <int I>
   void RegisterModule(std::wstring_view moduleName, std::wstring_view eventEmitterName, ReactAttributeId<I>) noexcept {
     RegisterModuleName(moduleName, eventEmitterName);
-    ReactMemberInfoIterator<TModule>{}.ForEachMember<I + 1>(*this);
+    ReactMemberInfoIterator<TModule>{}.template ForEachMember<I + 1>(*this);
   }
 
   void RegisterModuleName(std::wstring_view moduleName, std::wstring_view eventEmitterName = L"") noexcept {
@@ -970,7 +987,7 @@ struct ReactModuleVerifier {
 
   template <int I>
   constexpr void RegisterModule(std::wstring_view /*_*/, std::wstring_view /*_*/, ReactAttributeId<I>) noexcept {
-    ReactMemberInfoIterator<TModule>{}.ForEachMember<I + 1>(*this);
+    ReactMemberInfoIterator<TModule>{}.template ForEachMember<I + 1>(*this);
   }
 
   template <class TMember, class TAttribute, int I>
@@ -1010,9 +1027,9 @@ struct ReactMethodVerifier {
     return verifier.m_result;
   }
 
-  template <class TMember, class TAttribute, int I>
+  template <class TMember, class TAttribute, int I2>
   constexpr void
-  Visit([[maybe_unused]] TMember member, ReactAttributeId<I> /*attributeId*/, TAttribute /*attributeInfo*/) noexcept {
+  Visit([[maybe_unused]] TMember member, ReactAttributeId<I2> /*attributeId*/, TAttribute /*attributeInfo*/) noexcept {
     m_result = ModuleMethodInfo<TMember>::template Match<TMethodSpec>();
   }
 
@@ -1028,9 +1045,9 @@ struct ReactSyncMethodVerifier {
     return verifier.m_result;
   }
 
-  template <class TMember, class TAttribute, int I>
+  template <class TMember, class TAttribute, int I2>
   constexpr void
-  Visit([[maybe_unused]] TMember member, ReactAttributeId<I> /*attributeId*/, TAttribute /*attributeInfo*/) noexcept {
+  Visit([[maybe_unused]] TMember member, ReactAttributeId<I2> /*attributeId*/, TAttribute /*attributeInfo*/) noexcept {
     m_result = ModuleSyncMethodInfo<TMember>::template Match<TMethodSpec>();
   }
 
@@ -1135,9 +1152,18 @@ std::true_type IsBaseOfTemplateTest(std::enable_shared_from_this<T> *);
 std::false_type IsBaseOfTemplateTest(...);
 } // namespace Internal
 
+<<<<<<< HEAD
+// Check if type T is inherited from std::enable_shared_form_this<U>.
+// We support the scenario when the T and U are different types.
+||||||| 811c767bf
+=======
 // Check if type T is inherited from std::enable_shared_form_this<U>.
 // We support the scenario when the T and U are different types.
 template <class T>
+using IsEnabledSharedFromThisT = decltype(Internal::IsBaseOfTemplateTest((T *)nullptr));
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
+template <class T>
+<<<<<<< HEAD
 using IsEnabledSharedFromThisT = decltype(Internal::IsBaseOfTemplateTest((T *)nullptr));
 template <class T>
 inline constexpr bool IsEnabledSharedFromThisV = IsEnabledSharedFromThisT<T>::value;
@@ -1154,6 +1180,25 @@ inline constexpr auto GetReactModuleFactory(TModule * /*moduleNullPtr*/, int * /
 template <class TModule, std::enable_if_t<IsEnabledSharedFromThisV<TModule>, int> = 0>
 inline constexpr auto GetReactModuleFactory(TModule * /*moduleNullPtr*/, int * /*useDefault*/) noexcept {
   return &MakeDefaultSharedPtrReactModuleWrapper<TModule>;
+||||||| 811c767bf
+inline T &BoxedValue<T>::GetImpl(IBoxedValue &module) noexcept {
+  return *reinterpret_cast<T *>(module.GetPtr());
+=======
+inline constexpr bool IsEnabledSharedFromThisV = IsEnabledSharedFromThisT<T>::value;
+
+// Default implementation of factory getter for a TModule type **not** inherited from std::enable_shared_form_this.
+// For the custom implementation define GetReactModuleFactory with the last parameter to be 'int' (not 'int *').
+template <class TModule, std::enable_if_t<!IsEnabledSharedFromThisV<TModule>, int> = 0>
+inline constexpr auto GetReactModuleFactory(TModule * /*moduleNullPtr*/, int * /*useDefault*/) noexcept {
+  return &MakeDefaultReactModuleWrapper<TModule>;
+}
+
+// Default implementation of factory getter for a TModule type inherited from std::enable_shared_form_this.
+// For the custom implementation define GetReactModuleFactory with the last parameter to be 'int' (not 'int *').
+template <class TModule, std::enable_if_t<IsEnabledSharedFromThisV<TModule>, int> = 0>
+inline constexpr auto GetReactModuleFactory(TModule * /*moduleNullPtr*/, int * /*useDefault*/) noexcept {
+  return &MakeDefaultSharedPtrReactModuleWrapper<TModule>;
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 }
 
 // Type traits for TModule. It defines a factory to create the module and its ABI-safe wrapper.

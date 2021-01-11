@@ -64,22 +64,28 @@ function translateSpecFunctionParam(
     case 'FunctionTypeAnnotation': {
       // Ideally we'd get more information about the expected parameters of the callback
       // But the current schema doesn't seem to provide the necessary information.
-      return 'Callback<JSValue>';
+      return 'Callback<React::JSValue>';
     }
     case 'ArrayTypeAnnotation':
       // Ideally we'd get more information about the expected type of the array
       // But the current schema doesn't seem to provide the necessary information.
-      return 'JSValueArray';
+      return 'React::JSValueArray';
     case 'GenericObjectTypeAnnotation':
-      return 'JSValueObject';
+      return 'React::JSValueObject';
     case 'ObjectTypeAnnotation':
       // TODO we have more information here, and could create a more specific type
-      return 'JSValueObject';
+      return 'React::JSValueObject';
+    case 'ReservedFunctionValueTypeAnnotation':
+      // (#6597)
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (param.typeAnnotation.name !== 'RootTag')
+        throw new Error(
+          `Unknown reserved function: ${param.typeAnnotation.name} in translateSpecFunctionParam`,
+        );
+      return 'double';
     default:
       throw new Error(
-        `Unhandled type in translateSpecFunctionParam: ${
-          param.typeAnnotation.type
-        }`,
+        `Unhandled type in translateSpecFunctionParam: ${param.typeAnnotation.type}`,
       );
   }
 }
@@ -109,11 +115,17 @@ function translateFunctionParam(param: FunctionTypeAnnotationParam): string {
     case 'ObjectTypeAnnotation':
       // TODO we have more information here, and could create a more specific type
       return 'React::JSValueObject &&';
+    case 'ReservedFunctionValueTypeAnnotation':
+      // (#6597)
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (param.typeAnnotation.name !== 'RootTag')
+        throw new Error(
+          `Unknown reserved function: ${param.typeAnnotation.name} in translateFunctionParam`,
+        );
+      return 'double';
     default:
       throw new Error(
-        `Unhandled type in translateFunctionParam: ${
-          param.typeAnnotation.type
-        }`,
+        `Unhandled type in translateFunctionParam: ${param.typeAnnotation.type} in translateFunctionParam`,
       );
   }
 }
@@ -140,11 +152,21 @@ function translateSpecReturnType(
     case 'ArrayTypeAnnotation':
       // Ideally we'd get more information about the expected type of the array
       // But the current schema doesn't seem to provide the necessary information.
-      return 'JSValueArray';
+      return 'React::JSValueArray';
     case 'GenericObjectTypeAnnotation':
-      return 'JSValueObject';
+      return 'React::JSValueObject';
+    case 'ReservedFunctionValueTypeAnnotation':
+      // (#6597)
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (type.name !== 'RootTag')
+        throw new Error(
+          `Unknown reserved function: ${type.name} in translateSpecReturnType`,
+        );
+      return 'double';
     default:
-      throw new Error(`Unhandled type: ${type.type}`);
+      throw new Error(
+        `Unhandled type in translateSpecReturnType: ${type.type}`,
+      );
   }
 }
 
@@ -173,6 +195,14 @@ function translateImplReturnType(
       return 'React::JSValueArray';
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValueObject';
+    case 'ReservedFunctionValueTypeAnnotation':
+      // (#6597)
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (type.name !== 'RootTag')
+        throw new Error(
+          `Unknown reserved function: ${type.name} in translateSpecReturnType`,
+        );
+      return 'double';
     default:
       throw new Error(
         `Unhandled type in translateImplReturnType: ${type.type}`,
@@ -210,20 +240,20 @@ function isPromise(prop: MethodTypeShape) {
 }
 
 function getPossibleMethodSignatures(prop: MethodTypeShape): string[] {
-  let args = translateArgs(prop.typeAnnotation.params);
+  const args = translateArgs(prop.typeAnnotation.params);
   if (isPromise(prop)) {
     // Sadly, currently, the schema doesn't currently provide us information on the type of the promise.
     args.push('React::ReactPromise<React::JSValue> &&result');
   }
 
   // TODO be much more exhastive on the possible method signatures that can be used..
-  let sig = `REACT_${isMethodSync(prop) ? 'SYNC_' : ''}METHOD(${
+  const sig = `REACT_${isMethodSync(prop) ? 'SYNC_' : ''}METHOD(${
     prop.name
   }) ${translateImplReturnType(prop.typeAnnotation.returnTypeAnnotation)} ${
     prop.name
   }(${args.join(', ')}) noexcept { /* implementation */ }}`;
 
-  let staticsig = `REACT_${isMethodSync(prop) ? 'SYNC_' : ''}METHOD(${
+  const staticsig = `REACT_${isMethodSync(prop) ? 'SYNC_' : ''}METHOD(${
     prop.name
   }) static ${translateImplReturnType(
     prop.typeAnnotation.returnTypeAnnotation,
@@ -246,7 +276,7 @@ function renderProperties(
   return properties
     .filter(prop => prop.name !== 'getConstants')
     .map((prop, index) => {
-      let params = prop.typeAnnotation.params;
+      const params = prop.typeAnnotation.params;
 
       const traversedArgs = translateSpecArgs(params);
 
@@ -281,13 +311,13 @@ export function createNM2Generator({namespace}: {namespace: string}) {
     schema: SchemaType,
     _moduleSpecName: string,
   ): FilesOutput => {
-    let files = new Map<string, string>();
+    const files = new Map<string, string>();
 
     const nativeModules = Object.keys(schema.modules)
       .map(moduleName => {
         const modules = schema.modules[moduleName].nativeModules;
-        if (modules == null) {
-          return null;
+        if (!modules) {
+          throw new Error('modules does not exist');
         }
 
         return modules;

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 #pragma once
 
@@ -24,6 +24,15 @@ struct ReactRootView : ReactRootViewT<ReactRootView> {
   ReactNative::JSValueArgWriter InitialProps() noexcept;
   void InitialProps(ReactNative::JSValueArgWriter const &value) noexcept;
 
+  // property IsPerspectiveEnabled
+  bool IsPerspectiveEnabled() const noexcept {
+    return m_isPerspectiveEnabled;
+  }
+  void IsPerspectiveEnabled(bool value) noexcept {
+    m_isPerspectiveEnabled = value;
+    UpdatePerspective();
+  }
+
   void ReloadView() noexcept;
 
  private:
@@ -35,8 +44,10 @@ struct ReactRootView : ReactRootViewT<ReactRootView> {
   hstring m_componentName;
   ReactNative::JSValueArgWriter m_initialPropsWriter;
   folly::dynamic m_initialProps;
-
+  bool m_isPerspectiveEnabled{true};
   std::shared_ptr<react::uwp::ReactRootControl> m_rootControl;
+
+  void UpdatePerspective();
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

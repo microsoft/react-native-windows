@@ -4,13 +4,38 @@
 const fs = require('fs');
 const path = require('path');
 
+const rnWin32Path = fs.realpathSync(
+  path.dirname(require.resolve('@office-iss/react-native-win32/package.json')),
+);
+const rnwTesterPath = fs.realpathSync(
+  path.dirname(require.resolve('react-native-win32-tester/package.json')),
+);
+
 module.exports = {
   // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
   watchFolders: [
     // Include hoisted modules
     path.resolve(__dirname, '../../node_modules'),
+    rnwTesterPath,
+    rnWin32Path,
   ],
 
+<<<<<<< HEAD
+||||||| 811c767bf
+  resolver: {
+    resolveRequest: require('./metro-react-native-platform').reactNativePlatformResolver(
+      {win32: '@office-iss/react-native-win32'},
+    ),
+  },
+=======
+  resolver: {
+    extraNodeModules: {
+      '@office-iss/react-native-win32': rnWin32Path,
+      'react-native-win32-tester': rnwTesterPath,
+    },
+  },
+
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
   transformer: {
     getTransformOptions: async () => ({
       transform: {

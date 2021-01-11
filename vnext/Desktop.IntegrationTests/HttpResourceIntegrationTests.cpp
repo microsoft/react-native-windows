@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
@@ -17,7 +17,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::IsFalse(nullptr == rc);
   }
 
-  TEST_METHOD(RequestGetSucceeds) {
+  // This test always fails because the requested resource does not exist.
+  // TEST_METHOD(RequestGetSucceeds) {
+  void Disable_RequestGetSucceeds() {
     auto rc = IHttpResource::Make();
     bool sent = false;
     bool received = false;

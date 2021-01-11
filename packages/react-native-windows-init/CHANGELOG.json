@@ -2,6 +2,558 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 05 Jan 2021 05:06:42 GMT",
+      "tag": "react-native-windows-init_v0.1.43",
+      "version": "0.1.43",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Rework error reporting/telemetry to only log the minimal amount of data",
+            "author": "asklar@microsoft.com",
+            "commit": "226fc2c5f4fc300ad90bfc413d275e0fe0adf87f",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Dec 2020 03:20:37 GMT",
+      "tag": "react-native-windows-init_v0.1.42",
+      "version": "0.1.42",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow unreleased RNW versions with react-native-windows-init --useDevMode",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fa34591ac86ea25e1e92a807864ba71480046a27",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 04 Dec 2020 00:10:06 GMT",
+      "tag": "react-native-windows-init_v0.1.41",
+      "version": "0.1.41",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Force republish",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d44b2f23bec2319aa2d4fe7ac0aeadd772b9d579",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Dec 2020 21:43:48 GMT",
+      "tag": "react-native-windows-init_v0.1.40",
+      "version": "0.1.40",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update cli telemetry defaults",
+            "author": "jthysell@microsoft.com",
+            "commit": "6b349f3d89cc055157b3a8d0f0e75622082878c6",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Dec 2020 05:05:07 GMT",
+      "tag": "react-native-windows-init_v0.1.38",
+      "version": "0.1.38",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use strings for telem exit codes",
+            "author": "ngerlem@microsoft.com",
+            "commit": "55f266b1c6257b5503122b5fea8e1fa663127891",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Nov 2020 05:08:17 GMT",
+      "tag": "react-native-windows-init_v0.1.37",
+      "version": "0.1.37",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add more eslint rules",
+            "author": "ngerlem@microsoft.com",
+            "commit": "adc0617836a0fba4112646595645e65f93e0106f",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "react-native-windows-init_v0.1.36",
+      "version": "0.1.36",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Nov 2020 05:05:57 GMT",
+      "tag": "react-native-windows-init_v0.1.35",
+      "version": "0.1.35",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Disable telemetry in other CI systems",
+            "author": "asklar@microsoft.com",
+            "commit": "bcda5759d5d1bed770e7a8524e5cc3f94cbc0c6a",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Nov 2020 05:05:29 GMT",
+      "tag": "react-native-windows-init_v0.1.34",
+      "version": "0.1.34",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Don't initialize AppInsights when passing no-telemetry",
+            "author": "asklar@microsoft.com",
+            "commit": "1893d23fce2daedbf55ae90c5f6775141400f401",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Nov 2020 05:04:58 GMT",
+      "tag": "react-native-windows-init_v0.1.33",
+      "version": "0.1.33",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Bundling With \"react-native-windows-init --useDevMode\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7b32b0f8664e30335c1057df27ea6f83412138a0",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Nov 2020 05:05:45 GMT",
+      "tag": "react-native-windows-init_v0.1.32",
+      "version": "0.1.32",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add telemetry to react-native-windows CLI",
+            "author": "asklar@microsoft.com",
+            "commit": "61cc42e7f9b4dec313597fba6e99c6f22badbf7e",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Oct 2020 05:05:49 GMT",
+      "tag": "react-native-windows-init_v0.1.31",
+      "version": "0.1.31",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow Hermes to be used in C++ projects without modifying source code",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7e9d80e59fd0b8ca7549eda1a7d5cefc32d6cfbe",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Oct 2020 05:06:32 GMT",
+      "tag": "react-native-windows-init_v0.1.30",
+      "version": "0.1.30",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update just-scipts (remove npm-registry-fetch)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "00b2d84b8effce0b7405a67bd4903eed88cb9aaf",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "react-native-windows-init_v0.1.30",
+      "version": "0.1.30",
+      "comments": {
+        "patch": [
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 24 Sep 2020 05:06:21 GMT",
+      "tag": "react-native-windows-init_v0.1.29",
+      "version": "0.1.29",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Zero-Config Tests for CLI, react-native-windows-init, react-native-windows-codegen",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5a96480f422aa7c731d7febb900a3962e1265c08",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "react-native-windows-init_v0.1.28",
+      "version": "0.1.28",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 19 Sep 2020 05:05:08 GMT",
+      "tag": "react-native-windows-init_v0.1.27",
+      "version": "0.1.27",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Adding new native module template support to react-native-windows-init",
+            "author": "jthysell@microsoft.com",
+            "commit": "c7a42af99fb614652d446ebaee12ea689ade4458",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Sep 2020 22:03:37 GMT",
+      "tag": "react-native-windows-init_v0.1.26",
+      "version": "0.1.26",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Reconcile package versions",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8adedcfb2ce6492a4a7ede59e0f9188dc205d659",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "react-native-windows-init_v0.1.22",
+      "version": "0.1.22",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to eslint 6.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 31 Jul 2020 05:05:10 GMT",
+      "tag": "react-native-windows-init_v0.1.22",
+      "version": "0.1.22",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix devmode for react-native-windows-init to add the package to packages.config as well",
+            "author": "dannyvv@microsoft.com",
+            "commit": "692c20db03f2246e10ae8f1767952645ad52050f",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Jul 2020 05:06:13 GMT",
+      "tag": "react-native-windows-init_v0.1.21",
+      "version": "0.1.21",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Separate local-cli into its own package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fbb4352a015533ebaa77a8d3ea497850a0f67c3f",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Jul 2020 01:27:37 GMT",
+      "tag": "react-native-windows-init_v0.1.19",
+      "version": "0.1.19",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Rever to new experimentalNuGetDependency Naming",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8c9be4d325312d97ce19aeb4ee7ab3801b7b5a20",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Jul 2020 05:05:23 GMT",
+      "tag": "react-native-windows-init_v0.1.19-0",
+      "version": "0.1.19-0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable experimental usage of Microsoft.ReactNative.Managed as a nuget package",
+            "author": "dannyvv@microsoft.com",
+            "commit": "5570885a6573062b94acea238ee2c5348fac98dc",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Jul 2020 23:11:46 GMT",
+      "tag": "react-native-windows-init_v0.1.18",
+      "version": "0.1.18",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add watch script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "805f69dd9e566185d27890bc852abe766f035dfd",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Jul 2020 05:05:03 GMT",
+      "tag": "react-native-windows-init_v0.1.17",
+      "version": "0.1.17",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Replace Custom Generator Prompt With Inquirer",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a25a8294ff602cc457e34dfd38cae10650092810",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Jul 2020 05:06:19 GMT",
+      "tag": "react-native-windows-init_v0.1.16",
+      "version": "0.1.16",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Share eslint and Typescript configs across packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "623ac46c0ade7fb8564e3a0c9e8345768c18feb6",
+            "package": "react-native-windows-init"
+          },
+          {
+            "comment": "Migrate the local-cli to TypeScript",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5b28bba588d7c2edd076a60353accad9cbe37b34",
+            "package": "react-native-windows-init"
+          },
+          {
+            "comment": "Fix a few more casing typos",
+            "author": "dannyvv@microsoft.com",
+            "commit": "532e299688d745c0d7c5d8790a681f60813eb678",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 28 Jun 2020 05:04:51 GMT",
+      "tag": "react-native-windows-init_v0.1.15",
+      "version": "0.1.15",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix casing typos in NuGet and MSBuild",
+            "author": "dannyvv@microsoft.com",
+            "commit": "a4ed167972e14ff5bc46c22bac7939bf9153b85d",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 26 Jun 2020 23:59:27 GMT",
+      "tag": "react-native-windows-init_v0.1.14",
+      "version": "0.1.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Upgrade React Native to 3/22 Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0727ffcb907673749ddbf43e7a7c0922957c9e82",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 25 Jun 2020 14:32:50 GMT",
+      "tag": "react-native-windows-init_v0.1.13",
+      "version": "0.1.13",
+      "comments": {
+        "patch": [
+          {
+            "comment": "make cli strict and pass true to trailing bool param",
+            "author": "asklar@microsoft.com",
+            "commit": "757224a501649082d3e037f959591b05b3a495c3",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 24 Jun 2020 11:51:11 GMT",
+      "tag": "react-native-windows-init_v0.1.12",
+      "version": "0.1.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix issue running react-native-windows-init with yarn",
+            "author": "acoates@microsoft.com",
+            "commit": "b165f0cb3979a1eadbc7c54a056558779254f44e",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 24 Jun 2020 00:07:20 GMT",
+      "tag": "react-native-windows-init_v0.1.11",
+      "version": "0.1.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Prevent --useWinUI3 and --experimentalNugetDependency from being used at the same time in react-native-windows-init",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d20915e57295038ccd49178766e580cb952c8ed4",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 19 Jun 2020 00:07:58 GMT",
+      "tag": "react-native-windows-init_v0.1.10",
+      "version": "0.1.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "This change is only intended for developers working on react-native-windows, it is not intended for end-developers 'using' react-native-windows.",
+            "author": "dannyvv@microsoft.com",
+            "commit": "15f91528465b44cbff29a11ecb520694e4f2fcfc",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Jun 2020 00:33:44 GMT",
+      "tag": "react-native-windows-init_v0.1.9",
+      "version": "0.1.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix support for `--namespace` on react-native-windows init for cpp",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7d7b6fb2b392acc7956e32398ac779e78ad0e4cf",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 07 Jun 2020 00:05:23 GMT",
+      "tag": "react-native-windows-init_v0.1.8",
+      "version": "0.1.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update template gen to use mustache",
+            "author": "dannyvv@microsoft.com",
+            "commit": "1e39e42bc448117c4e981b41c7acdfd29f01417c",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 15 May 2020 00:04:44 GMT",
+      "tag": "react-native-windows-init_v0.1.7",
+      "version": "0.1.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "winui3 option for app project template",
+            "author": "asklar@microsoft.com",
+            "commit": "7de1f3843a9754c7fbf744bf3e556fdca78472c1",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 May 2020 00:05:03 GMT",
+      "tag": "react-native-windows-init_v0.1.6",
+      "version": "0.1.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Support --version file:<path> for running init against local changes",
+            "author": "acoates@microsoft.com",
+            "commit": "9bce53ea8849bc462817cc09910266c0183b2cc8",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Apr 2020 00:04:29 GMT",
       "tag": "react-native-windows-init_v0.1.5",
       "version": "0.1.5",

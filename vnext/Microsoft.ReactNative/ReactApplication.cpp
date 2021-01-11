@@ -1,32 +1,47 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
 #include "ReactApplication.h"
 #include "ReactApplication.g.cpp"
+<<<<<<< HEAD
 
 #include "IReactDispatcher.h"
+||||||| 811c767bf
+=======
+#include "winrt/Microsoft.ReactNative.h"
+
+#include "IReactDispatcher.h"
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 #include "Modules/LinkingManagerModule.h"
 #include "ReactNativeHost.h"
 
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Navigation.h>
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.UI.Core.h>
+<<<<<<< HEAD
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Navigation.h>
+||||||| 811c767bf
+#include <winrt/Windows.UI.Xaml.Navigation.h>
+=======
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 
 using namespace winrt;
 using namespace Windows::ApplicationModel;
-using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::UI::Core;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Navigation;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Navigation;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
+<<<<<<< HEAD
 ReactApplication::ReactApplication() = default;
 
 ReactApplication::ReactApplication(IInspectable const &outer) noexcept : ReactApplication{} {
@@ -38,6 +53,20 @@ ReactApplication::ReactApplication(IInspectable const &outer) noexcept : ReactAp
             f.CreateInstance(outer ? outer : static_cast<IInspectable const &>(*this), this->m_inner);
       });
 
+||||||| 811c767bf
+ReactApplication::ReactApplication() noexcept {
+=======
+ReactApplication::ReactApplication() = default;
+
+ReactApplication::ReactApplication(IInspectable const &outer) noexcept : ReactApplication{} {
+  // The factory is usually called in the base generated class. We call it here to pass correct
+  // 'outer' interface to enable inheritance from the ReactApplication class in user code.
+  impl::call_factory<xaml::Application, xaml::IApplicationFactory>([&](xaml::IApplicationFactory const &f) {
+    [[maybe_unused]] auto winrt_impl_discarded =
+        f.CreateInstance(outer ? outer : static_cast<IInspectable const &>(*this), this->m_inner);
+  });
+
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
   Suspending({this, &ReactApplication::OnSuspending});
 
 #if defined _DEBUG && !defined DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION
@@ -64,34 +93,16 @@ void ReactApplication::InstanceSettings(ReactNative::ReactInstanceSettings const
 }
 
 IVector<IReactPackageProvider> ReactApplication::PackageProviders() noexcept {
-  if (!m_packageProviders) {
-    m_packageProviders = single_threaded_vector<IReactPackageProvider>();
-  }
-
-  return m_packageProviders;
-}
-
-void ReactApplication::PackageProviders(
-    Windows::Foundation::Collections::IVector<IReactPackageProvider> const &value) noexcept {
-  m_packageProviders = value;
+  return InstanceSettings().PackageProviders();
 }
 
 ReactNative::ReactNativeHost ReactApplication::Host() noexcept {
   if (!m_host) {
     m_host = make<ReactNativeHost>();
     m_host.InstanceSettings(InstanceSettings());
-    m_host.PackageProviders(PackageProviders());
   }
 
   return m_host;
-}
-
-hstring ReactApplication::MainComponentName() noexcept {
-  return InstanceSettings().MainComponentName();
-}
-
-void ReactApplication::MainComponentName(hstring const &value) noexcept {
-  InstanceSettings().MainComponentName(value);
 }
 
 bool ReactApplication::UseDeveloperSupport() noexcept {
@@ -118,18 +129,64 @@ void ReactApplication::JavaScriptBundleFile(hstring const &value) noexcept {
   InstanceSettings().JavaScriptBundleFile(value);
 }
 
-void ReactApplication::OnActivated(IActivatedEventArgs const &e) {
-  if (e.Kind() == ActivationKind::Protocol) {
-    auto protocolActivatedEventArgs{e.as<ProtocolActivatedEventArgs>()};
+void ReactApplication::OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
+  if (e.Kind() == Windows::ApplicationModel::Activation::ActivationKind::Protocol) {
+    auto protocolActivatedEventArgs{e.as<Windows::ApplicationModel::Activation::ProtocolActivatedEventArgs>()};
     react::uwp::LinkingManagerModule::OpenUri(protocolActivatedEventArgs.Uri());
-    this->OnCreate(e);
   }
+  this->OnCreate(e);
 }
 
+<<<<<<< HEAD
 void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
   base_type::OnLaunched(e);
   // auto args = std::wstring(e.Arguments().c_str());
+||||||| 811c767bf
+void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
+  Super::OnLaunched(e);
+  // auto args = std::wstring(e.Arguments().c_str());
+=======
+void ReactApplication::OnLaunched(activation::LaunchActivatedEventArgs const &e_) {
+  base_type::OnLaunched(e_);
+  Windows::ApplicationModel::Activation::LaunchActivatedEventArgs e =
+#ifdef USE_WINUI3
+      e_.UWPLaunchActivatedEventArgs();
+#else
+      e_;
+#endif // USE_WINUI3
+
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
   this->OnCreate(e);
+}
+
+void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const &arguments) noexcept {
+  Microsoft::ReactNative::implementation::ReactNativeHost *hostImpl{
+      get_self<Microsoft::ReactNative::implementation::ReactNativeHost>(host)};
+  if (!arguments.empty() /*&& host.HasInstance()*/) {
+    constexpr wchar_t delimiter = L' ';
+    std::wistringstream argumentStream(arguments);
+    std::wstring token;
+    while (std::getline(argumentStream, token, delimiter)) {
+      if (token == L"-?") {
+        std::cout << "Options:" << std::endl
+                  << "  --direct-debugging <port>    Enable direct debugging on specified port." << std::endl;
+      }
+#if defined _DEBUG
+      else if (token == L"--direct-debugging") {
+        if (std::getline(argumentStream, token, delimiter)) {
+          const uint16_t port = static_cast<uint16_t>(std::wcstoul(token.c_str(), nullptr, 10));
+          hostImpl->InstanceSettings().UseWebDebugger(false);
+          hostImpl->InstanceSettings().UseDirectDebugger(true);
+          hostImpl->InstanceSettings().DebuggerBreakOnNextLine(true);
+          hostImpl->InstanceSettings().DebuggerPort(port);
+        }
+      } else if (token == L"--remote-debugging") {
+        hostImpl->InstanceSettings().UseWebDebugger(true);
+        hostImpl->InstanceSettings().UseDirectDebugger(false);
+      }
+#endif
+    }
+  }
 }
 
 /// <summary>
@@ -138,26 +195,14 @@ void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
 /// specific file.
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
-void ReactApplication::OnCreate(IActivatedEventArgs const &e) {
-  if (!m_delegate) {
-    m_delegate = CreateReactApplicationDelegate();
-  }
-
-#if defined _DEBUG
-  if (IsDebuggerPresent()) {
-    this->DebugSettings().EnableFrameRateCounter(TRUE);
-
-    SystemNavigationManager::GetForCurrentView().AppViewBackButtonVisibility(AppViewBackButtonVisibility::Visible);
-  }
-#endif
-
+void ReactApplication::OnCreate(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
   bool isPrelaunchActivated = false;
-  if (auto prelauchActivatedArgs = e.try_as<IPrelaunchActivatedEventArgs>()) {
+  if (auto prelauchActivatedArgs = e.try_as<Windows::ApplicationModel::Activation::IPrelaunchActivatedEventArgs>()) {
     isPrelaunchActivated = prelauchActivatedArgs.PrelaunchActivated();
   }
 
   hstring args;
-  if (auto lauchActivatedArgs = e.try_as<ILaunchActivatedEventArgs>()) {
+  if (auto lauchActivatedArgs = e.try_as<activation::ILaunchActivatedEventArgs>()) {
     args = lauchActivatedArgs.Arguments();
   }
 
@@ -169,45 +214,29 @@ void ReactApplication::OnCreate(IActivatedEventArgs const &e) {
 
   // Do not repeat app initialization when the Window already has content,
   // just ensure that the window is active
-  if (rootFrame == nullptr) {
+  bool previouslyInitialized = (rootFrame != nullptr);
+  if (!previouslyInitialized) {
     // Create a Frame to act as the navigation context and associate it with
     // a SuspensionManager key
     rootFrame = Frame();
 
     rootFrame.NavigationFailed({this, &ReactApplication::OnNavigationFailed});
 
-    if (e.PreviousExecutionState() == ApplicationExecutionState::Terminated) {
+    if (e.PreviousExecutionState() == Windows::ApplicationModel::Activation::ApplicationExecutionState::Terminated) {
       // Restore the saved session state only when appropriate, scheduling the
       // final launch steps after the restore is complete
     }
-
-    if (!isPrelaunchActivated) {
-      if (rootFrame.Content() == nullptr) {
-        // When the navigation stack isn't restored navigate to the first page,
-        // configuring the new page by passing required information as a
-        // navigation parameter
-        content = m_delegate.OnCreate(args);
-        rootFrame.Content(content);
-      }
-
-      // Place the frame in the current Window
-      Window::Current().Content(rootFrame);
-      // Ensure the current window is active
-      Window::Current().Activate();
-    }
-  } else {
-    if (!isPrelaunchActivated) {
-      if (rootFrame.Content() == nullptr) {
-        // When the navigation stack isn't restored navigate to the first page,
-        // configuring the new page by passing required information as a
-        // navigation parameter
-        content = m_delegate.OnCreate(args);
-        rootFrame.Content(content);
-      }
-      // Ensure the current window is active
-      Window::Current().Activate();
-    }
+    Window::Current().Content(rootFrame);
   }
+
+  ApplyArguments(Host(), args.c_str());
+
+  if (!previouslyInitialized) {
+    // Nudge the ReactNativeHost to create the instance and wrapping context
+    Host().ReloadInstance();
+  }
+
+  Window::Current().Activate();
 }
 
 /// <summary>
@@ -230,10 +259,6 @@ void ReactApplication::OnSuspending(
 /// <param name="e">Details about the navigation failure</param>
 void ReactApplication::OnNavigationFailed(IInspectable const &, NavigationFailedEventArgs const &e) {
   throw hresult_error(E_FAIL, hstring(L"Failed to load Page ") + e.SourcePageType().Name);
-}
-
-ReactApplicationDelegate __stdcall ReactApplication::CreateReactApplicationDelegate() {
-  return ReactApplicationDelegate(*this);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

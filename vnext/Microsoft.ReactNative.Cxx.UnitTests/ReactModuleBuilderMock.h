@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -7,14 +7,13 @@
 #include "future/future.h"
 
 #include <functional>
+#include "CppWinRTIncludes.h"
 #include "JSValue.h"
 #include "NativeModules.h"
 
 #undef GetCurrentTime
-#include "Windows.UI.Xaml.h"
 
 using namespace winrt;
-using namespace Windows::UI::Xaml;
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -26,6 +25,7 @@ struct ReactModuleBuilderMock {
 
   template <class... TArgs, class... TReasolveArgs>
   Mso::Future<bool>
+<<<<<<< HEAD
   Call1(std::wstring const &methodName, std::function<void(TReasolveArgs...)> &&resolve, TArgs &&... args) noexcept;
 
   template <class... TArgs, class... TResolveArgs, class... TRejectArgs>
@@ -33,6 +33,34 @@ struct ReactModuleBuilderMock {
       std::wstring const &methodName,
       std::function<void(TResolveArgs...)> const &resolve,
       std::function<void(TRejectArgs...)> const &reject,
+||||||| 811c767bf
+  Call1(std::wstring const &methodName, std::function<void(TResult)> &&resolve, TArgs &&... args) noexcept;
+
+  template <class... TArgs>
+  Mso::Future<bool>
+  Call1(std::wstring const &methodName, std::function<void()> const &resolve, TArgs &&... args) noexcept;
+
+  template <class TResult, class TError, class... TArgs>
+  Mso::Future<bool> Call2(
+      std::wstring const &methodName,
+      std::function<void(TResult)> const &resolve,
+      std::function<void(TError)> const &reject,
+      TArgs &&... args) noexcept;
+
+  template <class TError, class... TArgs>
+  Mso::Future<bool> Call2(
+      std::wstring const &methodName,
+      std::function<void()> const &resolve,
+      std::function<void(TError)> const &reject,
+=======
+  Call1(std::wstring const &methodName, std::function<void(TReasolveArgs...)> &&resolve, TArgs &&... args) noexcept;
+
+  template <class... TArgs, class... TResolveArgs, class... TRejectArgs>
+  Mso::Future<bool> Call2(
+      std::wstring const &methodName,
+      std::function<void(TResolveArgs...)> const &resolve,
+      std::function<void(TRejectArgs...)> const &reject,
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
       TArgs &&... args) noexcept;
 
   template <class TResult, class... TArgs>
@@ -112,6 +140,7 @@ struct ReactModuleBuilderMock {
 struct ReactContextMock : implements<ReactContextMock, IReactContext> {
   ReactContextMock(ReactModuleBuilderMock *builderMock) noexcept;
 
+<<<<<<< HEAD
   IReactPropertyBag Properties() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
@@ -120,8 +149,35 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
     VerifyElseCrashSz(false, "Not implemented");
   }
 
+||||||| 811c767bf
+=======
+  IReactSettingsSnapshot SettingsSnapshot() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  IReactPropertyBag Properties() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  IReactNotificationService Notifications() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  IReactDispatcher UIDispatcher() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  IReactDispatcher JSDispatcher() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  IInspectable JSRuntime() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
   void DispatchEvent(
-      FrameworkElement const & /*view*/,
+      xaml::FrameworkElement const & /*view*/,
       hstring const & /*eventName*/,
       JSValueArgWriter const & /*eventDataArgWriter*/) noexcept {}
 
@@ -134,6 +190,46 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
       hstring const &eventEmitterName,
       hstring const &eventName,
       JSValueArgWriter const &paramsArgWriter) noexcept;
+
+  uint16_t DebuggerPort() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  bool DebuggerBreakOnNextLine() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  bool UseDirectDebugger() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  bool UseFastRefresh() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  bool UseWebDebugger() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  hstring DebugBundlePath() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  hstring BundleRootPath() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  hstring SourceBundleHost() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  uint16_t SourceBundlePort() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  hstring JavaScriptBundleFile() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
 
  private:
   ReactModuleBuilderMock *m_builderMock;
@@ -202,7 +298,7 @@ ReactModuleBuilderMock::CallSync(std::wstring const &methodName, TResult &result
   if (auto method = GetSyncMethod(methodName)) {
     auto writer = ArgWriter();
     method(ArgReader(std::forward<TArgs>(args)...), writer);
-    ReadArgs(MakeJSValueTreeReader(TakeJSValue(writer)), result);
+    ReadValue(MakeJSValueTreeReader(TakeJSValue(writer)), result);
   }
 }
 

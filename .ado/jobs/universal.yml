@@ -1,0 +1,229 @@
+  parameters:
+    - name: buildEnvironment
+      type: string
+      default : PullRequest
+      values: 
+      - PullRequest 
+      - Continuous 
+    - name: buildMatrix
+      type: object
+      default:
+        - BuildEnvironment: PullRequest
+          Matrix:
+            - Name: ArmRelease
+              BuildConfiguration: Release
+              BuildPlatform: ARM
+            - Name: X64Release
+              BuildConfiguration: Release
+              BuildPlatform: X64
+            - Name: X64Debug
+              BuildConfiguration: Debug
+              BuildPlatform: X86
+              LayoutHeaders: true
+        - BuildEnvironment: Continuous
+          Matrix:
+            - Name: ArmDebug
+              BuildConfiguration: Debug
+              BuildPlatform: ARM
+            - Name: ArmRelease
+              BuildConfiguration: Release
+              BuildPlatform: ARM
+            - Name: Arm64RDebug
+              BuildConfiguration: Debug
+              BuildPlatform: ARM64
+            - Name: Arm64Release
+              BuildConfiguration: Release
+              BuildPlatform: ARM64
+            - Name: X64Debug
+              BuildConfiguration: Debug
+              BuildPlatform: X64
+            - Name: X64Release
+              BuildConfiguration: Release
+              BuildPlatform: X64
+            - Name: X86Debug
+              BuildConfiguration: Debug
+              BuildPlatform: X86
+              LayoutHeaders: true
+            - Name: X86Release
+              BuildConfiguration: Release
+              BuildPlatform: X86
+      
+  jobs:
+    - ${{ each config in parameters.buildMatrix }}:
+      - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
+        - ${{ each matrix in config.Matrix }}:
+            - job: UniversalBuild${{ matrix.Name }}
+              variables:
+                - template: ../variables/vs2019.yml
+              displayName: Universal Build ${{ matrix.Name }}
+              pool: windevbuildagents
+              timeoutInMinutes: 60
+              cancelTimeoutInMinutes: 5
+
+              steps:
+                - checkout: self
+                  clean: false
+                  submodules: false
+
+                - template: ../templates/build-rnw.yml
+                  parameters:
+                    yarnBuildCmd: build
+                    project: vnext/Microsoft.ReactNative.sln
+                    buildPlatform: ${{ matrix.BuildPlatform }}
+                    buildConfiguration: ${{ matrix.BuildConfiguration }}
+                    multicoreBuild: true
+
+                - task: PublishPipelineArtifact@1
+                  displayName: "Publish binaries for testing"
+                  inputs:
+                    targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}"
+
+                - template: ../templates/publish-build-artifacts-for-nuget.yml
+                  parameters:
+                    artifactName: ReactWindows
+                    buildPlatform: ${{ matrix.BuildPlatform }}
+                    buildConfiguration: ${{ matrix.BuildConfiguration }}
+                    layoutHeaders: ${{ matrix.LayoutHeaders }}
+                    contents: |
+                      Microsoft.ReactNative\**
+                      Microsoft.ReactNative.Managed\**
+                      Microsoft.ReactNative.Managed.CodeGen\**
+                
+                - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+                  displayName: 'Component Governance Detection'
+                  inputs:
+                    alertWarningLevel: Medium
+                    scanType: 'Register'
+
+                
+            - job: UniversalTest${{ matrix.Name }}
+              variables:
+                - template: ../variables/vs2019.yml
+              displayName: Universal Test ${{ matrix.Name }}
+              dependsOn:
+                - UniversalBuild${{ matrix.Name }}
+              pool:
+                vmImage: $(VmImage)
+              timeoutInMinutes: 60
+              cancelTimeoutInMinutes: 5
+
+              steps:
+                - checkout: self
+                  clean: false
+                  submodules: false
+
+                - task: PowerShell@2
+                  displayName: "Check if this environment meets the development dependencies"
+                  inputs:
+                    targetType: filePath
+                    filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
+                    arguments: -NoPrompt -Tags buildLab
+                    
+                - template: ../templates/prepare-env.yml
+                  parameters:
+                    yarnBuildCmd: build
+
+                - task: NuGetCommand@2
+                  displayName: NuGet restore
+                  inputs:
+                    command: restore
+                    restoreSolution: vnext/Microsoft.ReactNative.sln
+                    feedsToUse: config
+                    nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
+                    restoreDirectory: packages/
+                    verbosityRestore: Detailed # Options: quiet, normal, detailed
+                    
+                - task: DownloadPipelineArtifact@1
+                  displayName: "Download binaries for testing"
+                  inputs:
+                    targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}"
+
+                # The WinDevBuild Agents run on the c-drive and the hosted agents run on the d-drive.
+                # Some of the output files have the c-drive expanded in the outputs, which results in file not found errors when running tests
+                # This script fixes those files to point to the d-drive of the hosted agents.
+                # We unfortunately can't run the tests on the WinDev  build pool because it lacks UI support
+                - powershell: |
+                    Get-ChildItem *.appxrecipe -recurse | ForEach { (Get-Content -Path $_) -replace "c:\\a\\1\\s", "$(System.DefaultWorkingDirectory)" | Set-Content -Path $_ }
+                  displayName: Fix Paths in appx files to deal with different enlistments between agent types.
+
+                - powershell: |
+                    Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
+                    Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
+                    Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
+                  displayName: Set GoogleTestAdapterPath
+
+                - task: VSTest@2
+                  displayName: Run Universal Unit Tests (Native)
+                  timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+                  inputs:
+                    testSelector: testAssemblies
+                    testAssemblyVer2: |
+                      Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
+                      Microsoft.ReactNative.IntegrationTests/Microsoft.ReactNative.IntegrationTests.exe
+                      Mso.UnitTests/Mso.UnitTests.exe
+                    pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+                    searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    runTestsInIsolation: true
+                    platform: ${{ matrix.BuildPlatform }}
+                    configuration: ${{ matrix.BuildConfiguration }}
+                    publishRunAttachments: true
+                    collectDumpOn: onAbortOnly
+                    vsTestVersion: latest
+                  condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+
+                - task: VSTest@2
+                  displayName: Run Universal Unit Tests (UWP)
+                  timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+                  inputs:
+                    testSelector: testAssemblies
+                    testAssemblyVer2: |
+                      Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
+                    searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    runTestsInIsolation: true
+                    platform: ${{ matrix.BuildPlatform }}
+                    configuration: ${{ matrix.BuildConfiguration }}
+                    publishRunAttachments: true
+                    codeCoverageEnabled: true
+                    collectDumpOn: onAbortOnly
+                    vsTestVersion: latest
+                  condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+
+                - task: VSTest@2
+                  displayName: Run Universal Unit Tests (NetCore)
+                  timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+                  inputs:
+                    testSelector: testAssemblies
+                    testAssemblyVer2: |
+                      Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
+                    searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    runTestsInIsolation: true
+                    platform: ${{ matrix.BuildPlatform }}
+                    configuration: ${{ matrix.BuildConfiguration }}
+                    publishRunAttachments: true
+                    codeCoverageEnabled: true
+                    collectDumpOn: onAbortOnly
+                    vsTestVersion: latest
+                  condition: and(succeeded(), eq(variables.BuildPlatform, 'x64'))
+
+    # This job is the one that accumulates the spread out build tasks into one dependency
+    - job: UniversalBuild
+      condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+      displayName: Universal Build 🏗
+      variables:
+        - template: ../variables/vs2019.yml
+      dependsOn: 
+        - ${{ each config in parameters.buildMatrix }}:
+          - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
+            - ${{ each matrix in config.Matrix }}:
+              - UniversalBuild${{ matrix.Name }}
+      pool:
+        vmImage: $(VmImage)
+      timeoutInMinutes: 60
+      cancelTimeoutInMinutes: 5
+
+      steps:
+        - powershell: |
+            Write-Host "Waited for all Universal Build steps"
+          displayName: Waiting for all Universal Build steps

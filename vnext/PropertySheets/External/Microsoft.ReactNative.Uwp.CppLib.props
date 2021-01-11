@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -9,3 +10,19 @@
     <UseExperimentalNuget Condition="'$(UseExperimentalNuget)' == ''" >false</UseExperimentalNuget>
   </PropertyGroup>
 </Project>
+||||||| 811c767bf
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation.
+  Licensed under the MIT License.
+
+  This file will be consumed by ALL C++ UWP module projects (both inside
+  and outside of this repo) that build on top of Microsoft.ReactNative.
+  Do not make any changes here unless it applies to ALL such projects.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
+</Project>
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa

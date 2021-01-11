@@ -3,7 +3,6 @@ import * as React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 // Disabling no-jsx-lambda so functional components are more convenient to use
-/*tslint:disable:next-line jsx-no-lambda*/
 
 const AutoFocusingTextInputTest: React.FC<{}> = () => {
   return (
@@ -42,7 +41,7 @@ const ControllingTextInputTest: React.FC<{}> = () => {
       <Text>This TextInput inserts spaces between characters</Text>
       <TextInput
         multiline
-        onChangeText={(text) => setValue(text.charAt(text.length - 1) === ' ' ? value : (text + ' '))}
+        onChangeText={(text) => setValue(text.endsWith(' ') ? value : (text + ' '))}
         style={styles.blue}
         value={value}
       />
@@ -108,7 +107,7 @@ const StyleTextInputTest: React.FC<{}> = () => {
   );
 };
 
-export const title = '<TextInput>';
+export const title = 'TextInput';
 export const displayName = 'TextInput';
 export const description = 'TextInput Examples and Tests';
 export const examples = [

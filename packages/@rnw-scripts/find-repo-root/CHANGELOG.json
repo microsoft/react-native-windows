@@ -1,0 +1,140 @@
+{
+  "name": "@rnw-scripts/find-repo-root",
+  "entries": [
+    {
+      "date": "Fri, 20 Nov 2020 05:08:43 GMT",
+      "tag": "@rnw-scripts/find-repo-root_v0.0.13",
+      "version": "0.0.13",
+      "comments": {
+        "none": [
+          {
+            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "author": "ngerlem@microsoft.com",
+            "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
+            "package": "@rnw-scripts/find-repo-root"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Oct 2020 05:05:24 GMT",
+      "tag": "@rnw-scripts/find-repo-root_v0.0.12",
+      "version": "0.0.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow non-RNW repos",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cd0d904f4779ef919654bc006c6d4525bbf1b724",
+            "package": "@rnw-scripts/find-repo-root"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Oct 2020 05:06:32 GMT",
+      "tag": "@rnw-scripts/find-repo-root_v0.0.11",
+      "version": "0.0.11",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update just-scipts (remove npm-registry-fetch)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "00b2d84b8effce0b7405a67bd4903eed88cb9aaf",
+            "package": "@rnw-scripts/find-repo-root"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 01 Oct 2020 05:08:11 GMT",
+      "tag": "@rnw-scripts/find-repo-root_v0.0.11",
+      "version": "0.0.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "ESLint Fixup",
+            "author": "ngerlem@microsoft.com",
+            "commit": "98c072069c9d9e0d495bfd6f3bdc386b1362f377",
+            "package": "@rnw-scripts/find-repo-root"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Sep 2020 05:06:22 GMT",
+      "tag": "@rnw-scripts/find-repo-root_v0.0.9",
+      "version": "0.0.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixup eslint config",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2df3273449486de9e663e26f708fd9bb2cd37c91",
+            "package": "@rnw-scripts/find-repo-root"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Aug 2020 05:04:58 GMT",
+      "tag": "@rnw-scripts/find-repo-root_v0.0.4",
+      "version": "0.0.4",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to eslint 6.8.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "68f7ba47793f4f1638be59ee9cb8ba68a70ae0cb",
+            "package": "@rnw-scripts/find-repo-root"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Jul 2020 23:11:46 GMT",
+      "tag": "@rnw-scripts/find-repo-root_v0.0.3",
+      "version": "0.0.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add watch script",
+            "author": "ngerlem@microsoft.com",
+            "commit": "805f69dd9e566185d27890bc852abe766f035dfd",
+            "package": "@rnw-scripts/find-repo-root"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Jul 2020 05:06:19 GMT",
+      "tag": "@rnw-scripts/find-repo-root_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Share eslint and Typescript configs across packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "623ac46c0ade7fb8564e3a0c9e8345768c18feb6",
+            "package": "@rnw-scripts/find-repo-root"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 27 Jun 2020 03:52:38 GMT",
+      "tag": "@rnw-scripts/find-repo-root_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Convert Repo Scripts To Published TypeScript Packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ee99286e12977ff07d66fbddc7d6a40fd47d257c",
+            "package": "@rnw-scripts/find-repo-root"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "IReactModuleBuilder.idl";
+import "IReactContext.idl";
+
+// Do not add any XAML/UI framework-specific pieces here - use IViewManager.idl instead
+
+namespace Microsoft.ReactNative
+{
+
+  [webhosthidden]
+  enum ViewManagerPropertyType
+  {
+    Boolean,
+    Number,
+    String,
+    Array,
+    Map,
+    Color,
+  };
+
+  [webhosthidden]
+  interface IViewManagerWithReactContext
+  {
+    IReactContext ReactContext { get; set; };
+  }
+
+  [webhosthidden]
+  interface IViewManagerWithExportedViewConstants
+  {
+    ConstantProviderDelegate ExportedViewConstants { get; };
+  }
+
+  [webhosthidden]
+  interface IViewManagerWithExportedEventTypeConstants
+  {
+    ConstantProviderDelegate ExportedCustomBubblingEventTypeConstants { get; };
+
+    ConstantProviderDelegate ExportedCustomDirectEventTypeConstants { get; };
+  }
+
+}

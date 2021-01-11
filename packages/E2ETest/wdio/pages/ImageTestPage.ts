@@ -1,21 +1,15 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
 
-import { BasePage, By } from './BasePage';
-import { SHOW_IMAGE_BORDER, SET_RTL_MODE } from '../../app/Consts';
+import { BasePage, by } from './BasePage';
+import {
+  SHOW_IMAGE_BORDER,
+  SET_RTL_MODE,
+} from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 class ImageTestPage extends BasePage {
-  backToHomePage() {
-    this.homeButton.click();
-    this.waitForPageLoaded();
-  }
-
-  isPageLoaded() {
-    return super.isPageLoaded();
-  }
-
   toggleImageBorder() {
     this._imageBorder.click();
   }
@@ -25,11 +19,11 @@ class ImageTestPage extends BasePage {
   }
 
   private get _imageBorder() {
-    return By(SHOW_IMAGE_BORDER);
+    return by(SHOW_IMAGE_BORDER);
   }
 
   private get _rtlButton() {
-    return By(SET_RTL_MODE);
+    return by(SET_RTL_MODE);
   }
 }
 

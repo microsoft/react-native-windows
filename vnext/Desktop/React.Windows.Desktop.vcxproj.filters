@@ -28,8 +28,47 @@
     <Filter Include="Source Files\Modules">
       <UniqueIdentifier>{56988676-220f-43a7-b8b1-8ecc51158498}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\JSI">
+      <UniqueIdentifier>{c610d916-3a3d-4617-bab1-ddec02729037}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="..\Microsoft.ReactNative\IJSValueReader.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IJSValueWriter.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactContext.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactDispatcher.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactModuleBuilder.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactNotificationService.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactPackageBuilder.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactPackageProvider.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\ReactNativeHost.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl">
+      <Filter>ABI</Filter>
+    </Midl>
     <Midl Include="ABI\MemoryTracker.idl">
       <Filter>ABI</Filter>
     </Midl>
@@ -42,8 +81,30 @@
     <Midl Include="ABI\NativeTracing.idl">
       <Filter>ABI</Filter>
     </Midl>
+    <Midl Include="ABI\TestController.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IReactNonAbiValue.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\JsiApi.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl">
+      <Filter>ABI</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactContext.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactInstanceSettings.cpp" />
     <ClCompile Include="ABI\MemoryTracker.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
@@ -56,18 +117,34 @@
     <ClCompile Include="ABI\NativeTraceEventSource.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
+    <ClCompile Include="ABI\TestController.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
     <ClCompile Include="BeastWebSocketResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp">
       <Filter>Source Files\CxxReactWin32</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\ReactWindowsCore\Executors\WebSocketJSExecutor.cpp">
       <Filter>Source Files\Executors</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactWindowsCore\Executors\WebSocketJSExecutorFactory.cpp">
       <Filter>Source Files\Executors</Filter>
     </ClCompile>
+||||||| 811c767bf
+    <ClCompile Include="DevSupportManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Executors\WebSocketJSExecutor.cpp">
+      <Filter>Source Files\Executors</Filter>
+    </ClCompile>
+    <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp">
+      <Filter>Source Files\Executors</Filter>
+    </ClCompile>
+=======
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     <ClCompile Include="HttpResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -77,18 +154,43 @@
     <ClCompile Include="module.g.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="WebSocketResourceFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\NetworkingModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\TimingModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\WebSocketModule.cpp">
-      <Filter>Source Files\Modules</Filter>
+    <ClCompile Include="WebSocketResourceFactory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\NativeModulesProvider.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\DynamicReader.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\DynamicWriter.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactContext.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\IReactModuleBuilder.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\JsiReader.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\JsiWriter.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactPackageBuilder.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\RedBox.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
+    <ClCompile Include="RuntimeOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowNode.cpp" />
+    <ClCompile Include="ShadowNodeRegistry.cpp" />
+    <ClCompile Include="ViewManager.cpp" />
+    <ClCompile Include="Modules\UIManagerModule.cpp" />
+    <ClCompile Include="JSI\ChakraJsiRuntime_core.cpp">
+      <Filter>Source Files\JSI</Filter>
+    </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="WebSocketResourceFactory.cpp">
       <Filter>Source Files</Filter>
@@ -116,6 +218,10 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+||||||| 811c767bf
+    <ClCompile Include="pch.cpp" />
+=======
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MemoryTracker.h">
@@ -141,27 +247,51 @@
     <ClInclude Include="BeastWebSocketResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="DevSupportManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactWindowsCore\Executors\WebSocketJSExecutor.h">
       <Filter>Header Files\Executors</Filter>
     </ClInclude>
+||||||| 811c767bf
+    <ClInclude Include="DevSupportManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Executors\WebSocketJSExecutor.h">
+      <Filter>Header Files\Executors</Filter>
+    </ClInclude>
+=======
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     <ClInclude Include="HttpResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="JSBigStringResourceDll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Modules\NetworkingModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
+||||||| 811c767bf
+    <ClInclude Include="LazyDevSupportManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\NetworkingModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+=======
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     <ClInclude Include="Modules\TimingModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="NativeModuleFactories.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.h">
+      <Filter>ABI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorInfo.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="pch.h" />
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.h">
       <Filter>ABI</Filter>
@@ -169,6 +299,10 @@
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorInfo.h">
       <Filter>ABI</Filter>
     </ClInclude>
+||||||| 811c767bf
+    <ClInclude Include="pch.h" />
+=======
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

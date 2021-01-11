@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -14,8 +14,6 @@ import {ViewProps} from 'react-native';
  * Extends: {@link IKeyboardProps} and {@link https://facebook.github.io/react-native/docs/view | react-native's ViewProps}
  */
 export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
-  acceptsKeyboardFocus?: boolean;
-  // tslint:disable-next-line:no-any
   children?: any;
 
   /**
@@ -31,4 +29,5 @@ export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
    * See https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
    */
   accessibilitySetSize?: number;
+  focusable?: boolean;
 }

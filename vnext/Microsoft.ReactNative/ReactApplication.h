@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -7,8 +7,15 @@
 #include <CppWinRTIncludes.h>
 #include "ReactNativeHost.h"
 
+#ifdef USE_WINUI3
+namespace activation = xaml;
+#else
+namespace activation = winrt::Windows::ApplicationModel::Activation;
+#endif
+
 namespace winrt::Microsoft::ReactNative::implementation {
 
+<<<<<<< HEAD
 // NoDefaultCtorReactApplication_base is a copy of the generated ReactApplication_base
 // without the default constructor where it calls a factory for the base type.
 // This is done to fix the aggregation issue in types inheriting from the ReactApplication.
@@ -44,7 +51,54 @@ struct __declspec(empty_bases) NoDefaultCtorReactApplication_base : implements<
   hstring GetRuntimeClassName() const {
     return L"Microsoft.ReactNative.ReactApplication";
   }
+||||||| 811c767bf
+struct ReactApplication : ReactApplicationT<ReactApplication> {
+  using Super = ReactApplicationT<ReactApplication>;
+=======
+// NoDefaultCtorReactApplication_base is a copy of the generated ReactApplication_base
+// without the default constructor where it calls a factory for the base type.
+// This is done to fix the aggregation issue in types inheriting from the ReactApplication.
+// We call the factory in the ReactApplication constructor where we can pass correct
+// 'outer' interface.
+//
+// This class must match the generated ReactApplication_base.
+// It must be updated if the shape of generated ReactApplication_base is changed in future.
+// The only difference is that this class has no default constructor.
 
+template <typename D, typename... I>
+struct __declspec(empty_bases) NoDefaultCtorReactApplication_base :
+#ifndef USE_WINUI3
+    implements<
+        D,
+        Microsoft::ReactNative::ReactApplication,
+        composable,
+        composing,
+        xaml::IApplicationOverrides,
+        xaml::IApplicationOverrides2,
+        I...>,
+    impl::require<D, xaml::IApplication, xaml::IApplication2, xaml::IApplication3>,
+    impl::base<D, xaml::Application>,
+    xaml::IApplicationOverridesT<D>,
+    xaml::IApplicationOverrides2T<D>
+#else
+    implements<D, Microsoft::ReactNative::ReactApplication, composable, composing, xaml::IApplicationOverrides, I...>,
+    impl::require<D, xaml::IApplication>,
+    impl::base<D, xaml::Application>,
+    xaml::IApplicationOverridesT<D>
+#endif
+{
+  using base_type = NoDefaultCtorReactApplication_base;
+  using class_type = Microsoft::ReactNative::ReactApplication;
+  using implements_type = typename NoDefaultCtorReactApplication_base::implements_type;
+  using implements_type::implements_type;
+  using composable_base = xaml::Application;
+
+  hstring GetRuntimeClassName() const {
+    return L"Microsoft.ReactNative.ReactApplication";
+  }
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
+
+<<<<<<< HEAD
  protected:
   using dispatch = impl::
       dispatch_to_overridable<D, Windows::UI::Xaml::IApplicationOverrides, Windows::UI::Xaml::IApplicationOverrides2>;
@@ -54,6 +108,24 @@ struct __declspec(empty_bases) NoDefaultCtorReactApplication_base : implements<
 };
 
 struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
+||||||| 811c767bf
+=======
+ protected:
+  using dispatch = impl::dispatch_to_overridable<
+      D,
+      xaml::IApplicationOverrides
+#ifndef USE_WINUI3
+      ,
+      xaml::IApplicationOverrides2
+#endif
+      >;
+  auto overridable() noexcept {
+    return dispatch::overridable(static_cast<D &>(*this));
+  }
+};
+
+struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
  public: // ReactApplication ABI API
   ReactApplication();
   ReactApplication(IInspectable const &outer) noexcept;
@@ -62,12 +134,8 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
   void InstanceSettings(ReactNative::ReactInstanceSettings const &value) noexcept;
 
   Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
-  void PackageProviders(Windows::Foundation::Collections::IVector<IReactPackageProvider> const &value) noexcept;
 
   ReactNative::ReactNativeHost Host() noexcept;
-
-  hstring MainComponentName() noexcept;
-  void MainComponentName(hstring const &value) noexcept;
 
   bool UseDeveloperSupport() noexcept;
   void UseDeveloperSupport(bool value) noexcept;
@@ -80,19 +148,13 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
 
  public:
   void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
-  void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs const &e);
+  void OnLaunched(activation::LaunchActivatedEventArgs const &e);
   void OnSuspending(IInspectable const &, Windows::ApplicationModel::SuspendingEventArgs const &);
-  void OnNavigationFailed(IInspectable const &, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const &);
-
- protected:
-  virtual ReactApplicationDelegate __stdcall CreateReactApplicationDelegate();
+  void OnNavigationFailed(IInspectable const &, xaml::Navigation::NavigationFailedEventArgs const &);
 
  private:
   ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
-  Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders{nullptr};
   ReactNative::ReactNativeHost m_host{nullptr};
-
-  ReactApplicationDelegate m_delegate{nullptr};
 
   void OnCreate(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
 };

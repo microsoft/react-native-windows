@@ -2,7 +2,7 @@
 
 #include "MemoryTracker.h"
 
-#include "MemoryTracker.g.cpp"
+#include "facebook.react.MemoryTracker.g.cpp"
 
 #include "MessageQueueShim.h"
 

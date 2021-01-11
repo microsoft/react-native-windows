@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct AlertManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(JSValueObject, Callback<JSValue>) noexcept>{0, L"alertWithArgs"},
+      Method<void(React::JSValueObject, Callback<React::JSValue>) noexcept>{0, L"alertWithArgs"},
   };
 
   template <class TModule>

@@ -1,0 +1,7 @@
+moduleBuilder.AddConstantProvider((global::Microsoft.ReactNative.IJSValueWriter writer) =>
+{
+    global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty(writer, "MyField1", module.MyField1);
+    global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty(writer, "MyProp", module.MyProp);
+}
+
+);

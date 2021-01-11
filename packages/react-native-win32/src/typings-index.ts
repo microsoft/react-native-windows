@@ -12,7 +12,7 @@
    the package actually exports the whole of the win32 implementation of react-native.
 
    NOTE: Concrete classes, objects etc that actually need to be exported from the package,
-         need to also be added to react-native-implementation.win32.ts
+         need to also be added to index.win32.js
 */
 
 export * from './Libraries/Components/View/ViewWin32.Props';
@@ -21,6 +21,7 @@ export * from './Libraries/Components/Text/TextWin32.Props';
 export * from './Libraries/Components/Text/TextWin32';
 export * from './Libraries/Components/Button/ButtonWin32.Props';
 export * from './Libraries/Components/Button/ButtonWin32';
+export * from './Libraries/StyleSheet/PlatformColorValueTypesWin32';
 export * from './Libraries/Components/Touchable/TouchableWin32.Props';
 export * from './Libraries/Components/Touchable/TouchableWin32.Types';
 export * from './Libraries/Components/Touchable/TouchableWin32';

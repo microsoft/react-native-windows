@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation.
+  Licensed under the MIT License.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- To avoid having these references show in in Visual Studio which ignores conditions on items we have to put the source references in source. -->
+  <ItemGroup>
+    <ProjectReference Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
+      <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
+      <Name>Microsoft.ReactNative</Name>
+    </ProjectReference>
+    <ProjectReference Include="$(ReactNativeWindowsDir)Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj">
+      <Project>{F2824844-CE15-4242-9420-308923CD76C3}</Project>
+      <Name>Microsoft.ReactNative.Managed</Name>
+    </ProjectReference>
+    <!-- WinUI package name and version are set by WinUI.props -->
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
+  </ItemGroup>
+</Project>

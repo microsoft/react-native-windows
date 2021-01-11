@@ -1,5 +1,8 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+// IMPORTANT: Before updating this file
+// please read react-native-windows repo:
+// vnext/Microsoft.ReactNative.Cxx/README.md
 
 #pragma once
 #ifndef MICROSOFT_REACTNATIVE_JSVALUEWRITER
@@ -20,6 +23,8 @@ template <class T, std::enable_if_t<std::is_convertible_v<T, std::string_view>, 
 void WriteValue(IJSValueWriter const &writer, T const &value) noexcept;
 template <class T, std::enable_if_t<std::is_convertible_v<T, std::wstring_view>, int> = 1>
 void WriteValue(IJSValueWriter const &writer, T const &value) noexcept;
+void WriteValue(IJSValueWriter const &writer, winrt::hstring const &value) noexcept;
+void WriteValue(IJSValueWriter const &writer, winrt::param::hstring const &value) noexcept;
 void WriteValue(IJSValueWriter const &writer, bool value) noexcept;
 void WriteValue(IJSValueWriter const &writer, int8_t value) noexcept;
 void WriteValue(IJSValueWriter const &writer, int16_t value) noexcept;
@@ -81,6 +86,14 @@ inline void WriteValue(IJSValueWriter const &writer, T const &value) noexcept {
 
 template <class T, std::enable_if_t<std::is_convertible_v<T, std::wstring_view>, int>>
 inline void WriteValue(IJSValueWriter const &writer, T const &value) noexcept {
+  writer.WriteString(value);
+}
+
+inline void WriteValue(IJSValueWriter const &writer, winrt::hstring const &value) noexcept {
+  writer.WriteString(value);
+}
+
+inline void WriteValue(IJSValueWriter const &writer, winrt::param::hstring const &value) noexcept {
   writer.WriteString(value);
 }
 
@@ -266,6 +279,18 @@ template <class... TArgs>
 inline JSValueArgWriter MakeJSValueArgWriter(TArgs &&... args) noexcept {
   return [&args...](IJSValueWriter const &writer) noexcept {
     WriteArgs(writer, args...);
+  };
+}
+
+template <class T, std::enable_if_t<std::is_invocable_v<T, IJSValueWriter const &>, int> = 0>
+inline JSValueArgWriter MakeJSValueWriter(T &&argWriter) noexcept {
+  return std::forward<T>(argWriter);
+}
+
+template <class... TArgs>
+inline JSValueArgWriter MakeJSValueWriter(TArgs &&... args) noexcept {
+  return [&args...](IJSValueWriter const &[[maybe_unused]] writer) noexcept {
+    (WriteValue(writer, args), ...);
   };
 }
 

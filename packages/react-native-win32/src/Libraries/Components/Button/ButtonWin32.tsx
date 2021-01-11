@@ -26,11 +26,17 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
 
   public render() {
     const viewProps: IViewWin32Props = {
-      acceptsKeyboardFocus: true,
       accessible: true,
       accessibilityLabel: this.props.accessibilityLabel || this.props.title,
       accessibilityRole: 'button',
+<<<<<<< HEAD
       accessibilityState: this.state.accessibilityState,
+||||||| 811c767bf
+      accessibilityStates: this.state.accessibilityStates,
+=======
+      accessibilityState: this.state.accessibilityState,
+      focusable: true,
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
       onFocus: this._onFocus,
       onBlur: this._onBlur,
       onMouseEnter: this.props.onMouseEnter,
@@ -55,6 +61,7 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
     );
   }
 
+<<<<<<< HEAD
   private _makeState = (select: SelectState): IButtonWin32State => {
     return {
       accessibilityState: {
@@ -62,28 +69,47 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
         selected: select === SelectState.Selected,
       },
     };
+||||||| 811c767bf
+  private _makeState = (select: SelectState): IButtonWin32State => {
+    const accessibilityStates: RN.AccessibilityStates[] = [];
+    if (this.props.disabled) {
+      accessibilityStates.push('disabled');
+    } else if (select === SelectState.Selected) {
+      accessibilityStates.push('selected');
+    }
+
+    return { accessibilityStates };
+=======
+  private readonly _makeState = (select: SelectState): IButtonWin32State => {
+    return {
+      accessibilityState: {
+        disabled: this.props.disabled,
+        selected: select === SelectState.Selected,
+      },
+    };
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
   };
 
-  private _setState = (select: SelectState): void => {
-    const state = this._makeState(SelectState.Selected);
+  private readonly _setState = (select: SelectState): void => {
+    const state = this._makeState(select);
     this.setState(state);
   };
 
-  private _onFocus = (): void => {
+  private readonly _onFocus = (): void => {
     this._setState(SelectState.Selected);
     if (this.props.onFocus) {
       this.props.onFocus();
     }
   };
 
-  private _onBlur = (): void => {
+  private readonly _onBlur = (): void => {
     this._setState(SelectState.NotSelected);
     if (this.props.onBlur) {
       this.props.onBlur();
     }
   };
 
-  private _onTouchEnd = (event: RN.GestureResponderEvent): void => {
+  private readonly _onTouchEnd = (event: RN.GestureResponderEvent): void => {
     if (!this.props.disabled) {
       if (this.props.onPress) {
         this.props.onPress(event);

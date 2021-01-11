@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <description>Contains Windows Implementation of React-Native</description>
+    <authors>Microsoft</authors>
+    <projectUrl>https://github.com/microsoft/react-native-windows</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <copyright>&#169; Microsoft Corporation. All rights reserved.</copyright>
+    <repository type="git"
+      url="https://github.com/microsoft/react-native-windows.git"
+      commit="$CommitId$" />
+  </metadata>
+  <files>
+
+    <file src="$nugetroot$\x86\Debug\React.Windows.Desktop.DLL\react-native-win32.*"      target="lib\debug\x86"    exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x64\Debug\React.Windows.Desktop.DLL\react-native-win32.*"      target="lib\debug\x64"    exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\ARM64\Debug\React.Windows.Desktop.DLL\react-native-win32.*"    target="lib\debug\ARM64"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x86\Release\React.Windows.Desktop.DLL\react-native-win32.*"    target="lib\ship\x86"     exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x64\Release\React.Windows.Desktop.DLL\react-native-win32.*"    target="lib\ship\x64"     exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\ARM64\Release\React.Windows.Desktop.DLL\react-native-win32.*"  target="lib\ship\ARM64"   exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+
+    <file src="$nugetroot$\x86\Debug\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"    target="lib\debug\x86"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x64\Debug\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"    target="lib\debug\x64"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x86\Release\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"  target="lib\ship\x86"   exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x64\Release\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"  target="lib\ship\x64"   exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+
+    <file src="$nugetroot$\inc\callinvoker\ReactCommon\CallInvoker.h" target="inc\ReactCommon"/>
+    <file src="$nugetroot$\inc\cxxreact\*" target="inc\cxxreact"/>
+    <file src="$nugetroot$\inc\jsi\**\*.*" target="inc\jsi"/>
+    <file src="$nugetroot$\inc\Yoga\*.*" target="inc\Yoga"/>
+    <file src="$nugetroot$\inc\folly\**\*.*" target="inc" />
+    <file src="$nugetroot$\inc\stubs\**\*.*" target="inc" />
+
+    <file src="$nugetroot$\inc\Shared\AbiSafe.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\DevSettings.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWin32\INativeUIManagerLegacy.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\InstanceManager.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\IReactRootView.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\IRedBoxHandler.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\IUIManager.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\IWebSocketResource.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\JSBigAbiString.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\LayoutAnimation.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\Logging.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\MemoryMappedBuffer.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\MemoryTracker.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\Modules\I18nModule.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\NativeModuleProvider.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWin32\ShadowNode.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\Tracing.h" target="inc"/>
+    <file src="$nugetroot$\inc\include\Shared\ViewManager.h" target="inc"/>
+
+    <!-- Test DLL -->
+    <file src="$nugetroot$\inc\Test\WebSocketServer.h" target="inc\Test" />
+    <file src="$nugetroot$\inc\Test\HttpServer.h" target="inc\Test" />
+    <file src="$nugetroot$\inc\React.Windows.Desktop.Test.x64.def" target="inc\Test" />
+    <file src="$nugetroot$\inc\React.Windows.Desktop.Test.x86.def" target="inc\Test" />
+
+    <!-- Required for win32 -->
+    <file src="$nugetroot$\inc\Shared\DevServerHelper.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWin32\JSBigStringResourceDll.h" target="inc"/>
+    <file src="$nugetroot$\inc\react-native-win32.x64.def" target="inc"/>
+    <file src="$nugetroot$\inc\react-native-win32.x86.def" target="inc"/>
+
+    <file src="$nugetroot$\inc\include\**\*.*" target="inc\include" />
+
+    <file src="$nugetroot$\Microsoft.ReactNative.Cxx\**" target ="Microsoft.ReactNative.Cxx"/>
+
+    <file src="$nugetroot$\natvis\Folly.natvis" target ="natvis\Folly.natvis"/>
+  </files>
+</package>

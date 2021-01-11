@@ -8,11 +8,16 @@ namespace Microsoft::ReactNative {
 
 REACT_MODULE(Clipboard)
 struct Clipboard {
+  REACT_INIT(Initialize)
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+
   REACT_METHOD(getString)
-  static winrt::fire_and_forget getString(React::ReactPromise<React::JSValue> result) noexcept;
+  void getString(React::ReactPromise<React::JSValue> result) noexcept;
 
   REACT_METHOD(setString)
-  static void setString(std::string content) noexcept;
+  void setString(std::string content) noexcept;
+
+  winrt::Microsoft::ReactNative::ReactContext m_reactContext;
 };
 
 } // namespace Microsoft::ReactNative

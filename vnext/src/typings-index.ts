@@ -9,10 +9,10 @@
 
 /*
    This file is used to provide the typings for this package.  The typings should only include the Windows specific types, even though
-   the package actually exports the whole of the windows implementation of react-native.
+   the package actually exports the whole of the Windows implementation of react-native.
 
    NOTE: Concrete classes, objects etc that actually need to be exported from the package,
-         need to also be added to react-native-implementation.windows.ts
+         need to also be added to index.windows.js
 */
 
 export * from './Libraries/Components/DatePicker/DatePicker';

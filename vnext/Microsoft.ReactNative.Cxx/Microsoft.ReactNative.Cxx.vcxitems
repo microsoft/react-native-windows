@@ -4,18 +4,51 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
     <ItemsProjectGuid>{da8b35b3-da00-4b02-bde6-6a397b3fd46b}</ItemsProjectGuid>
+    <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)..\..\node_modules\react-native</ReactNativeDir>
+    <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)..\..\..\node_modules\react-native</ReactNativeDir>
+    <JSI_SourcePath Condition="'$(JSI_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_SourcePath>
+    <JSI_SourcePath Condition="'$(JSI_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)jsi\jsi.h')">$(MSBuildThisFileDirectory)</JSI_SourcePath>
+    <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\callinvoker</CallInvoker_SourcePath>
+    <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\CallInvoker.h')">$(MSBuildThisFileDirectory)</CallInvoker_SourcePath>
+    <TurboModule_SourcePath Condition="'$(TurboModule_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\react\nativemodule\core</TurboModule_SourcePath>
+    <TurboModule_SourcePath Condition="'$(TurboModule_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\TurboModule.h')">$(MSBuildThisFileDirectory)</TurboModule_SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+        $(MSBuildThisFileDirectory);
+        $(JSI_SourcePath);
+        $(CallInvoker_SourcePath);
+        $(TurboModule_SourcePath);
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
     </ClCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(JSI_SourcePath)\jsi\instrumentation.h" />
+    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h" />
+    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleProvider.h" />
+    <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\CallInvoker.h" />
+    <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.h" />
+    <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.h" />
+    <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CppWinRTIncludes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
+<<<<<<< HEAD
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactHandleHelper.h" />
+||||||| 811c767bf
+=======
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactHandleHelper.h" />
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueTreeReader.h" />
@@ -23,20 +56,69 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueWriter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueXaml.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModuleRegistration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NamespaceRedirect.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NativeModules.h" />
+<<<<<<< HEAD
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactDispatcher.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactNonAbiValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactPropertyBag.h" />
+||||||| 811c767bf
+=======
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactDispatcher.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactNonAbiValue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactNotificationService.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactPropertyBag.h" />
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactContext.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactError.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactPromise.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StructInfo.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Composition.Effects.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Composition.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Input.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Popups.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Text.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XamlHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.Peers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Controls.Primitives.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Documents.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Hosting.DesktopWindowXamlSource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Hosting.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Input.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Markup.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Media.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Controls.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Media.Imaging.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Media.Media3D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Navigation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Shapes.h" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(BuildMSRNCxx)'!='false'">
+    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ModuleRegistration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReactPromise.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleProvider.cpp" />
+    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.cpp">
+      <DisableSpecificWarnings>4100;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.cpp">
+      <DisableSpecificWarnings>4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)README.md" />
   </ItemGroup>
 </Project>

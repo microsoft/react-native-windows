@@ -22,43 +22,33 @@ E2E test app, test library and test cases are in packages/E2ETest/, and they are
 
 ## Procedures to setup and run E2E test
 
-1. Install React Native command line interface using NPM:
-```
-npm install -g react-native-cli
-```
+### Download and install WinAppDriver [WinAppDriver v1.1](https://github.com/microsoft/WinAppDriver/releases/download/v1.1/WindowsApplicationDriver.msi)
 
-2. Download and install WinAppDriver [WinAppDriver v1.1](https://github.com/microsoft/WinAppDriver/releases/download/v1.1/WindowsApplicationDriver.msi)
-
-3. Install node packages, build JS
+### Install node packages, build JS
 
 - C:\repo>`cd react-native-windows`
 - C:\repo\react-native-windows>`yarn install`
 - C:\repo\react-native-windows>`yarn build`
 
-4. Run the bundle server
+### Start the Metro server
 
 - C:\repo\react-native-windows>`cd packages\E2ETest`
 - C:\repo\react-native-windows\packages\E2ETest>`yarn run start`
-- wait until you see 'Loading dependency graph, done.'
 
-5. Ensure debugger is running
-
-Open Chrome and navigate to `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools.
-
-6. Open a new command prompt, build native app, deploy and launch e2e testing
+### To build, deploy and run the full e2e test suite
 
 - C:\repo\react-native-windows>`cd packages\E2ETest`
 - C:\repo\react-native-windows\packages\E2ETest>`yarn run e2e`
 
-## Procedures to only run E2E test
+### To run E2E tests
 
-Make sure bundle server is running(see above 'Run the bundle server' step) and chrome windows is open (see above 'Ensure debugger is running' step)
+First make sure bundle server is running (see "Start the Metro server" above)
 
-- run all specs
+- To run all test specs
 
 packages\E2ETest>`yarn run e2etest`
 
--  Run one spec
+-  To run one test spec (eg login.spec.ts)
 
 packages\E2ETest>`yarn run testspec wdio\test\login.spec.ts`
 
@@ -80,7 +70,7 @@ packages\E2ETest>`yarn run testspec wdio\test\login.spec.ts`
 
 New test page should be in E2E/app/ or its subfolder.
 
-Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) to learn more about Hooks)
+Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) and this [Pluralsight course](https://app.pluralsight.com/library/courses/using-react-hooks) to learn more about Hooks)
 
 ```
 // LoginTestPage.ts
@@ -100,25 +90,13 @@ export function LoginTestPage() {
 
 ```
 
-## Add the new page to TestPages.ts
+## Add the new page to RNTesterList.windows.ts
 
 ```
-// TestPages.ts
-const TestPages: ITestPage[] = [
-…
   {
-    testId: LOGIN_TESTPAGE,
-    description: 'Login Test Page',
-    content: LoginTestPage,
+    key: 'LegacyAccessibilityTest',
+    module: require('react-native/RNTester/js/examples-win/LegacyTests/AccessibilityTestPage'),
   },
-
-```
-
-## Put new testIDs in Consts.ts
-
-```
-//Consts.ts
-export const USERNAME_ON_LOGIN = 'UserName';
 ```
 
 ## Create a Page Object to match with the page in test app
@@ -165,7 +143,6 @@ Pay attention to the last line of the LoginPage, we always export a new instance
 ```
 // login.spec.ts
 before(() => {
-  HomePage.backToHomePage();
   HomePage.clickAndGotoLoginPage();
 });
 
@@ -186,6 +163,28 @@ describe('LoginTest', () => {
 
 1. For `yarn run e2e` or `yarn run e2ebundle`, the test continues even if one of steps like build failed. see [bug 3136](https://github.com/microsoft/react-native-windows/issues/3136) for more details
 
+# Debugging jasmine tests
+To debug in VS Code, create a configuration in your launch.json that looks like this:
+```
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "run wdio",
+            "program": "${workspaceRoot}/run_wdio.js",
+             "args": ["controlStyle"],
+            "stopOnEntry": true,
+            "autoAttachChildProcesses": true        
+        },
+    ]
+}
+```
+If you want to run all the tests, omit args.  If you want it to run just one test, supply just the name of the test spec without the spec.ts extension as an arg.  
+
+jasmine runs in a child node process, so the "autoAttachChildProcesses" : true is required for VS Code to attach to that child process.  With that setup, you can now set breakpoints in your test specs and VS Code will let you debug your tests.
+
 # More about E2E test
 
 ## Technical Decisions
@@ -193,6 +192,11 @@ describe('LoginTest', () => {
 ### MSTest vs node test runner
 
 A `node` test runner is the first choice since we started the investigation for E2E test. React Native apps are written in JavaScript and it&#39;s a good choose to select a JavaScript framework to author the test case. It would be more friendly to the community, so MSTest with C# is excluded in our option.
+
+### Appium
+[Appium](http://appium.io/) is a W3C-standards based technology based on Selenium, a popular test technology for the web.  Appium supports Windows as well as Android, iOS, and MacOS.  It's recommended that you get some training on this technology before writing tests.  Plurualsight has some great courses, see:  
+[Appium the Big Picture](https://app.pluralsight.com/player?course=appium-big-picture&author=marcel-devries&name=6d3fc4a8-e30e-41f2-aaaf-252483d2b017&clip=5&mode=live)  
+[Getting Started with Appium](https://www.pluralsight.com/courses/getting-started-ui-testing-appium)  
 
 ### WinAppDriver + WebDriverIO + Jasmine
 There is not existing example we can follow to setup E2E testing on Windows for React Native, and I spent weeks to investigate, test and prototype for our E2E. Hereafter I explain what kind of decisions I made and why I made these decisions
@@ -245,7 +249,7 @@ Option 2 is for advance user only. Each time we release a new WinAppDriver, we a
 
 If `yarn install` is run as admin privilege, WinAppDriver would be installed automatically, otherwise you need to install WinAppDriver manually.
 
-For the Azure pipeline, WinAppDriver is already installed on  [HostedVS2019](https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/win/Vs2019-Server2019-Readme.md) and [HostedVS2017](https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/win/Vs2017-Server2016-Readme.md)
+For the Azure pipeline, WinAppDriver is already installed on  [HostedVS2019](https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md) and [HostedVS2017](https://github.com/actions/virtual-environments/blob/master/images/win/Windows2016-Readme.md)
 
 
 ## Bundle
@@ -274,7 +278,7 @@ No matter what JavaScript framework you choose for native app testing, you have 
 
  WinAppDriver provides rich API to help locate the UI element. If [testID](https://facebook.github.io/react-native/docs/picker-item#testid) is specified in React Native app for Windows, the locator strategy should choose `accessibility id`.
 
-A unique `accessiblity id`/`testID` per Window is recommended for React Native Windows E2E testing when authoring the test app and test cases. To ease the maintain effort, all testIDs are defined in [Consts.ts](https://github.com/microsoft/react-native-windows/blob/master/packages/E2ETest/app/Consts.ts), then be imported by test app and test page objects or test cases.
+A unique `accessiblity id`/`testID` per Window is recommended for React Native Windows E2E testing when authoring the test app and test cases. To ease the maintain effort, all testIDs are defined in [Consts.ts](https://github.com/microsoft/react-native-windows/blob/master/packages/@react-native-windows/tester/src/js/examples-win/LegacyTests/Consts.ts), then be imported by test app and test page objects or test cases.
 
 | **Client API** | **Locator Strategy** | **Matched Attribute in inspect.exe** | **Example** |
 | --- | --- | --- | --- |
@@ -353,9 +357,9 @@ capabilities are the configuration which appium/WinAppDriver used to identify th
       maxInstances: 1,
       platformName: 'windows',
       'appium:deviceName': 'WindowsPC',
-      'appium:app': 'ReactUWPTestApp_kc2bncckyf4ap!App',
+      'appium:app': 'ReactUWPTestApp_cezq6h4ygq1hw!App',
       'deviceName': 'WindowsPC',
-      'app': 'ReactUWPTestApp_kc2bncckyf4ap!App',
+      'app': 'ReactUWPTestApp_cezq6h4ygq1hw!App',
       'winAppDriver:experimental-w3c': true,
   },
 
@@ -436,3 +440,80 @@ this.submitButton.click();
 You can easily to use By(string) to locate a element which associated with testID in the app.
 
 It's recommended to define a `get` for each locator like above.
+
+## E2E Tests and masters
+
+E2E tests can be summarized as follows:
+- they are tests that run the ReactUWPTestApp
+- use UI Automation to navigate between pages, query the state of elements, click on them, etc.
+- the ReactUWPTestApp has code to produce a dump of the its own visual tree ("tree dump output") and compares it with a checked in copy ("tree dump masters") to make sure nothing has regressed. The tree dumps are produced in Json format (there is also an option to produce them in a custom text format of key=value, but that is deprecated now).
+
+So you've added or updated some tests: great! you get a cookie*. But now you probably need to update the masters, or the tests will fail and break the CI.
+
+\* void where prohibited, prizes and participation may vary.
+
+![testFail](img/e2e-testfail.png)
+
+The best way to do this is by letting the CI run and fail, then downloading the generated tree dump output files, and comparing to the masters. Make sure the differences are expected, copy over them and check them in. The reason is that the masters will include things like the size elements rendered at, which can be dependent on DPI, scale factor, resolution, and in some cases (due to bugs) even differ based on bitness (see #4628).
+
+When an output doesn't match its master, a file with `.err` extension will be produced under the `TreeDump` folder in the `ReactUWPTestAppTreeDump` artifact. The content of the `.err` file will usually just say:
+
+```txt
+Tree dump file does not match master at C:\Program Files\WindowsApps\ReactUWPTestApp_1.0.0.0_x64__cezq6h4ygq1hw\Assets\TreeDump\masters\ControlStyleRoundBorder.json - See output at C:\Users\VssAdministrator\Documents\ReactUWPTestApp_cezq6h4ygq1hw\LocalState\TreeDump\ControlStyleRoundBorder.json
+```
+
+![Errors](img/e2e-errors.png)
+
+Find the corresponding `.json` file in that folder and compare it to its master. The masters live in [e2etest\windows\ReactUWPTestApp\Assets\TreeDump\masters](https://github.com/microsoft/react-native-windows/tree/master/packages/E2ETest/windows/ReactUWPTestApp/Assets/TreeDump/masters).
+
+Sometimes you'll have an element in your test that produces output that should not be used for comparison. You can manually edit the generated json and set the output that you want to ignore to the `<ANYTHING>` value:
+
+```json
+...
+"Windows.UI.Xaml.Button":
+{
+  "Text": "<ANYTHING>",
+  ...
+}
+...
+```
+
+## run_wdio
+
+WDIO is not really built to be run within Azure DevOps, so I wrote a utility called `run_wdio` to adapt it to something that can run in ADO.
+It can be found in [\packages\e2etest\run_wdio.js](https://github.com/microsoft/react-native-windows/blob/master/packages/E2ETest/run_wdio.js)
+Its main features (which WDIO lacks) are:
+
+* reports success/failure to ADO so that test failures will break the CI
+* supports test selection on the command line
+* supports test metadata and filtering (e.g. you can mark a test as "do not run in the lab")
+* prints out the list of tests and test cases that failed in the CI console
+
+
+## Debugging E2E Tests in CI
+If you have access to the AzureDevOps pipeline you'll be able to see test failures and debug crashes.
+Here are the artifacts that are produced during the build:
+- error screenshots of the app when a test failed
+- test run XML - this contains some information like the name of the wdio test that failed and the JS stack
+- tree dump outputs - you can compare these to the masters to see if there is a the difference responsible for the test failing. 
+- crash dumps of the e2e test app (ReactUWPTestApp)
+
+You can access these by going to the AzureDevOps run for your PR and clicking on the artifacts link:
+
+![Artifacts](img/e2e-artifacts.png)
+
+Then you can access crash dumps under the `ReactUWPTestAppTreeDump\CrashDumps` folder.
+![CrashDumps](img/e2e-crashdumps.png)
+
+You can get the symbols from the `appxsym` (just download it and rename it to `.zip`):
+![SymbolsPackage](img/e2e-syms.png)
+
+ The `ReactUWPTestAppTreeDump` folder will also contain any tree dump outputs that were produced that did not match the masters.  
+ 
+ ## Troubleshooting
+
+ ### E2ETests fail when run locally after sync  
+
+After doing a sync, E2E tests currently fail, see details in https://github.com/microsoft/react-native-windows/issues/5762  
+The workaround is to do a yarn install --force, then re-run the tests.
+

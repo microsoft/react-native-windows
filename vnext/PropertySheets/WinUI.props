@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="WinUI3 versioning">
+    <!-- This value is also used by the CLI, see /packages/@react-native-windows/generate-windows -->
+    <WinUI3Version>3.0.0-preview3.201113.0</WinUI3Version>
+  </PropertyGroup>
+
+  <PropertyGroup Label="WinUI2x versioning">
+		<!--This value is also used by the CLI, see /packages/@react-native-windows/generate-windows -->
+    <WinUI2xVersion>2.5.0</WinUI2xVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(UseWinUI3)'=='true'">
+    <WinUIPackageName>Microsoft.WinUI</WinUIPackageName>
+    <WinUIPackageVersion>$(WinUI3Version)</WinUIPackageVersion>
+    <WinUIPackageProps>$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).props</WinUIPackageProps>
+
+    <!-- Enlighten C# code about WinUI3 -->
+    <DefineConstants Condition="'$(UseWinUI3)'=='true'">USE_WINUI3;$(DefineConstants)</DefineConstants>
+
+    <IsWinUIAlpha Condition="'$(IsWinUIAlpha)' == ''">true</IsWinUIAlpha>
+    <WindowsKitsPath Condition="'$(IsWinUIAlpha)' == 'true'">WinUI-Alpha-Projects-Don-t-Use-SDK-Xaml-Tools</WindowsKitsPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(UseWinUI3)'!='true'">
+    <WinUIPackageName>Microsoft.UI.Xaml</WinUIPackageName>
+    <WinUIPackageVersion>$(WinUI2xVersion)</WinUIPackageVersion>
+    <!-- In WinUI 2.x, the props file is imported for us by the targets file -->
+    <WinUIPackageProps />
+  </PropertyGroup>
+
+  <ItemDefinitionGroup Condition="'$(UseWinUI3)'=='true'">
+    <!-- Enlighten C++ code about WinUI3 -->
+    <ClCompile>
+      <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!-- Preview 3 will need experimental types due to IXP -->
+      <PreprocessorDefinitions Condition="'$(UseExperimentalIXP)'=='true'">WINUI3_PREVIEW3;ENABLE_WINRT_EXPERIMENTAL_TYPES=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <!-- Enlighten IDL interfaces about WinUI3 -->
+    <Midl>
+      <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!-- Preview 3 will need experimental types due to IXP -->
+      <PreprocessorDefinitions>ENABLE_WINRT_EXPERIMENTAL_TYPES=1;DISABLE_MIDL_VERSION_CHECKS=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+  </ItemDefinitionGroup>
+
+  <Target Name="PrintWinUIConfig" BeforeTargets="Midl;Build;ResolveSDKReferences">
+    <Message Text="UseWinUI3 = $(UseWinUI3)" />
+    <Message Text="WinUIPackage = $(WinUIPackageName).$(WinUIPackageVersion)" />
+  </Target>
+</Project>

@@ -18,7 +18,7 @@ const React = require('react');
 const UnimplementedView = require('../UnimplementedViews/UnimplementedView');
 
 import type {TextStyleProp} from '../../StyleSheet/StyleSheet';
-import type {ColorValue} from '../../StyleSheet/StyleSheetTypes';
+import type {ColorValue} from '../../StyleSheet/StyleSheet';
 
 const MODE_DIALOG = 'dialog';
 const MODE_DROPDOWN = 'dropdown';
@@ -31,9 +31,9 @@ type PickerItemProps = $ReadOnly<{|
 
   /**
    * The value to be passed to picker's `onValueChange` callback when
-   * this item is selected. Can be a string or an integer.
+   * this item is selected.
    */
-  value?: ?(number | string),
+  value?: ?string,
 
   /**
    * Color of this item's text.
@@ -63,9 +63,9 @@ type PickerProps = $ReadOnly<{|
   style?: ?TextStyleProp,
 
   /**
-   * Value matching value of one of the items. Can be a string or an integer.
+   * Value matching value of one of the items.
    */
-  selectedValue?: ?(number | string),
+  selectedValue?: ?string,
 
   /**
    * Callback for when an item is selected. This is called with the following parameters:
@@ -98,6 +98,12 @@ type PickerProps = $ReadOnly<{|
   itemStyle?: ?TextStyleProp,
 
   /**
+   * Color of the item background.
+   * @platform android
+   */
+  backgroundColor?: ColorValue,
+
+  /**
    * Prompt string for this picker, used on Android in dialog mode as the title of the dialog.
    * @platform android
    */
@@ -107,6 +113,10 @@ type PickerProps = $ReadOnly<{|
    * Used to locate this view in end-to-end tests.
    */
   testID?: ?string,
+  /**
+   * The string used for the accessibility label. Will be read once focused on the picker but not on change.
+   */
+  accessibilityLabel?: ?string,
 |}>;
 
 /**

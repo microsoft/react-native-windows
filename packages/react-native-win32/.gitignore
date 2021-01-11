@@ -1,5 +1,6 @@
 /dist
 /flow
+/flow-typed
 /index.*
 /interface.*
 /IntegrationTests
@@ -10,3 +11,4 @@
 /RNTester.*
 /temp
 /typings-index.*
+/rn-get-polyfills.js

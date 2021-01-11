@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
@@ -11,13 +11,14 @@
 #include <cxxreact/ReactMarker.h>
 #include <jsi/jsi.h>
 #include <jsiexecutor/jsireact/JSIExecutor.h>
+#include <filesystem>
 #include "OInstance.h"
 #include "Unicode.h"
 
 #include "Chakra/ChakraExecutor.h"
 #include "Chakra/ChakraHelpers.h"
 #include "Chakra/ChakraUtils.h"
-#include "JSI/Shared/RuntimeHolder.h"
+#include "JSI/RuntimeHolder.h"
 
 #include <cxxreact/MessageQueueThread.h>
 #include <cxxreact/ModuleRegistry.h>
@@ -37,11 +38,11 @@
 #include <BatchingMessageQueueThread.h>
 #include <CreateModules.h>
 #include <DevSettings.h>
-#include <IDevSupportManager.h>
+#include <DevSupportManager.h>
 #include <IReactRootView.h>
-#include <IUIManager.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
+#include "PackagerConnection.h"
 
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
@@ -58,6 +59,8 @@
 // Type only available in Desktop.
 using Microsoft::React::WebSocketModule;
 #endif
+
+namespace fs = std::filesystem;
 
 // forward declaration.
 namespace facebook::react::tracing {
@@ -157,21 +160,6 @@ void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
 #endif
 }
 
-class BridgeCallInvoker : public CallInvoker {
- public:
-  BridgeCallInvoker(std::weak_ptr<MessageQueueThread> messageQueueThread)
-      : messageQueueThread_(std::move(messageQueueThread)) {}
-
-  void invokeAsync(std::function<void()> &&func) override {
-    if (auto queue = messageQueueThread_.lock()) {
-      queue->runOnQueue(std::move(func));
-    }
-  }
-
- private:
-  std::weak_ptr<MessageQueueThread> messageQueueThread_;
-};
-
 class OJSIExecutorFactory : public JSExecutorFactory {
  public:
   std::unique_ptr<JSExecutor> createJSExecutor(
@@ -188,15 +176,15 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     }
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
-    auto turboModuleManager =
-        std::make_shared<TurboModuleManager>(turboModuleRegistry_, std::make_shared<BridgeCallInvoker>(jsQueue));
+    auto turboModuleManager = std::make_shared<TurboModuleManager>(turboModuleRegistry_, jsCallInvoker_);
 
     // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
-    auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
-      return turboModuleManager->getModule(name);
-    };
+    auto binding = [turboModuleManager](
+                       const std::string &name, const jsi::Value *
+                       /*schema*/) -> std::shared_ptr<TurboModule> { return turboModuleManager->getModule(name); };
 
-    TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::make_shared<TurboModuleBinding>(binding));
+    TurboModuleBinding::install(
+        *runtimeHolder_->getRuntime(), std::function(binding), false /*enableJSTurboModuleCodegen*/);
 
     // init TurboModule
     for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
@@ -210,14 +198,17 @@ class OJSIExecutorFactory : public JSExecutorFactory {
   OJSIExecutorFactory(
       std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
-      std::shared_ptr<TurboModuleRegistry> turboModuleRegistry) noexcept
+      std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+      std::shared_ptr<CallInvoker> jsCallInvoker) noexcept
       : runtimeHolder_{std::move(runtimeHolder)},
         loggingHook_{std::move(loggingHook)},
-        turboModuleRegistry_{std::move(turboModuleRegistry)} {}
+        turboModuleRegistry_{std::move(turboModuleRegistry)},
+        jsCallInvoker_{std::move(jsCallInvoker)} {}
 
  private:
   std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
   std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
+  std::shared_ptr<CallInvoker> jsCallInvoker_;
   NativeLoggingHook loggingHook_;
 };
 
@@ -225,121 +216,87 @@ class OJSIExecutorFactory : public JSExecutorFactory {
 
 void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const char * /*tag*/) {}
 
-struct BridgeUIBatchInstanceCallback : public InstanceCallback {
-  BridgeUIBatchInstanceCallback(
-      std::weak_ptr<Instance> instance,
-      std::weak_ptr<IUIManager> uimanager,
-      std::weak_ptr<MessageQueueThread> uithread)
-      : m_instance(instance), m_weakUiManager(std::move(uimanager)), m_uiThread(std::move(uithread)) {}
-  virtual ~BridgeUIBatchInstanceCallback() = default;
-  void onBatchComplete() override {
-    if (auto uithread = m_uiThread.lock()) {
-      std::weak_ptr<IUIManager> weakUiManager(m_weakUiManager);
-      uithread->runOnQueue([weakUiManager]() {
-        auto uiManager = weakUiManager.lock();
-        if (uiManager != nullptr)
-          uiManager->onBatchComplete();
-      });
-#ifdef WINRT
-      // For UWP we use a batching message queue to optimize the usage
-      // of the CoreDispatcher.  Win32 already has an optimized queue.
-      facebook::react::BatchingMessageQueueThread *batchingUIThread =
-          static_cast<facebook::react::BatchingMessageQueueThread *>(uithread.get());
-      if (batchingUIThread != nullptr) {
-        batchingUIThread->onBatchComplete();
-      }
-#endif
-    }
-  }
-  void incrementPendingJSCalls() override {}
-  void decrementPendingJSCalls() override {}
-
-  std::weak_ptr<Instance> m_instance;
-  std::weak_ptr<IUIManager> m_weakUiManager;
-  std::weak_ptr<MessageQueueThread> m_uiThread;
-};
-
-struct BridgeTestInstanceCallback : public InstanceCallback {
-  BridgeTestInstanceCallback() {}
-  virtual ~BridgeTestInstanceCallback() = default;
-  void onBatchComplete() override {}
-  void incrementPendingJSCalls() override {}
-  void decrementPendingJSCalls() override {}
-};
-
 /*static*/ std::shared_ptr<InstanceImpl> InstanceImpl::MakeNoBundle(
+    std::shared_ptr<Instance> &&instance,
     std::string &&jsBundleBasePath,
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-    std::shared_ptr<IUIManager> uimanager,
+    std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings,
     std::shared_ptr<IDevSupportManager> devManager) noexcept {
-  auto instance = std::shared_ptr<InstanceImpl>(new InstanceImpl(
+  auto inner = std::shared_ptr<InstanceImpl>(new InstanceImpl(
+      std::move(instance),
       std::move(jsBundleBasePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
-      std::move(uimanager),
+      std::move(callback),
       std::move(jsQueue),
       std::move(nativeQueue),
       std::move(devSettings),
       std::move(devManager)));
 
-  instance->RegisterForReloadIfNecessary();
+  inner->RegisterForReloadIfNecessary();
 
-  return instance;
+  return inner;
 }
 
 /*static*/ std::shared_ptr<InstanceImpl> InstanceImpl::MakeAndLoadBundle(
+    std::shared_ptr<Instance> &&instance,
     std::string &&jsBundleBasePath,
     std::string &&jsBundleRelativePath,
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-    std::shared_ptr<IUIManager> uimanager,
+    std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings,
     std::shared_ptr<IDevSupportManager> devManager) noexcept {
-  auto instance = std::shared_ptr<InstanceImpl>(new InstanceImpl(
+  auto inner = std::shared_ptr<InstanceImpl>(new InstanceImpl(
+      std::move(instance),
       std::move(jsBundleBasePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
-      std::move(uimanager),
+      std::move(callback),
       std::move(jsQueue),
       std::move(nativeQueue),
       std::move(devSettings),
       std::move(devManager)));
 
-  instance->loadBundle(std::move(jsBundleRelativePath));
-  instance->RegisterForReloadIfNecessary();
+  inner->loadBundle(std::move(jsBundleRelativePath));
+  inner->RegisterForReloadIfNecessary();
 
-  return instance;
+  return inner;
+}
+
+void InstanceImpl::SetInError() noexcept {
+  m_isInError = true;
 }
 
 InstanceImpl::InstanceImpl(
+    std::shared_ptr<Instance> &&instance,
     std::string &&jsBundleBasePath,
     std::vector<
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-    std::shared_ptr<IUIManager> uimanager,
+    std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings,
     std::shared_ptr<IDevSupportManager> devManager)
-    : m_uimanager(std::move(uimanager)),
-      m_turboModuleRegistry(std::move(turboModuleRegistry)),
+    : m_turboModuleRegistry(std::move(turboModuleRegistry)),
       m_jsThread(std::move(jsQueue)),
       m_nativeQueue(nativeQueue),
       m_jsBundleBasePath(std::move(jsBundleBasePath)),
       m_devSettings(std::move(devSettings)),
       m_devManager(std::move(devManager)),
-      m_innerInstance(std::make_shared<Instance>()) {
+      m_innerInstance(std::move(instance)) {
   // Temp set the logmarker here
   facebook::react::ReactMarker::logTaggedMarker = logMarker;
 
@@ -362,9 +319,13 @@ InstanceImpl::InstanceImpl(
   std::shared_ptr<JSExecutorFactory> jsef;
   if (m_devSettings->useWebDebugger) {
     try {
-      auto jseFunc = m_devManager->LoadJavaScriptInProxyMode(*m_devSettings);
+      auto jseFunc = m_devManager->LoadJavaScriptInProxyMode(*m_devSettings, [weakthis = weak_from_this()]() {
+        if (auto strongThis = weakthis.lock()) {
+          strongThis->SetInError();
+        }
+      });
 
-      if ((jseFunc == nullptr) || m_devManager->HasException()) {
+      if ((jseFunc == nullptr) || m_isInError) {
         m_devSettings->errorCallback("Failed to create JavaScript Executor.");
         return;
       }
@@ -375,11 +336,18 @@ InstanceImpl::InstanceImpl(
       return;
     }
   } else {
+    if (m_devSettings->useFastRefresh || m_devSettings->liveReloadCallback) {
+      Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*m_devSettings);
+    }
+
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
       jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleRegistry);
+          m_devSettings->jsiRuntimeHolder,
+          m_devSettings->loggingCallback,
+          m_turboModuleRegistry,
+          m_innerInstance->getJSCallInvoker());
     } else if (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default) {
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
@@ -389,6 +357,7 @@ InstanceImpl::InstanceImpl(
           break;
 #else
           assert(false); // Hermes is not available in this build, fallthrough
+          [[fallthrough]];
 #endif
         case JSIEngineOverride::V8: {
 #if defined(USE_V8)
@@ -405,6 +374,7 @@ InstanceImpl::InstanceImpl(
           break;
 #else
           assert(false); // V8 is not available in this build, fallthrough
+          [[fallthrough]];
 #endif
         }
         case JSIEngineOverride::Chakra:
@@ -415,7 +385,10 @@ InstanceImpl::InstanceImpl(
           break;
       }
       jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, m_turboModuleRegistry);
+          m_devSettings->jsiRuntimeHolder,
+          m_devSettings->loggingCallback,
+          m_turboModuleRegistry,
+          m_innerInstance->getJSCallInvoker());
     } else {
       // We use the older non-JSI ChakraExecutor pipeline as a fallback as of
       // now. This will go away once we completely move to JSI flow.
@@ -456,11 +429,7 @@ InstanceImpl::InstanceImpl(
     }
   }
 
-  m_innerInstance->initializeBridge(
-      std::make_unique<BridgeUIBatchInstanceCallback>(m_innerInstance, m_uimanager, m_nativeQueue),
-      jsef,
-      m_jsThread,
-      m_moduleRegistry);
+  m_innerInstance->initializeBridge(std::move(callback), jsef, m_jsThread, m_moduleRegistry);
 
   // All JSI runtimes do support host objects and hence the native modules
   // proxy.
@@ -489,6 +458,7 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
 }
 
 void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool synchronously) {
+<<<<<<< HEAD
   // load JS
   if (m_devSettings->useWebDebugger) {
     // First attempt to get download the Js locally, to catch any bundling
@@ -503,17 +473,52 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       m_devSettings->errorCallback(jsBundleString);
       return;
     }
+||||||| 811c767bf
+  // load JS
+  if (m_devSettings->useWebDebugger) {
+    // First attempt to get download the Js locally, to catch any bundling
+    // errors before attempting to load the actual script.
+    auto jsBundleString = m_devManager->GetJavaScriptFromServer(
+        m_devSettings->debugHost,
+        m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
+        m_devSettings->platformName);
 
-    try {
+    if (m_devManager->HasException()) {
+      m_devSettings->errorCallback(jsBundleString);
+      return;
+    }
+=======
+  try {
+    if (m_devSettings->useWebDebugger || m_devSettings->liveReloadCallback != nullptr ||
+        m_devSettings->useFastRefresh) {
+      // First attempt to get download the Js locally, to catch any bundling
+      // errors before attempting to load the actual script.
+
+      auto [jsBundleString, success] = Microsoft::ReactNative::GetJavaScriptFromServer(
+          m_devSettings->sourceBundleHost,
+          m_devSettings->sourceBundlePort,
+          m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
+          m_devSettings->platformName,
+          m_devSettings->inlineSourceMap);
+
+      if (!success) {
+        m_devSettings->errorCallback(jsBundleString);
+        return;
+      }
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
+
       auto bundleUrl = DevServerHelper::get_BundleUrl(
-          m_devSettings->debugHost,
+          m_devSettings->sourceBundleHost,
+          m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName,
           /*dev*/ true,
           /*hot*/ false,
           m_devSettings->inlineSourceMap);
 
+      // Remote debug executor loads script from a Uri, rather than taking the actual bundle string
       m_innerInstance->loadScriptFromString(
+<<<<<<< HEAD
           std::make_unique<const JSBigStdString>(bundleUrl), bundleUrl, synchronously);
     } catch (std::exception &e) {
       m_devSettings->errorCallback(e.what());
@@ -525,12 +530,24 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 
     if (m_devManager->HasException()) {
       m_devSettings->errorCallback(jsBundleString);
-    } else {
-      m_innerInstance->loadScriptFromString(
-          std::make_unique<const JSBigStdString>(jsBundleString), jsBundleRelativePath, synchronously);
+||||||| 811c767bf
+          std::make_unique<const JSBigStdString>(bundleUrl), bundleUrl, synchronously);
+    } catch (std::exception &e) {
+      m_devSettings->errorCallback(e.what());
+      return;
     }
-  } else {
-    try {
+  } else if (m_devSettings->liveReloadCallback != nullptr || m_devSettings->useFastRefresh) {
+    auto jsBundleString = m_devManager->GetJavaScriptFromServer(
+        m_devSettings->debugHost, jsBundleRelativePath, m_devSettings->platformName);
+
+    if (m_devManager->HasException()) {
+      m_devSettings->errorCallback(jsBundleString);
+=======
+          std::make_unique<const JSBigStdString>(m_devSettings->useWebDebugger ? bundleUrl : jsBundleString),
+          bundleUrl,
+          synchronously);
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
+    } else {
 #if (defined(_MSC_VER) && !defined(WINRT))
       auto fullBundleFilePath = GetJSBundleFilePath(m_jsBundleBasePath, jsBundleRelativePath);
 
@@ -547,53 +564,24 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       }
 
 #else
-      std::string bundlePath = m_devSettings->bundleRootPath + jsBundleRelativePath + ".bundle";
+      std::string bundlePath =
+          (fs::path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).u8string();
 
       auto bundleString = std::make_unique<::react::uwp::StorageFileBigString>(bundlePath);
       m_innerInstance->loadScriptFromString(std::move(bundleString), jsBundleRelativePath, synchronously);
 #endif
-
-#if defined(_CHAKRACORE_H_)
-    } catch (const facebook::react::ChakraJSException &e) {
-      m_devSettings->errorCallback(std::string{e.what()} + "\r\n" + e.getStack());
-#endif
-    } catch (std::exception &e) {
-      m_devSettings->errorCallback(e.what());
     }
+#if defined(_CHAKRACORE_H_)
+  } catch (const facebook::react::ChakraJSException &e) {
+    m_devSettings->errorCallback(std::string{e.what()} + "\r\n" + e.getStack());
+#endif
+  } catch (std::exception &e) {
+    m_devSettings->errorCallback(e.what());
   }
 }
 
 InstanceImpl::~InstanceImpl() {
   m_nativeQueue->quitSynchronous();
-}
-
-void InstanceImpl::AttachMeasuredRootView(IReactRootView *rootView, folly::dynamic &&initProps) noexcept {
-  if (m_devManager->HasException()) {
-    return;
-  }
-
-  rootView->ResetView();
-
-  auto rootTag = m_uimanager->AddMeasuredRootView(rootView);
-  rootView->SetTag(rootTag);
-
-  std::string jsMainModuleName = rootView->JSComponentName();
-  folly::dynamic params = folly::dynamic::array(
-      std::move(jsMainModuleName), folly::dynamic::object("initialProps", std::move(initProps))("rootTag", rootTag));
-  m_innerInstance->callJSFunction("AppRegistry", "runApplication", std::move(params));
-}
-
-void InstanceImpl::DetachRootView(IReactRootView *rootView) noexcept {
-  if (m_devManager->HasException()) {
-    return;
-  }
-
-  auto rootTag = rootView->GetTag();
-  folly::dynamic params = folly::dynamic::array(rootTag);
-  m_innerInstance->callJSFunction("AppRegistry", "unmountApplicationComponentAtRootTag", std::move(params));
-
-  // Give the JS thread time to finish executing
-  m_jsThread->runOnQueueSync([]() {});
 }
 
 std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules(
@@ -625,7 +613,8 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   // list
   std::string bundleUrl = (m_devSettings->useWebDebugger || m_devSettings->liveReloadCallback)
       ? DevServerHelper::get_BundleUrl(
-            m_devSettings->debugHost,
+            m_devSettings->sourceBundleHost,
+            m_devSettings->sourceBundlePort,
             m_devSettings->debugBundlePath,
             m_devSettings->platformName,
             true /*dev*/,
@@ -665,13 +654,14 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
 
 void InstanceImpl::RegisterForReloadIfNecessary() noexcept {
   // setup polling for live reload
-  if (!m_devManager->HasException() && !m_devSettings->useFastRefresh && m_devSettings->liveReloadCallback != nullptr) {
-    m_devManager->StartPollingLiveReload(m_devSettings->debugHost, m_devSettings->liveReloadCallback);
+  if (!m_isInError && !m_devSettings->useFastRefresh && m_devSettings->liveReloadCallback != nullptr) {
+    m_devManager->StartPollingLiveReload(
+        m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort, m_devSettings->liveReloadCallback);
   }
 }
 
 void InstanceImpl::DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic &&eventData) {
-  if (m_devManager->HasException()) {
+  if (m_isInError) {
     return;
   }
 
@@ -680,7 +670,7 @@ void InstanceImpl::DispatchEvent(int64_t viewTag, std::string eventName, folly::
 }
 
 void InstanceImpl::invokeCallback(const int64_t callbackId, folly::dynamic &&params) {
-  if (m_devManager->HasException()) {
+  if (m_isInError) {
     return;
   }
 

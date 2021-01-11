@@ -1,0 +1,5 @@
+internal void CreateEnumSerializers()
+{
+    global::Microsoft.ReactNative.Managed.JSValueReaderCodeGen<global::TestClass.MyEnum>.ReadValue = (global::Microsoft.ReactNative.IJSValueReader reader, out global::TestClass.MyEnum value) => value = (global::TestClass.MyEnum)global::Microsoft.ReactNative.Managed.JSValueReader.ReadValue<int>(reader);
+    global::Microsoft.ReactNative.Managed.JSValueWriterCodeGen<global::TestClass.MyEnum>.WriteValue = (writer, value) => global::Microsoft.ReactNative.Managed.JSValueWriter.WriteValue<int>(writer, (int)value);
+}

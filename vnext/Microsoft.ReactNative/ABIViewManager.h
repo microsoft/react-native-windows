@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 //
@@ -11,57 +11,57 @@
 #include "DynamicReader.h"
 #include "DynamicWriter.h"
 
-#include <ReactUWP/Views/FrameworkElementViewManager.h>
-#include <ReactUWP/Views/ShadowNodeBase.h>
+#include <Views/FrameworkElementViewManager.h>
+#include <Views/ShadowNodeBase.h>
 #include "ReactHost/React.h"
 
 #include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::Microsoft::ReactNative {
 
-class ABIViewManager : public react::uwp::FrameworkElementViewManager {
-  using Super = react::uwp::FrameworkElementViewManager;
+class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewManager {
+  using Super = ::Microsoft::ReactNative::FrameworkElementViewManager;
 
  public:
   ABIViewManager(
-      std::shared_ptr<react::uwp::IReactInstance> const &reactInstance,
       Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
       ReactNative::IViewManager const &viewManager);
 
-  const char *GetName() const override;
+  const wchar_t *GetName() const override;
 
-  folly::dynamic GetExportedViewConstants() const override;
+  void GetExportedViewConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
-  folly::dynamic GetNativeProps() const override;
+  void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
-  void UpdateProperties(react::uwp::ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
+  void UpdateProperties(
+      ::Microsoft::ReactNative::ShadowNodeBase *nodeToUpdate,
+      winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
-  folly::dynamic GetCommands() const override;
+  void GetCommands(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
   void DispatchCommand(
-      const winrt::Windows::UI::Xaml::DependencyObject &viewToUpdate,
+      const xaml::DependencyObject &viewToUpdate,
       const std::string &commandId,
-      const folly::dynamic &commandArgs) override;
+      winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) override;
 
-  folly::dynamic GetExportedCustomBubblingEventTypeConstants() const override;
+  void GetExportedCustomBubblingEventTypeConstants(
+      const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
-  folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
+  void GetExportedCustomDirectEventTypeConstants(
+      const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
-  void AddView(
-      const winrt::Windows::UI::Xaml::DependencyObject &parent,
-      const winrt::Windows::UI::Xaml::DependencyObject &child,
-      int64_t index) override;
-  void RemoveAllChildren(const winrt::Windows::UI::Xaml::DependencyObject &parent) override;
-  void RemoveChildAt(const winrt::Windows::UI::Xaml::DependencyObject &parent, int64_t index) override;
+  void AddView(const xaml::DependencyObject &parent, const xaml::DependencyObject &child, int64_t index) override;
+  void RemoveAllChildren(const xaml::DependencyObject &parent) override;
+  void RemoveChildAt(const xaml::DependencyObject &parent, int64_t index) override;
   void ReplaceChild(
-      const winrt::Windows::UI::Xaml::DependencyObject &parent,
-      const winrt::Windows::UI::Xaml::DependencyObject &oldChild,
-      const winrt::Windows::UI::Xaml::DependencyObject &newChild) override;
+      const xaml::DependencyObject &parent,
+      const xaml::DependencyObject &oldChild,
+      const xaml::DependencyObject &newChild) override;
 
  protected:
-  winrt::Windows::UI::Xaml::DependencyObject CreateViewCore(int64_t) override;
+  xaml::DependencyObject CreateViewCore(int64_t) override;
 
-  std::string m_name;
+  std::wstring m_name;
   ReactNative::IViewManager m_viewManager;
   IViewManagerWithReactContext m_viewManagerWithReactContext;
   IViewManagerWithExportedViewConstants m_viewManagerWithExportedViewConstants;

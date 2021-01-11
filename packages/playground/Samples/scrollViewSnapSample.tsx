@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -69,10 +69,10 @@ export default class Bootstrap extends React.Component<{}, any> {
 
   onRefresh = () => {
     this.setState({refreshing: true});
-    wait(2000).then(() => this.setState({refreshing: false}));
+    void wait(2000).then(() => this.setState({refreshing: false}));
   };
 
-  makeItems = (nItems: number, styles: Object): Array<any> => {
+  makeItems = (nItems: number, styles: Record<string, any>): Array<any> => {
     const items = [];
     for (let i = 0; i < nItems; i++) {
       items[i] = (

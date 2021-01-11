@@ -1,18 +1,43 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 import "IReactContext.idl";
 import "IReactModuleBuilder.idl";
+#ifndef CORE_ABI
 import "IViewManager.idl";
+#endif
 
-namespace Microsoft.ReactNative {
+#include "DocString.h"
 
+namespace Microsoft.ReactNative
+{
+  DOC_STRING("Provides information about a custom native module.  See @IReactModuleBuilder.")
   delegate Object ReactModuleProvider(IReactModuleBuilder moduleBuilder);
+
+#ifndef CORE_ABI
+  DOC_STRING("Provides information about a custom view manager.  See @IViewManager.")
   delegate IViewManager ReactViewManagerProvider();
+#endif
 
   [webhosthidden]
-  interface IReactPackageBuilder {
+  DOC_STRING("Builds ReactNative package with the set of native modules and view managers.")
+  interface IReactPackageBuilder
+  {
+    DOC_STRING("Adds a custom native module.  See @ReactModuleProvider.")
     void AddModule(String moduleName, ReactModuleProvider moduleProvider);
+
+#ifndef CORE_ABI
+    DOC_STRING("Adds a custom view manager.  See @ReactViewManagerProvider.")
     void AddViewManager(String viewManagerName, ReactViewManagerProvider viewManagerProvider);
+#endif
+  }
+
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("Experimental extensions to the @IReactPackageBuilder.")
+  interface IReactPackageBuilderExperimental requires IReactPackageBuilder
+  {
+    DOC_STRING("Adds a custom TurboModule that uses direct access to JS Engine API.")
+    void AddTurboModule(String moduleName, ReactModuleProvider moduleProvider);
   }
 } // namespace Microsoft.ReactNative

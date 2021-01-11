@@ -1,4 +1,4 @@
-# Copyright (c) Microsoft Corporation. All rights reserved.
+# Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 #
 # UnitTest.ps1
@@ -17,10 +17,10 @@ param (
 	[System.IO.FileInfo[]] $Assemblies =
 	(
 		("$(Split-Path $PSScriptRoot)\target\$Platform\$Configuration\" +
-		"React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll"),
+			"React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll"),
 
 		("$(Split-Path $PSScriptRoot)\target\$Platform\$Configuration\" +
-		"JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe")
+			"ReactCommon.UnitTests\ReactCommon.UnitTests.exe")
 	),
 
 	[System.IO.FileInfo] $VsTest = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"

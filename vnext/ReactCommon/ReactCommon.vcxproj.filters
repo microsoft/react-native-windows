@@ -43,6 +43,21 @@
     <Filter Include="yoga\event">
       <UniqueIdentifier>{b81cc660-374c-4232-823b-6c76b48564b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="react">
+      <UniqueIdentifier>{2d49b4f6-fe41-45da-9942-81217accd474}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer">
+      <UniqueIdentifier>{61211521-40da-4211-b23d-bced1fefc5d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\core">
+      <UniqueIdentifier>{fa6d6abd-769f-4c36-b881-173f3f218abe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\debug">
+      <UniqueIdentifier>{cc363422-d654-4288-b8b8-ea8f38aa7604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\mounting">
+      <UniqueIdentifier>{836654a8-cee1-4d6d-ae20-bd2fb86710f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.cpp">
@@ -99,13 +114,10 @@
     <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
-    <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp">
-      <Filter>yoga</Filter>
-    </ClCompile>
-    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp">
       <Filter>jsi\jsi</Filter>
     </ClCompile>
-    <ClCompile Include="$(JSI_Source)\jsi\JSIDynamic.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.cpp">
       <Filter>jsi\jsi</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
@@ -120,26 +132,39 @@
     <ClCompile Include="$(YogaDir)\yoga\log.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.cpp">
       <Filter>turbomodule\core</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp">
       <Filter>turbomodule\core</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.cpp">
       <Filter>turbomodule\core</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.cpp">
       <Filter>turbomodule\core</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp">
       <Filter>turbomodule\core</Filter>
-    </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\BridgeJSCallInvoker.cpp">
-      <Filter>jscallinvoker\ReactCommon</Filter>
     </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp">
       <Filter>yoga\event</Filter>
+    </ClCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
+    <ClCompile Include=".\Yoga.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\SampleTurboCxxModule.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp">
+      <Filter>react\renderer\core</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp">
+      <Filter>react\renderer\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp">
+      <Filter>react\renderer\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\TransactionTelemetry.cpp">
+      <Filter>react\renderer\mounting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -236,39 +261,34 @@
     <ClInclude Include="$(YogaDir)\yoga\Yoga.h">
       <Filter>yoga</Filter>
     </ClInclude>
-    <ClInclude Include="$(JSI_SourcePath)\jsi\instrumentation.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h">
       <Filter>privatedata</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\BridgeJSCallInvoker.h">
-      <Filter>jscallinvoker\ReactCommon</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\JSCallInvoker.h">
-      <Filter>jscallinvoker\ReactCommon</Filter>
-    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -7,20 +7,33 @@
     <authors>Microsoft</authors>
     <projectUrl>https://www.openssl.org</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <dependencies>
+      <group targetFramework="Windows8-x86" />
+      <group targetFramework="Windows8-x64" />
+      <group targetFramework="Windows8-ARM64" />
+    </dependencies>
+    <repository type="git" url="$repoUrl$" branch="$repoBranch$" commit="$repoCommit$" />
+    <license type="expression">OpenSSL</license>
   </metadata>
   <files>
     <file src="OpenSSL.targets" target="build\native\$id$.targets" />
 
     <file src="$vcpkgroot$\installed\x86-windows-static\include\openssl\**\*.*" target="include\x86\openssl" />
-    <file src="$vcpkgroot$\installed\x86-windows-static\debug\lib\libcrypto.lib" target="lib\x86\Debug" />
-    <file src="$vcpkgroot$\installed\x86-windows-static\debug\lib\libssl.lib" target="lib\x86\Debug" />
-    <file src="$vcpkgroot$\installed\x86-windows-static\lib\libcrypto.lib" target="lib\x86\Release" />
-    <file src="$vcpkgroot$\installed\x86-windows-static\lib\libssl.lib" target="lib\x86\Release" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\debug\lib\libeay32.lib" target="lib\win8-x86\Debug" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\debug\lib\ssleay32.lib" target="lib\win8-x86\Debug" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\lib\libeay32.lib" target="lib\win8-x86\Release" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\lib\ssleay32.lib" target="lib\win8-x86\Release" />
 
     <file src="$vcpkgroot$\installed\x64-windows-static\include\openssl\**\*.*" target="include\x64\openssl" />
-    <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\libcrypto.lib" target="lib\x64\Debug" />
-    <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\libssl.lib" target="lib\x64\Debug" />
-    <file src="$vcpkgroot$\installed\x64-windows-static\lib\libcrypto.lib" target="lib\x64\Release" />
-    <file src="$vcpkgroot$\installed\x64-windows-static\lib\libssl.lib" target="lib\x64\Release" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\libeay32.lib" target="lib\win8-x64\Debug" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\ssleay32.lib" target="lib\win8-x64\Debug" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\lib\libeay32.lib" target="lib\win8-x64\Release" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\lib\ssleay32.lib" target="lib\win8-x64\Release" />
+
+    <file src="$vcpkgroot$\installed\arm64-windows-static\include\openssl\**\*.*" target="include\ARM64\openssl" />
+    <file src="$vcpkgroot$\installed\arm64-windows-static\debug\lib\libeay32.lib" target="lib\win8-arm64\Debug" />
+    <file src="$vcpkgroot$\installed\arm64-windows-static\debug\lib\ssleay32.lib" target="lib\win8-arm64\Debug" />
+    <file src="$vcpkgroot$\installed\arm64-windows-static\lib\libeay32.lib" target="lib\win8-arm64\Release" />
+    <file src="$vcpkgroot$\installed\arm64-windows-static\lib\ssleay32.lib" target="lib\win8-arm64\Release" />
   </files>
 </package>

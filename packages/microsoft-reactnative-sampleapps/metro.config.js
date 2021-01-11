@@ -5,7 +5,14 @@
  * @format
  */
 const path = require('path');
+<<<<<<< HEAD
 const blacklist = require('metro-config/src/defaults/blacklist');
+||||||| 811c767bf
+const blacklist = require('metro-config/src/defaults/blacklist');
+
+=======
+const exclusionList = require('metro-config/src/defaults/exclusionList');
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 const rnwPath = path.resolve(__dirname, '../../vnext');
 
 module.exports = {
@@ -22,16 +29,28 @@ module.exports = {
       // Redirect metro to rnwPath instead of node_modules/react-native-windows, since metro doesn't like symlinks
       'react-native-windows': rnwPath,
     },
-    blacklistRE: blacklist([
-      new RegExp(
-        '.*microsoft-reactnative-sampleapps/msbuild.*'.replace(/[/\\]/g, '\\/'),
-      ), // Avoid error EBUSY: resource busy or locked, open 'D:\a\1\s\packages\E2ETest\msbuild.ProjectImports.zip' in pipeline
+    blockList: exclusionList([
+      // Avoid error EBUSY: resource busy or locked, open 'D:\a\1\s\packages\E2ETest\msbuild.ProjectImports.zip' in pipeline
+      /.*\.ProjectImports\.zip/,
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
         `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
       ),
     ]),
   },
+
+  // Metro doesn't currently handle assets from other packages within a monorepo.  This is the current workaround people use
+  server: {
+    enhanceMiddleware: middleware => {
+      return (req, res, next) => {
+        if (req.url.startsWith('/vnext')) {
+          req.url = req.url.replace('/vnext', '/assets/../../vnext');
+        }
+        return middleware(req, res, next);
+      };
+    },
+  },
+
   transformer: {
     getTransformOptions: async () => ({
       transform: {

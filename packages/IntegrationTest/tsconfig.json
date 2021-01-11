@@ -1,0 +1,8 @@
+{
+  "extends": "@rnw-scripts/ts-config",
+  "compilerOptions": {
+    "lib": ["ES2019.Array", "DOM", "ES6" ,"DOM.Iterable", "ScriptHost"],
+  },
+  "exclude": ["node_modules"]
+}
+  

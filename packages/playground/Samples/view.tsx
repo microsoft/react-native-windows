@@ -1,11 +1,11 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
 
 import * as React from 'react';
-import {AppRegistry, CheckBox, StyleSheet, Text, View} from 'react-native';
+import {AppRegistry, StyleSheet, Switch, Text, View} from 'react-native';
 
 export default class Bootstrap extends React.Component<
   {},
@@ -87,15 +87,15 @@ export default class Bootstrap extends React.Component<
           paddingHorizontal: 20,
         }}>
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({focusable: value})}
             value={this.state.focusable}
           />
-          <Text>acceptsKeyboardFocus</Text>
+          <Text>focusable</Text>
         </View>
 
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({hasStyle: value})}
             value={this.state.hasStyle}
           />
@@ -103,7 +103,7 @@ export default class Bootstrap extends React.Component<
         </View>
 
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({hasBorder: value})}
             value={this.state.hasBorder}
           />
@@ -111,7 +111,7 @@ export default class Bootstrap extends React.Component<
         </View>
 
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({radius: value})}
             value={this.state.radius}
           />
@@ -119,7 +119,7 @@ export default class Bootstrap extends React.Component<
         </View>
 
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({largeBorder: value})}
             value={this.state.largeBorder}
           />
@@ -128,7 +128,7 @@ export default class Bootstrap extends React.Component<
 
         <View
           style={{flexDirection: 'row', alignSelf: 'flex-start', width: 100}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({alignSelfCenter: value})}
             value={this.state.alignSelfCenter}
           />
@@ -137,7 +137,7 @@ export default class Bootstrap extends React.Component<
 
         <View
           style={{flexDirection: 'row', alignSelf: 'flex-start', width: 100}}>
-          <CheckBox
+          <Switch
             onValueChange={value => this.setState({largePadding: value})}
             value={this.state.largePadding}
           />
@@ -154,7 +154,7 @@ export default class Bootstrap extends React.Component<
             backgroundColor: 'azure',
           }}>
           <View
-            acceptsKeyboardFocus={this.state.focusable ? true : false}
+            focusable={this.state.focusable ? true : false}
             style={
               this.state.hasStyle
                 ? this.state.hasBorder
@@ -165,11 +165,7 @@ export default class Bootstrap extends React.Component<
                   ? styles.radial
                   : styles.noBorder
                 : null
-            }
-            {...{
-              // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-              acceptsKeyboardFocus: true,
-            }}>
+            }>
             <Text style={styles.child}>The Text</Text>
           </View>
         </View>

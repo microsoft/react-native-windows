@@ -1,0 +1,156 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#define VERSION 1.0
+
+import "AccessibilityAction.idl";
+#include "NamespaceRedirect.h"
+
+namespace Microsoft.ReactNative
+{
+  enum AccessibilityRoles
+  {
+    None = 0,
+    Button,
+    Link,
+    Search,
+    Image,
+    KeyboardKey,
+    Text,
+    Adjustable,
+    ImageButton,
+    Header,
+    Summary,
+    Alert,
+    CheckBox,
+    ComboBox,
+    Menu,
+    MenuBar,
+    MenuItem,
+    ProgressBar,
+    Radio,
+    RadioGroup,
+    ScrollBar,
+    SpinButton,
+    Switch,
+    Tab,
+    TabList,
+    Timer,
+    ToolBar,
+    List, // RNW extension
+    ListItem, // RNW extension
+    Unknown, // Catch-all
+    CountRoles
+  };
+
+  enum AccessibilityStates
+  {
+    Selected = 0,
+    Disabled,
+    Checked,
+    Unchecked,
+    Busy,
+    Expanded,
+    Collapsed,
+    CountStates
+  };
+
+  enum AccessibilityValue
+  {
+    Min = 0,
+    Max,
+    Now,
+    Text
+  };
+
+  delegate void AccessibilityInvokeEventHandler();
+  delegate void AccessibilityActionEventHandler(AccessibilityAction action);
+
+  [default_interface]
+  [webhosthidden]
+  runtimeclass DynamicAutomationProperties
+  {
+    // Attached Properties
+    static XAML_NAMESPACE.DependencyProperty AccessibilityRoleProperty { get; };
+    static void SetAccessibilityRole(XAML_NAMESPACE.UIElement element, AccessibilityRoles value);
+    static AccessibilityRoles GetAccessibilityRole(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateSelectedProperty { get; };
+    static void SetAccessibilityStateSelected(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateSelected(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateDisabledProperty { get; };
+    static void SetAccessibilityStateDisabled(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateDisabled(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateCheckedProperty { get; };
+    static void SetAccessibilityStateChecked(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateChecked(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateUncheckedProperty { get; };
+    static void SetAccessibilityStateUnchecked(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateUnchecked(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateBusyProperty { get; };
+    static void SetAccessibilityStateBusy(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateBusy(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateExpandedProperty { get; };
+    static void SetAccessibilityStateExpanded(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateExpanded(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityStateCollapsedProperty { get; };
+    static void SetAccessibilityStateCollapsed(XAML_NAMESPACE.UIElement element, Boolean value);
+    static Boolean GetAccessibilityStateCollapsed(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityValueMinProperty { get; };
+    static void SetAccessibilityValueMin(XAML_NAMESPACE.UIElement element, Double value);
+    static Double GetAccessibilityValueMin(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityValueMaxProperty { get; };
+    static void SetAccessibilityValueMax(XAML_NAMESPACE.UIElement element, Double value);
+    static Double GetAccessibilityValueMax(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityValueNowProperty { get; };
+    static void SetAccessibilityValueNow(XAML_NAMESPACE.UIElement element, Double value);
+    static Double GetAccessibilityValueNow(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityValueTextProperty { get; };
+    static void SetAccessibilityValueText(XAML_NAMESPACE.UIElement element, String value);
+    static String GetAccessibilityValueText(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityInvokeEventHandlerProperty { get; };
+    static void SetAccessibilityInvokeEventHandler(XAML_NAMESPACE.UIElement element, AccessibilityInvokeEventHandler value);
+    static AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityActionsProperty { get; };
+    static void SetAccessibilityActions(XAML_NAMESPACE.UIElement element, Windows.Foundation.Collections.IVector<Microsoft.ReactNative.AccessibilityAction> value);
+    static Windows.Foundation.Collections.IVector<Microsoft.ReactNative.AccessibilityAction> GetAccessibilityActions(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AccessibilityActionEventHandlerProperty { get; };
+    static void SetAccessibilityActionEventHandler(XAML_NAMESPACE.UIElement element, AccessibilityActionEventHandler value);
+    static AccessibilityActionEventHandler GetAccessibilityActionEventHandler(XAML_NAMESPACE.UIElement element);
+  }
+
+  [default_interface]
+  [webhosthidden]
+  runtimeclass DynamicAutomationPeer :
+    XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer,
+    XAML_NAMESPACE.Automation.Provider.IInvokeProvider,
+    XAML_NAMESPACE.Automation.Provider.ISelectionProvider,
+    XAML_NAMESPACE.Automation.Provider.ISelectionItemProvider, 
+    XAML_NAMESPACE.Automation.Provider.IToggleProvider,
+    XAML_NAMESPACE.Automation.Provider.IExpandCollapseProvider,
+    XAML_NAMESPACE.Automation.Provider.IRangeValueProvider
+  {
+    DynamicAutomationPeer(XAML_NAMESPACE.FrameworkElement owner);
+  }
+
+  [default_interface]
+  [webhosthidden]
+  runtimeclass DynamicValueProvider :
+    XAML_NAMESPACE.Automation.Provider.IValueProvider
+  {
+    DynamicValueProvider(XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer peer);
+  }
+}

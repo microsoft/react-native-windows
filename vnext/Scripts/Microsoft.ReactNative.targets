@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <PropertyGroup>
-        <Native-Platform Condition="'$(Platform)' == 'Win32'">x86</Native-Platform>
-        <Native-Platform Condition="'$(Platform)' != 'Win32'">$(Platform)</Native-Platform>
-    </PropertyGroup>
-    <ItemGroup Condition="'$(TargetPlatformIdentifier)' == 'UAP'">
-        <Reference Include="$(MSBuildThisFileDirectory)..\..\lib\uap10.0\Microsoft.ReactNative.winmd">
-            <Implementation>Microsoft.ReactNative.dll</Implementation>
-        </Reference>
-    <ReferenceCopyLocalPaths Condition="$(Configuration) == 'Debug'" Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\debug\Microsoft.ReactNative.dll" />
-    <ReferenceCopyLocalPaths Condition="$(Configuration) == 'Debug'" Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\debug\Microsoft.ReactNative.pri" />
-    <ReferenceCopyLocalPaths Condition="$(Configuration) != 'Debug'" Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\release\Microsoft.ReactNative.dll" />
-    <ReferenceCopyLocalPaths Condition="$(Configuration) != 'Debug'" Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\release\Microsoft.ReactNative.pri" />
-    </ItemGroup>
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.VersionCheck.targets" />
+
+  <PropertyGroup>
+    <Native-Platform Condition="'$(Platform)' == 'Win32'">x86</Native-Platform>
+    <Native-Platform Condition="'$(Platform)' != 'Win32'">$(Platform)</Native-Platform>
+    <_rnwFolder>$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\</_rnwFolder>
+  </PropertyGroup>
+  
+  <ItemGroup Condition="'$(TargetPlatformIdentifier)' == 'UAP'">
+    <Reference Include="$(MSBuildThisFileDirectory)..\..\lib\uap10.0\Microsoft.ReactNative.winmd">
+      <Implementation>Microsoft.ReactNative.dll</Implementation>
+    </Reference>
+    
+    <ReferenceCopyLocalPaths Condition="Exists('$(_rnwFolder)Microsoft.ReactNative.dll')" Include="$(_rnwFolder)Microsoft.ReactNative.dll" />
+    <ReferenceCopyLocalPaths Condition="Exists('$(_rnwFolder)Microsoft.ReactNative.pri')" Include="$(_rnwFolder)Microsoft.ReactNative.pri" />
+    <ReferenceCopyLocalPaths Condition="$(Configuration) == 'Debug'" Include="$(_rnwFolder)**\*.xbf" />
+
+  </ItemGroup>
 </Project>

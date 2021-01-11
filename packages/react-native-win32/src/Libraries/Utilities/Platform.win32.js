@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
  * @format
- * @flow
+ * @flow strict
  */
 
 'use strict';
@@ -20,6 +20,11 @@ export type PlatformSelectSpec<A, N, D> = {
 const Platform = {
   __constants: null,
   OS: 'win32',
+  // $FlowFixMe[unsafe-getters-setters]
+  get Version(): number {
+    return this.constants.osVersion;
+  },
+  // $FlowFixMe[unsafe-getters-setters]
   get constants(): {|
     isTesting: boolean,
     reactNativeVersion: {|
@@ -28,43 +33,33 @@ const Platform = {
       patch: number,
       prerelease: ?number,
     |},
+    osVersion: number,
   |} {
     if (this.__constants == null) {
-      // Hack: We shouldn't need to null-check NativePlatformContants, but
-      // needed to remove the invariant it is non-null since react-native-win32
-      // hasn't picked up the changes we've made in 0.61 to add the module yet.
-      // This can be removed when we fix win32 NativePlatformConstantsWin.
-      if (NativePlatformConstantsWin) {
-        this.__constants = NativePlatformConstantsWin.getConstants();
-      } else {
-        this.__constants = {
-          isTesting: false,
-          reactNativeVersion: {
-            major: 0,
-            minor: 62,
-            patch: 0,
-            prerelease: undefined,
-          },
-        };
-      }
+      this.__constants = NativePlatformConstantsWin.getConstants();
     }
     return this.__constants;
   },
+  // $FlowFixMe[unsafe-getters-setters]
   get isTesting(): boolean {
     if (__DEV__) {
       return this.constants.isTesting;
     }
     return false;
   },
+  // $FlowFixMe[unsafe-getters-setters]
   get isTV(): boolean {
     return false;
   },
   select: <A, N, D>(spec: PlatformSelectSpec<A, N, D>): A | N | D =>
-  'win32' in spec
-    ? spec.win32
-    : 'native' in spec
-    ? spec.native
-    : spec.default,
+    'win32' in spec
+      ? // $FlowFixMe[incompatible-return]
+        spec.win32
+      : 'native' in spec
+      ? // $FlowFixMe[incompatible-return]
+        spec.native
+      : // $FlowFixMe[incompatible-return]
+        spec.default,
 };
 
 module.exports = Platform;

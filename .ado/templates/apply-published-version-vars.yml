@@ -1,0 +1,13 @@
+# Downloads previously published variables for versioning and applies them
+
+steps:
+  - task: DownloadPipelineArtifact@2
+    displayName: Download version variables
+    inputs:
+      artifact: VersionEnvVars
+      path: $(Build.StagingDirectory)/VersionEnvVars
+
+  - task: CmdLine@2
+    displayName: Apply version variables
+    inputs:
+      script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js

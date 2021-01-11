@@ -1,130 +1,87 @@
 /**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
  * @format
+ * @ts-check
  */
-// @ts-check
-const path = require('path');
-const fs = require('fs');
+
 const glob = require('glob');
-const rimraf = require('rimraf');
+const path = require('path');
+const {cleanTask, copyTask, series} = require('just-scripts');
 
-function retryOnError(errorCode, func) {
-  const startTime = Date.now();
+const rnDir = path.dirname(require.resolve('react-native/package.json'));
+const rnCopiesDir = path.join(
+  path.dirname(require.resolve('react-native-windows/package.json')),
+  'ReactCopies',
+);
 
-  while (true) {
-    try {
-      func();
-      return true;
-    } catch (ex) {
-      if (ex.code !== errorCode) {
-        throw ex;
-      }
-    }
+exports.copyTask = baseDir => {
+  const reactNative = (...files) => files.map(f => path.join(rnDir, f));
+  const reactCopies = (...files) => files.map(f => path.join(rnCopiesDir, f));
+  const src = (...files) => files.map(f => path.join(baseDir, 'src', f));
+  const base = file => path.join(baseDir, file);
 
-    if (Date.now() - startTime > 5000) {
-      return false;
-    }
-  }
-}
+  return series(
+    exports.cleanTask(baseDir),
 
-function copyDirectories(srcPath, targetPath, dirSpecs) {
-  dirSpecs.forEach(dirSpec => {
-    if (dirSpec.mergeFiles !== true) {
-      // rimraf issue 72: We will see ENOTEMPTY if Windows is still holding a
-      // lock to a file in our directory. E.g. if we get unlucky with timing
-      // and antivirus decides to run. Keep on spinning until we're able to
-      // delete the directory.
-      let deleted = retryOnError('ENOTEMPTY', () => {
-        if (dirSpec.rmFilter === undefined) {
-          rimraf.sync(path.resolve(targetPath, dirSpec.dest));
-        } else {
-          rimraf.sync(
-            path.resolve(targetPath, dirSpec.dest + path.sep + dirSpec.filter),
-          );
-        }
-      });
+    copyTask({
+      paths: reactNative('flow/**'),
+      dest: base('flow'),
+    }),
+    copyTask({
+      paths: reactNative('flow-typed/**'),
+      dest: base('flow-typed'),
+    }),
+    copyTask({
+      paths: reactNative('jest/**'),
+      dest: base('jest'),
+    }),
+    copyTask({
+      paths: reactCopies('IntegrationTests/**'),
+      dest: base('IntegrationTests'),
+    }),
+    copyTask({
+      paths: reactNative('Libraries/**/*.+(js|jsx|png|gif|jpg|html)'),
+      dest: base('Libraries'),
+    }),
 
-      if (!deleted) {
-        throw new Error(
-          'Timed out trying to delete directory. Ensure no locks are being held to project files and try again.',
-        );
-      }
-    }
+    copyTask({
+      paths: reactNative('index.js', 'interface.js', 'rn-get-polyfills.js'),
+      dest: base('.'),
+    }),
 
-    const curSrcPath = path.resolve(srcPath, dirSpec.src);
-    const curTargetPath = path.resolve(targetPath, dirSpec.dest);
+    copyTask({paths: src('**/*+(.d.ts|.js|.png)'), dest: base('.')}),
+  );
+};
 
-    glob
-      .sync('**/*.{js,png,gif,jpg,html,h}', {cwd: curSrcPath})
-      .forEach(file => {
-        const dir = path.dirname(file);
-        const targetDir = path.resolve(curTargetPath, dir);
-        const targetFile = path.resolve(curTargetPath, file);
+exports.cleanTask = baseDir => {
+  const base = file => path.join(baseDir, file);
 
-        fs.mkdirSync(targetDir, {recursive: true});
-        fs.writeFileSync(
-          targetFile,
-          fs.readFileSync(path.join(curSrcPath, file)),
-        );
-      });
+  return cleanTask({
+    paths: [
+      base('flow'),
+      base('jest'),
+
+      // IntegrationTests overlaps with the desktop test runner, so we need to
+      // be careful about what is removed until that is fixed.
+      ...glob.sync('IntegrationTests/**/*.+(js|command|png)', {
+        cwd: baseDir,
+        absolute: true,
+      }),
+
+      base('Libraries'),
+      base('index.js'),
+      base('interface.js'),
+      base('rn-get-polyfills.js'),
+
+      // Remove TS compiled gunk in our root
+      ...glob.sync(
+        '+(index|typings-index)*(.windows|.win32)*(.d)+(.js|.ts)*(.map)',
+        {
+          cwd: baseDir,
+          absolute: true,
+        },
+      ),
+    ],
   });
-}
-
-function copyFile(srcPath, targetPath, filename) {
-  fs.writeFileSync(
-    path.resolve(targetPath, filename),
-    fs.readFileSync(path.resolve(srcPath, filename)),
-  );
-}
-
-exports.copyRNLibraries = baseDir => {
-  const reactNativePath = path.dirname(
-    require.resolve('react-native/package.json'),
-  );
-
-  const reactNativeWindowsPath = path.dirname(
-    require.resolve('react-native-windows/package.json'),
-  );
-
-  copyDirectories(reactNativeWindowsPath, baseDir, [
-    {
-      src: 'ReactCopies/RNTester',
-      dest: 'RNTester',
-    },
-    {
-      src: 'ReactCopies/IntegrationTests',
-      dest: 'IntegrationTests',
-      rmFilter: '*.js',
-    },
-  ]);
-
-  copyDirectories(reactNativePath, baseDir, [
-    {
-      src: 'flow',
-      dest: 'flow',
-    },
-    {
-      src: 'jest',
-      dest: 'jest',
-    },
-    {
-      src: 'Libraries',
-      dest: 'Libraries',
-    },
-    {
-      src: 'packages/react-native-codegen/src',
-      dest: 'packages/react-native-codegen/src',
-    },
-  ]);
-
-  copyDirectories(baseDir, baseDir, [
-    {
-      src: 'src/jest',
-      dest: 'jest',
-      mergeFiles: true,
-    },
-  ]);
-
-  copyFile(reactNativePath, baseDir, 'rn-get-polyfills.js');
-  copyFile(reactNativePath, baseDir, 'index.js');
-  copyFile(reactNativePath, baseDir, 'interface.js');
 };

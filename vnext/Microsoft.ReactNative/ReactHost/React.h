@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -15,9 +15,31 @@
 #include "future/future.h"
 
 #include <NativeModuleProvider.h>
+<<<<<<< HEAD
 #include <ReactUWP/IReactInstance.h>
 #include <ReactUWP/ViewManagerProvider.h>
 #include <winrt/Microsoft.ReactNative.h>
+||||||| 811c767bf
+#include <ReactUWP/IReactInstance.h>
+#include <ReactUWP/ViewManagerProvider.h>
+=======
+#include <TurboModulesProvider.h>
+
+#ifdef CORE_ABI
+#include <folly/dynamic.h>
+#undef GetCurrentTime
+#endif
+
+#ifndef CORE_ABI
+// The IReactInstance.h brings dependency on XAML. Exclude it for the UI technology independent code.
+#include <IReactInstance.h>
+#endif
+
+#include <Shared/IReactRootView.h>
+
+#include <ViewManagerProvider.h>
+#include <winrt/Microsoft.ReactNative.h>
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 
 namespace Mso::React {
 
@@ -25,6 +47,7 @@ namespace Mso::React {
 struct IReactInstance;
 struct IReactViewHost;
 struct ReactOptions;
+struct IReactContext;
 
 enum class LogLevel : int32_t {
   Trace = 0,
@@ -34,11 +57,17 @@ enum class LogLevel : int32_t {
   Fatal = 4,
 };
 
+enum class JSIEngine : int32_t {
+  Chakra = 0, // Use the JSIExecutorFactory with ChakraRuntime
+  Hermes = 1, // Use the JSIExecutorFactory with Hermes
+  V8 = 2, // Use the JSIExecutorFactory with V8
+};
+
 using OnErrorCallback = Mso::Functor<void(const Mso::ErrorCode &)>;
 using OnLoggingCallback = Mso::Functor<void(LogLevel logLevel, const char *message)>;
-using OnReactInstanceCreatedCallback = Mso::Functor<void(IReactInstance &)>;
-using OnReactInstanceLoadedCallback = Mso::Functor<void(IReactInstance &, const Mso::ErrorCode &)>;
-using OnReactInstanceDestroyedCallback = Mso::Functor<void(IReactInstance &)>;
+using OnReactInstanceCreatedCallback = Mso::Functor<void(Mso::CntPtr<IReactContext> &&)>;
+using OnReactInstanceLoadedCallback = Mso::Functor<void(Mso::CntPtr<IReactContext> &&, const Mso::ErrorCode &)>;
+using OnReactInstanceDestroyedCallback = Mso::Functor<void(Mso::CntPtr<IReactContext> &&)>;
 
 //! Returns default OnError handler.
 LIBLET_PUBLICAPI OnErrorCallback GetDefaultOnErrorHandler() noexcept;
@@ -57,17 +86,56 @@ isolated JavaScript execution environment.*/
 MSO_GUID(IReactInstance, "085d524a-af3b-4839-8056-e5d0e6fc64bc")
 struct IReactInstance : IUnknown {
   //! Returns ReactOptions associated with the IReactInstance
-  //! The ReactOptions are meant to immutable and give to IReactInstance at its creation.
+  //! The ReactOptions are meant to be immutable and given to IReactInstance at its creation.
   virtual const ReactOptions &Options() const noexcept = 0;
 
   virtual ReactInstanceState State() const noexcept = 0;
+
+  virtual Mso::React::IReactContext &GetReactContext() const noexcept = 0;
+
+  virtual void AttachMeasuredRootView(
+      facebook::react::IReactRootView *rootView,
+      folly::dynamic &&initialProps) noexcept = 0;
+  virtual void DetachRootView(facebook::react::IReactRootView *rootView) noexcept = 0;
+};
+
+MSO_GUID(IReactSettingsSnapshot, "6652bb2e-4c5e-49f7-b642-e817b0fef4de")
+struct IReactSettingsSnapshot : IUnknown {
+  virtual bool UseWebDebugger() const noexcept = 0;
+  virtual bool UseFastRefresh() const noexcept = 0;
+  virtual bool UseDirectDebugger() const noexcept = 0;
+  virtual bool DebuggerBreakOnNextLine() const noexcept = 0;
+  virtual uint16_t DebuggerPort() const noexcept = 0;
+  virtual std::string DebugBundlePath() const noexcept = 0;
+  virtual std::string BundleRootPath() const noexcept = 0;
+  virtual std::string SourceBundleHost() const noexcept = 0;
+  virtual uint16_t SourceBundlePort() const noexcept = 0;
+  virtual std::string JavaScriptBundleFile() const noexcept = 0;
+  virtual bool UseDeveloperSupport() const noexcept = 0;
 };
 
 MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
 struct IReactContext : IUnknown {
+<<<<<<< HEAD
   virtual winrt::Microsoft::ReactNative::IReactPropertyBag Properties() noexcept = 0;
   virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept = 0;
   virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept = 0;
+||||||| 811c767bf
+  virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept = 0;
+  virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) noexcept = 0;
+=======
+  virtual winrt::Microsoft::ReactNative::IReactNotificationService Notifications() const noexcept = 0;
+  virtual winrt::Microsoft::ReactNative::IReactPropertyBag Properties() const noexcept = 0;
+  virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) const noexcept = 0;
+  virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept = 0;
+  virtual winrt::Microsoft::ReactNative::JsiRuntime JsiRuntime() const noexcept = 0;
+#ifndef CORE_ABI
+  virtual ReactInstanceState State() const noexcept = 0;
+  virtual bool IsLoaded() const noexcept = 0;
+  virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept = 0;
+  virtual IReactSettingsSnapshot const &SettingsSnapshot() const noexcept = 0;
+#endif
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 };
 
 //! Settings per each IReactViewHost associated with an IReactHost instance.
@@ -80,34 +148,11 @@ struct ReactViewOptions {
 };
 
 struct ReactDevOptions {
-  //! When dev mode is enabled, extra developer features are available
-  //! such as the dev menu, red box, etc.
-  bool IsDevModeEnabled{false};
-
-  //! Enables debugging in the JavaScript engine (if supported).
-  bool UseDirectDebugger{false};
-
-  //! For direct debugging, whether to break on the next line of JavaScript that is executed.
-  bool DebuggerBreakOnNextLine{false};
-
   //! For direct debugging, allow specifying the port to use for the debugger.
   uint16_t DebuggerPort{0};
 
   //! For direct debugging, specifies a name to associate with the JavaScript runtime instance.
   std::string DebuggerRuntimeName;
-
-  //! Enable live reload to load the source bundle from the React Native packager.
-  //! When the file is saved, the packager will trigger reloading.
-  bool UseLiveReload{false};
-
-  //! Enable fast refresh
-  //! With Fast Refresh enabled, most edits should be visible within a second or two.
-  //! Non-compatible changes still cause full reloads
-  bool UseFastRefresh{false};
-
-  //! Enables debugging using the web debugger. By default, this is Chrome using http://localhost:8081/debugger-ui from
-  //! Metro/Haul. Debugging will start as soon as the react native instance is loaded.
-  bool UseWebDebugger{false};
 
   //! URL used for debugging
   std::string DebugHost;
@@ -121,7 +166,7 @@ struct ReactDevOptions {
   //! {EXTENSION} = ".bundle"
   //! Specify a value for a component, or leave empty to use the default.
   std::string SourceBundleHost; // Host domain (without port) for the bundler server. Default: "localhost".
-  std::string SourceBundlePort; // Host port for the bundler server. Default: "8081".
+  uint16_t SourceBundlePort{0}; // Host port for the bundler server. Default: "8081".
   std::string SourceBundleName; // Bundle name without any extension (e.g. "index.win32"). Default: "index.{PLATFORM}"
   std::string SourceBundleExtension; // Bundle name extension. Default: ".bundle".
 
@@ -138,20 +183,22 @@ struct NativeModuleProvider2 {
 };
 
 struct ViewManagerProvider2 {
-  virtual std::vector<react::uwp::NativeViewManager> GetViewManagers(
-      Mso::CntPtr<IReactContext> const &reactContext,
-      std::shared_ptr<react::uwp::IReactInstance> const &instance) = 0;
+  virtual std::vector<std::unique_ptr<::Microsoft::ReactNative::IViewManager>> GetViewManagers(
+      Mso::CntPtr<IReactContext> const &reactContext) = 0;
 };
 
 //! A simple struct that describes the basic properties/needs of an SDX. Whenever a new SDX is
 //! getting hosted in React, properties here will be used to construct the SDX.
 struct ReactOptions {
-  react::uwp::ReactInstanceSettings LegacySettings;
+  winrt::Microsoft::ReactNative::IReactPropertyBag Properties;
+
+  winrt::Microsoft::ReactNative::IReactNotificationService Notifications;
 
   winrt::Microsoft::ReactNative::IReactPropertyBag Properties;
 
   std::shared_ptr<NativeModuleProvider2> ModuleProvider;
   std::shared_ptr<ViewManagerProvider2> ViewManagerProvider;
+  std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> TurboModuleProvider;
 
   //! Identity of the SDX. Must uniquely describe the SDX across the installed product.
   std::string Identity;
@@ -200,7 +247,7 @@ struct ReactOptions {
   OnLoggingCallback OnLogging;
 
   //! Ability to override the default redbox handling, which is used
-  //! during development to report JavaScript errors to uses
+  //! during development to report JavaScript errors to users
   std::shared_ptr<Mso::React::IRedBoxHandler> RedBoxHandler;
 
   //! Flag to suggest sdx owner's preference on enabling Bytecode caching in Javascript Engine for corresponding SDX.
@@ -209,6 +256,11 @@ struct ReactOptions {
   //! Flag controlling whether the JavaScript engine uses JIT compilation.
   bool EnableJITCompilation{true};
 
+  std::string ByteCodeFileUri;
+  bool EnableByteCodeCaching{true};
+  bool UseJsi{true};
+  JSIEngine JsiEngine{JSIEngine::Chakra};
+
   //! Enable function nativePerformanceNow.
   //! Method nativePerformanceNow() returns high resolution time info.
   //! It is not safe to expose to Custom Function. Add this flag so we can turn it off for Custom Function.
@@ -216,7 +268,64 @@ struct ReactOptions {
 
   react::uwp::JSIEngine JsiEngine{react::uwp::JSIEngine::Chakra};
 
+<<<<<<< HEAD
   ReactDevOptions DeveloperSettings = {};
+||||||| 811c767bf
+  //! Additional properties associated with the ReactOptions.
+  Mso::JSHost::PropertyBag Properties;
+=======
+  //! This controls the availability of various developer support functionality including
+  //! RedBox, and the Developer Menu
+  void SetUseDeveloperSupport(bool enable) noexcept;
+  bool UseDeveloperSupport() const noexcept;
+  static void SetUseDeveloperSupport(
+      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+      bool value) noexcept;
+  static bool UseDeveloperSupport(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
+
+  //! Should the instance trigger the hot reload logic when it first loads the instance
+  //! Most edits should be visible within a second or two without the instance having to reload
+  //! Non-compatible changes still cause full reloads
+  void SetUseFastRefresh(bool enable) noexcept;
+  bool UseFastRefresh() const noexcept;
+  static void SetUseFastRefresh(
+      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+      bool value) noexcept;
+  static bool UseFastRefresh(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
+
+  //! Enable live reload to load the source bundle from the React Native packager.
+  //! When the file is saved, the packager will trigger reloading.
+  void SetUseLiveReload(bool enable) noexcept;
+  bool UseLiveReload() const noexcept;
+  static void SetUseLiveReload(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties, bool value) noexcept;
+  static bool UseLiveReload(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
+
+  //! Should the instance run in a remote environment such as within a browser
+  //! By default, this is using a browser navigated to  http://localhost:8081/debugger-ui served
+  //! by Metro/Haul. Debugging will start as soon as the React Native instance is loaded.
+  void SetUseWebDebugger(bool enabled) noexcept;
+  bool UseWebDebugger() const noexcept;
+  static void SetUseWebDebugger(
+      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+      bool value) noexcept;
+  static bool UseWebDebugger(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
+
+  //! For direct debugging, whether to break on the next line of JavaScript that is executed.
+  void SetDebuggerBreakOnNextLine(bool enable) noexcept;
+  bool DebuggerBreakOnNextLine() const noexcept;
+  static void SetDebuggerBreakOnNextLine(
+      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+      bool value) noexcept;
+  static bool DebuggerBreakOnNextLine(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
+
+  //! Enables debugging in the JavaScript engine (if supported).
+  void SetUseDirectDebugger(bool enable) noexcept;
+  bool UseDirectDebugger() const noexcept;
+  static void SetUseDirectDebugger(
+      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+      bool value) noexcept;
+  static bool UseDirectDebugger(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 
   //! Adds registered JS bundle to JSBundles.
   LIBLET_PUBLICAPI ReactOptions &AddRegisteredJSBundle(std::string_view jsBundleId) noexcept;
@@ -292,7 +401,7 @@ MSO_GUID(IReactViewInstance, "29e04f14-9fc9-4dd7-a543-e59db0d57bd2")
 struct IReactViewInstance : IUnknown {
   //! Initialize ReactRootView with the reactInstance and view-specific settings.
   virtual Mso::Future<void> InitRootView(
-      Mso::CntPtr<IReactInstance> &&reactInstance,
+      Mso::CntPtr<Mso::React::IReactInstance> &&reactInstance,
       ReactViewOptions &&viewOptions) noexcept = 0;
 
   //! Update ReactRootView with changes in ReactInstance.

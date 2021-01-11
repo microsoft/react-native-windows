@@ -18,7 +18,7 @@ struct PermissionsAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(std::string, Promise<React::JSValue>) noexcept>{0, L"checkPermission"},
       Method<void(std::string, Promise<React::JSValue>) noexcept>{1, L"requestPermission"},
       Method<void(std::string, Promise<React::JSValue>) noexcept>{2, L"shouldShowRequestPermissionRationale"},
-      Method<void(JSValueArray, Promise<React::JSValue>) noexcept>{3, L"requestMultiplePermissions"},
+      Method<void(React::JSValueArray, Promise<React::JSValue>) noexcept>{3, L"requestMultiplePermissions"},
   };
 
   template <class TModule>

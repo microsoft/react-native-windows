@@ -287,6 +287,8 @@ TEST_CLASS (ObjectWithWeakRefTest) {
     TestAssert::IsTrue(deleted);
   }
 
+#pragma warning(push)
+#pragma warning(disable : 4702) // unreachable code
   TESTMETHOD_REQUIRES_SEH(ObjectWithWeakRef_Make_CannotAllocate) {
     Mso::CntPtr<ObjectWithWeakRefSample3CannotAllocate> obj;
     TestAssert::ExpectVEC([&]() noexcept { obj = Mso::Make<ObjectWithWeakRefSample3CannotAllocate>(); });
@@ -313,6 +315,7 @@ TEST_CLASS (ObjectWithWeakRefTest) {
     TestAssert::IsTrue(deleted); // If InitializeThis throws then destructor must be called.
     TestAssert::IsTrue(obj.IsEmpty());
   }
+#pragma warning(pop)
 
   TEST_METHOD(ObjectWithWeakRef_MakeElseNull) {
     bool deleted = false;
@@ -401,6 +404,8 @@ TEST_CLASS (ObjectWithWeakRefTest) {
     AssertAllocState(state);
   }
 
+#pragma warning(push)
+#pragma warning(disable : 4702) // unreachable code
   TESTMETHOD_REQUIRES_SEH(ObjectWithWeakRef_MakeAlloc_CannotAllocate) {
     Mso::CntPtr<ObjectWithWeakRefSample31CannotAllocate> obj;
     TestAssert::ExpectVEC([&]() noexcept {
@@ -435,6 +440,7 @@ TEST_CLASS (ObjectWithWeakRefTest) {
     AssertAllocState(state); // If InitializeThis throws then destructor must be called.
     TestAssert::IsTrue(obj.IsEmpty());
   }
+#pragma warning(pop)
 
   TEST_METHOD(ObjectWithWeakRef_MakeAllocElseNull) {
     AllocTestState state = {};

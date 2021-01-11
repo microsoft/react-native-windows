@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -31,7 +31,9 @@ export interface IDatePickerChangeEvent {
   };
 }
 
-export const enum DayOfWeek {
+// Enum already part of our public API
+// eslint-disable-next-line no-restricted-syntax
+export enum DayOfWeek {
   Sunday = 0,
   Monday = 1,
   Tuesday = 2,

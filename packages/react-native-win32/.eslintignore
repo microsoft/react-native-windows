@@ -1,0 +1,9 @@
+/dist
+/flow
+/index.*
+/IntegrationTests
+/jest
+/lib
+/Libraries
+/packages
+/ReactCopies

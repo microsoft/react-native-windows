@@ -5,39 +5,32 @@
 .*/*[.]macos.js
 .*/*[.]windesktop.js
 
-; These modules have base components and windows versions.
+; These modules have base components and Windows versions.
 ; Ideally we'd delete the base versions of files that had .windows overrides as part of the
 ; initRNLibraries build step
+<PROJECT_ROOT>/index.js
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
-<PROJECT_ROOT>/Libraries/Animated/src/nodes/AnimatedInterpolation.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
-<PROJECT_ROOT>/Libraries/Components/DatePicker/DatePicker.js
-<PROJECT_ROOT>/Libraries/Components/Keyboard/KeyboardExt.js
 <PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
 <PROJECT_ROOT>/Libraries/Components/Picker/RCTPickerNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
-<PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollView.js
-<PROJECT_ROOT>/Libraries/Components/StatusBar/NativeStatusBarManagerAndroid.js
-<PROJECT_ROOT>/Libraries/Components/Switch/SwitchNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableBounce.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableHighlight.js
-<PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableOpacity.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableWithoutFeedback.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
-<PROJECT_ROOT>/Libraries/Core/setUpReactDevTools.js
+<PROJECT_ROOT>/Libraries/Components/View/View.js
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
-<PROJECT_ROOT>/Libraries/Inspector/Inspector.js
-<PROJECT_ROOT>/Libraries/Lists/VirtualizedList.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/DebugInstructions.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
+<<<<<<< HEAD
 <PROJECT_ROOT>/Libraries/Pressability/PressabilityDebug.js
 <PROJECT_ROOT>/Libraries/StyleSheet/normalizeColor.js
 <PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
@@ -66,12 +59,52 @@
 <PROJECT_ROOT>/Libraries/Components/Switch/SwitchSchema.js
 <PROJECT_ROOT>/Libraries/Components/UnimplementedViews/UnimplementedNativeViewSchema.js
 <PROJECT_ROOT>/Libraries/Modal/ModalSchema.js
+||||||| 811c767bf
+<PROJECT_ROOT>/Libraries/Pressability/PressabilityDebug.js
+<PROJECT_ROOT>/Libraries/StyleSheet/normalizeColor.js
+<PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
+<PROJECT_ROOT>/Libraries/StyleSheet/processColorArray.js
+<PROJECT_ROOT>/Libraries/StyleSheet/StyleSheetTypes.js
+<PROJECT_ROOT>/RNTester/js/components/ListExampleShared.js
+<PROJECT_ROOT>/RNTester/js/components/RNTesterExampleList.js
+<PROJECT_ROOT>/RNTester/js/examples/ScrollView/ScrollViewExample.js
+<PROJECT_ROOT>/RNTester/js/examples/View/ViewExample.js
+<PROJECT_ROOT>/RNTester/js/FlatListExample.js
+<PROJECT_ROOT>/RNTester/js/ListExampleShared.js
+<PROJECT_ROOT>/RNTester/js/RNTesterExampleList.js
+<PROJECT_ROOT>/RNTester/js/ScrollViewExample.js
+<PROJECT_ROOT>/RNTester/js/TouchableExample.js
+<PROJECT_ROOT>/RNTester/js/ViewExample.js
+
+; Schema files are used for turbo-module code generation, but are not bundled.
+; We don't yet have the react-native-codegen package they rely on, so supress
+; checks for now.
+<PROJECT_ROOT>/Libraries/Components/ActivityIndicator/ActivityIndicatorSchema.js
+<PROJECT_ROOT>/Libraries/Components/RefreshControl/AndroidSwipeRefreshLayoutSchema.js
+<PROJECT_ROOT>/Libraries/Components/RefreshControl/PullToRefreshViewSchema.js
+<PROJECT_ROOT>/Libraries/Components/Slider/SliderSchema.js
+<PROJECT_ROOT>/Libraries/Components/Switch/SwitchSchema.js
+<PROJECT_ROOT>/Libraries/Components/UnimplementedViews/UnimplementedNativeViewSchema.js
+<PROJECT_ROOT>/Libraries/Modal/ModalSchema.js
+=======
+<PROJECT_ROOT>/Libraries/Pressability/Pressability.js
+<PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
 
+; Ignore react-native-windows' build output. Flow is not compiled with long path support and after running unittests these folders have long paths
+.*/node_modules/react-native-windows/build/.*
+.*/node_modules/react-native-windows/target/.*
+.*/node_modules/react-native-windows/Microsoft.ReactNative.Managed.CodeGen.UnitTests/.*
+.*/node_modules/react-native-windows/Microsoft.ReactNative.Managed.UnitTests/.*
+.target/.*
+
 ; These files dont need to be checked and just increase the build time
+.*/node_modules/e2etest/.*
 .*/node_modules/microsoft-reactnative-sampleapps/.*
+.*/node_modules/playground/.*
 
 ; Ignore templates for 'react-native init'
 <PROJECT_ROOT>/template/.*
@@ -82,17 +115,6 @@
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
-; Ignore unexpected extra "@providesModule"
-.*/node_modules/.*/node_modules/fbjs/.*
-
-
-; These should not be required directly
-; require from fbjs/lib instead: require('fbjs/lib/warning')
-.*/node_modules/warning/.*
-
-; Flow doesn't support platforms
-.*/Libraries/Utilities/HMRLoadingView.js
-
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/vnext/src/.*
 
@@ -102,8 +124,6 @@
 [untyped]
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/.*
 .*/node_modules/@react-native-community/cli/.*/.*
-<PROJECT_ROOT>/Libraries/ActionSheetIOS/ActionSheetIOS.js
-<PROJECT_ROOT>/Libraries/Share/Share.js
 
 [include]
 ; Need to include hoisted modules
@@ -116,8 +136,7 @@ flow/
 [options]
 emoji=true
 
-esproposal.optional_chaining=enable
-esproposal.nullish_coalescing=enable
+exact_by_default=true
 
 module.file_ext=.js
 module.file_ext=.json
@@ -125,9 +144,11 @@ module.file_ext=.windows.js
 
 munge_underscores=true
 
+module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.windows.js'
+module.name_mapper='^react-native-windows$' -> '<PROJECT_ROOT>/index.windows.js'
+module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
+module.name_mapper='^react-native-windows/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
-module.name_mapper='react-native$' -> '<PROJECT_ROOT>/index.js'
-module.name_mapper='react-native/\(.*\)' -> '<PROJECT_ROOT>/\1'
 
 suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
@@ -135,15 +156,8 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
-suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_ios\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)
-suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_ios\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)?:? #[0-9]+
-suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_android\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)
-suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_android\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)?:? #[0-9]+
-suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
-
-experimental.well_formed_exports=true
-experimental.types_first=true
 experimental.abstract_locations=true
+generate_tests=false
 
 [lints]
 sketchy-null-number=warn
@@ -153,10 +167,8 @@ untyped-type-import=warn
 nonstrict-import=warn
 deprecated-type=warn
 unsafe-getters-setters=warn
-inexact-spread=warn
 unnecessary-invariant=warn
 signature-verification-failure=warn
-deprecated-utility=error
 
 [strict]
 deprecated-type
@@ -168,4 +180,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.113.0
+^0.140.0

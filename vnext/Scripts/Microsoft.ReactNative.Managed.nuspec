@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <description>Contains Windows Implementation of React-Native for Managed code</description>
+    <authors>Microsoft</authors>
+    <projectUrl>https://github.com/microsoft/react-native-windows</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <copyright>&#169; Microsoft Corporation. All rights reserved.</copyright>
+    <repository type="git"
+      url="https://github.com/microsoft/react-native-windows.git"
+      commit="$CommitId$" />
+    <tags>react react-native react-native-windows native-module microsoft c# csharp</tags>
+    <dependencies>
+      <group targetFramework="UAP10.0">
+        <dependency id="Microsoft.UI.Xaml" version="2.5.0" />
+        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.2.9" />
+        <dependency id="Microsoft.ReactNative" version="$version$" />
+        <dependency id="Microsoft.ReactNative.Managed.CodeGen" version="$version$" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="$nugetroot$\Microsoft.ReactNative.Managed.targets" target="build"/>
+    <file src="$nugetroot$\Microsoft.ReactNative.VersionCheck.targets" target="build"/>
+
+    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref.anycpu\Microsoft.ReactNative.Managed.dll" target="ref\uap10.0"/>
+    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.xml" target="ref\uap10.0"/> 
+
+    <file src="$nugetroot$\ARM\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" target="runtimes\win10-arm\native" />
+    <file src="$nugetroot$\ARM\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pdb" target="runtimes\win10-arm\native" />
+    <file src="$nugetroot$\ARM\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pri" target="runtimes\win10-arm\native" />
+
+    <file src="$nugetroot$\ARM\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" target="runtimes\win10-arm\native" />
+    <file src="$nugetroot$\ARM\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pdb" target="runtimes\win10-arm\native" />
+    <file src="$nugetroot$\ARM\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pri" target="runtimes\win10-arm\native" />
+
+    <file src="$nugetroot$\ARM64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" target="runtimes\win10-arm64\native" />
+    <file src="$nugetroot$\ARM64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pdb" target="runtimes\win10-arm64\native" />
+    <file src="$nugetroot$\ARM64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pri" target="runtimes\win10-arm64\native" />
+
+    <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" target="runtimes\win10-arm64\native" />
+    <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pdb" target="runtimes\win10-arm64\native" />
+    <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pri" target="runtimes\win10-arm64\native" />
+
+    <file src="$nugetroot$\x86\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" target="runtimes\win10-x86\native" />
+    <file src="$nugetroot$\x86\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pdb" target="runtimes\win10-x86\native" />
+    <file src="$nugetroot$\x86\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pri" target="runtimes\win10-x86\native" />
+
+    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" target="runtimes\win10-x86\native" />
+    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pdb" target="runtimes\win10-x86\native" />
+    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pri" target="runtimes\win10-x86\native" />
+
+    <file src="$nugetroot$\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" target="runtimes\win10-x64\native" />
+    <file src="$nugetroot$\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pdb" target="runtimes\win10-x64\native" />
+    <file src="$nugetroot$\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pri" target="runtimes\win10-x64\native" />
+
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll" target="runtimes\win10-x64\native" />
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pdb" target="runtimes\win10-x64\native" />
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.pri" target="runtimes\win10-x64\native" />
+
+    <!-- XBF files need to be included for Debug since they are not embedded in the PRI -->
+    <file src="$nugetroot$\ARM\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-arm\native" />
+    <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-arm64\native" />
+    <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-x86\native" />
+    <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-x64\native" />
+
+  </files>
+</package>

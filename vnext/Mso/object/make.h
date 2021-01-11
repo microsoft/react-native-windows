@@ -18,6 +18,10 @@ namespace Mso {
 
   Method Make is noexcept depending on the Make policy IsNoExcept value.
 */
+#pragma warning(push)
+#pragma warning(disable : 4702) // unreachable code might be hit in a few cases in this file: If the linkers determines
+                                // ValidateObject throws, or when some of the lambda's are inlined...
+
 template <typename T, typename TResult = T, typename... TArgs>
 inline Mso::CntPtr<TResult> Make(TArgs &&... args) noexcept(T::MakePolicy::IsNoExcept) {
   typename T::RefCountPolicy::template MemoryGuard<T> memoryGuard = {};
@@ -185,6 +189,8 @@ struct MakeAllocator {
     Mso::Memory::Free(ptr);
   }
 };
+
+#pragma warning(pop)
 
 } // namespace Mso
 

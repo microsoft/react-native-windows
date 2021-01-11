@@ -187,21 +187,21 @@ TEST_CLASS_EX (PromiseGroupTest, LibletAwareMemLeakDetection) {
 
     auto future1 = p1.AddFuture().Then([&](std::vector<int> & value) noexcept {
       std::vector<int> v1 = std::move(value);
-      TestCheckEqual(3, v1.size());
+      TestCheckEqual(3u, v1.size());
     });
     auto future2 = p1.AddFuture().Then([&](std::vector<int> & value) noexcept {
       std::vector<int> v1 = std::move(value);
-      TestCheckEqual(3, v1.size());
+      TestCheckEqual(3u, v1.size());
     });
     auto future3 = p1.AddFuture().Then([&](std::vector<int> & value) noexcept {
       std::vector<int> v1 = std::move(value);
-      TestCheckEqual(3, v1.size());
+      TestCheckEqual(3u, v1.size());
     });
 
     Mso::FutureWait(future1);
     Mso::FutureWait(future2);
     Mso::FutureWait(future3);
-    TestCheckEqual(4, vec.size());
+    TestCheckEqual(4u, vec.size());
   }
 
   TEST_METHOD(PromiseGroup_SetValue_Moves) {
@@ -214,15 +214,15 @@ TEST_CLASS_EX (PromiseGroupTest, LibletAwareMemLeakDetection) {
 
     auto future1 = p1.AddFuture().Then([&](std::vector<int> & value) noexcept {
       std::vector<int> v1 = std::move(value);
-      TestCheckEqual(3, v1.size());
+      TestCheckEqual(3u, v1.size());
     });
     auto future2 = p1.AddFuture().Then([&](std::vector<int> & value) noexcept {
       std::vector<int> v1 = std::move(value);
-      TestCheckEqual(3, v1.size());
+      TestCheckEqual(3u, v1.size());
     });
     auto future3 = p1.AddFuture().Then([&](std::vector<int> & value) noexcept {
       std::vector<int> v1 = std::move(value);
-      TestCheckEqual(3, v1.size());
+      TestCheckEqual(3u, v1.size());
     });
 
     Mso::FutureWait(future1);
@@ -272,16 +272,16 @@ TEST_CLASS_EX (PromiseGroupTest, LibletAwareMemLeakDetection) {
     vec.push_back(4);
 
     auto future1 =
-        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3, value.size()); });
+        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3u, value.size()); });
     auto future2 =
-        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3, value.size()); });
+        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3u, value.size()); });
     auto future3 =
-        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3, value.size()); });
+        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3u, value.size()); });
 
     Mso::FutureWait(future1);
     Mso::FutureWait(future2);
     Mso::FutureWait(future3);
-    TestCheckEqual(4, vec.size());
+    TestCheckEqual(4u, vec.size());
   }
 
   TEST_METHOD(PromiseGroup_TrySetValue_Moves) {
@@ -293,11 +293,11 @@ TEST_CLASS_EX (PromiseGroupTest, LibletAwareMemLeakDetection) {
     TestCheck(vec.empty());
 
     auto future1 =
-        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3, value.size()); });
+        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3u, value.size()); });
     auto future2 =
-        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3, value.size()); });
+        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3u, value.size()); });
     auto future3 =
-        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3, value.size()); });
+        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3u, value.size()); });
 
     Mso::FutureWait(future1);
     Mso::FutureWait(future2);
@@ -354,11 +354,11 @@ TEST_CLASS_EX (PromiseGroupTest, LibletAwareMemLeakDetection) {
     p1.EmplaceValue({1, 2, 3});
 
     auto future1 =
-        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3, value.size()); });
+        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3u, value.size()); });
     auto future2 =
-        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3, value.size()); });
+        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3u, value.size()); });
     auto future3 =
-        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3, value.size()); });
+        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3u, value.size()); });
 
     Mso::FutureWait(future1);
     Mso::FutureWait(future2);
@@ -451,11 +451,11 @@ TEST_CLASS_EX (PromiseGroupTest, LibletAwareMemLeakDetection) {
     TestCheck(p1.TryEmplaceValue({1, 2, 3}));
 
     auto future1 =
-        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3, value.size()); });
+        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3u, value.size()); });
     auto future2 =
-        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3, value.size()); });
+        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3u, value.size()); });
     auto future3 =
-        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3, value.size()); });
+        p1.AddFuture().Then([&](const std::vector<int> &value) noexcept { TestCheckEqual(3u, value.size()); });
 
     Mso::FutureWait(future1);
     Mso::FutureWait(future2);

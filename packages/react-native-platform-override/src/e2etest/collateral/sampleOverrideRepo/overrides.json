@@ -1,0 +1,30 @@
+{ 
+  "excludePatterns": [
+    ".clang-format",
+    "README.md"
+  ],
+  "overrides": [
+    {
+      "type": "patch",
+      "file": "ReactCommon\\turbomodule\\samples\\SampleTurboCxxModule.cpp",
+      "baseFile": "ReactCommon\\turbomodule\\samples\\SampleTurboCxxModule.cpp",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "b8840ecbf1d0a61d5e13d6f9690722e41cacb7ab"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon\\turbomodule\\samples\\SampleTurboCxxModule.h",
+      "baseFile": "ReactCommon\\turbomodule\\samples\\SampleTurboCxxModule.h",
+      "baseVersion": "0.62.0-rc.3",
+      "baseHash": "2e4e38798e5504d891342e46da17ef3b073123d8"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon\\yoga\\yoga\\Yoga.cpp",
+      "baseFile": "ReactCommon\\yoga\\yoga\\Yoga.cpp",
+      "baseVersion": "0.0.0-56cf99a96",
+      "baseHash": "99b23af03df9e59e1c42cd9e026ebb4c4df75cb4",
+      "issue": 3994
+    }
+  ]
+}

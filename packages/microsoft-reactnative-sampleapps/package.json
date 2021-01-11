@@ -3,30 +3,49 @@
   "version": "0.0.54",
   "private": true,
   "scripts": {
-    "build": "just-scripts build",
     "bundle-cpp": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle",
     "bundle-cs": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCS/Bundle/index.windows.bundle --assets-dest windows/SampleAppCS/Bundle",
-    "clean": "just-scripts clean",
     "start": "react-native start",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
-    "watch": "tsc -w",
     "windows": "react-native run-windows"
   },
   "dependencies": {
+<<<<<<< HEAD
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-windows": "0.62.20",
     "rnpm-plugin-windows": "^0.6.1"
+||||||| 811c767bf
+    "react": "16.9.0",
+    "react-native": "0.62.2",
+    "react-native-windows": "0.0.0-master.50",
+    "rnpm-plugin-windows": "^0.6.1"
+=======
+    "react": "17.0.1",
+    "react-native": "0.0.0-d3a3ce857",
+    "react-native-windows": "0.0.0-canary.231"
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
+    "@rnw-scripts/eslint-config": "0.1.6",
     "@types/react": "16.9.0",
+<<<<<<< HEAD
     "@types/react-native": "^0.62.10",
     "just-scripts": "^0.36.1",
+||||||| 811c767bf
+    "@types/react-native": "^0.62.2",
+    "just-scripts": "^0.36.1",
+=======
+    "@types/react-native": "^0.63.18",
+    "eslint": "7.12.0",
+    "just-scripts": "^0.44.7",
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     "metro-react-native-babel-preset": "^0.56.0",
-    "react-native-windows-codegen": "0.0.3",
-    "react-test-renderer": "16.9.0"
+    "prettier": "1.19.1",
+    "react-native-windows-codegen": "0.1.11",
+    "react-test-renderer": "17.0.1"
   }
 }

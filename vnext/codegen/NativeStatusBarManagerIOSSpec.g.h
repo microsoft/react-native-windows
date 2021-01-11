@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(Callback<JSValue>) noexcept>{0, L"getHeight"},
+      Method<void(Callback<React::JSValue>) noexcept>{0, L"getHeight"},
       Method<void(bool) noexcept>{1, L"setNetworkActivityIndicatorVisible"},
       Method<void(std::string) noexcept>{2, L"addListener"},
       Method<void(double) noexcept>{3, L"removeListeners"},

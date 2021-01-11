@@ -1,5 +1,4 @@
-# This file defines the Windows Visual Studio PR build steps used during the CI loop
-name: $(Date:yyyyMMdd).$(Rev:.r)
+name: $(Date:yyyyMMdd).$(Rev:r)
 
 trigger: none # will disable CI builds entirely
 
@@ -9,6 +8,7 @@ pr:
 
 variables:
   - template: variables/msbuild.yml
+<<<<<<< HEAD
   - template: variables/release.yml
   - template: variables/vs2019.yml
   - name: reactNativeVersion
@@ -26,51 +26,51 @@ jobs:
 
   - job: RNWUniversalPR
     displayName: Universal PR
+||||||| 811c767bf
+  - template: variables/vs2019.yml
+  - name: reactNativeVersion
+    value: 0.62.2
+
+jobs:
+  - job: Setup
+    steps:
+      - task: powershell@2
+        name: checkPayload
+        displayName: "Check if build is required for this PR"
+        inputs:
+          targetType: filePath
+          filePath: .ado/shouldSkipPRBuild.ps1
+
+  - job: RNWUniversalPR
+    displayName: Universal PR
+=======
+  - group: platform-override-zero-permission-token
+
+stages:
+  - stage: Setup
+    jobs:
+      - job: Setup
+        variables:
+          - template: variables/vs2019.yml
+        steps:
+          - task: powershell@2
+            name: checkPayload
+            displayName: "Check if build is required for this PR"
+            inputs:
+              targetType: filePath
+              filePath: .ado/scripts/shouldSkipPRBuild.ps1
+
+  - stage: Build
+    displayName: Build 🔨
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    strategy:
-      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        #X64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: x64
-        X64Release:
-          BuildConfiguration: Release
-          BuildPlatform: x64
-        X86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
-          TestMSRNNuget: true
-          LayoutHeaders: true
-        #X86Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x86
-        #ArmDebug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: ARM
-        ArmRelease:
-          BuildConfiguration: Release
-          BuildPlatform: ARM
-        #Arm64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: ARM64
-        #Arm64Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: ARM64
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 60
-    cancelTimeoutInMinutes: 5
-
-    steps:
-      - checkout: self
-        clean: false
-        submodules: false
-
-      - template: templates/build-rnw.yml
+    jobs:
+      - template: jobs/universal.yml
         parameters:
-          yarnBuildCmd: build
-          project: vnext/Microsoft.ReactNative.sln
+          buildEnvironment: PullRequest
 
+<<<<<<< HEAD
       - powershell: |
           Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
           Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
@@ -112,7 +112,47 @@ jobs:
         condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
       - template: templates/publish-build-artifacts-for-nuget.yml
+||||||| 811c767bf
+      - task: VSTest@2
+        displayName: Run Universal Unit Tests (Native)
+        timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: |
+            Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
+            Mso.UnitTests/Mso.UnitTests.exe
+          pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+          searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: latest
+        condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+
+      - task: VSTest@2
+        displayName: Run Universal Unit Tests (Managed)
+        timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: |
+            Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
+          searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: latest
+        condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+
+      - template: templates/publish-build-artifacts-for-nuget.yml
+=======
+      - template: jobs/desktop.yml
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
         parameters:
+<<<<<<< HEAD
           artifactName: ReactWindows
           layoutHeaders: eq('true', variables['LayoutHeaders'])
           contents: |
@@ -189,7 +229,90 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
             /p:AppxPackageSigningEnabled=false
+||||||| 811c767bf
+          artifactName: ReactWindows
+          layoutHeaders: eq('true', variables['LayoutHeaders'])
+          contents: |
+            Microsoft.ReactNative\**
 
+      - script: |
+          npx --no-install beachball bump
+        displayName: Bump package versions to align nuget version with npm version
+        condition: eq('true', variables['TestMSRNNuget'])
+
+      - task: PowerShell@2
+        displayName: Prepare minimum nuget for testing experimental init
+        inputs:
+          targetType: 'inline'
+          script: |
+            $pkgJson = Get-Content -Raw -Path .\vnext\package.json | ConvertFrom-Json
+            $pkgVersion = $pkgJson.version
+            $(Build.SourcesDirectory)\vnext\Scripts\StripAdditionalPlatformsFromNuspec.ps1 -slices ("$(BuildPlatform).$(BuildConfiguration)")
+            Copy-Item -Force -Path vnext\Scripts\Microsoft.ReactNative.targets -Destination $(Build.SourcesDirectory)\vnext\target
+            nuget pack $(Build.SourcesDirectory)\vnext\Scripts\Microsoft.ReactNative.PR.nuspec -NonInteractive -OutputDirectory $(Build.StagingDirectory)/TestMSRNNuget -Properties "Configuration=Release;CommitId=0;version=$pkgVersion;id=Microsoft.ReactNative;nugetroot=$(Build.SourcesDirectory)\vnext\target;baseplatform=$(BuildPlatform);baseconfiguration=$(BuildConfiguration)" -Verbosity Detailed
+        condition: eq('true', variables['TestMSRNNuget'])
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: TestMSRNNuget"
+        inputs:
+          artifactName: TestMSRNNuget.$(BuildPlatform).$(BuildConfiguration)
+          pathtoPublish: $(Build.StagingDirectory)/TestMSRNNuget
+        condition: eq('true', variables['TestMSRNNuget'])
+
+  - job: RNWUniversalOtherProjectsPR
+    displayName: Universal Other Projects PR
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    strategy:
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 5
+
+    steps:
+      - checkout: self
+        clean: false
+        submodules: false
+        
+      - template: templates/prepare-env.yml
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - Playground
+        inputs:
+          command: restore
+          restoreSolution: packages/playground/windows/Playground.sln
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: VSBuild@1
+        displayName: VSBuild - Playground
+        inputs:
+          solution: packages/playground/windows/Playground.sln
+          vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          clean: true # Optional
+          maximumCpuCount: false # Optional
+          restoreNugetPackages: false # Optional
+          msbuildArgs:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
+            /p:BaseIntDir=$(BaseIntDir)
+            /p:AppxPackageSigningEnabled=false
+=======
+          buildEnvironment: PullRequest
+  
+      - template: jobs/nuget-desktop.yml
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
+
+<<<<<<< HEAD
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground Win32
         inputs:
@@ -286,7 +409,115 @@ jobs:
 
   - job: RNWDesktopPR
     displayName: Desktop PR
+||||||| 811c767bf
+      - task: NuGetCommand@2
+        displayName: NuGet restore - Playground Win32
+        inputs:
+          command: restore
+          restoreSolution: packages/playground/windows/Playground-Win32.sln
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: VSBuild@1
+        displayName: VSBuild - Playground Win32
+        inputs:
+          solution: packages/playground/windows/Playground-Win32.sln
+          vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          clean: true # Optional
+          maximumCpuCount: false # Optional
+          restoreNugetPackages: false # Optional
+          msbuildArgs:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
+            /p:BaseIntDir=$(BaseIntDir)
+
+  - job: RNWSampleAppsPR
+    displayName: Sample Apps PR
     dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    strategy:
+      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+        #X64Debug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: x64
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        #X86Debug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: x86
+        #X86Release:
+        #  BuildConfiguration: Release
+        #  BuildPlatform: x86
+        #ArmDebug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: ARM
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: ARM
+        #Arm64Debug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: ARM64
+        #Arm64Release:
+        #  BuildConfiguration: Release
+        #  BuildPlatform: ARM64
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 5
+    pool:
+      vmImage: $(VmImage)
+
+    steps:
+      - checkout: self
+        clean: false
+        submodules: false
+        
+      - template: templates/prepare-env.yml
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - SampleApps
+        inputs:
+          command: restore
+          restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+        condition: succeeded()
+
+      - task: CmdLine@2
+        displayName: run-windows (Debug)
+        inputs:
+          script: yarn windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --msbuildprops BaseIntDir=$(BaseIntDir)
+          workingDirectory: packages/microsoft-reactnative-sampleapps
+        condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'))
+
+      - task: CmdLine@2
+        displayName: run-windows (Release)
+        inputs:
+          script: yarn windows --no-packager --no-launch --no-deploy --arch $(BuildPlatform) --logging --release --msbuildprops BaseIntDir=$(BaseIntDir)
+          workingDirectory: packages/microsoft-reactnative-sampleapps
+        condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'))
+
+      - task: CmdLine@2
+        displayName: Create SampleApp bundle
+        inputs:
+          script: yarn bundle-cpp
+          workingDirectory: packages\microsoft-reactnative-sampleapps
+        condition: succeeded()
+
+  - job: RNWDesktopPR
+    displayName: Desktop PR
+=======
+      - template: jobs/cli-init.yml
+        parameters:
+          # The Nuget CLI verification is part of 'Build' to speed up the verification
+          buildEnvironment: PullRequest
+          buildNuGetOnly: true
+          
+  - stage: IntegrationTests
+    displayName: Tests 🧪
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
+    dependsOn: Setup
+<<<<<<< HEAD
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
@@ -324,18 +555,55 @@ jobs:
         (FullyQualifiedName!=RNTesterIntegrationTests::XHRSample)&
         (FullyQualifiedName!~WebSocketModule_)&
         (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
+||||||| 811c767bf
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    strategy:
+      matrix:
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
 
-    steps:
-      - checkout: self
-        clean: false
-        submodules: false
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
+    variables:
+      Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!~WebSocket)
+=======
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'False' )
+    jobs:
+      - template: jobs/jschecks.yml
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
+
+      - template: jobs/macos-tests.yml
+
+<<<<<<< HEAD
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
           testPlatformVersion: 16.5.0
 
       - template: templates/build-rnw.yml
+||||||| 811c767bf
+      - task: VisualStudioTestPlatformInstaller@1
+        inputs:
+          testPlatformVersion: 16.3.0
+
+      - template: templates/build-rnw.yml
+=======
+      - template: jobs/playground.yml
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
         parameters:
+<<<<<<< HEAD
           yarnBuildCmd: build
           project: vnext/ReactWindows-Desktop.sln
 
@@ -409,9 +677,45 @@ jobs:
           vsTestVersion: toolsInstaller
           otherConsoleOptions: '/ListTests'
         condition: failed()
+||||||| 811c767bf
+          yarnBuildCmd: build
+          project: vnext/ReactWindows-Desktop.sln
+
+      - task: CmdLine@2
+        displayName: Build react-native-win32 RNTester bundle
+        inputs:
+          script: yarn bundle
+          workingDirectory: packages/react-native-win32
+        condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x64'))
 
       - task: VSTest@2
-        displayName: Re-Run Desktop Integration Tests
+        displayName: Run Desktop Unit Tests
+        timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: |
+            React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
+            JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe
+          pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+          searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: toolsInstaller
+
+      - template: templates/stop-packagers.yml
+
+      - task: PowerShell@2
+        displayName: Set up test servers
+        inputs:
+          targetType: filePath # filePath | inline
+          filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
+          arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
+
+      - task: VSTest@2
+        displayName: Run Desktop Integration Tests
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
@@ -424,129 +728,43 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
-        condition: failed()
+        condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
 
-      - task: PowerShell@2
-        displayName: Check the metro bundle server
+      - task: VSTest@2
+        displayName: List Desktop Integration Tests
         inputs:
-          targetType: 'inline'
-          script: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
+          testSelector: testAssemblies
+          testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
+          searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
+          testFiltercriteria: $(Desktop.IntegrationTests.Filter)
+          runTestsInIsolation: false
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: false
+          collectDumpOn: onAbortOnly
+          vsTestVersion: toolsInstaller
+          otherConsoleOptions: '/ListTests'
         condition: failed()
+=======
+          buildEnvironment: PullRequest
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 
-      - template: templates/stop-packagers.yml
-
-      - template: templates/publish-build-artifacts-for-nuget.yml
+      - template: jobs/sample-apps.yml
         parameters:
-          artifactName: ReactWindows
-          contents: |
-            React.Windows.Desktop.DLL\**
-            React.Windows.Desktop.Test.DLL\**
+          buildEnvironment: PullRequest
 
-  - job: CliInit
-    displayName: Verify react-native init
+      - template: jobs/e2e-test.yml
+        parameters:
+          buildEnvironment: PullRequest
+
+      - template: jobs/integration-test.yml
+        parameters:
+          buildEnvironment: PullRequest
+
+  - stage: CLI
+    displayName: Cli 🖥
     dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    strategy:
-      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        X86DebugCpp:
-          language: cpp
-          configuration: Debug
-          platform: x86
-        X86DebugCs:
-          language: cs
-          configuration: Debug
-          platform: x86
-        #X86ReleaseCpp:
-        #  language: cpp
-        #  configuration: Release
-        #  platform: x86
-        #X86ReleaseCs:
-        #  language: cs
-        #  configuration: Release
-        #  platform: x86
-        #X64DebugCpp:
-        #  language: cpp
-        #  configuration: Debug
-        #  platform: x64
-        #X64DebugCs:
-        #  language: cs
-        #  configuration: Debug
-        #  platform: x64
-        X64ReleaseCpp:
-          language: cpp
-          configuration: Release
-          platform: x64
-        X64ReleaseCs:
-          language: cs
-          configuration: Release
-          platform: x64
-        #ArmDebugCpp:
-        #  language: cpp
-        #  configuration: Debug
-        #  platform: arm
-        #ArmDebugCs:
-        #  language: cs
-        #  configuration: Debug
-        #  platform: arm
-        ArmReleaseCpp:
-          language: cpp
-          configuration: Release
-          platform: arm
-        ArmReleaseCs:
-          language: cs
-          configuration: Release
-          platform: arm
-        #Arm64DebugCpp:
-        #  language: cpp
-        #  configuration: Debug
-        #  platform: arm64
-        #Arm64DebugCs:
-        #  language: cs
-        #  configuration: Debug
-        #  platform: arm64
-        #Arm64ReleaseCpp:
-        #  language: cpp
-        #  configuration: Release
-        #  platform: arm64
-        #Arm64ReleaseCs:
-        #  language: cs
-        #  configuration: Release
-        #  platform: arm64
-
-    timeoutInMinutes: 40 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    pool:
-      vmImage: $(VmImage)
-    steps:
-      - template: templates/react-native-init.yml
-        parameters:
-          language: $(language)
-          configuration: $(configuration)
-          platform: $(platform)
-          version: $(reactNativeVersion)
-
-  - job: CliInitExperimental
-    displayName: Verify react-native init experimental
-    dependsOn:
-     - Setup
-     - RNWUniversalPR
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    timeoutInMinutes: 40 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    pool:
-      vmImage: $(VmImage)
-    steps:
-      - template: templates/react-native-init.yml
-        parameters:
-          language: cpp
-          configuration: Debug
-          platform: x86
-          version: $(reactNativeVersion)
-          experimentalNugetDependency: true
-
-  - job: RNWExtraChecks
-    displayName: Extra Checks
-    dependsOn: Setup
+<<<<<<< HEAD
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
@@ -626,6 +844,98 @@ jobs:
           versionSpec: ">=5.8.0"
 
       - template: templates/prep-and-pack-nuget.yml
+||||||| 811c767bf
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 10 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    steps:
+      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+        clean: true # whether to fetch clean each time
+        fetchDepth: 2 # the depth of commits to ask Git to fetch
+        lfs: false # whether to download Git-LFS files
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: yarn install --frozen-lockfile
+
+      - task: CmdLine@2
+        displayName: Check for change files
+        inputs:
+          script: npx --no-install beachball check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
+
+      - task: CmdLine@2
+        displayName: yarn format:verify
+        inputs:
+          script: yarn format:verify
+
+      - task: CmdLine@2
+        displayName: yarn buildci
+        inputs:
+          script: yarn buildci
+
+      - task: CmdLine@2
+        displayName: yarn lint
+        inputs:
+          script: yarn lint
+
+      - task: CmdLine@2
+        displayName: yarn test
+        inputs:
+          script: yarn test
+
+      - task: CmdLine@2
+        displayName: yarn validate-overrides
+        inputs:
+          script: yarn validate-overrides
+
+      - task: CmdLine@2
+        displayName: yarn api
+        inputs:
+          script: yarn api
+
+  - template: templates/e2e-test-job.yml # Template reference
+    parameters:
+      name: E2ETest
+      BuildPlatform: x64
+
+  - job: RNWNugetPR
+    displayName: Build and Pack Nuget
+    dependsOn:
+      - Setup
+      - RNWUniversalPR
+      - RNWDesktopPR
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 30
+    cancelTimeoutInMinutes: 5
+    steps:
+      - checkout: self
+        fetchDepth: 15
+
+      # The commit tag in the nuspec requires that we use at least nuget 4.6
+      - task: NuGetToolInstaller@0
+        inputs:
+          versionSpec: ">=4.6.0"
+
+      - template: templates/prep-and-pack-nuget.yml
+=======
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'False' )
+    jobs:
+      - template: jobs/cli-init.yml
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
         parameters:
+<<<<<<< HEAD
           slices: '("x64.Release", "x86.Debug", "ARM.Release")'
           packUniversal: false
+||||||| 811c767bf
+          slices: '("x64.Release", "x86.Debug", "ARM.Debug")'
+          packUniversal: false
+=======
+          buildEnvironment: PullRequest
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa

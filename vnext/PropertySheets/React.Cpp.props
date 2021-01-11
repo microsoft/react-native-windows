@@ -13,16 +13,19 @@
     <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableWinRtLeanAndMean Condition="'$(EnableWinRtLeanAndMean)' == ''">true</EnableWinRtLeanAndMean>
+    <LinkIncremental Condition="'$(LinkIncremental)' == '' and '$(Configuration)'=='Debug'" Label="Configuration">true</LinkIncremental>
+    <LinkIncremental Condition="'$(LinkIncremental)' == '' and '$(Configuration)'=='Release'" Label="Configuration">false</LinkIncremental>
   </PropertyGroup>
 
   <PropertyGroup Label="Desktop">
     <!-- See https://docs.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt -->
     <WinVer>_WIN32_WINNT_WIN8</WinVer>
+    <EnableBeast Condition="'$(EnableBeast)' == ''">0</EnableBeast>
   </PropertyGroup>
 
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\ReactPatches.targets" />
-
   <PropertyGroup>
+<<<<<<< HEAD
     <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
     <HERMES_Version Condition="'$(HERMES_Version)' == ''">0.5.0-f56606a8</HERMES_Version>
     <HERMES_Package Condition="'$(HERMES_Package)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HERMES_Version)</HERMES_Package>
@@ -34,6 +37,17 @@
     <V8_Package Condition="'$(V8_Package)' == '' AND '$(V8AppPlatform)' == 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8_Version)</V8_Package>
     <V8_Package Condition="'$(V8_Package)' == '' AND '$(V8AppPlatform)' != 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.UWP.$(V8_Version)</V8_Package>
 
+||||||| 811c767bf
+    <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
+    <HERMES_Version Condition="'$(HERMES_Version)' == ''">0.1.6</HERMES_Version>
+    <HERMES_Package Condition="'$(HERMES_Package)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HERMES_Version)</HERMES_Package>
+
+    <USE_V8 Condition="'$(USE_V8)' == '' AND '$(Platform)' != 'ARM' AND '$(Platform)' != 'ARM64'">true</USE_V8>
+    <V8_Version Condition="'$(V8_Version)' == ''">0.2.7</V8_Version>
+    <V8_Package Condition="'$(V8_Package)' == ''">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8_Version)</V8_Package>
+
+=======
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     <!-- Enables React-Native-Windows ETW Provider : React-Native-Windows-Provider  -->
     <ENABLE_ETW_TRACING Condition="'$(ENABLE_ETW_TRACING)' == ''">true</ENABLE_ETW_TRACING>
 
@@ -54,6 +68,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
 
+<<<<<<< HEAD
   <PropertyGroup>
     <!-- This prop is used for shared JSI code and headers -->
     <JSI_Source Condition="'$(JSI_Source)' == ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_Source>
@@ -62,7 +77,26 @@
     <JSI_SourcePath Condition="'$(JSI_SourcePath)' == ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_SourcePath>
     <JSI_SourcePath Condition="'$(USE_V8)' == 'true'">$(V8_Package)\build\native\include</JSI_SourcePath>
     <JSI_SourcePath Condition="'$(USE_HERMES)' == 'true'">$(HERMES_Package)\build\native\include</JSI_SourcePath>
+||||||| 811c767bf
+  <PropertyGroup>
+    <!-- This prop is used for shared JSI code and headers -->
+    <JSI_Source Condition="'$(JSI_Source)' == ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_Source>
+    <JSI_Source Condition="'$(USE_HERMES)' == 'true'">$(HERMES_Package)\installed\x64-windows\include\jsi_ref</JSI_Source>
 
+    <!-- This prop is used for JSI code that may be overridden in external JSI implementations -->
+    <JSI_SourcePath Condition="'$(JSI_SourcePath)' == ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_SourcePath>
+    <JSI_SourcePath Condition="'$(USE_V8)' == 'true'">$(V8_Package)\build\native\include</JSI_SourcePath>
+=======
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions Condition="'$(UseHermes)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
+
+  <PropertyGroup>
     <!-- This disables copying the v8 DLL to outputs; it is re-enabled locally in win32 projects -->
     <V8JSI_NODLLCOPY>true</V8JSI_NODLLCOPY>
   </PropertyGroup>
@@ -98,13 +132,31 @@
         BOOST_SYSTEM_SOURCE;
         GTEST_HAS_RTTI=0;
         WIN32_LEAN_AND_MEAN;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(EnableWinRtLeanAndMean)' == 'true'">
         WINRT_LEAN_AND_MEAN;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+
+      <!-- Add include directories expected by React Native C++ code and headers -->
+      <AdditionalIncludeDirectories>
+        $(FollyDir);
+        $(ReactNativeDir)\ReactCommon;
+        $(ReactNativeDir)\ReactCommon\callinvoker;
+        $(ReactNativeDir)\ReactCommon\jsi;
+        $(ReactNativeDir)\ReactCommon\jsiexecutor;
+        $(ReactNativeDir)\ReactCommon\react\nativemodule\core;
+        $(ReactNativeDir)\ReactCommon\react\nativemodule\samples;
+        $(ReactNativeDir)\ReactCommon\reactperflogger;
+        $(ReactNativeDir)\ReactCommon\runtimeexecutor;
+        %(AdditionalIncludeDirectories);
+      </AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
 

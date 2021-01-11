@@ -78,20 +78,24 @@ function checkFilesForChanges(
   map: Map<string, string>,
   outputDir: string,
 ): boolean {
-  map.forEach((contents: string, fileName: string) => {
+  let hasChanges = false;
+
+  for (const [contents, fileName] of map) {
     const location = path.join(outputDir, fileName);
     if (!fs.existsSync(location)) {
-      return true;
+      hasChanges = true;
+      continue;
     }
 
     const currentContents = fs.readFileSync(location, 'utf8');
     if (currentContents !== contents) {
       console.error(`- ${fileName} has changed`);
-      return true;
+      hasChanges = true;
+      continue;
     }
-  });
+  }
 
-  return false;
+  return hasChanges;
 }
 
 function writeMapToFiles(map: Map<string, string>, outputDir: string) {
@@ -99,6 +103,7 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
   map.forEach((contents: string, fileName: string) => {
     try {
       const location = path.join(outputDir, fileName);
+      fs.mkdirSync(path.dirname(location), {recursive: true});
       fs.writeFileSync(location, contents);
     } catch (error) {
       success = false;
@@ -116,7 +121,7 @@ function combineSchemas(files: string[]): SchemaType {
       if (
         contents &&
         (/export\s+default\s+\(?codegenNativeComponent</.test(contents) ||
-          /extends TurboModule/.test(contents))
+          contents.includes('extends TurboModule'))
       ) {
         const schema = parseFile(filename);
 

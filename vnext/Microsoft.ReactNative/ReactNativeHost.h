@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -7,9 +7,8 @@
 
 #include "NativeModulesProvider.h"
 #include "ReactHost/React.h"
-#include "ReactInstance.h"
 #include "ReactInstanceSettings.h"
-#include "ViewManagersProvider.h"
+#include "ReactPropertyBag.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -18,25 +17,41 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
  public: // ReactNativeHost ABI API
   ReactNativeHost() noexcept;
 
+  static ReactNative::ReactNativeHost FromContext(ReactNative::IReactContext const &reactContext) noexcept;
+
   // property PackageProviders
   Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
-  void PackageProviders(Windows::Foundation::Collections::IVector<IReactPackageProvider> const &value) noexcept;
 
   // property InstanceSettings
   ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
   void InstanceSettings(ReactNative::ReactInstanceSettings const &value) noexcept;
 
+<<<<<<< HEAD
   void ReloadInstance() noexcept;
 
+||||||| 811c767bf
+  void ReloadInstance() noexcept;
+
+  void OnSuspend() noexcept;
+  void OnEnteredBackground() noexcept;
+  void OnLeavingBackground() noexcept;
+  void OnResume(OnResumeAction const &action) noexcept;
+  void OnBackPressed() noexcept;
+
+=======
+  Windows::Foundation::IAsyncAction LoadInstance() noexcept;
+  Windows::Foundation::IAsyncAction ReloadInstance() noexcept;
+  Windows::Foundation::IAsyncAction UnloadInstance() noexcept;
+
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
  public:
   Mso::React::IReactHost *ReactHost() noexcept;
+  static ReactNative::ReactNativeHost GetReactNativeHost(ReactPropertyBag const &properties) noexcept;
 
  private:
   Mso::CntPtr<Mso::React::IReactHost> m_reactHost;
 
   ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
-  ReactNative::ReactInstance m_reactInstance{nullptr};
-  Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders;
   ReactNative::IReactPackageBuilder m_packageBuilder;
 };
 

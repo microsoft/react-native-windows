@@ -30,7 +30,9 @@ $UseWebInstaller = $UseWebInstaller -or -not (Test-Path -Path "$LocalVsInstaller
 if ($UseWebInstaller) {
 	Write-Host "Downloading web installer..."
 
-	Invoke-WebRequest -Method Get `
+	Invoke-WebRequest `
+		-UseBasicParsing `
+		-Method Get `
 		-Uri $InstallerUri `
 		-OutFile $VsInstaller
 
@@ -90,7 +92,9 @@ if ($UseWebInstaller) {
 }
 
 if ($Collect) {
-	Invoke-WebRequest -Method Get `
+	Invoke-WebRequest `
+		-UseBasicParsing `
+		-Method Get `
 		-Uri 'https://download.microsoft.com/download/8/3/4/834E83F6-C377-4DCE-A757-69A418B6C6DF/Collect.exe' `
 		-OutFile ${env:System_DefaultWorkingDirectory}\Collect.exe
 

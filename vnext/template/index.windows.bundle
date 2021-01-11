@@ -1,0 +1,9 @@
+/**
+ * 
+ * Be sure to generate this file using the CLI:
+ *
+ * npx react-native bundle --platform windows --entry-file index.js 
+ *   --bundle-output windows\{{ name }}\Bundle\index.windows.bundle
+ *   --assets-dest windows\{{ name }}\Bundle
+ *
+ */

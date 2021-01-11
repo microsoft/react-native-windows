@@ -1,0 +1,1 @@
+moduleBuilder.AddInitializer((global::Microsoft.ReactNative.IReactContext reactContext) => module.MyEvent = () => reactContext.CallJSFunction("MyModuleName", "MyNamedFunction", (writer) => global::Microsoft.ReactNative.Managed.JSValueWriter.WriteArgs(writer)));

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <description>Contains Code generation tool for React-Native for Managed code</description>
+    <authors>Microsoft</authors>
+    <projectUrl>https://github.com/microsoft/react-native-windows</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <copyright>&#169; Microsoft Corporation. All rights reserved.</copyright>
+    <repository type="git"
+      url="https://github.com/microsoft/react-native-windows.git"
+      commit="$CommitId$" />
+    <tags>react react-native react-native-windows native-module codegen microsoft c# csharp</tags>
+  </metadata>
+  <files>
+    <file src="$nugetroot$\Microsoft.ReactNative.Managed.CodeGen.targets" target="build"/>
+    <file src="$nugetroot$\Microsoft.ReactNative.VersionCheck.targets" target="build"/>
+
+    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.Managed.CodeGen\Publish\**" target="tools"/>
+  </files>
+</package>

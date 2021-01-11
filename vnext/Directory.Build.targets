@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 
+  <!-- This import will noop when customer code is built. This import is here to help building the bits in the react-native-windows repository. -->
+  <Import Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../')))" Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
+
   <!-- For build debugging purposes. -->
   <Target Name="Vars">
     <Message Text="General" />
@@ -11,6 +14,10 @@
     <Message Text="=> PlatformName            [$(PlatformName)]" />
     <Message Text="=> DefaultPlatformToolset  [$(DefaultPlatformToolset)]" />
     <Message Text="=> PlatformToolset         [$(PlatformToolset)]" />
+    <Message Text="=> SolutionDir             [$(SolutionDir)]" />
+    <Message Text="=> RootDir                 [$(RootDir)]" />
+    <Message Text="=> RootIntDir              [$(RootIntDir)]" />
+    <Message Text="=> RootOutDir              [$(RootOutDir)]" />
     <Message Text="=> BaseIntDir              [$(BaseIntDir)]" />
     <Message Text="=> BaseOutDir              [$(BaseOutDir)]" />
     <Message Text="=> IntDir                  [$(IntDir)]" />
@@ -21,6 +28,7 @@
     <Message Text="=> LastBuildUnsuccessful   [$(LastBuildUnsuccessful)]" />
     <Message Text="=> LastBuildState          [$(LastBuildState)]" />
     <Message Text="=> GeneratedFilesDir       [$(GeneratedFilesDir)]" />
+    <Message Text="=> WinVer                  [$(WinVer)]" />
 
     <Message Text="%0A" />
     <Message Text="Microsoft.CppBuild.targets/MakeDirsForCl" />
@@ -31,6 +39,7 @@
     <Message Text="=> XMLDocumentationFileName    [@(CLCompile->Metadata('XMLDocumentationFileName')->DirectoryName()->Distinct())]" />
     <Message Text="=> BrowseInformationFile       [@(CLCompile->Metadata('BrowseInformationFile')->DirectoryName()->Distinct())]" />
     <Message Text="=> PreprocessOutputPath        [@(CLCompile->Metadata('PreprocessOutputPath')->DirectoryName()->Distinct())]" />
+    <Message Text="=> PreprocessorDefinitions     [@(CLCompile->Metadata('PreprocessorDefinitions')->Distinct())]" />
     <Message Text="=> ClDirsToMake                [@(ClDirsToMake)]" />
 
     <Message Text="%0A" />

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 using Microsoft.ReactNative;
@@ -6,8 +6,12 @@ using System;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Graphics.Display;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
+using Microsoft.ReactNative.Managed;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace ReactUWPTestApp
 {
@@ -22,26 +26,26 @@ namespace ReactUWPTestApp
         /// </summary>
         public App()
         {
-            MainComponentName = "ReactUWPTestApp";
-
 #if BUNDLE
             JavaScriptBundleFile = "index.windows";
             InstanceSettings.UseWebDebugger = false;
             InstanceSettings.UseFastRefresh = false;
 #else
-            JavaScriptMainModuleName = "app/index";
+            JavaScriptBundleFile = "app/index";
             InstanceSettings.UseWebDebugger = true;
             InstanceSettings.UseFastRefresh = true;
 #endif
 
 #if DEBUG
-            InstanceSettings.EnableDeveloperMenu = true;
+            InstanceSettings.UseDeveloperSupport = true;
 #else
-            InstanceSettings.EnableDeveloperMenu = false;
+            InstanceSettings.UseDeveloperSupport = false;
 #endif
 
-            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
-            PackageProviders.Add(new TreeDumpLibrary.ReactPackageProvider());
+            Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(PackageProviders); // Includes any autolinked modules
+
+            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());
+            PackageProviders.Add(new ReactUWPTestApp.ReactPackageProvider());
 
             this.InitializeComponent();
         }
@@ -54,12 +58,23 @@ namespace ReactUWPTestApp
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             base.OnLaunched(e);
+
+            // RNTester will load the most recently visited example page (or a provided link to an example) if
+            // reopened. Clear local storage to suppress that behavior and always go to the example list first.
+            // #6319 Tracks a better way to do this
+            ApplicationData.Current.ClearAsync().AsTask().Wait();
+
+            var frame = Window.Current.Content as Frame;
+            if (frame == null)
+            {
+                frame = new Frame();
+                Window.Current.Content = frame;
+            }
+            frame.Navigate(typeof(MainPage));
+            Window.Current.Activate();
+
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             ApplicationView.GetForCurrentView().TryResizeView(new Size(800, 600));
-            if (DisplayInformation.GetForCurrentView().ResolutionScale != ResolutionScale.Scale100Percent)
-            {
-                throw new Exception("A bug requires this app to run at 100% for accurate results - See https://github.com/microsoft/react-native-windows/issues/4619");
-            }
         }
     }
 }

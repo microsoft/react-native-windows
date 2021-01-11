@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <description>Contains Shared code for React-Native for Windows</description>
+    <authors>Microsoft</authors>
+    <projectUrl>https://github.com/microsoft/react-native-windows</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <copyright>&#169; Microsoft Corporation. All rights reserved.</copyright>
+    <repository type="git"
+      url="https://github.com/microsoft/react-native-windows.git"
+      commit="$CommitId$" />
+    <tags>react react-native react-native-windows microsoft c cpp c++</tags>
+    <dependencies>
+      <group targetFramework="UAP10.0">
+        <dependency id="Microsoft.ReactNative" version="$version$" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="$nugetroot$\Microsoft.ReactNative.Cxx.targets" target="build\native"/>
+    <file src="$nugetroot$\Microsoft.ReactNative.VersionCheck.targets" target="build\native"/>
+    
+    <file src="$nugetroot$\Microsoft.ReactNative.Cxx\**" target ="tools\Microsoft.ReactNative.Cxx"/>
+  </files>
+</package>

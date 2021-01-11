@@ -1,15 +1,25 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
 #include "IReactContext.h"
 #include "DynamicWriter.h"
+<<<<<<< HEAD
 #include "XamlUIService.h"
+||||||| 811c767bf
+=======
+#ifndef CORE_ABI
+#include "XamlUIService.h"
+#endif
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-ReactContext::ReactContext(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept : m_context{std::move(context)} {}
+//=============================================================================
+// ReactSettingsSnapshot implementation
+//=============================================================================
 
+<<<<<<< HEAD
 IReactPropertyBag ReactContext::Properties() noexcept {
   return m_context->Properties();
 }
@@ -19,8 +29,103 @@ IReactDispatcher ReactContext::UIDispatcher() noexcept {
 }
 
 // Deprecated: Use XamlUIService directly.
+||||||| 811c767bf
+=======
+#ifndef CORE_ABI
+ReactSettingsSnapshot::ReactSettingsSnapshot(Mso::CntPtr<const Mso::React::IReactSettingsSnapshot> &&settings) noexcept
+    : m_settings{std::move(settings)} {}
+
+bool ReactSettingsSnapshot::UseWebDebugger() const noexcept {
+  return m_settings->UseWebDebugger();
+}
+
+bool ReactSettingsSnapshot::UseFastRefresh() const noexcept {
+  return m_settings->UseFastRefresh();
+}
+
+bool ReactSettingsSnapshot::UseDirectDebugger() const noexcept {
+  return m_settings->UseDirectDebugger();
+}
+
+bool ReactSettingsSnapshot::DebuggerBreakOnNextLine() const noexcept {
+  return m_settings->DebuggerBreakOnNextLine();
+}
+
+uint16_t ReactSettingsSnapshot::DebuggerPort() const noexcept {
+  return m_settings->DebuggerPort();
+}
+
+hstring ReactSettingsSnapshot::DebugBundlePath() const noexcept {
+  return winrt::to_hstring(m_settings->DebugBundlePath());
+}
+
+hstring ReactSettingsSnapshot::BundleRootPath() const noexcept {
+  return winrt::to_hstring(m_settings->BundleRootPath());
+}
+
+hstring ReactSettingsSnapshot::SourceBundleHost() const noexcept {
+  return winrt::to_hstring(m_settings->SourceBundleHost());
+}
+
+uint16_t ReactSettingsSnapshot::SourceBundlePort() const noexcept {
+  return m_settings->SourceBundlePort();
+}
+
+hstring ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {
+  return winrt::to_hstring(m_settings->JavaScriptBundleFile());
+}
+
+Mso::React::IReactSettingsSnapshot const &ReactSettingsSnapshot::GetInner() const noexcept {
+  return *m_settings;
+}
+
+#endif
+
+//=============================================================================
+// ReactContext implementation
+//=============================================================================
+
+ReactContext::ReactContext(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept : m_context {
+  std::move(context)
+}
+#ifndef CORE_ABI
+, m_settings {
+  winrt::make<ReactSettingsSnapshot>(&m_context->SettingsSnapshot())
+}
+#endif
+{}
+
+#ifndef CORE_ABI
+IReactSettingsSnapshot ReactContext::SettingsSnapshot() noexcept {
+  return m_settings;
+}
+#endif
+
+IReactPropertyBag ReactContext::Properties() noexcept {
+  return m_context->Properties();
+}
+
+IReactNotificationService ReactContext::Notifications() noexcept {
+  return m_context->Notifications();
+}
+
+IReactDispatcher ReactContext::UIDispatcher() noexcept {
+  return Properties().Get(ReactDispatcherHelper::UIDispatcherProperty()).try_as<IReactDispatcher>();
+}
+
+IReactDispatcher ReactContext::JSDispatcher() noexcept {
+  return Properties().Get(ReactDispatcherHelper::JSDispatcherProperty()).try_as<IReactDispatcher>();
+}
+
+Windows::Foundation::IInspectable ReactContext::JSRuntime() noexcept {
+  return m_context->JsiRuntime();
+}
+
+#ifndef CORE_ABI
+// Deprecated: Use XamlUIService directly.
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
 void ReactContext::DispatchEvent(
-    winrt::Windows::UI::Xaml::FrameworkElement const &view,
+    xaml::FrameworkElement const &view,
     hstring const &eventName,
     JSValueArgWriter const &eventDataArgWriter) noexcept {
   auto xamlUIService = Properties()
@@ -31,6 +136,7 @@ void ReactContext::DispatchEvent(
     xamlUIService.DispatchEvent(view, eventName, eventDataArgWriter);
   }
 }
+#endif
 
 void ReactContext::CallJSFunction(
     hstring const &moduleName,
@@ -56,4 +162,14 @@ void ReactContext::EmitJSEvent(
   m_context->CallJSFunction(to_string(eventEmitterName), "emit", std::move(params));
 }
 
+<<<<<<< HEAD
 } // namespace winrt::Microsoft::ReactNative::implementation
+||||||| 811c767bf
+} // namespace winrt::Microsoft::ReactNative
+=======
+Mso::React::IReactContext &ReactContext::GetInner() const noexcept {
+  return *m_context;
+}
+
+} // namespace winrt::Microsoft::ReactNative::implementation
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa

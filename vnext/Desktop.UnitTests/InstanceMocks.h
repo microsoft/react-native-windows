@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include <cxxreact/Instance.h>
@@ -39,8 +42,9 @@ class MockJSExecutor : public facebook::react::JSExecutor {
 
 #pragma region JSExecutor overrides
 
-  void loadApplicationScript(std::unique_ptr<const facebook::react::JSBigString> script, std::string sourceURL)
-      override;
+  void initializeRuntime() override;
+
+  void loadBundle(std::unique_ptr<const facebook::react::JSBigString> script, std::string sourceURL) override;
 
   void setBundleRegistry(std::unique_ptr<facebook::react::RAMBundleRegistry> bundleRegistry) override;
 

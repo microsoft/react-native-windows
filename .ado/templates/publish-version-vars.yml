@@ -1,0 +1,8 @@
+# Publishes a script to apply version variables
+
+steps:
+  - task: PublishPipelineArtifact@1
+    displayName: Publish version variables
+    inputs:
+      targetPath: $(Build.StagingDirectory)/versionEnvVars
+      artifactName: VersionEnvVars

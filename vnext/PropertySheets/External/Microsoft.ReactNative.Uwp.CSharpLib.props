@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -8,3 +9,22 @@
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)\..\..'))\</ReactNativeWindowsDir>
   </PropertyGroup>
 </Project>
+||||||| 811c767bf
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation.
+  Licensed under the MIT License.
+
+  This file will be consumed by ALL UWP C# module projects (both inside
+  and outside of this repo) that build on top of Microsoft.ReactNative.
+  Do not make any changes here unless it applies to ALL such projects.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ReactNativeCodeGenEnabled Condition="'$(ReactNativeCodeGenEnabled)' == ''">true</ReactNativeCodeGenEnabled>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
+</Project>
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa

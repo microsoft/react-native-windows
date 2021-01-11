@@ -13,6 +13,7 @@
     "VerticalAlignment": "Stretch",
     "Visibility": "Visible",
     "Width": 500,
+    "AutomationId": "ImageContainer",
     "children": [
     {
         "XamlType": "Windows.UI.Xaml.DependencyObject"

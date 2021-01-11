@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SignConfigXML>
+  <job platform="" configuration="" dest="__INPATHROOT__" jobname="microsoftreactnative" approvers="">
+    <!-- Overwrite the input files to simplify downstream things like nuget package generation. -->
+
+    <!-- Is Authenticode right here? Do we need strong-signing for dotnet core binaries? -->
+
+    <!-- Sign the release binaries -->
+    <file src="__INPATHROOT__\x64\Release\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.exe" signType="AuthenticodeFormer" dest="__INPATHROOT__\ARM\Release\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.dll" />
+    <file src="__INPATHROOT__\x64\Release\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.dll" signType="AuthenticodeFormer" dest="__INPATHROOT__\ARM\Release\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.dll" />
+  </job>
+</SignConfigXML>

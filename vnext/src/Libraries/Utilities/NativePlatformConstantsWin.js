@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
  * @format
- * @flow
+ * @flow strict
  */
 
 'use strict';
@@ -20,6 +20,7 @@ export interface Spec extends TurboModule {
       patch: number,
       prerelease: ?number,
     |},
+    osVersion: number,
   |};
 }
 

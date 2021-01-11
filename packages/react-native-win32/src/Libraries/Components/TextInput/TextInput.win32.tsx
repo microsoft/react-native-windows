@@ -49,7 +49,6 @@ const RCTTextInput = requireNativeComponent<RCTTextInputProps>('RCTTextInput');
 
 // Adding typings on ViewManagers is problematic as available functionality is not known until
 // registration at runtime and would require native and js to always be in sync.
-/*tslint:disable-next-line no-any*/
 const TextInputViewManager: any = NativeModules.UIManager.getViewManagerConfig('RCTTextInput');
 
 class TextInput extends React.Component<TextInputProps, {}> {
@@ -59,7 +58,7 @@ class TextInput extends React.Component<TextInputProps, {}> {
 
   private _rafID: number;
 
-  private _inputRef: React.RefObject<React.Component<RCTTextInputProps> & Readonly<NativeMethods>>;
+  private readonly _inputRef: React.RefObject<React.Component<RCTTextInputProps> & Readonly<NativeMethods>>;
   private _lastNativeText: string;
   private _eventCount = 0;
 
@@ -75,10 +74,7 @@ class TextInput extends React.Component<TextInputProps, {}> {
   public componentDidMount() {
     this._lastNativeText = this.props.value;
 
-    const tag = findNodeHandle(this);
-    if (tag !== null) {
-      TextInputState.registerInput(tag);
-    }
+    TextInputState.registerInput(this);
 
     if (this.props.autoFocus) {
       this._rafID = requestAnimationFrame(this.focus);
@@ -109,10 +105,7 @@ class TextInput extends React.Component<TextInputProps, {}> {
     }
 
     // unregister
-    const tag = findNodeHandle(this);
-    if (tag !== null) {
-      TextInputState.unregisterInput(tag);
-    }
+    TextInputState.unregisterInput(this);
 
     // cancel animationFrame
     if (this._rafID !== null) {
@@ -151,14 +144,14 @@ class TextInput extends React.Component<TextInputProps, {}> {
    * Returns true if the TextInput is focused
    */
   public isFocused(): boolean {
-    return TextInputState.currentlyFocusedField() === findNodeHandle(this);
+    return TextInputState.currentlyFocusedInput() === this;
   }
 
   /**
    * Focuses the TextInput
    */
   public focus = (): void => {
-    TextInputState.setFocusedTextInput(findNodeHandle(this));
+    TextInputState.setFocusedTextInput(this);
     NativeModules.UIManager.
       dispatchViewManagerCommand(findNodeHandle(this), TextInputViewManager.Commands.focus, null);
   }
@@ -167,7 +160,7 @@ class TextInput extends React.Component<TextInputProps, {}> {
    * Blurs the TextInput
    */
   public blur = (): void => {
-    TextInputState.blurTextInput(findNodeHandle(this));
+    TextInputState.blurTextInput(this);
     NativeModules.UIManager.
       dispatchViewManagerCommand(findNodeHandle(this), TextInputViewManager.Commands.blur, null);
   }
@@ -179,13 +172,13 @@ class TextInput extends React.Component<TextInputProps, {}> {
     this.setNativeText('');
   }
 
-  private setEventCount = (): void => {
+  private readonly setEventCount = (): void => {
     NativeModules.UIManager.
       dispatchViewManagerCommand(findNodeHandle(this), TextInputViewManager.Commands.setEventCount,
         { eventCount: this._eventCount });
   }
 
-  private setNativeText = (val: string): void => {
+  private readonly setNativeText = (val: string): void => {
     if (this._lastNativeText !== val) {
       NativeModules.UIManager.
         dispatchViewManagerCommand(findNodeHandle(this), TextInputViewManager.Commands.setNativeText,
@@ -193,11 +186,11 @@ class TextInput extends React.Component<TextInputProps, {}> {
     }
   }
 
-  private _getText = (): string | null => {
+  private readonly _getText = (): string | null => {
     return this.props.value || (this.props.defaultValue || null);
   }
 
-  private _onChange = (e: IChangeEvent): void => {
+  private readonly _onChange = (e: IChangeEvent): void => {
     const text = e.nativeEvent.text;
     this._eventCount = e.nativeEvent.eventCount;
     this.setEventCount();
@@ -210,12 +203,12 @@ class TextInput extends React.Component<TextInputProps, {}> {
     return;
   }
 
-  private _onFocus = (e: IFocusEvent): void => {
+  private readonly _onFocus = (e: IFocusEvent): void => {
     this.focus();
     this.props.onFocus && this.props.onFocus(e);
   }
 
-  private _onBlur = (e: IBlurEvent): void => {
+  private readonly _onBlur = (e: IBlurEvent): void => {
     this.props.onBlur && this.props.onBlur(e);
   }
 }

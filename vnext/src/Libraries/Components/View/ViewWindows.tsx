@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
  */
@@ -14,7 +14,7 @@ type ViewWindowsType = React.ForwardRefExoticComponent<
   View;
 
 /**
- * Same as {@link https://facebook.github.io/react-native/docs/view | react-native's View}, but with extra windows specific functionality
+ * Same as {@link https://facebook.github.io/react-native/docs/view | react-native's View}, but with extra Windows specific functionality
  *
  * @remarks
  * Prop type: {@link IViewWindowsProps}.

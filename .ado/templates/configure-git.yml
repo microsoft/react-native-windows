@@ -7,6 +7,13 @@ steps:
       script: |
         git config --global user.email "53619745+rnbot@users.noreply.github.com"
         git config --global user.name "React-Native-Windows Bot"
+<<<<<<< HEAD
  
   - script: git remote set-url origin https://rnbot:$(githubAuthToken)@github.com/microsoft/react-native-windows
     displayName: Set Permissions to push
+||||||| 811c767bf
+=======
+  
+  - script: git remote set-url origin https://rnbot:$(githubAuthToken)@github.com/microsoft/react-native-windows
+    displayName: Set Permissions to push
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa

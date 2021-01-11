@@ -3,38 +3,55 @@
   "version": "0.0.54",
   "private": true,
   "scripts": {
-    "build": "just-scripts build",
-    "clean": "just-scripts clean",
     "start": "react-native start",
     "lint": "just-scripts lint",
     "lint:fix": "just-scripts lint:fix",
-    "watch": "tsc -w",
+    "watch": "just-scripts watch",
     "windows": "react-native run-windows",
-    "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
     "e2e": "react-native run-windows --no-launch --logging && npm run e2etest",
     "e2ebundle": "npm run bundle && react-native run-windows --no-launch --no-packager --bundle --logging && npm run e2etest",
-    "e2etest": "rimraf reports/* && npm run prettier && node run_wdio.js",
-    "testspec": "npm run prettier && wdio --spec",
-    "bundle": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file dist/app/index.js --bundle-output windows/ReactUWPTestApp/Bundle/index.windows.bundle --assets-dest windows/ReactUWPTestApp/Bundle",
+    "e2etest": "rimraf reports/* && set FORCE_COLOR=2 & node run_wdio.js",
+    "testspec": "wdio --spec",
+    "bundle": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file app/index.ts --bundle-output windows/ReactUWPTestApp/Bundle/index.windows.bundle --assets-dest windows/ReactUWPTestApp/Bundle",
     "buildapp": "react-native run-windows --no-launch --no-packager --no-deploy",
     "deployapp": "react-native run-windows --no-launch --no-packager --no-build",
     "buildbundleapp": "npm run bundle && react-native run-windows --no-launch --no-packager --no-deploy --bundle",
     "deploybundleapp": "react-native run-windows --no-launch --no-packager --no-build --bundle"
   },
   "dependencies": {
+    "@react-native-windows/tester": "0.0.1",
     "prompt-sync": "^4.2.0",
+<<<<<<< HEAD
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-windows": "0.62.20",
     "rnpm-plugin-windows": "^0.6.1"
+||||||| 811c767bf
+    "react": "16.9.0",
+    "react-native": "0.62.2",
+    "react-native-windows": "0.0.0-master.50",
+    "rnpm-plugin-windows": "^0.6.1"
+=======
+    "react": "17.0.1",
+    "react-native": "0.0.0-d3a3ce857",
+    "react-native-windows": "0.0.0-canary.231"
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
-    "@types/jasmine": "2.8.7",
+    "@rnw-scripts/eslint-config": "0.1.6",
+    "@rnw-scripts/ts-config": "0.1.0",
+    "@types/jasmine": "^3.3.0",
     "@types/node": "^10.14.8",
     "@types/react": "16.9.0",
+<<<<<<< HEAD
     "@types/react-native": "^0.62.10",
+||||||| 811c767bf
+    "@types/react-native": "^0.62.2",
+=======
+    "@types/react-native": "^0.63.18",
+>>>>>>> 64b0f8706de05473456eae6340a4cbcd938baaaa
     "@wdio/appium-service": "5.12.1",
     "@wdio/cli": "5.12.1",
     "@wdio/dot-reporter": "5.12.1",
@@ -43,10 +60,11 @@
     "@wdio/local-runner": "5.12.1",
     "@wdio/sync": "5.12.1",
     "appium": "1.14.1",
-    "just-scripts": "^0.36.1",
+    "eslint": "7.12.0",
+    "just-scripts": "^0.44.7",
     "metro-react-native-babel-preset": "^0.56.0",
-    "prettier": "^1.18.2",
-    "react-test-renderer": "16.9.0",
+    "prettier": "1.19.1",
+    "react-test-renderer": "17.0.1",
     "rimraf": "^3.0.0",
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.8.0",

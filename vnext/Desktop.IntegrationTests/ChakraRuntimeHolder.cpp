@@ -1,8 +1,6 @@
-#include "pch.h"
-
 #include "ChakraRuntimeHolder.h"
 
-#include <JSI/Shared/ChakraRuntimeFactory.h>
+#include <JSI/ChakraRuntimeFactory.h>
 
 using namespace facebook;
 using namespace facebook::react;

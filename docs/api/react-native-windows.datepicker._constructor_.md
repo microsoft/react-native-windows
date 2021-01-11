@@ -16,5 +16,5 @@ constructor(props: IDatePickerProps);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  props | <code>IDatePickerProps</code> |  |
+|  props | [IDatePickerProps](./react-native-windows.idatepickerprops.md) |  |
 
