@@ -12,18 +12,18 @@
 
 namespace Microsoft::ReactNative {
 
-using RNComponentViewUpdateMask = std::uint_fast8_t;
-/*
- * Bitmask for all types of possible updates performed during mounting.
- */
-constexpr RNComponentViewUpdateMask RNComponentViewUpdateMaskNone{0};
-constexpr RNComponentViewUpdateMask RNComponentViewUpdateMaskProps{1 << 0};
-constexpr RNComponentViewUpdateMask RNComponentViewUpdateMaskEventEmitter{1 << 1};
-constexpr RNComponentViewUpdateMask RNComponentViewUpdateMaskState{1 << 2};
-constexpr RNComponentViewUpdateMask RNComponentViewUpdateMaskLayoutMetrics{1 << 3};
+enum class RNComponentViewUpdateMask : std::uint_fast8_t
+{
+  None = 0,
+  Props = 1 << 0,
+  EventEmitter = 1 << 1,
+  State = 1 << 2,
+  LayoutMetrics = 1 << 3,
 
-constexpr RNComponentViewUpdateMask RNComponentViewUpdateMaskAll = RNComponentViewUpdateMaskProps |
-    RNComponentViewUpdateMaskEventEmitter | RNComponentViewUpdateMaskState | RNComponentViewUpdateMaskLayoutMetrics;
+  All = Props | EventEmitter | State | LayoutMetrics
+};
+
+DEFINE_ENUM_FLAG_OPERATORS(RNComponentViewUpdateMask);
 
 struct IComponentView {
   virtual std::vector<facebook::react::ComponentDescriptorProvider>

@@ -377,7 +377,7 @@ void FabricUIManager::RCTPerformMountInstructions(
         newChildComponentView->updateEventEmitter(newChildShadowView.eventEmitter);
         newChildComponentView->updateState(newChildShadowView.state, oldChildShadowView.state);
         newChildComponentView->updateLayoutMetrics(newChildShadowView.layoutMetrics, oldChildShadowView.layoutMetrics);
-        newChildComponentView->finalizeUpdates(RNComponentViewUpdateMaskAll);
+        newChildComponentView->finalizeUpdates(RNComponentViewUpdateMask::All);
 
         parentViewDescriptor.view->mountChildComponentView(*newChildComponentView, mutation.index);
         break;
@@ -402,26 +402,26 @@ void FabricUIManager::RCTPerformMountInstructions(
 
         if (oldChildShadowView.props != newChildShadowView.props) {
           newChildComponentView->updateProps(newChildShadowView.props, oldChildShadowView.props);
-          mask |= RNComponentViewUpdateMaskProps;
+          mask |= RNComponentViewUpdateMask::Props;
         }
 
         if (oldChildShadowView.eventEmitter != newChildShadowView.eventEmitter) {
           newChildComponentView->updateEventEmitter(newChildShadowView.eventEmitter);
-          mask |= RNComponentViewUpdateMaskEventEmitter;
+          mask |= RNComponentViewUpdateMask::EventEmitter;
         }
 
         if (oldChildShadowView.state != newChildShadowView.state) {
           newChildComponentView->updateState(newChildShadowView.state, oldChildShadowView.state);
-          mask |= RNComponentViewUpdateMaskState;
+          mask |= RNComponentViewUpdateMask::State;
         }
 
         if (oldChildShadowView.layoutMetrics != newChildShadowView.layoutMetrics) {
           newChildComponentView->updateLayoutMetrics(
               newChildShadowView.layoutMetrics, oldChildShadowView.layoutMetrics);
-          mask |= RNComponentViewUpdateMaskLayoutMetrics;
+          mask |= RNComponentViewUpdateMask::LayoutMetrics;
         }
 
-        if (mask != RNComponentViewUpdateMaskNone) {
+        if (mask != RNComponentViewUpdateMask::None) {
           newChildComponentView->finalizeUpdates(mask);
         }
 
