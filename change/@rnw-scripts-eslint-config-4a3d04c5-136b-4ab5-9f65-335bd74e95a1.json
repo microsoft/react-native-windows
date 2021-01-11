@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "add accessibilityDescription to ViewWin32",
+  "packageName": "@rnw-scripts/eslint-config",
+  "email": "lehon@microsoft.com",
+  "dependentChangeType": "none"
+}
