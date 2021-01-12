@@ -424,6 +424,10 @@
     },
     {
       "type": "platform",
+      "file": "src/Libraries/Utilities/FocusManager.win32.d.ts"
+    },
+    {
+      "type": "platform",
       "file": "src/Libraries/Utilities/FocusManager.win32.js"
     },
     {
