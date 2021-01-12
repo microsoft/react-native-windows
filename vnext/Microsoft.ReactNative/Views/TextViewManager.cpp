@@ -164,8 +164,7 @@ bool TextViewManager::UpdateProperty(
     // Temporary workaround for bug in XAML which fails to flush old TextDecorationLine render
     // Link to Bug: https://github.com/microsoft/microsoft-ui-xaml/issues/1093#issuecomment-514282402
     winrt::hstring text(textBlock.Text().c_str());
-    winrt::hstring empty_text{L""};
-    textBlock.Text(empty_text);
+    textBlock.Text(L"");
     textBlock.Text(text);
   } else if (TryUpdateCharacterSpacing(textBlock, propertyName, propertyValue)) {
   } else if (propertyName == "numberOfLines") {
