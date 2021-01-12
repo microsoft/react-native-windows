@@ -3,13 +3,13 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-c901c1fbc",
+  "baseVersion": "0.0.0-deda35134",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "79e242949bec3a348543ff8b03dc144a87332934"
+      "baseHash": "f0c6a0f78d1c12a6bd69371e56d1b24be3355a65"
     },
     {
       "type": "derived",
@@ -34,7 +34,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseHash": "739dfa774136768251847ae0f3900990b0b0f0c1"
+      "baseHash": "b91fdc5e531daa8fac236898c80efe228bbdb8d7"
     },
     {
       "type": "patch",
@@ -307,7 +307,7 @@
       "type": "derived",
       "file": "src/Libraries/Network/RCTNetworking.win32.js",
       "baseFile": "Libraries/Network/RCTNetworking.android.js",
-      "baseHash": "ede560ee51b68436768eca79166c4fb40a3cf20a",
+      "baseHash": "f37f4609ac267e701ba28bbe7af2d202e39c86ab",
       "issue": 4318
     },
     {
@@ -363,7 +363,11 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Dimensions.win32.js",
       "baseFile": "Libraries/Utilities/Dimensions.js",
-      "baseHash": "6a61022dbe92a0683a82669ace739fc7ca110c7d"
+      "baseHash": "a3cdcfacd5c32db430c3fbdd070e17c4aab007e0"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Utilities/FocusManager.win32.d.ts"
     },
     {
       "type": "platform",

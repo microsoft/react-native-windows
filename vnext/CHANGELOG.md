@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 05 Jan 2021 05:06:42 GMT and should not be manually modified.
+This log was last generated on Tue, 12 Jan 2021 05:07:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.232
+
+Tue, 12 Jan 2021 05:07:53 GMT
+
+### Changes
+
+- #6217 : Add Clearer Error Msg for YGValues (34109996+chiaramooney@users.noreply.github.com)
+- Integrate 1/6 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 1/7 Nightly RN Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.230
 

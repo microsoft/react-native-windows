@@ -34,7 +34,6 @@
     "lage": "^0.24.0"
   },
   "resolutions": {
-    "eslint-plugin-react": "^7.14.1",
     "eslint-plugin-react-hooks": "4.0.7",
     "kind-of": "6.0.3",
     "node-fetch": "2.6.1",
