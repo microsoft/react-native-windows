@@ -14,5 +14,5 @@ export interface IViewWin32
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [focus](./react-native-win32.iviewwin32.focus.md) | <code>() =&gt; void</code> |  |
+|  [focus](./react-native-win32.iviewwin32.focus.md) | () =&gt; void |  |
 

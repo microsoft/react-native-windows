@@ -14,10 +14,10 @@ export interface IHandledKeyboardEvent
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [altKey](./react-native-windows.ihandledkeyboardevent.altkey.md) | <code>boolean</code> |  |
-|  [code](./react-native-windows.ihandledkeyboardevent.code.md) | <code>string</code> |  |
-|  [ctrlKey](./react-native-windows.ihandledkeyboardevent.ctrlkey.md) | <code>boolean</code> |  |
-|  [handledEventPhase](./react-native-windows.ihandledkeyboardevent.handledeventphase.md) | <code>HandledEventPhase</code> |  |
-|  [metaKey](./react-native-windows.ihandledkeyboardevent.metakey.md) | <code>boolean</code> |  |
-|  [shiftKey](./react-native-windows.ihandledkeyboardevent.shiftkey.md) | <code>boolean</code> |  |
+|  [altKey](./react-native-windows.ihandledkeyboardevent.altkey.md) | boolean |  |
+|  [code](./react-native-windows.ihandledkeyboardevent.code.md) | string |  |
+|  [ctrlKey](./react-native-windows.ihandledkeyboardevent.ctrlkey.md) | boolean |  |
+|  [handledEventPhase](./react-native-windows.ihandledkeyboardevent.handledeventphase.md) | [HandledEventPhase](./react-native-windows.handledeventphase.md) |  |
+|  [metaKey](./react-native-windows.ihandledkeyboardevent.metakey.md) | boolean |  |
+|  [shiftKey](./react-native-windows.ihandledkeyboardevent.shiftkey.md) | boolean |  |
 

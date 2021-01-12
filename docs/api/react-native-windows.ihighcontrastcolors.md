@@ -16,12 +16,12 @@ export interface IHighContrastColors
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [ButtonFaceColor](./react-native-windows.ihighcontrastcolors.buttonfacecolor.md) | <code>string</code> |  |
-|  [ButtonTextColor](./react-native-windows.ihighcontrastcolors.buttontextcolor.md) | <code>string</code> |  |
-|  [GrayTextColor](./react-native-windows.ihighcontrastcolors.graytextcolor.md) | <code>string</code> |  |
-|  [HighlightColor](./react-native-windows.ihighcontrastcolors.highlightcolor.md) | <code>string</code> |  |
-|  [HighlightTextColor](./react-native-windows.ihighcontrastcolors.highlighttextcolor.md) | <code>string</code> |  |
-|  [HotlightColor](./react-native-windows.ihighcontrastcolors.hotlightcolor.md) | <code>string</code> |  |
-|  [WindowColor](./react-native-windows.ihighcontrastcolors.windowcolor.md) | <code>string</code> |  |
-|  [WindowTextColor](./react-native-windows.ihighcontrastcolors.windowtextcolor.md) | <code>string</code> |  |
+|  [ButtonFaceColor](./react-native-windows.ihighcontrastcolors.buttonfacecolor.md) | string |  |
+|  [ButtonTextColor](./react-native-windows.ihighcontrastcolors.buttontextcolor.md) | string |  |
+|  [GrayTextColor](./react-native-windows.ihighcontrastcolors.graytextcolor.md) | string |  |
+|  [HighlightColor](./react-native-windows.ihighcontrastcolors.highlightcolor.md) | string |  |
+|  [HighlightTextColor](./react-native-windows.ihighcontrastcolors.highlighttextcolor.md) | string |  |
+|  [HotlightColor](./react-native-windows.ihighcontrastcolors.hotlightcolor.md) | string |  |
+|  [WindowColor](./react-native-windows.ihighcontrastcolors.windowcolor.md) | string |  |
+|  [WindowTextColor](./react-native-windows.ihighcontrastcolors.windowtextcolor.md) | string |  |
 

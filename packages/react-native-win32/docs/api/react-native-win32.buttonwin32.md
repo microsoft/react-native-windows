@@ -11,6 +11,7 @@ React-native <Button> control with additional Win32-specific functionality.
 ```typescript
 export declare class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32State> 
 ```
+<b>Extends:</b> React.Component&lt;[IButtonWin32Props](./react-native-win32.ibuttonwin32props.md)<!-- -->, IButtonWin32State&gt;
 
 ## Constructors
 

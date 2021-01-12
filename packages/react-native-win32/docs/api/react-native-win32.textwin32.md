@@ -9,6 +9,7 @@
 ```typescript
 export declare class TextWin32 extends React.Component<ITextWin32Props, {}> 
 ```
+<b>Extends:</b> React.Component&lt;[ITextWin32Props](./react-native-win32.itextwin32props.md)<!-- -->, {}&gt;
 
 ## Constructors
 

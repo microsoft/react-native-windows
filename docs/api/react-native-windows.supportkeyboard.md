@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-supportKeyboard: <P extends Record<string, any>>(WrappedComponent: React.ComponentType<P>) => React.ForwardRefExoticComponent<React.PropsWithoutRef<P & IKeyboardProps & {
+supportKeyboard: <P extends object>(WrappedComponent: React.ComponentType<P>) => React.ForwardRefExoticComponent<React.PropsWithoutRef<P & IKeyboardProps & {
     children?: any;
 }> & React.RefAttributes<any>>
 ```

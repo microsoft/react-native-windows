@@ -14,9 +14,9 @@ static getDerivedStateFromProps(props: PickerPropsWithChildren): State;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  props | <code>PickerPropsWithChildren</code> |  |
+|  props | PickerPropsWithChildren |  |
 
 <b>Returns:</b>
 
-`State`
+State
 

@@ -5,7 +5,6 @@
 ```ts
 
 import { NativeEventEmitter } from 'react-native';
-import { ProcessedColorValue } from 'react-native';
 import * as React_2 from 'react';
 import * as RN from 'react-native';
 import { StyleProp } from 'react-native';
@@ -24,6 +23,9 @@ export type AppTheme = AppThemeModule;
 export const AppTheme: AppThemeModule | MissingNativeAppThemeShim;
 
 // @public (undocumented)
+export type AppThemeTypes = 'light' | 'dark';
+
+// @public (undocumented)
 export class DatePicker extends React_2.Component<IDatePickerProps> {
     constructor(props: IDatePickerProps);
     // (undocumented)
@@ -33,7 +35,7 @@ export class DatePicker extends React_2.Component<IDatePickerProps> {
     }
 
 // @public (undocumented)
-export enum DayOfWeek {
+export const enum DayOfWeek {
     // (undocumented)
     Friday = 5,
     // (undocumented)
@@ -85,6 +87,12 @@ export enum HandledEventPhase {
     Bubbling = 3,
     // (undocumented)
     Capturing = 1
+}
+
+// @public (undocumented)
+export interface IAppThemeChangedEvent {
+    // (undocumented)
+    currentTheme: AppThemeTypes;
 }
 
 // @public (undocumented)
@@ -232,7 +240,7 @@ export interface IPickerItemData {
     // (undocumented)
     label: string;
     // (undocumented)
-    textColor?: ProcessedColorValue | null;
+    textColor?: number;
     // (undocumented)
     value?: any;
 }
@@ -262,12 +270,12 @@ export interface IPopupTargetState {
 
 // @public (undocumented)
 export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
+    // (undocumented)
+    acceptsKeyboardFocus?: boolean;
     accessibilityPosInSet?: number;
     accessibilitySetSize?: number;
     // (undocumented)
     children?: any;
-    // (undocumented)
-    focusable?: boolean;
 }
 
 // Warning: (ae-forgotten-export) The symbol "IPickerProps" needs to be exported by the entry point typings-index.d.ts
@@ -301,7 +309,7 @@ export class Popup extends React_2.Component<IPopupProps, IPopupTargetState> {
 }
 
 // @public (undocumented)
-export const supportKeyboard: <P extends Record<string, any>>(WrappedComponent: React_2.ComponentType<P>) => React_2.ForwardRefExoticComponent<React_2.PropsWithoutRef<P & IKeyboardProps & {
+export const supportKeyboard: <P extends object>(WrappedComponent: React_2.ComponentType<P>) => React_2.ForwardRefExoticComponent<React_2.PropsWithoutRef<P & IKeyboardProps & {
     children?: any;
 }> & React_2.RefAttributes<any>>;
 

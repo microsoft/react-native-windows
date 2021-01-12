@@ -16,5 +16,5 @@ constructor(props: IFlyoutProps);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  props | <code>IFlyoutProps</code> |  |
+|  props | [IFlyoutProps](./react-native-windows.iflyoutprops.md) |  |
 

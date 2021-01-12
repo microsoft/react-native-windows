@@ -11,10 +11,11 @@ More fully defines an event by augmenting touchHistory
 ```typescript
 export interface IResponderSyntheticEvent<T> extends NativeSyntheticEvent<T> 
 ```
+<b>Extends:</b> NativeSyntheticEvent&lt;T&gt;
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [touchHistory](./react-native-win32.irespondersyntheticevent.touchhistory.md) | <code>{</code><br/><code>        indexOfSingleActiveTouch: number;</code><br/><code>        mostRecentTimeStamp: number;</code><br/><code>        numberActiveTouches: number;</code><br/><code>        touchBank: ITouchInfo[];</code><br/><code>    }</code> |  |
+|  [touchHistory](./react-native-win32.irespondersyntheticevent.touchhistory.md) | { indexOfSingleActiveTouch: number; mostRecentTimeStamp: number; numberActiveTouches: number; touchBank: [ITouchInfo](./react-native-win32.itouchinfo.md)<!-- -->\[\]; } |  |
 

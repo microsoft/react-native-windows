@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-textColor?: ProcessedColorValue | null;
+textColor?: number;
 ```

@@ -14,7 +14,7 @@ export interface ITouchableWin32State
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [isFocused](./react-native-win32.itouchablewin32state.isfocused.md) | <code>boolean</code> |  |
-|  [isHovered](./react-native-win32.itouchablewin32state.ishovered.md) | <code>boolean</code> |  |
-|  [isPressed](./react-native-win32.itouchablewin32state.ispressed.md) | <code>boolean</code> |  |
+|  [isFocused](./react-native-win32.itouchablewin32state.isfocused.md) | boolean |  |
+|  [isHovered](./react-native-win32.itouchablewin32state.ishovered.md) | boolean |  |
+|  [isPressed](./react-native-win32.itouchablewin32state.ispressed.md) | boolean |  |
 

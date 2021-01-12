@@ -16,8 +16,8 @@ export interface IPressInLocation
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [locationX](./react-native-win32.ipressinlocation.locationx.md) | <code>number</code> |  |
-|  [locationY](./react-native-win32.ipressinlocation.locationy.md) | <code>number</code> |  |
-|  [pageX](./react-native-win32.ipressinlocation.pagex.md) | <code>number</code> |  |
-|  [pageY](./react-native-win32.ipressinlocation.pagey.md) | <code>number</code> |  |
+|  [locationX](./react-native-win32.ipressinlocation.locationx.md) | number |  |
+|  [locationY](./react-native-win32.ipressinlocation.locationy.md) | number |  |
+|  [pageX](./react-native-win32.ipressinlocation.pagex.md) | number |  |
+|  [pageY](./react-native-win32.ipressinlocation.pagey.md) | number |  |
 
