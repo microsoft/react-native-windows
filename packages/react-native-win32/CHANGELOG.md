@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 09 Jan 2021 05:05:32 GMT and should not be manually modified.
+This log was last generated on Tue, 12 Jan 2021 05:07:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.71
+
+Tue, 12 Jan 2021 05:07:53 GMT
+
+### Changes
+
+- Integrate 1/7 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 1/6 Nightly RN Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.70
 

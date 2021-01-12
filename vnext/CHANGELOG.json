@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 12 Jan 2021 05:07:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.232",
+      "version": "0.0.0-canary.232",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "#6217 : Add Clearer Error Msg for YGValues",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "d7b8dba1b9d2b31ac7d8238f95da1f7d623a7849",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 1/6 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "64b0f8706de05473456eae6340a4cbcd938baaaa",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 1/7 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "267b5c0c086bb265172bb9b25b057043583a2574",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 Jan 2021 05:06:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.230",
       "version": "0.0.0-canary.230",
