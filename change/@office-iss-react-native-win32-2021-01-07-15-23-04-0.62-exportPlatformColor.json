@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Export PlatformColor function that returns a system color object",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ppatboyd@outlook.com",
+  "dependentChangeType": "patch",
+  "date": "2021-01-07T23:23:04.473Z"
+}
