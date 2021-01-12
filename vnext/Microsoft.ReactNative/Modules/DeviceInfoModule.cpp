@@ -125,7 +125,7 @@ void DeviceInfo::Initialize(React::ReactContext const &reactContext) noexcept {
   DeviceInfoHolder::SetCallback(
       m_context.Properties(), [weakThis = weak_from_this()](React::JSValueObject &&dimensions) {
         if (auto strongThis = weakThis.lock()) {
-          strongThis->m_context.EmitJSEvent(L"RCTDeviceEventEmitter", L"didUpdateDimensions", dimensions);
+          strongThis->m_context.CallJSFunction(L"RCTDeviceEventEmitter", L"emit", L"didUpdateDimensions", dimensions);
         }
       });
 }
