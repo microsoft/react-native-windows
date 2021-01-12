@@ -48,6 +48,7 @@
     <Message Text="=> FollyDir                [$(FollyDir)]" />
     <Message Text="=> ReactNativeWindowsDir   [$(ReactNativeWindowsDir)]" />
     <Message Text="=> ReactNativeDir          [$(ReactNativeDir)]" />
+    <Message Text="=> ReactNativePackageDir   [$(ReactNativePackageDir)]" />
     <Message Text="=> YogaDir                 [$(YogaDir)]" />
     <Message Text="=> ProjectHome             [$(ProjectHome)]" />
     <Message Text="=> UserRootDir             [$(UserRootDir)]" />
