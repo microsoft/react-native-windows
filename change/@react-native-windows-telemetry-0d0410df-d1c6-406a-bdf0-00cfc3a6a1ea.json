@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "remove excessive change files",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "lehon@microsoft.com",
+  "dependentChangeType": "none"
+}
