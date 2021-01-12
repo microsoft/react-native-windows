@@ -161,6 +161,7 @@ bool TextViewManager::UpdateProperty(
   } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextDecorationLine(textBlock, propertyName, propertyValue)) {
+    // Temporary workaround for bug in XAML which fails to flush old TextDecorationLine render
     std::wstring text(textBlock.Text().c_str());
     text.push_back('a');
     textBlock.Text(winrt::hstring(text));
