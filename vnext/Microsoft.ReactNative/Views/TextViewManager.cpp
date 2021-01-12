@@ -161,6 +161,11 @@ bool TextViewManager::UpdateProperty(
   } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextDecorationLine(textBlock, propertyName, propertyValue)) {
+    std::wstring text(textBlock.Text().c_str());
+    text.push_back('a');
+    textBlock.Text(winrt::hstring(text));
+    text.pop_back();
+    textBlock.Text(winrt::hstring(text));
   } else if (TryUpdateCharacterSpacing(textBlock, propertyName, propertyValue)) {
   } else if (propertyName == "numberOfLines") {
     if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
