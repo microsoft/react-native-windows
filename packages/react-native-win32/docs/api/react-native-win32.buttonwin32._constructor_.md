@@ -16,5 +16,5 @@ constructor(props: IButtonWin32Props);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  props | [IButtonWin32Props](./react-native-win32.ibuttonwin32props.md) |  |
+|  props | <code>IButtonWin32Props</code> |  |
 
