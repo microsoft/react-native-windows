@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 11 Jan 2021 15:07:21 GMT",
+      "tag": "react-native-windows_v0.63.17",
+      "version": "0.63.17",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Show HRESULT code on WebSocket errors (#6734)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "4bf1e42a2908fbabb87318ea307b4f6e76f507b0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Dec 2020 15:06:05 GMT",
       "tag": "react-native-windows_v0.63.15",
       "version": "0.63.15",
