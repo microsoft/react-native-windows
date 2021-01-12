@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "remove excessive change files",
-  "packageName": "react-native-windows-codegen",
-  "email": "lehon@microsoft.com",
-  "dependentChangeType": "none"
-}

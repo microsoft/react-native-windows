@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "remove excessive change files",
-  "packageName": "@rnw-scripts/jest-unittest-config",
-  "email": "lehon@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "remove excessive change files",
-  "packageName": "@react-native-windows/package-utils",
-  "email": "lehon@microsoft.com",
-  "dependentChangeType": "none"
-}
