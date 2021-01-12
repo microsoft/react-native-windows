@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "add accessibilityDescription to ViewWin32",
-  "packageName": "@rnw-scripts/create-github-releases",
-  "email": "lehon@microsoft.com",
-  "dependentChangeType": "none"
-}

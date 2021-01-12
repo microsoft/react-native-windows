@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "add accessibilityDescription to ViewWin32",
-  "packageName": "react-native-windows-codegen",
-  "email": "lehon@microsoft.com",
-  "dependentChangeType": "none"
-}

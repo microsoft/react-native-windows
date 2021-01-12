@@ -191,6 +191,11 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
    * Note: If typeID is 'Unknown', a typeName must be provided.
    */
   accessibilityAnnotation?: AccessibilityAnnotationInfo;
+  /**
+  * accessibilityDescription provides more detailed information specific to the element (i.e. last edit date, full location for a file)
+  * while accessibilityHint provides infomation on what will happen when they perform an action.
+  *
+  */
   accessibilityDescription?: string;
   accessibilityLevel?: number;
   accessibilityPositionInSet?: number;

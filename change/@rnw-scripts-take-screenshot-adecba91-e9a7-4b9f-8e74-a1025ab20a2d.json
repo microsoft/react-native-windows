@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "add accessibilityDescription to ViewWin32",
-  "packageName": "@rnw-scripts/take-screenshot",
-  "email": "lehon@microsoft.com",
-  "dependentChangeType": "none"
-}
