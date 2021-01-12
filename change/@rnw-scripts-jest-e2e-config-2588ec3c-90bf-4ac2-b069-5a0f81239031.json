@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "remove excessive change files",
+  "packageName": "@rnw-scripts/jest-e2e-config",
+  "email": "lehon@microsoft.com",
+  "dependentChangeType": "none"
+}

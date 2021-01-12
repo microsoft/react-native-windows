@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "remove excessive change files",
+  "packageName": "@rnw-scripts/integrate-rn",
+  "email": "lehon@microsoft.com",
+  "dependentChangeType": "none"
+}
