@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "raise change event when dimensions change",
-  "packageName": "react-native-windows",
-  "email": "kmelmon@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-10-21T00:25:59.575Z"
-}
