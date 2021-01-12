@@ -19,6 +19,7 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
 |  --- | --- | --- |
 |  [accessibilityActions](./react-native-win32.iviewwin32props.accessibilityactions.md) | ReadonlyArray&lt;[AccessibilityActionInfo](./react-native-win32.accessibilityactioninfo.md)<!-- -->&gt; |  |
 |  [accessibilityAnnotation](./react-native-win32.iviewwin32props.accessibilityannotation.md) | [AccessibilityAnnotationInfo](./react-native-win32.accessibilityannotationinfo.md) | Tells a person using a screen reader what kind of annotation they have selected. If available, it will also tell a person the author of the annotation and the date and time the annotation was posted.<!-- -->Note: If typeID is 'Unknown', a typeName must be provided. |
+|  [accessibilityDescription](./react-native-win32.iviewwin32props.accessibilitydescription.md) | string | accessibilityDescription provides more detailed information specific to the element (i.e. last edit date, full location for a file) while accessibilityHint provides infomation on what will happen when they perform an action. |
 |  [accessibilityLevel](./react-native-win32.iviewwin32props.accessibilitylevel.md) | number |  |
 |  [accessibilityPositionInSet](./react-native-win32.iviewwin32props.accessibilitypositioninset.md) | number |  |
 |  [accessibilitySetSize](./react-native-win32.iviewwin32props.accessibilitysetsize.md) | number |  |
