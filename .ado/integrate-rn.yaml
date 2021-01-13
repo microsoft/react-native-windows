@@ -12,7 +12,7 @@ pool:
   vmImage: $(VmImage)
 
 steps:
-  - template: ../templates/prepare-env.yml
+  - template: templates/prepare-env.yml
     parameters:
       yarnBuildCmd: build
 
