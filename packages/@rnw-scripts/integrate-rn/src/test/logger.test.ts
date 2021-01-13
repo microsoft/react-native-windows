@@ -32,7 +32,7 @@ test('Markdown Output', () => {
 
   logger.close();
 
-  expect(loggerOuptput).toBe(`Commits: foo
+  expect(loggerOuptput).toBe(`### ℹ Commits: foo
 ### ✅ Dependencies updated
 ### ⚠ Out of date overrides
 \`\`\`

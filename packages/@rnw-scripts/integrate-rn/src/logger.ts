@@ -67,8 +67,9 @@ export class MarkdownLogger implements Logger {
     // Ignore until completion
   }
 
-  info(message: string) {
-    this.stream.write(message + '\n');
+  info(message: string, body?: string) {
+    this.stream.write(`### ℹ ${message}\n`);
+    this.logBody(body);
   }
 
   success(taskName: string, body?: string) {
