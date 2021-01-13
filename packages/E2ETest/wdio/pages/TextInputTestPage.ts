@@ -12,51 +12,51 @@ import {
 } from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 class TextInputTestPage extends BasePage {
-  async clickTextInput() {
-    await (await this.textInput).click();
+  clickTextInput() {
+    this.textInput.click();
   }
 
-  async clickMultilineTextInput() {
-    await (await this.multiLineTextInput).click();
+  clickMultilineTextInput() {
+    this.multiLineTextInput.click();
   }
 
-  async clearAndTypeOnTextInput(text: string) {
-    await (await this.textInput).setValue(text);
+  clearAndTypeOnTextInput(text: string) {
+    this.textInput.setValue(text);
   }
 
-  async clearAndEnterOnTextInput(text: string) {
-    await (await this.textInput).setValue(text);
-    await (await this.textInput).addValue('Enter');
+  clearAndEnterOnTextInput(text: string) {
+    this.textInput.setValue(text);
+    this.textInput.addValue('Enter');
   }
 
-  async clearAndTypeOnMLTextInput(text: string) {
-    await (await this.multiLineTextInput).setValue(text);
+  clearAndTypeOnMLTextInput(text: string) {
+    this.multiLineTextInput.setValue(text);
   }
 
-  async clearAndTypeOnAutoCapTextInput(text: string) {
-    await (await this.autoCapTextInput).setValue(text);
+  clearAndTypeOnAutoCapTextInput(text: string) {
+    this.autoCapTextInput.setValue(text);
   }
 
-  async appendNewLineOnMLText(text: string) {
-    await (await this.multiLineTextInput).addValue('End');
-    await (await this.multiLineTextInput).addValue('Enter');
-    await (await this.multiLineTextInput).addValue(text);
+  appendNewLineOnMLText(text: string) {
+    this.multiLineTextInput.addValue('End');
+    this.multiLineTextInput.addValue('Enter');
+    this.multiLineTextInput.addValue(text);
   }
 
-  async getTextInputCurText() {
-    return (await this.curTextInput).getText();
+  getTextInputCurText() {
+    return this.curTextInput.getText();
   }
 
-  async getTextInputText() {
-    return (await this.textInput).getText();
+  getTextInputText() {
+    return this.textInput.getText();
   }
 
-  async getMLTextInputText() {
-    return (await this.multiLineTextInput).getText();
+  getMLTextInputText() {
+    return this.multiLineTextInput.getText();
   }
 
-  async getAutoCapTextInput() {
-    return (await this.autoCapTextInput).getText();
+  getAutoCapTextInput() {
+    return this.autoCapTextInput.getText();
   }
 
   private get textInput() {

@@ -3,8 +3,8 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "types": [
-    "webdriverio",
-    "@wdio/jasmine-framework"
+    "@wdio/sync",
+      "@wdio/jasmine-framework"
     ]
   },
   "include": [

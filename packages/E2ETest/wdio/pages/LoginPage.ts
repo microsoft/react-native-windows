@@ -13,26 +13,26 @@ import {
 } from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 class LoginPage extends BasePage {
-  async setLoginInfo(userName: string, password: string) {
-    await (await this._userName).setValue(userName);
-    await (await this._password).setValue(password);
+  setLoginInfo(userName: string, password: string) {
+    this._userName.setValue(userName);
+    this._password.setValue(password);
   }
 
-  async appendPassword(password: string) {
-    await (await this._password).addValue('End');
-    await (await this._password).addValue(password);
+  appendPassword(password: string) {
+    this._password.addValue('End');
+    this._password.addValue(password);
   }
 
-  async toggleShowPassword() {
-    await (await this._showPassword).click();
+  toggleShowPassword() {
+    this._showPassword.click();
   }
 
-  async submitForm() {
-    await (await this._submit).click();
+  submitForm() {
+    this._submit.click();
   }
 
-  async getLoginResult() {
-    return (await this._loginResult).getText();
+  getLoginResult() {
+    return this._loginResult.getText();
   }
 
   private get _userName() {
