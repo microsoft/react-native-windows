@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 12 Jan 2021 05:07:53 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Jan 2021 05:05:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.72
+
+Wed, 13 Jan 2021 05:05:37 GMT
+
+### Changes
+
+- add accessibilityDescription to ViewWin32 (lehon@microsoft.com)
 
 ## 0.0.0-canary.71
 

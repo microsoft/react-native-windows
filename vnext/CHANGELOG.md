@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 12 Jan 2021 05:07:53 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Jan 2021 05:05:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.233
+
+Wed, 13 Jan 2021 05:05:37 GMT
+
+### Changes
+
+- #6715 Add Workaround to Resolve textDecorationLine Bug (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.232
 

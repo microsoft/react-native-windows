@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 13 Jan 2021 05:05:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.233",
+      "version": "0.0.0-canary.233",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "#6715 Add Workaround to Resolve textDecorationLine Bug",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "9e427fb48f29c9d562628217122622531e02459c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Jan 2021 05:07:53 GMT",
       "tag": "react-native-windows_v0.0.0-canary.232",
       "version": "0.0.0-canary.232",
