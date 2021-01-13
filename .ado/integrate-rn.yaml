@@ -11,13 +11,18 @@ variables:
 pool:
   vmImage: $(VmImage)
 
-steps:
-  - template: templates/prepare-env.yml
-    parameters:
-      yarnBuildCmd: build
+jobs:
+  - job: IntegrateRN
+    displayName: Integrate React Native
+    timeoutInMinutes: 30
 
-  - script: git checkout -b integrate-${{ parameters.reactNativeVersion }} origin/master
-    displayName: Create a new branch
+    steps:
+      - template: templates/prepare-env.yml
+        parameters:
+          yarnBuildCmd: build
 
-  - script: yarn integrate-rn ${{ parameters.reactNativeVersion }} --reportPath integraton-report.md
-    displayName: Run Integration Script
+      - script: git checkout -b integrate-${{ parameters.reactNativeVersion }} origin/master
+        displayName: Create a new branch
+
+      - script: yarn integrate-rn ${{ parameters.reactNativeVersion }} --reportPath integraton-report.md --color
+        displayName: Run Integration Script
