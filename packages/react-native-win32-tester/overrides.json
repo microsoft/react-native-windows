@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.0.0-deda35134",
+  "baseVersion": "0.0.0-6fd684150",
   "overrides": [
     {
       "type": "patch",
@@ -43,7 +43,7 @@
       "type": "patch",
       "file": "src/js/utils/RNTesterStatePersister.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterStatePersister.js",
-      "baseHash": "b15ee55c3730ae01faa39fad54158596061a1a49",
+      "baseHash": "b12cac1795430a1ca851e4c88ccca0f6a3e599ce",
       "issue": 6316
     },
     {
