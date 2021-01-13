@@ -364,6 +364,7 @@ export interface IViewWin32Props extends Omit_2<RN.ViewProps, ViewWin32OmitTypes
     // (undocumented)
     accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
     accessibilityAnnotation?: AccessibilityAnnotationInfo;
+    accessibilityDescription?: string;
     // (undocumented)
     accessibilityLevel?: number;
     // (undocumented)
