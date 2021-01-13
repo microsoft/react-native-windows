@@ -10,12 +10,12 @@ import {
 } from '@react-native-windows/tester/js/examples-win/LegacyTests/Consts';
 
 class ImageTestPage extends BasePage {
-  toggleImageBorder() {
-    this._imageBorder.click();
+  async toggleImageBorder() {
+    await (await this._imageBorder).click();
   }
 
-  toggleRTLMode() {
-    this._rtlButton.click();
+  async toggleRTLMode() {
+    await (await this._rtlButton).click();
   }
 
   private get _imageBorder() {

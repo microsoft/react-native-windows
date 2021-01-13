@@ -67,9 +67,9 @@ const apiExamples = [
   'Transforms',
 ];
 
-describe('VisitAllPagesTest', () => {
+describe('VisitAllPagesTest', async () => {
   componentExamples.forEach(ex =>
-    it(ex, () => HomePage.goToComponentExample(ex))
+    it(ex, async () => await HomePage.goToComponentExample(ex))
   );
-  apiExamples.forEach(ex => it(ex, () => HomePage.goToApiExample(ex)));
+  apiExamples.forEach(ex => it(ex, async () => await HomePage.goToApiExample(ex)));
 });
