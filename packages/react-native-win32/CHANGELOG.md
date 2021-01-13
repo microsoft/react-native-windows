@@ -1,8 +1,18 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 21 Dec 2020 15:06:18 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Jan 2021 19:22:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.7
+
+Wed, 13 Jan 2021 19:22:54 GMT
+
+### Patches
+
+- Export PlatformColor function that returns a system color object (ppatboyd@outlook.com)
+- Adding FocusManager typing (safreibe@microsoft.com)
+- add accessibilityDescription to ViewWin32 (lehon@microsoft.com)
 
 ## 0.62.6
 

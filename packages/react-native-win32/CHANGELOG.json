@@ -2,6 +2,33 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 13 Jan 2021 19:22:54 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.7",
+      "version": "0.62.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Export PlatformColor function that returns a system color object",
+            "author": "ppatboyd@outlook.com",
+            "commit": "515361aa82b753edb2945b67836738e3680a26e7",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Adding FocusManager typing",
+            "author": "safreibe@microsoft.com",
+            "commit": "b71a7a40201bd93218330f922665c2178a301fc6",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "add accessibilityDescription to ViewWin32",
+            "author": "lehon@microsoft.com",
+            "commit": "f259cb50eb693eb074c4f676024179457503519b",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Dec 2020 15:06:18 GMT",
       "tag": "@office-iss/react-native-win32_v0.62.6",
       "version": "0.62.6",
