@@ -114,8 +114,8 @@ void FrameworkElementViewManager::TransferProperties(const XamlView &oldView, co
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::PositionInSetProperty());
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::SizeOfSetProperty());
   auto accessibilityView = xaml::Automation::AutomationProperties::GetAccessibilityView(oldView);
-  xaml::Automation::AutomationProperties::SetAccessibilityView(newView, accessibilityView);
   xaml::Automation::AutomationProperties::SetAccessibilityView(oldView, winrt::Peers::AccessibilityView::Raw);
+  xaml::Automation::AutomationProperties::SetAccessibilityView(newView, accessibilityView);
   TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityRoleProperty());
   TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateSelectedProperty());
   TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateDisabledProperty());
