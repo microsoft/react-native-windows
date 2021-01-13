@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Backport of bugfix: Dimension never fires change event",
+  "packageName": "react-native-windows",
+  "email": "Bartosz.Klonowski@callstack.com",
+  "dependentChangeType": "patch",
+  "date": "2021-01-12T14:06:36.159Z"
+}
