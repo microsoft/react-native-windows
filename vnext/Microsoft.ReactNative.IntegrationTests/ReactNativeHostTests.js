@@ -2,7 +2,7 @@ import { NativeModules } from 'react-native';
 
 class TestHostModuleFunctions {
     addValues(a, b) {
-        NativeModules.TestHostModule.returnInt(a + b);
+        NativeModules.TestHostModule.returnResult(a + b);
     }
 }
 
@@ -10,6 +10,6 @@ class TestHostModuleFunctions {
 if (NativeModules.TestHostModule) {
   global.__fbBatchedBridge.registerLazyCallableModule('TestHostModuleFunctions', () => new TestHostModuleFunctions());
 
-  // Native modules are created on demand from JavaScript code.
-  NativeModules.TestHostModule.start();
+  // Start running tests.
+  NativeModules.TestHostModule.startTests();
 }

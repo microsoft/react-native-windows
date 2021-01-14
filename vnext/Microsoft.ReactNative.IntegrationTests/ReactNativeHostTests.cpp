@@ -2,102 +2,50 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <JSI/JsiApiContext.h>
 #include <NativeModules.h>
-#include <winrt/Windows.System.h>
 #include "MockReactPackageProvider.h"
+#include "TestEventService.h"
+#include "TestReactNativeHostHolder.h"
 
-using namespace React;
+using namespace winrt;
+using namespace Microsoft::ReactNative;
 
 namespace ReactNativeIntegrationTests {
+
+// Use anonymous namespace to avoid any linking conflicts
+namespace {
 
 REACT_MODULE(TestHostModule)
 struct TestHostModule {
   REACT_INIT(Initialize)
-  void Initialize(ReactContext const &reactContext) noexcept {
-    using namespace facebook::jsi;
-    TestHostModule::Instance.set_value(*this);
-
-    Runtime *jsiRuntime{nullptr};
-    bool jsiExecuted{false};
-    // The JSI executed synchronously here because we are in JS thread.
-    ExecuteJsi(reactContext, [&](Runtime &rt) {
-      jsiRuntime = &rt;
-      jsiExecuted = true;
-      auto eval = rt.global().getPropertyAsFunction(rt, "eval");
-      auto addFunc = eval.call(rt, "(function(x, y) { return x + y; })").getObject(rt).getFunction(rt);
-      TestCheckEqual(7, addFunc.call(rt, 3, 4).getNumber());
-
-      Function hostGreeter = Function::createFromHostFunction(
-          rt,
-          PropNameID::forAscii(rt, "multFunc"),
-          1,
-          [](Runtime &rt, const Value & /*thisVal*/, const Value *args, size_t /*count*/) {
-            return Value{rt, String::createFromUtf8(rt, "Hello " + args[0].getString(rt).utf8(rt))};
-          });
-      TestCheckEqual("Hello World", hostGreeter.call(rt, "World").getString(rt).utf8(rt));
-      TestCheck(hostGreeter.getHostFunction(rt) != nullptr);
-
-      Function hostGreater2 = hostGreeter.getFunction(rt);
-      TestCheck(hostGreater2.isHostFunction(rt));
-      TestCheckEqual("Hello World", hostGreater2.call(rt, "World").getString(rt).utf8(rt));
-      TestCheck(hostGreater2.getHostFunction(rt) != nullptr);
-
-      class GreeterHostObject : public HostObject {
-        Value get(Runtime &rt, const PropNameID &) override {
-          return String::createFromAscii(rt, "Hello");
-        }
-        void set(Runtime &, const PropNameID &, const Value &) override {}
-      };
-
-      Object hostObjGreeter = Object::createFromHostObject(rt, std::make_shared<GreeterHostObject>());
-      TestCheckEqual(
-          "Hello", hostObjGreeter.getProperty(rt, PropNameID::forAscii(rt, "someProp")).getString(rt).utf8(rt));
-      TestCheck(hostObjGreeter.getHostObject(rt) != nullptr);
-
-      Object hostObjGreeter2 = Value{rt, hostObjGreeter}.getObject(rt);
-      TestCheck(hostObjGreeter2.isHostObject(rt));
-      TestCheckEqual(
-          "Hello", hostObjGreeter2.getProperty(rt, PropNameID::forAscii(rt, "someProp")).getString(rt).utf8(rt));
-      TestCheck(hostObjGreeter2.getHostObject(rt) != nullptr);
-    });
-    TestCheck(jsiExecuted);
-
-    jsiExecuted = false;
-    // Make sure that we use the same facebook::jsi::Runtime when we run second time.
-    ExecuteJsi(reactContext, [&](Runtime &rt) {
-      jsiExecuted = true;
-      TestCheckEqual(jsiRuntime, &rt);
-    });
-    TestCheck(jsiExecuted);
+  void Initialize(ReactContext const & /*reactContext*/) noexcept {
+    TestEventService::LogEvent("initialize", nullptr);
   }
 
   REACT_FUNCTION(addValues, L"addValues", L"TestHostModuleFunctions")
   std::function<void(int a, int b)> addValues;
 
-  REACT_METHOD(Start, L"start")
-  void Start() noexcept {
-    // Native modules are created on-demand.
-    // This method is used to start loading the module from JavaScript.
+  REACT_METHOD(StartTests, L"startTests")
+  void StartTests() noexcept {
+    TestEventService::LogEvent("start tests", nullptr);
+
+    TestEventService::LogEvent("call addValues", JSValueArray{4, 7});
+    addValues(4, 7);
   }
 
-  REACT_METHOD(ReturnInt, L"returnInt")
-  void ReturnInt(int value) noexcept {
-    TestHostModule::IntReturnValue.set_value(value);
+  REACT_METHOD(ReturnResult, L"returnResult")
+  void ReturnResult(JSValue value) noexcept {
+    TestEventService::LogEvent("return result", std::move(value));
   }
-
-  static std::promise<TestHostModule &> Instance;
-  static std::promise<int> IntReturnValue;
 };
-
-std::promise<TestHostModule &> TestHostModule::Instance;
-std::promise<int> TestHostModule::IntReturnValue;
 
 struct TestPackageProvider : winrt::implements<TestPackageProvider, IReactPackageProvider> {
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
     TryAddAttributedModule(packageBuilder, L"TestHostModule");
   }
 };
+
+} // namespace
 
 TEST_CLASS (ReactNativeHostTests) {
   TEST_METHOD(Activation_Succeeds) {
@@ -125,42 +73,20 @@ TEST_CLASS (ReactNativeHostTests) {
     const wchar_t *path = L"a/b/c";
     ReactNativeHost host{};
     host.InstanceSettings().BundleRootPath(path);
-    TestCheckEqual(std::wstring_view{path}, (std::wstring_view)host.InstanceSettings().BundleRootPath());
+    TestCheckEqual(path, host.InstanceSettings().BundleRootPath());
   }
 
-  TEST_METHOD(JsFunctionCall_Succeeds) {
-    std::future<TestHostModule &> testHostModule = TestHostModule::Instance.get_future();
-    std::future<int> returnValue = TestHostModule::IntReturnValue.get_future();
+  TEST_METHOD(Run_JSDrivenTests) {
+    TestEventService::Initialize();
 
-    winrt::Microsoft::ReactNative::ReactNativeHost host{};
-
-    auto queueController = winrt::Windows::System::DispatcherQueueController::CreateOnDedicatedThread();
-    queueController.DispatcherQueue().TryEnqueue([&]() noexcept {
+    auto reactNativeHost = TestReactNativeHostHolder(L"ReactNativeHostTests", [](ReactNativeHost const &host) noexcept {
       host.PackageProviders().Append(winrt::make<TestPackageProvider>());
-
-      // bundle is assumed to be co-located with the test binary
-      wchar_t testBinaryPath[MAX_PATH];
-      TestCheck(GetModuleFileNameW(NULL, testBinaryPath, MAX_PATH) < MAX_PATH);
-      testBinaryPath[std::wstring_view{testBinaryPath}.rfind(L"\\")] = 0;
-
-      host.InstanceSettings().BundleRootPath(testBinaryPath);
-      host.InstanceSettings().JavaScriptBundleFile(L"AddValues");
-      host.InstanceSettings().UseDeveloperSupport(false);
-      host.InstanceSettings().UseWebDebugger(false);
-      host.InstanceSettings().UseFastRefresh(false);
-      host.InstanceSettings().UseLiveReload(false);
-      host.InstanceSettings().EnableDeveloperMenu(false);
-
-      host.InstanceSettings().UseDirectDebugger(true);
-
-      host.LoadInstance();
     });
 
-    testHostModule.get().addValues(12, 23);
-    TestCheckEqual(35, returnValue.get());
-
-    host.UnloadInstance().get();
-    queueController.ShutdownQueueAsync().get();
+    TestEventService::ObserveEvents({TestEvent{"initialize", nullptr},
+                                     TestEvent{"start tests", nullptr},
+                                     TestEvent{"call addValues", JSValueArray{4, 7}},
+                                     TestEvent{"return result", 11}});
   }
 };
 
