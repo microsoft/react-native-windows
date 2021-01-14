@@ -39,7 +39,11 @@ JSValueType DynamicReader::ValueType() noexcept {
     case folly::dynamic::Type::BOOL:
       return JSValueType::Boolean;
     case folly::dynamic::Type::DOUBLE:
-      return JSValueType::Double;
+      if (double value = m_current->getDouble(); static_cast<int64_t>(value) == value) {
+        return JSValueType::Int64;
+      } else {
+        return JSValueType::Double;
+      }
     case folly::dynamic::Type::INT64:
       return JSValueType::Int64;
     case folly::dynamic::Type::OBJECT:
@@ -136,7 +140,9 @@ bool DynamicReader::GetBoolean() noexcept {
 }
 
 int64_t DynamicReader::GetInt64() noexcept {
-  return (m_current->type() == folly::dynamic::Type::INT64) ? m_current->getInt() : 0;
+  return (m_current->type() == folly::dynamic::Type::INT64)
+      ? m_current->getInt()
+      : (m_current->type() == folly::dynamic::Type::DOUBLE) ? static_cast<int64_t>(m_current->getDouble()) : 0;
 }
 
 double DynamicReader::GetDouble() noexcept {
