@@ -85,7 +85,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CxxMessageQueue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DevServerHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DevSettings.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)etw\react_native_windows.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IDevSupportManager.h" />
@@ -126,9 +125,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)WinRTWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)etw\build.bat" />
-    <None Include="$(MSBuildThisFileDirectory)etw\react_native_windows.man" />
-    <None Include="$(MSBuildThisFileDirectory)etw\react_native_windows_etw_res.dll" />
-    <None Include="$(MSBuildThisFileDirectory)etw\register.bat" />
+    <Text Include="$(MSBuildThisFileDirectory)tracing\cmd.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp" />
   </ItemGroup>
 </Project>

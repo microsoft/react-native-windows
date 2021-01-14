@@ -132,9 +132,6 @@
     <Filter Include="Source Files\AsyncStorage">
       <UniqueIdentifier>{ee633764-9967-4233-8848-81edf1488790}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\etw">
-      <UniqueIdentifier>{5862fbd1-2e67-4c90-9e58-24a66d71aec4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Modules">
       <UniqueIdentifier>{37d57028-146d-45f3-a56d-2ce7625a3449}</UniqueIdentifier>
     </Filter>
@@ -143,9 +140,6 @@
     </Filter>
     <Filter Include="Header Files\tracing">
       <UniqueIdentifier>{87b365df-267b-4c00-860a-53d129a65a4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\etw">
-      <UniqueIdentifier>{6008bddc-9f23-4190-9eea-662fb1ab2467}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\tracing">
       <UniqueIdentifier>{6d6b7412-d407-4ee3-be2a-addd9dba140a}</UniqueIdentifier>
@@ -187,9 +181,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.h">
       <Filter>Header Files\AsyncStorage</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)etw\react_native_windows.h">
-      <Filter>Header Files\etw</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.h">
       <Filter>Header Files\Modules</Filter>
@@ -364,17 +355,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)etw\build.bat">
-      <Filter>Source Files\etw</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)etw\react_native_windows.man">
-      <Filter>Source Files\etw</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)etw\react_native_windows_etw_res.dll">
-      <Filter>Source Files\etw</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)etw\register.bat">
-      <Filter>Source Files\etw</Filter>
+    <Text Include="$(MSBuildThisFileDirectory)tracing\cmd.txt">
+      <Filter>Source Files\tracing</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">
+      <Filter>Source Files\tracing</Filter>
     </None>
   </ItemGroup>
 </Project>
