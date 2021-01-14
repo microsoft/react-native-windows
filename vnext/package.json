@@ -64,7 +64,7 @@
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "react": "17.0.1",
-    "react-native": "0.0.0-6fd684150",
+    "react-native": "0.0.0-1433ed633",
     "react-native-platform-override": "^0.4.6",
     "react-native-windows-codegen": "0.1.11",
     "react-refresh": "^0.4.0",
@@ -73,7 +73,7 @@
   },
   "peerDependencies": {
     "react": "17.0.1",
-    "react-native": "0.0.0-6fd684150"
+    "react-native": "0.0.0-1433ed633"
   },
   "beachball": {
     "defaultNpmTag": "canary",

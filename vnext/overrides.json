@@ -7,7 +7,7 @@
   "excludePatterns": [
     "**/*.windesktop.js"
   ],
-  "baseVersion": "0.0.0-6fd684150",
+  "baseVersion": "0.0.0-1433ed633",
   "overrides": [
     {
       "type": "derived",
@@ -40,7 +40,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "16491ec07d4102e2798f32749aeeaa10e7bb63d3",
+      "baseHash": "b14492a0c4aba91eef7e9f55479e545830b28229",
       "issue": 5430
     },
     {
