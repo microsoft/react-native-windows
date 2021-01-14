@@ -61,6 +61,10 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
   };
 
   _connect = () => {
+    // Test protocols parsing. No further use.
+    const scalarProtocolSocket = new WebSocket(this.state.url, "p0");
+    const vectorialProtocolSocket = new WebSocket(this.state.url, ["p1", "p2"]);
+
     const socket = new WebSocket(this.state.url);
     socket.binaryType = 'arraybuffer';
     WS_EVENTS.forEach(ev => socket.addEventListener(ev, this._onSocketEvent));
