@@ -56,7 +56,7 @@ jobs:
       - powershell: |
           $reportWithHeader = '${{ parameters.commitTitle}}`n`n' + (Get-Content -Raw $(Agent.TempDirectory)/integraton-report.md))
           # Trim to max GitHub PR length
-          $trimmedReport = $reportWithHeader.substring(0, [math::min](65536, $reportWithHeader.length))
+          $trimmedReport = $reportWithHeader.substring(0, [math]::min(65536, $reportWithHeader.length))
           Set-Content $(Agent.TempDirectory)/commit-message.md -Value $trimmedReport
         displayName: Generate commit message
 
@@ -102,3 +102,9 @@ jobs:
 
       - script: git push origin integrate-${{ parameters.reactNativeVersion }}
         displayName: Push changes
+
+      - powershell: |
+          $headers = @{'Accept'='application/vnd.github.v3+json'; 'Authorization'='Token $(githubAuthToken)'}
+          $body = '{"head": "origin/integrate-${{ parameters.reactNativeVersion }}", "base": "origin/master"}'
+          Invoke-WebRequest -Method Post -Headers $headers -Body $body https://api.github.com/repos/microsoft/react-native-windows/pulls
+        displayName: Create PR
