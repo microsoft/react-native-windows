@@ -9,7 +9,7 @@ import * as crypto from 'crypto';
 import * as path from 'path';
 import {normalizePath, unixPath} from './PathUtils';
 import FileRepository from './FileRepository';
-import isutf8 from 'isutf8';
+import isUtf8 from 'isutf8';
 
 export type HashOpts = {
   /**
@@ -28,7 +28,7 @@ function normalizeContent(
 ): string | Buffer {
   if (
     opts.insensitivity === 'none' ||
-    (typeof content !== 'string' && !isutf8(content))
+    (typeof content !== 'string' && !isUtf8(content))
   ) {
     return content;
   }

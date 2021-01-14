@@ -1,3 +1,5 @@
+require('ts-node').register({ transpileOnly: true });
+
 const baseUrl = 'https://webdriver.io';
 
 exports.config = {
@@ -66,16 +68,9 @@ exports.config = {
       // grid with only 5 firefox instances available you can make sure that not more than
       // 5 instances get started at a time.
       maxInstances: 1,
-      //
-      platformName: 'windows',
-      // For W3C the appium capabilities need to have an extension prefix
-      // http://appium.io/docs/en/writing-running-appium/caps/
-      // This is `appium:` for all Appium Capabilities which can be found here
-      'appium:deviceName': 'WindowsPC',
-      'appium:app': 'ReactUWPTestApp_cezq6h4ygq1hw!App',
-      deviceName: 'WindowsPC',
+
       app: 'ReactUWPTestApp_cezq6h4ygq1hw!App',
-      'winAppDriver:experimental-w3c': true,
+      'ms:experimental-webdriver': true,
     },
     // {
     //     // maxInstances can get overwritten per capability. So if you have an in house Selenium
@@ -130,13 +125,14 @@ exports.config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: ['appium'],
-  appium: {
-    logPath: './reports/',
-    args: {
-      port: '4723',
-    },
-  },
+  services: [
+    [
+      'winappdriver',
+      {
+        logPath: './reports/',
+      },
+    ],
+  ],
 
   //
   // Framework you want to run your specs with.
@@ -167,6 +163,17 @@ exports.config = {
   jasmineNodeOpts: {
     // Needs to be longer than the 1m webdriverio timeout to let its errors be propgated
     defaultTimeoutInterval: 100000,
+    expectationResultHandler: function(passed, assertion) {
+      /**
+       * only take screenshot if assertion failed
+       */
+      if (passed) {
+        return;
+      }
+
+      let name = 'ERROR-' + Date.now();
+      browser.saveScreenshot('./errorShots/' + name + '.png');
+    },
   },
 
   //
@@ -239,12 +246,8 @@ exports.config = {
    * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
    * @param {Object} test test details
    */
-  afterTest: function(test) {
-    if (test.error !== undefined) {
-      let name = 'ERROR-' + Date.now();
-      browser.saveScreenshot('./errorShots/' + name + '.png');
-    }
-  },
+  // afterTest: function(test) {
+  // },
   /**
    * Hook that gets executed after the suite has ended
    * @param {Object} suite suite details

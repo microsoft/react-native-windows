@@ -39,7 +39,7 @@ let logger: Logger;
       },
     })
     .check(args => {
-      if (args._.length === 1 && semver.valid(args._[0])) {
+      if (args._.length === 1 && semver.valid(<string>args._[0])) {
         return true;
       } else {
         throw new Error('Usage: integrate-rn <version>');
@@ -47,7 +47,7 @@ let logger: Logger;
     })
     .showHelpOnFail(false);
 
-  const version = argv._[0];
+  const version = <string>argv._[0];
 
   logger = new CompositeLogger([
     new ConsoleLogger(process.stdout),

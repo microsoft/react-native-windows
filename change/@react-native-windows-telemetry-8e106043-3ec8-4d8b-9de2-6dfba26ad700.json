@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove appium from package dependency",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}

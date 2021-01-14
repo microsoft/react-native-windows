@@ -10,7 +10,7 @@ import * as path from 'path';
 import {WritableFileRepository, bindVersion} from './FileRepository';
 import GitReactFileRepository from './GitReactFileRepository';
 import {hashFileOrDirectory} from './Hash';
-import isutf8 from 'isutf8';
+import isUtf8 from 'isutf8';
 
 export interface UpgradeResult {
   overrideName: string;
@@ -79,7 +79,7 @@ export const UpgradeStrategies = {
       }
 
       const prettyPatched =
-        hasConflicts && isutf8(patchedFile)
+        hasConflicts && isUtf8(patchedFile)
           ? patchedFile
               .toString('utf8')
               .replace(/<<<<<<< ours/g, '<<<<<<< Upstream')

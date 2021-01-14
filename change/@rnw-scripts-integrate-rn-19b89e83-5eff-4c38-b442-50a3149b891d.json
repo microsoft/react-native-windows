@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update code to new packages for isUtf8 and yargs",
+  "packageName": "@rnw-scripts/integrate-rn",
+  "email": "canli@microsoft.com",
+  "dependentChangeType": "patch"
+}
