@@ -41,9 +41,9 @@ steps:
   # For Appium windows we have to depend on a node package that depends on python (gyp) to perform some install scripts
   - task: UsePythonVersion@0
     inputs:
-      #versionSpec: '3.x' 
-      #addToPath: true 
-      #architecture: 'x64' # Options: x86, x64 (this argument applies only on Windows agents)
+      #versionSpec: '3.x'
+      #addToPath: true
+      #architecture: 'x64'
 
   - template: yarn-install.yml
 
