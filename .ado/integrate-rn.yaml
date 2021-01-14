@@ -28,7 +28,10 @@ jobs:
 
       - template: templates/configure-git.yml
 
-      - template: templates/yarn-install.yml
+      # Using standard "yarn install" instead of midgarn-yarn because the integration
+      # script will do a normal yarn install anyway and we want to share results
+      - script: yarn install
+        displayName: yarn install
 
       - script: yarn build
         displayName: yarn build
