@@ -54,7 +54,7 @@ jobs:
         displayName: Test for changes
         
       - powershell: |
-          $reportWithHeader = '${{ parameters.commitTitle}}`n`n' + (Get-Content -Raw $(Agent.TempDirectory)\integration-report.md)
+          $reportWithHeader = "${{ parameters.commitTitle}}`n`n" + (Get-Content -Raw $(Agent.TempDirectory)\integration-report.md)
           # Trim to max GitHub PR length
           $trimmedReport = $reportWithHeader.substring(0, [math]::min(65536, $reportWithHeader.length))
           Set-Content $(Agent.TempDirectory)\commit-message.md -Value $trimmedReport
@@ -77,9 +77,9 @@ jobs:
 
           const allowsPatch = async (pkg) => !pkg.json?.beachball?.disallowedChangeTypes.includes('patch');
           enumerateRepoPackages(allowsPatch)
-            .then(pkgs => console.log(pkgs.map(pkg => path.relative('.', pkg.path)).join(' ')));
+            .then(pkgs => console.log(pkgs.map(pkg => path.relative('.', pkg.path)).join(',')));
           "
-          yarn change --scope $patchScope --message "${{ parameters.commitTitle}}" --type patch
+          yarn change --scope $patchScope.split(',') --message "${{ parameters.commitTitle}}" --type patch
         displayName: Create patch changefiles
 
       - powershell: |
@@ -89,9 +89,9 @@ jobs:
 
           const allowsPrerelease = async (pkg) => !pkg.json?.beachball?.disallowedChangeTypes.includes('prerelease');
           enumerateRepoPackages(allowsPrerelease)
-            .then(pkgs => console.log(pkgs.map(pkg => path.relative('.', pkg.path)).join(' ')));
+            .then(pkgs => console.log(pkgs.map(pkg => path.relative('.', pkg.path)).join(',')));
           "
-          yarn change --scope $prereleaseScope --message "${{ parameters.commitTitle}}" --type prerelease
+          yarn change --scope $prereleaseScope.split(',') --message "${{ parameters.commitTitle}}" --type prerelease
         displayName: Create prerelease changefiles
 
       - script: |
@@ -105,6 +105,6 @@ jobs:
 
       - powershell: |
           $headers = @{'Accept'='application/vnd.github.v3+json'; 'Authorization'='Token $(githubAuthToken)'}
-          $body = '{"head": "origin/integrate-${{ parameters.reactNativeVersion }}", "base": "origin/master"}'
+          $body = '{"head": "integrate-${{ parameters.reactNativeVersion }}", "base": "master"}'
           Invoke-WebRequest -Method Post -Headers $headers -Body $body https://api.github.com/repos/microsoft/react-native-windows/pulls
         displayName: Create PR
