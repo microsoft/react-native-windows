@@ -54,7 +54,7 @@ jobs:
         displayName: Test for changes
         
       - powershell: |
-          $reportWithHeader = '${{ parameters.commitTitle}}`n`n' + (Get-Content -Raw $(Agent.TempDirectory)/integraton-report.md)
+          $reportWithHeader = '${{ parameters.commitTitle}}`n`n' + (Get-Content -Raw $(Agent.TempDirectory)\integration-report.md)
           # Trim to max GitHub PR length
           $trimmedReport = $reportWithHeader.substring(0, [math]::min(65536, $reportWithHeader.length))
           Set-Content $(Agent.TempDirectory)\commit-message.md -Value $trimmedReport
