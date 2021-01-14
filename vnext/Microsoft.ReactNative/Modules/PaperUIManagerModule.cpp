@@ -59,8 +59,8 @@ void UIManager::SetSettings(
     std::unique_ptr<UIManagerSettings> &&settings) noexcept {
   properties.Set(
       UIManagerSettingsProperty().Handle(),
-      winrt::Microsoft::ReactNative::ReactNonAbiValue<std::unique_ptr<UIManagerSettings>>{std::in_place,
-                                                                                          std::move(settings)});
+      winrt::Microsoft::ReactNative::ReactNonAbiValue<std::unique_ptr<UIManagerSettings>>{
+          std::in_place, std::move(settings)});
 }
 
 winrt::Microsoft::ReactNative::ReactPropertyId<
@@ -82,9 +82,8 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   UIManagerModule() {}
   ~UIManagerModule() {
     m_nodeRegistry.removeAllRootViews([this](int64_t rootViewTag) { removeRootView(rootViewTag); });
-    m_nodeRegistry.ForAllNodes([this](int64_t tag, shadow_ptr const &shadowNode) noexcept {
-      DropView(tag, false, true);
-    });
+    m_nodeRegistry.ForAllNodes(
+        [this](int64_t tag, shadow_ptr const &shadowNode) noexcept { DropView(tag, false, true); });
     m_nativeUIManager->setHost(nullptr);
   }
 

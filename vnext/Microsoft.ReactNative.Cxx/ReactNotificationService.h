@@ -267,8 +267,8 @@ struct ReactNotificationService {
   }
 
   template <class TData, class THandler, std::enable_if_t<IsValidHandlerV<THandler, TData>, int> = 0>
-  ReactNotificationSubscription Subscribe(ReactNotificationId<TData> const &notificationId, THandler &&handler) const
-      noexcept {
+  ReactNotificationSubscription Subscribe(ReactNotificationId<TData> const &notificationId, THandler &&handler)
+      const noexcept {
     return Subscribe(m_handle, notificationId, nullptr, std::forward<THandler>(handler));
   }
 

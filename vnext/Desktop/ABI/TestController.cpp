@@ -96,11 +96,12 @@ msrn::IReactPackageBuilder TestController::CreateReactPackageBuilder() {
 
 msrn::IRedBoxErrorFrameInfo
 TestController::CreateRedBoxErrorFrameInfo(hstring file, hstring method, uint32_t line, uint32_t column) {
-  Mso::React::ErrorFrameInfo frameInfo{/* File */ ::Microsoft::Common::Unicode::Utf16ToUtf8(file),
-                                       /* Method */ ::Microsoft::Common::Unicode::Utf16ToUtf8(method),
-                                       /* Line */ static_cast<int>(line),
-                                       /* Columns */ static_cast<int>(column),
-                                       /* Collapse */ false};
+  Mso::React::ErrorFrameInfo frameInfo{
+      /* File */ ::Microsoft::Common::Unicode::Utf16ToUtf8(file),
+      /* Method */ ::Microsoft::Common::Unicode::Utf16ToUtf8(method),
+      /* Line */ static_cast<int>(line),
+      /* Columns */ static_cast<int>(column),
+      /* Collapse */ false};
 
   return make<Mso::React::RedBoxErrorFrameInfo>(std::move(frameInfo));
 }
@@ -125,11 +126,12 @@ msrn::IRedBoxErrorInfo TestController::CreateRedBoxErrorInfo(
   // errorInfo.ExtraData
 
   for (auto const &frame : callstack) {
-    Mso::React::ErrorFrameInfo frameInfo{/* File */ ::Microsoft::Common::Unicode::Utf16ToUtf8(frame.File()),
-                                         /* Method */ ::Microsoft::Common::Unicode::Utf16ToUtf8(frame.Method()),
-                                         /* Line */ static_cast<int>(frame.Line()),
-                                         /* Columns */ static_cast<int>(frame.Column()),
-                                         /* Collapse */ false};
+    Mso::React::ErrorFrameInfo frameInfo{
+        /* File */ ::Microsoft::Common::Unicode::Utf16ToUtf8(frame.File()),
+        /* Method */ ::Microsoft::Common::Unicode::Utf16ToUtf8(frame.Method()),
+        /* Line */ static_cast<int>(frame.Line()),
+        /* Columns */ static_cast<int>(frame.Column()),
+        /* Collapse */ false};
     errorInfo.Callstack.push_back(std::move(frameInfo));
   }
 

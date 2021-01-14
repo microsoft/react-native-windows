@@ -27,7 +27,7 @@ template <class T>
 Mso::Maybe<T> FutureWait(const Mso::Future<T> &future) noexcept {
   Mso::Maybe<T> value;
   Mso::ManualResetEvent finished;
-  future.Then(Mso::Executors::Inline{}, [&finished, &value ](Mso::Maybe<T> && result) noexcept {
+  future.Then(Mso::Executors::Inline{}, [&finished, &value](Mso::Maybe<T> &&result) noexcept {
     value = std::move(result);
     finished.Set();
   });

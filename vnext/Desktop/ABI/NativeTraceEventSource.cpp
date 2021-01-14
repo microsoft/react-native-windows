@@ -39,8 +39,8 @@ virtual void NativeBeginSection(const char *profileName, const char *args) noexc
   g_abiHandler.NativeBeginSection(Utf8ToUtf16(profileName), Utf8ToUtf16(args));
 }
 
-virtual void
-NativeEndSection(const char *profileName, const char *args, std::chrono::nanoseconds duration) noexcept override {
+virtual void NativeEndSection(const char *profileName, const char *args, std::chrono::nanoseconds duration) noexcept
+    override {
   g_abiHandler.NativeEndSection(Utf8ToUtf16(profileName), Utf8ToUtf16(args), duration.count());
 }
 

@@ -101,7 +101,7 @@ See the msoGuid.h for the usage guidelines.
 // __uuidof(type) implementation for Clang. In VC++ we use the native __uuidof() operator.
 #if !COMPILER_SUPPORTS_UUID
 #undef __uuidof
-#define __uuidof(type)::Mso::Details::GuidUtils::GuidOf < type> ::Value
+#define __uuidof(type) ::Mso::Details::GuidUtils::GuidOf<type>::Value
 #endif
 
 /// A macro to be used instead of __uuidof(expr). For types use __uuidof(type). E.g. __uuidof_expr(this).
@@ -161,19 +161,20 @@ constexpr const unsigned char H2U[256] = {
 
 /// Converts string to a GUID at compile time. Expected format: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX"
 constexpr GUID StringToGuid(const GuidString &g) noexcept {
-  return {static_cast<unsigned int>(
-              (H2U[g[0]] << 28) | (H2U[g[1]] << 24) | (H2U[g[2]] << 20) | (H2U[g[3]] << 16) | (H2U[g[4]] << 12) |
-              (H2U[g[5]] << 8) | (H2U[g[6]] << 4) | H2U[g[7]]),
-          static_cast<unsigned short>((H2U[g[9]] << 12) | (H2U[g[10]] << 8) | (H2U[g[11]] << 4) | H2U[g[12]]),
-          static_cast<unsigned short>((H2U[g[14]] << 12) | (H2U[g[15]] << 8) | (H2U[g[16]] << 4) | H2U[g[17]]),
-          {static_cast<unsigned char>((H2U[g[19]] << 4) | H2U[g[20]]),
-           static_cast<unsigned char>((H2U[g[21]] << 4) | H2U[g[22]]),
-           static_cast<unsigned char>((H2U[g[24]] << 4) | H2U[g[25]]),
-           static_cast<unsigned char>((H2U[g[26]] << 4) | H2U[g[27]]),
-           static_cast<unsigned char>((H2U[g[28]] << 4) | H2U[g[29]]),
-           static_cast<unsigned char>((H2U[g[30]] << 4) | H2U[g[31]]),
-           static_cast<unsigned char>((H2U[g[32]] << 4) | H2U[g[33]]),
-           static_cast<unsigned char>((H2U[g[34]] << 4) | H2U[g[35]])}};
+  return {
+      static_cast<unsigned int>(
+          (H2U[g[0]] << 28) | (H2U[g[1]] << 24) | (H2U[g[2]] << 20) | (H2U[g[3]] << 16) | (H2U[g[4]] << 12) |
+          (H2U[g[5]] << 8) | (H2U[g[6]] << 4) | H2U[g[7]]),
+      static_cast<unsigned short>((H2U[g[9]] << 12) | (H2U[g[10]] << 8) | (H2U[g[11]] << 4) | H2U[g[12]]),
+      static_cast<unsigned short>((H2U[g[14]] << 12) | (H2U[g[15]] << 8) | (H2U[g[16]] << 4) | H2U[g[17]]),
+      {static_cast<unsigned char>((H2U[g[19]] << 4) | H2U[g[20]]),
+       static_cast<unsigned char>((H2U[g[21]] << 4) | H2U[g[22]]),
+       static_cast<unsigned char>((H2U[g[24]] << 4) | H2U[g[25]]),
+       static_cast<unsigned char>((H2U[g[26]] << 4) | H2U[g[27]]),
+       static_cast<unsigned char>((H2U[g[28]] << 4) | H2U[g[29]]),
+       static_cast<unsigned char>((H2U[g[30]] << 4) | H2U[g[31]]),
+       static_cast<unsigned char>((H2U[g[32]] << 4) | H2U[g[33]]),
+       static_cast<unsigned char>((H2U[g[34]] << 4) | H2U[g[35]])}};
 }
 
 #if __clang__

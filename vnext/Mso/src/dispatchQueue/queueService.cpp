@@ -48,9 +48,7 @@ void QueueService::Post(DispatchTask &&task) noexcept {
 }
 
 bool QueueService::ShouldYield(TaskYieldReason *yieldReason) noexcept {
-  auto setReason = [&](TaskYieldReason reason) noexcept {
-    return yieldReason ? *yieldReason = reason : reason, true;
-  };
+  auto setReason = [&](TaskYieldReason reason) noexcept { return yieldReason ? *yieldReason = reason : reason, true; };
   std::lock_guard lock{m_mutex};
   return (m_shutdownAction.has_value() && setReason(TaskYieldReason::QueueShutdown)) ||
       (m_suspendCounter > 0 && setReason(TaskYieldReason::QueueSuspended));
