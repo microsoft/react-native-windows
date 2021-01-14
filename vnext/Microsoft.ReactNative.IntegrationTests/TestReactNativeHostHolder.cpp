@@ -16,7 +16,7 @@ TestReactNativeHostHolder::TestReactNativeHostHolder(
   m_host = ReactNativeHost{};
   m_queueController = DispatcherQueueController::CreateOnDedicatedThread();
   m_queueController.DispatcherQueue().TryEnqueue(
-      [ this, jsBundle = std::wstring{jsBundle}, hostInitializer = std::move(hostInitializer) ]() noexcept {
+      [this, jsBundle = std::wstring{jsBundle}, hostInitializer = std::move(hostInitializer)]() noexcept {
         // bundle is assumed to be co-located with the test binary
         wchar_t testBinaryPath[MAX_PATH];
         TestCheck(GetModuleFileNameW(NULL, testBinaryPath, MAX_PATH) < MAX_PATH);

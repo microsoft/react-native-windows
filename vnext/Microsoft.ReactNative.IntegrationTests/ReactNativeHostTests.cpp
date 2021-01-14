@@ -83,10 +83,11 @@ TEST_CLASS (ReactNativeHostTests) {
       host.PackageProviders().Append(winrt::make<TestPackageProvider>());
     });
 
-    TestEventService::ObserveEvents({TestEvent{"initialize", nullptr},
-                                     TestEvent{"start tests", nullptr},
-                                     TestEvent{"call addValues", JSValueArray{4, 7}},
-                                     TestEvent{"return result", 11}});
+    TestEventService::ObserveEvents(
+        {TestEvent{"initialize", nullptr},
+         TestEvent{"start tests", nullptr},
+         TestEvent{"call addValues", JSValueArray{4, 7}},
+         TestEvent{"return result", 11}});
   }
 };
 
