@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Updated doc comments in IReactNotificationService.idl",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
