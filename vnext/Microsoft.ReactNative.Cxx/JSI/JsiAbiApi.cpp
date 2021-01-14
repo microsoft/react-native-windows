@@ -28,9 +28,8 @@ facebook::jsi::JSError const &jsError) {                             \
 
 struct AbiJSError : facebook::jsi::JSError {
   AbiJSError(JsiAbiRuntime &rt, JsiError &&jsiError) noexcept
-      : facebook::jsi::JSError{to_string(jsiError.ErrorDetails()),
-                               rt,
-                               facebook::jsi::Value(rt, JsiAbiRuntime::ValueRef(jsiError.Value()))},
+      : facebook::jsi::
+            JSError{to_string(jsiError.ErrorDetails()), rt, facebook::jsi::Value(rt, JsiAbiRuntime::ValueRef(jsiError.Value()))},
         m_jsiError{std::move(jsiError)} {}
 
  private:
@@ -136,8 +135,10 @@ std::shared_ptr<facebook::jsi::HostObject> const &JsiHostObjectWrapper::HostObje
 JsiHostFunctionWrapper::JsiHostFunctionWrapper(HostFunctionType &&hostFunction) noexcept
     : m_hostFunction{std::move(hostFunction)} {}
 
-JsiValueRef JsiHostFunctionWrapper::
-operator()(JsiRuntime const &runtime, JsiValueRef const &thisArg, array_view<JsiValueRef const> args) try {
+JsiValueRef JsiHostFunctionWrapper::operator()(
+    JsiRuntime const &runtime,
+    JsiValueRef const &thisArg,
+    array_view<JsiValueRef const> args) try {
   JsiAbiRuntime *rt{JsiAbiRuntime::GetFromJsiRuntime(runtime)};
   JsiAbiRuntime::ValueRefArray valueRefArgs{args};
   return JsiAbiRuntime::DetachJsiValueRef(

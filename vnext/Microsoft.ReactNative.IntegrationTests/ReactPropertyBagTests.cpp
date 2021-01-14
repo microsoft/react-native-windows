@@ -537,9 +537,7 @@ TEST_CLASS (ReactPropertyBagTests) {
     ReactPropertyBag pb{ReactPropertyBagHelper::CreatePropertyBag()};
 
     TestCheck(!pb.Get(fooName));
-    Mso::Functor<std::string()> createValue1 = []() noexcept {
-      return "Hello world!"s;
-    };
+    Mso::Functor<std::string()> createValue1 = []() noexcept { return "Hello world!"s; };
     TestCheckEqual(createValue1, *pb.GetOrCreate(fooName, [&createValue1]() { return createValue1; }));
     TestCheckEqual(createValue1, *pb.Get(fooName));
     TestCheckEqual("Hello world!"s, pb.Get(fooName)());

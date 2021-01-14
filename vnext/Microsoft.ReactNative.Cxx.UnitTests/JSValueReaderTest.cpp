@@ -232,8 +232,9 @@ TEST_CLASS (JSValueReaderTest) {
     robot.Steps = std::vector<int>{1, 2, 3};
     robot.Dimensions = std::map<std::string, int>{{"Width", 24}, {"Height", 78}};
     robot.Badges = std::tuple<int, std::string, bool>{2, "Maverick", true};
-    robot.Tools = std::vector<RobotTool>{RobotTool{/*Name =*/"Screwdriver", /*Weight =*/2, /*IsEnabled =*/true},
-                                         RobotTool{/*Name =*/"Electro-shocker", /*Weight =*/3, /*IsEnabled =*/false}};
+    robot.Tools = std::vector<RobotTool>{
+        RobotTool{/*Name =*/"Screwdriver", /*Weight =*/2, /*IsEnabled =*/true},
+        RobotTool{/*Name =*/"Electro-shocker", /*Weight =*/3, /*IsEnabled =*/false}};
     robot.Path = std::vector<RobotPoint>{
         RobotPoint{/*X =*/5, /*Y =*/6}, RobotPoint{/*X =*/45, /*Y =*/90}, RobotPoint{/*X =*/15, /*Y =*/16}};
     robot.Extra = R2D2Extra{/*MovieSeries =*/"Episode 2"};

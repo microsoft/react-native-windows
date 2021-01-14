@@ -25,10 +25,12 @@ TEST_CLASS (WebSocketModuleIntegrationTest) {
         [](vector<dynamic>) {});
 
     auto ping = module->getMethods().at(WebSocketModule::MethodId::Ping);
-    ping.func(dynamic::array(0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
+    ping.func(
+        dynamic::array(0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
 
     auto close = module->getMethods().at(WebSocketModule::MethodId::Close);
-    close.func(dynamic::array(0, "closing", /*id*/ 0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
+    close.func(
+        dynamic::array(0, "closing", /*id*/ 0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
   }
 
   TEST_METHOD(WebSocketModule_SendMultiple) {
@@ -45,13 +47,19 @@ TEST_CLASS (WebSocketModuleIntegrationTest) {
         [](vector<dynamic>) {});
 
     auto send = module->getMethods().at(WebSocketModule::MethodId::Send);
-    send.func(dynamic::array("request1", 0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
-    send.func(dynamic::array("request2", 0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
-    send.func(dynamic::array("request3", 1), [](vector<dynamic>) {}, [](vector<dynamic>) {});
-    send.func(dynamic::array("request4", 1), [](vector<dynamic>) {}, [](vector<dynamic>) {});
+    send.func(
+        dynamic::array("request1", 0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
+    send.func(
+        dynamic::array("request2", 0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
+    send.func(
+        dynamic::array("request3", 1), [](vector<dynamic>) {}, [](vector<dynamic>) {});
+    send.func(
+        dynamic::array("request4", 1), [](vector<dynamic>) {}, [](vector<dynamic>) {});
 
     auto close = module->getMethods().at(WebSocketModule::MethodId::Close);
-    close.func(dynamic::array(0, "closing", /*id*/ 0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
-    close.func(dynamic::array(0, "closing", /*id*/ 1), [](vector<dynamic>) {}, [](vector<dynamic>) {});
+    close.func(
+        dynamic::array(0, "closing", /*id*/ 0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
+    close.func(
+        dynamic::array(0, "closing", /*id*/ 1), [](vector<dynamic>) {}, [](vector<dynamic>) {});
   }
 };

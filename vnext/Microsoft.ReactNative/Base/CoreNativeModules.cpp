@@ -34,8 +34,7 @@ bool HasPackageIdentity() noexcept {
     winrt::com_ptr<winrt::impl::abi_t<winrt::Windows::ApplicationModel::IPackage>> dummy;
     return abiPackageStatics->get_Current(winrt::put_abi(dummy)) !=
         winrt::impl::hresult_from_win32(APPMODEL_ERROR_NO_PACKAGE);
-  }
-  ();
+  }();
 
   return hasPackageIdentity;
 }

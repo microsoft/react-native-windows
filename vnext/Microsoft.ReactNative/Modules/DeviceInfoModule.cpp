@@ -72,17 +72,19 @@ React::JSValueObject DeviceInfoHolder::GetDimensions(const React::ReactPropertyB
 React::JSValueObject DeviceInfoHolder::getDimensions() noexcept {
   return React::JSValueObject{
       {"windowPhysicalPixels",
-       React::JSValueObject{{"width", m_windowWidth * m_scale},
-                            {"height", m_windowHeight * m_scale},
-                            {"scale", m_scale},
-                            {"fontScale", m_textScaleFactor},
-                            {"densityDpi", m_dpi}}},
+       React::JSValueObject{
+           {"width", m_windowWidth * m_scale},
+           {"height", m_windowHeight * m_scale},
+           {"scale", m_scale},
+           {"fontScale", m_textScaleFactor},
+           {"densityDpi", m_dpi}}},
       {"screenPhysicalPixels",
-       React::JSValueObject{{"width", m_screenWidth},
-                            {"height", m_screenHeight},
-                            {"scale", m_scale},
-                            {"fontScale", m_textScaleFactor},
-                            {"densityDpi", m_dpi}}},
+       React::JSValueObject{
+           {"width", m_screenWidth},
+           {"height", m_screenHeight},
+           {"scale", m_scale},
+           {"fontScale", m_textScaleFactor},
+           {"densityDpi", m_dpi}}},
   };
 }
 

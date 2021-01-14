@@ -80,9 +80,10 @@ class ReactHost final : public Mso::ActiveObject<IReactHost> {
  private:
   mutable std::mutex m_mutex;
   const Mso::InvokeElsePostExecutor m_executor{Queue()};
-  const Mso::ActiveReadableField<Mso::CntPtr<AsyncActionQueue>> m_actionQueue{Mso::Make<AsyncActionQueue>(Queue()),
-                                                                              Queue(),
-                                                                              m_mutex};
+  const Mso::ActiveReadableField<Mso::CntPtr<AsyncActionQueue>> m_actionQueue{
+      Mso::Make<AsyncActionQueue>(Queue()),
+      Queue(),
+      m_mutex};
   const Mso::ActiveField<Mso::ErrorCode> m_lastError{Queue()};
   const Mso::ActiveReadableField<ReactOptions> m_options{Queue(), m_mutex};
   const Mso::ActiveField<std::unordered_map<uintptr_t, Mso::WeakPtr<ReactViewHost>>> m_viewHosts{Queue()};
@@ -180,7 +181,7 @@ Mso::Future<void> ReactHost::PostInQueue(TCallback &&callback) noexcept {
   using Callback = std::decay_t<TCallback>;
   return Mso::PostFuture(
       m_executor,
-      [ weakThis = Mso::WeakPtr{this}, callback = Callback{std::forward<TCallback>(callback)} ]() mutable noexcept {
+      [weakThis = Mso::WeakPtr{this}, callback = Callback{std::forward<TCallback>(callback)}]() mutable noexcept {
         if (auto strongThis = weakThis.GetStrongPtr()) {
           return callback();
         }

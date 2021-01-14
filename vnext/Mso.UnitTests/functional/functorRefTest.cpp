@@ -128,18 +128,14 @@ TEST_CLASS (FunctorRefTest) {
 
   TEST_METHOD(FunctorRef_Lambda2) {
     bool isCalled = false;
-    auto lambda = [&isCalled]() noexcept {
-      isCalled = true;
-    };
+    auto lambda = [&isCalled]() noexcept { isCalled = true; };
     TestClass::Execute(lambda);
     TestCheck(isCalled);
   }
 
   TEST_METHOD(FunctorRefThrow_Lambda2) {
     bool isCalled = false;
-    auto lambda = [&isCalled]() noexcept {
-      isCalled = true;
-    };
+    auto lambda = [&isCalled]() noexcept { isCalled = true; };
     TestClass::ExecuteThrow(lambda);
     TestCheck(isCalled);
   }
@@ -203,7 +199,7 @@ TEST_CLASS (FunctorRefTest) {
     TestCheckEqual(1, param.AddRefCount);
 
     auto spParam2 =
-        TestClass::PassAsRValue(std::move(spParam), [](Mso::CntPtr<MyParam> && p) noexcept { return std::move(p); });
+        TestClass::PassAsRValue(std::move(spParam), [](Mso::CntPtr<MyParam> &&p) noexcept { return std::move(p); });
     TestCheckEqual(1, param.AddRefCount);
   }
 
@@ -248,7 +244,7 @@ TEST_CLASS (FunctorRefTest) {
     TestCheckEqual(1, param.AddRefCount);
 
     auto spParam2 =
-        TestClass::PassAsRValue(std::move(spParam), [](Mso::CntPtr<MyParam> && p) noexcept { return std::move(p); });
+        TestClass::PassAsRValue(std::move(spParam), [](Mso::CntPtr<MyParam> &&p) noexcept { return std::move(p); });
     TestCheckEqual(1, param.AddRefCount);
   }
 
@@ -291,7 +287,7 @@ TEST_CLASS (FunctorRefTest) {
 
     using Function = std::function<Mso::CntPtr<MyParam>(Mso::CntPtr<MyParam> &&)>;
     auto spParam2 = TestClass::PassAsRValueThrow(
-        std::move(spParam), Function([](Mso::CntPtr<MyParam> && p) noexcept { return std::move(p); }));
+        std::move(spParam), Function([](Mso::CntPtr<MyParam> &&p) noexcept { return std::move(p); }));
     TestCheckEqual(1, param.AddRefCount);
   }
 
@@ -299,9 +295,8 @@ TEST_CLASS (FunctorRefTest) {
     std::unique_ptr<bool> isCalled{nullptr};
     auto mutableValue = std::make_unique<bool>(true);
 
-    TestClass::Execute([&isCalled, mutableValue = std::move(mutableValue) ]() mutable noexcept {
-      isCalled = std::move(mutableValue);
-    });
+    TestClass::Execute(
+        [&isCalled, mutableValue = std::move(mutableValue)]() mutable noexcept { isCalled = std::move(mutableValue); });
 
     TestCheck(*isCalled);
   }
@@ -310,9 +305,8 @@ TEST_CLASS (FunctorRefTest) {
     std::unique_ptr<bool> isCalled{nullptr};
     auto mutableValue = std::make_unique<bool>(true);
 
-    TestClass::ExecuteThrow([&isCalled, mutableValue = std::move(mutableValue) ]() mutable noexcept {
-      isCalled = std::move(mutableValue);
-    });
+    TestClass::ExecuteThrow(
+        [&isCalled, mutableValue = std::move(mutableValue)]() mutable noexcept { isCalled = std::move(mutableValue); });
 
     TestCheck(*isCalled);
   }

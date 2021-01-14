@@ -78,11 +78,12 @@ Mso::React::ErrorInfo CreateErrorInfo(const folly::dynamic &args) noexcept {
     assert(stackFrame.isObject());
     assert(stackFrame.size() >= 4); // 4 in 0.57, 5 in 0.58+ (arguments added)
 
-    errorInfo.Callstack.push_back(Mso::React::ErrorFrameInfo{RetrieveOptionalStringFromMap(stackFrame, "file"),
-                                                             RetrieveOptionalStringFromMap(stackFrame, "methodName"),
-                                                             RetrieveIntFromMap(stackFrame, "lineNumber"),
-                                                             RetrieveIntFromMap(stackFrame, "column"),
-                                                             false});
+    errorInfo.Callstack.push_back(Mso::React::ErrorFrameInfo{
+        RetrieveOptionalStringFromMap(stackFrame, "file"),
+        RetrieveOptionalStringFromMap(stackFrame, "methodName"),
+        RetrieveIntFromMap(stackFrame, "lineNumber"),
+        RetrieveIntFromMap(stackFrame, "column"),
+        false});
   }
 
   return errorInfo;
@@ -129,12 +130,12 @@ Mso::React::ErrorInfo CreateErrorInfo2(const folly::dynamic &args) noexcept {
         assert(stackFrame.isObject());
         assert(stackFrame.size() >= 4); // 4 in 0.57, 5 in 0.58+ (arguments added)
 
-        errorInfo.Callstack.push_back(
-            Mso::React::ErrorFrameInfo{RetrieveOptionalStringFromMap(stackFrame, "file"),
-                                       RetrieveOptionalStringFromMap(stackFrame, "methodName"),
-                                       RetrieveIntFromMap(stackFrame, "lineNumber"),
-                                       RetrieveIntFromMap(stackFrame, "column"),
-                                       RetrieveOptionalBoolFromMap(stackFrame, "collapse")});
+        errorInfo.Callstack.push_back(Mso::React::ErrorFrameInfo{
+            RetrieveOptionalStringFromMap(stackFrame, "file"),
+            RetrieveOptionalStringFromMap(stackFrame, "methodName"),
+            RetrieveIntFromMap(stackFrame, "lineNumber"),
+            RetrieveIntFromMap(stackFrame, "column"),
+            RetrieveOptionalBoolFromMap(stackFrame, "collapse")});
       }
     }
   }
@@ -157,50 +158,51 @@ std::map<std::string, folly::dynamic> ExceptionsManagerModule::getConstants() {
 
 std::vector<facebook::xplat::module::CxxModule::Method> ExceptionsManagerModule::getMethods() {
   auto redboxHandler = m_redboxHandler;
-  return {Method(
-              "reportFatalException",
-              [redboxHandler](folly::dynamic args) noexcept {
-                if (redboxHandler && redboxHandler->isDevSupportEnabled()) {
-                  redboxHandler->showNewError(std::move(CreateErrorInfo(args)), Mso::React::ErrorType::JSFatal);
-                }
-                /*
-                // TODO - fatal errors should throw if there is no redbox handler
-                else {
-                  throw Exception();
-                } */
-              }),
+  return {
+      Method(
+          "reportFatalException",
+          [redboxHandler](folly::dynamic args) noexcept {
+            if (redboxHandler && redboxHandler->isDevSupportEnabled()) {
+              redboxHandler->showNewError(std::move(CreateErrorInfo(args)), Mso::React::ErrorType::JSFatal);
+            }
+            /*
+            // TODO - fatal errors should throw if there is no redbox handler
+            else {
+              throw Exception();
+            } */
+          }),
 
-          Method(
-              "reportSoftException",
-              [redboxHandler](folly::dynamic args) noexcept {
-                if (redboxHandler && redboxHandler->isDevSupportEnabled()) {
-                  redboxHandler->showNewError(std::move(CreateErrorInfo(args)), Mso::React::ErrorType::JSSoft);
-                }
-              }),
+      Method(
+          "reportSoftException",
+          [redboxHandler](folly::dynamic args) noexcept {
+            if (redboxHandler && redboxHandler->isDevSupportEnabled()) {
+              redboxHandler->showNewError(std::move(CreateErrorInfo(args)), Mso::React::ErrorType::JSSoft);
+            }
+          }),
 
-          Method(
-              "reportException",
-              [redboxHandler](folly::dynamic args) noexcept {
-                if (redboxHandler && redboxHandler->isDevSupportEnabled()) {
-                  auto isFatal = RetrieveOptionalBoolFromMap(args[0], "isFatal");
-                  redboxHandler->showNewError(
-                      std::move(CreateErrorInfo2(args[0])),
-                      isFatal ? Mso::React::ErrorType::JSFatal : Mso::React::ErrorType::JSSoft);
-                }
-              }),
+      Method(
+          "reportException",
+          [redboxHandler](folly::dynamic args) noexcept {
+            if (redboxHandler && redboxHandler->isDevSupportEnabled()) {
+              auto isFatal = RetrieveOptionalBoolFromMap(args[0], "isFatal");
+              redboxHandler->showNewError(
+                  std::move(CreateErrorInfo2(args[0])),
+                  isFatal ? Mso::React::ErrorType::JSFatal : Mso::React::ErrorType::JSSoft);
+            }
+          }),
 
-          Method(
-              "updateExceptionMessage",
-              [redboxHandler](folly::dynamic args) noexcept {
-                if (redboxHandler && redboxHandler->isDevSupportEnabled()) {
-                  redboxHandler->updateError(std::move(CreateErrorInfo(args)));
-                }
-              }),
+      Method(
+          "updateExceptionMessage",
+          [redboxHandler](folly::dynamic args) noexcept {
+            if (redboxHandler && redboxHandler->isDevSupportEnabled()) {
+              redboxHandler->updateError(std::move(CreateErrorInfo(args)));
+            }
+          }),
 
-          Method("dismissRedbox", [redboxHandler](folly::dynamic /*args*/) noexcept {
-            if (redboxHandler)
-              redboxHandler->dismissRedbox();
-          })};
+      Method("dismissRedbox", [redboxHandler](folly::dynamic /*args*/) noexcept {
+        if (redboxHandler)
+          redboxHandler->dismissRedbox();
+      })};
 }
 
 } // namespace react

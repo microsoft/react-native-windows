@@ -48,13 +48,14 @@ struct SampleModuleCppImpl {
     const ReactNotificationId<int> csTimerNotification{L"SampleModuleCS", L"TimerNotification"};
 
     // Note that all notification subscriptions are removed automatically when React instance is unloaded.
-    reactContext.Notifications().Subscribe(csTimerNotification, [
-    ](winrt::Windows::Foundation::IInspectable const &, ReactNotificationArgs<int> const &args) noexcept {
-      DEBUG_OUTPUT("C++ module, C# timer:", *args.Data());
-    });
+    reactContext.Notifications().Subscribe(
+        csTimerNotification,
+        [](winrt::Windows::Foundation::IInspectable const &, ReactNotificationArgs<int> const &args) noexcept {
+          DEBUG_OUTPUT("C++ module, C# timer:", *args.Data());
+        });
 
     m_timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
-        [ this, cppTimerNotification, notifications = reactContext.Notifications() ](
+        [this, cppTimerNotification, notifications = reactContext.Notifications()](
             const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
           notifications.SendNotification(cppTimerNotification, m_timerCount);
           TimedEvent(++m_timerCount);

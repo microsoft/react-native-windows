@@ -217,9 +217,8 @@ void ReactHost::Finalize() noexcept {
   // Since each AsyncAction has a strong ref count to ReactHost, the AsyncActionQueue must be empty.
   // Thus, we only need to call UnloadInQueue to unload ReactInstance if the ReactHost is not closed yet.
   if (Mso::Promise<void> notifyWhenClosed = m_notifyWhenClosed.Exchange(nullptr)) {
-    UnloadInQueue(0).Then<Mso::Executors::Inline>([notifyWhenClosed = std::move(notifyWhenClosed)]() noexcept {
-      notifyWhenClosed.TrySetValue();
-    });
+    UnloadInQueue(0).Then<Mso::Executors::Inline>(
+        [notifyWhenClosed = std::move(notifyWhenClosed)]() noexcept { notifyWhenClosed.TrySetValue(); });
   }
 }
 
@@ -277,7 +276,7 @@ Mso::Future<void> ReactHost::ReloadInstance() noexcept {
 }
 
 Mso::Future<void> ReactHost::ReloadInstanceWithOptions(ReactOptions &&options) noexcept {
-  return PostInQueue([ this, options = std::move(options) ]() mutable noexcept {
+  return PostInQueue([this, options = std::move(options)]() mutable noexcept {
     return m_actionQueue.Load()->PostActions({MakeUnloadInstanceAction(), MakeLoadInstanceAction(std::move(options))});
   });
 }
@@ -287,7 +286,7 @@ Mso::Future<void> ReactHost::UnloadInstance() noexcept {
 }
 
 AsyncAction ReactHost::MakeLoadInstanceAction(ReactOptions &&options) noexcept {
-  return [ spThis = Mso::CntPtr{this}, options = std::move(options) ]() mutable noexcept {
+  return [spThis = Mso::CntPtr{this}, options = std::move(options)]() mutable noexcept {
     return spThis->LoadInQueue(std::move(options));
   };
 }
@@ -296,9 +295,7 @@ AsyncAction ReactHost::MakeUnloadInstanceAction() noexcept {
   Mso::Internal::VerifyIsInQueueElseCrash(Queue());
   size_t unloadActionId = ++m_nextUnloadActionId;
   m_pendingUnloadActionId = unloadActionId;
-  return [ spThis = Mso::CntPtr{this}, unloadActionId ]() noexcept {
-    return spThis->UnloadInQueue(unloadActionId);
-  };
+  return [spThis = Mso::CntPtr{this}, unloadActionId]() noexcept { return spThis->UnloadInQueue(unloadActionId); };
 }
 
 Mso::CntPtr<IReactViewHost> ReactHost::MakeViewHost(ReactViewOptions &&options) noexcept {
@@ -307,7 +304,7 @@ Mso::CntPtr<IReactViewHost> ReactHost::MakeViewHost(ReactViewOptions &&options) 
 
 Mso::Future<std::vector<Mso::CntPtr<IReactViewHost>>> ReactHost::GetViewHostList() noexcept {
   Mso::Promise<std::vector<Mso::CntPtr<IReactViewHost>>> result;
-  InvokeInQueue([ this, result ]() noexcept {
+  InvokeInQueue([this, result]() noexcept {
     std::vector<Mso::CntPtr<IReactViewHost>> viewHosts;
     ForEachViewHost([&viewHosts](auto &viewHost) noexcept { viewHosts.push_back(&viewHost); });
     result.SetValue(std::move(viewHosts));
@@ -344,7 +341,7 @@ Mso::Future<void> ReactHost::LoadInQueue(ReactOptions &&options) noexcept {
   assert(false);
 #endif
 
-  return whenCreated.AsFuture().Then(Mso::Executors::Inline{}, [ this, whenLoaded ]() noexcept {
+  return whenCreated.AsFuture().Then(Mso::Executors::Inline{}, [this, whenLoaded]() noexcept {
     std::vector<Mso::Future<void>> initCompletionList;
     for (const auto &entry : m_viewHosts.Load()) {
       if (auto viewHost = entry.second.GetStrongPtr()) {
@@ -458,20 +455,19 @@ Mso::Future<void> ReactViewHost::ReloadViewInstance() noexcept {
 }
 
 Mso::Future<void> ReactViewHost::ReloadViewInstanceWithOptions(ReactViewOptions &&options) noexcept {
-  return m_reactHost->PostInQueue([ this, options = std::move(options) ]() mutable noexcept {
+  return m_reactHost->PostInQueue([this, options = std::move(options)]() mutable noexcept {
     return m_actionQueue.Load()->PostActions(
         {MakeUninitViewInstanceAction(), MakeInitViewInstanceAction(std::move(options))});
   });
 }
 
 Mso::Future<void> ReactViewHost::UnloadViewInstance() noexcept {
-  return m_reactHost->PostInQueue([this]() noexcept {
-    return m_actionQueue.Load()->PostAction(MakeUninitViewInstanceAction());
-  });
+  return m_reactHost->PostInQueue(
+      [this]() noexcept { return m_actionQueue.Load()->PostAction(MakeUninitViewInstanceAction()); });
 }
 
 Mso::Future<void> ReactViewHost::AttachViewInstance(IReactViewInstance &viewInstance) noexcept {
-  return m_reactHost->PostInQueue([ this, viewInstance = Mso::CntPtr{&viewInstance} ]() noexcept {
+  return m_reactHost->PostInQueue([this, viewInstance = Mso::CntPtr{&viewInstance}]() noexcept {
     auto previousViewInstance = m_viewInstance.Exchange(Mso::Copy(viewInstance));
     VerifyElseCrashSzTag(
         !previousViewInstance, "ViewInstance must not be previously attached.", 0x028508d6 /* tag_c7q9w */);
@@ -498,13 +494,11 @@ Mso::Future<void> ReactViewHost::DetachViewInstance() noexcept {
 }
 
 AsyncAction ReactViewHost::MakeInitViewInstanceAction() noexcept {
-  return [spThis = Mso::CntPtr{this}]() mutable noexcept {
-    return spThis->InitViewInstanceInQueue();
-  };
+  return [spThis = Mso::CntPtr{this}]() mutable noexcept { return spThis->InitViewInstanceInQueue(); };
 }
 
 AsyncAction ReactViewHost::MakeInitViewInstanceAction(ReactViewOptions &&options) noexcept {
-  return [ spThis = Mso::CntPtr{this}, options = std::move(options) ]() mutable noexcept {
+  return [spThis = Mso::CntPtr{this}, options = std::move(options)]() mutable noexcept {
     return spThis->InitViewInstanceInQueue(std::move(options));
   };
 }
@@ -512,7 +506,7 @@ AsyncAction ReactViewHost::MakeInitViewInstanceAction(ReactViewOptions &&options
 AsyncAction ReactViewHost::MakeUninitViewInstanceAction() noexcept {
   size_t uninitActionId = ++m_nextUninitActionId.Load();
   m_pendingUninitActionId.Store(std::move(uninitActionId));
-  return [ spThis = Mso::CntPtr{this}, uninitActionId ]() noexcept {
+  return [spThis = Mso::CntPtr{this}, uninitActionId]() noexcept {
     return spThis->UninitViewInstanceInQueue(uninitActionId);
   };
 }
