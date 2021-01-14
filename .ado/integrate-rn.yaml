@@ -45,7 +45,7 @@ jobs:
 
       - powershell: |
           if (!(Test-Path "$(Agent.TempDirectory)\integration-report.md")) {
-            dir "$(Agent.TempDirectory)""
+            dir "$(Agent.TempDirectory)"
             throw "No integration report generated"
           }
           if ((git status --porcelain).length -eq 0) {
