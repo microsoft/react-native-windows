@@ -361,7 +361,7 @@ capabilities are the configuration which WinAppDriver used to identify the app a
 
 ### winappdriver service
 
-Below configuration lets the framework launch/kill winappdriver automatically during the testing, and logs are saved as `reports\winappdriver.txt`.
+The below configuration lets the framework launch/terminate WinAppDriver automatically during testing, and logs are saved as `reports\winappdriver.txt`.
 
 ```
     port: 4723,
@@ -479,4 +479,3 @@ You can get the symbols from the `appxsym` (just download it and rename it to `.
 
 After doing a sync, E2E tests currently fail, see details in https://github.com/microsoft/react-native-windows/issues/5762  
 The workaround is to do a yarn install --force, then re-run the tests.
-
