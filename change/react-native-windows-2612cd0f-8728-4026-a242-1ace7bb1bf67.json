@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix unused variable warning in AbiCallInvoker",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Thu, 14 Jan 2021 05:05:22 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.22",
+      "version": "0.0.22",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow Integration Script to Output Markdown",
+            "author": "ngerlem@microsoft.com",
+            "commit": "892e0a044686b0a5317ebcc9a20eaf68e010951f",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Jan 2021 05:05:37 GMT",
       "tag": "@rnw-scripts/integrate-rn_v0.0.21",
       "version": "0.0.21",

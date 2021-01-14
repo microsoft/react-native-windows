@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate RN nightly 13/1 build.",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "igklemen@microsoft.com",
-  "dependentChangeType": "patch"
-}

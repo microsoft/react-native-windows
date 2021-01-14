@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Allow Integration Script to Output Markdown",
-  "packageName": "@rnw-scripts/integrate-rn",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
