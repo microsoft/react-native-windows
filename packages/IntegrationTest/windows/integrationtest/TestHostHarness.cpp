@@ -26,21 +26,21 @@ TestHostHarness::TestHostHarness(const ReactNativeHost &reactHost) noexcept
   m_redboxHandler = winrt::make<TestHostHarnessRedboxHandler>(get_weak());
   m_commandListener = winrt::make_self<TestCommandListener>();
 
-  m_commandListener->OnTestCommand([weakThis{get_weak()}](
-      const TestCommand &command, TestCommandResponse response) noexcept {
-    if (auto strongThis = weakThis.get()) {
-      strongThis->m_dispatcher.Post([ strongThis, command, response{std::move(response)} ]() mutable noexcept {
-        strongThis->OnTestCommand(command, std::move(response));
+  m_commandListener->OnTestCommand(
+      [weakThis{get_weak()}](const TestCommand &command, TestCommandResponse response) noexcept {
+        if (auto strongThis = weakThis.get()) {
+          strongThis->m_dispatcher.Post([strongThis, command, response{std::move(response)}]() mutable noexcept {
+            strongThis->OnTestCommand(command, std::move(response));
+          });
+        }
       });
-    }
-  });
 
   reactHost.InstanceSettings().RedBoxHandler(m_redboxHandler);
   m_instanceLoadedRevoker = reactHost.InstanceSettings().InstanceLoaded(
       winrt::auto_revoke, [weakThis{get_weak()}](const auto & /*sender*/, auto &&args) noexcept {
         if (auto strongThis = weakThis.get()) {
           strongThis->m_dispatcher.Post(
-              [ strongThis, args{std::move(args)} ]() noexcept { strongThis->OnInstanceLoaded(args); });
+              [strongThis, args{std::move(args)}]() noexcept { strongThis->OnInstanceLoaded(args); });
         }
       });
 }
@@ -203,7 +203,7 @@ IAsyncAction TestHostHarness::FlushJSQueue() noexcept {
 
   winrt::handle signal(CreateEvent(nullptr, false, false, nullptr));
 
-  m_context.JSDispatcher().Post([&signal, uiDispatcher{m_dispatcher} ]() noexcept {
+  m_context.JSDispatcher().Post([&signal, uiDispatcher{m_dispatcher}]() noexcept {
     uiDispatcher.Post([&signal]() noexcept { SetEvent(signal.get()); });
   });
 
@@ -217,7 +217,7 @@ void TestHostHarness::ShowJSError(std::string_view err) noexcept {
 }
 
 void TestHostHarnessRedboxHandler::ShowNewError(const IRedBoxErrorInfo &info, RedBoxErrorType /*type*/) noexcept {
-  QueueToUI([info](TestHostHarness & harness) noexcept {
+  QueueToUI([info](TestHostHarness &harness) noexcept {
     if (harness.m_currentTransaction) {
       harness.HandleHostAction(harness.m_currentTransaction->OnNewError(info));
     }
@@ -230,7 +230,7 @@ bool TestHostHarnessRedboxHandler::IsDevSupportEnabled() noexcept {
 }
 
 void TestHostHarnessRedboxHandler::UpdateError(const IRedBoxErrorInfo &info) noexcept {
-  QueueToUI([info](TestHostHarness & harness) noexcept {
+  QueueToUI([info](TestHostHarness &harness) noexcept {
     if (harness.m_currentTransaction) {
       harness.HandleHostAction(harness.m_currentTransaction->OnUpdateError(info));
     }
@@ -244,7 +244,7 @@ void TestHostHarnessRedboxHandler::DismissRedBox() noexcept {
 template <typename TFunc>
 void TestHostHarnessRedboxHandler::QueueToUI(TFunc &&func) noexcept {
   if (auto strongHarness = m_weakHarness.get()) {
-    strongHarness->m_dispatcher.Post([ strongHarness, func{std::move(func)} ]() noexcept { func(*strongHarness); });
+    strongHarness->m_dispatcher.Post([strongHarness, func{std::move(func)}]() noexcept { func(*strongHarness); });
   }
 }
 

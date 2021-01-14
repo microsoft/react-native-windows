@@ -61,7 +61,8 @@
 // TestCheckCrash expects that the provided expression causes a crash.
 //=============================================================================
 #define TestCheckCrashAtInternal(file, line, expr, exprStr, ...) \
-  TestAssert::ExpectCrashAt(file, line, [&]() { expr; }, exprStr, TestAssert::FormatMsg("" __VA_ARGS__).c_str())
+  TestAssert::ExpectCrashAt(                                     \
+      file, line, [&]() { expr; }, exprStr, TestAssert::FormatMsg("" __VA_ARGS__).c_str())
 #define TestCheckCrashAt(file, line, expr, ...) TestCheckCrashAtInternal(file, line, expr, #expr, __VA_ARGS__)
 #define TestCheckCrash(expr, ...) TestCheckCrashAtInternal(__FILE__, __LINE__, expr, #expr, __VA_ARGS__)
 
@@ -75,7 +76,8 @@
 // You should disable memory leak detection in tests that use TestCheckTerminate.
 //=============================================================================
 #define TestCheckTerminateAtInternal(file, line, expr, exprStr, ...) \
-  TestAssert::ExpectTerminateAt(file, line, [&]() { expr; }, exprStr, TestAssert::FormatMsg("" __VA_ARGS__).c_str())
+  TestAssert::ExpectTerminateAt(                                     \
+      file, line, [&]() { expr; }, exprStr, TestAssert::FormatMsg("" __VA_ARGS__).c_str())
 #define TestCheckTerminateAt(file, line, expr, ...) TestCheckTerminateAtInternal(file, line, expr, #expr, __VA_ARGS__)
 #define TestCheckTerminate(expr, ...) TestCheckTerminateAtInternal(__FILE__, __LINE__, expr, #expr, __VA_ARGS__)
 
@@ -102,7 +104,8 @@
 // TestCheckNoThrow expects that the provided expression does not throw an exception.
 //=============================================================================
 #define TestCheckNoThrowAtInternal(file, line, expr, exprStr, ...) \
-  TestAssert::ExpectNoThrowAt(file, line, [&]() { expr; }, exprStr, TestAssert::FormatMsg("" __VA_ARGS__).c_str())
+  TestAssert::ExpectNoThrowAt(                                     \
+      file, line, [&]() { expr; }, exprStr, TestAssert::FormatMsg("" __VA_ARGS__).c_str())
 #define TestCheckNoThrowAt(file, line, expr, ...) TestCheckNoThrowAtInternal(file, line, expr, #expr, __VA_ARGS__)
 #define TestCheckNoThrow(expr, ...) TestCheckNoThrowAtInternal(__FILE__, __LINE__, expr, #expr, __VA_ARGS__)
 

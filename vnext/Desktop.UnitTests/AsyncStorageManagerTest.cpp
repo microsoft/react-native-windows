@@ -107,8 +107,8 @@ TEST_CLASS (AsyncStorageManagerTest) {
 
     // Set two KV pairs. Note that it waits until the condition variable is
     // signalled from the Callback function.
-    vector<tuple<string, string>> setArgs = {make_tuple(SAMPLE_KEY_1, SAMPLE_VAL_1),
-                                             make_tuple(SAMPLE_KEY_2, SAMPLE_VAL_2)};
+    vector<tuple<string, string>> setArgs = {
+        make_tuple(SAMPLE_KEY_1, SAMPLE_VAL_1), make_tuple(SAMPLE_KEY_2, SAMPLE_VAL_2)};
     folly::dynamic jsSetArgs = folly::dynamic::array;
     jsSetArgs.push_back(FollyDynamicConverter::tupleStringVectorAsRetVal(setArgs));
     kvManager.executeKVOperation(AsyncStorageManager::AsyncStorageOperation::multiSet, jsSetArgs, callback);

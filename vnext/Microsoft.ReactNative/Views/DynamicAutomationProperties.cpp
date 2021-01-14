@@ -22,8 +22,9 @@ using namespace winrt::Windows::UI::Xaml::Interop;
 
 namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
 
-const winrt::TypeName dynamicAutomationTypeName{winrt::hstring{L"DynamicAutomationProperties"},
-                                                winrt::TypeKind::Metadata};
+const winrt::TypeName dynamicAutomationTypeName{
+    winrt::hstring{L"DynamicAutomationProperties"},
+    winrt::TypeKind::Metadata};
 
 xaml::DependencyProperty DynamicAutomationProperties::AccessibilityRoleProperty() {
   static xaml::DependencyProperty s_AccessibilityRoleProperty = xaml::DependencyProperty::RegisterAttached(

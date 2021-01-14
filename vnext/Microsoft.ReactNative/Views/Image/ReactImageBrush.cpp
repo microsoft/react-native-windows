@@ -52,8 +52,8 @@ void ReactImageBrush::BlurRadius(float value) {
 }
 
 void ReactImageBrush::TintColor(winrt::Color value) {
-  bool sameColor{value.A == m_tintColor.A && value.R == m_tintColor.R && value.G == m_tintColor.G &&
-                 value.B == m_tintColor.B};
+  bool sameColor{
+      value.A == m_tintColor.A && value.R == m_tintColor.R && value.G == m_tintColor.G && value.B == m_tintColor.B};
 
   if (!sameColor) {
     const bool forceEffectBrush{value.A == 0 || m_tintColor.A == 0};

@@ -16,8 +16,9 @@ std::string I18nModule::getName() {
 }
 
 std::map<std::string, folly::dynamic> I18nModule::getConstants() {
-  return {{"localeIdentifier", folly::dynamic{m_module->getLocaleIdentifier()}},
-          {"isRTL", folly::dynamic{m_module->getIsRTL()}}};
+  return {
+      {"localeIdentifier", folly::dynamic{m_module->getLocaleIdentifier()}},
+      {"isRTL", folly::dynamic{m_module->getIsRTL()}}};
 }
 
 std::vector<facebook::xplat::module::CxxModule::Method> I18nModule::getMethods() {

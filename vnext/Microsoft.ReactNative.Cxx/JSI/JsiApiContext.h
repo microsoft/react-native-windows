@@ -26,7 +26,7 @@ void ExecuteJsi(ReactContext const &context, TCodeWithRuntime const &code) {
     code(GetOrCreateContextRuntime(context));
   } else {
     // Otherwise, schedule work in JS thread.
-    jsDispatcher.Post([ context, code ]() noexcept { code(GetOrCreateContextRuntime(context)); });
+    jsDispatcher.Post([context, code]() noexcept { code(GetOrCreateContextRuntime(context)); });
   }
 }
 

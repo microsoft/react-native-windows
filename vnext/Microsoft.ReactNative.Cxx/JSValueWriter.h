@@ -277,9 +277,7 @@ inline JSValueArgWriter MakeJSValueArgWriter(T &&argWriter) noexcept {
 
 template <class... TArgs>
 inline JSValueArgWriter MakeJSValueArgWriter(TArgs &&... args) noexcept {
-  return [&args...](IJSValueWriter const &writer) noexcept {
-    WriteArgs(writer, args...);
-  };
+  return [&args...](IJSValueWriter const &writer) noexcept { WriteArgs(writer, args...); };
 }
 
 template <class T, std::enable_if_t<std::is_invocable_v<T, IJSValueWriter const &>, int> = 0>
@@ -289,9 +287,7 @@ inline JSValueArgWriter MakeJSValueWriter(T &&argWriter) noexcept {
 
 template <class... TArgs>
 inline JSValueArgWriter MakeJSValueWriter(TArgs &&... args) noexcept {
-  return [&args...](IJSValueWriter const &[[maybe_unused]] writer) noexcept {
-    (WriteValue(writer, args), ...);
-  };
+  return [&args...](IJSValueWriter const &[[maybe_unused]] writer) noexcept { (WriteValue(writer, args), ...); };
 }
 
 } // namespace winrt::Microsoft::ReactNative

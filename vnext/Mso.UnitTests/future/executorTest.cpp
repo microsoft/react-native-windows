@@ -35,39 +35,39 @@ TEST_CLASS_EX (ExecutorTest, LibletAwareMemLeakDetection) {
 
   TEST_METHOD(ThrowingExecutorTestIntValue) {
     auto queue = MakeTestDispatchQueue();
-    auto future = Mso::PostFuture(Mso::Executors::Executor::Throwing{queue}, []() -> int { return 5; })
-                      .Then(queue, [&](const Mso::Maybe<int> &value) noexcept {
-                        TestCheck(value.IsValue());
-                        TestCheckEqual(5, value.GetValue());
-                      });
+    auto future = Mso::PostFuture(Mso::Executors::Executor::Throwing{queue}, []() -> int {
+                    return 5;
+                  }).Then(queue, [&](const Mso::Maybe<int> &value) noexcept {
+      TestCheck(value.IsValue());
+      TestCheckEqual(5, value.GetValue());
+    });
 
     Mso::FutureWait(future);
   }
 
   TEST_METHOD(ThrowingExecutorTestIntException) {
     auto queue = MakeTestDispatchQueue();
-    auto future = Mso::PostFuture(Mso::Executors::Executor::Throwing{queue}, []() -> int { throw std::exception(); })
-                      .Then(queue, [&](const Mso::Maybe<int> &value) noexcept { TestCheck(value.IsError()); });
+    auto future = Mso::PostFuture(Mso::Executors::Executor::Throwing{queue}, []() -> int {
+                    throw std::exception();
+                  }).Then(queue, [&](const Mso::Maybe<int> &value) noexcept { TestCheck(value.IsError()); });
 
     Mso::FutureWait(future);
   }
 
   TEST_METHOD(ThrowingExecutorTestVoidValue) {
     auto queue = MakeTestDispatchQueue();
-    auto future = Mso::PostFuture(
-                      Mso::Executors::Executor::Throwing{queue},
-                      []() {
-                        // We return void
-                      })
-                      .Then(queue, [&](const Mso::Maybe<void> &value) noexcept { TestCheck(value.IsValue()); });
+    auto future = Mso::PostFuture(Mso::Executors::Executor::Throwing{queue}, []() {
+                    // We return void
+                  }).Then(queue, [&](const Mso::Maybe<void> &value) noexcept { TestCheck(value.IsValue()); });
 
     Mso::FutureWait(future);
   }
 
   TEST_METHOD(ThrowingExecutorTestVoidException) {
     auto queue = MakeTestDispatchQueue();
-    auto future = Mso::PostFuture(Mso::Executors::Executor::Throwing{queue}, []() -> void { throw std::exception(); })
-                      .Then(queue, [&](const Mso::Maybe<void> &value) noexcept { TestCheck(value.IsError()); });
+    auto future = Mso::PostFuture(Mso::Executors::Executor::Throwing{queue}, []() -> void {
+                    throw std::exception();
+                  }).Then(queue, [&](const Mso::Maybe<void> &value) noexcept { TestCheck(value.IsError()); });
 
     Mso::FutureWait(future);
   }

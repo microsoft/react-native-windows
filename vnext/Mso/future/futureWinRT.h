@@ -19,7 +19,7 @@ struct AsyncActionFutureAdapter : winrt::implements<
   using AsyncCompletedHandler = winrt::Windows::Foundation::AsyncActionCompletedHandler;
 
   AsyncActionFutureAdapter(Mso::Future<void> &&future) noexcept : m_future{std::move(future)} {
-    m_future.Then<Mso::Executors::Inline>([weakThis = get_weak()](Mso::Maybe<void> && result) noexcept {
+    m_future.Then<Mso::Executors::Inline>([weakThis = get_weak()](Mso::Maybe<void> &&result) noexcept {
       if (auto strongThis = weakThis.get()) {
         AsyncCompletedHandler handler;
         {
