@@ -335,7 +335,8 @@ LoginPage.waitForPageLoaded(15000)
 
 ### Capabilities
 
-capabilities are the configuration which WinAppDriver used to identify the app and launch the app. Below configurations supports without appium in the setup.
+the `capabilities` array is the set of configuration options that WinAppDriver uses to identify the app, and launch it. The below configuration options are supported when appium is not involved in the setup.
+`ms:experimental-webdriver` is a mandatory setting to make WinAppDriver use the W3C protocol.
 `ms:experimental-webdriver` is an mandatory setting to make WinAppDriver use W3C protocol.
 
 ```
@@ -361,7 +362,7 @@ capabilities are the configuration which WinAppDriver used to identify the app a
 
 ### winappdriver service
 
-Below configuration lets the framework launch/kill winappdriver automatically during the testing, and logs are saved as `reports\winappdriver.txt`.
+The below configuration lets the framework launch/terminate WinAppDriver automatically during testing, and logs are saved as `reports\winappdriver.txt`.
 
 ```
     port: 4723,
@@ -479,4 +480,3 @@ You can get the symbols from the `appxsym` (just download it and rename it to `.
 
 After doing a sync, E2E tests currently fail, see details in https://github.com/microsoft/react-native-windows/issues/5762  
 The workaround is to do a yarn install --force, then re-run the tests.
-
