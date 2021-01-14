@@ -7,26 +7,26 @@
   "excludePatterns": [
     "**/*.windesktop.js"
   ],
-  "baseVersion": "0.0.0-deda35134",
+  "baseVersion": "0.0.0-6fd684150",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "f0c6a0f78d1c12a6bd69371e56d1b24be3355a65"
+      "baseHash": "3f17e32af446344d9857568250005ef7a694bcbc"
     },
     {
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "caab3561363f0adf848ffd7da38f07aad5bb70cb",
+      "baseHash": "2241c126cde8163f86570a3f5a4db670cf9a7944",
       "issue": 3994
     },
     {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "6bdccafa3426949558427b4f746ddef4e1ab6f27",
+      "baseHash": "c95a9316567000e0cb151ebb0c0e182890cbae5e",
       "issue": 4054
     },
     {
