@@ -12,16 +12,16 @@ jobs:
       - template: ../variables/vs2019.yml
       #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage,WebSocket,Logging).
       #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
+      # windesktop is no longer bundling - Disable RNTesterIntegrationTests until fixed.
       - name: Desktop.IntegrationTests.Filter
         value: >
-          (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
-          (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
-          (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
+          (FullyQualifiedName!=RNTesterIntegrationTests::)&
           (FullyQualifiedName!~WebSocketModule_)&
           (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
-      # HostFunctionTest              - Crashes under JSI/V8
-      # HostObjectProtoTest           - Crashes under JSI/V8
-      # PreparedJavaScriptSourceTest  - Asserts/Fails under JSI/ChakraCore
+      #6799 -
+      #       HostFunctionTest              - Crashes under JSI/V8
+      #       HostObjectProtoTest           - Crashes under JSI/V8
+      #       PreparedJavaScriptSourceTest  - Asserts/Fails under JSI/ChakraCore
       - name: Desktop.UnitTests.Filter
         value: >
           (FullyQualifiedName!~HostFunctionTest)&
@@ -117,14 +117,12 @@ jobs:
           targetType: filePath # filePath | inline
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
           arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
-        condition: false # windesktop is no longer bundling
 
       - task: PowerShell@2
         displayName: Check the metro bundle server
         inputs:
           targetType: 'inline'
           script: Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
-        condition: false # windesktop is no longer bundling
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
@@ -140,9 +138,8 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
-        condition: false # windesktop is no longer bundling
         # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
-        # condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
+        condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
 
       - template: ../templates/stop-packagers.yml
 
