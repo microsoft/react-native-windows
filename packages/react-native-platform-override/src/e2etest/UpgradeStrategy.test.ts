@@ -15,9 +15,6 @@ import UpgradeStrategy, {
 import {acquireGitRepo, usingFiles} from './Resource';
 import GitReactFileRepository from '../GitReactFileRepository';
 import {hashFileOrDirectory} from '../Hash';
-
-// This has to be a const as @babel/plugin-transform-typescript used by testing does not spoort the default import
-// This has to be require because we are targetting ES6
 import isUtf8 from 'isutf8';
 
 let gitReactRepo: GitReactFileRepository;

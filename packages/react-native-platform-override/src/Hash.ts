@@ -9,9 +9,6 @@ import * as crypto from 'crypto';
 import * as path from 'path';
 import {normalizePath, unixPath} from './PathUtils';
 import FileRepository from './FileRepository';
-
-// This has to be a const as @babel/plugin-transform-typescript used by testing does not spoort the default import
-// This has to be require because we are targetting ES6
 import isUtf8 from 'isutf8';
 
 export type HashOpts = {
