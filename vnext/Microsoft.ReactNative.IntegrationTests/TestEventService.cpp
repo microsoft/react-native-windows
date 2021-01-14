@@ -16,7 +16,7 @@ using namespace std::literals::chrono_literals;
 /*static*/ std::condition_variable TestEventService::s_cv;
 /*static*/ TestEvent TestEventService::s_loggedEvent{};
 /*static*/ bool TestEventService::s_previousEventIsObserved{true}; // true to allow new event to be logged
-/*static*/ int TestEventService::s_observeEventIndex{0};
+/*static*/ uint32_t TestEventService::s_observeEventIndex{0};
 
 /*static*/ void TestEventService::Initialize() noexcept {
   auto lock = std::scoped_lock{s_mutex};
@@ -69,7 +69,7 @@ using namespace std::literals::chrono_literals;
     }
 
     // Finish observing after we observed the last event.
-    return s_observeEventIndex >= static_cast<ptrdiff_t>(expectedEvents.size());
+    return s_observeEventIndex >= expectedEvents.size();
   });
 }
 

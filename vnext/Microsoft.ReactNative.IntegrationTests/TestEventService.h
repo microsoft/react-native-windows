@@ -42,7 +42,7 @@ struct TestEventService {
   static std::condition_variable s_cv; // to notify about new event
   static TestEvent s_loggedEvent; // last logged event
   static bool s_previousEventIsObserved; // did we observe the last logged event?
-  static int s_observeEventIndex; // the event index to observe
+  static uint32_t s_observeEventIndex; // the event index to observe
 };
 
 } // namespace ReactNativeIntegrationTests
