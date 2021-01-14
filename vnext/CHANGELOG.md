@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 12 Jan 2021 05:07:53 GMT and should not be manually modified.
+This log was last generated on Thu, 14 Jan 2021 05:05:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.234
+
+Thu, 14 Jan 2021 05:05:22 GMT
+
+### Changes
+
+- Move CallInvoker.h to TurboModule folder (vmorozov@microsoft.com)
+- Fix unused variable warning in AbiCallInvoker (vmorozov@microsoft.com)
+- Integrate RN nightly 13/1 build. (igklemen@microsoft.com)
+
+## 0.0.0-canary.233
+
+Wed, 13 Jan 2021 05:05:37 GMT
+
+### Changes
+
+- #6715 Add Workaround to Resolve textDecorationLine Bug (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.232
 

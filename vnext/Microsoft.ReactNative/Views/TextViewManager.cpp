@@ -161,6 +161,11 @@ bool TextViewManager::UpdateProperty(
   } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextDecorationLine(textBlock, propertyName, propertyValue)) {
+    // Temporary workaround for bug in XAML which fails to flush old TextDecorationLine render
+    // Link to Bug: https://github.com/microsoft/microsoft-ui-xaml/issues/1093#issuecomment-514282402
+    winrt::hstring text(textBlock.Text().c_str());
+    textBlock.Text(L"");
+    textBlock.Text(text);
   } else if (TryUpdateCharacterSpacing(textBlock, propertyName, propertyValue)) {
   } else if (propertyName == "numberOfLines") {
     if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||

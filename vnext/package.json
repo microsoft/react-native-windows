@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.232",
+  "version": "0.0.0-canary.234",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -59,12 +59,12 @@
     "@types/react-native": "^0.63.18",
     "eslint": "7.12.0",
     "eslint-plugin-prettier": "2.6.2",
-    "flow-bin": "^0.140.0",
+    "flow-bin": "^0.142.0",
     "jscodeshift": "^0.11.0",
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "react": "17.0.1",
-    "react-native": "0.0.0-deda35134",
+    "react-native": "0.0.0-6fd684150",
     "react-native-platform-override": "^0.4.6",
     "react-native-windows-codegen": "0.1.11",
     "react-refresh": "^0.4.0",
@@ -73,7 +73,7 @@
   },
   "peerDependencies": {
     "react": "17.0.1",
-    "react-native": "0.0.0-deda35134"
+    "react-native": "0.0.0-6fd684150"
   },
   "beachball": {
     "defaultNpmTag": "canary",

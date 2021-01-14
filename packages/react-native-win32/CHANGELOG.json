@@ -2,6 +2,36 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 14 Jan 2021 05:05:22 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.73",
+      "version": "0.0.0-canary.73",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate RN nightly 13/1 build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "6d00292b75116970d6fb83e7d1560e2fa55f8b8a",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 Jan 2021 05:05:37 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.72",
+      "version": "0.0.0-canary.72",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add accessibilityDescription to ViewWin32",
+            "author": "lehon@microsoft.com",
+            "commit": "8c4a518552899dbacc7d9133e2e480c8f55df85d",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Jan 2021 05:07:53 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.71",
       "version": "0.0.0-canary.71",

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "remove excessive change files",
-  "packageName": "@rnw-scripts/format-files",
-  "email": "lehon@microsoft.com",
-  "dependentChangeType": "none"
-}

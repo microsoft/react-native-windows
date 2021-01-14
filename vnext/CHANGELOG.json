@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 14 Jan 2021 05:05:22 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.234",
+      "version": "0.0.0-canary.234",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move CallInvoker.h to TurboModule folder",
+            "author": "vmorozov@microsoft.com",
+            "commit": "b3694b77f6b79470f1536eea474cf8081cb19068",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix unused variable warning in AbiCallInvoker",
+            "author": "vmorozov@microsoft.com",
+            "commit": "57bb48555ae879184e4d103ac1ffc93c3d3806cd",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate RN nightly 13/1 build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "6d00292b75116970d6fb83e7d1560e2fa55f8b8a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 Jan 2021 05:05:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.233",
+      "version": "0.0.0-canary.233",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "#6715 Add Workaround to Resolve textDecorationLine Bug",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "9e427fb48f29c9d562628217122622531e02459c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Jan 2021 05:07:53 GMT",
       "tag": "react-native-windows_v0.0.0-canary.232",
       "version": "0.0.0-canary.232",
