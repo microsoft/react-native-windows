@@ -79,7 +79,7 @@ jobs:
           enumerateRepoPackages(allowsPatch)
             .then(pkgs => console.log(pkgs.map(pkg => path.relative('.', pkg.path)).join(',')));
           "
-          yarn change --scope $patchScope.split(',') --message "${{ parameters.commitTitle}}" --type patch
+          yarn change --scope @($patchScope.split(',')) --message "${{ parameters.commitTitle}}" --type patch
         displayName: Create patch changefiles
 
       - powershell: |
@@ -91,7 +91,7 @@ jobs:
           enumerateRepoPackages(allowsPrerelease)
             .then(pkgs => console.log(pkgs.map(pkg => path.relative('.', pkg.path)).join(',')));
           "
-          yarn change --scope $prereleaseScope.split(',') --message "${{ parameters.commitTitle}}" --type prerelease
+          yarn change --scope @($prereleaseScope.split(',')) --message "${{ parameters.commitTitle}}" --type prerelease
         displayName: Create prerelease changefiles
 
       - script: |
@@ -105,6 +105,6 @@ jobs:
 
       - powershell: |
           $headers = @{'Accept'='application/vnd.github.v3+json'; 'Authorization'='Token $(githubAuthToken)'}
-          $body = '{"head": "integrate-${{ parameters.reactNativeVersion }}", "base": "master"}'
+          $body = '{"head": "integrate-${{ parameters.reactNativeVersion }}", "base": "master", "title": "${{ parameters.commitTitle}}"}'
           Invoke-WebRequest -Method Post -Headers $headers -Body $body https://api.github.com/repos/microsoft/react-native-windows/pulls
         displayName: Create PR
