@@ -67,7 +67,6 @@
 
                 - template: ../templates/build-rnw.yml
                   parameters:
-                    yarnBuildCmd: build
                     project: vnext/Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
@@ -121,8 +120,6 @@
                     arguments: -NoPrompt -Tags buildLab
                     
                 - template: ../templates/prepare-env.yml
-                  parameters:
-                    yarnBuildCmd: build
 
                 - task: NuGetCommand@2
                   displayName: NuGet restore

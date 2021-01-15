@@ -12,7 +12,6 @@ parameters:
   buildPlatform: x64
   buildConfiguration: Debug
   msbuildArguments: ''
-  yarnBuildCmd: build
   multicoreBuild: false
 
   # Visual Studio Installer
@@ -30,7 +29,6 @@ steps:
       vsComponents: ${{ parameters.vsComponents }}
       listVsComponents: ${{ parameters.listVsComponents }}
       installVsComponents: ${{ parameters.installVsComponents }}
-      yarnBuildCmd: ${{ parameters.yarnBuildCmd }}
       debug: ${{ parameters.debug }}
 
   - task: NuGetCommand@2
