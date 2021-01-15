@@ -14,7 +14,7 @@
 // {910FB9A1-75DD-4CF4-BEEC-DA21341F20C8}
 TRACELOGGING_DEFINE_PROVIDER(
     g_hTraceLoggingProvider,
-    "RNWTraceLoggingProvider",
+    "Microsoft.ReactNativeWindows",
     (0x910fb9a1, 0x75dd, 0x4cf4, 0xbe, 0xec, 0xda, 0x21, 0x34, 0x1f, 0x20, 0xc8));
 
 using namespace facebook;
