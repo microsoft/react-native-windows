@@ -11039,7 +11039,7 @@ webdriver@6.12.0:
     got "^11.0.2"
     lodash.merge "^4.6.1"
 
-webdriverio@6.11.3, webdriverio@^6.9.0:
+webdriverio@6.11.3:
   version "6.11.3"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.11.3.tgz#043bc98514d7410264fbf14991bc0546fa119779"
   integrity sha512-yHS01H0+oz59Y+JLj/u8piLzOhtTiQSeASwb3hHF1EDuIiiK6JgGYFAqCYr26BrlzqzUOQ/9VpJj11LtcKWF/A==
@@ -11068,7 +11068,7 @@ webdriverio@6.11.3, webdriverio@^6.9.0:
     serialize-error "^7.0.0"
     webdriver "6.11.0"
 
-webdriverio@6.12.0:
+webdriverio@6.12.0, webdriverio@^6.9.0:
   version "6.12.0"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.12.0.tgz#03bf708d470aaebab669fd0d3de281dafbc09992"
   integrity sha512-9eu8WWOjsdDksbHeUPblAmQkWRVLOfI3C2P64UU0fX+zjcGXyCnkLsYfjV3dLmB4ePjgYZnNrSi4tsxJiorMew==
