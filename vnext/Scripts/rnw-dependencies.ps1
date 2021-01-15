@@ -201,11 +201,12 @@ $requirements = @(
         Install = { choco install -y yarn };
     },
     @{
-        Name = 'Appium';
+        Name = 'Python';
         Tags = @('rnwDev');
-        Valid = (Test-Path "${env:ProgramFiles}\Appium\Appium.exe");
-        Install = { choco install -y Appium-desktop };
-        Optional = $true;
+        Valid = try {
+            return (choco list -l python3 | where-Object { $_ -like 'python3 *' }) -ne $null
+        } catch { return false; };
+        Install = { choco install -y python3 };
     },
     @{
         Name = 'WinAppDriver';
