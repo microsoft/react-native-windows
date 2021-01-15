@@ -38,15 +38,30 @@ struct ReactNotificationArgs : implements<ReactNotificationArgs, IReactNotificat
   IInspectable m_data;
 };
 
-// The ReactNotificationService manages notification subscriptions and sending messages.
-// A notification service may have a parent notification service most for the automatic
-// unsubscription when the notification service is deleted.
-// All notifications are always sent from the root notification service that doe snot have parent service.
+// The ReactNotificationService manages a list subscriptions.
+// Subscriptions can be added or removed using Subscribe, Unsubscribe, and UnsubscribeAll methods.
+// The SendNotification sends notifications to all subscription in the list.
+// When ReactNotificationService is destroyed, it calls the UnsubscribeAll method.
+//
+// A notification service may have a "parent" notification service.
+// It allows a group of subscriptions to be automatically removed when the "child" service is destroyed.
+// We use this mechanism to automatically unsubscribe on React instance unload from all subscriptions
+// done in the native modules.
+// This is how the parent-child relationship works:
+// - All notifications are sent from the "root" service - the topmost "parent" service. SendNotification
+//   method called on the "child" service just calls "parent" service's SendNotification method.
+// - Subscriptions are added to services on all levels: a subscription added to a "child" service is also
+//   added to the "parent" service.
+// - When "child" subscription is removed, it also removes the corresponding subscription in the
+//   "parent" service.
 //
 // The ReactNotificationService is optimized for sending notifications vs modifying the list of subscriptions.
 // It means that it is very cheap to send messages vs adding or removing subscriptions.
 // It is done through the use of subscription snapshots. The list of the subscriptions is always immutable.
-// When we add or remove subscription, we create a new list of subscriptions and then atomically replace the old one.
+// When we add or remove subscription, we copy the list of subscriptions, modify it, and then atomically
+// replace the old list. The copy/modify/replace is done in a cycle in case if other thread replaces
+// the list first. If it happens, then the copy/modify/replace is done with the new list.
+// When we send a notification we take the current list snapshot and send notifications outside of lock.
 struct ReactNotificationService : implements<ReactNotificationService, IReactNotificationService> {
   ReactNotificationService();
   explicit ReactNotificationService(IReactNotificationService const parentNotificationService) noexcept;
