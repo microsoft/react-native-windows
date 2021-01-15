@@ -84,7 +84,7 @@ jobs:
       - powershell: |
           $newValue = '(FullyQualifiedName!~RNTesterIntegrationTests::)&' + "$(Desktop.IntegrationTests.Filter)"
           Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
-        displayName: Update Desktop.IntegrationTests.Filter
+        displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
         condition: and(succeeded(), eq(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
 
       - template: ../templates/build-rnw.yml
