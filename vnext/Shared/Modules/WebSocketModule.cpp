@@ -55,9 +55,9 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
         dynamic protocolsDynamic = jsArgAsDynamic(args, 1);
         if (!protocolsDynamic.empty())
         {
-          for (const auto& protocol : protocolsDynamic.items())
+          for (const auto& protocol : protocolsDynamic)
           {
-            protocols.push_back(protocol.first.getString());
+            protocols.push_back(protocol.getString());
           }
         }
 
