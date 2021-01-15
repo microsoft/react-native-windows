@@ -18,6 +18,10 @@ namespace ReactNativeIntegrationTests {
 using namespace winrt::Microsoft::ReactNative;
 
 struct TestEvent {
+  TestEvent() = default;
+  template <typename TName, typename TValue>
+  TestEvent(TName &&name, TValue &&value) : EventName(std::forward<TName>(name)), Value(std::forward<TValue>(value)) {}
+
   std::string EventName;
   JSValue Value;
 };
@@ -33,6 +37,12 @@ struct TestEventService {
   // different to the one that runs the ObserveEvents method.
   // We will have a deadlock if this expectation is not met.
   static void LogEvent(std::string_view eventName, JSValue &&value) noexcept;
+
+  // Logs new event for value types that need an explicit call to JSValue constructor.
+  template <typename TValue>
+  static void LogEvent(std::string_view eventName, TValue &&value) noexcept {
+    LogEvent(eventName, JSValue{std::forward<TValue>(value)});
+  }
 
   // Blocks current thread and observes all incoming events until we see them all.
   static void ObserveEvents(winrt::array_view<const TestEvent> expectedEvents) noexcept;
