@@ -508,10 +508,8 @@ Remarks:
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Provider GUID = cec49226-329e-4ea2-a16a-c37c6c0b2cd7
-EXTERN_C __declspec(selectany) const GUID REACT_NATIVE_WINDOWS = {0xcec49226,
-                                                                  0x329e,
-                                                                  0x4ea2,
-                                                                  {0xa1, 0x6a, 0xc3, 0x7c, 0x6c, 0x0b, 0x2c, 0xd7}};
+EXTERN_C __declspec(selectany) const GUID
+    REACT_NATIVE_WINDOWS = {0xcec49226, 0x329e, 0x4ea2, {0xa1, 0x6a, 0xc3, 0x7c, 0x6c, 0x0b, 0x2c, 0xd7}};
 
 #ifndef REACT_NATIVE_WINDOWS_Traits
 #define REACT_NATIVE_WINDOWS_Traits NULL

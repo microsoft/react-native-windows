@@ -32,9 +32,8 @@ UIManager::UIManager(std::vector<std::unique_ptr<IViewManager>> &&viewManagers, 
 
 UIManager::~UIManager() noexcept {
   m_nodeRegistry.removeAllRootViews([this](int64_t rootViewTag) { removeRootView(rootViewTag); });
-  m_nodeRegistry.ForAllNodes([this](int64_t tag, shadow_ptr const &shadowNode) noexcept {
-    DropView(tag, false, true);
-  });
+  m_nodeRegistry.ForAllNodes(
+      [this](int64_t tag, shadow_ptr const &shadowNode) noexcept { DropView(tag, false, true); });
   m_nativeUIManager->setHost(nullptr);
   m_nativeUIManager->destroy();
 }
@@ -462,9 +461,8 @@ UIManagerModule::~UIManagerModule() noexcept {
     // To make sure that we destroy UI components in UI thread.
     // We cannot use the m_uiQueue->runOnQueue directly because
     // the UI MessageQueueThread is already stopped.
-    std::static_pointer_cast<Mso::React::MessageDispatchQueue>(m_uiQueue)
-        ->DispatchQueue()
-        .Post([manager = std::move(m_manager)]() noexcept {});
+    std::static_pointer_cast<Mso::React::MessageDispatchQueue>(m_uiQueue)->DispatchQueue().Post(
+        [manager = std::move(m_manager)]() noexcept {});
   }
 }
 

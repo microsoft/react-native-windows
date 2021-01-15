@@ -51,7 +51,8 @@ std::vector<facebook::xplat::module::CxxModule::Method> TestUIManager::getMethod
       Method("dispatchViewManagerCommand", [](folly::dynamic args) {}),
       Method("measure", [](folly::dynamic args, Callback cb) {}),
       Method("measureInWindow", [](folly::dynamic args, Callback cb) {}),
-      Method("measureLayout", [](folly::dynamic args, Callback cbError, Callback cbSuccess) {}, AsyncTag),
+      Method(
+          "measureLayout", [](folly::dynamic args, Callback cbError, Callback cbSuccess) {}, AsyncTag),
       Method("findSubviewIn", [](folly::dynamic args, Callback cb) {}),
       Method("focus", [](folly::dynamic args) {}),
       Method("blur", [](folly::dynamic args) {}),

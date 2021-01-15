@@ -80,8 +80,9 @@ void AppTheme::fireEvent(std::string const &eventName, folly::dynamic &&eventDat
 AppThemeModule::AppThemeModule(std::shared_ptr<AppTheme> &&appTheme) : m_appTheme(std::move(appTheme)) {}
 
 auto AppThemeModule::getConstants() -> std::map<std::string, folly::dynamic> {
-  return {{"initialHighContrast", folly::dynamic{m_appTheme->getIsHighContrast()}},
-          {"initialHighContrastColors", folly::dynamic{m_appTheme->getHighContrastColors()}}};
+  return {
+      {"initialHighContrast", folly::dynamic{m_appTheme->getIsHighContrast()}},
+      {"initialHighContrastColors", folly::dynamic{m_appTheme->getHighContrastColors()}}};
 }
 
 auto AppThemeModule::getMethods() -> std::vector<facebook::xplat::module::CxxModule::Method> {

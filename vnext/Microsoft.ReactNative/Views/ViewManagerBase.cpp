@@ -74,8 +74,9 @@ YGSize DefaultYogaSelfMeasureFunc(
     assert(false);
   }
 
-  YGSize desiredSize = {GetConstrainedResult(constrainToWidth, element.DesiredSize().Width, widthMode),
-                        GetConstrainedResult(constrainToHeight, element.DesiredSize().Height, heightMode)};
+  YGSize desiredSize = {
+      GetConstrainedResult(constrainToWidth, element.DesiredSize().Width, widthMode),
+      GetConstrainedResult(constrainToHeight, element.DesiredSize().Height, heightMode)};
   return desiredSize;
 }
 
@@ -353,8 +354,8 @@ bool ViewManagerBase::IsNativeControlWithSelfLayout() const {
   return GetYogaCustomMeasureFunc() != nullptr;
 }
 
-void ViewManagerBase::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const
-    noexcept {
+void ViewManagerBase::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData)
+    const noexcept {
   folly::dynamic params = folly::dynamic::array(viewTag, std::move(eventName), std::move(eventData));
   m_context->CallJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
 }

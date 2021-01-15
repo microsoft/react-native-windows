@@ -50,7 +50,7 @@ void ReactNotificationSubscription::CallHandler(
     IReactNotificationArgs const &args) noexcept {
   if (IsSubscribed()) {
     if (m_dispatcher) {
-      m_dispatcher.Post([ thisPtr = get_strong(), sender, args ]() noexcept {
+      m_dispatcher.Post([thisPtr = get_strong(), sender, args]() noexcept {
         if (thisPtr->IsSubscribed()) {
           thisPtr->m_handler(sender, args);
         }

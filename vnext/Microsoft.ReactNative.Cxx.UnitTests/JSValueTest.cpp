@@ -186,17 +186,18 @@ TEST_CLASS (JSValueTest) {
   }
 
   TEST_METHOD(TestObjectLiteral) {
-    JSValue jsValue = JSValueObject{{"NullValue1", nullptr},
-                                    {"NullValue2", JSValue::Null.Copy()},
-                                    {"ObjValue", JSValueObject{{"prop1", 2}}},
-                                    {"ObjValueEmpty", JSValue::EmptyObject.Copy()},
-                                    {"ArrayValue", JSValueArray{1, 2}},
-                                    {"ArrayValueEmpty", JSValue::EmptyArray.Copy()},
-                                    {"StringValue1", "Hello"},
-                                    {"StringValue2", JSValue::EmptyString.Copy()},
-                                    {"BoolValue", true},
-                                    {"IntValue", 42},
-                                    {"DoubleValue", 4.5}};
+    JSValue jsValue = JSValueObject{
+        {"NullValue1", nullptr},
+        {"NullValue2", JSValue::Null.Copy()},
+        {"ObjValue", JSValueObject{{"prop1", 2}}},
+        {"ObjValueEmpty", JSValue::EmptyObject.Copy()},
+        {"ArrayValue", JSValueArray{1, 2}},
+        {"ArrayValueEmpty", JSValue::EmptyArray.Copy()},
+        {"StringValue1", "Hello"},
+        {"StringValue2", JSValue::EmptyString.Copy()},
+        {"BoolValue", true},
+        {"IntValue", 42},
+        {"DoubleValue", 4.5}};
     TestCheckEqual(JSValueType::Object, jsValue.Type());
     TestCheckEqual(JSValueType::Null, jsValue["NullValue1"].Type());
     TestCheckEqual(JSValueType::Null, jsValue["NullValue2"].Type());
@@ -228,15 +229,16 @@ TEST_CLASS (JSValueTest) {
   }
 
   TEST_METHOD(TestArrayLiteral) {
-    JSValue jsValue = JSValueArray{nullptr,
-                                   JSValueObject{{"prop1", 2}},
-                                   JSValueObject{},
-                                   JSValueArray{1, 2},
-                                   JSValueArray{},
-                                   "Hello",
-                                   true,
-                                   42,
-                                   4.5};
+    JSValue jsValue = JSValueArray{
+        nullptr,
+        JSValueObject{{"prop1", 2}},
+        JSValueObject{},
+        JSValueArray{1, 2},
+        JSValueArray{},
+        "Hello",
+        true,
+        42,
+        4.5};
 
     TestCheckEqual(JSValueType::Array, jsValue.Type());
     TestCheckEqual(JSValueType::Null, jsValue[0].Type());

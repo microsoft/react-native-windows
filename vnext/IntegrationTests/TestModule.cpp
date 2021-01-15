@@ -70,12 +70,13 @@ string TestDeviceInfoModule::getName() {
 }
 
 auto TestDeviceInfoModule::getConstants() -> map<string, dynamic> {
-  return {{"Dimensions",
-           folly::dynamic::object(
-               "windowPhysicalPixels",
-               folly::dynamic::object("width", 100)("height", 100)("scale", 1)("fontScale", 1)("densityDpi", 1))(
-               "screenPhysicalPixels",
-               folly::dynamic::object("width", 100)("height", 100)("scale", 1)("fontScale", 1)("densityDpi", 1))}};
+  return {
+      {"Dimensions",
+       folly::dynamic::object(
+           "windowPhysicalPixels",
+           folly::dynamic::object("width", 100)("height", 100)("scale", 1)("fontScale", 1)("densityDpi", 1))(
+           "screenPhysicalPixels",
+           folly::dynamic::object("width", 100)("height", 100)("scale", 1)("fontScale", 1)("densityDpi", 1))}};
 }
 
 auto TestDeviceInfoModule::getMethods() -> vector<Method> {
