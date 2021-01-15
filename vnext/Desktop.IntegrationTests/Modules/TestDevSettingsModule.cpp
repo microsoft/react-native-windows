@@ -6,7 +6,6 @@
 using namespace facebook::xplat;
 using namespace folly;
 
-using std::function;
 using std::map;
 using std::string;
 using std::vector;
@@ -28,15 +27,15 @@ map<string, dynamic> TestDevSettingsModule::getConstants() {
 vector<module::CxxModule::Method> TestDevSettingsModule::getMethods() {
   return {
       {"addMenuItem",
-       [this](dynamic args) {
+       [this](dynamic /*args*/) {
 
        }},
       {"reload",
-       [this](dynamic args) {
+       [this](dynamic /*args*/) {
 
        }},
       {"onFastRefresh",
-       [this](dynamic args) {
+       [this](dynamic /*args*/) {
 
        }},
   };
