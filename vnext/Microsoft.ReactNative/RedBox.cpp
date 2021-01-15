@@ -103,8 +103,8 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_dismissButton = m_redboxContent.FindName(L"DismissButton").as<xaml::Controls::Button>();
     m_reloadButton = m_redboxContent.FindName(L"ReloadButton").as<xaml::Controls::Button>();
 
-    m_tokenDismiss = m_dismissButton.Click([&](
-        IInspectable const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept { Dismiss(); });
+    m_tokenDismiss = m_dismissButton.Click(
+        [&](IInspectable const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept { Dismiss(); });
 
     m_tokenReload = m_reloadButton.Click([&](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
       Dismiss();
@@ -148,12 +148,12 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
           }
         });
 
-    m_tokenClosed = m_popup.Closed([wkThis = std::weak_ptr(shared_from_this())](
-        auto const & /*sender*/, IInspectable const & /*args*/) noexcept {
-      if (auto pthis = wkThis.lock()) {
-        pthis->OnPopupClosed();
-      }
-    });
+    m_tokenClosed = m_popup.Closed(
+        [wkThis = std::weak_ptr(shared_from_this())](auto const & /*sender*/, IInspectable const & /*args*/) noexcept {
+          if (auto pthis = wkThis.lock()) {
+            pthis->OnPopupClosed();
+          }
+        });
 
     m_popup.Child(m_redboxContent);
     m_popup.IsOpen(true);

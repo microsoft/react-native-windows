@@ -179,10 +179,11 @@ FileMappingBigString::FileMappingBigString(const std::string &filenameUtf8, uint
     m_data = decltype(m_data){static_cast<char *>(m_fileData.get()) + offset, [](void *) {}};
   } else {
     // Ensure m_data is null-terminated
-    m_data = decltype(m_data){new char[m_size + 1],
-                              [](void *pv) // Can't just say &opreator delete[] because of calling
-                                           // convention mismatches
-                              { delete[] static_cast<char *>(pv); }};
+    m_data = decltype(m_data){
+        new char[m_size + 1],
+        [](void *pv) // Can't just say &opreator delete[] because of calling
+                     // convention mismatches
+        { delete[] static_cast<char *>(pv); }};
     memcpy(m_data.get(), static_cast<char *>(m_fileData.get()) + offset, m_size);
     m_data.get()[m_size] = '\0';
   }

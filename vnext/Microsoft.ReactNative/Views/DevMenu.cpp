@@ -24,8 +24,8 @@ React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<DevMenuManager>>>
 }
 
 React::ReactPropertyId<React::ReactNonAbiValue<Mso::VoidFunctor>> ConfigureBundlerProperty() noexcept {
-  static React::ReactPropertyId<React::ReactNonAbiValue<Mso::VoidFunctor>> propId{L"ReactNative.DevMenuManager",
-                                                                                  L"ConfigureBundler"};
+  static React::ReactPropertyId<React::ReactNonAbiValue<Mso::VoidFunctor>> propId{
+      L"ReactNative.DevMenuManager", L"ConfigureBundler"};
   return propId;
 }
 

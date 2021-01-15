@@ -3,11 +3,14 @@
 
 #include "pch.h"
 
+#include <NativeModules.h>
 #include <ReactNotificationService.h>
 #include <eventWaitHandle/eventWaitHandle.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.h>
 #include <string>
+#include "TestEventService.h"
+#include "TestReactNativeHostHolder.h"
 
 using namespace winrt;
 using namespace Microsoft::ReactNative;
@@ -15,6 +18,49 @@ using namespace Windows::Foundation;
 using namespace std::string_literals;
 
 namespace ReactNativeIntegrationTests {
+
+// Use anonymous namespace to avoid any linking conflicts
+namespace {
+
+ReactNotificationId<int> notifyAppFromModule{L"NotificationTestModule", L"NotifyAppFromModule"};
+ReactNotificationId<int> notifyModuleFromApp{L"NotificationTestModule", L"NotifyModuleFromApp"};
+
+REACT_MODULE(NotificationTestModule)
+struct NotificationTestModule {
+  REACT_INIT(Initialize)
+  void Initialize(ReactContext const &reactContext) noexcept {
+    m_reactContext = reactContext;
+
+    // Subscribe to a notification from the app.
+    reactContext.Notifications().Subscribe(
+        notifyModuleFromApp, [](IInspectable const & /*sender*/, ReactNotificationArgs<int> const &args) noexcept {
+          TestEventService::LogEvent("NotifyModuleFromApp", args.Data());
+
+          // Unsubscribe after the first notification.
+          args.Subscription().Unsubscribe();
+        });
+  }
+
+  REACT_METHOD(RunTest, L"runTest")
+  void RunTest() noexcept {
+    TestEventService::LogEvent("Test started", nullptr);
+
+    // Send a notification from the module to app.
+    m_reactContext.Notifications().SendNotification(notifyAppFromModule, 15);
+    TestEventService::LogEvent("Test ended", nullptr);
+  }
+
+ private:
+  ReactContext m_reactContext;
+};
+
+struct NotificationTestPackageProvider : winrt::implements<NotificationTestPackageProvider, IReactPackageProvider> {
+  void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
+    TryAddAttributedModule(packageBuilder, L"NotificationTestModule");
+  }
+};
+
+} // namespace
 
 TEST_CLASS (ReactNotificationServiceTests) {
   TEST_METHOD(Notification_Subscribe) {
@@ -246,6 +292,36 @@ TEST_CLASS (ReactNotificationServiceTests) {
 
     subscription = nullptr;
     TestCheck(!s.IsSubscribed());
+  }
+
+  TEST_METHOD(NotificationBetweenAppAndModule) {
+    TestEventService::Initialize();
+
+    auto reactNativeHost =
+        TestReactNativeHostHolder(L"ReactNotificationServiceTests", [](ReactNativeHost const &host) noexcept {
+          host.PackageProviders().Append(winrt::make<NotificationTestPackageProvider>());
+
+          // Subscribe to a notification from module to app.
+          ReactNotificationService::Subscribe(
+              host.InstanceSettings().Notifications(),
+              notifyAppFromModule,
+              [](IInspectable const &, ReactNotificationArgs<int> const &args) {
+                TestEventService::LogEvent("NotifyAppFromModule", args.Data());
+
+                // Send a notification from app to the module.
+                args.Subscription().NotificationService().SendNotification(notifyModuleFromApp, 42);
+
+                // Unsubscribe after the first notification.
+                args.Subscription().Unsubscribe();
+              });
+        });
+
+    TestEventService::ObserveEvents({
+        TestEvent{"Test started", nullptr},
+        TestEvent{"NotifyAppFromModule", 15},
+        TestEvent{"NotifyModuleFromApp", 42},
+        TestEvent{"Test ended", nullptr},
+    });
   }
 };
 

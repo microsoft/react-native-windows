@@ -231,12 +231,12 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                     rejectFunction = {runtime, args[count - 1]};
                   }
 
-                  auto makeCallback = [&runtime](
-                                          const facebook::jsi::Value &callbackValue) noexcept->MethodResultCallback {
+                  auto makeCallback =
+                      [&runtime](const facebook::jsi::Value &callbackValue) noexcept -> MethodResultCallback {
                     // workaround: xcode doesn't accept a captured value with only rvalue copy constructor
                     auto functionObject =
                         std::make_shared<facebook::jsi::Function>(callbackValue.asObject(runtime).asFunction(runtime));
-                    return [&runtime, callbackFunction = functionObject ](const IJSValueWriter &writer) noexcept {
+                    return [&runtime, callbackFunction = functionObject](const IJSValueWriter &writer) noexcept {
                       const facebook::jsi::Value *resultArgs = nullptr;
                       size_t resultCount = 0;
                       writer.as<JsiWriter>()->AccessResultAsArgs(resultArgs, resultCount);

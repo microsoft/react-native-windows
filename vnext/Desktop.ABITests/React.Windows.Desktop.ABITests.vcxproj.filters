@@ -1,90 +1,69 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{dd007ef2-0241-4f4c-bac8-916c537375a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Other files">
+      <UniqueIdentifier>{8af93322-e15d-4a04-af2f-d9012ef7b089}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="DynamicReaderWriterTests.cpp" />
+    <ClCompile Include="MemoryTrackerTests.cpp" />
+    <ClCompile Include="NativeLogEventTests.cpp" />
+    <ClCompile Include="NativeTraceEventTests.cpp" />
+    <ClCompile Include="PerfTests.cpp" />
+    <ClCompile Include="ReactContextTests.cpp" />
+    <ClCompile Include="ReactDispatcherTests.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactInstanceSettingsTests.cpp" />
+    <ClCompile Include="ReactModuleBuilderTests.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.cpp" />
+    <ClCompile Include="ReactNonAbiValueTests.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactNotificationServiceTests.cpp" />
+    <ClCompile Include="ReactPackageBuilderTests.cpp" />
+    <ClCompile Include="ReactPackageProviderTests.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactPropertyBagTests.cpp" />
+    <ClCompile Include="RedBoxTests.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\TestEventService.cpp">
+      <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="MemoryTrackerTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NativeLogEventTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NativeTraceEventTests.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\TestReactNativeHostHolder.cpp">
+      <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="PerfTests.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="main.cpp">
+      <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="SimpleMessageQueue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactPropertyBagTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DynamicReaderWriterTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactContextTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactModuleBuilderTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactNonAbiValueTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactPackageBuilderTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactDispatcherTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactInstanceSettingsTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactNotificationServiceTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactPackageProviderTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RedBoxTests.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
+      <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="SimpleMessageQueue.h">
-      <Filter>Header Files</Filter>
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative.IntegrationTests\TestEventService.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative.IntegrationTests\TestReactNativeHostHolder.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <Manifest Include="Application.manifest">
+      <Filter>Other files</Filter>
+    </Manifest>
   </ItemGroup>
   <ItemGroup>
-    <Manifest Include="Application.manifest" />
+    <None Include="packages.config">
+      <Filter>Other files</Filter>
+    </None>
+    <None Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.js" />
   </ItemGroup>
 </Project>

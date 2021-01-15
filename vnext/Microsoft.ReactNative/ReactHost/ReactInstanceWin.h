@@ -52,9 +52,8 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   const ReactOptions &Options() const noexcept override;
   ReactInstanceState State() const noexcept override;
   Mso::React::IReactContext &GetReactContext() const noexcept override;
-  void AttachMeasuredRootView(
-      facebook::react::IReactRootView *rootView,
-      folly::dynamic &&initialProps) noexcept override;
+  void AttachMeasuredRootView(facebook::react::IReactRootView *rootView, folly::dynamic &&initialProps) noexcept
+      override;
   void DetachRootView(facebook::react::IReactRootView *rootView) noexcept override;
 
  public: // IReactInstanceInternal
@@ -156,12 +155,15 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
 
   const Mso::ActiveReadableField<Mso::DispatchQueue> m_jsDispatchQueue{Queue(), m_mutex};
 
-  const Mso::ActiveReadableField<std::shared_ptr<facebook::react::MessageQueueThread>> m_jsMessageThread{Queue(),
-                                                                                                         m_mutex};
-  const Mso::ActiveReadableField<std::shared_ptr<facebook::react::MessageQueueThread>> m_nativeMessageThread{Queue(),
-                                                                                                             m_mutex};
-  const Mso::ActiveReadableField<std::shared_ptr<facebook::react::MessageQueueThread>> m_uiMessageThread{Queue(),
-                                                                                                         m_mutex};
+  const Mso::ActiveReadableField<std::shared_ptr<facebook::react::MessageQueueThread>> m_jsMessageThread{
+      Queue(),
+      m_mutex};
+  const Mso::ActiveReadableField<std::shared_ptr<facebook::react::MessageQueueThread>> m_nativeMessageThread{
+      Queue(),
+      m_mutex};
+  const Mso::ActiveReadableField<std::shared_ptr<facebook::react::MessageQueueThread>> m_uiMessageThread{
+      Queue(),
+      m_mutex};
 
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::InstanceWrapper>> m_instanceWrapper{Queue(), m_mutex};
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::Instance>> m_instance{Queue(), m_mutex};

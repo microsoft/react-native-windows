@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix ReactNotificationService for notifications between app and modules",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

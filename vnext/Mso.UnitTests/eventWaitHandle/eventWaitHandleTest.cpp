@@ -59,7 +59,7 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     std::thread th;
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th = std::thread([ ev, &value ]() noexcept {
+      th = std::thread([ev, &value]() noexcept {
         ev.Set();
         ++value;
       });
@@ -76,7 +76,7 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     std::thread th;
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th = std::thread([ ev, &value ]() noexcept {
+      th = std::thread([ev, &value]() noexcept {
         ev.Set();
         ++value;
       });
@@ -94,12 +94,12 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     std::thread th1, th2;
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th1 = std::thread([ ev, &value ]() noexcept {
+      th1 = std::thread([ev, &value]() noexcept {
         ev.Wait();
         ++value;
       });
 
-      th2 = std::thread([ ev, &value ]() noexcept {
+      th2 = std::thread([ev, &value]() noexcept {
         ev.Wait();
         ++value;
       });
@@ -118,7 +118,7 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
 
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th1 = std::thread([ ev, &value ]() noexcept {
+      th1 = std::thread([ev, &value]() noexcept {
         ev.Wait();
         ++value;
         ev.Reset();
@@ -129,7 +129,7 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     TestCheckEqual(1, value.load());
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th2 = std::thread([ ev, &value ]() noexcept {
+      th2 = std::thread([ev, &value]() noexcept {
         ev.Wait();
         ++value;
       });
@@ -147,7 +147,7 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     std::thread th1;
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th1 = std::thread([ ev, &value ]() noexcept {
+      th1 = std::thread([ev, &value]() noexcept {
         TestCheck(!ev.WaitFor(0ms)); // Must always timeout in our case.
         ++value;
       });
@@ -163,7 +163,7 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     std::thread th1;
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th1 = std::thread([ ev, &value ]() noexcept {
+      th1 = std::thread([ev, &value]() noexcept {
         TestCheck(!ev.WaitFor(1ms)); // Must always timeout in our case.
         ++value;
       });
@@ -179,7 +179,7 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     std::thread th1;
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th1 = std::thread([ ev, &value ]() noexcept {
+      th1 = std::thread([ev, &value]() noexcept {
         TestCheck(ev.WaitFor(1000s)); // Must succeed because we call Set.
         ++value;
       });
@@ -232,7 +232,7 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     std::thread th;
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th = std::thread([ ev, &value ]() noexcept {
+      th = std::thread([ev, &value]() noexcept {
         ev.Set();
         ++value;
       });
@@ -249,7 +249,7 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     std::thread th;
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th = std::thread([ ev, &value ]() noexcept {
+      th = std::thread([ev, &value]() noexcept {
         ev.Set();
         ++value;
       });
@@ -268,12 +268,12 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     std::thread th1, th2;
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th1 = std::thread([ ev, &value, valueChanged ]() noexcept {
+      th1 = std::thread([ev, &value, valueChanged]() noexcept {
         ev.Wait();
         ++value;
         valueChanged.Set();
       });
-      th2 = std::thread([ ev, &value, valueChanged ]() noexcept {
+      th2 = std::thread([ev, &value, valueChanged]() noexcept {
         ev.Wait();
         ++value;
         valueChanged.Set();
@@ -298,7 +298,7 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     std::thread th;
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th = std::thread([ ev, &value ]() noexcept {
+      th = std::thread([ev, &value]() noexcept {
         ev.Wait();
         ++value;
       });
@@ -315,7 +315,7 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     std::thread th1;
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th1 = std::thread([ ev, &value ]() noexcept {
+      th1 = std::thread([ev, &value]() noexcept {
         TestCheck(!ev.WaitFor(0ms)); // Must always timeout in our case.
         ++value;
       });
@@ -331,7 +331,7 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     std::thread th1;
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th1 = std::thread([ ev, &value ]() noexcept {
+      th1 = std::thread([ev, &value]() noexcept {
         TestCheck(!ev.WaitFor(1ms)); // Must always timeout in our case.
         ++value;
       });
@@ -347,7 +347,7 @@ TEST_CLASS_EX (EventWaitHandleTest, LibletAwareMemLeakDetection) {
     std::thread th1;
     {
       // Debug(Mso::Memory::AutoIgnoreLeakScope ignore);
-      th1 = std::thread([ ev, &value ]() noexcept {
+      th1 = std::thread([ev, &value]() noexcept {
         TestCheck(ev.WaitFor(1000s)); // Must succeed because we call Set.
         ++value;
       });

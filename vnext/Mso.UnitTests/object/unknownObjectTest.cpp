@@ -1252,9 +1252,8 @@ TEST_CLASS (UnknownObjectTest) {
     Mso::CntPtr<IBaseSample1> base1 = Mso::Make<UnknownSample21, IBaseSample1>();
     Mso::CntPtr<IBaseSample2> base2 = Mso::Make<UnknownSample21, IBaseSample2>();
 
-    TestAssert::ExpectVEC([&]() noexcept {
-      base1->QueryInterface(__uuidof(IBaseSample2), reinterpret_cast<void **>(base2.GetRaw()));
-    });
+    TestAssert::ExpectVEC(
+        [&]() noexcept { base1->QueryInterface(__uuidof(IBaseSample2), reinterpret_cast<void **>(base2.GetRaw())); });
   }
 #endif
 

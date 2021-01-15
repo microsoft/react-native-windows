@@ -41,7 +41,7 @@ FrameworkElement CustomUserControlViewManagerCpp::CreateView() noexcept {
           ReactContext().DispatchEvent(
               c,
               L"topLabelChanged",
-              [ this, c ](winrt::Microsoft::ReactNative::IJSValueWriter const &eventDataWriter) noexcept {
+              [this, c](winrt::Microsoft::ReactNative::IJSValueWriter const &eventDataWriter) noexcept {
                 eventDataWriter.WriteString(c.Label());
               });
         }
