@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Tue, 05 Jan 2021 05:06:42 GMT and should not be manually modified.
+This log was last generated on Fri, 15 Jan 2021 05:07:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.13
+
+Fri, 15 Jan 2021 05:07:01 GMT
+
+### Changes
+
+- Remove appium from package dependency (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.12
 

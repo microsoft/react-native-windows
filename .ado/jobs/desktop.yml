@@ -8,8 +8,14 @@ parameters:
 
 jobs:
   - job: Desktop
+    displayName: Desktop
     variables:
       - template: ../variables/vs2019.yml
+
+      # Enable if any issues RNTesterIntegrationTests::* become unstable.
+      - name: Desktop.IntegrationTests.SkipRNTester
+        value: false
+
       #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage,WebSocket,Logging).
       #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
       - name: Desktop.IntegrationTests.Filter
@@ -19,15 +25,17 @@ jobs:
           (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
           (FullyQualifiedName!~WebSocketModule_)&
           (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
-      # HostFunctionTest              - Crashes under JSI/V8
-      # HostObjectProtoTest           - Crashes under JSI/V8
-      # PreparedJavaScriptSourceTest  - Asserts/Fails under JSI/ChakraCore
+
+      #6799 -
+      #       HostFunctionTest              - Crashes under JSI/V8
+      #       HostObjectProtoTest           - Crashes under JSI/V8
+      #       PreparedJavaScriptSourceTest  - Asserts/Fails under JSI/ChakraCore
       - name: Desktop.UnitTests.Filter
         value: >
           (FullyQualifiedName!~HostFunctionTest)&
           (FullyQualifiedName!~HostObjectProtoTest)&
           (FullyQualifiedName!~PreparedJavaScriptSourceTest)
-    displayName: Desktop
+
     strategy:
       matrix:
         # Start Continuous only
@@ -73,9 +81,14 @@ jobs:
         clean: false
         submodules: false
 
+      - powershell: |
+          $newValue = '(FullyQualifiedName!~RNTesterIntegrationTests::)&' + "$(Desktop.IntegrationTests.Filter)"
+          Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
+        displayName: Update Desktop.IntegrationTests.Filter
+        condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
+
       - template: ../templates/build-rnw.yml
         parameters:
-          yarnBuildCmd: build
           project: vnext/ReactWindows-Desktop.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
@@ -117,14 +130,14 @@ jobs:
           targetType: filePath # filePath | inline
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
           arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
-        condition: false # windesktop is no longer bundling
+        condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
 
       - task: PowerShell@2
         displayName: Check the metro bundle server
         inputs:
           targetType: 'inline'
           script: Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
-        condition: false # windesktop is no longer bundling
+        condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
@@ -140,9 +153,8 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
-        condition: false # windesktop is no longer bundling
         # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
-        # condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
+        condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
 
       - template: ../templates/stop-packagers.yml
 

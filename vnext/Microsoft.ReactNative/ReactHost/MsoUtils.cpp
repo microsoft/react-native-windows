@@ -58,7 +58,7 @@ struct WhenAllCompletedState : Mso::RefCountedObjectNoVTable<WhenAllCompletedSta
 Mso::Future<void> WhenAllCompleted(const std::vector<Mso::Future<void>> &futures) noexcept {
   auto whenAllCompleted = Mso::Make<WhenAllCompletedState>(futures.size());
   Mso::ForEach(futures, [whenAllCompleted](const Mso::Future<void> &future, size_t index) noexcept {
-    future.Then<Mso::Executors::Inline>([ whenAllCompleted, index ](Mso::Maybe<void> && result) mutable noexcept {
+    future.Then<Mso::Executors::Inline>([whenAllCompleted, index](Mso::Maybe<void> &&result) mutable noexcept {
       whenAllCompleted->SetResult(index, std::move(result));
     });
   });
@@ -71,9 +71,8 @@ Mso::Future<void> MakeCanceledFuture() noexcept {
 
 void SetPromiseValue(Mso::Promise<void> &&promise, const Mso::Future<void> &valueSource) noexcept {
   if (promise) {
-    valueSource.Then<Mso::Executors::Inline>([promise = std::move(promise)](Mso::Maybe<void> && value) noexcept {
-      promise.SetValue(std::move(value));
-    });
+    valueSource.Then<Mso::Executors::Inline>(
+        [promise = std::move(promise)](Mso::Maybe<void> &&value) noexcept { promise.SetValue(std::move(value)); });
   }
 }
 

@@ -2,6 +2,116 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 15 Jan 2021 05:07:01 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.235",
+      "version": "0.0.0-canary.235",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add JSValue constructor for std::optional<T>",
+            "author": "vmorozov@microsoft.com",
+            "commit": "af70a3e80fe482996e4151663b54a2fa37bea237",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Simplify Microsoft.ReactNative.IntegrationTests",
+            "author": "vmorozov@microsoft.com",
+            "commit": "ec3f4920e6c4f15357493b895ed83a59ab3310f2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Updated doc comments in IReactNotificationService.idl",
+            "author": "vmorozov@microsoft.com",
+            "commit": "a188c30557720133c25aeed8f75f03ddb4ca9154",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update clang-format version to 1.5.0",
+            "author": "vmorozov@microsoft.com",
+            "commit": "fed79b55bde999cafe46b7e702bfcd6c22a21ae2",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v0.4.7",
+            "author": "canli@microsoft.com",
+            "commit": "3ffbf9311ab77935b65c6616d33a6538f0582780",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 14 Jan 2021 05:05:22 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.234",
+      "version": "0.0.0-canary.234",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move CallInvoker.h to TurboModule folder",
+            "author": "vmorozov@microsoft.com",
+            "commit": "b3694b77f6b79470f1536eea474cf8081cb19068",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix unused variable warning in AbiCallInvoker",
+            "author": "vmorozov@microsoft.com",
+            "commit": "57bb48555ae879184e4d103ac1ffc93c3d3806cd",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate RN nightly 13/1 build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "6d00292b75116970d6fb83e7d1560e2fa55f8b8a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 Jan 2021 05:05:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.233",
+      "version": "0.0.0-canary.233",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "#6715 Add Workaround to Resolve textDecorationLine Bug",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "9e427fb48f29c9d562628217122622531e02459c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Jan 2021 05:07:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.232",
+      "version": "0.0.0-canary.232",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "#6217 : Add Clearer Error Msg for YGValues",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "d7b8dba1b9d2b31ac7d8238f95da1f7d623a7849",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 1/6 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "64b0f8706de05473456eae6340a4cbcd938baaaa",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 1/7 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "267b5c0c086bb265172bb9b25b057043583a2574",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 Jan 2021 05:06:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.230",
       "version": "0.0.0-canary.230",

@@ -155,12 +155,12 @@ struct CntPtrRef {
 
   operator CntPtr<T> *() const noexcept;
   operator void *() const noexcept;
-  operator T **() const noexcept;
-  operator void **() const noexcept;
-  operator const void **() const noexcept;
+  operator T * *() const noexcept;
+  operator void * *() const noexcept;
+  operator const void * *() const noexcept;
 
   template <typename TBase, EnableIfIsBaseOf<TBase, T> = 0>
-  explicit operator TBase **() const noexcept;
+  explicit operator TBase * *() const noexcept;
 
   T *&operator*() noexcept;
   T **ClearAndGetAddressOf() noexcept;
@@ -508,23 +508,23 @@ inline CntPtrRef<T>::operator void *() const noexcept {
 }
 
 template <typename T>
-inline CntPtrRef<T>::operator T **() const noexcept {
+inline CntPtrRef<T>::operator T * *() const noexcept {
   return const_cast<CntPtrRef *>(this)->m_pCntPtr->GetAddressOf();
 }
 
 template <typename T>
-inline CntPtrRef<T>::operator void **() const noexcept {
+inline CntPtrRef<T>::operator void * *() const noexcept {
   return reinterpret_cast<void **>(const_cast<CntPtrRef *>(this)->m_pCntPtr->GetAddressOf());
 }
 
 template <typename T>
-inline CntPtrRef<T>::operator const void **() const noexcept {
+inline CntPtrRef<T>::operator const void * *() const noexcept {
   return (const void **)(const_cast<CntPtrRef *>(this)->m_pCntPtr->GetAddressOf());
 }
 
 template <typename T>
 template <typename TBase, EnableIfIsBaseOf<TBase, T>>
-inline CntPtrRef<T>::operator TBase **() const noexcept {
+inline CntPtrRef<T>::operator TBase * *() const noexcept {
   return (TBase **)const_cast<CntPtrRef *>(this)->m_pCntPtr->GetAddressOf();
 }
 

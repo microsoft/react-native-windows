@@ -139,7 +139,7 @@ template <class TAction>
 inline Mso::Future<void> ReactViewInstance::PostInUIQueue(TAction &&action) noexcept {
   // ReactViewInstance has shorter lifetime than ReactRootControl. Thus, we capture this WeakPtr.
   return Mso::PostFuture(
-      m_uiQueue, [ weakThis = Mso::WeakPtr{this}, action{std::forward<TAction>(action)} ]() mutable noexcept {
+      m_uiQueue, [weakThis = Mso::WeakPtr{this}, action{std::forward<TAction>(action)}]() mutable noexcept {
         if (auto strongThis = weakThis.GetStrongPtr()) {
           if (auto rootControl = strongThis->m_weakRootControl.lock()) {
             action(*rootControl);

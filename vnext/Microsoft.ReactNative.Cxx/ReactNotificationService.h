@@ -24,6 +24,8 @@ struct ReactNotificationId : ReactPropertyName {
   }
 };
 
+struct ReactNotificationService;
+
 struct ReactNotificationSubscription {
   ReactNotificationSubscription(std::nullptr_t = nullptr) noexcept {}
 
@@ -45,6 +47,8 @@ struct ReactNotificationSubscription {
   ReactPropertyName NotificationName() const noexcept {
     return ReactPropertyName{m_handle ? m_handle.NotificationName() : nullptr};
   };
+
+  ReactNotificationService NotificationService() const noexcept;
 
   // True if the subscription is still active.
   // This property is checked before notification handler is invoked.
@@ -267,8 +271,8 @@ struct ReactNotificationService {
   }
 
   template <class TData, class THandler, std::enable_if_t<IsValidHandlerV<THandler, TData>, int> = 0>
-  ReactNotificationSubscription Subscribe(ReactNotificationId<TData> const &notificationId, THandler &&handler) const
-      noexcept {
+  ReactNotificationSubscription Subscribe(ReactNotificationId<TData> const &notificationId, THandler &&handler)
+      const noexcept {
     return Subscribe(m_handle, notificationId, nullptr, std::forward<THandler>(handler));
   }
 
@@ -297,6 +301,10 @@ struct ReactNotificationService {
 
  private:
   IReactNotificationService m_handle;
+};
+
+inline ReactNotificationService ReactNotificationSubscription::NotificationService() const noexcept {
+  return ReactNotificationService{m_handle ? m_handle.NotificationService() : nullptr};
 };
 
 } // namespace winrt::Microsoft::ReactNative

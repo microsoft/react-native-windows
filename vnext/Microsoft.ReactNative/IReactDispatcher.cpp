@@ -33,7 +33,7 @@ void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
   IReactDispatcher dispatcher{nullptr};
   auto queue = Mso::DispatchQueue::GetCurrentUIThreadQueue();
   if (queue && queue.HasThreadAccess()) {
-    queue.InvokeElsePost([&queue, &dispatcher ]() noexcept {
+    queue.InvokeElsePost([&queue, &dispatcher]() noexcept {
       // This code runs synchronously, but we want it to be run the queue context to
       // access the queue local value where we store the weak_ref to the dispatcher.
       // The queue local values are destroyed along with the queue.

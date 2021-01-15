@@ -128,6 +128,8 @@
     <ReferenceCopyLocalPaths Include="$(OutputPath)..\React.Windows.Desktop.DLL\react-native-win32.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\TestEventService.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\TestReactNativeHostHolder.cpp" />
     <ClCompile Include="DynamicReaderWriterTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MemoryTrackerTests.cpp" />
@@ -151,13 +153,16 @@
     <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactPropertyBagTests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Microsoft.ReactNative.IntegrationTests\TestEventService.h" />
+    <ClInclude Include="..\Microsoft.ReactNative.IntegrationTests\TestReactNativeHostHolder.h" />
     <ClInclude Include="SimpleMessageQueue.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="Application.manifest" />
+    <None Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.js" />
     <None Include="packages.config" />
-    <JsBundleEntry Include="..\Microsoft.ReactNative.IntegrationTests\AddValues.js" />
+    <JsBundleEntry Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.js" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

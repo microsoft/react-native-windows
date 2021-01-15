@@ -1,8 +1,51 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 05 Jan 2021 05:06:42 GMT and should not be manually modified.
+This log was last generated on Fri, 15 Jan 2021 05:07:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.235
+
+Fri, 15 Jan 2021 05:07:01 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v0.4.7 (canli@microsoft.com)
+
+### Changes
+
+- Add JSValue constructor for std::optional<T> (vmorozov@microsoft.com)
+- Simplify Microsoft.ReactNative.IntegrationTests (vmorozov@microsoft.com)
+- Updated doc comments in IReactNotificationService.idl (vmorozov@microsoft.com)
+- Update clang-format version to 1.5.0 (vmorozov@microsoft.com)
+
+## 0.0.0-canary.234
+
+Thu, 14 Jan 2021 05:05:22 GMT
+
+### Changes
+
+- Move CallInvoker.h to TurboModule folder (vmorozov@microsoft.com)
+- Fix unused variable warning in AbiCallInvoker (vmorozov@microsoft.com)
+- Integrate RN nightly 13/1 build. (igklemen@microsoft.com)
+
+## 0.0.0-canary.233
+
+Wed, 13 Jan 2021 05:05:37 GMT
+
+### Changes
+
+- #6715 Add Workaround to Resolve textDecorationLine Bug (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.232
+
+Tue, 12 Jan 2021 05:07:53 GMT
+
+### Changes
+
+- #6217 : Add Clearer Error Msg for YGValues (34109996+chiaramooney@users.noreply.github.com)
+- Integrate 1/6 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 1/7 Nightly RN Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.230
 

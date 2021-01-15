@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Wed, 13 Jan 2021 05:05:37 GMT",
+      "tag": "@rnw-scripts/just-task_v0.0.6",
+      "version": "0.0.6",
+      "comments": {
+        "none": [
+          {
+            "comment": "remove excessive change files",
+            "author": "lehon@microsoft.com",
+            "commit": "8c4a518552899dbacc7d9133e2e480c8f55df85d",
+            "package": "@rnw-scripts/just-task"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Oct 2020 05:06:32 GMT",
       "tag": "@rnw-scripts/just-task_v0.0.6",
       "version": "0.0.6",

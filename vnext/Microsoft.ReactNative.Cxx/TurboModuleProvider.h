@@ -19,7 +19,7 @@ template <
 void AddTurboModuleProvider(IReactPackageBuilder const &packageBuilder, std::wstring_view moduleName) {
   auto experimental = packageBuilder.as<IReactPackageBuilderExperimental>();
   experimental.AddTurboModule(
-      moduleName, [](IReactModuleBuilder const &moduleBuilder) noexcept->winrt::Windows::Foundation::IInspectable {
+      moduleName, [](IReactModuleBuilder const &moduleBuilder) noexcept -> winrt::Windows::Foundation::IInspectable {
         IJsiHostObject abiTurboModule{nullptr};
         // We expect the initializer to be called immediately for TurboModules
         moduleBuilder.AddInitializer([&abiTurboModule](IReactContext const &context) mutable {

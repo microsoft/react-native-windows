@@ -12,14 +12,18 @@
     </ItemGroup>
   </Target>
 
-  <!-- This target checks if Yarn install needs to run or not. This is a common cause of failed builds for developers not used to running it after syncing... -->
+  <!-- 
+    This target checks if Yarn install needs to run or not. 
+    This is a common cause of failed builds for developers not used to running it after syncing...
+    This check does not run during design time build and in our CI validation runs (detected via PublishToolDuringBuild because we know yarn install runs there.
+  -->
   <Target
     Name="EnsureJavaScriptCodeUpToDate"
     BeforeTargets="BeforeBuild"
     DependsOnTargets="EnsureJavaScriptCodeUpToDateInputAndOutputs"
     Inputs="@(_EnsureJavaScriptCodeUpToDateInputFiles)"
     Outputs="@(_EnsureJavaScriptCodeUpToDateOutputFiles)"
-    Condition="'$(DesignTimeBuild)'==''"
+    Condition="'$(DesignTimeBuild)'=='' AND '$(PublishToolDuringBuild)' == ''"
     >
 
     <Message Text="Checking if yarn is 'up to date' by running a 'dry-run' version of `yarn install` and checking the exit code" />

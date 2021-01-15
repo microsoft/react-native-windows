@@ -2,6 +2,36 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Fri, 15 Jan 2021 05:07:01 GMT",
+      "tag": "react-native-platform-override_v0.4.7",
+      "version": "0.4.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update code to new packages for isUtf8 and yargs",
+            "author": "canli@microsoft.com",
+            "commit": "3ffbf9311ab77935b65c6616d33a6538f0582780",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Jan 2021 05:07:53 GMT",
+      "tag": "react-native-platform-override_v0.4.6",
+      "version": "0.4.6",
+      "comments": {
+        "none": [
+          {
+            "comment": "Alphabetize dependencies",
+            "author": "ngerlem@microsoft.com",
+            "commit": "64b0f8706de05473456eae6340a4cbcd938baaaa",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Jan 2021 05:06:51 GMT",
       "tag": "react-native-platform-override_v0.4.6",
       "version": "0.4.6",

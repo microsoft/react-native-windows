@@ -2,6 +2,87 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 15 Jan 2021 05:07:01 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.74",
+      "version": "0.0.0-canary.74",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v0.4.7",
+            "author": "canli@microsoft.com",
+            "commit": "3ffbf9311ab77935b65c6616d33a6538f0582780",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 14 Jan 2021 05:05:22 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.73",
+      "version": "0.0.0-canary.73",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate RN nightly 13/1 build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "6d00292b75116970d6fb83e7d1560e2fa55f8b8a",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 Jan 2021 05:05:37 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.72",
+      "version": "0.0.0-canary.72",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add accessibilityDescription to ViewWin32",
+            "author": "lehon@microsoft.com",
+            "commit": "8c4a518552899dbacc7d9133e2e480c8f55df85d",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Jan 2021 05:07:53 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.71",
+      "version": "0.0.0-canary.71",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 1/7 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "267b5c0c086bb265172bb9b25b057043583a2574",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 1/6 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "64b0f8706de05473456eae6340a4cbcd938baaaa",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 09 Jan 2021 05:05:32 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.70",
+      "version": "0.0.0-canary.70",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding FocusManager type decl file",
+            "author": "safreibe@microsoft.com",
+            "commit": "2b701c48ebbf89883cedeeda8af95e672006b724",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Dec 2020 19:23:58 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.68",
       "version": "0.0.0-canary.68",
