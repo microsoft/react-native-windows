@@ -2,6 +2,27 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 15 Jan 2021 05:07:01 GMT",
+      "tag": "react-native-windows-init_v0.1.43",
+      "version": "0.1.43",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.13",
+            "author": "dannyvv@microsoft.com",
+            "commit": "3ffbf9311ab77935b65c6616d33a6538f0582780",
+            "package": "react-native-windows-init"
+          },
+          {
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.52",
+            "author": "dannyvv@microsoft.com",
+            "commit": "3ffbf9311ab77935b65c6616d33a6538f0582780",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Jan 2021 05:05:37 GMT",
       "tag": "react-native-windows-init_v0.1.43",
       "version": "0.1.43",

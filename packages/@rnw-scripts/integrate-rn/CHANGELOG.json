@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Fri, 15 Jan 2021 05:07:01 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v0.0.23",
+      "version": "0.0.23",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update code to new packages for isUtf8 and yargs",
+            "author": "canli@microsoft.com",
+            "commit": "3ffbf9311ab77935b65c6616d33a6538f0582780",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 14 Jan 2021 05:05:22 GMT",
       "tag": "@rnw-scripts/integrate-rn_v0.0.22",
       "version": "0.0.22",

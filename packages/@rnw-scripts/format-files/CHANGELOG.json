@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/format-files",
   "entries": [
     {
+      "date": "Fri, 15 Jan 2021 05:07:01 GMT",
+      "tag": "@rnw-scripts/format-files_v0.0.14",
+      "version": "0.0.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update clang-format version to 1.5.0",
+            "author": "vmorozov@microsoft.com",
+            "commit": "fed79b55bde999cafe46b7e702bfcd6c22a21ae2",
+            "package": "@rnw-scripts/format-files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Jan 2021 05:05:37 GMT",
       "tag": "@rnw-scripts/format-files_v0.0.13",
       "version": "0.0.13",

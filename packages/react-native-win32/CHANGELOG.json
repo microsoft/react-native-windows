@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 15 Jan 2021 05:07:01 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.74",
+      "version": "0.0.0-canary.74",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v0.4.7",
+            "author": "canli@microsoft.com",
+            "commit": "3ffbf9311ab77935b65c6616d33a6538f0582780",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 14 Jan 2021 05:05:22 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.73",
       "version": "0.0.0-canary.73",

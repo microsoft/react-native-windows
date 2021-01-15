@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Fri, 15 Jan 2021 05:07:01 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.13",
+      "version": "0.0.0-canary.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove appium from package dependency",
+            "author": "dannyvv@microsoft.com",
+            "commit": "3ffbf9311ab77935b65c6616d33a6538f0582780",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Jan 2021 05:05:37 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.12",
       "version": "0.0.0-canary.12",

@@ -2,6 +2,47 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 15 Jan 2021 05:07:01 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.235",
+      "version": "0.0.0-canary.235",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add JSValue constructor for std::optional<T>",
+            "author": "vmorozov@microsoft.com",
+            "commit": "af70a3e80fe482996e4151663b54a2fa37bea237",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Simplify Microsoft.ReactNative.IntegrationTests",
+            "author": "vmorozov@microsoft.com",
+            "commit": "ec3f4920e6c4f15357493b895ed83a59ab3310f2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Updated doc comments in IReactNotificationService.idl",
+            "author": "vmorozov@microsoft.com",
+            "commit": "a188c30557720133c25aeed8f75f03ddb4ca9154",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update clang-format version to 1.5.0",
+            "author": "vmorozov@microsoft.com",
+            "commit": "fed79b55bde999cafe46b7e702bfcd6c22a21ae2",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v0.4.7",
+            "author": "canli@microsoft.com",
+            "commit": "3ffbf9311ab77935b65c6616d33a6538f0582780",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 14 Jan 2021 05:05:22 GMT",
       "tag": "react-native-windows_v0.0.0-canary.234",
       "version": "0.0.0-canary.234",
