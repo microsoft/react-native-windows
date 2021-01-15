@@ -304,6 +304,76 @@ TEST_CLASS (JSValueTest) {
     TestCheckEqual(4.2, *value11.TryGetDouble());
   }
 
+  TEST_METHOD(TestJSValueStdOptionalConstructor) {
+    auto value001 = JSValue{std::optional{nullptr}};
+    auto value002 = JSValue{std::optional{JSValueObject{{"prop1", 3}}}};
+    auto value003 = JSValue{std::optional{JSValueObject{}}};
+    auto value004 = JSValue{std::optional{JSValueArray{1, 2}}};
+    auto value005 = JSValue{std::optional{JSValueArray{}}};
+    auto value006 = JSValue{std::optional{"Hello"}};
+    auto value007 = JSValue{std::optional{true}};
+    auto value008 = JSValue{std::optional{false}};
+    auto value009 = JSValue{std::optional{0}};
+    auto value010 = JSValue{std::optional{42}};
+    auto value011 = JSValue{std::optional{4.2}};
+
+    TestCheckEqual(JSValueType::Null, value001.Type());
+    TestCheckEqual(JSValueType::Object, value002.Type());
+    TestCheckEqual(JSValueType::Object, value003.Type());
+    TestCheckEqual(JSValueType::Array, value004.Type());
+    TestCheckEqual(JSValueType::Array, value005.Type());
+    TestCheckEqual(JSValueType::String, value006.Type());
+    TestCheckEqual(JSValueType::Boolean, value007.Type());
+    TestCheckEqual(JSValueType::Boolean, value008.Type());
+    TestCheckEqual(JSValueType::Int64, value009.Type());
+    TestCheckEqual(JSValueType::Int64, value010.Type());
+    TestCheckEqual(JSValueType::Double, value011.Type());
+
+    TestCheck(value001.IsNull());
+    TestCheckEqual(1u, value002.TryGetObject()->size());
+    TestCheckEqual(0u, value003.TryGetObject()->size());
+    TestCheckEqual(2u, value004.TryGetArray()->size());
+    TestCheckEqual(0u, value005.TryGetArray()->size());
+    TestCheckEqual("Hello", *value006.TryGetString());
+    TestCheckEqual(true, *value007.TryGetBoolean());
+    TestCheckEqual(false, *value008.TryGetBoolean());
+    TestCheckEqual(0, *value009.TryGetInt64());
+    TestCheckEqual(42, *value010.TryGetInt64());
+    TestCheckEqual(4.2, *value011.TryGetDouble());
+
+    auto value101 = JSValue{std::nullopt};
+    TestCheckEqual(JSValueType::Null, value101.Type());
+    TestCheck(value101.IsNull());
+
+    auto value201 = JSValue{std::optional<std::nullptr_t>{std::nullopt}};
+    auto value202 = JSValue{std::optional<JSValueObject>{std::nullopt}};
+    auto value203 = JSValue{std::optional<JSValueArray>{std::nullopt}};
+    auto value204 = JSValue{std::optional<const char *>{std::nullopt}};
+    auto value205 = JSValue{std::optional<std::string>{std::nullopt}};
+    auto value206 = JSValue{std::optional<std::string_view>{std::nullopt}};
+    auto value207 = JSValue{std::optional<bool>{std::nullopt}};
+    auto value208 = JSValue{std::optional<int32_t>{std::nullopt}};
+    auto value209 = JSValue{std::optional<int64_t>{std::nullopt}};
+    auto value210 = JSValue{std::optional<uint32_t>{std::nullopt}};
+    auto value211 = JSValue{std::optional<uint64_t>{std::nullopt}};
+    auto value212 = JSValue{std::optional<double>{std::nullopt}};
+    auto value213 = JSValue{std::optional<float>{std::nullopt}};
+
+    TestCheckEqual(JSValueType::Null, value201.Type());
+    TestCheckEqual(JSValueType::Null, value202.Type());
+    TestCheckEqual(JSValueType::Null, value203.Type());
+    TestCheckEqual(JSValueType::Null, value204.Type());
+    TestCheckEqual(JSValueType::Null, value205.Type());
+    TestCheckEqual(JSValueType::Null, value206.Type());
+    TestCheckEqual(JSValueType::Null, value207.Type());
+    TestCheckEqual(JSValueType::Null, value208.Type());
+    TestCheckEqual(JSValueType::Null, value209.Type());
+    TestCheckEqual(JSValueType::Null, value210.Type());
+    TestCheckEqual(JSValueType::Null, value211.Type());
+    TestCheckEqual(JSValueType::Null, value212.Type());
+    TestCheckEqual(JSValueType::Null, value213.Type());
+  }
+
   TEST_METHOD(TestJSValueImplicitCast) {
     // We do not assign values directly here sbecause it would be an explicit constructor call.
     JSValue value01, value02, value03, value04, value05, value06, value07, value08, value09, value10, value11, value12,
