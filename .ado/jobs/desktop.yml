@@ -12,7 +12,6 @@ jobs:
       - template: ../variables/vs2019.yml
       #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage,WebSocket,Logging).
       #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
-      # windesktop is no longer bundling - Disable RNTesterIntegrationTests until fixed.
       - name: Desktop.IntegrationTests.Filter
         value: >
           (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&

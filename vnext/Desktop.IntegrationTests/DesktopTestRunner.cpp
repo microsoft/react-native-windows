@@ -46,7 +46,9 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
       std::make_tuple(
           "AsyncLocalStorage",
-          []() -> unique_ptr<CxxModule> { return /*CreateAsyncStorageModule(L"ReactNativeAsyncStorage")*/ nullptr; },
+          []() -> unique_ptr<CxxModule> {
+            return /*CreateAsyncStorageModule(L"ReactNativeAsyncStorage")*/ nullptr;
+          }, // #6882
           nativeQueue),
       std::make_tuple(
           "WebSocketModule",

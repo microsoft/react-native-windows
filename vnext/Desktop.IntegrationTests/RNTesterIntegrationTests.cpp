@@ -109,7 +109,7 @@ TEST_CLASS (RNTesterIntegrationTests) {
     TestComponent("TimersTest");
   }
 
-  // AsyncStorage seems broken in Windows Desktop
+  // #6882 - AsyncStorage seems broken in Windows Desktop
   BEGIN_TEST_METHOD_ATTRIBUTE(AsyncStorage)
   TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
