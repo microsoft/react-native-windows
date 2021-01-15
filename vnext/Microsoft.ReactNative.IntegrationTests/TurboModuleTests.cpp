@@ -5,11 +5,15 @@
 #include <NativeModules.h>
 #include <sstream>
 #include <string>
+#include "TestEventService.h"
+#include "TestReactNativeHostHolder.h"
 
-using namespace React;
-using namespace winrt::Microsoft::ReactNative;
+using namespace winrt;
+using namespace Microsoft::ReactNative;
 
 namespace ReactNativeIntegrationTests {
+
+namespace {
 
 REACT_MODULE(SampleTurboModule)
 struct SampleTurboModule {
@@ -30,13 +34,13 @@ struct SampleTurboModule {
 
   REACT_METHOD(Succeeded, L"succeeded")
   void Succeeded() noexcept {
-    succeededSignal.set_value(true);
+    TestEventService::LogEvent("succeededSignal", true);
   }
 
   REACT_METHOD(OnError, L"onError")
   void OnError(std::string errorMessage) noexcept {
     // intended to keep the parameter name for debug purpose
-    succeededSignal.set_value(false);
+    TestEventService::LogEvent("succeededSignal", false);
   }
 
   REACT_METHOD(PromiseFunction, L"promiseFunction")
@@ -52,7 +56,7 @@ struct SampleTurboModule {
 
   REACT_METHOD(PromiseFunctionResult, L"promiseFunctionResult")
   void PromiseFunctionResult(std::string a) noexcept {
-    promiseFunctionSignal.set_value(a);
+    TestEventService::LogEvent("promiseFunctionSignal", std::move(a));
   }
 
   REACT_SYNC_METHOD(SyncFunction, L"syncFunction")
@@ -63,13 +67,13 @@ struct SampleTurboModule {
 
   REACT_METHOD(SyncFunctionResult, L"syncFunctionResult")
   void SyncFunctionResult(std::string a) noexcept {
-    syncFunctionSignal.set_value(a);
+    TestEventService::LogEvent("syncFunctionSignal", std::move(a));
   }
 
   REACT_METHOD(Constants, L"constants")
   void Constants(std::string a, int b, std::string c, int d) noexcept {
     auto resultString = (std::stringstream() << a << ", " << b << ", " << c << ", " << d).str();
-    constantsSignal.set_value(resultString);
+    TestEventService::LogEvent("constantsSignal", std::move(resultString));
   }
 
   REACT_METHOD(OneCallback, L"oneCallback")
@@ -79,7 +83,7 @@ struct SampleTurboModule {
 
   REACT_METHOD(OneCallbackResult, L"oneCallbackResult")
   void OneCallbackResult(int r) noexcept {
-    oneCallbackSignal.set_value(r);
+    TestEventService::LogEvent("oneCallbackSignal", r);
   }
 
   REACT_METHOD(TwoCallbacks, L"twoCallbacks")
@@ -98,35 +102,19 @@ struct SampleTurboModule {
 
   REACT_METHOD(TwoCallbacksResolved, L"twoCallbacksResolved")
   void TwoCallbacksResolved(int r) noexcept {
-    twoCallbacksResolvedSignal.set_value(r);
+    TestEventService::LogEvent("twoCallbacksResolvedSignal", r);
   }
 
   REACT_METHOD(TwoCallbacksRejected, L"twoCallbacksRejected")
   void TwoCallbacksRejected(std::string r) noexcept {
-    twoCallbacksRejectedSignal.set_value(r);
+    TestEventService::LogEvent("twoCallbacksResolvedSignal", std::move(r));
   }
-
-  static std::promise<bool> succeededSignal;
-  static std::promise<std::string> promiseFunctionSignal;
-  static std::promise<std::string> syncFunctionSignal;
-  static std::promise<std::string> constantsSignal;
-  static std::promise<int> oneCallbackSignal;
-  static std::promise<int> twoCallbacksResolvedSignal;
-  static std::promise<std::string> twoCallbacksRejectedSignal;
 };
-
-std::promise<bool> SampleTurboModule::succeededSignal;
-std::promise<std::string> SampleTurboModule::promiseFunctionSignal;
-std::promise<std::string> SampleTurboModule::syncFunctionSignal;
-std::promise<std::string> SampleTurboModule::constantsSignal;
-std::promise<int> SampleTurboModule::oneCallbackSignal;
-std::promise<int> SampleTurboModule::twoCallbacksResolvedSignal;
-std::promise<std::string> SampleTurboModule::twoCallbacksRejectedSignal;
 
 struct SampleTurboModuleSpec : TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void() noexcept>{0, L"succeeded"},
-      Method<void(std::string) noexcept>{0, L"onError"},
+      Method<void(std::string) noexcept>{1, L"onError"},
       Method<void(std::string, int, bool, ReactPromise<React::JSValue>) noexcept>{2, L"promiseFunction"},
       Method<void(std::string) noexcept>{3, L"promiseFunctionResult"},
       SyncMethod<std::string(std::string, int, bool) noexcept>{4, L"syncFunction"},
@@ -171,40 +159,25 @@ struct SampleTurboModulePackageProvider : winrt::implements<SampleTurboModulePac
   }
 };
 
+} // namespace
+
 TEST_CLASS (TurboModuleTests) {
   TEST_METHOD(ExecuteSampleTurboModule) {
-    ReactNativeHost host{};
+    TestEventService::Initialize();
 
-    auto queueController = winrt::Windows::System::DispatcherQueueController::CreateOnDedicatedThread();
-    queueController.DispatcherQueue().TryEnqueue([&]() noexcept {
+    auto reactNativeHost = TestReactNativeHostHolder(L"TurboModuleTests", [](ReactNativeHost const &host) noexcept {
       host.PackageProviders().Append(winrt::make<SampleTurboModulePackageProvider>());
-
-      // bundle is assumed to be co-located with the test binary
-      wchar_t testBinaryPath[MAX_PATH];
-      TestCheck(GetModuleFileNameW(NULL, testBinaryPath, MAX_PATH) < MAX_PATH);
-      testBinaryPath[std::wstring_view{testBinaryPath}.rfind(L"\\")] = 0;
-
-      host.InstanceSettings().BundleRootPath(testBinaryPath);
-      host.InstanceSettings().JavaScriptBundleFile(L"TurboModuleTests");
-      host.InstanceSettings().UseDeveloperSupport(false);
-      host.InstanceSettings().UseWebDebugger(false);
-      host.InstanceSettings().UseFastRefresh(false);
-      host.InstanceSettings().UseLiveReload(false);
-      host.InstanceSettings().EnableDeveloperMenu(false);
-
-      host.LoadInstance();
     });
 
-    TestCheckEqual(true, SampleTurboModule::succeededSignal.get_future().get());
-    TestCheckEqual("something, 1, true", SampleTurboModule::promiseFunctionSignal.get_future().get());
-    TestCheckEqual("something, 2, false", SampleTurboModule::syncFunctionSignal.get_future().get());
-    TestCheckEqual("constantString, 3, Hello, 10", SampleTurboModule::constantsSignal.get_future().get());
-    TestCheckEqual(3, SampleTurboModule::oneCallbackSignal.get_future().get());
-    TestCheckEqual(123, SampleTurboModule::twoCallbacksResolvedSignal.get_future().get());
-    TestCheckEqual("Failed", SampleTurboModule::twoCallbacksRejectedSignal.get_future().get());
-
-    host.UnloadInstance().get();
-    queueController.ShutdownQueueAsync().get();
+    TestEventService::ObserveEvents({
+        TestEvent{"promiseFunctionSignal", "something, 1, true"},
+        TestEvent{"oneCallbackSignal", 3},
+        TestEvent{"twoCallbacksResolvedSignal", 123},
+        TestEvent{"twoCallbacksResolvedSignal", "Failed"},
+        TestEvent{"syncFunctionSignal", "something, 2, false"},
+        TestEvent{"constantsSignal", "constantString, 3, Hello, 10"},
+        TestEvent{"succeededSignal", true},
+    });
   }
 };
 
