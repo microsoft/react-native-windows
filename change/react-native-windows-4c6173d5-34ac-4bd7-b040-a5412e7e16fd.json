@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add JSValue constructor for std::optional<T>",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
