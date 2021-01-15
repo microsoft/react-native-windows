@@ -9,17 +9,16 @@
 namespace Microsoft::React::Test {
 
 class TestDevSettingsModule : public facebook::xplat::module::CxxModule {
-
-  public:
+ public:
   static std::string name;
 
 #pragma region CxxModule members
 
-   std::string getName() override;
-   std::map<std::string, folly::dynamic> getConstants() override;
-   std::vector<Method> getMethods() override;
+  std::string getName() override;
+  std::map<std::string, folly::dynamic> getConstants() override;
+  std::vector<Method> getMethods() override;
 
 #pragma endregion CxxModule members
 };
 
-}
+} // namespace Microsoft::React::Test

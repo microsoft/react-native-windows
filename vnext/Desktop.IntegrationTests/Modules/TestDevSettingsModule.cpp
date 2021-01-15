@@ -27,28 +27,20 @@ map<string, dynamic> TestDevSettingsModule::getConstants() {
 
 vector<module::CxxModule::Method> TestDevSettingsModule::getMethods() {
   return {
-    {
-      "addMenuItem",
-      [this](dynamic args)
-      {
-        
-      }
-    },
-    {
-      "reload",
-      [this](dynamic args) {
+      {"addMenuItem",
+       [this](dynamic args) {
 
-      }
-    },
-    {
-      "onFastRefresh",
-      [this](dynamic args)
-      {
+       }},
+      {"reload",
+       [this](dynamic args) {
 
-      }
-    },
+       }},
+      {"onFastRefresh",
+       [this](dynamic args) {
+
+       }},
   };
 }
 
 #pragma endregion
-}
+} // namespace Microsoft::React::Test
