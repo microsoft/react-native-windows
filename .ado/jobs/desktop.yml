@@ -85,7 +85,7 @@ jobs:
           $newValue = '(FullyQualifiedName!~RNTesterIntegrationTests::)&' + "$(Desktop.IntegrationTests.Filter)"
           Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
         displayName: Update Desktop.IntegrationTests.Filter
-        condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
+        condition: and(succeeded(), eq(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
 
       - template: ../templates/build-rnw.yml
         parameters:
