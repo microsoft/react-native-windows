@@ -19,18 +19,12 @@ jobs:
       #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage,WebSocket,Logging).
       #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
       - name: Desktop.IntegrationTests.Filter
-        $[ if ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true') ]:
         value: >
           (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
           (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
           (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
           (FullyQualifiedName!~WebSocketModule_)&
           (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
-        $[ if eq(variables['Desktop.IntegrationTests.SkipRNTester'], 'true') ]:
-          value: >
-            (FullyQualifiedName!~RNTesterIntegrationTests::)&
-            (FullyQualifiedName!~WebSocketModule_)&
-            (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
 
       #6799 -
       #       HostFunctionTest              - Crashes under JSI/V8
@@ -86,6 +80,12 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
+
+      - powershell: |
+          $newValue = '(FullyQualifiedName!~RNTesterIntegrationTests::)&' + $(Desktop.IntegrationTests.Filter)
+          Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
+        displayName: Update Desktop.IntegrationTests.Filter
+        condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
 
       - template: ../templates/build-rnw.yml
         parameters:
