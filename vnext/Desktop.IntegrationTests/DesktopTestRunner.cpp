@@ -9,6 +9,7 @@
 #include <Modules/WebSocketModule.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <cxxreact/Instance.h>
+#include "Modules/TestDevSettingsModule.h"
 #include "ChakraRuntimeHolder.h"
 #include "DesktopTestInstance.h"
 #include "TestInstance.h"
@@ -72,7 +73,17 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
       std::make_tuple(
           TestDeviceInfoModule::name,
           []() -> unique_ptr<CxxModule> { return std::make_unique<TestDeviceInfoModule>(); },
-          nativeQueue)};
+          nativeQueue),
+
+        {
+          TestDevSettingsModule::name,
+          []() -> unique_ptr<CxxModule>
+          {
+            return std::make_unique<TestDevSettingsModule>();
+          },
+          nativeQueue
+        }
+  };
 
   // <0> string
   // <1> CxxModule::Provider
