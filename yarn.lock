@@ -2207,9 +2207,9 @@
     eslint-visitor-keys "^1.1.0"
 
 "@wdio/cli@^6.9.0":
-  version "6.11.3"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-6.11.3.tgz#af3b9d9b752c902c9c4b3d57c04bd8011897fb36"
-  integrity sha512-LzX7DaGAMGRF/1Tupu2rGcArgd33yfoyGVo4hkePq4mvV3WMVM1ZR5O+L28zE05woIKV698poCs2IDO9u03x6A==
+  version "6.12.0"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-6.12.0.tgz#6445bbf9ab7b916fadae01d6a94cb525146e057b"
+  integrity sha512-TeDkaBTQ272zbGvWanglfXwUH+uU3OrM76AeDe7c3xgGTlNjpVtLYCSTP5vjsLM2156Tg+f0gMTAUlflvnWFZQ==
   dependencies:
     "@types/ejs" "^3.0.5"
     "@types/fs-extra" "^9.0.4"
@@ -2233,7 +2233,7 @@
     lodash.union "^4.6.0"
     mkdirp "^1.0.4"
     recursive-readdir "^2.2.2"
-    webdriverio "6.11.3"
+    webdriverio "6.12.0"
     yargs "^16.0.3"
     yarn-install "^1.0.0"
 
@@ -2295,11 +2295,6 @@
     loglevel "^1.6.0"
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
-
-"@wdio/protocols@6.10.6":
-  version "6.10.6"
-  resolved "https://registry.yarnpkg.com/@wdio/protocols/-/protocols-6.10.6.tgz#8d1deed6651a5ca0a185ea334fc1a371dc4c700c"
-  integrity sha512-CLLVdc82S+Zij7f9djL90JC1bE5gtaOn+EF2pY4n8XdypqPUa1orQip8stQtX/wXEX0Ak45MEcSU9nCY+CzNnQ==
 
 "@wdio/protocols@6.12.0":
   version "6.12.0"
@@ -4274,21 +4269,6 @@ devtools-protocol@0.0.818844:
   version "0.0.818844"
   resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.818844.tgz#d1947278ec85b53e4c8ca598f607a28fa785ba9e"
   integrity sha512-AD1hi7iVJ8OD0aMLQU5VK0XH9LDlA1+BcPIgrAxPfaibx2DbWucuyOhc4oyQCbnvDDO68nN6/LcKfqTP343Jjg==
-
-devtools@6.11.0:
-  version "6.11.0"
-  resolved "https://registry.yarnpkg.com/devtools/-/devtools-6.11.0.tgz#d20f1d1bb42357d3f2e424d7103fdd3e0d339879"
-  integrity sha512-fqiRz77IIGkHfHdIkVYIpBNKz7qllJJvHP92NKDo5e41J+sSVKsjzHsPqvYLugRhSGsZKPrJ19Sj8kmPyFi18w==
-  dependencies:
-    "@wdio/config" "6.11.0"
-    "@wdio/logger" "6.10.10"
-    "@wdio/protocols" "6.10.6"
-    "@wdio/utils" "6.11.0"
-    chrome-launcher "^0.13.1"
-    edge-paths "^2.1.0"
-    puppeteer-core "^5.1.0"
-    ua-parser-js "^0.7.21"
-    uuid "^8.0.0"
 
 devtools@6.12.0:
   version "6.12.0"
@@ -11015,18 +10995,6 @@ wdio-winappdriver-service@^0.1.0:
     "@wdio/logger" "^6.8.0"
     fs-extra "^9.0.1"
 
-webdriver@6.11.0:
-  version "6.11.0"
-  resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-6.11.0.tgz#2997bf4ff6c1dcb4e58b4ae9e2b83af8b938f643"
-  integrity sha512-31uD1Vi+9QAzDSpN3+0oFFRnzJP8IVp8wRjLVbIOaQGPXV1sKjAP7v6LJcxl1JjcmW8keAIh2eyAgbjZJbcyZw==
-  dependencies:
-    "@wdio/config" "6.11.0"
-    "@wdio/logger" "6.10.10"
-    "@wdio/protocols" "6.10.6"
-    "@wdio/utils" "6.11.0"
-    got "^11.0.2"
-    lodash.merge "^4.6.1"
-
 webdriver@6.12.0:
   version "6.12.0"
   resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-6.12.0.tgz#c9a42b4b01575eb33e96fa6d79e9fb8514c8eb0d"
@@ -11038,35 +11006,6 @@ webdriver@6.12.0:
     "@wdio/utils" "6.11.0"
     got "^11.0.2"
     lodash.merge "^4.6.1"
-
-webdriverio@6.11.3:
-  version "6.11.3"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.11.3.tgz#043bc98514d7410264fbf14991bc0546fa119779"
-  integrity sha512-yHS01H0+oz59Y+JLj/u8piLzOhtTiQSeASwb3hHF1EDuIiiK6JgGYFAqCYr26BrlzqzUOQ/9VpJj11LtcKWF/A==
-  dependencies:
-    "@types/puppeteer-core" "^5.4.0"
-    "@wdio/config" "6.11.0"
-    "@wdio/logger" "6.10.10"
-    "@wdio/repl" "6.11.0"
-    "@wdio/utils" "6.11.0"
-    archiver "^5.0.0"
-    atob "^2.1.2"
-    css-shorthand-properties "^1.1.1"
-    css-value "^0.0.1"
-    devtools "6.11.0"
-    fs-extra "^9.0.1"
-    get-port "^5.1.1"
-    grapheme-splitter "^1.0.2"
-    lodash.clonedeep "^4.5.0"
-    lodash.isobject "^3.0.2"
-    lodash.isplainobject "^4.0.6"
-    lodash.zip "^4.2.0"
-    minimatch "^3.0.4"
-    puppeteer-core "^5.1.0"
-    resq "^1.9.1"
-    rgb2hex "0.2.3"
-    serialize-error "^7.0.0"
-    webdriver "6.11.0"
 
 webdriverio@6.12.0, webdriverio@^6.9.0:
   version "6.12.0"
