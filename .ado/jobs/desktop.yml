@@ -82,7 +82,7 @@ jobs:
         submodules: false
 
       - powershell: |
-          $newValue = '(FullyQualifiedName!~RNTesterIntegrationTests::)&' + $(Desktop.IntegrationTests.Filter)
+          $newValue = '(FullyQualifiedName!~RNTesterIntegrationTests::)&' + "$(Desktop.IntegrationTests.Filter)"
           Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
         displayName: Update Desktop.IntegrationTests.Filter
         condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
