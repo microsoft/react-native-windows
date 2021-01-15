@@ -75,7 +75,6 @@ jobs:
 
       - template: ../templates/build-rnw.yml
         parameters:
-          yarnBuildCmd: build
           project: vnext/ReactWindows-Desktop.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
