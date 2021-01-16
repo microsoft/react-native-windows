@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 15 Jan 2021 05:07:01 GMT and should not be manually modified.
+This log was last generated on Sat, 16 Jan 2021 05:05:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.236
+
+Sat, 16 Jan 2021 05:05:46 GMT
+
+### Changes
+
+- Fix missing commit from python dep (asklar@winse.microsoft.com)
+- Fix ReactNotificationService for notifications between app and modules (vmorozov@microsoft.com)
+- Treat WS protocols as scalar/array (julio.rocha@microsoft.com)
+- Reduce number of windesktop forked files. (julio.rocha@microsoft.com)
+- Add Python dependency to rnw-dependencies.ps1 (asklar@microsoft.com)
 
 ## 0.0.0-canary.235
 

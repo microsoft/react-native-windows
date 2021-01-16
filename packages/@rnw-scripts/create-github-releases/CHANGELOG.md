@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Wed, 06 Jan 2021 05:06:51 GMT and should not be manually modified.
+This log was last generated on Sat, 16 Jan 2021 05:05:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.19
+
+Sat, 16 Jan 2021 05:05:46 GMT
+
+### Patches
+
+- Use octokit instead of raw GitHub REST APIs (ngerlem@microsoft.com)
 
 ## 0.0.18
 

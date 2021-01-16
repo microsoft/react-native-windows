@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 16 Jan 2021 05:05:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.236",
+      "version": "0.0.0-canary.236",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix missing commit from python dep",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "e6de26b1e5ae2d74e55b38b0383e2e817b4bb150",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix ReactNotificationService for notifications between app and modules",
+            "author": "vmorozov@microsoft.com",
+            "commit": "b703dd185c000fbc1a8957abdc4f3ba99db053ff",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Treat WS protocols as scalar/array",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "9d552eb866c88910ac2e629c2430ce00bd36970c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Reduce number of windesktop forked files.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "bbd1193b1a8ac51e84ce987dfb5671f91e6d0322",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add Python dependency to rnw-dependencies.ps1",
+            "author": "asklar@microsoft.com",
+            "commit": "7e64e480e2a589394bbdd50eae0801e9cc386d1a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Jan 2021 05:07:01 GMT",
       "tag": "react-native-windows_v0.0.0-canary.235",
       "version": "0.0.0-canary.235",

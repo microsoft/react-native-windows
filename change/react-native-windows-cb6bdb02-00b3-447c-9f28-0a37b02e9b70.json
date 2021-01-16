@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix missing commit from python dep",
-  "packageName": "react-native-windows",
-  "email": "asklar@winse.microsoft.com",
-  "dependentChangeType": "patch"
-}
