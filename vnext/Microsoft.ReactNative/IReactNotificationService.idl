@@ -8,12 +8,20 @@ import "IReactPropertyBag.idl";
 
 namespace Microsoft.ReactNative {
 
+  // Forward declaration
+  interface IReactNotificationService;
+
   [webhosthidden]
   DOC_STRING(
     "A subscription to a notification.\n"
     "The subscription is removed when this object is deleted or the @.Unsubscribe method is called.")
   interface IReactNotificationSubscription
   {
+    DOC_STRING(
+      "The notification service for the subscription.\n"
+      "It can be null if @.IsSubscribed is true and the service is already deleted.")
+    IReactNotificationService NotificationService { get; };
+
     DOC_STRING("Name of the notification.")
     IReactPropertyName NotificationName { get; };
 
