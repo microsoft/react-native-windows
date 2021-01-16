@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Use octokit instead of raw GitHub REST APIs",
+  "packageName": "@rnw-scripts/create-github-releases",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
