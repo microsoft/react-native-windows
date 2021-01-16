@@ -204,8 +204,8 @@ $requirements = @(
         Name = 'Python';
         Tags = @('rnwDev');
         Valid = try {
-            return (choco list -l python3 | where-Object { $_ -like 'python3 *' }) -ne $null
-        } catch { return false; };
+            (choco list -l python3 | where-Object { $_ -like 'python3 *' }) -ne $null
+        } catch { $false; };
         Install = { choco install -y python3 };
     },
     @{
