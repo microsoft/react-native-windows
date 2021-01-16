@@ -94,7 +94,6 @@
     "/include",
     "/JSI",
     "/Libraries",
-    "!/Libraries/**/*.windesktop.*",
     "/Microsoft.ReactNative",
     "/Microsoft.ReactNative.Cxx",
     "/Microsoft.ReactNative.Managed",

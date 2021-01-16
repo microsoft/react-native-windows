@@ -3,7 +3,6 @@
 .*/*[.]android.js
 .*/*[.]ios.js
 .*/*[.]macos.js
-.*/*[.]windesktop.js
 
 ; These modules have base components and Windows versions.
 ; Ideally we'd delete the base versions of files that had .windows overrides as part of the

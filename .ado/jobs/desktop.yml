@@ -130,13 +130,13 @@ jobs:
           targetType: filePath # filePath | inline
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
           arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
-        condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
+        condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'), ne(variables['BuildConfiguration'], 'Debug'))
 
       - task: PowerShell@2
         displayName: Check the metro bundle server
         inputs:
           targetType: 'inline'
-          script: Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
+          script: Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windows&dev=true"
         condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
 
       - task: VSTest@2
