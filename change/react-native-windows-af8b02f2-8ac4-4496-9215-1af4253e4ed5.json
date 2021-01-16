@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Install .net core 3.1 for CodeGen project",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

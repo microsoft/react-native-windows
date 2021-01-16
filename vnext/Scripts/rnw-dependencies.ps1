@@ -204,7 +204,8 @@ $requirements = @(
         Name = 'Python';
         Tags = @('rnwDev');
         Valid = try {
-            (choco list -l python3 | where-Object { $_ -like 'python3 *' }) -ne $null
+            # assume AzDO pipeline has Python installed
+            ($env:AGENT_ID -ne $null) -or ((choco list -l python3 | where-Object { $_ -like 'python3 *' }) -ne $null)
         } catch { $false; };
         Install = { choco install -y python3 };
     },
@@ -264,6 +265,17 @@ $requirements = @(
             & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git
         };
         Optional = $true
+    },
+    @{
+        Name = ".net core 3.1"
+        Tags = @('appDev');
+        Valid = try {
+            $x = dotnet --info | Where-Object { $_ -like  '*Microsoft.NETCore.App 3.1*'};
+            ($x -ne $null) -and ($x.Length -ge 1)
+        } catch { $false };
+        Install = {
+            & choco install -y dotnetcore-3.1-sdk
+        }
     }
 );
 
