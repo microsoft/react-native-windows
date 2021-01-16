@@ -5,7 +5,7 @@
 
 namespace Microsoft.ReactNative
 {
-  DOC_STRING("Type of value read by IJSValueReader.")
+  DOC_STRING("Type of value read by @IJSValueReader.")
   enum JSValueType
   {
     Null,
@@ -34,10 +34,12 @@ namespace Microsoft.ReactNative
     "\n"
     "See the @IJSValueWriter for the corresponding writer interface.\n"
     "\n"
-    "The @IJSValueReader and @IJSValueWriter should be rarely used directly. "
-    "They are usually used to create serializer and deserializer functions for a type. "
-    "In the rest of our code we must use these functions to serialize/deserialize our values. "
-    "We already have a set of serializer and deserializer functions for some standard types.")
+    "The @IJSValueReader and @IJSValueWriter must be rarely used directly. "
+    "Use them to create serializer and deserializer functions for a type. "
+    "The rest of application code must use these functions to serialize/deserialize values. "
+    "The `Microsoft.ReactNative.Cxx` and `Microsoft.ReactNative.Managed` projects offer "
+    "serializer/deserializer functions for many standard types. Use them directly or to define "
+    "serializer/deserializer functions for your types.")
   // TODO: [vmorozov] Add a reference to serializer and deserializer functions for some standard types.
   // TODO: [vmorozov] Add a reference to usage examples.
   interface IJSValueReader
