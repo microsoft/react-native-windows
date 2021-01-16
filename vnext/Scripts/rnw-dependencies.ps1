@@ -264,6 +264,17 @@ $requirements = @(
             & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git
         };
         Optional = $true
+    },
+    @{
+        Name = ".net core 3.1"
+        Tags = @('appDev');
+        Valid = try {
+            $x = dotnet --info | Where-Object { $_ -like  '*Microsoft.NETCore.App 3.1*'};
+            ($x -ne $null) -and ($x.Length -ge 1)
+        } catch { $false };
+        Install = {
+            & choco install -y dotnetcore-3.1-sdk
+        }
     }
 );
 
