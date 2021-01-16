@@ -12,6 +12,7 @@
 #include "ChakraRuntimeHolder.h"
 #include "DesktopTestInstance.h"
 #include "Modules/TestDevSettingsModule.h"
+#include "Modules/TestImageLoaderModule.h"
 #include "TestInstance.h"
 #include "TestModule.h"
 #include "TestRootView.h"
@@ -68,6 +69,10 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
 
       {TestDevSettingsModule::name,
        []() -> unique_ptr<CxxModule> { return std::make_unique<TestDevSettingsModule>(); },
+       nativeQueue},
+
+      {TestImageLoaderModule::name,
+       []() -> unique_ptr<CxxModule> { return std::make_unique<TestImageLoaderModule>(); },
        nativeQueue}};
 
   // <0> string
@@ -77,7 +82,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   }
 
   // Update settings.
-  devSettings->platformName = "windesktop";
+  devSettings->platformName = "windows";
 
   auto instanceWrapper = CreateReactInstance(
       std::make_shared<facebook::react::Instance>(),
