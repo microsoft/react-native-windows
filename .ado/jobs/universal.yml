@@ -113,12 +113,6 @@
                   submodules: false
 
                 - task: PowerShell@2
-                  displayName: Display env
-                  inputs:
-                    targetType: "inline"
-                    script:  gci env:* | sort-object name
-
-                - task: PowerShell@2
                   displayName: "Check if this environment meets the development dependencies"
                   inputs:
                     targetType: filePath
