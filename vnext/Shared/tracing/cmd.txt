@@ -1,7 +1,0 @@
-REM Enable RNW provider/collector along side general system event providers.
-wpr.exe -start GeneralProfile -start rnw.wprp
-wpr.exe -start GeneralProfile -start rnw.etl
-
-REM Enable only RNW provider/collector.
-wpr.exe -start rnw.wprp
-wpr.exe -stop rnw.etl

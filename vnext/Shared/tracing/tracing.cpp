@@ -4,8 +4,8 @@
 #include "pch.h"
 
 #include <TraceLoggingProvider.h>
-#include "tracing/fbsystrace.h"
 #include <jsi/jsi.h>
+#include "tracing/fbsystrace.h"
 
 #include <array>
 #include <string>
@@ -83,7 +83,6 @@ void trace_begin_section(
     const std::string &profile_name,
     std::array<std::string, SYSTRACE_SECTION_MAX_ARGS> &&args,
     uint8_t size) {
-
   TraceLoggingWrite(
       g_hTraceLoggingProvider,
       "SystraceNativeSection",
@@ -122,10 +121,7 @@ void syncSectionBeginJSHook(uint64_t tag, const std::string &profile_name, const
 
 void syncSectionEndJSHook(uint64_t tag) {
   TraceLoggingWrite(
-      g_hTraceLoggingProvider,
-      "SystraceJSSection",
-      TraceLoggingString("end", "op"),
-      TraceLoggingUInt64(tag, "tag"));
+      g_hTraceLoggingProvider, "SystraceJSSection", TraceLoggingString("end", "op"), TraceLoggingUInt64(tag, "tag"));
 }
 
 void asyncSectionBeginJSHook(uint64_t tag, const std::string &profile_name, int cookie) {
@@ -159,7 +155,6 @@ void asyncFlowBeginJSHook(uint64_t tag, const std::string &profile_name, int coo
 }
 
 void asyncFlowEndJSHook(uint64_t tag, const std::string &profile_name, int cookie) {
-
   TraceLoggingWrite(
       g_hTraceLoggingProvider,
       "SystraceJSAsyncFlow",
@@ -170,7 +165,6 @@ void asyncFlowEndJSHook(uint64_t tag, const std::string &profile_name, int cooki
 }
 
 void counterJSHook(uint64_t tag, const std::string &profile_name, int value) {
-
   TraceLoggingWrite(
       g_hTraceLoggingProvider,
       "SystraceCounter",
@@ -180,10 +174,9 @@ void counterJSHook(uint64_t tag, const std::string &profile_name, int value) {
 }
 
 void initializeJSHooks(jsi::Runtime &runtime) {
-
   // TODO:: Assess the performance impact of hooking up the JS trace events. Especially when the tracing is not enabled.
   // If significant, this should be put under flag based on devsettings
-  
+
   runtime.global().setProperty(runtime, "__RCTProfileIsProfiling", true);
 
   runtime.global().setProperty(

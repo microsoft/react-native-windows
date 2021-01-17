@@ -355,11 +355,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="$(MSBuildThisFileDirectory)tracing\cmd.txt">
-      <Filter>Source Files\tracing</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">
       <Filter>Source Files\tracing</Filter>
     </None>
