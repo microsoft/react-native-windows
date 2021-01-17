@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Sat, 16 Jan 2021 05:05:46 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v0.0.19",
+      "version": "0.0.19",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use octokit instead of raw GitHub REST APIs",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8979b4cb50c432a25b9bc5c741ce9601be369502",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Jan 2021 05:05:37 GMT",
       "tag": "@rnw-scripts/create-github-releases_v0.0.18",
       "version": "0.0.18",

@@ -84,8 +84,8 @@ jobs:
       - powershell: |
           $newValue = '(FullyQualifiedName!~RNTesterIntegrationTests::)&' + "$(Desktop.IntegrationTests.Filter)"
           Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
-        displayName: Update Desktop.IntegrationTests.Filter
-        condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
+        displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
+        condition: and(succeeded(), eq(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
 
       - template: ../templates/build-rnw.yml
         parameters:
@@ -130,14 +130,14 @@ jobs:
           targetType: filePath # filePath | inline
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
           arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
-        condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
+        condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'), ne(variables['BuildConfiguration'], 'Debug'))
 
       - task: PowerShell@2
         displayName: Check the metro bundle server
         inputs:
           targetType: 'inline'
-          script: Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
-        condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'))
+          script: Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windows&dev=true"
+        condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'), ne(variables['BuildConfiguration'], 'Debug'))
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
