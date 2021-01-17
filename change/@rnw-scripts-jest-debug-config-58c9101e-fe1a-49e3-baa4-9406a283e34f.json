@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Bump internally published packages to 1.0",
+  "packageName": "@rnw-scripts/jest-debug-config",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none"
+}
