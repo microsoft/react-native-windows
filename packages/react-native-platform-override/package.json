@@ -1,6 +1,6 @@
 {
   "name": "react-native-platform-override",
-  "version": "0.4.7",
+  "version": "1.4.7",
   "description": "react-native-platform-override offers CLI tools to manage Javascript overrides in out-of-tree React Native platforms",
   "license": "MIT",
   "main": "./lib-commonjs/Api.js",
@@ -43,10 +43,10 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@react-native-windows/package-utils": "0.0.0-canary.12",
-    "@rnw-scripts/eslint-config": "0.1.6",
-    "@rnw-scripts/jest-unittest-config": "0.1.1",
-    "@rnw-scripts/just-task": "0.0.6",
-    "@rnw-scripts/ts-config": "0.1.0",
+    "@rnw-scripts/eslint-config": "1.1.6",
+    "@rnw-scripts/jest-unittest-config": "1.1.1",
+    "@rnw-scripts/just-task": "1.0.6",
+    "@rnw-scripts/ts-config": "1.1.0",
     "@types/async": "^3.2.3",
     "@types/chalk": "^2.2.0",
     "@types/diff-match-patch": "^1.0.32",
@@ -77,10 +77,5 @@
     "lib-commonjs",
     "!lib-commonjs/e2etest/**",
     "!lib-commonjs/test/**"
-  ],
-  "beachball": {
-    "disallowedChangeTypes": [
-      "major"
-    ]
-  }
+  ]
 }
