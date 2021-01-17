@@ -71,6 +71,7 @@ const argv = yargs
     yes: {
       alias: 'y',
       describe: 'Automatically confirm any warnings',
+      type: 'boolean',
       demandOption: false,
     },
   })
