@@ -9,13 +9,13 @@ parameters:
   type: boolean
   default: true
 
-variables:
-  ${{ if eq(parameters.frozenLockfile, true) }}:
-    frozenLockfileArgs: --frozen-lockfile
-  ${{ if eq(parameters.frozenLockfile, false) }}:
-    frozenLockfileArgs: ''
 steps:
+  - script: |
+      echo ##vso[task.setvariable variable=FrozenLockfileArgs]--frozen-lockfile
+    displayName: Enable frozen-lockfile
+    condition: ${{ parameters.frozenLockfile }}
+
   - task: CmdLine@2
     displayName: midgard-yarn (faster yarn install)
     inputs:
-      script: npx midgard-yarn@1.23.14 --cwd ${{ parameters.workingDirectory }} --production=${{ parameters.production }} $(frozenLockfileArgs) --network-concurrency 40 --cache-folder \.yarnCache
+      script: npx midgard-yarn@1.23.14 --cwd ${{ parameters.workingDirectory }} --production=${{ parameters.production }} $(FrozenLockfileArgs) --network-concurrency 40 --cache-folder \.yarnCache
