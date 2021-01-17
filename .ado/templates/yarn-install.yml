@@ -1,5 +1,21 @@
+parameters:
+- name: workingDirectory
+  type: string
+  default: .
+- name: production
+  type: boolean
+  default: false
+- name: frozenLockfile
+  type: boolean
+  default: true
+
+variables:
+  ${{ if eq(parameters.frozenLockfile, true) }}:
+    frozenLockfileArgs: --frozen-lockfile
+  ${{ if eq(parameters.frozenLockfile, false) }}:
+    frozenLockfileArgs: ''
 steps:
   - task: CmdLine@2
     displayName: midgard-yarn (faster yarn install)
     inputs:
-      script: npx midgard-yarn@1.23.14 --network-concurrency 40 --frozen-lockfile --cache-folder \.yarnCache
+      script: npx midgard-yarn@1.23.14 --cwd ${{ parameters.workingDirectory }} --production=${{ parameters.production }} $(frozenLockfileArgs) --network-concurrency 40 --cache-folder \.yarnCache
