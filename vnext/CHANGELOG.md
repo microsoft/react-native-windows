@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 16 Jan 2021 05:05:46 GMT and should not be manually modified.
+This log was last generated on Sun, 17 Jan 2021 05:08:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.237
+
+Sun, 17 Jan 2021 05:08:07 GMT
+
+### Changes
+
+- Install .net core 3.1 for CodeGen project (asklar@microsoft.com)
 
 ## 0.0.0-canary.236
 
