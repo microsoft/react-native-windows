@@ -68,6 +68,11 @@ const argv = yargs
       type: 'string',
       demandOption: true,
     },
+    yes: {
+      alias: 'y',
+      describe: 'Automatically confirm any warnings',
+      demandOption: false,
+    },
   })
   .version(false).argv;
 
@@ -94,12 +99,30 @@ const octokit = new Octokit({
     githubReleases.map(release => `  - ${release.tag_name}`).join('\n'),
   );
 
+  const releasesToPublish: Release[] = [];
   for (const changelog of changelogs) {
     for (const release of aggregateReleases(changelog)) {
       if (needsRelease(release, localTags, githubReleases)) {
-        await publishRelease(release);
+        releasesToPublish.push(release);
       }
     }
+  }
+
+  if (releasesToPublish.length > 1 && !argv.yes) {
+    console.error(
+      chalk.red(
+        'You are about to publish more than a single release. If you have stale' +
+          'tags in your local repository (such as if you fetched prior to Jan Feb' +
+          '2021) this script can create hundreds of releases at once, each ' +
+          'sending an email notification. If you want to proceed, please re-run' +
+          'the command with the "--yes" flag.',
+      ),
+    );
+    process.exit(1);
+  }
+
+  for (const release of releasesToPublish) {
+    await publishRelease(release);
   }
 
   console.log(chalk.green('All done!'));
