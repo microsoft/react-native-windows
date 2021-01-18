@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 18 Jan 2021 15:07:07 GMT",
+      "tag": "react-native-windows_v0.64.0-preview.7",
+      "version": "0.64.0-preview.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move CallInvoker.h to TurboModule folder",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f384dd0d870500d8df596331d2bd89a7a027065",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix ReactNotificationService for notifications between app and modules",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f384dd0d870500d8df596331d2bd89a7a027065",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix unused variable warning in AbiCallInvoker",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f384dd0d870500d8df596331d2bd89a7a027065",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update clang-format version to 1.5.0",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f384dd0d870500d8df596331d2bd89a7a027065",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add JSValue constructor for std::optional<T>",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f384dd0d870500d8df596331d2bd89a7a027065",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Simplify Microsoft.ReactNative.IntegrationTests",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f384dd0d870500d8df596331d2bd89a7a027065",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Updated doc comments in IReactNotificationService.idl",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4f384dd0d870500d8df596331d2bd89a7a027065",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Jan 2021 15:07:12 GMT",
       "tag": "react-native-windows_v0.64.0-preview.6",
       "version": "0.64.0-preview.6",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move CallInvoker.h to TurboModule folder",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
