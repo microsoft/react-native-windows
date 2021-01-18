@@ -13,9 +13,12 @@
     "test": "just-scripts test",
     "watch": "just-scripts watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@octokit/webhooks": "^7.21.0"
+  },
   "devDependencies": {
     "@azure/functions": "^1.0.2-beta2",
+    "@octokit/fixtures": "^21.3.1",
     "@rnw-scripts/jest-unittest-config": "0.1.1",
     "@rnw-scripts/just-task": "0.0.6",
     "@rnw-scripts/ts-config": "0.1.0",
