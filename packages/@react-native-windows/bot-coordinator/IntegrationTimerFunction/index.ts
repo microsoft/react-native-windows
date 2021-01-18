@@ -5,8 +5,10 @@
  * @format
  */
 
-import {Context, HttpRequest} from '@azure/functions';
+import {Context} from '@azure/functions';
+import {initializeActors} from '../Actors/Actor';
 
 export default async (context: Context) => {
-  context.log('Hello world');
+  const actorsHandle = await initializeActors(context);
+  actorsHandle.emit('integration-timer-fired');
 };

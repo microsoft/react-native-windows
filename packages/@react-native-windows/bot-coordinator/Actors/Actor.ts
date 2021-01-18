@@ -53,12 +53,13 @@ const globalActorInstances: ActorInstance[] = [];
  * Public access point to globally register actors
  */
 export const ActorRegistry = {
-  register: (actorName: string, actor: Actor) => {
+  register: (actorName: string, actor: Actor): Actor => {
     if (globallyRegisteredActors.hasOwnProperty(actorName)) {
       throw new Error(`Actor "${actorName}" has already been registered`);
     }
 
     globallyRegisteredActors[actorName] = actor;
+    return actor;
   },
 };
 
@@ -134,7 +135,7 @@ function createActorsHandle(
   };
 }
 
-function webhookToString(event: WebhookEvent) {
+function webhookToString(event: WebhookEvent): string {
   if (event.payload.action) {
     return `${event.name}.${event.payload.action}`;
   } else {
