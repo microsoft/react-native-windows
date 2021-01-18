@@ -214,6 +214,7 @@ $requirements = @(
         Tags = @('rnwDev');
         Valid = try { (Get-Command func -ErrorAction Stop) -ne $null } catch { $false };
         Install = { choco install -y azure-functions-core-tools-3 };
+        Optional = $true;
     },
     @{
         Name = 'WinAppDriver';
