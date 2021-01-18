@@ -52,7 +52,7 @@ export class ActorEventEmitter {
 
   emit: ActorEventEmit = async (eventName: keyof ActorEvents, ...args) => {
     const listeners = this.listeners[eventName];
-    if (!listeners) {
+    if (!listeners || listeners.length === 0) {
       return false;
     }
 
