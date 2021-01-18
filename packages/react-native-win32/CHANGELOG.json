@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 18 Jan 2021 15:07:08 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.5",
+      "version": "0.63.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "add accessibilityDescription to ViewWin32",
+            "author": "lehon@microsoft.com",
+            "commit": "0f4acb2f558b087a2dd8d4e318b440ff9f1184e0",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Adding FocusManager API sign.",
+            "author": "safreibe@microsoft.com",
+            "commit": "34de318677be41094c1cb67cd3cde7cb9a2a20dc",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Dec 2020 15:06:05 GMT",
       "tag": "@office-iss/react-native-win32_v0.63.4",
       "version": "0.63.4",

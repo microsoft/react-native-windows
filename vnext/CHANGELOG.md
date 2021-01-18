@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 11 Jan 2021 15:07:21 GMT and should not be manually modified.
+This log was last generated on Mon, 18 Jan 2021 15:07:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.18
+
+Mon, 18 Jan 2021 15:07:08 GMT
+
+### Patches
+
+- Backport of bugfix: Dimension never fires change event (Bartosz.Klonowski@callstack.com)
+- Reverse order of AccessibilityView in TransferProperties(). (igklemen@microsoft.com)
 
 ## 0.63.17
 

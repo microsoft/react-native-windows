@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 18 Jan 2021 15:07:08 GMT",
+      "tag": "react-native-windows_v0.63.18",
+      "version": "0.63.18",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Backport of bugfix: Dimension never fires change event",
+            "author": "Bartosz.Klonowski@callstack.com",
+            "commit": "d453f4c760579cf6d38be0149aaa6884ab43830e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Reverse order of AccessibilityView in TransferProperties().",
+            "author": "igklemen@microsoft.com",
+            "commit": "fcb4c3593b025e72ffd2af749b6d4ac36a3cdd4a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Jan 2021 15:07:21 GMT",
       "tag": "react-native-windows_v0.63.17",
       "version": "0.63.17",

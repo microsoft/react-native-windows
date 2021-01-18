@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Reverse order of AccessibilityView in TransferProperties().",
-  "packageName": "react-native-windows",
-  "email": "igklemen@microsoft.com",
-  "dependentChangeType": "patch"
-}
