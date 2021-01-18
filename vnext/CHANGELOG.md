@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 11 Jan 2021 15:07:12 GMT and should not be manually modified.
+This log was last generated on Mon, 18 Jan 2021 15:07:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.7
+
+Mon, 18 Jan 2021 15:07:07 GMT
+
+### Changes
+
+- Move CallInvoker.h to TurboModule folder (vmorozov@microsoft.com)
+- Fix ReactNotificationService for notifications between app and modules (vmorozov@microsoft.com)
+- Fix unused variable warning in AbiCallInvoker (vmorozov@microsoft.com)
+- Update clang-format version to 1.5.0 (vmorozov@microsoft.com)
+- Add JSValue constructor for std::optional<T> (vmorozov@microsoft.com)
+- Simplify Microsoft.ReactNative.IntegrationTests (vmorozov@microsoft.com)
+- Updated doc comments in IReactNotificationService.idl (vmorozov@microsoft.com)
 
 ## 0.64.0-preview.6
 
