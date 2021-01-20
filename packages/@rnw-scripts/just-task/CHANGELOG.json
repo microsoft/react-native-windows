@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Wed, 20 Jan 2021 01:45:54 GMT",
+      "tag": "@rnw-scripts/just-task_v1.0.6",
+      "version": "1.0.6",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump internally published packages to 1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "@rnw-scripts/just-task"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Jan 2021 05:05:37 GMT",
       "tag": "@rnw-scripts/just-task_v0.0.6",
       "version": "0.0.6",

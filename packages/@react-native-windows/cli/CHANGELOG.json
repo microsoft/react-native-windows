@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 20 Jan 2021 01:45:54 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.52",
+      "version": "0.0.0-canary.52",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump internally published packages to 1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Jan 2021 05:07:01 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.52",
       "version": "0.0.0-canary.52",

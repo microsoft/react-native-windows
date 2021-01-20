@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Sat, 16 Jan 2021 05:05:46 GMT and should not be manually modified.
+This log was last generated on Wed, 20 Jan 2021 01:45:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.20
+
+Wed, 20 Jan 2021 01:45:54 GMT
+
+### Patches
+
+- Add warning to release creation script when publishing multiple releases (ngerlem@microsoft.com)
 
 ## 0.0.19
 

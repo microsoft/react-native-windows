@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Bump internally published packages to 1.0",
-  "packageName": "@react-native-windows/cli",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

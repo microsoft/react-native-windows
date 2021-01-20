@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Bump internally published packages to 1.0",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

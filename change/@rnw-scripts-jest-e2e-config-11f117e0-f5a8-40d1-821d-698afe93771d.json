@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Bump internally published packages to 1.0",
-  "packageName": "@rnw-scripts/jest-e2e-config",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

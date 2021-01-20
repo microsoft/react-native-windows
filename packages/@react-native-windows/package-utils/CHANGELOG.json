@@ -2,6 +2,21 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Wed, 20 Jan 2021 01:45:54 GMT",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.12",
+      "version": "0.0.0-canary.12",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump internally published packages to 1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "@react-native-windows/package-utils"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Jan 2021 05:05:37 GMT",
       "tag": "@react-native-windows/package-utils_v0.0.0-canary.12",
       "version": "0.0.0-canary.12",

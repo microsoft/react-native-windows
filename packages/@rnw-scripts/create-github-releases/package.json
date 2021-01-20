@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/create-github-releases",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
