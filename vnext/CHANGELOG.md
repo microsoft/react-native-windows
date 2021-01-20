@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 17 Jan 2021 05:08:07 GMT and should not be manually modified.
+This log was last generated on Mon, 18 Jan 2021 05:08:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.238
+
+Mon, 18 Jan 2021 05:08:29 GMT
+
+### Changes
+
+- Last year, we had plumbed the Systrace sections and events in the core react native to windows code and fired ETW events. But, it was hard for people to use because we used manifest based ETW events. This change converts the event triggering code to use Tracelogging APIs (aka self describing events) which doesn't require the manifest to be registered on the host machine to inspect traces.
+ Post this change, the systrace events can be inspected on any windows machines where the RNW based apps are running by issuing the following commands, 
+wpr.exe -start rnw.wprp
+wpr.exe -stop rnw.etl
+wpa.exe rnw.etl
+
+This works for Win32 apps too, say Office. (mganandraj@outlook.com)
 
 ## 0.0.0-canary.237
 
