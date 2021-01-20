@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Treat WS protocols as scalar/array",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
