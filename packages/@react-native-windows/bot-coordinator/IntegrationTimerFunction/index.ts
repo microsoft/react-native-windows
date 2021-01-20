@@ -10,5 +10,5 @@ import {initializeActors} from '../Actors/Actor';
 
 export default async (context: Context) => {
   const actorsHandle = await initializeActors(context);
-  actorsHandle.emit('integration-timer-fired');
+  await actorsHandle.emit('integration-timer-fired');
 };

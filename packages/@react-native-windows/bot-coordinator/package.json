@@ -14,6 +14,8 @@
     "watch": "just-scripts watch"
   },
   "dependencies": {
+    "@octokit/plugin-retry": "^3.0.6",
+    "@octokit/plugin-throttling": "^3.3.4",
     "@octokit/webhooks": "^7.21.0"
   },
   "devDependencies": {

@@ -9,7 +9,7 @@ import {EventPayloads, WebhookEvent} from '@octokit/webhooks';
 import {ActorRegistry} from './Actor';
 
 /**
- * Actor to delete bot-created pull requests once they are closed or merged
+ * Actor to delete bot-created branches once an associated pull request is closed or merged
  */
 export default ActorRegistry.register('deleteStaleBranches', async context => {
   context.webhooks.on('pull_request.closed', onPullClosedOrMerged);
