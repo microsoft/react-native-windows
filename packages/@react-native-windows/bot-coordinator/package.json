@@ -1,7 +1,6 @@
 {
   "name": "@react-native-windows/bot-coordinator",
-  "private": true,
-  "version": "1.0.0",
+  "version": "1.0.0-0",
   "license": "MIT",
   "description": "Azure functions application for coordinating react-native-windows bots",
   "scripts": {
