@@ -103,7 +103,7 @@ jobs:
           Copy-Item yarn.lock $(Build.StagingDirectory)\bot-coordinator
         displayName: Organizing for unhoisted dependendencies
 
-      - template: templates/yarn-install
+      - template: templates/yarn-install.yml
         parameters:
          workingDirectory: $(Build.StagingDirectory)\bot-coordinator
          frozenLockfile: false
