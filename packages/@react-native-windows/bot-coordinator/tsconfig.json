@@ -1,0 +1,7 @@
+{
+  "extends": "@rnw-scripts/ts-config",
+  "compilerOptions": {
+    "rootDir": "."
+  },
+  "exclude": ["lib-commonjs", "node_modules"]
+}
