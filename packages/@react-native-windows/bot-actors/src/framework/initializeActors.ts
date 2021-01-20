@@ -4,21 +4,14 @@
  *
  * @format
  */
-
 import * as globby from 'globby';
 
-import {WebhookEvent} from '@octokit/webhooks';
-import {ActorRegistry, Secrets, EmitActorEvent} from 'bot-actors';
-import {ActorInstance} from './ActorInstance';
-
-/**
- * ActorsHandle allows external interaction with the collection of initialized
- * actors, such as triggering events
- */
-export type ActorsHandle = {
-  emitEvent: EmitActorEvent;
-  receiveWebhook: (event: WebhookEvent & {signature: string}) => Promise<void>;
-};
+import {
+  ActorInstance,
+  ActorRegistry,
+  ActorsHandle,
+  ActorsHandleImpl,
+} from 'bot-actors';
 
 /**
  * Log output for the actors system
@@ -31,6 +24,14 @@ export type Logger = {
 };
 
 /**
+ * Secrets required by actor services to function
+ */
+export type Secrets = {
+  githubAuthToken: string;
+  githubWebhookSecret: string;
+};
+
+/**
  * Attempts to perform global registration of all actors present, then runs
  * them to create event subscriptions. Returns the ActorsHandle to allow
  * functions to trigger an event to actors.
@@ -39,10 +40,6 @@ export async function initializeActors(
   logger: Logger,
   secrets: Secrets,
 ): Promise<ActorsHandle> {
-  if (globalActorInstances.length > 0) {
-    throw new Error('Actors have already been initialized');
-  }
-
   const actorSources = await globby('**', {
     cwd: `${__dirname}/..`,
     absolute: true,
@@ -52,29 +49,12 @@ export async function initializeActors(
     require(sourceFile);
   }
 
+  const actorInstances: ActorInstance[] = [];
   for (const [actorName, actor] of Object.entries(ActorRegistry.getActors())) {
-    globalActorInstances.push(
+    actorInstances.push(
       await ActorInstance.initialize(actorName, actor, logger, secrets),
     );
   }
 
-  return {
-    emitEvent: async (eventName, ...args) => {
-      let eventReceived = false;
-      for (const instance of globalActorInstances) {
-        eventReceived =
-          eventReceived || (await instance.emitEvent(eventName, ...args));
-      }
-
-      return eventReceived;
-    },
-
-    receiveWebhook: async event => {
-      for (const instance of globalActorInstances) {
-        await instance.receiveWebhook(event);
-      }
-    },
-  };
+  return new ActorsHandleImpl(actorInstances);
 }
-
-const globalActorInstances: ActorInstance[] = [];

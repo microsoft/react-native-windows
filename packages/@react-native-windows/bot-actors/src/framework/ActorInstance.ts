@@ -11,14 +11,12 @@ import {retry} from '@octokit/plugin-retry';
 import {throttling} from '@octokit/plugin-throttling';
 
 import {
-  Context,
-  ActorEventEmitter,
-  ActorEvents,
   ActorDefinition,
+  ActorEventEmitter,
+  AsyncEventEmitter,
+  Context,
   Logger,
   Secrets,
-  EmitActorEvent,
-  OnActorEvent,
 } from 'bot-actors';
 
 export class ActorInstance {
@@ -29,7 +27,7 @@ export class ActorInstance {
     private readonly webhooks: Webhooks,
   ) {}
 
-  eventEmitter: ActorEventEmitter = new ActorEventEmitterImpl();
+  eventEmitter: ActorEventEmitter = new AsyncEventEmitter();
 
   public static async initialize(
     actorName: string,
@@ -63,7 +61,7 @@ export class ActorInstance {
     };
   }
 
-  emitEvent: EmitActorEvent = async (eventName, ...args) => {
+  emitEvent: ActorEventEmitter['emit'] = async (eventName, ...args) => {
     this.logger.info(`Receiving event "${eventName}"`);
 
     if (await this.eventEmitter.emit(eventName, ...args)) {
@@ -137,36 +135,6 @@ function createOctokit(logger: Logger, secrets: Secrets): Octokit {
       },
     },
   });
-}
-
-class ActorEventEmitterImpl implements ActorEventEmitter {
-  private readonly listeners: {
-    [E in keyof ActorEvents]?: Array<ActorEvents[E]>;
-  } = {};
-
-  on: OnActorEvent = (eventName, listener) => {
-    if (!this.listeners[eventName]) {
-      this.listeners[eventName] = [];
-    }
-
-    this.listeners[eventName]!.push(listener);
-    return this;
-  };
-
-  emit: EmitActorEvent = async (eventName: keyof ActorEvents, ...args) => {
-    const listeners = this.listeners[eventName];
-    if (!listeners || listeners.length === 0) {
-      return false;
-    }
-
-    for (const listener of listeners) {
-      // @ts-ignore TypeScript can't figure out the correlation between mapped
-      // value and params
-      await listener(...args);
-    }
-
-    return true;
-  };
 }
 
 function webhookToString(event: WebhookEvent): string {
