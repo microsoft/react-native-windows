@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update V8 and Hermes package versions",
+  "packageName": "react-native-windows-init",
+  "email": "tudor.mihai@microsoft.com",
+  "dependentChangeType": "patch"
+}
