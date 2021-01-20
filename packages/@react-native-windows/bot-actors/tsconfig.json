@@ -1,0 +1,11 @@
+{
+  "extends": "@rnw-scripts/ts-config",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "bot-actors": ["framework/index"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

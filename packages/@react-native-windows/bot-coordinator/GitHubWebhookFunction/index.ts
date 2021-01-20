@@ -6,11 +6,12 @@
  */
 
 import {Context, HttpRequest} from '@azure/functions';
-import {initializeActors} from '../Actors/Actor';
 import {WebhookEvent} from '@octokit/webhooks';
+import {initializeActors} from '@react-native-windows/bot-actors';
+import getActorSecrets from '../getActorSecrets';
 
 export default async (context: Context, req: HttpRequest) => {
-  const actorsHandle = await initializeActors(context);
+  const actorsHandle = await initializeActors(context.log, getActorSecrets());
 
   try {
     await actorsHandle.receiveWebhook({

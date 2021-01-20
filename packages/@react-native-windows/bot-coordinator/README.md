@@ -18,5 +18,9 @@ Content-Type: application/json
 }
 ```
 
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "GITHUB_AUTH_TOKEN": "<secret here>",
+    "GITHUB_WEBHOOK_SECRET": "<secret here>"
+
 ## Deployment
 The Azure functions application is deployed nightly along with other artifacts published by the repo.

@@ -5,13 +5,13 @@
  * @format
  */
 
-import {ActorRegistry} from './Actor';
+import {ActorRegistry} from 'bot-actors';
 
 /**
  * Actor to trigger automated integration of newly published react-native builds
  */
 export default ActorRegistry.register('integrateReactNative', async context => {
-  context.actorEvents.on('integration-timer-fired', async () => {
+  context.events.on('integration-timer-fired', async () => {
     // Not yet implemented
   });
 });
