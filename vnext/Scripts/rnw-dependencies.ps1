@@ -210,6 +210,13 @@ $requirements = @(
         Install = { choco install -y python3 };
     },
     @{
+        Name = 'Azure Functions Core Tools';
+        Tags = @('rnwDev');
+        Valid = try { (Get-Command func -ErrorAction Stop) -ne $null } catch { $false };
+        Install = { choco install -y azure-functions-core-tools-3 };
+        Optional = $true;
+    },
+    @{
         Name = 'WinAppDriver';
         Tags = @('rnwDev');
         Valid = (Test-Path "${env:ProgramFiles(x86)}\Windows Application Driver\WinAppDriver.exe");

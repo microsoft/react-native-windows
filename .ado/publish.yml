@@ -72,13 +72,49 @@ jobs:
         displayName: Beachball Publish (Stable Branch)
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
-      - script: npx --ignore-existing @rnw-scripts/create-github-releases --authToken $(githubAuthToken)
+      - script: npx --ignore-existing @rnw-scripts/create-github-releases --yes --authToken $(githubAuthToken)
         displayName: Create GitHub Releases for New Tags (Stable Branch)
         condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ ne(variables['Build.SourceBranchName'], 'master') }} )
 
       - template: templates/set-version-vars.yml
 
       - template: templates/publish-version-vars.yml
+
+  - job: DeployBotCoordinator
+    displayName: Deploy Bot Coordinator Azure Function
+    condition: eq(variables['Build.SourceBranchName'], 'master')
+    dependsOn: RnwNpmPublish
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 30
+    steps:
+      - template: templates/prepare-env.yml
+
+      # Bump in case the bot coordinator is dependent on other monorepo packages that were just published
+      - script: npx --no-install beachball bump
+        diplayName: beachball bump
+
+      # Azure Functions expects a fully packagable folder with dependencies.
+      # Reinstall them without hoisting.
+      - powershell: |
+          Get-ChildItem "packages\@react-native-windows\bot-coordinator" 
+            | Where-Object{$_.Name -notin 'node_modules'} 
+            | Copy-Item -Destination $(Build.StagingDirectory)\bot-coordinator -Recurse
+          Copy-Item yarn.lock $(Build.StagingDirectory)\bot-coordinator
+        displayName: Organizing for unhoisted dependendencies
+
+      - template: templates/yarn-install
+        parameters:
+         workingDirectory: $(Build.StagingDirectory)\bot-coordinator
+         frozenLockfile: false
+         production: true # Avoid devDependencies
+
+      - task: AzureFunctionApp@1
+        inputs:
+          azureSubscription: cxe-rnw-azure
+          appType: functionApp
+          appName: rnw-bot-coordinator
+          package: $(Build.StagingDirectory)\bot-coordinator
 
   - job: RnwNativeBuildDesktop
     displayName: Build Desktop
