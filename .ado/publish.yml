@@ -104,11 +104,11 @@ jobs:
           Copy-Item yarn.lock $(Build.StagingDirectory)\bot-coordinator
 
           # devDependencies add bloat and might only exist in the monorepo
-          Get-Content ./packages/@react-native-windows/bot-coordinator/package.json |
+          Get-Content (Build.StagingDirectory)\bot-coordinator\package.json |
             ConvertFrom-Json |
             Select-Object -Property * -ExcludeProperty devDependencies |
             ConvertTo-Json |
-            Out-File test.json
+            Out-File (Build.StagingDirectory)\bot-coordinator\package.json
         displayName: Organizing for unhoisted dependencies
 
       - template: templates/yarn-install.yml
