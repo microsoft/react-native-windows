@@ -50,8 +50,9 @@ export class ActorInstance {
   }
 
   emitEvent: ActorEventEmitter['emit'] = async (eventName, ...args) => {
+    this.logger.verbose(`Evaluating event "${eventName}"`);
     if (await this.eventEmitter.emit(eventName, ...args)) {
-      this.logger.info(`Accepted event "${eventName}"`);
+      this.logger.info(`Finished event "${eventName}"`);
       return true;
     } else {
       this.logger.verbose(`Rejected event "${eventName}"`);

@@ -6,19 +6,9 @@
  */
 
 import * as t from 'io-ts';
-import {AsyncEventEmitter} from './AsyncEventEmitter';
 
-/**
- * Events that map be fired from functions to actors, including the expected
- * event payload
- */
-export const actorEvents = {
-  'integration-timer-fired': t.undefined,
-  'publish-pipeline-failed': t.type({
-    buildNumber: t.string,
-    buildUri: t.string,
-  }),
-};
+import {AsyncEventEmitter} from './AsyncEventEmitter';
+import {actorEvents} from '../Events';
 
 export type ActorEventName = keyof typeof actorEvents;
 

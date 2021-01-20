@@ -5,6 +5,8 @@
  * @format
  */
 
+import * as _ from 'lodash';
+
 import {Logger} from '@azure/functions';
 import {PathReporter, success} from 'io-ts/lib/PathReporter';
 import {actorEvents, ActorEventName} from '@react-native-windows/bot-actors';
@@ -43,7 +45,7 @@ function parseEvent(
   // Check that JSON conforms to schema expectations
   const expectedPayload = actorEvents[bodyJson.event as ActorEventName];
   const result = PathReporter.report(expectedPayload.decode(bodyJson.payload));
-  if (result === success()) {
+  if (!_.isEqual(result, success())) {
     log.error('Event payload did not match expectations: ', ...result);
     return null;
   }
