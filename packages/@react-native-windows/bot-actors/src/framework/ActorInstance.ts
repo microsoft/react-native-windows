@@ -17,7 +17,6 @@ import {ActorEventEmitter} from './ActorEvents';
 import {Context} from './Context';
 export class ActorInstance {
   private constructor(
-    private readonly actorName: string,
     private readonly logger: Logger,
     private readonly octokit: Octokit,
     private readonly webhooks: Webhooks,
@@ -35,12 +34,7 @@ export class ActorInstance {
     const octokit = createOctokit(decoratedLogger, secrets);
     const webhooks = new Webhooks({secret: secrets.githubWebhookSecret});
 
-    const instance = new ActorInstance(
-      actorName,
-      decoratedLogger,
-      octokit,
-      webhooks,
-    );
+    const instance = new ActorInstance(decoratedLogger, octokit, webhooks);
 
     await actor(instance.context());
     return instance;

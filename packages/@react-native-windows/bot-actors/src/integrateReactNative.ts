@@ -5,13 +5,15 @@
  * @format
  */
 
-import {ActorRegistry} from './framework';
+import {ActorDefinition, ActorRegistry} from './framework';
 
 /**
  * Actor to trigger automated integration of newly published react-native builds
  */
-export default ActorRegistry.register('integrateReactNative', async context => {
-  context.events.on('integration-timer-fired', async () => {
+const actor: ActorDefinition = async ({events}) => {
+  events.on('integration-timer-fired', async () => {
     // Not yet implemented
   });
-});
+};
+
+export default ActorRegistry.register('integrateReactNative', actor);
