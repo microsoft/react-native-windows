@@ -37,9 +37,7 @@ export class ActorInstance {
   ) {
     const decoratedLogger = decorateWithPrefix(logger, actorName);
     const octokit = createOctokit(decoratedLogger, secrets);
-    const webhooks = new Webhooks({
-      secret: secrets.githubWebhookSecret,
-    });
+    const webhooks = new Webhooks();
 
     const instance = new ActorInstance(
       actorName,
@@ -77,15 +75,13 @@ export class ActorInstance {
     }
   };
 
-  receiveWebhook: (
-    event: WebhookEvent & {signature: string},
-  ) => Promise<void> = async event => {
+  receiveWebhook: (event: WebhookEvent) => Promise<void> = async event => {
     this.logger.info(`Receiving webhook "${webhookToString(event)}"`);
 
     this.logger.verbose(
       `Offering actor "${this.actorName}" webhook "${webhookToString(event)}"`,
     );
-    await this.webhooks.verifyAndReceive(event);
+    await this.webhooks.receive(event);
   };
 }
 

@@ -26,7 +26,6 @@ export const failOnErrorLogger: Logger = {
 
 export const fakeSecrets: Secrets = {
   githubAuthToken: 'ABCD',
-  githubWebhookSecret: 'EFGH',
 };
 
 export class MockContext implements Context {
@@ -43,7 +42,6 @@ export class MockContext implements Context {
   }
 
   async receiveWebhook(event: WebhookEvent) {
-    // Do not verify a signature
     await this.webhooks.receive(event);
   }
 

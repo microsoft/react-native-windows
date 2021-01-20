@@ -28,7 +28,6 @@ export type Logger = {
  */
 export type Secrets = {
   githubAuthToken: string;
-  githubWebhookSecret: string;
 };
 
 /**

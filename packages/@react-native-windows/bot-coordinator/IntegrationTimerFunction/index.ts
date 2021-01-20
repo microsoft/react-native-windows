@@ -5,11 +5,8 @@
  * @format
  */
 
-import {Context} from '@azure/functions';
-import {initializeActors} from '@react-native-windows/bot-actors';
-import getActorSecrets from '../getActorSecrets';
+import {actorFunction} from '../actorFunction';
 
-export default async (context: Context) => {
-  const actorsHandle = await initializeActors(context.log, getActorSecrets());
+export default actorFunction(async ({actorsHandle}) => {
   await actorsHandle.emitEvent('integration-timer-fired');
-};
+});
