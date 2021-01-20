@@ -37,7 +37,7 @@ export async function initializeActors(
   logger: Logger,
   secrets: Secrets,
 ): Promise<ActorsHandle> {
-  const actorSources = await globby(['*'], {
+  const actorSources = await globby(['*.js'], {
     cwd: `${__dirname}/..`,
     absolute: true,
   });

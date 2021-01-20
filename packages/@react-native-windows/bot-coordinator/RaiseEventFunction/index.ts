@@ -5,13 +5,17 @@
  * @format
  */
 
-import {PathReporter} from 'io-ts/lib/PathReporter';
+import {Logger} from '@azure/functions';
+import {PathReporter, success} from 'io-ts/lib/PathReporter';
 import {actorEvents, ActorEventName} from '@react-native-windows/bot-actors';
 import {httpBotFunction} from '../botFunction';
 
 export default httpBotFunction(async ({context, req, actorsHandle}) => {
-  const event = parseEvent(req.body);
+  const bodyJson =
+    typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+  const event = parseEvent(bodyJson, context.log);
   if (!event) {
+    context.log.error('JSON schema validation failed');
     context.res = {status: 400, body: 'Malformed event'};
     return;
   }
@@ -24,17 +28,23 @@ export default httpBotFunction(async ({context, req, actorsHandle}) => {
  */
 function parseEvent(
   bodyJson: any,
+  log: Logger,
 ): {name: ActorEventName; payload?: any} | null {
-  if (
-    typeof bodyJson.event !== 'string' ||
-    !actorEvents.hasOwnProperty(bodyJson.event)
-  ) {
+  if (typeof bodyJson.event !== 'string') {
+    log.error('Missing event name');
     return null;
   }
 
+  if (!actorEvents.hasOwnProperty(bodyJson.event)) {
+    log.error('Unrecognized event name');
+    return null;
+  }
+
+  // Check that JSON conforms to schema expectations
   const expectedPayload = actorEvents[bodyJson.event as ActorEventName];
-  const errors = PathReporter.report(expectedPayload.decode(bodyJson.payload));
-  if (errors.length > 0) {
+  const result = PathReporter.report(expectedPayload.decode(bodyJson.payload));
+  if (result === success()) {
+    log.error('Event payload did not match expectations: ', ...result);
     return null;
   }
 

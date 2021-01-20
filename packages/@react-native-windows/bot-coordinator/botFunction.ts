@@ -14,17 +14,18 @@ import {
 } from '@react-native-windows/bot-actors';
 import {AzureFunction, Context, HttpRequest} from '@azure/functions';
 
-export type Secrets = {
-  githubAuthToken: string;
-  /** HMAC SHA-256 Secret used to validate messages */
-  httpSharedSecret: string;
-};
-
 export type ActorFunctionDelegate = (opts: {
   context: Context;
   secrets: Secrets;
   actorsHandle: ActorsHandle;
 }) => Promise<void>;
+
+export type Secrets = {
+  /** PAT used to authenticate to GitHub's REST APIs */
+  githubAuthToken: string;
+  /** HMAC SHA-256 secret used to validate incoming messages */
+  httpSharedSecret: string;
+};
 
 /**
  * Wrapper to do verification and initialization for parameterless
@@ -35,6 +36,24 @@ export function botFunction(delegate: ActorFunctionDelegate): AzureFunction {
 
     const actorsHandle = await initializeActors(context.log, secrets);
     await delegate({context, secrets, actorsHandle});
+  };
+}
+
+function getSecrets(): Secrets & ActorSecrets {
+  const githubAuthToken = process.env.GITHUB_AUTH_TOKEN;
+  if (githubAuthToken === undefined) {
+    throw new Error('"GITHUB_AUTH_TOKEN" env variable must be set');
+  }
+
+  const httpSharedSecret = process.env.HTTP_SHARED_SECRET;
+  if (httpSharedSecret === undefined) {
+    throw new Error('"HTTP_SHARED_SECRET" env variable must be set');
+  }
+
+  return {
+    githubAuthToken,
+    httpSharedSecret,
+    githubWebhookSecret: httpSharedSecret,
   };
 }
 
@@ -51,9 +70,15 @@ export type HttpFunctionDelegate = (opts: {
 export function httpBotFunction(delegate: HttpFunctionDelegate) {
   return async (context: Context, req: HttpRequest) => {
     const secrets = getSecrets();
+    const enableSignatureVerification =
+      process.env.ENABLE_SIGNATURE_VERIFICATION !== 'false';
 
     try {
-      if (!verifyMessageSignature(context, req, secrets)) {
+      if (
+        enableSignatureVerification &&
+        !verifyMessageSignature(context, req, secrets)
+      ) {
+        context.log.error('Signature verification failed');
         context.res = {status: 403, body: 'Signature verification failed'};
         return;
       }
@@ -66,6 +91,7 @@ export function httpBotFunction(delegate: HttpFunctionDelegate) {
     }
 
     if (!context.res) {
+      context.log.info('Request OK');
       context.res = {status: 200};
     }
   };
@@ -102,22 +128,4 @@ function verifyMessageSignature(
   }
 
   return true;
-}
-
-function getSecrets(): Secrets & ActorSecrets {
-  const githubAuthToken = process.env.GITHUB_AUTH_TOKEN;
-  if (githubAuthToken === undefined) {
-    throw new Error('"GITHUB_AUTH_TOKEN" env variable must be set');
-  }
-
-  const httpSharedSecret = process.env.HTTP_SHARED_SECRET;
-  if (httpSharedSecret === undefined) {
-    throw new Error('"HTTP_SHARED_SECRET" env variable must be set');
-  }
-
-  return {
-    githubAuthToken,
-    httpSharedSecret,
-    githubWebhookSecret: httpSharedSecret,
-  };
 }
