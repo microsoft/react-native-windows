@@ -5,7 +5,7 @@
  * @format
  */
 
-import {ActorRegistry} from 'bot-actors';
+import {ActorRegistry} from './framework';
 
 /**
  * Actor to trigger automated integration of newly published react-native builds

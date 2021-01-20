@@ -8,7 +8,9 @@
 import {Webhooks} from '@octokit/webhooks';
 import {Octokit} from '@octokit/rest';
 
-import {ActorEvents, AsyncEmitterSource, Logger} from 'bot-actors';
+import {Logger} from './initializeActors';
+import {AsyncEmitterSource} from './AsyncEventEmitter';
+import {ActorEventCallbacks} from './ActorEvents';
 
 /**
  * The actor context allows an actor to subscribe to events and perform actions
@@ -18,5 +20,5 @@ export type Context = {
   log: Logger;
   octokit: Octokit;
   webhooks: Webhooks;
-  events: AsyncEmitterSource<ActorEvents>;
+  events: AsyncEmitterSource<ActorEventCallbacks>;
 };

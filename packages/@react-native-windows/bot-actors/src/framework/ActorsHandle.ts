@@ -6,7 +6,9 @@
  */
 
 import {WebhookEvent} from '@octokit/webhooks';
-import {ActorInstance, ActorEventEmitter} from 'bot-actors';
+
+import {ActorEventEmitter} from './ActorEvents';
+import {ActorInstance} from './ActorInstance';
 
 /**
  * ActorsHandle allows external interaction with the collection of initialized

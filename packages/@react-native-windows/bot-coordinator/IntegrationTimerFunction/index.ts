@@ -5,8 +5,8 @@
  * @format
  */
 
-import {actorFunction} from '../actorFunction';
+import {botFunction} from '../botFunction';
 
-export default actorFunction(async ({actorsHandle}) => {
+export default botFunction(async ({actorsHandle}) => {
   await actorsHandle.emitEvent('integration-timer-fired');
 });

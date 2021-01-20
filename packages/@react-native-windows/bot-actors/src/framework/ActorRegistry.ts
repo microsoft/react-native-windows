@@ -5,7 +5,7 @@
  * @format
  */
 
-import {Context} from 'bot-actors';
+import {Context} from './Context';
 
 /**
  * Actor functions allow creating flows that react to external events, such as

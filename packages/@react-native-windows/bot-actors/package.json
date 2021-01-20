@@ -16,7 +16,9 @@
   "dependencies": {
     "@octokit/plugin-retry": "^3.0.6",
     "@octokit/plugin-throttling": "^3.3.4",
-    "@octokit/webhooks": "^7.21.0"
+    "@octokit/webhooks": "^7.21.0",
+    "fp-ts": "^2.9.3",
+    "io-ts": "^2.2.13"
   },
   "devDependencies": {
     "@octokit/fixtures": "^21.3.1",

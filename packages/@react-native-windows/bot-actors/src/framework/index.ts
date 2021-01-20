@@ -11,5 +11,4 @@ export * from './ActorRegistry';
 export * from './ActorsHandle';
 export * from './AsyncEventEmitter';
 export * from './Context';
-export * from './Mocks';
 export * from './initializeActors';

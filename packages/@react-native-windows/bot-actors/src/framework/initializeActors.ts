@@ -6,12 +6,9 @@
  */
 import * as globby from 'globby';
 
-import {
-  ActorInstance,
-  ActorRegistry,
-  ActorsHandle,
-  ActorsHandleImpl,
-} from 'bot-actors';
+import {ActorInstance} from './ActorInstance';
+import {ActorRegistry} from './ActorRegistry';
+import {ActorsHandle, ActorsHandleImpl} from './ActorsHandle';
 
 /**
  * Log output for the actors system
@@ -28,6 +25,7 @@ export type Logger = {
  */
 export type Secrets = {
   githubAuthToken: string;
+  githubWebhookSecret: string;
 };
 
 /**
@@ -39,7 +37,7 @@ export async function initializeActors(
   logger: Logger,
   secrets: Secrets,
 ): Promise<ActorsHandle> {
-  const actorSources = await globby('**', {
+  const actorSources = await globby(['*'], {
     cwd: `${__dirname}/..`,
     absolute: true,
   });

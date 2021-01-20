@@ -10,15 +10,11 @@ import {Octokit} from '@octokit/rest';
 import {retry} from '@octokit/plugin-retry';
 import {throttling} from '@octokit/plugin-throttling';
 
-import {
-  ActorDefinition,
-  ActorEventEmitter,
-  AsyncEventEmitter,
-  Context,
-  Logger,
-  Secrets,
-} from 'bot-actors';
-
+import {Logger, Secrets} from './initializeActors';
+import {ActorDefinition} from './ActorRegistry';
+import {AsyncEventEmitter} from './AsyncEventEmitter';
+import {ActorEventEmitter} from './ActorEvents';
+import {Context} from './Context';
 export class ActorInstance {
   private constructor(
     private readonly actorName: string,
@@ -37,7 +33,7 @@ export class ActorInstance {
   ) {
     const decoratedLogger = decorateWithPrefix(logger, actorName);
     const octokit = createOctokit(decoratedLogger, secrets);
-    const webhooks = new Webhooks();
+    const webhooks = new Webhooks({secret: secrets.githubWebhookSecret});
 
     const instance = new ActorInstance(
       actorName,
@@ -60,29 +56,27 @@ export class ActorInstance {
   }
 
   emitEvent: ActorEventEmitter['emit'] = async (eventName, ...args) => {
-    this.logger.info(`Receiving event "${eventName}"`);
-
     if (await this.eventEmitter.emit(eventName, ...args)) {
-      this.logger.info(
-        `Actor "${this.actorName}" accepted the event "${eventName}"`,
-      );
+      this.logger.info(`Accepted event "${eventName}"`);
       return true;
     } else {
-      this.logger.verbose(
-        `Actor "${this.actorName}" rejected the event "${eventName}"`,
-      );
+      this.logger.verbose(`Rejected event "${eventName}"`);
       return false;
     }
   };
 
   receiveWebhook: (event: WebhookEvent) => Promise<void> = async event => {
-    this.logger.info(`Receiving webhook "${webhookToString(event)}"`);
-
-    this.logger.verbose(
-      `Offering actor "${this.actorName}" webhook "${webhookToString(event)}"`,
-    );
+    this.logger.verbose(`Evaluating webhook "${webhookToString(event)}"`);
     await this.webhooks.receive(event);
   };
+}
+
+function webhookToString(event: WebhookEvent): string {
+  if (event.payload.action) {
+    return `${event.name}.${event.payload.action}`;
+  } else {
+    return event.name;
+  }
 }
 
 function decorateWithPrefix(log: Logger, prefix: string): Logger {
@@ -131,12 +125,4 @@ function createOctokit(logger: Logger, secrets: Secrets): Octokit {
       },
     },
   });
-}
-
-function webhookToString(event: WebhookEvent): string {
-  if (event.payload.action) {
-    return `${event.name}.${event.payload.action}`;
-  } else {
-    return event.name;
-  }
 }

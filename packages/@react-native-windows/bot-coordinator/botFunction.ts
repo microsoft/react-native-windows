@@ -14,7 +14,8 @@ import {
 } from '@react-native-windows/bot-actors';
 import {AzureFunction, Context, HttpRequest} from '@azure/functions';
 
-export type Secrets = ActorSecrets & {
+export type Secrets = {
+  githubAuthToken: string;
   /** HMAC SHA-256 Secret used to validate messages */
   httpSharedSecret: string;
 };
@@ -25,7 +26,10 @@ export type ActorFunctionDelegate = (opts: {
   actorsHandle: ActorsHandle;
 }) => Promise<void>;
 
-export function actorFunction(delegate: ActorFunctionDelegate): AzureFunction {
+/**
+ * Wrapper to do verification and initialization for parameterless
+ */
+export function botFunction(delegate: ActorFunctionDelegate): AzureFunction {
   return async (context: Context) => {
     const secrets = getSecrets();
 
@@ -40,18 +44,30 @@ export type HttpFunctionDelegate = (opts: {
   actorsHandle: ActorsHandle;
   req: HttpRequest;
 }) => Promise<void>;
-export function httpFunction(delegate: HttpFunctionDelegate) {
+
+/**
+ * Wrapper to do verification and initialization for HTTP Azure functions
+ */
+export function httpBotFunction(delegate: HttpFunctionDelegate) {
   return async (context: Context, req: HttpRequest) => {
     const secrets = getSecrets();
 
-    if (!verifyMessageSignature(context, req, secrets)) {
-      context.log.error('Signature verification failed');
-      context.res = {status: 403, body: 'Signature verification failed'};
-      return;
+    try {
+      if (!verifyMessageSignature(context, req, secrets)) {
+        context.res = {status: 403, body: 'Signature verification failed'};
+        return;
+      }
+
+      const actorsHandle = await initializeActors(context.log, secrets);
+      await delegate({context, secrets, actorsHandle, req});
+    } catch (ex) {
+      context.res = {status: 500};
+      throw ex;
     }
 
-    const actorsHandle = await initializeActors(context.log, secrets);
-    await delegate({context, secrets, actorsHandle, req});
+    if (!context.res) {
+      context.res = {status: 200};
+    }
   };
 }
 
@@ -88,7 +104,7 @@ function verifyMessageSignature(
   return true;
 }
 
-function getSecrets(): Secrets {
+function getSecrets(): Secrets & ActorSecrets {
   const githubAuthToken = process.env.GITHUB_AUTH_TOKEN;
   if (githubAuthToken === undefined) {
     throw new Error('"GITHUB_AUTH_TOKEN" env variable must be set');
@@ -99,5 +115,9 @@ function getSecrets(): Secrets {
     throw new Error('"HTTP_SHARED_SECRET" env variable must be set');
   }
 
-  return {githubAuthToken, httpSharedSecret};
+  return {
+    githubAuthToken,
+    httpSharedSecret,
+    githubWebhookSecret: httpSharedSecret,
+  };
 }

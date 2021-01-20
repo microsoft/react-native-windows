@@ -13,12 +13,12 @@ import {
   Context,
   Logger,
   Secrets,
-} from 'bot-actors';
+} from '../framework';
 
 export const failOnErrorLogger: Logger = {
-  verbose: () => {},
-  info: () => {},
-  warn: () => {},
+  verbose: console.log,
+  info: console.log,
+  warn: console.warn,
   error: (...args: any) => {
     fail(args.map((arg: any) => arg.toString()).join(' '));
   },
@@ -26,6 +26,7 @@ export const failOnErrorLogger: Logger = {
 
 export const fakeSecrets: Secrets = {
   githubAuthToken: 'ABCD',
+  githubWebhookSecret: 'ABCD',
 };
 
 export class MockContext implements Context {
@@ -37,7 +38,7 @@ export class MockContext implements Context {
   constructor() {
     this.log = failOnErrorLogger;
     this.octokit = new Octokit();
-    this.webhooks = new Webhooks();
+    this.webhooks = new Webhooks({secret: 'ABCD'});
     this.events = new AsyncEventEmitter();
   }
 

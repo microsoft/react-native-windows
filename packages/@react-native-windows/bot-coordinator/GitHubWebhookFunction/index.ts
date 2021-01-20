@@ -6,19 +6,17 @@
  */
 
 import {WebhookEvent} from '@octokit/webhooks';
-import {httpFunction} from '../actorFunction';
+import {httpBotFunction} from '../botFunction';
 
-export default httpFunction(async ({context, req, actorsHandle}) => {
-  try {
-    await actorsHandle.receiveWebhook({
-      id: req.headers['X-GitHub-Delivery'],
-      name: req.headers['X-GitHub-Event'] as WebhookEvent<any>['name'],
-      payload: req.body,
-    });
-  } catch (ex) {
-    context.res = {status: 500};
-    throw ex;
+export default httpBotFunction(async ({context, req, actorsHandle}) => {
+  if (!req.headers['X-GitHub-Delivery'] || !req.headers['X-GitHub-Event']) {
+    context.res = {status: 400, body: 'Missing headers'};
+    return;
   }
 
-  context.res = {status: 200};
+  await actorsHandle.receiveWebhook({
+    id: req.headers['X-GitHub-Delivery'],
+    name: req.headers['X-GitHub-Event'] as WebhookEvent<any>['name'],
+    payload: req.body,
+  });
 });

@@ -7,7 +7,7 @@
 
 import {EventPayloads, WebhookEvent} from '@octokit/webhooks';
 
-import {ActorRegistry} from 'bot-actors';
+import {ActorRegistry} from './framework';
 
 /**
  * Actor to delete bot-created branches once an associated pull request is closed or merged

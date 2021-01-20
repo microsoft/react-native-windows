@@ -5,7 +5,8 @@
  * @format
  */
 
-import {initializeActors, failOnErrorLogger, fakeSecrets} from 'bot-actors';
+import {initializeActors} from '../../framework';
+import {failOnErrorLogger, fakeSecrets} from '../Mocks';
 
 test('Initialization succeeds', async () => {
   await initializeActors(failOnErrorLogger, fakeSecrets);
