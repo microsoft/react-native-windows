@@ -54,7 +54,7 @@ jobs:
       - task: CmdLine@2
         displayName: Create GitHub Release
         inputs:
-          script: npx --ignore-existing @rnw-scripts/create-github-releases --authToken $(githubAuthToken)
+          script: npx --ignore-existing @rnw-scripts/create-github-releases --yes --authToken $(githubAuthToken)
 
       - task: CmdLine@2
         displayName: Set Version Env Vars
