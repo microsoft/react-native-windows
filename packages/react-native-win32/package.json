@@ -54,7 +54,7 @@
     "ws": "^6.1.4"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "0.1.6",
+    "@rnw-scripts/eslint-config": "1.1.6",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
     "@types/node": "^12.11.2",
@@ -69,7 +69,7 @@
     "prettier": "1.19.1",
     "react": "17.0.1",
     "react-native": "0.0.0-6fd684150",
-    "react-native-platform-override": "^0.4.7",
+    "react-native-platform-override": "^1.4.7",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^3.8.3"
   },

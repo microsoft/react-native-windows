@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/create-github-releases",
-  "version": "0.0.19",
+  "version": "1.0.19",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -23,9 +23,9 @@
     "yargs": "^15.4.1"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "0.1.6",
-    "@rnw-scripts/just-task": "0.0.6",
-    "@rnw-scripts/ts-config": "0.1.0",
+    "@rnw-scripts/eslint-config": "1.1.6",
+    "@rnw-scripts/just-task": "1.0.6",
+    "@rnw-scripts/ts-config": "1.1.0",
     "@types/chalk": "^2.2.0",
     "@types/glob": "^7.1.0",
     "@types/lodash": "^4.14.161",
@@ -35,11 +35,6 @@
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "typescript": "^3.8.3"
-  },
-  "beachball": {
-    "disallowedChangeTypes": [
-      "major"
-    ]
   },
   "files": [
     "bin.js",

@@ -18,8 +18,8 @@
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
-    "@rnw-scripts/eslint-config": "0.1.6",
-    "@rnw-scripts/ts-config": "0.1.0",
+    "@rnw-scripts/eslint-config": "1.1.6",
+    "@rnw-scripts/ts-config": "1.1.0",
     "@types/react": "16.9.0",
     "@types/react-native": "^0.63.18",
     "eslint": "7.12.0",
