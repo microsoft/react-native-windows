@@ -92,7 +92,7 @@ jobs:
 
       # Bump in case the bot coordinator is dependent on other monorepo packages that were just published
       - script: npx --no-install beachball bump
-        diplayName: beachball bump
+        displayName: beachball bump
 
       # Azure Functions expects a fully packagable folder with dependencies.
       # Reinstall them without hoisting.
