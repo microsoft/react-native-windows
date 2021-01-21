@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 21 Jan 2021 18:54:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.239",
+      "version": "0.0.0-canary.239",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update V8 and Hermes package versions",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "60778ed483756357f4ae73681e5b490404b4c2ea",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Jan 2021 01:45:54 GMT",
       "tag": "react-native-windows_v0.0.0-canary.238",
       "version": "0.0.0-canary.238",
