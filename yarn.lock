@@ -2397,14 +2397,14 @@
     validator "^13.0.0"
 
 "@wdio/local-runner@^6.11.3":
-  version "6.12.0"
-  resolved "https://registry.yarnpkg.com/@wdio/local-runner/-/local-runner-6.12.0.tgz#1031567d0966f67069ee59199d203c9f1fa0660b"
-  integrity sha512-7X8wmcldc4aKietZPi1GDAWM3EO7EUjR6rqmW5UOAtCbDX9EFhXi6O4dGFqzwO7ZbNiOzWozDhx9gVWL+FNbJQ==
+  version "6.12.1"
+  resolved "https://registry.yarnpkg.com/@wdio/local-runner/-/local-runner-6.12.1.tgz#20780d3980229b513dd26655ba82af11a5ec733b"
+  integrity sha512-vZkXcp/qO9kDpSzwrP4hkt8Q2o3DzSuEtmlEvniYmkS5blLmYuWCn9DpyM4h655jgr+r4NZW8k/3s3qosIs9zw==
   dependencies:
     "@types/stream-buffers" "^3.0.3"
     "@wdio/logger" "6.10.10"
     "@wdio/repl" "6.11.0"
-    "@wdio/runner" "6.12.0"
+    "@wdio/runner" "6.12.1"
     async-exit-hook "^2.0.1"
     stream-buffers "^3.0.2"
 
@@ -2438,18 +2438,18 @@
     "@types/cucumber" "^6.0.1"
     fs-extra "^9.0.0"
 
-"@wdio/runner@6.12.0":
-  version "6.12.0"
-  resolved "https://registry.yarnpkg.com/@wdio/runner/-/runner-6.12.0.tgz#e287621e9d65268d19833307a2e7a58994daa2e0"
-  integrity sha512-FaR4duFW0U3iucWK4GbllG2Lj3WEVs7JI6jvamFusqHlxXl7A0Tw+shd5E0HHUlkr3tN68bNP7MDQG76yh6EQg==
+"@wdio/runner@6.12.1":
+  version "6.12.1"
+  resolved "https://registry.yarnpkg.com/@wdio/runner/-/runner-6.12.1.tgz#25557fdd8c16a1996fa4f6a5b28d38cb6dbef97c"
+  integrity sha512-LMmiKQavMFrFd2LYrGA/DiKGJ/SH/3n95KWf4k8dmpB1fZqxO0KvEaE44CJTSFTQ0MB4JFTRUvW3JfXBm9EfRA==
   dependencies:
-    "@wdio/config" "6.11.0"
+    "@wdio/config" "6.12.1"
     "@wdio/logger" "6.10.10"
     "@wdio/utils" "6.11.0"
     deepmerge "^4.0.0"
     gaze "^1.1.2"
-    webdriver "6.12.0"
-    webdriverio "6.12.0"
+    webdriver "6.12.1"
+    webdriverio "6.12.1"
 
 "@wdio/sync@^6.9.0":
   version "6.11.0"
@@ -11217,7 +11217,7 @@ webdriverio@6.12.0:
     serialize-error "^7.0.0"
     webdriver "6.12.0"
 
-webdriverio@^6.9.0:
+webdriverio@6.12.1, webdriverio@^6.9.0:
   version "6.12.1"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.12.1.tgz#5b6f1167373bd7a154419d8a930ef1ffda9d0537"
   integrity sha512-Nx7ge0vTWHVIRUbZCT+IuMwB5Q0Q5nLlYdgnmmJviUKLuc3XtaEBkYPTbhHWHgSBXsPZMIc023vZKNkn+6iyeQ==
