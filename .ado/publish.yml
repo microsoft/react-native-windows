@@ -73,7 +73,7 @@ jobs:
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
       # Beachball reverts to local state after publish, but we want the updates it added
-      - script: git pull origin/${{ variables['Build.SourceBranchName'] }}
+      - script: git pull origin ${{ variables['Build.SourceBranchName'] }}
         displayName: git pull
 
       - script: npx --ignore-existing @rnw-scripts/create-github-releases --yes --authToken $(githubAuthToken)
