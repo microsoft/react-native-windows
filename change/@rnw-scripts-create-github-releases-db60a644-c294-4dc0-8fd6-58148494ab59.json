@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add warning to release creation script when publishing multiple releases",
-  "packageName": "@rnw-scripts/create-github-releases",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

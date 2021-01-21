@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update V8 and Hermes package versions",
-  "packageName": "@rnw-scripts/jest-unittest-config",
-  "email": "tudor.mihai@microsoft.com",
-  "dependentChangeType": "patch"
-}

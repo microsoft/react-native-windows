@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Change files",
+  "comment": "Update V8 and Hermes package versions",
   "packageName": "react-native-windows",
   "email": "tudor.mihai@microsoft.com",
   "dependentChangeType": "patch"
