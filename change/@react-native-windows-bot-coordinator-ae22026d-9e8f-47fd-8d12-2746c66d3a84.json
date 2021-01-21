@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Publish bot coordinator package",
+  "packageName": "@react-native-windows/bot-coordinator",
+  "email": "nick@nickgerleman.com",
+  "dependentChangeType": "patch"
+}
