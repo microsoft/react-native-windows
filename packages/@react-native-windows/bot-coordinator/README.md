@@ -5,7 +5,8 @@ This package contains code bridging Azure Functions to the bot-actors platform.
 ## Running locally
 1. Install Azure Functions Core Tools (e.g. through `choco install azure-functions-core-tools-3`)
 1. Ensure the [Azurite]() extension is installed
-1. Add any secrets needed to `local.settings.json`. This file is ignored by Git, but be careful not to edit the example file instead!
+1. Ensure the repo is built through `yarn build`.
+1. Add any secrets needed to the generated `local.settings.json`. This file will be ignored by Git!
 1. Run `yarn start` in the package root
 
 HttpTriggers can be triggered from localhost using a REST client like PostMan or curl. E.g.

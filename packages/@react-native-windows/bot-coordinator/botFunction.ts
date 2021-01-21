@@ -17,7 +17,7 @@ import {AzureFunction, Context, HttpRequest} from '@azure/functions';
 export type ActorFunctionDelegate = (opts: {
   context: Context;
   secrets: Secrets;
-  actorsHandle: ActorsHandle;
+  actors: ActorsHandle;
 }) => Promise<void>;
 
 export type Secrets = {
@@ -35,32 +35,14 @@ export function botFunction(delegate: ActorFunctionDelegate): AzureFunction {
     const secrets = getSecrets();
 
     const actorsHandle = await initializeActors(context.log, secrets);
-    await delegate({context, secrets, actorsHandle});
-  };
-}
-
-function getSecrets(): Secrets & ActorSecrets {
-  const githubAuthToken = process.env.GITHUB_AUTH_TOKEN;
-  if (githubAuthToken === undefined) {
-    throw new Error('"GITHUB_AUTH_TOKEN" env variable must be set');
-  }
-
-  const httpSharedSecret = process.env.HTTP_SHARED_SECRET;
-  if (httpSharedSecret === undefined) {
-    throw new Error('"HTTP_SHARED_SECRET" env variable must be set');
-  }
-
-  return {
-    githubAuthToken,
-    httpSharedSecret,
-    githubWebhookSecret: httpSharedSecret,
+    await delegate({context, secrets, actors: actorsHandle});
   };
 }
 
 export type HttpFunctionDelegate = (opts: {
   context: Context;
   secrets: Secrets;
-  actorsHandle: ActorsHandle;
+  actors: ActorsHandle;
   req: HttpRequest;
 }) => Promise<void>;
 
@@ -83,8 +65,8 @@ export function httpBotFunction(delegate: HttpFunctionDelegate) {
         return;
       }
 
-      const actorsHandle = await initializeActors(context.log, secrets);
-      await delegate({context, secrets, actorsHandle, req});
+      const actors = await initializeActors(context.log, secrets);
+      await delegate({context, secrets, actors, req});
     } catch (ex) {
       context.res = {status: 500};
       throw ex;
@@ -94,6 +76,24 @@ export function httpBotFunction(delegate: HttpFunctionDelegate) {
       context.log.info('Request OK');
       context.res = {status: 200};
     }
+  };
+}
+
+function getSecrets(): Secrets & ActorSecrets {
+  const githubAuthToken = process.env.GITHUB_AUTH_TOKEN;
+  if (githubAuthToken === undefined) {
+    throw new Error('"GITHUB_AUTH_TOKEN" env variable must be set');
+  }
+
+  const httpSharedSecret = process.env.HTTP_SHARED_SECRET;
+  if (httpSharedSecret === undefined) {
+    throw new Error('"HTTP_SHARED_SECRET" env variable must be set');
+  }
+
+  return {
+    githubAuthToken,
+    httpSharedSecret,
+    githubWebhookSecret: httpSharedSecret,
   };
 }
 

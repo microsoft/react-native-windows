@@ -9,6 +9,7 @@ import * as t from 'io-ts';
 
 import {AsyncEventEmitter} from './AsyncEventEmitter';
 import {actorEvents} from '../Events';
+export {actorEvents};
 
 export type ActorEventName = keyof typeof actorEvents;
 

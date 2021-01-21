@@ -12,7 +12,7 @@ import {PathReporter, success} from 'io-ts/lib/PathReporter';
 import {actorEvents, ActorEventName} from '@react-native-windows/bot-actors';
 import {httpBotFunction} from '../botFunction';
 
-export default httpBotFunction(async ({context, req, actorsHandle}) => {
+export default httpBotFunction(async ({context, req, actors}) => {
   const bodyJson =
     typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
   const event = parseEvent(bodyJson, context.log);
@@ -22,7 +22,7 @@ export default httpBotFunction(async ({context, req, actorsHandle}) => {
     return;
   }
 
-  await actorsHandle.emitEvent(event.name, event.payload);
+  await actors.emitEvent(event.name, event.payload);
 });
 
 /**
