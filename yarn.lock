@@ -2320,9 +2320,9 @@
     eslint-visitor-keys "^1.1.0"
 
 "@wdio/cli@^6.9.0":
-  version "6.12.0"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-6.12.0.tgz#6445bbf9ab7b916fadae01d6a94cb525146e057b"
-  integrity sha512-TeDkaBTQ272zbGvWanglfXwUH+uU3OrM76AeDe7c3xgGTlNjpVtLYCSTP5vjsLM2156Tg+f0gMTAUlflvnWFZQ==
+  version "6.12.1"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-6.12.1.tgz#9d2f0986c9fab2d02a620522a4f8c94fb24c20e8"
+  integrity sha512-RgCSonEnCWtVgA1XKUlFuBsQdTbeFs9dvP0VBwCTMilwqMPzt9OhpcDjvRjohBSX8dKf7YqcgEOuWr0WDCPQqw==
   dependencies:
     "@types/ejs" "^3.0.5"
     "@types/fs-extra" "^9.0.4"
@@ -2331,7 +2331,7 @@
     "@types/lodash.pickby" "^4.6.6"
     "@types/lodash.union" "^4.6.6"
     "@types/recursive-readdir" "^2.2.0"
-    "@wdio/config" "6.11.0"
+    "@wdio/config" "6.12.1"
     "@wdio/logger" "6.10.10"
     "@wdio/utils" "6.11.0"
     async-exit-hook "^2.0.1"
@@ -2346,7 +2346,7 @@
     lodash.union "^4.6.0"
     mkdirp "^1.0.4"
     recursive-readdir "^2.2.2"
-    webdriverio "6.12.0"
+    webdriverio "6.12.1"
     yargs "^16.0.3"
     yarn-install "^1.0.0"
 
@@ -11217,7 +11217,7 @@ webdriverio@6.12.0:
     serialize-error "^7.0.0"
     webdriver "6.12.0"
 
-webdriverio@^6.9.0:
+webdriverio@6.12.1, webdriverio@^6.9.0:
   version "6.12.1"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-6.12.1.tgz#5b6f1167373bd7a154419d8a930ef1ffda9d0537"
   integrity sha512-Nx7ge0vTWHVIRUbZCT+IuMwB5Q0Q5nLlYdgnmmJviUKLuc3XtaEBkYPTbhHWHgSBXsPZMIc023vZKNkn+6iyeQ==
