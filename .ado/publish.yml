@@ -9,6 +9,10 @@ parameters:
   displayName: Skip Git Push
   type: boolean
   default: false
+- name: skipBotDeployment
+  displayName: Skip Deploying Bots to Azure Functions
+  type: boolean
+  default: false
 
 variables:
   - template: variables/msbuild.yml
@@ -82,7 +86,7 @@ jobs:
 
   - job: DeployBotCoordinator
     displayName: Deploy Bot Coordinator Azure Function
-    condition: eq(variables['Build.SourceBranchName'], 'master')
+    condition: and(eq(variables['Build.SourceBranchName'], 'master'), not(parameters.skipBotDeployment))
     dependsOn: RnwNpmPublish
     pool:
       vmImage: $(VmImage)
