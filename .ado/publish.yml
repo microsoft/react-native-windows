@@ -86,7 +86,7 @@ jobs:
 
   - job: DeployBotCoordinator
     displayName: Deploy Bot Coordinator Azure Function
-    condition: and(eq(variables['Build.SourceBranchName'], 'master'), not(parameters.skipBotDeployment))
+    condition: eq(variables['Build.SourceBranchName'], 'master')
     dependsOn: RnwNpmPublish
     pool:
       vmImage: $(VmImage)
@@ -113,12 +113,13 @@ jobs:
          frozenLockfile: false
          production: true # Avoid devDependencies
 
-      - task: AzureFunctionApp@1
-        inputs:
-          azureSubscription: cxe-rnw-azure
-          appType: functionApp
-          appName: rnw-bot-coordinator
-          package: $(Build.StagingDirectory)\bot-coordinator
+      - ${{ if not(parameters.skipBotDeployment) }}:
+        - task: AzureFunctionApp@1
+          inputs:
+            azureSubscription: cxe-rnw-azure
+            appType: functionApp
+            appName: rnw-bot-coordinator
+            package: $(Build.StagingDirectory)\bot-coordinator
 
   - job: RnwNativeBuildDesktop
     displayName: Build Desktop
