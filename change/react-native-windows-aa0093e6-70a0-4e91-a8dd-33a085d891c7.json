@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add new .net native and UWP runtime versions",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
