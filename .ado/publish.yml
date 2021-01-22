@@ -9,6 +9,10 @@ parameters:
   displayName: Skip Git Push
   type: boolean
   default: false
+- name: skipBotDeployment
+  displayName: Skip Deploying Bots to Azure Functions
+  type: boolean
+  default: false
 
 variables:
   - template: variables/msbuild.yml
@@ -120,12 +124,13 @@ jobs:
          workingDirectory: $(Build.StagingDirectory)\bot-coordinator
          frozenLockfile: false
 
-      - task: AzureFunctionApp@1
-        inputs:
-          azureSubscription: cxe-rnw-azure
-          appType: functionApp
-          appName: rnw-bot-coordinator
-          package: $(Build.StagingDirectory)\bot-coordinator
+      - ${{ if not(parameters.skipBotDeployment) }}:
+        - task: AzureFunctionApp@1
+          inputs:
+            azureSubscription: cxe-rnw-azure
+            appType: functionApp
+            appName: rnw-bot-coordinator
+            package: $(Build.StagingDirectory)\bot-coordinator
 
   - job: RnwNativeBuildDesktop
     displayName: Build Desktop
