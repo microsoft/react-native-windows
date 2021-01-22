@@ -4,15 +4,14 @@
     "ReactCopies/**",
     "src/**"
   ],
-  "excludePatterns": [
-  ],
-  "baseVersion": "0.0.0-6fd684150",
+  "excludePatterns": [],
+  "baseVersion": "0.0.0-c66aa8abc",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "3f17e32af446344d9857568250005ef7a694bcbc"
+      "baseHash": "7cf410def8e724302967198174da14a06a118c7b"
     },
     {
       "type": "patch",
@@ -25,7 +24,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "c95a9316567000e0cb151ebb0c0e182890cbae5e",
+      "baseHash": "1f4e966c3edbca9c5a388d31ccabcce6f9b767cd",
       "issue": 4054
     },
     {
@@ -39,7 +38,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "16491ec07d4102e2798f32749aeeaa10e7bb63d3",
+      "baseHash": "c98895783fafdc8ce5afa50f443b80e70594709b",
       "issue": 5430
     },
     {
