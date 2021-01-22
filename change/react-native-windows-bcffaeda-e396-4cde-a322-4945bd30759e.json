@@ -1,0 +1,6 @@
+{
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
