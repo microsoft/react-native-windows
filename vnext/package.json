@@ -92,6 +92,7 @@
     "/Folly",
     "/generate.js",
     "/include",
+    "/jest",
     "/JSI",
     "/Libraries",
     "/Microsoft.ReactNative",
