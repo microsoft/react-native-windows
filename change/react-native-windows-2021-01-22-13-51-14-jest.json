@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "react-native-windows package should include jest preset/setup files",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2021-01-22T21:51:14.168Z"
-}
