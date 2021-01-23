@@ -28,6 +28,10 @@ type State = {
   lastMessage: ?ArrayBuffer,
   testMessage: ArrayBuffer,
   testExpectedResponse: ArrayBuffer,
+
+  scalarProtocolSocket: ?WebSocket,
+  vectorialProtocolSocket: ?WebSocket,
+
   ...
 };
 
@@ -41,6 +45,9 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
     lastMessage: null,
     testMessage: new Uint8Array([1, 2, 3]).buffer,
     testExpectedResponse: new Uint8Array([4, 5, 6, 7]).buffer,
+
+    scalarProtocolSocket: null,
+    vectorialProtocolSocket: null,
   };
 
   _waitFor = (condition: any, timeout: any, callback: any) => {
@@ -61,12 +68,19 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
   };
 
   _connect = () => {
+    // Test protocols parsing. No further use.
+    const scalarProtocolSocket = new WebSocket(this.state.url, 'p0');
+    const vectorialProtocolSocket = new WebSocket(this.state.url, ['p1', 'p2']);
+
     const socket = new WebSocket(this.state.url);
     socket.binaryType = 'arraybuffer';
     WS_EVENTS.forEach(ev => socket.addEventListener(ev, this._onSocketEvent));
     this.setState({
       socket,
       socketState: socket.readyState,
+
+      scalarProtocolSocket: scalarProtocolSocket,
+      vectorialProtocolSocket: vectorialProtocolSocket,
     });
   };
 
@@ -159,6 +173,24 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
   testDisconnect: () => void = () => {
     this._disconnect();
     this._waitFor(this._socketIsDisconnected, 5, disconnectSucceeded => {
+      // Check correct initialization and readyState (OPEN)
+      if (
+        this.state.scalarProtocolSocket === null ||
+        this.state.scalarProtocolSocket?.readyState !== 1
+      ) {
+        console.log('Failed to initialize scalarProtocolSocket');
+        TestModule.markTestPassed(false);
+        return;
+      }
+      if (
+        this.state.vectorialProtocolSocket === null ||
+        this.state.vectorialProtocolSocket?.readyState !== 1
+      ) {
+        console.log('Failed to initialize vectorialProtocolSocket');
+        TestModule.markTestPassed(false);
+        return;
+      }
+
       TestModule.markTestPassed(disconnectSucceeded);
     });
   };
