@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 18 Jan 2021 05:08:29 GMT and should not be manually modified.
+This log was last generated on Fri, 22 Jan 2021 05:07:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.240
+
+Fri, 22 Jan 2021 05:07:27 GMT
+
+### Changes
+
+- Add new .net native and UWP runtime versions (asklar@microsoft.com)
+
+## 0.0.0-canary.239
+
+Thu, 21 Jan 2021 18:54:54 GMT
+
+### Changes
+
+- Update V8 and Hermes package versions (tudor.mihai@microsoft.com)
 
 ## 0.0.0-canary.238
 

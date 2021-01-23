@@ -2,6 +2,53 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Wed, 20 Jan 2021 01:45:54 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v1.0.20",
+      "version": "1.0.20",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump internally published packages to 1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "@rnw-scripts/create-github-releases"
+          },
+          {
+            "comment": "Bump @rnw-scripts/ts-config to v1.1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "@rnw-scripts/create-github-releases"
+          },
+          {
+            "comment": "Bump @rnw-scripts/just-task to v1.0.6",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "@rnw-scripts/create-github-releases"
+          },
+          {
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.15",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "@rnw-scripts/create-github-releases"
+          },
+          {
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.6",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Add warning to release creation script when publishing multiple releases",
+            "author": "ngerlem@microsoft.com",
+            "commit": "582e72b291d3dc48b8414c24e7c52b9396cec1ac",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 16 Jan 2021 05:05:46 GMT",
       "tag": "@rnw-scripts/create-github-releases_v0.0.19",
       "version": "0.0.19",

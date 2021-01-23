@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 22 Jan 2021 05:07:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.240",
+      "version": "0.0.0-canary.240",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add new .net native and UWP runtime versions",
+            "author": "asklar@microsoft.com",
+            "commit": "bb97eb1a6a8f46cc3664261cfca6c4df06273bca",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 Jan 2021 18:54:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.239",
+      "version": "0.0.0-canary.239",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update V8 and Hermes package versions",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "60778ed483756357f4ae73681e5b490404b4c2ea",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 20 Jan 2021 01:45:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.238",
+      "version": "0.0.0-canary.238",
+      "comments": {
+        "none": [
+          {
+            "comment": "Stand up Bot Coordinator Azure Function",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8707b87ea875a2060f20edd9d598f6d1d416997f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump internally published packages to 1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 18 Jan 2021 05:08:29 GMT",
       "tag": "react-native-windows_v0.0.0-canary.238",
       "version": "0.0.0-canary.238",

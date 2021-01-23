@@ -2,6 +2,21 @@
   "name": "react-native-win32-tester",
   "entries": [
     {
+      "date": "Wed, 20 Jan 2021 01:45:54 GMT",
+      "tag": "react-native-win32-tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump @rnw-scripts/ts-config to v1.1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "react-native-win32-tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Jan 2021 05:07:01 GMT",
       "tag": "react-native-win32-tester_v0.0.1",
       "version": "0.0.1",

@@ -1,0 +1,35 @@
+{
+  "name": "@react-native-windows/bot-coordinator",
+  "entries": [
+    {
+      "date": "Thu, 21 Jan 2021 19:52:26 GMT",
+      "tag": "@react-native-windows/bot-coordinator_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Publish bot coordinator package",
+            "author": "nick@nickgerleman.com",
+            "commit": "ba1264af39740e6d739252fb5f55d454da51cfad",
+            "package": "@react-native-windows/bot-coordinator"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 20 Jan 2021 01:45:54 GMT",
+      "tag": "@react-native-windows/bot-coordinator_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump @rnw-scripts/ts-config to v1.1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "@react-native-windows/bot-coordinator"
+          }
+        ]
+      }
+    }
+  ]
+}

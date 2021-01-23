@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 15 Jan 2021 05:07:01 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Jan 2021 18:54:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.53
+
+Thu, 21 Jan 2021 18:54:54 GMT
+
+### Changes
+
+- Update V8 and Hermes package versions (tudor.mihai@microsoft.com)
 
 ## 0.0.0-canary.52
 

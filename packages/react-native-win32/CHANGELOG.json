@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 20 Jan 2021 01:45:54 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.74",
+      "version": "0.0.0-canary.74",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump internally published packages to 1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Jan 2021 05:07:01 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.74",
       "version": "0.0.0-canary.74",
