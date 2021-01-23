@@ -93,6 +93,7 @@
     "/Folly",
     "/generate.js",
     "/include",
+    "/jest",
     "/JSI",
     "/Libraries",
     "!/Libraries/**/*.windesktop.*",
