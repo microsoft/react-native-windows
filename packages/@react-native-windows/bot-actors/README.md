@@ -3,6 +3,8 @@
 The bot actors system allows creation of workflows that respond to GitHub or other external events. E.g.
 
 ```ts
+import {ActorDefinition, ActorRegistry} from './framework';
+
 const actor: ActorDefinition = async ({log, webhooks, octokit}) => {
   webhooks.on('pull_request.closed', async (event => {
     log.info('Responding to event');
