@@ -17,8 +17,20 @@ const actor: ActorDefinition = async ({log, webhooks, octokit}) => {
     });
   }));
 
-export default ActorRegistry.register('sample', actor);
+export default ActorRegistry.register('closeBranchOnPullClosed', actor);
 ```
+
+## Differences with other bot tools
+Frameworks like [`probot`](https://probot.github.io/) aim to make it easy to develop publicly consumed GitHub
+applications. While these are capable, deploying a public GitHub application with our automation limits the ability to
+iterate quickly on our specific use-cases.
+
+Fabric Bot/MSFTBot aims for a set of defined, customizable rules to meet generic repository needs. There is not a
+documented model for extensibility.
+
+Some solutions that are not yet usable in an OSS environment (e.g. MerlinBot).
+
+Bot actors differentiates by being "code-first", allowing full extensibility. The system is owned and kept OSS in react-native-windows, allowing us to quickly iterate on bot capabilities to meet our needs.
 
 ## Creating an actor
 Actors exist as a function accepting an `ActorContext`, which contains resources to subscribe to events or perform
@@ -27,7 +39,7 @@ to the root of the `src` directory will be automatically imported, so long as th
 `ActorRegistry`.
 
 ## Listening to events
-GitHub events may be subscribed to using the context `webhooks` object. This is provided by `@octokit/webhooks` and
+GitHub events may be subscribed to using the context `githubHooks` object. This is provided by `@octokit/webhooks` and
 provides a type-safe collection of GitHub events and associated data.
 
 Custom events may be provided by Azure functions in `@react-native-windows/bot-coordinator`. These can include timers,
@@ -43,6 +55,8 @@ Conveniences exist to fire custom events from Azure Pipelines (apart from PR pip
       eventName: publish-failed
       payload: {...}
 ```
+
+We hope to add built-in support for existing Pipelines webhooks in the future.
 
 ## Responding to events
 The `ActorContext` provides an `octokit` object, which is an instance of `@octokit/rest`. This object allows

@@ -93,9 +93,9 @@ test('receiveWebhook - Multiple listeners', async () => {
 
   const actorInstance = await ActorInstance.initialize(
     'testActor',
-    async ({webhooks}) => {
-      webhooks.on('pull_request.opened', () => mockFn1());
-      webhooks.on('pull_request.closed', () => mockFn2());
+    async ({gitHooks}) => {
+      gitHooks.on('pull_request.opened', () => mockFn1());
+      gitHooks.on('pull_request.closed', () => mockFn2());
     },
     failOnErrorLogger,
     fakeSecrets,

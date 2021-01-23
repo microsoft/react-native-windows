@@ -44,7 +44,7 @@ export class ActorInstance {
     return {
       log: this.logger,
       octokit: this.octokit,
-      webhooks: this.webhooks,
+      gitHooks: this.webhooks,
       events: this.eventEmitter,
     };
   }

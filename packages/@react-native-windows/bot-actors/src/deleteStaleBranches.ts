@@ -13,9 +13,9 @@ import {ActorDefinition, ActorRegistry} from './framework';
  * Actor to delete bot-created branches once an associated pull request is
  * closed or merged
  */
-const actor: ActorDefinition = async ({log, webhooks, octokit}) => {
-  webhooks.on('pull_request.closed', onPullClosedOrMerged);
-  webhooks.on('pull_request.merged', onPullClosedOrMerged);
+const actor: ActorDefinition = async ({log, gitHooks, octokit}) => {
+  gitHooks.on('pull_request.closed', onPullClosedOrMerged);
+  gitHooks.on('pull_request.merged', onPullClosedOrMerged);
 
   async function onPullClosedOrMerged(
     event: WebhookEvent<EventPayloads.WebhookPayloadPullRequest>,

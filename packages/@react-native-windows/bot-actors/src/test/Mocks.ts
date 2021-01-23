@@ -32,18 +32,18 @@ export const fakeSecrets: Secrets = {
 export class MockContext implements Context {
   log: Logger;
   octokit: Octokit;
-  webhooks: Webhooks;
+  gitHooks: Webhooks;
   events: ActorEventEmitter;
 
   constructor() {
     this.log = failOnErrorLogger;
     this.octokit = new Octokit();
-    this.webhooks = new Webhooks({secret: 'ABCD'});
+    this.gitHooks = new Webhooks({secret: 'ABCD'});
     this.events = new AsyncEventEmitter();
   }
 
   async receiveWebhook(event: WebhookEvent) {
-    await this.webhooks.receive(event);
+    await this.gitHooks.receive(event);
   }
 
   emitEvent: ActorEventEmitter['emit'] = async (eventName, ...args) => {

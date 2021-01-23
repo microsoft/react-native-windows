@@ -5,7 +5,7 @@
  * @format
  */
 
-import {Webhooks} from '@octokit/webhooks';
+import {Webhooks as OctokitWebhooks} from '@octokit/webhooks';
 import {Octokit} from '@octokit/rest';
 
 import {Logger} from './initializeActors';
@@ -19,6 +19,6 @@ import {ActorEventCallbacks} from './ActorEvents';
 export type Context = {
   log: Logger;
   octokit: Octokit;
-  webhooks: Webhooks;
+  gitHooks: OctokitWebhooks;
   events: AsyncEmitterSource<ActorEventCallbacks>;
 };
