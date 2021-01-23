@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@react-native-windows/bot-actors": "1.0.0",
+    "fp-ts": "^2.9.3",
+    "io-ts": "^2.2.13",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
