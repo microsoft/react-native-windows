@@ -10,7 +10,7 @@
 
 using namespace winrt;
 using namespace Windows::Foundation;
-using namespace system;
+using namespace Windows::System;
 
 namespace Mso {
 
