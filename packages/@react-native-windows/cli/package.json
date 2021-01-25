@@ -2,7 +2,10 @@
   "name": "@react-native-windows/cli",
   "version": "0.0.0-canary.53",
   "license": "MIT",
-  "main": "lib-commonjs/index.js",
+  "main": "index.dev.js",
+  "onPublish": {
+    "main": "lib-commonjs/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:microsoft/react-native-windows.git",
@@ -55,6 +58,7 @@
     "jest": "^26.5.2",
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
+    "ts-node": "^9.1.1",
     "typescript": "^3.8.3"
   },
   "files": [
