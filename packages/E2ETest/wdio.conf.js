@@ -17,7 +17,7 @@ exports.config = {
   // from which `wdio` was called.
   specs: ['wdio/test/**/*.test.ts'],
 
-  //  The property handles how many capabilities from the same test should run tests.
+  // The property handles how many capabilities from the same test should run tests.
   maxInstances: 1,
 
   capabilities: [
