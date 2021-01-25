@@ -5,14 +5,10 @@
 E2E test app, test library and test cases are in packages/E2ETest/, and they are organized as below.
 
  - app – the RN app folder
-
+ - reports – save the test reports
  - wdio – includes the page object libraries and test cases.
-
  - windows – the UWP native app
-
  - wdio.config.js – default parameters used by wdio test runner
-
-
 
 # Run E2E test
 
@@ -80,7 +76,7 @@ export function LoginTestPage() {
       <TextInput style={styles.input}
         placeholder='Email or Mobile Num'
         placeholderTextColor='rgba(225,225,225,0.7)'
-        testID='login-field'
+        testID="login-field"
         onChange={(text) => { setUserName(text.nativeEvent.text) }} />
    	…
  </View >);
@@ -105,11 +101,11 @@ export function LoginTestPage() {
 describe('LoginTest', () => {
 
   beforeAll(async () => {
-    await goToComponentExample('LegacyAccessibilityTest);
+    await goToComponentExample('LegacyAccessibilityTest');
   });
 
   it('Login Success', () => {
-    await loginForm = $('~login-field')
+    const loginForm = await $('~login-field');
     await loginForm.setValue('username');
     ...
   });
