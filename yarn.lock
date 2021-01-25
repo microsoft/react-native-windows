@@ -3259,9 +3259,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.32.0:
-  version "1.49.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.49.0.tgz#82095efb6900802fe3a7d06ea6c24de52bb882a2"
-  integrity sha512-eAqLYEEuHlKmguMo44VK4jcQxwDWU9+FSDWeyowSwdsfA5VKRBvNo4P5rqD7cdKMmWxEDk/5yeMQIciFbXa5Nw==
+  version "1.50.0"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.50.0.tgz#0ed8f6ac8f31681e0f79e5c354ae02cb961dfcfa"
+  integrity sha512-ZBg+vooMIy4NEpbelgyJP+fu+14pzPpzmcsUNw7OKrIonvhAtaOdIqO98jxYVAADeK/05AmHHhlLEYN/Ah0TwQ==
   dependencies:
     cosmiconfig "^6.0.0"
     execa "^4.0.3"
@@ -11034,15 +11034,10 @@ uuid@^3.0.1, uuid@^3.3.2, uuid@^3.3.3:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-uuid@^8.0.0:
+uuid@^8.0.0, uuid@^8.3.0, uuid@^8.3.1:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
-
-uuid@^8.3.0, uuid@^8.3.1:
-  version "8.3.1"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.1.tgz#2ba2e6ca000da60fce5a196954ab241131e05a31"
-  integrity sha512-FOmRr+FmWEIG8uhZv6C2bTgEVXsHk08kE7mPlrBbEe+c3r9pjceVPgupIfNIhc4yx55H69OXANrUaSuu9eInKg==
 
 v8-compile-cache@^2.0.3:
   version "2.1.1"
