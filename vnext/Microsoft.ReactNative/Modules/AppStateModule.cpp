@@ -3,9 +3,9 @@
 
 #include "pch.h"
 #include "AppStateModule.h"
+#include <Utils/Helpers.h>
 #include <XamlUtils.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
-#include <Utils/Helpers.h>
 #include "Unicode.h"
 
 namespace Microsoft::ReactNative {
