@@ -5,6 +5,8 @@
  * @ts-check
  */
 
+require('ts-node').register({ transpileOnly: true });
+
 const fs = require('fs');
 const path = require('path');
 
@@ -90,13 +92,5 @@ exports.config = {
     if (!fs.existsSync(errorDir)) {
       fs.mkdirSync(errorDir);
     }
-  },
-
-  /**
-   * Gets executed before test execution begins. At this point you can access to all global
-   * variables like `browser`. It is the perfect place to define custom commands.
-   */
-  before: function(_capabilities, _specs) {
-    require('ts-node').register({ files: true });
   },
 };
