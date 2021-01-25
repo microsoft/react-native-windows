@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 18 Jan 2021 15:07:08 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Jan 2021 15:08:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.19
+
+Mon, 25 Jan 2021 15:08:23 GMT
+
+### Patches
+
+- Include jest config files in package (30809111+acoates-ms@users.noreply.github.com)
+- Add new .net native and UWP runtime versions (asklar@microsoft.com)
 
 ## 0.63.18
 

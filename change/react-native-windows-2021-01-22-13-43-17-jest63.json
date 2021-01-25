@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Include jest config files in package",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2021-01-22T21:43:17.356Z"
-}
