@@ -183,8 +183,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
                        const std::string &name, const jsi::Value *
                        /*schema*/) -> std::shared_ptr<TurboModule> { return turboModuleManager->getModule(name); };
 
-    TurboModuleBinding::install(
-        *runtimeHolder_->getRuntime(), std::function(binding), false /*enableJSTurboModuleCodegen*/);
+    TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::function(binding));
 
     // init TurboModule
     for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 23 Jan 2021 05:08:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.241",
+      "version": "0.0.0-canary.241",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "react-native-windows package should include jest preset/setup files",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e391673d3eb1e2edb97bd1622da1455f13d83f06",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 22 Jan 2021 05:07:27 GMT",
       "tag": "react-native-windows_v0.0.0-canary.240",
       "version": "0.0.0-canary.240",
