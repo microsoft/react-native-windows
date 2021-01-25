@@ -5,8 +5,9 @@
  * @ts-check
  */
 
+require('ts-node').register({ transpileOnly: true });
+
 const fs = require('fs');
-const path = require('path');
 
 exports.config = {
   // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
@@ -31,7 +32,7 @@ exports.config = {
   ],
 
   // Level of logging verbosity: trace | debug | info | warn | error
-  logLevel: 'error',
+  logLevel: 'info',
 
   // Warns when a deprecated command is used
   deprecationWarnings: true,
@@ -85,18 +86,6 @@ exports.config = {
    * Gets executed once before all workers get launched.
    */
   onPrepare: function(_config, _capabilities) {
-    const errorDir = path.resolve(__dirname, 'errorShots');
-
-    if (!fs.existsSync(errorDir)) {
-      fs.mkdirSync(errorDir);
-    }
-  },
-
-  /**
-   * Gets executed before test execution begins. At this point you can access to all global
-   * variables like `browser`. It is the perfect place to define custom commands.
-   */
-  before: function(_capabilities, _specs) {
-    require('ts-node').register({ transpileOnly: true });
+    fs.mkdirSync('./errorShots', { recursive: true });
   },
 };
