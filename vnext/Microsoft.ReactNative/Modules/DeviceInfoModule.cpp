@@ -34,11 +34,11 @@ void DeviceInfoHolder::InitDeviceInfoHolder(
 
     auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
 
-    if (xaml::Window::Current()) {
-      auto const &window = xaml::Window::Current().CoreWindow();
+    if (auto window = xaml::Window::Current()) {
+      auto const &coreWindow = window.CoreWindow();
 
       deviceInfoHolder->m_sizeChangedRevoker =
-          window.SizeChanged(winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](auto &&, auto &&) {
+          coreWindow.SizeChanged(winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](auto &&, auto &&) {
             if (auto strongHolder = weakHolder.lock()) {
               strongHolder->updateDeviceInfo();
             }
