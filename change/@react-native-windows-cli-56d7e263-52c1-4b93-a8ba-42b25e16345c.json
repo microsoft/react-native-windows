@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "TypeScript Stack Traces and Zero Build for CLI Apps",
+  "packageName": "@react-native-windows/cli",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
