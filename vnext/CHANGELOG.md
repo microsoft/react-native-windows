@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 18 Jan 2021 15:07:07 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Jan 2021 15:06:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.8
+
+Mon, 25 Jan 2021 15:06:41 GMT
+
+### Changes
+
+- undefined (asklar@microsoft.com)
+- react-native-windows package should include jest preset/setup files (30809111+acoates-ms@users.noreply.github.com)
+- Parse WebSocket connect protocols as array (#6866) (julio.rocha@microsoft.com)
+- Add new .net native and UWP runtime versions (asklar@microsoft.com)
 
 ## 0.64.0-preview.7
 
