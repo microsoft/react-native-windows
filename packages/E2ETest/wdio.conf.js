@@ -49,7 +49,7 @@ exports.config = {
   connectionRetryTimeout: 90000,
 
   // Default request retries count
-  connectionRetryCount: 1,
+  connectionRetryCount: 10,
 
   port: 4723,
 
