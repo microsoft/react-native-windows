@@ -3,6 +3,7 @@
   "version": "0.0.0-canary.53",
   "license": "MIT",
   "main": "index.dev.js",
+  "typings": "lib-commonjs/index.d.ts",
   "onPublish": {
     "main": "lib-commonjs/index.js"
   },
