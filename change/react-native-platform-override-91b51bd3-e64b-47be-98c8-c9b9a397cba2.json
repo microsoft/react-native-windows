@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update @types package versions in package.json from dependabot updates to yarn.lock",
+  "packageName": "react-native-platform-override",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
