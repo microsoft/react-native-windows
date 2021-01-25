@@ -41,5 +41,6 @@ export async function goToExample(example: string) {
   // no longer present, but make sure we haven't crashed by checking that nav
   // buttons are still visible
   await browser.waitUntil(async () => !(await exampleButton.isDisplayed()));
-  await $('~components-tab');
+  const componentsTab = await $('~components-tab');
+  expect(await componentsTab.isDisplayed()).toBeTrue();
 }
