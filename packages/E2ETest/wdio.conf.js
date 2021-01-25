@@ -98,6 +98,5 @@ exports.config = {
    */
   before: function(_capabilities, _specs) {
     require('ts-node').register({ files: true });
-    fs.mkdirSync(path.resolve(__dirname, 'errorShots'));
   },
 };
