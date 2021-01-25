@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 25 Jan 2021 15:08:23 GMT",
+      "tag": "react-native-windows_v0.63.19",
+      "version": "0.63.19",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Include jest config files in package",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "db85adc09095b079a5320763e3a5ca246bbe527c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add new .net native and UWP runtime versions",
+            "author": "asklar@microsoft.com",
+            "commit": "b7714dfc55cd94a2f2ea078f86496d604483d305",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 18 Jan 2021 15:07:08 GMT",
       "tag": "react-native-windows_v0.63.18",
       "version": "0.63.18",
