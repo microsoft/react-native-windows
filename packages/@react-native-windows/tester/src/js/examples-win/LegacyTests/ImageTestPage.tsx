@@ -6,12 +6,6 @@
 import { StyleSheet, View, Image, Button } from 'react-native';
 import * as React from 'react'
 import { useState } from 'react';
-import {
-  SHOW_IMAGE_BORDER,
-  SET_RTL_MODE,
-  IMAGE_CONTAINER,
-  TREE_DUMP_RESULT,
-} from './Consts';
 import { TreeDumpControl } from './TreeDumpControl';
 
 const styles = StyleSheet.create({
@@ -93,7 +87,7 @@ export function ImageTestPage() {
   return (
     <View>
       <View
-        testID={IMAGE_CONTAINER}
+        testID="image-container"
         style={imageWithBorder ? styles.containerWithBorder : styles.container}
       >
         <Image
@@ -108,19 +102,18 @@ export function ImageTestPage() {
       <Button
         title={imageWithBorder ? 'Hide Border' : 'Show Border'}
         onPress={onPressBorder}
-        testID={SHOW_IMAGE_BORDER}
+        testID="toggle-border-button"
       />
       <Button
         title={rltMode ? 'Set image to LTR' : 'Set image to RTL'}
         onPress={() => setRtlMode(!rltMode)}
-        testID={SET_RTL_MODE}
+        testID="set-rtl-button"
       />
       <TreeDumpControl
         style={styles.treeDumpControl}
         dumpID={dumpId()}
-        uiaID={IMAGE_CONTAINER}
+        uiaID="image-container"
         additionalProperties={rltMode ? ['FlowDirection'] : []}
-        testID={TREE_DUMP_RESULT}
       />
     </View>
   );

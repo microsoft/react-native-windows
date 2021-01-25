@@ -6,12 +6,6 @@
 
 import * as React from 'react';
 import {Text, TextInput, View} from 'react-native';
-import {
-  TEXTINPUT_ON_TEXTINPUT,
-  ML_TEXTINPUT_ON_TEXTINPUT,
-  CURTEXT_ON_TEXTINPUT,
-  CAP_TEXTINPUT_ON_TEXTINPUT,
-} from './Consts';
 
 interface ITextInputTestPageState {
   log: string;
@@ -38,7 +32,7 @@ export class TextInputTestPage extends React.Component<
       <View>
         <TextInput
           style={{height: 32}}
-          testID={TEXTINPUT_ON_TEXTINPUT}
+          testID="textinput-field"
           placeholder="Enter text to see events"
           onFocus={() => this.updateText('onFocus')}
           onBlur={() => this.updateText('onBlur')}
@@ -64,18 +58,18 @@ export class TextInputTestPage extends React.Component<
           }}
         />
         <TextInput
-          testID={ML_TEXTINPUT_ON_TEXTINPUT}
+          testID="multi-line-textinput-field"
           style={{height: 80}}
           placeholder="MultiLine"
           multiline={true}
         />
         <TextInput
-          testID={CAP_TEXTINPUT_ON_TEXTINPUT}
+          testID="auto-caps-textinput-field"
           style={{height: 80}}
           placeholder="autoCapitalize"
           autoCapitalize="characters"
         />
-        <Text testID={CURTEXT_ON_TEXTINPUT}>{this.state.log}</Text>
+        <Text testID="textinput-log">{this.state.log}</Text>
       </View>
     );
   }

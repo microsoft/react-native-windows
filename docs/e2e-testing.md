@@ -6,8 +6,6 @@ E2E test app, test library and test cases are in packages/E2ETest/, and they are
 
  - app – the RN app folder
 
- - reports – save the test reports
-
  - wdio – includes the page object libraries and test cases.
 
  - windows – the UWP native app
@@ -82,7 +80,7 @@ export function LoginTestPage() {
       <TextInput style={styles.input}
         placeholder='Email or Mobile Num'
         placeholderTextColor='rgba(225,225,225,0.7)'
-        testID={USERNAME_ON_LOGIN}
+        testID='login-field'
         onChange={(text) => { setUserName(text.nativeEvent.text) }} />
    	…
  </View >);
@@ -99,59 +97,25 @@ export function LoginTestPage() {
   },
 ```
 
-## Create a Page Object to match with the page in test app
-
-Page Objects should be put in E2ETest/wdio/pages and its subfolder.
-
-```
-// LoginPage.ts
-class LoginPage extends BasePage {
-  isPageLoaded() {
-    return super.isPageLoaded() && this._userName.isDisplayed();
-  }
-
-  setLoginInfo(userName: string, password: string) {
-    this._userName.setValue(userName);
-    this._password.setValue(password);
-  }
-
-  submitForm() {
-    this._submit.click();
-  }
-
-  private get _userName() {
-    return By(USERNAME_ON_LOGIN);
-  }
-
-  private get _password() {
-    return By(PASSWORD_ON_LOGIN);
-  }
-
-  private get _submit() {
-    return By(SUBMIT_ON_LOGIN);
-  }
-}
-export default new LoginPage();
-```
-
-Locator is defined in a `get` function and just returns By(testID), then you can use all element function like &#39;click&#39; which is defined in WebDriverIO.
-
-Pay attention to the last line of the LoginPage, we always export a new instance of this object. It makes the test case more readable.
-
 ## Write a test spec to use the Page Object
 
-```
-// login.spec.ts
-before(() => {
-  HomePage.clickAndGotoLoginPage();
-});
+```ts
+// login.test.ts
 
 describe('LoginTest', () => {
-  it('Login Success', () => {
-    LoginPage.setLoginInfo('username', 'password');
-    LoginPage.submitForm();
-    assert.equal(LoginPage.getLoginResult(), 'Success');
+
+  beforeAll(async () => {
+    await goToComponentExample('LegacyAccessibilityTest);
   });
+
+  it('Login Success', () => {
+    await loginForm = $('~login-field')
+    await loginForm.setValue('username');
+    ...
+  });
+
+});
+
 ```
 
 # Restrictions
@@ -441,18 +405,6 @@ Sometimes you'll have an element in your test that produces output that should n
 }
 ...
 ```
-
-## run_wdio
-
-WDIO is not really built to be run within Azure DevOps, so I wrote a utility called `run_wdio` to adapt it to something that can run in ADO.
-It can be found in [\packages\e2etest\run_wdio.js](https://github.com/microsoft/react-native-windows/blob/master/packages/E2ETest/run_wdio.js)
-Its main features (which WDIO lacks) are:
-
-* reports success/failure to ADO so that test failures will break the CI
-* supports test selection on the command line
-* supports test metadata and filtering (e.g. you can mark a test as "do not run in the lab")
-* prints out the list of tests and test cases that failed in the CI console
-
 
 ## Debugging E2E Tests in CI
 If you have access to the AzureDevOps pipeline you'll be able to see test failures and debug crashes.

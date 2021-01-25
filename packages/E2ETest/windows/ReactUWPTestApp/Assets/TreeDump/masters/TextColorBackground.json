@@ -13,7 +13,7 @@
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
   "Width": 800,
-  "AutomationId": "TextColorBackgroundView",
+  "AutomationId": "text-color-background-view",
   "children": [
   {
     "XamlType": "Windows.UI.Xaml.Controls.TextBlock",

@@ -13,7 +13,7 @@
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
   "Width": 800,
-  "AutomationId": "ControlStyleView",
+  "AutomationId": "control-style-switch-view",
   "children": [
   {
     "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
@@ -678,7 +678,7 @@
         "Margin": "0,0,0,0",
         "Name": "DateText",
         "Padding": "12,0,0,2",
-        "RenderSize": [90, 21],
+        "RenderSize": [90, 20],
         "Text": "select a date",
         "VerticalAlignment": "Center",
         "Visibility": "Visible"
@@ -828,7 +828,7 @@
         "Margin": "12,5,0,7",
         "Name": "ContentPresenter",
         "Padding": "0,0,0,0",
-        "RenderSize": [756, 19],
+        "RenderSize": [756, 18],
         "VerticalAlignment": "Center",
         "Visibility": "Visible",
         "children": [
@@ -841,7 +841,7 @@
           "Margin": "0,0,0,0",
           "Name": "PlaceholderTextBlock",
           "Padding": "0,0,0,0",
-          "RenderSize": [756, 19],
+          "RenderSize": [756, 18],
           "Text": "",
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible"
