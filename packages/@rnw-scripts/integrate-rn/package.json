@@ -21,6 +21,7 @@
     "ora": "^3.4.0",
     "react-native-platform-override": "^1.4.7",
     "semver": "^7.3.2",
+    "source-map-support": "^0.5.19",
     "yargs": "^15.4.1"
   },
   "devDependencies": {

@@ -1,4 +1,6 @@
 // @ts-check
+require('source-map-support').install();
+
 const cli = require('@react-native-windows/cli');
 
 module.exports = {
