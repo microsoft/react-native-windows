@@ -56,7 +56,7 @@
               variables:
                 - template: ../variables/vs2019.yml
               displayName: Universal Build ${{ matrix.Name }}
-              pool: windevbuildagents
+              pool: $(AgentPool.Large)
               timeoutInMinutes: 60
               cancelTimeoutInMinutes: 5
 
