@@ -22,7 +22,7 @@
 #include <winrt/Windows.Web.Http.h>
 
 #pragma warning(push)
-#pragma warning(disable : 4146 4244 4068 4251 4101 4267 4804 4309)
+#pragma warning(disable : 4244 4068 4251 4101 4267 4804 4309)
 #include <cxxreact/JSExecutor.h>
 #include <cxxreact/MessageQueueThread.h>
 #pragma warning(pop)

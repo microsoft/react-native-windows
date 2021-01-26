@@ -3,13 +3,10 @@
 
 #pragma once
 
-#pragma warning(push)
-#pragma warning(disable : 4146)
 #include <DevServerHelper.h>
 #include <cxxreact/JSExecutor.h>
 #include <cxxreact/JSModulesUnbundle.h>
 #include <cxxreact/MessageQueueThread.h>
-#pragma warning(pop)
 
 #include <WebSocketJSExecutorFactory.h>
 
