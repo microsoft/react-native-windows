@@ -25,7 +25,7 @@
     "@rnw-scripts/jest-unittest-config": "1.1.1",
     "@rnw-scripts/just-task": "1.0.6",
     "@rnw-scripts/ts-config": "1.1.0",
-    "@types/jest": "^26.0.13",
+    "@types/jest": "^26.0.20",
     "@types/semver": "^7.3.3",
     "babel-jest": "^26.3.0",
     "eslint": "7.12.0",
