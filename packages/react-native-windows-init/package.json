@@ -24,6 +24,7 @@
     "npm-registry": "^0.1.13",
     "prompts": "^2.3.0",
     "semver": "^7.3.2",
+    "source-map-support": "^0.5.19",
     "valid-url": "^1.0.9",
     "yargs": "^15.4.1"
   },

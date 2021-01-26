@@ -7,6 +7,5 @@
  * @format
  */
 
-// Yarn will fail to link workspace binaries if they haven't been built yet. Add
-// a simple JS file to forward to the CLI which is built after install.
+require('source-map-support').install();
 require('./lib-commonjs/Cli');

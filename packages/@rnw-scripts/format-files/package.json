@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "async": "^3.2.0",
-    "clang-format": "1.5.0"
+    "clang-format": "1.5.0",
+    "source-map-support": "^0.5.19"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.6",

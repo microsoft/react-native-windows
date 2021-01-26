@@ -22,6 +22,7 @@
     "globby": "^9.2.0",
     "mustache": "^4.0.1",
     "react-native-tscodegen": "0.66.1",
+    "source-map-support": "^0.5.19",
     "yargs": "^15.4.1"
   },
   "devDependencies": {
