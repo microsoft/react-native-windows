@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-codegen
 
-This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Jan 2021 05:06:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.12
+
+Tue, 26 Jan 2021 05:06:39 GMT
+
+### Patches
+
+- Update @types package versions in package.json from dependabot updates to yarn.lock (dannyvv@microsoft.com)
 
 ## 0.1.11
 

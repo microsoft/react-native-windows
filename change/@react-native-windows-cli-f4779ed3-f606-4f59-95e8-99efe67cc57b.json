@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update just-scripts to remove yargs-parser resolution",
-  "packageName": "@react-native-windows/cli",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

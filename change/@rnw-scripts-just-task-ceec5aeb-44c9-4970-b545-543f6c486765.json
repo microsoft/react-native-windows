@@ -1,7 +1,0 @@
-{
-  "type": "major",
-  "comment": "Update just-scripts to remove yargs-parser resolution",
-  "packageName": "@rnw-scripts/just-task",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

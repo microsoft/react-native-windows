@@ -1,8 +1,20 @@
 # Change Log - @react-native-windows/package-utils
 
-This log was last generated on Wed, 06 Jan 2021 05:06:51 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Jan 2021 05:06:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.13
+
+Tue, 26 Jan 2021 05:06:39 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.0.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Update @types package versions in package.json from dependabot updates to yarn.lock (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.12
 

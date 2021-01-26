@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update @types package versions in package.json from dependabot updates to yarn.lock",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

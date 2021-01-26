@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update just-scripts to remove yargs-parser resolution",
-  "packageName": "@rnw-scripts/promote-release",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

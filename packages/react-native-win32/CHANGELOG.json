@@ -2,6 +2,43 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 26 Jan 2021 05:06:39 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.75",
+      "version": "0.0.0-canary.75",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update @types package versions in package.json from dependabot updates to yarn.lock",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b8f2beec9851dffe3188156c859cb123de926ba0",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 1/21 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "703667b8b0b58525ee3a6fff403eb7344c4ba4a4",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Update just-scripts to remove yargs-parser resolution",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d41c761d18cdc771a635bf9f5ef1259db9a27be",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.8",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b8f2beec9851dffe3188156c859cb123de926ba0",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Jan 2021 01:45:54 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.74",
       "version": "0.0.0-canary.74",

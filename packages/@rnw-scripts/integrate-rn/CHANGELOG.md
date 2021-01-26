@@ -1,8 +1,22 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Fri, 15 Jan 2021 05:07:01 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Jan 2021 05:06:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.24
+
+Tue, 26 Jan 2021 05:06:39 GMT
+
+### Patches
+
+- Update @types package versions in package.json from dependabot updates to yarn.lock (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump react-native-platform-override to v1.4.8 (dannyvv@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.16 (ngerlem@microsoft.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.13 (dannyvv@microsoft.com)
 
 ## 0.0.23
 

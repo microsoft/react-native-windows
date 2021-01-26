@@ -2,6 +2,29 @@
   "name": "@react-native-windows/bot-coordinator",
   "entries": [
     {
+      "date": "Tue, 26 Jan 2021 05:06:39 GMT",
+      "tag": "@react-native-windows/bot-coordinator_v1.0.1",
+      "version": "1.0.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update just-scripts to remove yargs-parser resolution",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d41c761d18cdc771a635bf9f5ef1259db9a27be",
+            "package": "@react-native-windows/bot-coordinator"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.0.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d41c761d18cdc771a635bf9f5ef1259db9a27be",
+            "package": "@react-native-windows/bot-coordinator"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Jan 2021 19:52:26 GMT",
       "tag": "@react-native-windows/bot-coordinator_v1.0.0",
       "version": "1.0.0",

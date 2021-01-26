@@ -2,6 +2,37 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Tue, 26 Jan 2021 05:06:39 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v1.0.21",
+      "version": "1.0.21",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update @types package versions in package.json from dependabot updates to yarn.lock",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b8f2beec9851dffe3188156c859cb123de926ba0",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Update just-scripts to remove yargs-parser resolution",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d41c761d18cdc771a635bf9f5ef1259db9a27be",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.16",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d41c761d18cdc771a635bf9f5ef1259db9a27be",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Jan 2021 01:45:54 GMT",
       "tag": "@rnw-scripts/create-github-releases_v1.0.20",
       "version": "1.0.20",

@@ -1,8 +1,20 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Wed, 20 Jan 2021 01:45:54 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Jan 2021 05:06:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.21
+
+Tue, 26 Jan 2021 05:06:39 GMT
+
+### Patches
+
+- Update @types package versions in package.json from dependabot updates to yarn.lock (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.16 (ngerlem@microsoft.com)
 
 ## 1.0.20
 

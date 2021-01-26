@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Thu, 24 Sep 2020 05:06:21 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Jan 2021 05:06:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.0
+
+Tue, 26 Jan 2021 05:06:39 GMT
+
+### Major changes
+
+- Update just-scripts to remove yargs-parser resolution (ngerlem@microsoft.com)
 
 ## 0.0.5
 

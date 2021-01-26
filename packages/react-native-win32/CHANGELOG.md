@@ -1,8 +1,21 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 15 Jan 2021 05:07:01 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Jan 2021 05:06:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.75
+
+Tue, 26 Jan 2021 05:06:39 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.4.8 (dannyvv@microsoft.com)
+
+### Changes
+
+- Update @types package versions in package.json from dependabot updates to yarn.lock (dannyvv@microsoft.com)
+- Integrate 1/21 Nightly RN Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.74
 

@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/promote-release",
-  "version": "1.2.13",
+  "version": "1.2.14",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -13,15 +13,15 @@
     "promote-release": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.15",
-    "@react-native-windows/package-utils": "^0.0.0-canary.12",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.16",
+    "@react-native-windows/package-utils": "^0.0.0-canary.13",
     "chalk": "^4.1.0",
     "simple-git": "^1.131.0",
     "yargs": "^15.4.1"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.6",
-    "@rnw-scripts/just-task": "1.0.6",
+    "@rnw-scripts/just-task": "2.0.0",
     "@rnw-scripts/ts-config": "1.1.0",
     "@types/chalk": "^2.2.0",
     "@types/yargs": "^15.0.5",

@@ -2,6 +2,61 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 26 Jan 2021 05:06:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.242",
+      "version": "0.0.0-canary.242",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update @types package versions in package.json from dependabot updates to yarn.lock",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b8f2beec9851dffe3188156c859cb123de926ba0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Background/Foreground app state handlers should be registered from the xaml thread",
+            "author": "asklar@microsoft.com",
+            "commit": "0eceae74b3aa4010b58d308c32362ab0aaf6344a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Rewrite E2ETest Specs (Removes Python Dependency)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2b06657f743b30dd5e618f7d35032e4feef1a4b3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 1/21 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "703667b8b0b58525ee3a6fff403eb7344c4ba4a4",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Update just-scripts to remove yargs-parser resolution",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d41c761d18cdc771a635bf9f5ef1259db9a27be",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump react-native-windows-codegen to v1.1.12",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b8f2beec9851dffe3188156c859cb123de926ba0",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.8",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b8f2beec9851dffe3188156c859cb123de926ba0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Jan 2021 05:08:20 GMT",
       "tag": "react-native-windows_v0.0.0-canary.241",
       "version": "0.0.0-canary.241",

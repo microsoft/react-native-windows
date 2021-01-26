@@ -1,8 +1,21 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Thu, 21 Jan 2021 18:54:54 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Jan 2021 05:06:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.44
+
+Tue, 26 Jan 2021 05:06:39 GMT
+
+### Patches
+
+- Update @types package versions in package.json from dependabot updates to yarn.lock (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.54 (dannyvv@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.14 (dannyvv@microsoft.com)
 
 ## 1.1.43
 

@@ -2,6 +2,29 @@
   "name": "react-native-windows-codegen",
   "entries": [
     {
+      "date": "Tue, 26 Jan 2021 05:06:39 GMT",
+      "tag": "react-native-windows-codegen_v1.1.12",
+      "version": "1.1.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update @types package versions in package.json from dependabot updates to yarn.lock",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b8f2beec9851dffe3188156c859cb123de926ba0",
+            "package": "react-native-windows-codegen"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Update just-scripts to remove yargs-parser resolution",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d41c761d18cdc771a635bf9f5ef1259db9a27be",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Jan 2021 01:45:54 GMT",
       "tag": "react-native-windows-codegen_v1.1.11",
       "version": "1.1.11",

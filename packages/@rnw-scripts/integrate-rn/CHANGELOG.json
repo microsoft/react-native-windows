@@ -2,6 +2,49 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Tue, 26 Jan 2021 05:06:39 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v1.0.24",
+      "version": "1.0.24",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update just-scripts to remove yargs-parser resolution",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d41c761d18cdc771a635bf9f5ef1259db9a27be",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Update @types package versions in package.json from dependabot updates to yarn.lock",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b8f2beec9851dffe3188156c859cb123de926ba0",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.8",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b8f2beec9851dffe3188156c859cb123de926ba0",
+            "package": "@rnw-scripts/integrate-rn"
+          },
+          {
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.16",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d41c761d18cdc771a635bf9f5ef1259db9a27be",
+            "package": "@rnw-scripts/integrate-rn"
+          },
+          {
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.13",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b8f2beec9851dffe3188156c859cb123de926ba0",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Jan 2021 01:45:54 GMT",
       "tag": "@rnw-scripts/integrate-rn_v1.0.23",
       "version": "1.0.23",

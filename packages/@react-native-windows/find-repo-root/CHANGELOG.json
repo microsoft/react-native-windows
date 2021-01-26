@@ -2,6 +2,29 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Tue, 26 Jan 2021 05:06:39 GMT",
+      "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.16",
+      "version": "0.0.0-canary.16",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update just-scripts to remove yargs-parser resolution",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d41c761d18cdc771a635bf9f5ef1259db9a27be",
+            "package": "@react-native-windows/find-repo-root"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.0.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d41c761d18cdc771a635bf9f5ef1259db9a27be",
+            "package": "@react-native-windows/find-repo-root"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Jan 2021 01:45:54 GMT",
       "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.15",
       "version": "0.0.0-canary.15",
