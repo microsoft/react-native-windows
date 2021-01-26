@@ -236,7 +236,7 @@ export async function copyProjectTemplateAndReplace(
   if (options.useHermes) {
     cppNugetPackages.push({
       id: 'ReactNative.Hermes.Windows',
-      version: '0.7.1',
+      version: '0.7.2',
       hasProps: false,
       hasTargets: true,
     });
