@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.64.0-preview.7",
+  "version": "0.64.0-preview.8",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -93,6 +93,7 @@
     "/Folly",
     "/generate.js",
     "/include",
+    "/jest",
     "/JSI",
     "/Libraries",
     "!/Libraries/**/*.windesktop.*",

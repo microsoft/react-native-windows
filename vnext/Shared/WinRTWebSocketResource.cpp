@@ -73,9 +73,10 @@ auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
 } // resume_in_queue
 
 string HResultToString(hresult_error const &e) {
-  std::stringstream hexCode;
-  hexCode << "[0x" << std::hex << e.code() << "] ";
-  return hexCode.str() + winrt::to_string(e.message());
+  std::stringstream stream;
+  stream << "[0x" << std::hex << e.code() << "] " << winrt::to_string(e.message());
+
+  return stream.str();
 }
 
 string HResultToString(hresult &&result) {
