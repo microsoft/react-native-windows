@@ -204,6 +204,7 @@ namespace TreeDumpLibrary
             }
 
             string dumpText = VisualTreeDumper.DumpTree(dumpRoot, textBlock, additionalProperties, mode);
+
             if (dumpText != dumpExpectedText)
             {
                 return await MatchDump(dumpText, GetMasterFile(dumpID), GetOutputFile(dumpID));

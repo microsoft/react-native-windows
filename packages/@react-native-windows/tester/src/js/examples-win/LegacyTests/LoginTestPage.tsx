@@ -13,13 +13,6 @@ import {
   TouchableOpacity,
   Button,
 } from 'react-native';
-import {
-  USERNAME_ON_LOGIN,
-  PASSWORD_ON_LOGIN,
-  SUBMIT_ON_LOGIN,
-  LOGINRESULT_ON_LOGIN,
-  SHOWPASSWORD_ON_LOGIN,
-} from './Consts';
 
 const styles = StyleSheet.create({
   container: {
@@ -67,7 +60,7 @@ export function LoginTestPage() {
         style={styles.input}
         placeholder="Email or Mobile Num"
         placeholderTextColor="rgba(225,225,225,0.7)"
-        testID={USERNAME_ON_LOGIN}
+        testID="username-field"
         onChange={text => {
           setUserName(text.nativeEvent.text);
         }}
@@ -76,7 +69,7 @@ export function LoginTestPage() {
       <TextInput
         style={styles.input}
         placeholder="Password"
-        testID={PASSWORD_ON_LOGIN}
+        testID="password-field"
         placeholderTextColor="rgba(225,225,225,0.7)"
         secureTextEntry={passwordHidden}
         onChange={text => {
@@ -87,18 +80,18 @@ export function LoginTestPage() {
       <Button
         title={passwordHidden ? 'Show Password' : 'Hide Password'}
         onPress={onPressShowPassword}
-        testID={SHOWPASSWORD_ON_LOGIN}
+        testID='show-password-toggle'
       />
 
       <TouchableOpacity
         style={styles.buttonContainer}
-        testID={SUBMIT_ON_LOGIN}
+        testID="submit-button"
         onPress={onPress}
       >
         <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
 
-      <Text testID={LOGINRESULT_ON_LOGIN}>{loginState}</Text>
+      <Text testID="result-text">{loginState}</Text>
     </View>
   );
 }

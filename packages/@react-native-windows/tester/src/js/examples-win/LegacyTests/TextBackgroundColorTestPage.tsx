@@ -8,15 +8,13 @@ import {
   Text,
   View,
 } from 'react-native';
-import {
-  TREE_DUMP_RESULT
-} from './Consts';
+
 import { TreeDumpControl } from './TreeDumpControl';
 
 export function TextBackgroundColorTestPage() {
   return (
     <View>
-      <View testID={'TextColorBackgroundView'}>
+      <View testID={'text-color-background-view'}>
         <Text>
           Outer no_color{' '}
           <Text style={{ backgroundColor: 'green' }}>
@@ -69,8 +67,7 @@ export function TextBackgroundColorTestPage() {
           margin: 10,
         }}
         dumpID={'TextColorBackground'}
-        uiaID={'TextColorBackgroundView'}
-        testID={TREE_DUMP_RESULT}
+        uiaID={'text-color-background-view'}
         additionalProperties={['TextHighlighters']}
       />
     </View>
@@ -78,7 +75,7 @@ export function TextBackgroundColorTestPage() {
 }
 
 export const displayName = (_undefined?: string) => { };
-export const title = '<LegacyTextBackgroundColorTest>';
+export const title = 'LegacyTextBackgroundColorTest';
 export const description = 'Legacy e2e test for Text with backgroundColor';
 export const examples = [
   {

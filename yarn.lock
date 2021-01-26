@@ -1881,11 +1881,6 @@
   resolved "https://registry.yarnpkg.com/@types/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#1ee30d79544ca84d68d4b3cdb0af4f205663dd2d"
   integrity sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
 
-"@types/fibers@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@types/fibers/-/fibers-3.1.0.tgz#3afa6d302587f52e63631cf2bc1acca6c0c3f65e"
-  integrity sha512-1o3I9xtk2PZFxwaLCC6gTaBfBZ5rvw/DSZZPK89fwuwO6LNrzSbC6rEs1xI0bQ3fCRWmO+uNJQQeD2J56oTMDg==
-
 "@types/find-up@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/find-up/-/find-up-4.0.0.tgz#6b74a76670477a23f0793cfaf2dafc86df59723a"
@@ -2113,7 +2108,7 @@
   dependencies:
     "@types/puppeteer" "*"
 
-"@types/puppeteer@*", "@types/puppeteer@^5.4.0":
+"@types/puppeteer@*":
   version "5.4.2"
   resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-5.4.2.tgz#80f3a1f54dedbbf750779716de81401549062072"
   integrity sha512-yjbHoKjZFOGqA6bIEI2dfBE5UPqU0YGWzP+ipDVP1iGzmlhksVKTBVZfT3Aj3wnvmcJ2PQ9zcncwOwyavmafBw==
@@ -2357,7 +2352,7 @@
     "@wdio/reporter" "6.11.0"
     chalk "^4.0.0"
 
-"@wdio/jasmine-framework@^6.8.0":
+"@wdio/jasmine-framework@^6.11.0":
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/@wdio/jasmine-framework/-/jasmine-framework-6.11.0.tgz#5e0d2f1dd5f39765fdbbf2365848a3c584a85cb8"
   integrity sha512-JyjefxllFZikvKS4kh5QQhanJ1XdhbhaHerVOANzD1dsDGP1J8PwT2b0FNKFhLILUENxBKsJuZUy46M0e+KhZQ==
@@ -2377,7 +2372,7 @@
     junit-report-builder "^2.1.0"
     validator "^13.0.0"
 
-"@wdio/local-runner@^6.11.3":
+"@wdio/local-runner@^6.12.1":
   version "6.12.1"
   resolved "https://registry.yarnpkg.com/@wdio/local-runner/-/local-runner-6.12.1.tgz#20780d3980229b513dd26655ba82af11a5ec733b"
   integrity sha512-vZkXcp/qO9kDpSzwrP4hkt8Q2o3DzSuEtmlEvniYmkS5blLmYuWCn9DpyM4h655jgr+r4NZW8k/3s3qosIs9zw==
@@ -2432,15 +2427,15 @@
     webdriver "6.12.1"
     webdriverio "6.12.1"
 
-"@wdio/sync@^6.9.0":
+"@wdio/spec-reporter@^6.11.0":
   version "6.11.0"
-  resolved "https://registry.yarnpkg.com/@wdio/sync/-/sync-6.11.0.tgz#fbf869a4888369d2fd269484808d10f971301ecb"
-  integrity sha512-ORdY40PNP1c0VKJV+dIh1tYmMXwsRHPhB66p1Y6TRm6LvIpPVX8peoB/Qx9zBsO40hAS1cFt9pdsGxu7VCHnfg==
+  resolved "https://registry.yarnpkg.com/@wdio/spec-reporter/-/spec-reporter-6.11.0.tgz#99e0a03985c0dfccf57f4b24c75f03409e1caaca"
+  integrity sha512-X68HGyay/tt0Y2nHn5U519bx+yBobAHge7lPklZ2cHNPEsmPSrvTyKIw5h3YO8mkfWHdp6IGxgHrET521Oe6WA==
   dependencies:
-    "@types/fibers" "^3.1.0"
-    "@types/puppeteer" "^5.4.0"
-    "@wdio/logger" "6.10.10"
-    fibers "^4.0.1"
+    "@wdio/reporter" "6.11.0"
+    chalk "^4.0.0"
+    easy-table "^1.1.1"
+    pretty-ms "^7.0.0"
 
 "@wdio/utils@6.11.0":
   version "6.11.0"
@@ -4321,11 +4316,6 @@ destroy@~1.0.4:
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
   integrity sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
 
-detect-libc@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
-  integrity sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=
-
 detect-newline@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-3.1.0.tgz#576f5dfc63ae1a192ff192d8ad3af6308991b651"
@@ -4461,6 +4451,15 @@ dtrace-provider@~0.8:
   integrity sha512-b7Z7cNtHPhH9EJhNNbbeqTcXB8LGFFZhq1PGgEvpeHlzd36bhbdTWoE/Ba/YguqpBSlAPKnARWhVlhunCMwfxg==
   dependencies:
     nan "^2.14.0"
+
+easy-table@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/easy-table/-/easy-table-1.1.1.tgz#c1b9b9ad68a017091a1c235e4bcba277540e143f"
+  integrity sha512-C9Lvm0WFcn2RgxbMnTbXZenMIWcBtkzMr+dWqq/JsVoGFSVUVlPqeOa5LP5kM0I3zoOazFpckOEb2/0LDFfToQ==
+  dependencies:
+    ansi-regex "^3.0.0"
+  optionalDependencies:
+    wcwidth ">=1.0.1"
 
 ecc-jsbn@~0.1.1:
   version "0.1.2"
@@ -5221,13 +5220,6 @@ fd-slicer@~1.1.0:
   integrity sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=
   dependencies:
     pend "~1.2.0"
-
-fibers@^4.0.1:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/fibers/-/fibers-4.0.3.tgz#dda5918280a48507f5d8a96dd9a525e8f4a532e2"
-  integrity sha512-MW5VrDtTOLpKK7lzw4qD7Z9tXaAhdOmOED5RHzg3+HjUk+ibkjVW0Py2ERtdqgTXaerLkVkBy2AEmJiT6RMyzg==
-  dependencies:
-    detect-libc "^1.0.3"
 
 figures@^2.0.0:
   version "2.0.0"
@@ -8675,6 +8667,11 @@ parse-json@^5.0.0:
     json-parse-better-errors "^1.0.1"
     lines-and-columns "^1.1.6"
 
+parse-ms@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/parse-ms/-/parse-ms-2.1.0.tgz#348565a753d4391fa524029956b172cb7753097d"
+  integrity sha512-kHt7kzLoS9VBZfUsiKjv43mr91ea+U05EyKkEtqp7vNbHxmaVuEqN7XxeEVnGrMtYOAxGrDElSi96K7EgO1zCA==
+
 parse-path@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/parse-path/-/parse-path-4.0.1.tgz#0ec769704949778cb3b8eda5e994c32073a1adff"
@@ -8926,6 +8923,13 @@ pretty-format@^26.0.0, pretty-format@^26.5.2, pretty-format@^26.6.2:
     ansi-styles "^4.0.0"
     react-is "^17.0.1"
 
+pretty-ms@^7.0.0:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/pretty-ms/-/pretty-ms-7.0.1.tgz#7d903eaab281f7d8e03c66f867e239dc32fb73e8"
+  integrity sha512-973driJZvxiGOQ5ONsFhOF/DtzPMOMtgC11kCpUrPGMTgqp2q/1gwzCquocrN33is0VZ5GFHXZYMM9l6h67v2Q==
+  dependencies:
+    parse-ms "^2.1.0"
+
 printj@~1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/printj/-/printj-1.1.2.tgz#d90deb2975a8b9f600fb3a1c94e3f4c53c78a222"
@@ -8962,13 +8966,6 @@ promise@^8.0.3:
   integrity sha512-W04AqnILOL/sPRXziNicCjSNRruLAuIHEOVBazepu0545DDNGYHz7ar9ZgZ1fMU8/MA4mVxp5rkBWRi6OXIy3Q==
   dependencies:
     asap "~2.0.6"
-
-prompt-sync@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/prompt-sync/-/prompt-sync-4.2.0.tgz#0198f73c5b70e3b03e4b9033a50540a7c9a1d7f4"
-  integrity sha512-BuEzzc5zptP5LsgV5MZETjDaKSWfchl5U9Luiu8SKp7iZWD5tZalOxvNcZRwv+d2phNFr8xlbxmFNcRKfJOzJw==
-  dependencies:
-    strip-ansi "^5.0.0"
 
 prompts@^2.0.1, prompts@^2.3.0, prompts@^2.4.0:
   version "2.4.0"
@@ -11018,7 +11015,7 @@ walker@^1.0.7, walker@~1.0.5:
   dependencies:
     makeerror "1.0.x"
 
-wcwidth@^1.0.1:
+wcwidth@>=1.0.1, wcwidth@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/wcwidth/-/wcwidth-1.0.1.tgz#f0b0dcf915bc5ff1528afadb2c0e17b532da2fe8"
   integrity sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g=

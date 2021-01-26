@@ -201,15 +201,6 @@ $requirements = @(
         Install = { choco install -y yarn };
     },
     @{
-        Name = 'Python';
-        Tags = @('rnwDev');
-        Valid = try {
-            # assume AzDO pipeline has Python installed
-            ($env:AGENT_ID -ne $null) -or ((choco list -l python3 | where-Object { $_ -like 'python3 *' }) -ne $null)
-        } catch { $false; };
-        Install = { choco install -y python3 };
-    },
-    @{
         Name = 'Azure Functions Core Tools';
         Tags = @('rnwDev');
         Valid = try { (Get-Command func -ErrorAction Stop) -ne $null } catch { $false };
