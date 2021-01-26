@@ -21,6 +21,9 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
+#include <winrt/Windows.ApplicationModel.Activation.h>
+#include <winrt/Windows.Networking.Connectivity.h>
+
 #pragma warning(push)
 #pragma warning(disable : 4146 4244 4068 4251 4101 4267 4804 4309)
 #include <cxxreact/JSExecutor.h>
@@ -230,6 +233,26 @@ void DevSupportManager::StartPollingLiveReload(
 
 void DevSupportManager::StopPollingLiveReload() {
   m_cancellation_token = true;
+}
+
+void DevSupportManager::startInspector(const std::string &packagerHost, const uint16_t packagerPort) {
+#if defined(HERMES_ENABLE_DEBUGGER)
+  auto packageStatics = winrt::get_activation_factory<winrt::Windows::ApplicationModel::IPackageStatics>(
+  winrt::name_of<winrt::Windows::ApplicationModel::Package>());
+  std::string packageName = winrt::to_string(packageStatics.Current().DisplayName());
+
+  auto hostNames = winrt::Windows::Networking::Connectivity::NetworkInformation::GetHostNames();
+  std::string deviceName = winrt::to_string(hostNames.First().Current().DisplayName());
+
+  m_InspectorPackagerConnection = std::make_unique<InspectorPackagerConnection>(
+      facebook::react::DevServerHelper::get_InspectorDeviceUrl(packagerHost, packagerPort, deviceName, packageName));
+#endif
+}
+
+void DevSupportManager::stopInspector() {
+#if defined(HERMES_ENABLE_DEBUGGER)
+  m_InspectorPackagerConnection = nullptr;
+#endif
 }
 
 std::pair<std::string, bool> GetJavaScriptFromServer(

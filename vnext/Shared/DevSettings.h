@@ -61,6 +61,9 @@ struct DevSettings {
   /// Enables debugging directly in the JavaScript engine.
   bool useDirectDebugger{false};
 
+  /// Enables React Native Hermes Inspector.
+  bool useHermesInspector{true};
+
   /// For direct debugging, break on the next line of JavaScript executed
   bool debuggerBreakOnNextLine{false};
 

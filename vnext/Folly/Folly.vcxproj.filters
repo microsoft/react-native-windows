@@ -28,6 +28,30 @@
     <Filter Include="Source Files\portability">
       <UniqueIdentifier>{9ad1fbe7-56fb-40d8-b0a2-ac0d6d0799e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\synchronization">
+      <UniqueIdentifier>{4733e5f7-9adc-400b-818d-0a954bc323d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\executors">
+      <UniqueIdentifier>{8dfbd8ba-04a2-4c1f-a1ce-c26b7b1433e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\concurrency">
+      <UniqueIdentifier>{ea59fc9b-7653-499c-95db-2d1e6c60d758}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\detail">
+      <UniqueIdentifier>{f169a8ed-4c45-43d5-a9f4-eefcaee3472c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\stubs">
+      <UniqueIdentifier>{6e96a796-0eb8-49f9-bdb7-6228fcb996ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\io">
+      <UniqueIdentifier>{5f0fc44f-3113-4c6f-8438-ab1392bc20ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\io\sync">
+      <UniqueIdentifier>{3fe83345-3e54-407a-bf64-c207f54fb54d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\memory">
+      <UniqueIdentifier>{e8896126-a833-4848-a3e1-8432015a4c95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(FollyDir)\folly\lang\Assume.cpp">
@@ -71,6 +95,87 @@
     </ClCompile>
     <ClCompile Include="$(FollyDir)\folly\Unicode.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\ExceptionWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\Executor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly/synchronization/AsymmetricMemoryBarrier.cpp">
+      <Filter>Source Files\synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\SharedMutex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly/synchronization/Hazptr.cpp">
+      <Filter>Source Files\synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly/synchronization/ParkingLot.cpp">
+      <Filter>Source Files\synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly/synchronization/WaitOptions.cpp">
+      <Filter>Source Files\synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly/synchronization\SanitizeThread.cpp">
+      <Filter>Source Files\synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\executors/ExecutorWithPriority.cpp">
+      <Filter>Source Files\executors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\executors/InlineExecutor.cpp">
+      <Filter>Source Files\executors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\executors/QueuedImmediateExecutor.cpp">
+      <Filter>Source Files\executors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\executors/TimedDrivableExecutor.cpp">
+      <Filter>Source Files\executors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly/lang/CString.cpp">
+      <Filter>Source Files\lang</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly/lang/SafeAssert.cpp">
+      <Filter>Source Files\lang</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\concurrency/CacheLocality.cpp">
+      <Filter>Source Files\concurrency</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\detail/AsyncTrace.cpp">
+      <Filter>Source Files\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly/detail/AtFork.cpp">
+      <Filter>Source Files\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\detail/MemoryIdler.cpp">
+      <Filter>Source Files\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\detail/Futex.cpp">
+      <Filter>Source Files\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\detail/StaticSingletonManager.cpp">
+      <Filter>Source Files\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\detail/ThreadLocalDetail.cpp">
+      <Filter>Source Files\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="posix_stubs.cpp">
+      <Filter>Source Files\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="windows_portability_tinyimp.cpp">
+      <Filter>Source Files\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly/portability/SysMembarrier.cpp">
+      <Filter>Source Files\portability</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly/io/async/Request.cpp">
+      <Filter>Source Files\io\sync</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly\detail\UniqueInstance.cpp">
+      <Filter>Source Files\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="$(FollyDir)\folly/memory/MallctlHelper.cpp">
+      <Filter>Source Files\memory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

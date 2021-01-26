@@ -67,6 +67,35 @@
     <ClCompile Include="$(FollyDir)\folly\Unicode.cpp" />
     <ClCompile Include="$(FollyDir)\folly\memory\detail\MallocImpl.cpp" />
   </ItemGroup>
+  <ItemGroup Condition="'$(EnableHermesInspector)' == 'true'">
+    <ClCompile Include="$(FollyDir)\folly\ExceptionWrapper.cpp" DisableSpecificWarnings="4541;4459;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(FollyDir)\folly\Executor.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\SharedMutex.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\concurrency/CacheLocality.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\detail/AsyncTrace.cpp" DisableSpecificWarnings="4541;4459;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(FollyDir)\folly\detail/Futex.cpp" DisableSpecificWarnings="4541;4459;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(FollyDir)\folly\detail/MemoryIdler.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\detail/StaticSingletonManager.cpp" DisableSpecificWarnings="4541;4459;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(FollyDir)\folly\detail/ThreadLocalDetail.cpp" />
+    <ClCompile Include="$(FollyDir)\folly/detail/AtFork.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\detail\UniqueInstance.cpp" DisableSpecificWarnings="4541;4459;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(FollyDir)\folly\executors/ExecutorWithPriority.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\executors/InlineExecutor.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\executors/TimedDrivableExecutor.cpp" DisableSpecificWarnings="4541;4459;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(FollyDir)\folly\executors/QueuedImmediateExecutor.cpp" />
+    <ClCompile Include="$(FollyDir)\folly/io/async/Request.cpp" DisableSpecificWarnings="4541;4459;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(FollyDir)\folly/memory/MallctlHelper.cpp" />
+    <ClCompile Include="$(FollyDir)\folly/portability/SysMembarrier.cpp" />
+    <ClCompile Include="$(FollyDir)\folly/synchronization/AsymmetricMemoryBarrier.cpp" />
+    <ClCompile Include="$(FollyDir)\folly/synchronization/Hazptr.cpp" />
+    <ClCompile Include="$(FollyDir)\folly/synchronization/ParkingLot.cpp" />
+    <ClCompile Include="$(FollyDir)\folly/synchronization/WaitOptions.cpp" />
+    <ClCompile Include="$(FollyDir)\folly/synchronization\SanitizeThread.cpp" />
+    <ClCompile Include="$(FollyDir)\folly/lang/CString.cpp" />
+    <ClCompile Include="$(FollyDir)\folly/lang/SafeAssert.cpp" />
+    <ClCompile Include="posix_stubs.cpp" DisableSpecificWarnings="4541;4459;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="windows_portability_tinyimp.cpp" DisableSpecificWarnings="4541;4459;%(DisableSpecificWarnings)" />
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(FollyDir)\folly\AtomicBitSet.h" />
     <ClInclude Include="$(FollyDir)\folly\AtomicHashArray-inl.h" />

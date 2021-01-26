@@ -362,6 +362,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h">
       <Filter>Header Files\JSI</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)etw\build.bat">

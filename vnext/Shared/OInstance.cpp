@@ -352,7 +352,7 @@ InstanceImpl::InstanceImpl(
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
 #if defined(USE_HERMES)
-          m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>();
+          m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>(m_devSettings, m_jsThread);
           m_devSettings->inlineSourceMap = false;
           break;
 #else

@@ -75,8 +75,9 @@
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;_CRT_SECURE_NO_WARNINGS;FOLLY_NO_CONFIG;NOMINMAX;RN_EXPORT=;JSI_EXPORT=;WIN32;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(EnableHermesInspector)' == 'true'">HERMES_INSPECTOR_FOLLY_KLUDGE;HERMES_ENABLE_DEBUGGER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
-      <DisableSpecificWarnings>4715;4146;4251;4800;4804;4305;4722;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4244;4018;4541;4267;4715;4146;4251;4800;4804;4305;4722;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
@@ -87,6 +88,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" />
+    <Import Project="$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets') AND '$(UseHermes)' == 'true' AND '$(EnableHermesInspector)' == 'true'" />
   </ImportGroup>
   <ItemGroup>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h" />
@@ -124,6 +126,27 @@
     <ClInclude Include="$(YogaDir)\yoga\YGMacros.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGNodeList.h" />
     <ClInclude Include="$(YogaDir)\yoga\Yoga.h" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(EnableHermesInspector)' == 'true'">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\Inspector.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\InspectorState.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\RuntimeAdapter.h" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\detail\Thread.h" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\detail\SerialExecutor.h" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\detail\CallbackOStream.h" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\Exceptions.h" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\AsyncPauseState.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\AutoAttachUtils.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\Connection.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\ConnectionDemux.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\MessageConverters.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\MessageInterfaces.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\MessageTypes.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\MessageTypesInlines.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\Registration.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\RemoteObjectsTable.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector\InspectorInterfaces.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\executor\JSITracing.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.cpp" />
@@ -178,6 +201,23 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\SampleTurboCxxModule.cpp" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(EnableHermesInspector)' == 'true'">
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\Inspector.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\InspectorState.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\RuntimeAdapter.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\detail\Thread.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\detail\SerialExecutor.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\detail\CallbackOStream.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\Connection.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\ConnectionDemux.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\MessageConverters.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\MessageTypes.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\Registration.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\RemoteObjectsTable.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector\InspectorInterfaces.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\executor\JSITracing.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\AutoAttachUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

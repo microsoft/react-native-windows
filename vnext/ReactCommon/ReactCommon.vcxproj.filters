@@ -58,6 +58,24 @@
     <Filter Include="react\renderer\mounting">
       <UniqueIdentifier>{836654a8-cee1-4d6d-ae20-bd2fb86710f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="hermes">
+      <UniqueIdentifier>{7094e9f9-ca16-42d9-bd72-768387ec0fd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hermes\inspector">
+      <UniqueIdentifier>{193b8653-23ca-4554-8909-4015a86e3a0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hermes\inspector\chrome">
+      <UniqueIdentifier>{b9013cb6-83ab-4c53-b445-4253494f81f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hermes\inspector\detail">
+      <UniqueIdentifier>{a4887182-2ebc-49ab-b71c-2a6a6aa9226e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reactperflogger">
+      <UniqueIdentifier>{b5350bb0-1b1d-4dc8-af10-2c9670ba89c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jsinspector">
+      <UniqueIdentifier>{ca229a51-6ce8-432f-8b06-8c6375e88a4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.cpp">
@@ -150,7 +168,6 @@
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp">
       <Filter>yoga\event</Filter>
     </ClCompile>
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
     <ClCompile Include=".\Yoga.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\SampleTurboCxxModule.cpp" />
@@ -166,6 +183,63 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\TransactionTelemetry.cpp">
       <Filter>react\renderer\mounting</Filter>
     </ClCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\Inspector.cpp">
+      <Filter>hermes\inspector</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\InspectorState.cpp">
+      <Filter>hermes\inspector</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\RuntimeAdapter.cpp">
+      <Filter>hermes\inspector</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\detail\Thread.h">
+      <Filter>hermes\inspector\detail</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\detail\Thread.cpp">
+      <Filter>hermes\inspector\detail</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\detail\SerialExecutor.h">
+      <Filter>hermes\inspector\detail</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\detail\SerialExecutor.cpp">
+      <Filter>hermes\inspector\detail</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\detail\CallbackOStream.h">
+      <Filter>hermes\inspector\detail</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\detail\CallbackOStream.cpp">
+      <Filter>hermes\inspector\detail</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\AsyncPauseState.h">
+      <Filter>hermes\inspector</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp">
+      <Filter>reactperflogger</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\Connection.cpp">
+      <Filter>hermes\inspector\chrome</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\ConnectionDemux.cpp">
+      <Filter>hermes\inspector\chrome</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\MessageConverters.cpp">
+      <Filter>hermes\inspector\chrome</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\MessageTypes.cpp">
+      <Filter>hermes\inspector\chrome</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\Registration.cpp">
+      <Filter>hermes\inspector\chrome</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\RemoteObjectsTable.cpp">
+      <Filter>hermes\inspector\chrome</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\Exceptions.h">
+      <Filter>hermes\inspector</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector\InspectorInterfaces.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\executor\JSITracing.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\AutoAttachUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stubs\sys\mman.h">
@@ -288,7 +362,49 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\Inspector.h">
+      <Filter>hermes\inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\InspectorState.h">
+      <Filter>hermes\inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\RuntimeAdapter.h">
+      <Filter>hermes\inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\AutoAttachUtils.h">
+      <Filter>hermes\inspector\chrome</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h">
+      <Filter>jscallinvoker\ReactCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\Connection.h">
+      <Filter>hermes\inspector\chrome</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\ConnectionDemux.h">
+      <Filter>hermes\inspector\chrome</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\MessageConverters.h">
+      <Filter>hermes\inspector\chrome</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\MessageInterfaces.h">
+      <Filter>hermes\inspector\chrome</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\MessageTypes.h">
+      <Filter>hermes\inspector\chrome</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\MessageTypesInlines.h">
+      <Filter>hermes\inspector\chrome</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\Registration.h">
+      <Filter>hermes\inspector\chrome</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\inspector\chrome\RemoteObjectsTable.h">
+      <Filter>hermes\inspector\chrome</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector\InspectorInterfaces.h">
+      <Filter>jsinspector</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\hermes\executor\JSITracing.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
