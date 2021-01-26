@@ -179,12 +179,11 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     auto turboModuleManager = std::make_shared<TurboModuleManager>(turboModuleRegistry_, jsCallInvoker_);
 
     // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
-    auto binding = [turboModuleManager](
-                       const std::string &name, const jsi::Value *
-                       /*schema*/) -> std::shared_ptr<TurboModule> { return turboModuleManager->getModule(name); };
+    auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
+      return turboModuleManager->getModule(name);
+    };
 
-    TurboModuleBinding::install(
-        *runtimeHolder_->getRuntime(), std::function(binding), false /*enableJSTurboModuleCodegen*/);
+    TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::function(binding));
 
     // init TurboModule
     for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {

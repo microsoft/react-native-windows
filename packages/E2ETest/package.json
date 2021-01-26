@@ -22,8 +22,8 @@
     "@react-native-windows/tester": "0.0.1",
     "prompt-sync": "^4.2.0",
     "react": "17.0.1",
-    "react-native": "0.0.0-6fd684150",
-    "react-native-windows": "0.0.0-canary.241"
+    "react-native": "0.0.0-c66aa8abc",
+    "react-native-windows": "^0.0.0-canary.241"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -49,7 +49,7 @@
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.8.0",
     "typescript": "^3.8.3",
-    "webdriverio": "^6.9.0",
-    "wdio-winappdriver-service": "^0.1.0"
+    "wdio-winappdriver-service": "^0.1.0",
+    "webdriverio": "^6.9.0"
   }
 }
