@@ -132,7 +132,7 @@ function spawnClangFormat(
         });
         clangFormatProcess.on('close', exit => {
           if (exit !== 0) {
-            callback(errorFromExitCode(exit));
+            callback(errorFromExitCode(exit!));
           } else {
             callback();
           }

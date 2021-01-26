@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update just-scripts to remove yargs-parser resolution",
+  "packageName": "@rnw-scripts/format-files",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none"
+}

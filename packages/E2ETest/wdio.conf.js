@@ -32,7 +32,7 @@ exports.config = {
   ],
 
   // Level of logging verbosity: trace | debug | info | warn | error
-  logLevel: 'info',
+  logLevel: 'error',
 
   // Warns when a deprecated command is used
   deprecationWarnings: true,
