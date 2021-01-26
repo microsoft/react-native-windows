@@ -72,8 +72,7 @@ Suppressed warnings in Assert macros:
   25064 - OACR function called twice in macro
 */
 #define AssertDetails_Statement_Begin \
-  __pragma(warning(push))             \
-      __pragma(warning(disable : 4127 4389 6239 25037 25038 25039 25041 25042 25064 25306)) do {
+  __pragma(warning(push)) __pragma(warning(disable : 4127 4389 6239 25037 25038 25039 25041 25042 25064 25306)) do {
 #define AssertDetails_Statement_End \
   }                                 \
   while (0)                         \
