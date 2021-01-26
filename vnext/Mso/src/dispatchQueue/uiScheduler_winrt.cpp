@@ -6,11 +6,16 @@
 #include "queueService.h"
 #include "taskQueue.h"
 #include "winrt/Windows.Foundation.h"
-#include "winrt/Windows.System.h"
 
 using namespace winrt;
 using namespace Windows::Foundation;
+#ifndef USE_WINUI3
+#include "winrt/Windows.System.h"
 using namespace Windows::System;
+#else
+#include "winrt/Microsoft.System.h"
+using namespace Microsoft::System;
+#endif
 
 namespace Mso {
 
