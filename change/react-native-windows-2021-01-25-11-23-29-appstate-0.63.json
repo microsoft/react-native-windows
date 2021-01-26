@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Background/Foreground app state handlers should be registered from the xaml thread",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2021-01-25T19:23:29.614Z"
+}
