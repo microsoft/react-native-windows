@@ -9,7 +9,6 @@
 
 #pragma warning(push)
 
-#pragma warning(disable : 4995)
 #pragma warning(disable : 4068)
 #pragma warning(disable : 4100)
 #pragma warning(disable : 4324) // structure was padded due to alignment specifier
