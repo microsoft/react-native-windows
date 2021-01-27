@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/take-screenshot",
   "entries": [
     {
+      "date": "Wed, 27 Jan 2021 05:06:36 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v1.0.7",
+      "version": "1.0.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Show TS Stack Traces on Uncaught CLI Exception",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ed5cbe4de1abac005e94ddc3564af4bb60b804f0",
+            "package": "@rnw-scripts/take-screenshot"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Jan 2021 05:06:39 GMT",
       "tag": "@rnw-scripts/take-screenshot_v1.0.6",
       "version": "1.0.6",

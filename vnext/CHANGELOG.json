@@ -2,6 +2,53 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 27 Jan 2021 05:06:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.243",
+      "version": "0.0.0-canary.243",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update comments for IJSValueReader and IJSValueWriter",
+            "author": "vmorozov@microsoft.com",
+            "commit": "bd8883ae84839917d644aa846f26d7ef1e0ba629",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "use lifted DispatcherQueue",
+            "author": "asklar@microsoft.com",
+            "commit": "5a511f25398ef45cc29e37454799a04e3cb12418",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Show TS Stack Traces on Uncaught CLI Exception",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ed5cbe4de1abac005e94ddc3564af4bb60b804f0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove usage of deprecated API",
+            "author": "asklar@microsoft.com",
+            "commit": "46b22e900c1df958307cb5131d2f0e193a7bcb0a",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-windows-codegen to v1.1.13",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ed5cbe4de1abac005e94ddc3564af4bb60b804f0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump react-native-platform-override to v1.4.9",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ed5cbe4de1abac005e94ddc3564af4bb60b804f0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Jan 2021 05:06:39 GMT",
       "tag": "react-native-windows_v0.0.0-canary.242",
       "version": "0.0.0-canary.242",

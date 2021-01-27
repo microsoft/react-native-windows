@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 26 Jan 2021 05:06:39 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Jan 2021 05:06:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.243
+
+Wed, 27 Jan 2021 05:06:36 GMT
+
+### Patches
+
+- Bump react-native-windows-codegen to v1.1.13 (ngerlem@microsoft.com)
+- Bump react-native-platform-override to v1.4.9 (ngerlem@microsoft.com)
+
+### Changes
+
+- Update comments for IJSValueReader and IJSValueWriter (vmorozov@microsoft.com)
+- use lifted DispatcherQueue (asklar@microsoft.com)
+- Show TS Stack Traces on Uncaught CLI Exception (ngerlem@microsoft.com)
+- Remove usage of deprecated API (asklar@microsoft.com)
 
 ## 0.0.0-canary.242
 

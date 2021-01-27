@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Wed, 27 Jan 2021 05:06:36 GMT",
+      "tag": "react-native-windows-init_v1.1.45",
+      "version": "1.1.45",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Show TS Stack Traces on Uncaught CLI Exception",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ed5cbe4de1abac005e94ddc3564af4bb60b804f0",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Jan 2021 05:06:39 GMT",
       "tag": "react-native-windows-init_v1.1.44",
       "version": "1.1.44",

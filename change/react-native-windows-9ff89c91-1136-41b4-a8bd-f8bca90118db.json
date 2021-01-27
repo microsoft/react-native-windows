@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update comments for IJSValueReader and IJSValueWriter",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

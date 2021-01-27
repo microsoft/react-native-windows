@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/promote-release",
-  "version": "1.2.14",
+  "version": "1.2.15",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",

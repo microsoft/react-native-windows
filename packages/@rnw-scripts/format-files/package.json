@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/format-files",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
