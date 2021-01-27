@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Clean up just-task configurations by supporting a default fallback",
+  "packageName": "@rnw-scripts/integrate-rn",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}

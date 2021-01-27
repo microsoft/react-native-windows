@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Clean up just-task configurations by supporting a default fallback",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}

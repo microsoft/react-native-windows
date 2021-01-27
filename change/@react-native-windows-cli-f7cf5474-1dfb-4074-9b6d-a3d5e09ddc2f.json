@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Clean up just-task configurations by supporting a default fallback",
+  "packageName": "@react-native-windows/cli",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
