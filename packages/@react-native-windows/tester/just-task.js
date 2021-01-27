@@ -7,15 +7,10 @@
  */
 
 const path = require('path');
+const {cleanTask, copyTask, series, task, tscTask} = require('just-scripts');
 
-const {
-  cleanTask,
-  copyTask,
-  eslintTask,
-  series,
-  task,
-  tscTask,
-} = require('just-scripts');
+// Use the shared base configuration
+require('@rnw-scripts/just-task');
 
 const rnTesterPath = path.dirname(
   require.resolve('@react-native/tester/package.json'),
@@ -30,6 +25,3 @@ task(
     copyTask({paths: [path.join(rnTesterPath, 'js')], dest: 'js'}),
   ),
 );
-
-task('lint', series(eslintTask()));
-task('lint:fix', series(eslintTask({fix: true})));

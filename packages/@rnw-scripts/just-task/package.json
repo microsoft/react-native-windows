@@ -3,13 +3,16 @@
   "version": "2.0.0",
   "license": "MIT",
   "main": "just-task.js",
+  "bin": {
+    "rnw-scripts": "./bin/rnw-scripts.js"
+  },
   "dependencies": {
     "@rnw-scripts/jest-e2e-config": "1.1.1"
   },
   "devDependencies": {
-    "just-scripts": "^1.3.1"
+    "just-scripts": "^1.3.2"
   },
   "peerDependencies": {
-    "just-scripts": "^1.3.1"
+    "just-scripts": "^1.3.2"
   }
 }
