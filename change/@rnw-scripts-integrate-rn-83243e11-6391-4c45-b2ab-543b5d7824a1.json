@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Clean up just-task configurations by supporting a default fallback",
+  "comment": "Leverage default config support in Just library and factor out common tasks",
   "packageName": "@rnw-scripts/integrate-rn",
   "email": "dannyvv@microsoft.com",
   "dependentChangeType": "patch"
