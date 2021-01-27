@@ -4,13 +4,13 @@
   "license": "MIT",
   "description": "Azure functions application for coordinating react-native-windows bots",
   "scripts": {
-    "build": "just-scripts build",
-    "clean": "just-scripts clean",
-    "lint": "just-scripts lint",
-    "lint:fix": "just-scripts lint:fix",
+    "build": "rnw-scripts build",
+    "clean": "rnw-scripts clean",
+    "lint": "rnw-scripts lint",
+    "lint:fix": "rnw-scripts lint:fix",
     "start": "func start --typescript",
-    "test": "just-scripts test",
-    "watch": "just-scripts watch"
+    "test": "rnw-scripts test",
+    "watch": "rnw-scripts watch"
   },
   "dependencies": {},
   "devDependencies": {

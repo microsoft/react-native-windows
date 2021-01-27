@@ -5,7 +5,6 @@
  * @ts-check
  */
 
-const copyRNLibaries = require('../../vnext/scripts/copyRNLibraries');
 const path = require('path');
 const fs = require('fs');
 const {
@@ -15,20 +14,14 @@ const {
   option,
   argv,
   tscTask,
-  eslintTask,
 } = require('just-scripts');
+
+// Use the shared base configuration
+require('@rnw-scripts/just-task');
+require('@rnw-scripts/just-task/react-native-tasks');
 
 option('production');
 option('clean');
-
-task('eslint', eslintTask());
-task('eslint:fix', eslintTask({fix: true}));
-
-task('copyRNLibraries', copyRNLibaries.copyTask(__dirname));
-
-task('flow-check', () => {
-  require('child_process').execSync('npx flow check', {stdio: 'inherit'});
-});
 
 task('ts', () => {
   return tscTask({
@@ -41,19 +34,10 @@ task('ts', () => {
   });
 });
 
-task('clean', copyRNLibaries.cleanTask(__dirname));
-
-function ensureDirectoryExists(filePath) {
-  const dir = path.dirname(filePath);
-  if (!fs.existsSync(dir)) {
-    ensureDirectoryExists(dir);
-    fs.mkdirSync(dir);
-  }
-}
-
 task('prepareBundle', () => {
-  ensureDirectoryExists(
+  fs.mkdirSync(
     path.resolve(__dirname, 'dist/win32/dev/js/RNTesterApp.win32.bundle'),
+    {recursive: true},
   );
 });
 
@@ -66,5 +50,6 @@ task(
   ),
 );
 
+task('clean', series('cleanRNLibraries'));
+
 task('lint', series('eslint', 'flow-check'));
-task('lint:fix', series('eslint:fix'));
