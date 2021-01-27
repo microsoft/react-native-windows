@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.62] V8 package update",
-  "packageName": "react-native-windows",
-  "email": "tudor.mihai@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2021-01-26T02:15:16.074Z"
-}
