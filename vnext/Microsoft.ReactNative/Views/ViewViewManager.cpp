@@ -99,6 +99,20 @@ class ViewShadowNode : public ShadowNodeBase {
     m_onClick = isSet;
   }
 
+  bool IsFocusable() const {
+    return m_isFocusable;
+  }
+  void IsFocusable(bool isFocusable) {
+    m_isFocusable = isFocusable;
+
+    if (IsControl())
+      GetControl().IsTabStop(m_isFocusable);
+  }
+
+  bool IsHitTestBrushRequired() const {
+    return IsRegisteredForMouseEvents();
+  }
+
   void AddView(ShadowNode &child, int64_t index) override {
     const auto &view = static_cast<ShadowNodeBase &>(child).GetView();
     if (view.try_as<xaml::UIElement>() == nullptr) {
@@ -159,6 +173,7 @@ class ViewShadowNode : public ShadowNodeBase {
     // shadow node to the view
     EnableFocusRing(EnableFocusRing());
     TabIndex(TabIndex());
+    IsFocusable(IsFocusable());
     static_cast<FrameworkElementViewManager *>(GetViewManager())->RefreshTransformMatrix(this);
   }
 

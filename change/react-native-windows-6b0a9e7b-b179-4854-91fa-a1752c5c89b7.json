@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "In Xaml, IsTabStop makes a control be able to receive focus or not so we also need to set it when IsFocusable is set.",
+  "packageName": "react-native-windows",
+  "email": "lamdoan@microsoft.com",
+  "dependentChangeType": "patch"
+}
