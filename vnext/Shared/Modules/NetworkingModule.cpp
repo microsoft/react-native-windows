@@ -15,11 +15,8 @@
 #include "Unicode.h"
 #include "Utilities.h"
 
-#pragma warning(push)
-#pragma warning(disable : 4146)
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
-#pragma warning(pop)
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage

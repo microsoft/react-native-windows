@@ -61,7 +61,6 @@ if (FAssertDo(f)) { ... } // same as "if (f) { ... } else Assert(false);"
 /**
 Suppressed warnings in Assert macros:
   C4127 - if/while loop condition is a constant
-  C4018 - signed/unsigned compare was converted to unsigned/unsigned compare
   C4389 - operation involved signed/unsigned variables
    6239 - OACR left expression is always false
   25011 - OACR missing 'break' or '__fallthrough' statement
@@ -73,8 +72,7 @@ Suppressed warnings in Assert macros:
   25064 - OACR function called twice in macro
 */
 #define AssertDetails_Statement_Begin \
-  __pragma(warning(push))             \
-      __pragma(warning(disable : 4127 4018 4389 6239 25037 25038 25039 25041 25042 25064 25306)) do {
+  __pragma(warning(push)) __pragma(warning(disable : 4127 4389 6239 25037 25038 25039 25041 25042 25064 25306)) do {
 #define AssertDetails_Statement_End \
   }                                 \
   while (0)                         \

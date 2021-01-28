@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove disabling 4018 4055 4146 4242",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

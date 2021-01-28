@@ -3,10 +3,7 @@
 
 #pragma once
 
-#pragma warning(push)
-#pragma warning(disable : 4146)
 #include <cxxreact/CxxModule.h>
-#pragma warning(pop)
 
 #include <folly/dynamic.h>
 

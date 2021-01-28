@@ -41,8 +41,6 @@ Here we provide a number of helper templates to implement QueryCast for a type:
                                 // inaccessible or deleted
 #pragma warning(disable : 4626) // assignment operator could not be generated because a base class assignment operator
                                 // is inaccessible or deleted
-#pragma warning(disable : 4995) // 'IsDebuggerPresent': name was marked as #pragma deprecated. It is part of
-                                // VerifyElseCrash macro.
 
 namespace Mso {
 
