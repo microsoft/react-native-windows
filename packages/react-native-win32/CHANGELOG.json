@@ -2,6 +2,29 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 28 Jan 2021 05:06:47 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.77",
+      "version": "0.0.0-canary.77",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Leverage default config support in Just library and factor out common tasks",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.10",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Jan 2021 05:06:36 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.76",
       "version": "0.0.0-canary.76",

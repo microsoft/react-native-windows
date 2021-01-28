@@ -2,6 +2,29 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 28 Jan 2021 05:06:47 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.15",
+      "version": "0.0.0-canary.15",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Leverage default config support in Just library and factor out common tasks",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "@react-native-windows/telemetry"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.0.1",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Jan 2021 05:06:39 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.14",
       "version": "0.0.0-canary.14",

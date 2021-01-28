@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/take-screenshot",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.6",
-    "@rnw-scripts/just-task": "2.0.0",
+    "@rnw-scripts/just-task": "2.0.1",
     "@rnw-scripts/ts-config": "1.1.0",
     "@types/yargs": "^15.0.5",
     "eslint": "7.12.0",

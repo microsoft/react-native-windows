@@ -2,6 +2,35 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Thu, 28 Jan 2021 05:06:47 GMT",
+      "tag": "@rnw-scripts/promote-release_v1.2.16",
+      "version": "1.2.16",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Leverage default config support in Just library and factor out common tasks",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.17",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "@rnw-scripts/promote-release"
+          },
+          {
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.14",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Jan 2021 05:06:36 GMT",
       "tag": "@rnw-scripts/promote-release_v1.2.15",
       "version": "1.2.15",

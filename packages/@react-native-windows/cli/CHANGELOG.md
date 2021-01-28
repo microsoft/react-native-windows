@@ -1,8 +1,20 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 26 Jan 2021 05:06:39 GMT and should not be manually modified.
+This log was last generated on Thu, 28 Jan 2021 05:06:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.55
+
+Thu, 28 Jan 2021 05:06:47 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.0.1 (dannyvv@microsoft.com)
+
+### Changes
+
+- Leverage default config support in Just library and factor out common tasks (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.54
 

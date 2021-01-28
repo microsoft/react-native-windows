@@ -2,6 +2,29 @@
   "name": "microsoft-reactnative-sampleapps",
   "entries": [
     {
+      "date": "Thu, 28 Jan 2021 05:06:47 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.244",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-windows-codegen to v1.1.14",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Jan 2021 05:06:36 GMT",
       "tag": "microsoft-reactnative-sampleapps_v0.0.54",
       "version": "0.0.54",

@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Tue, 26 Jan 2021 05:06:39 GMT and should not be manually modified.
+This log was last generated on Thu, 28 Jan 2021 05:06:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.1
+
+Thu, 28 Jan 2021 05:06:47 GMT
+
+### Patches
+
+- Leverage default config support in Just library and factor out common tasks (dannyvv@microsoft.com)
 
 ## 2.0.0
 

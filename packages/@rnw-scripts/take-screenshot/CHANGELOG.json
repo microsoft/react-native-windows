@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/take-screenshot",
   "entries": [
     {
+      "date": "Thu, 28 Jan 2021 05:06:47 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v1.0.8",
+      "version": "1.0.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Leverage default config support in Just library and factor out common tasks",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "@rnw-scripts/take-screenshot"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Jan 2021 05:06:36 GMT",
       "tag": "@rnw-scripts/take-screenshot_v1.0.7",
       "version": "1.0.7",

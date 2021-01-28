@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/format-files",
   "entries": [
     {
+      "date": "Thu, 28 Jan 2021 05:06:47 GMT",
+      "tag": "@rnw-scripts/format-files_v1.0.17",
+      "version": "1.0.17",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Leverage default config support in Just library and factor out common tasks",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "@rnw-scripts/format-files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Jan 2021 05:06:36 GMT",
       "tag": "@rnw-scripts/format-files_v1.0.16",
       "version": "1.0.16",

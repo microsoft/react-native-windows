@@ -2,6 +2,29 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Thu, 28 Jan 2021 05:06:47 GMT",
+      "tag": "react-native-platform-override_v1.4.10",
+      "version": "1.4.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Leverage default config support in Just library and factor out common tasks",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "react-native-platform-override"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.14",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Jan 2021 05:06:36 GMT",
       "tag": "react-native-platform-override_v1.4.9",
       "version": "1.4.9",

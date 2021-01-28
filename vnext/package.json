@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.243",
+  "version": "0.0.0-canary.244",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
     "@react-native-community/cli": "^5.0.1-alpha.0",
     "@react-native-community/cli-platform-android": "^5.0.1-alpha.0",
     "@react-native-community/cli-platform-ios": "^5.0.1-alpha.0",
-    "@react-native-windows/cli": "0.0.0-canary.54",
+    "@react-native-windows/cli": "0.0.0-canary.55",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "1.0.0",
     "@react-native/polyfills": "1.0.0",
@@ -66,8 +66,8 @@
     "prettier": "1.19.1",
     "react": "17.0.1",
     "react-native": "0.0.0-c66aa8abc",
-    "react-native-platform-override": "^1.4.9",
-    "react-native-windows-codegen": "1.1.13",
+    "react-native-platform-override": "^1.4.10",
+    "react-native-windows-codegen": "1.1.14",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^3.8.3"

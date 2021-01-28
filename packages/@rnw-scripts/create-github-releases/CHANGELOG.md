@@ -1,8 +1,20 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Wed, 27 Jan 2021 05:06:36 GMT and should not be manually modified.
+This log was last generated on Thu, 28 Jan 2021 05:06:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.23
+
+Thu, 28 Jan 2021 05:06:47 GMT
+
+### Patches
+
+- Leverage default config support in Just library and factor out common tasks (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.17 (dannyvv@microsoft.com)
 
 ## 1.0.22
 

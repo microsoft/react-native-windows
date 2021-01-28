@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Leverage default config support in Just library and factor out common tasks",
-  "packageName": "@react-native-windows/cli",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

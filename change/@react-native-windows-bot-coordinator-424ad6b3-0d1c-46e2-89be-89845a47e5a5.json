@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Leverage default config support in Just library and factor out common tasks",
-  "packageName": "@react-native-windows/bot-coordinator",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

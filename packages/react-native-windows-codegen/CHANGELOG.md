@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-codegen
 
-This log was last generated on Wed, 27 Jan 2021 05:06:36 GMT and should not be manually modified.
+This log was last generated on Thu, 28 Jan 2021 05:06:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.14
+
+Thu, 28 Jan 2021 05:06:47 GMT
+
+### Patches
+
+- Leverage default config support in Just library and factor out common tasks (dannyvv@microsoft.com)
 
 ## 1.1.13
 

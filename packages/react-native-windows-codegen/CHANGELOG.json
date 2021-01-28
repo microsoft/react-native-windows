@@ -2,6 +2,21 @@
   "name": "react-native-windows-codegen",
   "entries": [
     {
+      "date": "Thu, 28 Jan 2021 05:06:47 GMT",
+      "tag": "react-native-windows-codegen_v1.1.14",
+      "version": "1.1.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Leverage default config support in Just library and factor out common tasks",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "react-native-windows-codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Jan 2021 05:06:36 GMT",
       "tag": "react-native-windows-codegen_v1.1.13",
       "version": "1.1.13",
