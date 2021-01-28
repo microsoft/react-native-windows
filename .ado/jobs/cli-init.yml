@@ -170,8 +170,7 @@ jobs:
             additionalInitArguments:
             additionalRunArguments:
             continueOnBuildFailure: true # See issue #6129
-      pool:
-        vmImage: $(VmImage)
+      pool: $(AgentPool.Medium)
       timeoutInMinutes: 60
       cancelTimeoutInMinutes: 5
 
@@ -212,8 +211,7 @@ jobs:
             projectType: app
             additionalInitArguments: --useWinUI3 true
             additionalRunArguments:
-      pool:
-        vmImage: $(VmImage)
+      pool: $(AgentPool.Medium)
       timeoutInMinutes: 60
       cancelTimeoutInMinutes: 5
 
@@ -253,9 +251,7 @@ jobs:
             projectType: app
             additionalInitArguments:
             additionalRunArguments:
-
-      pool:
-        vmImage: $(VmImage)
+      pool: $(AgentPool.Medium)
       timeoutInMinutes: 60
       cancelTimeoutInMinutes: 5
 
