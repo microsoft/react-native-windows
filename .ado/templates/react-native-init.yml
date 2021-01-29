@@ -84,10 +84,14 @@ steps:
       Write-Host "##vso[task.setvariable variable=localProjectType]${{ parameters.projectType}}"
 
   # We force the usage of npm instead of yarn because yarn has fragility issues when redirected to a different server (such as verdaccio)
+  # We use --no-install and symlink the node_modules from the source tree to avoid having npx download react-native and all it dependencies
+  # which takes over a minute on the CI machines.
   - task: CmdLine@2
     displayName: Init new app project
     inputs:
-      script: npx react-native init testcli --npm --template react-native@$(reactNativeDevDependency)
+      script: |
+        mklink /D node_modules $(System.DefaultWorkingDirectory)\node_modules
+        npx --no-install react-native init testcli --npm --template react-native@$(reactNativeDevDependency)
       workingDirectory: $(Agent.BuildDirectory)
     condition: and(succeeded(), eq(variables['localProjectType'], 'app'))
   
