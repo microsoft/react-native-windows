@@ -185,7 +185,7 @@ steps:
   - task: CmdLine@2
     displayName: Build project (Release)
     inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs --release ${{ parameters.additionalRunArguments }}
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs --release ${{ parameters.additionalRunArguments }} --msbuildprops UseMultiToolTask=true
       workingDirectory: $(Agent.BuildDirectory)\testcli
     continueOnError: ${{ parameters.continueOnBuildFailure }}
     condition: and(succeeded(), eq('Release', variables['localConfig']))
@@ -193,7 +193,7 @@ steps:
   - task: CmdLine@2
     displayName: Build project (Debug)
     inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs ${{ parameters.additionalRunArguments }}
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs ${{ parameters.additionalRunArguments }} --msbuildprops UseMultiToolTask=true
       workingDirectory: $(Agent.BuildDirectory)\testcli
     continueOnError: ${{ parameters.continueOnBuildFailure }}
     condition: and(succeeded(), eq('Debug', variables['localConfig']))
