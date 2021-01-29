@@ -83,9 +83,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Shapes.h" />
   </ItemGroup>
   <ItemGroup Condition="'$(BuildMSRNCxx)'!='false'">
-    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValue.cpp" />
@@ -94,17 +91,23 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ModuleRegistration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReactPromise.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleProvider.cpp" />
-    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.cpp">
+    <!-- 
+      Make sure all FB code uses the same flags to improve build parallelism.
+      This is because msbuild has to invoke different cl.exe invocations for each 
+      set of flags and msbuild inside a project is single threaded. 
+      So if each of the following 4 cpp files had different flags overall would be:
+          (#otherFiles * costPerFile / #cores) + (4 * costPerFile)
+      with this it would be:
+          (#otherFiles * costPerFile / #cores) + (4 * costPerFile / #cores)
+      given each cpp file is 15-20 seconds on a build agent, 
+      this should save ~45 seconds of build time.
+    -->
+    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp" />
+    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.cpp" />
+    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.cpp" >
       <DisableSpecificWarnings>4100;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.cpp">
-      <DisableSpecificWarnings>4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)README.md" />
