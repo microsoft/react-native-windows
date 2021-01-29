@@ -199,8 +199,7 @@ void ABIViewManager::ReplaceChild(
 }
 
 YGMeasureFunc ABIViewManager::GetYogaCustomMeasureFunc() const {
-  if (m_viewManagerRequiresNativeLayout &&
-      m_viewManagerRequiresNativeLayout.RequiresNativeLayout()) {
+  if (m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout()) {
     return ::Microsoft::ReactNative::DefaultYogaSelfMeasureFunc;
   } else {
     return nullptr;
@@ -209,8 +208,7 @@ YGMeasureFunc ABIViewManager::GetYogaCustomMeasureFunc() const {
 
 ::Microsoft::ReactNative::ShadowNode *ABIViewManager::createShadow() const {
   return new ABIShadowNode(
-      m_viewManagerRequiresNativeLayout &&
-      m_viewManagerRequiresNativeLayout.RequiresNativeLayout());
+      m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout());
 }
 
 } // namespace winrt::Microsoft::ReactNative
