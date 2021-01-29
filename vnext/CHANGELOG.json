@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 29 Jan 2021 05:05:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.245",
+      "version": "0.0.0-canary.245",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove disabling 4018 4055 4146 4242",
+            "author": "asklar@microsoft.com",
+            "commit": "a5270d618070147f224e178f9dd3589fc64ca209",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Jan 2021 05:06:47 GMT",
       "tag": "react-native-windows_v0.0.0-canary.244",
       "version": "0.0.0-canary.244",
