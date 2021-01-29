@@ -95,19 +95,28 @@
       Make sure all FB code uses the same flags to improve build parallelism.
       This is because msbuild has to invoke different cl.exe invocations for each 
       set of flags and msbuild inside a project is single threaded. 
-      So if each of the following 4 cpp files had different flags overall would be:
-          (#otherFiles * costPerFile / #cores) + (4 * costPerFile)
-      with this it would be:
-          (#otherFiles * costPerFile / #cores) + (4 * costPerFile / #cores)
-      given each cpp file is 15-20 seconds on a build agent, 
-      this should save ~45 seconds of build time.
+      
+      For TurboModule cpp we have to temporarily disable 4267 because that is a security
+      warning and we want to make sure we error out if we ever introduce it in our code
+      bug #6986 tracks fixing FB's
+      To manage perf we disable the warning on the other files that come from FB as well.
     -->
-    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp" />
-    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.cpp" />
-    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.cpp" >
+    <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
       <DisableSpecificWarnings>4100;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.cpp" />
+    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.cpp">
+      <DisableSpecificWarnings>4100;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.cpp">
+      <DisableSpecificWarnings>4100;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.cpp">
+      <DisableSpecificWarnings>4100;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)README.md" />
