@@ -418,7 +418,9 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
   altLeft.Modifiers(winrt::Windows::System::VirtualKeyModifiers::Menu);
 
   // Hide keyboard accelerator tooltips
-  rootElement.KeyboardAcceleratorPlacementMode(xaml::Input::KeyboardAcceleratorPlacementMode::Hidden);
+  if (react::uwp::IsRS4OrHigher()) {
+    rootElement.KeyboardAcceleratorPlacementMode(xaml::Input::KeyboardAcceleratorPlacementMode::Hidden);
+  }
 }
 
 void ReactRootControl::RemoveBackHandlers() noexcept {
