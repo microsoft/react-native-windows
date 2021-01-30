@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include "FrameAnimationDriver.h"
+#include "Utils/Helpers.h"
 
 namespace react::uwp {
 FrameAnimationDriver::FrameAnimationDriver(
@@ -24,7 +25,9 @@ std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> FrameAnimat
   const auto [scopedBatch, animation] = []() {
     const auto compositor = Microsoft::ReactNative::GetCompositor();
     return std::make_tuple(
-        compositor.CreateScopedBatch(comp::CompositionBatchTypes::AllAnimations),
+        compositor.CreateScopedBatch(
+            react::uwp::IsRS5OrHigher() ? comp::CompositionBatchTypes::AllAnimations
+                                        : comp::CompositionBatchTypes::Animation),
         compositor.CreateScalarKeyFrameAnimation());
   }();
 
