@@ -183,7 +183,7 @@
         <span class="token punctuation">{</span>
             <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">null</span> <span class="token operator">!=</span> <span class="token keyword">value</span><span class="token punctuation">)</span>
             <span class="token punctuation">{</span>
-                view<span class="token punctuation">.</span><span class="token function">SetValue</span><span class="token punctuation">(</span>CustomUserControl<span class="token punctuation">.</span>LabelProperty<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                view<span class="token punctuation">.</span>Label <span class="token operator">=</span> <span class="token keyword">value</span><span class="token punctuation">;</span>
             <span class="token punctuation">}</span>
             <span class="token keyword">else</span>
             <span class="token punctuation">{</span>
@@ -196,7 +196,7 @@
         <span class="token punctuation">{</span>
             <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">null</span> <span class="token operator">!=</span> <span class="token keyword">value</span><span class="token punctuation">)</span>
             <span class="token punctuation">{</span>
-                view<span class="token punctuation">.</span><span class="token function">SetValue</span><span class="token punctuation">(</span>Control<span class="token punctuation">.</span>ForegroundProperty<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                view<span class="token punctuation">.</span>Foreground <span class="token operator">=</span> <span class="token keyword">value</span><span class="token punctuation">;</span>
             <span class="token punctuation">}</span>
             <span class="token keyword">else</span>
             <span class="token punctuation">{</span>
@@ -209,7 +209,7 @@
         <span class="token punctuation">{</span>
             <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">null</span> <span class="token operator">!=</span> <span class="token keyword">value</span><span class="token punctuation">)</span>
             <span class="token punctuation">{</span>
-                view<span class="token punctuation">.</span><span class="token function">SetValue</span><span class="token punctuation">(</span>Control<span class="token punctuation">.</span>BackgroundProperty<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                view<span class="token punctuation">.</span>Background <span class="token operator">=</span> <span class="token keyword">value</span><span class="token punctuation">;</span>
             <span class="token punctuation">}</span>
             <span class="token keyword">else</span>
             <span class="token punctuation">{</span>
@@ -411,19 +411,19 @@ void CustomUserControlViewManager::UpdateProperties(
       if (propertyName == "label") {
         if (propertyValue != nullptr) {
           auto const &amp;value = winrt::box_value(winrt::to_hstring(propertyValue.String()));
-          control.SetValue(winrt::ViewManagerSample::CustomUserControl::LabelProperty(), propertyValue);
+          control.Label(value);
         } else {
           control.ClearValue(winrt::ViewManagerSample::CustomUserControl::LabelProperty());
         }
       } else if (propertyName == "color") {
         if (auto value = propertyValue.To&lt;Brush&gt;()) {
-          control.SetValue(Control::ForegroundProperty(), value);
+          control.Foreground(value);
         } else {
           control.ClearValue(Control::ForegroundProperty());
         }
       } else if (propertyName == "backgroundColor") {
         if (auto value = propertyValue.To&lt;Brush&gt;()) {
-          control.SetValue(Control::BackgroundProperty(), value);
+          control.Background(value);
         } else {
           control.ClearValue(Control::BackgroundProperty());
         }
