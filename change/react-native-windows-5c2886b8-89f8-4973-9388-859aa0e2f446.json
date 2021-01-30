@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add JSValue converters for some WinRT/XAML types",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
