@@ -52,5 +52,14 @@ export const PoliteFocusTest: React.FunctionComponent<{}> = () => {
         </View>
     );
   };
-  
-  export const title = 'FocusManager';
+
+  export const title = 'FocusManager APIs';
+  export const displayName =  'FocusManager APIs';
+  export const description = 'Tests FocusManager';
+  export const examples = [
+    {
+      title: 'FocusManager Example',
+      description: 'All constants',
+      render: () => <PoliteFocusTest />
+    }
+  ];
