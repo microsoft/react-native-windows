@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 25 Jan 2021 15:06:41 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Feb 2021 15:07:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.9
+
+Mon, 01 Feb 2021 15:07:32 GMT
+
+### Changes
+
+- In Xaml, IsTabStop makes a control be able to receive focus or not so we also need to set it when IsFocusable is set. (lamdoan@microsoft.com)
+- Update V8 and Hermes package versions (tudor.mihai@microsoft.com)
+- Background/Foreground app state handlers should be registered from the xaml thread (asklar@microsoft.com)
 
 ## 0.64.0-preview.8
 

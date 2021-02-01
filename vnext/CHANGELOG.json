@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 01 Feb 2021 15:07:32 GMT",
+      "tag": "react-native-windows_v0.64.0-preview.9",
+      "version": "0.64.0-preview.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "In Xaml, IsTabStop makes a control be able to receive focus or not so we also need to set it when IsFocusable is set.",
+            "author": "lamdoan@microsoft.com",
+            "commit": "36839204682afed4fa3a0bd7711e4301dbfa6273",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 and Hermes package versions",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "2ff4e11720c6a305a3c53630c62d472013a46dc4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Background/Foreground app state handlers should be registered from the xaml thread",
+            "author": "asklar@microsoft.com",
+            "commit": "eb50390301dd423e12ed9950d73ab15e44f93506",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Jan 2021 15:06:41 GMT",
       "tag": "react-native-windows_v0.64.0-preview.8",
       "version": "0.64.0-preview.8",

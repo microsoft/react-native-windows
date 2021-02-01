@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 11 Jan 2021 15:07:12 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Feb 2021 15:07:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.6
+
+Mon, 01 Feb 2021 15:07:32 GMT
+
+### Changes
+
+- Update V8 and Hermes package versions (tudor.mihai@microsoft.com)
 
 ## 0.64.0-preview.5
 
