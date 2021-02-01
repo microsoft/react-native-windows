@@ -16,6 +16,8 @@ is unscoped. `react-native-windows-init` is run by name, and as such makes sense
 
 ## Adding a new scope
 
+> ⚠ Caution: Failing to create and give access to an NPM organization will break CI.
+
 New package scopes for related packages can be added by adding a new directory with the scope name and prefixing the
 packages name in `package.json` with the scope.
 
@@ -30,5 +32,3 @@ E.g. for `packages/@example-scope/create-widgets/package.json`:
 Publishing a scoped package requires that the **rnbot** NPM user is an owner of an **npm organization** with the
 same name as the scope. You can check whether an organization exists by viewing [npmjs.com/org/<scope>](https://www.npmjs.com/org/rnw-scripts).
 See acoates for granting permissions to rnbot.
-
-> ⚠ Caution: Failing to create and give access to an NPM organization will break CI.
