@@ -46,4 +46,10 @@ namespace Microsoft.ReactNative
 
     void ReplaceChild(XAML_NAMESPACE.FrameworkElement parent, XAML_NAMESPACE.UIElement oldChild, XAML_NAMESPACE.UIElement newChild);
   }
+
+  [webhosthidden]
+  interface IViewManagerRequiresNativeLayout
+  {
+    Boolean RequiresNativeLayout { get; };
+  }
 } // namespace Microsoft.ReactNative
