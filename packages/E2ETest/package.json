@@ -8,13 +8,7 @@
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
     "windows": "react-native run-windows",
-    "e2e": "react-native run-windows --no-launch --logging && npm run e2etest",
-    "e2etest": "jest --color",
-    "testspec": "wdio --spec",
-    "buildapp": "react-native run-windows --no-launch --no-packager --no-deploy",
-    "deployapp": "react-native run-windows --no-launch --no-packager --no-build",
-    "buildbundleapp": "npm run bundle && react-native run-windows --no-launch --no-packager --no-deploy --bundle",
-    "deploybundleapp": "react-native run-windows --no-launch --no-packager --no-build --bundle"
+    "e2etest": "jest --color"
   },
   "dependencies": {
     "@react-native-windows/tester": "0.0.1",
