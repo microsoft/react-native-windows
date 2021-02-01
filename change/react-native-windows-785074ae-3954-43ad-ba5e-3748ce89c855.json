@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Allow custom view managers to be able to trigger our logic to run native layout",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
