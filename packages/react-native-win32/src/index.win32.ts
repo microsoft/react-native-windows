@@ -34,7 +34,7 @@ Object.defineProperty(Index, 'ButtonWin32', {
 
 Object.defineProperty(Index, 'FocusManager', {
   get: () => {
-    return require('./Libraries/Utilities/FocusManager').FocusManager;
+    return require('./Libraries/Utilities/FocusManager');
   },
 });
 
