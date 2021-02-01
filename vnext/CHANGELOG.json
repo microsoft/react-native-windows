@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 01 Feb 2021 15:05:10 GMT",
+      "tag": "react-native-windows_v0.63.20",
+      "version": "0.63.20",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Background/Foreground app state handlers should be registered from the xaml thread",
+            "author": "asklar@microsoft.com",
+            "commit": "4596a9ddf3b6eb44ca328c799b6ebbcf11267989",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 package version",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "ccdb9d7a811e614b9ec9eb6e79fbbf61574041f8",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Jan 2021 15:08:23 GMT",
       "tag": "react-native-windows_v0.63.19",
       "version": "0.63.19",
