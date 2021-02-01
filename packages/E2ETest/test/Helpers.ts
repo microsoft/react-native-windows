@@ -11,7 +11,7 @@ export async function assertTreeDumpPassed() {
   // Text is populated asynchonously
   await browser.waitUntil(
     async () => (await treeDumpControl.getText()).trim() !== '',
-    { timeoutMsg: 'Tree dump was not generated' }
+    {timeoutMsg: 'Tree dump was not generated'},
   );
 
   expect(await treeDumpControl.getText()).toBe('TreeDump:Passed');
@@ -42,5 +42,5 @@ export async function goToExample(example: string) {
   // buttons are still visible
   await browser.waitUntil(async () => !(await exampleButton.isDisplayed()));
   const componentsTab = await $('~components-tab');
-  expect(await componentsTab.isDisplayed()).toBeTrue();
+  expect(await componentsTab.isDisplayed()).toBe(true);
 }

@@ -2,14 +2,11 @@
   "extends": "@rnw-scripts/ts-config",
   "compilerOptions": {
     "esModuleInterop": true,
-    "types": [
-      "@wdio/jasmine-framework",
-      "webdriverio",
-    ]
+    "types": ["jest", "webdriverio"]
   },
   "include": [
     "app",
-    "wdio"
+    "test",
   ],
   "exclude": [
     "node_modules"

@@ -4,9 +4,9 @@
  * @format
  */
 
-import { goToComponentExample, goToApiExample } from './Helpers';
+import {goToComponentExample, goToApiExample} from './Helpers';
 
-describe('VisitAllPagesTest', () => {
+describe('visitAllPages', () => {
   const componentExamples = [
     'ActivityIndicator',
     'Button',
@@ -68,10 +68,10 @@ describe('VisitAllPagesTest', () => {
   ];
 
   for (const component of componentExamples) {
-    it(component, async () => await goToComponentExample(component));
+    test(component, async () => await goToComponentExample(component));
   }
 
   for (const api of apiExamples) {
-    it(api, async () => await goToApiExample(api));
+    test(api, async () => await goToApiExample(api));
   }
 });

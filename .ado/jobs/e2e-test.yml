@@ -84,13 +84,6 @@ jobs:
           workingDirectory: packages/E2ETest
 
       - task: CopyFiles@2
-        displayName: Copy test report
-        inputs:
-          sourceFolder: $(Build.SourcesDirectory)\packages\E2ETest\reports
-          targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump/reports
-        condition: succeededOrFailed()
-
-      - task: CopyFiles@2
         displayName: Copy tree dump output files
         inputs:
           sourceFolder: $(UserProfile)\Documents\ReactUWPTestApp_cezq6h4ygq1hw!App
@@ -125,19 +118,6 @@ jobs:
           artifactName: ReactUWPTestAppTreeDump-$(System.JobAttempt)
           targetPath: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
         condition: succeededOrFailed()
-
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFormat: "JUnit"
-          testResultsFiles: "packages/E2ETest/reports/*.log"
-        condition: succeededOrFailed()
-
-      - task: PowerShell@2
-        displayName: "Show winappdriver log"
-        inputs:
-          targetType: "inline"
-          script: "Get-Content packages/E2ETest/reports/winappdriver.log | foreach {Write-Output $_}"
-        condition: failed()
 
       - task: PowerShell@2
         displayName: List disksize at end of job

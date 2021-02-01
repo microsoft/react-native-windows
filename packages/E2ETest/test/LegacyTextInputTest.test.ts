@@ -1,28 +1,29 @@
 /**
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
+ * @format
  */
 
-import { goToComponentExample } from './Helpers';
+import {goToComponentExample} from './Helpers';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyTextInputTest');
 });
 
-describe('TextInput', () => {
-  it('Click on TextInput to focus', async () => {
+describe('LegacyTextInputTest', () => {
+  test('Click on TextInput to focus', async () => {
     const textInput = await textInputField();
     await textInput.click();
     await assertLogContains('onFocus');
   });
 
-  it('Click on multiline TextInput to move focus away from single line TextInput', async () => {
+  test('Click on multiline TextInput to move focus away from single line TextInput', async () => {
     const textInput = await multiLineTextInputField();
     await textInput.click();
     await assertLogContains('onBlur');
   });
 
-  it('Type abc on TextInput', async () => {
+  test('Type abc on TextInput', async () => {
     const textInput = await textInputField();
     await textInput.setValue('abc');
     expect(await textInput.getText()).toBe('abc');
@@ -33,13 +34,13 @@ describe('TextInput', () => {
     await assertLogContains('onKeyPress key: c');
   });
 
-  it('Type def on TextInput', async () => {
+  test('Type def on TextInput', async () => {
     const textInput = await textInputField();
     await textInput.setValue('def');
     expect(await textInput.getText()).toBe('def');
   });
 
-  it('Type hello world on autoCap TextInput', async () => {
+  test('Type hello world on autoCap TextInput', async () => {
     const textInput = await autoCapsTextInputField();
     await textInput.setValue('def');
     expect(await textInput.getText()).toBe('DEF');
@@ -48,7 +49,7 @@ describe('TextInput', () => {
     expect(await textInput.getText()).toBe('HELLO WORLD');
   });
 
-  it('Type abc on multiline TextInput then press Enter key', async () => {
+  test('Type abc on multiline TextInput then press Enter key', async () => {
     const textInput = await textInputField();
     await textInput.setValue('abc');
     await textInput.addValue('Enter');
@@ -56,14 +57,14 @@ describe('TextInput', () => {
     await assertLogContains('onSubmitEditing text: abc');
   });
 
-  it('Type abc on multiline TextInput', async () => {
+  test('Type abc on multiline TextInput', async () => {
     const textInput = await multiLineTextInputField();
     await textInput.setValue('abc');
 
     expect(await textInput.getText()).toBe('abc');
   });
 
-  it('Enter key then type def on multiline TextInput', async () => {
+  test('Enter key then type def on multiline TextInput', async () => {
     const textInput = await multiLineTextInputField();
 
     await textInput.addValue('End');
@@ -96,6 +97,6 @@ async function assertLogContains(text: string) {
     },
     {
       timeoutMsg: `"${await textLogComponent.getText()}" did not contain "${text}"`,
-    }
+    },
   );
 }

@@ -1,17 +1,19 @@
 /**
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
+ *
+ * @format
  */
 
-import { goToComponentExample, assertTreeDumpPassed } from './Helpers';
+import {goToComponentExample, assertTreeDumpPassed} from './Helpers';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyTextBackgroundColorTest');
 });
 
-describe('TextBackgroundColorTest', () => {
+describe('LegacyTextBackgroundColorTest', () => {
   /* Test case #1: view and image displayed with no border and cornerRadius */
-  it('TextBackgroundColorTest', async () => {
+  test('TextBackgroundColorTest', async () => {
     await assertTreeDumpPassed();
   });
 });

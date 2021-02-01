@@ -1,16 +1,18 @@
 /**
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
+ *
+ * @format
  */
 
-import { goToComponentExample } from './Helpers';
+import {goToComponentExample} from './Helpers';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyLoginTest');
 });
 
-describe('LoginTest', () => {
-  it('Login Success', async () => {
+describe('LegacyLoginTest', () => {
+  test('Login Success', async () => {
     await setUsername('username');
     await setPassword('password');
 
@@ -18,7 +20,7 @@ describe('LoginTest', () => {
     expect(await getLoginResult()).toBe('Success');
   });
 
-  it('Login Fail due to user email', async () => {
+  test('Login Fail due to user email', async () => {
     await setUsername('username@microsoft.com');
     await setPassword('password');
 
@@ -26,7 +28,7 @@ describe('LoginTest', () => {
     expect(await getLoginResult()).toBe('Fail');
   });
 
-  it('Login Fail due to wrong password', async () => {
+  test('Login Fail due to wrong password', async () => {
     await setUsername('username');
     await setPassword('abcdefg');
 
@@ -34,7 +36,7 @@ describe('LoginTest', () => {
     expect(await getLoginResult()).toBe('Fail');
   });
 
-  it('Login Success with secureTextEntry off', async () => {
+  test('Login Success with secureTextEntry off', async () => {
     await toggleShowPassword();
     await setUsername('username');
     await setPassword('password');
@@ -43,7 +45,7 @@ describe('LoginTest', () => {
     expect(await getLoginResult()).toBe('Success');
   });
 
-  it('Login Success with secureTextEntry off then on', async () => {
+  test('Login Success with secureTextEntry off then on', async () => {
     await setUsername('username');
     await setPassword('pass');
 
@@ -53,7 +55,7 @@ describe('LoginTest', () => {
     expect(await getLoginResult()).toBe('Success');
   });
 
-  it('Login Success with secureTextEntry on then off', async () => {
+  test('Login Success with secureTextEntry on then off', async () => {
     await setUsername('username');
     await setPassword('pass');
 
