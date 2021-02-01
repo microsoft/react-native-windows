@@ -2,7 +2,7 @@
 
 ## E2E project structure
 
-E2E test app, test library and test cases are in [`/packages/E2ETest/`](../packages/E2ETest/README.md), and they are organized as below.
+E2E test app, test library and test cases are in [`/packages/E2ETest/`](../packages/E2ETest), and they are organized as below.
 
  - `test` – includes Jest tests using webdriverio
  - `windows` – the UWP native app
@@ -84,7 +84,7 @@ test application.
 ### Jest
 
 Jest is the test runner used by E2ETest, including assertsion libraries, test selection, etc. WebDriverIO setup is
-provided by a custom environment [`jest-environment-winappdriver`](../packages/jest-environment-winappdriver/README.md).
+provided by a custom environment [`jest-environment-winappdriver`](../packages/jest-environment-winappdriver).
 
 ## Authoring Tests
 
