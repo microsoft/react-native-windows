@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fix \"yarn build\" on master branch",
+  "packageName": "react-native-platform-override",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none"
+}
