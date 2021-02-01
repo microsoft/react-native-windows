@@ -14,8 +14,7 @@
     "@react-native-windows/tester": "0.0.1",
     "react": "17.0.1",
     "react-native": "0.0.0-c66aa8abc",
-    "react-native-windows": "^0.0.0-canary.246",
-    "sanitize-filename": "^1.6.3"
+    "react-native-windows": "^0.0.0-canary.246"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -36,6 +35,7 @@
     "metro-react-native-babel-preset": "^0.56.0",
     "prettier": "1.19.1",
     "react-test-renderer": "17.0.1",
+    "sanitize-filename": "^1.6.3",
     "typescript": "^3.8.3"
   }
 }
