@@ -58,13 +58,12 @@ class WinAppDriverEnvironment extends NodeEnvironment {
     await super.setup();
 
     this.winAppDriverProcess = await spawnWinAppDriver(this.winappdriverBin);
-
-    const browser = await webdriverio.remote(this.options);
+    this.browser = await webdriverio.remote(this.options);
 
     this.global.remote = webdriverio.remote;
-    this.global.browser = this.browser = browser;
-    this.global.$ = browser.$.bind(browser);
-    this.global.$$ = browser.$$.bind(browser);
+    this.global.browser = this.browser;
+    this.global.$ = this.browser.$.bind(this.browser);
+    this.global.$$ = this.browser.$$.bind(this.browser);
   }
 
   async teardown() {
