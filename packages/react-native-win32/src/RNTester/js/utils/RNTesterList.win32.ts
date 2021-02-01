@@ -93,6 +93,10 @@ const APIExamples: Array<IRNTesterExample> = [
     key: 'ThemingExample',
     module: require('../../APIExamples/ThemingModuleAPI'),
   },
+  {
+    key: 'FocusManagerExample',
+    module: require('../../APIExamples/FocusManagerAPI'),
+  },
 ];
 
 const Modules: {[key: string]: IRNTesterModule} = {};
