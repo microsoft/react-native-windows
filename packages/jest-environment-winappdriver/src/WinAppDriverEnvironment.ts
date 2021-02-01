@@ -78,7 +78,8 @@ class WinAppDriverEnvironment extends NodeEnvironment {
 }
 
 /**
- * Starts a WinAppdriver process and returns the pid once running
+ * Starts a WinAppdriver process and resolves a promise with the process once
+ * it is ready to accept commands
  *
  * Inspired-by/stolen from https://github.com/licanhua/wdio-winappdriver-service
  */

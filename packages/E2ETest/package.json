@@ -20,13 +20,14 @@
     "@react-native-windows/tester": "0.0.1",
     "react": "17.0.1",
     "react-native": "0.0.0-c66aa8abc",
-    "react-native-windows": "^0.0.0-canary.246"
+    "react-native-windows": "^0.0.0-canary.246",
+    "sanitize-filename": "^1.6.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
-    "@babel/runtime": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
+    "@babel/runtime": "^7.8.4",
     "@rnw-scripts/eslint-config": "1.1.6",
     "@rnw-scripts/just-task": "2.0.1",
     "@rnw-scripts/ts-config": "1.1.0",

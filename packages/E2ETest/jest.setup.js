@@ -8,6 +8,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const sanitizeFilename = require('sanitize-filename');
 
 const screenshotDir = './errorShots';
 fs.mkdirSync(screenshotDir, {recursive: true});
@@ -16,11 +17,11 @@ fs.mkdirSync(screenshotDir, {recursive: true});
 global.jasmine.getEnv().addReporter({
   specDone: async result => {
     if (result.status === 'failed') {
-      const filename = path.join(
-        screenshotDir,
+      const friendlySpecName = sanitizeFilename(
         `${result.fullName.replace(/\s/g, '-')}.png`,
       );
 
+      const filename = path.join(screenshotDir, friendlySpecName);
       await browser.saveScreenshot(filename);
     }
   },

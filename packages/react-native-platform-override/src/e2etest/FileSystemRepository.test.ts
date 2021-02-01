@@ -119,7 +119,7 @@ test('deleteFile - Exists', async () => {
 
 test('deleteFile - Doesnt Exist', async () => {
   await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async repo => {
-    // @ts-ignore Typings don't know about rejects
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     expect(repo.deleteFile('nope')).rejects.toThrow();
   });
 });
