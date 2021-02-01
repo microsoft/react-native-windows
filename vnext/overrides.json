@@ -5,13 +5,13 @@
     "src/**"
   ],
   "excludePatterns": [],
-  "baseVersion": "0.0.0-c66aa8abc",
+  "baseVersion": "0.0.0-67699ba9f",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "7cf410def8e724302967198174da14a06a118c7b"
+      "baseHash": "1699b9d914d5f1941d5b87f72051a4190d5b0a6e"
     },
     {
       "type": "patch",
@@ -92,7 +92,7 @@
       "type": "copy",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseHash": "b91fdc5e531daa8fac236898c80efe228bbdb8d7",
+      "baseHash": "ada8044fad72483553c185750fc464c1b785342a",
       "issue": 4578
     },
     {
@@ -217,7 +217,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/RefreshControl/RefreshControl.windows.js",
       "baseFile": "Libraries/Components/RefreshControl/RefreshControl.js",
-      "baseHash": "0efdf9cc52f5411bbf296f92e30aa44f83668b45"
+      "baseHash": "51acc96ca8c6866da99471de8933a3c8c20fcca2"
     },
     {
       "type": "derived",
@@ -235,7 +235,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "97e9917d3fa2dbe2fe6c03c4264f756634026796"
+      "baseHash": "b07d15c88ef2166c74070d4bca9109b0a2482323"
     },
     {
       "type": "patch",
@@ -257,13 +257,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "d43a1d363a5d126211e8ef3a00237820bc81900a"
+      "baseHash": "780af3d9474bf5ecaf944545c197aee87806bbc0"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "cb05e3460bdc1fe0eabdd1149591fce9a0341678"
+      "baseHash": "fb40e1ea51e0c0559b98528fb2010f1b35206f69"
     },
     {
       "type": "patch",
@@ -350,7 +350,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "c9a142fb3b2286a2541ec313cde34317f191460c"
+      "baseHash": "2ec4b900f4db6306171fffd4c78eb64f59893e09"
     },
     {
       "type": "derived",
@@ -366,6 +366,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
+      "baseVersion": "0.0.0-c66aa8abc",
       "baseHash": "693cbdb6e94b08b691d8fbacd792bbf1f2c56927"
     },
     {
