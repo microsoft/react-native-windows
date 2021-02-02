@@ -3,23 +3,6 @@ import { FocusManager } from '../../Libraries/Utilities/FocusManager.win32';
 import { View, StyleSheet, TouchableHighlight, Text } from 'react-native';
 
 const styles = StyleSheet.create({
-    border: {
-      borderStyle: 'dotted',
-      borderColor: 'black',
-    },
-    keyComponentRoot: {
-      borderWidth: 2,
-      flexDirection: 'row',
-      marginVertical: 5,
-      backgroundColor: 'whitesmoke',
-      justifyContent: 'space-around',
-    },
-    keyEnterVisualizer: {
-      margin: 5,
-      alignItems: 'center',
-      minWidth: 100,
-      minHeight: 30,
-    },
     blackbox: { height: 30, width: 30, borderColor: 'black', borderWidth: 3 },
   });
 
@@ -60,13 +43,13 @@ export const PoliteFocusTest: React.FunctionComponent<{}> = () => {
     );
   };
 
-  export const title = 'FocusManager APIs';
-  export const displayName =  'FocusManager APIs';
-  export const description = 'Tests FocusManager';
+  export const title = 'FocusManager API';
+  export const displayName =  'FocusManager API Example';
+  export const description = 'Change between polite and aggressive focus';
   export const examples = [
     {
       title: 'FocusManager Example',
-      description: 'All constants',
+      description: 'Use FocusManager API to change between polite and aggressive focus',
       render: () => <PoliteFocusTest />
     }
   ];
