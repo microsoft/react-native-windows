@@ -173,10 +173,10 @@
   </ImportGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.UI.Xaml" Condition="'$(UseWinUI3)'!='true'">
-      <Version>{{ winui2xVersion }}</Version>
+      <Version>$(WinUI2xVersion)</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.WinUI" Condition="'$(UseWinUI3)'=='true'">
-      <Version>{{ winui3Version }}</Version>
+      <Version>$(WinUI3Version)</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
