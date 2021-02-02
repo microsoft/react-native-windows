@@ -1,33 +1,35 @@
 /**
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
+ *
+ * @format
  */
 
-import { goToComponentExample, assertTreeDumpPassed } from './Helpers';
+import {goToComponentExample, assertTreeDumpPassed} from './Helpers';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyImageTest');
 });
 
-describe('ImageWithoutBorderTest', () => {
+describe('LegacyImageTest', () => {
   /* Test case #1: view and image displayed with no border and cornerRadius */
-  it('ImageWithoutBorderTest', async () => {
+  test('ImageWithoutBorderTest', async () => {
     await assertTreeDumpPassed();
   });
 
   /* Test case #2: Click button once, update view and image with round border*/
-  it('ImageWithBorderTest', async () => {
+  test('ImageWithBorderTest', async () => {
     await toggleImageBorder();
     await assertTreeDumpPassed();
   });
 
   /* Test case #3: Click button one more, remove border from view and image but tree sturcture is different from #1*/
-  it('ImageWithoutBorderTestOneMoreClick', async () => {
+  test('ImageWithoutBorderTestOneMoreClick', async () => {
     await toggleImageBorder();
     await assertTreeDumpPassed();
   });
 
-  it('ImageRTLTest', async () => {
+  test('ImageRTLTest', async () => {
     await toggleRTLMode();
     await assertTreeDumpPassed();
   });

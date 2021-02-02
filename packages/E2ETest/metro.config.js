@@ -9,11 +9,11 @@ const path = require('path');
 const exclusionList = require('metro-config/src/defaults/exclusionList');
 
 const rnwPath = fs.realpathSync(
-  path.dirname(require.resolve('react-native-windows/package.json'))
+  path.dirname(require.resolve('react-native-windows/package.json')),
 );
 
 const rnwTesterPath = fs.realpathSync(
-  path.dirname(require.resolve('@react-native-windows/tester/package.json'))
+  path.dirname(require.resolve('@react-native-windows/tester/package.json')),
 );
 
 module.exports = {
@@ -37,7 +37,7 @@ module.exports = {
       /.*\.ProjectImports\.zip/,
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
-        `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`
+        `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
       ),
     ]),
   },

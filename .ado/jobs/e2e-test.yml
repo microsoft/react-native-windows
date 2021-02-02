@@ -62,33 +62,11 @@ jobs:
           script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/E2ETest
 
-      - task: CopyFiles@2
-        displayName: Copy ReactUWPTestApp artifacts
-        inputs:
-          sourceFolder: $(Build.SourcesDirectory)/packages/E2ETest/windows/ReactUWPTestApp
-          targetFolder: $(Build.StagingDirectory)/ReactUWPTestApp
-          contents: AppPackages\**
-        condition: succeededOrFailed()
-
-      - task: PublishPipelineArtifact@1
-        displayName: "Publish Artifact:ReactUWPTestApp"
-        inputs:
-          artifactName: ReactUWPTestApp-$(System.JobAttempt)
-          targetPath: $(Build.StagingDirectory)/ReactUWPTestApp
-        condition: succeededOrFailed()
-
       - task: CmdLine@2
         displayName: run e2etest
         inputs:
           script: yarn run e2etest
           workingDirectory: packages/E2ETest
-
-      - task: CopyFiles@2
-        displayName: Copy test report
-        inputs:
-          sourceFolder: $(Build.SourcesDirectory)\packages\E2ETest\reports
-          targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump/reports
-        condition: succeededOrFailed()
 
       - task: CopyFiles@2
         displayName: Copy tree dump output files
@@ -119,32 +97,26 @@ jobs:
           script: ". $(Build.SourcesDirectory)\\.ado\\scripts\\Get-ShellScaling.ps1 > $(Build.StagingDirectory)\\ReactUWPTestAppTreeDump\\scaleFactor.txt"
         condition: failed()
 
+      - task: CopyFiles@2
+        displayName: Copy ReactUWPTestApp artifacts
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)/packages/E2ETest/windows/ReactUWPTestApp
+          targetFolder: $(Build.StagingDirectory)/ReactUWPTestApp
+          contents: AppPackages\**
+        condition: failed()
+
+      - task: PublishPipelineArtifact@1
+        displayName: "Publish Artifact:ReactUWPTestApp"
+        inputs:
+          artifactName: ReactUWPTestApp-$(System.JobAttempt)
+          targetPath: $(Build.StagingDirectory)/ReactUWPTestApp
+        condition: failed()
+
       - task: PublishPipelineArtifact@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
         inputs:
           artifactName: ReactUWPTestAppTreeDump-$(System.JobAttempt)
           targetPath: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
-        condition: succeededOrFailed()
-
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFormat: "JUnit"
-          testResultsFiles: "packages/E2ETest/reports/*.log"
-        condition: succeededOrFailed()
-
-      - task: PowerShell@2
-        displayName: "Show winappdriver log"
-        inputs:
-          targetType: "inline"
-          script: "Get-Content packages/E2ETest/reports/winappdriver.log | foreach {Write-Output $_}"
-        condition: failed()
-
-      - task: PowerShell@2
-        displayName: List disksize at end of job
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            Get-WmiObject Win32_LogicalDisk
         condition: succeededOrFailed()
 
       - template: ../templates/upload-build-logs.yml
