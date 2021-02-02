@@ -178,9 +178,11 @@
     <PackageReference Include="Microsoft.WinUI" Condition="'$(UseWinUI3)'=='true'">
       <Version>$(WinUI3Version)</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.9</Version>
+    {{#csNugetPackages}}
+    <PackageReference Include="{{ id }}">
+      <Version>{{ version }}</Version>
     </PackageReference>
+    {{/csNugetPackages}}
   </ItemGroup>
   <ImportGroup Label="ReactNativeWindowsTargets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets')" />
