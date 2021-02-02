@@ -11,7 +11,7 @@ export const PoliteFocusTest: React.FunctionComponent<{}> = () => {
     const [isAggressiveFocus, changeAggressiveFocus] = React.useState('Not focused');
 
     const buttonRef = React.useRef();
-    const buttonRef2 = React.useRef<View>();
+    const buttonRef2 = React.useRef();
     
     const politeFocusOnPress = () => {
       FocusManager.focus(buttonRef.current, false);
