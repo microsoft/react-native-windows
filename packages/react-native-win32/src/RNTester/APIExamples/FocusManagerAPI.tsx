@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FocusManager } from '@office-iss/react-native-win32';
+import { FocusManager } from '../../Libraries/Utilities/FocusManager.win32';
 import { View, StyleSheet, TouchableHighlight, Text } from 'react-native';
 
 const styles = StyleSheet.create({
