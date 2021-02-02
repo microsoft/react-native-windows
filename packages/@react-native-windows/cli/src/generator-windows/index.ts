@@ -218,12 +218,6 @@ export async function copyProjectTemplateAndReplace(
       hasProps: true,
       hasTargets: true,
     },
-    {
-      id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
-      version: options.useWinUI3 ? winui3Version : winui2xVersion,
-      hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
-      hasTargets: false,
-    },
   ];
 
   if (options.experimentalNuGetDependency) {
@@ -256,6 +250,20 @@ export async function copyProjectTemplateAndReplace(
     });
   }
 
+  const packagesConfigCppNugetPackages = [...cppNugetPackages, 
+  {
+    id: 'Microsoft.UI.Xaml',
+    version: winui2xVersion,
+    hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
+    hasTargets: false,
+  },
+  {
+    id: 'Microsoft.WinUI',
+    version: winui3Version,
+    hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
+    hasTargets: false,
+  },];
+
   const templateVars: Record<string, any> = {
     useMustache: true,
     regExpPatternsToRemove: [],
@@ -285,6 +293,7 @@ export async function copyProjectTemplateAndReplace(
     xamlNamespace: xamlNamespace,
     xamlNamespaceCpp: xamlNamespaceCpp,
     cppNugetPackages: cppNugetPackages,
+    packagesConfigCppNugetPackages: packagesConfigCppNugetPackages,
 
     // cs template variables
     csNugetPackages: csNugetPackages,
