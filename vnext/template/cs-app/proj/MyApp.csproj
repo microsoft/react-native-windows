@@ -164,13 +164,6 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    {{#csNugetPackages}}
-    <PackageReference Include="{{ id }}">
-      <Version>{{ version }}</Version>
-    </PackageReference>
-    {{/csNugetPackages}}
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' ">
     <VisualStudioVersion>16.0</VisualStudioVersion>
   </PropertyGroup>
@@ -178,6 +171,17 @@
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props')" />
   </ImportGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.UI.Xaml" Condition="'$(UseWinUI3)'!='true'">
+      <Version>{{ winui2xVersion }}</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.WinUI" Condition="'$(UseWinUI3)'=='true'">
+      <Version>{{ winui3Version }}</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.9</Version>
+    </PackageReference>
+  </ItemGroup>
   <ImportGroup Label="ReactNativeWindowsTargets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.targets')" />
   </ImportGroup>
