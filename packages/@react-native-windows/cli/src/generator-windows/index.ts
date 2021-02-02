@@ -256,6 +256,11 @@ export async function copyProjectTemplateAndReplace(
     });
   }
 
+  csNugetPackages.push({
+    id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
+    version: options.useWinUI3 ? winui3Version : winui2xVersion,
+  });
+
   const templateVars: Record<string, any> = {
     useMustache: true,
     regExpPatternsToRemove: [],
