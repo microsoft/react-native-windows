@@ -185,7 +185,7 @@
           <Version>$(WinUI3Version)</Version>
         </PackageReference>
       </ItemGroup>
-    </When>
+    </Otherwise>
   </Choose>
   <ItemGroup>
     {{#csNugetPackages}}
