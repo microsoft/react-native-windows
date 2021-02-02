@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Initialize ETW provide only once",
+  "comment": "Initialize ETW provider only once",
   "packageName": "react-native-windows",
   "email": "asklar@microsoft.com",
   "dependentChangeType": "patch"
