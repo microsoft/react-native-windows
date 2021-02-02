@@ -2,6 +2,29 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 02 Feb 2021 05:05:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.247",
+      "version": "0.0.0-canary.247",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow custom view managers to be able to trigger our logic to run native layout",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "17507ffd114bce83d59cd79acdedd71764ba6a48",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.10",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3859f2ff3f083d2a712231a9b497ecc70c33a844",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 30 Jan 2021 05:06:38 GMT",
       "tag": "react-native-windows_v0.0.0-canary.246",
       "version": "0.0.0-canary.246",

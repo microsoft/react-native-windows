@@ -2,6 +2,21 @@
   "name": "react-native-win32-tester",
   "entries": [
     {
+      "date": "Tue, 02 Feb 2021 05:05:37 GMT",
+      "tag": "react-native-win32-tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.10",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3859f2ff3f083d2a712231a9b497ecc70c33a844",
+            "package": "react-native-win32-tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Jan 2021 05:06:47 GMT",
       "tag": "react-native-win32-tester_v0.0.1",
       "version": "0.0.1",

@@ -1,8 +1,16 @@
 # Change Log - e2etest
 
-This log was last generated on Sat, 30 Jan 2021 05:06:38 GMT and should not be manually modified.
+This log was last generated on Tue, 02 Feb 2021 05:05:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.54
+
+Tue, 02 Feb 2021 05:05:37 GMT
+
+### Patches
+
+- Bump jest-environment-winappdriver to v1.0.0 (ngerlem@microsoft.com)
 
 ## 0.0.54
 

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix when using Jest expect typings",
-  "packageName": "react-native-platform-override",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}
