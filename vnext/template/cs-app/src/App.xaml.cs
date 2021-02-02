@@ -50,7 +50,12 @@ namespace {{ namespace }}
         /// <summary>
         /// Invoked when the application is activated by some means other than normal launching.
         /// </summary>
+{{#useWinUI3}}
+        protected override void OnActivated(Windows.ApplicationModel.Activation.IActivatedEventArgs e)
+{{/useWinUI3}}
+{{^useWinUI3}}
         protected override void OnActivated(IActivatedEventArgs e)
+{{/useWinUI3}}
         {
             var preActivationContent = Window.Current.Content;
             base.OnActivated(e);
