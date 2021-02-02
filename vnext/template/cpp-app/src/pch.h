@@ -8,6 +8,10 @@
 #include <windows.h>
 #include <CppWinRTIncludes.h>
 #include <winrt/Windows.ApplicationModel.Activation.h>
+#include <UI.Xaml.Controls.Primitives.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Markup.h>
+#include <UI.Xaml.Navigation.h>
 
 #include <winrt/Microsoft.ReactNative.h>
 
