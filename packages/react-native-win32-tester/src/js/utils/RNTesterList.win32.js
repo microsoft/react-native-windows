@@ -213,6 +213,11 @@ const APIExamples: Array<RNTesterExample> = [
     key: 'TransformExample',
     category: 'UI',
     module: require('../examples/Transform/TransformExample'),
+  },
+  {
+    key: 'FocusManagerExample',
+    category: 'UI',
+    module: require('../examples-win32/APIs/FocusManagerAPI'),
   } /*
   {
     key: 'WebSocketExample',

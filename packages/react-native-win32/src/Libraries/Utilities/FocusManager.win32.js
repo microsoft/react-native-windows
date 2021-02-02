@@ -39,4 +39,4 @@ class FocusManager {
   }
 }
 
-module.exports = FocusManager;
+module.exports = { FocusManager };
