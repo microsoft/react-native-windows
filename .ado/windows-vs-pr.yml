@@ -24,57 +24,12 @@ stages:
               targetType: filePath
               filePath: .ado/scripts/shouldSkipPRBuild.ps1
 
-  - stage: Build
-    displayName: Build 🔨
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    jobs:
-      - template: jobs/universal.yml
-        parameters:
-          buildEnvironment: PullRequest
+          - template: templates/yarn-install.yml
 
-      - template: jobs/desktop.yml
-        parameters:
-          buildEnvironment: PullRequest
-  
-      - template: jobs/nuget-desktop.yml
+          - template: templates/set-version-vars.yml
 
-      - template: jobs/cli-init.yml
-        parameters:
-          # The Nuget CLI verification is part of 'Build' to speed up the verification
-          buildEnvironment: PullRequest
-          buildNuGetOnly: true
+          - template: templates/publish-version-vars.yml
           
-  - stage: IntegrationTests
-    displayName: Tests 🧪
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'False' )
-    jobs:
-      - template: jobs/jschecks.yml
-
-      - template: jobs/macos-tests.yml
-
-      - template: jobs/playground.yml
-        parameters:
-          buildEnvironment: PullRequest
-
-      - template: jobs/sample-apps.yml
-        parameters:
-          buildEnvironment: PullRequest
-
-      - template: jobs/e2e-test.yml
-        parameters:
-          buildEnvironment: PullRequest
-
-      - template: jobs/integration-test.yml
-        parameters:
-          buildEnvironment: PullRequest
-
-  - stage: CLI
-    displayName: Cli 🖥
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'False' )
-    jobs:
-      - template: jobs/cli-init.yml
-        parameters:
-          buildEnvironment: PullRequest
+  - template: stages.yml
+    parameters:
+      buildEnvironment: PullRequest

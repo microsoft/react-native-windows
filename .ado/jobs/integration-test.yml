@@ -14,14 +14,18 @@ jobs:
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
           ARM:
             BuildPlatform: ARM
+            NoDeployOption: --no-deploy # We don't have Arm agents
           ARM64:
             BuildPlatform: ARM64
+            NoDeployOption: --no-deploy # We don't have Arm agents
         # End Continuous only
         X64:
           BuildPlatform: x64
+          NoDeployOption:
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
           X86:
             BuildPlatform: x86
+            NoDeployOption:
         # End Continuous only
 
     variables:
@@ -87,7 +91,7 @@ jobs:
       # There's a slight race condition here, where we assume Chrome will open
       # before this launches the app. This step takes ~1m on CI machines so it
       # shouldn't be a practical concern.
-      - script: yarn windows --no-build --no-packager --no-autolink --arch $(BuildPlatform) --logging
+      - script: yarn windows --no-build $(NoDeployOption) --no-packager --no-autolink --arch $(BuildPlatform) --logging
         displayName: yarn windows --no-build
         workingDirectory: packages/integration-test-app
 
@@ -107,6 +111,7 @@ jobs:
       - script: yarn integration-test
         displayName: yarn integration-test
         workingDirectory: packages/integration-test-app
+        condition: eq('$(NoDeployOption)', '')
 
       - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/after-test.png
         displayName: Screenshot desktop after tests
@@ -115,14 +120,14 @@ jobs:
       - task: PublishPipelineArtifact@1
         displayName: Upload targets
         inputs:
-          artifactName: Targets - IntegrationTest-$(System.JobAttempt)
+          artifactName: Targets - IntegrationTest-$(BuildPlatform)-$(System.JobAttempt)
           targetPath: packages/integration-test-app/windows/$(BuildPlatform)/Debug/integrationtest
         condition: failed()
 
       - task: PublishPipelineArtifact@1
         displayName: Upload screenshots
         inputs:
-          artifactName: Screenshots - IntegrationTest-$(System.JobAttempt)
+          artifactName: Screenshots - IntegrationTest-$(BuildPlatform)-$(System.JobAttempt)
           targetPath: $(Build.StagingDirectory)/Screenshots
         condition: succeededOrFailed()
 

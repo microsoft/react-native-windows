@@ -1,3 +1,10 @@
+parameters:
+  - name: buildEnvironment
+    type: string
+    default : PullRequest
+    values: 
+     - PullRequest 
+     - Continuous 
 
 jobs:
   - job: JSChecks
@@ -11,17 +18,29 @@ jobs:
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
         clean: true # whether to fetch clean each time
-        fetchDepth: 2 # the depth of commits to ask Git to fetch
         lfs: false # whether to download Git-LFS files
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
       - template: ../templates/yarn-install.yml
 
+      - script: |
+          echo BeachBallBranchName =  $(System.PullRequest.SourceBranchName)
+          echo ##vso[task.setvariable variable=BeachBallBranchName]$(System.PullRequest.SourceBranchName)
+        displayName: Set BeachBall Branch name for PR
+        condition: eq('$(Build.Reason)', 'PullRequest')
+
+      - script: |
+          set
+          echo BeachBallBranchName =  $(Build.SourceBranch)
+          echo ##vso[task.setvariable variable=BeachBallBranchName]$(Build.SourceBranch)
+        displayName: Set BeachBall Branch name for CI
+        condition: ne('$(Build.Reason)', 'PullRequest')
+
       - task: CmdLine@2
         displayName: Check for change files
         inputs:
-          script: npx --no-install beachball check --branch origin/$(System.PullRequest.TargetBranch) --changehint "Run `yarn change` from root of repo to generate a change file."
+          script: npx --no-install beachball check --branch origin/$(BeachBallBranchName) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
         displayName: yarn build

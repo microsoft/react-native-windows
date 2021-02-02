@@ -1,0 +1,65 @@
+parameters:
+  - name: buildEnvironment
+    type: string
+    default: PullRequest
+    values: 
+     - PullRequest 
+     - Continuous 
+
+stages:
+  - stage: Build
+    displayName: Build 🔨
+    dependsOn: Setup
+    condition: and (succeeded(), ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ))
+    jobs:
+      - template: jobs/universal.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+
+      - template: jobs/desktop.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+  
+      - template: jobs/nuget-desktop.yml
+
+      - template: jobs/cli-init.yml
+        parameters:
+          # The Nuget CLI verification is part of 'Build' to speed up the verification
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+          buildNuGetOnly: true
+
+  - stage: IntegrationTests
+    displayName: Tests 🧪
+    dependsOn: Setup
+    condition: and (succeeded(), ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ))
+    jobs:
+      - template: jobs/jschecks.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+
+      - template: jobs/macos-tests.yml
+
+      - template: jobs/playground.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+
+      - template: jobs/sample-apps.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+
+      - template: jobs/e2e-test.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+
+      - template: jobs/integration-test.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+
+  - stage: CLI
+    displayName: Cli 🖥
+    dependsOn: Setup
+    condition: and (succeeded(), ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ))
+    jobs:
+      - template: jobs/cli-init.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
