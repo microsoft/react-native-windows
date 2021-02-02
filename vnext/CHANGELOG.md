@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 25 Jan 2021 15:08:23 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Feb 2021 15:05:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.20
+
+Mon, 01 Feb 2021 15:05:10 GMT
+
+### Patches
+
+- Background/Foreground app state handlers should be registered from the xaml thread (asklar@microsoft.com)
+- Update V8 package version (tudor.mihai@microsoft.com)
 
 ## 0.63.19
 
