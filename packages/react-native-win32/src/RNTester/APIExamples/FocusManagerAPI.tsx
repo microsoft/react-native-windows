@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ *
+ * @format
+ */
+
 import * as React from 'react';
 import { FocusManager } from '../../Libraries/Utilities/FocusManager.win32';
 import { View, StyleSheet, TouchableHighlight, Text } from 'react-native';
