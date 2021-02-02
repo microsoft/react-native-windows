@@ -1,9 +1,12 @@
 using Microsoft.ReactNative;
-{{^useWinUI3}}
+#if !USE_WINUI3
 using Windows.ApplicationModel.Activation;
-{{/useWinUI3}}
-using {{ xamlNamespace }};
-using {{ xamlNamespace }}.Controls;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+#else
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#endif
 
 namespace {{ namespace }}
 {
