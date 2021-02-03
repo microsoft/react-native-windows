@@ -71,8 +71,7 @@ jobs:
             BuildConfiguration: Release
             BuildPlatform: x86
         # End Continuous only
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool.Medium)
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
