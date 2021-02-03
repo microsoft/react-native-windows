@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 03 Feb 2021 05:05:12 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.77",
+      "version": "0.0.0-canary.77",
+      "comments": {
+        "none": [
+          {
+            "comment": "Rename microsoft-reactnative-sampleapps to sample-apps",
+            "author": "ngerlem@microsoft.com",
+            "commit": "910ed096b6fcea634b3206d3448cc3a335bc8e89",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Feb 2021 05:05:37 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.77",
       "version": "0.0.0-canary.77",

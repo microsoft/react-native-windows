@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix template for WinUI3 C# App by expanding namespace of argument in AppOnActivated",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

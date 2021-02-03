@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Rename microsoft-reactnative-sampleapps to sample-apps",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

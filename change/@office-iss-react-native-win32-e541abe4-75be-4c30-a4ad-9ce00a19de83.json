@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Rename microsoft-reactnative-sampleapps to sample-apps",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

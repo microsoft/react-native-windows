@@ -1,6 +1,21 @@
 {
-  "name": "react-native-windows-codegen",
+  "name": "@react-native-windows/codegen",
   "entries": [
+    {
+      "date": "Wed, 03 Feb 2021 05:05:12 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.1",
+      "version": "0.0.0-canary.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move `react-native-windows-codegen` to `@react-native-windows/codegen`",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b34311f6ee86fd8ade1b9132f08109f8a5dcdf6d",
+            "package": "@react-native-windows/codegen"
+          }
+        ]
+      }
+    },
     {
       "date": "Thu, 28 Jan 2021 05:06:47 GMT",
       "tag": "react-native-windows-codegen_v1.1.14",
