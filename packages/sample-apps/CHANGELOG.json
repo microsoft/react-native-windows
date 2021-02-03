@@ -1,6 +1,29 @@
 {
-  "name": "microsoft-reactnative-sampleapps",
+  "name": "sample-apps",
   "entries": [
+    {
+      "date": "Wed, 03 Feb 2021 05:05:12 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.248",
+            "author": "dannyvv@microsoft.com",
+            "commit": "c8f299a4c0bf9e83dbfa27f33cc0f0e2068a7d15",
+            "package": "sample-apps"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b34311f6ee86fd8ade1b9132f08109f8a5dcdf6d",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
     {
       "date": "Tue, 02 Feb 2021 05:05:37 GMT",
       "tag": "microsoft-reactnative-sampleapps_v0.0.54",

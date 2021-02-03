@@ -1,8 +1,16 @@
-# Change Log - react-native-windows-codegen
+# Change Log - @react-native-windows/codegen
 
-This log was last generated on Thu, 28 Jan 2021 05:06:47 GMT and should not be manually modified.
+This log was last generated on Wed, 03 Feb 2021 05:05:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.1
+
+Wed, 03 Feb 2021 05:05:12 GMT
+
+### Changes
+
+- Move `react-native-windows-codegen` to `@react-native-windows/codegen` (ngerlem@microsoft.com)
 
 ## 1.1.14
 
