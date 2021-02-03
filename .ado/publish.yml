@@ -89,7 +89,7 @@ jobs:
       - template: templates/publish-version-vars.yml
 
   - job: DeployBotCoordinator
-    displayName: Deploy Bot Coordinator Azure Function
+    displayName: Deploy @rnw-bots/coordinator
     condition: eq(variables['Build.SourceBranchName'], 'master')
     dependsOn: RnwNpmPublish
     pool:
@@ -105,14 +105,14 @@ jobs:
       # Azure Functions expects a fully packagable folder with dependencies.
       # Reinstall them without hoisting.
       - powershell: |
-          Get-ChildItem "packages\@react-native-windows\bot-coordinator" |
+          Get-ChildItem "packages\@rnw-bots\coordinator" |
             Where-Object{$_.Name -notin 'node_modules','package.json'} |
             Copy-Item -Destination $(Build.StagingDirectory)\bot-coordinator -Recurse
 
           Copy-Item yarn.lock $(Build.StagingDirectory)\bot-coordinator
 
           # devDependencies add bloat and might only exist in the monorepo
-          Get-Content -Encoding utf8 packages\@react-native-windows\bot-coordinator\package.json |
+          Get-Content -Encoding utf8 packages\@rnw-bots\coordinator\package.json |
             ConvertFrom-Json |
             Select-Object -Property * -ExcludeProperty devDependencies |
             ConvertTo-Json |
