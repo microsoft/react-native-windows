@@ -1,4 +1,4 @@
-# E2ETest project
+# e2e-test-app project
 
 This package is not published, and is just used to verify a standalone app
 

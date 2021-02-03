@@ -1,6 +1,6 @@
 {
-  "name": "e2etest",
-  "version": "0.0.54",
+  "name": "e2e-test-app",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "react-native start",

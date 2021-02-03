@@ -4,7 +4,7 @@
 !packages/react-native-platform-override/node_modules
 !packages/override-tools/node_modules
 !packages/react-native-win32/node_modules
-!packages/E2ETest/node_modules
+!packages/e2e-test-app/node_modules
 !packages/microsoft-reactnative-sampleapps/node_modules
 !packages/playground/node_modules
 !packages/@react-native-windows/codegen/node_modules

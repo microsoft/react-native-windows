@@ -1,8 +1,8 @@
-# E2E Testing
+# End-to-End Testing
 
-## E2E project structure
+## e2e-test-app project structure
 
-E2E test app, test library and test cases are in [`/packages/E2ETest/`](../packages/E2ETest), and they are organized as below.
+A test app, test library and test cases are in [`/packages/e2e-test-app/`](../packages/e2e-test-app), and are organized as below.
 
  - `test` – includes Jest tests using webdriverio
  - `windows` – the UWP native app
@@ -17,21 +17,21 @@ This will be automatically done for you if you use the [RNW dependency script](h
 
 **Build the native test app**
 
-> C:\repo\react-native-windows> `cd packages\E2ETest`
+> C:\repo\react-native-windows> `cd packages\ewe-test-app`
 >
-> C:\repo\react-native-windows\packages\E2ETest> `yarn windows --no-launch`
+> C:\repo\react-native-windows\packages\ewe-test-app> `yarn windows --no-launch`
 
 **Running all tests**
 
-> C:\repo\react-native-windows\packages\E2ETest> `yarn e2etest`
+> C:\repo\react-native-windows\packages\ewe-test-app> `yarn e2etest`
 
 **Running a specific test**
 
-> C:\repo\react-native-windows\packages\E2ETest> `yarn e2etest -t visitAllPages`
+> C:\repo\react-native-windows\packages\ewe-test-app> `yarn e2etest -t visitAllPages`
 
 ## Debugging E2E Tests in CI
 ### Increasing verbosity
-By default the only messages printed during tests are related to errors returned by WinAppDriver or assertion failures. It is possible to increase verbosity to show individual WebDriver wire commands by editing [`/packages/E2ETest/jest.config.js`](../packages/E2ETest/jest.config.js).
+By default the only messages printed during tests are related to errors returned by WinAppDriver or assertion failures. It is possible to increase verbosity to show individual WebDriver wire commands by editing [`/packages/e2e-test-app/jest.config.js`](../packages/e2e-test-app/jest.config.js).
 
 ```js
 module.exports = {
@@ -83,13 +83,13 @@ test application.
 
 ### Jest
 
-Jest is the test runner used by E2ETest, including assertsion libraries, test selection, etc. WebDriverIO setup is
+Jest is the test runner used for end-to-end testing, including assertsion libraries, test selection, etc. WebDriverIO setup is
 provided by a custom environment [`jest-environment-winappdriver`](../packages/jest-environment-winappdriver).
 
 ## Authoring Tests
 
 Tests are written using Jest and WebDriverIO (see more below) against a test app running `RNTester`. `RNTester` example
-pages are used as Test UI, which is examined via Jest tests. Tests should attempt to target an existing `RNTester` page, but "Legacy" tests exist as custom pages only used by E2ETest
+pages are used as Test UI, which is examined via Jest tests. Tests should attempt to target an existing `RNTester` page, but "Legacy" tests exist as custom pages only used by e2e-test-app
 
 ### Writing a test against an RNTester example page
 
@@ -187,7 +187,7 @@ Tree dump file does not match master at C:\Program Files\WindowsApps\ReactUWPTes
 
 ![Errors](img/e2e-errors.png)
 
-Find the corresponding `.json` file in that folder and compare it to its master. The masters live in [e2etest\windows\ReactUWPTestApp\Assets\TreeDump\masters](https://github.com/microsoft/react-native-windows/tree/master/packages/E2ETest/windows/ReactUWPTestApp/Assets/TreeDump/masters).
+Find the corresponding `.json` file in that folder and compare it to its master. The masters live in [e2etest\windows\ReactUWPTestApp\Assets\TreeDump\masters](https://github.com/microsoft/react-native-windows/tree/master/packages/e2e-test-app/windows/ReactUWPTestApp/Assets/TreeDump/masters).
 
 Sometimes you'll have an element in your test that produces output that should not be used for comparison. You can manually edit the generated json and set the output that you want to ignore to the `<ANYTHING>` value:
 
