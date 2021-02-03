@@ -1,6 +1,6 @@
 {
-  "name": "microsoft-reactnative-sampleapps",
-  "version": "0.0.54",
+  "name": "sample-apps",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "bundle-cpp": "rnw-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle",
