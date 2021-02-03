@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 02 Feb 2021 05:05:37 GMT and should not be manually modified.
+This log was last generated on Wed, 03 Feb 2021 05:05:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.248
+
+Wed, 03 Feb 2021 05:05:12 GMT
+
+### Changes
+
+- Fix template for WinUI3 C# App by expanding namespace of argument in AppOnActivated (dannyvv@microsoft.com)
+- AllAnimations only exists on RS5 (asklar@microsoft.com)
+- Fix deep linking activation (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.247
 

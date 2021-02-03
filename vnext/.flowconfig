@@ -44,7 +44,7 @@
 
 ; These files dont need to be checked and just increase the build time
 .*/node_modules/e2etest/.*
-.*/node_modules/microsoft-reactnative-sampleapps/.*
+.*/node_modules/sample-apps/.*
 .*/node_modules/playground/.*
 
 ; Ignore templates for 'react-native init'

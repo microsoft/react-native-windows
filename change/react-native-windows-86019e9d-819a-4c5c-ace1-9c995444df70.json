@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "AllAnimations only exists on RS5",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
