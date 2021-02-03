@@ -3,9 +3,8 @@ parameters:
     type: string
     default: PullRequest
     values: 
-     - PullRequest 
-     - PullRequestNuGet
-     - Continuous 
+     - PullRequest
+     - Continuous
   - name: buildNuGetOnly
     type: boolean
     default: false
@@ -26,14 +25,14 @@ jobs:
               platform: arm
               projectType: app
               additionalInitArguments:
-              additionalRunArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
             ArmDebugCs:
               language: cs
               configuration: Debug
               platform: arm
               projectType: app
               additionalInitArguments:
-              additionalRunArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
           # END Continuous only
           ArmReleaseCpp:
             language: cpp
@@ -41,14 +40,14 @@ jobs:
             platform: arm
             projectType: app
             additionalInitArguments:
-            additionalRunArguments: --no-deploy
+            additionalRunArguments: --no-deploy # We don't have Arm agents
           ArmReleaseCs:
             language: cs
             configuration: Release
             platform: arm
             projectType: app
             additionalInitArguments:
-            additionalRunArguments: --no-deploy
+            additionalRunArguments: --no-deploy # We don't have Arm agents
           # Start Continuous only
           ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
             Arm64DebugCpp:
@@ -57,28 +56,28 @@ jobs:
               platform: arm64
               projectType: app
               additionalInitArguments:
-              additionalRunArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
             Arm64DebugCs:
               language: cs
               configuration: Debug
               platform: arm64
               projectType: app
               additionalInitArguments:
-              additionalRunArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
             Arm64ReleaseCpp:
               language: cpp
               configuration: Release
               platform: arm64
               projectType: app
               additionalInitArguments:
-              additionalRunArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
             Arm64ReleaseCs:
               language: cs
               configuration: Release
               platform: arm64
               projectType: app
               additionalInitArguments:
-              additionalRunArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
           # End Continuous only
           X64ReleaseCpp:
             language: cpp
@@ -197,7 +196,7 @@ jobs:
             projectType: $(projectType)    
             additionalInitArguments: $(additionalInitArguments)
             additionalRunArguments: $(additionalRunArguments)
-
+            buildEnvironment: ${{ parameters.buildEnvironment }}
 
   # We unfortunately can't add the nuget ones to the existing matrix above because Azure DevOps does not allow the dependsOn to be dynamic based on matrix expansion
   - ${{ if parameters.buildNuGetOnly }}:
@@ -237,3 +236,4 @@ jobs:
             additionalInitArguments: $(additionalInitArguments)
             additionalRunArguments: $(additionalRunArguments)
             useNuGet: true
+            buildEnvironment: ${{ parameters.buildEnvironment }}

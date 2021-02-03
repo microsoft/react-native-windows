@@ -65,6 +65,8 @@
                   clean: false
                   submodules: false
 
+                - template: ../templates/apply-published-version-vars.yml
+
                 - template: ../templates/build-rnw.yml
                   parameters:
                     project: vnext/Microsoft.ReactNative.sln
@@ -206,7 +208,6 @@
 
     # This job is the one that accumulates the spread out build tasks into one dependency
     - job: UniversalBuild
-      condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
       displayName: Universal Build 🏗
       variables:
         - template: ../variables/vs2019.yml
