@@ -27,6 +27,8 @@ stages:
           - template: templates/yarn-install.yml
 
           - template: templates/set-version-vars.yml
+            parameters:
+              buildEnvironment: Continuous
 
           - template: templates/publish-version-vars.yml
           

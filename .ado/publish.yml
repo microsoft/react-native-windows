@@ -85,6 +85,8 @@ jobs:
         condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ ne(variables['Build.SourceBranchName'], 'master') }} )
 
       - template: templates/set-version-vars.yml
+        parameters:
+          buildEnvironment: Continuous
 
       - template: templates/publish-version-vars.yml
 

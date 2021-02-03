@@ -24,19 +24,6 @@ jobs:
 
       - template: ../templates/yarn-install.yml
 
-      - script: |
-          echo BeachBallBranchName =  $(System.PullRequest.SourceBranchName)
-          echo ##vso[task.setvariable variable=BeachBallBranchName]$(System.PullRequest.SourceBranchName)
-        displayName: Set BeachBall Branch name for PR
-        condition: eq('$(Build.Reason)', 'PullRequest')
-
-      - script: |
-          set
-          echo BeachBallBranchName =  $(Build.SourceBranch)
-          echo ##vso[task.setvariable variable=BeachBallBranchName]$(Build.SourceBranch)
-        displayName: Set BeachBall Branch name for CI
-        condition: ne('$(Build.Reason)', 'PullRequest')
-
       - task: CmdLine@2
         displayName: Check for change files
         inputs:

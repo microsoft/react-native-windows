@@ -32,6 +32,8 @@ stages:
             displayName: Beachball Determine versions
 
           - template: templates/set-version-vars.yml
+            parameters:
+              buildEnvironment: Continuous
 
           - template: templates/publish-version-vars.yml
 

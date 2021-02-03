@@ -196,7 +196,7 @@ jobs:
             projectType: $(projectType)    
             additionalInitArguments: $(additionalInitArguments)
             additionalRunArguments: $(additionalRunArguments)
-
+            buildEnvironment: ${{ parameters.buildEnvironment }}
 
   # We unfortunately can't add the nuget ones to the existing matrix above because Azure DevOps does not allow the dependsOn to be dynamic based on matrix expansion
   - ${{ if parameters.buildNuGetOnly }}:
@@ -236,3 +236,4 @@ jobs:
             additionalInitArguments: $(additionalInitArguments)
             additionalRunArguments: $(additionalRunArguments)
             useNuGet: true
+            buildEnvironment: ${{ parameters.buildEnvironment }}

@@ -29,6 +29,12 @@ parameters:
   - name: continueOnBuildFailure
     type: boolean
     default: false
+  - name: buildEnvironment
+    type: string
+    default: PullRequest
+    values: 
+     - PullRequest 
+     - Continuous 
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -62,23 +68,12 @@ steps:
     displayName: Add npm user to verdaccio
 
   - script: |
-      echo BeachBallBranchName =  $(System.PullRequest.SourceBranchName)
-      echo ##vso[task.setvariable variable=BeachBallBranchName]$(System.PullRequest.SourceBranchName)
-    displayName: Set BeachBall Branch name for PR
-    condition: eq('$(Build.Reason)', 'PullRequest')
-
-  - script: |
-      set
-      echo BeachBallBranchName =  $(Build.SourceBranch)
-      echo ##vso[task.setvariable variable=BeachBallBranchName]$(Build.SourceBranch)
-    displayName: Set BeachBall Branch name for CI
-    condition: ne('$(Build.Reason)', 'PullRequest')
-
-  - script: |
       npx --no-install beachball publish --branch origin/$(BeachBallBranchName) --no-push --registry http://localhost:4873 --yes --access public --changehint "Run `yarn change` from root of repo to generate a change file."
     displayName: Publish packages to verdaccio
 
   - template: set-version-vars.yml
+    parameters:
+      buildEnvironment: ${{ parameters.buildEnvironment }}
 
   # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
   - task: NuGetToolInstaller@0
