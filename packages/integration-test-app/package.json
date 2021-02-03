@@ -1,6 +1,6 @@
 {
-  "name": "integration-test",
-  "version": "0.0.1",
+  "name": "integration-test-app",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "windows": "react-native run-windows",

@@ -8,7 +8,7 @@ parameters:
 
 jobs:
   - job: IntegrationTest
-    displayName: Integration Test
+    displayName: Integration Test App
     strategy:
       matrix:
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
@@ -51,7 +51,7 @@ jobs:
       # take up memory. Do the expensive parts of the build first.
       - script: yarn windows --no-launch --no-packager --no-deploy --no-autolink --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory)
         displayName: yarn windows --no-launch
-        workingDirectory: packages/IntegrationTest
+        workingDirectory: packages/integration-test-app
 
       # This will normally be run during tests if it isn't already, but running
       # it before helps avoid our window from being obscured.
@@ -60,7 +60,7 @@ jobs:
 
       - powershell: Start-Process npm -ArgumentList "run","start"
         displayName: Start packager
-        workingDirectory: packages/IntegrationTest
+        workingDirectory: packages/integration-test-app
 
       # Instance load may time out if the packager takes too long to return a
       # bundle. Request the bundle ahead of time so that the instance will get
@@ -89,7 +89,7 @@ jobs:
       # shouldn't be a practical concern.
       - script: yarn windows --no-build --no-packager --no-autolink --arch $(BuildPlatform) --logging
         displayName: yarn windows --no-build
-        workingDirectory: packages/IntegrationTest
+        workingDirectory: packages/integration-test-app
 
       - powershell: |
           $wshell = New-Object -ComObject wscript.shell
@@ -106,7 +106,7 @@ jobs:
 
       - script: yarn integration-test
         displayName: yarn integration-test
-        workingDirectory: packages/IntegrationTest
+        workingDirectory: packages/integration-test-app
 
       - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/after-test.png
         displayName: Screenshot desktop after tests
@@ -116,7 +116,7 @@ jobs:
         displayName: Upload targets
         inputs:
           artifactName: Targets - IntegrationTest-$(System.JobAttempt)
-          targetPath: packages/IntegrationTest/windows/$(BuildPlatform)/Debug/integrationtest
+          targetPath: packages/integration-test-app/windows/$(BuildPlatform)/Debug/integrationtest
         condition: failed()
 
       - task: PublishPipelineArtifact@1

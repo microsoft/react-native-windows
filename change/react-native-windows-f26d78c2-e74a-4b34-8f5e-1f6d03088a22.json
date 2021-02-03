@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Move `react-native-windows-codegen` to `@react-native-windows/codegen`",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none"
+}
