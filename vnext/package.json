@@ -55,6 +55,7 @@
     "ws": "^6.1.4"
   },
   "devDependencies": {
+    "@react-native-windows/codegen": "0.0.0-canary.0",
     "@rnw-scripts/eslint-config": "1.1.6",
     "@types/react": "16.9.11",
     "@types/react-native": "^0.63.46",
@@ -67,7 +68,6 @@
     "react": "17.0.1",
     "react-native": "0.0.0-c66aa8abc",
     "react-native-platform-override": "^1.4.10",
-    "react-native-windows-codegen": "1.1.14",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^3.8.3"
