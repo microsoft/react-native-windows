@@ -55,8 +55,6 @@
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.6",
-    "@types/es6-collections": "^0.5.32",
-    "@types/es6-promise": "0.0.32",
     "@types/node": "^14.14.22",
     "@types/prop-types": "15.7.1",
     "@types/react": "16.9.11",
