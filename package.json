@@ -23,6 +23,7 @@
       "packages/*",
       "packages/@react-native-windows/*",
       "packages/@react-native/*",
+      "packages/@rnw-bots/*",
       "packages/@rnw-scripts/*",
       "vnext"
     ]
