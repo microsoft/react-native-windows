@@ -97,7 +97,7 @@ jobs:
         displayName: Build react-native-win32 RNTester bundle
         inputs:
           script: yarn bundle
-          workingDirectory: packages/react-native-win32
+          workingDirectory: packages/@office-iss/react-native-win32
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x64'))
 
       - powershell: |
