@@ -79,7 +79,7 @@ jobs:
       - task: CopyFiles@2
         displayName: Copy tree dump screenshots
         inputs:
-          sourceFolder: $(Build.SourcesDirectory)\packages\ewe-test-app\errorShots
+          sourceFolder: $(Build.SourcesDirectory)\packages\e2e-test-app\errorShots
           targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
         condition: succeededOrFailed()
 

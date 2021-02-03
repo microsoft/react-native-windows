@@ -17,17 +17,17 @@ This will be automatically done for you if you use the [RNW dependency script](h
 
 **Build the native test app**
 
-> C:\repo\react-native-windows> `cd packages\ewe-test-app`
+> C:\repo\react-native-windows> `cd packages\e2e-test-app`
 >
-> C:\repo\react-native-windows\packages\ewe-test-app> `yarn windows --no-launch`
+> C:\repo\react-native-windows\packages\e2e-test-app> `yarn windows --no-launch`
 
 **Running all tests**
 
-> C:\repo\react-native-windows\packages\ewe-test-app> `yarn e2etest`
+> C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest`
 
 **Running a specific test**
 
-> C:\repo\react-native-windows\packages\ewe-test-app> `yarn e2etest -t visitAllPages`
+> C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest -t visitAllPages`
 
 ## Debugging E2E Tests in CI
 ### Increasing verbosity
