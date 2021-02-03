@@ -15,7 +15,7 @@
     "watch": "rnw-scripts watch"
   },
   "bin": {
-    "@react-native-windows/codegen": "./bin.js"
+    "codegen": "./bin.js"
   },
   "dependencies": {
     "chalk": "^4.1.0",
