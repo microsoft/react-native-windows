@@ -72,7 +72,7 @@ jobs:
         displayName: NuGet restore - SampleApps
         inputs:
           command: restore
-          restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+          restoreSolution: packages/sample-apps/windows/SampleApps.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
         condition: succeeded()
 
@@ -80,21 +80,21 @@ jobs:
         displayName: run-windows (Debug)
         inputs:
           script: yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
-          workingDirectory: packages/microsoft-reactnative-sampleapps
+          workingDirectory: packages/sample-apps
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'))
 
       - task: CmdLine@2
         displayName: run-windows (Release)
         inputs:
           script: yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --release --msbuildprops BaseIntDir=$(BaseIntDir)
-          workingDirectory: packages/microsoft-reactnative-sampleapps
+          workingDirectory: packages/sample-apps
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'))
 
       - task: CmdLine@2
         displayName: Create SampleApp bundle
         inputs:
           script: yarn bundle-cpp --verbose
-          workingDirectory: packages\microsoft-reactnative-sampleapps
+          workingDirectory: packages\sample-apps
         condition: succeeded()
 
       - template: ../templates/upload-build-logs.yml
