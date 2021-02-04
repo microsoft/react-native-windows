@@ -19,7 +19,7 @@ import {DocModel} from './doc-model';
 const templateCache: {[index: string]: string} = {};
 
 export async function renderDocFiles(docModel: DocModel, config: Config) {
-  const rendredFiles: string[] = [];
+  const renderedFiles: string[] = [];
   const outputPath = path.join(config.output, 'out');
   await fs.mkdir(outputPath).catch(err => {
     if (err.code !== 'EEXIST') throw err;
@@ -35,7 +35,7 @@ export async function renderDocFiles(docModel: DocModel, config: Config) {
     log(`[Rendering] file {${outputFileName}}`);
     const outputText = mustache.render(template, compound);
     await fs.writeFile(outputFileName, outputText, 'utf-8');
-    rendredFiles.push(outputFileName);
+    renderedFiles.push(outputFileName);
   }
 
   if (config.index && config.indexTemplate) {
@@ -45,10 +45,10 @@ export async function renderDocFiles(docModel: DocModel, config: Config) {
     log(`[Rendering] file {${indexOutput}}`);
     const outputText = mustache.render(indexTemplate, docModel);
     await fs.writeFile(indexOutput, outputText, 'utf-8');
-    rendredFiles.push(indexOutput);
+    renderedFiles.push(indexOutput);
   }
 
-  return rendredFiles;
+  return renderedFiles;
 }
 
 async function getCachedTemplate(templatePath: string) {
