@@ -26,6 +26,7 @@
     "@rnw-scripts/ts-config": "^1.1.0",
     "@types/chai": "^4.2.14",
     "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.22",
     "@types/ora": "^3.2.0",
     "@types/react-native": "^0.63.46",
     "@types/ws": "^7.4.0",

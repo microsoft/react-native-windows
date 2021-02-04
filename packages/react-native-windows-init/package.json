@@ -36,6 +36,7 @@
     "@rnw-scripts/ts-config": "1.1.0",
     "@types/chalk": "^2.2.0",
     "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.22",
     "@types/prompts": "^2.4.0",
     "@types/semver": "7.3.3",
     "@types/valid-url": "^1.0.3",
