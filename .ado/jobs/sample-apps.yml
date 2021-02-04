@@ -20,22 +20,22 @@ jobs:
           ArmDebug:
             BuildConfiguration: Debug
             BuildPlatform: ARM
-            NoDeployOption:
+            NoDeployOption: --no-deploy # We don't have Arm agents
         # End Continuous only
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
-          NoDeployOption: --no-deploy
+          NoDeployOption: --no-deploy # We don't have Arm agents
         # Start Continuous only
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
           Arm64Debug:
             BuildConfiguration: Debug
             BuildPlatform: ARM64
-            NoDeployOption:
+            NoDeployOption: --no-deploy # We don't have Arm agents
           Arm64Release:
             BuildConfiguration: Release
             BuildPlatform: ARM64
-            NoDeployOption:
+            NoDeployOption: --no-deploy # We don't have Arm agents
           X64Debug:
             BuildConfiguration: Debug
             BuildPlatform: x64

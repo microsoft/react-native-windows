@@ -376,7 +376,11 @@ void initializeJSHooks(jsi::Runtime &runtime) {
 
 void initializeETW() {
   // Register the provider
-  TraceLoggingRegister(g_hTraceLoggingProvider);
+  static bool etwInitialized = false;
+  if (!etwInitialized) {
+    TraceLoggingRegister(g_hTraceLoggingProvider);
+    etwInitialized = true;
+  }
 }
 
 } // namespace tracing

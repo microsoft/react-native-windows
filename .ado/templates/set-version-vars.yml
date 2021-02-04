@@ -1,10 +1,17 @@
 # Sets variables for package/commit versions
+parameters:
+  - name: buildEnvironment
+    type: string
+    default: PullRequest
+    values: 
+     - PullRequest 
+     - Continuous 
 
 steps:
   - task: CmdLine@2
     displayName: Set version variables
     name: setVersionEnvVars
     inputs:
-      script: node ./.ado/scripts/setVersionEnvVars.js
+      script: node ./.ado/scripts/setVersionEnvVars.js ${{ parameters.buildEnvironment }} $(Build.BuildId)
     env:
       RUNNER_TEMP: $(Build.StagingDirectory)

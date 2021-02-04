@@ -35,7 +35,7 @@ BreakBeforeTernaryOperators: true
 BreakConstructorInitializersBeforeComma: false
 BreakAfterJavaFieldAnnotations: false
 BreakStringLiterals: false
-ColumnLimit:       80
+ColumnLimit:       120
 CommentPragmas:  '^ IWYU pragma:'
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 4
@@ -43,7 +43,7 @@ ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true
 DerivePointerAlignment: false
 DisableFormat:   false
-ForEachMacros:   [ FOR_EACH_RANGE, FOR_EACH, TEST_METHOD ]
+ForEachMacros:   [ FOR_EACH_RANGE, FOR_EACH, TEST_CLASS, TEST_CLASS_EX ]
 IncludeBlocks: Preserve
 IncludeCategories:
   - Regex:           'pch.h'

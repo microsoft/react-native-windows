@@ -38,15 +38,15 @@ jobs:
 
     strategy:
       matrix:
-        # Start Continuous only
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          ArmDebug:
-            BuildConfiguration: Debug
-            BuildPlatform: ARM
-          ArmRelease:
-            BuildConfiguration: Release
-            BuildPlatform: ARM
-        # End Continuous only
+        # Arm Desktop does not build on non-arm agents
+        # ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+        #   ArmDebug:
+        #     BuildConfiguration: Debug
+        #     BuildPlatform: ARM
+        #   ArmRelease:
+        #     BuildConfiguration: Release
+        #     BuildPlatform: ARM
+        # # End Continuous only
         Arm64Debug:
           BuildConfiguration: Debug
           BuildPlatform: ARM64
@@ -79,6 +79,8 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
+
+      - template: ../templates/apply-published-version-vars.yml
 
       - powershell: |
           $newValue = '(FullyQualifiedName!~RNTesterIntegrationTests::)&' + "$(Desktop.IntegrationTests.Filter)"
