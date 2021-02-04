@@ -8,7 +8,9 @@ const rnWin32Path = fs.realpathSync(
   path.dirname(require.resolve('@office-iss/react-native-win32/package.json')),
 );
 const rnwTesterPath = fs.realpathSync(
-  path.dirname(require.resolve('react-native-win32-tester/package.json')),
+  path.dirname(
+    require.resolve('@office-iss/react-native-win32-tester/package.json'),
+  ),
 );
 
 module.exports = {
