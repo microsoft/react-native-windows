@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Thu, 04 Feb 2021 05:05:58 GMT",
+      "tag": "react-native-platform-override_v1.4.10",
+      "version": "1.4.10",
+      "comments": {
+        "none": [
+          {
+            "comment": "Typings fix",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b76b4569db56c3a0f84584374146a6aabd509205",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Feb 2021 05:05:37 GMT",
       "tag": "react-native-platform-override_v1.4.10",
       "version": "1.4.10",

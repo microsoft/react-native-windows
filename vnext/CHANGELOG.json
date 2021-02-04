@@ -2,6 +2,82 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 04 Feb 2021 05:05:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.249",
+      "version": "0.0.0-canary.249",
+      "comments": {
+        "none": [
+          {
+            "comment": "Consolidate duplicated clang-format files",
+            "author": "ngerlem@microsoft.com",
+            "commit": "12bd50d214a1e1d3f5e3fbf6f556f5928fccec4a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove stale gitignored files",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b76b4569db56c3a0f84584374146a6aabd509205",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump react-native-platform-override to v1.4.10",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b76b4569db56c3a0f84584374146a6aabd509205",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Initialize ETW provider only once",
+            "author": "asklar@microsoft.com",
+            "commit": "03f9afb65b3dad4a9ec8bdaf66ba0b79c844c39e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 03 Feb 2021 05:05:12 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.248",
+      "version": "0.0.0-canary.248",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix template for WinUI3 C# App by expanding namespace of argument in AppOnActivated",
+            "author": "dannyvv@microsoft.com",
+            "commit": "c8f299a4c0bf9e83dbfa27f33cc0f0e2068a7d15",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "AllAnimations only exists on RS5",
+            "author": "asklar@microsoft.com",
+            "commit": "643bf1cd9c4ddf1d3d2020e73073b100bcf3b121",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix deep linking activation",
+            "author": "vmorozov@microsoft.com",
+            "commit": "78eef2a9ccf6d905bc5530ef2352ec0716ef1573",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Move `react-native-windows-codegen` to `@react-native-windows/codegen`",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b34311f6ee86fd8ade1b9132f08109f8a5dcdf6d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Rename microsoft-reactnative-sampleapps to sample-apps",
+            "author": "ngerlem@microsoft.com",
+            "commit": "910ed096b6fcea634b3206d3448cc3a335bc8e89",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Feb 2021 05:05:37 GMT",
       "tag": "react-native-windows_v0.0.0-canary.247",
       "version": "0.0.0-canary.247",

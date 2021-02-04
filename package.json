@@ -9,7 +9,7 @@
     "change": "beachball change",
     "clean": "lage clean -- --color",
     "format": "format-files -i -style=file -assume-filename=../.clang-format",
-    "format:verify": "format-files -i -style=file -assume-filename=../.clang-format -verify",
+    "format:verify": "format-files -i -style=file -verify",
     "test": "lage test --verbose -- --color",
     "validate-overrides": "react-native-platform-override validate --color"
   },
@@ -21,8 +21,10 @@
   "workspaces": {
     "packages": [
       "packages/*",
+      "packages/@office-iss/*",
       "packages/@react-native-windows/*",
       "packages/@react-native/*",
+      "packages/@rnw-bots/*",
       "packages/@rnw-scripts/*",
       "vnext"
     ]

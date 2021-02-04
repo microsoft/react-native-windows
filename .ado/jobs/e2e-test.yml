@@ -9,14 +9,15 @@ parameters:
 
 jobs:
   - job: E2ETest
-    displayName: E2E Test
+    displayName: E2E Test App
     strategy:
       matrix:
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          Arm:
-            BuildPlatform: ARM
-          Arm64:
-            BuildPlatform: ARM64
+          # Arm E2E does not build on non-arm agents
+          # Arm:
+          #   BuildPlatform: ARM
+          # Arm64:
+          #   BuildPlatform: ARM64
           x64:
             BuildPlatform: x64
         # End Continuous only
@@ -60,13 +61,13 @@ jobs:
         displayName: run-windows
         inputs:
           script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
-          workingDirectory: packages/E2ETest
+          workingDirectory: packages/e2e-test-app
 
       - task: CmdLine@2
         displayName: run e2etest
         inputs:
           script: yarn run e2etest
-          workingDirectory: packages/E2ETest
+          workingDirectory: packages/e2e-test-app
 
       - task: CopyFiles@2
         displayName: Copy tree dump output files
@@ -79,7 +80,7 @@ jobs:
       - task: CopyFiles@2
         displayName: Copy tree dump screenshots
         inputs:
-          sourceFolder: $(Build.SourcesDirectory)\packages\E2ETest\errorShots
+          sourceFolder: $(Build.SourcesDirectory)\packages\e2e-test-app\errorShots
           targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
         condition: succeededOrFailed()
 
@@ -100,7 +101,7 @@ jobs:
       - task: CopyFiles@2
         displayName: Copy ReactUWPTestApp artifacts
         inputs:
-          sourceFolder: $(Build.SourcesDirectory)/packages/E2ETest/windows/ReactUWPTestApp
+          sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app/windows/ReactUWPTestApp
           targetFolder: $(Build.StagingDirectory)/ReactUWPTestApp
           contents: AppPackages\**
         condition: failed()
@@ -108,14 +109,14 @@ jobs:
       - task: PublishPipelineArtifact@1
         displayName: "Publish Artifact:ReactUWPTestApp"
         inputs:
-          artifactName: ReactUWPTestApp-$(System.JobAttempt)
+          artifactName: ReactUWPTestApp-$(BuildPlatform)-$(System.JobAttempt)
           targetPath: $(Build.StagingDirectory)/ReactUWPTestApp
         condition: failed()
 
       - task: PublishPipelineArtifact@1
         displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
         inputs:
-          artifactName: ReactUWPTestAppTreeDump-$(System.JobAttempt)
+          artifactName: ReactUWPTestAppTreeDump-$(BuildPlatform)-$(System.JobAttempt)
           targetPath: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
         condition: succeededOrFailed()
 
