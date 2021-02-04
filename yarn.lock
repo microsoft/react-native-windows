@@ -1941,16 +1941,6 @@
   resolved "https://registry.yarnpkg.com/@types/diff-match-patch/-/diff-match-patch-1.0.32.tgz#d9c3b8c914aa8229485351db4865328337a3d09f"
   integrity sha512-bPYT5ECFiblzsVzyURaNhljBH2Gh1t9LowgUwciMrNAhFewLkHT2H0Mto07Y4/3KCOGZHRQll3CTtQZ0X11D/A==
 
-"@types/es6-collections@^0.5.32":
-  version "0.5.32"
-  resolved "https://registry.yarnpkg.com/@types/es6-collections/-/es6-collections-0.5.32.tgz#62edb3942849951b6025d42af9da97d7b837f31b"
-  integrity sha512-aOOGt8ivRTqSWDzrHoNorP/o/YXgVK0oA7SP3jke3W4zZDSFAbWhYWjPG0qnGq6B/QOsx76FnmC3bUFSvleOLA==
-
-"@types/es6-promise@0.0.32":
-  version "0.0.32"
-  resolved "https://registry.yarnpkg.com/@types/es6-promise/-/es6-promise-0.0.32.tgz#3bcf44fb1e429f3df76188c8c6d874463ba371fd"
-  integrity sha1-O89E+x5Cnz33YYjIxth0Rjujcf0=
-
 "@types/eslint-visitor-keys@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#1ee30d79544ca84d68d4b3cdb0af4f205663dd2d"

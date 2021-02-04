@@ -21,6 +21,7 @@
   "workspaces": {
     "packages": [
       "packages/*",
+      "packages/@office-iss/*",
       "packages/@react-native-windows/*",
       "packages/@react-native/*",
       "packages/@rnw-bots/*",
