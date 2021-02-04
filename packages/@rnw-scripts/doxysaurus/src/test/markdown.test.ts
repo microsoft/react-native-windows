@@ -15,12 +15,13 @@ import {LinkResolver, TypeLinks, toMarkdown} from '../markdown';
 // Test conversion from Doxygen XML to Markdown.
 //
 // These tests are using the string-template to have more natural string look and feel.
-// The leading pipeline '|' means an end of previous line and the of a new line.
-// All other end-of-line characters are removed from the string.
+// The leading pipeline '|' is used as a start of a new line.
+// All other end-of-line characters and leading spaces are removed from the string.
 //
 // The XML spaces are significant in Doxygen XML docs.
 // We keep them as we parse XML.
-// Using the pipeline '|' character we indent the XML text for better readability.
+// Using the pipeline '|' character we indent the XML text for better
+// readability while keeping the original Doxygen XML formatting.
 //
 
 test('Empty brief description', async () => {
