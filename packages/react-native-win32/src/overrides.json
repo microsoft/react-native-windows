@@ -533,6 +533,10 @@
     },
     {
       "type": "platform",
+      "file": "RNTester\\APIExamples\\FocusManagerAPI.tsx"
+    },    
+    {
+      "type": "platform",
       "file": "RNTester\\APIExamples\\ThemingModuleAPI.tsx"
     },
     {
