@@ -1,6 +1,21 @@
 {
-  "name": "@react-native-windows/bot-coordinator",
+  "name": "@rnw-bots/coordinator",
   "entries": [
+    {
+      "date": "Thu, 04 Feb 2021 05:05:58 GMT",
+      "tag": "@rnw-bots/coordinator_v1.0.3",
+      "version": "1.0.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add @rnw-bots scope",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c49b38784253cbd7288f9f31398c60f8a01ced35",
+            "package": "@rnw-bots/coordinator"
+          }
+        ]
+      }
+    },
     {
       "date": "Thu, 28 Jan 2021 05:06:47 GMT",
       "tag": "@react-native-windows/bot-coordinator_v1.0.2",

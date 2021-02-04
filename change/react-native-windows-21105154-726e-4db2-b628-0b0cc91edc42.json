@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Consolidate duplicated clang-format files",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

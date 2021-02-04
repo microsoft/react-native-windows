@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Move to office-iss directory",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

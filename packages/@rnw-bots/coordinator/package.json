@@ -1,6 +1,6 @@
 {
   "name": "@rnw-bots/coordinator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "description": "Azure functions application for coordinating react-native-windows bots",
   "scripts": {

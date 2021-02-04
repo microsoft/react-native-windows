@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 04 Feb 2021 05:05:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.249",
+      "version": "0.0.0-canary.249",
+      "comments": {
+        "none": [
+          {
+            "comment": "Consolidate duplicated clang-format files",
+            "author": "ngerlem@microsoft.com",
+            "commit": "12bd50d214a1e1d3f5e3fbf6f556f5928fccec4a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove stale gitignored files",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b76b4569db56c3a0f84584374146a6aabd509205",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump react-native-platform-override to v1.4.10",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b76b4569db56c3a0f84584374146a6aabd509205",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Initialize ETW provider only once",
+            "author": "asklar@microsoft.com",
+            "commit": "03f9afb65b3dad4a9ec8bdaf66ba0b79c844c39e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 03 Feb 2021 05:05:12 GMT",
       "tag": "react-native-windows_v0.0.0-canary.248",
       "version": "0.0.0-canary.248",

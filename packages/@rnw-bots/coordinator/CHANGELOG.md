@@ -1,8 +1,16 @@
-# Change Log - @react-native-windows/bot-coordinator
+# Change Log - @rnw-bots/coordinator
 
-This log was last generated on Thu, 28 Jan 2021 05:06:47 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Feb 2021 05:05:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.3
+
+Thu, 04 Feb 2021 05:05:58 GMT
+
+### Patches
+
+- Add @rnw-bots scope (ngerlem@microsoft.com)
 
 ## 1.0.2
 
