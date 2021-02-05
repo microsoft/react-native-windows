@@ -26,6 +26,7 @@ import {
 } from '../../config/dependencyConfig';
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
+import {XMLSerializer} from 'xmldom';
 
 /**
  * Locates the react-native-windows directory
@@ -112,11 +113,8 @@ async function updateAutoLink(
   options: AutoLinkOptions,
 ) {
   const startTime = performance.now();
-
   const verbose = options.logging;
-
   const checkMode = options.check;
-
   let changesNecessary = false;
 
   const spinner = newSpinner(
@@ -293,6 +291,9 @@ async function updateAutoLink(
       }
     }
 
+    changesNecessary =
+      ensureWinUIDialect(solutionFile, windowsAppConfig, checkMode) ||
+      changesNecessary;
     // Generating cs/cpp files for app code consumption
     if (projectLang === 'cs') {
       let csUsingNamespaces = '';
@@ -589,6 +590,151 @@ async function updateAutoLink(
     );
     throw e;
   }
+}
+
+function formatXml(input: string) {
+  const noNL = input.replace(/[\r\n]/g, '');
+  const lines = noNL.split('>');
+  let output = '';
+  let indent = 0;
+  for (const line of lines.filter(x => x.trim() !== '')) {
+    if (line.startsWith('</')) {
+      indent--;
+    }
+    output += '  '.repeat(indent) + line.trim() + '>\r\n';
+    if (line.endsWith('?')) {
+      // header, don't change indent
+    } else if (line.endsWith('/')) {
+      // self-closing tag: <foo />
+    } else if (!line.startsWith('</')) {
+      indent++;
+    }
+  }
+  if (indent !== 0) throw new Error('malformed xml');
+  return output;
+}
+
+function ensureWinUIDialect(
+  slnFile: string,
+  windowsProjectConfig: WindowsProjectConfig,
+  checkMode: boolean,
+) {
+  console.log('ensure dialect');
+  const buildFlagsProps = path.join(path.dirname(slnFile), 'BuildFlags.props');
+  let changesNeeded = false;
+  if (fs.existsSync(buildFlagsProps)) {
+    const buildFlagsContents = configUtils.readProjectFile(buildFlagsProps);
+    const useWinUI3FromConfig = windowsProjectConfig.useWinUI3;
+    const useWinUI3FromBuildFlags =
+      configUtils
+        .tryFindPropertyValue(buildFlagsContents, 'UseWinUI3')
+        ?.toLowerCase() === 'true';
+    // use the UseWinUI3 value in react-native.config.js, or if not present, the value from BuildFlags.props
+    changesNeeded = fixPackagesConfig(
+      useWinUI3FromConfig !== undefined
+        ? useWinUI3FromConfig
+        : useWinUI3FromBuildFlags,
+      windowsProjectConfig,
+      checkMode,
+    );
+    if (useWinUI3FromConfig !== undefined) {
+      // Make sure BuildFlags matches the value that comes from react-native.config.js
+      const node = buildFlagsContents.getElementsByTagName('UseWinUI3');
+      const newValue = useWinUI3FromConfig ? 'true' : 'false';
+      changesNeeded = changesNeeded || node.item(0)?.textContent !== newValue;
+      if (!checkMode && changesNeeded) {
+        node.item(0)!.textContent = newValue;
+        const buildFlagsOutput = new XMLSerializer().serializeToString(
+          buildFlagsContents,
+        );
+        fs.writeFileSync(buildFlagsProps, buildFlagsOutput);
+      }
+    }
+  }
+  return changesNeeded;
+}
+
+function fixPackagesConfig(
+  useWinUI3: boolean,
+  project: WindowsProjectConfig,
+  checkMode: boolean,
+) {
+  const projectFile = path.join(
+    project.folder,
+    project.sourceDir,
+    project.project!.projectFile,
+  );
+  const packagesConfig = path.join(
+    path.dirname(projectFile),
+    'packages.config',
+  );
+  console.log(`UseWinUI = ${useWinUI3}`);
+  console.log(`packages.config = ${packagesConfig}`);
+  let changed = false;
+
+  if (fs.existsSync(packagesConfig)) {
+    // if we don't have a packages.config, then this is a C# project, in which case we use <PackageReference> and dynamically pick the right XAML package.
+    const packagesConfigContents = configUtils.readProjectFile(packagesConfig);
+    const packageElements = packagesConfigContents.documentElement.getElementsByTagName(
+      'package',
+    );
+
+    const winuiPropsContents = configUtils.readProjectFile(
+      require.resolve('react-native-windows/PropertySheets/WinUI.props'),
+    );
+    const winui2xVersion = configUtils.tryFindPropertyValue(
+      winuiPropsContents,
+      'WinUI2xVersion',
+    );
+    const winui3Version = configUtils.tryFindPropertyValue(
+      winuiPropsContents,
+      'WinUI3Version',
+    );
+
+    const dialects = [
+      {id: 'Microsoft.WinUI', version: winui3Version!},
+      {id: 'Microsoft.UI.Xaml', version: winui2xVersion!},
+    ];
+    const keepPkg = useWinUI3 ? dialects[0] : dialects[1];
+    const removePkg = useWinUI3 ? dialects[1] : dialects[0];
+
+    const nodesToRemove: Element[] = [];
+    let needsToAddKeepPkg = true;
+    for (let i = 0; i < packageElements.length; i++) {
+      const packageElement = packageElements.item(i)!;
+      const idAttr = packageElement!.getAttributeNode('id');
+      const id = idAttr!.value;
+      if (id === removePkg.id) {
+        nodesToRemove.push(packageElement);
+        packagesConfigContents.documentElement.removeChild(packageElement);
+        changed = true;
+      } else if (id === keepPkg.id) {
+        changed =
+          changed || packageElement.getAttribute('version') !== keepPkg.version;
+        packageElement.setAttribute('version', keepPkg.version!);
+        needsToAddKeepPkg = false;
+      }
+    }
+
+    if (needsToAddKeepPkg) {
+      const newPkg = packagesConfigContents.createElement('package');
+
+      Object.entries(keepPkg).forEach(([attr, value]) => {
+        newPkg.setAttribute(attr, value as string);
+      });
+      newPkg.setAttribute('targetFramework', 'native');
+      packagesConfigContents.documentElement.appendChild(newPkg);
+      changed = true;
+    }
+
+    if (!checkMode && changed) {
+      const serializer = new XMLSerializer();
+      const output = serializer.serializeToString(packagesConfigContents);
+      const formattedXml = formatXml(output);
+      fs.writeFileSync(packagesConfig, formattedXml, {encoding: 'utf-8'});
+    }
+  }
+  return changed;
 }
 
 interface AutoLinkOptions {

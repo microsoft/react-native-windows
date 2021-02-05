@@ -250,19 +250,21 @@ export async function copyProjectTemplateAndReplace(
     });
   }
 
-  const packagesConfigCppNugetPackages = [...cppNugetPackages, 
-  {
-    id: 'Microsoft.UI.Xaml',
-    version: winui2xVersion,
-    hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
-    hasTargets: false,
-  },
-  {
-    id: 'Microsoft.WinUI',
-    version: winui3Version,
-    hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
-    hasTargets: false,
-  },];
+  const packagesConfigCppNugetPackages = [
+    ...cppNugetPackages,
+    {
+      id: 'Microsoft.UI.Xaml',
+      version: winui2xVersion,
+      hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
+      hasTargets: false,
+    },
+    {
+      id: 'Microsoft.WinUI',
+      version: winui3Version,
+      hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
+      hasTargets: false,
+    },
+  ];
 
   const templateVars: Record<string, any> = {
     useMustache: true,

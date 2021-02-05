@@ -68,6 +68,7 @@ export interface WindowsProjectConfig {
   sourceDir: string;
   solutionFile: string;
   project: Project;
+  useWinUI3?: boolean;
 }
 
 type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
@@ -142,6 +143,10 @@ export function projectConfigWindows(
         };
         validProject = true;
       }
+    }
+
+    if ('useWinUI3' in userConfig) {
+      result.useWinUI3 = userConfig.useWinUI3;
     }
   } else {
     // No manually provided solutionFile, try to find it
