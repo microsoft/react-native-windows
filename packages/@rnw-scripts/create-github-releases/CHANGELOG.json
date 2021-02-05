@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Fri, 05 Feb 2021 05:05:05 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v1.0.23",
+      "version": "1.0.23",
+      "comments": {
+        "none": [
+          {
+            "comment": "Make @types/node version explicit",
+            "author": "ngerlem@microsoft.com",
+            "commit": "22ee9e8c47a0c794e7d509a471547ba873578e31",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Jan 2021 05:06:47 GMT",
       "tag": "@rnw-scripts/create-github-releases_v1.0.23",
       "version": "1.0.23",

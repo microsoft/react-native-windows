@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Make @types/node version explicit",
-  "packageName": "@rnw-scripts/take-screenshot",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}
