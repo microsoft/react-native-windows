@@ -5,7 +5,7 @@
  * @format
  */
 
-// Implementation of a simple template mechanism that used for code generation.
+// Implementation of a simple template mechanism that is used for code generation.
 // Each new line starts with a pipe '|' character.
 // Any space before the pipe is ignored.
 // The space after the pipe '|' and before text is interpreted as indentation
