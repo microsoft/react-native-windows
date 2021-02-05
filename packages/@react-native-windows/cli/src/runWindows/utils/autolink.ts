@@ -28,6 +28,9 @@ import {Project, WindowsProjectConfig} from '../../config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
 import {XMLSerializer} from 'xmldom';
 
+// TS2497: This module can only be referenced with ECMAScript imports/exports by turning on the 'esModuleInterop' flag and referencing its default export.
+import formatXml = require('xml-formatter');
+
 /**
  * Locates the react-native-windows directory
  * @param config project configuration
@@ -592,28 +595,6 @@ async function updateAutoLink(
   }
 }
 
-function formatXml(input: string) {
-  const noNL = input.replace(/[\r\n]/g, '');
-  const lines = noNL.split('>');
-  let output = '';
-  let indent = 0;
-  for (const line of lines.filter(x => x.trim() !== '')) {
-    if (line.startsWith('</')) {
-      indent--;
-    }
-    output += '  '.repeat(indent) + line.trim() + '>\r\n';
-    if (line.endsWith('?')) {
-      // header, don't change indent
-    } else if (line.endsWith('/')) {
-      // self-closing tag: <foo />
-    } else if (!line.startsWith('</')) {
-      indent++;
-    }
-  }
-  if (indent !== 0) throw new Error('malformed xml');
-  return output;
-}
-
 function ensureWinUIDialect(
   slnFile: string,
   windowsProjectConfig: WindowsProjectConfig,
@@ -678,10 +659,11 @@ function fixPackagesConfig(
     const packageElements = packagesConfigContents.documentElement.getElementsByTagName(
       'package',
     );
-
-    const winuiPropsContents = configUtils.readProjectFile(
-      require.resolve('react-native-windows/PropertySheets/WinUI.props'),
+    const winUIPropsPath = path.join(
+      resolveRnwRoot(project),
+      'PropertySheets/WinUI.props',
     );
+    const winuiPropsContents = configUtils.readProjectFile(winUIPropsPath);
     const winui2xVersion = configUtils.tryFindPropertyValue(
       winuiPropsContents,
       'WinUI2xVersion',

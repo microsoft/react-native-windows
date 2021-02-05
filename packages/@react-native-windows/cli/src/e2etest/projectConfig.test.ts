@@ -101,6 +101,35 @@ const projects: TargetProject[] = [
       null,
     );
   }),
+  project('WithWinUI3', async (folder: string) => {
+    const windowsDir = path.join(folder, 'windows');
+    await tryMkdir(windowsDir);
+
+    const replacements = {
+      name: 'WithWinUI3',
+      namespace: 'WithWinUI3',
+      useMustache: true,
+      projectGuidUpper: testProjectGuid,
+      projectGuidLower: testProjectGuid.toLowerCase(),
+    };
+
+    await copyAndReplace(
+      path.join(templateRoot, 'cs-app/proj/MyApp.sln'),
+      path.join(windowsDir, 'WithWinUI3.sln'),
+      replacements,
+      null,
+    );
+
+    const projDir = path.join(windowsDir, 'WithWinUI3');
+    await tryMkdir(projDir);
+
+    await copyAndReplace(
+      path.join(templateRoot, 'cs-app/proj/MyApp.csproj'),
+      path.join(projDir, 'WithWinUI3.csproj'),
+      replacements,
+      null,
+    );
+  }),
 ];
 
 // Tests that given userConfig is null, the result will always be null
