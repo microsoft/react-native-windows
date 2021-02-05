@@ -222,6 +222,8 @@
       cancelTimeoutInMinutes: 5
 
       steps:
+        - checkout: none
+          clean: false
         - powershell: |
             Write-Host "Waited for all Universal Build steps"
           displayName: Waiting for all Universal Build steps
