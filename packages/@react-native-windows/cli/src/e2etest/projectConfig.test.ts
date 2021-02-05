@@ -166,6 +166,20 @@ const projects: TargetProject[] = [
       replacements,
       null,
     );
+
+    await copyAndReplace(
+      path.join(templateRoot, 'cpp-app/proj/packages.config'),
+      path.join(projDir, 'packages.config'),
+      replacements,
+      null,
+    );
+
+    await copyAndReplace(
+      path.join(templateRoot, 'shared-app/proj/BuildFlags.props'),
+      path.join(windowsDir, 'BuildFlags.props'),
+      replacements,
+      null,
+    );
   }),
 ];
 
