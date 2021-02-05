@@ -51,6 +51,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('../../../Libraries/Components/View/Tests/ViewWin32Test'),
   },
   {
+    key: 'TextWin32Test',
+    module: require('@office-iss/react-native-win32/Libraries/Components/Text/Tests/TextWin32Test'),
+  },
+  {
     key: 'TextInputExample',
     module: require('../../../Libraries/Components/TextInput/Tests/TextInputTest'),
   },

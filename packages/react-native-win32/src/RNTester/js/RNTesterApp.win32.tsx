@@ -13,6 +13,12 @@ const RNTesterExampleList = require('react-native/RNTester/js/components/RNTeste
 const RNTesterList = require('./utils/RNTesterList.win32');
 const RNTesterNavigationReducer = require('react-native/RNTester/js/utils/RNTesterNavigationReducer');
 
+// uncomment the below lines to enable message spy
+/*
+import MessageQueue from 'react-native/Libraries/BatchedBridge/MessageQueue';
+MessageQueue.spy(true);
+*/
+
 const styles = StyleSheet.create({
   headerContainer: {
     borderBottomWidth: StyleSheet.hairlineWidth,
