@@ -1623,9 +1623,9 @@
     shell-quote "1.6.1"
 
 "@react-native-community/cli-types@^5.0.1-alpha.0":
-  version "5.0.1-alpha.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-5.0.1-alpha.0.tgz#962e6e61d259b10282703718a32740758540ee5b"
-  integrity sha512-asx1AhZSx1w8slT1K0RwcSz/+Q5/bYRIYfa8eVCZlQqsGCeELajPIgayLmSNlnQT8JUWTB1caR3XX5vD3ab/mg==
+  version "5.0.1-alpha.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-5.0.1-alpha.1.tgz#e8cf69966cf4e0fb5dda9bc708a52980ed1f8896"
+  integrity sha512-RdsLU0Jf3HodFnAY+oxCJt3VlhaN4MxGhfISvjGzqdjq3kpzmxex3+7fi6QvS97Kd6G2cheOJAdgP5wcwxp3Ng==
   dependencies:
     ora "^3.4.0"
 
