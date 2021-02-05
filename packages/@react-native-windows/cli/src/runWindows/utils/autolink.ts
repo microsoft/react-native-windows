@@ -28,9 +28,6 @@ import {Project, WindowsProjectConfig} from '../../config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
 import {XMLSerializer} from 'xmldom';
 
-// TS2497: This module can only be referenced with ECMAScript imports/exports by turning on the 'esModuleInterop' flag and referencing its default export.
-import formatXml = require('xml-formatter');
-
 /**
  * Locates the react-native-windows directory
  * @param config project configuration
@@ -595,12 +592,11 @@ async function updateAutoLink(
   }
 }
 
-function ensureWinUIDialect(
+export function ensureWinUIDialect(
   slnFile: string,
   windowsProjectConfig: WindowsProjectConfig,
   checkMode: boolean,
 ) {
-  console.log('ensure dialect');
   const buildFlagsProps = path.join(path.dirname(slnFile), 'BuildFlags.props');
   let changesNeeded = false;
   if (fs.existsSync(buildFlagsProps)) {
@@ -688,7 +684,6 @@ function fixPackagesConfig(
       const id = idAttr!.value;
       if (id === removePkg.id) {
         nodesToRemove.push(packageElement);
-        packagesConfigContents.documentElement.removeChild(packageElement);
         changed = true;
       } else if (id === keepPkg.id) {
         changed =
@@ -697,6 +692,10 @@ function fixPackagesConfig(
         needsToAddKeepPkg = false;
       }
     }
+
+    nodesToRemove.forEach(pkg =>
+      packagesConfigContents.documentElement.removeChild(pkg),
+    );
 
     if (needsToAddKeepPkg) {
       const newPkg = packagesConfigContents.createElement('package');
@@ -717,6 +716,30 @@ function fixPackagesConfig(
     }
   }
   return changed;
+}
+
+function formatXml(input: string) {
+  const noNL = input.replace(/[\r\n]/g, '');
+  const lines = noNL.split('>');
+  let output = '';
+  let indent = 0;
+  for (const line of lines.map(x => x.trim()).filter(x => x !== '')) {
+    if (line.startsWith('</')) {
+      indent--;
+    }
+    output += '  '.repeat(indent) + line.trim() + '>\r\n';
+    if (line.endsWith('?')) {
+      // header, don't change indent
+    } else if (line.endsWith('/')) {
+      // self-closing tag: <foo />
+    } else if (line.startsWith('<!--')) {
+      // xml comment: <!-- foo -->
+    } else if (!line.startsWith('</')) {
+      indent++;
+    }
+  }
+  if (indent !== 0) throw new Error(`Malformed xml, input was ${input}`);
+  return output;
 }
 
 interface AutoLinkOptions {
