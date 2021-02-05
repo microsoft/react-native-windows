@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fixing FocusManager export. Export an object with a FocusManager property rather than the class directly",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "safreibe@microsoft.com",
+  "dependentChangeType": "patch"
+}
