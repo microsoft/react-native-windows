@@ -8,7 +8,7 @@ import { ViewWin32 } from '../../View/ViewWin32';
 
 const TextRunsTest: React.FC<{}> = () => {
   return (
-    <View focusable>
+    <View>
       <TextWin32>
         <TextWin32>Text With </TextWin32>
         <TextWin32>Multiple Text </TextWin32>
@@ -21,7 +21,7 @@ const TextRunsTest: React.FC<{}> = () => {
 const FocusableTextTest: React.FC<{}> = () => {
   return (
     <ViewWin32>
-      <TextWin32 selectable>This TextWin32 demonstrates focusable</TextWin32>
+      <TextWin32 focusable>This TextWin32 demonstrates focusable</TextWin32>
     </ViewWin32>
   );
 };
@@ -61,7 +61,7 @@ const TextPromotionTest: React.FC<{}> = () => {
     <ViewWin32>
       <Button
       title="Click to Promote Focusability"
-      onPress={() => 
+      onPress={() =>
         {
           if (focusabilityState == FocusabilityState.NoFocus)
           {
@@ -79,7 +79,7 @@ const TextPromotionTest: React.FC<{}> = () => {
         This text is currently...
       </TextWin32>
       <TextWin32>
-        {(focusabilityState == FocusabilityState.NoFocus) ? 'No Focusability' : 
+        {(focusabilityState == FocusabilityState.NoFocus) ? 'No Focusability' :
          (focusabilityState == FocusabilityState.Focusable) ? 'Focusable' :
          'Selectable'}
       </TextWin32>
