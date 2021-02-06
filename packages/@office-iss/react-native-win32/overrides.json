@@ -347,6 +347,10 @@
       "baseHash": "95ed8a2da162e168c7d740640a9d6c0fdb282c84"
     },
     {
+      "type": "platform",
+      "file": "src/Libraries/Text/Tests/TextWin32Test.tsx"
+    },
+    {
       "type": "copy",
       "file": "src/Libraries/Utilities/BackHandler.win32.js",
       "baseFile": "Libraries/Utilities/BackHandler.android.js",

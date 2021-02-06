@@ -1,7 +1,7 @@
 'use strict';
 import * as React from 'react';
 import { Button, View } from 'react-native';
-import { TextWin32 } from '../TextWin32';
+import { TextWin32 } from '../../Text/TextWin32';
 import { ViewWin32 } from '../../View/ViewWin32';
 
 // Disabling no-jsx-lambda so functional components are more convenient to use
@@ -21,7 +21,7 @@ const TextRunsTest: React.FC<{}> = () => {
 const FocusableTextTest: React.FC<{}> = () => {
   return (
     <ViewWin32>
-      <TextWin32 selectable>This TextWin32 demonstrates focusable</TextWin32>
+      <TextWin32 focusable>This TextWin32 demonstrates focusable</TextWin32>
     </ViewWin32>
   );
 };
