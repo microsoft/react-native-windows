@@ -19,7 +19,7 @@ import * as vstools from './vstools';
 import * as generatorCommon from '../../generator-common';
 import * as configUtils from '../../config/configUtils';
 
-import {Command, Config} from '@react-native-community/cli-types';
+import {Command, Config, Dependency} from '@react-native-community/cli-types';
 import {
   WindowsDependencyConfig,
   ProjectDependency,
@@ -27,107 +27,27 @@ import {
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
 import {XMLSerializer} from 'xmldom';
+import {Ora} from 'ora';
 const formatter = require('xml-formatter');
 
-/**
- * Locates the react-native-windows directory
- * @param config project configuration
- */
-function resolveRnwRoot(projectConfig: WindowsProjectConfig) {
-  const rnwPackage = path.dirname(
-    require.resolve('react-native-windows/package.json', {
-      paths: [projectConfig.folder],
-    }),
-  );
-  return rnwPackage;
-}
+export class AutolinkWindows {
+  private changesNecessary: boolean;
 
-/**
- * Locates the react-native-windows directory containing template files
- * @param config project configuration
- */
-function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
-  const rnwPackage = resolveRnwRoot(projectConfig);
-  return path.join(rnwPackage, 'template');
-}
-
-/**
- * Logs the given message if verbose is True.
- * @param message The message to log.
- * @param verbose Whether or not verbose logging is enabled.
- */
-function verboseMessage(message: any, verbose: boolean) {
-  if (verbose) {
-    console.log(message);
-  }
-}
-
-/**
- * Updates the target file with the expected contents if it's different.
- * @param filePath Path to the target file to update.
- * @param expectedContents The expected contents of the file.
- * @param verbose If true, enable verbose logging.
- * @param checkMode It true, don't make any changes.
- * @return Whether any changes were necessary.
- */
-function updateFile(
-  filePath: string,
-  expectedContents: string,
-  verbose: boolean,
-  checkMode: boolean,
-): boolean {
-  const fileName = chalk.bold(path.basename(filePath));
-  verboseMessage(`Reading ${fileName}...`, verbose);
-  const actualContents = fs.existsSync(filePath)
-    ? fs.readFileSync(filePath).toString()
-    : '';
-
-  const contentsChanged = expectedContents !== actualContents;
-
-  if (contentsChanged) {
-    verboseMessage(chalk.yellow(`${fileName} needs to be updated.`), verbose);
-    if (!checkMode) {
-      verboseMessage(`Writing ${fileName}...`, verbose);
-      fs.writeFileSync(filePath, expectedContents, {
-        encoding: 'utf8',
-        flag: 'w',
-      });
-    }
-  } else {
-    verboseMessage(`No changes to ${fileName}.`, verbose);
+  public areChangesNeeded() {
+    return this.changesNecessary;
   }
 
-  return contentsChanged;
-}
+  constructor(readonly config: Config, readonly options: AutoLinkOptions) {
+    this.changesNecessary = false;
+  }
 
-/**
- * Performs auto-linking for RNW native modules and apps.
- * @param args Unprocessed args passed from react-native CLI.
- * @param config Config passed from react-native CLI.
- * @param options Options passed from react-native CLI.
- */
-// Disabling lint warnings due to high existing cyclomatic complexity
-// eslint-disable-next-line complexity
-async function updateAutoLink(
-  args: string[],
-  config: Config,
-  options: AutoLinkOptions,
-) {
-  const startTime = performance.now();
-  const verbose = options.logging;
-  const checkMode = options.check;
-  let changesNecessary = false;
+  public run(spinner: Ora) {
+    const verbose = this.options.logging;
 
-  const spinner = newSpinner(
-    checkMode ? 'Checking auto-linked files...' : 'Auto-linking...',
-  );
-
-  verboseMessage('', verbose);
-
-  try {
+    verboseMessage('', verbose);
     verboseMessage('Parsing project...', verbose);
 
-    const projectConfig = config.project;
+    const projectConfig = this.config.project;
 
     if (!('windows' in projectConfig) || projectConfig.windows === null) {
       throw new CodedError(
@@ -140,16 +60,16 @@ async function updateAutoLink(
     const rnwRoot = resolveRnwRoot(windowsAppConfig);
     const templateRoot = resolveTemplateRoot(windowsAppConfig);
 
-    if (options.sln) {
-      const slnFile = path.join(windowsAppConfig.folder, options.sln);
+    if (this.options.sln) {
+      const slnFile = path.join(windowsAppConfig.folder, this.options.sln);
       windowsAppConfig.solutionFile = path.relative(
         path.join(windowsAppConfig.folder, windowsAppConfig.sourceDir),
         slnFile,
       );
     }
 
-    if (options.proj) {
-      const projFile = path.join(windowsAppConfig.folder, options.proj);
+    if (this.options.proj) {
+      const projFile = path.join(windowsAppConfig.folder, this.options.proj);
 
       const projectContents = configUtils.readProjectFile(projFile);
 
@@ -201,6 +121,90 @@ async function updateAutoLink(
 
     const windowsAppProjectConfig = windowsAppConfig.project;
 
+    this.validateRequiredProperties(windowsAppProjectConfig);
+
+    const projectFile = path.join(
+      windowsAppConfig.folder,
+      windowsAppConfig.sourceDir,
+      windowsAppConfig.project.projectFile,
+    );
+
+    const projectDir = path.dirname(projectFile);
+    const projectLang = windowsAppConfig.project.projectLang!;
+
+    verboseMessage('Parsing dependencies...', verbose);
+
+    const dependenciesConfig = this.config.dependencies;
+
+    const windowsDependencies = this.getWindowsDependencies(
+      dependenciesConfig,
+      verbose,
+    );
+
+    this.changesNecessary =
+      ensureXAMLDialect(windowsAppConfig, this.options.check) ||
+      this.changesNecessary;
+
+    // Generating cs/cpp files for app code consumption
+    if (projectLang === 'cs') {
+      this.changesNecessary =
+        this.generateCSAutolinking(
+          windowsDependencies,
+          templateRoot,
+          projectLang,
+          projectDir,
+        ) || this.changesNecessary;
+    } else if (projectLang === 'cpp') {
+      this.changesNecessary =
+        this.generateCppAutolinking(
+          windowsDependencies,
+          templateRoot,
+          projectLang,
+          projectDir,
+        ) || this.changesNecessary;
+    }
+
+    // Generating props for app project consumption
+    let propertiesForProps = '';
+    let csModuleNames: string[] = [];
+
+    if (projectLang === 'cpp') {
+      csModuleNames = this.getCSModules(windowsDependencies);
+
+      if (csModuleNames.length > 0) {
+        propertiesForProps += `\n    <!-- Set due to dependency on C# module(s): ${csModuleNames.join()} -->`;
+        propertiesForProps += `\n    <ConsumeCSharpModules Condition="'$(ConsumeCSharpModules)'==''">true</ConsumeCSharpModules>`;
+      }
+    }
+
+    this.changesNecessary =
+      this.generateAutolinkProps(
+        templateRoot,
+        projectDir,
+        propertiesForProps,
+      ) || this.changesNecessary;
+
+    // Generating targets for app project consumption
+    this.changesNecessary =
+      this.generateAutolinkTargets(
+        windowsDependencies,
+        projectDir,
+        templateRoot,
+      ) || this.changesNecessary;
+
+    // Generating project entries for solution
+    this.changesNecessary =
+      this.updateSolution(
+        windowsDependencies,
+        csModuleNames,
+        rnwRoot,
+        solutionFile,
+      ) || this.changesNecessary;
+
+    spinner.succeed();
+  }
+
+  private validateRequiredProperties(windowsAppProjectConfig: Project) {
     const projectRequired: Array<keyof Project> = [
       'projectFile',
       'projectName',
@@ -229,20 +233,118 @@ async function updateAutoLink(
         );
       }
     });
+  }
 
-    const projectFile = path.join(
-      windowsAppConfig.folder,
-      windowsAppConfig.sourceDir,
-      windowsAppConfig.project.projectFile,
+  private generateCppAutolinking(
+    windowsDependencies: Record<string, WindowsDependencyConfig>,
+    templateRoot: string,
+    projectLang: string,
+    projectDir: string,
+  ) {
+    let cppIncludes = '';
+    let cppPackageProviders = '';
+
+    for (const dependencyName of Object.keys(windowsDependencies)) {
+      windowsDependencies[dependencyName].projects.forEach(project => {
+        if (project.directDependency) {
+          cppIncludes += `\n\n// Includes from ${dependencyName}`;
+          project.cppHeaders.forEach(header => {
+            cppIncludes += `\n#include <${header}>`;
+          });
+
+          cppPackageProviders += `\n    // IReactPackageProviders from ${dependencyName}`;
+          project.cppPackageProviders.forEach(packageProvider => {
+            cppPackageProviders += `\n    packageProviders.Append(winrt::${packageProvider}());`;
+          });
+        }
+      });
+    }
+
+    if (cppPackageProviders === '') {
+      // There are no windows dependencies, this would result in warning. C4100: 'packageProviders': unreferenced formal parameter.
+      // therefore add a usage.
+      cppPackageProviders = '\n    UNREFERENCED_PARAMETER(packageProviders);'; // CODESYNC: vnext\local-cli\generator-windows\index.js
+    }
+
+    const cppFileName = 'AutolinkedNativeModules.g.cpp';
+
+    const srcCppFile = path.join(
+      templateRoot,
+      `${projectLang}-app`,
+      'src',
+      cppFileName,
     );
 
-    const projectDir = path.dirname(projectFile);
-    const projectLang = windowsAppConfig.project.projectLang!;
+    const destCppFile = path.join(projectDir, cppFileName);
 
-    verboseMessage('Parsing dependencies...', verbose);
+    verboseMessage(
+      `Calculating ${chalk.bold(path.basename(destCppFile))}...`,
+      this.options.logging,
+    );
 
-    const dependenciesConfig = config.dependencies;
+    const cppContents = generatorCommon.resolveContents(srcCppFile, {
+      useMustache: true,
+      autolinkCppIncludes: cppIncludes,
+      autolinkCppPackageProviders: cppPackageProviders,
+    });
 
+    return this.updateFile(destCppFile, cppContents);
+  }
+
+  private generateCSAutolinking(
+    windowsDependencies: Record<string, WindowsDependencyConfig>,
+    templateRoot: string,
+    projectLang: string,
+    projectDir: string,
+  ) {
+    let csUsingNamespaces = '';
+    let csReactPackageProviders = '';
+
+    for (const dependencyName of Object.keys(windowsDependencies)) {
+      windowsDependencies[dependencyName].projects.forEach(project => {
+        if (project.directDependency) {
+          csUsingNamespaces += `\n\n// Namespaces from ${dependencyName}`;
+          project.csNamespaces.forEach(namespace => {
+            csUsingNamespaces += `\nusing ${namespace};`;
+          });
+
+          csReactPackageProviders += `\n            // IReactPackageProviders from ${dependencyName}`;
+          project.csPackageProviders.forEach(packageProvider => {
+            csReactPackageProviders += `\n            packageProviders.Add(new ${packageProvider}());`;
+          });
+        }
+      });
+    }
+
+    const csFileName = 'AutolinkedNativeModules.g.cs';
+
+    const srcCsFile = path.join(
+      templateRoot,
+      `${projectLang}-app`,
+      'src',
+      csFileName,
+    );
+
+    const destCsFile = path.join(projectDir, csFileName);
+
+    verboseMessage(
+      `Calculating ${chalk.bold(path.basename(destCsFile))}...`,
+      this.options.logging,
+    );
+
+    const csContents = generatorCommon.resolveContents(srcCsFile, {
+      useMustache: true,
+      autolinkCsUsingNamespaces: csUsingNamespaces,
+      autolinkCsReactPackageProviders: csReactPackageProviders,
+    });
+
+    return this.updateFile(destCsFile, csContents);
+  }
+
+  private getWindowsDependencies(
+    dependenciesConfig: {[key: string]: Dependency},
+    verbose: boolean,
+  ) {
     const windowsDependencies: Record<string, WindowsDependencyConfig> = {};
 
     for (const dependencyName of Object.keys(dependenciesConfig)) {
@@ -291,153 +393,50 @@ async function updateAutoLink(
         }
       }
     }
+    return windowsDependencies;
+  }
 
-    changesNecessary =
-      ensureXAMLDialect(windowsAppConfig, checkMode) || changesNecessary;
-    // Generating cs/cpp files for app code consumption
-    if (projectLang === 'cs') {
-      let csUsingNamespaces = '';
-      let csReactPackageProviders = '';
+  /**
+   * Updates the target file with the expected contents if it's different.
+   * @param filePath Path to the target file to update.
+   * @param expectedContents The expected contents of the file.
+   * @param verbose If true, enable verbose logging.
+   * @param checkMode It true, don't make any changes.
+   * @return Whether any changes were necessary.
+   */
+  private updateFile(filePath: string, expectedContents: string): boolean {
+    const fileName = chalk.bold(path.basename(filePath));
+    verboseMessage(`Reading ${fileName}...`, this.options.logging);
+    const actualContents = fs.existsSync(filePath)
+      ? fs.readFileSync(filePath).toString()
+      : '';
 
-      for (const dependencyName of Object.keys(windowsDependencies)) {
-        windowsDependencies[dependencyName].projects.forEach(project => {
-          if (project.directDependency) {
-            csUsingNamespaces += `\n\n// Namespaces from ${dependencyName}`;
-            project.csNamespaces.forEach(namespace => {
-              csUsingNamespaces += `\nusing ${namespace};`;
-            });
+    const contentsChanged = expectedContents !== actualContents;
 
-            csReactPackageProviders += `\n            // IReactPackageProviders from ${dependencyName}`;
-            project.csPackageProviders.forEach(packageProvider => {
-              csReactPackageProviders += `\n            packageProviders.Add(new ${packageProvider}());`;
-            });
-          }
+    if (contentsChanged) {
+      verboseMessage(
+        chalk.yellow(`${fileName} needs to be updated.`),
+        this.options.logging,
+      );
+      if (!this.options.check) {
+        verboseMessage(`Writing ${fileName}...`, this.options.logging);
+        fs.writeFileSync(filePath, expectedContents, {
+          encoding: 'utf8',
+          flag: 'w',
         });
       }
-
-      const csFileName = 'AutolinkedNativeModules.g.cs';
-
-      const srcCsFile = path.join(
-        templateRoot,
-        `${projectLang}-app`,
-        'src',
-        csFileName,
-      );
-
-      const destCsFile = path.join(projectDir, csFileName);
-
-      verboseMessage(
-        `Calculating ${chalk.bold(path.basename(destCsFile))}...`,
-        verbose,
-      );
-
-      const csContents = generatorCommon.resolveContents(srcCsFile, {
-        useMustache: true,
-        autolinkCsUsingNamespaces: csUsingNamespaces,
-        autolinkCsReactPackageProviders: csReactPackageProviders,
-      });
-
-      changesNecessary =
-        updateFile(destCsFile, csContents, verbose, checkMode) ||
-        changesNecessary;
-    } else if (projectLang === 'cpp') {
-      let cppIncludes = '';
-      let cppPackageProviders = '';
-
-      for (const dependencyName of Object.keys(windowsDependencies)) {
-        windowsDependencies[dependencyName].projects.forEach(project => {
-          if (project.directDependency) {
-            cppIncludes += `\n\n// Includes from ${dependencyName}`;
-            project.cppHeaders.forEach(header => {
-              cppIncludes += `\n#include <${header}>`;
-            });
-
-            cppPackageProviders += `\n    // IReactPackageProviders from ${dependencyName}`;
-            project.cppPackageProviders.forEach(packageProvider => {
-              cppPackageProviders += `\n    packageProviders.Append(winrt::${packageProvider}());`;
-            });
-          }
-        });
-      }
-
-      if (cppPackageProviders === '') {
-        // There are no windows dependencies, this would result in warning. C4100: 'packageProviders': unreferenced formal parameter.
-        // therefore add a usage.
-        cppPackageProviders = '\n    UNREFERENCED_PARAMETER(packageProviders);'; // CODESYNC: vnext\local-cli\generator-windows\index.js
-      }
-
-      const cppFileName = 'AutolinkedNativeModules.g.cpp';
-
-      const srcCppFile = path.join(
-        templateRoot,
-        `${projectLang}-app`,
-        'src',
-        cppFileName,
-      );
-
-      const destCppFile = path.join(projectDir, cppFileName);
-
-      verboseMessage(
-        `Calculating ${chalk.bold(path.basename(destCppFile))}...`,
-        verbose,
-      );
-
-      const cppContents = generatorCommon.resolveContents(srcCppFile, {
-        useMustache: true,
-        autolinkCppIncludes: cppIncludes,
-        autolinkCppPackageProviders: cppPackageProviders,
-      });
-
-      changesNecessary =
-        updateFile(destCppFile, cppContents, verbose, checkMode) ||
-        changesNecessary;
+    } else {
+      verboseMessage(`No changes to ${fileName}.`, this.options.logging);
     }
 
-    // Generating props for app project consumption
-    let propertiesForProps = '';
-    const csModuleNames: string[] = [];
+    return contentsChanged;
+  }
 
-    if (projectLang === 'cpp') {
-      for (const dependencyName of Object.keys(windowsDependencies)) {
-        windowsDependencies[dependencyName].projects.forEach(project => {
-          if (project.directDependency && project.projectLang === 'cs') {
-            csModuleNames.push(project.projectName);
-          }
-        });
-      }
-
-      if (csModuleNames.length > 0) {
-        propertiesForProps += `\n    <!-- Set due to dependency on C# module(s): ${csModuleNames.join()} -->`;
-        propertiesForProps += `\n    <ConsumeCSharpModules Condition="'$(ConsumeCSharpModules)'==''">true</ConsumeCSharpModules>`;
-      }
-    }
-
-    const propsFileName = 'AutolinkedNativeModules.g.props';
-
-    const srcPropsFile = path.join(
-      templateRoot,
-      `shared-app`,
-      'src',
-      propsFileName,
-    );
-
-    const destPropsFile = path.join(projectDir, propsFileName);
-
-    verboseMessage(
-      `Calculating ${chalk.bold(path.basename(destPropsFile))}...`,
-      verbose,
-    );
-
-    const propsContents = generatorCommon.resolveContents(srcPropsFile, {
-      useMustache: true,
-      autolinkPropertiesForProps: propertiesForProps,
-    });
-
-    changesNecessary =
-      updateFile(destPropsFile, propsContents, verbose, checkMode) ||
-      changesNecessary;
-
-    // Generating targets for app project consumption
+  private generateAutolinkTargets(
+    windowsDependencies: Record<string, WindowsDependencyConfig>,
+    projectDir: string,
+    templateRoot: string,
+  ) {
     let projectReferencesForTargets = '';
 
     for (const dependencyName of Object.keys(windowsDependencies)) {
@@ -456,8 +455,8 @@ async function updateAutoLink(
 
           projectReferencesForTargets += `\n    <!-- Projects from ${dependencyName} -->`;
           projectReferencesForTargets += `\n    <ProjectReference Include="$(ProjectDir)${relDependencyProjectFile}">
-      <Project>${project.projectGuid}</Project>
-    </ProjectReference>`;
+        <Project>${project.projectGuid}</Project>
+      </ProjectReference>`;
         }
       });
     }
@@ -475,7 +474,7 @@ async function updateAutoLink(
 
     verboseMessage(
       `Calculating ${chalk.bold(path.basename(destTargetFile))}...`,
-      verbose,
+      this.options.logging,
     );
 
     const targetContents = generatorCommon.resolveContents(srcTargetFile, {
@@ -483,11 +482,58 @@ async function updateAutoLink(
       autolinkProjectReferencesForTargets: projectReferencesForTargets,
     });
 
-    changesNecessary =
-      updateFile(destTargetFile, targetContents, verbose, checkMode) ||
-      changesNecessary;
+    return this.updateFile(destTargetFile, targetContents);
+  }
 
-    // Generating project entries for solution
+  private generateAutolinkProps(
+    templateRoot: string,
+    projectDir: string,
+    propertiesForProps: string,
+  ) {
+    const propsFileName = 'AutolinkedNativeModules.g.props';
+
+    const srcPropsFile = path.join(
+      templateRoot,
+      `shared-app`,
+      'src',
+      propsFileName,
+    );
+
+    const destPropsFile = path.join(projectDir, propsFileName);
+
+    verboseMessage(
+      `Calculating ${chalk.bold(path.basename(destPropsFile))}...`,
+      this.options.logging,
+    );
+
+    const propsContents = generatorCommon.resolveContents(srcPropsFile, {
+      useMustache: true,
+      autolinkPropertiesForProps: propertiesForProps,
+    });
+
+    return this.updateFile(destPropsFile, propsContents);
+  }
+
+  private getCSModules(
+    windowsDependencies: Record<string, WindowsDependencyConfig>,
+  ) {
+    const csModuleNames: string[] = [];
+    for (const dependencyName of Object.keys(windowsDependencies)) {
+      windowsDependencies[dependencyName].projects.forEach(project => {
+        if (project.directDependency && project.projectLang === 'cs') {
+          csModuleNames.push(project.projectName);
+        }
+      });
+    }
+    return csModuleNames;
+  }
+
+  private updateSolution(
+    windowsDependencies: Record<string, WindowsDependencyConfig>,
+    csModuleNames: string[],
+    rnwRoot: string,
+    solutionFile: string,
+  ) {
     const projectsForSolution: Project[] = [];
 
     for (const dependencyName of Object.keys(windowsDependencies)) {
@@ -533,62 +579,20 @@ async function updateAutoLink(
 
     verboseMessage(
       `Calculating ${chalk.bold(path.basename(solutionFile))} changes...`,
-      verbose,
+      this.options.logging,
     );
 
+    let changesNecessary = false;
     projectsForSolution.forEach(project => {
       const contentsChanged = vstools.addProjectToSolution(
         solutionFile,
         project,
-        verbose,
-        checkMode,
+        this.options.logging,
+        this.options.check,
       );
       changesNecessary = changesNecessary || contentsChanged;
     });
-
-    spinner.succeed();
-    const endTime = performance.now();
-
-    if (!changesNecessary) {
-      console.log(
-        `${chalk.green(
-          'Success:',
-        )} No auto-linking changes necessary. (${Math.round(
-          endTime - startTime,
-        )}ms)`,
-      );
-    } else if (checkMode) {
-      console.log(
-        `${chalk.yellow(
-          'Warning:',
-        )} Auto-linking changes were necessary but ${chalk.bold(
-          '--check',
-        )} specified. Run ${chalk.bold(
-          "'npx react-native autolink-windows'",
-        )} to apply the changes. (${Math.round(endTime - startTime)}ms)`,
-      );
-      throw new CodedError(
-        'NeedAutolinking',
-        'Auto-linking changes were necessary but --check was specified',
-      );
-    } else {
-      console.log(
-        `${chalk.green(
-          'Success:',
-        )} Auto-linking changes completed. (${Math.round(
-          endTime - startTime,
-        )}ms)`,
-      );
-    }
-  } catch (e) {
-    spinner.fail();
-    const endTime = performance.now();
-    console.log(
-      `${chalk.red('Error:')} ${e.toString()}. (${Math.round(
-        endTime - startTime,
-      )}ms)`,
-    );
-    throw e;
+    return changesNecessary;
   }
 }
 
@@ -722,6 +726,102 @@ function updatePackagesConfigXAMLDialect(
     }
   }
   return changed;
+}
+
+/**
+ * Locates the react-native-windows directory
+ * @param config project configuration
+ */
+function resolveRnwRoot(projectConfig: WindowsProjectConfig) {
+  const rnwPackage = path.dirname(
+    require.resolve('react-native-windows/package.json', {
+      paths: [projectConfig.folder],
+    }),
+  );
+  return rnwPackage;
+}
+
+/**
+ * Locates the react-native-windows directory containing template files
+ * @param config project configuration
+ */
+function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
+  const rnwPackage = resolveRnwRoot(projectConfig);
+  return path.join(rnwPackage, 'template');
+}
+
+/**
+ * Logs the given message if verbose is True.
+ * @param message The message to log.
+ * @param verbose Whether or not verbose logging is enabled.
+ */
+function verboseMessage(message: any, verbose: boolean) {
+  if (verbose) {
+    console.log(message);
+  }
+}
+
+/**
+ * Performs auto-linking for RNW native modules and apps.
+ * @param args Unprocessed args passed from react-native CLI.
+ * @param config Config passed from react-native CLI.
+ * @param options Options passed from react-native CLI.
+ */
+async function updateAutoLink(
+  args: string[],
+  config: Config,
+  options: AutoLinkOptions,
+) {
+  const startTime = performance.now();
+  const spinner = newSpinner(
+    options.check ? 'Checking auto-linked files...' : 'Auto-linking...',
+  );
+  try {
+    const autolink = new AutolinkWindows(config, options);
+    autolink.run(spinner);
+    const endTime = performance.now();
+
+    if (!autolink.areChangesNeeded()) {
+      console.log(
+        `${chalk.green(
+          'Success:',
+        )} No auto-linking changes necessary. (${Math.round(
+          endTime - startTime,
+        )}ms)`,
+      );
+    } else if (options.check) {
+      console.log(
+        `${chalk.yellow(
+          'Warning:',
+        )} Auto-linking changes were necessary but ${chalk.bold(
+          '--check',
+        )} specified. Run ${chalk.bold(
+          "'npx react-native autolink-windows'",
+        )} to apply the changes. (${Math.round(endTime - startTime)}ms)`,
+      );
+      throw new CodedError(
+        'NeedAutolinking',
+        'Auto-linking changes were necessary but --check was specified',
+      );
+    } else {
+      console.log(
+        `${chalk.green(
+          'Success:',
+        )} Auto-linking changes completed. (${Math.round(
+          endTime - startTime,
+        )}ms)`,
+      );
+    }
+  } catch (e) {
+    spinner.fail();
+    const endTime = performance.now();
+    console.log(
+      `${chalk.red('Error:')} ${e.toString()}. (${Math.round(
+        endTime - startTime,
+      )}ms)`,
+    );
+    throw e;
+  }
 }
 
 function formatXml(input: string) {
