@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "TextWin32 focusable property, enabling focus without selectability, and a TextWin32 test page.",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ppatboyd@outlook.com",
+  "dependentChangeType": "patch",
+  "date": "2021-02-06T01:38:08.371Z"
+}
