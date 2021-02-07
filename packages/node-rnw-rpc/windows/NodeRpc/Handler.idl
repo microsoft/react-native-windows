@@ -1,0 +1,33 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace NodeRpc {
+
+    delegate void RpcAction(Windows.Data.Json.JsonValue args);
+    delegate Windows.Data.Json.JsonValue RpcOperation(Windows.Data.Json.JsonValue args);
+    delegate Windows.Foundation.IAsyncAction AsyncRpcAction(Windows.Data.Json.JsonValue args);
+    delegate Windows.Foundation.IAsyncOperation<Windows.Data.Json.JsonValue> AsyncRpcOperation(Windows.Data.Json.JsonValue args);
+
+    [webhosthidden]
+    [default_interface]
+    runtimeclass Handler
+    {
+        Handler();
+
+        [default_overload]
+        [method_name("BindAction")]
+        Handler Bind(String methodName, RpcAction action);
+
+        [method_name("BindOperation")]
+        Handler Bind(String methodName, RpcOperation operation);
+
+        [method_name("BindAsyncAction")]
+        Handler Bind(String methodName, AsyncRpcAction action);
+
+        [method_name("BindAsyncOperation")]
+        Handler Bind(String methodName, AsyncRpcOperation operation);
+
+        // Result may be null if void return
+        Windows.Foundation.IAsyncOperation<Windows.Data.Json.JsonValue> Invoke(String methodName, Windows.Data.Json.JsonValue params);
+    };
+}

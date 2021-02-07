@@ -1,0 +1,17 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "Handler.idl";
+
+namespace NodeRpc {
+
+    [webhosthidden]
+    [default_interface]
+    runtimeclass Server
+    {
+      Server(NodeRpc.Handler handler);
+
+      Windows.Foundation.IAsyncAction ProcessAllClientRequests(UInt16 port, Windows.Foundation.TimeSpan pollInterval);
+    };
+
+}
