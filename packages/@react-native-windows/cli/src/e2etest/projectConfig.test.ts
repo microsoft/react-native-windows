@@ -14,16 +14,12 @@ import {
 
 import {copyAndReplace} from '../generator-common';
 import {AutolinkWindows} from '../runWindows/utils/autolink';
-
-const templateRoot = path.resolve('../../../vnext/template');
-
-const testProjectGuid = '{416476D5-974A-4EE2-8145-4E331297247E}';
-
-async function tryMkdir(dir: string): Promise<void> {
-  try {
-    await fs.promises.mkdir(dir, {recursive: true});
-  } catch (err) {}
-}
+import {
+  ensureWinUI3Project,
+  templateRoot,
+  testProjectGuid,
+  tryMkdir,
+} from './projectConfig.utils';
 
 type TargetProject = [string, ((folder: string) => Promise<void>)?];
 
@@ -103,83 +99,7 @@ const projects: TargetProject[] = [
     );
   }),
   project('WithWinUI3', async (folder: string) => {
-    const windowsDir = path.join(folder, 'windows');
-    await tryMkdir(windowsDir);
-
-    const replacements = {
-      name: 'WithWinUI3',
-      namespace: 'WithWinUI3',
-      useMustache: true,
-      projectGuidUpper: testProjectGuid,
-      projectGuidLower: testProjectGuid.toLowerCase(),
-      useWinUI3: false,
-      useHermes: false,
-      packagesConfigCppNugetPackages: [
-        {
-          id: 'Microsoft.ReactNative.Cxx',
-          version: '1.0.0',
-          hasProps: false,
-          hasTargets: true,
-        },
-        {
-          id: 'Microsoft.UI.Xaml',
-          version: '2.3.4.5',
-          hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
-          hasTargets: false,
-        },
-        {
-          id: 'Microsoft.WinUI',
-          version: '3.2.1.0',
-          hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
-          hasTargets: false,
-        },
-      ],
-    };
-
-    await copyAndReplace(
-      path.join(templateRoot, 'cpp-app/proj/MyApp.sln'),
-      path.join(windowsDir, 'WithWinUI3.sln'),
-      replacements,
-      null,
-    );
-
-    const projDir = path.join(windowsDir, 'WithWinUI3');
-    await tryMkdir(projDir);
-
-    await copyAndReplace(
-      path.join(templateRoot, 'cpp-app/proj/MyApp.vcxproj'),
-      path.join(projDir, 'WithWinUI3.vcxproj'),
-      replacements,
-      null,
-    );
-
-    await copyAndReplace(
-      path.join(templateRoot, 'cpp-app/proj/packages.config'),
-      path.join(projDir, 'packages.config'),
-      replacements,
-      null,
-    );
-
-    await copyAndReplace(
-      path.join(templateRoot, 'shared-app/proj/ExperimentalFeatures.props'),
-      path.join(windowsDir, 'ExperimentalFeatures.props'),
-      replacements,
-      null,
-    );
-
-    await copyAndReplace(
-      path.join(templateRoot, 'cpp-app/proj/packages.config'),
-      path.join(projDir, 'packages.config'),
-      replacements,
-      null,
-    );
-
-    await copyAndReplace(
-      path.join(templateRoot, 'shared-app/proj/BuildFlags.props'),
-      path.join(windowsDir, 'BuildFlags.props'),
-      replacements,
-      null,
-    );
+    await ensureWinUI3Project(folder);
   }),
 ];
 
@@ -246,6 +166,7 @@ test.each(projects)(
 
 test('useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async done => {
   const folder = path.resolve('src/e2etest/projects/WithWinUI3');
+
   const rnc = require(path.join(folder, 'react-native.config.js'));
 
   const config = projectConfigWindows(folder, rnc.project.windows)!;

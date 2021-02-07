@@ -672,7 +672,7 @@ export class AutolinkWindows {
         // Make sure BuildFlags matches the value that comes from react-native.config.js
         const node = buildFlags.content.getElementsByTagName('UseWinUI3');
         const newValue = useWinUI3FromConfig ? 'true' : 'false';
-        changesNeeded = changesNeeded || node.item(0)?.textContent !== newValue;
+        changesNeeded = node.item(0)?.textContent !== newValue || changesNeeded;
         if (!this.options.check && changesNeeded) {
           node.item(0)!.textContent = newValue;
           const buildFlagsOutput = new XMLSerializer().serializeToString(

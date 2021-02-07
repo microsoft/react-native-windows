@@ -2,17 +2,18 @@ import * as path from 'path';
 import { projectConfigWindows } from '../config/projectConfig';
 import {AutolinkWindows} from '../runWindows/utils/autolink';
 import {DOMParser} from 'xmldom';
+import { ensureWinUI3Project } from './projectConfig.utils';
 
 test('autolink with no windows project', () => {
     expect(() => {
       // eslint-disable-next-line no-new
-      new AutolinkWindows({}, {}, {check: true, logging: false});
+      new AutolinkTest({}, {}, {check: true, logging: false});
     }).toThrowError();
   });
   
   test('autolink with incomplete windows project', () => {
     expect(() => {
-      const autolink = new AutolinkWindows(
+      const autolink = new AutolinkTest(
         {windows: {}},
         {},
         {check: true, logging: false},
@@ -63,7 +64,7 @@ test('autolink with no windows project', () => {
     }).toThrow();
   });
   
-  test('autolink fixup proj', () => {
+  test('autolink fixup proj', async done => {
     const autolink = new AutolinkTest(
       {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
       {},
@@ -76,6 +77,8 @@ test('autolink with no windows project', () => {
     expect(autolink.getWindowsProjectConfig().solutionFile).toEqual('foo.sln');
     expect(autolink.getWindowsProjectConfig().project).toBeUndefined();
   
+    const folder = path.resolve('src/e2etest/projects/', 'WithWinUI3');
+    await ensureWinUI3Project(folder);
     expect(() => {
       autolink.validateRequiredProjectProperties();
     }).toThrow();
@@ -85,6 +88,7 @@ test('autolink with no windows project', () => {
     expect(projectConfig).not.toBeUndefined();
     expect(projectConfig.projectName).toEqual('WithWinUI3');
     autolink.validateRequiredProjectProperties();
+    done();
   });
   
   test('empty cpp autolink dependencies', () => {
