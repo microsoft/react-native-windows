@@ -14,18 +14,19 @@ namespace winrt::NodeRpc::implementation {
 Server::Server(const winrt::NodeRpc::Handler &handler) : m_requestProcessor(handler) {}
 
 IAsyncAction Server::ProcessAllClientRequests(uint16_t port, Windows::Foundation::TimeSpan pollInterval) noexcept {
-  auto weakThis = get_weak();
+  auto weakServer = get_weak();
   auto cancellationToken = co_await get_cancellation_token();
 
   while (!cancellationToken()) {
     try {
-      auto strongThis = weakThis.get();
-      if (!strongThis) {
+      auto strongServer = weakServer.get();
+      if (!strongServer) {
         co_return;
       }
 
-      // FUTURE: We should share lessthrow_await_adapter and use it here/below
-      co_await strongThis->m_socket.ConnectAsync(HostName(L"127.0.0.1"), winrt::to_hstring(port));
+      // FUTURE: We should share lessthrow_await_adapter from outside of vnext
+      // and use it here and below to avoid exceptions during expected control flow.
+      co_await strongServer->m_socket.ConnectAsync(HostName(L"127.0.0.1"), winrt::to_hstring(port));
       break;
     } catch (const winrt::hresult_error &ex) {
       auto socketError = SocketError::GetStatus(ex.code());
@@ -39,12 +40,19 @@ IAsyncAction Server::ProcessAllClientRequests(uint16_t port, Windows::Foundation
     co_await context;
   }
 
-  if (!cancellationToken()) {
-    if (auto strongThis = weakThis.get()) {
-      auto pumpRequestsCoro = strongThis->PumpRequests();
-      cancellationToken.callback([pumpRequestsCoro]() noexcept { pumpRequestsCoro.Cancel(); });
-      co_await pumpRequestsCoro;
+  IAsyncAction pumpRequestsCoro(nullptr);
+
+  // Make sure to let the server die while pumping. Do not keep a strong ref
+  // after starting the coroutine
+  if (auto strongServer = weakServer.get()) {
+    if (!cancellationToken()) {
+      pumpRequestsCoro = strongServer->PumpRequests();
     }
+  }
+
+  if (pumpRequestsCoro) {
+    cancellationToken.callback([pumpRequestsCoro]() noexcept { pumpRequestsCoro.Cancel(); });
+    co_await pumpRequestsCoro;
   }
 }
 
@@ -53,7 +61,7 @@ IAsyncAction Server::PumpRequests() noexcept {
   reader.ByteOrder(ByteOrder::LittleEndian);
   reader.UnicodeEncoding(UnicodeEncoding::Utf8);
 
-  auto weakThis = get_weak();
+  auto weakServer = get_weak();
   auto cancellationToken = co_await get_cancellation_token();
 
   while (!cancellationToken()) {
@@ -63,9 +71,9 @@ IAsyncAction Server::PumpRequests() noexcept {
       co_await reader.LoadAsync(messageSize);
       auto message = reader.ReadString(messageSize);
 
-      if (auto strongThis = weakThis.get()) {
+      if (auto strongServer = weakServer.get()) {
         if (!cancellationToken()) {
-          strongThis->m_requestProcessor.HandleRequest(message, strongThis->m_socket.OutputStream());
+          strongServer->m_requestProcessor.HandleRequest(message, strongServer->m_socket.OutputStream());
         }
       }
 

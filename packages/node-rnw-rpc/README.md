@@ -28,7 +28,7 @@ handler.Bind("add", [](const JSonValue& params) noexcept {
     sum += addend.GetNumber();
   }
   
-  return JSonValue.CreateNumberValue(sum);
+  return JSonValue::CreateNumberValue(sum);
 });
 
 // Methods may be implcitly bound to IAsyncAction or IAsyncOperation

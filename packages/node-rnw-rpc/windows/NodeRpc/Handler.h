@@ -17,7 +17,7 @@ struct Handler : HandlerT<Handler> {
 
   bool IsMethodRegistered(const winrt::hstring &methodName) noexcept;
   bool IsReservedMethodName(const winrt::hstring &methodName) noexcept;
-  Windows::Foundation::IAsyncOperation<Windows::Data::Json::JsonValue> Invoke(const winrt::hstring& methodName, const Windows::Data::Json::JsonValue &params) noexcept;
+  Windows::Foundation::IAsyncOperation<Windows::Data::Json::JsonValue> Invoke(const winrt::hstring& methodName, const Windows::Data::Json::JsonValue &params);
 
  private:
   std::unordered_map<winrt::hstring, RpcAction> m_actionHandlers;

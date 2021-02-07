@@ -27,7 +27,7 @@ namespace NodeRpc {
         [method_name("BindAsyncOperation")]
         Handler Bind(String methodName, AsyncRpcOperation operation);
 
-        // Result may be null if void return
+        // May throw on delegate error
         Windows.Foundation.IAsyncOperation<Windows.Data.Json.JsonValue> Invoke(String methodName, Windows.Data.Json.JsonValue params);
     };
 }

@@ -117,9 +117,13 @@
     <ClInclude Include="Handler.h">
       <DependentUpon>Handler.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="ReactPackageProvider.h">
+      <DependentUpon>ReactPackageProvider.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="JsonRpcRequestProcessor.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -129,11 +133,15 @@
     <ClCompile Include="Handler.cpp">
       <DependentUpon>Handler.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="ReactPackageProvider.cpp">
+      <DependentUpon>ReactPackageProvider.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="Server.idl" />
     <Midl Include="Handler.idl" />
+    <Midl Include="ReactPackageProvider.idl" />
+    <Midl Include="Server.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NodeRpc.def" />

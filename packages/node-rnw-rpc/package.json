@@ -10,7 +10,7 @@
     "watch": "rnw-scripts watch",
     "windows": "react-native run-windows"
   },
-  "main": "lib-commonjs/appcontainerPipe.js",
+  "main": "lib-commonjs/nodeRnwRpc.js",
   "peerDependencies": {
     "react-native-windows": ">0.63.0 || <0.0.0"
   },

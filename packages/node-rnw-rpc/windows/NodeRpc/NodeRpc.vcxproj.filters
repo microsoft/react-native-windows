@@ -3,6 +3,7 @@
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="JsonRpcRequestProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -16,5 +17,6 @@
   <ItemGroup>
     <Midl Include="Server.idl" />
     <Midl Include="Handler.idl" />
+    <Midl Include="ReactPackageProvider.idl" />
   </ItemGroup>
 </Project>

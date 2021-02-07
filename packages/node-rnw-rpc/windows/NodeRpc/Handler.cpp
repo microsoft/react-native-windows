@@ -54,11 +54,11 @@ bool Handler::IsReservedMethodName(const winrt::hstring &methodName) noexcept {
   return std::wstring_view(methodName).compare(0, reservedPrefix.size(), reservedPrefix, 0, reservedPrefix.size()) != 0;
 }
 
-IAsyncOperation<JsonValue> Handler::Invoke(const winrt::hstring &methodName, const JsonValue &params) noexcept {
+IAsyncOperation<JsonValue> Handler::Invoke(const winrt::hstring &methodName, const JsonValue &params) {
   auto action = m_actionHandlers.find(methodName);
   if (action != m_actionHandlers.end()) {
     action->second(params);
-    co_return nullptr;
+    co_return JsonValue::CreateNullValue();
   }
 
   auto operation = m_operationHandlers.find(methodName);
@@ -70,7 +70,7 @@ IAsyncOperation<JsonValue> Handler::Invoke(const winrt::hstring &methodName, con
   auto asyncAction = m_asyncActionHandlers.find(methodName);
   if (asyncAction != m_asyncActionHandlers.end()) {
     co_await asyncAction->second(params);
-    co_return nullptr;
+    co_return JsonValue::CreateNullValue();
   }
 
   auto asyncOperation = m_asyncOperationHandlers.find(methodName);
