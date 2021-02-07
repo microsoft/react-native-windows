@@ -22,7 +22,7 @@
     "@react-native-windows/tester": "0.0.1",
     "prompt-sync": "^4.2.0",
     "react": "17.0.1",
-    "react-native": "0.64.0-rc.1",
+    "react-native": "0.64.0-rc.3",
     "react-native-windows": "0.64.0-preview.9"
   },
   "devDependencies": {
