@@ -6,12 +6,10 @@
 
 using namespace winrt::Microsoft::ReactNative;
 
-namespace winrt::NodeRpc::implementation
-{
+namespace winrt::NodeRpc::implementation {
 
-void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept
-{
-    // Noop
+void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
+  // Noop
 }
 
 } // namespace winrt::NodeRpc::implementation
