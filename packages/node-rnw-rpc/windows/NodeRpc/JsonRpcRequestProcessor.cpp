@@ -52,6 +52,8 @@ IAsyncOperation<JsonObject> JsonRpcRequestProcessor::DecodeAndValidateMessage(
     co_return nullptr;
   }
 
+  // TODO validate fields
+  co_return obj;
 }
 
 IAsyncAction JsonRpcRequestProcessor::EmitError(
