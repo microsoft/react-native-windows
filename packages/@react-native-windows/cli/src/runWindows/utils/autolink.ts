@@ -645,8 +645,7 @@ function fixPackagesConfig(
     path.dirname(projectFile),
     'packages.config',
   );
-  console.log(`UseWinUI = ${useWinUI3}`);
-  console.log(`packages.config = ${packagesConfig}`);
+
   let changed = false;
 
   if (fs.existsSync(packagesConfig)) {
