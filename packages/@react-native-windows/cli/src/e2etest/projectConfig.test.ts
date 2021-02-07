@@ -13,7 +13,7 @@ import {
 } from '../config/projectConfig';
 
 import {copyAndReplace} from '../generator-common';
-import {ensureXAMLDialect} from '../runWindows/utils/autolink';
+import {AutolinkWindows} from '../runWindows/utils/autolink';
 
 const templateRoot = path.resolve('../../../vnext/template');
 
@@ -248,9 +248,18 @@ test('useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalF
   const folder = path.resolve('src/e2etest/projects/WithWinUI3');
   const rnc = require(path.join(folder, 'react-native.config.js'));
 
-  const config = projectConfigWindows(folder, rnc.project.windows);
+  const config = projectConfigWindows(folder, rnc.project.windows)!;
 
-  expect(ensureXAMLDialect(config!, false)).toBeTruthy();
+  const al = new AutolinkWindows(
+    {windows: config},
+    {},
+    {
+      check: false,
+      logging: false,
+    },
+  );
+
+  expect(al.ensureXAMLDialect()).toBeTruthy();
 
   const packagesConfig = (
     await fs.promises.readFile(

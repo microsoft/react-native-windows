@@ -19,7 +19,12 @@ import * as vstools from './vstools';
 import * as generatorCommon from '../../generator-common';
 import * as configUtils from '../../config/configUtils';
 
-import {Command, Config, Dependency} from '@react-native-community/cli-types';
+import {
+  Command,
+  Config,
+  Dependency,
+  ProjectConfig,
+} from '@react-native-community/cli-types';
 import {
   WindowsDependencyConfig,
   ProjectDependency,
@@ -32,13 +37,40 @@ const formatter = require('xml-formatter');
 
 export class AutolinkWindows {
   private changesNecessary: boolean;
+  protected windowsAppConfig: WindowsProjectConfig;
 
   public areChangesNeeded() {
     return this.changesNecessary;
   }
 
-  constructor(readonly config: Config, readonly options: AutoLinkOptions) {
+  private getWindowsConfig() {
+    return this.windowsAppConfig;
+  }
+
+  private getSolutionFile() {
+    return path.join(
+      this.getWindowsConfig().folder,
+      this.getWindowsConfig().sourceDir,
+      this.getWindowsConfig().solutionFile,
+    );
+  }
+
+  constructor(
+    readonly projectConfig: ProjectConfig,
+    readonly dependenciesConfig: {[key: string]: Dependency},
+    readonly options: AutoLinkOptions,
+  ) {
     this.changesNecessary = false;
+    if (
+      !('windows' in this.projectConfig) ||
+      this.projectConfig.windows === null
+    ) {
+      throw new CodedError(
+        'NoWindowsConfig',
+        'Windows auto-link only supported on Windows app projects',
+      );
+    }
+    this.windowsAppConfig = projectConfig.windows;
   }
 
   public run(spinner: Ora) {
@@ -47,121 +79,41 @@ export class AutolinkWindows {
     verboseMessage('', verbose);
     verboseMessage('Parsing project...', verbose);
 
-    const projectConfig = this.config.project;
+    const rnwRoot = resolveRnwRoot(this.windowsAppConfig);
+    const templateRoot = resolveTemplateRoot(this.windowsAppConfig);
 
-    if (!('windows' in projectConfig) || projectConfig.windows === null) {
-      throw new CodedError(
-        'NoWindowsConfig',
-        'Windows auto-link only supported on Windows app projects',
-      );
-    }
-
-    const windowsAppConfig: WindowsProjectConfig = projectConfig.windows;
-    const rnwRoot = resolveRnwRoot(windowsAppConfig);
-    const templateRoot = resolveTemplateRoot(windowsAppConfig);
-
-    if (this.options.sln) {
-      const slnFile = path.join(windowsAppConfig.folder, this.options.sln);
-      windowsAppConfig.solutionFile = path.relative(
-        path.join(windowsAppConfig.folder, windowsAppConfig.sourceDir),
-        slnFile,
-      );
-    }
-
-    if (this.options.proj) {
-      const projFile = path.join(windowsAppConfig.folder, this.options.proj);
-
-      const projectContents = configUtils.readProjectFile(projFile);
-
-      windowsAppConfig.project = {
-        projectFile: path.relative(
-          path.join(windowsAppConfig.folder, windowsAppConfig.sourceDir),
-          projFile,
-        ),
-        projectName: configUtils.getProjectName(projectContents),
-        projectLang: configUtils.getProjectLanguage(projFile),
-        projectGuid: configUtils.getProjectGuid(projectContents),
-      };
-    }
+    this.fixUpForSlnOption();
+    this.fixUpForProjOption();
 
     verboseMessage('Found Windows app project, config:', verbose);
-    verboseMessage(windowsAppConfig, verbose);
+    verboseMessage(this.windowsAppConfig, verbose);
 
-    const alwaysRequired: Array<keyof WindowsProjectConfig> = [
-      'folder',
-      'sourceDir',
-      'solutionFile',
-      'project',
-    ];
+    this.validateRequiredAppProperties();
 
-    alwaysRequired.forEach(item => {
-      if (!(item in windowsAppConfig) || windowsAppConfig[item] === null) {
-        throw new CodedError(
-          'IncompleteConfig',
-          `${item} is required but not specified by react-native config`,
-          {item: item},
-        );
-      } else if (
-        typeof windowsAppConfig[item] === 'string' &&
-        (windowsAppConfig[item] as string).startsWith('Error: ')
-      ) {
-        throw new CodedError(
-          'InvalidConfig',
-          `${item} invalid. ${windowsAppConfig[item]}`,
-          {item: item},
-        );
-      }
-    });
+    const solutionFile = this.getSolutionFile();
 
-    const solutionFile = path.join(
-      windowsAppConfig.folder,
-      windowsAppConfig.sourceDir,
-      windowsAppConfig.solutionFile,
-    );
+    const windowsAppProjectConfig = this.windowsAppConfig.project;
 
-    const windowsAppProjectConfig = windowsAppConfig.project;
+    this.validateRequiredProjectProperties();
 
-    this.validateRequiredProperties(windowsAppProjectConfig);
-
-    const projectFile = path.join(
-      windowsAppConfig.folder,
-      windowsAppConfig.sourceDir,
-      windowsAppConfig.project.projectFile,
-    );
+    const projectFile = this.getProjectFile();
 
     const projectDir = path.dirname(projectFile);
-    const projectLang = windowsAppConfig.project.projectLang!;
+    const projectLang = windowsAppProjectConfig.projectLang!;
 
     verboseMessage('Parsing dependencies...', verbose);
 
-    const dependenciesConfig = this.config.dependencies;
-
-    const windowsDependencies = this.getWindowsDependencies(
-      dependenciesConfig,
-      verbose,
-    );
-
-    this.changesNecessary =
-      ensureXAMLDialect(windowsAppConfig, this.options.check) ||
-      this.changesNecessary;
+    this.changesNecessary = this.ensureXAMLDialect() || this.changesNecessary;
 
     // Generating cs/cpp files for app code consumption
     if (projectLang === 'cs') {
       this.changesNecessary =
-        this.generateCSAutolinking(
-          windowsDependencies,
-          templateRoot,
-          projectLang,
-          projectDir,
-        ) || this.changesNecessary;
+        this.generateCSAutolinking(templateRoot, projectLang, projectDir) ||
+        this.changesNecessary;
     } else if (projectLang === 'cpp') {
       this.changesNecessary =
-        this.generateCppAutolinking(
-          windowsDependencies,
-          templateRoot,
-          projectLang,
-          projectDir,
-        ) || this.changesNecessary;
+        this.generateCppAutolinking(templateRoot, projectLang, projectDir) ||
+        this.changesNecessary;
     }
 
     // Generating props for app project consumption
@@ -169,7 +121,7 @@ export class AutolinkWindows {
     let csModuleNames: string[] = [];
 
     if (projectLang === 'cpp') {
-      csModuleNames = this.getCSModules(windowsDependencies);
+      csModuleNames = this.getCSModules();
 
       if (csModuleNames.length > 0) {
         propertiesForProps += `\n    <!-- Set due to dependency on C# module(s): ${csModuleNames.join()} -->`;
@@ -186,25 +138,104 @@ export class AutolinkWindows {
 
     // Generating targets for app project consumption
     this.changesNecessary =
-      this.generateAutolinkTargets(
-        windowsDependencies,
-        projectDir,
-        templateRoot,
-      ) || this.changesNecessary;
+      this.generateAutolinkTargets(projectDir, templateRoot) ||
+      this.changesNecessary;
 
     // Generating project entries for solution
     this.changesNecessary =
-      this.updateSolution(
-        windowsDependencies,
-        csModuleNames,
-        rnwRoot,
-        solutionFile,
-      ) || this.changesNecessary;
+      this.updateSolution(rnwRoot, solutionFile) || this.changesNecessary;
 
     spinner.succeed();
   }
 
-  private validateRequiredProperties(windowsAppProjectConfig: Project) {
+  /**
+   * Handles the --proj command-line option by consuming its value into the windowsAppConfig
+   */
+  public fixUpForProjOption() {
+    if (this.options.proj) {
+      const projFile = path.join(
+        this.windowsAppConfig.folder,
+        this.options.proj,
+      );
+
+      const projectContents = configUtils.readProjectFile(projFile);
+
+      this.windowsAppConfig.project = {
+        projectFile: path.relative(
+          path.join(
+            this.windowsAppConfig.folder,
+            this.windowsAppConfig.sourceDir,
+          ),
+          projFile,
+        ),
+        projectName: configUtils.getProjectName(projectContents),
+        projectLang: configUtils.getProjectLanguage(projFile),
+        projectGuid: configUtils.getProjectGuid(projectContents),
+      };
+    }
+  }
+
+  /**
+   * Handles the --sln command-line option by consuming its value into the windowsAppConfig
+   */
+  public fixUpForSlnOption() {
+    if (this.options.sln) {
+      const slnFile = path.join(this.windowsAppConfig.folder, this.options.sln);
+      this.windowsAppConfig.solutionFile = path.relative(
+        path.join(
+          this.windowsAppConfig.folder,
+          this.windowsAppConfig.sourceDir,
+        ),
+        slnFile,
+      );
+    }
+  }
+
+  /** Validates the all of the required app (solution) properties are present and valid */
+  public validateRequiredAppProperties() {
+    const alwaysRequired: Array<keyof WindowsProjectConfig> = [
+      'folder',
+      'sourceDir',
+      'solutionFile',
+      'project',
+    ];
+
+    alwaysRequired.forEach(item => {
+      if (
+        !(item in this.windowsAppConfig) ||
+        this.windowsAppConfig[item] === null
+      ) {
+        throw new CodedError(
+          'IncompleteConfig',
+          `${item} is required but not specified by react-native config`,
+          {item: item},
+        );
+      } else if (
+        typeof this.windowsAppConfig[item] === 'string' &&
+        (this.windowsAppConfig[item] as string).startsWith('Error: ')
+      ) {
+        throw new CodedError(
+          'InvalidConfig',
+          `${item} invalid. ${this.windowsAppConfig[item]}`,
+          {item: item},
+        );
+      }
+    });
+  }
+
+  /** @return the full path to the project file (.vcxproj or .csproj) */
+  private getProjectFile() {
+    const windowsAppConfig = this.getWindowsConfig();
+    return path.join(
+      windowsAppConfig.folder,
+      windowsAppConfig.sourceDir,
+      windowsAppConfig.project.projectFile,
+    );
+  }
+
+  /** Validates that all of the required app _project_ properties are present and valid */
+  public validateRequiredProjectProperties() {
+    const windowsAppProjectConfig = this.windowsAppConfig.project;
     const projectRequired: Array<keyof Project> = [
       'projectFile',
       'projectName',
@@ -236,35 +267,11 @@ export class AutolinkWindows {
   }
 
   private generateCppAutolinking(
-    windowsDependencies: Record<string, WindowsDependencyConfig>,
     templateRoot: string,
     projectLang: string,
     projectDir: string,
   ) {
-    let cppIncludes = '';
-    let cppPackageProviders = '';
-
-    for (const dependencyName of Object.keys(windowsDependencies)) {
-      windowsDependencies[dependencyName].projects.forEach(project => {
-        if (project.directDependency) {
-          cppIncludes += `\n\n// Includes from ${dependencyName}`;
-          project.cppHeaders.forEach(header => {
-            cppIncludes += `\n#include <${header}>`;
-          });
-
-          cppPackageProviders += `\n    // IReactPackageProviders from ${dependencyName}`;
-          project.cppPackageProviders.forEach(packageProvider => {
-            cppPackageProviders += `\n    packageProviders.Append(winrt::${packageProvider}());`;
-          });
-        }
-      });
-    }
-
-    if (cppPackageProviders === '') {
-      // There are no windows dependencies, this would result in warning. C4100: 'packageProviders': unreferenced formal parameter.
-      // therefore add a usage.
-      cppPackageProviders = '\n    UNREFERENCED_PARAMETER(packageProviders);'; // CODESYNC: vnext\local-cli\generator-windows\index.js
-    }
+    const {cppPackageProviders, cppIncludes} = this.getCppReplacements();
 
     const cppFileName = 'AutolinkedNativeModules.g.cpp';
 
@@ -291,30 +298,44 @@ export class AutolinkWindows {
     return this.updateFile(destCppFile, cppContents);
   }
 
-  private generateCSAutolinking(
-    windowsDependencies: Record<string, WindowsDependencyConfig>,
-    templateRoot: string,
-    projectLang: string,
-    projectDir: string,
-  ) {
-    let csUsingNamespaces = '';
-    let csReactPackageProviders = '';
+  public getCppReplacements() {
+    let cppIncludes = '';
+    let cppPackageProviders = '';
+    const windowsDependencies = this.getWindowsDependencies();
 
     for (const dependencyName of Object.keys(windowsDependencies)) {
       windowsDependencies[dependencyName].projects.forEach(project => {
         if (project.directDependency) {
-          csUsingNamespaces += `\n\n// Namespaces from ${dependencyName}`;
-          project.csNamespaces.forEach(namespace => {
-            csUsingNamespaces += `\nusing ${namespace};`;
+          cppIncludes += `\n\n// Includes from ${dependencyName}`;
+          project.cppHeaders.forEach(header => {
+            cppIncludes += `\n#include <${header}>`;
           });
 
-          csReactPackageProviders += `\n            // IReactPackageProviders from ${dependencyName}`;
-          project.csPackageProviders.forEach(packageProvider => {
-            csReactPackageProviders += `\n            packageProviders.Add(new ${packageProvider}());`;
+          cppPackageProviders += `\n    // IReactPackageProviders from ${dependencyName}`;
+          project.cppPackageProviders.forEach(packageProvider => {
+            cppPackageProviders += `\n    packageProviders.Append(winrt::${packageProvider}());`;
           });
         }
       });
     }
+
+    if (cppPackageProviders === '') {
+      // There are no windows dependencies, this would result in warning. C4100: 'packageProviders': unreferenced formal parameter.
+      // therefore add a usage.
+      cppPackageProviders = '\n    UNREFERENCED_PARAMETER(packageProviders);'; // CODESYNC: vnext\local-cli\generator-windows\index.js
+    }
+    return {cppPackageProviders, cppIncludes};
+  }
+
+  private generateCSAutolinking(
+    templateRoot: string,
+    projectLang: string,
+    projectDir: string,
+  ) {
+    const {
+      csUsingNamespaces,
+      csReactPackageProviders,
+    } = this.getCsReplacements();
 
     const csFileName = 'AutolinkedNativeModules.g.cs';
 
@@ -341,70 +362,102 @@ export class AutolinkWindows {
     return this.updateFile(destCsFile, csContents);
   }
 
-  private getWindowsDependencies(
-    dependenciesConfig: {[key: string]: Dependency},
-    verbose: boolean,
-  ) {
-    const windowsDependencies: Record<string, WindowsDependencyConfig> = {};
+  public getCsReplacements() {
+    let csUsingNamespaces = '';
+    let csReactPackageProviders = '';
 
-    for (const dependencyName of Object.keys(dependenciesConfig)) {
-      const windowsDependency: WindowsDependencyConfig | undefined =
-        dependenciesConfig[dependencyName].platforms.windows;
+    const windowsDependencies = this.getWindowsDependencies();
+    for (const dependencyName of Object.keys(windowsDependencies)) {
+      windowsDependencies[dependencyName].projects.forEach(project => {
+        if (project.directDependency) {
+          csUsingNamespaces += `\n\n// Namespaces from ${dependencyName}`;
+          project.csNamespaces.forEach(namespace => {
+            csUsingNamespaces += `\nusing ${namespace};`;
+          });
 
-      if (windowsDependency) {
-        verboseMessage(
-          `${chalk.bold(dependencyName)} has Windows implementation, config:`,
-          verbose,
-        );
-        verboseMessage(windowsDependency, verbose);
-
-        let dependencyIsValid = true;
-
-        dependencyIsValid = !!(
-          dependencyIsValid &&
-          'sourceDir' in windowsDependency &&
-          windowsDependency.sourceDir &&
-          !windowsDependency.sourceDir.startsWith('Error: ')
-        );
-
-        if (
-          'projects' in windowsDependency &&
-          Array.isArray(windowsDependency.projects)
-        ) {
-          windowsDependency.projects.forEach(project => {
-            const itemsToCheck: Array<keyof ProjectDependency> = [
-              'projectFile',
-              'directDependency',
-            ];
-            itemsToCheck.forEach(item => {
-              dependencyIsValid = !!(
-                dependencyIsValid &&
-                item in project &&
-                project[item] &&
-                !project[item]!.toString().startsWith('Error: ')
-              );
-            });
+          csReactPackageProviders += `\n            // IReactPackageProviders from ${dependencyName}`;
+          project.csPackageProviders.forEach(packageProvider => {
+            csReactPackageProviders += `\n            packageProviders.Add(new ${packageProvider}());`;
           });
         }
+      });
+    }
+    return {csUsingNamespaces, csReactPackageProviders};
+  }
 
-        if (dependencyIsValid) {
-          verboseMessage(`Adding ${chalk.bold(dependencyName)}.`, verbose);
-          windowsDependencies[dependencyName] = windowsDependency;
+  /** Cache of dependencies */
+  private readonly windowsDependencies: Record<
+    string,
+    WindowsDependencyConfig
+  > = {};
+
+  private getWindowsDependencies() {
+    if (Object.keys(this.windowsDependencies).length === 0) {
+      for (const dependencyName of Object.keys(this.dependenciesConfig)) {
+        const windowsDependency: WindowsDependencyConfig | undefined = this
+          .dependenciesConfig[dependencyName].platforms.windows;
+
+        if (windowsDependency) {
+          verboseMessage(
+            `${chalk.bold(dependencyName)} has Windows implementation, config:`,
+            this.options.logging,
+          );
+          verboseMessage(windowsDependency, this.options.logging);
+
+          let dependencyIsValid = true;
+
+          dependencyIsValid = !!(
+            dependencyIsValid &&
+            'sourceDir' in windowsDependency &&
+            windowsDependency.sourceDir &&
+            !windowsDependency.sourceDir.startsWith('Error: ')
+          );
+
+          if (
+            'projects' in windowsDependency &&
+            Array.isArray(windowsDependency.projects)
+          ) {
+            windowsDependency.projects.forEach(project => {
+              const itemsToCheck: Array<keyof ProjectDependency> = [
+                'projectFile',
+                'directDependency',
+              ];
+              itemsToCheck.forEach(item => {
+                dependencyIsValid = !!(
+                  dependencyIsValid &&
+                  item in project &&
+                  project[item] &&
+                  !project[item]!.toString().startsWith('Error: ')
+                );
+              });
+            });
+          }
+
+          if (dependencyIsValid) {
+            verboseMessage(
+              `Adding ${chalk.bold(dependencyName)}.`,
+              this.options.logging,
+            );
+            this.windowsDependencies[dependencyName] = windowsDependency;
+          } else {
+            verboseMessage(
+              `Invalid dependency configuration for dependency ${dependencyName}`,
+              this.options.logging,
+            );
+          }
         }
       }
     }
-    return windowsDependencies;
+    return this.windowsDependencies;
   }
 
   /**
    * Updates the target file with the expected contents if it's different.
    * @param filePath Path to the target file to update.
    * @param expectedContents The expected contents of the file.
-   * @param verbose If true, enable verbose logging.
-   * @param checkMode It true, don't make any changes.
    * @return Whether any changes were necessary.
    */
-  private updateFile(filePath: string, expectedContents: string): boolean {
+  protected updateFile(filePath: string, expectedContents: string): boolean {
     const fileName = chalk.bold(path.basename(filePath));
     verboseMessage(`Reading ${fileName}...`, this.options.logging);
     const actualContents = fs.existsSync(filePath)
@@ -432,13 +485,10 @@ export class AutolinkWindows {
     return contentsChanged;
   }
 
-  private generateAutolinkTargets(
-    windowsDependencies: Record<string, WindowsDependencyConfig>,
-    projectDir: string,
-    templateRoot: string,
-  ) {
+  private generateAutolinkTargets(projectDir: string, templateRoot: string) {
     let projectReferencesForTargets = '';
 
+    const windowsDependencies = this.getWindowsDependencies();
     for (const dependencyName of Object.keys(windowsDependencies)) {
       windowsDependencies[dependencyName].projects.forEach(project => {
         if (project.directDependency) {
@@ -514,10 +564,9 @@ export class AutolinkWindows {
     return this.updateFile(destPropsFile, propsContents);
   }
 
-  private getCSModules(
-    windowsDependencies: Record<string, WindowsDependencyConfig>,
-  ) {
+  private getCSModules() {
     const csModuleNames: string[] = [];
+    const windowsDependencies = this.getWindowsDependencies();
     for (const dependencyName of Object.keys(windowsDependencies)) {
       windowsDependencies[dependencyName].projects.forEach(project => {
         if (project.directDependency && project.projectLang === 'cs') {
@@ -528,13 +577,9 @@ export class AutolinkWindows {
     return csModuleNames;
   }
 
-  private updateSolution(
-    windowsDependencies: Record<string, WindowsDependencyConfig>,
-    csModuleNames: string[],
-    rnwRoot: string,
-    solutionFile: string,
-  ) {
+  private updateSolution(rnwRoot: string, solutionFile: string) {
     const projectsForSolution: Project[] = [];
+    const windowsDependencies = this.getWindowsDependencies();
 
     for (const dependencyName of Object.keys(windowsDependencies)) {
       // Process dependency projects
@@ -554,6 +599,7 @@ export class AutolinkWindows {
       });
     }
 
+    const csModuleNames = this.getCSModules();
     if (csModuleNames.length > 0) {
       // Add managed projects
       projectsForSolution.push({
@@ -594,138 +640,140 @@ export class AutolinkWindows {
     });
     return changesNecessary;
   }
-}
 
-export function ensureXAMLDialect(
-  windowsProjectConfig: WindowsProjectConfig,
-  checkMode: boolean,
-) {
-  const slnFile = path.join(
-    windowsProjectConfig.folder,
-    windowsProjectConfig.sourceDir,
-    windowsProjectConfig.solutionFile,
-  );
-  const buildFlagsProps = path.join(
-    path.dirname(slnFile),
-    'ExperimentalFeatures.props',
-  );
-  let changesNeeded = false;
-  if (fs.existsSync(buildFlagsProps)) {
-    const buildFlagsContents = configUtils.readProjectFile(buildFlagsProps);
-    const useWinUI3FromConfig = windowsProjectConfig.useWinUI3;
-    const useWinUI3FromBuildFlags =
-      configUtils
-        .tryFindPropertyValue(buildFlagsContents, 'UseWinUI3')
-        ?.toLowerCase() === 'true';
-    // use the UseWinUI3 value in react-native.config.js, or if not present, the value from ExperimentalFeatures.props
-    changesNeeded = updatePackagesConfigXAMLDialect(
-      useWinUI3FromConfig !== undefined
-        ? useWinUI3FromConfig
-        : useWinUI3FromBuildFlags,
-      windowsProjectConfig,
-      checkMode,
+  protected getBuildFlagsPropsXml() {
+    const buildFlagsProps = path.join(
+      path.dirname(this.getSolutionFile()),
+      'BuildFlags.props',
     );
-    if (useWinUI3FromConfig !== undefined) {
-      // Make sure BuildFlags matches the value that comes from react-native.config.js
-      const node = buildFlagsContents.getElementsByTagName('UseWinUI3');
-      const newValue = useWinUI3FromConfig ? 'true' : 'false';
-      changesNeeded = changesNeeded || node.item(0)?.textContent !== newValue;
-      if (!checkMode && changesNeeded) {
-        node.item(0)!.textContent = newValue;
-        const buildFlagsOutput = new XMLSerializer().serializeToString(
-          buildFlagsContents,
-        );
-        fs.writeFileSync(buildFlagsProps, buildFlagsOutput);
+    if (fs.existsSync(buildFlagsProps)) {
+      const buildFlagsContents = configUtils.readProjectFile(buildFlagsProps);
+      return {path: buildFlagsProps, content: buildFlagsContents};
+    }
+    return undefined;
+  }
+
+  public ensureXAMLDialect() {
+    let changesNeeded = false;
+    const useWinUI3FromConfig = this.getWindowsConfig().useWinUI3;
+    const buildFlags = this.getBuildFlagsPropsXml();
+    if (buildFlags) {
+      const useWinUI3FromBuildFlags =
+        configUtils
+          .tryFindPropertyValue(buildFlags.content, 'UseWinUI3')
+          ?.toLowerCase() === 'true';
+      // use the UseWinUI3 value in react-native.config.js, or if not present, the value from BuildFlags.props
+      changesNeeded = this.updatePackagesConfigXAMLDialect(
+        useWinUI3FromConfig !== undefined
+          ? useWinUI3FromConfig
+          : useWinUI3FromBuildFlags,
+      );
+      if (useWinUI3FromConfig !== undefined) {
+        // Make sure BuildFlags matches the value that comes from react-native.config.js
+        const node = buildFlags.content.getElementsByTagName('UseWinUI3');
+        const newValue = useWinUI3FromConfig ? 'true' : 'false';
+        changesNeeded = changesNeeded || node.item(0)?.textContent !== newValue;
+        if (!this.options.check && changesNeeded) {
+          node.item(0)!.textContent = newValue;
+          const buildFlagsOutput = new XMLSerializer().serializeToString(
+            buildFlags.content,
+          );
+          this.updateFile(buildFlags.path, buildFlagsOutput);
+        }
       }
     }
+    return changesNeeded;
   }
-  return changesNeeded;
-}
 
-function updatePackagesConfigXAMLDialect(
-  useWinUI3: boolean,
-  project: WindowsProjectConfig,
-  checkMode: boolean,
-) {
-  const projectFile = path.join(
-    project.folder,
-    project.sourceDir,
-    project.project!.projectFile,
-  );
-  const packagesConfig = path.join(
-    path.dirname(projectFile),
-    'packages.config',
-  );
-
-  let changed = false;
-
-  if (fs.existsSync(packagesConfig)) {
-    // if we don't have a packages.config, then this is a C# project, in which case we use <PackageReference> and dynamically pick the right XAML package.
-    const packagesConfigContents = configUtils.readProjectFile(packagesConfig);
-    const packageElements = packagesConfigContents.documentElement.getElementsByTagName(
-      'package',
-    );
-    const winUIPropsPath = path.join(
-      resolveRnwRoot(project),
-      'PropertySheets/WinUI.props',
-    );
-    const winuiPropsContents = configUtils.readProjectFile(winUIPropsPath);
-    const winui2xVersion = configUtils.tryFindPropertyValue(
-      winuiPropsContents,
-      'WinUI2xVersion',
-    );
-    const winui3Version = configUtils.tryFindPropertyValue(
-      winuiPropsContents,
-      'WinUI3Version',
+  protected getPackagesConfigXml() {
+    const projectFile = this.getProjectFile();
+    const packagesConfig = path.join(
+      path.dirname(projectFile),
+      'packages.config',
     );
 
-    const dialects = [
-      {id: 'Microsoft.WinUI', version: winui3Version!},
-      {id: 'Microsoft.UI.Xaml', version: winui2xVersion!},
-    ];
-    const keepPkg = useWinUI3 ? dialects[0] : dialects[1];
-    const removePkg = useWinUI3 ? dialects[1] : dialects[0];
+    if (fs.existsSync(packagesConfig)) {
+      return {
+        path: packagesConfig,
+        content: configUtils.readProjectFile(packagesConfig),
+      };
+    }
+    return undefined;
+  }
 
-    const nodesToRemove: Element[] = [];
-    let needsToAddKeepPkg = true;
-    for (let i = 0; i < packageElements.length; i++) {
-      const packageElement = packageElements.item(i)!;
-      const idAttr = packageElement!.getAttributeNode('id');
-      const id = idAttr!.value;
-      if (id === removePkg.id) {
-        nodesToRemove.push(packageElement);
+  private updatePackagesConfigXAMLDialect(useWinUI3: boolean) {
+    let changed = false;
+    const packagesConfig = this.getPackagesConfigXml();
+    if (packagesConfig) {
+      // if we don't have a packages.config, then this is a C# project, in which case we use <PackageReference> and dynamically pick the right XAML package.
+      const project = this.getWindowsConfig();
+
+      const packageElements = packagesConfig.content.documentElement.getElementsByTagName(
+        'package',
+      );
+      const winUIPropsPath = path.join(
+        resolveRnwRoot(project),
+        'PropertySheets/WinUI.props',
+      );
+      const winuiPropsContents = configUtils.readProjectFile(winUIPropsPath);
+      const winui2xVersion = configUtils.tryFindPropertyValue(
+        winuiPropsContents,
+        'WinUI2xVersion',
+      );
+      const winui3Version = configUtils.tryFindPropertyValue(
+        winuiPropsContents,
+        'WinUI3Version',
+      );
+
+      const dialects = [
+        {id: 'Microsoft.WinUI', version: winui3Version!},
+        {id: 'Microsoft.UI.Xaml', version: winui2xVersion!},
+      ];
+      const keepPkg = useWinUI3 ? dialects[0] : dialects[1];
+      const removePkg = useWinUI3 ? dialects[1] : dialects[0];
+
+      const nodesToRemove: Element[] = [];
+      let needsToAddKeepPkg = true;
+      for (let i = 0; i < packageElements.length; i++) {
+        const packageElement = packageElements.item(i)!;
+        const idAttr = packageElement!.getAttributeNode('id');
+        const id = idAttr!.value;
+        if (id === removePkg.id) {
+          nodesToRemove.push(packageElement);
+          changed = true;
+        } else if (id === keepPkg.id) {
+          changed =
+            changed ||
+            packageElement.getAttribute('version') !== keepPkg.version;
+          packageElement.setAttribute('version', keepPkg.version!);
+          needsToAddKeepPkg = false;
+        }
+      }
+
+      nodesToRemove.forEach(pkg =>
+        packagesConfig.content.documentElement.removeChild(pkg),
+      );
+
+      if (needsToAddKeepPkg) {
+        const newPkg = packagesConfig.content.createElement('package');
+
+        Object.entries(keepPkg).forEach(([attr, value]) => {
+          newPkg.setAttribute(attr, value as string);
+        });
+        newPkg.setAttribute('targetFramework', 'native');
+        packagesConfig.content.documentElement.appendChild(newPkg);
         changed = true;
-      } else if (id === keepPkg.id) {
-        changed =
-          changed || packageElement.getAttribute('version') !== keepPkg.version;
-        packageElement.setAttribute('version', keepPkg.version!);
-        needsToAddKeepPkg = false;
+      }
+
+      if (!this.options.check && changed) {
+        const serializer = new XMLSerializer();
+        const output = serializer.serializeToString(packagesConfig.content);
+        const formattedXml = formatter(output, { indentation: '  ' });
+        this.updateFile(packagesConfig.path, formattedXml);
       }
     }
-
-    nodesToRemove.forEach(pkg =>
-      packagesConfigContents.documentElement.removeChild(pkg),
-    );
-
-    if (needsToAddKeepPkg) {
-      const newPkg = packagesConfigContents.createElement('package');
-
-      Object.entries(keepPkg).forEach(([attr, value]) => {
-        newPkg.setAttribute(attr, value as string);
-      });
-      newPkg.setAttribute('targetFramework', 'native');
-      packagesConfigContents.documentElement.appendChild(newPkg);
-      changed = true;
-    }
-
-    if (!checkMode && changed) {
-      const serializer = new XMLSerializer();
-      const output = serializer.serializeToString(packagesConfigContents);
-      const formattedXml = formatter(output, {indentation: '  '});
-      fs.writeFileSync(packagesConfig, formattedXml, {encoding: 'utf-8'});
-    }
+    return changed;
   }
-  return changed;
 }
 
 /**
@@ -777,7 +825,11 @@ async function updateAutoLink(
     options.check ? 'Checking auto-linked files...' : 'Auto-linking...',
   );
   try {
-    const autolink = new AutolinkWindows(config, options);
+    const autolink = new AutolinkWindows(
+      config.project,
+      config.dependencies,
+      options,
+    );
     autolink.run(spinner);
     const endTime = performance.now();
 
