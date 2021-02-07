@@ -7,7 +7,7 @@
   "excludePatterns": [
     "**/*.windesktop.js"
   ],
-  "baseVersion": "0.64.0-rc.1",
+  "baseVersion": "0.64.0-rc.3",
   "overrides": [
     {
       "type": "derived",
