@@ -10,99 +10,96 @@
 //
 
 // Documentation model for a code project.
-export class DocModel {
-  // The code project for the model.
-  codeProject = '';
-
+export interface DocModel {
   // List of all documented compounds indexed by their name.
-  compounds: {[index: string]: DocCompound} = {};
+  compounds: DocCompound[];
 
   // List of all structs and classes sorted by name.
-  classes: DocCompound[] = [];
+  classes: DocCompound[];
 }
 
 // DocCompound represents a document for a type.
 // We generate one file per compound.
-export class DocCompound {
+export interface DocCompound {
   // Documented type name.
-  name: string = '';
+  name: string;
 
   // Name of the code file where the type is defined.
-  codeFileName = '';
+  codeFileName: string;
 
   // Docusaurus Id for the generate Markdown documentation file.
-  docId: string = '';
+  docId: string;
 
   // The type namespace.
-  namespace: string = '';
+  namespace: string;
 
   // All namespace aliases defined for the namespace in the project config.
-  namespaceAliases: string[] = [];
+  namespaceAliases: string[];
 
   // Code type declaration.
-  declaration: string = '';
+  declaration: string;
 
   // Brief type description.
-  brief: string = '';
+  brief: string;
 
   // Detailed type description.
-  details: string = '';
+  details: string;
 
   // Summary type description compiled from brief and details descriptions.
-  summary: string = '';
+  summary: string;
 
   // Sections with type members and with related definitions.
-  sections: DocSection[] = [];
+  sections: DocSection[];
 }
 
 // DocSection is a group of compound members such as 'Public members' or 'Related definitions'.
-export class DocSection {
+export interface DocSection {
   // The section name.
-  name = '';
+  name: string;
 
   // List of member overloads in this section.
-  memberOverloads: DocMemberOverload[] = [];
+  memberOverloads: DocMemberOverload[];
 
   // First member overload source code line number. It is used for sorting.
-  line = 0;
+  line: number;
 }
 
 // A group of members with the same name.
-export class DocMemberOverload {
+export interface DocMemberOverload {
   // Name of the member group with the same name.
   // It can be different from the member names. E.g. '(constructor)' instead of class name.
-  name = '';
+  name: string;
 
   // List of members in the group.
-  members: DocMember[] = [];
+  members: DocMember[];
 
   // The anchor link to the member overload doc.
-  anchor = '#';
+  anchor: string;
 
   // The summary of the first member.
-  summary = '';
+  summary: string;
 
   // First member source code line number. It is used for sorting.
-  line = 0;
+  line: number;
 }
 
 // Represents a compound member such as field or function.
-export class DocMember {
+export interface DocMember {
   // Name of the member such as function or field name.
-  name = '';
+  name: string;
 
   // Member code declaration.
-  declaration: string = '';
+  declaration: string;
 
   // Brief member description.
-  brief: string = '';
+  brief: string;
 
   // Detailed member description.
-  details: string = '';
+  details: string;
 
   // Summary member description compiled from brief and details descriptions.
-  summary: string = '';
+  summary: string;
 
   // Source code line number. It is used for sorting.
-  line = 0;
+  line: number;
 }

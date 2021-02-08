@@ -38,10 +38,10 @@ export async function renderDocFiles(docModel: DocModel, config: Config) {
     renderedFiles.push(outputFileName);
   }
 
-  if (config.index && config.indexTemplate) {
-    const indexTemplatePath = path.join(config.input, config.indexTemplate);
+  if (config.indexFilename && config.indexTemplatePath) {
+    const indexTemplatePath = path.join(config.input, config.indexTemplatePath);
     const indexTemplate = await getCachedTemplate(indexTemplatePath);
-    const indexOutput = path.join(outputPath, config.index);
+    const indexOutput = path.join(outputPath, config.indexFilename);
     log(`[Rendering] file {${indexOutput}}`);
     const outputText = mustache.render(indexTemplate, docModel);
     await fs.writeFile(indexOutput, outputText, 'utf-8');

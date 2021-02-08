@@ -18,22 +18,22 @@ export interface Config {
   input: string;
   output: string;
   filePatterns?: string[];
-  prefix: string;
-  index?: string;
-  indexTemplate?: string;
+  docIdPrefix: string;
+  indexFilename?: string;
+  indexTemplatePath?: string;
   projects?: string[];
   types?: string[];
-  namespaceAliases?: [string, string[]][];
-  sections?: [string, string][];
+  namespaceAliases?: {[key: string]: string[]};
+  sections?: {[key: string]: string};
   stdTypeLinks?: {
     linkPrefix?: string;
-    linkMap: [string, string][];
-    operatorMap?: [string, string][];
+    linkMap: {[key: string]: string};
+    operatorMap?: {[key: string]: string};
   };
   idlTypeLinks?: {
     linkPrefix?: string;
-    linkMap: [string, string][];
-    operatorMap?: [string, string][];
+    linkMap: {[key: string]: string};
+    operatorMap?: {[key: string]: string};
   };
 }
 
@@ -105,19 +105,19 @@ function normalizeConfig(config: Partial<Config>): Config {
     }
     config.output = path.normalize(config.output);
 
-    if (!config.prefix) {
-      config.prefix = '';
+    if (!config.docIdPrefix) {
+      config.docIdPrefix = '';
     }
 
-    if (!config.index) {
-      config.index = 'index.md';
+    if (!config.indexFilename) {
+      config.indexFilename = 'index.md';
     }
 
     if (!config.projects) {
       delete config.projects;
     }
 
-    return <Config>config;
+    return config as Config;
   } else {
     throw new Error('Undefined config.configDir');
   }
