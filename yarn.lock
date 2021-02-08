@@ -1583,11 +1583,11 @@
     xmldoc "^1.1.2"
 
 "@react-native-community/cli-platform-ios@^5.0.1-alpha.0":
-  version "5.0.1-alpha.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-5.0.1-alpha.0.tgz#a1c37f2c630819d2d1520621e0f7665ec6a751ba"
-  integrity sha512-gcWpxB2k5X3Gl+DhrKDe7eegzeJvIOW/tM4p4zX4OO19/osM7glSlLNj+X5WVVB+XkFqm9W99NrasVfqGyFcdg==
+  version "5.0.1-alpha.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-5.0.1-alpha.1.tgz#4d919dc91829404ebd4717c9adc3b3f013152919"
+  integrity sha512-X0odEhPYecSWjG+nNFN5tSxFQcfxS2rTOaMSmrHiqdlL8Bv57wCajtf5VhwanqhGt3eZ70y8oS9VdBRachxEpA==
   dependencies:
-    "@react-native-community/cli-tools" "^5.0.1-alpha.0"
+    "@react-native-community/cli-tools" "^5.0.1-alpha.1"
     chalk "^3.0.0"
     glob "^7.1.3"
     js-yaml "^3.13.1"
