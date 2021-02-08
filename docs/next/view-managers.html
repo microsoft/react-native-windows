@@ -176,7 +176,7 @@
 
 <span class="token keyword">namespace</span> <span class="token namespace">ViewManagerSample</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">internal</span> <span class="token keyword">class</span> <span class="token class-name">CustomUserControlViewManager</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">AttributedViewManager<span class="token punctuation">&lt;</span>CustomUserControlCS<span class="token punctuation">></span></span></span>
+    <span class="token keyword">internal</span> <span class="token keyword">class</span> <span class="token class-name">CustomUserControlViewManager</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">AttributedViewManager<span class="token punctuation">&lt;</span>CustomUserControl<span class="token punctuation">></span></span></span>
     <span class="token punctuation">{</span>
         <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">ViewManagerProperty</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">"label"</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
         <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SetLabel</span><span class="token punctuation">(</span><span class="token class-name">CustomUserControl</span> view<span class="token punctuation">,</span> view<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword">string</span></span> <span class="token keyword">value</span><span class="token punctuation">)</span>
@@ -330,7 +330,9 @@ struct CustomUserControlViewManager : winrt::implements&lt;
                                              CustomUserControlViewManager,
                                              winrt::Microsoft::ReactNative::IViewManager,
                                              winrt::Microsoft::ReactNative::IViewManagerWithNativeProperties,
-                                             winrt::Microsoft::ReactNative::IViewManagerWithCommands&gt; {
+                                             winrt::Microsoft::ReactNative::IViewManagerWithCommands,
+                                             winrt::Microsoft::ReactNative::IViewManagerWithExportedEventTypeConstants,
+                                             winrt::Microsoft::ReactNative::IViewManagerWithReactContext&gt; {
  public:
   CustomUserControlViewManager() = default;
 
@@ -348,13 +350,26 @@ struct CustomUserControlViewManager : winrt::implements&lt;
       winrt::Windows::UI::Xaml::FrameworkElement const &amp;view,
       winrt::Microsoft::ReactNative::IJSValueReader const &amp;propertyMapReader) noexcept;
 
-   // IViewManagerWithCommands
+  // IViewManagerWithCommands
   winrt::Windows::Foundation::Collections::IVectorView&lt;winrt::hstring&gt; Commands() noexcept;
 
   void DispatchCommand(
       winrt::Windows::UI::Xaml::FrameworkElement const &amp;view,
       winrt::hstring const &amp;commandId,
       winrt::Microsoft::ReactNative::IJSValueReader const &amp;commandArgsReader) noexcept;
+
+  // IViewManagerWithExportedEventTypeConstants
+  winrt::Microsoft::ReactNative::ConstantProviderDelegate ExportedCustomBubblingEventTypeConstants() noexcept;
+
+  winrt::Microsoft::ReactNative::ConstantProviderDelegate ExportedCustomDirectEventTypeConstants() noexcept;
+
+  // IViewManagerWithReactContext
+  winrt::Microsoft::ReactNative::IReactContext ReactContext() noexcept;
+
+  void ReactContext(winrt::Microsoft::ReactNative::IReactContext reactContext) noexcept;
+
+private:
+  winrt::Microsoft::ReactNative::IReactContext m_reactContext{ nullptr };
 };
 
 }
@@ -444,12 +459,37 @@ void CustomUserControlViewManager::DispatchCommand(
     FrameworkElement const &amp;view,
     winrt::hstring const &amp;commandId,
     winrt::Microsoft::ReactNative::IJSValueReader const &amp;commandArgsReader) noexcept {
-  if (auto control = view.try_as&lt;winrt::SampleLibraryCPP::CustomUserControlCPP&gt;()) {
+  if (auto control = view.try_as&lt;winrt::ViewManagerSample::CustomUserControl&gt;()) {
     if (commandId == L"CustomCommand") {
       const JSValueArray &amp;commandArgs = JSValue::ReadArrayFrom(commandArgsReader);
       // Execute command
     }
   }
+}
+
+// IViewManagerWithExportedEventTypeConstants
+ConstantProviderDelegate CustomUserControlViewManager::ExportedCustomBubblingEventTypeConstants() noexcept {
+  return [](winrt::Microsoft::ReactNative::IJSValueWriter const&amp; constantWriter) {
+    // use constantWriter to define bubbling events, see ExportedCustomDirectEventTypeConstants
+  }
+}
+
+ConstantProviderDelegate CustomUserControlViewManager::ExportedCustomDirectEventTypeConstants() noexcept {
+  return [](winrt::Microsoft::ReactNative::IJSValueWriter const&amp; constantWriter) {
+    constantWriter.WritePropertyName(L"topMyEvent");
+    constantWriter.WriteObjectBegin();
+    WriteProperty(constantWriter, L"registrationName", L"onMyEvent");
+    constantWriter.WriteObjectEnd();
+  };
+}
+
+// IViewManagerWithReactContext
+IReactContext CustomUserControlViewManager::ReactContext() noexcept {
+  return m_reactContext;
+}
+
+void CustomUserControlViewManager::ReactContext(IReactContext reactContext) noexcept {
+  m_reactContext = reactContext;
 }
 
 }
