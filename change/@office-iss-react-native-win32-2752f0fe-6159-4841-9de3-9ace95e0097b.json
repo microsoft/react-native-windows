@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate react-native 0.64.0-rc.3",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
