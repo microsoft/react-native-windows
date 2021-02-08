@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 08 Feb 2021 15:04:50 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.6",
+      "version": "0.63.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add accessibilityDescription prop to config file",
+            "author": "lehon@microsoft.com",
+            "commit": "81e24f92c668dc71dc8622f85f599e09e2b04d9d",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 18 Jan 2021 15:07:08 GMT",
       "tag": "@office-iss/react-native-win32_v0.63.5",
       "version": "0.63.5",
