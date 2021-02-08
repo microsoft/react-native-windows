@@ -16,7 +16,8 @@ import {promises as fs, existsSync} from 'fs';
 export interface Config {
   configDir: string;
   input: string;
-  output: string;
+  buildDir: string;
+  outputDir: string;
   filePatterns?: string[];
   docIdPrefix: string;
   indexFilename?: string;
@@ -37,21 +38,38 @@ export interface Config {
   };
 }
 
+export type LoadedConfig = Partial<Config> & {
+  configDir: string;
+  buildDir: string;
+};
+
 // Generates an async stream of project configs.
-export async function* getProjectConfigs(configPath: string) {
+export async function* getProjectConfigs(
+  configPath: string,
+  outputDir?: string,
+  parentConfig?: LoadedConfig,
+): AsyncGenerator<Config> {
   const config = await loadConfig(
     ensureAbsolutePath(configPath, process.cwd()),
+    parentConfig,
   );
-  if (config.projects) {
+  config.outputDir = outputDir;
+  if (Array.isArray(config.projects) && config.projects.length > 0) {
     for (const project of config.projects) {
       const projectConfigPath = ensureAbsolutePath(
         path.join(project, 'doxysaurus.json'),
         config.configDir,
       );
       if (existsSync(projectConfigPath)) {
-        yield loadConfig(projectConfigPath, config);
+        for await (const projectConfig of getProjectConfigs(
+          projectConfigPath,
+          outputDir,
+          config,
+        )) {
+          yield projectConfig;
+        }
       } else {
-        yield updateConfig(config, {input: project});
+        yield normalizeConfig({...config, input: project});
       }
     }
   } else {
@@ -60,72 +78,51 @@ export async function* getProjectConfigs(configPath: string) {
 }
 
 // Loads config file and merges it with parent config when it is given.
-export async function loadConfig(
+async function loadConfig(
   configPath: string,
-  parentConfig?: Config,
-): Promise<Config> {
+  parentConfig?: LoadedConfig,
+): Promise<LoadedConfig> {
   const configText = await fs.readFile(configPath, 'utf-8');
   const config = JSON.parse(configText) as Partial<Config>;
-  config.configDir = path.dirname(configPath);
+  const configDir = path.dirname(configPath);
   if (parentConfig) {
-    return updateConfig(
-      parentConfig,
-      {
-        input: undefined,
-        projects: undefined,
-      },
-      config,
-      {
-        output: path.join(
-          parentConfig.output,
-          config.output ?? path.basename(config.configDir),
-        ),
-      },
-    );
+    return {
+      ...parentConfig,
+      input: undefined,
+      projects: undefined,
+      ...config,
+      configDir,
+      buildDir: path.join(
+        parentConfig.buildDir,
+        config.buildDir || path.basename(configDir),
+      ),
+    };
   } else {
-    return normalizeConfig(config);
+    return {
+      ...config,
+      configDir,
+      buildDir: config.buildDir
+        ? ensureAbsolutePath(config.buildDir, configDir)
+        : path.join(process.cwd(), 'docs'),
+    };
   }
 }
 
 // Normalizes config to set all required fields and make all paths absolute.
-function normalizeConfig(config: Partial<Config>): Config {
-  if (config.configDir) {
-    if (config.input) {
-      config.input = ensureAbsolutePath(config.input, config.configDir);
-    } else {
-      config.input = config.configDir;
-    }
-
-    if (config.output) {
-      if (!path.isAbsolute(config.output)) {
-        config.output = path.join(config.configDir, config.output);
-      }
-    } else {
-      config.output = path.join(process.cwd(), 'docs');
-    }
-    config.output = path.normalize(config.output);
-
-    if (!config.docIdPrefix) {
-      config.docIdPrefix = '';
-    }
-
-    if (!config.indexFilename) {
-      config.indexFilename = 'index.md';
-    }
-
-    if (!config.projects) {
-      delete config.projects;
-    }
-
-    return config as Config;
-  } else {
-    throw new Error('Undefined config.configDir');
-  }
-}
-
-// Updates and normalizes config file.
-function updateConfig(config: Config, ...update: Partial<Config>[]): Config {
-  return normalizeConfig(Object.assign({}, config, ...update));
+function normalizeConfig(config: LoadedConfig): Config {
+  const buildDir = config.buildDir
+    ? ensureAbsolutePath(config.buildDir, config.configDir)
+    : path.join(process.cwd(), 'docs');
+  return {
+    ...config,
+    input: config.input
+      ? ensureAbsolutePath(config.input, config.configDir)
+      : config.configDir,
+    buildDir,
+    outputDir: config.outputDir || path.join(buildDir, 'out'),
+    docIdPrefix: config.docIdPrefix || '',
+    indexFilename: config.indexFilename || 'index.md',
+  };
 }
 
 function ensureAbsolutePath(filePath: string, currentDir: string) {

@@ -1,4 +1,4 @@
 {
   "projects": ["Microsoft.ReactNative.Cxx"],
-  "output": "build/docs"
+  "buildDir": "build/docs"
 }

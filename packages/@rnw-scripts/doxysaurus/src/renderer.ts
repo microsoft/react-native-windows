@@ -20,10 +20,7 @@ const templateCache: {[index: string]: string} = {};
 
 export async function renderDocFiles(docModel: DocModel, config: Config) {
   const renderedFiles: string[] = [];
-  const outputPath = path.join(config.output, 'out');
-  await fs.mkdir(outputPath).catch(err => {
-    if (err.code !== 'EEXIST') throw err;
-  });
+  await fs.mkdir(config.outputDir, {recursive: true});
 
   const templatePath = path.normalize(
     path.join(__dirname, '..', 'templates', 'cpp', 'class.md'),
@@ -31,7 +28,7 @@ export async function renderDocFiles(docModel: DocModel, config: Config) {
   const template = await getCachedTemplate(templatePath);
 
   for (const compound of Object.values(docModel.compounds)) {
-    const outputFileName = path.join(outputPath, `${compound.docId}.md`);
+    const outputFileName = path.join(config.outputDir, `${compound.docId}.md`);
     log(`[Rendering] file {${outputFileName}}`);
     const outputText = mustache.render(template, compound);
     await fs.writeFile(outputFileName, outputText, 'utf-8');
@@ -41,7 +38,7 @@ export async function renderDocFiles(docModel: DocModel, config: Config) {
   if (config.indexFilename && config.indexTemplatePath) {
     const indexTemplatePath = path.join(config.input, config.indexTemplatePath);
     const indexTemplate = await getCachedTemplate(indexTemplatePath);
-    const indexOutput = path.join(outputPath, config.indexFilename);
+    const indexOutput = path.join(config.outputDir, config.indexFilename);
     log(`[Rendering] file {${indexOutput}}`);
     const outputText = mustache.render(indexTemplate, docModel);
     await fs.writeFile(indexOutput, outputText, 'utf-8');

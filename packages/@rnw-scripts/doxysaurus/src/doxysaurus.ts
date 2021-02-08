@@ -11,6 +11,7 @@
 //
 
 import fs from 'fs';
+import path from 'path';
 import yargs from 'yargs';
 import {log} from './logger';
 import {getProjectConfigs, Config} from './config';
@@ -18,7 +19,6 @@ import {generateDoxygenXml} from './doxygen';
 import {DoxModel} from './doxygen-model';
 import {transformToMarkdown} from './transformer';
 import {renderDocFiles} from './renderer';
-import {copyDocusaurusFiles} from './docusaurus';
 
 const argv = yargs
   .options({
@@ -28,15 +28,20 @@ const argv = yargs
       type: 'string',
       demandOption: true,
     },
-    quiet: {
-      alias: 'q',
-      describe: 'quiet mode',
-      type: 'boolean',
-    },
     log: {
       alias: 'l',
       describe: 'log file',
       type: 'string',
+    },
+    output: {
+      alias: 'o',
+      describe: 'output directory',
+      type: 'string',
+    },
+    quiet: {
+      alias: 'q',
+      describe: 'quiet mode',
+      type: 'boolean',
     },
     watch: {
       alias: 'w',
@@ -51,7 +56,10 @@ fireAndForget(async () => {
   log.init({quiet: argv.quiet, logFile: argv.log});
 
   const configList: Config[] = [];
-  for await (const config of getProjectConfigs(argv.config)) {
+  for await (const config of getProjectConfigs(
+    argv.config,
+    argv.output ? path.resolve(process.cwd(), argv.output) : undefined,
+  )) {
     configList.push(config);
     await processProject(config);
   }
@@ -70,8 +78,7 @@ async function processProject(config: Config) {
   await generateDoxygenXml(config);
   const doxModel = await DoxModel.load(config);
   const docModel = transformToMarkdown(doxModel, config);
-  const files = await renderDocFiles(docModel, config);
-  await copyDocusaurusFiles(files);
+  await renderDocFiles(docModel, config);
 
   log(`[Finished] processing project {${config.input}}`);
 }

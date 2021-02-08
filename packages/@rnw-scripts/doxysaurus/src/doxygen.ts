@@ -25,7 +25,7 @@ import {Config} from './config';
 const DOXYGEN_VERSION = '1.9.1';
 
 export async function generateDoxygenXml(config: Config) {
-  const doxygenConfigPath = path.join(config.output, 'doxygen.config');
+  const doxygenConfigPath = path.join(config.buildDir, 'doxygen.config');
   generateDoxygenConfig(config, doxygenConfigPath);
 
   if (!doxygen.isDoxygenExecutableInstalled(DOXYGEN_VERSION)) {
@@ -48,7 +48,7 @@ export async function generateDoxygenXml(config: Config) {
 
 function generateDoxygenConfig(config: Config, doxygenConfigPath: string) {
   const doxygenOptions: {[index: string]: string} = {
-    OUTPUT_DIRECTORY: config.output,
+    OUTPUT_DIRECTORY: config.buildDir,
     INPUT: config.input,
     GENERATE_LATEX: 'NO',
     GENERATE_HTML: 'NO',

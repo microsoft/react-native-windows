@@ -23,7 +23,7 @@ export class DoxModel {
 
   static async load(config: Config): Promise<DoxModel> {
     const model = new DoxModel(config);
-    const indexPath = path.join(config.output, 'xml', 'index.xml');
+    const indexPath = path.join(config.buildDir, 'xml', 'index.xml');
     log(`Loading index {${indexPath}}`);
     const indexText = await fs.readFile(indexPath, 'utf8');
     const indexXml = <IndexRootType>await xml2js.parseStringPromise(indexText);
@@ -46,7 +46,7 @@ export class DoxModel {
 
   private async loadCompound(compound: IndexCompoundType) {
     const compoundPath = path.join(
-      this.config.output,
+      this.config.buildDir,
       'xml',
       `${compound.$.refid}.xml`,
     );
