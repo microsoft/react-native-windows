@@ -623,7 +623,6 @@ void TextInputShadowNode::SetText(const winrt::Microsoft::ReactNative::JSValue &
           } else {
             textBox.SelectionStart(newValue.size());
           }
-          textBox.SelectionLength(oldSelectionLength);
         }
       } else if (text.IsNull())
         textBox.ClearValue(xaml::Controls::TextBox::TextProperty());
