@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Make @types/node version explicit",
-  "packageName": "@react-native-windows/package-utils",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

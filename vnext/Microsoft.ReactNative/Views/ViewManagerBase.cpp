@@ -165,7 +165,7 @@ void ViewManagerBase::GetExportedCustomBubblingEventTypeConstants(
     writer.WritePropertyName(L"phasedRegistrationNames");
     writer.WriteObjectBegin();
     React::WriteProperty(writer, L"captured", bubbleName + L"Capture");
-    React::WriteProperty(writer, L"capbubbledtured", std::move(bubbleName));
+    React::WriteProperty(writer, L"bubbled", std::move(bubbleName));
     writer.WriteObjectEnd();
     writer.WriteObjectEnd();
   }
