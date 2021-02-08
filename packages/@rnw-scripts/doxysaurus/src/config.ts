@@ -5,14 +5,14 @@
  * @format
  */
 
-//
-// Configuration for the Doxysaurus tool.
-//
+/**
+ * Configuration for the Doxysaurus tool.
+ */
 
 import path from 'path';
 import {promises as fs, existsSync} from 'fs';
 
-// Definition of a config.
+/** Doxysaurus project configuration. */
 export interface Config {
   configDir: string;
   input: string;
@@ -43,7 +43,7 @@ export type LoadedConfig = Partial<Config> & {
   buildDir: string;
 };
 
-// Generates an async stream of project configs.
+/** Generates an async stream of project configs. */
 export async function* getProjectConfigs(
   configPath: string,
   outputDir?: string,
@@ -77,7 +77,7 @@ export async function* getProjectConfigs(
   }
 }
 
-// Loads config file and merges it with parent config when it is given.
+/** Loads config file and merges it with parent config if it is given. */
 async function loadConfig(
   configPath: string,
   parentConfig?: LoadedConfig,
@@ -108,7 +108,7 @@ async function loadConfig(
   }
 }
 
-// Normalizes config to set all required fields and make all paths absolute.
+/** Normalizes config to set all required fields and makes all paths absolute. */
 function normalizeConfig(config: LoadedConfig): Config {
   const buildDir = config.buildDir
     ? ensureAbsolutePath(config.buildDir, config.configDir)
@@ -125,7 +125,7 @@ function normalizeConfig(config: LoadedConfig): Config {
   };
 }
 
-function ensureAbsolutePath(filePath: string, currentDir: string) {
+function ensureAbsolutePath(filePath: string, currentDir: string): string {
   return path.normalize(
     path.isAbsolute(filePath) ? filePath : path.join(currentDir, filePath),
   );

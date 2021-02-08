@@ -9,12 +9,12 @@
  * @format
  */
 
-//
-// Generates Doxygen documentation XML files.
-//
+/**
+ * Generates Doxygen documentation XML files.
+ */
 
 // @ts-ignore (no typings for doxygen)
-import constants = require('doxygen/lib/constants');
+import constants from 'doxygen/lib/constants';
 // @ts-ignore (no typings for doxygen)
 import doxygen from 'doxygen';
 import path from 'path';
@@ -24,7 +24,7 @@ import {Config} from './config';
 
 const DOXYGEN_VERSION = '1.9.1';
 
-export async function generateDoxygenXml(config: Config) {
+export async function generateDoxygenXml(config: Config): Promise<void> {
   const doxygenConfigPath = path.join(config.buildDir, 'doxygen.config');
   generateDoxygenConfig(config, doxygenConfigPath);
 
@@ -42,11 +42,14 @@ export async function generateDoxygenXml(config: Config) {
 
   // Doxygen process reports all warnings in the stderr stream.
   for (const warning of stderr.split('\n')) {
-    log(`Warning: ${warning}`);
+    log.warning(warning);
   }
 }
 
-function generateDoxygenConfig(config: Config, doxygenConfigPath: string) {
+function generateDoxygenConfig(
+  config: Config,
+  doxygenConfigPath: string,
+): void {
   const doxygenOptions: {[index: string]: string} = {
     OUTPUT_DIRECTORY: config.buildDir,
     INPUT: config.input,
@@ -65,8 +68,7 @@ function generateDoxygenConfig(config: Config, doxygenConfigPath: string) {
 // Modified from doxygen NPM.
 // This is a not exported method that we need for the runAsync implementation.
 // The code is modified for TypeScript, eslint, and the different __dirname.
-function doxygenExecutablePath(version?: any) {
-  version = version ? version : constants.default.version;
+function doxygenExecutablePath(version?: string): string {
   // const dirName = __dirname; -- we must use the doxygen package path
   const dirName = path.dirname(require.resolve('doxygen/package.json'));
 
@@ -78,7 +80,13 @@ function doxygenExecutablePath(version?: any) {
   const ext =
     process.platform === constants.platform.windows.identifier ? '.exe' : '';
   return path.normalize(
-    path.join(dirName, 'dist', version, doxygenFolder, 'doxygen' + ext),
+    path.join(
+      dirName,
+      'dist',
+      version || constants.default.version,
+      doxygenFolder,
+      'doxygen' + ext,
+    ),
   );
 }
 
@@ -86,14 +94,15 @@ function doxygenExecutablePath(version?: any) {
 // Extends doxygen.run to return a Promise.
 // We cannot use util.promisify because it loses the stderr with warnings.
 async function runAsync(
-  configPath?: any,
-  version?: any,
+  configPath?: string,
+  version?: string,
 ): Promise<{stdout: string; stderr: string}> {
-  configPath = configPath ? configPath : constants.path.configFile;
   const doxygenPath = doxygenExecutablePath(version);
   return new Promise((resolve, reject) => {
     exec(
-      `"${doxygenPath}" "${path.resolve(configPath)}"`,
+      `"${doxygenPath}" "${path.resolve(
+        configPath || constants.path.configFile,
+      )}"`,
       (error, stdout, stderr) => {
         if (error) {
           reject(error);

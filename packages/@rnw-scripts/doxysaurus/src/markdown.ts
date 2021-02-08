@@ -8,11 +8,11 @@
  * Copyright (c) 2016 Kam Low
  *
  * @format
- **/
+ */
 
-//
-// Transforms Doxygen descriptions to markdown.
-//
+/**
+ * Transforms Doxygen descriptions to markdown.
+ */
 
 import {DoxDescription, DoxDescriptionElement} from './doxygen-model';
 import {DocCompound, DocMemberOverload} from './doc-model';
@@ -33,7 +33,10 @@ export interface LinkResolver {
   ): [DocCompound | undefined, DocMemberOverload | undefined];
 }
 
-export function toMarkdown(desc: DoxDescription, linkResolver?: LinkResolver) {
+export function toMarkdown(
+  desc: DoxDescription,
+  linkResolver?: LinkResolver,
+): string {
   const context: DoxDescriptionElement[] = [];
   let indent = 0;
 
@@ -99,9 +102,7 @@ export function toMarkdown(desc: DoxDescription, linkResolver?: LinkResolver) {
         } else if (element.$.kind === 'retval') {
           return write(index ? '\n\n' : '', '### Return values\n', element.$$);
         } else {
-          return log(
-            `Warning: Unknown parameterlist kind {${element.$.kind}}.`,
-          );
+          return log.warning(`Unknown parameterlist kind {${element.$.kind}}.`);
         }
       case 'parameteritem':
         return write('\n* ', element.$$);
@@ -123,7 +124,7 @@ export function toMarkdown(desc: DoxDescription, linkResolver?: LinkResolver) {
         } else if (element.$.kind === 'see') {
           return write('**See also**: ', element.$$);
         } else {
-          log(`Warning: [element.$.kind=${element.$.kind}]: not supported.`);
+          log.warning(`[element.$.kind=${element.$.kind}]: not supported.`);
           return;
         }
       case 'formula':
@@ -177,9 +178,7 @@ export function toMarkdown(desc: DoxDescription, linkResolver?: LinkResolver) {
         return write(element.$$);
 
       default:
-        log(
-          `Warning: [element[['#name'=${element['#name']}]]]: not supported.`,
-        );
+        log.warning(`[element[['#name'=${element['#name']}]]]: not supported.`);
     }
   }
 
@@ -207,7 +206,7 @@ export function toMarkdown(desc: DoxDescription, linkResolver?: LinkResolver) {
         return write('`', text, '`');
       }
     } else {
-      log(`Warning: Unknown kindref={${element.$.kindref}}`);
+      log.warning(`Unknown kindref={${element.$.kindref}}`);
     }
 
     write(text);

@@ -10,9 +10,9 @@
  * @format
  **/
 
-//
-// Transforms Doxygen documentation model to the Markdown based model to be used by Docusaurus service.
-//
+/**
+ * Transforms Doxygen documentation model to the Markdown based model to be used by Docusaurus service.
+ */
 
 import {Config} from './config';
 import {DoxModel, DoxCompound, DoxMember} from './doxygen-model';
@@ -28,7 +28,10 @@ import path from 'path';
 import {log} from './logger';
 import {toMarkdown, LinkResolver, StringBuilder} from './markdown';
 
-export function transformToMarkdown(doxModel: DoxModel, config: Config) {
+export function transformToMarkdown(
+  doxModel: DoxModel,
+  config: Config,
+): DocModel {
   const docModel: DocModel = {compounds: [], classes: []};
 
   const docIdToDoxCompound = new Map<string, DoxCompound | undefined>();
@@ -102,7 +105,7 @@ export function transformToMarkdown(doxModel: DoxModel, config: Config) {
   return docModel;
 
   // eslint-disable-next-line complexity
-  function transformClass(doxCompound: DoxCompound) {
+  function transformClass(doxCompound: DoxCompound): void {
     const doxCompoundName = doxCompound.compoundname[0]._;
     log(`[Transforming] ${doxCompoundName}`);
     const noTemplateName = doxCompoundName.split('<')[0];
@@ -242,7 +245,7 @@ export function transformToMarkdown(doxModel: DoxModel, config: Config) {
     log('[Compound] dump: ', compound);
   }
 
-  function compoundToMarkdown(compound: DocCompound) {
+  function compoundToMarkdown(compound: DocCompound): void {
     const doxCompound = docIdToDoxCompound.get(compound.docId);
     compound.brief = toMarkdown(doxCompound?.briefdescription, linkResolver);
     compound.details = toMarkdown(

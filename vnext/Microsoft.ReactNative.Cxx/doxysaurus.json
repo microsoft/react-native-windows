@@ -2,7 +2,7 @@
   "filePatterns": ["*.h"],
   "docIdPrefix": "cppapi-",
   "indexFilename": "cppapi.md",
-  "indexTemplatePath": "cppapi.md",
+  "indexTemplatePath": "cppapi.md.mustache",
   "types": [
     "JSValue",
     "JSValueArray",

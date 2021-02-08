@@ -5,10 +5,10 @@
  * @format
  */
 
-//
-// The Doxysaurus uses Doxygen to generate documentation based on code,
-// and then generates markdown files to be used by the Docusaurus service.
-//
+/**
+ * The Doxysaurus uses Doxygen to generate documentation based on code,
+ * and then generates markdown files to be used by the Docusaurus service.
+ */
 
 import fs from 'fs';
 import path from 'path';
@@ -71,7 +71,7 @@ fireAndForget(async () => {
   }
 });
 
-async function processProject(config: Config) {
+async function processProject(config: Config): Promise<void> {
   log(`[Start] processing project {${config.input}}`);
   log('Project config: ', config);
 
@@ -83,7 +83,7 @@ async function processProject(config: Config) {
   log(`[Finished] processing project {${config.input}}`);
 }
 
-function watchProject(config: Config) {
+function watchProject(config: Config): void {
   log(`[Watching] folder {${config.input}} ...`);
 
   // We use delayTimer to coalesce multiple events coming at the same time
@@ -117,14 +117,14 @@ function watchProject(config: Config) {
   }
 }
 
-// Handles promise rejection and returns void instead of Promise<void>.
+/** Handles promise rejection and returns void instead of Promise<void>. */
 function fireAndForget(asyncFunc: () => Promise<void>): void {
   (async () => {
     try {
       await asyncFunc();
     } catch (err) {
       try {
-        log(`Error: `, err);
+        log.error(err);
       } catch (logError) {
         console.error(logError);
       }

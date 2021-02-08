@@ -3,11 +3,11 @@
  * Licensed under the MIT License.
  *
  * @format
- **/
+ */
 
-//
-// Renders Markdown based documentation model to markdown files by applying Mustache templates.
-//
+/**
+ * Renders Markdown based documentation model to markdown files by applying Mustache templates.
+ */
 
 import mustache from 'mustache';
 import path from 'path';
@@ -18,12 +18,15 @@ import {DocModel} from './doc-model';
 
 const templateCache: {[index: string]: string} = {};
 
-export async function renderDocFiles(docModel: DocModel, config: Config) {
+export async function renderDocFiles(
+  docModel: DocModel,
+  config: Config,
+): Promise<string[]> {
   const renderedFiles: string[] = [];
   await fs.mkdir(config.outputDir, {recursive: true});
 
   const templatePath = path.normalize(
-    path.join(__dirname, '..', 'templates', 'cpp', 'class.md'),
+    path.join(__dirname, '..', 'templates', 'cpp', 'class.md.mustache'),
   );
   const template = await getCachedTemplate(templatePath);
 
@@ -48,7 +51,7 @@ export async function renderDocFiles(docModel: DocModel, config: Config) {
   return renderedFiles;
 }
 
-async function getCachedTemplate(templatePath: string) {
+async function getCachedTemplate(templatePath: string): Promise<string> {
   let template = templateCache[templatePath];
   if (!template) {
     template = await fs.readFile(templatePath, 'utf-8');

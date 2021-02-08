@@ -5,10 +5,10 @@
  * @format
  */
 
-//
-// Loads Doxygen model using xml2js component.
-// Provides partial typings for loaded data structures used by Doxysaurus project.
-//
+/**
+ * Loads Doxygen model using xml2js component.
+ * Provides partial typings for loaded data structures used by Doxysaurus project.
+ */
 
 import path from 'path';
 import xml2js from 'xml2js';
