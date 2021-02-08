@@ -1,8 +1,16 @@
-# Change Log - integration-test
+# Change Log - integration-test-app
 
-This log was last generated on Sat, 30 Jan 2021 05:06:38 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Feb 2021 05:05:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Mon, 08 Feb 2021 05:05:41 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.250 (igklemen@microsoft.com)
 
 ## 0.0.1
 

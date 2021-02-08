@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 08 Feb 2021 05:05:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.250",
+      "version": "0.0.0-canary.250",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Switch.onChange",
+            "author": "igklemen@microsoft.com",
+            "commit": "1a94c915b5be42ca2d43792f35fa9fad26dba2f4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 05 Feb 2021 05:05:05 GMT",
       "tag": "react-native-windows_v0.0.0-canary.249",
       "version": "0.0.0-canary.249",

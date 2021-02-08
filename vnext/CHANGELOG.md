@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 04 Feb 2021 05:05:58 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Feb 2021 05:05:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.250
+
+Mon, 08 Feb 2021 05:05:41 GMT
+
+### Changes
+
+- Fix Switch.onChange (igklemen@microsoft.com)
 
 ## 0.0.0-canary.249
 
