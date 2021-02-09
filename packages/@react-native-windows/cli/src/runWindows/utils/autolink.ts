@@ -708,9 +708,6 @@ export class AutolinkWindows {
       // if we don't have a packages.config, then this is a C# project, in which case we use <PackageReference> and dynamically pick the right XAML package.
       const project = this.getWindowsConfig();
 
-      const packageElements = packagesConfig.content.documentElement.getElementsByTagName(
-        'package',
-      );
       const winUIPropsPath = path.join(
         resolveRnwRoot(project),
         'PropertySheets/WinUI.props',
@@ -732,38 +729,11 @@ export class AutolinkWindows {
       const keepPkg = useWinUI3 ? dialects[0] : dialects[1];
       const removePkg = useWinUI3 ? dialects[1] : dialects[0];
 
-      const nodesToRemove: Element[] = [];
-      let needsToAddKeepPkg = true;
-      for (let i = 0; i < packageElements.length; i++) {
-        const packageElement = packageElements.item(i)!;
-        const idAttr = packageElement!.getAttributeNode('id');
-        const id = idAttr!.value;
-        if (id === removePkg.id) {
-          nodesToRemove.push(packageElement);
-          changed = true;
-        } else if (id === keepPkg.id) {
-          changed =
-            changed ||
-            packageElement.getAttribute('version') !== keepPkg.version;
-          packageElement.setAttribute('version', keepPkg.version!);
-          needsToAddKeepPkg = false;
-        }
-      }
-
-      nodesToRemove.forEach(pkg =>
-        packagesConfig.content.documentElement.removeChild(pkg),
+      changed = this.updatePackagesConfig(
+        packagesConfig,
+        [removePkg],
+        [keepPkg],
       );
-
-      if (needsToAddKeepPkg) {
-        const newPkg = packagesConfig.content.createElement('package');
-
-        Object.entries(keepPkg).forEach(([attr, value]) => {
-          newPkg.setAttribute(attr, value as string);
-        });
-        newPkg.setAttribute('targetFramework', 'native');
-        packagesConfig.content.documentElement.appendChild(newPkg);
-        changed = true;
-      }
 
       if (!this.options.check && changed) {
         const serializer = new XMLSerializer();
@@ -772,6 +742,51 @@ export class AutolinkWindows {
         this.updateFile(packagesConfig.path, formattedXml);
       }
     }
+    return changed;
+  }
+
+  private updatePackagesConfig(
+    packagesConfig: {path: string; content: Document},
+    removePkgs: {id: string; version: string}[],
+    keepPkgs: {id: string; version: string}[],
+  ) {
+    let changed = false;
+    const packageElements = packagesConfig.content.documentElement.getElementsByTagName(
+      'package',
+    );
+
+    const nodesToRemove: Element[] = [];
+
+    for (let i = 0; i < packageElements.length; i++) {
+      const packageElement = packageElements.item(i)!;
+      const idAttr = packageElement!.getAttributeNode('id');
+      const id = idAttr!.value;
+      const keepPkg = keepPkgs.find(pkg => pkg.id === id);
+      if (removePkgs.find(pkg => pkg.id === id)) {
+        nodesToRemove.push(packageElement);
+        changed = true;
+      } else if (keepPkg) {
+        changed =
+          changed || keepPkg.version !== packageElement.getAttribute('version');
+        packageElement.setAttribute('version', keepPkg.version!);
+        keepPkgs = keepPkgs.filter(pkg => pkg.id !== keepPkg.id);
+      }
+    }
+
+    nodesToRemove.forEach(pkg =>
+      packagesConfig.content.documentElement.removeChild(pkg),
+    );
+
+    keepPkgs.forEach(keepPkg => {
+      const newPkg = packagesConfig.content.createElement('package');
+
+      Object.entries(keepPkg).forEach(([attr, value]) => {
+        newPkg.setAttribute(attr, value as string);
+      });
+      newPkg.setAttribute('targetFramework', 'native');
+      packagesConfig.content.documentElement.appendChild(newPkg);
+      changed = true;
+    });
     return changed;
   }
 }
