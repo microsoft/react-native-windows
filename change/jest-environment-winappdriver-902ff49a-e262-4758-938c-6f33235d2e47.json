@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump just-scripts from 1.3.2 to 1.3.3",
+  "packageName": "jest-environment-winappdriver",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}

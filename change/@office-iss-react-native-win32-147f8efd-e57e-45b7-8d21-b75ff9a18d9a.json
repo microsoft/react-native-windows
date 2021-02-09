@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bump just-scripts from 1.3.2 to 1.3.3",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
