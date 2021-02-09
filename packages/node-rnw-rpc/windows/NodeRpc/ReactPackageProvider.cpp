@@ -8,7 +8,7 @@ using namespace winrt::Microsoft::ReactNative;
 
 namespace winrt::NodeRpc::implementation {
 
-void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &/*packageBuilder*/) noexcept {
+void ReactPackageProvider::CreatePackage(IReactPackageBuilder const & /*packageBuilder*/) noexcept {
   // Noop
 }
 

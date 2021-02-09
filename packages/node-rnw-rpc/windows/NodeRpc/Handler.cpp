@@ -19,7 +19,9 @@ winrt::NodeRpc::Handler Handler::BindAction(const winrt::hstring &methodName, co
   return NodeRpc::Handler(*this);
 }
 
-winrt::NodeRpc::Handler Handler::BindAsyncAction(const winrt::hstring &methodName, const AsyncRpcAction &action) noexcept {
+winrt::NodeRpc::Handler Handler::BindAsyncAction(
+    const winrt::hstring &methodName,
+    const AsyncRpcAction &action) noexcept {
   VerifyElseCrash(!IsMethodRegistered(methodName));
   VerifyElseCrash(!IsReservedMethodName(methodName));
 
@@ -27,7 +29,9 @@ winrt::NodeRpc::Handler Handler::BindAsyncAction(const winrt::hstring &methodNam
   return NodeRpc::Handler(*this);
 }
 
-winrt::NodeRpc::Handler Handler::BindOperation(const winrt::hstring &methodName, const RpcOperation &operation) noexcept {
+winrt::NodeRpc::Handler Handler::BindOperation(
+    const winrt::hstring &methodName,
+    const RpcOperation &operation) noexcept {
   VerifyElseCrash(!IsMethodRegistered(methodName));
   VerifyElseCrash(!IsReservedMethodName(methodName));
 
@@ -35,7 +39,9 @@ winrt::NodeRpc::Handler Handler::BindOperation(const winrt::hstring &methodName,
   return NodeRpc::Handler(*this);
 }
 
-winrt::NodeRpc::Handler Handler::BindAsyncOperation(const winrt::hstring &methodName, const AsyncRpcOperation &operation) noexcept {
+winrt::NodeRpc::Handler Handler::BindAsyncOperation(
+    const winrt::hstring &methodName,
+    const AsyncRpcOperation &operation) noexcept {
   VerifyElseCrash(!IsMethodRegistered(methodName));
   VerifyElseCrash(!IsReservedMethodName(methodName));
 
