@@ -129,7 +129,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReactPackageProvider.cs" />
-    <Compile Include="TreeDumpControlViewManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

@@ -5,16 +5,15 @@
  * @format
  */
 
-export async function assertTreeDumpPassed() {
-  const treeDumpControl = await $('~tree-dump-control');
+import {waitForConnection} from 'node-rnw-rpc';
 
-  // Text is populated asynchonously
-  await browser.waitUntil(
-    async () => (await treeDumpControl.getText()).trim() !== '',
-    {timeoutMsg: 'Tree dump was not generated'},
-  );
-
-  expect(await treeDumpControl.getText()).toBe('TreeDump:Passed');
+export async function dumpVisualTree(
+  accessibilityId: string,
+): Promise<Record<string, any>> {
+  console.log('connecting');
+  const rpcClient = await waitForConnection({port: 8603});
+  console.log('connected');
+  return await rpcClient.invoke('DumpVisualTree', {accessibilityId});
 }
 
 export async function goToComponentExample(example: string) {

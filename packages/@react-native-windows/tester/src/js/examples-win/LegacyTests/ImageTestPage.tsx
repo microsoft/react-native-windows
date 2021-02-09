@@ -6,7 +6,6 @@
 import { StyleSheet, View, Image, Button } from 'react-native';
 import * as React from 'react'
 import { useState } from 'react';
-import { TreeDumpControl } from './TreeDumpControl';
 
 const styles = StyleSheet.create({
   container: {
@@ -43,11 +42,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     direction: 'rtl',
   },
-  treeDumpControl: {
-    height: 150,
-    width: 500,
-    margin: 10,
-  },
 });
 
 export function ImageTestPage() {
@@ -69,19 +63,6 @@ export function ImageTestPage() {
       return styles.imageWithBorder;
     }
     return styles.image;
-  };
-
-  const dumpId = () => {
-    if (rltMode) {
-      return 'ImageRTL';
-    }
-    if (imageWithBorder) {
-      return 'ImageWithBorder';
-    }
-    if (clickCount === 0) {
-      return 'ImageWithoutBorder';
-    }
-    return 'ImageWithoutBorder-Subsequent';
   };
 
   return (
@@ -108,12 +89,6 @@ export function ImageTestPage() {
         title={rltMode ? 'Set image to LTR' : 'Set image to RTL'}
         onPress={() => setRtlMode(!rltMode)}
         testID="set-rtl-button"
-      />
-      <TreeDumpControl
-        style={styles.treeDumpControl}
-        dumpID={dumpId()}
-        uiaID="image-container"
-        additionalProperties={rltMode ? ['FlowDirection'] : []}
       />
     </View>
   );

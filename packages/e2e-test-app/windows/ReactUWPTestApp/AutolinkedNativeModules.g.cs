@@ -2,6 +2,9 @@
 
 using System.Collections.Generic;
 
+// Namespaces from node-rnw-rpc
+using NodeRpc;
+
 namespace Microsoft.ReactNative.Managed
 {
     internal static class AutolinkedNativeModules

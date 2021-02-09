@@ -5,7 +5,7 @@
  * @format
  */
 
-import {goToComponentExample, assertTreeDumpPassed} from './Helpers';
+import {goToComponentExample, dumpVisualTree} from './Helpers';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyTextBackgroundColorTest');
@@ -14,6 +14,7 @@ beforeAll(async () => {
 describe('LegacyTextBackgroundColorTest', () => {
   /* Test case #1: view and image displayed with no border and cornerRadius */
   test('TextBackgroundColorTest', async () => {
-    await assertTreeDumpPassed();
+    const dump = await dumpVisualTree('text-color-background-view');
+    expect(dump).toMatchSnapshot();
   });
 });
