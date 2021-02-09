@@ -1,0 +1,207 @@
+{
+  "XamlType": "Microsoft.ReactNative.ViewPanel",
+  "Background": null,
+  "BorderBrush": "#00000000",
+  "BorderThickness": "0,0,0,0",
+  "Clip": null,
+  "CornerRadius": "0,0,0,0",
+  "FlowDirection": "LeftToRight",
+  "Height": 95,
+  "HorizontalAlignment": "Stretch",
+  "Margin": "0,0,0,0",
+  "RenderSize": [800, 95],
+  "VerticalAlignment": "Stretch",
+  "Visibility": "Visible",
+  "Width": 800,
+  "AutomationId": "text-color-background-view",
+  "children": [
+  {
+    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    "Clip": null,
+    "FlowDirection": "LeftToRight",
+    "Foreground": "#FF000000",
+    "Height": 19,
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [800, 19],
+    "Text": "Outer no_color START_NESTED green DEEPER_NESTED blue END_NESTED attributes.",
+    "TextHighlighters": [{
+"Background": "#FF008000",
+"Ranges": [{"StartIndex":15,"Length":18}]
+}
+,{
+"Background": "#FF008000",
+"Ranges": [{"StartIndex":33,"Length":1}]
+}
+,{
+"Background": "#FF0000FF",
+"Ranges": [{"StartIndex":34,"Length":18}]
+}
+,{
+"Background": "#FF008000",
+"Ranges": [{"StartIndex":52,"Length":1}]
+}
+,{
+"Background": "#FF008000",
+"Ranges": [{"StartIndex":53,"Length":10}]
+}
+],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "Width": 800
+  },
+  {
+    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    "Clip": null,
+    "FlowDirection": "LeftToRight",
+    "Foreground": "#FF000000",
+    "Height": 19,
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [800, 19],
+    "Text": "Outer no_color START_NESTED no_color DEEPER_NESTED blue END_NESTED attributes.",
+    "TextHighlighters": [{
+"Background": "#FF0000FF",
+"Ranges": [{"StartIndex":37,"Length":18}]
+}
+],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "Width": 800
+  },
+  {
+    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    "Clip": null,
+    "FlowDirection": "LeftToRight",
+    "Foreground": "#FF000000",
+    "Height": 19,
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [800, 19],
+    "Text": "Outer no_color START_NESTED green DEEPER_NESTED inherit green END_NESTED attributes.",
+    "TextHighlighters": [{
+"Background": "#FF008000",
+"Ranges": [{"StartIndex":15,"Length":19}]
+}
+,{
+"Background": "#FF008000",
+"Ranges": [{"StartIndex":34,"Length":27}]
+}
+,{
+"Background": "#FF008000",
+"Ranges": [{"StartIndex":61,"Length":1}]
+}
+,{
+"Background": "#FF008000",
+"Ranges": [{"StartIndex":62,"Length":10}]
+}
+],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "Width": 800
+  },
+  {
+    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    "Clip": null,
+    "FlowDirection": "LeftToRight",
+    "Foreground": "#FF000000",
+    "Height": 19,
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [800, 19],
+    "Text": "Outer red START_NESTED inherit red DEEPER_NESTED inherit red END_NESTED attributes.",
+    "TextHighlighters": [{
+"Background": "#FFFF0000",
+"Ranges": [{"StartIndex":0,"Length":9}]
+}
+,{
+"Background": "#FFFF0000",
+"Ranges": [{"StartIndex":9,"Length":1}]
+}
+,{
+"Background": "#FFFF0000",
+"Ranges": [{"StartIndex":10,"Length":25}]
+}
+,{
+"Background": "#FFFF0000",
+"Ranges": [{"StartIndex":35,"Length":25}]
+}
+,{
+"Background": "#FFFF0000",
+"Ranges": [{"StartIndex":60,"Length":1}]
+}
+,{
+"Background": "#FFFF0000",
+"Ranges": [{"StartIndex":61,"Length":10}]
+}
+,{
+"Background": "#FFFF0000",
+"Ranges": [{"StartIndex":71,"Length":1}]
+}
+,{
+"Background": "#FFFF0000",
+"Ranges": [{"StartIndex":72,"Length":11}]
+}
+],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "Width": 800
+  },
+  {
+    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    "Clip": null,
+    "FlowDirection": "LeftToRight",
+    "Foreground": "#FF000000",
+    "Height": 19,
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [800, 19],
+    "Text": "Outer red START_NESTED green DEEPER_NESTED blue END_NESTED attributes.",
+    "TextHighlighters": [{
+"Background": "#FFFF0000",
+"Ranges": [{"StartIndex":0,"Length":9}]
+}
+,{
+"Background": "#FFFF0000",
+"Ranges": [{"StartIndex":9,"Length":1}]
+}
+,{
+"Background": "#FF008000",
+"Ranges": [{"StartIndex":10,"Length":18}]
+}
+,{
+"Background": "#FF008000",
+"Ranges": [{"StartIndex":28,"Length":1}]
+}
+,{
+"Background": "#FF0000FF",
+"Ranges": [{"StartIndex":29,"Length":18}]
+}
+,{
+"Background": "#FF008000",
+"Ranges": [{"StartIndex":47,"Length":1}]
+}
+,{
+"Background": "#FF008000",
+"Ranges": [{"StartIndex":48,"Length":10}]
+}
+,{
+"Background": "#FFFF0000",
+"Ranges": [{"StartIndex":58,"Length":1}]
+}
+,{
+"Background": "#FFFF0000",
+"Ranges": [{"StartIndex":59,"Length":11}]
+}
+],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "Width": 800
+  }
+  ]
+}

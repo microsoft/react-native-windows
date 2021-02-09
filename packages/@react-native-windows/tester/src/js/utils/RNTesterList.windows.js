@@ -150,10 +150,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples-win/LegacyTests/ImageTestPage'),
   },
   {
-    key: 'LegacyAccessibilityTest',
-    module: require('../examples-win/LegacyTests/AccessibilityTestPage'),
-  },
-  {
     key: 'LegacyTextBackgroundColorTest',
     module: require('../examples-win/LegacyTests/TextBackgroundColorTestPage'),
   },

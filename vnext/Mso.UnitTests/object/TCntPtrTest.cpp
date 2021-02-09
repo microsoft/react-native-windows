@@ -114,7 +114,7 @@ TestClassComponent(CntPtrTest, Mso.CntPtr) TEST_CLASS (CntPtrTest) {
   static void ValidateRefCount(uint32_t expectedIncRefCountCallCount, TAction action) {
     uint32_t actualIncRefCountCallCount = 0;
     uint32_t actualDecRefCountCallCount = 0;
-    auto callback = [&actualIncRefCountCallCount, &actualDecRefCountCallCount ](bool incremented) noexcept {
+    auto callback = [&actualIncRefCountCallCount, &actualDecRefCountCallCount](bool incremented) noexcept {
       if (incremented) {
         ++actualIncRefCountCallCount;
       } else {

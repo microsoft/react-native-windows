@@ -12,6 +12,16 @@ namespace winrt::Microsoft::ReactNative::implementation {
 //=============================================================================
 
 ReactNotificationSubscription::ReactNotificationSubscription(
+    IReactNotificationSubscription const &parentSubscription,
+    weak_ref<ReactNotificationService> &&notificationService,
+    IReactPropertyName const &notificationName,
+    IReactDispatcher const &dispatcher) noexcept
+    : m_parentSubscription{parentSubscription},
+      m_notificationService{std::move(notificationService)},
+      m_notificationName{notificationName},
+      m_dispatcher{dispatcher} {}
+
+ReactNotificationSubscription::ReactNotificationSubscription(
     weak_ref<ReactNotificationService> &&notificationService,
     IReactPropertyName const &notificationName,
     IReactDispatcher const &dispatcher,
@@ -25,12 +35,16 @@ ReactNotificationSubscription::~ReactNotificationSubscription() noexcept {
   Unsubscribe();
 }
 
-IReactDispatcher ReactNotificationSubscription::Dispatcher() const noexcept {
-  return m_dispatcher;
+IReactNotificationService ReactNotificationSubscription::NotificationService() const noexcept {
+  return m_notificationService.get().as<IReactNotificationService>();
 }
 
 IReactPropertyName ReactNotificationSubscription::NotificationName() const noexcept {
   return m_notificationName;
+}
+
+IReactDispatcher ReactNotificationSubscription::Dispatcher() const noexcept {
+  return m_dispatcher;
 }
 
 bool ReactNotificationSubscription::IsSubscribed() const noexcept {
@@ -38,6 +52,10 @@ bool ReactNotificationSubscription::IsSubscribed() const noexcept {
 }
 
 void ReactNotificationSubscription::Unsubscribe() noexcept {
+  if (m_parentSubscription) {
+    m_parentSubscription.Unsubscribe();
+  }
+
   if (m_isSubscribed.exchange(false)) {
     if (auto notificationService = m_notificationService.get()) {
       notificationService->Unsubscribe(*this);
@@ -48,9 +66,10 @@ void ReactNotificationSubscription::Unsubscribe() noexcept {
 void ReactNotificationSubscription::CallHandler(
     IInspectable const &sender,
     IReactNotificationArgs const &args) noexcept {
+  VerifyElseCrashSz(!m_parentSubscription, "CallHandler must not be called on the child subscription.");
   if (IsSubscribed()) {
     if (m_dispatcher) {
-      m_dispatcher.Post([ thisPtr = get_strong(), sender, args ]() noexcept {
+      m_dispatcher.Post([thisPtr = get_strong(), sender, args]() noexcept {
         if (thisPtr->IsSubscribed()) {
           thisPtr->m_handler(sender, args);
         }
@@ -127,10 +146,16 @@ IReactNotificationSubscription ReactNotificationService::Subscribe(
     IReactPropertyName const &notificationName,
     IReactDispatcher const &dispatcher,
     ReactNotificationHandler const &handler) noexcept {
-  auto subscription = make<ReactNotificationSubscription>(get_weak(), notificationName, dispatcher, handler);
+  // Make sure that parent notification service also subscribes to this notification.
+  auto parentSubscription = m_parentNotificationService
+      ? m_parentNotificationService.Subscribe(notificationName, dispatcher, handler)
+      : IReactNotificationSubscription{nullptr};
+  auto subscription = parentSubscription
+      ? make<ReactNotificationSubscription>(parentSubscription, get_weak(), notificationName, dispatcher)
+      : make<ReactNotificationSubscription>(get_weak(), notificationName, dispatcher, handler);
   ModifySubscriptions(
       notificationName, [&subscription](std::vector<IReactNotificationSubscription> const &snapshot) noexcept {
-        std::vector<IReactNotificationSubscription> newSnapshot(snapshot);
+        auto newSnapshot = std::vector<IReactNotificationSubscription>(snapshot);
         newSnapshot.push_back(subscription);
         return newSnapshot;
       });
@@ -138,10 +163,11 @@ IReactNotificationSubscription ReactNotificationService::Subscribe(
 }
 
 void ReactNotificationService::Unsubscribe(IReactNotificationSubscription const &subscription) noexcept {
+  // The subscription will call the parent Unsubscribe on its own.
   ModifySubscriptions(
       subscription.NotificationName(),
       [&subscription](std::vector<IReactNotificationSubscription> const &snapshot) noexcept {
-        std::vector<IReactNotificationSubscription> newSnapshot(snapshot);
+        auto newSnapshot = std::vector<IReactNotificationSubscription>(snapshot);
         auto it = std::find(newSnapshot.begin(), newSnapshot.end(), subscription);
         if (it != newSnapshot.end()) {
           newSnapshot.erase(it);
@@ -151,7 +177,8 @@ void ReactNotificationService::Unsubscribe(IReactNotificationSubscription const 
 }
 
 void ReactNotificationService::UnsubscribeAll() noexcept {
-  std::map<IReactPropertyName, SubscriptionSnapshotPtr> subscriptions;
+  // The subscription will call the parent Unsubscribe on its own.
+  decltype(m_subscriptions) subscriptions;
   {
     std::scoped_lock lock{m_mutex};
     subscriptions = std::move(m_subscriptions);
@@ -169,27 +196,27 @@ void ReactNotificationService::SendNotification(
     IReactPropertyName const &notificationName,
     IInspectable const &sender,
     IInspectable const &data) noexcept {
-  SubscriptionSnapshotPtr currentSnapshotPtr;
-
-  {
-    std::scoped_lock lock{m_mutex};
-    auto it = m_subscriptions.find(notificationName);
-    if (it != m_subscriptions.end()) {
-      currentSnapshotPtr = it->second;
-    }
-  }
-
-  // Call notification handlers outside of lock.
-  if (currentSnapshotPtr) {
-    for (auto &subscription : *currentSnapshotPtr) {
-      auto args = make<ReactNotificationArgs>(subscription, data);
-      get_self<ReactNotificationSubscription>(subscription)->CallHandler(sender, args);
-    }
-  }
-
-  // Call parent notification service
   if (m_parentNotificationService) {
+    // Notification are always sent from the root notification service.
     m_parentNotificationService.SendNotification(notificationName, sender, data);
+  } else {
+    SubscriptionSnapshotPtr currentSnapshotPtr;
+
+    {
+      std::scoped_lock lock{m_mutex};
+      auto it = m_subscriptions.find(notificationName);
+      if (it != m_subscriptions.end()) {
+        currentSnapshotPtr = it->second;
+      }
+    }
+
+    // Call notification handlers outside of lock.
+    if (currentSnapshotPtr) {
+      for (auto &subscription : *currentSnapshotPtr) {
+        auto args = make<ReactNotificationArgs>(subscription, data);
+        get_self<ReactNotificationSubscription>(subscription)->CallHandler(sender, args);
+      }
+    }
   }
 }
 

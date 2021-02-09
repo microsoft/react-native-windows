@@ -99,11 +99,14 @@ Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\jsi-inl.h -Destinati
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\threadsafe.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
 
 # Microsoft.ReactNative.CXX project TurboModule files
+New-Item -ItemType Directory -Path $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\CallInvoker.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 
 # NUSPEC
 Copy-Item -Force -Path $ReactWindowsRoot\Scripts\*.nuspec -Destination $TargetRoot

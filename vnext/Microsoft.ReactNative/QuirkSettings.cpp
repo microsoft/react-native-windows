@@ -13,8 +13,8 @@ namespace winrt::Microsoft::ReactNative::implementation {
 QuirkSettings::QuirkSettings() noexcept {}
 
 winrt::Microsoft::ReactNative::ReactPropertyId<bool> MatchAndroidAndIOSStretchBehaviorProperty() noexcept {
-  static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{L"ReactNative.QuirkSettings",
-                                                                     L"MatchAndroidAndIOSyStretchBehavior"};
+  static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
+      L"ReactNative.QuirkSettings", L"MatchAndroidAndIOSyStretchBehavior"};
   return propId;
 }
 
@@ -25,15 +25,15 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MatchAndroidAndIOSStretchBe
 }
 
 winrt::Microsoft::ReactNative::ReactPropertyId<bool> UseLegacyWebSocketModuleProperty() noexcept {
-  winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{L"ReactNative.QuirkSettings",
-                                                              L"UseLegacyWebSocketModule"};
+  winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
+      L"ReactNative.QuirkSettings", L"UseLegacyWebSocketModule"};
 
   return propId;
 }
 
 winrt::Microsoft::ReactNative::ReactPropertyId<bool> AcceptSelfSignedCertsProperty() noexcept {
-  winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{L"ReactNative.QuirkSettings",
-                                                              L"Networking.AcceptSelfSigned"};
+  winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
+      L"ReactNative.QuirkSettings", L"Networking.AcceptSelfSigned"};
 
   return propId;
 }

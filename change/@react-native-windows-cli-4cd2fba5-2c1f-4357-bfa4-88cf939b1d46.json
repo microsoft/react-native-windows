@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Build apps for either/or WinUI 3 or XAML",
+  "packageName": "@react-native-windows/cli",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

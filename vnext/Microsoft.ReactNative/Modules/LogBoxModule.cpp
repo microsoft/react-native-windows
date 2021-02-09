@@ -74,12 +74,12 @@ void LogBox::ShowOnUIThread() noexcept {
         }
       });
 
-  m_tokenClosed = m_popup.Closed([wkThis = weak_from_this()](
-      auto const & /*sender*/, winrt::IInspectable const & /*args*/) noexcept {
-    if (auto strongThis = wkThis.lock()) {
-      strongThis->HideOnUIThread();
-    }
-  });
+  m_tokenClosed = m_popup.Closed(
+      [wkThis = weak_from_this()](auto const & /*sender*/, winrt::IInspectable const & /*args*/) noexcept {
+        if (auto strongThis = wkThis.lock()) {
+          strongThis->HideOnUIThread();
+        }
+      });
 
   m_popup.Child(m_logBoxContent);
   m_popup.IsOpen(true);

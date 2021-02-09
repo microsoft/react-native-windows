@@ -36,7 +36,7 @@ T Copy(const T &obj) noexcept(noexcept(T{obj})) {
 //! resolved to a strong pointer at the call time.
 template <class T, class TReturn, class... TArgs>
 Mso::Functor<TReturn(TArgs...)> MakeWeakMemberFunctor(T *self, TReturn (T::*memberFunc)(TArgs...)) noexcept {
-  return [ weakSelf = Mso::WeakPtr<T>{self}, memberFunc ](TArgs... args) noexcept {
+  return [weakSelf = Mso::WeakPtr<T>{self}, memberFunc](TArgs... args) noexcept {
     if (auto strongSelf = weakSelf.GetStrongPtr()) {
       (strongSelf.Get()->*memberFunc)(args...);
     }
@@ -49,7 +49,7 @@ Mso::Functor<TReturn(TArgs...)> MakeWeakMemberFunctor(T *self, TReturn (T::*memb
 //! resolved to a strong pointer at the call time.
 template <class T, class TReturn, class... TArgs>
 std::function<TReturn(TArgs...)> MakeWeakMemberStdFunction(T *self, TReturn (T::*memberFunc)(TArgs...)) noexcept {
-  return std::function<TReturn(TArgs...)>([ weakSelf = Mso::WeakPtr<T>{self}, memberFunc ](TArgs... args) noexcept {
+  return std::function<TReturn(TArgs...)>([weakSelf = Mso::WeakPtr<T>{self}, memberFunc](TArgs... args) noexcept {
     if (auto strongSelf = weakSelf.GetStrongPtr()) {
       (strongSelf.Get()->*memberFunc)(args...);
     }

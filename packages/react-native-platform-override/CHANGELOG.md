@@ -1,8 +1,68 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Fri, 18 Dec 2020 19:23:58 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.11
+
+Tue, 09 Feb 2021 05:07:37 GMT
+
+### Patches
+
+- Bump just-scripts from 1.3.2 to 1.3.3 (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/package-utils to v0.0.0-canary.15 (dannyvv@microsoft.com)
+
+## 1.4.10
+
+Thu, 28 Jan 2021 05:06:47 GMT
+
+### Patches
+
+- Leverage default config support in Just library and factor out common tasks (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/package-utils to v0.0.0-canary.14 (dannyvv@microsoft.com)
+
+## 1.4.9
+
+Wed, 27 Jan 2021 05:06:36 GMT
+
+### Patches
+
+- Show TS Stack Traces on Uncaught CLI Exception (ngerlem@microsoft.com)
+
+## 1.4.8
+
+Tue, 26 Jan 2021 05:06:39 GMT
+
+### Patches
+
+- Update @types package versions in package.json from dependabot updates to yarn.lock (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/package-utils to v0.0.0-canary.13 (dannyvv@microsoft.com)
+
+## 0.4.7
+
+Fri, 15 Jan 2021 05:07:01 GMT
+
+### Patches
+
+- Update code to new packages for isUtf8 and yargs (canli@microsoft.com)
+
+## 0.4.6
+
+Wed, 06 Jan 2021 05:06:51 GMT
+
+### Patches
+
+- Move some packages from @rnw-scripts to @react-native-windows (ngerlem@microsoft.com)
 
 ## 0.4.5
 

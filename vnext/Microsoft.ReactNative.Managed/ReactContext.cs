@@ -23,11 +23,11 @@ namespace Microsoft.ReactNative.Managed
       var argWriter = arg as JSValueArgWriter;
       if (argWriter != null)
       {
-        Handle.DispatchEvent(view, eventName, argWriter);
+        XamlUIService.FromContext(Handle).DispatchEvent(view, eventName, argWriter);
       }
       else
       {
-        Handle.DispatchEvent(view, eventName, (IJSValueWriter writer) => writer.WriteValue(arg));
+        XamlUIService.FromContext(Handle).DispatchEvent(view, eventName, (IJSValueWriter writer) => writer.WriteValue(arg));
       }
     }
 

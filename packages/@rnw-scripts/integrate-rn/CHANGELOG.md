@@ -1,8 +1,82 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.27
+
+Tue, 09 Feb 2021 05:07:37 GMT
+
+### Patches
+
+- Bump just-scripts from 1.3.2 to 1.3.3 (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.18 (dannyvv@microsoft.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.15 (dannyvv@microsoft.com)
+- Bump react-native-platform-override to v1.4.11 (dannyvv@microsoft.com)
+
+## 1.0.26
+
+Thu, 28 Jan 2021 05:06:47 GMT
+
+### Patches
+
+- Leverage default config support in Just library and factor out common tasks (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump react-native-platform-override to v1.4.10 (dannyvv@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.17 (dannyvv@microsoft.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.14 (dannyvv@microsoft.com)
+
+## 1.0.25
+
+Wed, 27 Jan 2021 05:06:36 GMT
+
+### Patches
+
+- Show TS Stack Traces on Uncaught CLI Exception (ngerlem@microsoft.com)
+
+## 1.0.24
+
+Tue, 26 Jan 2021 05:06:39 GMT
+
+### Patches
+
+- Update @types package versions in package.json from dependabot updates to yarn.lock (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump react-native-platform-override to v1.4.8 (dannyvv@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.16 (ngerlem@microsoft.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.13 (dannyvv@microsoft.com)
+
+## 0.0.23
+
+Fri, 15 Jan 2021 05:07:01 GMT
+
+### Patches
+
+- Update code to new packages for isUtf8 and yargs (canli@microsoft.com)
+
+## 0.0.22
+
+Thu, 14 Jan 2021 05:05:22 GMT
+
+### Patches
+
+- Allow Integration Script to Output Markdown (ngerlem@microsoft.com)
+
+## 0.0.21
+
+Wed, 06 Jan 2021 05:06:51 GMT
+
+### Patches
+
+- Move some packages from @rnw-scripts to @react-native-windows (ngerlem@microsoft.com)
 
 ## 0.0.19
 

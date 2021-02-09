@@ -56,7 +56,7 @@
               variables:
                 - template: ../variables/vs2019.yml
               displayName: Universal Build ${{ matrix.Name }}
-              pool: windevbuildagents
+              pool: $(AgentPool.Large)
               timeoutInMinutes: 60
               cancelTimeoutInMinutes: 5
 
@@ -65,9 +65,10 @@
                   clean: false
                   submodules: false
 
+                - template: ../templates/apply-published-version-vars.yml
+
                 - template: ../templates/build-rnw.yml
                   parameters:
-                    yarnBuildCmd: build
                     project: vnext/Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
@@ -121,8 +122,6 @@
                     arguments: -NoPrompt -Tags buildLab
                     
                 - template: ../templates/prepare-env.yml
-                  parameters:
-                    yarnBuildCmd: build
 
                 - task: NuGetCommand@2
                   displayName: NuGet restore
@@ -209,7 +208,6 @@
 
     # This job is the one that accumulates the spread out build tasks into one dependency
     - job: UniversalBuild
-      condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
       displayName: Universal Build 🏗
       variables:
         - template: ../variables/vs2019.yml
@@ -224,6 +222,8 @@
       cancelTimeoutInMinutes: 5
 
       steps:
+        - checkout: none
+          clean: false
         - powershell: |
             Write-Host "Waited for all Universal Build steps"
           displayName: Waiting for all Universal Build steps

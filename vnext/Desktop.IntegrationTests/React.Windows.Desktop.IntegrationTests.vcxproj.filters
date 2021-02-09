@@ -10,6 +10,12 @@
     <Filter Include="Integration Tests">
       <UniqueIdentifier>{d16575e1-76eb-4fd5-a7b1-8a0f061e6fa9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Modules">
+      <UniqueIdentifier>{3781180d-974e-4c46-a063-d2df2331f6cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Modules">
+      <UniqueIdentifier>{893336b8-ce9c-433b-ba3c-aa4697609ec0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -39,6 +45,12 @@
     <ClCompile Include="ChakraRuntimeHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\TestDevSettingsModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\TestImageLoaderModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DesktopTestInstance.h">
@@ -46,6 +58,12 @@
     </ClInclude>
     <ClInclude Include="ChakraRuntimeHolder.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\TestDevSettingsModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\TestImageLoaderModule.h">
+      <Filter>Header Files\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

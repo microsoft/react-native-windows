@@ -462,7 +462,7 @@ void FabricUIManager::initiateTransaction(facebook::react::MountingCoordinator::
   } while (m_followUpTransactionRequired);
 }
 
-void Microsoft::ReactNative::FabricUIManager::schedulerDidFinishTransaction(
+void FabricUIManager::schedulerDidFinishTransaction(
     facebook::react::MountingCoordinator::Shared const &mountingCoordinator) {
   // Should cache this locally
 
@@ -474,7 +474,7 @@ void Microsoft::ReactNative::FabricUIManager::schedulerDidFinishTransaction(
   }
 }
 
-void Microsoft::ReactNative::FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
+void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
     facebook::react::SurfaceId surfaceId,
     const facebook::react::ShadowView &shadowView) {
   /*
@@ -512,14 +512,14 @@ void Microsoft::ReactNative::FabricUIManager::schedulerDidRequestPreliminaryView
   */
 }
 
-void Microsoft::ReactNative::FabricUIManager::schedulerDidDispatchCommand(
+void FabricUIManager::schedulerDidDispatchCommand(
     const facebook::react::ShadowView &shadowView,
     std::string const &commandName,
     folly::dynamic const args) {
   assert(false);
 }
 
-void Microsoft::ReactNative::FabricUIManager::schedulerDidSetJSResponder(
+void FabricUIManager::schedulerDidSetJSResponder(
     facebook::react::SurfaceId surfaceId,
     const facebook::react::ShadowView &shadowView,
     const facebook::react::ShadowView &initialShadowView,
@@ -527,7 +527,11 @@ void Microsoft::ReactNative::FabricUIManager::schedulerDidSetJSResponder(
   assert(false);
 }
 
-void Microsoft::ReactNative::FabricUIManager::schedulerDidClearJSResponder() {
+void FabricUIManager::schedulerDidClearJSResponder() {
+  assert(false);
+}
+
+void FabricUIManager::schedulerDidSendAccessibilityEvent(const facebook::react::ShadowView &shadowView, std::string const &eventType) {
   assert(false);
 }
 

@@ -2,6 +2,51 @@
   "name": "@rnw-scripts/babel-node-config",
   "entries": [
     {
+      "date": "Fri, 05 Feb 2021 05:05:05 GMT",
+      "tag": "@rnw-scripts/babel-node-config_v1.0.2",
+      "version": "1.0.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Make @types/node version explicit",
+            "author": "ngerlem@microsoft.com",
+            "commit": "22ee9e8c47a0c794e7d509a471547ba873578e31",
+            "package": "@rnw-scripts/babel-node-config"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 20 Jan 2021 01:45:54 GMT",
+      "tag": "@rnw-scripts/babel-node-config_v1.0.2",
+      "version": "1.0.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump internally published packages to 1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "@rnw-scripts/babel-node-config"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 Jan 2021 05:05:37 GMT",
+      "tag": "@rnw-scripts/babel-node-config_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "remove excessive change files",
+            "author": "lehon@microsoft.com",
+            "commit": "8c4a518552899dbacc7d9133e2e480c8f55df85d",
+            "package": "@rnw-scripts/babel-node-config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Nov 2020 05:08:43 GMT",
       "tag": "@rnw-scripts/babel-node-config_v0.0.2",
       "version": "0.0.2",

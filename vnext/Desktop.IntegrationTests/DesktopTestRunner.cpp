@@ -11,6 +11,8 @@
 #include <cxxreact/Instance.h>
 #include "ChakraRuntimeHolder.h"
 #include "DesktopTestInstance.h"
+#include "Modules/TestDevSettingsModule.h"
+#include "Modules/TestImageLoaderModule.h"
 #include "TestInstance.h"
 #include "TestModule.h"
 #include "TestRootView.h"
@@ -44,33 +46,40 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   devSettings->jsiRuntimeHolder = std::make_shared<ChakraRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
 
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
-      std::make_tuple(
-          "AsyncLocalStorage",
-          []() -> unique_ptr<CxxModule> { return CreateAsyncStorageModule(L"ReactNativeAsyncStorage"); },
-          nativeQueue),
-      std::make_tuple(
-          "WebSocketModule",
-          []() -> unique_ptr<CxxModule> { return std::make_unique<WebSocketModule>(); },
-          nativeQueue),
-      std::make_tuple(
-          "Networking",
-          []() -> unique_ptr<CxxModule> { return std::make_unique<Microsoft::React::NetworkingModule>(); },
-          nativeQueue),
-      std::make_tuple(
-          "Timing", [nativeQueue]() -> unique_ptr<CxxModule> { return CreateTimingModule(nativeQueue); }, nativeQueue),
+      {"AsyncLocalStorage",
+       []() -> unique_ptr<CxxModule> {
+         return /*CreateAsyncStorageModule(L"ReactNativeAsyncStorage")*/ nullptr; // #6882
+       },
+       nativeQueue},
+
+      {"WebSocketModule", []() -> unique_ptr<CxxModule> { return std::make_unique<WebSocketModule>(); }, nativeQueue},
+
+      {"Networking",
+       []() -> unique_ptr<CxxModule> { return std::make_unique<Microsoft::React::NetworkingModule>(); },
+       nativeQueue},
+
+      {"Timing", [nativeQueue]() -> unique_ptr<CxxModule> { return CreateTimingModule(nativeQueue); }, nativeQueue},
+
       // Apparently mandatory for /IntegrationTests
-      std::make_tuple(
-          TestAppStateModule::name,
-          []() -> unique_ptr<CxxModule> { return std::make_unique<TestAppStateModule>(); },
-          nativeQueue),
+      {TestAppStateModule::name,
+       []() -> unique_ptr<CxxModule> { return std::make_unique<TestAppStateModule>(); },
+       nativeQueue},
+
       // Apparently mandatory for /IntegrationTests
-      std::make_tuple(
-          "UIManager", []() -> unique_ptr<CxxModule> { return std::make_unique<TestUIManager>(); }, nativeQueue),
+      {"UIManager", []() -> unique_ptr<CxxModule> { return std::make_unique<TestUIManager>(); }, nativeQueue},
+
       // Apparently mandatory for /IntegrationTests
-      std::make_tuple(
-          TestDeviceInfoModule::name,
-          []() -> unique_ptr<CxxModule> { return std::make_unique<TestDeviceInfoModule>(); },
-          nativeQueue)};
+      {TestDeviceInfoModule::name,
+       []() -> unique_ptr<CxxModule> { return std::make_unique<TestDeviceInfoModule>(); },
+       nativeQueue},
+
+      {TestDevSettingsModule::name,
+       []() -> unique_ptr<CxxModule> { return std::make_unique<TestDevSettingsModule>(); },
+       nativeQueue},
+
+      {TestImageLoaderModule::name,
+       []() -> unique_ptr<CxxModule> { return std::make_unique<TestImageLoaderModule>(); },
+       nativeQueue}};
 
   // <0> string
   // <1> CxxModule::Provider
@@ -79,7 +88,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   }
 
   // Update settings.
-  devSettings->platformName = "windesktop";
+  devSettings->platformName = "windows";
 
   auto instanceWrapper = CreateReactInstance(
       std::make_shared<facebook::react::Instance>(),

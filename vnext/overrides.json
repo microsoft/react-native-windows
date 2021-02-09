@@ -4,29 +4,27 @@
     "ReactCopies/**",
     "src/**"
   ],
-  "excludePatterns": [
-    "**/*.windesktop.js"
-  ],
-  "baseVersion": "0.0.0-c901c1fbc",
+  "excludePatterns": [],
+  "baseVersion": "0.0.0-c66aa8abc",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "79e242949bec3a348543ff8b03dc144a87332934"
+      "baseHash": "7cf410def8e724302967198174da14a06a118c7b"
     },
     {
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "caab3561363f0adf848ffd7da38f07aad5bb70cb",
+      "baseHash": "2241c126cde8163f86570a3f5a4db670cf9a7944",
       "issue": 3994
     },
     {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "6bdccafa3426949558427b4f746ddef4e1ab6f27",
+      "baseHash": "1f4e966c3edbca9c5a388d31ccabcce6f9b767cd",
       "issue": 4054
     },
     {
@@ -40,7 +38,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "ff8d45f38fc62dbf4eb6c93db5377d79089ef0dd",
+      "baseHash": "c98895783fafdc8ce5afa50f443b80e70594709b",
       "issue": 5430
     },
     {
@@ -94,7 +92,7 @@
       "type": "copy",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseHash": "739dfa774136768251847ae0f3900990b0b0f0c1",
+      "baseHash": "b91fdc5e531daa8fac236898c80efe228bbdb8d7",
       "issue": 4578
     },
     {
@@ -327,7 +325,7 @@
       "type": "derived",
       "file": "src/Libraries/Network/RCTNetworkingWinShared.js",
       "baseFile": "Libraries/Network/RCTNetworking.ios.js",
-      "baseHash": "4ffd52784e4f1c0f9d21e66fba5a09d21952ff1a"
+      "baseHash": "6fa09eb85703489e276a86973adb09df3607435c"
     },
     {
       "type": "patch",
@@ -345,14 +343,14 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "e1418d31343ca11ce165a87f82224ccc8d801052",
+      "baseHash": "8ec1e8578c507df3e04f6e885822773388de008d",
       "issue": 4379
     },
     {
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "1911105ff7796cfeef6db832ec0bd6a53d7622ac"
+      "baseHash": "c9a142fb3b2286a2541ec313cde34317f191460c"
     },
     {
       "type": "derived",
@@ -374,7 +372,7 @@
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.windows.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
-      "baseHash": "e8f8ce02645228b423fdda317e5d1d9e69b54e6d"
+      "baseHash": "b1b07ee8ec52627ee47087032184fbd9e1254ba9"
     },
     {
       "type": "copy",

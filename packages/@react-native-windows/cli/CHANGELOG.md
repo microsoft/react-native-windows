@@ -1,8 +1,77 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 29 Dec 2020 05:06:55 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.56
+
+Tue, 09 Feb 2021 05:07:37 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.0.2 (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump just-scripts from 1.3.2 to 1.3.3 (dannyvv@microsoft.com)
+
+## 0.0.0-canary.55
+
+Thu, 28 Jan 2021 05:06:47 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.0.1 (dannyvv@microsoft.com)
+
+### Changes
+
+- Leverage default config support in Just library and factor out common tasks (dannyvv@microsoft.com)
+
+## 0.0.0-canary.54
+
+Tue, 26 Jan 2021 05:06:39 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.0.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Update @types package versions in package.json from dependabot updates to yarn.lock (dannyvv@microsoft.com)
+
+## 0.0.0-canary.53
+
+Thu, 21 Jan 2021 18:54:54 GMT
+
+### Changes
+
+- Update V8 and Hermes package versions (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.52
+
+Fri, 15 Jan 2021 05:07:01 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.13 (dannyvv@microsoft.com)
+
+## 0.0.0-canary.51
+
+Wed, 06 Jan 2021 05:06:51 GMT
+
+### Changes
+
+- Print cwd if generator cannot detect project package (ngerlem@microsoft.com)
+- Move some packages from @rnw-scripts to @react-native-windows (ngerlem@microsoft.com)
+
+## 0.0.0-canary.50
+
+Tue, 05 Jan 2021 05:06:42 GMT
+
+### Changes
+
+- Rework error reporting/telemetry to only log the minimal amount of data (asklar@microsoft.com)
 
 ## 0.0.0-canary.49
 

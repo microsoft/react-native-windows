@@ -1,6 +1,6 @@
 {
   "name": "react-native-platform-override",
-  "version": "0.4.5",
+  "version": "1.4.11",
   "description": "react-native-platform-override offers CLI tools to manage Javascript overrides in out-of-tree React Native platforms",
   "license": "MIT",
   "main": "./lib-commonjs/Api.js",
@@ -11,18 +11,18 @@
     "directory": "packages/react-native-platform-override"
   },
   "scripts": {
-    "build": "just-scripts build",
-    "clean": "just-scripts clean",
-    "lint": "just-scripts lint",
-    "lint:fix": "just-scripts lint:fix",
-    "test": "just-scripts test",
-    "watch": "just-scripts watch"
+    "build": "rnw-scripts build",
+    "clean": "rnw-scripts clean",
+    "lint": "rnw-scripts lint",
+    "lint:fix": "rnw-scripts lint:fix",
+    "test": "rnw-scripts test",
+    "watch": "rnw-scripts watch"
   },
   "bin": {
     "react-native-platform-override": "./bin.js"
   },
   "dependencies": {
-    "@rnw-scripts/package-utils": "^0.0.11",
+    "@react-native-windows/package-utils": "^0.0.0-canary.15",
     "async": "^3.2.0",
     "chalk": "^4.1.0",
     "fp-ts": "^2.5.0",
@@ -35,6 +35,7 @@
     "ora": "^3.4.0",
     "semver": "^7.3.2",
     "simple-git": "^1.131.0",
+    "source-map-support": "^0.5.19",
     "upath": "^1.2.0",
     "yargs": "^15.4.1"
   },
@@ -42,21 +43,21 @@
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
-    "@rnw-scripts/eslint-config": "0.1.6",
-    "@rnw-scripts/jest-unittest-config": "0.1.1",
-    "@rnw-scripts/just-task": "0.0.6",
-    "@rnw-scripts/package-utils": "0.0.11",
-    "@rnw-scripts/ts-config": "0.1.0",
-    "@types/async": "^3.2.3",
+    "@react-native-windows/package-utils": "0.0.0-canary.15",
+    "@rnw-scripts/eslint-config": "1.1.6",
+    "@rnw-scripts/jest-unittest-config": "1.1.1",
+    "@rnw-scripts/just-task": "2.0.2",
+    "@rnw-scripts/ts-config": "1.1.0",
+    "@types/async": "^3.2.5",
     "@types/chalk": "^2.2.0",
     "@types/diff-match-patch": "^1.0.32",
     "@types/globby": "^9.1.0",
     "@types/inquirer": "^6.5.0",
-    "@types/jest": "^26.0.13",
-    "@types/lodash": "^4.14.161",
+    "@types/jest": "^26.0.20",
+    "@types/lodash": "^4.14.168",
     "@types/minimatch": "^3.0.3",
-    "@types/node": "^13.7.4",
-    "@types/node-fetch": "^2.5.7",
+    "@types/node": "^14.14.22",
+    "@types/node-fetch": "^2.5.8",
     "@types/ora": "^3.2.0",
     "@types/semver": "^7.3.3",
     "@types/yargs": "^15.0.5",
@@ -64,7 +65,7 @@
     "diff-match-patch": "^1.0.4",
     "eslint": "7.12.0",
     "jest": "^26.5.2",
-    "just-scripts": "^0.44.7",
+    "just-scripts": "^1.3.3",
     "minimatch": "^3.0.4",
     "prettier": "1.19.1",
     "typescript": "^3.8.3"
@@ -77,10 +78,5 @@
     "lib-commonjs",
     "!lib-commonjs/e2etest/**",
     "!lib-commonjs/test/**"
-  ],
-  "beachball": {
-    "disallowedChangeTypes": [
-      "major"
-    ]
-  }
+  ]
 }

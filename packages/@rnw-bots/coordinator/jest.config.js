@@ -1,0 +1,1 @@
+module.exports = require('@rnw-scripts/jest-unittest-config');

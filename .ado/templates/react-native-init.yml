@@ -29,6 +29,12 @@ parameters:
   - name: continueOnBuildFailure
     type: boolean
     default: false
+  - name: buildEnvironment
+    type: string
+    default: PullRequest
+    values: 
+     - PullRequest 
+     - Continuous 
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -62,10 +68,12 @@ steps:
     displayName: Add npm user to verdaccio
 
   - script: |
-      npx --no-install beachball publish --branch origin/$(System.PullRequest.TargetBranch) --no-push --registry http://localhost:4873 --yes --access public --changehint "Run `yarn change` from root of repo to generate a change file."
+      npx --no-install beachball publish --branch origin/$(BeachBallBranchName) --no-push --registry http://localhost:4873 --yes --access public --changehint "Run `yarn change` from root of repo to generate a change file."
     displayName: Publish packages to verdaccio
 
   - template: set-version-vars.yml
+    parameters:
+      buildEnvironment: ${{ parameters.buildEnvironment }}
 
   # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
   - task: NuGetToolInstaller@0
@@ -84,10 +92,14 @@ steps:
       Write-Host "##vso[task.setvariable variable=localProjectType]${{ parameters.projectType}}"
 
   # We force the usage of npm instead of yarn because yarn has fragility issues when redirected to a different server (such as verdaccio)
+  # We use --no-install and symlink the node_modules from the source tree to avoid having npx download react-native and all it dependencies
+  # which takes over a minute on the CI machines.
   - task: CmdLine@2
     displayName: Init new app project
     inputs:
-      script: npx react-native init testcli --npm --template react-native@$(reactNativeDevDependency)
+      script: |
+        mklink /D node_modules $(System.DefaultWorkingDirectory)\node_modules
+        npx --no-install react-native init testcli --npm --template react-native@$(reactNativeDevDependency)
       workingDirectory: $(Agent.BuildDirectory)
     condition: and(succeeded(), eq(variables['localProjectType'], 'app'))
   

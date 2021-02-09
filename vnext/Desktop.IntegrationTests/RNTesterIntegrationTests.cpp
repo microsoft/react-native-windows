@@ -23,13 +23,16 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 TEST_MODULE_INITIALIZE(InitModule) {
   Microsoft::React::SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
   Microsoft::React::SetRuntimeOptionBool("UseBeastWebSocket", false);
+
+  // WebSocketJSExecutor can't register native log hooks.
+  Microsoft::React::SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
 }
 
 // None of these tests are runnable
 TEST_CLASS (RNTesterIntegrationTests) {
   TestRunner m_runner;
 
-  void TestComponent(std::string && testComponent) {
+  void TestComponent(string && testComponent) {
     auto result = m_runner.RunTest("IntegrationTests/IntegrationTestsApp", std::move(testComponent));
     Assert::AreNotEqual(TestStatus::Pending, result.Status, result.Message.c_str());
     Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
@@ -109,6 +112,10 @@ TEST_CLASS (RNTesterIntegrationTests) {
     TestComponent("TimersTest");
   }
 
+  // #6882 - AsyncStorage seems broken in Windows Desktop
+  BEGIN_TEST_METHOD_ATTRIBUTE(AsyncStorage)
+  TEST_IGNORE()
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(AsyncStorage) {
     TestComponent("AsyncStorageTest");
   }

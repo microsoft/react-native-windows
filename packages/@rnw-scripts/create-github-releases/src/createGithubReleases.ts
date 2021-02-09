@@ -18,13 +18,15 @@ import * as simplegit from 'simple-git/promise';
 import * as util from 'util';
 import * as yargs from 'yargs';
 
-import fetch from 'node-fetch';
-import findRepoRoot from '@rnw-scripts/find-repo-root';
+import {Octokit} from '@octokit/rest';
+import findRepoRoot from '@react-native-windows/find-repo-root';
 
 const glob = util.promisify(require('glob').glob);
 
-const RNW_REPO_ENDPOINT =
-  'https://api.github.com/repos/microsoft/react-native-windows';
+const RNW_REPO = {
+  owner: 'microsoft',
+  repo: 'react-native-windows',
+};
 
 /**
  * Representation the JSON chanelog comment obejct
@@ -59,22 +61,6 @@ interface Release {
   comments: Comment[];
 }
 
-/**
- * Some of the props exposed on a release by GitHub's REST API for a release
- * resource
- */
-interface GithubApiRelease {
-  url: string;
-  id: number;
-  tag_name: string;
-  name: string;
-  body: string;
-  draft: boolean;
-  prerelease: boolean;
-  created_at: string;
-  published_at: boolean;
-}
-
 const argv = yargs
   .options({
     authToken: {
@@ -82,8 +68,19 @@ const argv = yargs
       type: 'string',
       demandOption: true,
     },
+    yes: {
+      alias: 'y',
+      describe: 'Automatically confirm any warnings',
+      type: 'boolean',
+      demandOption: false,
+    },
   })
   .version(false).argv;
+
+const octokit = new Octokit({
+  auth: argv.authToken,
+  userAgent: 'RNW Github Release Script',
+});
 
 (async () => {
   console.log('Reading changelogs...');
@@ -91,16 +88,42 @@ const argv = yargs
 
   console.log('Listing tags...');
   const localTags = (await simplegit().tags()).all;
+  console.log(localTags.map(tag => `  - ${tag}`).join('\n'));
 
   console.log('Fetching releases...');
-  const githubReleases = await fetchReleases(argv.authToken);
+  const githubReleases = await octokit.paginate(
+    octokit.repos.listReleases,
+    RNW_REPO,
+  );
 
+  console.log(
+    githubReleases.map(release => `  - ${release.tag_name}`).join('\n'),
+  );
+
+  const releasesToPublish: Release[] = [];
   for (const changelog of changelogs) {
     for (const release of aggregateReleases(changelog)) {
       if (needsRelease(release, localTags, githubReleases)) {
-        await publishRelease(release, argv.authToken);
+        releasesToPublish.push(release);
       }
     }
+  }
+
+  if (releasesToPublish.length > 1 && !argv.yes) {
+    console.error(
+      chalk.red(
+        'You are about to publish more than a single release. If you have stale' +
+          'tags in your local repository (such as if you fetched prior to Jan Feb' +
+          '2021) this script can create hundreds of releases at once, each ' +
+          'sending an email notification. If you want to proceed, please re-run' +
+          'the command with the "--yes" flag.',
+      ),
+    );
+    process.exit(1);
+  }
+
+  for (const release of releasesToPublish) {
+    await publishRelease(release);
   }
 
   console.log(chalk.green('All done!'));
@@ -125,54 +148,12 @@ async function readChangelogs(): Promise<Changelog[]> {
 }
 
 /**
- * Fetch a list of all releases that Github knows about
- */
-async function fetchReleases(token: string): Promise<GithubApiRelease[]> {
-  return await fetchAllPages(`${RNW_REPO_ENDPOINT}/releases`, token);
-}
-
-/**
- * Fethches all pages of a given GitHub resource
- *
- * @param baseUrl the resoure URL
- * @param token the GitHub auth token
- * @returns a merged representation of the arrays of all pages
- */
-async function fetchAllPages(baseUrl: string, token: string): Promise<any[]> {
-  let page = 0;
-  const results = [];
-
-  while (true) {
-    const pageUrl = new URL(baseUrl);
-    pageUrl.searchParams.append('per_page', '100');
-    pageUrl.searchParams.append('page', (++page).toString());
-
-    const pageResult = await fetch(pageUrl, {
-      headers: requestHeaders(token),
-    });
-
-    if (!pageResult.ok) {
-      throw new Error(
-        `Status ${pageResult.status}: Unable to fetch '${pageUrl}'`,
-      );
-    }
-
-    const pageResultArr = await pageResult.json();
-    if (pageResultArr.length === 0) {
-      return results;
-    } else {
-      results.push(...pageResultArr);
-    }
-  }
-}
-
-/**
  * Determines whether we should try to make a release for a change entry
  */
 function needsRelease(
   release: Release,
   localTags: string[],
-  githubReleases: GithubApiRelease[],
+  githubReleases: Array<{tag_name: string}>,
 ) {
   const releaseTags = githubReleases.map(r => r.tag_name);
   return localTags.includes(release.tag) && !releaseTags.includes(release.tag);
@@ -181,27 +162,20 @@ function needsRelease(
 /**
  * Create a release for the given change entry
  */
-async function publishRelease(release: Release, token: string) {
+async function publishRelease(release: Release) {
   const pre = semver.prerelease(release.version);
   console.log(
     `Creating release for ${release.packageName} ${release.version}...`,
   );
 
-  const res = await fetch(`${RNW_REPO_ENDPOINT}/releases`, {
-    method: 'POST',
-    headers: requestHeaders(token),
-    body: JSON.stringify({
-      tag_name: release.tag,
-      name: `${packageTitle(release.packageName)} ${release.version}`,
-      body: createReleaseMarkdown(release),
-      prerelease: !!pre,
-      draft: shouldBeDraft(release),
-    }),
+  await octokit.repos.createRelease({
+    tag_name: release.tag,
+    name: `${packageTitle(release.packageName)} ${release.version}`,
+    body: createReleaseMarkdown(release),
+    prerelease: !!pre,
+    draft: shouldBeDraft(release),
+    ...RNW_REPO,
   });
-
-  if (!res.ok) {
-    throw new Error(`Status ${res.status} trying to create release`);
-  }
 }
 
 /**
@@ -239,17 +213,6 @@ function createReleaseMarkdown(release: Release): string {
   }
 
   return md;
-}
-
-/**
- * Create request headers common to GitHub API calls
- */
-function requestHeaders(token: string): {[header: string]: string} {
-  return {
-    Authorization: `Token ${token}`,
-    'Content-Type': 'application/json',
-    'User-Agent': 'RNW Github Release Script',
-  };
 }
 
 /**

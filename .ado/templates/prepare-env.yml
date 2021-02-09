@@ -1,7 +1,6 @@
 # Steps to checkout, install node_modules, yarn build, install SDK and install VS dependencies
 
 parameters:
-  yarnBuildCmd: build
   debug: false
 
   # Visual Studio Installer
@@ -41,9 +40,9 @@ steps:
   - template: yarn-install.yml
 
   - task: CmdLine@2
-    displayName: yarn ${{ parameters.yarnBuildCmd }}
+    displayName: yarn build
     inputs:
-      script: yarn ${{ parameters.yarnBuildCmd }}
+      script: yarn build
 
   - task: PowerShell@2
     displayName: List Visual Studio Components

@@ -2,6 +2,36 @@
   "name": "@rnw-scripts/ts-config",
   "entries": [
     {
+      "date": "Wed, 20 Jan 2021 01:45:54 GMT",
+      "tag": "@rnw-scripts/ts-config_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump internally published packages to 1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "982fb19448d7c9ed3f12fa27182fa69be83478c7",
+            "package": "@rnw-scripts/ts-config"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 Jan 2021 05:05:37 GMT",
+      "tag": "@rnw-scripts/ts-config_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "remove excessive change files",
+            "author": "lehon@microsoft.com",
+            "commit": "8c4a518552899dbacc7d9133e2e480c8f55df85d",
+            "package": "@rnw-scripts/ts-config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 11 Jul 2020 05:09:38 GMT",
       "tag": "@rnw-scripts/ts-config_v0.1.0",
       "version": "0.1.0",

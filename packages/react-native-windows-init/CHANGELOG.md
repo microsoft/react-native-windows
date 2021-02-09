@@ -1,8 +1,80 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Tue, 08 Dec 2020 03:20:37 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.47
+
+Tue, 09 Feb 2021 05:07:37 GMT
+
+### Patches
+
+- Bump just-scripts from 1.3.2 to 1.3.3 (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.56 (dannyvv@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.16 (dannyvv@microsoft.com)
+
+## 1.1.46
+
+Thu, 28 Jan 2021 05:06:47 GMT
+
+### Patches
+
+- Leverage default config support in Just library and factor out common tasks (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.15 (dannyvv@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.55 (dannyvv@microsoft.com)
+
+## 1.1.45
+
+Wed, 27 Jan 2021 05:06:36 GMT
+
+### Patches
+
+- Show TS Stack Traces on Uncaught CLI Exception (ngerlem@microsoft.com)
+
+## 1.1.44
+
+Tue, 26 Jan 2021 05:06:39 GMT
+
+### Patches
+
+- Update @types package versions in package.json from dependabot updates to yarn.lock (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.54 (dannyvv@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.14 (dannyvv@microsoft.com)
+
+## 1.1.43
+
+Thu, 21 Jan 2021 18:54:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.53 (tudor.mihai@microsoft.com)
+
+## 0.1.43
+
+Fri, 15 Jan 2021 05:07:01 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.13 (dannyvv@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.52 (dannyvv@microsoft.com)
+
+## 0.1.43
+
+Tue, 05 Jan 2021 05:06:42 GMT
+
+### Patches
+
+- Rework error reporting/telemetry to only log the minimal amount of data (asklar@microsoft.com)
 
 ## 0.1.42
 

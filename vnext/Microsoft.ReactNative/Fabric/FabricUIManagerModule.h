@@ -216,6 +216,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       const facebook::react::ShadowView &initialShadowView,
       bool blockNativeResponder) override;
   virtual void schedulerDidClearJSResponder() override;
+  virtual void schedulerDidSendAccessibilityEvent(const facebook::react::ShadowView &shadowView, std::string const &eventType) override;
 };
 
 } // namespace Microsoft::ReactNative

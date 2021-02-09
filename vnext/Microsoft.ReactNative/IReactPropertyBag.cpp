@@ -135,7 +135,7 @@ struct ReactPropertyName : winrt::implements<ReactPropertyName, IReactPropertyNa
 
 com_ptr<ReactPropertyName> ReactPropertyNamespace::GetLocalName(hstring const &localName) noexcept {
   // Implement outside of class because we need the ReactPropertyName definition.
-  return m_localNames->GetOrCreate(localName, [ this, &localName ]() noexcept {
+  return m_localNames->GetOrCreate(localName, [this, &localName]() noexcept {
     IReactPropertyNamespace x = *this;
     return make_self<ReactPropertyName>(x, localName);
   });

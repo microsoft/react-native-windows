@@ -4,14 +4,13 @@
   <PropertyGroup>
     <!-- Office pre-disabled warnings -->
     <!--
-        C4146 - unary minus operator applied to unsigned type, result still unsigned
         C4201 - nonstandard extension used : nameless struct/union
         C4505 - 'function' : unreferenced local function has been removed
         C4456 - declaration of 'identifier' hides previous local declaration
         C4458 - declaration of 'identifier' hides class member
         C4702 - unreachable code
       -->
-    <OfficePreDisabledWarnings>4146;4201;4505;4456;4458;4702</OfficePreDisabledWarnings>
+    <OfficePreDisabledWarnings>4201;4505;4456;4458;4702</OfficePreDisabledWarnings>
     <!--
         The following list matches the list in ..\make.inc
           C4068 - unknown pragma

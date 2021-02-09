@@ -29,7 +29,7 @@ void MessageDispatchQueue::runOnQueue(std::function<void()> &&func) {
     return;
   }
 
-  m_dispatchQueue.Post([ pThis = shared_from_this(), func = std::move(func) ]() noexcept {
+  m_dispatchQueue.Post([pThis = shared_from_this(), func = std::move(func)]() noexcept {
     if (!pThis->m_stopped) {
       pThis->tryFunc(func);
     }
@@ -51,11 +51,11 @@ void MessageDispatchQueue::runSync(const Mso::VoidFunctorRef &func) noexcept {
 
   m_dispatchQueue.InvokeElsePost(Mso::MakeDispatchTask(
       /*callback:*/
-      [&func, &callbackFinished ]() noexcept {
+      [&func, &callbackFinished]() noexcept {
         func();
         callbackFinished.Set();
       },
-      /*onCancel:*/[&func, &callbackFinished ]() noexcept { callbackFinished.Set(); }));
+      /*onCancel:*/ [&func, &callbackFinished]() noexcept { callbackFinished.Set(); }));
 
   callbackFinished.Wait();
 }
@@ -67,7 +67,7 @@ void MessageDispatchQueue::runOnQueueSync(std::function<void()> &&func) {
     return;
   }
 
-  runSync([ this, &func ]() noexcept {
+  runSync([this, &func]() noexcept {
     if (!m_stopped) {
       tryFunc(func);
     }

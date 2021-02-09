@@ -1,0 +1,11 @@
+{
+  "bindings": [
+    {
+      "name": "heartbeet",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0 0 * * * *"
+    }
+  ],
+  "scriptFile": "../lib-commonjs/HeartbeatFunction/index.js"
+}

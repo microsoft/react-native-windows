@@ -1,0 +1,64 @@
+{
+  "includePatterns": [
+    "src"
+  ],
+  "excludePatterns": [
+    "src/js/examples-win32/**"
+  ],
+  "baseVersion": "0.0.0-c66aa8abc",
+  "overrides": [
+    {
+      "type": "patch",
+      "file": "src/js/components/ListExampleShared.win32.js",
+      "baseFile": "packages/rn-tester/js/components/ListExampleShared.js",
+      "baseHash": "d7be07e3fd8d9c1df8e23d5674ce3eb067d00865"
+    },
+    {
+      "type": "patch",
+      "file": "src/js/components/RNTesterEmptyBookmarksState.win32.js",
+      "baseFile": "packages/rn-tester/js/components/RNTesterEmptyBookmarksState.js",
+      "baseHash": "312a8f4a51f942df975f865638570a5349c0cd3f",
+      "issue": 6341
+    },
+    {
+      "type": "patch",
+      "file": "src/js/components/RNTesterExampleFilter.win32.js",
+      "baseFile": "packages/rn-tester/js/components/RNTesterExampleFilter.js",
+      "baseHash": "20e35122c8529a5bf848f91d9ea9b85be3c23882"
+    },
+    {
+      "type": "copy",
+      "file": "src/js/RNTesterApp.win32.js",
+      "baseFile": "packages/rn-tester/js/RNTesterApp.android.js",
+      "baseHash": "30f3ef9bdc0e2c337309079831664c4a596c404f",
+      "issue": 4586
+    },
+    {
+      "type": "derived",
+      "file": "src/js/utils/RNTesterList.win32.js",
+      "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
+      "baseHash": "a51e3721933832a1e2e0c83c47b792184f6d45a8"
+    },
+    {
+      "type": "patch",
+      "file": "src/js/utils/RNTesterStatePersister.win32.js",
+      "baseFile": "packages/rn-tester/js/utils/RNTesterStatePersister.js",
+      "baseHash": "b12cac1795430a1ca851e4c88ccca0f6a3e599ce",
+      "issue": 6316
+    },
+    {
+      "type": "patch",
+      "file": "src/js/utils/testerStateUtils.win32.js",
+      "baseFile": "packages/rn-tester/js/utils/testerStateUtils.js",
+      "baseHash": "d079e5493312ae176bfabf8e011df6bf7e7929c2",
+      "issue": 6316
+    },
+    {
+      "type": "patch",
+      "file": "src/js/utils/useAsyncStorageReducer.win32.js",
+      "baseFile": "packages/rn-tester/js/utils/useAsyncStorageReducer.js",
+      "baseHash": "dd12805229a025d0c45f676d6c535f2f19386025",
+      "issue": 6316
+    }
+  ]
+}

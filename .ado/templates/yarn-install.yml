@@ -1,5 +1,20 @@
+parameters:
+- name: workingDirectory
+  type: string
+  default: .
+- name: frozenLockfile
+  type: boolean
+  default: true
+- name: extraArgs
+  type: string
+  default: --network-concurrency 40 --cache-folder \.yarnCache
+
 steps:
-  - task: CmdLine@2
-    displayName: midgard-yarn (faster yarn install)
-    inputs:
-      script: npx midgard-yarn@1.23.14 --network-concurrency 40 --frozen-lockfile --cache-folder \.yarnCache
+  - ${{ if eq(parameters.frozenLockfile, true) }}:
+    - script: npx midgard-yarn@1.23.24 --frozen-lockfile --cwd ${{ parameters.workingDirectory }} ${{ parameters.extraArgs }}
+      displayName: midgard-yarn (faster yarn install)
+
+  - ${{ if eq(parameters.frozenLockfile, false) }}:
+    - script: npx midgard-yarn@1.23.24 --cwd ${{ parameters.workingDirectory }} ${{ parameters.extraArgs }}
+      displayName: midgard-yarn (faster yarn install)
+

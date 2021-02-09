@@ -5,8 +5,7 @@ parameters:
     values: 
      - PullRequest 
      - Continuous 
-  
-  
+
 jobs:
   - job: Playground
     variables:

@@ -3,9 +3,8 @@ parameters:
     type: string
     default: PullRequest
     values: 
-     - PullRequest 
-     - PullRequestNuGet
-     - Continuous 
+     - PullRequest
+     - Continuous
   - name: buildNuGetOnly
     type: boolean
     default: false
@@ -26,14 +25,14 @@ jobs:
               platform: arm
               projectType: app
               additionalInitArguments:
-              additionalRunArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
             ArmDebugCs:
               language: cs
               configuration: Debug
               platform: arm
               projectType: app
               additionalInitArguments:
-              additionalRunArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
           # END Continuous only
           ArmReleaseCpp:
             language: cpp
@@ -41,14 +40,14 @@ jobs:
             platform: arm
             projectType: app
             additionalInitArguments:
-            additionalRunArguments: --no-deploy
+            additionalRunArguments: --no-deploy # We don't have Arm agents
           ArmReleaseCs:
             language: cs
             configuration: Release
             platform: arm
             projectType: app
             additionalInitArguments:
-            additionalRunArguments: --no-deploy
+            additionalRunArguments: --no-deploy # We don't have Arm agents
           # Start Continuous only
           ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
             Arm64DebugCpp:
@@ -57,28 +56,28 @@ jobs:
               platform: arm64
               projectType: app
               additionalInitArguments:
-              additionalRunArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
             Arm64DebugCs:
               language: cs
               configuration: Debug
               platform: arm64
               projectType: app
               additionalInitArguments:
-              additionalRunArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
             Arm64ReleaseCpp:
               language: cpp
               configuration: Release
               platform: arm64
               projectType: app
               additionalInitArguments:
-              additionalRunArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
             Arm64ReleaseCs:
               language: cs
               configuration: Release
               platform: arm64
               projectType: app
               additionalInitArguments:
-              additionalRunArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
           # End Continuous only
           X64ReleaseCpp:
             language: cpp
@@ -155,6 +154,21 @@ jobs:
             additionalInitArguments:
             additionalRunArguments: --no-autolink --no-deploy
 
+          X86DebugCppWinUI3:
+            language: cpp
+            configuration: Debug
+            platform: x86
+            projectType: app
+            additionalInitArguments: --useWinUI3 true
+            additionalRunArguments:
+          X86DebugCsWinUI3:
+            language: cs
+            configuration: Debug
+            platform: x86
+            projectType: app
+            additionalInitArguments: --useWinUI3 true
+            additionalRunArguments:
+
           X64DebugCppHermes:
             language: cpp
             configuration: Debug
@@ -169,15 +183,11 @@ jobs:
             projectType: app
             additionalInitArguments:
             additionalRunArguments:
-            continueOnBuildFailure: true # See issue #6129
-      pool:
-        vmImage: $(VmImage)
+      pool: $(AgentPool.Medium)
       timeoutInMinutes: 60
       cancelTimeoutInMinutes: 5
 
       steps:
-        # We unfortunately can't inline the template here because WinUI needs continueOnBuildFailure and ADO does not allow that variable to be an expression
-        # We can take out that part when we have better agents.
         - template: ../templates/react-native-init.yml
           parameters:
             language: $(language)
@@ -186,48 +196,7 @@ jobs:
             projectType: $(projectType)    
             additionalInitArguments: $(additionalInitArguments)
             additionalRunArguments: $(additionalRunArguments)
-            continueOnBuildFailure: ${{ eq('$(continueOnBuildFailure)', 'true')}}
-
-  # We unfortunately can't add the winUI3 ones to the existing matrix above because Auzre DevOps has problems with expressions for continueOnError.
-  # We have to place this as a value
-  - ${{ if not(parameters.buildNuGetOnly) }}:
-    - job: CliInitWinUI3
-      variables:
-        - template: ../variables/vs2019.yml
-      displayName: Verify Cli
-      strategy:
-        matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-          X86DebugCppWinUI3:
-            language: cpp
-            configuration: Debug
-            platform: x86
-            projectType: app
-            additionalInitArguments: --useWinUI3 true
-            additionalRunArguments:
-            
-          X86DebugCsWinUI3:
-            language: cs
-            configuration: Debug
-            platform: x86
-            projectType: app
-            additionalInitArguments: --useWinUI3 true
-            additionalRunArguments:
-      pool:
-        vmImage: $(VmImage)
-      timeoutInMinutes: 60
-      cancelTimeoutInMinutes: 5
-
-      steps:          
-        - template: ../templates/react-native-init.yml
-          parameters:
-            language: $(language)
-            configuration: $(configuration)
-            platform: $(platform)
-            projectType: $(projectType)    
-            additionalInitArguments: $(additionalInitArguments)
-            additionalRunArguments: $(additionalRunArguments)
-            continueOnBuildFailure: true # See issue #6129
-
+            buildEnvironment: ${{ parameters.buildEnvironment }}
 
   # We unfortunately can't add the nuget ones to the existing matrix above because Azure DevOps does not allow the dependsOn to be dynamic based on matrix expansion
   - ${{ if parameters.buildNuGetOnly }}:
@@ -253,9 +222,7 @@ jobs:
             projectType: app
             additionalInitArguments:
             additionalRunArguments:
-
-      pool:
-        vmImage: $(VmImage)
+      pool: $(AgentPool.Medium)
       timeoutInMinutes: 60
       cancelTimeoutInMinutes: 5
 
@@ -269,3 +236,4 @@ jobs:
             additionalInitArguments: $(additionalInitArguments)
             additionalRunArguments: $(additionalRunArguments)
             useNuGet: true
+            buildEnvironment: ${{ parameters.buildEnvironment }}

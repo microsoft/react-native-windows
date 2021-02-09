@@ -1,0 +1,31 @@
+{
+  "name": "@office-iss/react-native-win32-tester",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "Windows private fork of RNTester",
+  "private": true,
+  "scripts": {
+    "build": "rnw-scripts build",
+    "lint:fix": "rnw-scripts lint:fix",
+    "lint": "rnw-scripts lint",
+    "validate-overrides": "react-native-platform-override validate"
+  },
+  "dependencies": {
+    "@react-native/tester": "0.0.1"
+  },
+  "peerDependencies": {
+    "@office-iss/react-native-win32": "^0.0.0-canary.78",
+    "react-native": "0.0.0-c66aa8abc"
+  },
+  "devDependencies": {
+    "@office-iss/react-native-win32": "^0.0.0-canary.78",
+    "@rnw-scripts/eslint-config": "1.1.6",
+    "@rnw-scripts/ts-config": "1.1.0",
+    "@types/node": "^14.14.22",
+    "eslint": "7.12.0",
+    "just-scripts": "^1.3.3",
+    "react-native": "0.0.0-c66aa8abc",
+    "react-native-platform-override": "^1.4.11",
+    "typescript": "^3.8.3"
+  }
+}

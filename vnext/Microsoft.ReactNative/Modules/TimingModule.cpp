@@ -13,10 +13,7 @@
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/Instance.h>
 
-#pragma warning(push)
-#pragma warning(disable : 4146)
 #include <cxxreact/JsArgumentHelpers.h>
-#pragma warning(pop)
 
 #include <unknwnbase.h>
 

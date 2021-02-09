@@ -9,6 +9,10 @@ parameters:
   displayName: Skip Git Push
   type: boolean
   default: false
+- name: skipBotDeployment
+  displayName: Skip Deploying Bots to Azure Functions
+  type: boolean
+  default: false
 
 variables:
   - template: variables/msbuild.yml
@@ -49,10 +53,7 @@ jobs:
 
       - template: templates/configure-git.yml
 
-      - template: templates/yarn-install.yml
-
-      - script: yarn build
-        displayName: yarn build
+      - template: templates/prepare-env.yml
 
       - script: |
           echo ##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish
@@ -75,13 +76,63 @@ jobs:
         displayName: Beachball Publish (Stable Branch)
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
-      - script: npx --ignore-existing @rnw-scripts/create-github-releases --authToken $(githubAuthToken)
+      # Beachball reverts to local state after publish, but we want the updates it added
+      - script: git pull origin ${{ variables['Build.SourceBranchName'] }}
+        displayName: git pull
+
+      - script: npx --ignore-existing @rnw-scripts/create-github-releases --yes --authToken $(githubAuthToken)
         displayName: Create GitHub Releases for New Tags (Stable Branch)
         condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ ne(variables['Build.SourceBranchName'], 'master') }} )
 
       - template: templates/set-version-vars.yml
+        parameters:
+          buildEnvironment: Continuous
 
       - template: templates/publish-version-vars.yml
+
+  - job: DeployBotCoordinator
+    displayName: Deploy @rnw-bots/coordinator
+    condition: eq(variables['Build.SourceBranchName'], 'master')
+    dependsOn: RnwNpmPublish
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 30
+    steps:
+      - template: templates/prepare-env.yml
+
+      # Bump in case the bot coordinator is dependent on other monorepo packages that were just published
+      - script: npx --no-install beachball bump
+        displayName: beachball bump
+
+      # Azure Functions expects a fully packagable folder with dependencies.
+      # Reinstall them without hoisting.
+      - powershell: |
+          Get-ChildItem "packages\@rnw-bots\coordinator" |
+            Where-Object{$_.Name -notin 'node_modules','package.json'} |
+            Copy-Item -Destination $(Build.StagingDirectory)\bot-coordinator -Recurse
+
+          Copy-Item yarn.lock $(Build.StagingDirectory)\bot-coordinator
+
+          # devDependencies add bloat and might only exist in the monorepo
+          Get-Content -Encoding utf8 packages\@rnw-bots\coordinator\package.json |
+            ConvertFrom-Json |
+            Select-Object -Property * -ExcludeProperty devDependencies |
+            ConvertTo-Json |
+            Out-File -Encoding utf8 $(Build.StagingDirectory)\bot-coordinator\package.json
+        displayName: Organizing for unhoisted dependencies
+
+      - template: templates/yarn-install.yml
+        parameters:
+         workingDirectory: $(Build.StagingDirectory)\bot-coordinator
+         frozenLockfile: false
+
+      - ${{ if not(parameters.skipBotDeployment) }}:
+        - task: AzureFunctionApp@1
+          inputs:
+            azureSubscription: cxe-rnw-azure
+            appType: functionApp
+            appName: rnw-bot-coordinator
+            package: $(Build.StagingDirectory)\bot-coordinator
 
   - job: RnwNativeBuildDesktop
     displayName: Build Desktop

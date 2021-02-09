@@ -1,8 +1,221 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 29 Dec 2020 05:06:55 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.251
+
+Tue, 09 Feb 2021 05:07:37 GMT
+
+### Changes
+
+- [Fix] ScrollView.ScrollToEnd not working for vertical lists (igklemen@microsoft.com)
+- Bump just-scripts from 1.3.2 to 1.3.3 (dannyvv@microsoft.com)
+- Doxysaurus tool to generate docs for  C++ (vmorozov@microsoft.com)
+
+## 0.0.0-canary.250
+
+Mon, 08 Feb 2021 05:05:41 GMT
+
+### Changes
+
+- Fix Switch.onChange (igklemen@microsoft.com)
+
+## 0.0.0-canary.249
+
+Thu, 04 Feb 2021 05:05:58 GMT
+
+### Changes
+
+- Initialize ETW provider only once (asklar@microsoft.com)
+
+## 0.0.0-canary.248
+
+Wed, 03 Feb 2021 05:05:12 GMT
+
+### Changes
+
+- Fix template for WinUI3 C# App by expanding namespace of argument in AppOnActivated (dannyvv@microsoft.com)
+- AllAnimations only exists on RS5 (asklar@microsoft.com)
+- Fix deep linking activation (vmorozov@microsoft.com)
+
+## 0.0.0-canary.247
+
+Tue, 02 Feb 2021 05:05:37 GMT
+
+### Changes
+
+- Allow custom view managers to be able to trigger our logic to run native layout (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.246
+
+Sat, 30 Jan 2021 05:06:38 GMT
+
+### Changes
+
+- App crashes at startup on RS3 because of RS4+ API usage (asklar@microsoft.com)
+
+## 0.0.0-canary.245
+
+Fri, 29 Jan 2021 05:05:32 GMT
+
+### Changes
+
+- Remove disabling 4018 4055 4146 4242 (asklar@microsoft.com)
+
+## 0.0.0-canary.244
+
+Thu, 28 Jan 2021 05:06:47 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.4.10 (dannyvv@microsoft.com)
+- Bump react-native-windows-codegen to v1.1.14 (dannyvv@microsoft.com)
+
+### Changes
+
+- Leverage default config support in Just library and factor out common tasks (dannyvv@microsoft.com)
+
+## 0.0.0-canary.243
+
+Wed, 27 Jan 2021 05:06:36 GMT
+
+### Patches
+
+- Bump react-native-windows-codegen to v1.1.13 (ngerlem@microsoft.com)
+- Bump react-native-platform-override to v1.4.9 (ngerlem@microsoft.com)
+
+### Changes
+
+- Update comments for IJSValueReader and IJSValueWriter (vmorozov@microsoft.com)
+- use lifted DispatcherQueue (asklar@microsoft.com)
+- Show TS Stack Traces on Uncaught CLI Exception (ngerlem@microsoft.com)
+- Remove usage of deprecated API (asklar@microsoft.com)
+
+## 0.0.0-canary.242
+
+Tue, 26 Jan 2021 05:06:39 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.4.8 (dannyvv@microsoft.com)
+
+### Changes
+
+- Update @types package versions in package.json from dependabot updates to yarn.lock (dannyvv@microsoft.com)
+- Background/Foreground app state handlers should be registered from the xaml thread (asklar@microsoft.com)
+- Rewrite E2ETest Specs (Removes Python Dependency) (ngerlem@microsoft.com)
+- Integrate 1/21 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.241
+
+Sat, 23 Jan 2021 05:08:20 GMT
+
+### Changes
+
+- react-native-windows package should include jest preset/setup files (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.240
+
+Fri, 22 Jan 2021 05:07:27 GMT
+
+### Changes
+
+- Add new .net native and UWP runtime versions (asklar@microsoft.com)
+
+## 0.0.0-canary.239
+
+Thu, 21 Jan 2021 18:54:54 GMT
+
+### Changes
+
+- Update V8 and Hermes package versions (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.238
+
+Mon, 18 Jan 2021 05:08:29 GMT
+
+### Changes
+
+- Last year, we had plumbed the Systrace sections and events in the core react native to windows code and fired ETW events. But, it was hard for people to use because we used manifest based ETW events. This change converts the event triggering code to use Tracelogging APIs (aka self describing events) which doesn't require the manifest to be registered on the host machine to inspect traces.
+ Post this change, the systrace events can be inspected on any windows machines where the RNW based apps are running by issuing the following commands, 
+wpr.exe -start rnw.wprp
+wpr.exe -stop rnw.etl
+wpa.exe rnw.etl
+
+This works for Win32 apps too, say Office. (mganandraj@outlook.com)
+
+## 0.0.0-canary.237
+
+Sun, 17 Jan 2021 05:08:07 GMT
+
+### Changes
+
+- Install .net core 3.1 for CodeGen project (asklar@microsoft.com)
+
+## 0.0.0-canary.236
+
+Sat, 16 Jan 2021 05:05:46 GMT
+
+### Changes
+
+- Fix missing commit from python dep (asklar@winse.microsoft.com)
+- Fix ReactNotificationService for notifications between app and modules (vmorozov@microsoft.com)
+- Treat WS protocols as scalar/array (julio.rocha@microsoft.com)
+- Reduce number of windesktop forked files. (julio.rocha@microsoft.com)
+- Add Python dependency to rnw-dependencies.ps1 (asklar@microsoft.com)
+
+## 0.0.0-canary.235
+
+Fri, 15 Jan 2021 05:07:01 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v0.4.7 (canli@microsoft.com)
+
+### Changes
+
+- Add JSValue constructor for std::optional<T> (vmorozov@microsoft.com)
+- Simplify Microsoft.ReactNative.IntegrationTests (vmorozov@microsoft.com)
+- Updated doc comments in IReactNotificationService.idl (vmorozov@microsoft.com)
+- Update clang-format version to 1.5.0 (vmorozov@microsoft.com)
+
+## 0.0.0-canary.234
+
+Thu, 14 Jan 2021 05:05:22 GMT
+
+### Changes
+
+- Move CallInvoker.h to TurboModule folder (vmorozov@microsoft.com)
+- Fix unused variable warning in AbiCallInvoker (vmorozov@microsoft.com)
+- Integrate RN nightly 13/1 build. (igklemen@microsoft.com)
+
+## 0.0.0-canary.233
+
+Wed, 13 Jan 2021 05:05:37 GMT
+
+### Changes
+
+- #6715 Add Workaround to Resolve textDecorationLine Bug (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.232
+
+Tue, 12 Jan 2021 05:07:53 GMT
+
+### Changes
+
+- #6217 : Add Clearer Error Msg for YGValues (34109996+chiaramooney@users.noreply.github.com)
+- Integrate 1/6 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 1/7 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.230
+
+Tue, 05 Jan 2021 05:06:42 GMT
+
+### Changes
+
+- Enable support for C++ TurboModules (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.229
 

@@ -10,9 +10,23 @@
 
 #include <JSValueWriter.h>
 #include <Utils/ValueUtils.h>
+#include <Views/ShadowNodeBase.h>
 #include "ReactHost/MsoUtils.h"
 
 namespace winrt::Microsoft::ReactNative {
+
+class ABIShadowNode : public ::Microsoft::ReactNative::ShadowNodeBase {
+  using Super = ShadowNodeBase;
+
+ public:
+  ABIShadowNode(bool needsForceLayout) : m_needsForceLayout(needsForceLayout) {}
+  bool NeedsForceLayout() override {
+    return m_needsForceLayout;
+  }
+
+ private:
+  bool m_needsForceLayout;
+};
 
 ABIViewManager::ABIViewManager(
     Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
@@ -25,6 +39,7 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithNativeProperties{viewManager.try_as<IViewManagerWithNativeProperties>()},
       m_viewManagerWithCommands{viewManager.try_as<IViewManagerWithCommands>()},
       m_viewManagerWithExportedEventTypeConstants{viewManager.try_as<IViewManagerWithExportedEventTypeConstants>()},
+      m_viewManagerRequiresNativeLayout{viewManager.try_as<IViewManagerRequiresNativeLayout>()},
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()} {
   if (m_viewManagerWithReactContext) {
     m_viewManagerWithReactContext.ReactContext(winrt::make<implementation::ReactContext>(Mso::Copy(reactContext)));
@@ -181,6 +196,19 @@ void ABIViewManager::ReplaceChild(
   } else {
     Super::ReplaceChild(parent, oldChild, newChild);
   }
+}
+
+YGMeasureFunc ABIViewManager::GetYogaCustomMeasureFunc() const {
+  if (m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout()) {
+    return ::Microsoft::ReactNative::DefaultYogaSelfMeasureFunc;
+  } else {
+    return nullptr;
+  }
+}
+
+::Microsoft::ReactNative::ShadowNode *ABIViewManager::createShadow() const {
+  return new ABIShadowNode(
+      m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout());
 }
 
 } // namespace winrt::Microsoft::ReactNative

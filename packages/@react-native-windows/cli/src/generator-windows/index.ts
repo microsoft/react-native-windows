@@ -22,7 +22,10 @@ import {
 } from '../generator-common';
 import {GenerateOptions} from '..';
 import {CodedError} from '@react-native-windows/telemetry';
-import {findPackage, WritableNpmPackage} from '@rnw-scripts/package-utils';
+import {
+  findPackage,
+  WritableNpmPackage,
+} from '@react-native-windows/package-utils';
 
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';
@@ -215,12 +218,6 @@ export async function copyProjectTemplateAndReplace(
       hasProps: true,
       hasTargets: true,
     },
-    {
-      id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
-      version: options.useWinUI3 ? winui3Version : winui2xVersion,
-      hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
-      hasTargets: false,
-    },
   ];
 
   if (options.experimentalNuGetDependency) {
@@ -247,11 +244,21 @@ export async function copyProjectTemplateAndReplace(
   if (options.useHermes) {
     cppNugetPackages.push({
       id: 'ReactNative.Hermes.Windows',
-      version: '0.7.1',
+      version: '0.7.2',
       hasProps: false,
       hasTargets: true,
     });
   }
+
+  const packagesConfigCppNugetPackages = [
+    ...cppNugetPackages,
+    {
+      id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
+      version: options.useWinUI3 ? winui3Version : winui2xVersion,
+      hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
+      hasTargets: false,
+    },
+  ];
 
   const templateVars: Record<string, any> = {
     useMustache: true,
@@ -282,6 +289,7 @@ export async function copyProjectTemplateAndReplace(
     xamlNamespace: xamlNamespace,
     xamlNamespaceCpp: xamlNamespaceCpp,
     cppNugetPackages: cppNugetPackages,
+    packagesConfigCppNugetPackages: packagesConfigCppNugetPackages,
 
     // cs template variables
     csNugetPackages: csNugetPackages,
@@ -535,7 +543,9 @@ export async function installScriptsAndDependencies(options: {
 }) {
   const projectPackage = await WritableNpmPackage.fromPath(process.cwd());
   if (!projectPackage) {
-    throw new Error('The current directory is not the root of an npm package');
+    throw new Error(
+      `The current directory '${process.cwd()}' is not the root of an npm package`,
+    );
   }
 
   await projectPackage.mergeProps({

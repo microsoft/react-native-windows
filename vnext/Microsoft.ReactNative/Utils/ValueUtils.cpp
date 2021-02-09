@@ -11,10 +11,7 @@
 #include <folly/dynamic.h>
 #include <iomanip>
 
-#pragma warning(push)
-#pragma warning(disable : 4995)
 #include <locale>
-#pragma warning(pop)
 
 namespace winrt {
 using namespace Windows::Foundation;

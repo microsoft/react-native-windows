@@ -264,11 +264,12 @@ std::map<std::string, dynamic> AsyncStorageModuleWin32::getConstants() {
 }
 
 std::vector<CxxModule::Method> AsyncStorageModuleWin32::getMethods() {
-  return {Method("multiGet", this, &AsyncStorageModuleWin32::multiGet),
-          Method("multiSet", this, &AsyncStorageModuleWin32::multiSet),
-          Method("multiRemove", this, &AsyncStorageModuleWin32::multiRemove),
-          Method("clear", this, &AsyncStorageModuleWin32::clear),
-          Method("getAllKeys", this, &AsyncStorageModuleWin32::getAllKeys)};
+  return {
+      Method("multiGet", this, &AsyncStorageModuleWin32::multiGet),
+      Method("multiSet", this, &AsyncStorageModuleWin32::multiSet),
+      Method("multiRemove", this, &AsyncStorageModuleWin32::multiRemove),
+      Method("clear", this, &AsyncStorageModuleWin32::clear),
+      Method("getAllKeys", this, &AsyncStorageModuleWin32::getAllKeys)};
 }
 
 void AsyncStorageModuleWin32::multiGet(folly::dynamic args, Callback jsCallback) {

@@ -1,8 +1,60 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Thu, 03 Dec 2020 23:59:32 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.16
+
+Tue, 09 Feb 2021 05:07:37 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.0.2 (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump just-scripts from 1.3.2 to 1.3.3 (dannyvv@microsoft.com)
+
+## 0.0.0-canary.15
+
+Thu, 28 Jan 2021 05:06:47 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.0.1 (dannyvv@microsoft.com)
+
+### Changes
+
+- Leverage default config support in Just library and factor out common tasks (dannyvv@microsoft.com)
+
+## 0.0.0-canary.14
+
+Tue, 26 Jan 2021 05:06:39 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.0.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Update @types package versions in package.json from dependabot updates to yarn.lock (dannyvv@microsoft.com)
+
+## 0.0.0-canary.13
+
+Fri, 15 Jan 2021 05:07:01 GMT
+
+### Changes
+
+- Remove appium from package dependency (dannyvv@microsoft.com)
+
+## 0.0.0-canary.12
+
+Tue, 05 Jan 2021 05:06:42 GMT
+
+### Changes
+
+- Rework error reporting/telemetry to only log the minimal amount of data (asklar@microsoft.com)
 
 ## 0.0.0-canary.11
 

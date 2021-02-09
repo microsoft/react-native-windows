@@ -271,7 +271,11 @@ static float NumberOrDefault(const winrt::Microsoft::ReactNative::JSValue &value
   return result;
 }
 
-static YGValue YGValueOrDefault(const winrt::Microsoft::ReactNative::JSValue &value, YGValue defaultValue) {
+static YGValue YGValueOrDefault(
+    const winrt::Microsoft::ReactNative::JSValue &value,
+    YGValue defaultValue,
+    ShadowNodeBase &shadowNode,
+    const std::string &key) {
   YGValue result = defaultValue;
 
   if (value.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
@@ -290,10 +294,17 @@ static YGValue YGValueOrDefault(const winrt::Microsoft::ReactNative::JSValue &va
       folly::dynamic pct(str);
       return YGValue{static_cast<float>(pct.asDouble()), YGUnitPercent};
     }
+    if (str.length() > 2 && (str.compare(str.length() - 2, 2, "pt") || str.compare(str.length() - 2, 2, "px"))) {
+      shadowNode.RedBox(
+          "Value '" + value.AsString() + "' for " + key + " is invalid. Cannot be converted to YGValue. '" +
+          str.substr((str.length() - 2), 2) + "' unit not needed. Simply use integer value.");
+      return defaultValue;
+    }
   }
 
-  // Unexpected format, using default
-  assert(false);
+  shadowNode.RedBox(
+      "Value '" + value.AsString() + "' for " + key +
+      " is invalid. Cannot be converted to YGValue. Did you forget the %? Otherwise, simply use integer value.");
   return defaultValue;
 }
 
@@ -506,7 +517,7 @@ static void StyleYogaNode(
 
       YGNodeStyleSetFlexShrink(yogaNode, result);
     } else if (key == "flexBasis") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaUnitValueAutoHelper(
           yogaNode, result, YGNodeStyleSetFlexBasis, YGNodeStyleSetFlexBasisPercent, YGNodeStyleSetFlexBasisAuto);
@@ -555,92 +566,92 @@ static void StyleYogaNode(
 
       YGNodeStyleSetAspectRatio(yogaNode, result);
     } else if (key == "left") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueHelper(yogaNode, YGEdgeLeft, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
     } else if (key == "top") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueHelper(yogaNode, YGEdgeTop, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
     } else if (key == "right") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueHelper(yogaNode, YGEdgeRight, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
     } else if (key == "bottom") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueHelper(yogaNode, YGEdgeBottom, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
     } else if (key == "end") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueHelper(yogaNode, YGEdgeEnd, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
     } else if (key == "start") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueHelper(yogaNode, YGEdgeStart, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
     } else if (key == "width") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaUnitValueAutoHelper(
           yogaNode, result, YGNodeStyleSetWidth, YGNodeStyleSetWidthPercent, YGNodeStyleSetWidthAuto);
     } else if (key == "minWidth") {
-      YGValue result = YGValueOrDefault(value, YGValue{0.0f, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{0.0f, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMinWidth, YGNodeStyleSetMinWidthPercent);
     } else if (key == "maxWidth") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMaxWidth, YGNodeStyleSetMaxWidthPercent);
     } else if (key == "height") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaUnitValueAutoHelper(
           yogaNode, result, YGNodeStyleSetHeight, YGNodeStyleSetHeightPercent, YGNodeStyleSetHeightAuto);
     } else if (key == "minHeight") {
-      YGValue result = YGValueOrDefault(value, YGValue{0.0f, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{0.0f, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMinHeight, YGNodeStyleSetMinHeightPercent);
     } else if (key == "maxHeight") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMaxHeight, YGNodeStyleSetMaxHeightPercent);
     } else if (key == "margin") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueAutoHelper(
           yogaNode, YGEdgeAll, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginLeft") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueAutoHelper(
           yogaNode, YGEdgeLeft, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginStart") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueAutoHelper(
           yogaNode, YGEdgeStart, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginTop") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueAutoHelper(
           yogaNode, YGEdgeTop, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginRight") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueAutoHelper(
           yogaNode, YGEdgeRight, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginEnd") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueAutoHelper(
           yogaNode, YGEdgeEnd, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginBottom") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueAutoHelper(
           yogaNode, YGEdgeBottom, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginHorizontal") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueAutoHelper(
           yogaNode,
@@ -650,7 +661,7 @@ static void StyleYogaNode(
           YGNodeStyleSetMarginPercent,
           YGNodeStyleSetMarginAuto);
     } else if (key == "marginVertical") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueAutoHelper(
           yogaNode,
@@ -661,53 +672,53 @@ static void StyleYogaNode(
           YGNodeStyleSetMarginAuto);
     } else if (key == "padding") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
         SetYogaValueHelper(yogaNode, YGEdgeAll, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingLeft") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
         SetYogaValueHelper(yogaNode, YGEdgeLeft, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingStart") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
         SetYogaValueHelper(yogaNode, YGEdgeStart, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingTop") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
         SetYogaValueHelper(yogaNode, YGEdgeTop, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingRight") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaValueHelper(yogaNode, YGEdgeRight, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
     } else if (key == "paddingEnd") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
         SetYogaValueHelper(yogaNode, YGEdgeEnd, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingBottom") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
         SetYogaValueHelper(yogaNode, YGEdgeBottom, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingHorizontal") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
         SetYogaValueHelper(yogaNode, YGEdgeHorizontal, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingVertical") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
         SetYogaValueHelper(yogaNode, YGEdgeVertical, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }

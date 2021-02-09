@@ -263,9 +263,8 @@ ReactModuleBuilderMock::CallSync(std::wstring const &methodName, TResult &result
 
 template <class... TArgs>
 inline /*static*/ IJSValueReader ReactModuleBuilderMock::ArgReader(TArgs &&... args) noexcept {
-  return CreateArgReader([&args...](IJSValueWriter const &writer) mutable noexcept {
-    WriteArgs(writer, std::forward<TArgs>(args)...);
-  });
+  return CreateArgReader(
+      [&args...](IJSValueWriter const &writer) mutable noexcept { WriteArgs(writer, std::forward<TArgs>(args)...); });
 }
 
 template <class... TArgs, size_t... I>
@@ -273,7 +272,7 @@ inline MethodResultCallback ReactModuleBuilderMock::ResolveCallback(
     std::function<void(TArgs...)> const &resolve,
     std::index_sequence<I...>,
     Mso::Promise<bool> const &promise) noexcept {
-  return [ this, resolve, promise ](IJSValueWriter const &writer) noexcept {
+  return [this, resolve, promise](IJSValueWriter const &writer) noexcept {
     std::tuple<RemoveConstRef<TArgs>...> args;
     ReadArgs(MakeJSValueTreeReader(TakeJSValue(writer)), std::get<I>(args)...);
     resolve(std::get<I>(args)...);
@@ -287,7 +286,7 @@ inline MethodResultCallback ReactModuleBuilderMock::RejectCallback(
     std::function<void(TArgs...)> const &reject,
     std::index_sequence<I...>,
     Mso::Promise<bool> const &promise) noexcept {
-  return [ this, reject, promise ](IJSValueWriter const &writer) noexcept {
+  return [this, reject, promise](IJSValueWriter const &writer) noexcept {
     std::tuple<RemoveConstRef<TArgs>...> args;
     ReadArgs(MakeJSValueTreeReader(TakeJSValue(writer)), std::get<I>(args)...);
     reject(std::get<I>(args)...);

@@ -62,10 +62,6 @@ Mso::CntPtr<TTarget> qi_cast(const TSource *piSource, const IID &riid = __uuidof
   return qi_cast<TTarget, TSource *>(piSourceNonConst, riid);
 }
 
-#pragma warning(push)
-#pragma warning(disable : 4995) // VerifyElseCrashSz gives "warning C4995: 'IsDebuggerPresent': name was marked as
-                                // #pragma deprecated"
-
 /**
   qi_cast_or_crash<Type>(source, optional riid)
 
@@ -91,8 +87,6 @@ Mso::CntPtr<TTarget> qi_cast_or_crash(const TSource *piSource, const IID &riid =
   VerifyElseCrashSzTag(target, "Query interface failed.", 0x022054c4 /* tag_cifte */);
   return target;
 }
-
-#pragma warning(pop)
 
 /**
   simpleqi_cast<Type>(source, optional riid)

@@ -1,0 +1,110 @@
+trigger: none
+pr: none
+
+parameters:
+- name: reactNativeVersion
+  displayName: React Native Version
+  type: string
+- name: commitTitle
+  displayName: Commit Title
+  type: string
+
+variables:
+  - template: variables/vs2019.yml
+  - group: RNW Secrets
+
+pool:
+  vmImage: $(VmImage)
+
+jobs:
+  - job: IntegrateRN
+    displayName: Integrate React Native
+    timeoutInMinutes: 30
+
+    steps:
+      - checkout: self
+        clean: true
+        submodules: false
+
+      - template: templates/configure-git.yml
+
+      # Using standard "yarn install" instead of midgarn-yarn because the integration
+      # script will do a normal yarn install anyway and we want to share results
+      - script: yarn install
+        displayName: yarn install
+
+      - script: yarn build
+        displayName: yarn build
+
+      - script: git checkout -b integrate-${{ parameters.reactNativeVersion }} origin/master
+        displayName: Create a new branch
+
+      - script: yarn integrate-rn ${{ parameters.reactNativeVersion }} --reportPath "$(Agent.TempDirectory)\integration-report.md" --color
+        displayName: yarn integrate-rn
+        continueOnError: true
+
+      - powershell: |
+          if (!(Test-Path "$(Agent.TempDirectory)\integration-report.md")) {
+            dir "$(Agent.TempDirectory)"
+            throw "No integration report generated"
+          }
+          if ((git status --porcelain).length -eq 0) {
+            throw "No changes found"
+          }
+        displayName: Test for changes
+        
+      - powershell: |
+          $reportWithHeader = "${{ parameters.commitTitle}}`n`n" + (Get-Content -Raw $(Agent.TempDirectory)\integration-report.md)
+          # Trim to max GitHub PR length
+          $trimmedReport = $reportWithHeader.substring(0, [math]::min(65536, $reportWithHeader.length))
+          Set-Content $(Agent.TempDirectory)\commit-message.md -Value $trimmedReport
+        displayName: Generate commit message
+
+      - script: |
+          git add --all
+          git commit -F $(Agent.TempDirectory)\commit-message.md
+        displayName: Commit changes
+      
+      - powershell: |
+          $commitHash = git log --format=%H -n 1
+          Write-Output "##vso[task.setvariable variable=FirstCommit]$commitHash"
+        displayName: Save base commit
+        
+      - powershell: |
+          $patchScope = node -e "
+          const path = require('path');
+          const {enumerateRepoPackages} = require('@react-native-windows/package-utils');
+
+          const allowsPatch = async (pkg) => !pkg.json?.beachball?.disallowedChangeTypes.includes('patch');
+          enumerateRepoPackages(allowsPatch)
+            .then(pkgs => console.log(pkgs.map(pkg => path.relative('.', pkg.path)).join(',')));
+          "
+          yarn change --scope @($patchScope.split(',')) --message "${{ parameters.commitTitle}}" --type patch
+        displayName: Create patch changefiles
+
+      - powershell: |
+          $prereleaseScope = node -e "
+          const path = require('path');
+          const {enumerateRepoPackages} = require('@react-native-windows/package-utils');
+
+          const allowsPrerelease = async (pkg) => !pkg.json?.beachball?.disallowedChangeTypes.includes('prerelease');
+          enumerateRepoPackages(allowsPrerelease)
+            .then(pkgs => console.log(pkgs.map(pkg => path.relative('.', pkg.path)).join(',')));
+          "
+          yarn change --scope @($prereleaseScope.split(',')) --message "${{ parameters.commitTitle}}" --type prerelease
+        displayName: Create prerelease changefiles
+
+      - script: |
+          git reset $(FirstCommit)
+          git add --all
+          git commit --amend -F "$(Agent.TempDirectory)\commit-message.md"
+        displayName: Slip changefiles into original commit
+
+      - script: git push origin integrate-${{ parameters.reactNativeVersion }}
+        displayName: Push changes
+
+      - powershell: |
+          $headers = @{'Accept'='application/vnd.github.v3+json'; 'Authorization'='Token $(githubAuthToken)'}
+          $body = '{"head": "integrate-${{ parameters.reactNativeVersion }}", "base": "master", "title": "${{ parameters.commitTitle}}"}'
+          Invoke-WebRequest -Method Post -Headers $headers -Body $body https://api.github.com/repos/microsoft/react-native-windows/pulls
+        displayName: Create PR
