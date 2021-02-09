@@ -50,15 +50,15 @@ export async function* getProjectConfigs(
   parentConfig?: LoadedConfig,
 ): AsyncGenerator<Config> {
   const config = await loadConfig(
-    ensureAbsolutePath(configPath, process.cwd()),
+    path.resolve(process.cwd(), configPath),
     parentConfig,
   );
   config.outputDir = outputDir;
   if (Array.isArray(config.projects) && config.projects.length > 0) {
     for (const project of config.projects) {
-      const projectConfigPath = ensureAbsolutePath(
-        path.join(project, 'doxysaurus.json'),
+      const projectConfigPath = path.resolve(
         config.configDir,
+        path.join(project, 'doxysaurus.json'),
       );
       if (existsSync(projectConfigPath)) {
         for await (const projectConfig of getProjectConfigs(
@@ -102,7 +102,7 @@ async function loadConfig(
       ...config,
       configDir,
       buildDir: config.buildDir
-        ? ensureAbsolutePath(config.buildDir, configDir)
+        ? path.resolve(configDir, config.buildDir)
         : path.join(process.cwd(), 'docs'),
     };
   }
@@ -111,22 +111,16 @@ async function loadConfig(
 /** Normalizes config to set all required fields and makes all paths absolute. */
 function normalizeConfig(config: LoadedConfig): Config {
   const buildDir = config.buildDir
-    ? ensureAbsolutePath(config.buildDir, config.configDir)
+    ? path.resolve(config.configDir, config.buildDir)
     : path.join(process.cwd(), 'docs');
   return {
     ...config,
     input: config.input
-      ? ensureAbsolutePath(config.input, config.configDir)
+      ? path.resolve(config.configDir, config.input)
       : config.configDir,
     buildDir,
     outputDir: config.outputDir || path.join(buildDir, 'out'),
     docIdPrefix: config.docIdPrefix || '',
     indexFilename: config.indexFilename || 'index.md',
   };
-}
-
-function ensureAbsolutePath(filePath: string, currentDir: string): string {
-  return path.normalize(
-    path.isAbsolute(filePath) ? filePath : path.join(currentDir, filePath),
-  );
 }
