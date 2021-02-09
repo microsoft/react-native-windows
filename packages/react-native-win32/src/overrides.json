@@ -165,6 +165,10 @@
     },
     {
       "type": "platform",
+      "file": "Libraries\\Components\\Text\\Tests\\TextWin32Test.tsx"
+    },
+    {
+      "type": "platform",
       "file": "Libraries\\Components\\Text\\TextWin32.Props.ts"
     },
     {
@@ -449,6 +453,14 @@
       "baseFile": "Libraries\\StyleSheet\\StyleSheet.js",
       "baseVersion": "0.62.0-rc.3",
       "baseHash": "87b211c7221c858271123d6d306ffb51f881e512",
+      "issue": "LEGACY_FIXME"
+    },
+    {
+      "type": "derived",
+      "file": "Libraries\\Text\\Text.win32.js",
+      "baseFile": "Libraries\\Text\\Text.js",
+      "baseVersion": "0.62.2",
+      "baseHash": "f9696025acc90d378071edf1d829397992c368ae",
       "issue": "LEGACY_FIXME"
     },
     {
