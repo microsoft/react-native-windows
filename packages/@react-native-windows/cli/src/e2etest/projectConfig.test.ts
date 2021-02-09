@@ -237,13 +237,7 @@ test('useWinUI3=true in react-native.config.js, useWinUI3=false in BuildFlags.pr
 
   const config = projectConfigWindows(folder, rnc.project.windows);
 
-  expect(
-    ensureWinUIDialect(
-      path.join(config!.folder, config!.sourceDir, config!.solutionFile),
-      config!,
-      false,
-    ),
-  ).toBeTruthy();
+  expect(ensureWinUIDialect(config!, false)).toBeTruthy();
 
   const packagesConfig = (
     await fs.promises.readFile(
@@ -255,25 +249,9 @@ test('useWinUI3=true in react-native.config.js, useWinUI3=false in BuildFlags.pr
     await fs.promises.readFile(path.join(folder, 'windows/BuildFlags.props'))
   ).toString();
 
-  const expectedPackagesConfig = `<?xml version="1.0" encoding="utf-8"?>
-<packages>
-  <package id="Microsoft.ReactNative.Cxx" version="1.0.0" targetFramework="native"/>
-  <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
-</packages>
-`;
-  expect(packagesConfig.replace(/\r/g, '')).toEqual(expectedPackagesConfig);
+  expect(packagesConfig.replace(/\r/g, '')).toEqual(rnc.expectedPackagesConfig);
 
-  const expectedBuildFlags = `<?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
-  <!-- Flags can be added here to affect the compilation of Microsoft.ReactNative -->
-  <PropertyGroup Label="Microsoft.ReactNative Build Flags">
-    <UseWinUI3>true</UseWinUI3>
-    <UseHermes>false</UseHermes>
-  </PropertyGroup>
-
-</Project>`;
-  expect(buildFlags.replace(/\r/g, '')).toEqual(expectedBuildFlags);
+  expect(buildFlags.replace(/\r/g, '')).toEqual(rnc.expectedBuildFlags);
 
   done();
 });

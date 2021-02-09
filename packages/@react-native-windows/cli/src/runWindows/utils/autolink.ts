@@ -292,8 +292,7 @@ async function updateAutoLink(
     }
 
     changesNecessary =
-      ensureWinUIDialect(solutionFile, windowsAppConfig, checkMode) ||
-      changesNecessary;
+      ensureXAMLDialect(windowsAppConfig, checkMode) || changesNecessary;
     // Generating cs/cpp files for app code consumption
     if (projectLang === 'cs') {
       let csUsingNamespaces = '';
@@ -592,11 +591,15 @@ async function updateAutoLink(
   }
 }
 
-export function ensureWinUIDialect(
-  slnFile: string,
+export function ensureXAMLDialect(
   windowsProjectConfig: WindowsProjectConfig,
   checkMode: boolean,
 ) {
+  const slnFile = path.join(
+    windowsProjectConfig.folder,
+    windowsProjectConfig.sourceDir,
+    windowsProjectConfig.solutionFile,
+  );
   const buildFlagsProps = path.join(path.dirname(slnFile), 'BuildFlags.props');
   let changesNeeded = false;
   if (fs.existsSync(buildFlagsProps)) {
@@ -607,7 +610,7 @@ export function ensureWinUIDialect(
         .tryFindPropertyValue(buildFlagsContents, 'UseWinUI3')
         ?.toLowerCase() === 'true';
     // use the UseWinUI3 value in react-native.config.js, or if not present, the value from BuildFlags.props
-    changesNeeded = fixPackagesConfig(
+    changesNeeded = updatePackagesConfigXAMLDialect(
       useWinUI3FromConfig !== undefined
         ? useWinUI3FromConfig
         : useWinUI3FromBuildFlags,
@@ -631,7 +634,7 @@ export function ensureWinUIDialect(
   return changesNeeded;
 }
 
-function fixPackagesConfig(
+function updatePackagesConfigXAMLDialect(
   useWinUI3: boolean,
   project: WindowsProjectConfig,
   checkMode: boolean,
