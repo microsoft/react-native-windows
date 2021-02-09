@@ -142,7 +142,7 @@ async function runWindows(
       );
 
       newError(
-        `It is possible your installation is missing depdencies. These can be automatically installed by running ${rnwDependenciesPath} from an elevated PowerShell prompt.\nFor more information, go to http://aka.ms/rnw-deps`,
+        `It is possible your installation is missing required software depdencies. Dependencies can be automatically installed by running ${rnwDependenciesPath} from an elevated PowerShell prompt.\nFor more information, go to http://aka.ms/rnw-deps`,
       );
     }
     return setExitProcessWithError(e, options.logging);
