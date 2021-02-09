@@ -161,8 +161,8 @@ const projects: TargetProject[] = [
     );
 
     await copyAndReplace(
-      path.join(templateRoot, 'shared-app/proj/BuildFlags.props'),
-      path.join(windowsDir, 'BuildFlags.props'),
+      path.join(templateRoot, 'shared-app/proj/ExperimentalFeatures.props'),
+      path.join(windowsDir, 'ExperimentalFeatures.props'),
       replacements,
       null,
     );
@@ -231,7 +231,7 @@ test.each(projects)(
   },
 );
 
-test('useWinUI3=true in react-native.config.js, useWinUI3=false in BuildFlags.props', async done => {
+test('useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async done => {
   const folder = path.resolve('src/e2etest/projects/WithWinUI3');
   const rnc = require(path.join(folder, 'react-native.config.js'));
 
@@ -246,7 +246,9 @@ test('useWinUI3=true in react-native.config.js, useWinUI3=false in BuildFlags.pr
   ).toString();
 
   const buildFlags = (
-    await fs.promises.readFile(path.join(folder, 'windows/BuildFlags.props'))
+    await fs.promises.readFile(
+      path.join(folder, 'windows/ExperimentalFeatures.props'),
+    )
   ).toString();
 
   expect(packagesConfig.replace(/\r/g, '')).toEqual(rnc.expectedPackagesConfig);
