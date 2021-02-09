@@ -110,6 +110,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CppWinrtLessExceptions.h" />
     <ClInclude Include="JsonRpcRequestProcessor.h" />
     <ClInclude Include="Server.h">
       <DependentUpon>Server.idl</DependentUpon>

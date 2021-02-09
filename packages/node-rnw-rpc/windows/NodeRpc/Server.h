@@ -16,8 +16,8 @@ struct Server : ServerT<Server> {
       Windows::Foundation::TimeSpan pollInterval) noexcept;
 
  private:
-  bool IsPollContinueCondition(Windows::Networking::Sockets::SocketErrorStatus socketError) noexcept;
-  bool IsExpectedConnectionEnd(Windows::Networking::Sockets::SocketErrorStatus socketError) noexcept;
+  bool IsPollContinueCondition(winrt::hresult hr) noexcept;
+  bool IsExpectedConnectionEnd(winrt::hresult hr) noexcept;
 
   Windows::Foundation::IAsyncAction PumpRequests() noexcept;
 
