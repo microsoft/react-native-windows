@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "TestHostHarness.h"
+#include "TestCommandResponse.h"
 #include "TestModule.h"
 
 #include <JSValue.h>
@@ -10,7 +11,6 @@
 using namespace std::chrono;
 using namespace std::chrono_literals;
 
-using namespace winrt::integrationtest;
 using namespace winrt::Microsoft::ReactNative;
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Data::Json;
@@ -19,21 +19,11 @@ using namespace winrt::Windows::System;
 namespace IntegrationTest {
 
 TestHostHarness::TestHostHarness(const ReactNativeHost &reactHost) noexcept
-    : m_dispatcher{ReactDispatcherHelper::UIThreadDispatcher()} {
+    : m_dispatcher{ReactDispatcherHelper::UIThreadDispatcher()}, m_rpcServer(CreateRpcHander()) {
   VerifyElseCrash(m_dispatcher);
   VerifyElseCrash(m_dispatcher.HasThreadAccess());
 
   m_redboxHandler = winrt::make<TestHostHarnessRedboxHandler>(get_weak());
-  m_commandListener = winrt::make_self<TestCommandListener>();
-
-  m_commandListener->OnTestCommand(
-      [weakThis{get_weak()}](const TestCommand &command, TestCommandResponse response) noexcept {
-        if (auto strongThis = weakThis.get()) {
-          strongThis->m_dispatcher.Post([strongThis, command, response{std::move(response)}]() mutable noexcept {
-            strongThis->OnTestCommand(command, std::move(response));
-          });
-        }
-      });
 
   reactHost.InstanceSettings().RedBoxHandler(m_redboxHandler);
   m_instanceLoadedRevoker = reactHost.InstanceSettings().InstanceLoaded(
@@ -45,6 +35,12 @@ TestHostHarness::TestHostHarness(const ReactNativeHost &reactHost) noexcept
       });
 }
 
+TestHostHarness::~TestHostHarness() noexcept {
+  if (m_serverListenCoro) {
+    m_serverListenCoro.Cancel();
+  }
+}
+
 void TestHostHarness::SetRootView(ReactRootView &&rootView) noexcept {
   VerifyElseCrash(m_dispatcher.HasThreadAccess());
 
@@ -54,8 +50,8 @@ void TestHostHarness::SetRootView(ReactRootView &&rootView) noexcept {
 void TestHostHarness::OnInstanceLoaded(const InstanceLoadedEventArgs &args) noexcept {
   VerifyElseCrash(m_dispatcher.HasThreadAccess());
 
-  if (!m_commandListener->IsListening()) {
-    StartListening();
+  if (!m_serverListenCoro) {
+    m_serverListenCoro = StartListening();
   }
 
   ReactContext context(args.Context());
@@ -85,50 +81,60 @@ void TestHostHarness::OnInstanceLoaded(const InstanceLoadedEventArgs &args) noex
       });
 }
 
-winrt::fire_and_forget TestHostHarness::StartListening() noexcept {
+IAsyncAction TestHostHarness::StartListening() noexcept {
   VerifyElseCrash(m_dispatcher.HasThreadAccess());
 
-  auto listenResult = co_await m_commandListener->StartListening();
+  auto cancellationToken = co_await winrt::get_cancellation_token();
 
-  switch (listenResult) {
-    case ListenResult::Success:
-      co_return;
+  // Keep on polling for clients until we die
+  while (!cancellationToken()) {
+    auto processReqsTask = m_rpcServer.ProcessAllClientRequests(8305 /*port*/, 50ms /*pollInterval*/);
 
-    case ListenResult::AddressInUse:
-      ShowJSError("Test harness address is already in use. Is there another instance running?");
-      co_return;
-
-    case ListenResult::OtherError:
-      ShowJSError("The test harness ran into an unexpected error trying to listen for commands.");
-      co_return;
-
-    default:
-      ShowJSError("Unexpected ListenResult from TestCommandListener.");
-      co_return;
+    // Foward cancellation to also cancel processing reqs (setting callback replaces the last)
+    cancellationToken.callback([processReqsTask]() noexcept { processReqsTask.Cancel(); });
+    co_await processReqsTask;
   }
 }
 
-winrt::fire_and_forget TestHostHarness::OnTestCommand(TestCommand command, TestCommandResponse response) noexcept {
+winrt::NodeRpc::Handler TestHostHarness::CreateRpcHander() noexcept {
+  winrt::NodeRpc::Handler handler;
+
+  handler.BindAsyncOperation(
+      L"RunTestComponent", [weakThis{get_weak()}](const JsonValue &payload) noexcept -> IAsyncOperation<IJsonValue> {
+        auto strongThis = weakThis.get();
+        VerifyElseCrash(strongThis);
+        co_return co_await strongThis->OnTestCommand(TestCommandId::RunTestComponent, payload);
+      });
+
+  handler.BindAsyncOperation(
+      L"GoToComponent", [weakThis{get_weak()}](const JsonValue &payload) noexcept -> IAsyncOperation<IJsonValue> {
+        auto strongThis = weakThis.get();
+        VerifyElseCrash(strongThis);
+        co_return co_await strongThis->OnTestCommand(TestCommandId::GoToComponent, payload);
+      });
+
+  return handler;
+}
+
+IAsyncOperation<IJsonValue> TestHostHarness::OnTestCommand(TestCommandId command, JsonValue payload) noexcept {
   VerifyElseCrash(m_dispatcher.HasThreadAccess());
 
   // Keep ourselves alive while we have a test command
   auto strongThis = get_strong();
 
   if (m_pendingResponse) {
-    response.Error("Received a test command while still processing the previous");
-    co_return;
+    co_return TestCommandResponse::Error("Received a test command while still processing the previous");
   }
 
   if (m_instanceFailedToLoad) {
-    response.Error("The instance failed to load");
-    co_return;
+    co_return TestCommandResponse::Error("The instance failed to load");
   }
 
-  m_pendingResponse = std::move(response);
+  m_pendingResponse.emplace();
 
-  switch (command.Id) {
+  switch (command) {
     case TestCommandId::RunTestComponent: {
-      auto componentName = command.payload.GetString();
+      auto componentName = payload.GetObject().GetNamedString(L"component");
       m_rootView.ComponentName(componentName);
 
       m_currentTransaction = winrt::make_self<TestTransaction>();
@@ -137,21 +143,24 @@ winrt::fire_and_forget TestHostHarness::OnTestCommand(TestCommand command, TestC
     }
 
     case TestCommandId::GoToComponent: {
-      auto componentName = command.payload.GetString();
+      auto componentName = payload.GetObject().GetNamedString(L"component");
       m_rootView.ComponentName(componentName);
 
       co_await FlushJSQueue();
-      m_pendingResponse->Okay();
       m_pendingResponse.reset();
+      co_return TestCommandResponse::Okay();
       break;
     }
 
     default: {
       ShowJSError("Unexpected command ID from test runner");
-      response.Error("Unexpected command ID from test runner");
+      co_return TestCommandResponse::Error("Unexpected command ID from test runner");
       break;
     }
   }
+
+  co_return co_await *m_pendingResponse;
+  ;
 }
 
 winrt::fire_and_forget TestHostHarness::TimeoutOnInactivty(winrt::weak_ref<TestTransaction> transaction) noexcept {
@@ -187,8 +196,8 @@ winrt::fire_and_forget TestHostHarness::HandleHostAction(HostAction action) noex
       HandleHostAction(m_currentTransaction->OnEventsFlushed());
       break;
 
-    case HostAction::SubmitResult:
-      m_currentTransaction->SubmitResult(*m_pendingResponse);
+    case HostAction::ResultReady:
+      m_pendingResponse->Set(m_currentTransaction->GetResult());
       m_pendingResponse.reset();
       m_currentTransaction = nullptr;
       break;
