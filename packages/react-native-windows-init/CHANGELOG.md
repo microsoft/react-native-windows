@@ -1,8 +1,21 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Thu, 28 Jan 2021 05:06:47 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.47
+
+Tue, 09 Feb 2021 05:07:37 GMT
+
+### Patches
+
+- Bump just-scripts from 1.3.2 to 1.3.3 (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.56 (dannyvv@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.16 (dannyvv@microsoft.com)
 
 ## 1.1.46
 

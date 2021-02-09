@@ -2,12 +2,13 @@
 
 #include "App.xaml.g.h"
 
-{{#useWinUI3}}
+#include <CppWinRTIncludes.h>
+
+#ifdef USE_WINUI3
 namespace activation = winrt::Microsoft::UI::Xaml;
-{{/useWinUI3}}
-{{^useWinUI3}}
+#else
 namespace activation = winrt::Windows::ApplicationModel::Activation;
-{{/useWinUI3}}
+#endif
 
 namespace winrt::{{ namespaceCpp }}::implementation
 {
@@ -17,7 +18,7 @@ namespace winrt::{{ namespaceCpp }}::implementation
         void OnLaunched(activation::LaunchActivatedEventArgs const&);
         void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
         void OnSuspending(IInspectable const&, Windows::ApplicationModel::SuspendingEventArgs const&);
-        void OnNavigationFailed(IInspectable const&, {{ xamlNamespaceCpp }}::Navigation::NavigationFailedEventArgs const&);
+        void OnNavigationFailed(IInspectable const&, xaml::Navigation::NavigationFailedEventArgs const&);
       private:
         using super = AppT<App>;
     };

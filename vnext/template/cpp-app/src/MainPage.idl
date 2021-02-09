@@ -1,7 +1,9 @@
+#include "NamespaceRedirect.h"
+
 namespace {{ namespace }}
 {
     [default_interface]
-    runtimeclass MainPage : {{ xamlNamespace }}.Controls.Page
+    runtimeclass MainPage : XAML_NAMESPACE.Controls.Page
     {
         MainPage();
     }

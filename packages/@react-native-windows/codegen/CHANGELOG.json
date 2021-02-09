@@ -2,6 +2,29 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Tue, 09 Feb 2021 05:07:37 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.2",
+      "version": "0.0.0-canary.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump just-scripts from 1.3.2 to 1.3.3",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ef4046c6a798446b6404dc26d0dd39224a0d7274",
+            "package": "@react-native-windows/codegen"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.0.2",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ef4046c6a798446b6404dc26d0dd39224a0d7274",
+            "package": "@react-native-windows/codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 05 Feb 2021 05:05:05 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.1",
       "version": "0.0.0-canary.1",

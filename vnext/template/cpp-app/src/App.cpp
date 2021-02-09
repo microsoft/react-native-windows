@@ -6,9 +6,10 @@
 #include "ReactPackageProvider.h"
 
 using namespace winrt;
-using namespace {{ xamlNamespaceCpp }};
-using namespace {{ xamlNamespaceCpp }}::Controls;
-using namespace {{ xamlNamespaceCpp }}::Navigation;
+using namespace xaml;
+using namespace xaml::Controls;
+using namespace xaml::Navigation;
+
 using namespace Windows::ApplicationModel;
 namespace winrt::{{ namespaceCpp }}::implementation
 {

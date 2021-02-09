@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 08 Feb 2021 05:05:41 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.251
+
+Tue, 09 Feb 2021 05:07:37 GMT
+
+### Changes
+
+- [Fix] ScrollView.ScrollToEnd not working for vertical lists (igklemen@microsoft.com)
+- Bump just-scripts from 1.3.2 to 1.3.3 (dannyvv@microsoft.com)
+- Doxysaurus tool to generate docs for  C++ (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.250
 

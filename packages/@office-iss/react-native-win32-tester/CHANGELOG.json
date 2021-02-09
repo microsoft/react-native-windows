@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32-tester",
   "entries": [
     {
+      "date": "Tue, 09 Feb 2021 05:07:37 GMT",
+      "tag": "@office-iss/react-native-win32-tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.11",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ef4046c6a798446b6404dc26d0dd39224a0d7274",
+            "package": "@office-iss/react-native-win32-tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 05 Feb 2021 05:05:05 GMT",
       "tag": "@office-iss/react-native-win32-tester_v0.0.1",
       "version": "0.0.1",

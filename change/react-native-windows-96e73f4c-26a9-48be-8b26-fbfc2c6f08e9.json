@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Doxysaurus tool to generate docs for  C++",
+  "comment": "Build apps for either/or WinUI 3 or XAML",
   "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
+  "email": "asklar@microsoft.com",
   "dependentChangeType": "patch"
 }
