@@ -1,9 +1,12 @@
-﻿using Microsoft.ReactNative;
-{{^useWinUI3}}
+using Microsoft.ReactNative;
+#if USE_WINUI3
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+#else
 using Windows.ApplicationModel.Activation;
-{{/useWinUI3}}
-using {{ xamlNamespace }};
-using {{ xamlNamespace }}.Controls;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+#endif
 
 namespace {{ namespace }}
 {
@@ -50,12 +53,7 @@ namespace {{ namespace }}
         /// <summary>
         /// Invoked when the application is activated by some means other than normal launching.
         /// </summary>
-{{#useWinUI3}}
         protected override void OnActivated(Windows.ApplicationModel.Activation.IActivatedEventArgs e)
-{{/useWinUI3}}
-{{^useWinUI3}}
-        protected override void OnActivated(IActivatedEventArgs e)
-{{/useWinUI3}}
         {
             var preActivationContent = Window.Current.Content;
             base.OnActivated(e);

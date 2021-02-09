@@ -7,7 +7,7 @@
 #include "App.h"
 
 using namespace winrt;
-using namespace {{ xamlNamespaceCpp }};
+using namespace xaml;
 
 namespace winrt::{{ namespaceCpp }}::implementation
 {
