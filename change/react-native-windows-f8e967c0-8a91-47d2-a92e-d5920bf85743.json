@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Doxysaurus tool to generate docs for  C++",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

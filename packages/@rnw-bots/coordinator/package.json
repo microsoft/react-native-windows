@@ -1,6 +1,6 @@
 {
   "name": "@rnw-bots/coordinator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "description": "Azure functions application for coordinating react-native-windows bots",
   "scripts": {
@@ -16,7 +16,7 @@
   "devDependencies": {
     "@azure/functions": "^1.0.2-beta2",
     "@rnw-scripts/jest-unittest-config": "1.1.1",
-    "@rnw-scripts/just-task": "2.0.1",
+    "@rnw-scripts/just-task": "2.0.2",
     "@rnw-scripts/ts-config": "1.1.0",
     "@types/node": "^14.14.22",
     "babel-jest": "^26.3.0",

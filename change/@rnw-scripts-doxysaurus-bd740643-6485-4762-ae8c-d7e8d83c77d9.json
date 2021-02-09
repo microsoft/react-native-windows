@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Doxysaurus tool to generate docs for  C++",
-  "packageName": "@rnw-scripts/doxysaurus",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

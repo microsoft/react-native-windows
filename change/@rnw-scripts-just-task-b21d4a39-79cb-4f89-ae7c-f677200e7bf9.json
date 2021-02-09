@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bump just-scripts from 1.3.2 to 1.3.3",
-  "packageName": "@rnw-scripts/just-task",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

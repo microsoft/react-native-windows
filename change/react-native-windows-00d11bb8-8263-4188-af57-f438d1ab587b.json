@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[Fix] ScrollView.ScrollToEnd not working for vertical lists",
-  "packageName": "react-native-windows",
-  "email": "igklemen@microsoft.com",
-  "dependentChangeType": "patch"
-}

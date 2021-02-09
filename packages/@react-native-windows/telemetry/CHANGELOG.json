@@ -2,6 +2,29 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 09 Feb 2021 05:07:37 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.16",
+      "version": "0.0.0-canary.16",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump just-scripts from 1.3.2 to 1.3.3",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ef4046c6a798446b6404dc26d0dd39224a0d7274",
+            "package": "@react-native-windows/telemetry"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.0.2",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ef4046c6a798446b6404dc26d0dd39224a0d7274",
+            "package": "@react-native-windows/telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 05 Feb 2021 05:05:05 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.15",
       "version": "0.0.0-canary.15",

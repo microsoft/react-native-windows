@@ -2,6 +2,29 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Tue, 09 Feb 2021 05:07:37 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.251",
+            "author": "igklemen@microsoft.com",
+            "commit": "400b1b830a981950a7d423e20dc00ee4326c5ce6",
+            "package": "integration-test-app"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.0.2",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ef4046c6a798446b6404dc26d0dd39224a0d7274",
+            "package": "integration-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 Feb 2021 05:05:41 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",
