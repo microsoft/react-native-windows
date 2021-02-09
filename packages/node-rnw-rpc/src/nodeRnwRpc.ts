@@ -123,7 +123,7 @@ export class RpcClient {
         }
 
         this.pendingRequests.delete(response.payload.id);
-        pendingReq({type: 'success', result: response.payload.result});
+        pendingReq({type: 'success', result: response.payload.result}, null);
         break;
       }
 
@@ -134,7 +134,7 @@ export class RpcClient {
         }
 
         this.pendingRequests.delete(response.payload.id);
-        pendingReq({type: 'error', ...response.payload.error});
+        pendingReq({type: 'error', ...response.payload.error}, null);
         break;
       }
     }
