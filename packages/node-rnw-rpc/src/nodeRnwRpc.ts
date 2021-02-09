@@ -18,7 +18,10 @@ export type InvokeResult =
 export class RpcClient {
   private readonly socket: Socket;
   private readonly server: Server;
-  private readonly pendingRequests: Map<any, (result: InvokeResult) => void>;
+  private readonly pendingRequests: Map<
+    any,
+    (result: InvokeResult | null, err: Error | null) => void
+  >;
   private receiveBuffer: Buffer;
 
   constructor(socket: Socket, server: Server) {
@@ -29,16 +32,24 @@ export class RpcClient {
     this.receiveBuffer = Buffer.alloc(0);
 
     this.socket.on('data', this.onData.bind(this));
+    this.socket.on('end', this.onEnd.bind(this));
+    this.socket.on('error', this.onError.bind(this));
   }
 
   invoke(
     methodName: string,
     params: any[] | Record<string, any>,
   ): Promise<InvokeResult> {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       const messageId = ++incrementingId;
-
-      this.pendingRequests.set(messageId, result => resolve(result));
+      this.pendingRequests.set(messageId, (result, err) => {
+        if (err) {
+          reject(err);
+        }
+        if (result) {
+          resolve(result);
+        }
+      });
 
       const requestString = jsonrpc
         .request(messageId, methodName, params)
@@ -54,7 +65,7 @@ export class RpcClient {
   }
 
   close() {
-    this.socket.end();
+    this.socket.destroy();
     this.server.close();
   }
 
@@ -65,11 +76,27 @@ export class RpcClient {
       const totalLength = messageLength + 4;
 
       if (this.receiveBuffer.length >= totalLength) {
-        const messageBuffer = this.receiveBuffer.slice(0, totalLength);
-        this.receiveBuffer = Buffer.from(this.receiveBuffer, totalLength);
+        const messageBuffer = this.receiveBuffer.slice(4, totalLength);
+
+        if (totalLength < this.receiveBuffer.length) {
+          this.receiveBuffer = Buffer.from(this.receiveBuffer, totalLength);
+        } else {
+          this.receiveBuffer = Buffer.alloc(0);
+        }
+
         this.onMessage(messageBuffer);
       }
     }
+  }
+
+  private onEnd() {
+    this.pendingRequests.forEach(req =>
+      req(null, new Error('Unexpected disconnect from RPC server')),
+    );
+  }
+
+  private onError(error: Error) {
+    this.pendingRequests.forEach(req => req(null, error));
   }
 
   private onMessage(message: Buffer) {
@@ -84,7 +111,10 @@ export class RpcClient {
       case RpcStatusType.notification:
         throw new Error('Unexpected JSON-RPC notification');
       case RpcStatusType.invalid:
-        throw new Error('Invalid JSON-RPC2 response: ' + response.payload);
+        throw new Error(
+          'Invalid JSON-RPC2 response: ' +
+            JSON.stringify(response.payload, null, 2),
+        );
 
       case RpcStatusType.success: {
         const pendingReq = this.pendingRequests.get(response.payload.id);

@@ -57,7 +57,7 @@ bool Handler::IsMethodRegistered(const winrt::hstring &methodName) noexcept {
 bool Handler::IsReservedMethodName(const winrt::hstring &methodName) noexcept {
   constexpr std::wstring_view reservedPrefix = L"rpc.";
 
-  return std::wstring_view(methodName).compare(0, reservedPrefix.size(), reservedPrefix, 0, reservedPrefix.size()) != 0;
+  return std::wstring_view(methodName).compare(0, reservedPrefix.size(), reservedPrefix, 0, reservedPrefix.size()) == 0;
 }
 
 IAsyncOperation<IJsonValue> Handler::Invoke(const winrt::hstring &methodName, const JsonValue &params) {

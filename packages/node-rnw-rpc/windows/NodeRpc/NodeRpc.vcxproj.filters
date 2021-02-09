@@ -8,6 +8,7 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="JsonRpcRequestProcessor.h" />
+    <ClInclude Include="CppWinrtLessExceptions.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PropertySheet.props" />

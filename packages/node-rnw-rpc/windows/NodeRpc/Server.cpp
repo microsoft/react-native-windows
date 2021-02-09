@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "Server.h"
 #include "Server.g.cpp"
+#include "CppWinrtLessExceptions.h"
 
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Networking;
@@ -18,21 +19,22 @@ IAsyncAction Server::ProcessAllClientRequests(uint16_t port, Windows::Foundation
   auto cancellationToken = co_await get_cancellation_token();
 
   while (!cancellationToken()) {
-    try {
-      auto strongServer = weakServer.get();
-      if (!strongServer) {
-        co_return;
-      }
+    auto strongServer = weakServer.get();
+    if (!strongServer) {
+      co_return;
+    }
 
-      // FUTURE: We should share lessthrow_await_adapter from outside of vnext
-      // and use it here and below to avoid exceptions during expected control flow.
-      co_await strongServer->m_socket.ConnectAsync(HostName(L"127.0.0.1"), winrt::to_hstring(port));
+    strongServer->m_socket = StreamSocket();
+    auto connection = strongServer->m_socket.ConnectAsync(HostName(L"127.0.0.1"), winrt::to_hstring(port));
+    co_await lessthrow_await_adapter<IAsyncAction>{connection};
+
+    auto hr = connection.ErrorCode();
+    if (SUCCEEDED(hr)) {
       break;
-    } catch (const winrt::hresult_error &ex) {
-      auto socketError = SocketError::GetStatus(ex.code());
-      if (!IsPollContinueCondition(socketError)) {
-        throw;
-      }
+    }
+
+    if (!IsPollContinueCondition(hr)) {
+      throw winrt::hresult_error(hr);
     }
 
     winrt::apartment_context context;
@@ -65,34 +67,45 @@ IAsyncAction Server::PumpRequests() noexcept {
   auto cancellationToken = co_await get_cancellation_token();
 
   while (!cancellationToken()) {
-    try {
-      co_await reader.LoadAsync(sizeof(uint32_t));
-      auto messageSize = reader.ReadUInt32();
-      co_await reader.LoadAsync(messageSize);
-      auto message = reader.ReadString(messageSize);
+    auto loadSize = reader.LoadAsync(sizeof(uint32_t));
+    co_await lessthrow_await_adapter<DataReaderLoadOperation>{loadSize};
+    auto loadSizeHr = loadSize.ErrorCode();
 
-      if (auto strongServer = weakServer.get()) {
-        if (!cancellationToken()) {
-          strongServer->m_requestProcessor.HandleRequest(message, strongServer->m_socket.OutputStream());
-        }
-      }
-
-    } catch (const winrt::hresult_error ex) {
-      // Connection gone
-      auto socketError = SocketError::GetStatus(ex.code());
-      if (IsExpectedConnectionEnd(socketError)) {
+    if (FAILED(loadSizeHr)) {
+      if (IsExpectedConnectionEnd(loadSizeHr)) {
         co_return;
+      } else {
+        throw winrt::hresult_error(loadSizeHr);
       }
+    }
 
-      // TODO do we need to handle stream closed separately or is it propagated as socket error?
+    auto messageSize = reader.ReadUInt32();
 
-      // Unexpected error. Throw to noexcept boundary to crash
-      throw;
+    auto loadMessage = reader.LoadAsync(messageSize);
+    co_await lessthrow_await_adapter<DataReaderLoadOperation>{loadMessage};
+    auto loadMessageHr = loadMessage.ErrorCode();
+
+    if (FAILED(loadMessageHr)) {
+      if (IsExpectedConnectionEnd(loadMessageHr)) {
+        co_return;
+      } else {
+        throw winrt::hresult_error(loadMessageHr);
+      }
+    }
+
+    auto message = reader.ReadString(messageSize);
+
+    if (auto strongServer = weakServer.get()) {
+      if (!cancellationToken()) {
+        strongServer->m_requestProcessor.HandleRequest(message, strongServer->m_socket.OutputStream());
+      }
     }
   }
 }
 
-bool Server::IsPollContinueCondition(Windows::Networking::Sockets::SocketErrorStatus socketError) noexcept {
+bool Server::IsPollContinueCondition(winrt::hresult hr) noexcept {
+  auto socketError = SocketError::GetStatus(hr);
+
   switch (socketError) {
     case SocketErrorStatus::ConnectionTimedOut:
     case SocketErrorStatus::ConnectionRefused:
@@ -105,7 +118,9 @@ bool Server::IsPollContinueCondition(Windows::Networking::Sockets::SocketErrorSt
   }
 }
 
-bool Server::IsExpectedConnectionEnd(Windows::Networking::Sockets::SocketErrorStatus socketError) noexcept {
+bool Server::IsExpectedConnectionEnd(winrt::hresult hr) noexcept {
+  auto socketError = SocketError::GetStatus(hr);
+
   switch (socketError) {
     case SocketErrorStatus::OperationAborted:
     case SocketErrorStatus::ConnectionResetByPeer:

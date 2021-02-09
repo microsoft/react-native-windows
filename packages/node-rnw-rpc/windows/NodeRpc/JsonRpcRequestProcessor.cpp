@@ -90,6 +90,7 @@ JsonRpcRequestProcessor::EmitResponse(JsonObject responseBody, JsonValue id, IOu
   writer.WriteBytes(utf8JsonStringBytes);
 
   co_await writer.StoreAsync();
+  writer.DetachStream();
 }
 
 } // namespace winrt::NodeRpc

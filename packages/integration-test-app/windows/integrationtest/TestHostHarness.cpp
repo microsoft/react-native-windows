@@ -139,6 +139,7 @@ IAsyncOperation<IJsonValue> TestHostHarness::OnTestCommand(TestCommandId command
 
       m_currentTransaction = winrt::make_self<TestTransaction>();
       TimeoutOnInactivty(m_currentTransaction->get_weak());
+      co_return co_await *m_pendingResponse;
       break;
     }
 
@@ -158,9 +159,6 @@ IAsyncOperation<IJsonValue> TestHostHarness::OnTestCommand(TestCommandId command
       break;
     }
   }
-
-  co_return co_await *m_pendingResponse;
-  ;
 }
 
 winrt::fire_and_forget TestHostHarness::TimeoutOnInactivty(winrt::weak_ref<TestTransaction> transaction) noexcept {
