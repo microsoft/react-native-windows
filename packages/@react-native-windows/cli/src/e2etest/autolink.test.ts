@@ -242,7 +242,7 @@ test('autolink with no windows project', () => {
     );
   });
   
-  test('ensureWinUIDialect - useWinUI3=true in react-native.config.js, useWinUI3=false in BuildFlags.props', async done => {
+  test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=false in BuildFlags.props', async done => {
     const folder = path.resolve('src/e2etest/projects/WithWinUI3');
     const rnc = require(path.join(folder, 'react-native.config.js'));
   
@@ -259,7 +259,7 @@ test('autolink with no windows project', () => {
     al.buildFlagsProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>`;
     al.packagesConfig = `<packages><package id="SuperPkg" version="42"/></packages>`;
   
-    expect(al.ensureWinUIDialect()).toBeTruthy();
+    expect(al.ensureXAMLDialect()).toBeTruthy();
   
     const expectedBuildFlags = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>';
     expect(al.buildFlagsProps).toEqual(expectedBuildFlags);
@@ -277,7 +277,7 @@ test('autolink with no windows project', () => {
     done();
   });
 
-  test('ensureWinUIDialect - useWinUI3=false in react-native.config.js, useWinUI3=true in BuildFlags.props', async done => {
+  test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=true in BuildFlags.props', async done => {
     const folder = path.resolve('src/e2etest/projects/WithWinUI3');
     const rnc = require(path.join(folder, 'react-native.config.js'));
   
@@ -294,7 +294,7 @@ test('autolink with no windows project', () => {
     al.buildFlagsProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>`;
     al.packagesConfig = `<packages><package id="SuperPkg" version="42"/></packages>`;
   
-    expect(al.ensureWinUIDialect()).toBeTruthy();
+    expect(al.ensureXAMLDialect()).toBeTruthy();
   
     const expectedBuildFlags = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
     expect(al.buildFlagsProps).toEqual(expectedBuildFlags);
@@ -312,7 +312,7 @@ test('autolink with no windows project', () => {
     done();
   });
 
-  test('ensureWinUIDialect - useWinUI3 not in react-native.config.js, useWinUI3=true in BuildFlags.props', async done => {
+  test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=true in BuildFlags.props', async done => {
     const folder = path.resolve('src/e2etest/projects/WithWinUI3');
     const rnc = require(path.join(folder, 'react-native.config.js'));
   
@@ -329,7 +329,7 @@ test('autolink with no windows project', () => {
     al.buildFlagsProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>`;
     al.packagesConfig = `<packages><package id="SuperPkg" version="42"/></packages>`;
   
-    expect(al.ensureWinUIDialect()).toBeTruthy();
+    expect(al.ensureXAMLDialect()).toBeTruthy();
   
     const expectedBuildFlags = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>';
     expect(al.buildFlagsProps).toEqual(expectedBuildFlags);
@@ -347,7 +347,7 @@ test('autolink with no windows project', () => {
     done();
   });
   
-  test('ensureWinUIDialect - useWinUI3 not in react-native.config.js, useWinUI3=false in BuildFlags.props', async done => {
+  test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=false in BuildFlags.props', async done => {
     const folder = path.resolve('src/e2etest/projects/WithWinUI3');
     const rnc = require(path.join(folder, 'react-native.config.js'));
   
@@ -364,7 +364,7 @@ test('autolink with no windows project', () => {
     al.buildFlagsProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>`;
     al.packagesConfig = `<packages><package id="SuperPkg" version="42"/><package id="Microsoft.WinUI"/></packages>`;
   
-    expect(al.ensureWinUIDialect()).toBeTruthy();
+    expect(al.ensureXAMLDialect()).toBeTruthy();
   
     const expectedBuildFlags = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
     expect(al.buildFlagsProps).toEqual(expectedBuildFlags);

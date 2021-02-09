@@ -768,7 +768,7 @@ export class AutolinkWindows {
       if (!this.options.check && changed) {
         const serializer = new XMLSerializer();
         const output = serializer.serializeToString(packagesConfig.content);
-        const formattedXml = formatter(output, { indentation: '  ' });
+        const formattedXml = formatter(output, {indentation: '  '});
         this.updateFile(packagesConfig.path, formattedXml);
       }
     }
@@ -874,30 +874,6 @@ async function updateAutoLink(
     );
     throw e;
   }
-}
-
-function formatXml(input: string) {
-  const noNL = input.replace(/[\r\n]/g, '');
-  const lines = noNL.split('>');
-  let output = '';
-  let indent = 0;
-  for (const line of lines.map(x => x.trim()).filter(x => x !== '')) {
-    if (line.startsWith('</')) {
-      indent--;
-    }
-    output += '  '.repeat(indent) + line.trim() + '>\r\n';
-    if (line.endsWith('?')) {
-      // header, don't change indent
-    } else if (line.endsWith('/')) {
-      // self-closing tag: <foo />
-    } else if (line.startsWith('<!--')) {
-      // xml comment: <!-- foo -->
-    } else if (!line.startsWith('</')) {
-      indent++;
-    }
-  }
-  if (indent !== 0) throw new Error(`Malformed xml, input was ${input}`);
-  return output;
 }
 
 interface AutoLinkOptions {

@@ -15,7 +15,6 @@ const expectedConfig = {
     projectLang: 'cpp',
     projectGuid: '{416476d5-974a-4ee2-8145-4e331297247e}',
   },
-  useWinUI3: false,
 };
 
 module.exports = {
