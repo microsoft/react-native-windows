@@ -57,11 +57,6 @@ jobs:
         displayName: yarn windows --no-launch
         workingDirectory: packages/integration-test-app
 
-      # This will normally be run during tests if it isn't already, but running
-      # it before helps avoid our window from being obscured.
-      - powershell: Start-Process CheckNetIsolation.exe -ArgumentList "LoopbackExempt","-is" -Verb runAs
-        displayName: Exempt loopback server
-
       - powershell: Start-Process npm -ArgumentList "run","start"
         displayName: Start packager
         workingDirectory: packages/integration-test-app
