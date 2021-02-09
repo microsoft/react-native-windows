@@ -11,7 +11,7 @@
 <li><a href="https://github.com/microsoft/react-native-windows/tree/master/packages/sample-apps">Sample App in microsoft/react-native-windows/packages/microsoft-reactnative-sampleapps</a></li>
 </ul>
 </blockquote>
-<p>This guide will help set you up with the Visual Studio infrastructure to author your own stand-alone native module for React Native Windows. In this document we'll be creating the scaffolding for a <code>MyLibrary</code> native module.</p>
+<p>This guide will help set you up with the Visual Studio infrastructure to author your own stand-alone native module for React Native Windows. In this document we'll be creating the scaffolding for a <code>NativeModuleSample</code> native module.</p>
 <h2><a class="anchor" aria-hidden="true" id="development-environment"></a><a href="#development-environment" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Development Environment</h2>
 <p>Make sure you have installed all of the <a href="/react-native-windows/docs/0.60/rnw-dependencies">development dependencies</a>.</p>
 <p>If you're planning on writing in C++, you'll need to download and install the <a href="https://marketplace.visualstudio.com/items?itemName=CppWinRTTeam.cppwinrt101804264">C++/WinRT Visual Studio Extension</a>.</p>
@@ -19,7 +19,7 @@
 <p>If you already have an existing native module project for iOS/Android, you can skip straight to <a href="#manually-adding-windows-support">Manually Adding Windows Support</a>.</p>
 <p>Otherwise, if you're creating a new project from scratch, the quickest way is to follow the official React Native instructions at <a href="https://facebook.github.io/react-native/docs/native-modules-setup">https://facebook.github.io/react-native/docs/native-modules-setup</a>.</p>
 <pre><code class="hljs css language-cmd">yarn global add create-react-native-module
-create-react-native-module MyLibrary
+create-react-native-module NativeModuleSample
 </code></pre>
 <p>Now you'll have a new native module project under <code>react-native-my-library</code>. Be sure to look at the command output for further steps you'll want to do before publishing the project.</p>
 <h2><a class="anchor" aria-hidden="true" id="manually-adding-windows-support"></a><a href="#manually-adding-windows-support" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Manually Adding Windows Support</h2>
@@ -37,9 +37,9 @@ yarn add react-native-windows@vnext --peer
 <p>If you're planning on writing your native module in C#, you'll want to choose <code>Windows Runtime Component (Universal Windows)</code>.</p>
 <p>If you're planning on writing your native module in C++, you'll want to choose <code>Windows Runtime Component (C++/WinRT)</code>. <strong>Important:</strong> You want <strong>C++/WinRT</strong>, not <strong>C++/CX</strong>. Do not choose <code>Windows Runtime Component (C++/CX)</code>. If you don't see the <strong>C++/WinRT</strong> project type, make sure you installed the <em>C++/WinRT Visual Studio Extension</em> linked to above under <a href="#development-environment">Development Environment</a>.</p>
 <ol>
-<li>Set the <code>Project Name</code> to <code>MyLibrary</code>.</li>
+<li>Set the <code>Project Name</code> to <code>NativeModuleSample</code>.</li>
 <li>Set the <code>Location</code> to the native module directory you created earlier.</li>
-<li>Set the <code>Solution Name</code> to <code>MyLibrary</code>.</li>
+<li>Set the <code>Solution Name</code> to <code>NativeModuleSample</code>.</li>
 <li>Click <code>Create</code>.</li>
 </ol>
 <p>Next you'll be prompted to select the versions of Windows you'll support. This should match the values for React Native Windows:</p>
@@ -47,7 +47,7 @@ yarn add react-native-windows@vnext --peer
 <li>Set the <code>Target version</code> to <code>Windows 10, version 1903 (10.0; Build 18362)</code>.</li>
 <li>Set the <code>Minimum version</code> to <code>Windows 10 Creators Update (10.0; Build 15063)</code>.</li>
 </ol>
-<p>You should now have a new <code>MyLibrary</code> solution file at <code>.\MyLibrary\MyLibrary.sln</code> and a <code>MyLibrary</code> project at <code>.\MyLibrary\MyLibrary\MyLibrary.csproj</code> for C# or <code>.\MyLibrary\MyLibrary\MyLibrary.vcxproj</code> for C++.</p>
+<p>You should now have a new <code>NativeModuleSample</code> solution file at <code>.\NativeModuleSample\NativeModuleSample.sln</code> and a <code>NativeModuleSample</code> project at <code>.\NativeModuleSample\NativeModuleSample\NativeModuleSample.csproj</code> for C# or <code>.\NativeModuleSample\NativeModuleSample\NativeModuleSample.vcxproj</code> for C++.</p>
 <p>For C++/WinRT project:</p>
 <ol>
 <li>Right click on the project and choose <code>Manage Nuget Packages...</code>
@@ -62,15 +62,15 @@ yarn add react-native-windows@vnext --peer
 <p>Now, we want to rename the root directory of the Windows native code to <code>windows</code> to match the peer <code>android</code> and <code>ios</code> directories:</p>
 <ol>
 <li>Close the solution with <code>File</code> &gt; <code>Close Solution</code>.</li>
-<li>Rename that top <code>MyLibrary</code> directory <code>windows</code>.</li>
-<li>Re-open the solution file at <code>windows\MyLibrary.sln</code>.</li>
+<li>Rename that top <code>NativeModuleSample</code> directory <code>windows</code>.</li>
+<li>Re-open the solution file at <code>windows\NativeModuleSample.sln</code>.</li>
 </ol>
 <p>Now it's time to add React Native Windows into the solution.</p>
 <h3><a class="anchor" aria-hidden="true" id="adding-react-native-windows-to-the-visual-studio-solution"></a><a href="#adding-react-native-windows-to-the-visual-studio-solution" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Adding React Native Windows to the Visual Studio Solution</h3>
 <p>We're going to add several React Native Windows projects to your solution. So to avoid confusing them with your own code, we're first going to create a solution folder called <code>ReactNative</code>:</p>
 <ol>
 <li>Open the Solution Explorer sidebar.</li>
-<li>Right-click on <code>Solution 'MyLibrary'</code> at the top.</li>
+<li>Right-click on <code>Solution 'NativeModuleSample'</code> at the top.</li>
 <li>Select <code>Add</code> &gt; <code>New Solution Folder</code>.</li>
 <li>Name the folder <code>ReactNative</code>.</li>
 </ol>
@@ -104,12 +104,12 @@ yarn add react-native-windows@vnext --peer
 <li>Select <code>Add</code> &gt; <code>Existing Project...</code>.</li>
 <li>Select the project file and click <code>Open</code>.</li>
 </ol>
-<p>You now have all of the React Native Windows projects to your solution. Next we're going to reference them in our <code>MyLibrary</code> project.</p>
+<p>You now have all of the React Native Windows projects to your solution. Next we're going to reference them in our <code>NativeModuleSample</code> project.</p>
 <h3><a class="anchor" aria-hidden="true" id="referencing-react-native-windows-in-your-project"></a><a href="#referencing-react-native-windows-in-your-project" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Referencing React Native Windows in your Project</h3>
 <p>The only project reference you <strong>must</strong> add is <code>Microsoft.ReactNative</code>. To add the reference:</p>
 <ol>
 <li>Open the Solution Explorer sidebar.</li>
-<li>Right-click on your <code>MyLibrary</code> project.</li>
+<li>Right-click on your <code>NativeModuleSample</code> project.</li>
 <li>Select <code>Add</code> &gt; <code>Reference</code>.</li>
 <li>Select <code>Projects</code> on the left-hand side.</li>
 <li>Check the box next to <code>Microsoft.ReactNative</code>.</li>
@@ -118,7 +118,7 @@ yarn add react-native-windows@vnext --peer
 <p>After you've added the reference, you need to make sure it doesn't copy itself into your build (otherwise it'll cause build conflicts down the line when you're trying on consume your library):</p>
 <ol>
 <li>Open the Solution Explorer sidebar.</li>
-<li>Under your <code>MyLibrary</code> project, expand the <code>References</code>.</li>
+<li>Under your <code>NativeModuleSample</code> project, expand the <code>References</code>.</li>
 <li>Right-click on <code>Microsoft.ReactNative</code>.</li>
 <li>Select <code>Properties</code>.</li>
 <li>Under <code>Build</code>, Change <code>Copy Local</code> to <code>False</code>.</li>
@@ -127,7 +127,7 @@ yarn add react-native-windows@vnext --peer
 <p>If you're writing in C#, you'll want to add <code>Microsoft.ReactNative.SharedManaged</code>:</p>
 <ol>
 <li>Open the Solution Explorer sidebar.</li>
-<li>Right-click on your <code>MyLibrary</code> project.</li>
+<li>Right-click on your <code>NativeModuleSample</code> project.</li>
 <li>Select <code>Add</code> &gt; <code>Reference</code>.</li>
 <li>Select <code>Shared Projects</code> on the left-hand side.</li>
 <li>Check the box next to <code>Microsoft.ReactNative.SharedManaged</code>.</li>
@@ -136,7 +136,7 @@ yarn add react-native-windows@vnext --peer
 <p>If you're writing in C++, you'll want to add <code>Microsoft.ReactNative.Cxx</code>:</p>
 <ol>
 <li>Open the Solution Explorer sidebar.</li>
-<li>Right-click on your <code>MyLibrary</code> project.</li>
+<li>Right-click on your <code>NativeModuleSample</code> project.</li>
 <li>Select <code>Add</code> &gt; <code>Reference</code>.</li>
 <li>Select <code>Shared Projects</code> on the left-hand side.</li>
 <li>Check the box next to <code>Microsoft.ReactNative.Cxx</code>.</li>
