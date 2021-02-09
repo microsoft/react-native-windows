@@ -13,7 +13,7 @@ import {
 } from '../config/projectConfig';
 
 import {copyAndReplace} from '../generator-common';
-import {ensureWinUIDialect} from '../runWindows/utils/autolink';
+import {ensureXAMLDialect} from '../runWindows/utils/autolink';
 
 const templateRoot = path.resolve('../../../vnext/template');
 
@@ -237,7 +237,7 @@ test('useWinUI3=true in react-native.config.js, useWinUI3=false in BuildFlags.pr
 
   const config = projectConfigWindows(folder, rnc.project.windows);
 
-  expect(ensureWinUIDialect(config!, false)).toBeTruthy();
+  expect(ensureXAMLDialect(config!, false)).toBeTruthy();
 
   const packagesConfig = (
     await fs.promises.readFile(

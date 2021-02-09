@@ -27,6 +27,7 @@ import {
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
 import {XMLSerializer} from 'xmldom';
+const formatter = require('xml-formatter');
 
 /**
  * Locates the react-native-windows directory
@@ -713,35 +714,11 @@ function updatePackagesConfigXAMLDialect(
     if (!checkMode && changed) {
       const serializer = new XMLSerializer();
       const output = serializer.serializeToString(packagesConfigContents);
-      const formattedXml = formatXml(output);
+      const formattedXml = formatter(output, {indentation: '  '});
       fs.writeFileSync(packagesConfig, formattedXml, {encoding: 'utf-8'});
     }
   }
   return changed;
-}
-
-function formatXml(input: string) {
-  const noNL = input.replace(/[\r\n]/g, '');
-  const lines = noNL.split('>');
-  let output = '';
-  let indent = 0;
-  for (const line of lines.map(x => x.trim()).filter(x => x !== '')) {
-    if (line.startsWith('</')) {
-      indent--;
-    }
-    output += '  '.repeat(indent) + line.trim() + '>\r\n';
-    if (line.endsWith('?')) {
-      // header, don't change indent
-    } else if (line.endsWith('/')) {
-      // self-closing tag: <foo />
-    } else if (line.startsWith('<!--')) {
-      // xml comment: <!-- foo -->
-    } else if (!line.startsWith('</')) {
-      indent++;
-    }
-  }
-  if (indent !== 0) throw new Error(`Malformed xml, input was ${input}`);
-  return output;
 }
 
 interface AutoLinkOptions {

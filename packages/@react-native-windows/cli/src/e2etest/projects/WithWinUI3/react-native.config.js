@@ -41,8 +41,7 @@ module.exports = {
 <packages>
   <package id="Microsoft.ReactNative.Cxx" version="1.0.0" targetFramework="native"/>
   <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
-</packages>
-`,
+</packages>`,
   expectedBuildFlags: `<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
