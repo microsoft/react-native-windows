@@ -1,0 +1,53 @@
+{
+  "filePatterns": ["*.h"],
+  "docIdPrefix": "cppapi-",
+  "indexFilename": "cppapi.md",
+  "indexTemplatePath": "cppapi.md.mustache",
+  "types": [
+    "JSValue",
+    "JSValueArray",
+    "JSValueObject"
+  ],
+  "namespaceAliases": {
+    "winrt::Microsoft::ReactNative": ["React"]
+  },
+  "sections": {
+    "friend": "<not visible>",
+    "private-attrib": "<not visible>",
+    "private-func": "<not visible>",
+    "private-slot": "<not visible>",
+    "private-static-attrib": "<not visible>",
+    "private-static-func": "<not visible>",
+    "private-type": "<not visible>",
+    "protected-attrib": "Protected members",
+    "protected-func": "Protected members",
+    "protected-static-attrib": "Protected members",
+    "protected-static-func": "Protected members",
+    "protected-type": "<not visible>",
+    "public-attrib": "Public members",
+    "public-func": "Public members",
+    "public-static-attrib": "Public members",
+    "public-static-func": "Public members",
+    "public-type": "<not visible>",
+    "related": "Standalone members",
+    "user-defined": "<user defined>"
+  },
+  "stdTypeLinks": {
+    "linkPrefix": "https://en.cppreference.com/w/cpp/",
+    "linkMap": {
+      "std::intializer_list": "utility/initializer_list",
+      "std::less": "utility/functional/less",
+      "std::map": "container/map",
+      "std::string": "string/basic_string",
+      "std::string_view": "string/basic_string_view",
+      "std::vector": "container/vector"
+    }
+  },
+  "idlTypeLinks": {
+    "linkMap": {
+      "IJSValueReader": "IJSValueReader",
+      "IJSValueWriter": "IJSValueWriter",
+      "JSValueType": "JSValueType"
+    }
+  }
+}

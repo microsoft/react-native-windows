@@ -13,6 +13,7 @@
 !packages/scripts/node_modules
 !packages/@react-native-windows/find-repo-root/node_modules
 !packages/@rnw-scripts/create-github-releases/node_modules
+!packages/@rnw-scripts/doxysaurus/node_modules
 !packages/@rnw-scripts/format-files/node_modules
 !packages/@rnw-scripts/promote-release/node_modules
 !.github/ISSUE_TEMPLATE
