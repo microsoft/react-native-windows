@@ -1716,6 +1716,18 @@
   resolved "https://registry.yarnpkg.com/@reactions/component/-/component-2.0.2.tgz#40f8c1c2c37baabe57a0c944edb9310dc1ec6642"
   integrity sha1-QPjBwsN7qr5XoMlE7bkxDcHsZkI=
 
+"@rnw-scripts/jest-e2e-config@1.1.1":
+  version "1.1.2"
+  dependencies:
+    "@rnw-scripts/babel-node-config" "1.0.2"
+
+"@rnw-scripts/just-task@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@rnw-scripts/just-task/-/just-task-2.0.1.tgz#220e7e3bf0a32e75bc4d66e1ed811cf461fa8354"
+  integrity sha512-6aL8lnfVevIjNuw5F9RmbxIDu5Xepz6sVlM4gLfYCJKxJ9OD4ffhYbPo85qMYF6Y/fH/ALXACSdcSxQpGPd6Hw==
+  dependencies:
+    "@rnw-scripts/jest-e2e-config" "1.1.1"
+
 "@rushstack/node-core-library@3.35.2":
   version "3.35.2"
   resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.35.2.tgz#21ca879b5051a5ebafa952fafcd648a07a142bcb"
@@ -6911,6 +6923,11 @@ jsonify@~0.0.0:
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
   integrity sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
 
+jsonrpc-lite@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/jsonrpc-lite/-/jsonrpc-lite-2.2.0.tgz#fb3aa9d292c8970eb7f83c6040c6554767bbc6a6"
+  integrity sha512-/cbbSxtZWs1O7R4tWqabrCM/t3N8qKUZMAg9IUqpPvUs6UyRvm6pCNYkskyKN/XU0UgffW+NY2ZRr8t0AknX7g==
+
 jsprim@^1.2.2:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/jsprim/-/jsprim-1.4.1.tgz#313e66bc1e5cc06e438bc1b7499c2e5c56acb6a2"
@@ -6953,7 +6970,7 @@ jsx-ast-utils@^2.0.1:
     tar "^6.1.0"
     yargs "^16.2.0"
 
-just-scripts@^1.3.3:
+just-scripts@^1.3.2, just-scripts@^1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/just-scripts/-/just-scripts-1.3.3.tgz#c7adaa7084f0b01c17beaeccc5ee0002c43279aa"
   integrity sha512-vf9aVkvOXvr0ymm9E8BzN2Y1Vm6K9+2XcuwqyMQMfrb9cFPfNSLuuFqAiBiX25wjgsTcIFgwN6Mf+i5bfTnfcA==

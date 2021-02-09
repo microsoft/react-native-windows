@@ -24,7 +24,7 @@ export default class IntegrationTestRunner {
     await ensureLoopbackServerExemption();
     const testClient = await this.connectToHostWithRetry();
     const res = await testClient.sendTestCommand({
-      command: 'GoToComponent',
+      name: 'GoToComponent',
       component: startingComponent,
     });
 
@@ -45,7 +45,7 @@ export default class IntegrationTestRunner {
 
     try {
       res = await this.testClient.sendTestCommand({
-        command: 'RunTestComponent',
+        name: 'RunTestComponent',
         component: componentName,
       });
     } catch (ex) {
