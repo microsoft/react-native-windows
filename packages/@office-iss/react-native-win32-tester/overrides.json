@@ -27,8 +27,11 @@
       "baseHash": "20e35122c8529a5bf848f91d9ea9b85be3c23882"
     },
     {
-      "type": "platform",
-      "file": "src/js/RNTesterApp.win32.js"
+      "type": "copy",
+      "file": "src/js/RNTesterApp.win32.js",
+      "baseFile": "packages/rn-tester/js/RNTesterApp.android.js",
+      "baseHash": "30f3ef9bdc0e2c337309079831664c4a596c404f",
+      "issue": 4586
     },
     {
       "type": "derived",

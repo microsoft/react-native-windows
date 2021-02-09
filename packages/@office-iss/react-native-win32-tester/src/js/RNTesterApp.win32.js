@@ -14,12 +14,6 @@ import {AppRegistry} from 'react-native';
 
 import RNTesterApp from './RNTesterAppShared';
 
-// uncomment the below lines to enable message spy
-/*
-import MessageQueue from 'react-native/Libraries/BatchedBridge/MessageQueue';
-MessageQueue.spy(true);
-*/
-
 AppRegistry.registerComponent('RNTesterApp', () => RNTesterApp);
 
 module.exports = RNTesterApp;
