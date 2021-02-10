@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 27 Jan 2021 22:14:52 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Feb 2021 15:07:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.9
+
+Mon, 08 Feb 2021 15:07:33 GMT
+
+### Patches
+
+- Fixing FocusManager export. Export an object with a FocusManager property rather than the class directly (safreibe@microsoft.com)
 
 ## 0.62.8
 

@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 08 Feb 2021 15:07:33 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.9",
+      "version": "0.62.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixing FocusManager export. Export an object with a FocusManager property rather than the class directly",
+            "author": "safreibe@microsoft.com",
+            "commit": "5b528f4542c52b9d0e0766c46af8c6186a38fc7d",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Jan 2021 22:14:52 GMT",
       "tag": "@office-iss/react-native-win32_v0.62.8",
       "version": "0.62.8",
