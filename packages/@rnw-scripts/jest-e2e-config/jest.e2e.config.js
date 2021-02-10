@@ -25,6 +25,12 @@ module.exports = {
   // Default timeout of a test in milliseconds
   testTimeout: 300000,
 
+  // Specifies the maximum number of workers the worker-pool will spawn for running tests.
+  maxWorkers: 1,
+
+  // Indicates whether each individual test should be reported during the run.
+  verbose: true,
+
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.[jt]sx?$': ['babel-jest', require('@rnw-scripts/babel-node-config')],

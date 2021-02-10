@@ -6,7 +6,7 @@ exports[`dependencyConfig - BlankLib (Use react-native.config.js) 1`] = `null`;
 
 exports[`dependencyConfig - MissingProjectFilesLib (Ignore react-native.config.js) 1`] = `
 Object {
-  "folder": "C:\\\\Users\\\\nickg\\\\Desktop\\\\react-native-windows\\\\packages\\\\@react-native-windows\\\\cli\\\\src\\\\e2etest\\\\projects\\\\MissingProjectFilesLib",
+  "folder": StringContaining "MissingProjectFilesLib",
   "nugetPackages": Array [],
   "projects": Array [],
   "solutionFile": null,
@@ -16,7 +16,7 @@ Object {
 
 exports[`dependencyConfig - MissingProjectFilesLib (Use react-native.config.js) 1`] = `
 Object {
-  "folder": "C:\\\\Users\\\\nickg\\\\Desktop\\\\react-native-windows\\\\packages\\\\@react-native-windows\\\\cli\\\\src\\\\e2etest\\\\projects\\\\MissingProjectFilesLib",
+  "folder": StringContaining "MissingProjectFilesLib",
   "nugetPackages": Array [],
   "projects": Array [],
   "solutionFile": null,
@@ -26,7 +26,7 @@ Object {
 
 exports[`dependencyConfig - SimpleCSharpLib (Ignore react-native.config.js) 1`] = `
 Object {
-  "folder": "C:\\\\Users\\\\nickg\\\\Desktop\\\\react-native-windows\\\\packages\\\\@react-native-windows\\\\cli\\\\src\\\\e2etest\\\\projects\\\\SimpleCSharpLib",
+  "folder": StringContaining "SimpleCSharpLib",
   "nugetPackages": Array [],
   "projects": Array [
     Object {
@@ -56,7 +56,7 @@ Object {
 
 exports[`dependencyConfig - SimpleCSharpLib (Use react-native.config.js) 1`] = `
 Object {
-  "folder": "C:\\\\Users\\\\nickg\\\\Desktop\\\\react-native-windows\\\\packages\\\\@react-native-windows\\\\cli\\\\src\\\\e2etest\\\\projects\\\\SimpleCSharpLib",
+  "folder": StringContaining "SimpleCSharpLib",
   "nugetPackages": Array [],
   "projects": Array [
     Object {
@@ -86,7 +86,7 @@ Object {
 
 exports[`dependencyConfig - SimpleCppLib (Ignore react-native.config.js) 1`] = `
 Object {
-  "folder": "C:\\\\Users\\\\nickg\\\\Desktop\\\\react-native-windows\\\\packages\\\\@react-native-windows\\\\cli\\\\src\\\\e2etest\\\\projects\\\\SimpleCppLib",
+  "folder": StringContaining "SimpleCppLib",
   "nugetPackages": Array [],
   "projects": Array [
     Object {
@@ -116,7 +116,7 @@ Object {
 
 exports[`dependencyConfig - SimpleCppLib (Use react-native.config.js) 1`] = `
 Object {
-  "folder": "C:\\\\Users\\\\nickg\\\\Desktop\\\\react-native-windows\\\\packages\\\\@react-native-windows\\\\cli\\\\src\\\\e2etest\\\\projects\\\\SimpleCppLib",
+  "folder": StringContaining "SimpleCppLib",
   "nugetPackages": Array [],
   "projects": Array [
     Object {
