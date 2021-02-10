@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Feb 2021 05:06:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.57
+
+Wed, 10 Feb 2021 05:06:37 GMT
+
+### Changes
+
+- Build apps for either/or WinUI 3 or XAML (asklar@microsoft.com)
 
 ## 0.0.0-canary.56
 

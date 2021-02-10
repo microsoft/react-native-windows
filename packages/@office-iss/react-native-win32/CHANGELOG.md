@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Feb 2021 05:06:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.79
+
+Wed, 10 Feb 2021 05:06:37 GMT
+
+### Changes
+
+- TextWin32 focusable property, enabling focus without selectability, and a TextWin32 test page. (ppatboyd@outlook.com)
 
 ## 0.0.0-canary.78
 

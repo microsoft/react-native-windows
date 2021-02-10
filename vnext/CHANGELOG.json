@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 10 Feb 2021 05:06:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.252",
+      "version": "0.0.0-canary.252",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Build apps for either/or WinUI 3 or XAML",
+            "author": "asklar@microsoft.com",
+            "commit": "504cd4293df706f9089562bb630242c13ec4028f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Feb 2021 05:07:37 GMT",
       "tag": "react-native-windows_v0.0.0-canary.251",
       "version": "0.0.0-canary.251",

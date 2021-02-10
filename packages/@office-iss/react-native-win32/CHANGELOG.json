@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 10 Feb 2021 05:06:37 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.79",
+      "version": "0.0.0-canary.79",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "TextWin32 focusable property, enabling focus without selectability, and a TextWin32 test page.",
+            "author": "ppatboyd@outlook.com",
+            "commit": "0ab224e0572bff058fd3ac253b80c2b3ed0eac4a",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Feb 2021 05:07:37 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.78",
       "version": "0.0.0-canary.78",
