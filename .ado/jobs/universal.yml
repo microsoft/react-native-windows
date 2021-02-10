@@ -10,13 +10,10 @@
       default:
         - BuildEnvironment: PullRequest
           Matrix:
-            - Name: ArmRelease
-              BuildConfiguration: Release
-              BuildPlatform: ARM
             - Name: X64Release
               BuildConfiguration: Release
               BuildPlatform: X64
-            - Name: X64Debug
+            - Name: X86Debug
               BuildConfiguration: Debug
               BuildPlatform: X86
               LayoutHeaders: true

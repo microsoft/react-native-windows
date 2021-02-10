@@ -13,7 +13,7 @@ jobs:
     displayName: Playground
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        X86DebugUnivesal:
+        X86DebugUniversal:
           BuildConfiguration: Debug
           BuildPlatform: x86
           SolutionFile: Playground.sln

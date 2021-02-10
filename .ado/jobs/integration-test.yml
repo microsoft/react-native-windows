@@ -12,10 +12,10 @@ jobs:
     strategy:
       matrix:
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          ARM:
+          Arm:
             BuildPlatform: ARM
             NoDeployOption: --no-deploy # We don't have Arm agents
-          ARM64:
+          Arm64:
             BuildPlatform: ARM64
             NoDeployOption: --no-deploy # We don't have Arm agents
         # End Continuous only
