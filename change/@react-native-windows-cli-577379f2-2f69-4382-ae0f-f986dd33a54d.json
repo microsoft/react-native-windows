@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Better dependency warning on run-windows build error",
+  "packageName": "@react-native-windows/cli",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
