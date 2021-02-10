@@ -31,7 +31,7 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
   folder: string,       // (auto) Absolute path to the app root folder, determined by react-native config, ex: 'c:\path\to\my-app'
   sourceDir: string,    // (req) Relative path to the Windows implementation under folder, ex: 'windows'
   solutionFile: string, // (req) Relative path to the app's VS solution file under sourceDir, ex: 'MyApp.sln'
-  useWinUI3: boolean    // (opt) If true, use WinUI 3. If false, use Windows XAML and WinUI 2.x. If missing, the value from rnwRoot\PropertySheets\BuildFlags.props will be used.
+  useWinUI3: boolean    // (opt) If true, use WinUI 3. If false, use Windows XAML and WinUI 2.x. If missing, the value from rnwRoot\PropertySheets\ExperimentalFeatures.props will be used.
   project: { // (req)
     projectFile: string, // (req) Relative path to the VS project file under sourceDir, ex: 'MyApp\MyApp.vcxproj' for 'c:\path\to\my-app\windows\MyApp\MyApp.vcxproj'
     projectName: string, // (auto) Name of the project, determined from projectFile, ex: 'MyApp'

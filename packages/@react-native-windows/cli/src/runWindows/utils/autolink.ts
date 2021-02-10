@@ -641,14 +641,19 @@ export class AutolinkWindows {
     return changesNecessary;
   }
 
-  protected getBuildFlagsPropsXml() {
-    const buildFlagsProps = path.join(
+  protected getExperimentalFeaturesPropsXml() {
+    const experimentalFeaturesProps = path.join(
       path.dirname(this.getSolutionFile()),
-      'BuildFlags.props',
+      'ExperimentalFeatures.props',
     );
-    if (fs.existsSync(buildFlagsProps)) {
-      const buildFlagsContents = configUtils.readProjectFile(buildFlagsProps);
-      return {path: buildFlagsProps, content: buildFlagsContents};
+    if (fs.existsSync(experimentalFeaturesProps)) {
+      const experimentalFeaturesContents = configUtils.readProjectFile(
+        experimentalFeaturesProps,
+      );
+      return {
+        path: experimentalFeaturesProps,
+        content: experimentalFeaturesContents,
+      };
     }
     return undefined;
   }
@@ -656,29 +661,34 @@ export class AutolinkWindows {
   public ensureXAMLDialect() {
     let changesNeeded = false;
     const useWinUI3FromConfig = this.getWindowsConfig().useWinUI3;
-    const buildFlags = this.getBuildFlagsPropsXml();
-    if (buildFlags) {
-      const useWinUI3FromBuildFlags =
+    const experimentalFeatures = this.getExperimentalFeaturesPropsXml();
+    if (experimentalFeatures) {
+      const useWinUI3FromExperimentalFeatures =
         configUtils
-          .tryFindPropertyValue(buildFlags.content, 'UseWinUI3')
+          .tryFindPropertyValue(experimentalFeatures.content, 'UseWinUI3')
           ?.toLowerCase() === 'true';
-      // use the UseWinUI3 value in react-native.config.js, or if not present, the value from BuildFlags.props
+      // use the UseWinUI3 value in react-native.config.js, or if not present, the value from ExperimentalFeatures.props
       changesNeeded = this.updatePackagesConfigXAMLDialect(
         useWinUI3FromConfig !== undefined
           ? useWinUI3FromConfig
-          : useWinUI3FromBuildFlags,
+          : useWinUI3FromExperimentalFeatures,
       );
       if (useWinUI3FromConfig !== undefined) {
-        // Make sure BuildFlags matches the value that comes from react-native.config.js
-        const node = buildFlags.content.getElementsByTagName('UseWinUI3');
+        // Make sure ExperimentalFeatures.props matches the value that comes from react-native.config.js
+        const node = experimentalFeatures.content.getElementsByTagName(
+          'UseWinUI3',
+        );
         const newValue = useWinUI3FromConfig ? 'true' : 'false';
         changesNeeded = node.item(0)?.textContent !== newValue || changesNeeded;
         if (!this.options.check && changesNeeded) {
           node.item(0)!.textContent = newValue;
-          const buildFlagsOutput = new XMLSerializer().serializeToString(
-            buildFlags.content,
+          const experimentalFeaturesOutput = new XMLSerializer().serializeToString(
+            experimentalFeatures.content,
           );
-          this.updateFile(buildFlags.path, buildFlagsOutput);
+          this.updateFile(
+            experimentalFeatures.path,
+            experimentalFeaturesOutput,
+          );
         }
       }
     }

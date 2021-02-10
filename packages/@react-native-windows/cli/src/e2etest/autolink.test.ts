@@ -27,18 +27,18 @@ test('autolink with no windows project', () => {
       return this.windowsAppConfig;
     }
     public packagesConfig = '';
-    public buildFlagsProps = '';
+    public experimentalFeaturesProps = '';
     protected getPackagesConfigXml(){
         return {path:'packages.config', content: new DOMParser().parseFromString(this.packagesConfig, 'application/xml')};
     }
-    protected getBuildFlagsPropsXml(){
-        return {path: 'BuildFlags.props', content: new DOMParser().parseFromString(this.buildFlagsProps, 'application/xml')};
+    protected getExperimentalFeaturesPropsXml(){
+        return {path: 'ExperimentalFeatures.props', content: new DOMParser().parseFromString(this.experimentalFeaturesProps, 'application/xml')};
     }
     protected updateFile(filepath: string, content: string) {
         if (filepath === 'packages.config') {
             this.packagesConfig = content;
-        } else if (filepath === 'BuildFlags.props') {
-            this.buildFlagsProps = content;
+        } else if (filepath === 'ExperimentalFeatures.props') {
+            this.experimentalFeaturesProps = content;
         } else {
             throw new Error(`Unknown path: ${filepath}`);
         }
@@ -242,7 +242,7 @@ test('autolink with no windows project', () => {
     );
   });
   
-  test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=false in BuildFlags.props', async done => {
+  test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async done => {
     const folder = path.resolve('src/e2etest/projects/WithWinUI3');
     const rnc = require(path.join(folder, 'react-native.config.js'));
   
@@ -256,13 +256,13 @@ test('autolink with no windows project', () => {
         logging: false,
       },
     );
-    al.buildFlagsProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>`;
+    al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>`;
     al.packagesConfig = `<packages><package id="SuperPkg" version="42"/></packages>`;
   
     expect(al.ensureXAMLDialect()).toBeTruthy();
   
-    const expectedBuildFlags = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>';
-    expect(al.buildFlagsProps).toEqual(expectedBuildFlags);
+    const expectedExperimentalFeatures = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>';
+    expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
 
     // example packages.config: 
     // <packages>
@@ -277,7 +277,7 @@ test('autolink with no windows project', () => {
     done();
   });
 
-  test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=true in BuildFlags.props', async done => {
+  test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=true in ExperimentalFeatures.props', async done => {
     const folder = path.resolve('src/e2etest/projects/WithWinUI3');
     const rnc = require(path.join(folder, 'react-native.config.js'));
   
@@ -291,13 +291,13 @@ test('autolink with no windows project', () => {
         logging: false,
       },
     );
-    al.buildFlagsProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>`;
+    al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>`;
     al.packagesConfig = `<packages><package id="SuperPkg" version="42"/></packages>`;
   
     expect(al.ensureXAMLDialect()).toBeTruthy();
   
-    const expectedBuildFlags = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
-    expect(al.buildFlagsProps).toEqual(expectedBuildFlags);
+    const expectedExperimentalFeatures = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
+    expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
 
     // example packages.config: 
     // <packages>
@@ -312,7 +312,7 @@ test('autolink with no windows project', () => {
     done();
   });
 
-  test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=true in BuildFlags.props', async done => {
+  test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=true in ExperimentalFeatures.props', async done => {
     const folder = path.resolve('src/e2etest/projects/WithWinUI3');
     const rnc = require(path.join(folder, 'react-native.config.js'));
   
@@ -326,13 +326,13 @@ test('autolink with no windows project', () => {
         logging: false,
       },
     );
-    al.buildFlagsProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>`;
+    al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>`;
     al.packagesConfig = `<packages><package id="SuperPkg" version="42"/></packages>`;
   
     expect(al.ensureXAMLDialect()).toBeTruthy();
   
-    const expectedBuildFlags = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>';
-    expect(al.buildFlagsProps).toEqual(expectedBuildFlags);
+    const expectedExperimentalFeatures = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>';
+    expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
 
     // example packages.config: 
     // <packages>
@@ -347,7 +347,7 @@ test('autolink with no windows project', () => {
     done();
   });
   
-  test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=false in BuildFlags.props', async done => {
+  test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async done => {
     const folder = path.resolve('src/e2etest/projects/WithWinUI3');
     const rnc = require(path.join(folder, 'react-native.config.js'));
   
@@ -361,13 +361,13 @@ test('autolink with no windows project', () => {
         logging: false,
       },
     );
-    al.buildFlagsProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>`;
+    al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>`;
     al.packagesConfig = `<packages><package id="SuperPkg" version="42"/><package id="Microsoft.WinUI"/></packages>`;
   
     expect(al.ensureXAMLDialect()).toBeTruthy();
   
-    const expectedBuildFlags = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
-    expect(al.buildFlagsProps).toEqual(expectedBuildFlags);
+    const expectedExperimentalFeatures = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
+    expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
 
     // example packages.config: 
     // <packages>

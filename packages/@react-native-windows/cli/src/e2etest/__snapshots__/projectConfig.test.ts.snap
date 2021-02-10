@@ -12,7 +12,6 @@ Object {
   },
   "solutionFile": "Error: No app solution file found, please specify in react-native.config.",
   "sourceDir": "windows",
-  "useWinUI3": false,
 }
 `;
 
@@ -24,7 +23,6 @@ Object {
   },
   "solutionFile": "Error: Solution file is required but not specified in react-native.config.",
   "sourceDir": "windows",
-  "useWinUI3": false,
 }
 `;
 
@@ -39,7 +37,6 @@ Object {
   },
   "solutionFile": "SimpleCSharpApp.sln",
   "sourceDir": "windows",
-  "useWinUI3": false,
 }
 `;
 
@@ -54,7 +51,6 @@ Object {
   },
   "solutionFile": "SimpleCSharpApp.sln",
   "sourceDir": "windows",
-  "useWinUI3": false,
 }
 `;
 
@@ -69,7 +65,6 @@ Object {
   },
   "solutionFile": "SimpleCppApp.sln",
   "sourceDir": "windows",
-  "useWinUI3": false,
 }
 `;
 
@@ -84,7 +79,6 @@ Object {
   },
   "solutionFile": "SimpleCppApp.sln",
   "sourceDir": "windows",
-  "useWinUI3": false,
 }
 `;
 
@@ -99,7 +93,6 @@ Object {
   },
   "solutionFile": "WithWinUI3.sln",
   "sourceDir": "windows",
-  "useWinUI3": false,
 }
 `;
 

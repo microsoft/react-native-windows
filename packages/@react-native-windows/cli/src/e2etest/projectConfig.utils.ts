@@ -74,8 +74,8 @@ export async function ensureWinUI3Project(folder: string) {
   );
 
   await copyAndReplace(
-    path.join(templateRoot, 'shared-app/proj/BuildFlags.props'),
-    path.join(windowsDir, 'BuildFlags.props'),
+    path.join(templateRoot, 'shared-app/proj/ExperimentalFeatures.props'),
+    path.join(windowsDir, 'ExperimentalFeatures.props'),
     replacements,
     null
   );
