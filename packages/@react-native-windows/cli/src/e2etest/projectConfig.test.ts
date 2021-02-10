@@ -181,7 +181,7 @@ test.each(projects)(
 
     const userConfig = null;
 
-    expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot();
+    expect(projectConfigWindows(folder, userConfig)).toBeNull();
   },
 );
 
@@ -198,7 +198,13 @@ test.each(projects)(
 
     const userConfig: Partial<WindowsProjectConfig> = rnc.project.windows;
 
-    expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot();
+    if (name === 'BlankApp') {
+      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot();
+    } else {
+      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot({
+        folder: expect.stringContaining(name),
+      });
+    }
   },
 );
 
@@ -214,7 +220,13 @@ test.each(projects)(
 
     const userConfig: Partial<WindowsProjectConfig> = {};
 
-    expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot();
+    if (name === 'BlankApp') {
+      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot();
+    } else {
+      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot({
+        folder: expect.stringContaining(name),
+      });
+    }
   },
 );
 
