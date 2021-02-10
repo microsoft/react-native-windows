@@ -20,7 +20,7 @@ module.exports = {
   testEnvironment: 'node',
 
   // The pattern or patterns Jest uses to detect test files
-  testRegex: '/test/.*\\.test',
+  testRegex: '/test/.*\\.test\.ts$',
 
   // Specifies the maximum number of workers the worker-pool will spawn for running tests.
   maxWorkers: 1,
