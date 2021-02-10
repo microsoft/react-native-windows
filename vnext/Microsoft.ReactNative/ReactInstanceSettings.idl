@@ -150,7 +150,7 @@ Error types include:\n\
 * JavaScript Syntax Errors\n\
 * Global JavaScript Exception Thrown\n\
 \n\
-The `Context` Property on the event arguments provides access to the instance.")
+The @InstanceLoadedEventArgs.Context property on the event arguments provides access to the instance.")
     event Windows.Foundation.EventHandler<InstanceLoadedEventArgs> InstanceLoaded;
     event Windows.Foundation.EventHandler<InstanceDestroyedEventArgs> InstanceDestroyed;
   }
