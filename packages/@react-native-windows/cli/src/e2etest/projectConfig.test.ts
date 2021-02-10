@@ -161,8 +161,8 @@ const projects: TargetProject[] = [
     );
 
     await copyAndReplace(
-      path.join(templateRoot, 'shared-app/proj/BuildFlags.props'),
-      path.join(windowsDir, 'BuildFlags.props'),
+      path.join(templateRoot, 'shared-app/proj/ExperimentalFeatures.props'),
+      path.join(windowsDir, 'ExperimentalFeatures.props'),
       replacements,
       null,
     );
@@ -180,9 +180,8 @@ test.each(projects)(
     }
 
     const userConfig = null;
-    const expectedConfig: WindowsProjectConfig | null = null;
 
-    expect(projectConfigWindows(folder, userConfig)).toBe(expectedConfig);
+    expect(projectConfigWindows(folder, userConfig)).toBeNull();
   },
 );
 
@@ -198,13 +197,14 @@ test.each(projects)(
     }
 
     const userConfig: Partial<WindowsProjectConfig> = rnc.project.windows;
-    const expectedConfig: WindowsProjectConfig | null = rnc.expectedConfig;
 
-    if (expectedConfig !== null) {
-      expectedConfig.folder = folder;
+    if (name === 'BlankApp') {
+      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot();
+    } else {
+      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot({
+        folder: expect.stringContaining(name),
+      });
     }
-
-    expect(projectConfigWindows(folder, userConfig)).toEqual(expectedConfig);
   },
 );
 
@@ -213,25 +213,24 @@ test.each(projects)(
   'projectConfig - %s (Ignore react-native.config.js)',
   async (name, setup) => {
     const folder = path.resolve('src/e2etest/projects/', name);
-    const rnc = require(path.join(folder, 'react-native.config.js'));
 
     if (setup !== undefined) {
       await setup(folder);
     }
 
     const userConfig: Partial<WindowsProjectConfig> = {};
-    const expectedConfig: WindowsProjectConfig | null =
-      rnc.expectedConfigIgnoringOverride;
 
-    if (expectedConfig !== null) {
-      expectedConfig.folder = folder;
+    if (name === 'BlankApp') {
+      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot();
+    } else {
+      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot({
+        folder: expect.stringContaining(name),
+      });
     }
-
-    expect(projectConfigWindows(folder, userConfig)).toEqual(expectedConfig);
   },
 );
 
-test('useWinUI3=true in react-native.config.js, useWinUI3=false in BuildFlags.props', async done => {
+test('useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async done => {
   const folder = path.resolve('src/e2etest/projects/WithWinUI3');
   const rnc = require(path.join(folder, 'react-native.config.js'));
 
@@ -245,13 +244,15 @@ test('useWinUI3=true in react-native.config.js, useWinUI3=false in BuildFlags.pr
     )
   ).toString();
 
-  const buildFlags = (
-    await fs.promises.readFile(path.join(folder, 'windows/BuildFlags.props'))
+  const experimentalFeatures = (
+    await fs.promises.readFile(
+      path.join(folder, 'windows/ExperimentalFeatures.props'),
+    )
   ).toString();
 
-  expect(packagesConfig.replace(/\r/g, '')).toEqual(rnc.expectedPackagesConfig);
+  expect(packagesConfig.replace(/\r/g, '')).toMatchSnapshot();
 
-  expect(buildFlags.replace(/\r/g, '')).toEqual(rnc.expectedBuildFlags);
+  expect(experimentalFeatures.replace(/\r/g, '')).toMatchSnapshot();
 
   done();
 });

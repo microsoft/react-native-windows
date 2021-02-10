@@ -601,7 +601,10 @@ export function ensureXAMLDialect(
     windowsProjectConfig.sourceDir,
     windowsProjectConfig.solutionFile,
   );
-  const buildFlagsProps = path.join(path.dirname(slnFile), 'BuildFlags.props');
+  const buildFlagsProps = path.join(
+    path.dirname(slnFile),
+    'ExperimentalFeatures.props',
+  );
   let changesNeeded = false;
   if (fs.existsSync(buildFlagsProps)) {
     const buildFlagsContents = configUtils.readProjectFile(buildFlagsProps);
@@ -610,7 +613,7 @@ export function ensureXAMLDialect(
       configUtils
         .tryFindPropertyValue(buildFlagsContents, 'UseWinUI3')
         ?.toLowerCase() === 'true';
-    // use the UseWinUI3 value in react-native.config.js, or if not present, the value from BuildFlags.props
+    // use the UseWinUI3 value in react-native.config.js, or if not present, the value from ExperimentalFeatures.props
     changesNeeded = updatePackagesConfigXAMLDialect(
       useWinUI3FromConfig !== undefined
         ? useWinUI3FromConfig
