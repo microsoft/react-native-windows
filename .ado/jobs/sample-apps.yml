@@ -55,8 +55,7 @@ jobs:
         # End Continuous only
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool.Medium)
 
     steps:
       - checkout: self
