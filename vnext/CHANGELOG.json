@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 08 Feb 2021 15:06:18 GMT",
+      "tag": "react-native-windows_v0.64.0-preview.10",
+      "version": "0.64.0-preview.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Switch.onChange",
+            "author": "igklemen@microsoft.com",
+            "commit": "99daf2dc77ad6c5177906171271873d979a7af3a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate react-native 0.64.0-rc.3",
+            "author": "ngerlem@microsoft.com",
+            "commit": "424459a095bec9a620e7cf8524af7960090c00d9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Feb 2021 15:07:32 GMT",
       "tag": "react-native-windows_v0.64.0-preview.9",
       "version": "0.64.0-preview.9",

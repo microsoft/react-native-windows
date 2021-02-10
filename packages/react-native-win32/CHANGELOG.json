@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 08 Feb 2021 15:06:18 GMT",
+      "tag": "@office-iss/react-native-win32_v0.64.0-preview.7",
+      "version": "0.64.0-preview.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate react-native 0.64.0-rc.3",
+            "author": "ngerlem@microsoft.com",
+            "commit": "424459a095bec9a620e7cf8524af7960090c00d9",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Feb 2021 15:07:32 GMT",
       "tag": "@office-iss/react-native-win32_v0.64.0-preview.6",
       "version": "0.64.0-preview.6",

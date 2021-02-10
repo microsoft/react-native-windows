@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.64.0-preview.6",
+  "version": "0.64.0-preview.7",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
@@ -69,7 +69,7 @@
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "react": "17.0.1",
-    "react-native": "0.64.0-rc.1",
+    "react-native": "0.64.0-rc.3",
     "react-native-platform-override": "^0.4.3",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^3.8.3"

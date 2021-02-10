@@ -14,17 +14,17 @@
     "@react-native/tester": "0.0.1"
   },
   "peerDependencies": {
-    "react-native": "0.64.0-rc.1",
-    "react-native-windows": "0.64.0-preview.9"
+    "react-native": "0.64.0-rc.3",
+    "react-native-windows": "0.64.0-preview.10"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "0.1.6",
     "@rnw-scripts/ts-config": "0.1.0",
     "eslint": "7.12.0",
     "just-scripts": "^0.44.7",
-    "react-native": "0.64.0-rc.1",
+    "react-native": "0.64.0-rc.3",
     "react-native-platform-override": "^0.4.3",
-    "react-native-windows": "0.64.0-preview.9",
+    "react-native-windows": "0.64.0-preview.10",
     "typescript": "^3.8.3"
   }
 }
