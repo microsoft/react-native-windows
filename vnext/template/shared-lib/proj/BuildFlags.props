@@ -3,5 +3,5 @@
   <PropertyGroup>
     <AppProjectBuildFlagsProps Condition="'$(AppProjectBuildFlagsProps)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'windows\BuildFlags.props'))\windows\BuildFlags.props</AppProjectBuildFlagsProps>
   </PropertyGroup>
-  <Import Project="$(BuildFlagsProps)" Condition="Exists($(AppProjectBuildFlagsProps))"/>
+  <Import Project="$(AppProjectBuildFlagsProps)" Condition="Exists('$(AppProjectBuildFlagsProps)')"/>
 </Project>
