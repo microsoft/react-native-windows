@@ -133,13 +133,8 @@ test.each(projects)(
 
     const userConfig: Partial<WindowsDependencyConfig> =
       rnc.dependency.platforms.windows;
-    const expectedConfig: WindowsDependencyConfig | null = rnc.expectedConfig;
 
-    if (expectedConfig !== null) {
-      expectedConfig.folder = folder;
-    }
-
-    expect(dependencyConfigWindows(folder, userConfig)).toEqual(expectedConfig);
+    expect(dependencyConfigWindows(folder, userConfig)).toMatchSnapshot();
   },
 );
 
@@ -148,20 +143,12 @@ test.each(projects)(
   'dependencyConfig - %s (Ignore react-native.config.js)',
   async (name, setup) => {
     const folder = path.resolve('src/e2etest/projects/', name);
-    const rnc = require(path.join(folder, 'react-native.config.js'));
 
     if (setup !== undefined) {
       await setup(folder);
     }
 
     const userConfig: Partial<WindowsDependencyConfig> = {};
-    const expectedConfig: WindowsDependencyConfig | null =
-      rnc.expectedConfigIgnoringOverride;
-
-    if (expectedConfig !== null) {
-      expectedConfig.folder = folder;
-    }
-
-    expect(dependencyConfigWindows(folder, userConfig)).toEqual(expectedConfig);
+    expect(dependencyConfigWindows(folder, userConfig)).toMatchSnapshot();
   },
 );
