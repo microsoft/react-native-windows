@@ -1716,18 +1716,6 @@
   resolved "https://registry.yarnpkg.com/@reactions/component/-/component-2.0.2.tgz#40f8c1c2c37baabe57a0c944edb9310dc1ec6642"
   integrity sha1-QPjBwsN7qr5XoMlE7bkxDcHsZkI=
 
-"@rnw-scripts/jest-e2e-config@1.1.1":
-  version "1.1.2"
-  dependencies:
-    "@rnw-scripts/babel-node-config" "1.0.2"
-
-"@rnw-scripts/just-task@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@rnw-scripts/just-task/-/just-task-2.0.1.tgz#220e7e3bf0a32e75bc4d66e1ed811cf461fa8354"
-  integrity sha512-6aL8lnfVevIjNuw5F9RmbxIDu5Xepz6sVlM4gLfYCJKxJ9OD4ffhYbPo85qMYF6Y/fH/ALXACSdcSxQpGPd6Hw==
-  dependencies:
-    "@rnw-scripts/jest-e2e-config" "1.1.1"
-
 "@rushstack/node-core-library@3.35.2":
   version "3.35.2"
   resolved "https://registry.yarnpkg.com/@rushstack/node-core-library/-/node-core-library-3.35.2.tgz#21ca879b5051a5ebafa952fafcd648a07a142bcb"
