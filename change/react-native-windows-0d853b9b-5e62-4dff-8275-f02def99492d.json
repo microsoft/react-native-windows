@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed typo in template which breaks C# autolinking",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
