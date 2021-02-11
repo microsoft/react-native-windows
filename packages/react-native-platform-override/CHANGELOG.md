@@ -82,7 +82,7 @@ Fri, 18 Dec 2020 19:23:58 GMT
 
 ### Patches
 
-- Fix missing dependency / race condition in pacakge.json (dannyvv@microsoft.com)
+- Fix missing dependency / race condition in package.json (dannyvv@microsoft.com)
 
 ## 0.4.4
 

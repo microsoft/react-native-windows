@@ -1768,7 +1768,7 @@ Thu, 07 May 2020 00:05:07 GMT
 - Don't delete nuget.exe if using locally-installed (e.g. chocolatey) (asklar@microsoft.com)
 - Only bundle when not running Intellisense builds (asklar@microsoft.com)
 - Disable CxxFrameHandler4 (ngerlem@microsoft.com)
-- Switch package layout to use `files` in `pacakge.json` rather than `.npmignore` (dannyvv@microsoft.com)
+- Switch package layout to use `files` in `package.json` rather than `.npmignore` (dannyvv@microsoft.com)
 
 ## 0.0.0-master.59
 
