@@ -5,7 +5,7 @@
   <Import Project="..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props" Condition="Exists('..\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props')" />
   {{/propsTopOfFile}}
   {{/cppNugetPackages}}
-  <Import Project="$(SolutionDir)\BuildFlags.props" Condition="Exists('$(SolutionDir)\BuildFlags.props')" />
+  <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>

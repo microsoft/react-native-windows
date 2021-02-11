@@ -458,10 +458,14 @@ export async function copyProjectTemplateAndReplace(
       });
     }
 
-    if (fs.existsSync(path.join(sharedPath, projDir, 'BuildFlags.props'))) {
+    if (
+      fs.existsSync(
+        path.join(sharedPath, projDir, 'ExperimentalFeatures.props'),
+      )
+    ) {
       sharedProjMappings.push({
-        from: path.join(sharedPath, projDir, 'BuildFlags.props'),
-        to: path.join(windowsDir, 'BuildFlags.props'),
+        from: path.join(sharedPath, projDir, 'ExperimentalFeatures.props'),
+        to: path.join(windowsDir, 'ExperimentalFeatures.props'),
       });
     }
 
