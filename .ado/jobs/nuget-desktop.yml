@@ -31,3 +31,4 @@ jobs:
           packMicrosoftReactNativeManaged: false
           packMicrosoftReactNativeManagedCodeGen: false
           slices: '("x64.Release", "x86.Debug")'
+          
