@@ -180,7 +180,8 @@ test('useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalF
     },
   );
 
-  expect(al.ensureXAMLDialect()).toBeTruthy();
+  const exd = await al.ensureXAMLDialect();
+  expect(exd).toBeTruthy();
 
   const packagesConfig = (
     await fs.promises.readFile(
