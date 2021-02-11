@@ -243,10 +243,15 @@ export type IStateConditions = {
 //
 // @public (undocumented)
 export interface ITextWin32Props extends Omit_3<RN.TextProps, TextWin32OmitTypes>, BasePropsWin32 {
+    focusable?: boolean;
     // (undocumented)
     keyDownEvents?: IHandledKeyboardEvent[];
     // (undocumented)
     keyUpEvents?: IHandledKeyboardEvent[];
+    onBlur?: (ev: RN.NativeSyntheticEvent<{}>) => void;
+    onBlurCapture?: (ev: RN.NativeSyntheticEvent<{}>) => void;
+    onFocus?: (ev: RN.NativeSyntheticEvent<{}>) => void;
+    onFocusCapture?: (ev: RN.NativeSyntheticEvent<{}>) => void;
     // (undocumented)
     onKeyDown?: (args: IKeyboardEvent) => void;
     // (undocumented)

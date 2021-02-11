@@ -11,6 +11,7 @@ This package provides Win32 specific components and provides JS implementations 
 |  Class | Description |
 |  --- | --- |
 |  [ButtonWin32](./react-native-win32.buttonwin32.md) | React-native <Button> control with additional Win32-specific functionality. |
+|  [FocusManager](./react-native-win32.focusmanager.md) |  |
 |  [TextWin32](./react-native-win32.textwin32.md) |  |
 |  [TouchableWin32](./react-native-win32.touchablewin32.md) | TouchableWin32 is a 'componentization' of the Touchable Mixin in React Native. This means that instead of implementing components such as TouchableHighlight via the mixin, they are merely implemented as wrappers around TouchableWin32, forwarding the correct set of props. Additionally, TouchableWin32 supports hover via onMouseEnter and onMouseLeave and focus/blur via onFocus/onBlur. TouchableWin32 also allows for functions as child components (that use the internal state of the touchable to conditionally render children) as well functions as styles (that use internal state to conditionally calculate styles) |
 
@@ -21,6 +22,12 @@ This package provides Win32 specific components and provides JS implementations 
 |  [EventPhase](./react-native-win32.eventphase.md) |  |
 |  [PersonaCoinPresence](./react-native-win32.personacoinpresence.md) |  |
 |  [PersonaCoinSize](./react-native-win32.personacoinsize.md) |  |
+
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [PlatformColor(names)](./react-native-win32.platformcolor.md) |  |
 
 ## Interfaces
 
@@ -61,6 +68,7 @@ This package provides Win32 specific components and provides JS implementations 
 |  [ARIARole](./react-native-win32.ariarole.md) |  |
 |  [BasePropsWin32](./react-native-win32.basepropswin32.md) |  |
 |  [ButtonWin32OmitStyles](./react-native-win32.buttonwin32omitstyles.md) |  |
+|  [ColorStop](./react-native-win32.colorstop.md) |  |
 |  [Cursor](./react-native-win32.cursor.md) |  |
 |  [IChildAsFunction](./react-native-win32.ichildasfunction.md) | Used by IRenderChild, it simply describes a function that takes some generic state type T and returns a ReactNode |
 |  [IHandledKeyboardEvent](./react-native-win32.ihandledkeyboardevent.md) |  |
@@ -72,6 +80,7 @@ This package provides Win32 specific components and provides JS implementations 
 |  [IState](./react-native-win32.istate.md) | Gesture responder states |
 |  [IStateConditions](./react-native-win32.istateconditions.md) | Describes lookup maps of states meeting some specified criteria |
 |  [ITransitions](./react-native-win32.itransitions.md) | Map of State to \[Signal to State\], describing state transition maps |
+|  [NativeOrDynamicColorType](./react-native-win32.nativeordynamiccolortype.md) |  |
 |  [OmittedAccessibilityPropsWin32](./react-native-win32.omittedaccessibilitypropswin32.md) |  |
 |  [SharedAccessibilityPropsIOSandWin32](./react-native-win32.sharedaccessibilitypropsiosandwin32.md) |  |
 |  [SharedTextPropsAndroidandWin32](./react-native-win32.sharedtextpropsandroidandwin32.md) |  |
