@@ -376,7 +376,7 @@ test('autolink with no windows project', () => {
     // example packages.config: 
     // <packages>
     //   <package id="SuperPkg" version="42"/>
-    //   <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
+    //   <package id="Microsoft.WinUI" version="3.0.0-preview4.210210.4" targetFramework="native"/>
     // </packages>
     //
     expect(al.packagesConfig).not.toContain('Microsoft.WinUI');
