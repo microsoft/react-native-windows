@@ -1,8 +1,20 @@
 # Change Log - @react-native-windows/tester
 
-This log was last generated on Wed, 10 Feb 2021 05:06:37 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Feb 2021 05:08:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Thu, 11 Feb 2021 05:08:29 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.4.12 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.253 (ngerlem@microsoft.com)
 
 ## 0.0.1
 

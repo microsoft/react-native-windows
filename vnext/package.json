@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.252",
+  "version": "0.0.0-canary.253",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
     "@react-native-community/cli": "^5.0.1-alpha.0",
     "@react-native-community/cli-platform-android": "^5.0.1-alpha.0",
     "@react-native-community/cli-platform-ios": "^5.0.1-alpha.0",
-    "@react-native-windows/cli": "0.0.0-canary.57",
+    "@react-native-windows/cli": "0.0.0-canary.58",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "1.0.0",
     "@react-native/polyfills": "1.0.0",
@@ -55,7 +55,7 @@
     "ws": "^6.1.4"
   },
   "devDependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.2",
+    "@react-native-windows/codegen": "0.0.0-canary.3",
     "@rnw-scripts/eslint-config": "1.1.6",
     "@types/node": "^14.14.22",
     "@types/react": "16.9.11",
@@ -68,7 +68,7 @@
     "prettier": "1.19.1",
     "react": "17.0.1",
     "react-native": "0.0.0-c66aa8abc",
-    "react-native-platform-override": "^1.4.11",
+    "react-native-platform-override": "^1.4.12",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^3.8.3"

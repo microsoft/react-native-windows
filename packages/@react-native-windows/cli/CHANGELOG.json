@@ -2,6 +2,47 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 11 Feb 2021 05:08:29 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.58",
+      "version": "0.0.0-canary.58",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Refactor autolinking code",
+            "author": "asklar@microsoft.com",
+            "commit": "3a875c2bf27354dc0b5cf96a291ab9105bf3a774",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Rename \"BuildFlags.props\" to \"ExperimentalFeatures.props\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Better dependency warning on run-windows build error",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cf6a97e48f5a8ae59fdb29ef39e71800394a73dc",
+            "package": "@react-native-windows/cli"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.2.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Feb 2021 05:06:37 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.57",
       "version": "0.0.0-canary.57",

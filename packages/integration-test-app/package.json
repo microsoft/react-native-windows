@@ -13,7 +13,7 @@
     "chai": "^4.2.0",
     "react": "17.0.1",
     "react-native": "0.0.0-c66aa8abc",
-    "react-native-windows": "^0.0.0-canary.252"
+    "react-native-windows": "^0.0.0-canary.253"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -22,7 +22,7 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/traverse": "^7.11.5",
     "@rnw-scripts/eslint-config": "^1.1.6",
-    "@rnw-scripts/just-task": "^2.0.2",
+    "@rnw-scripts/just-task": "^2.1.0",
     "@rnw-scripts/ts-config": "^1.1.0",
     "@types/chai": "^4.2.14",
     "@types/jest": "^26.0.20",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Improve compile time by increasing paralelism",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

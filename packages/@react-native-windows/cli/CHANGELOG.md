@@ -1,8 +1,23 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 10 Feb 2021 05:06:37 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Feb 2021 05:08:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.58
+
+Thu, 11 Feb 2021 05:08:29 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.0 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/jest-unittest-config to v1.2.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Refactor autolinking code (asklar@microsoft.com)
+- Rename "BuildFlags.props" to "ExperimentalFeatures.props" (ngerlem@microsoft.com)
+- Better dependency warning on run-windows build error (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.57
 

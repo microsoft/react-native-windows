@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 10 Feb 2021 05:06:37 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Feb 2021 05:08:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.253
+
+Thu, 11 Feb 2021 05:08:29 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.4.12 (ngerlem@microsoft.com)
+
+### Changes
+
+- Minor doc update (30809111+acoates-ms@users.noreply.github.com)
+- Make modules use the app's buildFlags.props (asklar@microsoft.com)
+- Improve compile time by increasing paralelism (dannyvv@microsoft.com)
+- Rename "BuildFlags.props" to "ExperimentalFeatures.props" (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.252
 

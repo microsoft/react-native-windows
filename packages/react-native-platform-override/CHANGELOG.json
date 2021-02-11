@@ -2,6 +2,29 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Thu, 11 Feb 2021 05:08:29 GMT",
+      "tag": "react-native-platform-override_v1.4.12",
+      "version": "1.4.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "react-native-platform-override"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.16",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Feb 2021 05:07:37 GMT",
       "tag": "react-native-platform-override_v1.4.11",
       "version": "1.4.11",

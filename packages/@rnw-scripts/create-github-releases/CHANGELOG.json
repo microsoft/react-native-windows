@@ -2,6 +2,29 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Thu, 11 Feb 2021 05:08:29 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v1.0.25",
+      "version": "1.0.25",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.19",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Feb 2021 05:07:37 GMT",
       "tag": "@rnw-scripts/create-github-releases_v1.0.24",
       "version": "1.0.24",

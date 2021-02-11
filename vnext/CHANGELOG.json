@@ -2,6 +2,47 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 11 Feb 2021 05:08:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.253",
+      "version": "0.0.0-canary.253",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Minor doc update",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "b35ef5002f9d8a5a2f18aa0529efc095d47681bc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Make modules use the app's buildFlags.props",
+            "author": "asklar@microsoft.com",
+            "commit": "3a875c2bf27354dc0b5cf96a291ab9105bf3a774",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Improve compile time by increasing paralelism",
+            "author": "dannyvv@microsoft.com",
+            "commit": "91bfc83f6b1343dd3ac340d6eacfdb0c8316b463",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Rename \"BuildFlags.props\" to \"ExperimentalFeatures.props\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.12",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Feb 2021 05:06:37 GMT",
       "tag": "react-native-windows_v0.0.0-canary.252",
       "version": "0.0.0-canary.252",
