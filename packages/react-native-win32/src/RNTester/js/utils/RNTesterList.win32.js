@@ -81,6 +81,10 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../../../Libraries/Components/View/Tests/ViewWin32Test'),
   },
   {
+    key: 'TextWin32Example',
+    module: require('../../../Libraries/Components/Text/Tests/TextWin32Test'),
+  },
+  {
     key: 'TextInputExample',
     module: require('../../../Libraries/Components/TextInput/Tests/TextInputTest'),
   },
