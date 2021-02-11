@@ -34,7 +34,7 @@ test('autolink with no windows project', () => {
     protected getExperimentalFeaturesPropsXml(){
         return {path: 'ExperimentalFeatures.props', content: new DOMParser().parseFromString(this.experimentalFeaturesProps, 'application/xml')};
     }
-    protected updateFile(filepath: string, content: string) {
+    protected async updateFile(filepath: string, content: string) {
         if (filepath === 'packages.config') {
             this.packagesConfig = content;
         } else if (filepath === 'ExperimentalFeatures.props') {
@@ -259,7 +259,8 @@ test('autolink with no windows project', () => {
     al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>`;
     al.packagesConfig = `<packages><package id="SuperPkg" version="42"/></packages>`;
   
-    expect(al.ensureXAMLDialect()).toBeTruthy();
+    const exd = await al.ensureXAMLDialect();
+    expect(exd).toBeTruthy();
   
     const expectedExperimentalFeatures = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>';
     expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
@@ -294,7 +295,8 @@ test('autolink with no windows project', () => {
     al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>`;
     al.packagesConfig = `<packages><package id="SuperPkg" version="42"/></packages>`;
   
-    expect(al.ensureXAMLDialect()).toBeTruthy();
+    const exd = await al.ensureXAMLDialect();
+    expect(exd).toBeTruthy();
   
     const expectedExperimentalFeatures = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
     expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
@@ -329,7 +331,8 @@ test('autolink with no windows project', () => {
     al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>`;
     al.packagesConfig = `<packages><package id="SuperPkg" version="42"/></packages>`;
   
-    expect(al.ensureXAMLDialect()).toBeTruthy();
+    const exd = await al.ensureXAMLDialect();
+    expect(exd).toBeTruthy();
   
     const expectedExperimentalFeatures = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>';
     expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
@@ -364,7 +367,8 @@ test('autolink with no windows project', () => {
     al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>`;
     al.packagesConfig = `<packages><package id="SuperPkg" version="42"/><package id="Microsoft.WinUI"/></packages>`;
   
-    expect(al.ensureXAMLDialect()).toBeTruthy();
+    const exd = await al.ensureXAMLDialect();
+    expect(exd).toBeTruthy();
   
     const expectedExperimentalFeatures = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
     expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
