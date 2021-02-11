@@ -4,12 +4,34 @@ param(
     [switch]$NoPrompt = $false,
     [switch]$Clone = $false,
     [switch]$ListChecks = $false,
-    [String]$Check = $null,
+    [string]$Check = [CheckId]::All,
 
     [Parameter(ValueFromRemainingArguments)]
     [ValidateSet('appDev', 'rnwDev', 'buildLab', 'vs2019', 'clone')]
     [String[]]$Tags = @('appDev')
 )
+
+enum CheckId {
+    All
+    AzureFunctions
+    Choco
+    Chrome
+    DeveloperMode
+    DotNetCore
+    FreeSpace
+    git
+    InstalledMemory
+    LongPath
+    MSBuild64LongPath
+    MSBuildLogViewer
+    Node
+    RNWClone
+    VSUWP
+    WinAppDriver
+    WindowsADK
+    WindowsVersion
+    Yarn
+}
 
 # CODESYNC \packages\@react-native-windows\cli\src\runWindows\runWindows.ts
 $MarkerFile = "$env:LOCALAPPDATA\rnw-dependencies.txt"
@@ -133,41 +155,41 @@ $requiredFreeSpaceGB = 15;
 
 $requirements = @(
     @{
-        Id='FreeSpace';
+        Id=[CheckId]::FreeSpace;
         Name = "Free space on $drive`: > $requiredFreeSpaceGB GB";
         Tags = @('appDev');
         Valid = $drive.Free/1GB -gt $requiredFreeSpaceGB;
         Optional = $true; # this requirement is fuzzy
     },
     @{
-        Id='InstalledMemory';
+        Id=[CheckId]::InstalledMemory;
         Name = "Installed memory >= 16 GB";
         Tags = @('appDev');
         Valid = (Get-CimInstance -ClassName win32_computersystem).TotalPhysicalMemory -ge 15GB;
         Optional = $true;
     },
     @{
-        Id="WindowsVersion";
+        Id=[CheckId]::WindowsVersion;
         Name = 'Windows version > 10.0.16299.0';
         Tags = @('appDev');
         Valid = ($v.Major -eq 10 -and $v.Minor -eq 0 -and $v.Build -ge 16299);
     },
     @{
-        Id="DeveloperMode";
+        Id=[CheckId]::DeveloperMode;
         Name = 'Developer mode is on';
         Tags = @('appDev');
         Valid = try { (Get-WindowsDeveloperLicense).IsValid } catch { $false };
         Install = { EnableDevMode };
     },
     @{
-        Id="LongPath";
+        Id=[CheckId]::LongPath;
         Name = 'Long path support is enabled';
         Tags = @('appDev');
         Valid = try { (Get-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled).LongPathsEnabled -eq 1} catch { $false };
         Install = { Set-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled -Value 1 -Type DWord;  };
     },
     @{
-        Id="Choco";
+        Id=[CheckId]::Choco;
         Name = 'Choco';
         Tags = @('appDev');
         Valid = try { (Get-Command choco -ErrorAction Stop) -ne $null } catch { $false };
@@ -177,28 +199,28 @@ $requirements = @(
         };
     },
     @{
-        Id="git";
+        Id=[CheckId]::git;
         Name = 'git';
         Tags = @('appDev');
         Valid = try { (Get-Command git.exe -ErrorAction Stop) -ne $null } catch { $false };
         Install = { choco install -y git };
     },
     @{
-        Id="VSUWP";
+        Id=[CheckId]::VSUWP;
         Name = 'Visual Studio >= 16.5 with UWP and Desktop/C++';
         Tags = @('appDev', 'vs2019');
         Valid = CheckVS;
         Install = { InstallVS };
     },
     @{
-        Id="Node";
+        Id=[CheckId]::Node;
         Name = 'NodeJS 12, 13 or 14 installed';
         Tags = @('appDev');
         Valid = CheckNode;
         Install = { choco install -y nodejs-lts };
     },
     @{
-        Id="Chrome";
+        Id=[CheckId]::Chrome;
         Name = 'Chrome';
         Tags = @('appDev'); # For now this is still required. Edge has been added, but only when it is already running...
         Valid = try { ((Get-Item (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe' -ErrorAction Stop).'(Default)').VersionInfo).ProductMajorPart
@@ -207,14 +229,14 @@ $requirements = @(
         Optional = $true;
     },
     @{
-        Id="Yarn";
+        Id=[CheckId]::Yarn;
         Name = 'Yarn';
         Tags = @('appDev');
         Valid = try { (Get-Command yarn -ErrorAction Stop) -ne $null } catch { $false };
         Install = { choco install -y yarn };
     },
     @{
-        Id="AzureFunctions";
+        Id=[CheckId]::AzureFunctions;
         Name = 'Azure Functions Core Tools';
         Tags = @('rnwDev');
         Valid = try { (Get-Command func -ErrorAction Stop) -ne $null } catch { $false };
@@ -222,7 +244,7 @@ $requirements = @(
         Optional = $true;
     },
     @{
-        Id="WinAppDriver";
+        Id=[CheckId]::WinAppDriver;
         Name = 'WinAppDriver';
         Tags = @('rnwDev');
         Valid = (Test-Path "${env:ProgramFiles(x86)}\Windows Application Driver\WinAppDriver.exe");
@@ -236,7 +258,7 @@ $requirements = @(
         Optional = $true;
     },
     @{
-        Id="MSBuildLogViewer";
+        Id=[CheckId]::MSBuildLogViewer;
         Name = "MSBuild Structured Log Viewer";
         Tags = @('rnwDev');
         Valid = (cmd "/c assoc .binlog 2>nul" )  -ne $null;
@@ -250,7 +272,7 @@ $requirements = @(
     },
     @{
         # The 64-bit version of MsBuild does not support long paths. A temp fix for v16 is: https://github.com/microsoft/msbuild/issues/5331
-        Id="MSBuild64LongPath"
+        Id=[CheckId]::MSBuild64LongPath
         Name = "MSBuild 64-bit Long Path Support"
         Tags = @('buildLab');
         Valid = try {
@@ -265,14 +287,14 @@ $requirements = @(
     },
     @{
         # Install the Windows ADK (Assessment and Deployment Kit) to install the wpt (Windows Performance Toolkit) so we can use wpr (Windows Performance Recorder) for performance analysis
-        Id="WindowsADK";
+        Id=[CheckId]::WindowsADK;
         Name = 'Windows ADK';
         Tags = @('buildLab');
         Valid = (Test-Path "${env:ProgramFiles(x86)}\Windows Kits\10\Windows Performance Toolkit\wpr.exe");
         Install = { choco install -y windows-adk };
     },
     @{
-        Id="RNWClone";
+        Id=[CheckId]::RNWClone;
         Name = "React-Native-Windows clone"
         Tags = @('clone')
         Valid = try {
@@ -284,7 +306,7 @@ $requirements = @(
         Optional = $true
     },
     @{
-        ID="DotNetCore";
+        ID=[CheckId]::DotNetCore;
         Name = ".net core 3.1"
         Tags = @('appDev');
         Valid = try {
@@ -311,7 +333,7 @@ $Installed = 0;
 $filteredRequirements = New-Object System.Collections.Generic.List[object]
 foreach ($req in $requirements)
 {
-    if (!$Check -or $req.Id -eq $Check)
+    if ($Check -eq [CheckId]::All -or $req.Id -eq $Check)
     {
         foreach ($tag in $req.Tags)
         {
