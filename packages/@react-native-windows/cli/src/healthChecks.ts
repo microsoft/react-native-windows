@@ -35,7 +35,6 @@ export function getHealthChecks(): HealthCheckCategory[] | undefined {
               // The schema check of react-native doctor requires this to be a string, although it should be a boolean
               // Enable this once we pick up a new version of the CLI that includes https://github.com/react-native-community/cli/pull/1367
               // isRequired: (optional.trim() === 'Required') ? true : false, 
-              isRequired: false,
               getDiagnostics: async () => {
                 let needsToBeFixed = true;
                 try {
