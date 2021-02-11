@@ -5039,7 +5039,7 @@
             "package": "react-native-windows"
           },
           {
-            "comment": "Switch package layout to use `files` in `pacakge.json` rather than `.npmignore`",
+            "comment": "Switch package layout to use `files` in `package.json` rather than `.npmignore`",
             "author": "dannyvv@microsoft.com",
             "commit": "c18e0c17fa6c2a2f778aa6607fb7e1601f6089da",
             "package": "react-native-windows"

@@ -228,7 +228,7 @@
       "comments": {
         "patch": [
           {
-            "comment": "Fix missing dependency / race condition in pacakge.json",
+            "comment": "Fix missing dependency / race condition in package.json",
             "author": "dannyvv@microsoft.com",
             "commit": "697dfc78e9a443756bf44b9cfd9c4c67cff82d0f",
             "package": "react-native-platform-override"
