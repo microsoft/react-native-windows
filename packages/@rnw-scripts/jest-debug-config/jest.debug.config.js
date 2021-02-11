@@ -20,7 +20,7 @@ module.exports = {
   testEnvironment: 'node',
 
   // The pattern or patterns Jest uses to detect test files
-  testRegex: '/(test|e2etest)/.*\\.test',
+  testRegex: '/(test|e2etest)/.*\\.test\.ts$',
 
   // Default timeout of a test in milliseconds
   testTimeout: 600000,

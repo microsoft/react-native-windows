@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Do not try to execute snapshots in Jest debug config",
+  "packageName": "@rnw-scripts/jest-debug-config",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
