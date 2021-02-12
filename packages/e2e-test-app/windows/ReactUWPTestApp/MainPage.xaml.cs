@@ -33,24 +33,24 @@ namespace ReactUWPTestApp
         }
 
         JsonObject DumpVisualTree(JsonValue payload)
-		{
+        {
             var payloadObj = payload.GetObject();
             var accessibilityId = payloadObj.GetNamedString("accessibilityId");
 
             var additionalProperties = new List<string>();
             if (payloadObj.ContainsKey("additionalProperties"))
-			{
+            {
                 foreach (JsonValue prop in payloadObj.GetNamedArray("additionalProperties"))
-				{
+                {
                     additionalProperties.Add(prop.GetString());
-				}
-			}
+                }
+            }
 
             var rootDump = VisualTreeDumper.DumpTree(this, null, additionalProperties, DumpTreeMode.Json);
             var element = VisualTreeDumper.FindElementByAutomationId(JsonObject.Parse(rootDump), accessibilityId);
 
             return element;
-		}
+        }
 
         async Task LoopServer(Server server)
         {
