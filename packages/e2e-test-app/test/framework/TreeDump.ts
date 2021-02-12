@@ -6,7 +6,6 @@
  */
 
 import {RpcClient} from 'jest-environment-winappdriver';
-import 'jest-extended';
 
 /**
  * Schema of tree dumped node
@@ -40,11 +39,15 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace jest {
     interface Matchers<R> {
-      toRoughlyMatchSnapshot(element: UIElement): CustomMatcherResult;
+      toMatchXamlSnapshot(): CustomMatcherResult;
     }
 
     interface Expect {
-      toMatchRenderSize(actual: number[], epsilon: number): CustomMatcherResult;
+      toBeCloseTo(expected: number, epsilon: number): CustomMatcherResult;
+      toMatchRenderSize(
+        expected: number[],
+        epsilon: number,
+      ): CustomMatcherResult;
     }
   }
 }
@@ -53,7 +56,7 @@ expect.extend({
   /**
    * Checks that a UIElement snapshot matches, with fuzzy comparision
    */
-  toRoughlyMatchSnapshot: (
+  toMatchXamlSnapshot: (
     element: UIElement,
     epsilon: number = 1,
   ): jest.CustomMatcherResult => {
@@ -62,6 +65,23 @@ expect.extend({
     );
 
     return {pass: true, message: () => ''};
+  },
+
+  /**
+   * Whether a value is close to another with given epsilon
+   */
+  toBeCloseTo(
+    actual: number,
+    expected: number,
+    epsilon: number,
+  ): jest.CustomMatcherResult {
+    const message = () =>
+      `Expected "${expected}" to be within ${epsilon} of ${actual}`;
+    if (actual > expected + epsilon || actual < expected - epsilon) {
+      return {pass: false, message};
+    } else {
+      return {pass: true, message};
+    }
   },
 
   /**
@@ -101,17 +121,11 @@ function createUIElementProprtyMatcher(
   const matcher: Record<keyof UIElement, any> = {};
 
   if (element.Height !== null && element.Height !== undefined) {
-    matcher.Height = expect.toBeWithin(
-      element.Height - epsilon,
-      element.Height + epsilon,
-    );
+    matcher.Height = expect.toBeCloseTo(element.Height, epsilon);
   }
 
   if (element.Width !== null && element.Width !== undefined) {
-    matcher.Width = expect.toBeWithin(
-      element.Width - epsilon,
-      element.Width + epsilon,
-    );
+    matcher.Width = expect.toBeCloseTo(element.Width, epsilon);
   }
 
   if (element.RenderSize) {
