@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 08 Feb 2021 15:07:33 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Feb 2021 20:03:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.62.10
+
+Fri, 12 Feb 2021 20:03:18 GMT
+
+### Patches
+
+- TextWin32 focusable property, enabling focus without selectability, and a TextWin32 test page. (ppatboyd@outlook.com)
 
 ## 0.62.9
 

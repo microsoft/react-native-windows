@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 12 Feb 2021 20:03:18 GMT",
+      "tag": "@office-iss/react-native-win32_v0.62.10",
+      "version": "0.62.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "TextWin32 focusable property, enabling focus without selectability, and a TextWin32 test page.",
+            "author": "ppatboyd@outlook.com",
+            "commit": "e948a8c09acc0c38626f523d1f265c153fd0ce8f",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 Feb 2021 15:07:33 GMT",
       "tag": "@office-iss/react-native-win32_v0.62.9",
       "version": "0.62.9",
