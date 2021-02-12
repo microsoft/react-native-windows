@@ -81,7 +81,7 @@ jobs:
         inputs:
           sourceFolder: packages/e2e-test-app/test/snapshots
           targetFolder: $(Build.StagingDirectory)/snapshots
-          contents: **
+          contents: "**"
         condition: failed()
 
       - task: CopyFiles@2
