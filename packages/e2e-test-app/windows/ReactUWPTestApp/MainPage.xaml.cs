@@ -1,5 +1,6 @@
 using NodeRpc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TreeDumpLibrary;
 using Windows.Data.Json;
@@ -25,19 +26,31 @@ namespace ReactUWPTestApp
 
 
             var handler = new Handler();
-            handler.BindOperation("DumpVisualTree", (payload) =>
-            {
-                var rootDump = VisualTreeDumper.DumpTree(this, null, new string[] { }, DumpTreeMode.Json);
-
-                var accessibilityId = payload.GetObject().GetNamedString("accessibilityId");
-                var element = VisualTreeDumper.FindElementByAutomationId(JsonObject.Parse(rootDump), accessibilityId);
-
-                return element;
-            });
+            handler.BindOperation("DumpVisualTree", DumpVisualTree);
 
             var server = new Server(handler);
             var tsk = LoopServer(server);
         }
+
+        JsonObject DumpVisualTree(JsonValue payload)
+		{
+            var payloadObj = payload.GetObject();
+            var accessibilityId = payloadObj.GetNamedString("accessibilityId");
+
+            var additionalProperties = new List<string>();
+            if (payloadObj.ContainsKey("additionalProperties"))
+			{
+                foreach (JsonValue prop in payloadObj.GetNamedArray("additionalProperties"))
+				{
+                    additionalProperties.Add(prop.GetString());
+				}
+			}
+
+            var rootDump = VisualTreeDumper.DumpTree(this, null, additionalProperties, DumpTreeMode.Json);
+            var element = VisualTreeDumper.FindElementByAutomationId(JsonObject.Parse(rootDump), accessibilityId);
+
+            return element;
+		}
 
         async Task LoopServer(Server server)
         {

@@ -4,7 +4,7 @@
   <ItemGroup>
     <!-- Projects from node-rnw-rpc -->
     <ProjectReference Include="$(ProjectDir)..\..\..\node-rnw-rpc\windows\NodeRpc\NodeRpc.vcxproj">
-      <Project>{c0a69310-6119-46dc-a6d6-0bab7826dc92}</Project>
-    </ProjectReference>
+        <Project>{c0a69310-6119-46dc-a6d6-0bab7826dc92}</Project>
+      </ProjectReference>
   </ItemGroup>
 </Project>

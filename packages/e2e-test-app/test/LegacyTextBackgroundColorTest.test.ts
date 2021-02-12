@@ -5,7 +5,7 @@
  * @format
  */
 
-import {goToComponentExample, dumpVisualTree} from './Helpers';
+import {goToComponentExample, dumpVisualTree} from './framework';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyTextBackgroundColorTest');
@@ -14,7 +14,9 @@ beforeAll(async () => {
 describe('LegacyTextBackgroundColorTest', () => {
   /* Test case #1: view and image displayed with no border and cornerRadius */
   test('TextBackgroundColorTest', async () => {
-    const dump = await dumpVisualTree('text-color-background-view');
+    const dump = await dumpVisualTree('text-color-background-view', {
+      additionalProperties: ['TextHighlighters'],
+    });
     expect(dump).toMatchSnapshot();
   });
 });

@@ -5,5 +5,7 @@ module.exports = {
     $: 'readonly',
     browser: 'readonly',
     expect: 'readonly',
+    fail: 'readonly',
+    rpcClient: 'readonly',
   },
 };

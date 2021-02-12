@@ -5,30 +5,25 @@
  * @format
  */
 
-import {waitForConnection} from 'node-rnw-rpc';
-
-export async function dumpVisualTree(
-  accessibilityId: string,
-): Promise<Record<string, any>> {
-  console.log('connecting');
-  const rpcClient = await waitForConnection({port: 8603});
-  console.log('connected');
-  return await rpcClient.invoke('DumpVisualTree', {accessibilityId});
-}
-
+/**
+ * Visit an example on the RNTester Components tab
+ */
 export async function goToComponentExample(example: string) {
   const componentsTabButton = await $('~components-tab');
   await componentsTabButton.click();
   await goToExample(example);
 }
 
+/**
+ * Visit an example on the RNTester APIs tab
+ */
 export async function goToApiExample(example: string) {
   const componentsTabButton = await $('~apis-tab');
   await componentsTabButton.click();
   await goToExample(example);
 }
 
-export async function goToExample(example: string) {
+async function goToExample(example: string) {
   // Filter the list down to the one test, to improve the stability of selectors
   const searchBox = await $('~explorer_search');
   await searchBox.setValue(example);

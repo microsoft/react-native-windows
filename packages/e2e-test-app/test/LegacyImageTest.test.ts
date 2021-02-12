@@ -5,7 +5,7 @@
  * @format
  */
 
-import {goToComponentExample, dumpVisualTree} from './Helpers';
+import {goToComponentExample, dumpVisualTree} from './framework';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyImageTest');

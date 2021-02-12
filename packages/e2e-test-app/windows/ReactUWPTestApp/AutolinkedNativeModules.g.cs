@@ -11,6 +11,8 @@ namespace Microsoft.ReactNative.Managed
     {
         internal static void RegisterAutolinkedNativeModulePackages(IList<IReactPackageProvider> packageProviders)
         { 
+            // IReactPackageProviders from node-rnw-rpc
+            packageProviders.Add(new NodeRpc.ReactPackageProvider());
         }
     }
 }
