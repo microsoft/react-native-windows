@@ -84,13 +84,6 @@ jobs:
           contents: "**"
         condition: failed()
 
-      - task: PowerShell@2
-        displayName: "Get-ShellScaling"
-        inputs:
-          targetType: "inline"
-          script: ". $(Build.SourcesDirectory)\\.ado\\scripts\\Get-ShellScaling.ps1 > $(Build.StagingDirectory)\\ReactUWPTestAppTreeDump\\scaleFactor.txt"
-        condition: failed()
-
       - task: CopyFiles@2
         displayName: Copy ReactUWPTestApp artifacts
         inputs:
