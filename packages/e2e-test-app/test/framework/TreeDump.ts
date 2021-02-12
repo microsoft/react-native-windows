@@ -34,6 +34,7 @@ export type UIElement = {
   Name?: string | null;
   Text?: string | null;
   children?: UIElement[];
+  [index: string]: unknown;
 };
 
 /**
