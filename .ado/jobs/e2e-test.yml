@@ -71,8 +71,8 @@ jobs:
         displayName: yarn e2etest
         workingDirectory: packages/e2e-test-app
 
-      - script: yarn e2etest --updateSnapshot
-        displayName: yarn e2etest --updateSnapshot
+      - script: yarn e2etest --updateSnapshots
+        displayName: yarn e2etest --updateSnapshots
         workingDirectory: packages/e2e-test-app
         condition: and(failed(), eq(variables.StartedTests, 'true'))
 
