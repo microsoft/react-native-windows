@@ -24,12 +24,10 @@ stages:
               targetType: filePath
               filePath: .ado/scripts/shouldSkipPRBuild.ps1
 
-          - template: templates/yarn-install.yml
-
           - task: CmdLine@2
             displayName: Check for change files
             inputs:
-              script: npx --no-install beachball check --branch origin/$(BeachBallBranchName) --changehint "Run `yarn change` from root of repo to generate a change file."
+              script: npx --ignore-existing beachball@^1.50.1 check --branch origin/$(BeachBallBranchName) --changehint "Run `yarn change` from root of repo to generate a change file."
 
           - template: templates/set-version-vars.yml
             parameters:
