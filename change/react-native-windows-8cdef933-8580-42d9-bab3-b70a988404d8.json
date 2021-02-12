@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix all package typos",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
