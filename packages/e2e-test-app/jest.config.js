@@ -17,7 +17,7 @@ module.exports = {
   testEnvironment: 'jest-environment-winappdriver',
 
   // The pattern or patterns Jest uses to detect test files
-  testRegex: '.*\\.test',
+  testRegex: '.*\\.test\\.ts$',
 
   // Default timeout of a test in milliseconds
   testTimeout: 70000,
@@ -39,6 +39,7 @@ module.exports = {
 
   testEnvironmentOptions: {
     app: 'ReactUWPTestApp_cezq6h4ygq1hw!App',
+    enableRpc: true,
     webdriverOptions: {
       // Level of logging verbosity: trace | debug | info | warn | error
       logLevel: 'error',

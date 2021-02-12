@@ -5,7 +5,7 @@
  * @format
  */
 
-import {goToComponentExample, goToApiExample} from './Helpers';
+import {goToComponentExample, goToApiExample} from './framework';
 
 describe('visitAllPages', () => {
   const componentExamples = [
