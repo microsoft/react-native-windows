@@ -3,10 +3,13 @@
 
 #include "pch.h"
 #include "TestTransaction.h"
+#include "ExceptionInfo.h"
+#include "TestCommandResponse.h"
 
 #include <Crash.h>;
 
 using namespace winrt::Microsoft::ReactNative;
+using namespace winrt::Windows::Data::Json;
 
 namespace IntegrationTest {
 
@@ -102,28 +105,24 @@ HostAction TestTransaction::OnEventsFlushed() noexcept {
   VerifyElseCrash(m_result != TestResult::None);
 
   m_state = TestState::Complete;
-  return HostAction::SubmitResult;
+  return HostAction::ResultReady;
 }
 
-void TestTransaction::SubmitResult(TestCommandResponse &response) noexcept {
+JsonObject TestTransaction::GetResult() noexcept {
   VerifyElseCrash(m_state == TestState::Complete);
 
   switch (m_result) {
     case TestResult::Pass:
-      response.TestPassed();
-      break;
+      return TestCommandResponse::TestPassed();
 
     case TestResult::Timeout:
-      response.Timeout();
-      break;
+      return TestCommandResponse::Timeout();
 
     case TestResult::FailNoMessage:
-      response.TestFailed();
-      break;
+      return TestCommandResponse::TestFailed();
 
     case TestResult::Exception:
-      response.Exception(*m_exception);
-      break;
+      return TestCommandResponse::Exception(*m_exception);
 
     case TestResult::None:
     default:
