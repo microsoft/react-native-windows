@@ -84,14 +84,6 @@ jobs:
           contents: "**"
         condition: failed()
 
-      - task: CopyFiles@2
-        displayName: Copy snapshots
-        inputs:
-          sourceFolder: $(UserProfile)\Documents\ReactUWPTestApp_cezq6h4ygq1hw!App
-          targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
-          contents: TreeDump\**
-        condition: succeededOrFailed()
-
       - task: PowerShell@2
         displayName: "MSInfo32"
         inputs:
