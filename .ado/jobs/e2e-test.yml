@@ -74,7 +74,7 @@ jobs:
       - script: yarn e2etest --updateSnapshot
         displayName: yarn e2etest --updateSnapshot
         workingDirectory: packages/e2e-test-app
-        condition: and(failed(), eq(variables.StartedTests, "true"))
+        condition: and(failed(), eq(variables.StartedTests, 'true'))
 
       - task: CopyFiles@2
         displayName: Copy snapshots
