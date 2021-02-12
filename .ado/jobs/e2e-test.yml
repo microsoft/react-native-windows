@@ -71,15 +71,15 @@ jobs:
         displayName: yarn e2etest
         workingDirectory: packages/e2e-test-app
 
-      - script: yarn e2etest --updateSnapshot
-        displayName: yarn e2etest --updateSnapshot
+      - script: yarn e2etest --updateSnapshots
+        displayName: yarn e2etest --updateSnapshots
         workingDirectory: packages/e2e-test-app
         condition: and(failed(), eq(variables.StartedTests, 'true'))
 
       - task: CopyFiles@2
         displayName: Copy snapshots
         inputs:
-          sourceFolder: packages/e2e-test-app/test/snapshots
+          sourceFolder: packages/e2e-test-app/test/__snapshots__
           targetFolder: $(Build.StagingDirectory)/snapshots
           contents: "**"
         condition: failed()
