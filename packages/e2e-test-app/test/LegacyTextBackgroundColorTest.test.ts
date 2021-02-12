@@ -17,6 +17,6 @@ describe('LegacyTextBackgroundColorTest', () => {
     const dump = await dumpVisualTree('text-color-background-view', {
       additionalProperties: ['TextHighlighters'],
     });
-    expect(dump).toMatchXamlSnapshot();
+    expect(dump).toMatchSnapshot();
   });
 });
