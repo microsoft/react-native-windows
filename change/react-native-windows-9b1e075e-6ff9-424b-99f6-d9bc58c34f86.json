@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add onPressIn / onPressOut events to TextInput",
+  "packageName": "react-native-windows",
+  "email": "igklemen@microsoft.com",
+  "dependentChangeType": "patch"
+}
