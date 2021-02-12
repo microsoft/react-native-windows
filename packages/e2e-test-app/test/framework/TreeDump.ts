@@ -59,19 +59,63 @@ export async function dumpVisualTree(
     fail(dumpResponse.message);
   }
 
-  return pruneCollapsedElements(dumpResponse.result);
+  const element = dumpResponse.result;
+  massageForComparison(element);
+  return element;
 }
 
-function pruneCollapsedElements(element: UIElement): UIElement {
+/**
+ * Massages the element to values which are safe for exact comparison. E.g.
+ * rounding or removing non-deterministic values.
+ */
+function massageForComparison(element: UIElement) {
+  pruneCollapsedElements(element);
+  roundMeasurements(element);
+}
+
+/**
+ * Removes trees of XAML that are not visible.
+ */
+function pruneCollapsedElements(element: UIElement) {
   if (!element.children) {
-    return element;
+    return;
   }
 
-  const newElement = {...element};
+  element.children = element.children.filter(
+    child => child.Visibility !== 'Collapsed',
+  );
 
-  newElement.children = element.children
-    .filter(child => child.Visibility !== 'Collapsed')
-    .map(pruneCollapsedElements);
+  element.children.forEach(pruneCollapsedElements);
+}
 
-  return newElement;
+/**
+ * Round measurements, to account for differences in scale-factor, rounding,
+ * etc.
+ */
+function roundMeasurements(element: UIElement) {
+  // Allow measuresments to be a bit more than 1 DIP apart
+  const DIPS_FUZZINESS = 1.25;
+
+  const roundFactor = DIPS_FUZZINESS * 2;
+  if (element.Width !== undefined && element.Width !== null) {
+    element.Width = roundToNearest(element.Width, roundFactor);
+  }
+
+  if (element.Height !== undefined && element.Height !== null) {
+    element.Height = roundToNearest(element.Height, roundFactor);
+  }
+
+  if (element.RenderSize) {
+    element.RenderSize = element.RenderSize.map(size =>
+      roundToNearest(size, roundFactor),
+    );
+  }
+
+  if (element.children) {
+    element.children.forEach(roundMeasurements);
+  }
+}
+
+function roundToNearest(num: number, nearest: number): number {
+  return Math.round(num / nearest) * nearest;
 }
