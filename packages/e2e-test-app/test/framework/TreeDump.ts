@@ -58,7 +58,7 @@ expect.extend({
    */
   toMatchXamlSnapshot: (
     element: UIElement,
-    epsilon: number = 1,
+    epsilon: number = 2,
   ): jest.CustomMatcherResult => {
     expect(element).toMatchSnapshot(
       createUIElementProprtyMatcher(element, epsilon),
