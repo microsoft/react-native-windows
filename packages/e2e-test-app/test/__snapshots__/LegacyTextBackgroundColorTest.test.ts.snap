@@ -12,10 +12,6 @@ Object {
   "Height": 95,
   "HorizontalAlignment": "Stretch",
   "Margin": "0,0,0,0",
-  "RenderSize": Array [
-    800,
-    95,
-  ],
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
   "Width": 800,
@@ -29,10 +25,6 @@ Object {
       "HorizontalAlignment": "Stretch",
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
-      "RenderSize": Array [
-        800,
-        20,
-      ],
       "Text": "Outer no_color START_NESTED green DEEPER_NESTED blue END_NESTED attributes.",
       "TextHighlighters": Array [
         Object {
@@ -94,10 +86,6 @@ Object {
       "HorizontalAlignment": "Stretch",
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
-      "RenderSize": Array [
-        800,
-        20,
-      ],
       "Text": "Outer no_color START_NESTED no_color DEEPER_NESTED blue END_NESTED attributes.",
       "TextHighlighters": Array [
         Object {
@@ -123,10 +111,6 @@ Object {
       "HorizontalAlignment": "Stretch",
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
-      "RenderSize": Array [
-        800,
-        20,
-      ],
       "Text": "Outer no_color START_NESTED green DEEPER_NESTED inherit green END_NESTED attributes.",
       "TextHighlighters": Array [
         Object {
@@ -179,10 +163,6 @@ Object {
       "HorizontalAlignment": "Stretch",
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
-      "RenderSize": Array [
-        800,
-        20,
-      ],
       "Text": "Outer red START_NESTED inherit red DEEPER_NESTED inherit red END_NESTED attributes.",
       "TextHighlighters": Array [
         Object {
@@ -271,10 +251,6 @@ Object {
       "HorizontalAlignment": "Stretch",
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
-      "RenderSize": Array [
-        800,
-        20,
-      ],
       "Text": "Outer red START_NESTED green DEEPER_NESTED blue END_NESTED attributes.",
       "TextHighlighters": Array [
         Object {

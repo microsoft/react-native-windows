@@ -44,7 +44,7 @@ export async function dumpVisualTree(
   accessibilityId: string,
   opts?: {
     pruneCollapsed?: boolean;
-    roundMeasurements?: boolean;
+    deterministicOnly?: boolean;
     additionalProperties?: string[];
   },
 ): Promise<UIElement> {
@@ -67,8 +67,8 @@ export async function dumpVisualTree(
     pruneCollapsedElements(element);
   }
 
-  if (opts?.roundMeasurements !== false) {
-    roundToGrid(element);
+  if (opts?.deterministicOnly !== false) {
+    removeNonDeterministicProps(element);
   }
 
   return element;
@@ -90,23 +90,16 @@ function pruneCollapsedElements(element: UIElement) {
 }
 
 /**
- * Rounds render sizes to nearest 5 px grid to account for subtle differences
- * in measurement (e.g. from rounding on different DPI devices)
- *
- * This is a hack to get around Jest snapshots needing deterministic matchers
- * and snapshot values. It can break down, e.g. if one measurement is 27,
- * but the other is 28.
+ * Removes trees of properties that are not determinisitc
  */
-function roundToGrid(element: UIElement) {
-  const NEAREST = 5;
-
+function removeNonDeterministicProps(element: UIElement) {
   if (element.RenderSize) {
-    element.RenderSize = element.RenderSize.map(
-      s => Math.round(s / NEAREST) * NEAREST,
-    );
+    // RenderSize is subject to rounding, etc and should mostly be derived from
+    // other deterministic properties in the tree.
+    delete element.RenderSize;
   }
 
   if (element.children) {
-    element.children.forEach(roundToGrid);
+    element.children.forEach(removeNonDeterministicProps);
   }
 }
