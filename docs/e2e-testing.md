@@ -175,7 +175,7 @@ import {dumpVisualTree} from './framework';
 
 test('Example test', async () => {
   const dump = await dumpVisualTree('test-id-here');
-  expect(dump).toMatchSnapshot();
+  expect(dump).toRoughlyMatchSnapshot();
 });
 ```
 

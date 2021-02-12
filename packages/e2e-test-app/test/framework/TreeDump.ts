@@ -5,11 +5,9 @@
  * @format
  */
 
+import * as _ from 'lodash';
 import {RpcClient} from 'jest-environment-winappdriver';
-
-declare global {
-  const rpcClient: RpcClient | undefined;
-}
+import 'jest-extended';
 
 /**
  * Schema of tree dumped node
@@ -37,12 +35,112 @@ export type UIElement = {
   [index: string]: unknown;
 };
 
+declare global {
+  const rpcClient: RpcClient | undefined;
+
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace jest {
+    interface Matchers<R> {
+      toRoughlyMatchSnapshot(element: UIElement): CustomMatcherResult;
+    }
+
+    interface Expect {
+      toMatchRenderSize(actual: number[], epsilon: number): CustomMatcherResult;
+    }
+  }
+}
+
+expect.extend({
+  /**
+   * Checks that a UIElement snapshot matches, with fuzzy comparision
+   */
+  toRoughlyMatchSnapshot: (
+    element: UIElement,
+    epsilon: number = 1,
+  ): jest.CustomMatcherResult => {
+    expect(element).toMatchSnapshot(
+      createUIElementProprtyMatcher(element, epsilon),
+    );
+
+    return {pass: true, message: () => ''};
+  },
+
+  /**
+   * Checks that a UIElement snapshot matches, with fuzzy comparision
+   */
+  toMatchRenderSize: (
+    actual: number[],
+    expected: number[],
+    epsilon: number,
+  ): jest.CustomMatcherResult => {
+    const message = () =>
+      `Recieved RenderSize "${JSON.stringify(
+        actual,
+      )}" does not match the expected "${JSON.stringify(expected)}"`;
+
+    if (actual.length !== expected.length) {
+      return {pass: false, message};
+    }
+
+    for (let i = 0; i < expected.length; i++) {
+      if (
+        actual[i] > expected[i] + epsilon ||
+        actual[i] < expected[i] - epsilon
+      ) {
+        return {pass: false, message};
+      }
+    }
+
+    return {pass: true, message};
+  },
+});
+
+function createUIElementProprtyMatcher(
+  element: UIElement,
+  epsilon: number,
+): Record<keyof UIElement, any> {
+  const matcher: Record<keyof UIElement, any> = {};
+
+  if (element.Height !== null && element.Height !== undefined) {
+    matcher.Height = expect.toBeWithin(
+      element.Height - epsilon,
+      element.Height + epsilon,
+    );
+  }
+
+  if (element.Width !== null && element.Width !== undefined) {
+    matcher.Width = expect.toBeWithin(
+      element.Width - epsilon,
+      element.Width + epsilon,
+    );
+  }
+
+  if (element.RenderSize) {
+    matcher.RenderSize = expect.toMatchRenderSize(element.RenderSize, epsilon);
+  }
+
+  if (element.children) {
+    const childMatchers = element.children.map(child =>
+      createUIElementProprtyMatcher(child, epsilon),
+    );
+
+    if (childMatchers.length < 1) {
+      throw new Error();
+    }
+
+    matcher.children = _.merge({}, ...childMatchers);
+  }
+
+  return matcher;
+}
+
 /**
- * Dump a section of the native visual tree
+ * Dump a section of the native visual tree.
  */
 export async function dumpVisualTree(
   accessibilityId: string,
   opts?: {
+    pruneCollapsed?: boolean;
     additionalProperties?: string[];
   },
 ): Promise<UIElement> {
@@ -60,17 +158,12 @@ export async function dumpVisualTree(
   }
 
   const element = dumpResponse.result;
-  massageForComparison(element);
-  return element;
-}
 
-/**
- * Massages the element to values which are safe for exact comparison. E.g.
- * rounding or removing non-deterministic values.
- */
-function massageForComparison(element: UIElement) {
-  pruneCollapsedElements(element);
-  roundMeasurements(element);
+  if (opts?.pruneCollapsed !== false) {
+    pruneCollapsedElements(element);
+  }
+
+  return element;
 }
 
 /**
@@ -86,36 +179,4 @@ function pruneCollapsedElements(element: UIElement) {
   );
 
   element.children.forEach(pruneCollapsedElements);
-}
-
-/**
- * Round measurements, to account for differences in scale-factor, rounding,
- * etc.
- */
-function roundMeasurements(element: UIElement) {
-  // Allow measuresments to be 2.5 DIPs off
-  const DIPS_FUZZINESS = 2.5;
-
-  const roundFactor = DIPS_FUZZINESS * 2;
-  if (element.Width !== undefined && element.Width !== null) {
-    element.Width = roundToNearest(element.Width, roundFactor);
-  }
-
-  if (element.Height !== undefined && element.Height !== null) {
-    element.Height = roundToNearest(element.Height, roundFactor);
-  }
-
-  if (element.RenderSize) {
-    element.RenderSize = element.RenderSize.map(size =>
-      roundToNearest(size, roundFactor),
-    );
-  }
-
-  if (element.children) {
-    element.children.forEach(roundMeasurements);
-  }
-}
-
-function roundToNearest(num: number, nearest: number): number {
-  return Math.round(num / nearest) * nearest;
 }

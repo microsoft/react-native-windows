@@ -35,7 +35,7 @@ module.exports = {
 
   // A list of paths to modules that run some code to configure or set up the testing framework
   // before each test file in the suite is executed
-  setupFilesAfterEnv: ['./jest.setup.js'],
+  setupFilesAfterEnv: ['./jest.setup.js', 'jest-extended'],
 
   testEnvironmentOptions: {
     app: 'ReactUWPTestApp_cezq6h4ygq1hw!App',
