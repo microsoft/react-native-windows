@@ -24,7 +24,7 @@ Object {
   "children": Array [
     Object {
       "Background": null,
-      "BorderBrush": "#00000000",
+      "BorderBrush": "Test failure",
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
