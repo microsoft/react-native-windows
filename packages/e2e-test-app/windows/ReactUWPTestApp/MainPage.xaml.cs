@@ -1,3 +1,10 @@
+using NodeRpc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using TreeDumpLibrary;
+using Windows.Data.Json;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -16,6 +23,42 @@ namespace ReactUWPTestApp
             var app = Application.Current as App;
             myRootView.ReactNativeHost = app.Host;
             myRootView.ComponentName = "RNTesterApp";
+
+
+            var handler = new Handler();
+            handler.BindOperation("DumpVisualTree", DumpVisualTree);
+
+            var server = new Server(handler);
+            var tsk = LoopServer(server);
         }
+
+        JsonObject DumpVisualTree(JsonValue payload)
+        {
+            var payloadObj = payload.GetObject();
+            var accessibilityId = payloadObj.GetNamedString("accessibilityId");
+
+            var additionalProperties = new List<string>();
+            if (payloadObj.ContainsKey("additionalProperties"))
+            {
+                foreach (JsonValue prop in payloadObj.GetNamedArray("additionalProperties"))
+                {
+                    additionalProperties.Add(prop.GetString());
+                }
+            }
+
+            var rootDump = VisualTreeDumper.DumpTree(this, null, additionalProperties, DumpTreeMode.Json);
+            var element = VisualTreeDumper.FindElementByAutomationId(JsonObject.Parse(rootDump), accessibilityId);
+
+            return element;
+        }
+
+        async Task LoopServer(Server server)
+        {
+            while (true)
+            {
+                await server.ProcessAllClientRequests(8603, TimeSpan.FromMilliseconds(50));
+            }
+        }
+
     }
 }

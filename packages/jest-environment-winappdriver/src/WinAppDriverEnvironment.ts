@@ -13,18 +13,28 @@ import NodeEnvironment = require('jest-environment-node');
 import * as webdriverio from 'webdriverio';
 import {BrowserObject, RemoteOptions} from 'webdriverio';
 import {Config} from '@jest/types';
+import {waitForConnection, RpcClient} from 'node-rnw-rpc';
 
 export type EnvironmentOptions = {
   app?: string;
+  enableRpc?: boolean;
+  rpcPort?: number;
   winAppDriverBin?: string;
   webdriverOptions?: RemoteOptions;
 };
 
+type RpcOptions = {
+  enable: boolean;
+  port: number;
+};
+
 class WinAppDriverEnvironment extends NodeEnvironment {
-  private readonly options: RemoteOptions;
+  private readonly webDriverOptions: RemoteOptions;
+  private readonly rpcOptions: RpcOptions;
   private readonly winappdriverBin: string;
   private winAppDriverProcess: ChildProcess | undefined;
   private browser: BrowserObject | undefined;
+  private rpcClient: RpcClient | undefined;
 
   constructor(config: Config.ProjectConfig) {
     super(config);
@@ -47,18 +57,28 @@ class WinAppDriverEnvironment extends NodeEnvironment {
       },
     };
 
-    this.options = Object.assign(
+    this.webDriverOptions = Object.assign(
       {},
       baseOptions,
       passedOptions.webdriverOptions,
     );
+
+    this.rpcOptions = {
+      enable: passedOptions.enableRpc === true,
+      port: passedOptions.rpcPort || 8603,
+    };
   }
 
   async setup() {
     await super.setup();
 
     this.winAppDriverProcess = await spawnWinAppDriver(this.winappdriverBin);
-    this.browser = await webdriverio.remote(this.options);
+    this.browser = await webdriverio.remote(this.webDriverOptions);
+
+    if (this.rpcOptions.enable) {
+      this.rpcClient = await waitForConnection({port: this.rpcOptions.port});
+      this.global.rpcClient = this.rpcClient;
+    }
 
     this.global.remote = webdriverio.remote;
     this.global.browser = this.browser;
@@ -69,6 +89,10 @@ class WinAppDriverEnvironment extends NodeEnvironment {
   async teardown() {
     if (this.browser) {
       await this.browser.deleteSession();
+    }
+
+    if (this.rpcClient) {
+      this.rpcClient.close();
     }
 
     this.winAppDriverProcess?.kill('SIGINT');
@@ -117,4 +141,5 @@ async function spawnWinAppDriver(
   });
 }
 
+export {RpcClient} from 'node-rnw-rpc';
 module.exports = WinAppDriverEnvironment;

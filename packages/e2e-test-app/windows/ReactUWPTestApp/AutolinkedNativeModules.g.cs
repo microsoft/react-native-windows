@@ -2,12 +2,17 @@
 
 using System.Collections.Generic;
 
+// Namespaces from node-rnw-rpc
+using NodeRpc;
+
 namespace Microsoft.ReactNative.Managed
 {
     internal static class AutolinkedNativeModules
     {
         internal static void RegisterAutolinkedNativeModulePackages(IList<IReactPackageProvider> packageProviders)
         { 
+            // IReactPackageProviders from node-rnw-rpc
+            packageProviders.Add(new NodeRpc.ReactPackageProvider());
         }
     }
 }
