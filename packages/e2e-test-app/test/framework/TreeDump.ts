@@ -5,7 +5,6 @@
  * @format
  */
 
-import * as _ from 'lodash';
 import {RpcClient} from 'jest-environment-winappdriver';
 import 'jest-extended';
 
@@ -120,15 +119,9 @@ function createUIElementProprtyMatcher(
   }
 
   if (element.children) {
-    const childMatchers = element.children.map(child =>
+    matcher.children = element.children.map(child =>
       createUIElementProprtyMatcher(child, epsilon),
     );
-
-    if (childMatchers.length < 1) {
-      throw new Error();
-    }
-
-    matcher.children = _.merge({}, ...childMatchers);
   }
 
   return matcher;
