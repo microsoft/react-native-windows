@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 12 Feb 2021 05:19:35 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.59",
+      "version": "0.0.0-canary.59",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "move autolink FS operations to async",
+            "author": "asklar@microsoft.com",
+            "commit": "d7a56e503a532058321fc962664fb013e531541d",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Feb 2021 05:08:29 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.58",
       "version": "0.0.0-canary.58",

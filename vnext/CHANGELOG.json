@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 12 Feb 2021 05:19:35 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.254",
+      "version": "0.0.0-canary.254",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed typo in template which breaks C# autolinking",
+            "author": "jthysell@microsoft.com",
+            "commit": "4a5b47c020d5136cdb280a5fbb9d4cd1e4711cfe",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix all package typos",
+            "author": "jthysell@microsoft.com",
+            "commit": "8b4f330f15b01073270c6eef7337e4f62aca874d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix cursor resetting in TextInput.",
+            "author": "igklemen@microsoft.com",
+            "commit": "c9f6405784d93cc288336308956fe0929dd657db",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Feb 2021 05:08:29 GMT",
       "tag": "react-native-windows_v0.0.0-canary.253",
       "version": "0.0.0-canary.253",
