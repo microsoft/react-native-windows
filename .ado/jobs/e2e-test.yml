@@ -79,7 +79,7 @@ jobs:
       - task: CopyFiles@2
         displayName: Copy snapshots
         inputs:
-          sourceFolder: packages/e2e-test-app/test/snapshots
+          sourceFolder: packages/e2e-test-app/test/__snapshots__
           targetFolder: $(Build.StagingDirectory)/snapshots
           contents: "**"
         condition: failed()
