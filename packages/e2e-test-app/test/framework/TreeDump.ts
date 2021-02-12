@@ -93,8 +93,8 @@ function pruneCollapsedElements(element: UIElement) {
  * etc.
  */
 function roundMeasurements(element: UIElement) {
-  // Allow measuresments to be a bit more than 1 DIP apart
-  const DIPS_FUZZINESS = 1.25;
+  // Allow measuresments to be 2.5 DIPs off
+  const DIPS_FUZZINESS = 2.5;
 
   const roundFactor = DIPS_FUZZINESS * 2;
   if (element.Width !== undefined && element.Width !== null) {
