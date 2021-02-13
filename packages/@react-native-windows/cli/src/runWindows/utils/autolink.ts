@@ -131,8 +131,9 @@ export class AutolinkWindows {
       csModuleNames = this.getCSModules();
 
       if (csModuleNames.length > 0) {
-        propertiesForProps += `\n    <!-- Set due to dependency on C# module(s): ${csModuleNames.join()} -->`;
-        propertiesForProps += `\n    <ConsumeCSharpModules Condition="'$(ConsumeCSharpModules)'==''">true</ConsumeCSharpModules>`;
+        propertiesForProps += `
+    <!-- Set due to dependency on C# module(s): ${csModuleNames.join()} -->
+    <ConsumeCSharpModules Condition="'$(ConsumeCSharpModules)'==''">true</ConsumeCSharpModules>`;
       }
     }
 
@@ -510,10 +511,11 @@ export class AutolinkWindows {
             dependencyProjectFile,
           );
 
-          projectReferencesForTargets += `\n    <!-- Projects from ${dependencyName} -->`;
-          projectReferencesForTargets += `\n    <ProjectReference Include="$(ProjectDir)${relDependencyProjectFile}">
-        <Project>${project.projectGuid}</Project>
-      </ProjectReference>`;
+          projectReferencesForTargets += `
+    <!-- Projects from ${dependencyName} -->
+    <ProjectReference Include="$(ProjectDir)${relDependencyProjectFile}">
+      <Project>${project.projectGuid}</Project>
+    </ProjectReference>`;
         }
       });
     }
