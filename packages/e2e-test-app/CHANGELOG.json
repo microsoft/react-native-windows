@@ -2,6 +2,21 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Sat, 13 Feb 2021 05:05:34 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump jest-environment-winappdriver to v1.1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4ffbe942d88558013ebd85870ca6f247e7898c79",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Feb 2021 05:19:35 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",

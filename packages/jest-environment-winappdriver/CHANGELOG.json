@@ -2,6 +2,21 @@
   "name": "jest-environment-winappdriver",
   "entries": [
     {
+      "date": "Sat, 13 Feb 2021 05:05:34 GMT",
+      "tag": "jest-environment-winappdriver_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add RPC to Environment",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4ffbe942d88558013ebd85870ca6f247e7898c79",
+            "package": "jest-environment-winappdriver"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Feb 2021 05:08:29 GMT",
       "tag": "jest-environment-winappdriver_v1.0.2",
       "version": "1.0.2",
