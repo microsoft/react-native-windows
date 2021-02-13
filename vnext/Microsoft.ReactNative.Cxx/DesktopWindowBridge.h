@@ -5,6 +5,7 @@
 #include <winrt/Windows.Foundation.h>
 #include <functional>
 #include <ReactNotificationService.h>
+#include <winrt/Microsoft.ReactNative.h>
 
 namespace Microsoft::ReactNative {
 void ForwardWindowMessage(

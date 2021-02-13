@@ -7,6 +7,7 @@
 
 using namespace winrt::Microsoft::ReactNative;
 
+#if !defined(CORE_ABI) && !defined(__APPLE__)
 namespace Microsoft::ReactNative {
 
   auto GetPropertyNameForWindowMessage(UINT uMsg) {
@@ -55,3 +56,4 @@ std::unordered_map<UINT, winrt::Microsoft::ReactNative::IReactNotificationSubscr
 }
 
 } // namespace winrt::Microsoft::ReactNative
+#endif
