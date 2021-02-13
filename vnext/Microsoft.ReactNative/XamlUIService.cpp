@@ -65,4 +65,20 @@ ReactPropertyId<xaml::XamlRoot> XamlRootProperty() noexcept {
   return winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(XamlRootProperty());
 }
 
+#ifdef USE_WINUI3
+ReactPropertyId<ui::WindowId> XamlIslandProperty() noexcept {
+  static ReactPropertyId<ui::WindowId> propId{L"ReactNative.UIManager", L"XamlIsland"};
+  return propId;
+}
+
+/*static*/ void XamlUIService::SetIslandWindow(IReactPropertyBag const &properties, ui::WindowId hwnd) {
+  winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Set(XamlIslandProperty(), hwnd);
+}
+/*static*/ ui::WindowId XamlUIService::GetIslandWindow(IReactPropertyBag const &properties) {
+  auto hwnd = winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(XamlIslandProperty());
+  return hwnd.value();
+}
+
+#endif
+
 } // namespace winrt::Microsoft::ReactNative::implementation

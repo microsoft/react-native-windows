@@ -16,23 +16,25 @@ class AppTheme {
       const Mso::React::IReactContext &context,
       const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread);
 
-  bool getIsHighContrast();
-  folly::dynamic getHighContrastColors();
+  bool getIsHighContrast() const;
+  folly::dynamic getHighContrastColors() const;
 
  private:
   // High Contrast Color helper method
-  std::string formatRGB(winrt::Windows::UI::Color ElementColor);
+  static std::string formatRGB(winrt::Windows::UI::Color ElementColor);
 
-  void fireEvent(std::string const &eventName, folly::dynamic &&eventData);
+  void fireEvent(std::string const &eventName, folly::dynamic &&eventData) const;
 
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
   bool m_isHighContrast{false};
   folly::dynamic m_highContrastColors;
-
   winrt::Windows::UI::ViewManagement::AccessibilitySettings m_accessibilitySettings{};
+  // AccessibilitySettings m_accessibilitySettings;
   winrt::Windows::UI::ViewManagement::AccessibilitySettings::HighContrastChanged_revoker m_highContrastChangedRevoker{};
   winrt::Windows::UI::ViewManagement::UISettings m_uiSettings{};
+  winrt::Microsoft::ReactNative::IReactNotificationSubscription m_wmSubscription;
+  void NotifyHighContrastChanged() const;
 };
 
 class AppThemeModule : public facebook::xplat::module::CxxModule {

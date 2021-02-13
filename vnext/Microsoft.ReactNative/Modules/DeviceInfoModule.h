@@ -3,6 +3,7 @@
 #pragma once
 
 #include <NativeModules.h>
+#include <React.h>
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Graphics.Display.h>
@@ -14,12 +15,14 @@ namespace Microsoft::ReactNative {
 // DeviceInfoHolder is created on the UI thread and stored in the PropertyBag so that the DeviceInfo module can return
 // the constants synchronously.
 struct DeviceInfoHolder {
-  DeviceInfoHolder();
+  DeviceInfoHolder(const Mso::React::IReactContext &context);
 
   static void SetCallback(
       const React::ReactPropertyBag &propertyBag,
       Mso::Functor<void(React::JSValueObject &&)> &&callback) noexcept;
-  static void InitDeviceInfoHolder(const React::ReactPropertyBag &propertyBag) noexcept;
+  static void InitDeviceInfoHolder(
+      const Mso::React::IReactContext &context,
+      const React::ReactPropertyBag &propertyBag) noexcept;
   static React::JSValueObject GetDimensions(const React::ReactPropertyBag &propertyBag) noexcept;
 
  private:
@@ -38,6 +41,8 @@ struct DeviceInfoHolder {
   winrt::Windows::UI::Core::CoreWindow::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::Windows::Graphics::Display::DisplayInformation::DpiChanged_revoker m_dpiChangedRevoker{};
   Mso::Functor<void(React::JSValueObject &&)> m_notifyCallback;
+  winrt::Microsoft::ReactNative::IReactNotificationSubscription m_wmSubscription{};
+  Mso::CntPtr<const Mso::React::IReactContext> m_context{};
 };
 
 REACT_MODULE(DeviceInfo)

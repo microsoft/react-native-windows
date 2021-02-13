@@ -1,0 +1,17 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace Microsoft.ReactNative {
+  [default_interface][webhosthidden] runtimeclass DesktopWindowMessage {
+    UInt32 uMsg {
+      get;
+    };
+    UInt64 wParam {
+      get;
+    };
+    Int64 lParam {
+      get;
+    };
+    DesktopWindowMessage(UInt32 uMsg, UInt64 wParam, Int64 lParam);
+  }
+} // namespace Microsoft.ReactNative

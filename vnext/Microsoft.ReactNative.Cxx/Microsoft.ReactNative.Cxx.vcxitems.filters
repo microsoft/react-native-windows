@@ -27,6 +27,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DesktopWindowBridge.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
@@ -144,6 +147,9 @@
     </ClInclude>
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.h">
       <Filter>TurboModule</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DesktopWindowBridge.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
