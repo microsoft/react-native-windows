@@ -5,8 +5,8 @@
 
 #include <ReactNotificationService.h>
 #include <ReactPropertyBag.h>
-#include <functional>
 #include <winrt/Windows.Foundation.h>
+#include <functional>
 
 #if defined(USE_WINUI3) && !defined(CORE_ABI) && !defined(__APPLE__) && \
     WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
@@ -14,8 +14,6 @@
 #include <winrt/Microsoft.ReactNative.h>
 
 namespace Microsoft::ReactNative {
-
-
 
 inline auto GetPropertyNameForWindowMessage(UINT uMsg) {
   auto id = std::to_wstring(uMsg);
@@ -59,7 +57,6 @@ inline std::unordered_map<UINT, winrt::Microsoft::ReactNative::IReactNotificatio
   return result;
 }
 
-
 #else
 namespace Microsoft::ReactNative {
 
@@ -83,7 +80,6 @@ std::unordered_map<UINT, winrt::Microsoft::ReactNative::IReactNotificationSubscr
 }
 #endif
 
-
 template <typename TFn, typename... TArgs>
 auto CallIndirect(const wchar_t *dllName, const char *fnName, TArgs &&... args) {
   static void *library = nullptr;
@@ -97,4 +93,3 @@ auto CallIndirect(const wchar_t *dllName, const char *fnName, TArgs &&... args) 
 #define CALL_INDIRECT(dllName, fn, ...) Microsoft::ReactNative::CallIndirect<decltype(&fn)>(dllName, #fn, __VA_ARGS__)
 
 } // namespace Microsoft::ReactNative
-
