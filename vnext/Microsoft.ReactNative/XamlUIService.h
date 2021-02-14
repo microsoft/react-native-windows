@@ -24,10 +24,10 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
 
   static void SetXamlRoot(IReactPropertyBag const &properties, xaml::XamlRoot const &xamlRoot) noexcept;
   static xaml::XamlRoot GetXamlRoot(IReactPropertyBag const &properties) noexcept;
-#ifdef USE_WINUI3
-  static void SetIslandWindow(IReactPropertyBag const &properties, ui::WindowId hwnd);
-  static ui::WindowId GetIslandWindow(IReactPropertyBag const &properties);
-#endif
+
+  static void SetIslandWindow(IReactPropertyBag const &properties, uint64_t hwnd);
+  static uint64_t GetIslandWindow(IReactPropertyBag const &properties);
+
  private:
   std::weak_ptr<::Microsoft::ReactNative::INativeUIManagerHost> m_wkUIManager;
   Mso::CntPtr<Mso::React::IReactContext> m_context;

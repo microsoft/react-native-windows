@@ -64,9 +64,7 @@ void DeviceInfoHolder::InitDeviceInfoHolder(
               strongHolder->updateDeviceInfo();
             }
           });
-    } else {
-      auto window = XamlUIService::GetIslandWindow(deviceInfoHolder->m_context->Properties());
-      auto hwnd = (HWND)window.Value;
+    } else if (auto hwnd = (HWND)XamlUIService::GetIslandWindow(deviceInfoHolder->m_context->Properties())) {
 
       deviceInfoHolder->m_wmSubscription = SubscribeToWindowMessage(
           context.Notifications(),
@@ -134,7 +132,7 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
 
     m_windowWidth = window.Bounds().Width;
     m_windowHeight = window.Bounds().Height;
-  } else if (auto hwnd = (HWND)XamlUIService::GetIslandWindow(m_context->Properties()).Value) {
+  } else if (auto hwnd = (HWND)XamlUIService::GetIslandWindow(m_context->Properties())) {
     RECT rect{};
     if (CALL_INDIRECT(L"user32.dll", GetWindowRect, hwnd, &rect)) {
       m_windowWidth = (float)(rect.right - rect.left);
