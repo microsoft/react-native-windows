@@ -114,8 +114,9 @@ struct WindowData {
               host.InstanceSettings().Properties(), rootElement.XamlRoot());
 
 #ifdef USE_WINUI3
-          winrt::Microsoft::UI::WindowId window{(uint64_t)GetXamlIslandHwnd(m_desktopWindowXamlSource)};
-          winrt::Microsoft::ReactNative::XamlUIService::SetIslandWindow(host.InstanceSettings().Properties(), window);
+          const auto islandWindow = (uint64_t)GetXamlIslandHwnd(m_desktopWindowXamlSource);
+          winrt::Microsoft::ReactNative::XamlUIService::SetIslandWindow(
+              host.InstanceSettings().Properties(), islandWindow);
 #endif
 
           // Nudge the ReactNativeHost to create the instance and wrapping context

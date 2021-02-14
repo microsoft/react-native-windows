@@ -2,28 +2,87 @@
 // Licensed under the MIT License.
 
 #pragma once
+
 #include <ReactNotificationService.h>
-#include <winrt/Microsoft.ReactNative.h>
-#include <winrt/Windows.Foundation.h>
+#include <ReactPropertyBag.h>
 #include <functional>
+#include <winrt/Windows.Foundation.h>
+
+#if defined(USE_WINUI3) && !defined(CORE_ABI) && !defined(__APPLE__) && \
+    WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#include <winrt/Microsoft.ReactNative.h>
 
 namespace Microsoft::ReactNative {
-void ForwardWindowMessage(
+
+
+
+inline auto GetPropertyNameForWindowMessage(UINT uMsg) {
+  auto id = std::to_wstring(uMsg);
+  winrt::Microsoft::ReactNative::ReactPropertyName windowMsgProperty{L"ReactNative.Desktop.WindowMessage", id.c_str()};
+  return windowMsgProperty;
+}
+
+inline void ForwardWindowMessage(
     const winrt::Microsoft::ReactNative::IReactNotificationService &svc,
     HWND hwnd,
     UINT uMsg,
     WPARAM wParam,
-    LPARAM lParam);
+    LPARAM lParam) {
+  winrt::Microsoft::ReactNative::DesktopWindowMessage args{uMsg, wParam, lParam};
+  svc.SendNotification(GetPropertyNameForWindowMessage(uMsg).Handle(), winrt::box_value((uint64_t)hwnd), args);
+}
 
-winrt::Microsoft::ReactNative::IReactNotificationSubscription SubscribeToWindowMessage(
+inline winrt::Microsoft::ReactNative::IReactNotificationSubscription SubscribeToWindowMessage(
     const winrt::Microsoft::ReactNative::IReactNotificationService &svc,
     UINT uMsg,
-    std::function<void(HWND sender, const winrt::Microsoft::ReactNative::DesktopWindowMessage &)> callback);
+    std::function<void(HWND, const winrt::Microsoft::ReactNative::DesktopWindowMessage &)> callback) {
+  return svc.Subscribe(
+      GetPropertyNameForWindowMessage(uMsg).Handle(),
+      nullptr,
+      [=](const winrt::Windows::Foundation::IInspectable &sender,
+          const winrt::Microsoft::ReactNative::IReactNotificationArgs &args) {
+        if (auto dwm = args.Data().try_as<winrt::Microsoft::ReactNative::DesktopWindowMessage>()) {
+          callback(reinterpret_cast<HWND>(winrt::unbox_value<uint64_t>(sender)), dwm);
+        }
+      });
+}
 
+inline std::unordered_map<UINT, winrt::Microsoft::ReactNative::IReactNotificationSubscription> SubscribeToWindowMessage(
+    const winrt::Microsoft::ReactNative::IReactNotificationService &svc,
+    std::initializer_list<UINT> uMsgs,
+    std::function<void(HWND, const winrt::Microsoft::ReactNative::DesktopWindowMessage &)> callback) {
+  std::unordered_map<UINT, winrt::Microsoft::ReactNative::IReactNotificationSubscription> result;
+  for (auto uMsg : uMsgs) {
+    result[uMsg] = SubscribeToWindowMessage(svc, uMsg, callback);
+  }
+  return result;
+}
+
+
+#else
+namespace Microsoft::ReactNative {
+
+/// Stubs for UWP
+template <typename... T>
+void ForwardWindowMessage(const winrt::Microsoft::ReactNative::IReactNotificationService &svc, T &&...) {}
+
+template <typename... T>
+winrt::Microsoft::ReactNative::IReactNotificationSubscription SubscribeToWindowMessage(
+    const winrt::Microsoft::ReactNative::IReactNotificationService &svc,
+    T &&...) {
+  return nullptr;
+}
+
+template <typename... T>
 std::unordered_map<UINT, winrt::Microsoft::ReactNative::IReactNotificationSubscription> SubscribeToWindowMessage(
     const winrt::Microsoft::ReactNative::IReactNotificationService &svc,
     std::initializer_list<UINT> uMsgs,
-    std::function<void(HWND, const winrt::Microsoft::ReactNative::DesktopWindowMessage &)> callback);
+    T &&...) {
+  return std::unordered_map<UINT, winrt::Microsoft::ReactNative::IReactNotificationSubscription>{};
+}
+#endif
+
 
 template <typename TFn, typename... TArgs>
 auto CallIndirect(const wchar_t *dllName, const char *fnName, TArgs &&... args) {
@@ -39,12 +98,3 @@ auto CallIndirect(const wchar_t *dllName, const char *fnName, TArgs &&... args) 
 
 } // namespace Microsoft::ReactNative
 
-namespace winrt::impl {
-
-template <>
-struct reference_traits<MSG> {
-  static auto make(const MSG &msg) {
-    return winrt::Microsoft::ReactNative::DesktopWindowMessage{msg.message, msg.wParam, msg.lParam};
-  }
-};
-} // namespace winrt::impl

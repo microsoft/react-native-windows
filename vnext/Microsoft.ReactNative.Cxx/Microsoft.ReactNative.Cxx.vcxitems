@@ -92,6 +92,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ModuleRegistration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReactPromise.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleProvider.cpp" />
+
     <!-- 
       Make sure all FB code uses the same flags to improve build parallelism.
       This is because msbuild has to invoke different cl.exe invocations for each 
@@ -121,8 +122,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)README.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DesktopWindowBridge.cpp" />
   </ItemGroup>
 </Project>
