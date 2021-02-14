@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sun, 14 Feb 2021 05:06:10 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.60",
+      "version": "0.0.0-canary.60",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update WinUI 3 package to Preview 4",
+            "author": "asklar@microsoft.com",
+            "commit": "4eaeb870a85038fef7e0396349482da056f23689",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "fix xml indentation of autolinkedNativeModules.g.targets",
+            "author": "asklar@microsoft.com",
+            "commit": "3ff91dcef101db8369ddb8b9446632a80be32b45",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Feb 2021 05:19:35 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.59",
       "version": "0.0.0-canary.59",

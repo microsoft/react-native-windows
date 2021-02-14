@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix xml indentation of autolinkedNativeModules.g.targets",
-  "packageName": "@react-native-windows/cli",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

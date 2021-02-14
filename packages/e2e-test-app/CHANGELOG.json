@@ -2,6 +2,21 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Sun, 14 Feb 2021 05:06:10 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "asklar@microsoft.com",
+            "commit": "4eaeb870a85038fef7e0396349482da056f23689",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 13 Feb 2021 05:05:34 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",

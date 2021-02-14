@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update WinUI 3 package to Preview 4",
-  "packageName": "@react-native-windows/cli",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
