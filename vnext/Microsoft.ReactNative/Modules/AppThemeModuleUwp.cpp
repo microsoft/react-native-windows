@@ -7,10 +7,10 @@
 
 #include <DesktopWindowBridge.h>
 #include <ReactPropertyBag.h>
+#include <Utils/Helpers.h>
 #include <Utils/ValueUtils.h>
 #include <XamlUIService.h>
 #include <XamlUtils.h>
-#include <Utils/Helpers.h>
 #include <cxxreact/CxxModule.h>
 
 #include <functional>

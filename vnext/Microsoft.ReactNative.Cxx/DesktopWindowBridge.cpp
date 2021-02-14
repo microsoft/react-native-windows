@@ -10,10 +10,10 @@ using namespace winrt::Microsoft::ReactNative;
 #if !defined(CORE_ABI) && !defined(__APPLE__)
 namespace Microsoft::ReactNative {
 
-  auto GetPropertyNameForWindowMessage(UINT uMsg) {
-    auto id = std::to_wstring(uMsg);
-    ReactPropertyName windowMsgProperty{L"ReactNative.Desktop.WindowMessage", id.c_str()};
-    return windowMsgProperty;
+auto GetPropertyNameForWindowMessage(UINT uMsg) {
+  auto id = std::to_wstring(uMsg);
+  ReactPropertyName windowMsgProperty{L"ReactNative.Desktop.WindowMessage", id.c_str()};
+  return windowMsgProperty;
 }
 
 void ForwardWindowMessage(
@@ -37,13 +37,10 @@ std::unordered_map<UINT, winrt::Microsoft::ReactNative::IReactNotificationSubscr
   return result;
 }
 
-
-  winrt::Microsoft::ReactNative::IReactNotificationSubscription SubscribeToWindowMessage(
+winrt::Microsoft::ReactNative::IReactNotificationSubscription SubscribeToWindowMessage(
     const winrt::Microsoft::ReactNative::IReactNotificationService &svc,
     UINT uMsg,
-    std::function<void(
-        HWND,
-        const winrt::Microsoft::ReactNative::DesktopWindowMessage &)> callback) {
+    std::function<void(HWND, const winrt::Microsoft::ReactNative::DesktopWindowMessage &)> callback) {
   return svc.Subscribe(
       GetPropertyNameForWindowMessage(uMsg).Handle(),
       nullptr,
@@ -55,5 +52,5 @@ std::unordered_map<UINT, winrt::Microsoft::ReactNative::IReactNotificationSubscr
       });
 }
 
-} // namespace winrt::Microsoft::ReactNative
+} // namespace Microsoft::ReactNative
 #endif

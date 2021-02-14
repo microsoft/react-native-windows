@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <winrt/Windows.Foundation.h>
-#include <functional>
 #include <ReactNotificationService.h>
 #include <winrt/Microsoft.ReactNative.h>
+#include <winrt/Windows.Foundation.h>
+#include <functional>
 
 namespace Microsoft::ReactNative {
 void ForwardWindowMessage(

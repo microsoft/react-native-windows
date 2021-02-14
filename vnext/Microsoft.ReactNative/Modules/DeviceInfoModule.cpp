@@ -65,7 +65,6 @@ void DeviceInfoHolder::InitDeviceInfoHolder(
             }
           });
     } else if (auto hwnd = (HWND)XamlUIService::GetIslandWindow(deviceInfoHolder->m_context->Properties())) {
-
       deviceInfoHolder->m_wmSubscription = SubscribeToWindowMessage(
           context.Notifications(),
           WM_WINDOWPOSCHANGED,
