@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#if !defined(CORE_ABI) && !defined(__APPLE__)
 #include <DesktopWindowBridge.h>
 #include <ReactPropertyBag.h>
 
 using namespace winrt::Microsoft::ReactNative;
 
-#if !defined(CORE_ABI) && !defined(__APPLE__)
 namespace Microsoft::ReactNative {
 
 auto GetPropertyNameForWindowMessage(UINT uMsg) {
