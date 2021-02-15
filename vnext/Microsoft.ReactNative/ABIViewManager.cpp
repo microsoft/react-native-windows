@@ -53,9 +53,13 @@ const wchar_t *ABIViewManager::GetName() const {
   return m_name.c_str();
 }
 
-xaml::DependencyObject ABIViewManager::CreateViewCore(int64_t) {
-  auto view = m_viewManager.CreateView();
-  return view;
+xaml::DependencyObject ABIViewManager::CreateViewCore(int64_t, winrt::Microsoft::ReactNative::JSValueObject &props) {
+  if (auto viewCreateProps = m_viewManager.try_as<IViewManagerCreateWithProperties>()) {
+    auto view = viewCreateProps.CreateViewWithProperties(
+        MakeJSValueTreeReader(winrt::Microsoft::ReactNative::JSValue(std::move(props.Copy()))));
+    return view.as<xaml::DependencyObject>();
+  }
+  return m_viewManager.CreateView();
 }
 
 void ABIViewManager::GetExportedViewConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {

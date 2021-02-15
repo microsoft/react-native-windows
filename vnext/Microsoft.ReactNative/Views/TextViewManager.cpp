@@ -137,7 +137,7 @@ const wchar_t *TextViewManager::GetName() const {
   return L"RCTText";
 }
 
-XamlView TextViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView TextViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
   auto textBlock = xaml::Controls::TextBlock();
   textBlock.TextWrapping(xaml::TextWrapping::Wrap); // Default behavior in React Native
   return textBlock;

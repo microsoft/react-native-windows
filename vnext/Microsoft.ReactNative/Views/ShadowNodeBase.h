@@ -69,7 +69,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   virtual void removeAllChildren() override;
   virtual void AddView(ShadowNode &child, int64_t index) override;
   virtual void RemoveChildAt(int64_t indexToRemove) override;
-  virtual void createView() override;
+  virtual void createView(winrt::Microsoft::ReactNative::JSValueObject &) override;
   virtual bool NeedsForceLayout();
 
   virtual void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;

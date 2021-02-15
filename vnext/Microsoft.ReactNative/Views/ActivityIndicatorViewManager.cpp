@@ -25,7 +25,7 @@ void ActivityIndicatorViewManager::GetNativeProps(const winrt::Microsoft::ReactN
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"color", L"Color");
 }
 
-XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
   auto progressRing = xaml::Controls::ProgressRing();
   return progressRing;
 }

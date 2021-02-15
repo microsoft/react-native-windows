@@ -25,7 +25,7 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   ~ScrollViewShadowNode();
   void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs)
       override;
-  void createView() override;
+  void createView(winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
  private:
@@ -91,8 +91,8 @@ void ScrollViewShadowNode::dispatchCommand(
   }
 }
 
-void ScrollViewShadowNode::createView() {
-  Super::createView();
+void ScrollViewShadowNode::createView(winrt::Microsoft::ReactNative::JSValueObject &props) {
+  Super::createView(props);
 
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
   const auto scrollViewUWPImplementation = react::uwp::ScrollViewUWPImplementation(scrollViewer);
@@ -458,7 +458,7 @@ void ScrollViewManager::GetExportedCustomDirectEventTypeConstants(
   writer.WriteObjectEnd();
 }
 
-XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
   const auto scrollViewer = winrt::ScrollViewer{};
 
   scrollViewer.HorizontalScrollBarVisibility(winrt::ScrollBarVisibility::Auto);

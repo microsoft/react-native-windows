@@ -62,7 +62,7 @@ class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewMana
   ::Microsoft::ReactNative::ShadowNode *createShadow() const override;
 
  protected:
-  xaml::DependencyObject CreateViewCore(int64_t) override;
+  xaml::DependencyObject CreateViewCore(int64_t, winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
   std::wstring m_name;
   ReactNative::IViewManager m_viewManager;

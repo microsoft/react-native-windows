@@ -47,9 +47,15 @@ namespace Microsoft.ReactNative
     void ReplaceChild(XAML_NAMESPACE.FrameworkElement parent, XAML_NAMESPACE.UIElement oldChild, XAML_NAMESPACE.UIElement newChild);
   }
 
-  [webhosthidden]
+  [webhosthidden] DOC_STRING("Enables a view manager to be responsible for its own layout and sizing.")
   interface IViewManagerRequiresNativeLayout
   {
     Boolean RequiresNativeLayout { get; };
   }
+
+  [webhosthidden]
+  DOC_STRING("Enables a view manager to dynamically decide what kind of view to create depending on the properties passed to it.")
+  interface IViewManagerCreateWithProperties {
+    Object CreateViewWithProperties(IJSValueReader propertyMapReader);
+  };
 } // namespace Microsoft.ReactNative
