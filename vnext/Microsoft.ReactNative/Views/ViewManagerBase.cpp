@@ -191,7 +191,7 @@ void ViewManagerBase::GetExportedCustomDirectEventTypeConstants(
   }
 }
 
-XamlView ViewManagerBase::CreateView(int64_t tag, winrt::Microsoft::ReactNative::JSValueObject& props) {
+XamlView ViewManagerBase::CreateView(int64_t tag, winrt::Microsoft::ReactNative::JSValueObject &props) {
   XamlView view = CreateViewCore(tag, props);
 
   OnViewCreated(view);
