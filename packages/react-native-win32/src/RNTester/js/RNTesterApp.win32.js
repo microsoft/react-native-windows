@@ -46,9 +46,6 @@ LogBox.ignoreLogs(['Module RCTImagePickerManager requires main queue setup']);
 
 // const APP_STATE_KEY = 'RNTesterAppState.v2'; [Win32]
 
-const MessageQueue = require('react-native/Libraries/BatchedBridge/MessageQueue');
-MessageQueue.spy(true);
-
 const Header = ({
   onBack,
   title,
