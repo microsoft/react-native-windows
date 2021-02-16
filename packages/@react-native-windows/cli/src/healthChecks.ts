@@ -47,7 +47,7 @@ export function getHealthChecks(): HealthCheckCategory[] | undefined {
                 }
               },
               runAutomaticFix: async ({ loader, logManualInstallation }) => {
-                const command = `powershell ${rnwDepScriptPath} -Check ${id}`;
+                const command = `powershell -ExecutionPolicy Unrestricted -NoProfile ${rnwDepScriptPath} -Check ${id}`;
                 try {
                   const { exitCode } = await execa(command, { stdio: 'inherit' });
                   if (exitCode) {
