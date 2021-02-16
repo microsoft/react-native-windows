@@ -1095,7 +1095,7 @@ T &dynamic::get() {
   if (auto *p = get_nothrow<T>()) {
     return *p;
   }
-  throw_exception<TypeError>(getDynamicTypeName<T>(), type());
+  throw_exception<TypeError>(TypeInfo<T>::name, type());
 }
 
 #endif
