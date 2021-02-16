@@ -366,8 +366,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseVersion": "0.0.0-c66aa8abc",
-      "baseHash": "693cbdb6e94b08b691d8fbacd792bbf1f2c56927"
+      "baseHash": "8821c40968873af45b343d0deb37f62ecb56286d"
     },
     {
       "type": "patch",
