@@ -34,7 +34,15 @@
       "type": "copy",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseHash": "ada8044fad72483553c185750fc464c1b785342a"
+      "baseHash": "ada8044fad72483553c185750fc464c1b785342a",
+      "issue": 4578
+    },
+    {
+      "type": "copy",
+      "file": "src/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.win32.js",
+      "baseFile": "Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.android.js",
+      "baseHash": "ba167547a814d5be30acda847423f86cf2104b59",
+      "issue": 4578
     },
     {
       "type": "platform",
