@@ -152,6 +152,10 @@
     },
     {
       "type": "platform",
+      "file": "src/Libraries/Components/Text/Tests/TextWin32Test.tsx"
+    },
+    {
+      "type": "platform",
       "file": "src/Libraries/Components/Text/TextWin32.Props.ts"
     },
     {
@@ -397,6 +401,14 @@
       "baseVersion": "0.63.2",
       "baseHash": "00145fb07af1746e25fe01e828770c1229525265",
       "issue": 5269
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Text/Text.win32.js",
+      "baseFile": "Libraries/Text/Text.js",
+      "baseVersion": "0.63.2",
+      "baseHash": "47b5745aff3f5c3fc6f3295e769746b2c40532a6",
+      "issue": 7080
     },
     {
       "type": "derived",
