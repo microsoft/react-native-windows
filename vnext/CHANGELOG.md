@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 01 Feb 2021 15:05:10 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Feb 2021 22:57:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.22
+
+Tue, 16 Feb 2021 22:57:36 GMT
+
+### Patches
+
+- Workaround arm64 compiler bug for internal consumption (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.63.20
 

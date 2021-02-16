@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 16 Feb 2021 22:57:36 GMT",
+      "tag": "react-native-windows_v0.63.22",
+      "version": "0.63.22",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Workaround arm64 compiler bug for internal consumption",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "b60211651255458abf84a06fc3e90779927735ab",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Feb 2021 15:05:10 GMT",
       "tag": "react-native-windows_v0.63.20",
       "version": "0.63.20",

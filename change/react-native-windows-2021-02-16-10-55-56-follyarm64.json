@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Workaround arm64 compiler bug for internal consumption",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2021-02-16T18:55:56.164Z"
-}

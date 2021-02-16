@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 16 Feb 2021 22:57:36 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.7",
+      "version": "0.63.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.63] focusable property for TextWin32",
+            "author": "ppatboyd@outlook.com",
+            "commit": "b1888affa58e20a8cd29c7299a3758b38c106abc",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 Feb 2021 15:04:50 GMT",
       "tag": "@office-iss/react-native-win32_v0.63.6",
       "version": "0.63.6",
