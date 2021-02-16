@@ -96,6 +96,13 @@
       "issue": 4578
     },
     {
+      "type": "copy",
+      "file": "src/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.windows.js",
+      "baseFile": "Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.android.js",
+      "baseHash": "ba167547a814d5be30acda847423f86cf2104b59",
+      "issue": 4578
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
