@@ -218,12 +218,6 @@ export async function copyProjectTemplateAndReplace(
       hasProps: true,
       hasTargets: true,
     },
-    {
-      id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
-      version: options.useWinUI3 ? winui3Version : winui2xVersion,
-      hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
-      hasTargets: false,
-    },
   ];
 
   if (options.experimentalNuGetDependency) {
@@ -256,6 +250,16 @@ export async function copyProjectTemplateAndReplace(
     });
   }
 
+  const packagesConfigCppNugetPackages = [
+    ...cppNugetPackages,
+    {
+      id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
+      version: options.useWinUI3 ? winui3Version : winui2xVersion,
+      hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
+      hasTargets: false,
+    },
+  ];
+
   const templateVars: Record<string, any> = {
     useMustache: true,
     regExpPatternsToRemove: [],
@@ -285,6 +289,7 @@ export async function copyProjectTemplateAndReplace(
     xamlNamespace: xamlNamespace,
     xamlNamespaceCpp: xamlNamespaceCpp,
     cppNugetPackages: cppNugetPackages,
+    packagesConfigCppNugetPackages: packagesConfigCppNugetPackages,
 
     // cs template variables
     csNugetPackages: csNugetPackages,
@@ -472,10 +477,14 @@ export async function copyProjectTemplateAndReplace(
       });
     }
 
-    if (fs.existsSync(path.join(sharedPath, projDir, 'BuildFlags.props'))) {
+    if (
+      fs.existsSync(
+        path.join(sharedPath, projDir, 'ExperimentalFeatures.props'),
+      )
+    ) {
       sharedProjMappings.push({
-        from: path.join(sharedPath, projDir, 'BuildFlags.props'),
-        to: path.join(windowsDir, 'BuildFlags.props'),
+        from: path.join(sharedPath, projDir, 'ExperimentalFeatures.props'),
+        to: path.join(windowsDir, 'ExperimentalFeatures.props'),
       });
     }
 

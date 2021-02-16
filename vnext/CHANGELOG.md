@@ -1,8 +1,93 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 30 Jan 2021 05:06:38 GMT and should not be manually modified.
+This log was last generated on Sun, 14 Feb 2021 05:06:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.255
+
+Sun, 14 Feb 2021 05:06:10 GMT
+
+### Changes
+
+- Update WinUI 3 package to Preview 4 (asklar@microsoft.com)
+
+## 0.0.0-canary.254
+
+Fri, 12 Feb 2021 05:19:35 GMT
+
+### Changes
+
+- Fixed typo in template which breaks C# autolinking (jthysell@microsoft.com)
+- Fix all package typos (jthysell@microsoft.com)
+- Fix cursor resetting in TextInput. (igklemen@microsoft.com)
+
+## 0.0.0-canary.253
+
+Thu, 11 Feb 2021 05:08:29 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.4.12 (ngerlem@microsoft.com)
+
+### Changes
+
+- Minor doc update (30809111+acoates-ms@users.noreply.github.com)
+- Make modules use the app's buildFlags.props (asklar@microsoft.com)
+- Improve compile time by increasing paralelism (dannyvv@microsoft.com)
+- Rename "BuildFlags.props" to "ExperimentalFeatures.props" (ngerlem@microsoft.com)
+
+## 0.0.0-canary.252
+
+Wed, 10 Feb 2021 05:06:37 GMT
+
+### Changes
+
+- Build apps for either/or WinUI 3 or XAML (asklar@microsoft.com)
+
+## 0.0.0-canary.251
+
+Tue, 09 Feb 2021 05:07:37 GMT
+
+### Changes
+
+- [Fix] ScrollView.ScrollToEnd not working for vertical lists (igklemen@microsoft.com)
+- Bump just-scripts from 1.3.2 to 1.3.3 (dannyvv@microsoft.com)
+- Doxysaurus tool to generate docs for  C++ (vmorozov@microsoft.com)
+
+## 0.0.0-canary.250
+
+Mon, 08 Feb 2021 05:05:41 GMT
+
+### Changes
+
+- Fix Switch.onChange (igklemen@microsoft.com)
+
+## 0.0.0-canary.249
+
+Thu, 04 Feb 2021 05:05:58 GMT
+
+### Changes
+
+- Initialize ETW provider only once (asklar@microsoft.com)
+
+## 0.0.0-canary.248
+
+Wed, 03 Feb 2021 05:05:12 GMT
+
+### Changes
+
+- Fix template for WinUI3 C# App by expanding namespace of argument in AppOnActivated (dannyvv@microsoft.com)
+- AllAnimations only exists on RS5 (asklar@microsoft.com)
+- Fix deep linking activation (vmorozov@microsoft.com)
+
+## 0.0.0-canary.247
+
+Tue, 02 Feb 2021 05:05:37 GMT
+
+### Changes
+
+- Allow custom view managers to be able to trigger our logic to run native layout (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.246
 
@@ -1701,7 +1786,7 @@ Thu, 07 May 2020 00:05:07 GMT
 - Don't delete nuget.exe if using locally-installed (e.g. chocolatey) (asklar@microsoft.com)
 - Only bundle when not running Intellisense builds (asklar@microsoft.com)
 - Disable CxxFrameHandler4 (ngerlem@microsoft.com)
-- Switch package layout to use `files` in `pacakge.json` rather than `.npmignore` (dannyvv@microsoft.com)
+- Switch package layout to use `files` in `package.json` rather than `.npmignore` (dannyvv@microsoft.com)
 
 ## 0.0.0-master.59
 

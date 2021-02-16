@@ -1,0 +1,397 @@
+{
+  "name": "sample-apps",
+  "entries": [
+    {
+      "date": "Sun, 14 Feb 2021 05:06:10 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.255",
+            "author": "asklar@microsoft.com",
+            "commit": "4eaeb870a85038fef7e0396349482da056f23689",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Feb 2021 05:19:35 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.254",
+            "author": "jthysell@microsoft.com",
+            "commit": "4a5b47c020d5136cdb280a5fbb9d4cd1e4711cfe",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 11 Feb 2021 05:08:29 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.253",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "b35ef5002f9d8a5a2f18aa0529efc095d47681bc",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Feb 2021 05:06:37 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.252",
+            "author": "asklar@microsoft.com",
+            "commit": "504cd4293df706f9089562bb630242c13ec4028f",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 09 Feb 2021 05:07:37 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.251",
+            "author": "igklemen@microsoft.com",
+            "commit": "400b1b830a981950a7d423e20dc00ee4326c5ce6",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 08 Feb 2021 05:05:41 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.250",
+            "author": "igklemen@microsoft.com",
+            "commit": "1a94c915b5be42ca2d43792f35fa9fad26dba2f4",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 05 Feb 2021 05:05:05 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.249",
+            "author": "ngerlem@microsoft.com",
+            "commit": "22ee9e8c47a0c794e7d509a471547ba873578e31",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 04 Feb 2021 05:05:58 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.249",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b76b4569db56c3a0f84584374146a6aabd509205",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 03 Feb 2021 05:05:12 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.248",
+            "author": "dannyvv@microsoft.com",
+            "commit": "c8f299a4c0bf9e83dbfa27f33cc0f0e2068a7d15",
+            "package": "sample-apps"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b34311f6ee86fd8ade1b9132f08109f8a5dcdf6d",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Feb 2021 05:05:37 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.247",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3859f2ff3f083d2a712231a9b497ecc70c33a844",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 30 Jan 2021 05:06:38 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.246",
+            "author": "asklar@microsoft.com",
+            "commit": "099dab0f3799dd7572ef81e8b93bf4eeb77845ab",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 29 Jan 2021 05:05:32 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.245",
+            "author": "asklar@microsoft.com",
+            "commit": "a5270d618070147f224e178f9dd3589fc64ca209",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Jan 2021 05:06:47 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.244",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-windows-codegen to v1.1.14",
+            "author": "dannyvv@microsoft.com",
+            "commit": "54fb284afaf1b12ab51f1c29bb7ca67eddab8db1",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 27 Jan 2021 05:06:36 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.243",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ed5cbe4de1abac005e94ddc3564af4bb60b804f0",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-windows-codegen to v1.1.13",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ed5cbe4de1abac005e94ddc3564af4bb60b804f0",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 Jan 2021 05:06:39 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.242",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b8f2beec9851dffe3188156c859cb123de926ba0",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump react-native-windows-codegen to v1.1.12",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b8f2beec9851dffe3188156c859cb123de926ba0",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 23 Jan 2021 05:08:20 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.241",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e391673d3eb1e2edb97bd1622da1455f13d83f06",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 22 Jan 2021 05:07:27 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.240",
+            "author": "asklar@microsoft.com",
+            "commit": "bb97eb1a6a8f46cc3664261cfca6c4df06273bca",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 Jan 2021 18:54:54 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.239",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "60778ed483756357f4ae73681e5b490404b4c2ea",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 20 Jan 2021 01:45:54 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.238",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8707b87ea875a2060f20edd9d598f6d1d416997f",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 18 Jan 2021 05:08:29 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.238",
+            "author": "mganandraj@outlook.com",
+            "commit": "a542b74968694b88ab2bf6514267264dec44f8da",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 17 Jan 2021 05:08:07 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.237",
+            "author": "asklar@microsoft.com",
+            "commit": "822f5421e9841d8b188c0c1821aaf9e1e1ef1241",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 16 Jan 2021 05:05:46 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.236",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "e6de26b1e5ae2d74e55b38b0383e2e817b4bb150",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 15 Jan 2021 05:07:01 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.235",
+            "author": "vmorozov@microsoft.com",
+            "commit": "af70a3e80fe482996e4151663b54a2fa37bea237",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 14 Jan 2021 05:05:22 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.234",
+            "author": "vmorozov@microsoft.com",
+            "commit": "b3694b77f6b79470f1536eea474cf8081cb19068",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    }
+  ]
+}

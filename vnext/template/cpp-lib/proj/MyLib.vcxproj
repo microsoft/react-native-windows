@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
   {{#cppNugetPackages}}
   {{#propsTopOfFile}}
   <Import Project="$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props" Condition="Exists('$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props')" />
@@ -92,6 +93,7 @@
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\external\Microsoft.ReactNative.Uwp.CppLib.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.props')" />
     <Import Project="$(SolutionDir)\packages\$(WinUIPackageProps)" Condition="'$(WinUIPackageProps)'!='' And Exists('$(SolutionDir)\packages\$(WinUIPackageProps)')" />
   </ImportGroup>
+
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>
     <ClCompile>

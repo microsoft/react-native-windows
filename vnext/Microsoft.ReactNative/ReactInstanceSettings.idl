@@ -140,7 +140,17 @@ Subsequent runs of the application should be faster as the JavaScript will be lo
     UInt16 SourceBundlePort { get; set; };
 
     JSIEngine JSIEngineOverride { get; set; };
+
+    DOC_STRING("This event is triggered when a React Native instance has been created, but before any JavaScript is loaded in the JavaScript engine.  The @InstanceCreatedEventArgs.Context property on the event arguments provides access to the instance.")
     event Windows.Foundation.EventHandler<InstanceCreatedEventArgs> InstanceCreated;
+
+    DOC_STRING("This event is triggered when React Native instance has finished loading the JavaScript bundle.  If there were errors, then the @InstanceLoadedEventArgs.Failed property on the args will be true.\n\
+\n\
+Error types include:\n\
+* JavaScript Syntax Errors\n\
+* Global JavaScript Exception Thrown\n\
+\n\
+The @InstanceLoadedEventArgs.Context property on the event arguments provides access to the instance.")
     event Windows.Foundation.EventHandler<InstanceLoadedEventArgs> InstanceLoaded;
     event Windows.Foundation.EventHandler<InstanceDestroyedEventArgs> InstanceDestroyed;
   }

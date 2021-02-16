@@ -1,0 +1,14 @@
+{
+  "extends": "@rnw-scripts/ts-config",
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "types": ["jest", "webdriverio"]
+  },
+  "include": [
+    "app",
+    "test",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

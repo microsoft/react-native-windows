@@ -5,8 +5,7 @@ parameters:
     values: 
      - PullRequest 
      - Continuous 
-  
-  
+
 jobs:
   - job: Playground
     variables:
@@ -14,7 +13,7 @@ jobs:
     displayName: Playground
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        X86DebugUnivesal:
+        X86DebugUniversal:
           BuildConfiguration: Debug
           BuildPlatform: x86
           SolutionFile: Playground.sln
@@ -37,8 +36,7 @@ jobs:
           BuildPlatform: x86
           SolutionFile: Playground.sln
           BuildWinUI3: true
-    pool:
-      vmImage: $(VmImage)
+    pool: $(AgentPool.Medium)
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
 
@@ -87,8 +85,6 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             $(BuildWinUI3Properties)
             /p:BaseIntDir=$(BaseIntDir) 
-
-        continueOnError: true # See issue #6129
 
       - powershell: $(Build.SourcesDirectory)/.ado/scripts/TestWACK.ps1 $(BuildPlatform) $(BuildConfiguration) $(Build.StagingDirectory)\WACK
         displayName: Test WACK

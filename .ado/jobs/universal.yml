@@ -10,13 +10,10 @@
       default:
         - BuildEnvironment: PullRequest
           Matrix:
-            - Name: ArmRelease
-              BuildConfiguration: Release
-              BuildPlatform: ARM
             - Name: X64Release
               BuildConfiguration: Release
               BuildPlatform: X64
-            - Name: X64Debug
+            - Name: X86Debug
               BuildConfiguration: Debug
               BuildPlatform: X86
               LayoutHeaders: true
@@ -64,6 +61,8 @@
                 - checkout: self
                   clean: false
                   submodules: false
+
+                - template: ../templates/apply-published-version-vars.yml
 
                 - template: ../templates/build-rnw.yml
                   parameters:
@@ -206,7 +205,6 @@
 
     # This job is the one that accumulates the spread out build tasks into one dependency
     - job: UniversalBuild
-      condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
       displayName: Universal Build 🏗
       variables:
         - template: ../variables/vs2019.yml
@@ -221,6 +219,8 @@
       cancelTimeoutInMinutes: 5
 
       steps:
+        - checkout: none
+          clean: false
         - powershell: |
             Write-Host "Waited for all Universal Build steps"
           displayName: Waiting for all Universal Build steps

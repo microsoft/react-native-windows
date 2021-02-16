@@ -466,6 +466,7 @@ XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/) {
   scrollViewer.VerticalSnapPointsAlignment(winrt::SnapPointsAlignment::Near);
   scrollViewer.VerticalSnapPointsType(winrt::SnapPointsType::Mandatory);
   scrollViewer.HorizontalSnapPointsType(winrt::SnapPointsType::Mandatory);
+  scrollViewer.HorizontalScrollMode(winrt::ScrollMode::Disabled);
 
   const auto snapPointManager = react::uwp::SnapPointManagingContentControl::Create();
   scrollViewer.Content(*snapPointManager);

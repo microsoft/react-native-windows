@@ -8,20 +8,24 @@ parameters:
 
 jobs:
   - job: IntegrationTest
-    displayName: Integration Test
+    displayName: Integration Test App
     strategy:
       matrix:
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          ARM:
+          Arm:
             BuildPlatform: ARM
-          ARM64:
+            NoDeployOption: --no-deploy # We don't have Arm agents
+          Arm64:
             BuildPlatform: ARM64
+            NoDeployOption: --no-deploy # We don't have Arm agents
         # End Continuous only
         X64:
           BuildPlatform: x64
+          NoDeployOption:
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
           X86:
             BuildPlatform: x86
+            NoDeployOption:
         # End Continuous only
 
     variables:
@@ -51,16 +55,11 @@ jobs:
       # take up memory. Do the expensive parts of the build first.
       - script: yarn windows --no-launch --no-packager --no-deploy --no-autolink --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory)
         displayName: yarn windows --no-launch
-        workingDirectory: packages/IntegrationTest
-
-      # This will normally be run during tests if it isn't already, but running
-      # it before helps avoid our window from being obscured.
-      - powershell: Start-Process CheckNetIsolation.exe -ArgumentList "LoopbackExempt","-is" -Verb runAs
-        displayName: Exempt loopback server
+        workingDirectory: packages/integration-test-app
 
       - powershell: Start-Process npm -ArgumentList "run","start"
         displayName: Start packager
-        workingDirectory: packages/IntegrationTest
+        workingDirectory: packages/integration-test-app
 
       # Instance load may time out if the packager takes too long to return a
       # bundle. Request the bundle ahead of time so that the instance will get
@@ -87,9 +86,9 @@ jobs:
       # There's a slight race condition here, where we assume Chrome will open
       # before this launches the app. This step takes ~1m on CI machines so it
       # shouldn't be a practical concern.
-      - script: yarn windows --no-build --no-packager --no-autolink --arch $(BuildPlatform) --logging
+      - script: yarn windows --no-build $(NoDeployOption) --no-packager --no-autolink --arch $(BuildPlatform) --logging
         displayName: yarn windows --no-build
-        workingDirectory: packages/IntegrationTest
+        workingDirectory: packages/integration-test-app
 
       - powershell: |
           $wshell = New-Object -ComObject wscript.shell
@@ -106,7 +105,8 @@ jobs:
 
       - script: yarn integration-test
         displayName: yarn integration-test
-        workingDirectory: packages/IntegrationTest
+        workingDirectory: packages/integration-test-app
+        condition: eq(variables.NoDeployOption, '')
 
       - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/after-test.png
         displayName: Screenshot desktop after tests
@@ -115,14 +115,14 @@ jobs:
       - task: PublishPipelineArtifact@1
         displayName: Upload targets
         inputs:
-          artifactName: Targets - IntegrationTest-$(System.JobAttempt)
-          targetPath: packages/IntegrationTest/windows/$(BuildPlatform)/Debug/integrationtest
+          artifactName: Targets - IntegrationTest-$(BuildPlatform)-$(System.JobAttempt)
+          targetPath: packages/integration-test-app/windows/$(BuildPlatform)/Debug/integrationtest
         condition: failed()
 
       - task: PublishPipelineArtifact@1
         displayName: Upload screenshots
         inputs:
-          artifactName: Screenshots - IntegrationTest-$(System.JobAttempt)
+          artifactName: Screenshots - IntegrationTest-$(BuildPlatform)-$(System.JobAttempt)
           targetPath: $(Build.StagingDirectory)/Screenshots
         condition: succeededOrFailed()
 

@@ -7,7 +7,7 @@ const expectedConfig = {
   solutionFile: 'Error: Solution file is required but not specified in react-native.config.',
   project: {
     projectFile: 'Error: Project is required but not specified in react-native.config.',
-  }
+  },
 };
 
 const expectedConfigIgnoringOverride = {

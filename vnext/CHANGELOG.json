@@ -2,6 +2,260 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 14 Feb 2021 05:06:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.255",
+      "version": "0.0.0-canary.255",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update WinUI 3 package to Preview 4",
+            "author": "asklar@microsoft.com",
+            "commit": "4eaeb870a85038fef7e0396349482da056f23689",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Feb 2021 05:19:35 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.254",
+      "version": "0.0.0-canary.254",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed typo in template which breaks C# autolinking",
+            "author": "jthysell@microsoft.com",
+            "commit": "4a5b47c020d5136cdb280a5fbb9d4cd1e4711cfe",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix all package typos",
+            "author": "jthysell@microsoft.com",
+            "commit": "8b4f330f15b01073270c6eef7337e4f62aca874d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix cursor resetting in TextInput.",
+            "author": "igklemen@microsoft.com",
+            "commit": "c9f6405784d93cc288336308956fe0929dd657db",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 11 Feb 2021 05:08:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.253",
+      "version": "0.0.0-canary.253",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Minor doc update",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "b35ef5002f9d8a5a2f18aa0529efc095d47681bc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Make modules use the app's buildFlags.props",
+            "author": "asklar@microsoft.com",
+            "commit": "3a875c2bf27354dc0b5cf96a291ab9105bf3a774",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Improve compile time by increasing paralelism",
+            "author": "dannyvv@microsoft.com",
+            "commit": "91bfc83f6b1343dd3ac340d6eacfdb0c8316b463",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Rename \"BuildFlags.props\" to \"ExperimentalFeatures.props\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.12",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Feb 2021 05:06:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.252",
+      "version": "0.0.0-canary.252",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Build apps for either/or WinUI 3 or XAML",
+            "author": "asklar@microsoft.com",
+            "commit": "504cd4293df706f9089562bb630242c13ec4028f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 09 Feb 2021 05:07:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.251",
+      "version": "0.0.0-canary.251",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[Fix] ScrollView.ScrollToEnd not working for vertical lists",
+            "author": "igklemen@microsoft.com",
+            "commit": "400b1b830a981950a7d423e20dc00ee4326c5ce6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump just-scripts from 1.3.2 to 1.3.3",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ef4046c6a798446b6404dc26d0dd39224a0d7274",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Doxysaurus tool to generate docs for  C++",
+            "author": "vmorozov@microsoft.com",
+            "commit": "78ddbbe724b5f1bd4384d8a0be50b9e549f014bc",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 08 Feb 2021 05:05:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.250",
+      "version": "0.0.0-canary.250",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Switch.onChange",
+            "author": "igklemen@microsoft.com",
+            "commit": "1a94c915b5be42ca2d43792f35fa9fad26dba2f4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 05 Feb 2021 05:05:05 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.249",
+      "version": "0.0.0-canary.249",
+      "comments": {
+        "none": [
+          {
+            "comment": "Make @types/node version explicit",
+            "author": "ngerlem@microsoft.com",
+            "commit": "22ee9e8c47a0c794e7d509a471547ba873578e31",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 04 Feb 2021 05:05:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.249",
+      "version": "0.0.0-canary.249",
+      "comments": {
+        "none": [
+          {
+            "comment": "Consolidate duplicated clang-format files",
+            "author": "ngerlem@microsoft.com",
+            "commit": "12bd50d214a1e1d3f5e3fbf6f556f5928fccec4a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove stale gitignored files",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b76b4569db56c3a0f84584374146a6aabd509205",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump react-native-platform-override to v1.4.10",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b76b4569db56c3a0f84584374146a6aabd509205",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Initialize ETW provider only once",
+            "author": "asklar@microsoft.com",
+            "commit": "03f9afb65b3dad4a9ec8bdaf66ba0b79c844c39e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 03 Feb 2021 05:05:12 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.248",
+      "version": "0.0.0-canary.248",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix template for WinUI3 C# App by expanding namespace of argument in AppOnActivated",
+            "author": "dannyvv@microsoft.com",
+            "commit": "c8f299a4c0bf9e83dbfa27f33cc0f0e2068a7d15",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "AllAnimations only exists on RS5",
+            "author": "asklar@microsoft.com",
+            "commit": "643bf1cd9c4ddf1d3d2020e73073b100bcf3b121",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix deep linking activation",
+            "author": "vmorozov@microsoft.com",
+            "commit": "78eef2a9ccf6d905bc5530ef2352ec0716ef1573",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Move `react-native-windows-codegen` to `@react-native-windows/codegen`",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b34311f6ee86fd8ade1b9132f08109f8a5dcdf6d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Rename microsoft-reactnative-sampleapps to sample-apps",
+            "author": "ngerlem@microsoft.com",
+            "commit": "910ed096b6fcea634b3206d3448cc3a335bc8e89",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Feb 2021 05:05:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.247",
+      "version": "0.0.0-canary.247",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow custom view managers to be able to trigger our logic to run native layout",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "17507ffd114bce83d59cd79acdedd71764ba6a48",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.10",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3859f2ff3f083d2a712231a9b497ecc70c33a844",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 30 Jan 2021 05:06:38 GMT",
       "tag": "react-native-windows_v0.0.0-canary.246",
       "version": "0.0.0-canary.246",
@@ -4827,7 +5081,7 @@
             "package": "react-native-windows"
           },
           {
-            "comment": "Switch package layout to use `files` in `pacakge.json` rather than `.npmignore`",
+            "comment": "Switch package layout to use `files` in `package.json` rather than `.npmignore`",
             "author": "dannyvv@microsoft.com",
             "commit": "c18e0c17fa6c2a2f778aa6607fb7e1601f6089da",
             "package": "react-native-windows"

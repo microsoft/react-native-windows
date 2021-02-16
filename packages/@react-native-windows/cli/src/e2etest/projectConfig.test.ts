@@ -13,16 +13,13 @@ import {
 } from '../config/projectConfig';
 
 import {copyAndReplace} from '../generator-common';
-
-const templateRoot = path.resolve('../../../vnext/template');
-
-const testProjectGuid = '{416476D5-974A-4EE2-8145-4E331297247E}';
-
-async function tryMkdir(dir: string): Promise<void> {
-  try {
-    await fs.promises.mkdir(dir, {recursive: true});
-  } catch (err) {}
-}
+import {AutolinkWindows} from '../runWindows/utils/autolink';
+import {
+  ensureWinUI3Project,
+  templateRoot,
+  testProjectGuid,
+  tryMkdir,
+} from './projectConfig.utils';
 
 type TargetProject = [string, ((folder: string) => Promise<void>)?];
 
@@ -101,6 +98,9 @@ const projects: TargetProject[] = [
       null,
     );
   }),
+  project('WithWinUI3', async (folder: string) => {
+    await ensureWinUI3Project(folder);
+  }),
 ];
 
 // Tests that given userConfig is null, the result will always be null
@@ -114,9 +114,8 @@ test.each(projects)(
     }
 
     const userConfig = null;
-    const expectedConfig: WindowsProjectConfig | null = null;
 
-    expect(projectConfigWindows(folder, userConfig)).toBe(expectedConfig);
+    expect(projectConfigWindows(folder, userConfig)).toBeNull();
   },
 );
 
@@ -132,13 +131,14 @@ test.each(projects)(
     }
 
     const userConfig: Partial<WindowsProjectConfig> = rnc.project.windows;
-    const expectedConfig: WindowsProjectConfig | null = rnc.expectedConfig;
 
-    if (expectedConfig !== null) {
-      expectedConfig.folder = folder;
+    if (name === 'BlankApp') {
+      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot();
+    } else {
+      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot({
+        folder: expect.stringContaining(name),
+      });
     }
-
-    expect(projectConfigWindows(folder, userConfig)).toEqual(expectedConfig);
   },
 );
 
@@ -147,20 +147,57 @@ test.each(projects)(
   'projectConfig - %s (Ignore react-native.config.js)',
   async (name, setup) => {
     const folder = path.resolve('src/e2etest/projects/', name);
-    const rnc = require(path.join(folder, 'react-native.config.js'));
 
     if (setup !== undefined) {
       await setup(folder);
     }
 
     const userConfig: Partial<WindowsProjectConfig> = {};
-    const expectedConfig: WindowsProjectConfig | null =
-      rnc.expectedConfigIgnoringOverride;
 
-    if (expectedConfig !== null) {
-      expectedConfig.folder = folder;
+    if (name === 'BlankApp') {
+      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot();
+    } else {
+      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot({
+        folder: expect.stringContaining(name),
+      });
     }
-
-    expect(projectConfigWindows(folder, userConfig)).toEqual(expectedConfig);
   },
 );
+
+test('useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async done => {
+  const folder = path.resolve('src/e2etest/projects/WithWinUI3');
+
+  const rnc = require(path.join(folder, 'react-native.config.js'));
+
+  const config = projectConfigWindows(folder, rnc.project.windows)!;
+
+  const al = new AutolinkWindows(
+    {windows: config},
+    {},
+    {
+      check: false,
+      logging: false,
+    },
+  );
+
+  const exd = await al.ensureXAMLDialect();
+  expect(exd).toBeTruthy();
+
+  const packagesConfig = (
+    await fs.promises.readFile(
+      path.join(folder, 'windows/WithWinUI3/packages.config'),
+    )
+  ).toString();
+
+  const experimentalFeatures = (
+    await fs.promises.readFile(
+      path.join(folder, 'windows/ExperimentalFeatures.props'),
+    )
+  ).toString();
+
+  expect(packagesConfig.replace(/\r/g, '')).toMatchSnapshot();
+
+  expect(experimentalFeatures.replace(/\r/g, '')).toMatchSnapshot();
+
+  done();
+});

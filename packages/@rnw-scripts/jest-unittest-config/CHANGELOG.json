@@ -2,6 +2,36 @@
   "name": "@rnw-scripts/jest-unittest-config",
   "entries": [
     {
+      "date": "Thu, 11 Feb 2021 05:08:29 GMT",
+      "tag": "@rnw-scripts/jest-unittest-config_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Pass Jest Snapshot Args",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "@rnw-scripts/jest-unittest-config"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 05 Feb 2021 05:05:05 GMT",
+      "tag": "@rnw-scripts/jest-unittest-config_v1.1.1",
+      "version": "1.1.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump @rnw-scripts/babel-node-config to v1.0.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "22ee9e8c47a0c794e7d509a471547ba873578e31",
+            "package": "@rnw-scripts/jest-unittest-config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Jan 2021 01:45:54 GMT",
       "tag": "@rnw-scripts/jest-unittest-config_v1.1.1",
       "version": "1.1.1",

@@ -10,7 +10,7 @@ namespace Microsoft::ReactNative {
 /*
  * Maintains a list of connections to packaging servers which can notify the instance to reload, or show the dev menu
  * Generally an app will only ever talk to one server, so if there are mutliple instances running in an app this allows
- * them to share a connection to that pacakger.
+ * them to share a connection to that packager.
  */
 struct PackagerConnection : std::enable_shared_from_this<PackagerConnection> {
   PackagerConnection(const std::string &sourceBundleHost, uint16_t sourceBundlePort);

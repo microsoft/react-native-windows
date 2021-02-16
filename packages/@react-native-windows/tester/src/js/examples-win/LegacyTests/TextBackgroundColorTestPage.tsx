@@ -9,8 +9,6 @@ import {
   View,
 } from 'react-native';
 
-import { TreeDumpControl } from './TreeDumpControl';
-
 export function TextBackgroundColorTestPage() {
   return (
     <View>
@@ -60,16 +58,6 @@ export function TextBackgroundColorTestPage() {
       </Text>
       </View>
 
-      <TreeDumpControl
-        style={{
-          height: 150,
-          width: 500,
-          margin: 10,
-        }}
-        dumpID={'TextColorBackground'}
-        uiaID={'text-color-background-view'}
-        additionalProperties={['TextHighlighters']}
-      />
     </View>
   );
 }

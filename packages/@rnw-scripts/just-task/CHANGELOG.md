@@ -1,8 +1,28 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Thu, 28 Jan 2021 05:06:47 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Feb 2021 05:08:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.1.0
+
+Thu, 11 Feb 2021 05:08:29 GMT
+
+### Minor changes
+
+- Pass Jest Snapshot Args (ngerlem@microsoft.com)
+
+### Patches
+
+- Bump @rnw-scripts/jest-e2e-config to v1.1.2 (ngerlem@microsoft.com)
+
+## 2.0.2
+
+Tue, 09 Feb 2021 05:07:37 GMT
+
+### Patches
+
+- Bump just-scripts from 1.3.2 to 1.3.3 (dannyvv@microsoft.com)
 
 ## 2.0.1
 

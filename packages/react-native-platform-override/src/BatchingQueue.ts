@@ -21,7 +21,7 @@ export default class BatchingQueue<TKey> {
         this.keyedQueues.set(key, []);
       }
 
-      this.keyedQueues.get(key).push(async () => {
+      this.keyedQueues.get(key)!.push(async () => {
         try {
           resolve(await action());
         } catch (ex) {
@@ -37,7 +37,7 @@ export default class BatchingQueue<TKey> {
   }
 
   private async pumpQueue(): Promise<void> {
-    const currentQueue = this.keyedQueues.get(this.currentKey!);
+    const currentQueue = this.keyedQueues.get(this.currentKey!)!;
 
     while (currentQueue.length > 0) {
       await currentQueue.shift()!();

@@ -16,7 +16,7 @@ import * as configUtils from './configUtils';
 /*
 
 react-native config will generate the following JSON for app projects that have a
-windows implementation, as a target for auto-linking. This is done heurestically,
+windows implementation, as a target for auto-linking. This is done heuristically,
 so if the result isn't quite correct, app developers can provide a manual override
 file: react-native.config.js.
 
@@ -31,6 +31,7 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
   folder: string,       // (auto) Absolute path to the app root folder, determined by react-native config, ex: 'c:\path\to\my-app'
   sourceDir: string,    // (req) Relative path to the Windows implementation under folder, ex: 'windows'
   solutionFile: string, // (req) Relative path to the app's VS solution file under sourceDir, ex: 'MyApp.sln'
+  useWinUI3: boolean    // (opt) If true, use WinUI 3. If false, use Windows XAML and WinUI 2.x. If missing, the value from rnwRoot\PropertySheets\ExperimentalFeatures.props will be used.
   project: { // (req)
     projectFile: string, // (req) Relative path to the VS project file under sourceDir, ex: 'MyApp\MyApp.vcxproj' for 'c:\path\to\my-app\windows\MyApp\MyApp.vcxproj'
     projectName: string, // (auto) Name of the project, determined from projectFile, ex: 'MyApp'
@@ -68,6 +69,7 @@ export interface WindowsProjectConfig {
   sourceDir: string;
   solutionFile: string;
   project: Project;
+  useWinUI3?: boolean;
 }
 
 type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
@@ -142,6 +144,10 @@ export function projectConfigWindows(
         };
         validProject = true;
       }
+    }
+
+    if ('useWinUI3' in userConfig) {
+      result.useWinUI3 = userConfig.useWinUI3;
     }
   } else {
     // No manually provided solutionFile, try to find it
