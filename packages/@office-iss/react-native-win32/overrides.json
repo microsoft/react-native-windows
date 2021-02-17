@@ -3,13 +3,13 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-c66aa8abc",
+  "baseVersion": "0.0.0-67699ba9f",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "7cf410def8e724302967198174da14a06a118c7b"
+      "baseHash": "1699b9d914d5f1941d5b87f72051a4190d5b0a6e"
     },
     {
       "type": "derived",
@@ -31,16 +31,18 @@
       "issue": 5807
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseHash": "b91fdc5e531daa8fac236898c80efe228bbdb8d7"
+      "baseHash": "ada8044fad72483553c185750fc464c1b785342a",
+      "issue": 4578
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfo.win32.js",
-      "baseFile": "Libraries/Components/AccessibilityInfo/NativeAccessibilityInfo.js",
-      "baseHash": "7b519b61f8100b5997c999b21552fd270abafce7"
+      "type": "copy",
+      "file": "src/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.win32.js",
+      "baseFile": "Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.android.js",
+      "baseHash": "ba167547a814d5be30acda847423f86cf2104b59",
+      "issue": 4578
     },
     {
       "type": "platform",
@@ -150,7 +152,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "97e9917d3fa2dbe2fe6c03c4264f756634026796"
+      "baseHash": "b07d15c88ef2166c74070d4bca9109b0a2482323"
     },
     {
       "type": "patch",
@@ -285,7 +287,7 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "Libraries/Inspector/Inspector.js",
-      "baseHash": "60aa482532caac00745f8ae8611a36c756fb5b75"
+      "baseHash": "298fb992c56e404e68496a4542fd53334f876428"
     },
     {
       "type": "patch",
@@ -354,7 +356,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "Libraries/Text/TextNativeComponent.js",
-      "baseHash": "2f8bb1c9009dc2e0e90234203f1f2c6a85d83b18",
+      "baseHash": "ecf4a89da45b7e81e1e6424e00bf292d389e3b9f",
       "issue": 7074
     },
     {

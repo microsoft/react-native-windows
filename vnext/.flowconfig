@@ -63,7 +63,6 @@
 .*/vnext/ReactCopies/.*
 
 [untyped]
-<PROJECT_ROOT>/Libraries/DeprecatedPropTypes/.*
 .*/node_modules/@react-native-community/cli/.*/.*
 
 [include]
@@ -120,4 +119,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.142.0
+^0.143.1
