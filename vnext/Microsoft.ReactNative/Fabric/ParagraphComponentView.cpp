@@ -14,6 +14,7 @@
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #pragma warning(pop)
 
+#include <dwrite.h>
 #include <react/renderer/components/text/ParagraphState.h>
 #include <unicode.h>
 
@@ -50,11 +51,47 @@ void ParagraphComponentView::updateProps(
   const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(props);
 
-  if (oldViewProps.foregroundColor != newViewProps.foregroundColor) {
-    if (newViewProps.foregroundColor)
-      m_element.Foreground(::react::uwp::SolidColorBrushFrom(newViewProps.backgroundColor));
+  if (oldViewProps.textAttributes.foregroundColor != newViewProps.textAttributes.foregroundColor) {
+    if (newViewProps.textAttributes.foregroundColor)
+      m_element.Foreground(::react::uwp::SolidColorBrushFrom(newViewProps.textAttributes.foregroundColor));
     else
       m_element.ClearValue(::xaml::Controls::TextBlock::ForegroundProperty());
+  }
+
+  if (oldViewProps.textAttributes.fontSize != newViewProps.textAttributes.fontSize) {
+    if (std::isnan(newViewProps.textAttributes.fontSize))
+      m_element.ClearValue(::xaml::Controls::TextBlock::FontSizeProperty());
+    else
+      m_element.FontSize(newViewProps.textAttributes.fontSize);
+  }
+
+  if (oldViewProps.textAttributes.fontWeight != newViewProps.textAttributes.fontWeight) {
+    m_element.FontWeight(
+        winrt::Windows::UI::Text::FontWeight{static_cast<uint16_t>(newViewProps.textAttributes.fontWeight.value_or(
+            static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR)))});
+  }
+
+  if (oldViewProps.textAttributes.fontStyle != newViewProps.textAttributes.fontStyle) {
+    switch (newViewProps.textAttributes.fontStyle.value_or(facebook::react::FontStyle::Normal)) {
+      case facebook::react::FontStyle::Italic:
+        m_element.FontStyle(winrt::Windows::UI::Text::FontStyle::Italic);
+        break;
+      case facebook::react::FontStyle::Normal:
+        m_element.FontStyle(winrt::Windows::UI::Text::FontStyle::Normal);
+        break;
+      case facebook::react::FontStyle::Oblique:
+        m_element.FontStyle(winrt::Windows::UI::Text::FontStyle::Oblique);
+        break;
+      default:
+        assert(false);
+    }
+  }
+  
+  if (oldViewProps.textAttributes.fontFamily != newViewProps.textAttributes.fontFamily) {
+    if (newViewProps.textAttributes.fontFamily.empty())
+      m_element.FontFamily(xaml::Media::FontFamily(L"Segoe UI"));
+    else
+      m_element.FontFamily(xaml::Media::FontFamily(Microsoft::Common::Unicode::Utf8ToUtf16(newViewProps.textAttributes.fontFamily)));
   }
 
   m_props = std::static_pointer_cast<facebook::react::ParagraphProps const>(props);
