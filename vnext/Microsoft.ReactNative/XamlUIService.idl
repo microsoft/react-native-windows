@@ -26,7 +26,8 @@ namespace Microsoft.ReactNative {
     static void SetXamlRoot(IReactPropertyBag properties, XAML_NAMESPACE.XamlRoot xamlRoot);
     static XAML_NAMESPACE.XamlRoot GetXamlRoot(IReactPropertyBag properties);
 
-    static UInt64 GetIslandWindow(IReactPropertyBag properties);
-    static void SetIslandWindow(IReactPropertyBag properties, UInt64 hwnd);
+    static UInt64 GetIslandWindowHandle(IReactPropertyBag properties);
+    DOC_STRING("Sets the windowHandle HWND (as an uint64) to be the XAML Island window for the current React instance. Pass the value returned by IDesktopWindowXamlSourceNative get_WindowHandle.")
+    static void SetIslandWindowHandle(IReactPropertyBag properties, UInt64 windowHandle);
   }
 } // namespace Microsoft.ReactNative

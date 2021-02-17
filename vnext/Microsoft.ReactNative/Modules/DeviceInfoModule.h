@@ -20,9 +20,7 @@ struct DeviceInfoHolder {
   static void SetCallback(
       const React::ReactPropertyBag &propertyBag,
       Mso::Functor<void(React::JSValueObject &&)> &&callback) noexcept;
-  static void InitDeviceInfoHolder(
-      const Mso::React::IReactContext &context,
-      const React::ReactPropertyBag &propertyBag) noexcept;
+  static void InitDeviceInfoHolder(const Mso::React::IReactContext &context) noexcept;
   static React::JSValueObject GetDimensions(const React::ReactPropertyBag &propertyBag) noexcept;
 
  private:
@@ -32,7 +30,7 @@ struct DeviceInfoHolder {
 
   float m_windowWidth{0};
   float m_windowHeight{0};
-  float m_scale{0};
+  float m_scale{1.0f};
   double m_textScaleFactor{0};
   float m_dpi{0};
   uint32_t m_screenWidth{0};
@@ -43,6 +41,7 @@ struct DeviceInfoHolder {
   Mso::Functor<void(React::JSValueObject &&)> m_notifyCallback;
   winrt::Microsoft::ReactNative::IReactNotificationSubscription m_wmSubscription{};
   Mso::CntPtr<const Mso::React::IReactContext> m_context{};
+
 };
 
 REACT_MODULE(DeviceInfo)

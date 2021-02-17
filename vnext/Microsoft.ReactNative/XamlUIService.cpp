@@ -70,10 +70,10 @@ ReactPropertyId<uint64_t> XamlIslandProperty() noexcept {
   return propId;
 }
 
-/*static*/ void XamlUIService::SetIslandWindow(IReactPropertyBag const &properties, uint64_t hwnd) {
+/*static*/ void XamlUIService::SetIslandWindowHandle(IReactPropertyBag const &properties, uint64_t hwnd) noexcept {
   winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Set(XamlIslandProperty(), hwnd);
 }
-/*static*/ uint64_t XamlUIService::GetIslandWindow(IReactPropertyBag const &properties) {
+/*static*/ uint64_t XamlUIService::GetIslandWindowHandle(IReactPropertyBag const &properties) noexcept {
   auto hwnd = winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(XamlIslandProperty());
   return hwnd.value_or(0);
 }

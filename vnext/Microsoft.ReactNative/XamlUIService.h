@@ -25,8 +25,8 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
   static void SetXamlRoot(IReactPropertyBag const &properties, xaml::XamlRoot const &xamlRoot) noexcept;
   static xaml::XamlRoot GetXamlRoot(IReactPropertyBag const &properties) noexcept;
 
-  static void SetIslandWindow(IReactPropertyBag const &properties, uint64_t hwnd);
-  static uint64_t GetIslandWindow(IReactPropertyBag const &properties);
+  static void SetIslandWindowHandle(IReactPropertyBag const &properties, uint64_t hwnd) noexcept;
+  static uint64_t GetIslandWindowHandle(IReactPropertyBag const &properties) noexcept;
 
  private:
   std::weak_ptr<::Microsoft::ReactNative::INativeUIManagerHost> m_wkUIManager;

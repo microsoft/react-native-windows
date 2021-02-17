@@ -12,8 +12,9 @@
 #include <XamlUIService.h>
 #include <XamlUtils.h>
 #include <cxxreact/CxxModule.h>
-
 #include <functional>
+#include <memory>
+#include <IReactContext.h>
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
 #pragma optimize("", off)
@@ -24,7 +25,8 @@ using namespace xaml;
 using namespace Windows::UI::ViewManagement;
 } // namespace winrt
 
-using namespace Microsoft::ReactNative;
+
+using namespace winrt::Microsoft::ReactNative;
 
 namespace react::uwp {
 
@@ -35,19 +37,22 @@ namespace react::uwp {
 AppTheme::AppTheme(
     const Mso::React::IReactContext &context,
     const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
-    : m_context(&context), m_queueThread(defaultQueueThread) {
+    : m_context(&context),
+      m_queueThread(defaultQueueThread) {
   if (auto currentApp = xaml::TryGetCurrentApplication()) {
     m_isHighContrast = getIsHighContrast();
     m_highContrastColors = getHighContrastColors();
 
     if (react::uwp::IsWinUI3Island()) {
-      m_wmSubscription =
-          SubscribeToWindowMessage(context.Notifications(), WM_THEMECHANGED, [this](const auto &, const auto &) {
-            NotifyHighContrastChanged();
+      m_wmSubscription = SubscribeToWindowMessage(
+          m_context->Notifications(), WM_THEMECHANGED, [this](const auto &, const auto &) {
+              NotifyHighContrastChanged();
           });
     } else {
       m_highContrastChangedRevoker = m_accessibilitySettings.HighContrastChanged(
-          winrt::auto_revoke, [this](const auto &, const auto &) { NotifyHighContrastChanged(); });
+          winrt::auto_revoke, [this](const auto &, const auto &) {
+              NotifyHighContrastChanged();
+          });
     }
   }
 }
@@ -82,12 +87,13 @@ folly::dynamic AppTheme::getHighContrastColors() const {
 }
 
 void AppTheme::fireEvent(std::string const &eventName, folly::dynamic &&eventData) const {
-  m_context->CallJSFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array(eventName, std::move(eventData)));
+  ///m_context.CallJSFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array(eventName, std::move(eventData)));
 }
 
 void AppTheme::NotifyHighContrastChanged() const {
   folly::dynamic eventData =
       folly::dynamic::object("highContrastColors", getHighContrastColors())("isHighContrast", getIsHighContrast());
+  this->
 
   fireEvent("highContrastChanged", std::move(eventData));
 }

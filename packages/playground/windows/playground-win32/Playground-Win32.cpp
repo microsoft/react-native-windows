@@ -17,22 +17,21 @@
 #include <DesktopWindowBridge.h>
 #include <winrt/Microsoft.ReactNative.h>
 
+#include <CppWinRTIncludes.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Hosting.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #pragma pop_macro("GetCurrentTime")
 
 #ifndef USE_WINUI3
-namespace xaml = winrt::Windows::UI::Xaml;
 #else
 #include <winrt/Microsoft.UI.h>
-namespace xaml = winrt::Microsoft::UI::Xaml;
 #endif
 
 namespace controls = xaml::Controls;
 namespace hosting = xaml::Hosting;
 
-#define WINDOWDATA L"WindowData"
+constexpr auto WindowDataProperty = L"WindowData";
 
 int RunPlayground(int showCmd, bool useWebDebugger);
 
@@ -66,7 +65,7 @@ struct WindowData {
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
 
   static WindowData *GetFromWindow(HWND hwnd) {
-    auto data = reinterpret_cast<WindowData *>(GetProp(hwnd, WINDOWDATA));
+    auto data = reinterpret_cast<WindowData *>(GetProp(hwnd, WindowDataProperty));
     return data;
   }
 
@@ -115,7 +114,7 @@ struct WindowData {
 
 #ifdef USE_WINUI3
           const auto islandWindow = (uint64_t)GetXamlIslandHwnd(m_desktopWindowXamlSource);
-          winrt::Microsoft::ReactNative::XamlUIService::SetIslandWindow(
+          winrt::Microsoft::ReactNative::XamlUIService::SetIslandWindowHandle(
               host.InstanceSettings().Properties(), islandWindow);
 #endif
 
@@ -316,8 +315,7 @@ HINSTANCE WindowData::s_instance = reinterpret_cast<HINSTANCE>(&__ImageBase);
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
 #ifdef USE_WINUI3
   if (auto windowData = WindowData::GetFromWindow(hwnd)) {
-    auto notificationSvc = windowData->InstanceSettings().Notifications();
-    Microsoft::ReactNative::ForwardWindowMessage(notificationSvc, hwnd, message, wparam, lparam);
+    winrt::Microsoft::ReactNative::ForwardWindowMessage(windowData->InstanceSettings().Notifications(), hwnd, message, wparam, lparam);
   }
 #endif
 
@@ -331,7 +329,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
     }
     case WM_DESTROY: {
       delete WindowData::GetFromWindow(hwnd);
-      SetProp(hwnd, WINDOWDATA, 0);
+      SetProp(hwnd, WindowDataProperty, 0);
       PostQuitMessage(0);
       return 0;
     }
@@ -339,7 +337,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       auto cs = reinterpret_cast<CREATESTRUCT *>(lparam);
       auto windowData = static_cast<WindowData *>(cs->lpCreateParams);
       WINRT_ASSERT(windowData);
-      SetProp(hwnd, WINDOWDATA, reinterpret_cast<HANDLE>(windowData));
+      SetProp(hwnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
       break;
     }
     case WM_WINDOWPOSCHANGED: {
