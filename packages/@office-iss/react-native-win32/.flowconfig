@@ -53,7 +53,6 @@
 .*/react-native-win32/src/.*
 
 [untyped]
-<PROJECT_ROOT>/Libraries/DeprecatedPropTypes/.*
 .*/node_modules/@react-native-community/cli/.*/.*
 ; Should work out how to do this properly
 .*/react-native-win32/Libraries/Image/resolveAssetSource.win32.js
