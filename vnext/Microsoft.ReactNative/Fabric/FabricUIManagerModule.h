@@ -35,6 +35,8 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       const std::string &moduleName,
       const folly::dynamic &initialProps) noexcept;
 
+  void stopSurface(facebook::react::SurfaceId surfaceId) noexcept;
+
   void constraintSurfaceLayout(
       facebook::react::SurfaceId surfaceId,
       const facebook::react::LayoutConstraints &layoutConstraints,

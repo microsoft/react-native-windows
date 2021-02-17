@@ -254,6 +254,10 @@ void FabricUIManager::startSurface(
   );
 }
 
+void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept {
+  m_scheduler->stopSurface(surfaceId);
+}
+
 void FabricUIManager::constraintSurfaceLayout(
     facebook::react::SurfaceId surfaceId,
     const facebook::react::LayoutConstraints &layoutConstraints,

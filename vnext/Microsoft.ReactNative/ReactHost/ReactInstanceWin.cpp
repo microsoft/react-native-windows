@@ -876,7 +876,8 @@ void ReactInstanceWin::AttachMeasuredRootView(
     std::string jsMainModuleName = rootView->JSComponentName();
     folly::dynamic params = folly::dynamic::array(
         std::move(jsMainModuleName),
-        folly::dynamic::object("initialProps", std::move(initialProps))("rootTag", rootTag));
+        folly::dynamic::object("initialProps", std::move(initialProps))("rootTag", rootTag)(
+            "fabric", m_options.EnableFabric()));
     CallJsFunction("AppRegistry", "runApplication", std::move(params));
   }
 }
@@ -889,6 +890,10 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView)
   folly::dynamic params = folly::dynamic::array(rootTag);
 
   if (m_options.EnableFabric()) {
+    auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+        winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
+    uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(rootTag));
+
     CallJsFunction("ReactFabric", "unmountComponentAtNode", std::move(params));
   } else {
     CallJsFunction("AppRegistry", "unmountApplicationComponentAtRootTag", std::move(params));
