@@ -220,10 +220,6 @@ void ReactInstanceWin::LoadModules(
   if (m_options.EnableFabric()) {
     registerTurboModule(
         L"FabricUIManagerBinding",
-        // Spec incorrectly reports commandID as a number, but its actually a number | string.. so dont use the spec for
-        // now
-        // winrt::Microsoft::ReactNative::MakeTurboModuleProvider < ::Microsoft::ReactNative::UIManager,
-        //::Microsoft::ReactNativeSpecs::UIManagerSpec>());
         winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
   }
 
