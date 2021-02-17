@@ -102,4 +102,4 @@ auto CallIndirect(const wchar_t *dllName, const char *fnName, TArgs &&... args) 
 #define CALL_INDIRECT(dllName, fn, ...) \
   winrt::Microsoft::ReactNative::CallIndirect<decltype(&fn)>(dllName, #fn, __VA_ARGS__)
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative
