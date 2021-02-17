@@ -105,7 +105,7 @@ const wchar_t *ImageViewManager::GetName() const {
   return L"RCTImageView";
 }
 
-XamlView ImageViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
+XamlView ImageViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   return ReactImage::Create().as<winrt::Grid>();
 }
 

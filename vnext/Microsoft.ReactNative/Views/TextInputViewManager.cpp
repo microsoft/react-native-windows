@@ -730,7 +730,7 @@ ShadowNode *TextInputViewManager::createShadow() const {
   return new TextInputShadowNode();
 }
 
-XamlView TextInputViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
+XamlView TextInputViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   xaml::Controls::TextBox textBox;
   return textBox;
 }

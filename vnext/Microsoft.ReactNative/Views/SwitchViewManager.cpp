@@ -145,7 +145,7 @@ ShadowNode *SwitchViewManager::createShadow() const {
   return new SwitchShadowNode();
 }
 
-XamlView SwitchViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
+XamlView SwitchViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   auto toggleSwitch = winrt::ToggleSwitch();
   toggleSwitch.OnContent(nullptr);
   toggleSwitch.OffContent(nullptr);

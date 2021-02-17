@@ -21,7 +21,7 @@ class PickerViewManager : public ControlViewManager {
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
  protected:
-  XamlView CreateViewCore(int64_t tag, winrt::Microsoft::ReactNative::JSValueObject &) override;
+  XamlView CreateViewCore(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &) override;
 
   friend class PickerShadowNode;
 };

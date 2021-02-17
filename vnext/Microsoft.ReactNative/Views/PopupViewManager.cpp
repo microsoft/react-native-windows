@@ -314,7 +314,7 @@ ShadowNode *PopupViewManager::createShadow() const {
   return new PopupShadowNode();
 }
 
-XamlView PopupViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
+XamlView PopupViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   auto popup = winrt::Popup();
   auto control = xaml::Controls::ContentControl();
 

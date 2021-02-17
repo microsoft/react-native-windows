@@ -158,7 +158,7 @@ void GlyphViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVa
   writer.WriteString(L"boolean");
 }
 
-XamlView GlyphViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
+XamlView GlyphViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   winrt::Glyphs glyphs = winrt::Glyphs();
   return glyphs;
 }

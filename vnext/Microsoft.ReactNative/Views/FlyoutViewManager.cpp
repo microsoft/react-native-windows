@@ -434,7 +434,7 @@ const wchar_t *FlyoutViewManager::GetName() const {
   return L"RCTFlyout";
 }
 
-XamlView FlyoutViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
+XamlView FlyoutViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   return winrt::make<winrt::react::uwp::implementation::ViewPanel>().as<XamlView>();
 }
 

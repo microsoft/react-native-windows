@@ -56,7 +56,7 @@ ShadowNode *SliderViewManager::createShadow() const {
   return new SliderShadowNode();
 }
 
-XamlView SliderViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
+XamlView SliderViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   auto slider = xaml::Controls::Slider();
   return slider;
 }

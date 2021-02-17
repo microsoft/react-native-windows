@@ -18,7 +18,7 @@ class GlyphViewManager : public FrameworkElementViewManager {
   void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
  protected:
-  XamlView CreateViewCore(int64_t tag, winrt::Microsoft::ReactNative::JSValueObject &props) override;
+  XamlView CreateViewCore(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props) override;
 };
 
 } // namespace Microsoft::ReactNative

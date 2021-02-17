@@ -458,7 +458,7 @@ void ScrollViewManager::GetExportedCustomDirectEventTypeConstants(
   writer.WriteObjectEnd();
 }
 
-XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
+XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   const auto scrollViewer = winrt::ScrollViewer{};
 
   scrollViewer.HorizontalScrollBarVisibility(winrt::ScrollBarVisibility::Auto);

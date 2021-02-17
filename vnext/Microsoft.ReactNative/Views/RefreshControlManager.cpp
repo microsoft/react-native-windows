@@ -79,7 +79,9 @@ const wchar_t *RefreshControlViewManager::GetName() const {
   return L"RCTRefreshControl";
 }
 
-XamlView RefreshControlViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
+XamlView RefreshControlViewManager::CreateViewCore(
+    int64_t /*tag*/,
+    const winrt::Microsoft::ReactNative::JSValueObject &) {
   if (react::uwp::IsRS4OrHigher()) {
     // refreshContainer is supported >= RS4
     return winrt::RefreshContainer();

@@ -164,7 +164,7 @@ ShadowNode *DatePickerViewManager::createShadow() const {
   return new DatePickerShadowNode();
 }
 
-XamlView DatePickerViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
+XamlView DatePickerViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   auto datePicker = xaml::Controls::CalendarDatePicker();
   return datePicker;
 }

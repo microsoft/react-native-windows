@@ -200,7 +200,7 @@ ShadowNode *PickerViewManager::createShadow() const {
   return new PickerShadowNode();
 }
 
-XamlView PickerViewManager::CreateViewCore(int64_t /*tag*/, winrt::Microsoft::ReactNative::JSValueObject &) {
+XamlView PickerViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   auto combobox = xaml::Controls::ComboBox();
   return combobox;
 }
