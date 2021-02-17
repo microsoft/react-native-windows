@@ -286,9 +286,7 @@ static const winrt::Microsoft::ReactNative::ReactPropertyId<
 
 std::shared_ptr<ExpressionAnimationStore> ViewManagerBase::GetExpressionAnimationStore() noexcept {
   return winrt::Microsoft::ReactNative::ReactPropertyBag(GetReactContext().Properties())
-      .GetOrCreate(
-          ExpressionAnimationStorePropertyId(),
-          []() { return std::make_shared<ExpressionAnimationStore>(); })
+      .GetOrCreate(ExpressionAnimationStorePropertyId(), []() { return std::make_shared<ExpressionAnimationStore>(); })
       .Value();
 }
 

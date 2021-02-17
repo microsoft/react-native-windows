@@ -21,12 +21,12 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 
+#include <Fabric/FabricUIManagerModule.h>
+#include <QuirkSettings.h>
 #include <ReactHost/React.h>
 #include <ReactHost/React_Win.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include <object/unknownObject.h>
-#include <QuirkSettings.h>
-#include <Fabric/FabricUIManagerModule.h>
 
 #include <ReactHost/MsoUtils.h>
 #include <Utils/Helpers.h>
@@ -183,8 +183,7 @@ void ReactRootControl::InitRootView(
         winrt::auto_revoke,
         [wkThis = weak_from_this(), context = m_context](
             winrt::Windows::Foundation::IInspectable const &sender, xaml::SizeChangedEventArgs const &e) noexcept {
-
-        if (auto strongThis = wkThis.lock()) {
+          if (auto strongThis = wkThis.lock()) {
             if (strongThis->GetTag()) {
               auto root = sender.as<winrt::Grid>();
 

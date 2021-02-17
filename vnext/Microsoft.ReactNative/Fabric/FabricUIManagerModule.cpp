@@ -313,10 +313,9 @@ void FabricUIManager::startSurface(
 }
 
 void FabricUIManager::constraintSurfaceLayout(
-  facebook::react::SurfaceId surfaceId,
-  const facebook::react::LayoutConstraints& layoutConstraints,
-  const facebook::react::LayoutContext& layoutContext) const noexcept
-{
+    facebook::react::SurfaceId surfaceId,
+    const facebook::react::LayoutConstraints &layoutConstraints,
+    const facebook::react::LayoutContext &layoutContext) const noexcept {
   m_scheduler->constraintSurfaceLayout(surfaceId, layoutConstraints, layoutContext);
 }
 
@@ -343,7 +342,6 @@ void FabricUIManager::RCTPerformMountInstructions(
     // facebook::react::RCTComponentViewRegistry* registry,
     // facebook::react::RCTMountingTransactionObserverCoordinator& observerCoordinator,
     facebook::react::SurfaceId surfaceId) {
-
   for (auto const &mutation : mutations) {
     switch (mutation.type) {
       case facebook::react::ShadowViewMutation::Create: {
@@ -531,7 +529,9 @@ void FabricUIManager::schedulerDidClearJSResponder() {
   assert(false);
 }
 
-void FabricUIManager::schedulerDidSendAccessibilityEvent(const facebook::react::ShadowView &shadowView, std::string const &eventType) {
+void FabricUIManager::schedulerDidSendAccessibilityEvent(
+    const facebook::react::ShadowView &shadowView,
+    std::string const &eventType) {
   assert(false);
 }
 

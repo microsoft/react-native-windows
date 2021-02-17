@@ -381,7 +381,7 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
   changedIndices.push_back(pointerIndex);
 
   if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-      winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
     std::unordered_set<facebook::react::SharedTouchEventEmitter> uniqueEventEmitters = {};
     std::vector<facebook::react::SharedTouchEventEmitter> emittersForIndex;
 

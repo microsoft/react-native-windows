@@ -145,12 +145,11 @@ void ViewPanel::InvalidateForArrange(xaml::UIElement element) {
   }
 }
 
-void ViewPanel::SetOnMeasure(Mso::Functor<void(winrt::Windows::Foundation::Size&)>&& fn) noexcept {
+void ViewPanel::SetOnMeasure(Mso::Functor<void(winrt::Windows::Foundation::Size &)> &&fn) noexcept {
   m_onMeasure = std::move(fn);
 }
 
 winrt::Size ViewPanel::MeasureOverride(winrt::Size availableSize) {
-
   if (m_onMeasure) {
     m_onMeasure(availableSize);
   }

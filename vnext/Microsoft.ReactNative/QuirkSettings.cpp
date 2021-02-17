@@ -6,8 +6,8 @@
 #include "QuirkSettings.g.cpp"
 
 #include "QuirkSettings.h"
-#include "ReactPropertyBag.h"
 #include "React.h"
+#include "ReactPropertyBag.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 

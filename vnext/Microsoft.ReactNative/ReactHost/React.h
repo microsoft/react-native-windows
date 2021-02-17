@@ -287,9 +287,7 @@ struct ReactOptions {
   //! Should the instance enable the Fabric UI architecture
   void SetEnableFabric(bool enabled) noexcept;
   bool EnableFabric() const noexcept;
-  static void SetEnableFabric(
-      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
-      bool value) noexcept;
+  static void SetEnableFabric(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties, bool value) noexcept;
   static bool EnableFabric(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
 
   //! For direct debugging, whether to break on the next line of JavaScript that is executed.

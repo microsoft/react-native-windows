@@ -412,7 +412,7 @@ void ReactInstanceWin::Initialize() noexcept {
             std::move(devSettings));
 
         m_instanceWrapper.Exchange(std::move(instanceWrapper));
-    
+
         // Eagerly init the FabricUI binding
         if (m_options.EnableFabric()) {
           Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
