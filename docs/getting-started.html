@@ -114,6 +114,9 @@ Also ensure your system meets all the <a href="/react-native-windows/docs/rnw-de
 <p>This sends telemetry to Microsoft by default. You can prevent the telemetry from being sent by using the <code>--no-telemetry</code> command line option. See the <code>@react-native-windows/cli</code> README for more details.</p></li>
 <li><p>Using Visual Studio</p>
 <ul>
+<li>From the root of the project directory, run the following script which will automatically link your app's dependencies:
+<pre><code class="hljs css language-bat">npx react-native autolink-windows
+</code></pre></li>
 <li>Open the solution file in the application folder in Visual Studio (e.g., <code>AwesomeProject/windows/AwesomeProject.sln</code> if you used <code>AwesomeProject</code> as <code>&lt;projectName&gt;</code>)</li>
 <li>Select the <code>Debug</code> configuration and the <code>x64</code> platform from the combo box controls to the left of the <code>Run</code> button and underneath the <code>Team</code> and <code>Tools</code> menu item.</li>
 <li>Run <code>yarn start</code> from your project directory, and wait for the React Native packager to report success.</li>
