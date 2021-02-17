@@ -1,0 +1,16 @@
+steps:
+  - task: CmdLine@2
+    displayName: Set BeachBallBranchName for Pull Request
+    inputs:
+      script: |
+        echo Setting BeachBallBranchName to $(System.PullRequest.TargetBranch)
+        echo "##vso[task.setvariable variable=BeachBallBranchName]$(System.PullRequest.TargetBranch)
+    condition: ${{ eq(variables['Build.Reason'], 'PullRequest') }}
+
+  - task: CmdLine@2
+    displayName: Set BeachBallBranchName for CI
+    inputs:
+      script: |
+        echo Setting BeachBallBranchName to $(Build.SourceBranchName)
+        echo "##vso[task.setvariable variable=BeachBallBranchName]$(Build.SourceBranchName)
+    condition: ${{ ne(variables['Build.Reason'], 'PullRequest') }}
