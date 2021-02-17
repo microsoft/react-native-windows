@@ -191,8 +191,8 @@ void ViewManagerBase::GetExportedCustomDirectEventTypeConstants(
   }
 }
 
-XamlView ViewManagerBase::CreateView(int64_t tag) {
-  XamlView view = CreateViewCore(tag);
+XamlView ViewManagerBase::CreateView(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  XamlView view = CreateViewCore(tag, props);
 
   OnViewCreated(view);
   // Set the tag if the element type supports it

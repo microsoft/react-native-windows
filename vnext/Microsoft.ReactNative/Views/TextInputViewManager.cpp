@@ -94,7 +94,7 @@ class TextInputShadowNode : public ShadowNodeBase {
 
  public:
   TextInputShadowNode() = default;
-  void createView() override;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
   void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs)
@@ -165,8 +165,8 @@ class TextInputShadowNode : public ShadowNodeBase {
   xaml::Controls::Control::Loaded_revoker m_controlLoadedRevoker{};
 };
 
-void TextInputShadowNode::createView() {
-  Super::createView();
+void TextInputShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  Super::createView(props);
   registerEvents();
 }
 
@@ -730,7 +730,7 @@ ShadowNode *TextInputViewManager::createShadow() const {
   return new TextInputShadowNode();
 }
 
-XamlView TextInputViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView TextInputViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   xaml::Controls::TextBox textBox;
   return textBox;
 }

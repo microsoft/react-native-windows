@@ -131,7 +131,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     node->m_tag = reactTag;
     node->m_viewManager = viewManager;
 
-    node->createView();
+    node->createView(props);
 
     m_nativeUIManager->CreateView(*node, props);
 
