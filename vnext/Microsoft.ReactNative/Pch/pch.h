@@ -29,8 +29,8 @@
 // Define environment variable RNW_FASTBUILD=true to improve compilation speed on your PC.
 #ifdef RNW_FASTBUILD
 #include <UI.Composition.h>
-#include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Automation.Peers.h>
+#include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
