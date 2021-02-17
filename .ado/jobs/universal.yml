@@ -142,6 +142,7 @@
                 # We unfortunately can't run the tests on the WinDev  build pool because it lacks UI support
                 - powershell: |
                     Get-ChildItem *.appxrecipe -recurse | ForEach { (Get-Content -Path $_) -replace "c:\\a\\1\\s", "$(System.DefaultWorkingDirectory)" | Set-Content -Path $_ }
+                    Get-ChildItem *.appxrecipe -recurse | ForEach { (Get-Content -Path $_) -replace "d:\\a\\_work\\1\\s", "$(System.DefaultWorkingDirectory)" | Set-Content -Path $_ }
                   displayName: Fix Paths in appx files to deal with different enlistments between agent types.
 
                 - powershell: |

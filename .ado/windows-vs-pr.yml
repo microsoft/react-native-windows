@@ -16,6 +16,8 @@ stages:
       - job: Setup
         variables:
           - template: variables/vs2019.yml
+        pool:
+          vmImage: windows-2019
         steps:
           - task: powershell@2
             name: checkPayload
@@ -25,6 +27,8 @@ stages:
               filePath: .ado/scripts/shouldSkipPRBuild.ps1
 
           - template: templates/yarn-install.yml
+
+          - template: templates/compute-beachball-branch-name.yml
 
           - task: CmdLine@2
             displayName: Check for change files
