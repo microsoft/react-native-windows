@@ -7,9 +7,13 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4244 4305)
+#include <react/renderer/components/image/ImageShadowNode.h>
+#include <react/renderer/components/root/RootShadowNode.h>
 #include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
+#include <react/renderer/components/text/RawTextShadowNode.h>
 #include <react/renderer/components/text/TextShadowNode.h>
+#include <react/renderer/components/textinput/iostextinput/TextInputShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
 #pragma warning(pop)
 
@@ -33,10 +37,15 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<ParagraphComponentView>();
   } else if (componentHandle == facebook::react::ScrollViewShadowNode::Handle()) {
     view = std::make_shared<ScrollViewComponentView>();
-  }
+  } else {
+    // Just to keep track of what kinds of shadownodes we are being used verify we know about them here
+    assert(
+        componentHandle == facebook::react::ImageShadowNode::Handle() ||
+        componentHandle == facebook::react::RawTextShadowNode::Handle() ||
+        componentHandle == facebook::react::TextInputShadowNode::Handle() ||
+        componentHandle == facebook::react::RootShadowNode::Handle() ||
+        componentHandle == facebook::react::ViewShadowNode::Handle());
 
-  else {
-    // Currently we are treating a lot of component just as normal views...
     view = std::make_shared<ViewComponentView>();
   }
 

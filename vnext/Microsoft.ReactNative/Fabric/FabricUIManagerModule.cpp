@@ -12,8 +12,8 @@
 #include <IReactRootView.h>
 #include <IXamlRootView.h>
 #include <JSI/jsi.h>
-#include <winrt/Windows.Graphics.Display.h>
 #include <UI.Xaml.Controls.h>
+#include <winrt/Windows.Graphics.Display.h>
 #include "Unicode.h"
 #pragma warning(push)
 #pragma warning(disable : 4244)
@@ -53,8 +53,7 @@ FabicUIManagerProperty() noexcept {
 
 FabricUIManager::FabricUIManager() {}
 
-FabricUIManager::~FabricUIManager() {
-}
+FabricUIManager::~FabricUIManager() {}
 
 // Equiv of AsyncEventBeat (ReactAndroid\src\main\java\com\facebook\react\fabric\jni\AsyncEventBeat.h)
 class AsyncEventBeat final : public facebook::react::EventBeat { //, public facebook::react::EventBeatManagerObserver {
@@ -154,7 +153,6 @@ std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> shar
 }
 
 void FabricUIManager::installFabricUIManager() noexcept {
-
   std::shared_ptr<const facebook::react::ReactNativeConfig> config =
       std::make_shared<const ReactNativeConfigProperties>(m_context);
 
@@ -186,13 +184,15 @@ void FabricUIManager::installFabricUIManager() noexcept {
                                         facebook::react::ContextContainer::Shared const &contextContainer)
       -> facebook::react::ComponentDescriptorRegistry::Shared {
     auto registry = sharedProviderRegistry()->createComponentDescriptorRegistry({eventDispatcher, contextContainer});
+    // Enabling the fallback component will require us to run the view component codegen to generate
+    // UnimplementedNativeViewComponentDescriptor
     /*
     auto mutableRegistry = std::const_pointer_cast<facebook::react::ComponentDescriptorRegistry>(registry);
     mutableRegistry->setFallbackComponentDescriptor(
         std::make_shared<facebook::react::UnimplementedNativeViewComponentDescriptor>(
             facebook::react::ComponentDescriptorParameters{
                 eventDispatcher, contextContainer, nullptr}));
-                */
+    */
     return registry;
   };
   toolbox.runtimeExecutor = runtimeExecutor;
@@ -220,7 +220,6 @@ void FabricUIManager::startSurface(
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
-
   auto xamlRootView = static_cast<::react::uwp::IXamlRootView *>(rootview);
   auto rootFE = xamlRootView->GetXamlView().as<xaml::FrameworkElement>();
 
@@ -233,8 +232,8 @@ void FabricUIManager::startSurface(
   facebook::react::LayoutContext context;
 
   // TODO: This call wont work with winUI
-  context.pointScaleFactor =
-      static_cast<facebook::react::Float>(winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView().RawPixelsPerViewPixel());
+  context.pointScaleFactor = static_cast<facebook::react::Float>(
+      winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView().RawPixelsPerViewPixel());
 
   facebook::react::LayoutConstraints constraints;
   constraints.minimumSize.height = static_cast<facebook::react::Float>(rootFE.ActualHeight());
