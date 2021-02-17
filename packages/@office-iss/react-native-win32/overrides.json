@@ -356,7 +356,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "Libraries/Text/TextNativeComponent.js",
-      "baseHash": "2f8bb1c9009dc2e0e90234203f1f2c6a85d83b18",
+      "baseHash": "ecf4a89da45b7e81e1e6424e00bf292d389e3b9f",
       "issue": 7074
     },
     {
