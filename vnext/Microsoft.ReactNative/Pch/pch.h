@@ -28,31 +28,28 @@
 
 // Define environment variable RNW_FASTBUILD=true to improve compilation speed on your PC.
 #ifdef RNW_FASTBUILD
+#include <UI.Composition.h>
+#include <UI.Xaml.Automation.h>
+#include <UI.Xaml.Automation.Peers.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Input.h>
+#include <UI.Xaml.Media.h>
+#include <UI.Xaml.Shapes.h>
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.Devices.Input.h>
-#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.Metadata.h>
-#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
-#include <winrt/Windows.System.h>
-#include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.UI.ViewManagement.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
-#include <winrt/Windows.UI.Xaml.Automation.Peers.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.Shapes.h>
-#include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.Web.Http.Filters.h>
 
 #include "Base/CxxReactIncludes.h"
 
 #include <boost/algorithm/string.hpp>
-#endif
+#endif // RNW_FASTBUILD
 
 #include "CppWinRTIncludes.h"
 #include "HResult.h"
