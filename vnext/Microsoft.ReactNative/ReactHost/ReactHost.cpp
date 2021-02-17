@@ -59,6 +59,14 @@ winrt::Microsoft::ReactNative::IReactPropertyName UseDirectDebuggerProperty() no
   return propName;
 }
 
+winrt::Microsoft::ReactNative::IReactPropertyName EnableFabricProperty() noexcept {
+  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
+      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.ReactOptions"),
+          L"EnableFabric");
+  return propName;
+}
+
 //=============================================================================================
 // ReactOptions implementation
 //=============================================================================================
@@ -151,6 +159,30 @@ bool ReactOptions::UseWebDebugger() const noexcept {
 /*static*/ bool ReactOptions::UseWebDebugger(
     winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
   return winrt::unbox_value_or<bool>(properties.Get(UseWebDebuggerProperty()), false);
+}
+
+void ReactOptions::SetEnableFabric(bool enabled) noexcept {
+  SetEnableFabric(Properties, enabled);
+}
+
+bool ReactOptions::EnableFabric() const noexcept {
+  return EnableFabric(Properties);
+}
+
+/*static*/ void ReactOptions::SetEnableFabric(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+    bool value) noexcept {
+  properties.Set(EnableFabricProperty(), winrt::box_value(value));
+
+  if (value) {
+    // Fabric is incompatible with WebDebugging
+    SetUseWebDebugger(properties, false);
+  }
+}
+
+/*static*/ bool ReactOptions::EnableFabric(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
+  return winrt::unbox_value_or<bool>(properties.Get(EnableFabricProperty()), false);
 }
 
 bool ReactOptions::UseLiveReload() const noexcept {

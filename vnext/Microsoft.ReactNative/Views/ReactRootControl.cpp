@@ -176,8 +176,7 @@ void ReactRootControl::InitRootView(
   m_previewKeyboardEventHandlerOnRoot->hook(xamlRootView);
   m_SIPEventHandler->AttachView(xamlRootView, /*fireKeyboradEvents:*/ true);
 
-  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+  if (m_reactOptions->EnableFabric()) {
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
 
     m_rootSizeChangedRevoker = xamlRootGrid.SizeChanged(

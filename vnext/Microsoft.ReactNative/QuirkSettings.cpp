@@ -7,6 +7,7 @@
 
 #include "QuirkSettings.h"
 #include "ReactPropertyBag.h"
+#include "React.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -38,11 +39,6 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> AcceptSelfSignedCertsProper
   return propId;
 }
 
-winrt::Microsoft::ReactNative::ReactPropertyId<bool> EnableFabricProperty() noexcept {
-  winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{L"ReactNative.QuirkSettings", L"EnableFabric"};
-  return propId;
-}
-
 #pragma region IDL interface
 
 /*static*/ void QuirkSettings::SetMatchAndroidAndIOSStretchBehavior(
@@ -66,7 +62,7 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> EnableFabricProperty() noex
 /*static*/ void QuirkSettings::SetEnableFabric(
     winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
     bool value) noexcept {
-  ReactPropertyBag(settings.Properties()).Set(EnableFabricProperty(), value);
+  Mso::React::ReactOptions::SetEnableFabric(settings.Properties(), value);
 }
 
 #pragma endregion IDL interface
@@ -84,7 +80,7 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> EnableFabricProperty() noex
 }
 
 /*static*/ bool QuirkSettings::GetEnableFabric(ReactPropertyBag properties) noexcept {
-  return properties.Get(EnableFabricProperty()).value_or(false);
+  return Mso::React::ReactOptions::EnableFabric(properties.Handle());
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

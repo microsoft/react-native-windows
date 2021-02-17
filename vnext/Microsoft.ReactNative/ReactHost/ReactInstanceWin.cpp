@@ -217,8 +217,7 @@ void ReactInstanceWin::LoadModules(
     }
   };
 
-  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()))) {
+  if (m_options.EnableFabric()) {
     registerTurboModule(
         L"FabricUIManagerBinding",
         // Spec incorrectly reports commandID as a number, but its actually a number | string.. so dont use the spec for
@@ -415,8 +414,7 @@ void ReactInstanceWin::Initialize() noexcept {
         m_instanceWrapper.Exchange(std::move(instanceWrapper));
     
         // Eagerly init the FabricUI binding
-        if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
-                winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()))) {
+        if (m_options.EnableFabric()) {
           Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
               winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()),
               m_instanceWrapper.Load()->GetInstance()->getRuntimeExecutor());
@@ -863,8 +861,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
   int64_t rootTag = -1;
   rootView->ResetView();
 
-  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()))) {
+  if (m_options.EnableFabric()) {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
 
@@ -895,8 +892,7 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView)
   auto rootTag = rootView->GetTag();
   folly::dynamic params = folly::dynamic::array(rootTag);
 
-  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()))) {
+  if (m_options.EnableFabric()) {
     CallJsFunction("ReactFabric", "unmountComponentAtNode", std::move(params));
   } else {
     CallJsFunction("AppRegistry", "unmountApplicationComponentAtRootTag", std::move(params));
