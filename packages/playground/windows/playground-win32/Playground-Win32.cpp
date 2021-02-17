@@ -14,35 +14,45 @@
 #pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
 
+#include <DesktopWindowBridge.h>
 #include <winrt/Microsoft.ReactNative.h>
 
+#include <CppWinRTIncludes.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Hosting.h>
 #include <winrt/Windows.Foundation.Collections.h>
-
 #pragma pop_macro("GetCurrentTime")
 
 #ifndef USE_WINUI3
-namespace xaml = winrt::Windows::UI::Xaml;
 #else
-namespace xaml = winrt::Microsoft::UI::Xaml;
+#include <winrt/Microsoft.UI.h>
 #endif
 
 namespace controls = xaml::Controls;
 namespace hosting = xaml::Hosting;
 
+constexpr auto WindowDataProperty = L"WindowData";
+
 int RunPlayground(int showCmd, bool useWebDebugger);
+
+HWND GetXamlIslandHwnd(const hosting::DesktopWindowXamlSource &dwxs) {
+  auto interop = dwxs.as<IDesktopWindowXamlSourceNative>();
+  // Get the new child window's hwnd
+  HWND hWndXamlIsland = nullptr;
+  winrt::check_hresult(interop->get_WindowHandle(&hWndXamlIsland));
+  return hWndXamlIsland;
+}
 
 struct WindowData {
   static HINSTANCE s_instance;
   static constexpr uint16_t defaultDebuggerPort = 9229;
 
   std::wstring m_bundleFile;
-  hosting::DesktopWindowXamlSource m_desktopWindowXamlSource;
+  hosting::DesktopWindowXamlSource m_desktopWindowXamlSource{nullptr};
 
-  winrt::Microsoft::ReactNative::ReactRootView m_reactRootView;
-  winrt::Microsoft::ReactNative::ReactNativeHost m_host;
-  winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings;
+  winrt::Microsoft::ReactNative::ReactRootView m_reactRootView{nullptr};
+  winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
+  winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
 
   bool m_useWebDebugger{true};
   bool m_liveReloadEnabled{true};
@@ -55,7 +65,8 @@ struct WindowData {
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
 
   static WindowData *GetFromWindow(HWND hwnd) {
-    return reinterpret_cast<WindowData *>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+    auto data = reinterpret_cast<WindowData *>(GetProp(hwnd, WindowDataProperty));
+    return data;
   }
 
   winrt::Microsoft::ReactNative::ReactNativeHost Host() noexcept {
@@ -101,14 +112,18 @@ struct WindowData {
           winrt::Microsoft::ReactNative::XamlUIService::SetXamlRoot(
               host.InstanceSettings().Properties(), rootElement.XamlRoot());
 
+#ifdef USE_WINUI3
+          const auto islandWindow = (uint64_t)GetXamlIslandHwnd(m_desktopWindowXamlSource);
+          winrt::Microsoft::ReactNative::XamlUIService::SetIslandWindowHandle(
+              host.InstanceSettings().Properties(), islandWindow);
+#endif
+
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
 
           m_reactRootView = winrt::Microsoft::ReactNative::ReactRootView();
           m_reactRootView.ComponentName(appName);
           m_reactRootView.ReactNativeHost(host);
-
-          // Retrieve ABI pointer from C++/CX pointer
           rootElement.Children().Clear();
           rootElement.Children().Append(m_reactRootView);
         }
@@ -144,10 +159,7 @@ struct WindowData {
     // Parent the DesktopWindowXamlSource object to current window
     winrt::check_hresult(interop->AttachToWindow(hwnd));
 
-    // Get the new child window's hwnd
-    HWND hWndXamlIsland = nullptr;
-    winrt::check_hresult(interop->get_WindowHandle(&hWndXamlIsland));
-
+    auto hWndXamlIsland = GetXamlIslandHwnd(m_desktopWindowXamlSource);
     SetWindowPos(hWndXamlIsland, nullptr, 0, 0, createStruct->cx, createStruct->cy, SWP_SHOWWINDOW);
 
     return 0;
@@ -301,6 +313,13 @@ extern "C" IMAGE_DOS_HEADER __ImageBase;
 HINSTANCE WindowData::s_instance = reinterpret_cast<HINSTANCE>(&__ImageBase);
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
+#ifdef USE_WINUI3
+  if (auto windowData = WindowData::GetFromWindow(hwnd)) {
+    winrt::Microsoft::ReactNative::ReactNotificationService rns(windowData->InstanceSettings().Notifications());
+    winrt::Microsoft::ReactNative::ForwardWindowMessage(rns, hwnd, message, wparam, lparam);
+  }
+#endif
+
   switch (message) {
     case WM_CREATE: {
       return WindowData::GetFromWindow(hwnd)->OnCreate(hwnd, reinterpret_cast<LPCREATESTRUCT>(lparam));
@@ -311,7 +330,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
     }
     case WM_DESTROY: {
       delete WindowData::GetFromWindow(hwnd);
-      SetWindowLongPtr(hwnd, GWLP_USERDATA, 0);
+      SetProp(hwnd, WindowDataProperty, 0);
       PostQuitMessage(0);
       return 0;
     }
@@ -319,7 +338,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       auto cs = reinterpret_cast<CREATESTRUCT *>(lparam);
       auto windowData = static_cast<WindowData *>(cs->lpCreateParams);
       WINRT_ASSERT(windowData);
-      SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(windowData));
+      SetProp(hwnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
       break;
     }
     case WM_WINDOWPOSCHANGED: {
@@ -380,7 +399,6 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
     if (xamlSourceProcessedMessage) {
       continue;
     }
-
     if (!TranslateAccelerator(hwnd, hAccelTable, &msg)) {
       TranslateMessage(&msg);
       DispatchMessage(&msg);
@@ -398,7 +416,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   wcex.style = CS_HREDRAW | CS_VREDRAW;
   wcex.lpfnWndProc = &WndProc;
   wcex.cbClsExtra = DLGWINDOWEXTRA;
-  wcex.cbWndExtra = 0;
+  wcex.cbWndExtra = sizeof(WindowData *);
   wcex.hInstance = WindowData::s_instance;
   wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
   wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Set up mechanism to forward window messages from [WinUI 3] xaml islands. Update AppTheme and DeviceInfo module.",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

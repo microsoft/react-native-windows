@@ -39,8 +39,8 @@ class ViewShadowNode : public ShadowNodeBase {
  public:
   ViewShadowNode() = default;
 
-  void createView() override {
-    Super::createView();
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &props) override {
+    Super::createView(props);
 
     auto panel = GetViewPanel();
 
@@ -157,7 +157,7 @@ class ViewShadowNode : public ShadowNodeBase {
     XamlView current = m_view;
 
     // TODO NOW: Why do we do this? Removal of children doesn't seem to imply we
-    // tear down the infrastr
+    // tear down the infrastructure
     if (IsControl()) {
       if (auto control = m_view.try_as<xaml::Controls::ContentControl>()) {
         current = control.Content().as<XamlView>();
@@ -367,7 +367,7 @@ ShadowNode *ViewViewManager::createShadow() const {
   return new ViewShadowNode();
 }
 
-XamlView ViewViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView ViewViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   auto panel = winrt::make<winrt::react::uwp::implementation::ViewPanel>();
   panel.VerticalAlignment(xaml::VerticalAlignment::Stretch);
   panel.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);

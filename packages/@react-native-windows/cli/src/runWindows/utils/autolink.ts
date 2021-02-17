@@ -808,6 +808,18 @@ export class AutolinkWindows {
     });
     return changed;
   }
+
+  /** @return The CLI command to invoke autolink-windows independently */
+  public getAutolinkWindowsCommand() {
+    const folder = this.windowsAppConfig.folder;
+
+    const autolinkCommand = 'npx react-native autolink-windows';
+    const autolinkArgs = `--sln "${path.relative(
+      folder,
+      this.getSolutionFile(),
+    )}" --proj "${path.relative(folder, this.getProjectFile())}"`;
+    return `${autolinkCommand} ${autolinkArgs}`;
+  }
 }
 
 /**
@@ -876,18 +888,19 @@ async function updateAutoLink(
         )}ms)`,
       );
     } else if (options.check) {
+      const autolinkCommand = autolink.getAutolinkWindowsCommand();
       console.log(
         `${chalk.yellow(
           'Warning:',
         )} Auto-linking changes were necessary but ${chalk.bold(
           '--check',
-        )} specified. Run ${chalk.bold(
-          "'npx react-native autolink-windows'",
-        )} to apply the changes. (${Math.round(endTime - startTime)}ms)`,
+        )} specified. Run '${chalk.bold(
+          `${autolinkCommand}`,
+        )}' to apply the changes. (${Math.round(endTime - startTime)}ms)`,
       );
       throw new CodedError(
         'NeedAutolinking',
-        'Auto-linking changes were necessary but --check was specified',
+        `Auto-linking changes were necessary but --check was specified. Run '${autolinkCommand}' to apply the changes`,
       );
     } else {
       console.log(

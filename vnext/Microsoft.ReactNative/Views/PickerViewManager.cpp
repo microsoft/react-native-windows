@@ -24,7 +24,7 @@ class PickerShadowNode : public ShadowNodeBase {
 
  public:
   PickerShadowNode();
-  void createView() override;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
   bool NeedsForceLayout() override;
 
@@ -63,8 +63,8 @@ PickerShadowNode::PickerShadowNode() : Super() {
   }
 }
 
-void PickerShadowNode::createView() {
-  Super::createView();
+void PickerShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  Super::createView(props);
   auto combobox = GetView().as<xaml::Controls::ComboBox>();
   combobox.AllowFocusOnInteraction(true);
 
@@ -200,7 +200,7 @@ ShadowNode *PickerViewManager::createShadow() const {
   return new PickerShadowNode();
 }
 
-XamlView PickerViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView PickerViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   auto combobox = xaml::Controls::ComboBox();
   return combobox;
 }

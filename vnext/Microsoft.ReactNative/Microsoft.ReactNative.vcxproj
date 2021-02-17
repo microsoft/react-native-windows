@@ -183,6 +183,9 @@
     <ClInclude Include="Base\CoreNativeModules.h" />
     <ClInclude Include="Base\CxxReactIncludes.h" />
     <ClInclude Include="Base\FollyIncludes.h" />
+    <ClInclude Include="DesktopWindowMessage.h">
+      <DependentUpon>DesktopWindowMessage.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="DevMenuControl.h">
       <DependentUpon>DevMenuControl.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -385,6 +388,9 @@
     <ClCompile Include="Base\CoreNativeModules.cpp" />
     <ClCompile Include="Base\CoreUIManagers.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
+    <ClCompile Include="DesktopWindowMessage.cpp">
+      <DependentUpon>DesktopWindowMessage.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="DevMenuControl.cpp">
       <DependentUpon>DevMenuControl.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -569,6 +575,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="DesktopWindowMessage.idl" />
     <Midl Include="DevMenuControl.idl">
       <DependentUpon>DevMenuControl.xaml</DependentUpon>
       <SubType>Code</SubType>

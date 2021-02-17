@@ -21,7 +21,7 @@ class RefreshControlViewManager : public FrameworkElementViewManager {
       const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
  protected:
-  XamlView CreateViewCore(int64_t tag) override;
+  XamlView CreateViewCore(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void AddView(const XamlView &parent, const XamlView &child, int64_t index) override;
 };
 

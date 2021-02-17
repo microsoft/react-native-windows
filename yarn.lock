@@ -3036,9 +3036,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.32.0:
-  version "1.50.1"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.50.1.tgz#4ed28f096fd9aa75deec69db160c29c6766a557b"
-  integrity sha512-/0iWk0D9Yrcs6P+J8KttCmQc4v8EE6KzY2cdRabDJPQWqmhO9gsMLj5EURPhKoI8Isy8SVKxGUQJLpYHlzYByw==
+  version "1.51.1"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.51.1.tgz#fadd846fe9e46e6c5f02a9d8ababe9c2e3c62581"
+  integrity sha512-vimktQo4Tv20yT88QqL9Nh7d+AgJaICuTAYLCapOZqbUfF+yPTKZZHQa167lGhunMWI4SmATDUg11bIuBMyrsw==
   dependencies:
     cosmiconfig "^6.0.0"
     execa "^4.0.3"
@@ -3052,7 +3052,7 @@ beachball@^1.32.0:
     semver "^6.1.1"
     toposort "^2.0.2"
     uuid "^8.3.1"
-    workspace-tools "^0.10.2"
+    workspace-tools "^0.12.2"
     yargs-parser "^20.2.4"
 
 before-after-hook@^2.1.0:
@@ -5212,10 +5212,10 @@ flatted@^2.0.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.2.tgz#4575b21e2bcee7434aa9be662f4b7b5f9c2b5138"
   integrity sha512-r5wGx7YeOwNWNlCA0wQ86zKyDLMQr+/RB8xy74M4hTphfmjlijTSSXGuH8rnvKZnfT9i+75zmd8jcKdMR4O6jA==
 
-flow-bin@^0.142.0:
-  version "0.142.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.142.0.tgz#b46b69de1123cf7c5a50917402968e07291df054"
-  integrity sha512-YgiapK/wrJjcgSgOWfoncbZ4vZrZWdHs+p7V9duI9zo4ehW2nM/VRrpSaWoZ+CWu3t+duGyAvupJvC6MM2l07w==
+flow-bin@^0.143.1:
+  version "0.143.1"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.143.1.tgz#2ff825dfd85e84531b0ae780842cb1c2a9743cd2"
+  integrity sha512-6S6bgZ/pghBzEUELXkwFH/bsHT+GBMo8ftHDYs0SSJ+1e6NRdFfqxcYhaTvAK8zteSfQLZBIoec6G4WPPp4qQg==
 
 flow-parser@0.*:
   version "0.113.0"
@@ -8902,10 +8902,10 @@ react-native-tscodegen@0.66.1:
     nullthrows "1.1.1"
     typescript "^3.5.3"
 
-react-native@0.0.0-c66aa8abc:
-  version "0.0.0-c66aa8abc"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-c66aa8abc.tgz#c16c1a5996fbf552d91841465bb838baba2bd300"
-  integrity sha512-MLLREGn0reS/PmJsyvPVkqgUbdZxOh/BWWkB7FYm4k+1BzJCIs5Ob+CyVKjt82VXwlHnGlWygT5krj/LlPgtnQ==
+react-native@0.0.0-67699ba9f:
+  version "0.0.0-67699ba9f"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-67699ba9f.tgz#131b8d6e447e964b43e7541b7ce0f89302d54fd8"
+  integrity sha512-Xk3x1g2lg5NatZiDHm//NmOLtZOstZfY/J6Neokgyh8+jO1aKUhArltucP7BZ7c3gm/liSfMnVplFM3nr+XX9A==
   dependencies:
     "@jest/create-cache-key-function" "^26.5.0"
     "@react-native-community/cli" "^5.0.1-alpha.0"
@@ -10936,10 +10936,27 @@ wordwrapjs@^4.0.0:
     reduce-flatten "^2.0.0"
     typical "^5.0.0"
 
-workspace-tools@^0.10.0, workspace-tools@^0.10.1, workspace-tools@^0.10.2:
+workspace-tools@^0.10.0, workspace-tools@^0.10.1:
   version "0.10.2"
   resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.10.2.tgz#e5d04c8aa67ed534c364a94baef3039367a2a8a8"
   integrity sha512-g4WkDpGF1OunuiL/eQ93rOqKYI9l0SPrYEKV/58flToD5K1uBy4uCqM5wMUR+1WkOI7AzLoo6By+x/Qn3y9qrw==
+  dependencies:
+    "@pnpm/lockfile-file" "^3.0.7"
+    "@pnpm/logger" "^3.2.2"
+    "@yarnpkg/lockfile" "^1.1.0"
+    find-up "^4.1.0"
+    find-yarn-workspace-root "^1.2.1"
+    fs-extra "^9.0.0"
+    git-url-parse "^11.1.2"
+    globby "^11.0.0"
+    jju "^1.4.0"
+    multimatch "^4.0.0"
+    read-yaml-file "^2.0.0"
+
+workspace-tools@^0.12.2:
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.12.2.tgz#2de5c7329c39a1aa4b2a979c523bbdbcf6798305"
+  integrity sha512-uF5WFTKNIhfLGIUv5EaH7cwXZVn8sI9BrmU0eI8ySVbhMqRe6WWNcNf5q0hICXP4sIXpCuxO8DqLPySm71mPfQ==
   dependencies:
     "@pnpm/lockfile-file" "^3.0.7"
     "@pnpm/logger" "^3.2.2"

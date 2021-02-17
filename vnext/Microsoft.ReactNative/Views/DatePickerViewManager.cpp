@@ -23,7 +23,7 @@ class DatePickerShadowNode : public ShadowNodeBase {
 
  public:
   DatePickerShadowNode() = default;
-  void createView() override;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
  private:
@@ -35,8 +35,8 @@ class DatePickerShadowNode : public ShadowNodeBase {
   xaml::Controls::CalendarDatePicker::DateChanged_revoker m_dataPickerDateChangedRevoker{};
 };
 
-void DatePickerShadowNode::createView() {
-  Super::createView();
+void DatePickerShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  Super::createView(props);
 
   auto datePicker = GetView().as<xaml::Controls::CalendarDatePicker>();
 
@@ -164,7 +164,7 @@ ShadowNode *DatePickerViewManager::createShadow() const {
   return new DatePickerShadowNode();
 }
 
-XamlView DatePickerViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView DatePickerViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   auto datePicker = xaml::Controls::CalendarDatePicker();
   return datePicker;
 }

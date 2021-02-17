@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add IViewManagerCreateWithProperties to allow VMs to change behavior at create time",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

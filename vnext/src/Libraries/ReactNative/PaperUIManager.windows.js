@@ -93,6 +93,9 @@ UIManagerJS.getConstants = getConstants;
 // $FlowFixMe
 UIManagerJS.getViewManagerConfig = getViewManagerConfig;
 
+UIManagerJS.hasViewManagerConfig = (viewManagerName: string) =>
+  getViewManagerConfig(viewManagerName) != null;
+
 //};
 
 // TODO (T45220498): Remove this.

@@ -34,7 +34,7 @@ const wchar_t *RawTextViewManager::GetName() const {
   return L"RCTRawText";
 }
 
-XamlView RawTextViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView RawTextViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   winrt::Run run;
   return run;
 }

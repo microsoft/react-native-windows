@@ -23,7 +23,7 @@ class TextInputViewManager : public ControlViewManager {
   virtual void TransferProperties(const XamlView &oldView, const XamlView &newView) override;
 
  protected:
-  XamlView CreateViewCore(int64_t tag) override;
+  XamlView CreateViewCore(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &) override;
   friend class TextInputShadowNode;
 
  private:

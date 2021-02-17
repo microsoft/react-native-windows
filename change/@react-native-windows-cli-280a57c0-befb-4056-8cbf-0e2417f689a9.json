@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixes autolink check error to incude command to fix it",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
