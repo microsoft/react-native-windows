@@ -1,8 +1,48 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
+This log was last generated on Sun, 14 Feb 2021 05:06:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.60
+
+Sun, 14 Feb 2021 05:06:10 GMT
+
+### Changes
+
+- Update WinUI 3 package to Preview 4 (asklar@microsoft.com)
+- fix xml indentation of autolinkedNativeModules.g.targets (asklar@microsoft.com)
+
+## 0.0.0-canary.59
+
+Fri, 12 Feb 2021 05:19:35 GMT
+
+### Changes
+
+- move autolink FS operations to async (asklar@microsoft.com)
+
+## 0.0.0-canary.58
+
+Thu, 11 Feb 2021 05:08:29 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.0 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/jest-unittest-config to v1.2.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Refactor autolinking code (asklar@microsoft.com)
+- Rename "BuildFlags.props" to "ExperimentalFeatures.props" (ngerlem@microsoft.com)
+- Better dependency warning on run-windows build error (ngerlem@microsoft.com)
+
+## 0.0.0-canary.57
+
+Wed, 10 Feb 2021 05:06:37 GMT
+
+### Changes
+
+- Build apps for either/or WinUI 3 or XAML (asklar@microsoft.com)
 
 ## 0.0.0-canary.56
 

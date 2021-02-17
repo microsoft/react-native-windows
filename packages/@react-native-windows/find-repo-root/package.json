@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/find-repo-root",
-  "version": "0.0.0-canary.18",
+  "version": "0.0.0-canary.19",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.6",
-    "@rnw-scripts/just-task": "2.0.2",
+    "@rnw-scripts/just-task": "2.1.0",
     "@rnw-scripts/ts-config": "1.1.0",
     "@types/find-up": "^4.0.0",
     "@types/node": "^14.14.22",

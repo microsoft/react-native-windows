@@ -3,12 +3,16 @@
 #include "pch.h"
 #include "AutolinkedNativeModules.g.h"
 
+// Includes from node-rnw-rpc
+#include <winrt/NodeRpc.h>
+
 namespace winrt::Microsoft::ReactNative
 {
 
 void RegisterAutolinkedNativeModulePackages(winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IReactPackageProvider> const& packageProviders)
 { 
-    UNREFERENCED_PARAMETER(packageProviders);
+    // IReactPackageProviders from node-rnw-rpc
+    packageProviders.Append(winrt::NodeRpc::ReactPackageProvider());
 }
 
 }

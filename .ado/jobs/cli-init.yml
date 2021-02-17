@@ -33,23 +33,20 @@ jobs:
               projectType: app
               additionalInitArguments:
               additionalRunArguments: --no-deploy # We don't have Arm agents
-          # END Continuous only
-          ArmReleaseCpp:
-            language: cpp
-            configuration: Release
-            platform: arm
-            projectType: app
-            additionalInitArguments:
-            additionalRunArguments: --no-deploy # We don't have Arm agents
-          ArmReleaseCs:
-            language: cs
-            configuration: Release
-            platform: arm
-            projectType: app
-            additionalInitArguments:
-            additionalRunArguments: --no-deploy # We don't have Arm agents
-          # Start Continuous only
-          ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+            ArmReleaseCpp:
+              language: cpp
+              configuration: Release
+              platform: arm
+              projectType: app
+              additionalInitArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
+            ArmReleaseCs:
+              language: cs
+              configuration: Release
+              platform: arm
+              projectType: app
+              additionalInitArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
             Arm64DebugCpp:
               language: cpp
               configuration: Debug

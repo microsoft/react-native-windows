@@ -1,8 +1,44 @@
 # Change Log - playground
 
-This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
+This log was last generated on Sun, 14 Feb 2021 05:06:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.54
+
+Sun, 14 Feb 2021 05:06:10 GMT
+
+### Changes
+
+- Bump @react-native-windows/tester to v0.0.1 (asklar@microsoft.com)
+
+## 0.0.54
+
+Fri, 12 Feb 2021 05:19:35 GMT
+
+### Changes
+
+- Bump @react-native-windows/tester to v0.0.1 (jthysell@microsoft.com)
+
+## 0.0.54
+
+Thu, 11 Feb 2021 05:08:29 GMT
+
+### Patches
+
+- Bump @react-native-windows/tester to v0.0.1 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.253 (ngerlem@microsoft.com)
+
+## 0.0.54
+
+Wed, 10 Feb 2021 05:06:37 GMT
+
+### Changes
+
+- Bump @react-native-windows/tester to v0.0.1 (asklar@microsoft.com)
 
 ## 0.0.54
 

@@ -8,7 +8,6 @@ const expectedConfig = {
   project: {
     projectFile: 'Error: Project is required but not specified in react-native.config.',
   },
-  useWinUI3: false,
 };
 
 const expectedConfigIgnoringOverride = {
@@ -17,7 +16,6 @@ const expectedConfigIgnoringOverride = {
   project: {
     projectFile: 'Error: No app project file found, please specify in react-native.config.',
   },
-  useWinUI3: false,
 };
 
 module.exports = {

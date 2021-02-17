@@ -2,6 +2,104 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 14 Feb 2021 05:06:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.255",
+      "version": "0.0.0-canary.255",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update WinUI 3 package to Preview 4",
+            "author": "asklar@microsoft.com",
+            "commit": "4eaeb870a85038fef7e0396349482da056f23689",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Feb 2021 05:19:35 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.254",
+      "version": "0.0.0-canary.254",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed typo in template which breaks C# autolinking",
+            "author": "jthysell@microsoft.com",
+            "commit": "4a5b47c020d5136cdb280a5fbb9d4cd1e4711cfe",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix all package typos",
+            "author": "jthysell@microsoft.com",
+            "commit": "8b4f330f15b01073270c6eef7337e4f62aca874d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix cursor resetting in TextInput.",
+            "author": "igklemen@microsoft.com",
+            "commit": "c9f6405784d93cc288336308956fe0929dd657db",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 11 Feb 2021 05:08:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.253",
+      "version": "0.0.0-canary.253",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Minor doc update",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "b35ef5002f9d8a5a2f18aa0529efc095d47681bc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Make modules use the app's buildFlags.props",
+            "author": "asklar@microsoft.com",
+            "commit": "3a875c2bf27354dc0b5cf96a291ab9105bf3a774",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Improve compile time by increasing paralelism",
+            "author": "dannyvv@microsoft.com",
+            "commit": "91bfc83f6b1343dd3ac340d6eacfdb0c8316b463",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Rename \"BuildFlags.props\" to \"ExperimentalFeatures.props\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.12",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Feb 2021 05:06:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.252",
+      "version": "0.0.0-canary.252",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Build apps for either/or WinUI 3 or XAML",
+            "author": "asklar@microsoft.com",
+            "commit": "504cd4293df706f9089562bb630242c13ec4028f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Feb 2021 05:07:37 GMT",
       "tag": "react-native-windows_v0.0.0-canary.251",
       "version": "0.0.0-canary.251",
@@ -4983,7 +5081,7 @@
             "package": "react-native-windows"
           },
           {
-            "comment": "Switch package layout to use `files` in `pacakge.json` rather than `.npmignore`",
+            "comment": "Switch package layout to use `files` in `package.json` rather than `.npmignore`",
             "author": "dannyvv@microsoft.com",
             "commit": "c18e0c17fa6c2a2f778aa6607fb7e1601f6089da",
             "package": "react-native-windows"

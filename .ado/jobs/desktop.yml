@@ -38,20 +38,17 @@ jobs:
 
     strategy:
       matrix:
-        # Arm Desktop does not build on non-arm agents
-        # ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-        #   ArmDebug:
-        #     BuildConfiguration: Debug
-        #     BuildPlatform: ARM
-        #   ArmRelease:
-        #     BuildConfiguration: Release
-        #     BuildPlatform: ARM
-        # # End Continuous only
-        Arm64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM64
-        # Start Continuous only
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+          # Arm Desktop does not build on non-arm agents
+          # ArmDebug:
+          #   BuildConfiguration: Debug
+          #   BuildPlatform: ARM
+          # ArmRelease:
+          #   BuildConfiguration: Release
+          #   BuildPlatform: ARM
+          Arm64Debug:
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64
           Arm64Release:
             BuildConfiguration: Release
             BuildPlatform: ARM64

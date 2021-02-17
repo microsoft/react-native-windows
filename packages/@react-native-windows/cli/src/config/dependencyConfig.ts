@@ -17,7 +17,7 @@ import * as configUtils from './configUtils';
 
 react-native config will generate the following JSON for each native module dependency
 under node_modules that has a Windows implementation, in order to support auto-linking.
-This is done heurestically, so if the result isn't quite correct, native module developers
+This is done heuristically, so if the result isn't quite correct, native module developers
 can provide a manual override file: react-native.config.js.
 
 Schema for dependencies:
@@ -254,7 +254,7 @@ export function dependencyConfigWindows(
       }
     }
   } else {
-    // No react-native.config, try to heurestically find any projects
+    // No react-native.config, try to heuristically find any projects
 
     const foundProjects = configUtils.findDependencyProjectFiles(sourceDir);
 

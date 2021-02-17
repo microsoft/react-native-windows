@@ -5,7 +5,7 @@
  * @format
  */
 
-import {goToComponentExample} from './Helpers';
+import {goToComponentExample} from './framework';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyTextInputTest');
