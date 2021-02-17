@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix PR",
+  "packageName": "@react-native-windows/cli",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
