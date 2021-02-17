@@ -71,7 +71,7 @@ void DeviceInfoHolder::InitDeviceInfoHolder(const Mso::React::IReactContext &con
           WM_WINDOWPOSCHANGED,
           [weakHolder = std::weak_ptr(deviceInfoHolder)](HWND hwnd, const DesktopWindowMessage &dwm) {
             if (auto strongHolder = weakHolder.lock()) {
-              const auto pos = reinterpret_cast<WINDOWPOS *>(dwm.LParam());
+              const auto pos = reinterpret_cast<WINDOWPOS *>(dwm.LParam);
               const auto newWidth = static_cast<float>(pos->cx);
               const auto newHeight = static_cast<float>(pos->cy);
               const auto changed =

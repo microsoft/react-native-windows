@@ -43,7 +43,9 @@ inline ReactNotificationSubscription SubscribeToWindowMessage(
           const winrt::Windows::Foundation::IInspectable &sender,
           const ReactNotificationArgs<DesktopWindowMessage> &args) {
         if (auto dwm = args.Data()) {
-          cb(reinterpret_cast<HWND>(winrt::unbox_value<uint64_t>(sender)), dwm);
+          if (dwm.has_value()) {
+            cb(reinterpret_cast<HWND>(winrt::unbox_value<uint64_t>(sender)), dwm.value());
+          }
         }
       });
 }
