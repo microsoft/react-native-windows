@@ -12,16 +12,9 @@
 #include <IReactRootView.h>
 #include <IXamlRootView.h>
 #include <JSI/jsi.h>
-#include <Modules\NativeUIManager.h>
+#include <winrt/Windows.Graphics.Display.h>
 #include <UI.Xaml.Controls.h>
-#include <UI.Xaml.Media.h>
-#include <Views/ViewManager.h>
-#include <XamlUtils.h>
-#include <react/renderer/core/EventBeat.h>
-#include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
-#include "ShadowNodeBase.h"
 #include "Unicode.h"
-#include "XamlUIService.h"
 #pragma warning(push)
 #pragma warning(disable : 4244)
 #include <react/renderer/scheduler/Scheduler.h>
@@ -61,10 +54,6 @@ FabicUIManagerProperty() noexcept {
 FabricUIManager::FabricUIManager() {}
 
 FabricUIManager::~FabricUIManager() {
-  // To make sure that we destroy UI components in UI thread.
-  // if (!m_context.UIDispatcher().HasThreadAccess()) {
-  //    m_context.UIDispatcher().Post([module = std::move(m_module)]() {});
-  //  }
 }
 
 // Equiv of AsyncEventBeat (ReactAndroid\src\main\java\com\facebook\react\fabric\jni\AsyncEventBeat.h)
@@ -164,28 +153,10 @@ std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> shar
   return providerRegistry;
 }
 
-void FabricUIManager::installFabricUIManager( // in android this is Binding::installFabricUIManager(
-                                              // jni::alias_ref<JRuntimeExecutor::javaobject> runtimeExecutorHolder,
-                                              // jni::alias_ref<jobject> javaUIManager,
-                                              // EventBeatManager *eventBeatManager,
-                                              // jni::alias_ref<JavaMessageQueueThread::javaobject>
-                                              // jsMessageQueueThread, ComponentFactory *componentsRegistry,
-                                              // jni::alias_ref<jobject> reactNativeConfig
-    ) noexcept {
-  // SystraceSection s("FabricUIManagerBinding::installFabricUIManager");
+void FabricUIManager::installFabricUIManager() noexcept {
 
   std::shared_ptr<const facebook::react::ReactNativeConfig> config =
       std::make_shared<const ReactNativeConfigProperties>(m_context);
-
-  /*
-    enableFabricLogs_ =
-        config->getBool("react_fabric:enabled_android_fabric_logs");
-
-    if (enableFabricLogs_) {
-      LOG(WARNING) << "Binding::installFabricUIManager() was called (address: "
-                   << this << ").";
-    }
-    */
 
   std::lock_guard<std::mutex> schedulerLock(m_schedulerMutex);
 
@@ -209,20 +180,6 @@ void FabricUIManager::installFabricUIManager( // in android this is Binding::ins
 
   contextContainer->insert("ReactNativeConfig", config);
 
-  // Keep reference to config object and cache some feature flags here
-  m_reactNativeConfig = config;
-  m_collapseDeleteCreateMountingInstructions =
-      m_reactNativeConfig->getBool("react_fabric:enabled_collapse_delete_create_mounting_instructions") &&
-      !m_reactNativeConfig->getBool("react_fabric:enable_reparenting_detection_android") &&
-      !m_reactNativeConfig->getBool("react_fabric:enabled_layout_animations_android");
-
-  m_disablePreallocateViews = m_reactNativeConfig->getBool("react_fabric:disabled_view_preallocation_android");
-
-  /*
-    bool enableLayoutAnimations = reactNativeConfig_->getBool(
-        "react_fabric:enabled_layout_animations_android");
-  */
-
   auto toolbox = facebook::react::SchedulerToolbox{};
   toolbox.contextContainer = contextContainer;
   toolbox.componentRegistryFactory = [](facebook::react::EventDispatcher::Weak const &eventDispatcher,
@@ -243,18 +200,13 @@ void FabricUIManager::installFabricUIManager( // in android this is Binding::ins
   toolbox.asynchronousEventBeatFactory = asynchronousBeatFactory;
 
   /*
-    if (m_reactNativeConfig->getBool(
-            "react_fabric:enable_background_executor_android")) {
-      backgroundExecutor_ = std::make_unique<JBackgroundExecutor>();
-      toolbox.backgroundExecutor = backgroundExecutor_->get();
-    }
-    */
-  /*
-    if (enableLayoutAnimations) {
-      animationDriver_ =
-          std::make_shared<LayoutAnimationDriver>(runtimeExecutor, this);
-    }
-    */
+  if (m_reactNativeConfig->getBool(
+      "react_fabric:enable_background_executor_android")) {
+    backgroundExecutor_ = std::make_unique<JBackgroundExecutor>();
+    toolbox.backgroundExecutor = backgroundExecutor_->get();
+  }
+  */
+
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
       toolbox, (/*animationDriver_ ? animationDriver_.get() :*/ nullptr), this);
 }
@@ -268,7 +220,6 @@ void FabricUIManager::startSurface(
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
-  // SystraceSection s("FabricUIManagerBinding::startSurface");
 
   auto xamlRootView = static_cast<::react::uwp::IXamlRootView *>(rootview);
   auto rootFE = xamlRootView->GetXamlView().as<xaml::FrameworkElement>();
@@ -279,17 +230,11 @@ void FabricUIManager::startSurface(
     self->m_registry.dequeueComponentViewWithComponentHandle(facebook::react::RootShadowNode::Handle(), surfaceId);
   });
 
-  /*
-    std::shared_ptr<Scheduler> scheduler = getScheduler();
-    if (!scheduler) {
-      LOG(ERROR) << "Binding::startSurface: scheduler disappeared";
-      return;
-    }
-    */
-
   facebook::react::LayoutContext context;
-  // TODO scaling factor
-  context.pointScaleFactor = 1; // pointScaleFactor_;
+
+  // TODO: This call wont work with winUI
+  context.pointScaleFactor =
+      static_cast<facebook::react::Float>(winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView().RawPixelsPerViewPixel());
 
   facebook::react::LayoutConstraints constraints;
   constraints.minimumSize.height = static_cast<facebook::react::Float>(rootFE.ActualHeight());
@@ -300,8 +245,6 @@ void FabricUIManager::startSurface(
       ? facebook::react::LayoutDirection::LeftToRight
       : facebook::react::LayoutDirection::RightToLeft;
 
-  // LayoutContext context;
-  // context.pointScaleFactor = pointScaleFactor_;
   m_scheduler->startSurface(
       surfaceId,
       moduleName,
@@ -540,36 +483,29 @@ void FabricUIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext con
 
   m_context.Properties().Set(FabicUIManagerProperty(), shared_from_this());
 
-  // auto settings = m_context.Properties().Get(FabricUIManagerSettingsProperty());
-  // m_batchingUIMessageQueue = std::move((*settings)->batchingUIMessageQueue);
-  // m_module->Initialize(reactContext);
-
   /*
+  EventBeatManager eventBeatManager = new EventBeatManager(mReactApplicationContext);
+  UIManagerModule nativeModule =
+    Assertions.assertNotNull(mReactApplicationContext.getNativeModule(UIManagerModule.class));
+  EventDispatcher eventDispatcher = nativeModule.getEventDispatcher();
+  FabricUIManager uiManager =
+    new FabricUIManager(
+      mReactApplicationContext,
+      nativeModule.getViewManagerRegistry_DO_NOT_USE(),
+      eventDispatcher,
+      eventBeatManager);
 
-      final EventBeatManager eventBeatManager = new EventBeatManager(mReactApplicationContext);
-      UIManagerModule nativeModule =
-          Assertions.assertNotNull(mReactApplicationContext.getNativeModule(UIManagerModule.class));
-      EventDispatcher eventDispatcher = nativeModule.getEventDispatcher();
-      final FabricUIManager uiManager =
-          new FabricUIManager(
-              mReactApplicationContext,
-              nativeModule.getViewManagerRegistry_DO_NOT_USE(),
-              eventDispatcher,
-              eventBeatManager);
+  Binding binding = new Binding();
+  // TODO T31905686: remove this call
+  loadClasses();
+  MessageQueueThread jsMessageQueueThread =
+    mReactApplicationContext
+      .getCatalystInstance()
+      .getReactQueueConfiguration()
+      .getJSQueueThread();
+  */
 
-
-
-    final Binding binding = new Binding();
-      // TODO T31905686: remove this call
-    loadClasses();
-      MessageQueueThread jsMessageQueueThread =
-          mReactApplicationContext
-              .getCatalystInstance()
-              .getReactQueueConfiguration()
-              .getJSQueueThread();
-
-      // binding.register( // This is register in java, which calls into Binding::installFabricUIManager
-      */
+  // binding.register( // This is register in java, which calls into Binding::installFabricUIManager
   installFabricUIManager(
       /*
         mReactApplicationContext.getCatalystInstance().getRuntimeExecutor(),

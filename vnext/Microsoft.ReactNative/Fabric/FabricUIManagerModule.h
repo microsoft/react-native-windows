@@ -2,13 +2,8 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include <CxxMessageQueue.h>
-#include <INativeUIManager.h>
 #include <NativeModules.h>
 #include <React.h>
-#include <Views/ShadowNodeRegistry.h>
-#include <winrt/Windows.ApplicationModel.h>
-#include <winrt/Windows.Foundation.h>
 #include "ComponentViewRegistry.h"
 
 #pragma warning(push)
@@ -22,10 +17,6 @@ class ReactNativeConfig;
 } // namespace facebook::react
 
 namespace Microsoft::ReactNative {
-
-class UIManagerModule;
-class IViewManager;
-class NativeUIManager;
 
 REACT_MODULE(FabricUIManager)
 struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManager>,
@@ -62,21 +53,14 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       facebook::react::SurfaceId surfaceId);
   void didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept;
 
-  // std::shared_ptr<facebook::react::MessageQueueThread> m_batchingUIMessageQueue;
-  // std::shared_ptr<UIManagerModule> m_module;
   winrt::Microsoft::ReactNative::ReactContext m_context;
   std::shared_ptr<facebook::react::Scheduler> m_scheduler;
   std::mutex m_schedulerMutex; // Protect m_scheduler
-  bool m_collapseDeleteCreateMountingInstructions{false};
-  bool m_disablePreallocateViews{false};
   bool m_transactionInFlight{false};
   bool m_followUpTransactionRequired{false};
 
   ComponentViewRegistry m_registry;
-
   std::unordered_map<facebook::react::SurfaceId, XamlView> m_surfaceRegistry;
-
-  std::shared_ptr<const facebook::react::ReactNativeConfig> m_reactNativeConfig;
 
   // Inherited via SchedulerDelegate
   virtual void schedulerDidFinishTransaction(
