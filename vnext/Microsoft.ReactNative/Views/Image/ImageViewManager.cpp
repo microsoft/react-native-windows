@@ -77,7 +77,7 @@ class ImageShadowNode : public ShadowNodeBase {
  public:
   ImageShadowNode() = default;
 
-  void createView(winrt::Microsoft::ReactNative::JSValueObject &props) override {
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &props) override {
     ShadowNodeBase::createView(props);
     auto reactImage{m_view.as<ReactImage>()};
 

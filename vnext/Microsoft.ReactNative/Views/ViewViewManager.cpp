@@ -39,7 +39,7 @@ class ViewShadowNode : public ShadowNodeBase {
  public:
   ViewShadowNode() = default;
 
-  void createView(winrt::Microsoft::ReactNative::JSValueObject &props) override {
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &props) override {
     Super::createView(props);
 
     auto panel = GetViewPanel();

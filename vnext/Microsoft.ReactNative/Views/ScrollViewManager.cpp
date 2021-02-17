@@ -25,7 +25,7 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   ~ScrollViewShadowNode();
   void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs)
       override;
-  void createView(winrt::Microsoft::ReactNative::JSValueObject &) override;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
  private:
@@ -91,7 +91,7 @@ void ScrollViewShadowNode::dispatchCommand(
   }
 }
 
-void ScrollViewShadowNode::createView(winrt::Microsoft::ReactNative::JSValueObject &props) {
+void ScrollViewShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
   Super::createView(props);
 
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();

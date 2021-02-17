@@ -86,7 +86,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   virtual ~FlyoutShadowNode();
 
   void AddView(ShadowNode &child, int64_t index) override;
-  void createView(winrt::Microsoft::ReactNative::JSValueObject &) override;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   static void OnFlyoutClosed(const Mso::React::IReactContext &context, int64_t tag, bool newValue);
   void onDropViewInstance() override;
   void removeAllChildren() override;
@@ -149,7 +149,7 @@ void FlyoutShadowNode::AddView(ShadowNode &child, int64_t /*index*/) {
   }
 }
 
-void FlyoutShadowNode::createView(winrt::Microsoft::ReactNative::JSValueObject &props) {
+void FlyoutShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
   Super::createView(props);
 
   m_flyout = winrt::Flyout();

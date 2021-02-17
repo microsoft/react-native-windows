@@ -31,7 +31,7 @@ void ShadowNodeBase::updateProperties(winrt::Microsoft::ReactNative::JSValueObje
   GetViewManager()->UpdateProperties(this, props);
 }
 
-void ShadowNodeBase::createView(winrt::Microsoft::ReactNative::JSValueObject &props) {
+void ShadowNodeBase::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_view = GetViewManager()->CreateView(this->m_tag, props);
 
   if (react::uwp::g_HasActualSizeProperty == react::uwp::TriBit::Undefined) {

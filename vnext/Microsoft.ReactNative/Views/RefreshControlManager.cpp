@@ -23,7 +23,7 @@ class RefreshControlShadowNode : public ShadowNodeBase {
 
  public:
   RefreshControlShadowNode(){};
-  void createView(winrt::Microsoft::ReactNative::JSValueObject &) override;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
  private:
@@ -31,7 +31,7 @@ class RefreshControlShadowNode : public ShadowNodeBase {
   winrt::Deferral m_refreshDeferral{nullptr};
 };
 
-void RefreshControlShadowNode::createView(winrt::Microsoft::ReactNative::JSValueObject &props) {
+void RefreshControlShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
   Super::createView(props);
   if (auto refreshContainer = GetView().try_as<winrt::RefreshContainer>()) {
     m_refreshRequestedRevoker =

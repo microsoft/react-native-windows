@@ -31,7 +31,7 @@ class GlyphShadowNode : public ShadowNodeBase {
  public:
   GlyphShadowNode() = default;
 
-  void createView(winrt::Microsoft::ReactNative::JSValueObject &) override;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
  private:
@@ -41,7 +41,7 @@ class GlyphShadowNode : public ShadowNodeBase {
   double m_height = 24;
 };
 
-void GlyphShadowNode::createView(winrt::Microsoft::ReactNative::JSValueObject &props) {
+void GlyphShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
   Super::createView(props);
   auto glyphs = GetView().as<winrt::Glyphs>();
 
