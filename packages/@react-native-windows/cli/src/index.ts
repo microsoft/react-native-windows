@@ -151,3 +151,4 @@ assertStableInterface;
 export const commands = [autoLinkCommand, runWindowsCommand];
 export const dependencyConfig = dependencyConfigWindows;
 export const projectConfig = projectConfigWindows;
+export * from './healthChecks';
