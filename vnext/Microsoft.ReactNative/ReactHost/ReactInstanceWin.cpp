@@ -284,6 +284,7 @@ void ReactInstanceWin::Initialize() noexcept {
           winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
       strongThis->m_appearanceListener =
           Mso::Make<react::uwp::AppearanceChangeListener>(strongThis->GetReactContext(), strongThis->m_uiQueue);
+
       Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(strongThis->GetReactContext());
     }
   }).Then(Queue(), [this, weakThis = Mso::WeakPtr{this}]() noexcept {

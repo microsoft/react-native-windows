@@ -5,6 +5,7 @@
 #include "DeviceInfoModule.h"
 #include <DesktopWindowBridge.h>
 #include <IReactDispatcher.h>
+#include <IReactPropertyBag.h>
 #include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 #include <Utils/Helpers.h>
 #include <XamlUIService.h>
@@ -12,7 +13,6 @@
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
-#include <IReactPropertyBag.h>
 
 using namespace winrt::Microsoft::ReactNative;
 
@@ -67,7 +67,7 @@ void DeviceInfoHolder::InitDeviceInfoHolder(const Mso::React::IReactContext &con
         auto hwnd =
             reinterpret_cast<HWND>(XamlUIService::GetIslandWindowHandle(deviceInfoHolder->m_context->Properties()))) {
       deviceInfoHolder->m_wmSubscription = SubscribeToWindowMessage(
-          context.Notifications(),
+          ReactNotificationService(context.Notifications()),
           WM_WINDOWPOSCHANGED,
           [weakHolder = std::weak_ptr(deviceInfoHolder)](HWND hwnd, const DesktopWindowMessage &dwm) {
             if (auto strongHolder = weakHolder.lock()) {

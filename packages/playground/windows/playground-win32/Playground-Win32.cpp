@@ -315,7 +315,8 @@ HINSTANCE WindowData::s_instance = reinterpret_cast<HINSTANCE>(&__ImageBase);
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
 #ifdef USE_WINUI3
   if (auto windowData = WindowData::GetFromWindow(hwnd)) {
-    winrt::Microsoft::ReactNative::ForwardWindowMessage(windowData->InstanceSettings().Notifications(), hwnd, message, wparam, lparam);
+    winrt::Microsoft::ReactNative::ReactNotificationService rns(windowData->InstanceSettings().Notifications());
+    winrt::Microsoft::ReactNative::ForwardWindowMessage(rns, hwnd, message, wparam, lparam);
   }
 #endif
 

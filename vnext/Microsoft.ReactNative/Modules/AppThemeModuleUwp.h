@@ -5,6 +5,7 @@
 
 #include <IReactInstance.h>
 #include <React.h>
+#include <ReactNotificationService.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
@@ -32,7 +33,7 @@ class AppTheme : public std::enable_shared_from_this<AppTheme> {
   winrt::Windows::UI::ViewManagement::AccessibilitySettings m_accessibilitySettings{};
   winrt::Windows::UI::ViewManagement::AccessibilitySettings::HighContrastChanged_revoker m_highContrastChangedRevoker{};
   winrt::Windows::UI::ViewManagement::UISettings m_uiSettings{};
-  winrt::Microsoft::ReactNative::IReactNotificationSubscription m_wmSubscription;
+  winrt::Microsoft::ReactNative::ReactNotificationSubscription m_wmSubscription;
 };
 
 class AppThemeModule : public facebook::xplat::module::CxxModule {
