@@ -1,0 +1,17 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative {
+
+  [default_interface]
+  [webhosthidden]
+  DOC_STRING("Represents a window message. See https://docs.microsoft.com/windows/win32/learnwin32/window-messages")
+  runtimeclass DesktopWindowMessage {
+    UInt32 Msg { get;};
+    UInt64 WParam { get; };
+    Int64 LParam { get; };
+    DesktopWindowMessage(UInt32 msg, UInt64 wParam, Int64 lParam);
+  }
+} // namespace Microsoft.ReactNative

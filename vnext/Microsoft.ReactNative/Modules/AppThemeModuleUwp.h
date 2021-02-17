@@ -5,34 +5,35 @@
 
 #include <IReactInstance.h>
 #include <React.h>
+#include <ReactNotificationService.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
 namespace react::uwp {
 
-class AppTheme {
+class AppTheme : public std::enable_shared_from_this<AppTheme> {
  public:
   AppTheme(
-      const Mso::React::IReactContext &context,
+      const Mso::React::IReactContext &reactContext,
       const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread);
 
-  bool getIsHighContrast();
-  folly::dynamic getHighContrastColors();
+  bool getIsHighContrast() const;
+  folly::dynamic getHighContrastColors() const;
 
  private:
   // High Contrast Color helper method
-  std::string formatRGB(winrt::Windows::UI::Color ElementColor);
-
-  void fireEvent(std::string const &eventName, folly::dynamic &&eventData);
+  static std::string formatRGB(winrt::Windows::UI::Color ElementColor);
+  void NotifyHighContrastChanged() const;
+  void fireEvent(std::string const &eventName, folly::dynamic &&eventData) const;
 
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
   bool m_isHighContrast{false};
   folly::dynamic m_highContrastColors;
-
   winrt::Windows::UI::ViewManagement::AccessibilitySettings m_accessibilitySettings{};
   winrt::Windows::UI::ViewManagement::AccessibilitySettings::HighContrastChanged_revoker m_highContrastChangedRevoker{};
   winrt::Windows::UI::ViewManagement::UISettings m_uiSettings{};
+  winrt::Microsoft::ReactNative::ReactNotificationSubscription m_wmSubscription;
 };
 
 class AppThemeModule : public facebook::xplat::module::CxxModule {

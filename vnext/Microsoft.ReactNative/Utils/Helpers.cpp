@@ -103,4 +103,12 @@ bool IsXamlIsland() {
   return false;
 }
 
+bool IsWinUI3Island() {
+#ifndef USE_WINUI3
+  return false;
+#else
+  return react::uwp::IsXamlIsland();
+#endif
+}
+
 } // namespace react::uwp

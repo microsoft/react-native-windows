@@ -157,7 +157,7 @@ class ViewShadowNode : public ShadowNodeBase {
     XamlView current = m_view;
 
     // TODO NOW: Why do we do this? Removal of children doesn't seem to imply we
-    // tear down the infrastr
+    // tear down the infrastructure
     if (IsControl()) {
       if (auto control = m_view.try_as<xaml::Controls::ContentControl>()) {
         current = control.Content().as<XamlView>();
