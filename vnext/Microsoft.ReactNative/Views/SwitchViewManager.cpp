@@ -25,7 +25,7 @@ class SwitchShadowNode : public ShadowNodeBase {
 
  public:
   SwitchShadowNode() = default;
-  void createView() override;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
   void UpdateThumbColor();
   void UpdateTrackColor();
@@ -42,8 +42,8 @@ class SwitchShadowNode : public ShadowNodeBase {
   winrt::Microsoft::ReactNative::JSValue m_onTrackColor;
 };
 
-void SwitchShadowNode::createView() {
-  Super::createView();
+void SwitchShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  Super::createView(props);
 
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
   m_toggleSwitchToggledRevoker = toggleSwitch.Toggled(winrt::auto_revoke, [=](auto &&, auto &&) {
@@ -145,7 +145,7 @@ ShadowNode *SwitchViewManager::createShadow() const {
   return new SwitchShadowNode();
 }
 
-XamlView SwitchViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView SwitchViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   auto toggleSwitch = winrt::ToggleSwitch();
   toggleSwitch.OnContent(nullptr);
   toggleSwitch.OffContent(nullptr);

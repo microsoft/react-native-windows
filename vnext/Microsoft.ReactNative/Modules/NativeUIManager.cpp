@@ -156,7 +156,7 @@ struct RootShadowNode final : public ShadowNodeBase {
     m_view = reactRootView->GetXamlView();
   }
 
-  void createView() override {
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override {
     // ASSERT: The root view is created before react, so react should never tell
     // the root view to be created.
     assert(false);

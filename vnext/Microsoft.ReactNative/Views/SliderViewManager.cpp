@@ -25,12 +25,12 @@ class SliderShadowNode : public ShadowNodeBase {
 
  public:
   SliderShadowNode() = default;
-  void createView() override;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 };
 
-void SliderShadowNode::createView() {
-  Super::createView();
+void SliderShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  Super::createView(props);
 }
 
 void SliderShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
@@ -56,7 +56,7 @@ ShadowNode *SliderViewManager::createShadow() const {
   return new SliderShadowNode();
 }
 
-XamlView SliderViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView SliderViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   auto slider = xaml::Controls::Slider();
   return slider;
 }

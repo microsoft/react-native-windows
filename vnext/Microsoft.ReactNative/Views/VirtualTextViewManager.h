@@ -49,7 +49,7 @@ class VirtualTextViewManager : public ViewManagerBase {
       const std::string &propertyName,
       const winrt::Microsoft::ReactNative::JSValue &propertyValue) override;
 
-  XamlView CreateViewCore(int64_t tag) override;
+  XamlView CreateViewCore(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &) override;
 };
 
 } // namespace Microsoft::ReactNative

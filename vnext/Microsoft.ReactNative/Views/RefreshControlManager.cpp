@@ -23,7 +23,7 @@ class RefreshControlShadowNode : public ShadowNodeBase {
 
  public:
   RefreshControlShadowNode(){};
-  void createView() override;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
  private:
@@ -31,8 +31,8 @@ class RefreshControlShadowNode : public ShadowNodeBase {
   winrt::Deferral m_refreshDeferral{nullptr};
 };
 
-void RefreshControlShadowNode::createView() {
-  Super::createView();
+void RefreshControlShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  Super::createView(props);
   if (auto refreshContainer = GetView().try_as<winrt::RefreshContainer>()) {
     m_refreshRequestedRevoker =
         refreshContainer.RefreshRequested(winrt::auto_revoke, [this](auto &&, winrt::RefreshRequestedEventArgs args) {
@@ -79,7 +79,9 @@ const wchar_t *RefreshControlViewManager::GetName() const {
   return L"RCTRefreshControl";
 }
 
-XamlView RefreshControlViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView RefreshControlViewManager::CreateViewCore(
+    int64_t /*tag*/,
+    const winrt::Microsoft::ReactNative::JSValueObject &) {
   if (react::uwp::IsRS4OrHigher()) {
     // refreshContainer is supported >= RS4
     return winrt::RefreshContainer();

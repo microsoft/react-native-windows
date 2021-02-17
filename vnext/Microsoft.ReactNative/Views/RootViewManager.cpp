@@ -22,7 +22,7 @@ const wchar_t *RootViewManager::GetName() const {
   return L"ROOT";
 }
 
-XamlView RootViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView RootViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   // ASSERT: Can't create a root view directly. Comes from host.
   assert(false);
   return nullptr;
