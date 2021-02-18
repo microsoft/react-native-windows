@@ -285,7 +285,7 @@ export async function deployToDesktop(
     const ideFolder = `${buildTools.installationPath}\\Common7\\IDE`;
     const deployAppxRecipeExePath = `${ideFolder}\\DeployAppRecipe.exe`;
     if (
-      vsVersion.gte(Version.fromString('16.9.30801.93')) &&
+      vsVersion.gte(Version.fromString('16.8.30906.45')) &&
       fs.existsSync(deployAppxRecipeExePath)
     ) {
       await commandWithProgress(
