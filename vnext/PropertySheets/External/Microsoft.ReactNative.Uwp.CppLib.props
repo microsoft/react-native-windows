@@ -8,6 +8,14 @@
   Do not make any changes here unless it applies to ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!--
+      Define SkipAddPriPayloadFilesToCopyToOutputDirectoryItems=true and GenerateLibraryLayout=false to avoid
+      conflicts with copying Microsoft.ReactNative XBF files by the native module DLLs and by Microsoft.ReactNative.
+    -->
+    <SkipAddPriPayloadFilesToCopyToOutputDirectoryItems>true</SkipAddPriPayloadFilesToCopyToOutputDirectoryItems>
+    <GenerateLibraryLayout>false</GenerateLibraryLayout>
+  </PropertyGroup>
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
 </Project>
