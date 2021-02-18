@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Rename BuildProps to ExperimentalFeatures",
-  "packageName": "@react-native-windows/cli",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

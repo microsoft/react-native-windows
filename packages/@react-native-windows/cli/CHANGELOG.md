@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 01 Feb 2021 15:07:32 GMT and should not be manually modified.
+This log was last generated on Mon, 15 Feb 2021 15:07:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.7
+
+Mon, 15 Feb 2021 15:07:11 GMT
+
+### Changes
+
+- Rename BuildProps to ExperimentalFeatures (ngerlem@microsoft.com)
 
 ## 0.64.0-preview.6
 
