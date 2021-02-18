@@ -69,6 +69,10 @@ void ImageComponentView::updateProps(
     }
   }
 
+  if (oldImageProps.resizeMode != newImageProps.resizeMode) {
+    m_element.ResizeMode(newImageProps.resizeMode);
+  }
+
   m_props = std::static_pointer_cast<facebook::react::ImageProps const>(props);
 }
 
