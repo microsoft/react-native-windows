@@ -352,9 +352,9 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Text/Text.win32.js",
-      "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "693cbdb6e94b08b691d8fbacd792bbf1f2c56927",
+      "file": "src/Libraries/Text/TextNativeComponent.win32.js",
+      "baseFile": "Libraries/Text/TextNativeComponent.js",
+      "baseHash": "d316f87ebc8899c3b99802f684b6a333970d737c",
       "issue": 7080
     },
     {
