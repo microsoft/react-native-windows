@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Avoid MaxPath issue with telemetry in UnitTest project",
-  "packageName": "@react-native-windows/cli",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 14 Feb 2021 05:06:10 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Feb 2021 05:07:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.256
+
+Thu, 18 Feb 2021 05:07:11 GMT
+
+### Changes
+
+- Improve Microsoft.ReactNative compilation speed (vmorozov@microsoft.com)
+- Fix DevMenuControl.xbf copy conflict (vmorozov@microsoft.com)
+- Set up mechanism to forward window messages from [WinUI 3] xaml islands. Update AppTheme and DeviceInfo module. (asklar@microsoft.com)
+- Integrate 1/31 Nightly RN Build (ngerlem@microsoft.com)
+- Add IViewManagerCreateWithProperties to allow VMs to change behavior at create time (asklar@microsoft.com)
+- Integrate rnw-dependencies into react-native doctor (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.255
 

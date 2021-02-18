@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 18 Feb 2021 05:07:11 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.256",
+      "version": "0.0.0-canary.256",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve Microsoft.ReactNative compilation speed",
+            "author": "vmorozov@microsoft.com",
+            "commit": "caa0a9d46c1c2f3cdd0acf3a1da2f2f8302f0bb7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix DevMenuControl.xbf copy conflict",
+            "author": "vmorozov@microsoft.com",
+            "commit": "7f3eaed16ba8d0885378b1e56acc1f03eacba083",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Set up mechanism to forward window messages from [WinUI 3] xaml islands. Update AppTheme and DeviceInfo module.",
+            "author": "asklar@microsoft.com",
+            "commit": "bdd23dc452f4167769e3166513524f263fd3cda0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 1/31 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ee4d83d9a23bd4fcc51d7ccacd72eff493a9742d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add IViewManagerCreateWithProperties to allow VMs to change behavior at create time",
+            "author": "asklar@microsoft.com",
+            "commit": "0e5c8d98e6ed398b0b6c6c6875bc1ed3b37522fc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate rnw-dependencies into react-native doctor",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "fe0fe222dffe5f097553d5201a42a34f63f95adc",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 14 Feb 2021 05:06:10 GMT",
       "tag": "react-native-windows_v0.0.0-canary.255",
       "version": "0.0.0-canary.255",

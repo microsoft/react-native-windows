@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Integrate 1/31 Nightly RN Build",
-  "packageName": "node-rnw-rpc",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

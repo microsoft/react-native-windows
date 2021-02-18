@@ -2,6 +2,33 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 18 Feb 2021 05:07:11 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.61",
+      "version": "0.0.0-canary.61",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Avoid MaxPath issue with telemetry in UnitTest project",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ba25733c4bc09d74796d80a011ac9ddf5fc67adf",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Integrate rnw-dependencies into react-native doctor",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "fe0fe222dffe5f097553d5201a42a34f63f95adc",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Fixes autolink check error to incude command to fix it",
+            "author": "jthysell@microsoft.com",
+            "commit": "294fea85543ed6c7e65972cfd42a1e8f96ac24cb",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 14 Feb 2021 05:06:10 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.60",
       "version": "0.0.0-canary.60",
