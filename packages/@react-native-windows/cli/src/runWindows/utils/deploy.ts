@@ -277,7 +277,7 @@ export async function deployToDesktop(
       verbose,
     );
   } else {
-// If we have DeployAppRecipe.exe, use it (start in 16.8.4, earlier 16.8 versions have bugs)
+    // If we have DeployAppRecipe.exe, use it (start in 16.8.4, earlier 16.8 versions have bugs)
     const appxRecipe = path.join(
       path.dirname(appxManifestPath),
       `${projectName}.build.appxrecipe`,
