@@ -25,6 +25,7 @@ import {BuildConfig, RunWindowsOptions} from '../runWindowsOptions';
 import MSBuildTools from './msbuildtools';
 import {Config} from '@react-native-community/cli-types';
 import {WindowsProjectConfig} from '../../config/projectConfig';
+import Version from './version';
 
 function pushd(pathArg: string): () => void {
   const cwd = process.cwd();
@@ -231,7 +232,6 @@ export async function deployToDesktop(
     windowsConfig && windowsConfig.project && windowsConfig.project.projectName
       ? windowsConfig.project.projectName
       : options.proj!;
-  const appPackageFolder = getAppPackage(options, projectName);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options, projectName);
   const appxManifest = parseAppxManifest(appxManifestPath);
@@ -239,32 +239,8 @@ export async function deployToDesktop(
     return x.name === 'Identity';
   })[0];
   const appName = identity.attributes.Name;
-  const script = glob.sync(
-    path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
-  )[0];
 
-  const vsVersion = buildTools.installationVersion;
-  if (vsVersion.startsWith('16.5') || vsVersion.startsWith('16.6')) {
-    // VS 16.5 and 16.6 introduced a regression in packaging where the certificates created in the UI will render the package uninstallable.
-    // This will be fixed in 16.7. In the meantime we need to copy the Add-AppDevPackage that has the fix for this EKU issue:
-    // https://developercommunity.visualstudio.com/content/problem/1012921/uwp-packaging-generates-incompatible-certificate.html
-    if (verbose) {
-      newWarn(
-        'Applying Add-AppDevPackage.ps1 workaround for VS 16.5-16.6 bug - see https://developercommunity.visualstudio.com/content/problem/1012921/uwp-packaging-generates-incompatible-certificate.html',
-      );
-    }
-    fs.copyFileSync(
-      path.join(
-        path.resolve(__dirname),
-        '..',
-        '..',
-        '..',
-        'powershell',
-        'Add-AppDevPackage.ps1',
-      ),
-      script,
-    );
-  }
+  const vsVersion = Version.fromString(buildTools.installationVersion);
 
   const args = [];
   if (options.remoteDebugging) {
@@ -276,20 +252,24 @@ export async function deployToDesktop(
   }
 
   await runPowerShellScriptFunction(
-    'Removing old version of the app',
-    windowsStoreAppUtils,
-    `Uninstall-App ${appName}`,
-    verbose,
-  );
-
-  await runPowerShellScriptFunction(
     'Enabling Developer Mode',
     windowsStoreAppUtils,
     'EnableDevMode',
     verbose,
   );
 
+  const appPackageFolder = getAppPackage(options, projectName);
+
   if (options.release) {
+    await runPowerShellScriptFunction(
+      'Removing old version of the app',
+      windowsStoreAppUtils,
+      `Uninstall-App ${appName}`,
+      verbose,
+    );
+    const script = glob.sync(
+      path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
+    )[0];
     await runPowerShellScriptFunction(
       'Installing new version of the app',
       windowsStoreAppUtils,
@@ -297,23 +277,43 @@ export async function deployToDesktop(
       verbose,
     );
   } else {
-    // Install the app package's dependencies before attempting to deploy.
-    await runPowerShellScriptFunction(
-      'Installing dependent framework packages',
-      windowsStoreAppUtils,
-      `Install-AppDependencies ${appxManifestPath} ${appPackageFolder} ${options.arch}`,
-      verbose,
+    // If we have DeployAppRecipe.exe, use it (start in 16.9 Preview 2, don't use 16.8 even if it's there as that version has bugs)
+    const appxRecipe = path.join(
+      path.dirname(appxManifestPath),
+      `${projectName}.build.appxrecipe`,
     );
-    await build.buildSolution(
-      buildTools,
-      slnFile,
-      'Debug',
-      options.arch,
-      {DeployLayout: 'true'},
-      verbose,
-      'deploy',
-      options.buildLogDirectory,
-    );
+    const ideFolder = `${buildTools.installationPath}\\Common7\\IDE`;
+    const deployAppxRecipeExePath = `${ideFolder}\\DeployAppRecipe.exe`;
+    if (
+      vsVersion.gte(Version.fromString('16.9.30801.93')) &&
+      fs.existsSync(deployAppxRecipeExePath)
+    ) {
+      await commandWithProgress(
+        newSpinner('Deploying'),
+        `Deploying ${appxRecipe}`,
+        deployAppxRecipeExePath,
+        [appxRecipe],
+        verbose,
+      );
+    } else {
+      // Install the app package's dependencies before attempting to deploy.
+      await runPowerShellScriptFunction(
+        'Installing dependent framework packages',
+        windowsStoreAppUtils,
+        `Install-AppDependencies ${appxManifestPath} ${appPackageFolder} ${options.arch}`,
+        verbose,
+      );
+      await build.buildSolution(
+        buildTools,
+        slnFile,
+        /* options.release ? 'Release' : */ 'Debug',
+        options.arch,
+        {DeployLayout: 'true'},
+        verbose,
+        'deploy',
+        options.buildLogDirectory,
+      );
+    }
   }
 
   const appFamilyName = execSync(
