@@ -487,6 +487,8 @@ void FabricUIManager::schedulerDidSendAccessibilityEvent(
 void FabricUIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
 
+  m_registry.Initialize(reactContext);
+
   m_context.Properties().Set(FabicUIManagerProperty(), shared_from_this());
 
   /*

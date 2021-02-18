@@ -24,10 +24,10 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
   void OnDisconnected();
 
   // Public Properties
-  react::uwp::ResizeMode ResizeMode() {
+  ::react::uwp::ResizeMode ResizeMode() {
     return m_resizeMode;
   }
-  void ResizeMode(react::uwp::ResizeMode value);
+  void ResizeMode(::react::uwp::ResizeMode value);
 
   float BlurRadius() {
     return m_blurRadius;
@@ -59,7 +59,7 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
       bool forceEffectBrush = false);
 
   float m_blurRadius{0};
-  react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
+  ::react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
   winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};
   winrt::Windows::Foundation::Size m_availableSize{};
   xaml::Media::LoadedImageSurface m_loadedImageSurface{nullptr};

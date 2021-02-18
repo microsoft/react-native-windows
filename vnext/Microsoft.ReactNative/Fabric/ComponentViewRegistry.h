@@ -6,6 +6,8 @@
 
 #include "ComponentView.h"
 
+#include <Microsoft.ReactNative.Cxx/ReactContext.h>
+
 namespace Microsoft::ReactNative {
 
 struct ComponentViewDescriptor final {
@@ -15,6 +17,8 @@ struct ComponentViewDescriptor final {
 /* This could be expanded to have a pool of ComponentViewDescriptor's, like iOS does */
 class ComponentViewRegistry final {
  public:
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+
   ComponentViewDescriptor const &dequeueComponentViewWithComponentHandle(
       facebook::react::ComponentHandle componentHandle,
       facebook::react::Tag tag) noexcept;
@@ -26,6 +30,7 @@ class ComponentViewRegistry final {
 
  private:
   std::unordered_map<facebook::react::Tag, ComponentViewDescriptor> m_registry;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
 } // namespace Microsoft::ReactNative
