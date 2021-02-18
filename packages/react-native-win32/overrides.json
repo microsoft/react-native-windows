@@ -128,6 +128,10 @@
     },
     {
       "type": "platform",
+      "file": "src/Libraries/Components/Text/Tests/TextWin32Test.tsx"
+    },
+    {
+      "type": "platform",
       "file": "src/Libraries/Components/Text/TextWin32.Props.ts"
     },
     {
@@ -345,6 +349,13 @@
       "file": "src/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "Libraries/StyleSheet/StyleSheet.js",
       "baseHash": "95ed8a2da162e168c7d740640a9d6c0fdb282c84"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Text/TextNativeComponent.win32.js",
+      "baseFile": "Libraries/Text/TextNativeComponent.js",
+      "baseHash": "d316f87ebc8899c3b99802f684b6a333970d737c",
+      "issue": 7080
     },
     {
       "type": "copy",
