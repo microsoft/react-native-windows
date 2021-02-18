@@ -83,7 +83,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Navigation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Shapes.h" />
   </ItemGroup>
-  <ItemGroup Condition="'$(BuildMSRNCxx)'!='false'">
+  <ItemGroup Condition="'$(BuildMSRNCxx)' != 'false'">
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValue.cpp" />
@@ -92,12 +92,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ModuleRegistration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReactPromise.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleProvider.cpp" />
-
-    <!-- 
+  </ItemGroup>
+  <ItemGroup Condition="'$(BuildMSRNCxx)' != 'false' and '$(BuildMSRNCxxReactCommon)' != 'false'">
+    <!--
       Make sure all FB code uses the same flags to improve build parallelism.
-      This is because msbuild has to invoke different cl.exe invocations for each 
-      set of flags and msbuild inside a project is single threaded. 
-      
+      This is because msbuild has to invoke different cl.exe invocations for each
+      set of flags and msbuild inside a project is single threaded.
+
       For TurboModule cpp we have to temporarily disable 4267 because that is a security
       warning and we want to make sure we error out if we ever introduce it in our code
       bug #6986 tracks fixing FB's

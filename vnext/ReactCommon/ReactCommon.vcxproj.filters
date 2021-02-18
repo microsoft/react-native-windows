@@ -166,6 +166,8 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\TransactionTelemetry.cpp">
       <Filter>react\renderer\mounting</Filter>
     </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBuffer.cpp" />
+    <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stubs\sys\mman.h">
@@ -289,6 +291,7 @@
       <Filter>turbomodule\core</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
