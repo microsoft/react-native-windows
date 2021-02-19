@@ -289,11 +289,6 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         strong_this->m_imageBrushOpenedRevoker =
             imageBrush.ImageOpened(winrt::auto_revoke, [weak_this, imageBrush](const auto &, const auto &) {
               if (auto strong_this{weak_this.get()}) {
-                if (auto bitmap{imageBrush.ImageSource().try_as<winrt::BitmapImage>()}) {
-                  strong_this->m_imageSource.height = bitmap.PixelHeight();
-                  strong_this->m_imageSource.width = bitmap.PixelWidth();
-                }
-
                 imageBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
               }
             });
@@ -339,6 +334,11 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
 
                 auto strong_this{weak_this.get()};
                 if (strong_this && fireLoadEndEvent) {
+                  if (auto bitmap{imageBrush.ImageSource().try_as<winrt::BitmapImage>()}) {
+                    strong_this->m_imageSource.height = bitmap.PixelHeight();
+                    strong_this->m_imageSource.width = bitmap.PixelWidth();
+                  }
+
                   strong_this->m_onLoadEndEvent(*strong_this, true);
                 }
               });
