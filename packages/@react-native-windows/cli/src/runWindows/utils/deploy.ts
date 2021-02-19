@@ -240,7 +240,7 @@ export async function deployToDesktop(
   const projectName =
     windowsConfig && windowsConfig.project && windowsConfig.project.projectName
       ? windowsConfig.project.projectName
-      : options.proj!;
+      : path.parse(options.proj!).name;
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options, projectName);
   const appxManifest = parseAppxManifest(appxManifestPath);
@@ -291,7 +291,7 @@ export async function deployToDesktop(
       'InstallAppFailure',
     );
   } else {
-    // If we have DeployAppRecipe.exe, use it (start in 16.9 Preview 2, don't use 16.8 even if it's there as that version has bugs)
+    // If we have DeployAppRecipe.exe, use it (start in 16.8.4, earlier 16.8 versions have bugs)
     const appxRecipe = path.join(
       path.dirname(appxManifestPath),
       `${projectName}.build.appxrecipe`,
@@ -299,7 +299,7 @@ export async function deployToDesktop(
     const ideFolder = `${buildTools.installationPath}\\Common7\\IDE`;
     const deployAppxRecipeExePath = `${ideFolder}\\DeployAppRecipe.exe`;
     if (
-      vsVersion.gte(Version.fromString('16.9.30801.93')) &&
+      vsVersion.gte(Version.fromString('16.8.30906.45')) &&
       fs.existsSync(deployAppxRecipeExePath)
     ) {
       await commandWithProgress(
