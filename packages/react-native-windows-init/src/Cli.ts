@@ -435,14 +435,6 @@ function isProjectUsingYarn(cwd: string): boolean {
       );
     }
 
-    if (argv.useHermes && argv.language === 'cs') {
-      throw new CodedError(
-        'IncompatibleOptions',
-        "Error: '--useHermes' is not yet compatible with C# projects",
-        {detail: 'useHermes and C#'},
-      );
-    }
-
     if (!useDevMode) {
       if (!version) {
         const rnVersion = getReactNativeVersion();

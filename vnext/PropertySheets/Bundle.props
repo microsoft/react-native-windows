@@ -5,7 +5,7 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
+  <Import Condition="'$(UseHermes)' == ''" Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
 
   <PropertyGroup>
 

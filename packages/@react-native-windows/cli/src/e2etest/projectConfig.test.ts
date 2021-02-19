@@ -164,7 +164,7 @@ test.each(projects)(
   },
 );
 
-test('useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async done => {
+test('useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async () => {
   const folder = path.resolve('src/e2etest/projects/WithWinUI3');
 
   const rnc = require(path.join(folder, 'react-native.config.js'));
@@ -198,6 +198,4 @@ test('useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalF
   expect(packagesConfig.replace(/\r/g, '')).toMatchSnapshot();
 
   expect(experimentalFeatures.replace(/\r/g, '')).toMatchSnapshot();
-
-  done();
 });

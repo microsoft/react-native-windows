@@ -15,7 +15,7 @@ export async function tryMkdir(dir: string): Promise<void> {
 export async function ensureWinUI3Project(folder: string) {
   const windowsDir = path.join(folder, 'windows');
   if (fs.existsSync(windowsDir)) {
-    await fs.promises.rm(windowsDir, {recursive: true});
+    await fs.promises.rmdir(windowsDir, {recursive: true});
   }
   await tryMkdir(windowsDir);
 

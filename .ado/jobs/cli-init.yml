@@ -166,20 +166,31 @@ jobs:
             additionalInitArguments: --useWinUI3 true
             additionalRunArguments:
 
-          X64DebugCppHermes:
+          X86DebugCppHermes:
             language: cpp
             configuration: Debug
-            platform: x64
-            projectType: app
-            additionalInitArguments:
-            additionalRunArguments:
-          X86ReleaseCppHermes:
-            language: cpp
-            configuration: Release
             platform: x86
             projectType: app
-            additionalInitArguments:
+            additionalInitArguments: --useHermes
             additionalRunArguments:
+          ARM64ReleaseCsHermes:
+            language: cs
+            configuration: Release
+            platform: ARM64
+            projectType: app
+            additionalInitArguments: --useHermes
+            additionalRunArguments:
+          # Start Continuous only
+          ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+            X64ReleaseCppHermes:
+              language: cpp
+              configuration: Debug
+              platform: x64
+              projectType: app
+              additionalInitArguments: --useHermes
+            additionalRunArguments:
+          # End Continuous only
+
       pool: $(AgentPool.Medium)
       timeoutInMinutes: 60
       cancelTimeoutInMinutes: 5
