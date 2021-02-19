@@ -227,7 +227,10 @@ export function dependencyConfigWindows(
       const projectContents = configUtils.readProjectFile(projectFile);
 
       // Calculating (auto) items
-      project.projectName = configUtils.getProjectName(projectContents);
+      project.projectName = configUtils.getProjectName(
+        projectFile,
+        projectContents,
+      );
       project.projectLang = configUtils.getProjectLanguage(projectFile);
       project.projectGuid = configUtils.getProjectGuid(projectContents);
 
@@ -265,7 +268,10 @@ export function dependencyConfigWindows(
 
       const projectContents = configUtils.readProjectFile(projectFile);
 
-      const projectName = configUtils.getProjectName(projectContents);
+      const projectName = configUtils.getProjectName(
+        projectFile,
+        projectContents,
+      );
 
       const projectGuid = configUtils.getProjectGuid(projectContents);
 
