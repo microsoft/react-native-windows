@@ -243,7 +243,6 @@ async function runWindowsInternal(
     }
   }
 
-
   if (options.build) {
     runWindowsPhase = 'FindSolution';
     if (!slnFile) {

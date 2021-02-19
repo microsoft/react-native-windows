@@ -284,7 +284,10 @@ export function importProjectExists(
  * @param projectContents The XML project contents.
  * @return The project name.
  */
-export function getProjectName(projectPath: string, projectContents: Node): string {
+export function getProjectName(
+  projectPath: string,
+  projectContents: Node,
+): string {
   const name =
     tryFindPropertyValue(projectContents, 'ProjectName') ||
     path.parse(projectPath).name ||
