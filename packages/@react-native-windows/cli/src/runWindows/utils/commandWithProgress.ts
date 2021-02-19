@@ -113,7 +113,7 @@ export function commandWithProgress(
         resolve();
       } else {
         spinner.fail();
-        reject();
+        reject(new Error(`${taskDoingName} returned error code ${code}`));
       }
     });
   });
