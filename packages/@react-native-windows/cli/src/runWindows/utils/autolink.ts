@@ -176,7 +176,7 @@ export class AutolinkWindows {
           ),
           projFile,
         ),
-        projectName: configUtils.getProjectName(projectContents),
+        projectName: configUtils.getProjectName(projFile, projectContents),
         projectLang: configUtils.getProjectLanguage(projFile),
         projectGuid: configUtils.getProjectGuid(projectContents),
       };

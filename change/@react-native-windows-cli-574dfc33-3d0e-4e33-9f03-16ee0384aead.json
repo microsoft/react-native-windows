@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix projectName issue with C# projects and deploy tool version check",
+  "packageName": "@react-native-windows/cli",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

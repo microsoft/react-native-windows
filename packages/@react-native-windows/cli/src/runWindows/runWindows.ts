@@ -227,20 +227,31 @@ async function runWindowsInternal(
   }
 
   // Get the solution file
-  const slnFile = build.getAppSolutionFile(options, config);
+  let slnFile;
+  try {
+    slnFile = build.getAppSolutionFile(options, config);
+  } catch (e) {
+    newError(`Couldn't get app solution information. ${e.message}`);
+    throw e;
+  }
 
-  if (options.autolink) {
-    const autolinkArgs: string[] = [];
-    const autolinkConfig = config;
-    const autoLinkOptions = {
-      logging: options.logging,
-      proj: options.proj,
-      sln: options.sln,
-    };
-    runWindowsPhase = 'AutoLink';
-    await autoLinkCommand.func(autolinkArgs, autolinkConfig, autoLinkOptions);
-  } else {
-    newInfo('Autolink step is skipped');
+  try {
+    if (options.autolink) {
+      const autolinkArgs: string[] = [];
+      const autolinkConfig = config;
+      const autoLinkOptions = {
+        logging: options.logging,
+        proj: options.proj,
+        sln: options.sln,
+      };
+      runWindowsPhase = 'AutoLink';
+      await autoLinkCommand.func(autolinkArgs, autolinkConfig, autoLinkOptions);
+    } else {
+      newInfo('Autolink step is skipped');
+    }
+  } catch (e) {
+    newError(`Autolinking failed. ${e.message}`);
+    throw e;
   }
 
   let buildTools: MSBuildTools;
