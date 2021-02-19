@@ -28,7 +28,6 @@ export function findFiles(folder: string, filenamePattern: string): string[] {
       'node_modules/**',
       '**/Debug/**',
       '**/Release/**',
-      '**/WinUI3/**',
       '**/Generated Files/**',
       '**/packages/**',
     ],
@@ -285,10 +284,10 @@ export function importProjectExists(
  * @param projectContents The XML project contents.
  * @return The project name.
  */
-export function getProjectName(projectContents: Node): string {
+export function getProjectName(projectPath: string, projectContents: Node): string {
   const name =
     tryFindPropertyValue(projectContents, 'ProjectName') ||
-    tryFindPropertyValue(projectContents, 'AssemblyName') ||
+    path.parse(projectPath).name ||
     '';
 
   return name;

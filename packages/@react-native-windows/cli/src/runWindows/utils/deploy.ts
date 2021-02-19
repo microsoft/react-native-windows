@@ -231,7 +231,7 @@ export async function deployToDesktop(
   const projectName =
     windowsConfig && windowsConfig.project && windowsConfig.project.projectName
       ? windowsConfig.project.projectName
-      : options.proj!;
+      : path.parse(options.proj!).name;
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options, projectName);
   const appxManifest = parseAppxManifest(appxManifestPath);
