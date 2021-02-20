@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fixes missing image size in Image onLoad event",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "none"
+}
