@@ -348,39 +348,37 @@ void ReactInstanceWin::Initialize() noexcept {
         cxxModules.insert(std::end(cxxModules), std::begin(customCxxModules), std::end(customCxxModules));
       }
 
-      if (m_options.UseJsi) {
-        std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
-        std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
+      std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
+      std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
-        switch (m_options.JsiEngine) {
-          case JSIEngine::Hermes:
+      switch (m_options.JsiEngine) {
+        case JSIEngine::Hermes:
 #if defined(USE_HERMES)
-            devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
-            devSettings->inlineSourceMap = false;
-            break;
+          devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
+          devSettings->inlineSourceMap = false;
+          break;
 #endif
-          case JSIEngine::V8:
+        case JSIEngine::V8:
 #if defined(USE_V8)
-            preparedScriptStore =
-                std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
+          preparedScriptStore =
+              std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
 
-            devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-                devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
-            break;
+          devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+              devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
+          break;
 #endif
-          case JSIEngine::Chakra:
-            if (m_options.EnableByteCodeCaching || !m_options.ByteCodeFileUri.empty()) {
-              scriptStore = std::make_unique<react::uwp::UwpScriptStore>();
-              preparedScriptStore =
-                  std::make_unique<react::uwp::UwpPreparedScriptStore>(winrt::to_hstring(m_options.ByteCodeFileUri));
-            }
-            devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
-                devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
-            break;
-        }
-
-        m_jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
+        case JSIEngine::Chakra:
+          if (m_options.EnableByteCodeCaching || !m_options.ByteCodeFileUri.empty()) {
+            scriptStore = std::make_unique<react::uwp::UwpScriptStore>();
+            preparedScriptStore =
+                std::make_unique<react::uwp::UwpPreparedScriptStore>(winrt::to_hstring(m_options.ByteCodeFileUri));
+          }
+          devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
+              devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
+          break;
       }
+
+      m_jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
 
       try {
         // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
