@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Drop WebSocketModule integration tests",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

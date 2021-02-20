@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 20 Feb 2021 05:06:12 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.257",
+      "version": "0.0.0-canary.257",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Include RuntimeExecutor.h in nuget",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "ada0be2f78ae5cc8f2255dd5379f0557f1f01ba7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[Perf] Make DesktopWindowMessage a struct",
+            "author": "asklar@microsoft.com",
+            "commit": "231296fc78175b5632cd8dabd945bc8b9c2f8875",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Drop WebSocketModule integration tests",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "40399fa9037e2888cc4fabbe256e588b39e4d9b7",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fixes missing image size in Image onLoad event",
+            "author": "erozell@outlook.com",
+            "commit": "180b7c61ff915f269048207618e93cee5a70ec1f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 18 Feb 2021 05:07:11 GMT",
       "tag": "react-native-windows_v0.0.0-canary.256",
       "version": "0.0.0-canary.256",

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 20 Feb 2021 05:06:12 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.62",
+      "version": "0.0.0-canary.62",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix projectName issue with C# projects and deploy tool version check",
+            "author": "asklar@microsoft.com",
+            "commit": "27f894c831735c6a41497b7dbd28527672599e6c",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 18 Feb 2021 05:07:11 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.61",
       "version": "0.0.0-canary.61",

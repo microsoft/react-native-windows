@@ -2,6 +2,21 @@
   "name": "jest-environment-winappdriver",
   "entries": [
     {
+      "date": "Sat, 20 Feb 2021 05:06:12 GMT",
+      "tag": "jest-environment-winappdriver_v1.1.1-2",
+      "version": "1.1.1-2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump node-rnw-rpc to v1.0.1-2",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "ada0be2f78ae5cc8f2255dd5379f0557f1f01ba7",
+            "package": "jest-environment-winappdriver"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 18 Feb 2021 05:07:11 GMT",
       "tag": "jest-environment-winappdriver_v1.1.1-1",
       "version": "1.1.1-1",
