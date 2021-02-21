@@ -37,18 +37,20 @@ WebSocketJSExecutor::WebSocketJSExecutor(
       m_socketDataWriter(m_socket.OutputStream()) {
   m_msgReceived = m_socket.MessageReceived(winrt::auto_revoke, [this](auto &&, auto &&args) {
     try {
-      std::string response;
-      if (args.MessageType() == winrt::Windows::Networking::Sockets::SocketMessageType::Utf8) {
-        winrt::Windows::Storage::Streams::DataReader reader = args.GetDataReader();
-        reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
-        uint32_t len = reader.UnconsumedBufferLength();
-        std::vector<uint8_t> data(len);
-        reader.ReadBytes(data);
+      if (auto reader = args.GetDataReader()) {
+        if (args.MessageType() == winrt::Windows::Networking::Sockets::SocketMessageType::Utf8) {
+          reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
+          uint32_t len = reader.UnconsumedBufferLength();
+          std::vector<uint8_t> data(len);
+          reader.ReadBytes(data);
 
-        std::string str(Microsoft::Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
-        OnMessageReceived(str);
+          std::string str(Microsoft::Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+          OnMessageReceived(str);
+        } else {
+          OnHitError("Unexpected MessageType from MessageWebSocket.");
+        }
       } else {
-        OnHitError("Unexpected MessageType from MessageWebSocket.");
+        OnHitError("Lost connection to remote JS debugger.");
       }
     } catch (winrt::hresult_error const &e) {
       auto hr = e.code();
