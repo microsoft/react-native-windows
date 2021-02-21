@@ -156,25 +156,27 @@ export function addProjectToSolution(
     '\tGlobalSection(SolutionConfigurationPlatforms) = preSolution',
     '\tEndGlobalSection',
     false,
-  ).map(line => line.match(/\s+([\w|]+)\s=/)![1]);
+  ).map(line => line.match(/\s+([\w\s|]+)\s=/)![1]);
 
   const projectConfigLines: string[] = [];
 
   slnConfigs.forEach(slnConfig => {
-    projectConfigLines.push(
-      `\t\t${projectGuid}.${slnConfig}.ActiveCfg = ${
-        project.projectLang === 'cpp'
-          ? slnConfig.replace('x86', 'Win32')
-          : slnConfig
-      }`,
-    );
-    projectConfigLines.push(
-      `\t\t${projectGuid}.${slnConfig}.Build.0 = ${
-        project.projectLang === 'cpp'
-          ? slnConfig.replace('x86', 'Win32')
-          : slnConfig
-      }`,
-    );
+    if (project.projectLang !== 'cpp' || !slnConfig.endsWith('|Any CPU')) {
+      projectConfigLines.push(
+        `\t\t${projectGuid}.${slnConfig}.ActiveCfg = ${
+          project.projectLang === 'cpp'
+            ? slnConfig.replace('x86', 'Win32')
+            : slnConfig
+        }`,
+      );
+      projectConfigLines.push(
+        `\t\t${projectGuid}.${slnConfig}.Build.0 = ${
+          project.projectLang === 'cpp'
+            ? slnConfig.replace('x86', 'Win32')
+            : slnConfig
+        }`,
+      );
+    }
   });
 
   const projectConfigStartIndex = slnLines.indexOf(
