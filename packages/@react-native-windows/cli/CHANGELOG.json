@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 22 Feb 2021 15:07:37 GMT",
+      "tag": "@react-native-windows/cli_v0.64.0-preview.8",
+      "version": "0.64.0-preview.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[0.64] Deploy using VS new DeployAppRecipe tool",
+            "author": "asklar@microsoft.com",
+            "commit": "2964014e386b53d66a719a357d2adde687cd4b0a",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Feb 2021 15:07:11 GMT",
       "tag": "@react-native-windows/cli_v0.64.0-preview.7",
       "version": "0.64.0-preview.7",

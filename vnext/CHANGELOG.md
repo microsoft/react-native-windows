@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 15 Feb 2021 15:07:11 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Feb 2021 15:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.12
+
+Mon, 22 Feb 2021 15:07:37 GMT
+
+### Changes
+
+- Fix cursor resetting in TextInput. (igklemen@microsoft.com)
 
 ## 0.64.0-preview.11
 

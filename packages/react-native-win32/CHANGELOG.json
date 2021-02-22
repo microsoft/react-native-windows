@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 22 Feb 2021 15:07:37 GMT",
+      "tag": "@office-iss/react-native-win32_v0.64.0-preview.8",
+      "version": "0.64.0-preview.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[0.64] Cherry pick focusable property for TextWin32",
+            "author": "ppatboyd@outlook.com",
+            "commit": "838e65410a6d3a18bbd0eae1f6ee88394de93a6f",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 Feb 2021 15:06:18 GMT",
       "tag": "@office-iss/react-native-win32_v0.64.0-preview.7",
       "version": "0.64.0-preview.7",
