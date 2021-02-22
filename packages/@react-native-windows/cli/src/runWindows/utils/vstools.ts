@@ -161,7 +161,7 @@ export function addProjectToSolution(
   const projectConfigLines: string[] = [];
 
   slnConfigs.forEach(slnConfig => {
-    if (project.projectLang !== 'cpp' || !slnConfig.endsWith('|Any CPU')) {
+    if (!slnConfig.endsWith('|Any CPU')) {
       projectConfigLines.push(
         `\t\t${projectGuid}.${slnConfig}.ActiveCfg = ${
           project.projectLang === 'cpp'
