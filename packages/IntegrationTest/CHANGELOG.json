@@ -2,6 +2,21 @@
   "name": "integration-test",
   "entries": [
     {
+      "date": "Mon, 22 Feb 2021 15:07:37 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.64.0-preview.12",
+            "author": "igklemen@microsoft.com",
+            "commit": "90d368aca1654bd8961869678168276c566a76d5",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Feb 2021 15:07:11 GMT",
       "tag": "integration-test_v0.0.1",
       "version": "0.0.1",

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 15 Feb 2021 15:07:11 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Feb 2021 15:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.8
+
+Mon, 22 Feb 2021 15:07:37 GMT
+
+### Changes
+
+- [0.64] Deploy using VS new DeployAppRecipe tool (asklar@microsoft.com)
 
 ## 0.64.0-preview.7
 
