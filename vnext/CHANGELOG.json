@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 22 Feb 2021 15:07:37 GMT",
+      "tag": "react-native-windows_v0.64.0-preview.12",
+      "version": "0.64.0-preview.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix cursor resetting in TextInput.",
+            "author": "igklemen@microsoft.com",
+            "commit": "90d368aca1654bd8961869678168276c566a76d5",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Feb 2021 15:07:11 GMT",
       "tag": "react-native-windows_v0.64.0-preview.11",
       "version": "0.64.0-preview.11",
