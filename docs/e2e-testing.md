@@ -278,7 +278,7 @@ No matter what JavaScript framework you choose for native app testing, you have 
 
  WinAppDriver provides rich API to help locate the UI element. If [testID](https://facebook.github.io/react-native/docs/picker-item#testid) is specified in React Native app for Windows, the locator strategy should choose `accessibility id`.
 
-A unique `accessiblity id`/`testID` per Window is recommended for React Native Windows E2E testing when authoring the test app and test cases. To ease the maintain effort, all testIDs are defined in [Consts.ts](https://github.com/microsoft/react-native-windows/blob/master/packages/@react-native-windows/tester/src/js/examples-win/LegacyTests/Consts.ts), then be imported by test app and test page objects or test cases.
+A unique `accessiblity id`/`testID` per Window is recommended for React Native Windows E2E testing when authoring the test app and test cases. To ease the maintain effort, all testIDs are defined in [Consts.ts](https://github.com/microsoft/react-native-windows/blob/0.64-stable/packages/@react-native-windows/tester/src/js/examples-win/LegacyTests/Consts.ts), then be imported by test app and test page objects or test cases.
 
 | **Client API** | **Locator Strategy** | **Matched Attribute in inspect.exe** | **Example** |
 | --- | --- | --- | --- |
@@ -464,7 +464,7 @@ Tree dump file does not match master at C:\Program Files\WindowsApps\ReactUWPTes
 
 ![Errors](img/e2e-errors.png)
 
-Find the corresponding `.json` file in that folder and compare it to its master. The masters live in [e2etest\windows\ReactUWPTestApp\Assets\TreeDump\masters](https://github.com/microsoft/react-native-windows/tree/master/packages/E2ETest/windows/ReactUWPTestApp/Assets/TreeDump/masters).
+Find the corresponding `.json` file in that folder and compare it to its master. The masters live in [e2etest\windows\ReactUWPTestApp\Assets\TreeDump\masters](https://github.com/microsoft/react-native-windows/tree/0.64-stable/packages/E2ETest/windows/ReactUWPTestApp/Assets/TreeDump/masters).
 
 Sometimes you'll have an element in your test that produces output that should not be used for comparison. You can manually edit the generated json and set the output that you want to ignore to the `<ANYTHING>` value:
 
@@ -481,7 +481,7 @@ Sometimes you'll have an element in your test that produces output that should n
 ## run_wdio
 
 WDIO is not really built to be run within Azure DevOps, so I wrote a utility called `run_wdio` to adapt it to something that can run in ADO.
-It can be found in [\packages\e2etest\run_wdio.js](https://github.com/microsoft/react-native-windows/blob/master/packages/E2ETest/run_wdio.js)
+It can be found in [\packages\e2etest\run_wdio.js](https://github.com/microsoft/react-native-windows/blob/0.64-stable/packages/E2ETest/run_wdio.js)
 Its main features (which WDIO lacks) are:
 
 * reports success/failure to ADO so that test failures will break the CI
