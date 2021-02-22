@@ -83,7 +83,7 @@ export class AutolinkWindows {
     const templateRoot = resolveTemplateRoot(this.windowsAppConfig);
 
     this.fixUpForSlnOption();
-    this.fixUpForProjOption();
+    await this.fixUpForProjOption();
 
     verboseMessage('Found Windows app project, config:', verbose);
     verboseMessage(this.windowsAppConfig, verbose);
@@ -151,7 +151,8 @@ export class AutolinkWindows {
 
     // Generating project entries for solution
     this.changesNecessary =
-      this.updateSolution(rnwRoot, solutionFile) || this.changesNecessary;
+      (await this.updateSolution(rnwRoot, solutionFile)) ||
+      this.changesNecessary;
 
     spinner.succeed();
   }
@@ -159,14 +160,14 @@ export class AutolinkWindows {
   /**
    * Handles the --proj command-line option by consuming its value into the windowsAppConfig
    */
-  public fixUpForProjOption() {
+  public async fixUpForProjOption() {
     if (this.options.proj) {
       const projFile = path.join(
         this.windowsAppConfig.folder,
         this.options.proj,
       );
 
-      const projectContents = configUtils.readProjectFile(projFile);
+      const projectContents = await configUtils.readProjectFile(projFile);
 
       this.windowsAppConfig.project = {
         projectFile: path.relative(
@@ -586,7 +587,7 @@ export class AutolinkWindows {
     return csModuleNames;
   }
 
-  private updateSolution(rnwRoot: string, solutionFile: string) {
+  private async updateSolution(rnwRoot: string, solutionFile: string) {
     const projectsForSolution: Project[] = [];
     const windowsDependencies = this.getWindowsDependencies();
 
@@ -638,25 +639,25 @@ export class AutolinkWindows {
     );
 
     let changesNecessary = false;
-    projectsForSolution.forEach(project => {
-      const contentsChanged = vstools.addProjectToSolution(
+    for (const project of projectsForSolution) {
+      const contentsChanged = await vstools.addProjectToSolution(
         solutionFile,
         project,
         this.options.logging,
         this.options.check,
       );
       changesNecessary = changesNecessary || contentsChanged;
-    });
+    }
     return changesNecessary;
   }
 
-  protected getExperimentalFeaturesPropsXml() {
+  protected async getExperimentalFeaturesPropsXml() {
     const experimentalFeaturesProps = path.join(
       path.dirname(this.getSolutionFile()),
       'ExperimentalFeatures.props',
     );
     if (fs.existsSync(experimentalFeaturesProps)) {
-      const experimentalFeaturesContents = configUtils.readProjectFile(
+      const experimentalFeaturesContents = await configUtils.readProjectFile(
         experimentalFeaturesProps,
       );
       return {
@@ -670,7 +671,7 @@ export class AutolinkWindows {
   public async ensureXAMLDialect() {
     let changesNeeded = false;
     const useWinUI3FromConfig = this.getWindowsConfig().useWinUI3;
-    const experimentalFeatures = this.getExperimentalFeaturesPropsXml();
+    const experimentalFeatures = await this.getExperimentalFeaturesPropsXml();
     if (experimentalFeatures) {
       const useWinUI3FromExperimentalFeatures =
         configUtils
@@ -704,7 +705,7 @@ export class AutolinkWindows {
     return changesNeeded;
   }
 
-  protected getPackagesConfigXml() {
+  protected async getPackagesConfigXml() {
     const projectFile = this.getProjectFile();
     const packagesConfig = path.join(
       path.dirname(projectFile),
@@ -714,7 +715,7 @@ export class AutolinkWindows {
     if (fs.existsSync(packagesConfig)) {
       return {
         path: packagesConfig,
-        content: configUtils.readProjectFile(packagesConfig),
+        content: await configUtils.readProjectFile(packagesConfig),
       };
     }
     return undefined;
@@ -722,7 +723,7 @@ export class AutolinkWindows {
 
   private async updatePackagesConfigXAMLDialect(useWinUI3: boolean) {
     let changed = false;
-    const packagesConfig = this.getPackagesConfigXml();
+    const packagesConfig = await this.getPackagesConfigXml();
     if (packagesConfig) {
       // if we don't have a packages.config, then this is a C# project, in which case we use <PackageReference> and dynamically pick the right XAML package.
       const project = this.getWindowsConfig();
@@ -731,7 +732,9 @@ export class AutolinkWindows {
         resolveRnwRoot(project),
         'PropertySheets/WinUI.props',
       );
-      const winuiPropsContents = configUtils.readProjectFile(winUIPropsPath);
+      const winuiPropsContents = await configUtils.readProjectFile(
+        winUIPropsPath,
+      );
       const winui2xVersion = configUtils.tryFindPropertyValue(
         winuiPropsContents,
         'WinUI2xVersion',

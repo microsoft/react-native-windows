@@ -116,7 +116,9 @@ test.each(projects)(
     const userConfig = null;
     const expectedConfig: WindowsDependencyConfig | null = null;
 
-    expect(dependencyConfigWindows(folder, userConfig)).toBe(expectedConfig);
+    expect(await dependencyConfigWindows(folder, userConfig)).toBe(
+      expectedConfig,
+    );
   },
 );
 
@@ -135,11 +137,15 @@ test.each(projects)(
       rnc.dependency.platforms.windows;
 
     if (name === 'BlankLib') {
-      expect(dependencyConfigWindows(folder, userConfig)).toMatchSnapshot();
+      expect(
+        await dependencyConfigWindows(folder, userConfig),
+      ).toMatchSnapshot();
     } else {
-      expect(dependencyConfigWindows(folder, userConfig)).toMatchSnapshot({
-        folder: expect.stringContaining(name),
-      });
+      expect(await dependencyConfigWindows(folder, userConfig)).toMatchSnapshot(
+        {
+          folder: expect.stringContaining(name),
+        },
+      );
     }
   },
 );
@@ -157,11 +163,15 @@ test.each(projects)(
     const userConfig: Partial<WindowsDependencyConfig> = {};
 
     if (name === 'BlankLib') {
-      expect(dependencyConfigWindows(folder, userConfig)).toMatchSnapshot();
+      expect(
+        await dependencyConfigWindows(folder, userConfig),
+      ).toMatchSnapshot();
     } else {
-      expect(dependencyConfigWindows(folder, userConfig)).toMatchSnapshot({
-        folder: expect.stringContaining(name),
-      });
+      expect(await dependencyConfigWindows(folder, userConfig)).toMatchSnapshot(
+        {
+          folder: expect.stringContaining(name),
+        },
+      );
     }
   },
 );

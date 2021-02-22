@@ -113,10 +113,10 @@ export interface WindowsDependencyConfig {
  */
 // Disabled due to existing high cyclomatic complexity
 // eslint-disable-next-line complexity
-export function dependencyConfigWindows(
+export async function dependencyConfigWindows(
   folder: string,
   userConfig: Partial<WindowsDependencyConfig> | null = {},
-): WindowsDependencyConfig | null {
+): Promise<WindowsDependencyConfig | null> {
   if (userConfig === null) {
     return null;
   }
@@ -224,7 +224,7 @@ export function dependencyConfigWindows(
 
       const projectFile = path.join(sourceDir, project.projectFile);
 
-      const projectContents = configUtils.readProjectFile(projectFile);
+      const projectContents = await configUtils.readProjectFile(projectFile);
 
       // Calculating (auto) items
       project.projectName = configUtils.getProjectName(projectContents);
@@ -256,14 +256,16 @@ export function dependencyConfigWindows(
   } else {
     // No react-native.config, try to heuristically find any projects
 
-    const foundProjects = configUtils.findDependencyProjectFiles(sourceDir);
+    const foundProjects = await configUtils.findDependencyProjectFiles(
+      sourceDir,
+    );
 
     for (const foundProject of foundProjects) {
       const projectFile = path.join(sourceDir, foundProject);
 
       const projectLang = configUtils.getProjectLanguage(projectFile);
 
-      const projectContents = configUtils.readProjectFile(projectFile);
+      const projectContents = await configUtils.readProjectFile(projectFile);
 
       const projectName = configUtils.getProjectName(projectContents);
 

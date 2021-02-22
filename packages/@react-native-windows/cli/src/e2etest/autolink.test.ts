@@ -28,10 +28,10 @@ test('autolink with no windows project', () => {
     }
     public packagesConfig = '';
     public experimentalFeaturesProps = '';
-    protected getPackagesConfigXml(){
+    protected async getPackagesConfigXml(){
         return {path:'packages.config', content: new DOMParser().parseFromString(this.packagesConfig, 'application/xml')};
     }
-    protected getExperimentalFeaturesPropsXml(){
+    protected async getExperimentalFeaturesPropsXml(){
         return {path: 'ExperimentalFeatures.props', content: new DOMParser().parseFromString(this.experimentalFeaturesProps, 'application/xml')};
     }
     protected async updateFile(filepath: string, content: string) {
@@ -82,7 +82,7 @@ test('autolink with no windows project', () => {
     expect(() => {
       autolink.validateRequiredProjectProperties();
     }).toThrow();
-    autolink.fixUpForProjOption();
+    await autolink.fixUpForProjOption();
   
     const projectConfig = autolink.getWindowsProjectConfig().project;
     expect(projectConfig).not.toBeUndefined();
@@ -246,7 +246,7 @@ test('autolink with no windows project', () => {
     const folder = path.resolve('src/e2etest/projects/WithWinUI3');
     const rnc = require(path.join(folder, 'react-native.config.js'));
   
-    const config = projectConfigWindows(folder, rnc.project.windows)!;
+    const config = await projectConfigWindows(folder, rnc.project.windows)!;
   
     const al = new AutolinkTest(
       {windows: config},
@@ -282,8 +282,8 @@ test('autolink with no windows project', () => {
     const folder = path.resolve('src/e2etest/projects/WithWinUI3');
     const rnc = require(path.join(folder, 'react-native.config.js'));
   
-    const config = projectConfigWindows(folder, rnc.project.windows)!;
-    config.useWinUI3 = false;
+    const config = await projectConfigWindows(folder, rnc.project.windows)!;
+    config!.useWinUI3 = false;
     const al = new AutolinkTest(
       {windows: config},
       {},
@@ -318,8 +318,8 @@ test('autolink with no windows project', () => {
     const folder = path.resolve('src/e2etest/projects/WithWinUI3');
     const rnc = require(path.join(folder, 'react-native.config.js'));
   
-    const config = projectConfigWindows(folder, rnc.project.windows)!;
-    delete config.useWinUI3;
+    const config = await projectConfigWindows(folder, rnc.project.windows)!;
+    delete config!.useWinUI3;
     const al = new AutolinkTest(
       {windows: config},
       {},
@@ -354,8 +354,8 @@ test('autolink with no windows project', () => {
     const folder = path.resolve('src/e2etest/projects/WithWinUI3');
     const rnc = require(path.join(folder, 'react-native.config.js'));
   
-    const config = projectConfigWindows(folder, rnc.project.windows)!;
-    delete config.useWinUI3;
+    const config = await projectConfigWindows(folder, rnc.project.windows)!;
+    delete config!.useWinUI3;
     const al = new AutolinkTest(
       {windows: config},
       {},

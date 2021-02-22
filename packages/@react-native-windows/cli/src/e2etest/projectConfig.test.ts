@@ -115,7 +115,7 @@ test.each(projects)(
 
     const userConfig = null;
 
-    expect(projectConfigWindows(folder, userConfig)).toBeNull();
+    expect(await projectConfigWindows(folder, userConfig)).toBeNull();
   },
 );
 
@@ -133,9 +133,9 @@ test.each(projects)(
     const userConfig: Partial<WindowsProjectConfig> = rnc.project.windows;
 
     if (name === 'BlankApp') {
-      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot();
+      expect(await projectConfigWindows(folder, userConfig)).toMatchSnapshot();
     } else {
-      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot({
+      expect(await projectConfigWindows(folder, userConfig)).toMatchSnapshot({
         folder: expect.stringContaining(name),
       });
     }
@@ -155,9 +155,9 @@ test.each(projects)(
     const userConfig: Partial<WindowsProjectConfig> = {};
 
     if (name === 'BlankApp') {
-      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot();
+      expect(await projectConfigWindows(folder, userConfig)).toMatchSnapshot();
     } else {
-      expect(projectConfigWindows(folder, userConfig)).toMatchSnapshot({
+      expect(await projectConfigWindows(folder, userConfig)).toMatchSnapshot({
         folder: expect.stringContaining(name),
       });
     }
@@ -169,7 +169,7 @@ test('useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalF
 
   const rnc = require(path.join(folder, 'react-native.config.js'));
 
-  const config = projectConfigWindows(folder, rnc.project.windows)!;
+  const config = await projectConfigWindows(folder, rnc.project.windows)!;
 
   const al = new AutolinkWindows(
     {windows: config},

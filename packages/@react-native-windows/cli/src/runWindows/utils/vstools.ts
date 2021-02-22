@@ -89,12 +89,12 @@ function getBlockContentsFromLines(
  * @param checkMode It true, don't make any changes.
  * @return Whether any changes were necessary.
  */
-export function addProjectToSolution(
+export async function addProjectToSolution(
   slnFile: string,
   project: Project,
   verbose: boolean = false,
   checkMode: boolean = false,
-): boolean {
+): Promise<boolean> {
   if (project.projectLang === null) {
     throw new CodedError(
       'AddProjectToSolution',
@@ -218,7 +218,7 @@ export function addProjectToSolution(
       }
 
       const slnContents = slnLines.join('\r\n');
-      fs.writeFileSync(slnFile, slnContents, {
+      await fs.promises.writeFile(slnFile, slnContents, {
         encoding: 'utf8',
         flag: 'w',
       });

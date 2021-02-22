@@ -101,8 +101,10 @@ export function findSolutionFiles(winFolder: string): string[] {
  * @param filePath The absolute file path to check.
  * @return Whether the path is to a RNW lib project file.
  */
-export function isRnwDependencyProject(filePath: string): boolean {
-  const projectContents = readProjectFile(filePath);
+export async function isRnwDependencyProject(
+  filePath: string,
+): Promise<boolean> {
+  const projectContents = await readProjectFile(filePath);
 
   const projectLang = getProjectLanguage(filePath);
   if (projectLang === 'cs') {
@@ -125,7 +127,9 @@ export function isRnwDependencyProject(filePath: string): boolean {
  * @param winFolder The absolute path to target folder.
  * @return Return the array of relative file paths.
  */
-export function findDependencyProjectFiles(winFolder: string): string[] {
+export async function findDependencyProjectFiles(
+  winFolder: string,
+): Promise<string[]> {
   // First, search for all potential project files
   const allCppProj = findFiles(winFolder, '*.vcxproj');
   const allCsProj = findFiles(winFolder, '*.csproj');
@@ -141,7 +145,7 @@ export function findDependencyProjectFiles(winFolder: string): string[] {
 
   // Try to find any project file that appears to be a dependency project
   for (const projectFile of allProjects) {
-    if (isRnwDependencyProject(path.join(winFolder, projectFile))) {
+    if (await isRnwDependencyProject(path.join(winFolder, projectFile))) {
       dependencyProjectFiles.push(path.normalize(projectFile));
     }
   }
@@ -154,8 +158,8 @@ export function findDependencyProjectFiles(winFolder: string): string[] {
  * @param filePath The absolute file path to check.
  * @return Whether the path is to a RNW app project file.
  */
-function isRnwAppProject(filePath: string): boolean {
-  const projectContents = readProjectFile(filePath);
+async function isRnwAppProject(filePath: string): Promise<boolean> {
+  const projectContents = await readProjectFile(filePath);
 
   const projectLang = getProjectLanguage(filePath);
   if (projectLang === 'cs') {
@@ -178,7 +182,9 @@ function isRnwAppProject(filePath: string): boolean {
  * @param winFolder The absolute path to target folder.
  * @return Return the array of relative file paths.
  */
-export function findAppProjectFiles(winFolder: string): string[] {
+export async function findAppProjectFiles(
+  winFolder: string,
+): Promise<string[]> {
   // First, search for all potential project files
   const allCppProj = findFiles(winFolder, '*.vcxproj');
   const allCsProj = findFiles(winFolder, '*.csproj');
@@ -194,7 +200,7 @@ export function findAppProjectFiles(winFolder: string): string[] {
 
   // Try to find any project file that appears to be an app project
   for (const projectFile of allProjects) {
-    if (isRnwAppProject(path.join(winFolder, projectFile))) {
+    if (await isRnwAppProject(path.join(winFolder, projectFile))) {
       appProjectFiles.push(path.normalize(projectFile));
     }
   }
@@ -222,8 +228,10 @@ export function getProjectLanguage(projectPath: string): 'cpp' | 'cs' | null {
  * @param projectPath The target project file path.
  * @return The project file contents.
  */
-export function readProjectFile(projectPath: string) {
-  const projectContents = fs.readFileSync(projectPath, 'utf8').toString();
+export async function readProjectFile(projectPath: string) {
+  const projectContents = (
+    await fs.promises.readFile(projectPath, 'utf8')
+  ).toString();
   return new DOMParser().parseFromString(projectContents, 'application/xml');
 }
 

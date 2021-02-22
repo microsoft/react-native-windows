@@ -80,10 +80,10 @@ type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
  * @param userConfig A manually specified override config.
  * @return The config if any RNW apps exist.
  */
-export function projectConfigWindows(
+export async function projectConfigWindows(
   folder: string,
   userConfig: Partial<WindowsProjectConfig> | null = {},
-): WindowsProjectConfig | null {
+): Promise<WindowsProjectConfig | null> {
   if (userConfig === null) {
     return null;
   }
@@ -163,7 +163,7 @@ export function projectConfigWindows(
     }
 
     // No manually provided project, try to find it
-    const foundProjects = configUtils.findAppProjectFiles(sourceDir);
+    const foundProjects = await configUtils.findAppProjectFiles(sourceDir);
     if (foundProjects.length === 0) {
       result.project = {
         projectFile:
@@ -184,7 +184,7 @@ export function projectConfigWindows(
 
   if (validProject) {
     const projectFile = path.join(sourceDir, result.project.projectFile!);
-    const projectContents = configUtils.readProjectFile(projectFile);
+    const projectContents = await configUtils.readProjectFile(projectFile);
 
     // Add missing (auto) items
     result.project.projectName = configUtils.getProjectName(projectContents);
