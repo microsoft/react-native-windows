@@ -612,10 +612,17 @@ void TextInputShadowNode::SetText(const winrt::Microsoft::ReactNative::JSValue &
   if (m_mostRecentEventCount == m_nativeEventCount) {
     if (textBox) {
       if (text.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+        auto oldCursor = textBox.SelectionStart();
+        auto oldSelectionLength = textBox.SelectionLength();
         auto oldValue = textBox.Text();
         auto newValue = react::uwp::asHstring(text);
         if (oldValue != newValue) {
           textBox.Text(newValue);
+          if (static_cast<uint32_t>(oldCursor) <= newValue.size()) {
+            textBox.SelectionStart(oldCursor);
+          } else {
+            textBox.SelectionStart(newValue.size());
+          }
         }
       } else if (text.IsNull())
         textBox.ClearValue(xaml::Controls::TextBox::TextProperty());
