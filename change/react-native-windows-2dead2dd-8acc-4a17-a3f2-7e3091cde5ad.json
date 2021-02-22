@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix cursor resetting in TextInput.",
+  "packageName": "react-native-windows",
+  "email": "igklemen@microsoft.com",
+  "dependentChangeType": "patch"
+}
