@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixes race conditions for ReactImage",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
