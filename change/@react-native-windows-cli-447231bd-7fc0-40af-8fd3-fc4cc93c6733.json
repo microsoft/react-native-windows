@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[0.64] Deploy using VS new DeployAppRecipe tool",
+  "packageName": "@react-native-windows/cli",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
