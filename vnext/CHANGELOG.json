@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 15 Feb 2021 15:07:11 GMT",
+      "tag": "react-native-windows_v0.64.0-preview.11",
+      "version": "0.64.0-preview.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow custom view managers to be able to trigger our logic to run native layout",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "5f5a8c4cf7a255582bb61779479affad8c652820",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add onPressIn / onPressOut events to TextInput",
+            "author": "igklemen@microsoft.com",
+            "commit": "88e840d60e993822fc460126d4ea72444a74c480",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Rename BuildProps to ExperimentalFeatures",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a67ee081e6b000953cb6387e5c87209c7a6c122c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixed typo in template which breaks C# autolinking",
+            "author": "jthysell@microsoft.com",
+            "commit": "7af16efe5ba1a8bf795b9da05b3631043b27746a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 Feb 2021 15:06:18 GMT",
       "tag": "react-native-windows_v0.64.0-preview.10",
       "version": "0.64.0-preview.10",

@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 08 Feb 2021 15:06:18 GMT and should not be manually modified.
+This log was last generated on Mon, 15 Feb 2021 15:07:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.11
+
+Mon, 15 Feb 2021 15:07:11 GMT
+
+### Changes
+
+- Allow custom view managers to be able to trigger our logic to run native layout (30809111+acoates-ms@users.noreply.github.com)
+- Add onPressIn / onPressOut events to TextInput (igklemen@microsoft.com)
+- Rename BuildProps to ExperimentalFeatures (ngerlem@microsoft.com)
+- Fixed typo in template which breaks C# autolinking (jthysell@microsoft.com)
 
 ## 0.64.0-preview.10
 

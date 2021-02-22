@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Rename BuildProps to ExperimentalFeatures",
+  "comment": "[0.64] Deploy using VS new DeployAppRecipe tool",
   "packageName": "@react-native-windows/cli",
-  "email": "ngerlem@microsoft.com",
+  "email": "asklar@microsoft.com",
   "dependentChangeType": "patch"
 }

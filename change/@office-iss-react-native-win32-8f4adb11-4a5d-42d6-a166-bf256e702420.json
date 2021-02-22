@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[0.64] Cherry pick focusable property for TextWin32",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "ppatboyd@outlook.com",
+  "dependentChangeType": "patch"
+}
