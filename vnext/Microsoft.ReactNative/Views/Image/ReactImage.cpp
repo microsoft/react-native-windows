@@ -202,7 +202,8 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   winrt::Uri uri{react::uwp::UriTryCreate(Utf8ToUtf16(source.uri))};
 
   const bool fromStream{
-      source.sourceType == ImageSourceType::Download || source.sourceType == ImageSourceType::InlineData || source.sourceType == ImageSourceType::SvgInlineData};
+      source.sourceType == ImageSourceType::Download || source.sourceType == ImageSourceType::InlineData ||
+      source.sourceType == ImageSourceType::SvgInlineData};
 
   winrt::InMemoryRandomAccessStream memoryStream{nullptr};
 

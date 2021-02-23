@@ -13,7 +13,7 @@
 
 namespace react::uwp {
 
-enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2, Svg = 3, SvgInlineData = 4};
+enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2, Svg = 3, SvgInlineData = 4 };
 
 struct ReactImageSource {
   std::string uri;
