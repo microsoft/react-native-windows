@@ -140,7 +140,11 @@ void ReactImage::Source(ReactImageSource source) {
     if (((scheme == L"http") || (scheme == L"https")) && !source.headers.empty()) {
       source.sourceType = ImageSourceType::Download;
     } else if (scheme == L"data") {
-      source.sourceType = ImageSourceType::InlineData;
+      if (source.uri.find("image/svg") != std::string::npos) {
+        source.sourceType = ImageSourceType::SvgInlineData;
+      } else {
+        source.sourceType = ImageSourceType::InlineData;
+      }
     } else if (ext == L".svg" || ext == L".svgz") {
       source.sourceType = ImageSourceType::Svg;
     }
@@ -159,6 +163,7 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> ReactImage::GetImageMe
     case ImageSourceType::Download:
       co_return co_await GetImageStreamAsync(source);
     case ImageSourceType::InlineData:
+    case ImageSourceType::SvgInlineData:
       co_return co_await GetImageInlineDataAsync(source);
     default: // ImageSourceType::Uri
       co_return nullptr;
@@ -197,7 +202,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   winrt::Uri uri{react::uwp::UriTryCreate(Utf8ToUtf16(source.uri))};
 
   const bool fromStream{
-      source.sourceType == ImageSourceType::Download || source.sourceType == ImageSourceType::InlineData};
+      source.sourceType == ImageSourceType::Download || source.sourceType == ImageSourceType::InlineData || source.sourceType == ImageSourceType::SvgInlineData};
 
   winrt::InMemoryRandomAccessStream memoryStream{nullptr};
 
@@ -236,8 +241,9 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
             compositionBrush->AvailableSize(args.NewSize());
           });
 
-      if (strong_this->m_surfaceLoadedRevoker)
+      if (strong_this->m_surfaceLoadedRevoker) {
         strong_this->m_surfaceLoadedRevoker.revoke();
+      }
 
       if (surface) {
         strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
@@ -294,7 +300,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
             });
       }
 
-      if (source.sourceType == ImageSourceType::Svg) {
+      if (source.sourceType == ImageSourceType::Svg || source.sourceType == ImageSourceType::SvgInlineData) {
         winrt::SvgImageSource svgImageSource{imageBrush.ImageSource().try_as<winrt::SvgImageSource>()};
 
         if (!svgImageSource) {
@@ -320,7 +326,11 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
           imageBrush.ImageSource(svgImageSource);
         }
 
-        svgImageSource.UriSource(uri);
+        if (fromStream) {
+          co_await svgImageSource.SetSourceAsync(memoryStream);
+        } else {
+          svgImageSource.UriSource(uri);
+        }
 
       } else {
         winrt::BitmapImage bitmapImage{imageBrush.ImageSource().try_as<winrt::BitmapImage>()};
