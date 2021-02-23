@@ -54,7 +54,7 @@ export default class Bootstrap extends React.Component<
       imageUri = smallImageUri;
     } else if (value === 'large') {
       imageUri = largeImageUri;
-    }else if (value === 'data-svg') {
+    } else if (value === 'data-svg') {
       imageUri = dataImageSvg;
     } else if (value === 'data') {
       imageUri = dataImageUri;
