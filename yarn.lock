@@ -140,16 +140,7 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/generator@^7.12.17", "@babel/generator@^7.5.0":
-  version "7.12.17"
-  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.12.17.tgz#9ef1dd792d778b32284411df63f4f668a9957287"
-  integrity sha512-DSA7ruZrY4WI8VxuS1jWSRezFnghEoYEFrZcw9BizQRmOZiUsiHl59+qEARGPqPikwA/GPTyRCi7isuCK/oyqg==
-  dependencies:
-    "@babel/types" "^7.12.17"
-    jsesc "^2.5.1"
-    source-map "^0.5.0"
-
-"@babel/generator@^7.13.0":
+"@babel/generator@^7.12.17", "@babel/generator@^7.13.0", "@babel/generator@^7.5.0":
   version "7.13.0"
   resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.13.0.tgz#bd00d4394ca22f220390c56a0b5b85568ec1ec0c"
   integrity sha512-zBZfgvBB/ywjx0Rgc2+BwoH/3H+lDtlgD4hBOpEv5LxRnYsm/753iRuLepqnYlynpjC3AdQxtxsoeHJoEEwOAw==
@@ -1133,16 +1124,7 @@
     globals "^11.1.0"
     lodash "^4.17.19"
 
-"@babel/types@^7.0.0", "@babel/types@^7.12.1", "@babel/types@^7.12.13", "@babel/types@^7.12.17", "@babel/types@^7.3.0", "@babel/types@^7.3.3", "@babel/types@^7.4.4", "@babel/types@^7.7.0":
-  version "7.12.17"
-  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.12.17.tgz#9d711eb807e0934c90b8b1ca0eb1f7230d150963"
-  integrity sha512-tNMDjcv/4DIcHxErTgwB9q2ZcYyN0sUfgGKUK/mm1FJK7Wz+KstoEekxrl/tBiNDgLK1HGi+sppj1An/1DR4fQ==
-  dependencies:
-    "@babel/helper-validator-identifier" "^7.12.11"
-    lodash "^4.17.19"
-    to-fast-properties "^2.0.0"
-
-"@babel/types@^7.13.0":
+"@babel/types@^7.0.0", "@babel/types@^7.12.1", "@babel/types@^7.12.13", "@babel/types@^7.12.17", "@babel/types@^7.13.0", "@babel/types@^7.3.0", "@babel/types@^7.3.3", "@babel/types@^7.4.4", "@babel/types@^7.7.0":
   version "7.13.0"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.13.0.tgz#74424d2816f0171b4100f0ab34e9a374efdf7f80"
   integrity sha512-hE+HE8rnG1Z6Wzo+MhaKE5lM5eMx71T4EHJgku2E3xIfaULhDcxiiRxUYgwX8qwP1BBSlag+TdGOt6JAidIZTA==
