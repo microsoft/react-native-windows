@@ -71,6 +71,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
 
   bool m_useCompositionBrush{false};
   float m_blurRadius{0};
+  int m_imageSourceId{0};
   ReactImageSource m_imageSource;
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
   winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};

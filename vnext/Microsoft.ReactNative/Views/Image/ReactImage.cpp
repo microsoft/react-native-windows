@@ -196,6 +196,9 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   const ReactImageSource source{m_imageSource};
   winrt::Uri uri{react::uwp::UriTryCreate(Utf8ToUtf16(source.uri))};
 
+  // Increment the image source ID before any co_await calls
+  auto currentImageSourceId = ++m_imageSourceId;
+
   const bool fromStream{
       source.sourceType == ImageSourceType::Download || source.sourceType == ImageSourceType::InlineData};
 
@@ -219,9 +222,15 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
     if (strong_this && fireLoadEndEvent) {
       strong_this->m_onLoadEndEvent(*strong_this, false);
     }
+    co_return;
   }
 
   if (auto strong_this{weak_this.get()}) {
+    // If the image source has been updated since this operation started, do not continue
+    if (currentImageSourceId != strong_this->m_imageSourceId) {
+      co_return;
+    }
+
     if (strong_this->m_useCompositionBrush) {
       const auto compositionBrush{ReactImageBrush::Create()};
 
@@ -363,9 +372,15 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         } else {
           bitmapImage.UriSource(uri);
 
-          // TODO: When we change the source of a BitmapImage, we're getting a flicker of the old image
-          // being resized to the size of the new image. This is a temporary workaround.
-          imageBrush.Opacity(0);
+          // It is possible that the same URI will be set twice if an intermediate update occurs that requires
+          // asynchronous behavior (e.g., when the ImageSourceType is ::Download or ::InlineData). In this case,
+          // do not set the opacity to zero as the ImageOpened event will not fire.
+          auto currentUri = bitmapImage.UriSource();
+          if (uri && currentUri && uri.AbsoluteUri() != currentUri.AbsoluteUri()) {
+            // TODO: When we change the source of a BitmapImage, we're getting a flicker of the old image
+            // being resized to the size of the new image. This is a temporary workaround.
+            imageBrush.Opacity(0);
+          }
         }
       }
 
