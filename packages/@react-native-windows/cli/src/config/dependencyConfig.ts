@@ -191,16 +191,8 @@ export function dependencyConfigWindows(
         break;
       }
 
-      const projectFile = path.join(sourceDir, project.projectFile);
-
-      const projectContents = configUtils.readProjectFile(projectFile);
-
       // Calculating (auto) items
-      calculateAutoItemsForDirectDependency(
-        project,
-        projectFile,
-        projectContents,
-      );
+      calculateProjectFromOverride(project, sourceDir);
     }
   } else {
     // No react-native.config, try to heuristically find any projects
@@ -209,22 +201,17 @@ export function dependencyConfigWindows(
 
     for (const foundProject of foundProjects) {
       const projectFile = path.join(sourceDir, foundProject);
-      const projectContents = configUtils.readProjectFile(projectFile);
 
-      result.projects.push(
-        calculateProject(projectFile, projectContents, sourceDir),
-      );
+      result.projects.push(calculateProjectFromFile(projectFile, sourceDir));
     }
   }
 
   return result;
 }
 
-function calculateProject(
-  projectFile: string,
-  projectContents: Document,
-  sourceDir: string,
-) {
+function calculateProjectFromFile(projectFile: string, sourceDir: string) {
+  const projectContents = configUtils.readProjectFile(projectFile);
+
   const projectNamespace = configUtils.getProjectNamespace(projectContents);
   const {cppNamespace, csNamespace} = getLanguageNamespaces(projectNamespace);
 
@@ -258,11 +245,14 @@ function getLanguageNamespaces(projectNamespace: string | null) {
   }
 }
 
-function calculateAutoItemsForDirectDependency(
+function calculateProjectFromOverride(
   project: ProjectDependency,
-  projectFile: string,
-  projectContents: Document,
+  sourceDir: string,
 ) {
+  const projectFile = path.join(sourceDir, project.projectFile);
+
+  const projectContents = configUtils.readProjectFile(projectFile);
+
   project.projectName = configUtils.getProjectName(
     projectFile,
     projectContents,
