@@ -31,7 +31,7 @@ class PopupShadowNode : public ShadowNodeBase {
   PopupShadowNode() = default;
   virtual ~PopupShadowNode();
 
-  void createView() override;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void AddView(ShadowNode &child, int64_t index) override;
   virtual void removeAllChildren() override;
   virtual void RemoveChildAt(int64_t indexToRemove) override;
@@ -73,8 +73,8 @@ xaml::Controls::ContentControl PopupShadowNode::GetControl() {
   return control;
 }
 
-void PopupShadowNode::createView() {
-  Super::createView();
+void PopupShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  Super::createView(props);
 
   auto popup = GetView().as<winrt::Popup>();
   auto control = GetControl();
@@ -314,7 +314,7 @@ ShadowNode *PopupViewManager::createShadow() const {
   return new PopupShadowNode();
 }
 
-XamlView PopupViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView PopupViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   auto popup = winrt::Popup();
   auto control = xaml::Controls::ContentControl();
 

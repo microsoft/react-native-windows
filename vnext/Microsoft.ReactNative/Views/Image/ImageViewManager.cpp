@@ -77,8 +77,8 @@ class ImageShadowNode : public ShadowNodeBase {
  public:
   ImageShadowNode() = default;
 
-  void createView() override {
-    ShadowNodeBase::createView();
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &props) override {
+    ShadowNodeBase::createView(props);
     auto reactImage{m_view.as<ReactImage>()};
 
     m_onLoadEndToken = reactImage->OnLoadEnd([imageViewManager{static_cast<ImageViewManager *>(GetViewManager())},
@@ -105,7 +105,7 @@ const wchar_t *ImageViewManager::GetName() const {
   return L"RCTImageView";
 }
 
-XamlView ImageViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView ImageViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   return ReactImage::Create().as<winrt::Grid>();
 }
 

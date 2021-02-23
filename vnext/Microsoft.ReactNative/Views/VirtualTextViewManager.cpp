@@ -50,7 +50,7 @@ const wchar_t *VirtualTextViewManager::GetName() const {
   return L"RCTVirtualText";
 }
 
-XamlView VirtualTextViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView VirtualTextViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   return winrt::Span();
 }
 

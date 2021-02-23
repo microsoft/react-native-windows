@@ -86,7 +86,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   virtual ~FlyoutShadowNode();
 
   void AddView(ShadowNode &child, int64_t index) override;
-  void createView() override;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   static void OnFlyoutClosed(const Mso::React::IReactContext &context, int64_t tag, bool newValue);
   void onDropViewInstance() override;
   void removeAllChildren() override;
@@ -149,8 +149,8 @@ void FlyoutShadowNode::AddView(ShadowNode &child, int64_t /*index*/) {
   }
 }
 
-void FlyoutShadowNode::createView() {
-  Super::createView();
+void FlyoutShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  Super::createView(props);
 
   m_flyout = winrt::Flyout();
   m_isFlyoutShowOptionsSupported = !!(winrt::Flyout().try_as<winrt::IFlyoutBase5>());
@@ -434,7 +434,7 @@ const wchar_t *FlyoutViewManager::GetName() const {
   return L"RCTFlyout";
 }
 
-XamlView FlyoutViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView FlyoutViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   return winrt::make<winrt::react::uwp::implementation::ViewPanel>().as<XamlView>();
 }
 

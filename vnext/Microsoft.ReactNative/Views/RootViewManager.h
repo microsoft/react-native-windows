@@ -30,7 +30,7 @@ class RootViewManager : public FrameworkElementViewManager {
   void destroyShadow(ShadowNode *node) const override;
 
  protected:
-  XamlView CreateViewCore(int64_t tag) override;
+  XamlView CreateViewCore(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &) override;
 };
 
 } // namespace Microsoft::ReactNative
