@@ -227,7 +227,6 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
 
   if (auto strong_this{weak_this.get()}) {
     // If the image source has been updated since this operation started, do not continue
-    // TODO: #7194 This "cancellation" will prevent onLoad / onLoadEnd events from firing for canceled source props
     if (currentImageSourceId != strong_this->m_imageSourceId) {
       co_return;
     }
