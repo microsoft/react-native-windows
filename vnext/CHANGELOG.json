@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 23 Feb 2021 05:06:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.258",
+      "version": "0.0.0-canary.258",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixes race conditions for ReactImage",
+            "author": "erozell@outlook.com",
+            "commit": "0329f9bc9028b9ae13a26fccd824f7a6d369ba6c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix websocket crash when bundler goes away",
+            "author": "asklar@microsoft.com",
+            "commit": "de55eb60ec776c6c8aa9bb597774844788fdf9d6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 20 Feb 2021 05:06:12 GMT",
       "tag": "react-native-windows_v0.0.0-canary.257",
       "version": "0.0.0-canary.257",

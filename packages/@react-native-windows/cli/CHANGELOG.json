@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 23 Feb 2021 05:06:42 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.63",
+      "version": "0.0.0-canary.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix autolinking for solutions that have 'Any CPU' projects",
+            "author": "asklar@microsoft.com",
+            "commit": "e2ab2be6d6367dad6132c9897c27de478e4f510b",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 20 Feb 2021 05:06:12 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.62",
       "version": "0.0.0-canary.62",

@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 20 Feb 2021 05:06:12 GMT and should not be manually modified.
+This log was last generated on Tue, 23 Feb 2021 05:06:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.258
+
+Tue, 23 Feb 2021 05:06:42 GMT
+
+### Changes
+
+- Fixes race conditions for ReactImage (erozell@outlook.com)
+- Fix websocket crash when bundler goes away (asklar@microsoft.com)
 
 ## 0.0.0-canary.257
 

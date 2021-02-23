@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix websocket crash when bundler goes away",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
