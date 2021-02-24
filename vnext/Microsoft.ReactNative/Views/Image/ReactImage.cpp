@@ -140,13 +140,12 @@ void ReactImage::Source(ReactImageSource source) {
     if (((scheme == L"http") || (scheme == L"https")) && !source.headers.empty()) {
       source.sourceType = ImageSourceType::Download;
     } else if (scheme == L"data") {
-      if (source.uri.find("image/svg") != std::string::npos) {
-        source.sourceType = ImageSourceType::SvgInlineData;
-      } else {
-        source.sourceType = ImageSourceType::InlineData;
+      source.sourceType = ImageSourceType::InlineData;
+      if (source.uri.find("image/svg+xml;base64") != std::string::npos) {
+        source.sourceFormat = ImageSourceFormat::Svg;
       }
     } else if (ext == L".svg" || ext == L".svgz") {
-      source.sourceType = ImageSourceType::Svg;
+      source.sourceFormat = ImageSourceFormat::Svg;
     }
 
     m_imageSource = source;
@@ -163,7 +162,6 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> ReactImage::GetImageMe
     case ImageSourceType::Download:
       co_return co_await GetImageStreamAsync(source);
     case ImageSourceType::InlineData:
-    case ImageSourceType::SvgInlineData:
       co_return co_await GetImageInlineDataAsync(source);
     default: // ImageSourceType::Uri
       co_return nullptr;
@@ -202,8 +200,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   winrt::Uri uri{react::uwp::UriTryCreate(Utf8ToUtf16(source.uri))};
 
   const bool fromStream{
-      source.sourceType == ImageSourceType::Download || source.sourceType == ImageSourceType::InlineData ||
-      source.sourceType == ImageSourceType::SvgInlineData};
+      source.sourceType == ImageSourceType::Download || source.sourceType == ImageSourceType::InlineData};
 
   winrt::InMemoryRandomAccessStream memoryStream{nullptr};
 
@@ -301,7 +298,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
             });
       }
 
-      if (source.sourceType == ImageSourceType::Svg || source.sourceType == ImageSourceType::SvgInlineData) {
+      if (source.sourceFormat == ImageSourceFormat::Svg) {
         winrt::SvgImageSource svgImageSource{imageBrush.ImageSource().try_as<winrt::SvgImageSource>()};
 
         if (!svgImageSource) {
