@@ -124,6 +124,9 @@ class ReactViewHost final : public ActiveObject<IReactViewHost> {
   AsyncAction MakeInitViewInstanceAction(ReactViewOptions &&options) noexcept;
   AsyncAction MakeUninitViewInstanceAction() noexcept;
 
+  template <class TCallback>
+  Mso::Future<void> PostInQueue(TCallback &&callback) noexcept;
+
  private:
   mutable std::mutex m_mutex;
   const Mso::InvokeElsePostExecutor m_executor{Queue()};
@@ -173,7 +176,7 @@ class ReactHostRegistry final : public Mso::RefCountedObjectNoVTable<ReactHostRe
 };
 
 //=============================================================================================
-// ReactHost inline implementation
+// Inline implementations
 //=============================================================================================
 
 template <class TCallback>
@@ -181,6 +184,19 @@ Mso::Future<void> ReactHost::PostInQueue(TCallback &&callback) noexcept {
   using Callback = std::decay_t<TCallback>;
   return Mso::PostFuture(
       m_executor,
+      [weakThis = Mso::WeakPtr{this}, callback = Callback{std::forward<TCallback>(callback)}]() mutable noexcept {
+        if (auto strongThis = weakThis.GetStrongPtr()) {
+          return callback();
+        }
+
+        return Mso::MakeCanceledFuture();
+      });
+}
+
+template <class TCallback>
+Mso::Future<void> ReactViewHost::PostInQueue(TCallback &&callback) noexcept {
+  using Callback = std::decay_t<TCallback>;
+  return m_reactHost->PostInQueue(
       [weakThis = Mso::WeakPtr{this}, callback = Callback{std::forward<TCallback>(callback)}]() mutable noexcept {
         if (auto strongThis = weakThis.GetStrongPtr()) {
           return callback();
