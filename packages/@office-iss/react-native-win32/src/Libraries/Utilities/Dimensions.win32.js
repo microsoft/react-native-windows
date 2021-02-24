@@ -5,7 +5,6 @@
  * @format
  * @flow
  */
-'use strict';
 
 class Dimensions {
   static get(dim: string): Object {

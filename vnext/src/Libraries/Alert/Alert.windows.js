@@ -4,7 +4,6 @@
  * @flow
  * @format
  */
-'use strict';
 
 import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
 const AlertNative = TurboModuleRegistry.getEnforcing('Alert');
