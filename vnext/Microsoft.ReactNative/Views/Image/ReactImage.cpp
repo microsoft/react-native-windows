@@ -141,8 +141,11 @@ void ReactImage::Source(ReactImageSource source) {
       source.sourceType = ImageSourceType::Download;
     } else if (scheme == L"data") {
       source.sourceType = ImageSourceType::InlineData;
+      if (source.uri.find("image/svg+xml;base64") != std::string::npos) {
+        source.sourceFormat = ImageSourceFormat::Svg;
+      }
     } else if (ext == L".svg" || ext == L".svgz") {
-      source.sourceType = ImageSourceType::Svg;
+      source.sourceFormat = ImageSourceFormat::Svg;
     }
 
     m_imageSource = source;
@@ -236,8 +239,9 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
             compositionBrush->AvailableSize(args.NewSize());
           });
 
-      if (strong_this->m_surfaceLoadedRevoker)
+      if (strong_this->m_surfaceLoadedRevoker) {
         strong_this->m_surfaceLoadedRevoker.revoke();
+      }
 
       if (surface) {
         strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
@@ -299,7 +303,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
             });
       }
 
-      if (source.sourceType == ImageSourceType::Svg) {
+      if (source.sourceFormat == ImageSourceFormat::Svg) {
         winrt::SvgImageSource svgImageSource{imageBrush.ImageSource().try_as<winrt::SvgImageSource>()};
 
         if (!svgImageSource) {
@@ -325,7 +329,11 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
           imageBrush.ImageSource(svgImageSource);
         }
 
-        svgImageSource.UriSource(uri);
+        if (fromStream) {
+          co_await svgImageSource.SetSourceAsync(memoryStream);
+        } else {
+          svgImageSource.UriSource(uri);
+        }
 
       } else {
         winrt::BitmapImage bitmapImage{imageBrush.ImageSource().try_as<winrt::BitmapImage>()};
