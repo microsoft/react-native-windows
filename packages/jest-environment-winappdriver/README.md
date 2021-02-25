@@ -17,8 +17,11 @@ module.exports = {
       logLevel: 'error',
       ...
     },
+    winAppDriverBin: 'D:\\Program Files (x86)\\Windows Application Driver\\WinAppDriver.exe',
   },
 };
 ```
 
 WebDriverIO options for initializing a remote may be passed through `testEnvironmentOptions.webdriverOptions`.
+
+Custom installation paths of WinAppDriver can be specified through `testEnvironmentOptions.winAppDriverBin`.
