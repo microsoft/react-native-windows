@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Revert \"Fix DispatchEvent for events that don't have a sender (#7207)\"",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
