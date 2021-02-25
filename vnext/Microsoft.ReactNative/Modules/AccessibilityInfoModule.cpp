@@ -41,7 +41,6 @@ void AccessibilityInfo::setAccessibilityFocus(double /*reactTag*/) noexcept {
 
 void AccessibilityInfo::announceForAccessibility(std::string announcement) noexcept {
   m_context.UIDispatcher().Post([context = m_context, announcement = std::move(announcement)] {
-
     // Windows requires a specific element to announce from. Unfortunately the react-native API does not provide a tag
     // So we need to add a temporary control to raise the notification event from.
 
