@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 23 Feb 2021 05:06:42 GMT and should not be manually modified.
+This log was last generated on Thu, 25 Feb 2021 05:05:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.259
+
+Thu, 25 Feb 2021 05:05:52 GMT
+
+### Changes
+
+- Some XAML events do not have a sender (e.g. Loaded) (asklar@microsoft.com)
+- [Image] add svg data uri support (email not defined)
 
 ## 0.0.0-canary.258
 
