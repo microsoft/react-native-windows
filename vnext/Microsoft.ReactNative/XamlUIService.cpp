@@ -42,8 +42,7 @@ void XamlUIService::DispatchEvent(
     eventData = eventDataWriter->TakeValue();
   }
 
-  auto tag = view ? unbox_value<int64_t>(view.Tag()) : 0;
-  m_context->DispatchEvent(tag, to_string(eventName), std::move(eventData));
+  m_context->DispatchEvent(unbox_value<int64_t>(view.Tag()), to_string(eventName), std::move(eventData));
 }
 
 /*static*/ ReactPropertyId<XamlUIService> XamlUIService::XamlUIServiceProperty() noexcept {
