@@ -14,6 +14,16 @@ A test app, test library and test cases are in [`/packages/e2e-test-app/`](../pa
 
 This will be automatically done for you if you use the [RNW dependency script](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies) with `rnwDev` as an argument.
 
+The E2E tests assume it is installed in the default location under `C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe`. If you choose a different path, you will need to specify it in [`/packages/e2e-test-app/jest.config.js`](../packages/e2e-test-app/jest.config.js).
+```js
+module.exports = {
+...
+  testEnvironmentOptions: {
+    ...
+    winAppDriverBin: 'D:\\Program Files (x86)\\Windows Application Driver\\WinAppDriver.exe',
+  },
+};
+```
 
 **Build the native test app**
 
