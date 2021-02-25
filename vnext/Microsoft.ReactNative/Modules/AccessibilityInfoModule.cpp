@@ -41,27 +41,17 @@ void AccessibilityInfo::setAccessibilityFocus(double /*reactTag*/) noexcept {
 
 void AccessibilityInfo::announceForAccessibility(std::string announcement) noexcept {
   m_context.UIDispatcher().Post([context = m_context, announcement = std::move(announcement)] {
-    xaml::UIElement element{nullptr};
 
-    // Windows requires a specific element to announce from.  Unfortunately the react-native API does not provide a tag
-    // So we need to find something to try to raise the notification event from
+    // Windows requires a specific element to announce from. Unfortunately the react-native API does not provide a tag
+    // So we need to add a temporary control to raise the notification event from.
 
-    if (auto window = xaml::Window::Current()) {
-      element = window.Content();
-    }
+    auto textBlock = xaml::Controls::TextBlock();
 
-    if (!element && react::uwp::Is19H1OrHigher()) {
-      // XamlRoot added in 19H1
-      if (auto xamlRoot = React::XamlUIService::GetXamlRoot(context.Properties().Handle())) {
-        element = xamlRoot.Content();
-      }
-    }
-
-    if (!element) {
+    if (!textBlock) {
       return;
     }
 
-    auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
+    auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(textBlock);
 
     if (!peer) {
       return;
