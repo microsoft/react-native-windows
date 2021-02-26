@@ -46,8 +46,9 @@ void ReactImageBrush::ResizeMode(react::uwp::ResizeMode value) {
 
 void ReactImageBrush::BlurRadius(float value) {
   if (m_blurRadius != value) {
+    const bool forceEffectBrush{value == 0 || m_blurRadius == 0};
     m_blurRadius = value;
-    UpdateCompositionBrush();
+    UpdateCompositionBrush(forceEffectBrush);
   }
 }
 
@@ -100,7 +101,9 @@ void ReactImageBrush::UpdateCompositionBrush(bool forceEffectBrush) {
       // "You can compute the blur radius of the kernel by multiplying the standard deviation by 3.
       // The units of both the standard deviation and blur radius are DIPs.
       // A value of zero DIPs disables this effect entirely."
-      compositionBrush.Properties().InsertScalar(BlurBlurAmount, m_blurRadius / 3);
+      if (m_blurRadius > 0) {
+        compositionBrush.Properties().InsertScalar(BlurBlurAmount, m_blurRadius / 3);
+      }
 
       if (m_tintColor.A != 0) {
         compositionBrush.Properties().InsertColor(TintColorColor, m_tintColor);
@@ -186,18 +189,9 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     comp::CompositionSurfaceBrush const &surfaceBrush,
     bool forceEffectBrush) {
   if (!m_effectBrush || forceEffectBrush) {
-    // GaussianBlurEffect
-    auto blurEffect{winrt::make<winrt::Microsoft::ReactNative::implementation::GaussianBlurEffect>()};
-    blurEffect.Name(L"Blur");
-
-    // https://microsoft.github.io/Win2D/html/P_Microsoft_Graphics_Canvas_Effects_GaussianBlurEffect_BlurAmount.htm
-    // "You can compute the blur radius of the kernel by multiplying the standard deviation by 3.
-    // The units of both the standard deviation and blur radius are DIPs.
-    // A value of zero DIPs disables this effect entirely."
-    blurEffect.BlurAmount(m_blurRadius / 3);
-
+    winrt::IGraphicsEffectSource sourceParameter = comp::CompositionEffectSourceParameter{L"source"};
+    winrt::IGraphicsEffect effect{nullptr};
     std::vector<winrt::hstring> animatedProperties;
-    animatedProperties.push_back({BlurBlurAmount});
 
     if (ResizeMode() == ResizeMode::Repeat) {
       // BorderEffect
@@ -206,15 +200,24 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
       borderEffect.ExtendX(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
       borderEffect.ExtendY(winrt::Microsoft::ReactNative::CanvasEdgeBehavior::Wrap);
 
-      comp::CompositionEffectSourceParameter borderEffectSourceParameter{L"source"};
-      borderEffect.Source(borderEffectSourceParameter);
-      blurEffect.Source(borderEffect);
-    } else {
-      comp::CompositionEffectSourceParameter blurEffectSourceParameter{L"source"};
-      blurEffect.Source(blurEffectSourceParameter);
+      borderEffect.Source(sourceParameter);
+      effect = borderEffect;
     }
 
-    winrt::IGraphicsEffect effect{blurEffect};
+    if (m_blurRadius > 0) {
+      // GaussianBlurEffect
+      auto blurEffect{winrt::make<winrt::Microsoft::ReactNative::implementation::GaussianBlurEffect>()};
+      blurEffect.Name(L"Blur");
+
+      // https://microsoft.github.io/Win2D/html/P_Microsoft_Graphics_Canvas_Effects_GaussianBlurEffect_BlurAmount.htm
+      // "You can compute the blur radius of the kernel by multiplying the standard deviation by 3.
+      // The units of both the standard deviation and blur radius are DIPs.
+      // A value of zero DIPs disables this effect entirely."
+      blurEffect.BlurAmount(m_blurRadius / 3);
+      animatedProperties.push_back({BlurBlurAmount});
+      blurEffect.Source(!effect ? sourceParameter : effect);
+      effect = blurEffect;
+    }
 
     // tintColor
     if (m_tintColor.A != 0) {
@@ -224,11 +227,9 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
 
       auto compositeEffect{winrt::make<winrt::Microsoft::ReactNative::implementation::CompositeStepEffect>()};
       compositeEffect.Mode(winrt::Microsoft::ReactNative::CanvasComposite::SourceIn);
-      compositeEffect.Destination(blurEffect);
       compositeEffect.Source(tintColorEffect);
-
       animatedProperties.push_back({TintColorColor});
-
+      compositeEffect.Destination(!effect ? sourceParameter : effect);
       effect = compositeEffect;
     }
 
