@@ -2,6 +2,29 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Fri, 26 Feb 2021 05:06:35 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump jest-environment-winappdriver to v1.1.1-5",
+            "author": "igklemen@microsoft.com",
+            "commit": "aa05758ea9a3f34ef16568b455c0173da23f8dbb",
+            "package": "e2e-test-app"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.260",
+            "author": "asklar@microsoft.com",
+            "commit": "a0bced61819e240c218fdcc17d4742d330e5ad42",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Feb 2021 05:05:52 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",

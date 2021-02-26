@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 25 Feb 2021 05:05:52 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Feb 2021 05:06:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.260
+
+Fri, 26 Feb 2021 05:06:35 GMT
+
+### Changes
+
+- Revert "Fix DispatchEvent for events that don't have a sender (#7207)" (asklar@microsoft.com)
 
 ## 0.0.0-canary.259
 

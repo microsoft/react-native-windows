@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Feb 2021 05:06:35 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.260",
+      "version": "0.0.0-canary.260",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Revert \"Fix DispatchEvent for events that don't have a sender (#7207)\"",
+            "author": "asklar@microsoft.com",
+            "commit": "a0bced61819e240c218fdcc17d4742d330e5ad42",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Feb 2021 05:05:52 GMT",
       "tag": "react-native-windows_v0.0.0-canary.259",
       "version": "0.0.0-canary.259",
