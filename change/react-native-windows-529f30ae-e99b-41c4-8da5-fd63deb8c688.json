@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Narrow fix for tintColor and repeat images",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
