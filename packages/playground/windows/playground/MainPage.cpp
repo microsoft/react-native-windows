@@ -126,7 +126,7 @@ void winrt::playground::implementation::MainPage::x_entryPointCombo_SelectionCha
   }
 }
 
-void winrt::playground::implementation::MainPage::x_x_UseWebDebuggerCheckBox_Checked(
+void winrt::playground::implementation::MainPage::x_UseWebDebuggerCheckBox_Checked(
     winrt::Windows::Foundation::IInspectable const & /*sender*/,
     winrt::Windows::Foundation::IInspectable const & /*e*/) {
   if (x_JsEngine()) {
@@ -140,7 +140,7 @@ void winrt::playground::implementation::MainPage::x_x_UseWebDebuggerCheckBox_Che
   }
 }
 
-void winrt::playground::implementation::MainPage::x_x_UseWebDebuggerCheckBox_Unchecked(
+void winrt::playground::implementation::MainPage::x_UseWebDebuggerCheckBox_Unchecked(
     winrt::Windows::Foundation::IInspectable const & /*sender*/,
     winrt::Windows::Foundation::IInspectable const & /*e*/) {
   if (x_JsEngine()) {

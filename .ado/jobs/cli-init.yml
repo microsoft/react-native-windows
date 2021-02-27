@@ -173,7 +173,7 @@ jobs:
             projectType: app
             additionalInitArguments: --useHermes
             additionalRunArguments:
-          ARM64ReleaseCsHermes:
+          Arm64ReleaseCsHermes:
             language: cs
             configuration: Release
             platform: ARM64
@@ -188,7 +188,7 @@ jobs:
               platform: x64
               projectType: app
               additionalInitArguments: --useHermes
-            additionalRunArguments:
+              additionalRunArguments:
           # End Continuous only
 
       pool: $(AgentPool.Medium)

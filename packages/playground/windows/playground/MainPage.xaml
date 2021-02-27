@@ -109,8 +109,8 @@
                 Margin="8,4,4,4"
                 VerticalAlignment="Center"
                 IsChecked="true"
-                Checked="x_x_UseWebDebuggerCheckBox_Checked"
-                Unchecked="x_x_UseWebDebuggerCheckBox_Unchecked"
+                Checked="x_UseWebDebuggerCheckBox_Checked"
+                Unchecked="x_UseWebDebuggerCheckBox_Unchecked"
                 Content="Web Debugger"/>
             <CheckBox x:Name="x_UseDirectDebuggerCheckBox"
                 Margin="4"
