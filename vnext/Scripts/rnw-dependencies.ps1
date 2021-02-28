@@ -126,6 +126,15 @@ function CheckNode {
     }
 }
 
+function CheckWinAppDriver {
+    $WADPath = "${env:ProgramFiles(x86)}\Windows Application Driver\WinAppDriver.exe";
+    if (Test-Path $WADPath) {
+        $version = [Version]([System.Diagnostics.FileVersionInfo]::GetVersionInfo($WADPath).FileVersion);
+        return $version.CompareTo([Version]"1.2.1") -ge 0;
+    }
+    return $false;
+}
+
 function EnableDevmode {
     $RegistryKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
 
@@ -247,12 +256,13 @@ $requirements = @(
         Id=[CheckId]::WinAppDriver;
         Name = 'WinAppDriver';
         Tags = @('rnwDev');
-        Valid = (Test-Path "${env:ProgramFiles(x86)}\Windows Application Driver\WinAppDriver.exe");
+        Valid = CheckWinAppDriver;
         Install = {
             # don't install from choco as we need an exact version match. appium-windows-driver checks the checksum of WAD.
             # See \node_modules\appium-windows-driver\build\lib\installer.js
             $ProgressPreference = 'Ignore';
-            Invoke-WebRequest -UseBasicParsing https://github.com/microsoft/WinAppDriver/releases/download/v1.1/WindowsApplicationDriver.msi -OutFile $env:TEMP\WindowsApplicationDriver.msi
+            $url = "https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver_1.2.1.msi";
+            Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\WindowsApplicationDriver.msi
             & $env:TEMP\WindowsApplicationDriver.msi /q
         };
         Optional = $true;
