@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 01 Mar 2021 15:05:53 GMT",
+      "tag": "react-native-windows_v0.64.0-preview.13",
+      "version": "0.64.0-preview.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[Image] add svg data uri support",
+            "author": "email not defined",
+            "commit": "71073f0d1524ef3708478bccf66fcdf18e9fc683",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Add IViewManagerCreateWithProperties",
+            "author": "asklar@microsoft.com",
+            "commit": "d0d680cd27f594842ac820105c75f443aef549e9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Include RuntimeExecutor.h in nuget",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "0ce34eed0f68c3ff7533144b46bfae0956c20c3d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Feb 2021 15:07:37 GMT",
       "tag": "react-native-windows_v0.64.0-preview.12",
       "version": "0.64.0-preview.12",

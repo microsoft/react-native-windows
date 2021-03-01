@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[Image] add svg data uri support",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}
