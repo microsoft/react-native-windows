@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update yargs version used and patch y18n version 4.0.0 to 4.0.1 as used by detox of transitive dependencies to address https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-7774",
+  "packageName": "react-native-windows-init",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
