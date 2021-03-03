@@ -23,7 +23,7 @@
     "mustache": "^4.0.1",
     "react-native-tscodegen": "0.66.1",
     "source-map-support": "^0.5.19",
-    "yargs": "^15.4.1"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.6",
@@ -34,7 +34,7 @@
     "@types/globby": "^9.1.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
-    "@types/yargs": "15.0.5",
+    "@types/yargs": "16.0.0",
     "babel-jest": "^26.3.0",
     "eslint": "7.12.0",
     "jest": "^26.5.2",
