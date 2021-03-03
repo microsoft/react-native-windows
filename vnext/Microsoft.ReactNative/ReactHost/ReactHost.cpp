@@ -449,25 +449,26 @@ void ReactViewHost::SetOptions(ReactViewOptions &&options) noexcept {
 }
 
 Mso::Future<void> ReactViewHost::ReloadViewInstance() noexcept {
-  return m_reactHost->PostInQueue([this]() noexcept {
+  return PostInQueue([this]() noexcept {
     return m_actionQueue.Load()->PostActions({MakeUninitViewInstanceAction(), MakeInitViewInstanceAction()});
   });
 }
 
 Mso::Future<void> ReactViewHost::ReloadViewInstanceWithOptions(ReactViewOptions &&options) noexcept {
-  return m_reactHost->PostInQueue([this, options = std::move(options)]() mutable noexcept {
+  return PostInQueue([this, options = std::move(options)]() mutable noexcept {
     return m_actionQueue.Load()->PostActions(
         {MakeUninitViewInstanceAction(), MakeInitViewInstanceAction(std::move(options))});
   });
 }
 
 Mso::Future<void> ReactViewHost::UnloadViewInstance() noexcept {
-  return m_reactHost->PostInQueue(
-      [this]() noexcept { return m_actionQueue.Load()->PostAction(MakeUninitViewInstanceAction()); });
+  return PostInQueue([this, spThis = Mso::CntPtr{this}]() noexcept {
+    return m_actionQueue.Load()->PostAction(MakeUninitViewInstanceAction());
+  });
 }
 
 Mso::Future<void> ReactViewHost::AttachViewInstance(IReactViewInstance &viewInstance) noexcept {
-  return m_reactHost->PostInQueue([this, viewInstance = Mso::CntPtr{&viewInstance}]() noexcept {
+  return PostInQueue([this, viewInstance = Mso::CntPtr{&viewInstance}]() noexcept {
     auto previousViewInstance = m_viewInstance.Exchange(Mso::Copy(viewInstance));
     VerifyElseCrashSzTag(
         !previousViewInstance, "ViewInstance must not be previously attached.", 0x028508d6 /* tag_c7q9w */);
@@ -481,7 +482,7 @@ Mso::Future<void> ReactViewHost::AttachViewInstance(IReactViewInstance &viewInst
 }
 
 Mso::Future<void> ReactViewHost::DetachViewInstance() noexcept {
-  return m_reactHost->PostInQueue([this]() noexcept {
+  return PostInQueue([this, spThis = Mso::CntPtr{this}]() noexcept {
     auto viewInstance = m_viewInstance.Exchange(nullptr);
     VerifyElseCrashSzTag(viewInstance, "ViewInstance is not attached.", 0x0281e3db /* tag_c64p1 */);
     m_reactHost->DetachViewHost(*this);
