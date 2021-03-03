@@ -169,3 +169,4 @@ jobs:
         inputs:
           alertWarningLevel: Medium
           scanType: 'Register'
+        condition: false # Temporarily disabling CG, see https://github.com/microsoft/react-native-windows/issues/7261
