@@ -75,17 +75,24 @@ void CoalescingEventEmitter::EnsureRenderCallbackRegistered() noexcept {
 }
 
 void CoalescingEventEmitter::OnRendering() noexcept {
-  std::unique_lock lock(m_mutex);
+  auto jsDispatcher = m_context->Properties().Get(ReactDispatcherHelper::JSDispatcherProperty()).as<IReactDispatcher>();
 
   // Submit the batch of requests to the JS queue
-  while (!m_eventQueue.empty()) {
-    auto &evt = m_eventQueue.front();
-    if (!evt.expired) {
-      m_context->CallJSFunction("RCTEventEmitter", "receiveEvent", std::move(evt.args));
+  jsDispatcher.Post([weakThis{get_weak()}]() noexcept {
+    auto strongThis = weakThis.get();
+    if (!strongThis) {
+      return;
     }
 
-    m_eventQueue.pop_front();
-  }
+    while (!strongThis->m_eventQueue.empty()) {
+      auto &evt = strongThis->m_eventQueue.front();
+      if (!evt.expired) {
+        strongThis->m_context->CallJSFunction("RCTEventEmitter", "receiveEvent", std::move(evt.args));
+      }
+
+      strongThis->m_eventQueue.pop_front();
+    }
+  });
 
   // Don't leave the callback continuously registered as it can waste power.
   // See https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.compositiontarget.rendering?view=winrt-19041
