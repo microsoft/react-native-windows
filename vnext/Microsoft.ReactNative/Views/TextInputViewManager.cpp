@@ -328,7 +328,7 @@ void TextInputShadowNode::registerEvents() {
               folly::dynamic offsetData = folly::dynamic::object("x", args.FinalView().HorizontalOffset())(
                   "y", args.FinalView().VerticalOffset());
               folly::dynamic eventData = folly::dynamic::object("target", tag)("contentOffset", std::move(offsetData));
-              GetViewManager()->GetReactContext().DispatchEvent(tag, "topTextInputOnScroll", std::move(eventData));
+              GetViewManager()->GetReactContext().DispatchEvent(tag, "topTextInputScroll", std::move(eventData));
             }
           });
     }
@@ -713,7 +713,7 @@ void TextInputViewManager::GetExportedCustomDirectEventTypeConstants(
                                L"KeyPress",
                                L"PressIn",
                                L"PressOut",
-                               L"OnScroll",
+                               L"Scroll",
                                L"SubmitEditing"};
 
   for (auto &eventBaseName : eventNames) {
