@@ -95,6 +95,23 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/ScrollView/ScrollViewSimpleExample'),
   },
   {
+    key: 'ScrollViewAnimatedExample',
+    category: 'Basic',
+    module: require('../examples/ScrollView/ScrollViewAnimatedExample'),
+  },
+  {
+    key: 'SectionList_EndReached',
+    module: require('../examples/SectionList/SectionList_onEndReached'),
+    category: 'ListView',
+    supportsTVOS: true,
+  },
+  {
+    key: 'SectionList_onViewableItemsChanged',
+    module: require('../examples/SectionList/SectionList_onViewableItemsChanged'),
+    category: 'ListView',
+    supportsTVOS: true,
+  },
+  {
     key: 'SectionListExample',
     category: 'ListView',
     module: require('../examples/SectionList/SectionListExample'),

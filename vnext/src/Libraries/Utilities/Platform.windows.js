@@ -6,8 +6,6 @@
  * @flow strict
  */
 
-'use strict';
-
 import NativePlatformConstantsWin from './NativePlatformConstantsWin';
 
 export type PlatformSelectSpec<A, N, D> = {

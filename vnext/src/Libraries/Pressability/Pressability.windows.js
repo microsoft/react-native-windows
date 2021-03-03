@@ -8,8 +8,6 @@
  * @format
  */
 
-'use strict';
-
 import {isHoverEnabled} from './HoverState';
 import invariant from 'invariant';
 import SoundManager from '../Components/Sound/SoundManager';
@@ -566,8 +564,8 @@ export default class Pressability {
       },
 
       onClick: (event: PressEvent): void => {
-        const {onPress} = this._config;
-        if (onPress != null) {
+        const {onPress, disabled} = this._config;
+        if (onPress != null && disabled !== true) {
           onPress(event);
         }
       },

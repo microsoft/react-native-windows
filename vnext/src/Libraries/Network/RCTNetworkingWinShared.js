@@ -2,33 +2,73 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
- * @format
  * @flow strict-local
+ * @format
  */
 
 'use strict';
 
-import NativeEventEmitter from '../EventEmitter/NativeEventEmitter';
-import type {NativeResponseType} from './XMLHttpRequest';
-import convertRequestBody from './convertRequestBody';
-
+import RCTDeviceEventEmitter from '../EventEmitter/RCTDeviceEventEmitter';
 const RCTNetworkingNative = require('../BatchedBridge/NativeModules')
   .Networking; // [Windows]
+import {type NativeResponseType} from './XMLHttpRequest';
+import convertRequestBody, {type RequestBody} from './convertRequestBody';
+import {type EventSubscription} from '../vendor/emitter/EventEmitter';
 
-import type {RequestBody} from './convertRequestBody';
+type RCTNetworkingEventDefinitions = $ReadOnly<{
+  didSendNetworkData: [
+    [
+      number, // requestId
+      number, // progress
+      number, // total
+    ],
+  ],
+  didReceiveNetworkResponse: [
+    [
+      number, // requestId
+      number, // status
+      ?{[string]: string}, // responseHeaders
+      ?string, // responseURL
+    ],
+  ],
+  didReceiveNetworkData: [
+    [
+      number, // requestId
+      string, // response
+    ],
+  ],
+  didReceiveNetworkIncrementalData: [
+    [
+      number, // requestId
+      string, // responseText
+      number, // progress
+      number, // total
+    ],
+  ],
+  didReceiveNetworkDataProgress: [
+    [
+      number, // requestId
+      number, // loaded
+      number, // total
+    ],
+  ],
+  didCompleteNetworkResponse: [
+    [
+      number, // requestId
+      string, // error
+      boolean, // timeOutError
+    ],
+  ],
+}>;
 
-// FIXME: use typed events
-class RCTNetworking extends NativeEventEmitter<$FlowFixMe> {
-  constructor() {
-    const disableCallsIntoModule =
-      typeof global.__disableRCTNetworkingExtraneousModuleCalls === 'function'
-        ? global.__disableRCTNetworkingExtraneousModuleCalls()
-        : false;
-
-    super(RCTNetworkingNative, {
-      __SECRET_DISABLE_CALLS_INTO_MODULE_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: disableCallsIntoModule,
-    });
-  }
+const RCTNetworking = {
+  addListener<K: $Keys<RCTNetworkingEventDefinitions>>(
+    eventType: K,
+    listener: (...$ElementType<RCTNetworkingEventDefinitions, K>) => mixed,
+    context?: mixed,
+  ): EventSubscription {
+    return RCTDeviceEventEmitter.addListener(eventType, listener, context);
+  },
 
   sendRequest(
     method: string,
@@ -56,15 +96,15 @@ class RCTNetworking extends NativeEventEmitter<$FlowFixMe> {
       },
       callback,
     );
-  }
+  },
 
   abortRequest(requestId: number) {
     RCTNetworkingNative.abortRequest(requestId);
-  }
+  },
 
   clearCookies(callback: (result: boolean) => void) {
     RCTNetworkingNative.clearCookies(callback);
-  }
-}
+  },
+};
 
-module.exports = (new RCTNetworking(): RCTNetworking);
+module.exports = RCTNetworking;

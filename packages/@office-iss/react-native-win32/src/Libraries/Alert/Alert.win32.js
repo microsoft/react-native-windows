@@ -8,8 +8,6 @@
  * @flow
  */
 
-'use strict';
-
 // [Windows
 import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
 const PLYAlertManager = TurboModuleRegistry.getEnforcing('Alert');

@@ -163,7 +163,7 @@ module.exports = {
       'maskedviewios-moved',
       'MaskedViewIOS has been extracted from react-native core and will be removed in a future release. ' +
         "It can now be installed and imported from '@react-native-masked-view/masked-view' instead of 'react-native'. " +
-        'See https://github.com/react-native-masked-view/react-native-masked-view',
+        'See https://github.com/react-native-masked-view/masked-view',
     );
     return require('./Libraries/Components/MaskedView/MaskedViewIOS');
   },
@@ -176,7 +176,7 @@ module.exports = {
       'picker-moved',
       'Picker has been extracted from react-native core and will be removed in a future release. ' +
         "It can now be installed and imported from '@react-native-picker/picker' instead of 'react-native'. " +
-        'See https://github.com/react-native-picker/react-native-picker',
+        'See https://github.com/react-native-picker/picker',
     );
     return require('./Libraries/Components/Picker/Picker');
   },
@@ -186,7 +186,7 @@ module.exports = {
       'pickerios-moved',
       'PickerIOS has been extracted from react-native core and will be removed in a future release. ' +
         "It can now be installed and imported from '@react-native-picker/picker' instead of 'react-native'. " +
-        'See https://github.com/react-native-picker/react-native-picker',
+        'See https://github.com/react-native-picker/picker',
     );
     return require('./Libraries/Components/Picker/PickerIOS');
   },
@@ -230,7 +230,7 @@ module.exports = {
     warnOnce(
       'segmented-control-ios-moved',
       'SegmentedControlIOS has been extracted from react-native core and will be removed in a future release. ' +
-        "It can now be installed and imported from '@react-native-community/segmented-control' instead of 'react-native'. " +
+        "It can now be installed and imported from '@react-native-segmented-control/segmented-control' instead of 'react-native'. " +
         'See https://github.com/react-native-segmented-control/segmented-control',
     );
     return require('./Libraries/Components/SegmentedControlIOS/SegmentedControlIOS');
@@ -319,7 +319,7 @@ module.exports = {
     warnOnce(
       'clipboard-moved',
       'Clipboard has been extracted from react-native core and will be removed in a future release. ' +
-        "It can now be installed and imported from '@react-native-community/clipboard' instead of 'react-native'. " +
+        "It can now be installed and imported from '@react-native-clipboard/clipboard' instead of 'react-native'. " +
         'See https://github.com/react-native-clipboard/clipboard',
     );
     return require('./Libraries/Components/Clipboard/Clipboard');
