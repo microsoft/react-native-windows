@@ -1,0 +1,25 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "IReactContext.idl";
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative {
+
+  [default_interface]
+  [webhosthidden]
+  DOC_STRING("Allows firing events delivered once-per-frame, optionally coalesced based on a supplied key")
+  runtimeclass CoalescingEventEmitter {
+    DOC_STRING("Allows access to a `CoalescingEventEmitter` from a `ReactContext`.")
+    static CoalescingEventEmitter FromContext(IReactContext context);
+
+    DOC_STRING("Fires a coalescing event via RTCEventEmitter.receiveEvent."
+               "Accepts a `coalesceKey` to correlate events where only the latest of the key should be emitted.")
+    void EmitJSEvent(Int64 coalesceKey, JSValueArgWriter paramsArgWriter);
+
+    DOC_STRING("Fires an event via RTCEventEmitter.receiveEvent. "
+               "Ordering is preserved relative to coalescing events, but the event is not itself coalesced.")
+    void EmitDurableJSEvent(JSValueArgWriter paramsArgWriter);
+  }
+} // namespace Microsoft.ReactNative

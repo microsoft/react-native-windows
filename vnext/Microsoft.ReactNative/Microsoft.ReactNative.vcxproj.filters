@@ -313,7 +313,7 @@
     <ClCompile Include="JSI\ChakraJsiRuntime_edgemode.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
-    <ClCompile Include="DesktopWindowMessage.cpp" />
+    <ClCompile Include="CoalescingEventEmitter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -668,7 +668,7 @@
     <ClInclude Include="Views\PaperShadowNode.h" />
     <ClInclude Include="Views\ShadowNodeRegistry.h" />
     <ClInclude Include="DocString.h" />
-    <ClInclude Include="DesktopWindowMessage.h" />
+    <ClInclude Include="CoalescingEventEmitter.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -706,6 +706,7 @@
     <Midl Include="JsiApi.idl" />
     <Midl Include="DocString.idl" />
     <Midl Include="DesktopWindowMessage.idl" />
+    <Midl Include="CoalescingEventEmitter.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />

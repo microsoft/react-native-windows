@@ -3,6 +3,8 @@
 
 #include "pch.h"
 
+#include <CoalescingEventEmitter.h>
+#include <DynamicReader.h>
 #include <JSValueWriter.h>
 #include <JsiWriter.h>
 #include <Views/SIPEventHandler.h>
@@ -10,7 +12,14 @@
 #include "Impl/ScrollViewUWPImplementation.h"
 #include "ScrollViewManager.h"
 
+using namespace winrt::Microsoft::ReactNative;
+
 namespace Microsoft::ReactNative {
+
+enum class CoalesceType {
+  CoalesceByTag,
+  Durable,
+};
 
 namespace ScrollViewCommands {
 constexpr const char *ScrollTo = "scrollTo";
@@ -33,10 +42,11 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   void EmitScrollEvent(
       const winrt::ScrollViewer &scrollViewer,
       int64_t tag,
-      const char *eventName,
+      const winrt::hstring &eventName,
       double x,
       double y,
-      double zoom);
+      double zoom,
+      CoalesceType coalesceType);
   template <typename T>
   std::tuple<bool, T> getPropertyAndValidity(
       const winrt::Microsoft::ReactNative::JSValue &propertyValue,
@@ -239,27 +249,30 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
           EmitScrollEvent(
               scrollViewerNotNull,
               m_tag,
-              "topScrollEndDrag",
+              L"topScrollEndDrag",
               args.NextView().HorizontalOffset(),
               args.NextView().VerticalOffset(),
-              args.NextView().ZoomFactor());
+              args.NextView().ZoomFactor(),
+              CoalesceType::Durable);
 
           EmitScrollEvent(
               scrollViewerNotNull,
               m_tag,
-              "topScrollBeginMomentum",
+              L"topScrollBeginMomentum",
               args.NextView().HorizontalOffset(),
               args.NextView().VerticalOffset(),
-              args.NextView().ZoomFactor());
+              args.NextView().ZoomFactor(),
+              CoalesceType::Durable);
         }
 
         EmitScrollEvent(
             scrollViewerNotNull,
             m_tag,
-            "topScroll",
+            L"topScroll",
             args.NextView().HorizontalOffset(),
             args.NextView().VerticalOffset(),
-            args.NextView().ZoomFactor());
+            args.NextView().ZoomFactor(),
+            CoalesceType::CoalesceByTag);
       });
 
   m_scrollViewerDirectManipulationStartedRevoker =
@@ -274,10 +287,11 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
         EmitScrollEvent(
             scrollViewer,
             m_tag,
-            "topScrollBeginDrag",
+            L"topScrollBeginDrag",
             scrollViewer.HorizontalOffset(),
             scrollViewer.VerticalOffset(),
-            scrollViewer.ZoomFactor());
+            scrollViewer.ZoomFactor(),
+            CoalesceType::Durable);
       });
 
   m_scrollViewerDirectManipulationCompletedRevoker =
@@ -287,18 +301,20 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
           EmitScrollEvent(
               scrollViewer,
               m_tag,
-              "topScrollEndMomentum",
+              L"topScrollEndMomentum",
               scrollViewer.HorizontalOffset(),
               scrollViewer.VerticalOffset(),
-              scrollViewer.ZoomFactor());
+              scrollViewer.ZoomFactor(),
+              CoalesceType::Durable);
         } else {
           EmitScrollEvent(
               scrollViewer,
               m_tag,
-              "topScrollEndDrag",
+              L"topScrollEndDrag",
               scrollViewer.HorizontalOffset(),
               scrollViewer.VerticalOffset(),
-              scrollViewer.ZoomFactor());
+              scrollViewer.ZoomFactor(),
+              CoalesceType::Durable);
         }
 
         m_isScrolling = false;
@@ -316,29 +332,41 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
 void ScrollViewShadowNode::EmitScrollEvent(
     const winrt::ScrollViewer &scrollViewer,
     int64_t tag,
-    const char *eventName,
+    const winrt::hstring &eventName,
     double x,
     double y,
-    double zoom) {
+    double zoom,
+    CoalesceType coalesceType) {
   const auto scrollViewerNotNull = scrollViewer;
 
-  folly::dynamic offset = folly::dynamic::object("x", x)("y", y);
+  JSValueObject contentOffset{{"x", x}, {"y", y}};
+  JSValueObject contentInset{{"left", 0}, {"top", 0}, {"right", 0}, {"bottom", 0}};
 
-  folly::dynamic contentInset = folly::dynamic::object("left", 0)("top", 0)("right", 0)("bottom", 0);
+  JSValueObject contentSize{
+      {"width", scrollViewerNotNull.ExtentWidth()}, {"height", scrollViewerNotNull.ExtentHeight()}};
 
-  folly::dynamic contentSize =
-      folly::dynamic::object("width", scrollViewerNotNull.ExtentWidth())("height", scrollViewerNotNull.ExtentHeight());
+  JSValueObject layoutMeasurement{
+      {"width", scrollViewerNotNull.ActualWidth()}, {"height", scrollViewerNotNull.ActualHeight()}};
 
-  folly::dynamic layoutSize =
-      folly::dynamic::object("width", scrollViewerNotNull.ActualWidth())("height", scrollViewerNotNull.ActualHeight());
+  JSValueObject eventJson{
+      {"target", tag},
+      {"responderIgnoreScroll", true},
+      {"contentOffset", std::move(contentOffset)},
+      {"contentInset", std::move(contentInset)},
+      {"contentSize", std::move(contentSize)},
+      {"layoutMeasurement", std::move(layoutMeasurement)},
+      {"zoomScale", zoom}};
 
-  folly::dynamic eventJson =
-      folly::dynamic::object("target", tag)("responderIgnoreScroll", true)("contentOffset", offset)(
-          "contentInset", contentInset)("contentSize", contentSize)("layoutMeasurement", layoutSize)("zoomScale", zoom);
+  JSValueArray params{tag, winrt::to_string(eventName), std::move(eventJson)};
 
-  folly::dynamic params = folly::dynamic::array(tag, eventName, eventJson);
-  GetViewManager()->GetReactContext().CallJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
-}
+  auto coalescingEmitter = implementation::CoalescingEventEmitter::FromContext(GetViewManager()->GetReactContext());
+
+  if (coalesceType == CoalesceType::CoalesceByTag) {
+    coalescingEmitter.EmitJSEvent(tag, [&](const IJSValueWriter &writer) noexcept { params.WriteTo(writer); });
+  } else {
+    coalescingEmitter.EmitDurableJSEvent([&](const IJSValueWriter &writer) noexcept { params.WriteTo(writer); });
+  }
+} // namespace Microsoft::ReactNative
 
 template <typename T>
 std::tuple<bool, T> ScrollViewShadowNode::getPropertyAndValidity(

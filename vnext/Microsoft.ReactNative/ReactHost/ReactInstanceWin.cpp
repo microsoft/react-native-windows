@@ -11,6 +11,7 @@
 #include <comUtil/qiCast.h>
 
 #include <XamlUIService.h>
+#include "CoalescingEventEmitter.h"
 #include "ReactErrorProvider.h"
 
 #include "Microsoft.ReactNative/IReactNotificationService.h"
@@ -626,6 +627,10 @@ void ReactInstanceWin::InitUIManager() noexcept {
   m_reactContext->Properties().Set(
       implementation::XamlUIService::XamlUIServiceProperty().Handle(),
       winrt::make<implementation::XamlUIService>(m_reactContext));
+
+  m_reactContext->Properties().Set(
+      implementation::CoalescingEventEmitter::Property().Handle(),
+      winrt::make<implementation::CoalescingEventEmitter>(m_reactContext));
 }
 
 facebook::react::NativeLoggingHook ReactInstanceWin::GetLoggingCallback() noexcept {
