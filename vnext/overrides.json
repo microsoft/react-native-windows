@@ -15,6 +15,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/runtimeexecutor/ReactCommon/RuntimeExecutor.h",
+      "baseFile": "ReactCommon/runtimeexecutor/ReactCommon/RuntimeExecutor.h",
+      "baseHash": "d67ec51c86967cbc1da40e41c1e81c2563b1e757",
+      "issue": 7252
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseHash": "2241c126cde8163f86570a3f5a4db670cf9a7944",
