@@ -1,8 +1,21 @@
 # Change Log - e2e-test-app
 
-This log was last generated on Tue, 02 Mar 2021 05:06:32 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Mar 2021 05:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Thu, 04 Mar 2021 05:05:53 GMT
+
+### Patches
+
+- Bump @react-native-windows/tester to v0.0.1 (dannyvv@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.262 (dannyvv@microsoft.com)
+- Bump node-rnw-rpc to v1.0.1 (dannyvv@microsoft.com)
 
 ## 0.0.0
 

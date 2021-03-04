@@ -2,6 +2,29 @@
   "name": "@react-native-windows/tester",
   "entries": [
     {
+      "date": "Thu, 04 Mar 2021 05:05:53 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.262",
+            "author": "dannyvv@microsoft.com",
+            "commit": "e834e7c206a0f1405bf4bbf406cb7b11bf413d94",
+            "package": "@react-native-windows/tester"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.13",
+            "author": "dannyvv@microsoft.com",
+            "commit": "e834e7c206a0f1405bf4bbf406cb7b11bf413d94",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Mar 2021 05:06:32 GMT",
       "tag": "@react-native-windows/tester_v0.0.1",
       "version": "0.0.1",

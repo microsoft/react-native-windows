@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes registration name for TextInput onScroll",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

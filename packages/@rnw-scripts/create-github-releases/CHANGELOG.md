@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Thu, 11 Feb 2021 05:08:29 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Mar 2021 05:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.26
+
+Thu, 04 Mar 2021 05:05:53 GMT
+
+### Patches
+
+- Update yargs version used and patch y18n version 4.0.0 to 4.0.1 as used by detox of transitive dependencies to address https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-7774 (dannyvv@microsoft.com)
 
 ## 1.0.25
 

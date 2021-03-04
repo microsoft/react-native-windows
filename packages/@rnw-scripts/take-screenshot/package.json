@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/take-screenshot",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",

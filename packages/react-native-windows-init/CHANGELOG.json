@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Thu, 04 Mar 2021 05:05:53 GMT",
+      "tag": "react-native-windows-init_v1.1.49",
+      "version": "1.1.49",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update yargs version used and patch y18n version 4.0.0 to 4.0.1 as used by detox of transitive dependencies to address https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-7774",
+            "author": "dannyvv@microsoft.com",
+            "commit": "e834e7c206a0f1405bf4bbf406cb7b11bf413d94",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Feb 2021 05:06:42 GMT",
       "tag": "react-native-windows-init_v1.1.48",
       "version": "1.1.48",

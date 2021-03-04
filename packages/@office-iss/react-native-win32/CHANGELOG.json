@@ -2,6 +2,29 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 04 Mar 2021 05:05:53 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.82",
+      "version": "0.0.0-canary.82",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 2/9 nightly RN build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "fb4e8bc1b81ecf6ad6d46f8f7753ad09397c867b",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.13",
+            "author": "dannyvv@microsoft.com",
+            "commit": "e834e7c206a0f1405bf4bbf406cb7b11bf413d94",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 18 Feb 2021 05:07:11 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.81",
       "version": "0.0.0-canary.81",

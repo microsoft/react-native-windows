@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 02 Mar 2021 05:06:32 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Mar 2021 05:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.262
+
+Thu, 04 Mar 2021 05:05:53 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.4.13 (dannyvv@microsoft.com)
+
+### Changes
+
+- Some XAML events do not have a sender (e.g. Loaded) (asklar@microsoft.com)
+- Update WinAppDriver version requirement (asklar@microsoft.com)
+- Fixes registration name for TextInput onScroll (erozell@outlook.com)
+- Integrate 2/9 nightly RN build. (igklemen@microsoft.com)
+- Ensure root views are properly unloaded (#7221) (skyle@fb.com)
+- Narrow fix for tintColor and repeat images (erozell@outlook.com)
+- Fix RN runtimeExecutor use of std::thread (asklar@microsoft.com)
 
 ## 0.0.0-canary.261
 
