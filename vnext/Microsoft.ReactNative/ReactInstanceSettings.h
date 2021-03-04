@@ -93,9 +93,6 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   bool DebuggerBreakOnNextLine() noexcept;
   void DebuggerBreakOnNextLine(bool value) noexcept;
 
-  bool UseJsi() noexcept;
-  void UseJsi(bool value) noexcept;
-
   bool EnableJITCompilation() noexcept;
   void EnableJITCompilation(bool value) noexcept;
 
@@ -168,7 +165,6 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
       single_threaded_vector<IReactPackageProvider>()};
   hstring m_javaScriptMainModuleName{};
   hstring m_javaScriptBundleFile{};
-  bool m_useJsi{true};
   bool m_enableJITCompilation{true};
   bool m_enableByteCodeCaching{false};
   hstring m_byteCodeFileUri{};
@@ -229,14 +225,6 @@ inline hstring ReactInstanceSettings::JavaScriptBundleFile() noexcept {
 
 inline void ReactInstanceSettings::JavaScriptBundleFile(hstring const &value) noexcept {
   m_javaScriptBundleFile = value;
-}
-
-inline bool ReactInstanceSettings::UseJsi() noexcept {
-  return m_useJsi;
-}
-
-inline void ReactInstanceSettings::UseJsi(bool value) noexcept {
-  m_useJsi = value;
 }
 
 inline bool ReactInstanceSettings::EnableJITCompilation() noexcept {

@@ -88,10 +88,6 @@ For Chakra this enables you to debug the JS runtime directly within your app usi
 ***Note: this is not supported with the Chakra JS engine which is the currently used JavaScript engine***")
     Boolean DebuggerBreakOnNextLine { get; set; };
 
-    DOC_STRING("This controls if the JavaScript bridge should use the newer JSI runtime or use the legacy executor.  The JSI runtime is used by default, and the legacy executor will be removed in a future release. \n\
-> **It is not recommended to change this setting.**")
-    Boolean UseJsi { get; set; };
-
     DOC_STRING("Flag controlling whether the JavaScript engine uses JIT compilation.")
     DOC_DEFAULT("true")
     Boolean EnableJITCompilation { get; set; };
