@@ -171,7 +171,9 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   if (TagFromOriginalSource(args, &tag, &sourceElement))
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
 
-  DispatchTouchEvent(eventType, *optPointerIndex);
+  if (m_pointers[*optPointerIndex].isLeftButton) {
+    DispatchTouchEvent(eventType, *optPointerIndex);
+  }
 
   m_pointers.erase(cbegin(m_pointers) + *optPointerIndex);
   if (m_pointers.size() == 0)
