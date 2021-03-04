@@ -9,9 +9,13 @@
 namespace winrt::Microsoft::ReactNative {
 
 BatchingEventEmitter::BatchingEventEmitter(Mso::CntPtr<const Mso::React::IReactContext> &&context) noexcept
-    : m_context(std::move(context)) {}
+    : m_context(std::move(context)) {
+  m_uiDispatcher = m_context->Properties().Get(ReactDispatcherHelper::UIDispatcherProperty()).as<IReactDispatcher>();
+}
 
 void BatchingEventEmitter::EmitJSEvent(int64_t tag, winrt::hstring &&eventName, JSValueObject &&eventObject) noexcept {
+  VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
+
   implementation::BatchedEvent newEvent{tag, std::move(eventName), std::move(eventObject)};
 
   {
@@ -27,7 +31,7 @@ void BatchingEventEmitter::EmitJSEvent(int64_t tag, winrt::hstring &&eventName, 
       m_renderingRevoker = xaml::Media::CompositionTarget::Rendering(
           winrt::auto_revoke, [weakThis{get_weak()}](auto const &, auto const &) {
             if (auto strongThis = weakThis.get()) {
-              strongThis->OnRendering();
+              strongThis->OnFrameUI();
             }
           });
     }
@@ -38,6 +42,8 @@ void BatchingEventEmitter::EmitCoalescingJSEvent(
     int64_t tag,
     winrt::hstring &&eventName,
     JSValueObject &&eventObject) noexcept {
+  VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
+
   {
     std::unique_lock lock(m_eventQueueMutex);
     auto endIter = std::remove_if(m_eventQueue.begin(), m_eventQueue.end(), [&](const auto &evt) noexcept {
@@ -50,35 +56,41 @@ void BatchingEventEmitter::EmitCoalescingJSEvent(
   EmitJSEvent(tag, std::move(eventName), std::move(eventObject));
 }
 
-void BatchingEventEmitter::OnRendering() noexcept {
+void BatchingEventEmitter::OnFrameUI() noexcept {
   auto jsDispatcher = m_context->Properties().Get(ReactDispatcherHelper::JSDispatcherProperty()).as<IReactDispatcher>();
 
   jsDispatcher.Post([weakThis{get_weak()}]() noexcept {
-    auto strongThis = weakThis.get();
-    if (!strongThis) {
-      return;
-    }
-
-    std::unique_lock lock(strongThis->m_eventQueueMutex);
-
-    while (!strongThis->m_eventQueue.empty()) {
-      auto &evt = strongThis->m_eventQueue.front();
-
-      auto paramsWriter = winrt::make_self<DynamicWriter>();
-      paramsWriter->WriteArrayBegin();
-      WriteValue(*paramsWriter, evt.tag);
-      WriteValue(*paramsWriter, evt.eventName);
-      WriteValue(*paramsWriter, evt.eventObject);
-      paramsWriter->WriteArrayEnd();
-
-      strongThis->m_context->CallJSFunction("RCTEventEmitter", "receiveEvent", paramsWriter->TakeValue());
-      strongThis->m_eventQueue.pop_front();
+    if (auto strongThis = weakThis.get()) {
+      strongThis->OnFrameJS();
     }
   });
 
   // Don't leave the callback continuously registered as it can waste power.
   // See https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.compositiontarget.rendering?view=winrt-19041
   m_renderingRevoker.revoke();
+}
+
+void BatchingEventEmitter::OnFrameJS() noexcept {
+  std::deque<implementation::BatchedEvent> currentBatch;
+
+  {
+    std::unique_lock lock(m_eventQueueMutex);
+    currentBatch.swap(m_eventQueue);
+  }
+
+  while (!currentBatch.empty()) {
+    auto &evt = currentBatch.front();
+
+    auto paramsWriter = winrt::make_self<DynamicWriter>();
+    paramsWriter->WriteArrayBegin();
+    WriteValue(*paramsWriter, evt.tag);
+    WriteValue(*paramsWriter, evt.eventName);
+    WriteValue(*paramsWriter, evt.eventObject);
+    paramsWriter->WriteArrayEnd();
+
+    m_context->CallJSFunction("RCTEventEmitter", "receiveEvent", paramsWriter->TakeValue());
+    currentBatch.pop_front();
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative

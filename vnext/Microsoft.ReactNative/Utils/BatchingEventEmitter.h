@@ -37,13 +37,14 @@ struct BatchingEventEmitter : winrt::implements<BatchingEventEmitter, winrt::Win
   void EmitCoalescingJSEvent(int64_t tag, winrt::hstring &&eventName, JSValueObject &&eventObject) noexcept;
 
  private:
-  void EnsureQueuePumping() noexcept;
-  void OnRendering() noexcept;
+  void OnFrameUI() noexcept;
+  void OnFrameJS() noexcept;
 
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
   std::deque<implementation::BatchedEvent> m_eventQueue;
   std::mutex m_eventQueueMutex;
   xaml::Media::CompositionTarget::Rendering_revoker m_renderingRevoker;
+  IReactDispatcher m_uiDispatcher;
 };
 
 } // namespace winrt::Microsoft::ReactNative
