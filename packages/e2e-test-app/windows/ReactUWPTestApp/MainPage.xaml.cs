@@ -46,7 +46,7 @@ namespace ReactUWPTestApp
                 }
             }
 
-            var rootDump = VisualTreeDumper.DumpTree(this, null, additionalProperties);
+            var rootDump = VisualTreeDumper.DumpTree(this, null, additionalProperties, new AttachedProperty[] {});
             var element = VisualTreeDumper.FindElementByAutomationId(JsonObject.Parse(rootDump), accessibilityId);
 
             return element;
