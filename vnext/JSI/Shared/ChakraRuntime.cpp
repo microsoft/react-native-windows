@@ -675,8 +675,6 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
   HostFunctionWrapper *hostFuncWraper = static_cast<HostFunctionWrapper *>(callbackState);
   ChakraRuntime &chakraRuntime = hostFuncWraper->GetRuntime();
   return chakraRuntime.HandleCallbackExceptions([&]() {
-    ChakraVerifyElseThrow(!isConstructCall, "Constructor call for HostObjectGetTrap() is not supported.");
-
     ChakraVerifyElseThrow(argCount > 0, "There must be at least 'this' argument.");
     const JsiValueView jsiThisArg{*args};
     const JsiValueViewArgs jsiArgs{args + 1, argCount - 1u};
@@ -696,7 +694,6 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
     void *callbackState) noexcept {
   ChakraRuntime *chakraRuntime = static_cast<ChakraRuntime *>(callbackState);
   return chakraRuntime->HandleCallbackExceptions([&]() {
-    ChakraVerifyElseThrow(!isConstructCall, "Constructor call for HostObjectGetTrap() is not supported.");
 
     // args[0] - the Proxy handler object (this) (unused).
     // args[1] - the Proxy target object.
@@ -737,7 +734,6 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
     void *callbackState) noexcept {
   ChakraRuntime *chakraRuntime = static_cast<ChakraRuntime *>(callbackState);
   return chakraRuntime->HandleCallbackExceptions([&]() {
-    ChakraVerifyElseThrow(!isConstructCall, "Constructor call for HostObjectSetTrap() is not supported.");
 
     // args[0] - the Proxy handler object (this) (unused).
     // args[1] - the Proxy target object.
