@@ -694,7 +694,6 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
     void *callbackState) noexcept {
   ChakraRuntime *chakraRuntime = static_cast<ChakraRuntime *>(callbackState);
   return chakraRuntime->HandleCallbackExceptions([&]() {
-
     // args[0] - the Proxy handler object (this) (unused).
     // args[1] - the Proxy target object.
     // args[2] - the name of the property to set.
@@ -734,7 +733,6 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
     void *callbackState) noexcept {
   ChakraRuntime *chakraRuntime = static_cast<ChakraRuntime *>(callbackState);
   return chakraRuntime->HandleCallbackExceptions([&]() {
-
     // args[0] - the Proxy handler object (this) (unused).
     // args[1] - the Proxy target object.
     // args[2] - the name of the property to set.
