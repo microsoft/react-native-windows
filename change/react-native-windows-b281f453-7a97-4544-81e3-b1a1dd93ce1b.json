@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove unnecessary exceptions to unblock some partners",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
