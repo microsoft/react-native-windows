@@ -151,7 +151,9 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#setaccessibilityfocus
    */
   setAccessibilityFocus: function(reactTag: number): void {
-    legacySendAccessibilityEvent(reactTag, 'focus');
+    if (NativeAccessibilityInfo) {
+      NativeAccessibilityInfo.setAccessibilityFocus(reactTag);
+    }
   },
 
   /**
