@@ -32,12 +32,17 @@ struct BatchingEventEmitter : public std::enable_shared_from_this<BatchingEventE
 
   //! Queues an event to be fired via RTCEventEmitter.receiveEvent().
   void EmitJSEvent(int64_t tag, winrt::hstring &&eventName, JSValue &&eventObject) noexcept;
-  void EmitJSEvent(winrt::hstring &&emitterMethod, int64_t tag, winrt::hstring &&eventName, JSValue &&eventObject) noexcept;
+  void
+  EmitJSEvent(winrt::hstring &&emitterMethod, int64_t tag, winrt::hstring &&eventName, JSValue &&eventObject) noexcept;
 
   //! Queues an event to be fired via RTCEventEmitter.receiveEvent(). Existing events in the batch with the same name
   //! and tag will be removed.
   void EmitCoalescingJSEvent(int64_t tag, winrt::hstring &&eventName, JSValue &&eventObject) noexcept;
-  void EmitCoalescingJSEvent(winrt::hstring &&emitterMethod, int64_t tag, winrt::hstring &&eventName, JSValue &&eventObject) noexcept;
+  void EmitCoalescingJSEvent(
+      winrt::hstring &&emitterMethod,
+      int64_t tag,
+      winrt::hstring &&eventName,
+      JSValue &&eventObject) noexcept;
 
  private:
   void OnFrameUI() noexcept;
