@@ -3,7 +3,6 @@
 
 #include "pch.h"
 
-#include <CoalescingEventEmitter.h>
 #include <DynamicReader.h>
 #include <JSValueWriter.h>
 #include <JsiWriter.h>
@@ -42,7 +41,7 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   void EmitScrollEvent(
       const winrt::ScrollViewer &scrollViewer,
       int64_t tag,
-      const winrt::hstring &eventName,
+      winrt::hstring &&eventName,
       double x,
       double y,
       double zoom,
@@ -332,7 +331,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
 void ScrollViewShadowNode::EmitScrollEvent(
     const winrt::ScrollViewer &scrollViewer,
     int64_t tag,
-    const winrt::hstring &eventName,
+    winrt::hstring &&eventName,
     double x,
     double y,
     double zoom,
@@ -357,14 +356,12 @@ void ScrollViewShadowNode::EmitScrollEvent(
       {"layoutMeasurement", std::move(layoutMeasurement)},
       {"zoomScale", zoom}};
 
-  JSValueArray params{tag, winrt::to_string(eventName), std::move(eventJson)};
-
-  auto coalescingEmitter = implementation::CoalescingEventEmitter::FromContext(GetViewManager()->GetReactContext());
+  auto *viewManager = static_cast<ScrollViewManager *>(GetViewManager());
 
   if (coalesceType == CoalesceType::CoalesceByTag) {
-    coalescingEmitter.EmitJSEvent(tag, [&](const IJSValueWriter &writer) noexcept { params.WriteTo(writer); });
+    viewManager->BatchingEmitter().EmitCoalescingJSEvent(tag, std::move(eventName), std::move(eventJson));
   } else {
-    coalescingEmitter.EmitDurableJSEvent([&](const IJSValueWriter &writer) noexcept { params.WriteTo(writer); });
+    viewManager->BatchingEmitter().EmitJSEvent(tag, std::move(eventName), std::move(eventJson));
   }
 } // namespace Microsoft::ReactNative
 
@@ -419,7 +416,9 @@ void ScrollViewShadowNode::UpdateZoomMode(const winrt::ScrollViewer &scrollViewe
                                                                    : winrt::ZoomMode::Disabled);
 }
 
-ScrollViewManager::ScrollViewManager(const Mso::React::IReactContext &context) : Super(context) {}
+ScrollViewManager::ScrollViewManager(const Mso::React::IReactContext &context) : Super(context) {
+  m_batchingEventEmitter = winrt::make_self<BatchingEventEmitter>(Mso::CntPtr(&context));
+}
 
 const wchar_t *ScrollViewManager::GetName() const {
   return L"RCTScrollView";
@@ -535,6 +534,10 @@ void ScrollViewManager::SnapToOffsets(const XamlView &parent, const winrt::IVect
       react::uwp::ScrollViewUWPImplementation(scrollViewer).SnapToOffsets(offsets);
     }
   }
+}
+
+BatchingEventEmitter &ScrollViewManager::BatchingEmitter() noexcept {
+  return *m_batchingEventEmitter;
 }
 
 } // namespace Microsoft::ReactNative
