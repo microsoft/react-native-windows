@@ -13,9 +13,10 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 struct BatchedEvent {
+  winrt::hstring emitterMethod;
   int64_t tag{};
   winrt::hstring eventName;
-  JSValueObject eventObject;
+  JSValue eventObject;
 };
 } // namespace winrt::Microsoft::ReactNative::implementation
 
@@ -25,16 +26,18 @@ namespace winrt::Microsoft::ReactNative {
 //! be coalesced. The batch is finished at the time the JS thread starts to process it. I.e. it is possible for a batch
 //! to last for multiple frames if the JS thread is blocked. This is by-design as it allows our coalescing strategy to
 //! account for long operations on the JS thread.
-struct BatchingEventEmitter : winrt::implements<BatchingEventEmitter, winrt::Windows::Foundation::IInspectable> {
+struct BatchingEventEmitter : public std::enable_shared_from_this<BatchingEventEmitter> {
  public:
   BatchingEventEmitter(Mso::CntPtr<const Mso::React::IReactContext> &&context) noexcept;
 
   //! Queues an event to be fired via RTCEventEmitter.receiveEvent().
-  void EmitJSEvent(int64_t tag, winrt::hstring &&eventName, JSValueObject &&eventObject) noexcept;
+  void EmitJSEvent(int64_t tag, winrt::hstring &&eventName, JSValue &&eventObject) noexcept;
+  void EmitJSEvent(winrt::hstring &&emitterMethod, int64_t tag, winrt::hstring &&eventName, JSValue &&eventObject) noexcept;
 
   //! Queues an event to be fired via RTCEventEmitter.receiveEvent(). Existing events in the batch with the same name
   //! and tag will be removed.
-  void EmitCoalescingJSEvent(int64_t tag, winrt::hstring &&eventName, JSValueObject &&eventObject) noexcept;
+  void EmitCoalescingJSEvent(int64_t tag, winrt::hstring &&eventName, JSValue &&eventObject) noexcept;
+  void EmitCoalescingJSEvent(winrt::hstring &&emitterMethod, int64_t tag, winrt::hstring &&eventName, JSValue &&eventObject) noexcept;
 
  private:
   void OnFrameUI() noexcept;

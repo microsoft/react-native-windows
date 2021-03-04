@@ -38,7 +38,7 @@ class ScrollViewManager : public ControlViewManager {
  private:
   friend class ScrollViewShadowNode;
 
-  winrt::com_ptr<winrt::Microsoft::ReactNative::BatchingEventEmitter> m_batchingEventEmitter;
+  std::shared_ptr<winrt::Microsoft::ReactNative::BatchingEventEmitter> m_batchingEventEmitter;
 };
 
 } // namespace Microsoft::ReactNative
