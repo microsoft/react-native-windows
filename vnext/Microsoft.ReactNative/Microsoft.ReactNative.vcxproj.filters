@@ -313,7 +313,9 @@
     <ClCompile Include="JSI\ChakraJsiRuntime_edgemode.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
-    <ClCompile Include="DesktopWindowMessage.cpp" />
+    <ClCompile Include="Utils\BatchingEventEmitter.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -668,7 +670,9 @@
     <ClInclude Include="Views\PaperShadowNode.h" />
     <ClInclude Include="Views\ShadowNodeRegistry.h" />
     <ClInclude Include="DocString.h" />
-    <ClInclude Include="DesktopWindowMessage.h" />
+    <ClInclude Include="Utils\BatchingEventEmitter.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
