@@ -36,8 +36,8 @@ namespace Microsoft.ReactNative {
     "- Use the Properties to share native module's data with other components. \n"
     "- Use the Notifications to exchange events with other components. \n"
     "- Use @.CallJSFunction to call JavaScript functions, and @.EmitJSEvent to raise JavaScript events. \n"
-    "- Use @.UIDispatcher to schedule work in UI thread. \n"
-    "- Use @.JSDispatcher to schedule work in UI thread.")
+    "- Use @.UIDispatcher to schedule work in the UI thread. \n"
+    "- Use @.JSDispatcher to schedule work in the JS thread.")
   interface IReactContext {
 #ifndef CORE_ABI
     DOC_STRING("Get settings snapshot that were used to start the React instance.")
