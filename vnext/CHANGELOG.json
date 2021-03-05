@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 05 Mar 2021 16:31:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.263",
+      "version": "0.0.0-canary.263",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "remove stale appium comment",
+            "author": "igklemen@microsoft.com",
+            "commit": "d1d8069034effe657c6769e02d1b088f89b751d8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix right click warning.",
+            "author": "igklemen@microsoft.com",
+            "commit": "24273ae43fe50c9e81cb1d5093a4eb5ecaee74f3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove unnecessary exceptions to unblock some partners",
+            "author": "asklar@microsoft.com",
+            "commit": "3d2fb4e4997b0cd268887122a9485eb1ad56fa46",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Coalesce ScrollView Messages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c6b776e369fdf1a383a266d6d4e4482b7fba9a25",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove ChakraExecutor (non-JSI)",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "1c6b617fcecefd9b873da00af594c71e61d4e792",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Mar 2021 05:05:53 GMT",
       "tag": "react-native-windows_v0.0.0-canary.262",
       "version": "0.0.0-canary.262",
