@@ -55,12 +55,12 @@ namespace Microsoft.ReactNative {
 
     DOC_STRING(
       "Get the UI thread dispatcher. \n"
-      "It is a shortcut for the `ReactDispatcherHelper::UIDispatcherProperty` from the @.Properties property bag.")
+      "It is a shortcut for the @ReactDispatcherHelper.UIDispatcherProperty from the @.Properties property bag.")
     IReactDispatcher UIDispatcher { get; };
 
     DOC_STRING(
       "Get the JS thread dispatcher. \n"
-      "It is a shortcut for the `ReactDispatcherHelper::JSDispatcherProperty` from the @.Properties property bag.")
+      "It is a shortcut for the @ReactDispatcherHelper.JSDispatcherProperty from the @.Properties property bag.")
     IReactDispatcher JSDispatcher { get; };
 
     DOC_STRING("Get the JavaScript runtime for the running React instance. It can be null if Web debugging is used.")
