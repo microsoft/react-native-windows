@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Avoid re-registering render callbacks when coalescing single element queue",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
