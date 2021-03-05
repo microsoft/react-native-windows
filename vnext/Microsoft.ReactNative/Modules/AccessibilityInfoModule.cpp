@@ -35,7 +35,7 @@ void AccessibilityInfo::isTouchExplorationEnabled(
   onSuccess(UiaClientsAreListening());
 }
 
-void AccessibilityInfo::setAccessibilityFocus(double reactTag) noexcept {
+void AccessibilityInfo::setAccessibilityFocus(double /*reactTag*/) noexcept {
   // no-op - This appears to be unused in RN
 }
 
