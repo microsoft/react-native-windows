@@ -25,27 +25,17 @@ void BatchingEventEmitter::EmitJSEvent(
   VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
 
   implementation::BatchedEvent newEvent{std::move(emitterMethod), tag, std::move(eventName), std::move(eventObject)};
-
-  size_t queueSizeAfterInsert;
+  bool isFirstEventInBatch = false;
 
   {
     std::scoped_lock lock(m_eventQueueMutex);
 
+    isFirstEventInBatch = m_eventQueue.size() == 0;
     m_eventQueue.push_back(std::move(newEvent));
-    queueSizeAfterInsert = m_eventQueue.size();
   }
 
-  // Once a frame is presented, send a task to JS to emit all elements in the
-  // queue. We know the task is pending on the UI thread or JS thread if we
-  // have a non-zero size queue, so we want to only trigger pumping when the
-  // first element is added to an empty queue.
-  if (queueSizeAfterInsert == 1) {
-    m_renderingRevoker = xaml::Media::CompositionTarget::Rendering(
-        winrt::auto_revoke, [weakThis{weak_from_this()}](auto const &, auto const &) {
-          if (auto strongThis = weakThis.lock()) {
-            strongThis->OnFrameUI();
-          }
-        });
+  if (isFirstEventInBatch) {
+    RegisterFrameCallback();
   }
 }
 
@@ -63,16 +53,36 @@ void BatchingEventEmitter::EmitCoalescingJSEvent(
     JSValue &&eventObject) noexcept {
   VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
 
+  implementation::BatchedEvent newEvent{std::move(emitterMethod), tag, std::move(eventName), std::move(eventObject)};
+  bool isFirstEventInBatch = false;
+
   {
     std::scoped_lock lock(m_eventQueueMutex);
+
+    isFirstEventInBatch = m_eventQueue.size() == 0;
+
     auto endIter = std::remove_if(m_eventQueue.begin(), m_eventQueue.end(), [&](const auto &evt) noexcept {
       return evt.eventName == eventName && evt.tag == tag;
     });
 
     m_eventQueue.erase(endIter, m_eventQueue.end());
+    m_eventQueue.push_back(std::move(newEvent));
   }
 
-  EmitJSEvent(std::move(emitterMethod), tag, std::move(eventName), std::move(eventObject));
+  if (isFirstEventInBatch) {
+    RegisterFrameCallback();
+  }
+}
+
+void BatchingEventEmitter::RegisterFrameCallback() noexcept {
+  VerifyElseCrash(!m_renderingRevoker);
+
+  m_renderingRevoker = xaml::Media::CompositionTarget::Rendering(
+      winrt::auto_revoke, [weakThis{weak_from_this()}](auto const &, auto const &) {
+        if (auto strongThis = weakThis.lock()) {
+          strongThis->OnFrameUI();
+        }
+      });
 }
 
 void BatchingEventEmitter::OnFrameUI() noexcept {
