@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Integrate 2/20",
+  "packageName": "node-rnw-rpc",
+  "email": "igklemen@microsoft.com",
+  "dependentChangeType": "patch"
+}
