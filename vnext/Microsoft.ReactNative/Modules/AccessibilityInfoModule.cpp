@@ -47,11 +47,13 @@ void AccessibilityInfo::announceForAccessibility(std::string announcement) noexc
 
     if (react::uwp::Is19H1OrHigher()) {
       // XamlRoot added in 19H1
-      if (auto xamlRoot =
-              winrt::Microsoft::ReactNative::XamlUIService::GetAccessibleXamlRoot(context.Properties().Handle())) {
-        element = xamlRoot.Content();
-      } else {
-        return;
+      if (winrt::Microsoft::ReactNative::XamlUIService::GetXamlRoot(context.Properties().Handle())) {
+        if (auto xamlroot =
+                winrt::Microsoft::ReactNative::XamlUIService::GetAccessibleXamlRoot(context.Properties().Handle())) {
+          element = xamlroot.Content();
+        } else {
+          return;
+        }
       }
     }
 
@@ -60,10 +62,6 @@ void AccessibilityInfo::announceForAccessibility(std::string announcement) noexc
         element = window.Content();
         element.SetValue(xaml::Automation::AutomationProperties::LandmarkTypeProperty(), winrt::box_value(80002));
       }
-    }
-
-    if (!element) {
-      return;
     }
 
     auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
