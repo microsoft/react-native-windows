@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.0.0-16efb8dd5",
+  "baseVersion": "0.0.0-1fe5cac52",
   "overrides": [
     {
       "type": "patch",
@@ -37,7 +37,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "4f71741892c963aeb64cdc41029aac614ce85ead"
+      "baseHash": "94116ef8cb09ccd42c5d1da8d67c2f538871af97"
     },
     {
       "type": "patch",

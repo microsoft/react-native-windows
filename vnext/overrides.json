@@ -5,13 +5,13 @@
     "src/**"
   ],
   "excludePatterns": [],
-  "baseVersion": "0.0.0-16efb8dd5",
+  "baseVersion": "0.0.0-1fe5cac52",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "4830cc7767fcafb3ce15d7b884f2f6ad8c030366"
+      "baseHash": "167cde28ed8c6dd95f7d79d1f21365ede842de16"
     },
     {
       "type": "patch",
@@ -213,7 +213,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "1f1fb46e3ee28acbfeaaba6842b9f273171dd5c9"
+      "baseHash": "614553aa8396b42e932f8c717ebc8b493d772d93"
     },
     {
       "type": "derived",
@@ -249,7 +249,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "b07d15c88ef2166c74070d4bca9109b0a2482323"
+      "baseHash": "17dcc7e2cfba2b7a7f6e523cd4e5bbdca9a43ce5"
     },
     {
       "type": "patch",
@@ -364,7 +364,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "bf6e342f34dd6fea00ae7ea56938a5473db1912c"
+      "baseHash": "8377428d85da1428842099549076fdacd549bd07"
     },
     {
       "type": "derived",
