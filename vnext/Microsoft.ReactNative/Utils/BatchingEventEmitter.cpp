@@ -75,6 +75,8 @@ void BatchingEventEmitter::EmitCoalescingJSEvent(
 }
 
 void BatchingEventEmitter::RegisterFrameCallback() noexcept {
+  VerifyElseCrash(!m_renderingRevoker);
+
   m_renderingRevoker = xaml::Media::CompositionTarget::Rendering(
       winrt::auto_revoke, [weakThis{weak_from_this()}](auto const &, auto const &) {
         if (auto strongThis = weakThis.lock()) {
