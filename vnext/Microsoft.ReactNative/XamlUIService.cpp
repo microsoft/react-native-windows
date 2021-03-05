@@ -6,11 +6,9 @@
 #include "XamlUIService.g.cpp"
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
-#include <UI.Xaml.Automation.Peers.h>
 #include "DynamicWriter.h"
 #include "ShadowNodeBase.h"
 #include "Views/ShadowNodeBase.h"
-
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
