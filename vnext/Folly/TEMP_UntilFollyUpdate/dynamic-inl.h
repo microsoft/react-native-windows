@@ -1050,10 +1050,6 @@ struct dynamic::GetAddrImpl<dynamic::ObjectImpl> {
   }
 };
 
-// Workaround arm64 ship compiler/link bug:
-// https://developercommunity2.visualstudio.com/t/arm64-release-error-lnk2040-relocation-pageoffset/1338200
-#ifdef _M_ARM64
-
 template <class T>
 T &dynamic::get() {
   if (auto *p = get_nothrow<T>()) {
@@ -1087,18 +1083,6 @@ T &dynamic::get() {
       break;
   }
 }
-
-#else
-
-template <class T>
-T &dynamic::get() {
-  if (auto *p = get_nothrow<T>()) {
-    return *p;
-  }
-  throw_exception<TypeError>(TypeInfo<T>::name, type());
-}
-
-#endif
 
 template <class T>
 T const &dynamic::get() const {
