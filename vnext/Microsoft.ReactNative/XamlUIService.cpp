@@ -6,9 +6,11 @@
 #include "XamlUIService.g.cpp"
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
+#include <UI.Xaml.Automation.Peers.h>
 #include "DynamicWriter.h"
 #include "ShadowNodeBase.h"
 #include "Views/ShadowNodeBase.h"
+
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -56,14 +58,29 @@ ReactPropertyId<xaml::XamlRoot> XamlRootProperty() noexcept {
   return propId;
 }
 
+ReactPropertyId<xaml::XamlRoot> AccessibleXamlRootProperty() noexcept {
+  static ReactPropertyId<xaml::XamlRoot> propId{L"ReactNative.UIManager", L"AccessibleXamlRoot"};
+  return propId;
+}
+
 /*static*/ void XamlUIService::SetXamlRoot(
     IReactPropertyBag const &properties,
     xaml::XamlRoot const &xamlRoot) noexcept {
   winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Set(XamlRootProperty(), xamlRoot);
 }
 
+/*static*/ void XamlUIService::SetAccessibleXamlRoot(
+    IReactPropertyBag const &properties,
+    xaml::XamlRoot const &xamlRoot) noexcept {
+  winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Set(AccessibleXamlRootProperty(), xamlRoot);
+}
+
 /*static*/ xaml::XamlRoot XamlUIService::GetXamlRoot(IReactPropertyBag const &properties) noexcept {
   return winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(XamlRootProperty());
+}
+
+/*static*/ xaml::XamlRoot XamlUIService::GetAccessibleXamlRoot(IReactPropertyBag const &properties) noexcept {
+  return winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(AccessibleXamlRootProperty());
 }
 
 ReactPropertyId<uint64_t> XamlIslandProperty() noexcept {

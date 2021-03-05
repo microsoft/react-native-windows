@@ -5,13 +5,11 @@
 #include "AccessibilityInfoModule.h"
 #include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Controls.h>
-#include <UI.Xaml.Input.h>
 #include <XamlUtils.h>
 #include <uiautomationcore.h>
 #include <uiautomationcoreapi.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include <winrt/Windows.UI.ViewManagement.h>
-#include "XamlUIService.h"
 #include "Unicode.h"
 #include "Utils/Helpers.h"
 
@@ -38,38 +36,37 @@ void AccessibilityInfo::isTouchExplorationEnabled(
 }
 
 void AccessibilityInfo::setAccessibilityFocus(double reactTag) noexcept {
-  m_context.UIDispatcher().Post([context = m_context, reactTag = std::move(reactTag)] {
-    auto service = winrt::Microsoft::ReactNative::XamlUIService::FromContext(context.Handle());
-    auto element = service.ElementFromReactTag(int64_t(reactTag));
-
-    if (!element) {
-      return;
-    }
-
-    auto frameworkElement = element.try_as<xaml::FrameworkElement>();
-    xaml::Input::FocusManager::TryFocusAsync(frameworkElement, xaml::FocusState::Programmatic);
-    auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(frameworkElement);
-
-    if (!peer) {
-      return;
-    }
-
-    peer.RaiseAutomationEvent(xaml::Automation::Peers::AutomationEvents::AutomationFocusChanged);
-  });
+  // no-op - This appears to be unused in RN
 }
 
 void AccessibilityInfo::announceForAccessibility(std::string announcement) noexcept {
   m_context.UIDispatcher().Post([context = m_context, announcement = std::move(announcement)] {
     // Windows requires a specific element to announce from. Unfortunately the react-native API does not provide a tag
-    // So we need to add a temporary control to raise the notification event from.
+    // So we need to find something to raise the notification event from.
+    xaml::UIElement element{nullptr};
 
-    auto textBlock = xaml::Controls::TextBlock();
+    if (react::uwp::Is19H1OrHigher()) {
+      // XamlRoot added in 19H1
+      if (auto xamlRoot =
+              winrt::Microsoft::ReactNative::XamlUIService::GetAccessibleXamlRoot(context.Properties().Handle())) {
+        element = xamlRoot.Content();
+      } else {
+        return;
+      }
+    }
 
-    if (!textBlock) {
+    if (!element) {
+      if (auto window = xaml::Window::Current()) {
+        element = window.Content();
+        element.SetValue(xaml::Automation::AutomationProperties::LandmarkTypeProperty(), winrt::box_value(80002));
+      }
+    }
+
+    if (!element) {
       return;
     }
 
-    auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(textBlock);
+    auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
 
     if (!peer) {
       return;

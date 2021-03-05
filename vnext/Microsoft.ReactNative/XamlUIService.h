@@ -23,7 +23,9 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
       JSValueArgWriter const &eventDataArgWriter) noexcept;
 
   static void SetXamlRoot(IReactPropertyBag const &properties, xaml::XamlRoot const &xamlRoot) noexcept;
+  static void SetAccessibleXamlRoot(IReactPropertyBag const &properties, xaml::XamlRoot const &xamlRoot) noexcept;
   static xaml::XamlRoot GetXamlRoot(IReactPropertyBag const &properties) noexcept;
+  static xaml::XamlRoot GetAccessibleXamlRoot(IReactPropertyBag const &properties) noexcept;
 
   static void SetIslandWindowHandle(IReactPropertyBag const &properties, uint64_t hwnd) noexcept;
   static uint64_t GetIslandWindowHandle(IReactPropertyBag const &properties) noexcept;
