@@ -45,6 +45,7 @@ struct BatchingEventEmitter : public std::enable_shared_from_this<BatchingEventE
       JSValue &&eventObject) noexcept;
 
  private:
+  void RegisterFrameCallback() noexcept;
   void OnFrameUI() noexcept;
   void OnFrameJS() noexcept;
 
