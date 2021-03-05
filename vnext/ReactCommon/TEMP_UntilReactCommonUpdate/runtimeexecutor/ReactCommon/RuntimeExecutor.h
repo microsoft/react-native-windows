@@ -23,8 +23,7 @@ namespace react {
  * instead of storing a pointer to the Runtime itself, which makes it more
  * difficult to ensure that the Runtime is being accessed safely.
  */
-using RuntimeExecutor =
-    std::function<void(std::function<void(jsi::Runtime &runtime)> &&callback)>;
+using RuntimeExecutor = std::function<void(std::function<void(jsi::Runtime &runtime)> &&callback)>;
 
 /*
  * The caller can expect that the callback will be executed sometime later on an
@@ -39,9 +38,8 @@ using RuntimeExecutor =
 inline static void executeAsynchronously(
     RuntimeExecutor const &runtimeExecutor,
     std::function<void(jsi::Runtime &runtime)> &&callback) noexcept {
-  std::thread([callback = std::move(callback), runtimeExecutor]() mutable {
-    runtimeExecutor(std::move(callback));
-  }).detach();
+  std::thread([callback = std::move(callback), runtimeExecutor]() mutable { runtimeExecutor(std::move(callback)); })
+      .detach();
 }
 
 /*
@@ -57,11 +55,10 @@ inline static void executeSynchronously_CAN_DEADLOCK(
   std::mutex mutex;
   mutex.lock();
 
-  runtimeExecutor(
-      [callback = std::move(callback), &mutex](jsi::Runtime &runtime) {
-        callback(runtime);
-        mutex.unlock();
-      });
+  runtimeExecutor([callback = std::move(callback), &mutex](jsi::Runtime &runtime) {
+    callback(runtime);
+    mutex.unlock();
+  });
 
   mutex.lock();
 }
