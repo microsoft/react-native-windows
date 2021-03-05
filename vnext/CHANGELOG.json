@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 05 Mar 2021 08:02:05 GMT",
+      "tag": "react-native-windows_v0.63.23",
+      "version": "0.63.23",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Avoid exporting data as that breaks delay loading",
+            "author": "ryknuth@microsoft.com",
+            "commit": "6bcf125d53a85a988bee964a497d96c90841163f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Feb 2021 22:57:36 GMT",
       "tag": "react-native-windows_v0.63.22",
       "version": "0.63.22",
