@@ -187,5 +187,13 @@
     <Error Condition="!Exists('$(ReactNativePackageDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
     <Error Condition="!Exists('$(YogaDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
   </Target>
+    <ItemGroup>
+    <TemporaryReactCommonPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilReactCommonUpdate\**\*.*" />
+  </ItemGroup>
   <Target Name="Deploy" />
+  <!-- Reenable this task if we need to temporarily replace any folly files for fixes, while we wait for PRs to land in folly -->
+  <Target Name="ApplyReactCommonTemporaryPatch" BeforeTargets="PrepareForBuild">
+    <Copy DestinationFiles="@(TemporaryReactCommonPatchFiles->'$(ReactNativeDir)\ReactCommon\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryReactCommonPatchFiles)" />
+  </Target>
+
 </Project>
