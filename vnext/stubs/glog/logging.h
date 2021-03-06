@@ -69,6 +69,15 @@ inline std::ostream &GetNullLog() noexcept {
 }
 
 #define LOG(b) GlogStub::GetNullLog()
+
+typedef int LogSeverity;
+inline void FlushLogFiles(LogSeverity min_severity) {
+  LOG("");
+}
+
+#define google GlogStub
+static const int INFO = 1;
+
 #endif
 
 } // namespace GlogStub
