@@ -251,11 +251,14 @@ REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms) {
 
 // C# provides System.Uri.TryCreate, but no native equivalent seems to exist
 winrt::Uri UriTryCreate(winrt::param::hstring const &uri) {
-  try {
-    return winrt::Uri(uri);
-  } catch (...) {
-    return winrt::Uri(nullptr);
+  winrt::Uri ret{nullptr};
+  if (uri != winrt::hstring{L""}) {
+    try {
+      ret = winrt::Uri(uri);
+    } catch (...) {
+    }
   }
+  return ret;
 }
 
 } // namespace react::uwp
