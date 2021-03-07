@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Avoid exception when trying to create Uri from empty strings",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
