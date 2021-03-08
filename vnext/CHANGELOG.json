@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 08 Mar 2021 20:49:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.264",
+      "version": "0.0.0-canary.264",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Avoid re-registering render callbacks when coalescing single element queue",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c7d227a76ced04b2c9be04ae28fcb2559f69481e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 05 Mar 2021 16:31:03 GMT",
       "tag": "react-native-windows_v0.0.0-canary.263",
       "version": "0.0.0-canary.263",

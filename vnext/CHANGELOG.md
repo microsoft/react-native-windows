@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 05 Mar 2021 16:31:03 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Mar 2021 20:49:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.264
+
+Mon, 08 Mar 2021 20:49:18 GMT
+
+### Changes
+
+- Avoid re-registering render callbacks when coalescing single element queue (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.263
 
