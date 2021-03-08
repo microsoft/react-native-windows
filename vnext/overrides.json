@@ -2,7 +2,8 @@
   "includePatterns": [
     ".flowconfig",
     "ReactCopies/**",
-    "src/**"
+    "src/**",
+    "ReactCommon/TEMP_UntilReactCommonUpdate/**"
   ],
   "excludePatterns": [],
   "baseVersion": "0.0.0-1fe5cac52",

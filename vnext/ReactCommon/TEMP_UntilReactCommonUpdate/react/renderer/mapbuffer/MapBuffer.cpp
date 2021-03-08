@@ -13,7 +13,9 @@ namespace facebook {
 namespace react {
 
 MapBuffer::MapBuffer(int initialSize) {
+  // [Windows - adding cast to fix build break in VS
   _dataSize = static_cast<uint16_t>(initialSize);
+  // Windows]
   _data = new Byte[_dataSize];
   // TODO: Should we clean up memory here?
 }
