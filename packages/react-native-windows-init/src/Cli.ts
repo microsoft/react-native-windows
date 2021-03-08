@@ -77,7 +77,7 @@ const argv = yargs
     },
     projectType: {
       type: 'string',
-      describe: 'The type of project to initialize.',
+      describe: 'The type of project to initialize (supported on 0.64+)',
       choices: ['app', 'lib'],
       default: 'app',
     },
