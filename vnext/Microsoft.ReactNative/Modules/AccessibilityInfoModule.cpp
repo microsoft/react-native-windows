@@ -45,23 +45,22 @@ void AccessibilityInfo::announceForAccessibility(std::string announcement) noexc
     // So we need to find something to raise the notification event from.
     xaml::UIElement element{nullptr};
 
-    if (react::uwp::Is19H1OrHigher()) {
-      // XamlRoot added in 19H1
-      if (winrt::Microsoft::ReactNative::XamlUIService::GetXamlRoot(context.Properties().Handle())) {
-        if (auto xamlroot =
-                winrt::Microsoft::ReactNative::XamlUIService::GetAccessibleXamlRoot(context.Properties().Handle())) {
-          element = xamlroot.Content();
-        } else {
-          return;
+    if (react::uwp::IsXamlIsland()) {
+      if (auto xamlroot =
+              winrt::Microsoft::ReactNative::XamlUIService::GetAccessibleRoot(context.Properties().Handle())) {
+        element = xamlroot.Content();
+      }
+      if (!element) {
+        if (auto window = xaml::Window::Current()) {
+          if (element = window.Content()) {
+            element.SetValue(xaml::Automation::AutomationProperties::LandmarkTypeProperty(), winrt::box_value(80002));
+          } else {
+            return;
+          }
         }
       }
-    }
-
-    if (!element) {
-      if (auto window = xaml::Window::Current()) {
-        element = window.Content();
-        element.SetValue(xaml::Automation::AutomationProperties::LandmarkTypeProperty(), winrt::box_value(80002));
-      }
+    } else {
+      element = xaml::Controls::TextBlock();
     }
 
     auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);

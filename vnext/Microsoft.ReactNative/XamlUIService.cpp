@@ -56,7 +56,7 @@ ReactPropertyId<xaml::XamlRoot> XamlRootProperty() noexcept {
   return propId;
 }
 
-ReactPropertyId<xaml::XamlRoot> AccessibleXamlRootProperty() noexcept {
+ReactPropertyId<xaml::XamlRoot> AccessibleRootProperty() noexcept {
   static ReactPropertyId<xaml::XamlRoot> propId{L"ReactNative.UIManager", L"AccessibleXamlRoot"};
   return propId;
 }
@@ -67,18 +67,18 @@ ReactPropertyId<xaml::XamlRoot> AccessibleXamlRootProperty() noexcept {
   winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Set(XamlRootProperty(), xamlRoot);
 }
 
-/*static*/ void XamlUIService::SetAccessibleXamlRoot(
+/*static*/ void XamlUIService::SetAccessibleRoot(
     IReactPropertyBag const &properties,
     xaml::XamlRoot const &xamlRoot) noexcept {
-  winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Set(AccessibleXamlRootProperty(), xamlRoot);
+  winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Set(AccessibleRootProperty(), xamlRoot);
 }
 
 /*static*/ xaml::XamlRoot XamlUIService::GetXamlRoot(IReactPropertyBag const &properties) noexcept {
   return winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(XamlRootProperty());
 }
 
-/*static*/ xaml::XamlRoot XamlUIService::GetAccessibleXamlRoot(IReactPropertyBag const &properties) noexcept {
-  return winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(AccessibleXamlRootProperty());
+/*static*/ xaml::XamlRoot XamlUIService::GetAccessibleRoot(IReactPropertyBag const &properties) noexcept {
+  return winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(AccessibleRootProperty());
 }
 
 ReactPropertyId<uint64_t> XamlIslandProperty() noexcept {
