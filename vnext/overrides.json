@@ -15,6 +15,13 @@
       "baseHash": "167cde28ed8c6dd95f7d79d1f21365ede842de16"
     },
     {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBuffer.cpp",
+      "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBuffer.cpp",
+      "baseHash": "f810d614ada443e806fee88a0edf3bb6564d2c7d",
+      "issue": 7309
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/runtimeexecutor/ReactCommon/RuntimeExecutor.h",
       "baseFile": "ReactCommon/runtimeexecutor/ReactCommon/RuntimeExecutor.h",
