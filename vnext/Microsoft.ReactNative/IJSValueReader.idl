@@ -57,8 +57,8 @@ namespace Microsoft.ReactNative
       "\n"
       "**Note**\n"
       "- Use @.ValueType to get the type of the property value and other GetXXX methods to read it.\n"
-      "- Use @.GetNextObjectProperty method to start reading property value of type @JSValueType.Object.\n"
-      "- Use @.GetNextArrayItem method to start reading property value of type @JSValueType.Array")
+      "- Use @.GetNextObjectProperty method to start reading property value of type @JSValueType `Object`.\n"
+      "- Use @.GetNextArrayItem method to start reading property value of type @JSValueType `Array")
     Boolean GetNextObjectProperty(out String propertyName);
 
     DOC_STRING(
@@ -69,8 +69,8 @@ namespace Microsoft.ReactNative
       "\n"
       "**Note**\n"
       "- Use @.ValueType to get the type of the array item and other GetXXX methods to read it.\n"
-      "- Use @.GetNextObjectProperty method to start reading property value of type @JSValueType.Object.\n"
-      "- Use @.GetNextArrayItem method to start reading property value of type @JSValueType.Array")
+      "- Use @.GetNextObjectProperty method to start reading property value of type @JSValueType `Object`.\n"
+      "- Use @.GetNextArrayItem method to start reading property value of type @JSValueType `Array")
     Boolean GetNextArrayItem();
 
     DOC_STRING("Gets the current `String` value.")
