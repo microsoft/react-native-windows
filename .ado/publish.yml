@@ -22,6 +22,8 @@ variables:
     value: ''
   - name: SkipGitPushPublishArgs
     value: ''
+  - name: NugetSecurityAnalysisWarningLevel
+    value: 'warn'
 
 schedules:
 - cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
