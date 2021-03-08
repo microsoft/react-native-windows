@@ -3,46 +3,65 @@
 
 #include "DocString.h"
 
-namespace Microsoft.ReactNative {
-
-  // Writer for JSON-like streams or tree structures
+namespace Microsoft.ReactNative
+{
   [webhosthidden]
-  DOC_STRING("`IJSValueWriter` is used to write JavaScript values from custom native modules.  It acts as a stream and supports all the types in @JSValueType.")
-  interface IJSValueWriter {
-    DOC_STRING("Write a null value.")
+  DOC_STRING(
+    "JSON-like stream writer.\n"
+    "It is used to write data that is sent between native modules and the Microsoft.ReactNative.dll.\n"
+    "\n"
+    "The JSON-like streams are data structures that satisfy the [JSON specification](https://tools.ietf.org/html/rfc8259). "
+    "The data structure may have objects with name-value pairs and arrays of items. "
+    "Property values or array items can be of type `Null`, `Object`, `Array`, `String`, `Boolean`, or `Number`. "
+    "The `IJSValueWriter` treats the `Number` type as `Int64` or `Double`. See @JSValueType.\n"
+    "\n"
+    "See the @IJSValueReader for the corresponding reader interface.\n"
+    "\n"
+    "The @IJSValueReader and @IJSValueWriter must be rarely used directly. "
+    "Use them to create serializer and deserializer functions for a type. "
+    "The rest of application code must use these functions to serialize/deserialize values. "
+    "The `Microsoft.ReactNative.Cxx` and `Microsoft.ReactNative.Managed` projects offer "
+    "serializer/deserializer functions for many standard types. Use them directly or to define "
+    "serializer/deserializer functions for your types.")
+  // TODO: [vmorozov] Add a reference to serializer and deserializer functions for some standard types.
+  // TODO: [vmorozov] Add a reference to usage examples.
+  interface IJSValueWriter
+  {
+    DOC_STRING("Writes a `Null` value.")
     void WriteNull();
 
-    DOC_STRING("Write a boolean value.")
+    DOC_STRING("Writes a `Boolean` value.")
     void WriteBoolean(Boolean value);
 
-    DOC_STRING("Write a number value from an integer.")
+    DOC_STRING("Writes a `Number` value from an integer.")
     void WriteInt64(Int64 value);
 
-    DOC_STRING("Write a number value from a double.")
+    DOC_STRING("Writes a `Number` value from a double.")
     void WriteDouble(Double value);
 
-    DOC_STRING("Write a string value")
+    DOC_STRING("Writes a `String` value")
     void WriteString(String value);
 
-    DOC_STRING("Start writing an object.")
+    DOC_STRING("Starts writing an `Object`.")
     void WriteObjectBegin();
 
-    DOC_STRING("Write a property within an object.  This should then be followed by writing the value of that property.")
+    DOC_STRING(
+      "Writes a property name within an object. "
+      "This call should then be followed by writing the value of that property.")
     void WritePropertyName(String name);
 
-    DOC_STRING("Complete writing an object.")
+    DOC_STRING("Completes writing an object.")
     void WriteObjectEnd();
 
-    DOC_STRING("Start writing an array.")
+    DOC_STRING("Starts writing an array.")
     void WriteArrayBegin();
 
-    DOC_STRING("Complete writing an array.")
+    DOC_STRING("Completes writing an array.")
     void WriteArrayEnd();
   }
 
-  // Use this delegate to pass arbitrary value to ABI API.
-  // In a function that implements the delegate use the provided writer to stream custom values.
-  DOC_STRING("Use this delegate to pass arbitrary value to ABI API. \n\
-In a function that implements the delegate use the provided writer to stream custom values.")
+  DOC_STRING(
+    "The `JSValueArgWriter` delegate is used to pass arbitrary value to ABI API. \n"
+    "In a function that implements the delegate use the provided writer to stream custom values.")
   delegate void JSValueArgWriter(IJSValueWriter writer);
 } // namespace Microsoft.ReactNative
