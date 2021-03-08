@@ -51,7 +51,7 @@ struct JSValueObject : std::map<std::string, JSValue, std::less<>> {
   JSValueObject(JSValueObject const &) = delete;
 
   // Default move constructor.
-  JSValueObject(JSValueObject &&) = default;
+  JSValueObject(JSValueObject &&) noexcept = default;
 
   //! Delete copy assignment to avoid unexpected copies. Use the Copy method instead.
   JSValueObject &operator=(JSValueObject const &) = delete;
