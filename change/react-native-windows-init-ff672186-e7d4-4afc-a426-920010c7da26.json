@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Added 0.64+ to projectType flag for react-native-windows-init cli",
+  "packageName": "react-native-windows-init",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
