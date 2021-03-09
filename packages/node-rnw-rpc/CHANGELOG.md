@@ -1,8 +1,21 @@
 # Change Log - node-rnw-rpc
 
-This log was last generated on Mon, 08 Mar 2021 20:49:18 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Mar 2021 18:00:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.2
+
+Tue, 09 Mar 2021 18:00:37 GMT
+
+### Patches
+
+- Integrate 2/20 (igklemen@microsoft.com)
+
+### Changes
+
+- Integrate 6/3 RN nigtly build. (igklemen@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.265 (igklemen@microsoft.com)
 
 ## 1.0.2-1
 

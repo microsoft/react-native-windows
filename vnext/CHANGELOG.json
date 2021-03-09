@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 09 Mar 2021 18:00:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.265",
+      "version": "0.0.0-canary.265",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 6/3 RN nigtly build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "dabb208f7dfd160ba44bcf492b32fd383f9168be",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Clarify IJSValueWriter/IJSValueReader docs",
+            "author": "asklar@microsoft.com",
+            "commit": "f4534b2e5d6e5fe293a27e98b24061924aa4fcdf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix bad merge",
+            "author": "asklar@microsoft.com",
+            "commit": "e1eda1fd6a7807a633b89cf3d6fee06065a23a02",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Disable warning 4103 in MemoryMappedBufferTests.cpp",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "b49560a61b719571ab281ee7aa230bb72c033308",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Clarify IJSValueWriter/IJSValueReader docs",
+            "author": "asklar@microsoft.com",
+            "commit": "f4534b2e5d6e5fe293a27e98b24061924aa4fcdf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 2/20",
+            "author": "igklemen@microsoft.com",
+            "commit": "25a5f41129805762cef5d5b594c1810b6e53e39d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 Mar 2021 20:49:18 GMT",
       "tag": "react-native-windows_v0.0.0-canary.264",
       "version": "0.0.0-canary.264",

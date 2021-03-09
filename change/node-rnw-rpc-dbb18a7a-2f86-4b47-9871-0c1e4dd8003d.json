@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate 6/3 RN nigtly build.",
-  "packageName": "node-rnw-rpc",
-  "email": "igklemen@microsoft.com",
-  "dependentChangeType": "patch"
-}

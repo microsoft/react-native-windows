@@ -2,6 +2,35 @@
   "name": "node-rnw-rpc",
   "entries": [
     {
+      "date": "Tue, 09 Mar 2021 18:00:37 GMT",
+      "tag": "node-rnw-rpc_v1.0.2",
+      "version": "1.0.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 6/3 RN nigtly build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "dabb208f7dfd160ba44bcf492b32fd383f9168be",
+            "package": "node-rnw-rpc"
+          },
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.265",
+            "author": "igklemen@microsoft.com",
+            "commit": "dabb208f7dfd160ba44bcf492b32fd383f9168be",
+            "package": "node-rnw-rpc"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Integrate 2/20",
+            "author": "igklemen@microsoft.com",
+            "commit": "25a5f41129805762cef5d5b594c1810b6e53e39d",
+            "package": "node-rnw-rpc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 Mar 2021 20:49:18 GMT",
       "tag": "node-rnw-rpc_v1.0.2-1",
       "version": "1.0.2-1",
