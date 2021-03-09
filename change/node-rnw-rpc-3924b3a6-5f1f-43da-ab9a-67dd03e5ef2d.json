@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "beachball sync",
+  "packageName": "node-rnw-rpc",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
