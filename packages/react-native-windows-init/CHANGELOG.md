@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Tue, 09 Mar 2021 21:16:42 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Mar 2021 22:34:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.52
+
+Tue, 09 Mar 2021 22:34:34 GMT
+
+### Patches
+
+- beachball fixes (jthysell@microsoft.com)
 
 ## 1.1.51
 

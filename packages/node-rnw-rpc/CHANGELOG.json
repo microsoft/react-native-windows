@@ -2,6 +2,29 @@
   "name": "node-rnw-rpc",
   "entries": [
     {
+      "date": "Tue, 09 Mar 2021 22:34:34 GMT",
+      "tag": "node-rnw-rpc_v1.0.4",
+      "version": "1.0.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "beachball fixes",
+            "author": "jthysell@microsoft.com",
+            "commit": "1c6a1e07faa668afffb40c72f441df378a2fde7b",
+            "package": "node-rnw-rpc"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.269",
+            "author": "jthysell@microsoft.com",
+            "commit": "1c6a1e07faa668afffb40c72f441df378a2fde7b",
+            "package": "node-rnw-rpc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Mar 2021 21:16:42 GMT",
       "tag": "node-rnw-rpc_v1.0.3",
       "version": "1.0.3",

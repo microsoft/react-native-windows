@@ -2,6 +2,29 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Tue, 09 Mar 2021 22:34:34 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump node-rnw-rpc to v1.0.4",
+            "author": "jthysell@microsoft.com",
+            "commit": "1c6a1e07faa668afffb40c72f441df378a2fde7b",
+            "package": "integration-test-app"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.269",
+            "author": "jthysell@microsoft.com",
+            "commit": "1c6a1e07faa668afffb40c72f441df378a2fde7b",
+            "package": "integration-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Mar 2021 21:16:42 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",

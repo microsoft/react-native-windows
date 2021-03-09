@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "beachball fixes",
-  "packageName": "node-rnw-rpc",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

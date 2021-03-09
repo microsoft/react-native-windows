@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 09 Mar 2021 22:34:34 GMT",
+      "tag": "react-native-windows-init_v1.1.52",
+      "version": "1.1.52",
+      "comments": {
+        "patch": [
+          {
+            "comment": "beachball fixes",
+            "author": "jthysell@microsoft.com",
+            "commit": "1c6a1e07faa668afffb40c72f441df378a2fde7b",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Mar 2021 21:16:42 GMT",
       "tag": "react-native-windows-init_v1.1.51",
       "version": "1.1.51",

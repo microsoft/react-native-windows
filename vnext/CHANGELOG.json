@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 09 Mar 2021 22:34:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.269",
+      "version": "0.0.0-canary.269",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "beachball fixes",
+            "author": "jthysell@microsoft.com",
+            "commit": "1c6a1e07faa668afffb40c72f441df378a2fde7b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Mar 2021 21:16:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.268",
       "version": "0.0.0-canary.268",

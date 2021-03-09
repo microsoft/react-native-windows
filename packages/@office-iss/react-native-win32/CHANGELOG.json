@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 09 Mar 2021 22:34:34 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.85",
+      "version": "0.0.0-canary.85",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "beachball fixes",
+            "author": "jthysell@microsoft.com",
+            "commit": "1c6a1e07faa668afffb40c72f441df378a2fde7b",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Mar 2021 21:16:42 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.84",
       "version": "0.0.0-canary.84",
