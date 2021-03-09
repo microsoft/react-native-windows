@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Integrate 6/3 RN nigtly build. (#7318)",
+  "comment": "beachball fixes",
   "packageName": "@office-iss/react-native-win32",
   "email": "jthysell@microsoft.com",
   "dependentChangeType": "patch"
