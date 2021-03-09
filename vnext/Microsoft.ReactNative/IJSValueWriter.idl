@@ -39,7 +39,7 @@ namespace Microsoft.ReactNative
     DOC_STRING("Writes a `Number` value from a double.")
     void WriteDouble(Double value);
 
-    DOC_STRING("Writes a `String` value")
+    DOC_STRING("Writes a `String` value.")
     void WriteString(String value);
 
     DOC_STRING("Starts writing an `Object`.")

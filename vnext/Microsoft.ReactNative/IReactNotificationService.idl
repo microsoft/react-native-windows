@@ -28,7 +28,7 @@ namespace Microsoft.ReactNative {
     DOC_STRING(
       "The @IReactDispatcher provided when the notification subscription created.\n"
       "All notifications will be handled using this dispatcher.\n"
-      "In case if it is null, the events are handled synchronously.")
+      "If the dispatcher is null, the events are handled synchronously.")
     IReactDispatcher Dispatcher { get; };
 
     DOC_STRING(
@@ -96,7 +96,7 @@ namespace Microsoft.ReactNative {
   DOC_STRING("Helper methods for the notification service implementation.")
   static runtimeclass ReactNotificationServiceHelper
   {
-    DOC_STRING("Creates new instance of IReactNotificationService")
+    DOC_STRING("Creates a new instance of IReactNotificationService")
     static IReactNotificationService CreateNotificationService();
   }
 } // namespace Microsoft.ReactNative

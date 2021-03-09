@@ -36,8 +36,8 @@ namespace Microsoft.ReactNative {
     "- Use the Properties to share native module's data with other components. \n"
     "- Use the Notifications to exchange events with other components. \n"
     "- Use @.CallJSFunction to call JavaScript functions, and @.EmitJSEvent to raise JavaScript events. \n"
-    "- Use @.UIDispatcher to schedule work in UI thread. \n"
-    "- Use @.JSDispatcher to schedule work in UI thread.")
+    "- Use @.UIDispatcher to schedule work in the UI thread. \n"
+    "- Use @.JSDispatcher to schedule work in the JavaScript thread.")
   interface IReactContext {
 #ifndef CORE_ABI
     DOC_STRING("Get settings snapshot that were used to start the React instance.")
@@ -55,12 +55,12 @@ namespace Microsoft.ReactNative {
 
     DOC_STRING(
       "Get the UI thread dispatcher. \n"
-      "It is a shortcut for the `ReactDispatcherHelper::UIDispatcherProperty` from the @.Properties property bag.")
+      "It is a shortcut for the @ReactDispatcherHelper.UIDispatcherProperty from the @.Properties property bag.")
     IReactDispatcher UIDispatcher { get; };
 
     DOC_STRING(
       "Get the JS thread dispatcher. \n"
-      "It is a shortcut for the `ReactDispatcherHelper::JSDispatcherProperty` from the @.Properties property bag.")
+      "It is a shortcut for the @ReactDispatcherHelper.JSDispatcherProperty from the @.Properties property bag.")
     IReactDispatcher JSDispatcher { get; };
 
     DOC_STRING("Get the JavaScript runtime for the running React instance. It can be null if Web debugging is used.")
