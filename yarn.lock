@@ -384,9 +384,9 @@
     js-tokens "^4.0.0"
 
 "@babel/parser@^7.0.0", "@babel/parser@^7.1.0", "@babel/parser@^7.1.6", "@babel/parser@^7.11.5", "@babel/parser@^7.12.13", "@babel/parser@^7.13.0", "@babel/parser@^7.13.4", "@babel/parser@^7.7.0":
-  version "7.13.9"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.13.9.tgz#ca34cb95e1c2dd126863a84465ae8ef66114be99"
-  integrity sha512-nEUfRiARCcaVo3ny3ZQjURjHQZUo/JkEw7rLlSZy/psWGnvwXFtPcr6jb7Yb41DVW5LTe6KRq9LGleRNsg1Frw==
+  version "7.13.10"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.13.10.tgz#8f8f9bf7b3afa3eabd061f7a5bcdf4fec3c48409"
+  integrity sha512-0s7Mlrw9uTWkYua7xWr99Wpk2bnGa0ANleKfksYAES8LpWH4gW1OUr42vqKNf0us5UQNfru2wPqMqRITzq/SIQ==
 
 "@babel/plugin-proposal-async-generator-functions@^7.13.8":
   version "7.13.8"
