@@ -5283,10 +5283,10 @@ flatted@^2.0.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.2.tgz#4575b21e2bcee7434aa9be662f4b7b5f9c2b5138"
   integrity sha512-r5wGx7YeOwNWNlCA0wQ86zKyDLMQr+/RB8xy74M4hTphfmjlijTSSXGuH8rnvKZnfT9i+75zmd8jcKdMR4O6jA==
 
-flow-bin@^0.145.0:
-  version "0.145.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.145.0.tgz#922f7c3568caaa5eb64621ec536deb56b24d1795"
-  integrity sha512-+9fi9BMxRBtSWC1x0hWggWTb8Vih+AC7wyvLAX5wR1m6u2lF2HLtixXqy2GX8bWgaynSEJR5lmPxYYC4wMI8cA==
+flow-bin@^0.146.0:
+  version "0.146.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.146.0.tgz#fafa002663a0e13bf3c08c3972dd93d68289ccc6"
+  integrity sha512-TP8eCwltqc7fo6ad5klgsrZ2veZIK2qM1vHf1A/cnXTStPh8hLAz1cOXmlQIFZR/7fjSMI39TS3CgF6M/HUhAw==
 
 flow-parser@0.*:
   version "0.113.0"
@@ -7508,20 +7508,6 @@ merge2@^1.2.3, merge2@^1.3.0:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.3.0.tgz#5b366ee83b2f1582c48f87e47cf1a9352103ca81"
   integrity sha512-2j4DAdlBOkiSZIsaXk4mTE3sRS02yBHAtfy127xRV3bQUFqXkjHCHLW6Scv7DwNRbIWNHH8zpnz9zMaKXIdvYw==
 
-metro-babel-register@0.65.1:
-  version "0.65.1"
-  resolved "https://registry.yarnpkg.com/metro-babel-register/-/metro-babel-register-0.65.1.tgz#a214330452f7af58ed853660a67e090c6b02e8a9"
-  integrity sha512-B5UEHVEpA+umzRRH6+cw2Vkkk4H7DpG1+o4tL/KQ61a1vr2+M//gWcbDVJbE4nd2PI3zA9Pt8qWEze6ut4ki3g==
-  dependencies:
-    "@babel/core" "^7.0.0"
-    "@babel/plugin-proposal-nullish-coalescing-operator" "^7.0.0"
-    "@babel/plugin-proposal-optional-chaining" "^7.0.0"
-    "@babel/plugin-syntax-class-properties" "^7.0.0"
-    "@babel/plugin-transform-flow-strip-types" "^7.0.0"
-    "@babel/plugin-transform-modules-commonjs" "^7.0.0"
-    "@babel/register" "^7.0.0"
-    escape-string-regexp "^1.0.5"
-
 metro-babel-register@0.65.2:
   version "0.65.2"
   resolved "https://registry.yarnpkg.com/metro-babel-register/-/metro-babel-register-0.65.2.tgz#1e27be9b9fd472a768649d7c5e565460de02ac46"
@@ -7689,7 +7675,7 @@ metro-react-native-babel-preset@^0.56.0:
     "@babel/template" "^7.0.0"
     react-refresh "^0.4.0"
 
-metro-react-native-babel-transformer@0.65.1, metro-react-native-babel-transformer@^0.64.0, metro-react-native-babel-transformer@^0.65.0:
+metro-react-native-babel-transformer@0.65.2, metro-react-native-babel-transformer@^0.64.0, metro-react-native-babel-transformer@^0.65.0:
   version "0.65.2"
   resolved "https://registry.yarnpkg.com/metro-react-native-babel-transformer/-/metro-react-native-babel-transformer-0.65.2.tgz#133b3134929ee05aa46107404e60e04434c93d42"
   integrity sha512-9cecDjvEPZefcRaePToAh8ae4dukIF+npdyy8rXq9kRv5ezW6qUQsvp9NRcqPjqu8H1rueE89ewLblH2x8Dgsw==
@@ -7708,24 +7694,10 @@ metro-resolver@0.65.2, metro-resolver@^0.64.0, metro-resolver@^0.65.0:
   dependencies:
     absolute-path "^0.0.0"
 
-metro-runtime@0.65.1, metro-runtime@0.65.2, metro-runtime@^0.64.0, metro-runtime@^0.65.0:
+metro-runtime@0.65.2, metro-runtime@^0.64.0, metro-runtime@^0.65.0:
   version "0.65.2"
   resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.65.2.tgz#bedbf165928ce5450f77e08479558d0cf6d21d40"
   integrity sha512-qHxPdzoJVZEuOHR//wMvOmB6Dc+JJUqy7yuT72TDm7Ou0HTGXbFGw3RDV0AxR9HC0100SgAL63kes7v4LaAMVg==
-
-metro-source-map@0.65.1:
-  version "0.65.1"
-  resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.65.1.tgz#9006d282cec0996d7af2bffb81788574e3972a85"
-  integrity sha512-eaOQfLaCjzfiSb4a47adRn9kAQw5JP5mKMBOQAdQHDNrPbTxUKf0vHJUxNqTWHs3EZ1DNkuBhEPFvIc3jQ9WoA==
-  dependencies:
-    "@babel/traverse" "^7.0.0"
-    "@babel/types" "^7.0.0"
-    invariant "^2.2.4"
-    metro-symbolicate "0.65.1"
-    nullthrows "^1.1.1"
-    ob1 "0.65.1"
-    source-map "^0.5.6"
-    vlq "^1.0.0"
 
 metro-source-map@0.65.2:
   version "0.65.2"
@@ -7739,18 +7711,6 @@ metro-source-map@0.65.2:
     nullthrows "^1.1.1"
     ob1 "0.65.2"
     source-map "^0.5.6"
-    vlq "^1.0.0"
-
-metro-symbolicate@0.65.1:
-  version "0.65.1"
-  resolved "https://registry.yarnpkg.com/metro-symbolicate/-/metro-symbolicate-0.65.1.tgz#3832980c4b5e80827b63c7fef0cc8a5dd33b4d4d"
-  integrity sha512-lP/tq/js9SmS16nXdPk28N4MWK9bdZNmAdGSmQroVtH7qLJn0zd6fss5JuruOD4OyrFTaIWEnHdW9an679YQYw==
-  dependencies:
-    invariant "^2.2.4"
-    metro-source-map "0.65.1"
-    nullthrows "^1.1.1"
-    source-map "^0.5.6"
-    through2 "^2.0.1"
     vlq "^1.0.0"
 
 metro-symbolicate@0.65.2:
@@ -8263,11 +8223,6 @@ oauth-sign@~0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.9.0.tgz#47a7b016baa68b5fa0ecf3dee08a85c679ac6455"
   integrity sha512-fexhUFFPTGV8ybAtSIGbV6gOkSv8UtRbDBnAyLQw4QPKkgNlsH2ByPGtMUqdWkos6YCRmAqViwgZrJc/mRDzZQ==
-
-ob1@0.65.1:
-  version "0.65.1"
-  resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.65.1.tgz#662d1c88bdb90c2eb0f74dae676819b969c763c7"
-  integrity sha512-aNJO5KPy9mtLuTLqDkgCP/+QWreOfvZgaIvMV2UrQHp2UUvQt/CU5H8orQ0ZtjM8OwVnV0n2FU+UtCS0DFNhkQ==
 
 ob1@0.65.2:
   version "0.65.2"
@@ -8990,10 +8945,10 @@ react-native-tscodegen@0.66.1:
     nullthrows "1.1.1"
     typescript "^3.5.3"
 
-react-native@0.0.0-1fe5cac52:
-  version "0.0.0-1fe5cac52"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-1fe5cac52.tgz#03350aa4358645c7216d05d210edd791ef5d48d5"
-  integrity sha512-rZ2k/RqtXM8AdTHV3k2zWctTK05Tgk6tego1b3v95Aq2Vpg2OOX6JHln01n7drMOsN/HUeEFhTBra6CO117RpQ==
+react-native@0.0.0-d477f8011:
+  version "0.0.0-d477f8011"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-d477f8011.tgz#9c4348c2404df96a12b73cf7da3219bfb5b31e9a"
+  integrity sha512-aEzCTzDOlBE6JeQ9u5EKLC32Gjcvbo1ZqM2STHkExZ9vuLfV1rZMl65Frwm42MIv8ftk9Fh/7a6TyswxF6CwBQ==
   dependencies:
     "@jest/create-cache-key-function" "^26.5.0"
     "@react-native-community/cli" "^5.0.1-alpha.0"
@@ -9009,10 +8964,10 @@ react-native@0.0.0-1fe5cac52:
     hermes-engine "~0.7.0"
     invariant "^2.2.4"
     jsc-android "^245459.0.0"
-    metro-babel-register "0.65.1"
-    metro-react-native-babel-transformer "0.65.1"
-    metro-runtime "0.65.1"
-    metro-source-map "0.65.1"
+    metro-babel-register "0.65.2"
+    metro-react-native-babel-transformer "0.65.2"
+    metro-runtime "0.65.2"
+    metro-source-map "0.65.2"
     nullthrows "^1.1.1"
     pretty-format "^26.5.2"
     promise "^8.0.3"
