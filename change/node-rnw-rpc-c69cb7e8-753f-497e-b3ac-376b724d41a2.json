@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Integrate 6/3 RN nigtly build. (#7318)",
-  "packageName": "node-rnw-rpc",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

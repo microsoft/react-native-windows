@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "beachball fixes",
+  "packageName": "jest-environment-winappdriver",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

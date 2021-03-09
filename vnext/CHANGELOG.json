@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 09 Mar 2021 21:16:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.268",
+      "version": "0.0.0-canary.268",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "beachball sync",
+            "author": "jthysell@microsoft.com",
+            "commit": "d5fe5f70892fd19a1397a2f562b8958600dd6a9a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix rnw-dependencies.ps1: VS Enterprise, require 18362 sdk, add cppwinrt vsix for rnw devs",
+            "author": "asklar@microsoft.com",
+            "commit": "63993b6f436fa5906d10f26cdee07c3ea995ec54",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Mar 2021 18:00:37 GMT",
       "tag": "react-native-windows_v0.0.0-canary.265",
       "version": "0.0.0-canary.265",

@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 09 Mar 2021 21:16:42 GMT",
+      "tag": "react-native-windows-init_v1.1.51",
+      "version": "1.1.51",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Added 0.64+ to projectType flag for react-native-windows-init cli (#7306)",
+            "author": "jthysell@microsoft.com",
+            "commit": "b86a7d325d943a4b26045fc3773d19159f4897e0",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Mar 2021 18:00:37 GMT",
       "tag": "react-native-windows-init_v1.1.50",
       "version": "1.1.50",
