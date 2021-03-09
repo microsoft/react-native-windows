@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate 2/20",
-  "packageName": "react-native-windows",
-  "email": "igklemen@microsoft.com",
-  "dependentChangeType": "patch"
-}

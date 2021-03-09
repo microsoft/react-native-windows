@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Thu, 04 Mar 2021 05:05:53 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Mar 2021 18:00:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.50
+
+Tue, 09 Mar 2021 18:00:37 GMT
+
+### Patches
+
+- Added 0.64+ to projectType flag for react-native-windows-init cli (jthysell@microsoft.com)
 
 ## 1.1.49
 

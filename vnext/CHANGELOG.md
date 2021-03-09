@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 08 Mar 2021 20:49:18 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Mar 2021 18:00:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.265
+
+Tue, 09 Mar 2021 18:00:37 GMT
+
+### Changes
+
+- Integrate 6/3 RN nigtly build. (igklemen@microsoft.com)
+- Clarify IJSValueWriter/IJSValueReader docs (asklar@microsoft.com)
+- fix bad merge (asklar@microsoft.com)
+- Disable warning 4103 in MemoryMappedBufferTests.cpp (julio.rocha@microsoft.com)
+- Clarify IJSValueWriter/IJSValueReader docs (asklar@microsoft.com)
+- Integrate 2/20 (igklemen@microsoft.com)
 
 ## 0.0.0-canary.264
 
