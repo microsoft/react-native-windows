@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integrate 6/3 RN nigtly build. (#7318)",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
