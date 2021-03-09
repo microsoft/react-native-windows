@@ -138,6 +138,8 @@ class TextInputShadowNode : public ShadowNodeBase {
   bool m_hideCaret = false;
   bool m_isTextBox = true;
   winrt::Microsoft::ReactNative::JSValue m_placeholderTextColor;
+  bool m_shouldClearTextOnSubmit = false;
+  std::vector<HandledKeyboardEvent> m_submitKeyEvents{};
 
   // Javascripts is running in a different thread. If the typing is very fast,
   // It's possible that two TextChanged are raised but TextInput just got the
@@ -158,7 +160,7 @@ class TextInputShadowNode : public ShadowNodeBase {
 
   xaml::Controls::Control::GotFocus_revoker m_controlGotFocusRevoker{};
   xaml::Controls::Control::LostFocus_revoker m_controlLostFocusRevoker{};
-  xaml::Controls::Control::KeyDown_revoker m_controlKeyDownRevoker{};
+  xaml::Controls::Control::PreviewKeyDown_revoker m_controlKeyDownRevoker{};
   xaml::Controls::Control::SizeChanged_revoker m_controlSizeChangedRevoker{};
   xaml::Controls::Control::CharacterReceived_revoker m_controlCharacterReceivedRevoker{};
   xaml::Controls::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
@@ -278,8 +280,28 @@ void TextInputShadowNode::registerEvents() {
   });
 
   m_controlKeyDownRevoker =
-      control.KeyDown(winrt::auto_revoke, [=](auto &&, xaml::Input::KeyRoutedEventArgs const &args) {
-        if (args.Key() == winrt::Windows::System::VirtualKey::Enter && !args.Handled()) {
+      control.PreviewKeyDown(winrt::auto_revoke, [=](auto &&, xaml::Input::KeyRoutedEventArgs const &args) {
+        auto isMultiline = m_isTextBox && control.as<xaml::Controls::TextBox>().AcceptsReturn();
+        auto shouldSubmit = !args.Handled();
+        if (shouldSubmit) {
+          if (!isMultiline && m_submitKeyEvents.size() == 0) {
+            // If no 'submitKeyEvents' are supplied, use the default behavior for single-line TextInput
+            shouldSubmit = args.Key() == winrt::Windows::System::VirtualKey::Enter;
+          } else if (m_submitKeyEvents.size() > 0) {
+            // If 'submitKeyEvents' are supplied, use them to determine whether to emit
+            // 'onSubmitEditing' for either single-line or multi-line TextInput
+
+            // This must be kept in sync with the default value for HandledKeyboardEvent.handledEventPhase
+            auto defaultEventPhase = HandledEventPhase::Bubbling;
+            auto currentEvent = KeyboardHelper::CreateKeyboardEvent(defaultEventPhase, args);
+            shouldSubmit = KeyboardHelper::ShouldMarkKeyboardHandled(m_submitKeyEvents, currentEvent);
+          } else {
+            // If no 'submitKeyEvents' are supplied, do not emit 'onSubmitEditing' for multi-line TextInput
+            shouldSubmit = false;
+          }
+        }
+
+        if (shouldSubmit) {
           folly::dynamic eventDataSubmitEditing = {};
           if (m_isTextBox) {
             eventDataSubmitEditing = folly::dynamic::object("target", tag)(
@@ -288,8 +310,23 @@ void TextInputShadowNode::registerEvents() {
             eventDataSubmitEditing = folly::dynamic::object("target", tag)(
                 "text", react::uwp::HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
           }
+
+          if (m_shouldClearTextOnSubmit) {
+            if (m_isTextBox) {
+              control.as<xaml::Controls::TextBox>().ClearValue(xaml::Controls::TextBox::TextProperty());
+            } else {
+              control.as<xaml::Controls::PasswordBox>().ClearValue(xaml::Controls::PasswordBox::PasswordProperty());
+            }
+          }
+
           GetViewManager()->GetReactContext().DispatchEvent(
               tag, "topTextInputSubmitEditing", std::move(eventDataSubmitEditing));
+
+          // For multi-line TextInput, we have to mark the PreviewKeyDown event as
+          // handled to prevent the TextInput from adding a newline character
+          if (isMultiline) {
+            args.Handled(true);
+          }
         }
       });
 
@@ -544,6 +581,14 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
       } else if (m_isTextBox != true && react::uwp::IsValidColorValue(propertyValue)) {
         setPasswordBoxPlaceholderForeground(passwordBox, propertyValue);
       }
+    } else if (propertyName == "clearTextOnSubmit") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+        m_shouldClearTextOnSubmit = propertyValue.AsBoolean();
+    } else if (propertyName == "submitKeyEvents") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Array)
+        m_submitKeyEvents = KeyboardHelper::FromJS(propertyValue);
+      else if (propertyValue.IsNull())
+        m_submitKeyEvents.clear();
     } else {
       if (m_isTextBox) { // Applicable properties for TextBox
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
@@ -697,6 +742,8 @@ void TextInputViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::I
   React::WriteProperty(writer, L"contextMenuHidden", L"boolean");
   React::WriteProperty(writer, L"caretHidden", L"boolean");
   React::WriteProperty(writer, L"autoCapitalize", L"string");
+  React::WriteProperty(writer, L"clearTextOnSubmit", L"boolean");
+  React::WriteProperty(writer, L"submitKeyEvents", L"array");
 }
 
 void TextInputViewManager::GetExportedCustomDirectEventTypeConstants(

@@ -177,15 +177,16 @@ void HandledKeyboardEventHandler::KeyboardEventHandledHandler(
 
   bool shouldMarkHandled = false;
   if (phase == KeyboardEventPhase::PreviewKeyDown || phase == KeyboardEventPhase::KeyDown)
-    shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, event);
+    shouldMarkHandled = KeyboardHelper::ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, event);
   else
-    shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyUpKeyboardEvents, event);
+    shouldMarkHandled = KeyboardHelper::ShouldMarkKeyboardHandled(m_handledKeyUpKeyboardEvents, event);
 
   if (shouldMarkHandled)
     args.Handled(true);
 }
 
-bool HandledKeyboardEventHandler::ShouldMarkKeyboardHandled(
+
+/* static */ bool KeyboardHelper::ShouldMarkKeyboardHandled(
     std::vector<HandledKeyboardEvent> const &handledEvents,
     HandledKeyboardEvent currentEvent) {
   for (auto const &event : handledEvents) {
