@@ -8,7 +8,8 @@ jobs:
   - job: ${{ parameters.name }}
     displayName: E2E Test
     dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    #condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    condition: false
 
     # E2ETest is in the pipeline of windows-vs-pr, but windows-vs-pr is still using vs2017.yml
     # E2ETest can only be executed on windows-2019 or above, so force to use windows-2019 image and override vs2017.yml variables
@@ -37,12 +38,12 @@ jobs:
           script: |
             Get-WmiObject Win32_LogicalDisk
 
-      - task: PowerShell@2
-        displayName: Delete Android SDK folder
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            Remove-Item –path "C:\Program Files (x86)\Android\android-sdk" –recurse -force
+      # - task: PowerShell@2
+      #   displayName: Delete Android SDK folder
+      #   inputs:
+      #     targetType: inline # filePath | inline
+      #     script: |
+      #       Remove-Item –path "C:\Program Files (x86)\Android\android-sdk" –recurse -force
 
       - task: PowerShell@2
         displayName: List disksize after deleting software on C
@@ -57,7 +58,8 @@ jobs:
           vsComponents: $(VsComponents)
           yarnBuildCmd: build
 
-      - task: NuGetCommand@2
+      # NuGetCommand@2 workaround: https://developercommunity.visualstudio.com/content/problem/288534/vsts-yaml-build-failure-the-task-name-nugetcommand.html
+      - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
         displayName: NuGet restore - ReactUWPTestApp
         inputs:
           command: restore

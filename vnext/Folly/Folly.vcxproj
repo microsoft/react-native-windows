@@ -281,9 +281,7 @@
     <TemporaryFollyPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFollyUpdate\**\*.*"/>
   </ItemGroup>
   <!-- Reenable this task if we need to temporarily replace any folly files for fixes, while we wait for PRs to land in folly -->
-  <!--
   <Target Name="ApplyFollyTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFolly">
     <Copy DestinationFiles="@(TemporaryFollyPatchFiles->'$(FollyDir)folly\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryFollyPatchFiles)" />
   </Target>
-  -->
 </Project>

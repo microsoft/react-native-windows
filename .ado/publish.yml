@@ -4,6 +4,8 @@ variables:
   - template: variables/msbuild.yml
   - template: variables/vs2017.yml
   - group: RNW Secrets
+  - name: NugetSecurityAnalysisWarningLevel
+    value: 'warn'
 
 trigger:
   batch: true
