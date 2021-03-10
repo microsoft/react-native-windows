@@ -183,7 +183,7 @@ jobs:
           #   additionalRunArguments:
           X64ReleaseCppHermes:
             language: cpp
-            configuration: Debug
+            configuration: Release
             platform: x64
             projectType: app
             additionalInitArguments: --useHermes
