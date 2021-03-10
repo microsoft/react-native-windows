@@ -88,7 +88,16 @@ function focusTextInput(textField: ?ComponentRef) {
     return;
   }
 
-  if (currentlyFocusedInputRef !== textField && textField != null) {
+  // [Windows
+  if (Platform.OS === 'windows' && textField != null) {
+    // On Windows, we cannot test if the currentlyFocusedInputRef equals the
+    // target ref because the call to focus on the target ref may occur before
+    // an onBlur event for the target ref has been dispatched to JS but after
+    // the target ref has lost native focus.
+    focusInput(textField);
+    WindowsTextInputCommands.focus(textField);
+    // Windows]
+  } else if (currentlyFocusedInputRef !== textField && textField != null) {
     focusInput(textField);
     if (Platform.OS === 'ios') {
       // This isn't necessarily a single line text input
@@ -100,11 +109,6 @@ function focusTextInput(textField: ?ComponentRef) {
     } else if (Platform.OS === 'android') {
       AndroidTextInputCommands.focus(textField);
     }
-    // [Windows
-    else if (Platform.OS === 'windows') {
-      WindowsTextInputCommands.focus(textField);
-    }
-    // Windows]
   }
 }
 

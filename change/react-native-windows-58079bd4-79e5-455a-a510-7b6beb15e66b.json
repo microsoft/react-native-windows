@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixes case where focus commands may be ignored",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
