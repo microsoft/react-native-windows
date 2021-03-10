@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "More doc formatting",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
