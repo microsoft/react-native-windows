@@ -185,7 +185,6 @@ void HandledKeyboardEventHandler::KeyboardEventHandledHandler(
     args.Handled(true);
 }
 
-
 /* static */ bool KeyboardHelper::ShouldMarkKeyboardHandled(
     std::vector<HandledKeyboardEvent> const &handledEvents,
     HandledKeyboardEvent currentEvent) {
