@@ -8,7 +8,8 @@ jobs:
   - job: ${{ parameters.name }}
     displayName: E2E Test
     dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    #condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    condition: false
 
     # E2ETest is in the pipeline of windows-vs-pr, but windows-vs-pr is still using vs2017.yml
     # E2ETest can only be executed on windows-2019 or above, so force to use windows-2019 image and override vs2017.yml variables
