@@ -18,12 +18,41 @@ steps:
     condition: and(succeeded(), ne('', '${{ parameters.slices }}'))
 
   - ${{ if eq(parameters.codesignBinaries, true) }}:
-    - task: PkgESCodeSign@10
+    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
       displayName: '${{ parameters.packageId }} CodeSign Binaries'
       inputs:
-        signConfigXml: $(System.DefaultWorkingDirectory)\ReactWindows\${{ parameters.packageId }}.SignConfig.xml
-        inPathRoot: ${{parameters.nugetroot}}
-        outPathRoot: ${{parameters.nugetroot}}
+        ConnectedServiceName: ReactNativeSigning
+        FolderPath: $(System.DefaultWorkingDirectory)/ReactWindows
+        # Recursively finds files matching these patterns:
+        Pattern: |
+          **/${{ parameters.packageId }}.dll
+          **/${{ parameters.packageId }}.winmd
+          **/${{ parameters.packageId }}.exe
+        UseMinimatch: true
+        signConfigType: inlineSignParams
+        inlineOperation: | 
+          [
+             {
+                "KeyCode" : "CP-230012",
+                "OperationCode" : "SigntoolSign",
+                "Parameters" : {
+                  "OpusName" : "Microsoft",
+                  "OpusInfo" : "http://www.microsoft.com",
+                  "FileDigest" : "/fd \"SHA256\"",
+                  "PageHash" : "/PH",
+                  "TimeStamp" : "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+                },
+                "ToolName" : "sign",
+                "ToolVersion" : "1.0"
+              },
+              {
+                "KeyCode" : "CP-230012",
+                "OperationCode" : "SigntoolVerify",
+                "Parameters" : {},
+                "ToolName" : "sign",
+                "ToolVersion" : "1.0"
+              }
+          ]
 
   # NuGetCommand@2 workaround: https://developercommunity.visualstudio.com/content/problem/288534/vsts-yaml-build-failure-the-task-name-nugetcommand.html
   - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
@@ -36,12 +65,32 @@ steps:
       buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.packageId }};${{ parameters.buildProperties }}
   
   - ${{ if eq(parameters.codesignNuget, true) }}:
-    - task: PkgESCodeSign@10
+    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
       displayName: '${{ parameters.packageId }} CodeSign NuGet'
       inputs:
-        signConfigXml: $(System.DefaultWorkingDirectory)\ReactWindows\${{ parameters.packageId }}.NugetSignConfig.xml
-        inPathRoot: $(System.DefaultWorkingDirectory)/NugetRootFinal
-        outPathRoot: $(System.DefaultWorkingDirectory)/NugetRootFinal
+        ConnectedServiceName: ReactNativeSigning
+        FolderPath: $(System.DefaultWorkingDirectory)/NugetRootFinal
+        Pattern: |
+          **/${{ parameters.packageId }}.${{ parameters.packageVersion }}.nupkg
+        UseMinimatch: true
+        signConfigType: inlineSignParams
+        inlineOperation: | 
+          [
+            {
+                "KeyCode" : "CP-401405",
+                "OperationCode" : "NuGetSign",
+                "Parameters" : {},
+                "ToolName" : "sign",
+                "ToolVersion" : "1.0"
+            },
+            {
+                "KeyCode" : "CP-401405",
+                "OperationCode" : "NuGetVerify",
+                "Parameters" : {},
+                "ToolName" : "sign",
+                "ToolVersion" : "1.0"
+            }
+          ]
 
   - task: CmdLine@2
     displayName: '${{ parameters.packageId }} - Nuget push to local test feed'
