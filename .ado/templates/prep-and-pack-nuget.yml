@@ -13,7 +13,8 @@ steps:
       artifactName: ReactWindows
       downloadPath: $(System.DefaultWorkingDirectory)
 
-  - task: NuGetCommand@2
+  # NuGetCommand@2 workaround: https://developercommunity.visualstudio.com/content/problem/288534/vsts-yaml-build-failure-the-task-name-nugetcommand.html
+  - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
     displayName: 'NuGet pack Desktop'
     inputs:
       command: pack
@@ -21,7 +22,8 @@ steps:
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.desktopId}};nugetroot=${{parameters.nugetroot}}
 
-  - task: NuGetCommand@2
+  # NuGetCommand@2 workaround: https://developercommunity.visualstudio.com/content/problem/288534/vsts-yaml-build-failure-the-task-name-nugetcommand.html
+  - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
     displayName: 'NuGet pack Universal'
     inputs:
       command: pack
