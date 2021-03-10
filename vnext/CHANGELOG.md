@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 05 Mar 2021 08:02:05 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Mar 2021 17:41:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.24
+
+Wed, 10 Mar 2021 17:41:09 GMT
+
+### Patches
+
+- [0.63] Fix usage of std::thread in RN's RuntimeExecutor (asklar@microsoft.com)
+- undefined (asklar@microsoft.com)
 
 ## 0.63.23
 
