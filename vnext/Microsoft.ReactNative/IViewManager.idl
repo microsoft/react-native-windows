@@ -10,10 +10,8 @@ namespace Microsoft.ReactNative
 {
 
   [webhosthidden]
-  DOC_STRING(
-    "See the documentation of [Native UI Components](view-managers) for information on how to author a view manager.\n"
-    ">**This documentation and the underlying platform code is a work in progress.**"
-  )
+  DOC_STRING("See the documentation of [Native UI Components](view-managers) for information on how to author a view manager.\n\
+>**This documentation and the underlying platform code is a work in progress.**")
   interface IViewManager
   {
     String Name { get; };
@@ -56,10 +54,8 @@ namespace Microsoft.ReactNative
   }
 
   [webhosthidden]
-  DOC_STRING(
-    "Enables a view manager to create views whose behavior depend on the the property values passed to the view manager at creation time. "
-    "For example, a view manager could choose to create different types of UI elements based on the properties passed in."
-  )
+  DOC_STRING("Enables a view manager to create views whose behavior depend on the the property values passed to the view manager at creation time. \
+For example, a view manager could choose to create different types of UI elements based on the properties passed in.")
   interface IViewManagerCreateWithProperties {
     Object CreateViewWithProperties(IJSValueReader propertyMapReader);
   };
