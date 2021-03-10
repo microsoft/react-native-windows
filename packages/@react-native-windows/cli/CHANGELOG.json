@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 10 Mar 2021 21:22:57 GMT",
+      "tag": "@react-native-windows/cli_v0.64.0-preview.9",
+      "version": "0.64.0-preview.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[0.64] Fix autolinking for solutions that have 'Any CPU' projects",
+            "author": "asklar@microsoft.com",
+            "commit": "2f63c22253cd073bc475a82e5d5e2f3210c19f74",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Feb 2021 15:07:37 GMT",
       "tag": "@react-native-windows/cli_v0.64.0-preview.8",
       "version": "0.64.0-preview.8",
