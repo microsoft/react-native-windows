@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 10 Mar 2021 21:22:57 GMT",
+      "tag": "react-native-windows_v0.64.0-preview.14",
+      "version": "0.64.0-preview.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix right click warning.",
+            "author": "igklemen@microsoft.com",
+            "commit": "3a3f0bd68cb49bbd4020d60413726691850d8c37",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] More doc formatting",
+            "author": "asklar@microsoft.com",
+            "commit": "28dededdf2ffc33a6c4d2219a1ba7ba065f75281",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Port IJSValueWriter/IJSValueReader docs from master",
+            "author": "asklar@microsoft.com",
+            "commit": "dc74c7982c05a20fd7f2aa9bdc3b279e1524cc4a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove unnecessary exceptions to unblock some partners",
+            "author": "asklar@microsoft.com",
+            "commit": "c73bb3ae273f1aca3bb5a0bc44964f72c2fdf82b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Clarify IJSValueWriter/IJSValueReader docs",
+            "author": "asklar@microsoft.com",
+            "commit": "bfebc67309dc1212b9e79fc8db3fe8b639308ef0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Fix usage of std::thread in RN's RuntimeExecutor",
+            "author": "asklar@microsoft.com",
+            "commit": "f901b5ff333430a18ed38e18d1bda75cc6c89238",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Mar 2021 15:05:53 GMT",
       "tag": "react-native-windows_v0.64.0-preview.13",
       "version": "0.64.0-preview.13",
