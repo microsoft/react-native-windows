@@ -46,7 +46,10 @@ namespace ReactUWPTestApp
                 }
             }
 
-            var rootDump = VisualTreeDumper.DumpTree(this, null, additionalProperties, new AttachedProperty[] {});
+            var rootDump = VisualTreeDumper.DumpTree(this, null, additionalProperties, new AttachedProperty[] { 
+                new AttachedProperty() { Name = "Top", Property = Microsoft.ReactNative.ViewPanel.TopProperty },
+                new AttachedProperty() { Name = "Left", Property = Microsoft.ReactNative.ViewPanel.LeftProperty }
+            });
             var element = VisualTreeDumper.FindElementByAutomationId(JsonObject.Parse(rootDump), accessibilityId);
 
             return element;
