@@ -36,7 +36,7 @@ namespace Microsoft.ReactNative
     "See the @IJSValueWriter for the corresponding writer interface.\n"
     "\n"
     "The @IJSValueReader and @IJSValueWriter must be rarely used directly. "
-    "Use them to create functions that serialize a native type or deserialize into a native type. "
+    "Use them to create functions that serialize and deserialize from/to a native type. "
     "The rest of application code must use these functions to serialize/deserialize values. "
     "The `Microsoft.ReactNative.Cxx` and `Microsoft.ReactNative.Managed` projects offer "
     "serializer/deserializer functions for many standard types. Use them directly or to define "

@@ -1,16 +1,8 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 10 Mar 2021 21:22:57 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Feb 2021 15:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
-
-## 0.64.0-preview.9
-
-Wed, 10 Mar 2021 21:22:57 GMT
-
-### Changes
-
-- [0.64] Fix autolinking for solutions that have 'Any CPU' projects (asklar@microsoft.com)
 
 ## 0.64.0-preview.8
 

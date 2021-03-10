@@ -2,21 +2,6 @@
   "name": "e2etest",
   "entries": [
     {
-      "date": "Wed, 10 Mar 2021 21:22:57 GMT",
-      "tag": "e2etest_v0.0.54",
-      "version": "0.0.54",
-      "comments": {
-        "prerelease": [
-          {
-            "comment": "Bump @react-native-windows/tester to v0.0.1",
-            "author": "igklemen@microsoft.com",
-            "commit": "3a3f0bd68cb49bbd4020d60413726691850d8c37",
-            "package": "e2etest"
-          }
-        ]
-      }
-    },
-    {
       "date": "Mon, 01 Mar 2021 15:05:53 GMT",
       "tag": "e2etest_v0.0.54",
       "version": "0.0.54",
