@@ -11,8 +11,8 @@
 #include <JSValue.h>
 #include <winrt/base.h>
 #include <mutex>
-#include <string_view>
 #include <queue>
+#include <string_view>
 
 namespace ReactNativeIntegrationTests {
 
