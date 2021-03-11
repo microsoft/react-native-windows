@@ -4,8 +4,8 @@
 // See that we can safely reload react instance when we use C++ TurboModules.
 
 #include "pch.h"
-#include <ReactCommon/TurboModule.h> // This comes from the react-native package.
-#include <ReactCommon/TurboModuleUtils.h> // This must come from the react-native package, but we use a local version to fix issues.
+#include <ReactCommon/TurboModule.h>
+#include <ReactCommon/TurboModuleUtils.h>
 #include <TurboModuleProvider.h> // It is RNW specific
 #include <limits>
 #include "TestEventService.h"
