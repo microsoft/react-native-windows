@@ -29,6 +29,10 @@ jobs:
 
       - template: templates/configure-git.yml
 
+      - task: UseNode@1
+        inputs:
+          version: '10.x'
+        
       - task: CmdLine@2
         displayName: yarn install
         inputs:
