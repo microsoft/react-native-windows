@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 01 Sep 2020 03:32:19 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Mar 2021 17:36:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.60.0-vnext.172
+
+Thu, 11 Mar 2021 17:36:40 GMT
+
+### Changes
+
+- [0.60] Make package config more strict (dannyvv@microsoft.com)
+- Patch for 0.60 to support new MSVC version (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.60.0-vnext.171
 

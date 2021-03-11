@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 11 Mar 2021 17:36:40 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.172",
+      "version": "0.60.0-vnext.172",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[0.60] Make package config more strict",
+            "author": "dannyvv@microsoft.com",
+            "commit": "df49e9bae0cc355294d8088c533fae139211c5f2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Patch for 0.60 to support new MSVC version",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "8a541710c78437fb2cfcdb7f879b50e01e9feed4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Sep 2020 03:32:19 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.171",
       "version": "0.60.0-vnext.171",
