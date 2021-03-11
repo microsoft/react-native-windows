@@ -535,6 +535,15 @@ bool FrameworkElementViewManager::UpdateProperty(
     } else if (propertyName == "accessibilityActions") {
       auto value = json_type_traits<winrt::IVector<winrt::react::uwp::AccessibilityAction>>::parseJson(propertyValue);
       DynamicAutomationProperties::SetAccessibilityActions(element, value);
+    } else if (propertyName == "display") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+        auto value = propertyValue.AsString();
+        if (value == "none") {
+          element.Visibility(winrt::Windows::UI::Xaml::Visibility::Collapsed);
+        } else {
+          element.Visibility(winrt::Windows::UI::Xaml::Visibility::Visible);
+        }
+      }
     } else {
       return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
