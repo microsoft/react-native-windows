@@ -1,8 +1,16 @@
 # Change Log - node-rnw-rpc
 
-This log was last generated on Wed, 10 Mar 2021 05:10:47 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Mar 2021 05:07:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.5-1
+
+Thu, 11 Mar 2021 05:07:32 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.271 (asklar@microsoft.com)
 
 ## 1.0.5-0
 

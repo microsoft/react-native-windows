@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 10 Mar 2021 05:10:47 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Mar 2021 05:07:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.271
+
+Thu, 11 Mar 2021 05:07:32 GMT
+
+### Changes
+
+- Enable view managers to listen for JS event attach/detach (asklar@microsoft.com)
+- Fixes case where focus commands may be ignored (erozell@outlook.com)
+- Enabling codesigning via ESRP (jthysell@microsoft.com)
 
 ## 0.0.0-canary.270
 

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enable view managers to listen for JS event attach/detach",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

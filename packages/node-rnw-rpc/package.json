@@ -1,6 +1,6 @@
 {
   "name": "node-rnw-rpc",
-  "version": "1.0.5-0",
+  "version": "1.0.5-1",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -15,7 +15,7 @@
     "jsonrpc-lite": "^2.2.0"
   },
   "peerDependencies": {
-    "react-native-windows": ">=0.0.0-canary.270 <0.0.0"
+    "react-native-windows": ">=0.0.0-canary.271 <0.0.0"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.6",
@@ -28,7 +28,7 @@
     "prettier": "1.19.1",
     "react": "17.0.1",
     "react-native": "0.0.0-d477f8011",
-    "react-native-windows": "^0.0.0-canary.270",
+    "react-native-windows": "^0.0.0-canary.271",
     "typescript": "^3.8.3"
   },
   "files": [
