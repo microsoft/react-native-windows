@@ -146,11 +146,11 @@ Subsequent runs of the application should be faster as the JavaScript will be lo
       "\n"
       "Note that the @InstanceCreated event is triggered in response to the 'InstanceCreated' notification "
       "raised in the 'ReactNative.InstanceSettings' namespace. "
-      "Consider using @Notifications to handle the notification in a dispatcher different from JSDispatcher.")
+      "Consider using @Notifications to handle the notification in a dispatcher different from the JSDispatcher.")
     event Windows.Foundation.EventHandler<InstanceCreatedEventArgs> InstanceCreated;
 
     DOC_STRING(
-      "The @InstanceCreated event is triggered when React Native instance has finished loading the JavaScript bundle.\n"
+      "The @InstanceLoaded event is triggered when React Native instance has finished loading the JavaScript bundle.\n"
       "\n"
       "It is triggered on the JSDispatcher thread.\n"
       "If there were errors, then the @InstanceLoadedEventArgs.Failed property on the event arguments will be true.\n"
@@ -159,11 +159,11 @@ Subsequent runs of the application should be faster as the JavaScript will be lo
       "* JavaScript syntax errors.\n"
       "* Global JavaScript exceptions thrown.\n"
       "\n"
-      "The @InstanceCreatedEventArgs.Context property on the event arguments provides access to the instance context.\n"
+      "The @InstanceLoadedEventArgs.Context property on the event arguments provides access to the instance context.\n"
       "\n"
       "Note that the @InstanceLoaded event is triggered in response to the 'InstanceLoaded' notification "
       "raised in the 'ReactNative.InstanceSettings' namespace. "
-      "Consider using @Notifications to handle the notification in a dispatcher different from JSDispatcher.")
+      "Consider using @Notifications to handle the notification in a dispatcher different from the JSDispatcher.")
     event Windows.Foundation.EventHandler<InstanceLoadedEventArgs> InstanceLoaded;
 
     DOC_STRING(
@@ -171,11 +171,11 @@ Subsequent runs of the application should be faster as the JavaScript will be lo
       "\n"
       "It is triggered on the JSDispatcher thread as the last work item before it shuts down.\n"
       "No new JSDispatcher work can be executed after that.\n"
-      "The @InstanceCreatedEventArgs.Context property on the event arguments provides access to the instance context.\n"
+      "The @InstanceDestroyedEventArgs.Context property on the event arguments provides access to the instance context.\n"
       "\n"
       "Note that the @InstanceDestroyed event is triggered in response to the 'InstanceDestroyed' notification "
       "raised in the 'ReactNative.InstanceSettings' namespace. "
-      "Consider using @Notifications to handle the notification in a dispatcher different from JSDispatcher.")
+      "Consider using @Notifications to handle the notification in a dispatcher different from the JSDispatcher.")
     event Windows.Foundation.EventHandler<InstanceDestroyedEventArgs> InstanceDestroyed;
   }
 }
