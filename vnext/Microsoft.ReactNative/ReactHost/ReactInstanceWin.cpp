@@ -189,6 +189,9 @@ ReactInstanceWin::ReactInstanceWin(
           this,
           options.Properties,
           winrt::make<implementation::ReactNotificationService>(options.Notifications))} {
+  // As soon as the bundle is loaded or failed to load, we set the m_whenLoaded promise value in JS queue.
+  // It then synchronously raises the OnInstanceLoaded event in the JS queue.
+  // Then, we notify the ReactHost about the load event in the internal queue.
   m_whenLoaded.AsFuture()
       .Then<Mso::Executors::Inline>(
           [onLoaded = m_options.OnInstanceLoaded, reactContext = m_reactContext](Mso::Maybe<void> &&value) noexcept {
@@ -199,16 +202,24 @@ ReactInstanceWin::ReactInstanceWin(
       .Then(Queue(), [whenLoaded = std::move(whenLoaded)](Mso::Maybe<void> &&value) noexcept {
         whenLoaded.SetValue(std::move(value));
       });
+
+  // When the JS queue is shutdown, we set the m_whenDestroyed promise value as the last work item in the JS queue.
+  // No JS queue work can be done after that for the instance.
+  // The promise continuation synchronously calls the OnInstanceDestroyed event.
+  // Then, the Destroy() method returns the m_whenDestroyedResult future to ReactHost to handle instance destruction.
   m_whenDestroyedResult =
-      m_whenDestroyed.AsFuture().Then<Mso::Executors::Inline>([whenLoadFailed = m_whenLoaded,
+      m_whenDestroyed.AsFuture().Then<Mso::Executors::Inline>([whenLoaded = m_whenLoaded,
                                                                onDestroyed = m_options.OnInstanceDestroyed,
                                                                reactContext = m_reactContext]() noexcept {
-        whenLoadFailed.TryCancel();
+        whenLoaded.TryCancel(); // It only has an effect if whenLoaded was not set before
         if (onDestroyed) {
           onDestroyed.Get()->Invoke(reactContext);
         }
       });
 
+  // We notify the ReactHost immediately that the instance is created, but the
+  // OnInstanceCreated event is raised only after the internal react-native instance is ready and
+  // it starts handling JS queue work items.
   m_whenCreated.SetValue();
 }
 
@@ -518,10 +529,6 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
   m_isDestroyed = true;
   m_state = ReactInstanceState::Unloaded;
   AbandonJSCallQueue();
-
-  if (!m_isLoaded) {
-    OnReactInstanceLoaded(Mso::CancellationErrorProvider().MakeErrorCode(true));
-  }
 
   // Make sure that the instance is not destroyed yet
   if (auto instance = m_instance.Exchange(nullptr)) {
