@@ -12,6 +12,7 @@
 #include <winrt/base.h>
 #include <mutex>
 #include <string_view>
+#include <queue>
 
 namespace ReactNativeIntegrationTests {
 
@@ -50,9 +51,8 @@ struct TestEventService {
  private:
   static std::mutex s_mutex; // to synchronize access to the fields below
   static std::condition_variable s_cv; // to notify about new event
-  static TestEvent s_loggedEvent; // last logged event
-  static bool s_previousEventIsObserved; // did we observe the last logged event?
-  static uint32_t s_observeEventIndex; // the event index to observe
+  static std::queue<TestEvent> s_eventQueue; // the event queue
+  static bool s_hasNewEvent;
 };
 
 } // namespace ReactNativeIntegrationTests
