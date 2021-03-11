@@ -309,12 +309,14 @@
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="Views\PaperShadowNode.cpp" />
     <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
-    <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp" />
     <ClCompile Include="JSI\ChakraJsiRuntime_edgemode.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
     <ClCompile Include="Utils\BatchingEventEmitter.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp">
+      <Filter>ReactHost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -672,6 +674,9 @@
     <ClInclude Include="DocString.h" />
     <ClInclude Include="Utils\BatchingEventEmitter.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ReactHost\JSCallInvokerScheduler.h">
+      <Filter>ReactHost</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
