@@ -109,6 +109,7 @@
   <ItemGroup>
     <ClCompile Include="ExecuteJsiTests.cpp" />
     <ClCompile Include="JsiRuntimeTests.cpp" />
+    <ClCompile Include="JsiSimpleTurboModuleTests.cpp" />
     <ClCompile Include="JsiTurboModuleTests.cpp" />
     <ClCompile Include="ReactInstanceSettingsTests.cpp" />
     <ClCompile Include="ReactNonAbiValueTests.cpp" />
@@ -143,12 +144,14 @@
   <ItemGroup>
     <Manifest Include="Application.manifest" />
     <None Include="ExecuteJsiTests.js" />
+    <None Include="JsiSimpleTurboModuleTests.js" />
     <None Include="JsiTurboModuleTests.js" />
     <None Include="ReactNativeHostTests.js" />
     <None Include="ReactNotificationServiceTests.js" />
     <None Include="TurboModuleTests.js" />
     <None Include="packages.config" />
     <JsBundleEntry Include="ExecuteJsiTests.js" />
+    <JsBundleEntry Include="JsiSimpleTurboModuleTests.js" />
     <JsBundleEntry Include="JsiTurboModuleTests.js" />
     <JsBundleEntry Include="ReactNativeHostTests.js" />
     <JsBundleEntry Include="ReactNotificationServiceTests.js" />
