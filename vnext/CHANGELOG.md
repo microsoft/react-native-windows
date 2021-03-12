@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 01 Mar 2021 15:05:53 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Mar 2021 19:20:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.0-preview.15
+
+Fri, 12 Mar 2021 19:20:30 GMT
+
+### Changes
+
+- beachball sync (jthysell@microsoft.com)
+- [0.64] Port IJSValueWriter/IJSValueReader docs from master (asklar@microsoft.com)
+- [0.64] Enabling codesigning via ESRP (jthysell@microsoft.com)
+- Raise Instance notifications in JSDispatcher thread (vmorozov@microsoft.com)
+- Disable warning 4103 in MemoryMappedBufferTests.cpp (#7319) (julio.rocha@microsoft.com)
+- [0.64] Fix usage of std::thread in RN's RuntimeExecutor (asklar@microsoft.com)
+- Fix right click warning. (igklemen@microsoft.com)
+- Remove unnecessary exceptions to unblock some partners (asklar@microsoft.com)
+- Clarify IJSValueWriter/IJSValueReader docs (asklar@microsoft.com)
 
 ## 0.64.0-preview.13
 

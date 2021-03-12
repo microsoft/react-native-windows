@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[0.64] Fix autolinking for solutions that have 'Any CPU' projects",
-  "packageName": "@react-native-windows/cli",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

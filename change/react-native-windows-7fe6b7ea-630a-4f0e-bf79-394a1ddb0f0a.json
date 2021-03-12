@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Disable warning 4103 in MemoryMappedBufferTests.cpp (#7319)",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Raise Instance notifications in JSDispatcher thread",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

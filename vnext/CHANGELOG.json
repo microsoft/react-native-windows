@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 12 Mar 2021 19:20:30 GMT",
+      "tag": "react-native-windows_v0.64.0-preview.15",
+      "version": "0.64.0-preview.15",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "beachball sync",
+            "author": "jthysell@microsoft.com",
+            "commit": "ebb968fc7a1afd84aa092864de6cbfac13af8fa2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Port IJSValueWriter/IJSValueReader docs from master",
+            "author": "asklar@microsoft.com",
+            "commit": "dc74c7982c05a20fd7f2aa9bdc3b279e1524cc4a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Enabling codesigning via ESRP",
+            "author": "jthysell@microsoft.com",
+            "commit": "7b4bb63421afcf8fa751b2977652a1abeacd6d21",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Raise Instance notifications in JSDispatcher thread",
+            "author": "vmorozov@microsoft.com",
+            "commit": "5d7ed09227a07d26d5a996d63daccd114a3ca33e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Disable warning 4103 in MemoryMappedBufferTests.cpp (#7319)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "2f2b078895561abfc7ba22bdead64fce02a925a4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Fix usage of std::thread in RN's RuntimeExecutor",
+            "author": "asklar@microsoft.com",
+            "commit": "f901b5ff333430a18ed38e18d1bda75cc6c89238",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix right click warning.",
+            "author": "igklemen@microsoft.com",
+            "commit": "3a3f0bd68cb49bbd4020d60413726691850d8c37",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove unnecessary exceptions to unblock some partners",
+            "author": "asklar@microsoft.com",
+            "commit": "c73bb3ae273f1aca3bb5a0bc44964f72c2fdf82b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Clarify IJSValueWriter/IJSValueReader docs",
+            "author": "asklar@microsoft.com",
+            "commit": "bfebc67309dc1212b9e79fc8db3fe8b639308ef0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Mar 2021 15:05:53 GMT",
       "tag": "react-native-windows_v0.64.0-preview.13",
       "version": "0.64.0-preview.13",
