@@ -12,7 +12,6 @@
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "Unicode.h"
 #include "Utils/Helpers.h"
-#include "XamlUIService.h"
 
 namespace Microsoft::ReactNative {
 

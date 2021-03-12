@@ -10,11 +10,9 @@
 #include <Modules\NativeUIManager.h>
 #include <Views/ViewManager.h>
 #include <XamlUtils.h>
-//#include <UI.Xaml.Input.h>
 #include "ShadowNodeBase.h"
 #include "Unicode.h"
 #include "XamlUIService.h"
-//#include "Utils/Helpers.h"
 
 namespace Microsoft::ReactNative {
 
