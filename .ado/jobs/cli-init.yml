@@ -166,20 +166,29 @@ jobs:
             additionalInitArguments: --useWinUI3 true
             additionalRunArguments:
 
-          X64DebugCppHermes:
+          X86DebugCppHermes:
             language: cpp
             configuration: Debug
-            platform: x64
-            projectType: app
-            additionalInitArguments:
-            additionalRunArguments:
-          X86ReleaseCppHermes:
-            language: cpp
-            configuration: Release
             platform: x86
             projectType: app
-            additionalInitArguments:
+            additionalInitArguments: --useHermes
             additionalRunArguments:
+          # #7225 ReactNative.Hermes.Windows is not yet seen as compatible for usage in C# projects
+          # Arm64ReleaseCsHermes:
+          #   language: cs
+          #   configuration: Release
+          #   platform: ARM64
+          #   projectType: app
+          #   additionalInitArguments: --useHermes
+          #   additionalRunArguments:
+          X64ReleaseCppHermes:
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            additionalInitArguments: --useHermes
+            additionalRunArguments:
+
       pool: $(AgentPool.Medium)
       timeoutInMinutes: 60
       cancelTimeoutInMinutes: 5
