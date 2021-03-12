@@ -2,6 +2,175 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Fri, 12 Mar 2021 05:07:46 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.272",
+            "author": "ngerlem@microsoft.com",
+            "commit": "89ceb6d7c2e76bd43b8c2264a2b5243dab1f6e51",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 11 Mar 2021 05:07:32 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.271",
+            "author": "asklar@microsoft.com",
+            "commit": "0c64f4c0e9c74ac81cad9f2cb5b2f311938aeead",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Mar 2021 05:10:47 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.270",
+            "author": "asklar@microsoft.com",
+            "commit": "670d9d5d97d2dff275bb29f4d53b45385ad3fa49",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 09 Mar 2021 22:34:34 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump node-rnw-rpc to v1.0.4",
+            "author": "jthysell@microsoft.com",
+            "commit": "1c6a1e07faa668afffb40c72f441df378a2fde7b",
+            "package": "e2e-test-app"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.269",
+            "author": "jthysell@microsoft.com",
+            "commit": "1c6a1e07faa668afffb40c72f441df378a2fde7b",
+            "package": "e2e-test-app"
+          },
+          {
+            "comment": "Bump jest-environment-winappdriver to v1.1.1",
+            "author": "jthysell@microsoft.com",
+            "commit": "1c6a1e07faa668afffb40c72f441df378a2fde7b",
+            "package": "e2e-test-app"
+          },
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "jthysell@microsoft.com",
+            "commit": "1c6a1e07faa668afffb40c72f441df378a2fde7b",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 09 Mar 2021 21:16:42 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.268",
+            "author": "jthysell@microsoft.com",
+            "commit": "d5fe5f70892fd19a1397a2f562b8958600dd6a9a",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 09 Mar 2021 18:00:37 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.265",
+            "author": "igklemen@microsoft.com",
+            "commit": "dabb208f7dfd160ba44bcf492b32fd383f9168be",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 08 Mar 2021 20:49:18 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.264",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c7d227a76ced04b2c9be04ae28fcb2559f69481e",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 05 Mar 2021 16:31:03 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.263",
+            "author": "igklemen@microsoft.com",
+            "commit": "d1d8069034effe657c6769e02d1b088f89b751d8",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 04 Mar 2021 05:05:53 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.262",
+            "author": "dannyvv@microsoft.com",
+            "commit": "e834e7c206a0f1405bf4bbf406cb7b11bf413d94",
+            "package": "e2e-test-app"
+          },
+          {
+            "comment": "Bump node-rnw-rpc to v1.0.1",
+            "author": "dannyvv@microsoft.com",
+            "commit": "e834e7c206a0f1405bf4bbf406cb7b11bf413d94",
+            "package": "e2e-test-app"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "dannyvv@microsoft.com",
+            "commit": "e834e7c206a0f1405bf4bbf406cb7b11bf413d94",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Mar 2021 05:06:32 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",

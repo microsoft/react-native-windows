@@ -3,13 +3,13 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-16efb8dd5",
+  "baseVersion": "0.0.0-d477f8011",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "4830cc7767fcafb3ce15d7b884f2f6ad8c030366"
+      "baseHash": "f4da69b0623292df17b4cb39406edf68fecabe9d"
     },
     {
       "type": "derived",
@@ -152,7 +152,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "b07d15c88ef2166c74070d4bca9109b0a2482323"
+      "baseHash": "4f5fe56bdded55bbeee1b54356f82361bb1f8b02"
     },
     {
       "type": "patch",
@@ -233,7 +233,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "802ad09c9e8ae8ab0f51846ee4de4a96ac4bed1f",
+      "baseHash": "9fb656bbb836310325789d897879f769124eb31c",
       "issue": 4320
     },
     {

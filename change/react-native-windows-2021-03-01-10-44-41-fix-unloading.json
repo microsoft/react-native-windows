@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Ensure root views are properly unloaded (#7221)",
-  "packageName": "react-native-windows",
-  "email": "skyle@fb.com",
-  "dependentChangeType": "patch",
-  "date": "2021-03-01T18:44:41.417Z"
-}

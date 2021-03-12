@@ -1,8 +1,103 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 02 Mar 2021 05:06:32 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Mar 2021 05:07:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.272
+
+Fri, 12 Mar 2021 05:07:46 GMT
+
+### Changes
+
+- Include Hermes NuGet Package By Default (ngerlem@microsoft.com)
+- Raise Instance notifications in JSDispatcher thread (vmorozov@microsoft.com)
+
+## 0.0.0-canary.271
+
+Thu, 11 Mar 2021 05:07:32 GMT
+
+### Changes
+
+- Enable view managers to listen for JS event attach/detach (asklar@microsoft.com)
+- Fixes case where focus commands may be ignored (erozell@outlook.com)
+- Enabling codesigning via ESRP (jthysell@microsoft.com)
+
+## 0.0.0-canary.270
+
+Wed, 10 Mar 2021 05:10:47 GMT
+
+### Changes
+
+- More doc formatting (asklar@microsoft.com)
+
+## 0.0.0-canary.269
+
+Tue, 09 Mar 2021 22:34:34 GMT
+
+### Changes
+
+- beachball fixes (jthysell@microsoft.com)
+
+## 0.0.0-canary.268
+
+Tue, 09 Mar 2021 21:16:42 GMT
+
+### Changes
+
+- beachball sync (jthysell@microsoft.com)
+- Fix rnw-dependencies.ps1: VS Enterprise, require 18362 sdk, add cppwinrt vsix for rnw devs (asklar@microsoft.com)
+
+## 0.0.0-canary.265
+
+Tue, 09 Mar 2021 18:00:37 GMT
+
+### Changes
+
+- Integrate 6/3 RN nigtly build. (igklemen@microsoft.com)
+- Clarify IJSValueWriter/IJSValueReader docs (asklar@microsoft.com)
+- fix bad merge (asklar@microsoft.com)
+- Disable warning 4103 in MemoryMappedBufferTests.cpp (julio.rocha@microsoft.com)
+- Clarify IJSValueWriter/IJSValueReader docs (asklar@microsoft.com)
+- Integrate 2/20 (igklemen@microsoft.com)
+
+## 0.0.0-canary.264
+
+Mon, 08 Mar 2021 20:49:18 GMT
+
+### Changes
+
+- Avoid re-registering render callbacks when coalescing single element queue (ngerlem@microsoft.com)
+
+## 0.0.0-canary.263
+
+Fri, 05 Mar 2021 16:31:03 GMT
+
+### Changes
+
+- remove stale appium comment (igklemen@microsoft.com)
+- Fix right click warning. (igklemen@microsoft.com)
+- Remove unnecessary exceptions to unblock some partners (asklar@microsoft.com)
+- Coalesce ScrollView Messages (ngerlem@microsoft.com)
+- Remove ChakraExecutor (non-JSI) (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.262
+
+Thu, 04 Mar 2021 05:05:53 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.4.13 (dannyvv@microsoft.com)
+
+### Changes
+
+- Some XAML events do not have a sender (e.g. Loaded) (asklar@microsoft.com)
+- Update WinAppDriver version requirement (asklar@microsoft.com)
+- Fixes registration name for TextInput onScroll (erozell@outlook.com)
+- Integrate 2/9 nightly RN build. (igklemen@microsoft.com)
+- Ensure root views are properly unloaded (#7221) (skyle@fb.com)
+- Narrow fix for tintColor and repeat images (erozell@outlook.com)
+- Fix RN runtimeExecutor use of std::thread (asklar@microsoft.com)
 
 ## 0.0.0-canary.261
 

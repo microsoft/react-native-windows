@@ -2,23 +2,24 @@
   "includePatterns": [
     ".flowconfig",
     "ReactCopies/**",
-    "src/**"
+    "src/**",
+    "ReactCommon/TEMP_UntilReactCommonUpdate/**"
   ],
   "excludePatterns": [],
-  "baseVersion": "0.0.0-16efb8dd5",
+  "baseVersion": "0.0.0-d477f8011",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "4830cc7767fcafb3ce15d7b884f2f6ad8c030366"
+      "baseHash": "f4da69b0623292df17b4cb39406edf68fecabe9d"
     },
     {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/runtimeexecutor/ReactCommon/RuntimeExecutor.h",
-      "baseFile": "ReactCommon/runtimeexecutor/ReactCommon/RuntimeExecutor.h",
-      "baseHash": "d67ec51c86967cbc1da40e41c1e81c2563b1e757",
-      "issue": 7252
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBuffer.cpp",
+      "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBuffer.cpp",
+      "baseHash": "f810d614ada443e806fee88a0edf3bb6564d2c7d",
+      "issue": 7309
     },
     {
       "type": "patch",
@@ -213,7 +214,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "1f1fb46e3ee28acbfeaaba6842b9f273171dd5c9"
+      "baseHash": "614553aa8396b42e932f8c717ebc8b493d772d93"
     },
     {
       "type": "derived",
@@ -249,7 +250,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "b07d15c88ef2166c74070d4bca9109b0a2482323"
+      "baseHash": "4f5fe56bdded55bbeee1b54356f82361bb1f8b02"
     },
     {
       "type": "patch",
@@ -328,7 +329,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "802ad09c9e8ae8ab0f51846ee4de4a96ac4bed1f",
+      "baseHash": "9fb656bbb836310325789d897879f769124eb31c",
       "issue": 4590
     },
     {
@@ -364,7 +365,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "bf6e342f34dd6fea00ae7ea56938a5473db1912c"
+      "baseHash": "8377428d85da1428842099549076fdacd549bd07"
     },
     {
       "type": "derived",
@@ -380,7 +381,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "8821c40968873af45b343d0deb37f62ecb56286d"
+      "baseHash": "f782aaf60f162419c71948fd548dfebb7746dd4f"
     },
     {
       "type": "patch",

@@ -1,8 +1,45 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 18 Feb 2021 05:07:11 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Mar 2021 22:34:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.85
+
+Tue, 09 Mar 2021 22:34:34 GMT
+
+### Changes
+
+- beachball fixes (jthysell@microsoft.com)
+
+## 0.0.0-canary.84
+
+Tue, 09 Mar 2021 21:16:42 GMT
+
+### Changes
+
+- Integrate 6/3 RN nigtly build. (#7318) (jthysell@microsoft.com)
+
+## 0.0.0-canary.83
+
+Tue, 09 Mar 2021 18:00:37 GMT
+
+### Changes
+
+- Integrate 6/3 RN nigtly build. (igklemen@microsoft.com)
+- Integrate 2/20 (igklemen@microsoft.com)
+
+## 0.0.0-canary.82
+
+Thu, 04 Mar 2021 05:05:53 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.4.13 (dannyvv@microsoft.com)
+
+### Changes
+
+- Integrate 2/9 nightly RN build. (igklemen@microsoft.com)
 
 ## 0.0.0-canary.81
 

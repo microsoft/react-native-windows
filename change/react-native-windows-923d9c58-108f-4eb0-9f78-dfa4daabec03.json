@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Some XAML events do not have a sender (e.g. Loaded)",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

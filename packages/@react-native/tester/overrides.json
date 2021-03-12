@@ -1,11 +1,11 @@
 {
-  "baseVersion": "0.0.0-16efb8dd5",
+  "baseVersion": "0.0.0-d477f8011",
   "overrides": [
     {
       "type": "copy",
       "directory": "js",
       "baseDirectory": "packages/rn-tester/js",
-      "baseHash": "a662926a24c8c04b73e8a15c9d5ef42019df5501",
+      "baseHash": "79d174937b0b4d9f879d001a691a592f38aaeb4c",
       "issue": 4054
     },
     {

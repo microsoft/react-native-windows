@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix RN runtimeExecutor use of std::thread",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

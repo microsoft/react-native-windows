@@ -8,7 +8,7 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   DOC_STRING(
     "JSON-like stream writer.\n"
-    "It is used to write data that is sent between native modules and the Microsoft.ReactNative.dll.\n"
+    "It is used to write data that is sent between native modules and the Microsoft.ReactNative library.\n"
     "\n"
     "The JSON-like streams are data structures that satisfy the [JSON specification](https://tools.ietf.org/html/rfc8259). "
     "The data structure may have objects with name-value pairs and arrays of items. "
@@ -18,7 +18,7 @@ namespace Microsoft.ReactNative
     "See the @IJSValueReader for the corresponding reader interface.\n"
     "\n"
     "The @IJSValueReader and @IJSValueWriter must be rarely used directly. "
-    "Use them to create serializer and deserializer functions for a type. "
+    "Use them to create functions that serialize a native type or deserialize into a native type. "
     "The rest of application code must use these functions to serialize/deserialize values. "
     "The `Microsoft.ReactNative.Cxx` and `Microsoft.ReactNative.Managed` projects offer "
     "serializer/deserializer functions for many standard types. Use them directly or to define "
@@ -39,7 +39,7 @@ namespace Microsoft.ReactNative
     DOC_STRING("Writes a `Number` value from a double.")
     void WriteDouble(Double value);
 
-    DOC_STRING("Writes a `String` value")
+    DOC_STRING("Writes a `String` value.")
     void WriteString(String value);
 
     DOC_STRING("Starts writing an `Object`.")

@@ -77,7 +77,7 @@ const argv = yargs
     },
     projectType: {
       type: 'string',
-      describe: 'The type of project to initialize.',
+      describe: 'The type of project to initialize (supported on 0.64+)',
       choices: ['app', 'lib'],
       default: 'app',
     },
@@ -432,14 +432,6 @@ function isProjectUsingYarn(cwd: string): boolean {
         'IncompatibleOptions',
         "Error: Incompatible options specified. Options '--useHermes' and '--experimentalNuGetDependency' are incompatible",
         {detail: 'useHermes and experimentalNuGetDependency'},
-      );
-    }
-
-    if (argv.useHermes && argv.language === 'cs') {
-      throw new CodedError(
-        'IncompatibleOptions',
-        "Error: '--useHermes' is not yet compatible with C# projects",
-        {detail: 'useHermes and C#'},
       );
     }
 

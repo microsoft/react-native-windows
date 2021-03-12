@@ -100,6 +100,9 @@ void ABIViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValu
         case ViewManagerPropertyType::Color:
           writer.WriteString(L"Color");
           break;
+        case ViewManagerPropertyType::Function:
+          writer.WriteString(L"function");
+          break;
       }
     }
   }

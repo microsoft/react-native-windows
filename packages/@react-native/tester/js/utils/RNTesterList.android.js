@@ -80,16 +80,29 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/ScrollView/ScrollViewAnimatedExample'),
   },
   {
-    key: 'SectionList_EndReached',
-    module: require('../examples/SectionList/SectionList_onEndReached'),
+    key: 'SectionList-onEndReached',
+    module: require('../examples/SectionList/SectionList-onEndReached'),
     category: 'ListView',
-    supportsTVOS: true,
   },
   {
-    key: 'SectionList_onViewableItemsChanged',
-    module: require('../examples/SectionList/SectionList_onViewableItemsChanged'),
+    key: 'SectionList-inverted',
+    module: require('../examples/SectionList/SectionList-inverted'),
     category: 'ListView',
-    supportsTVOS: true,
+  },
+  {
+    key: 'SectionList-onViewableItemsChanged',
+    module: require('../examples/SectionList/SectionList-onViewableItemsChanged'),
+    category: 'ListView',
+  },
+  {
+    key: 'SectionList-stickyHeadersEnabled',
+    module: require('../examples/SectionList/SectionList-stickyHeadersEnabled'),
+    category: 'ListView',
+  },
+  {
+    key: 'SectionList-withSeparators',
+    module: require('../examples/SectionList/SectionList-withSeparators'),
+    category: 'ListView',
   },
   {
     key: 'SectionListExample',

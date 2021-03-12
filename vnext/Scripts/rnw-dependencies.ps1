@@ -8,7 +8,8 @@ param(
 
     [Parameter(ValueFromRemainingArguments)]
     [ValidateSet('appDev', 'rnwDev', 'buildLab', 'vs2019', 'clone')]
-    [String[]]$Tags = @('appDev')
+    [String[]]$Tags = @('appDev'),
+    [switch]$Enterprise = $false
 )
 
 enum CheckId {
@@ -31,6 +32,7 @@ enum CheckId {
     WindowsADK
     WindowsVersion
     Yarn
+    CppWinRTVSIX
 }
 
 # CODESYNC \packages\@react-native-windows\cli\src\runWindows\runWindows.ts
@@ -58,7 +60,8 @@ if ($tagsToInclude.Contains('rnwDev')) {
 $vsComponents = @('Microsoft.Component.MSBuild',
     'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
-    'Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core');
+    'Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core',
+    'Microsoft.VisualStudio.Component.Windows10SDK.18362');
 
 # UWP.VC is not needed to build the projects with msbuild, but the VS IDE requires it.
 if (!($tagsToInclude.Contains('buildLab'))) {
@@ -130,6 +133,7 @@ function CheckWinAppDriver {
     $WADPath = "${env:ProgramFiles(x86)}\Windows Application Driver\WinAppDriver.exe";
     if (Test-Path $WADPath) {
         $version = [Version]([System.Diagnostics.FileVersionInfo]::GetVersionInfo($WADPath).FileVersion);
+        Write-Debug "WinAppDriver version found: $version"
         return $version.CompareTo([Version]"1.2.1") -ge 0;
     }
     return $false;
@@ -158,6 +162,33 @@ function GetMsBuild64BitConfigFile{
     $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
     $msbExeConfigPath=& $vsWhere -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\amd64\MSBuild.exe.config
     return $msbExeConfigPath;
+}
+
+function CheckCppWinRT_VSIX {
+    try {
+        $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+        if (!(Test-Path $vsWhere)) {
+            return $false;
+        }
+        $vsPath = & $vsWhere -version 16.5 -property installationPath;
+        $natvis = Get-ChildItem "$vsPath\Common7\IDE\Extensions\cppwinrt.natvis" -Recurse;
+        return $null -ne $natvis;
+    } catch { return $false };
+}
+
+function InstallCppWinRT_VSIX {
+    $url = "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/CppWinRTTeam/vsextensions/cppwinrt101804264/2.0.210304.5/vspackage";
+    Write-Debug "Downloading CppWinRT VSIX from $url"
+    Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\Microsoft.Windows.CppWinRT.vsix
+    
+    $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+    if (!(Test-Path $vsWhere)) {
+        return $false;
+    }
+    $productPath = & $vsWhere -version 16.5 -property productPath
+    $VSIXInstaller_exe = Join-Path (Split-Path $productPath) "VSIXInstaller.exe"
+    $process = Start-Process $VSIXInstaller_exe -PassThru -Wait -ArgumentList "/a /q $env:TEMP\Microsoft.Windows.CppWinRT.vsix"
+    $process.WaitForExit();
 }
 
 $requiredFreeSpaceGB = 15;
@@ -216,14 +247,14 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::VSUWP;
-        Name = 'Visual Studio >= 16.5 with UWP and Desktop/C++';
+        Name = 'Compilers, build tools, SDKs and Visual Studio';
         Tags = @('appDev', 'vs2019');
         Valid = CheckVS;
         Install = { InstallVS };
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'NodeJS 12, 13 or 14 installed';
+        Name = 'NodeJS lts installed';
         Tags = @('appDev');
         Valid = CheckNode;
         Install = { choco install -y nodejs-lts };
@@ -258,8 +289,6 @@ $requirements = @(
         Tags = @('rnwDev');
         Valid = CheckWinAppDriver;
         Install = {
-            # don't install from choco as we need an exact version match. appium-windows-driver checks the checksum of WAD.
-            # See \node_modules\appium-windows-driver\build\lib\installer.js
             $ProgressPreference = 'Ignore';
             $url = "https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver_1.2.1.msi";
             Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\WindowsApplicationDriver.msi
@@ -313,6 +342,14 @@ $requirements = @(
         Install = {
             & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git
         };
+        Optional = $true
+    },
+    @{
+        Id=[CheckId]::CppWinRTVSIX;
+        Name = "C++/WinRT VSIX package";
+        Tags = @('rnwDev');
+        Valid = CheckCppWinRT_VSIX;
+        Install = { InstallCppWinRT_VSIX };
         Optional = $true
     },
     @{

@@ -2,6 +2,263 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 12 Mar 2021 05:07:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.272",
+      "version": "0.0.0-canary.272",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Include Hermes NuGet Package By Default",
+            "author": "ngerlem@microsoft.com",
+            "commit": "89ceb6d7c2e76bd43b8c2264a2b5243dab1f6e51",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Raise Instance notifications in JSDispatcher thread",
+            "author": "vmorozov@microsoft.com",
+            "commit": "91fcecf2947f4db638f795ed46640f5adbc9520d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 11 Mar 2021 05:07:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.271",
+      "version": "0.0.0-canary.271",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable view managers to listen for JS event attach/detach",
+            "author": "asklar@microsoft.com",
+            "commit": "0c64f4c0e9c74ac81cad9f2cb5b2f311938aeead",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixes case where focus commands may be ignored",
+            "author": "erozell@outlook.com",
+            "commit": "c97d0ac35979cd6b777cae752982dab751c248eb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Enabling codesigning via ESRP",
+            "author": "jthysell@microsoft.com",
+            "commit": "e8fcb693df093a07ea0f526557dc906492b74113",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Mar 2021 05:10:47 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.270",
+      "version": "0.0.0-canary.270",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "More doc formatting",
+            "author": "asklar@microsoft.com",
+            "commit": "670d9d5d97d2dff275bb29f4d53b45385ad3fa49",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 09 Mar 2021 22:34:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.269",
+      "version": "0.0.0-canary.269",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "beachball fixes",
+            "author": "jthysell@microsoft.com",
+            "commit": "1c6a1e07faa668afffb40c72f441df378a2fde7b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 09 Mar 2021 21:16:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.268",
+      "version": "0.0.0-canary.268",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "beachball sync",
+            "author": "jthysell@microsoft.com",
+            "commit": "d5fe5f70892fd19a1397a2f562b8958600dd6a9a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix rnw-dependencies.ps1: VS Enterprise, require 18362 sdk, add cppwinrt vsix for rnw devs",
+            "author": "asklar@microsoft.com",
+            "commit": "63993b6f436fa5906d10f26cdee07c3ea995ec54",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 09 Mar 2021 18:00:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.265",
+      "version": "0.0.0-canary.265",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 6/3 RN nigtly build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "dabb208f7dfd160ba44bcf492b32fd383f9168be",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Clarify IJSValueWriter/IJSValueReader docs",
+            "author": "asklar@microsoft.com",
+            "commit": "f4534b2e5d6e5fe293a27e98b24061924aa4fcdf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "fix bad merge",
+            "author": "asklar@microsoft.com",
+            "commit": "e1eda1fd6a7807a633b89cf3d6fee06065a23a02",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Disable warning 4103 in MemoryMappedBufferTests.cpp",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "b49560a61b719571ab281ee7aa230bb72c033308",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Clarify IJSValueWriter/IJSValueReader docs",
+            "author": "asklar@microsoft.com",
+            "commit": "f4534b2e5d6e5fe293a27e98b24061924aa4fcdf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 2/20",
+            "author": "igklemen@microsoft.com",
+            "commit": "25a5f41129805762cef5d5b594c1810b6e53e39d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 08 Mar 2021 20:49:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.264",
+      "version": "0.0.0-canary.264",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Avoid re-registering render callbacks when coalescing single element queue",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c7d227a76ced04b2c9be04ae28fcb2559f69481e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 05 Mar 2021 16:31:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.263",
+      "version": "0.0.0-canary.263",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "remove stale appium comment",
+            "author": "igklemen@microsoft.com",
+            "commit": "d1d8069034effe657c6769e02d1b088f89b751d8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix right click warning.",
+            "author": "igklemen@microsoft.com",
+            "commit": "24273ae43fe50c9e81cb1d5093a4eb5ecaee74f3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove unnecessary exceptions to unblock some partners",
+            "author": "asklar@microsoft.com",
+            "commit": "3d2fb4e4997b0cd268887122a9485eb1ad56fa46",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Coalesce ScrollView Messages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c6b776e369fdf1a383a266d6d4e4482b7fba9a25",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove ChakraExecutor (non-JSI)",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "1c6b617fcecefd9b873da00af594c71e61d4e792",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 04 Mar 2021 05:05:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.262",
+      "version": "0.0.0-canary.262",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Some XAML events do not have a sender (e.g. Loaded)",
+            "author": "asklar@microsoft.com",
+            "commit": "ad25492aa0908637e33f7bd44365f52c62a5e4e1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update WinAppDriver version requirement",
+            "author": "asklar@microsoft.com",
+            "commit": "a837e53cc678b1009e73d9679b9a73d2b159ed0a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixes registration name for TextInput onScroll",
+            "author": "erozell@outlook.com",
+            "commit": "d1c9694ca9b68a651b18a7e56a366d99e2e7ef57",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 2/9 nightly RN build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "fb4e8bc1b81ecf6ad6d46f8f7753ad09397c867b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Ensure root views are properly unloaded (#7221)",
+            "author": "skyle@fb.com",
+            "commit": "cd4d381de461a8781c6616f61695a5dafcf44966",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Narrow fix for tintColor and repeat images",
+            "author": "erozell@outlook.com",
+            "commit": "87e4f9751bebcfa633f8c80c9f0fccd37651db1b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix RN runtimeExecutor use of std::thread",
+            "author": "asklar@microsoft.com",
+            "commit": "3ef08bc9da6d0271b76a88e65a08f1fa9feaacbf",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.13",
+            "author": "dannyvv@microsoft.com",
+            "commit": "e834e7c206a0f1405bf4bbf406cb7b11bf413d94",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Mar 2021 05:06:32 GMT",
       "tag": "react-native-windows_v0.0.0-canary.261",
       "version": "0.0.0-canary.261",

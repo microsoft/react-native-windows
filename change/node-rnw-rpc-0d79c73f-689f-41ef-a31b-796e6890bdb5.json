@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Integrate 2/9 nightly RN build.",
-  "packageName": "node-rnw-rpc",
-  "email": "igklemen@microsoft.com",
-  "dependentChangeType": "patch"
-}
