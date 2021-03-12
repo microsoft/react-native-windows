@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Include Hermes NuGet Package By Default",
-  "packageName": "react-native-windows-init",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

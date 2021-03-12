@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Include Hermes NuGet Package By Default",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

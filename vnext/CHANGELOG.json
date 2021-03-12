@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 12 Mar 2021 05:07:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.272",
+      "version": "0.0.0-canary.272",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Include Hermes NuGet Package By Default",
+            "author": "ngerlem@microsoft.com",
+            "commit": "89ceb6d7c2e76bd43b8c2264a2b5243dab1f6e51",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Raise Instance notifications in JSDispatcher thread",
+            "author": "vmorozov@microsoft.com",
+            "commit": "91fcecf2947f4db638f795ed46640f5adbc9520d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Mar 2021 05:07:32 GMT",
       "tag": "react-native-windows_v0.0.0-canary.271",
       "version": "0.0.0-canary.271",
