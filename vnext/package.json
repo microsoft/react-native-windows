@@ -45,6 +45,7 @@
     "promise": "^8.0.3",
     "prop-types": "^15.7.2",
     "react-devtools-core": "^4.6.0",
+    "react-native-codegen": "^0.0.6",
     "react-refresh": "^0.4.0",
     "regenerator-runtime": "^0.13.2",
     "scheduler": "^0.20.1",
@@ -65,7 +66,7 @@
     "just-scripts": "^0.44.7",
     "prettier": "1.19.1",
     "react": "17.0.1",
-    "react-native": "0.64.0-rc.3",
+    "react-native": "0.64.0",
     "react-native-platform-override": "^0.4.3",
     "react-native-windows-codegen": "0.1.10",
     "react-refresh": "^0.4.0",
@@ -77,12 +78,12 @@
     "react-native": "^0.64.0-rc.1"
   },
   "beachball": {
-    "defaultNpmTag": "preview",
+    "defaultNpmTag": "latest",
     "gitTags": true,
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch"
+      "prerelease"
     ]
   },
   "files": [
