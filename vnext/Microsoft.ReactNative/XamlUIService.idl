@@ -26,11 +26,11 @@ namespace Microsoft.ReactNative {
     DOC_STRING("Set XamlRoot for app. This must be manually provided to the ReactInstanceSettings when using XamlIslands.")
     static void SetXamlRoot(IReactPropertyBag properties, XAML_NAMESPACE.XamlRoot xamlRoot);
     // This needs to be manually provided to the ReactInstanceSettings when using XamlIslands
-    DOC_STRING("Set accessible XamlRoot for app. This XamlRoot should be able to create an automation peer. This must be manually provided to the ReactInstanceSettings when using XamlIslands to have access to accessibility methods.")
+    DOC_STRING("Set accessible FrameworkElement for app. Make sure the element is able to create an automation peer. This must be manually provided to the ReactInstanceSettings when using XamlIslands to have access to accessibility methods.")
     static void SetAccessibleRoot(IReactPropertyBag properties, XAML_NAMESPACE.FrameworkElement accessibleRoot);
     DOC_STRING("Retrieve XamlRoot for app.")
     static XAML_NAMESPACE.XamlRoot GetXamlRoot(IReactPropertyBag properties);
-    DOC_STRING("Retrieve accessible XamlRoot for app.")
+    DOC_STRING("Retrieve accessible FrameworkElement for app.")
     static XAML_NAMESPACE.FrameworkElement GetAccessibleRoot(IReactPropertyBag properties);
 
     static UInt64 GetIslandWindowHandle(IReactPropertyBag properties);
