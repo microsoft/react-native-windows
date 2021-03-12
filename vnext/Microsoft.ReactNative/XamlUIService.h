@@ -23,7 +23,9 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
       JSValueArgWriter const &eventDataArgWriter) noexcept;
 
   static void SetXamlRoot(IReactPropertyBag const &properties, xaml::XamlRoot const &xamlRoot) noexcept;
-  static void SetAccessibleRoot(IReactPropertyBag const &properties, xaml::FrameworkElement const &accessibleRoot) noexcept;
+  static void SetAccessibleRoot(
+      IReactPropertyBag const &properties,
+      xaml::FrameworkElement const &accessibleRoot) noexcept;
   static xaml::XamlRoot GetXamlRoot(IReactPropertyBag const &properties) noexcept;
   static xaml::FrameworkElement GetAccessibleRoot(IReactPropertyBag const &properties) noexcept;
 
