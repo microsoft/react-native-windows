@@ -326,7 +326,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   }
 
   void sendAccessibilityEvent(int64_t reactTag, double eventType) noexcept {
-    if (eventType == 0) { // FocusAccessibilityEvent
+    if (eventType == 0) { // FocusAccessibilityEvent Type
       focus(reactTag);
     }
   }

@@ -5,7 +5,6 @@
 #include "AccessibilityInfoModule.h"
 #include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Controls.h>
-#include <UI.Xaml.Input.h>
 #include <XamlUtils.h>
 #include <uiautomationcore.h>
 #include <uiautomationcoreapi.h>
