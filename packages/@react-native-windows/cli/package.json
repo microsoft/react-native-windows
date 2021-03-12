@@ -57,7 +57,7 @@
     "templates"
   ],
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.63-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",
