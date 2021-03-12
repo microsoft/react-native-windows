@@ -46,18 +46,11 @@ void AccessibilityInfo::announceForAccessibility(std::string announcement) noexc
     xaml::UIElement element{nullptr};
 
     if (react::uwp::IsXamlIsland()) {
-      if (auto xamlroot =
+      if (auto accessibleRoot =
               winrt::Microsoft::ReactNative::XamlUIService::GetAccessibleRoot(context.Properties().Handle())) {
-        element = xamlroot.Content();
-      }
-      if (!element) {
-        if (auto window = xaml::Window::Current()) {
-          if (element = window.Content()) {
-            element.SetValue(xaml::Automation::AutomationProperties::LandmarkTypeProperty(), winrt::box_value(80002));
-          } else {
-            return;
-          }
-        }
+        element = accessibleRoot;
+      } else {
+        return;
       }
     } else {
       element = xaml::Controls::TextBlock();
