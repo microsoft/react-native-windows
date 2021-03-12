@@ -77,7 +77,6 @@
         FOLLY_NO_CONFIG;
         NOMINMAX;
         _HAS_AUTO_PTR_ETC;
-        CHAKRACORE;
         RN_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>

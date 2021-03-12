@@ -61,7 +61,6 @@
         BOOST_ASIO_HAS_IOCP;
         FOLLY_NO_CONFIG;
         NOMINMAX;
-        CHAKRACORE;
         RN_EXPORT=;
         JSI_EXPORT=;
         %(PreprocessorDefinitions)

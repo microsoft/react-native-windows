@@ -99,7 +99,6 @@
         FOLLY_NO_CONFIG;
         NOMINMAX;
         _HAS_AUTO_PTR_ETC;
-        CHAKRACORE;
         RN_PLATFORM=win32;
         RN_EXPORT=;
         JSI_EXPORT=;
