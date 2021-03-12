@@ -41,4 +41,8 @@ TestReactNativeHostHolder::~TestReactNativeHostHolder() noexcept {
   m_queueController.ShutdownQueueAsync().get();
 }
 
+winrt::Microsoft::ReactNative::ReactNativeHost const &TestReactNativeHostHolder::Host() const noexcept {
+  return m_host;
+}
+
 } // namespace ReactNativeIntegrationTests

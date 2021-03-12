@@ -309,6 +309,9 @@
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="Views\PaperShadowNode.cpp" />
     <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
+    <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp">
+      <Filter>ReactHost</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -663,6 +666,9 @@
     <ClInclude Include="Views\PaperShadowNode.h" />
     <ClInclude Include="Views\ShadowNodeRegistry.h" />
     <ClInclude Include="DocString.h" />
+    </ClInclude>
+    <ClInclude Include="ReactHost\JSCallInvokerScheduler.h">
+      <Filter>ReactHost</Filter>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
