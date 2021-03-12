@@ -10,9 +10,11 @@
 #include <Modules\NativeUIManager.h>
 #include <Views/ViewManager.h>
 #include <XamlUtils.h>
+//#include <UI.Xaml.Input.h>
 #include "ShadowNodeBase.h"
 #include "Unicode.h"
 #include "XamlUIService.h"
+//#include "Utils/Helpers.h"
 
 namespace Microsoft::ReactNative {
 
@@ -121,6 +123,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       vm->GetConstants(writer);
       writer.WriteObjectEnd();
     }
+    constants.Add(L"FocusAccessibilityEvent", 0);
   }
 
   void createView(int64_t reactTag, std::string viewName, int64_t rootTag, React::JSValueObject &&props) noexcept {
@@ -323,8 +326,9 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   }
 
   void sendAccessibilityEvent(int64_t reactTag, double eventType) noexcept {
-    assert(false);
-    // TODO
+    if (eventType == 0) { // FocusAccessibilityEvent
+      focus(reactTag);
+    }
   }
 
   void showPopupMenu(

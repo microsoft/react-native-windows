@@ -11,9 +11,9 @@
 #include <uiautomationcoreapi.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include <winrt/Windows.UI.ViewManagement.h>
-#include "XamlUIService.h"
 #include "Unicode.h"
 #include "Utils/Helpers.h"
+#include "XamlUIService.h"
 
 namespace Microsoft::ReactNative {
 
@@ -37,25 +37,8 @@ void AccessibilityInfo::isTouchExplorationEnabled(
   onSuccess(UiaClientsAreListening());
 }
 
-void AccessibilityInfo::setAccessibilityFocus(double reactTag) noexcept {
-  m_context.UIDispatcher().Post([context = m_context, reactTag = std::move(reactTag)] {
-    auto service = winrt::Microsoft::ReactNative::XamlUIService::FromContext(context.Handle());
-    auto element = service.ElementFromReactTag(int64_t(reactTag));
-
-    if (!element) {
-      return;
-    }
-
-    auto frameworkElement = element.try_as<xaml::FrameworkElement>();
-    xaml::Input::FocusManager::TryFocusAsync(frameworkElement, xaml::FocusState::Programmatic);
-    auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(frameworkElement);
-
-    if (!peer) {
-      return;
-    }
-
-    peer.RaiseAutomationEvent(xaml::Automation::Peers::AutomationEvents::AutomationFocusChanged);
-  });
+void AccessibilityInfo::setAccessibilityFocus(double /*reactTag*/) noexcept {
+  // no-op - This appears to be unused in RN
 }
 
 void AccessibilityInfo::announceForAccessibility(std::string announcement) noexcept {
