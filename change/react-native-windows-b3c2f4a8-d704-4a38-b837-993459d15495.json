@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Change TextInput cursor behavior",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
