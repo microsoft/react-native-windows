@@ -6,17 +6,17 @@
     <RootNamespace>Playground</RootNamespace>
     <ProjectName>Playground-win32</ProjectName>
     <Keyword>Win32Proj</Keyword>
-    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <!-- <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier> -->
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <BuildMSRNCxx>false</BuildMSRNCxx>
     <RunAutolinkCheck>false</RunAutolinkCheck>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <AppxPackage>false</AppxPackage>
   </PropertyGroup>
   <PropertyGroup Label="FromWinUI3_VSIX" Condition="'$(UseWinUI3)'=='true'">
     <AppContainerApplication>false</AppContainerApplication>
-    <AppxPackage>false</AppxPackage>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
@@ -131,11 +131,6 @@
     <Image Include="Island_256.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <PropertyGroup Condition="'$(UseWinUI3)'!='true'">
-    <MsAppxPackageTargets Condition="'$(MsAppxPackageTargets)'==''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\AppxPackage\Microsoft.AppXPackage.Targets</MsAppxPackageTargets>
-    <ProjectPriFileName>resources.pri</ProjectPriFileName>
-  </PropertyGroup>
-  <Import Project="$(MsAppxPackageTargets)" Condition="'$(UseWinUI3)'!='true' And Exists('$(MsAppxPackageTargets)')" />
   <ImportGroup Label="ReactNativeWindowsTargets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets')" />
   </ImportGroup>
@@ -162,15 +157,5 @@
     <Error Condition="!Exists('$(V8Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(UseV8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210309.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210309.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210309.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210309.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-  </Target>
-  <Target Name="AddHostingContract" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <HostingContractPath>$(WindowsSDK_MetadataPathVersioned)\Windows.UI.Xaml.Hosting.HostingContract\4.0.0.0\Windows.UI.Xaml.Hosting.HostingContract.winmd</HostingContractPath>
-    </PropertyGroup>
-    <ItemGroup>
-      <Reference Include="$(HostingContractPath)">
-        <IsWinMDFile>true</IsWinMDFile>
-      </Reference>
-    </ItemGroup>
   </Target>
 </Project>
