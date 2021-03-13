@@ -2,6 +2,54 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 12 Mar 2021 05:07:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.272",
+      "version": "0.0.0-canary.272",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Include Hermes NuGet Package By Default",
+            "author": "ngerlem@microsoft.com",
+            "commit": "89ceb6d7c2e76bd43b8c2264a2b5243dab1f6e51",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Raise Instance notifications in JSDispatcher thread",
+            "author": "vmorozov@microsoft.com",
+            "commit": "91fcecf2947f4db638f795ed46640f5adbc9520d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 11 Mar 2021 05:07:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.271",
+      "version": "0.0.0-canary.271",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable view managers to listen for JS event attach/detach",
+            "author": "asklar@microsoft.com",
+            "commit": "0c64f4c0e9c74ac81cad9f2cb5b2f311938aeead",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixes case where focus commands may be ignored",
+            "author": "erozell@outlook.com",
+            "commit": "c97d0ac35979cd6b777cae752982dab751c248eb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Enabling codesigning via ESRP",
+            "author": "jthysell@microsoft.com",
+            "commit": "e8fcb693df093a07ea0f526557dc906492b74113",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Mar 2021 05:10:47 GMT",
       "tag": "react-native-windows_v0.0.0-canary.270",
       "version": "0.0.0-canary.270",

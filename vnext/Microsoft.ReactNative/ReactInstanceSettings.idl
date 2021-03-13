@@ -137,17 +137,45 @@ Subsequent runs of the application should be faster as the JavaScript will be lo
 
     JSIEngine JSIEngineOverride { get; set; };
 
-    DOC_STRING("This event is triggered when a React Native instance has been created, but before any JavaScript is loaded in the JavaScript engine.  The @InstanceCreatedEventArgs.Context property on the event arguments provides access to the instance.")
+    DOC_STRING(
+      "The @InstanceCreated event is triggered right after the React Native instance is created.\n"
+      "\n"
+      "It is triggered on the JSDispatcher thread before any other JSDispatcher work items.\n"
+      "No JavaScript code is loaded in the JavaScript engine yet.\n"
+      "The @InstanceCreatedEventArgs.Context property on the event arguments provides access to the instance context.\n"
+      "\n"
+      "Note that the @InstanceCreated event is triggered in response to the 'InstanceCreated' notification "
+      "raised in the 'ReactNative.InstanceSettings' namespace. "
+      "Consider using @Notifications to handle the notification in a dispatcher different from the JSDispatcher.")
     event Windows.Foundation.EventHandler<InstanceCreatedEventArgs> InstanceCreated;
 
-    DOC_STRING("This event is triggered when React Native instance has finished loading the JavaScript bundle.  If there were errors, then the @InstanceLoadedEventArgs.Failed property on the args will be true.\n\
-\n\
-Error types include:\n\
-* JavaScript Syntax Errors\n\
-* Global JavaScript Exception Thrown\n\
-\n\
-The @InstanceLoadedEventArgs.Context property on the event arguments provides access to the instance.")
+    DOC_STRING(
+      "The @InstanceLoaded event is triggered when React Native instance has finished loading the JavaScript bundle.\n"
+      "\n"
+      "It is triggered on the JSDispatcher thread.\n"
+      "If there were errors, then the @InstanceLoadedEventArgs.Failed property on the event arguments will be true.\n"
+      "The error types include:\n"
+      "\n"
+      "* JavaScript syntax errors.\n"
+      "* Global JavaScript exceptions thrown.\n"
+      "\n"
+      "The @InstanceLoadedEventArgs.Context property on the event arguments provides access to the instance context.\n"
+      "\n"
+      "Note that the @InstanceLoaded event is triggered in response to the 'InstanceLoaded' notification "
+      "raised in the 'ReactNative.InstanceSettings' namespace. "
+      "Consider using @Notifications to handle the notification in a dispatcher different from the JSDispatcher.")
     event Windows.Foundation.EventHandler<InstanceLoadedEventArgs> InstanceLoaded;
+
+    DOC_STRING(
+      "The @InstanceDestroyed event is triggered when React Native instance is destroyed.\n"
+      "\n"
+      "It is triggered on the JSDispatcher thread as the last work item before it shuts down.\n"
+      "No new JSDispatcher work can be executed after that.\n"
+      "The @InstanceDestroyedEventArgs.Context property on the event arguments provides access to the instance context.\n"
+      "\n"
+      "Note that the @InstanceDestroyed event is triggered in response to the 'InstanceDestroyed' notification "
+      "raised in the 'ReactNative.InstanceSettings' namespace. "
+      "Consider using @Notifications to handle the notification in a dispatcher different from the JSDispatcher.")
     event Windows.Foundation.EventHandler<InstanceDestroyedEventArgs> InstanceDestroyed;
   }
 }

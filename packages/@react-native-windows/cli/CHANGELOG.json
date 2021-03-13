@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 12 Mar 2021 05:07:46 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.64",
+      "version": "0.0.0-canary.64",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Include Hermes NuGet Package By Default",
+            "author": "ngerlem@microsoft.com",
+            "commit": "89ceb6d7c2e76bd43b8c2264a2b5243dab1f6e51",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Feb 2021 05:06:42 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.63",
       "version": "0.0.0-canary.63",

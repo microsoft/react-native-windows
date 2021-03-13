@@ -34,7 +34,7 @@ MainPage::MainPage() {
   x_engineHermes().IsEnabled(true);
   x_engineV8().IsEnabled(true);
 
-  x_JsEngine().SelectedIndex(0);
+  x_JsEngine().SelectedIndex(1);
 }
 
 void MainPage::OnLoadClick(
@@ -123,6 +123,34 @@ void winrt::playground::implementation::MainPage::x_entryPointCombo_SelectionCha
         x_rootComponentNameCombo().SelectedIndex(1);
       }
     }
+  }
+}
+
+void winrt::playground::implementation::MainPage::x_UseWebDebuggerCheckBox_Checked(
+    winrt::Windows::Foundation::IInspectable const & /*sender*/,
+    winrt::Windows::Foundation::IInspectable const & /*e*/) {
+  if (x_JsEngine()) {
+    x_JsEngine().IsEnabled(false);
+  }
+  if (x_DebuggerPort()) {
+    x_DebuggerPort().IsEnabled(false);
+  }
+  if (x_BreakOnFirstLineCheckBox()) {
+    x_BreakOnFirstLineCheckBox().IsEnabled(false);
+  }
+}
+
+void winrt::playground::implementation::MainPage::x_UseWebDebuggerCheckBox_Unchecked(
+    winrt::Windows::Foundation::IInspectable const & /*sender*/,
+    winrt::Windows::Foundation::IInspectable const & /*e*/) {
+  if (x_JsEngine()) {
+    x_JsEngine().IsEnabled(true);
+  }
+  if (x_DebuggerPort()) {
+    x_DebuggerPort().IsEnabled(true);
+  }
+  if (x_BreakOnFirstLineCheckBox()) {
+    x_BreakOnFirstLineCheckBox().IsEnabled(true);
   }
 }
 

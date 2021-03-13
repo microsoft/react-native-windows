@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <JSI/Shared/RuntimeHolder.h>
+#include <JSI/RuntimeHolder.h>
 
 #include <jsi/jsi.h>
 #include <thread>
