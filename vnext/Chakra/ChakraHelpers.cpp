@@ -64,7 +64,7 @@ class ChakraVersionInfo {
 #if !defined(CHAKRACORE_UWP)
     // This code is win32 only at the moment. We will need to change this
     // line if we want to support UWP.
-    constexpr wchar_t chakraDllName[] = L"ChakraCore.dll";
+    constexpr wchar_t chakraDllName[] = L"Chakra.dll";
 
     auto freeLibraryWrapper = [](void *p) { FreeLibrary((HMODULE)p); };
     HMODULE moduleHandle;
@@ -403,7 +403,7 @@ JsValueRef evaluateScriptWithBytecode(
     JsValueRef scriptFileName,
     [[maybe_unused]] std::string &&bytecodeFileName,
     [[maybe_unused]] bool asyncBytecodeGeneration) {
-#if defined(WINRT)
+#if defined(WINRT) || defined(USE_EDGEMODE_JSRT)
   // TODO:
   // ChakraRT does not support the JsRunSerialized() API.
   // Hence for UWP implementation, we fall back to using the original source
