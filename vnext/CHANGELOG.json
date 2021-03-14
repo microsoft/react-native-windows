@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 14 Mar 2021 05:06:38 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.274",
+      "version": "0.0.0-canary.274",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "update to newer cppwinrt, 2-3% reduction in binary size",
+            "author": "asklar@microsoft.com",
+            "commit": "286adbe692092f5268fecf0ec7dc8f4467a9eed0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 13 Mar 2021 05:08:04 GMT",
       "tag": "react-native-windows_v0.0.0-canary.273",
       "version": "0.0.0-canary.273",

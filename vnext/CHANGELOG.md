@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 13 Mar 2021 05:08:04 GMT and should not be manually modified.
+This log was last generated on Sun, 14 Mar 2021 05:06:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.274
+
+Sun, 14 Mar 2021 05:06:38 GMT
+
+### Changes
+
+- update to newer cppwinrt, 2-3% reduction in binary size (asklar@microsoft.com)
 
 ## 0.0.0-canary.273
 

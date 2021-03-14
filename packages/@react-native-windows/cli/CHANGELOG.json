@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sun, 14 Mar 2021 05:06:38 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.65",
+      "version": "0.0.0-canary.65",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "update to newer cppwinrt, 2-3% reduction in binary size",
+            "author": "asklar@microsoft.com",
+            "commit": "286adbe692092f5268fecf0ec7dc8f4467a9eed0",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Bump xmldom from 0.3.0 to 0.5.0",
+            "author": "asklar@microsoft.com",
+            "commit": "ce0a2f118a3860befbeebfa61dcb8025e650f14a",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Mar 2021 05:07:46 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.64",
       "version": "0.0.0-canary.64",

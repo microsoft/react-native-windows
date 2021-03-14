@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 12 Mar 2021 05:07:46 GMT and should not be manually modified.
+This log was last generated on Sun, 14 Mar 2021 05:06:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.65
+
+Sun, 14 Mar 2021 05:06:38 GMT
+
+### Changes
+
+- update to newer cppwinrt, 2-3% reduction in binary size (asklar@microsoft.com)
+- Bump xmldom from 0.3.0 to 0.5.0 (asklar@microsoft.com)
 
 ## 0.0.0-canary.64
 
