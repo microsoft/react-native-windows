@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "update to newer cppwinrt, 2-3% reduction in binary size",
-  "packageName": "@react-native-windows/cli",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
