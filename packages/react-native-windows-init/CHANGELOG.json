@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Mon, 15 Mar 2021 17:23:19 GMT",
+      "tag": "react-native-windows-init_v0.1.37",
+      "version": "0.1.37",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/telemetry to v0.64.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "66b6eab3684bacd15094474ed230eb734e212e79",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Mar 2021 19:20:30 GMT",
       "tag": "react-native-windows-init_v0.1.37",
       "version": "0.1.37",
