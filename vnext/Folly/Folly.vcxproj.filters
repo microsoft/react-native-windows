@@ -72,6 +72,7 @@
     <ClCompile Include="$(FollyDir)\folly\Unicode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(FollyDir)\folly\portability\Asm.h">
@@ -524,6 +525,7 @@
     <ClInclude Include="$(FollyDir)\folly\detail\FingerprintPolynomial.h">
       <Filter>Header Files\detail</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="Folly.natvis" />

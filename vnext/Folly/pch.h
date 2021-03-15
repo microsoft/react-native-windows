@@ -1,22 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#pragma once
-
-#include "targetver.h"
-
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
 
 #include <windows.h>
-#include <math.h>
 
-#include <condition_variable>
-#include <functional>
+#include <cstddef>
 #include <iostream>
-#include <map>
+#include <memory_resource>
 #include <string>
+#include <vector>
 
-#include <folly/dynamic.h>
-#include <folly/json.h>
+#include <folly/String.h>
+
+#include <boost/algorithm/string.hpp>
