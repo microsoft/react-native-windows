@@ -27,7 +27,7 @@ jobs:
     variables:
       - template: ../variables/vs2019.yml
 
-    pool: $(AgentPool.Large)
+    pool: $(AgentPool.Medium)
 
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
@@ -54,6 +54,16 @@ jobs:
         inputs:
           script: regedit /S $(Build.SourcesDirectory)\.ado\scripts\ReactUWPTestApp.reg
           workingDirectory: $(Build.SourcesDirectory)
+
+      - task: powershell@2
+        displayName: Install WInAppDriver 1.2.1
+        inputs:
+          targetType: 'inline'
+          script: |
+            $ProgressPreference = 'Ignore';
+            $url = "https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver_1.2.1.msi";
+            Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\WindowsApplicationDriver.msi
+            & $env:TEMP\WindowsApplicationDriver.msi /q
 
       - task: CmdLine@2
         displayName: run-windows
