@@ -27,7 +27,7 @@ namespace Microsoft.ReactNative {
   DOC_STRING("The arguments for the @ReactInstanceSettings.InstanceCreated event.")
   runtimeclass InstanceCreatedEventArgs
   {
-    DOC_STRING("Gets @IReactContext for the React instance that was just created.")
+    DOC_STRING("Gets the @IReactContext for the React instance that was just created.")
     IReactContext Context { get; };
   }
 
@@ -36,10 +36,10 @@ namespace Microsoft.ReactNative {
   DOC_STRING("The arguments for the @ReactInstanceSettings.InstanceLoaded event.")
   runtimeclass InstanceLoadedEventArgs
   {
-    DOC_STRING("Gets @IReactContext for the React instance that finished loading the bundle.")
+    DOC_STRING("Gets the @IReactContext for the React instance that finished loading the bundle.")
     IReactContext Context { get; };
 
-    DOC_STRING("Gets `true` if JavaScript bundle failed to load.")
+    DOC_STRING("Returns `true` if the JavaScript bundle failed to load.")
     Boolean Failed { get; };
   }
 
@@ -48,24 +48,24 @@ namespace Microsoft.ReactNative {
   DOC_STRING("The arguments for the @ReactInstanceSettings.InstanceDestroyed event.")
   runtimeclass InstanceDestroyedEventArgs
   {
-    DOC_STRING("Gets @IReactContext for the React instance that just destroyed.")
+    DOC_STRING("Gets the @IReactContext for the React instance that just destroyed.")
     IReactContext Context { get; };
   }
 
   [webhosthidden]
-  DOC_STRING("Provides settings to create React instance.")
+  DOC_STRING("Provides settings to create a React instance.")
   runtimeclass ReactInstanceSettings
   {
     DOC_STRING("Creates new instance of @ReactInstanceSettings")
     ReactInstanceSettings();
 
     DOC_STRING(
-      "Gets @IReactPropertyBag to share values between components and the application."
+      "Gets a @IReactPropertyBag to share values between components and the application.\n"
       "Use @IReactContext.Properties to access this @IReactPropertyBag from native components and view managers.")
     IReactPropertyBag Properties { get; };
 
     DOC_STRING(
-      "Gets @IReactNotificationService to send notifications between components and the application.\n"
+      "Gets a @IReactNotificationService to send notifications between components and the application.\n"
       "Use @IReactContext.Notifications to access this @IReactNotificationService "
       "from native components or view managers.")
     IReactNotificationService Notifications { get; };
@@ -79,8 +79,7 @@ namespace Microsoft.ReactNative {
 
     DOC_STRING(
       "This controls whether various developer experience features are available for this instance. "
-      "In particular, it enables the developer menu, the default `RedBox` and `LogBox` experience, "
-      "and loading UI during the JavaScript bundle load.")
+      "In particular, it enables the developer menu, the default `RedBox` and `LogBox` experience.")
     Boolean UseDeveloperSupport { get; set; };
 
     // Deprecated - use JavaScriptBundleFile instead
@@ -101,7 +100,7 @@ namespace Microsoft.ReactNative {
     Boolean UseWebDebugger { get; set; };
 
     DOC_STRING(
-      "Should the instance trigger the hot module reload logic when it first loads the instance.\n"
+      "Controls whether the instance triggers the hot module reload logic when it first loads the instance.\n"
       "Most edits should be visible within a second or two without the instance having to reload.\n"
       "Non-compatible changes still cause full reloads.\n"
       "See [Fast Refresh](https://reactnative.dev/docs/fast-refresh) for more information on Fast Refresh.")
@@ -120,7 +119,7 @@ namespace Microsoft.ReactNative {
     Boolean UseDirectDebugger { get; set; };
 
     DOC_STRING(
-      "For direct debugging, whether to break on the next line of JavaScript that is executed.\n"
+      "For direct debugging, controls whether to break on the next line of JavaScript that is executed.\n"
       "This can help debug issues hit early in the JavaScript bundle load.\n"
       "***Note: this is not supported with the Chakra JS engine which is the currently used JavaScript engine***")
     Boolean DebuggerBreakOnNextLine { get; set; };
@@ -135,7 +134,8 @@ namespace Microsoft.ReactNative {
       "Subsequent runs of the application should be faster as the JavaScript will be loaded from bytecode "
       "instead of the raw JavaScript.\n"
       "@.ByteCodeFileUri must be set to a location the application has write access to in order for "
-      "the bytecode to be successfully cached.")
+      "the bytecode to be successfully cached.\n"
+      "**Note that currently the byte code generation is not implemented for UWP applications.**")
     DOC_DEFAULT("false")
     Boolean EnableByteCodeCaching { get; set; };
 
@@ -145,12 +145,13 @@ namespace Microsoft.ReactNative {
       "In version 0.63 both properties will do the same thing. It will be removed in version 0.65.", deprecate, 1)]
     DOC_STRING(
       "This controls whether various developer experience features are available for this instance. "
-      "In particular the developer menu, the default `RedBox` experience and the loading UI during bundle load.")
+      "In particular the developer menu, and the default `RedBox` experience.")
     Boolean EnableDeveloperMenu { get; set; };
 
     DOC_STRING(
       "Set this to a location the application has write access to in order for bytecode to be successfully cached. "
-      "See @.EnableByteCodeCaching.")
+      "See @.EnableByteCodeCaching.\n"
+      "**Note that currently the byte code generation is not implemented for UWP applications.**")
     String ByteCodeFileUri { get; set; };
 
     // Deprecated
@@ -204,7 +205,7 @@ namespace Microsoft.ReactNative {
     DOC_STRING(
       "The @JSIEngine override to be used with the React instance.\n"
       "In order the override to work the Microsoft.ReactNative must be compiled with support of that engine.")
-    DOC_DEFAULT("8081")
+    DOC_DEFAULT("JSIEngine.Chakra")
     JSIEngine JSIEngineOverride { get; set; };
 
     DOC_STRING(
