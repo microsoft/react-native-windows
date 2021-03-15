@@ -256,7 +256,7 @@ jobs:
         parameters:
           publishCommitId: $(publishCommitId)
           npmVersion: $(npmVersion)
-          ${{ if or(eq(variables['EnableCodesign'], 'true'), and(endsWith(variables['Build.SourceBranchName'], '-stable'), not(${{ parameters.skipStableCodesign }}))) }}: # Sign on stable release builds
+          ${{ if or(eq(variables['EnableCodesign'], 'true'), and(endsWith(variables['Build.SourceBranchName'], '-stable'), not(parameters.skipStableCodesign))) }}: # Sign on stable release builds
             signMicrosoft: true
 
       - task: PublishPipelineArtifact@1
