@@ -38,7 +38,7 @@ One primary dispatcher that applications may require is the @IReactContext.UIDis
     DOC_STRING("Get name of the UIDispatcher property for the IReactPropertyBag. Generally you can use @ReactContext.UIDispatcher to get the value of this property for a specific react instance.")
     static IReactPropertyName UIDispatcherProperty { get; };
 
-    DOC_STRING("Get name of the JSDispatcher property for the IReactPropertyBag. Generally you can use @ReactContext.JSDispatcher to get the value of this property for a specific react instance.")
+    DOC_STRING("Get name of the JSDispatcher property for the @IReactPropertyBag. Generally you can use @ReactContext.JSDispatcher to get the value of this property for a specific React instance.")
     static IReactPropertyName JSDispatcherProperty { get; };
   }
 } // namespace ReactNative
