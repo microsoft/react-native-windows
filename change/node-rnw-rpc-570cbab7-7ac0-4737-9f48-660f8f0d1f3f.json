@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update packages to new cppwinrt version",
+  "packageName": "node-rnw-rpc",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
