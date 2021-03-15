@@ -539,9 +539,9 @@ bool FrameworkElementViewManager::UpdateProperty(
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         auto value = propertyValue.AsString();
         if (value == "none") {
-          element.Visibility(winrt::Windows::UI::Xaml::Visibility::Collapsed);
+          element.Visibility(xaml::Visibility::Collapsed);
         } else {
-          element.Visibility(winrt::Windows::UI::Xaml::Visibility::Visible);
+          element.Visibility(xaml::Visibility::Visible);
         }
       }
     } else {
