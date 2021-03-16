@@ -586,8 +586,8 @@ exports.examples = [
   },
   {
     title: 'OnKeyDown/OnKeyUp callbacks on Pressable',
-    description: ('<Pressable> components can be respond to keyDown/keyUp native events.' + 
-    ' Additionally, they can be activated by pressing Space or Enter as if they were clicked with the mouse, triggering onPress' + 
+    description: ('<Pressable> components can be respond to keyDown/keyUp native events.' +
+      ' Additionally, they can be activated by pressing Space or Enter as if they were clicked with the mouse, triggering onPress' +
       ' - this behavior can be suppressed by calling e.preventDefault() on the event (can be toggled with the switch).': string),
     render: function(): React.Node {
       return <PressWithOnKeyDown />;

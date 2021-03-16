@@ -657,6 +657,7 @@ export default class Pressability {
           event.nativeEvent.code === 'Enter' ||
           event.nativeEvent.code === 'GamepadA'
         ) {
+          // flowlint sketchy-null:warn, sketchy-null-bool:off
           if (!event.defaultPrevented) {
             const {onPressOut, onPress} = this._config;
             // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
@@ -675,6 +676,7 @@ export default class Pressability {
           event.nativeEvent.code === 'Enter' ||
           event.nativeEvent.code === 'GamepadA'
         ) {
+          // flowlint sketchy-null:warn, sketchy-null-bool:off
           if (!event.defaultPrevented) {
             const {onPressIn} = this._config;
             // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead

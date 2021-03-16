@@ -28,7 +28,8 @@ import type {
   PressEvent,
   // [Windows
   BlurEvent,
-  FocusEvent, // Windows]
+  FocusEvent,
+  KeyEvent, // Windows]
 } from '../../Types/CoreEventTypes';
 import View from '../View/View';
 import TextInputState from '../TextInput/TextInputState';
