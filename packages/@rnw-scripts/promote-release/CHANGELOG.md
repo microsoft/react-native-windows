@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Tue, 17 Nov 2020 19:12:07 GMT and should not be manually modified.
+This log was last generated on Mon, 15 Mar 2021 17:23:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.11
+
+Mon, 15 Mar 2021 17:23:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/package-utils to v0.64.0 (ngerlem@microsoft.com)
 
 ## 0.2.9
 
