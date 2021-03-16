@@ -44,4 +44,9 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\CppAppConsumeCSharpModule.targets" />
 
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\RequireSolution.targets" />
+  <ItemDefinitionGroup>
+    <Reference>
+        <Private Condition="'$(ConfigurationType)' != 'Application'">false</Private>
+    </Reference>
+  </ItemDefinitionGroup>
 </Project>

@@ -13,4 +13,9 @@
   </PropertyGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
+  <ItemDefinitionGroup>
+    <Reference>
+        <Private Condition="'$(ConfigurationType)' != 'Application'">false</Private>
+    </Reference>
+  </ItemDefinitionGroup>
 </Project>

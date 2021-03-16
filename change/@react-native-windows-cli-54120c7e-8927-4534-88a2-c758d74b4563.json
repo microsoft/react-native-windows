@@ -1,7 +1,7 @@
 {
   "type": "patch",
-  "comment": "Promote 0.64 to latest",
+  "comment": "[0.64] Update cppwinrt package version",
   "packageName": "@react-native-windows/cli",
-  "email": "ngerlem@microsoft.com",
+  "email": "asklar@microsoft.com",
   "dependentChangeType": "patch"
 }
