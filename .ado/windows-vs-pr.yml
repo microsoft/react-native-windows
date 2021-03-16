@@ -33,7 +33,7 @@ stages:
           - task: CmdLine@2
             displayName: Check for change files
             inputs:
-              script: npx --no-install beachball check --branch origin/$(BeachBallBranchName) --changehint "Run `yarn change` from root of repo to generate a change file."
+              script: npx --no-install beachball check --branch origin/$(BeachBallBranchName) --changehint "##vso[task.logissue type=error]Run `yarn change` from root of repo to generate a change file."
 
           - template: templates/set-version-vars.yml
             parameters:
