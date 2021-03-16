@@ -10,8 +10,8 @@ import "RedBoxHandler.idl";
 
 #include "DocString.h"
 
-namespace Microsoft.ReactNative {
-
+namespace Microsoft.ReactNative
+{
   DOC_STRING(
     "A JavaScript engine type that can be set for a React instance in @ReactInstanceSettings.JSIEngineOverride")
   // Keep in sync with enum in IReactInstance.h
@@ -83,7 +83,7 @@ namespace Microsoft.ReactNative {
     Boolean UseDeveloperSupport { get; set; };
 
     // Deprecated - use JavaScriptBundleFile instead
-    [deprecated("Use JavaScriptBundleFile instead. It will be removed in version 0.65.", deprecate, 1)]
+    [deprecated("Use @.JavaScriptBundleFile instead. It will be removed in version 0.65.", deprecate, 1)]
     DOC_STRING("Name of the JavaScript bundle file. If @.JavaScriptBundleFile is specified it is used instead.")
     String JavaScriptMainModuleName { get; set; };
 

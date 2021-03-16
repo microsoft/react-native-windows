@@ -11,12 +11,13 @@ import "IReactPropertyBag.idl";
 
 #include "DocString.h"
 
-namespace Microsoft.ReactNative {
-
+namespace Microsoft.ReactNative
+{
 #ifndef CORE_ABI
   [webhosthidden]
   DOC_STRING("An immutable snapshot of @ReactInstanceSettings used to create the current React instance.")
-  interface IReactSettingsSnapshot {
+  interface IReactSettingsSnapshot
+  {
     DOC_STRING(
       "A read-only snapshot of @ReactInstanceSettings.UseWebDebugger property value "
       "at the time when the React instance is created.\n"
@@ -106,7 +107,8 @@ namespace Microsoft.ReactNative {
     "- Use @.CallJSFunction to call JavaScript functions, and @.EmitJSEvent to raise JavaScript events.\n"
     "- Use @.UIDispatcher to post asynchronous work in the UI thread.\n"
     "- Use @.JSDispatcher to post asynchronous work in the JavaScript engine thread.")
-  interface IReactContext {
+  interface IReactContext
+  {
 #ifndef CORE_ABI
     DOC_STRING("Gets the settings snapshot that was used to start the React instance.")
     IReactSettingsSnapshot SettingsSnapshot { get; };
