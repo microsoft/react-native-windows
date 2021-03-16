@@ -29,16 +29,16 @@ One primary dispatcher that applications may require is the @IReactContext.UIDis
   [webhosthidden]
   static runtimeclass ReactDispatcherHelper
   {
-    // Creates a new serial dispatcher that uses thread pool to run tasks.
+    DOC_STRING("Creates a new serial dispatcher that uses thread pool to run tasks.")
     static IReactDispatcher CreateSerialDispatcher();
 
-    // Get or create IReactDispatcher for the current UI thread.
+    DOC_STRING("Get or creates a @IReactDispatcher for the current UI thread. This can be used with @ReactInstanceSettings.UIDispatcher to launch a React instance from a non-UI thread.  This API must be called from a UI thread.  It will return null if called from a non-UI thread.")
     static IReactDispatcher UIThreadDispatcher{ get; };
 
-    // Get name of the UIDispatcher property for the IReactPropertyBag.
+    DOC_STRING("Get name of the UIDispatcher property for the @IReactPropertyBag. Generally you can use @ReactContext.UIDispatcher to get the value of this property for a specific React instance.")
     static IReactPropertyName UIDispatcherProperty { get; };
 
-    // Get name of the JSDispatcher property for the IReactPropertyBag.
+    DOC_STRING("Get name of the JSDispatcher property for the @IReactPropertyBag. Generally you can use @ReactContext.JSDispatcher to get the value of this property for a specific React instance.")
     static IReactPropertyName JSDispatcherProperty { get; };
   }
 } // namespace ReactNative
