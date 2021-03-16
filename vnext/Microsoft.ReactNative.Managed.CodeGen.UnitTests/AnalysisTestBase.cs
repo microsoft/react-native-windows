@@ -60,9 +60,15 @@ public class TestClass
 
             var references = new List<string>();
 
-            var microsoftNetCoreUwpPkgVersion = "6.2.10";
             var uapVersion = "uap10.0.15138";
-            var microsoftNetCoreUwpPkgFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "Microsoft SDKs", "UWPNuGetPackages", "microsoft.netcore.universalwindowsplatform", microsoftNetCoreUwpPkgVersion, "ref", uapVersion);
+            var uwpPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), 
+                "Microsoft SDKs", "UWPNuGetPackages", "microsoft.netcore.universalwindowsplatform");
+
+            var versions = Directory.GetDirectories(uwpPath).Select(x => new Version(Path.GetFileName(x)));
+            Assert.IsTrue(versions.Count() > 0);
+            var microsoftNetCoreUwpPkgVersion = versions.Max();
+            Assert.IsTrue(microsoftNetCoreUwpPkgVersion >= new Version("6.2.10"));
+            var microsoftNetCoreUwpPkgFolder = Path.Combine(uwpPath, microsoftNetCoreUwpPkgVersion.ToString(), "ref", uapVersion);
             if (!Directory.Exists(microsoftNetCoreUwpPkgFolder))
             {
                 Assert.Fail($"Could not find path {microsoftNetCoreUwpPkgFolder}. This should have been installed as part of the UWP workload for Microsoft Visual Studio 2019 version 16.6");
