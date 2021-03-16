@@ -12,7 +12,7 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   DOC_STRING(
     "A namespace for a @IReactPropertyBag property name.\n"
-    "Use @ReactPropertyBagHelper.GetNamespace to get atomic property namespace for a string.");
+    "Use @ReactPropertyBagHelper.GetNamespace to get atomic property namespace for a string.")
   interface IReactPropertyNamespace
   {
     DOC_STRING("Gets String representation of the @IReactPropertyNamespace.")
@@ -29,7 +29,7 @@ namespace Microsoft.ReactNative
     DOC_STRING("Gets String representation of the @IReactPropertyName.")
     String LocalName { get; };
 
-    DOC_STRING("Gets the @IReactPropertyNamespace where the property name is defined.");
+    DOC_STRING("Gets the @IReactPropertyNamespace where the property name is defined.")
     IReactPropertyNamespace Namespace { get; };
   }
 
