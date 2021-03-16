@@ -67,7 +67,7 @@ public class TestClass
             var versions = Directory.GetDirectories(uwpPath).Select(x => new Version(Path.GetFileName(x)));
             Assert.IsTrue(versions.Count() > 0);
             var microsoftNetCoreUwpPkgVersion = versions.Max();
-            Assert.IsTrue(microsoftNetCoreUwpPkgVersion >= "6.2.10");
+            Assert.IsTrue(microsoftNetCoreUwpPkgVersion >= new Version("6.2.10"));
             var microsoftNetCoreUwpPkgFolder = Path.Combine(uwpPath, microsoftNetCoreUwpPkgVersion, "ref", uapVersion);
             if (!Directory.Exists(microsoftNetCoreUwpPkgFolder))
             {
