@@ -242,26 +242,31 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
         const auto scrollViewerNotNull = sender.as<winrt::ScrollViewer>();
 
         // If we are transitioning to inertial scrolling.
-        if (m_isScrolling && !m_isScrollingFromInertia && args.IsInertial()) {
-          m_isScrollingFromInertia = true;
+        if (m_isScrolling) {
+          const auto momentumStarting = !m_isScrollingFromInertia && args.IsInertial();
+          const auto momentumEnding = m_isScrollingFromInertia && !args.IsInertial();
 
-          EmitScrollEvent(
-              scrollViewerNotNull,
-              m_tag,
-              L"topScrollEndDrag",
-              args.NextView().HorizontalOffset(),
-              args.NextView().VerticalOffset(),
-              args.NextView().ZoomFactor(),
-              CoalesceType::Durable);
+          if (momentumStarting || momentumEnding) {
+            m_isScrollingFromInertia = momentumStarting;
 
-          EmitScrollEvent(
-              scrollViewerNotNull,
-              m_tag,
-              L"topScrollBeginMomentum",
-              args.NextView().HorizontalOffset(),
-              args.NextView().VerticalOffset(),
-              args.NextView().ZoomFactor(),
-              CoalesceType::Durable);
+            EmitScrollEvent(
+                scrollViewerNotNull,
+                m_tag,
+                momentumStarting ? L"topScrollEndDrag" : L"topScrollEndMomentum",
+                args.NextView().HorizontalOffset(),
+                args.NextView().VerticalOffset(),
+                args.NextView().ZoomFactor(),
+                CoalesceType::Durable);
+
+            EmitScrollEvent(
+                scrollViewerNotNull,
+                m_tag,
+                momentumStarting ? L"topScrollBeginMomentum" : L"topScrollBeginDrag",
+                args.NextView().HorizontalOffset(),
+                args.NextView().VerticalOffset(),
+                args.NextView().ZoomFactor(),
+                CoalesceType::Durable);
+          }
         }
 
         EmitScrollEvent(
