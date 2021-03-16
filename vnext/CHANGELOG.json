@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 16 Mar 2021 05:07:08 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.275",
+      "version": "0.0.0-canary.275",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "AzDO image now installs uwp package 6.2.11, not 6.2.10; Update Codegen UnitTest",
+            "author": "asklar@microsoft.com",
+            "commit": "6c04f4a7de43d7e2ed929076c814374b681a0498",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 14 Mar 2021 05:06:38 GMT",
       "tag": "react-native-windows_v0.0.0-canary.274",
       "version": "0.0.0-canary.274",

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 14 Mar 2021 05:06:38 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Mar 2021 05:07:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.275
+
+Tue, 16 Mar 2021 05:07:08 GMT
+
+### Changes
+
+- AzDO image now installs uwp package 6.2.11, not 6.2.10; Update Codegen UnitTest (asklar@microsoft.com)
 
 ## 0.0.0-canary.274
 
