@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Mon, 15 Mar 2021 17:23:19 GMT",
+      "tag": "react-native-platform-override_v0.4.3",
+      "version": "0.4.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/package-utils to v0.64.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "66b6eab3684bacd15094474ed230eb734e212e79",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Nov 2020 05:08:17 GMT",
       "tag": "react-native-platform-override_v0.4.3",
       "version": "0.4.3",
