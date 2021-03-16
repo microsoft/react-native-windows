@@ -66,7 +66,7 @@
     </ItemGroup>
   </Target>
   <!--
-    As a cppwinrt project, .pch is very big, and delete it in pipeline after build
+    As a C++/WinRT project, .pch is very big, and delete it in pipeline after build
     Instead of outright deleting the PCHs, we want to trick the "project freshness detector" by
     emitting empty files that look suspiciously like the PCHs it's expecting.
     It's of utmost importance that their timestamps match up. -->

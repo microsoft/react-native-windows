@@ -43,7 +43,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
 
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
+  <Import Condition="'$(UseHermes)' == '' or '$(UseV8)' == ''" Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions Condition="'$(UseHermes)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>

@@ -1,8 +1,34 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 11 Mar 2021 05:07:32 GMT and should not be manually modified.
+This log was last generated on Sun, 14 Mar 2021 05:06:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.274
+
+Sun, 14 Mar 2021 05:06:38 GMT
+
+### Changes
+
+- update to newer cppwinrt, 2-3% reduction in binary size (asklar@microsoft.com)
+
+## 0.0.0-canary.273
+
+Sat, 13 Mar 2021 05:08:04 GMT
+
+### Changes
+
+- Add method support for Xaml Islands (34109996+chiaramooney@users.noreply.github.com)
+- Change TextInput cursor behavior (erozell@outlook.com)
+
+## 0.0.0-canary.272
+
+Fri, 12 Mar 2021 05:07:46 GMT
+
+### Changes
+
+- Include Hermes NuGet Package By Default (ngerlem@microsoft.com)
+- Raise Instance notifications in JSDispatcher thread (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.271
 

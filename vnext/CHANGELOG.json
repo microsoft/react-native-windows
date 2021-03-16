@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 14 Mar 2021 05:06:38 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.274",
+      "version": "0.0.0-canary.274",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "update to newer cppwinrt, 2-3% reduction in binary size",
+            "author": "asklar@microsoft.com",
+            "commit": "286adbe692092f5268fecf0ec7dc8f4467a9eed0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 13 Mar 2021 05:08:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.273",
+      "version": "0.0.0-canary.273",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add method support for Xaml Islands",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "2dfb964e57020226828867f816bd31cff25814b8",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Change TextInput cursor behavior",
+            "author": "erozell@outlook.com",
+            "commit": "7e202454d3178243594872aa61871b8566a203e4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Mar 2021 05:07:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.272",
+      "version": "0.0.0-canary.272",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Include Hermes NuGet Package By Default",
+            "author": "ngerlem@microsoft.com",
+            "commit": "89ceb6d7c2e76bd43b8c2264a2b5243dab1f6e51",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Raise Instance notifications in JSDispatcher thread",
+            "author": "vmorozov@microsoft.com",
+            "commit": "91fcecf2947f4db638f795ed46640f5adbc9520d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Mar 2021 05:07:32 GMT",
       "tag": "react-native-windows_v0.0.0-canary.271",
       "version": "0.0.0-canary.271",

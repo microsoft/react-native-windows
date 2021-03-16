@@ -618,7 +618,7 @@ void TextInputShadowNode::SetText(const winrt::Microsoft::ReactNative::JSValue &
         auto newValue = react::uwp::asHstring(text);
         if (oldValue != newValue) {
           textBox.Text(newValue);
-          if (static_cast<uint32_t>(oldCursor) <= newValue.size()) {
+          if (oldValue.size() == newValue.size()) {
             textBox.SelectionStart(oldCursor);
           } else {
             textBox.SelectionStart(newValue.size());
