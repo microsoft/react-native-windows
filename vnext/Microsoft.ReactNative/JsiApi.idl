@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "DocString.h"
+
 namespace Microsoft.ReactNative
 {
   // JsiByteArrayUser delegate receives a range of bytes as a byte array.
@@ -13,6 +15,9 @@ namespace Microsoft.ReactNative
   // copy data if it wants to store it for the later use. Otherwise it may cause issues due to the memory
   // being overwritten after the call is completed. It may happen if the provided byte array was stored
   // on the call stack or it was a managed memory pinned for the use and then unpinned after that.
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   delegate void JsiByteArrayUser(UInt8[] bytes);
 
   // IJsiByteBuffer encapsulates a byte array buffer.
@@ -26,6 +31,9 @@ namespace Microsoft.ReactNative
   // delegate call and unpin it after that. It means that the provided data is only valid while the
   // JsiByteArrayUser delegate is being called.
   [webhosthidden]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   interface IJsiByteBuffer
   {
     // Size of the byte buffer data.
@@ -36,6 +44,9 @@ namespace Microsoft.ReactNative
   };
 
   // Type of the JavaScript value. It is currently matching the full JavaScript set of types except for the BigInt type.
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   enum JsiValueKind
   {
     Undefined,
@@ -48,52 +59,82 @@ namespace Microsoft.ReactNative
   };
 
   [webhosthidden]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   struct JsiValueRef
   {
     JsiValueKind Kind;
     UInt64 Data;
   };
 
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   struct JsiSymbolRef
   {
     UInt64 Data;
   };
 
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   struct JsiStringRef
   {
     UInt64 Data;
   };
 
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   struct JsiObjectRef
   {
     UInt64 Data;
   };
 
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   struct JsiWeakObjectRef
   {
     UInt64 Data;
   };
 
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   struct JsiPropertyIdRef
   {
     UInt64 Data;
   };
 
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   struct JsiScopeState
   {
     UInt64 Data;
   };
 
   [default_interface]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   runtimeclass JsiPreparedJavaScript
   {
   };
 
   [experimental]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   delegate JsiValueRef JsiHostFunction(JsiRuntime runtime, JsiValueRef thisArg, JsiValueRef[] args);
 
   [webhosthidden]
   [experimental]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   interface IJsiHostObject
   {
     JsiValueRef GetProperty(JsiRuntime runtime, JsiPropertyIdRef propertyId);
@@ -101,6 +142,9 @@ namespace Microsoft.ReactNative
     IVector<JsiPropertyIdRef> GetPropertyIds(JsiRuntime runtime);
   };
 
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   enum JsiErrorType
   {
     JSError,         // JavaScript error
@@ -108,6 +152,9 @@ namespace Microsoft.ReactNative
   };
 
   [webhosthidden, default_interface]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API.")
   runtimeclass JsiError
   {
     JsiErrorType ErrorType { get; };
@@ -119,6 +166,10 @@ namespace Microsoft.ReactNative
 
   [webhosthidden, default_interface]
   [experimental]
+  DOC_STRING(
+    "It is an experimental API to implement ABI-safe JSI.\n"
+    "**Do not use this interface directly. We plan to change or remove it in version 0.65. "
+    "Instead use the JSI API through the ExecuteJsi function or in a JSI-based Turbo Module**")
   runtimeclass JsiRuntime
   {
     // TODO : replace with a registered factory method
