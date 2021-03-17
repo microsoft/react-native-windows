@@ -19,7 +19,7 @@ namespace Microsoft.ReactNative {
   {
     DOC_STRING(
       "The notification service for the subscription.\n"
-      "It can be null if the @.IsSubscribed is true and the notification service is already deleted.")
+      "It can be null if @.IsSubscribed is true and the notification service was already deleted.")
     IReactNotificationService NotificationService { get; };
 
     DOC_STRING("Name of the notification.")

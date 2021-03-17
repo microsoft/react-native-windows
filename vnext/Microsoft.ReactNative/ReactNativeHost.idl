@@ -11,7 +11,7 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   [default_interface]
   DOC_STRING(
-    "This is the main entry-point to create a react-native instance.\n"
+    "This is the main entry-point to create a React instance.\n"
     "The `ReactNativeHost` object exists to configure the instance using @ReactInstanceSettings before it is loaded, "
     "as well as enabling control of when to load the instance.\n"
     "Use @ReactInstanceSettings events to observe instance creation, loading, and destruction.")
@@ -28,13 +28,14 @@ namespace Microsoft.ReactNative
     DOC_STRING("Provides access to this host's @ReactInstanceSettings to configure the react instance.")
     ReactInstanceSettings InstanceSettings { get; set; };
 
-    DOC_STRING("Loads new React instance. It is an alias for @.ReloadInstance method.")
+    DOC_STRING("Loads a new React instance. It is an alias for @.ReloadInstance method.")
     Windows.Foundation.IAsyncAction LoadInstance();
 
     DOC_STRING(
-      "Unloads current React instance and loads the new one.\n"
-      "The React instance loading creates an instance of the JS engine and launches provided JavaScript code bundle. "
-      "If a React instance of this host is already running, then the @.ReloadInstance shuts down the already "
+      "Unloads the current React instance and loads a new one.\n"
+      "The React instance loading creates an instance of the JavaScript engine, "
+      "and launches the provided JavaScript code bundle.\n"
+      "If a React instance is already running in this host, then @.ReloadInstance shuts down the already "
       "the running React instance, and loads a new React instance.\n"
       "The React instance lifecycle can be observed with the following events:"
       "- The @ReactInstanceSettings.InstanceCreated event is raised when the React instance is just created.\n"
@@ -45,12 +46,12 @@ namespace Microsoft.ReactNative
 
     DOC_STRING(
       "Unloads current React instance.\n"
-      "After the ReactInsatnce is unloaded, all the React resources including the JaavScript engine environment "
+      "After the React instance is unloaded, all the React resources including the JavaScript engine environment "
       "are cleaned up.\n"
       "The React instance destruction can be observed with the @ReactInstanceSettings.InstanceDestroyed event.")
     Windows.Foundation.IAsyncAction UnloadInstance();
 
-    DOC_STRING("Returns @ReactNativeHost instance from the @IReactContext.")
+    DOC_STRING("Returns the @ReactNativeHost instance associated with the given @IReactContext.")
     static ReactNativeHost FromContext(IReactContext reactContext);
   }
 } // namespace Microsoft.ReactNative

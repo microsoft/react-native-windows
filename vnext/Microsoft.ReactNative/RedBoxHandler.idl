@@ -84,8 +84,6 @@ This can be useful if you have an existing error reporting system that you want 
 The default implementation of `RedBoxHandler` shows an error messages in a error screen
 that covers the whole application window.
 
--- Insert Screenshot here --
-
 If you want to maintain the existing `RedBox` behaviors, and also report errors to your own reporting system,
 your implementation can call into the default `RedBoxHandler`, which can be obtained by calling :
 

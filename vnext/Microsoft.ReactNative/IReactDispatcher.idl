@@ -16,7 +16,7 @@ namespace Microsoft.ReactNative
     "`IReactDispatcher` provides the core threading/task management interface for ensuring that the code execution "
     "happens in the right order on the right thread.\n"
     "One primary dispatcher that applications may require is the @IReactContext.UIDispatcher which provides native "
-    "modules access to the UI thread associated with this react instance. "
+    "modules access to the UI thread associated with this React instance. "
     "Another one is the @IReactContext.JSDispatcher which allows apps to post tasks to the JS engine thread.")
   interface IReactDispatcher
   {

@@ -21,10 +21,10 @@ namespace Microsoft.ReactNative
 
     DOC_STRING(
       "The name of the root UI component registered in JavaScript with help of the "
-      "`AppRegistry.registerComponent` method.")
+      "[`AppRegistry.registerComponent`](https://reactnative.dev/docs/appregistry#registercomponent) method.")
     String ComponentName { get; set; };
 
-    DOC_STRING("The @JSValueArgWriter that is used to serialze the main component initial properties.")
+    DOC_STRING("The @JSValueArgWriter that is used to serialize the main component initial properties.")
     JSValueArgWriter InitialProps { get; set; };
 
     DOC_STRING(

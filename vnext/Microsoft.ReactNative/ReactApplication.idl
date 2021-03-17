@@ -10,9 +10,10 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   [default_interface]
   DOC_STRING(
-    "`ReactApplication` provides a base application class for use in applications that are entirely written "
-    "in React Native. `ReactApplication` will load the React instance on launch of your app for you and provide "
-    "accessors to your application's @ReactInstanceSettings and @ReactNativeHost to customize your React instance.")
+    "The `ReactApplication` is a base application class for use in applications that are entirely written "
+    "in React Native. When the app launches, the `ReactApplication` will load the React instance. "
+    "Use @ReactInstanceSettings and @ReactNativeHost properties to customize React instance in "
+    "your application's constructor.")
   unsealed runtimeclass ReactApplication : XAML_NAMESPACE.Application
   {
     DOC_STRING("Creates a new instance of @ReactApplication")
@@ -21,7 +22,7 @@ namespace Microsoft.ReactNative
     DOC_STRING(
       "Provides access to your application's @ReactInstanceSettings.\n"
       "Generally, changes to these settings will not take effect if the React instance is already loaded, "
-      "unless the React instance is reloaded, so most settings should be set in your applications constructor.")
+      "unless the React instance is reloaded, so most settings should be set in your application's constructor.")
     ReactInstanceSettings InstanceSettings { get; set; };
 
     DOC_STRING(
@@ -34,7 +35,7 @@ namespace Microsoft.ReactNative
     ReactNativeHost Host { get; };
 
     DOC_STRING(
-      "Should the developer experience features such as the developer menu and `RedBox` be enabled.\n"
+      "Controls whether the developer experience features such as the developer menu and `RedBox` are enabled.\n"
       "See @ReactInstanceSettings.UseDeveloperSupport.")
     Boolean UseDeveloperSupport { get; set; };
 
