@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 17 Mar 2021 05:18:22 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.276",
+      "version": "0.0.0-canary.276",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix redbox on boot when using web debugging",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "911287953e3e91ae953ae1f2374835a17b92d31d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Minor docs update for ReactDispatcherHelper",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "a569ca00e1b02b182a9ed36643069c04a8dd1950",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Mar 2021 05:07:08 GMT",
       "tag": "react-native-windows_v0.0.0-canary.275",
       "version": "0.0.0-canary.275",

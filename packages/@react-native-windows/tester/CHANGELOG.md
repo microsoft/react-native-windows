@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/tester
 
-This log was last generated on Tue, 16 Mar 2021 05:07:08 GMT and should not be manually modified.
+This log was last generated on Wed, 17 Mar 2021 05:18:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Wed, 17 Mar 2021 05:18:22 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.276 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.1
 
