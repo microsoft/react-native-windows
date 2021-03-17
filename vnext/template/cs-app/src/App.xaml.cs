@@ -43,9 +43,28 @@ namespace {{ namespace }}
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             base.OnLaunched(e);
-            var frame = Window.Current.Content as Frame;
-            frame.Navigate(typeof(MainPage));
-            Window.Current.Activate();
+            var frame = (Frame)Window.Current.Content;
+            frame.Navigate(typeof(MainPage), e.Arguments);
+        }
+
+        /// <summary>
+        /// Invoked when the application is activated by some means other than normal launching.
+        /// </summary>
+{{#useWinUI3}}
+        protected override void OnActivated(Windows.ApplicationModel.Activation.IActivatedEventArgs e)
+{{/useWinUI3}}
+{{^useWinUI3}}
+        protected override void OnActivated(IActivatedEventArgs e)
+{{/useWinUI3}}
+        {
+            var preActivationContent = Window.Current.Content;
+            base.OnActivated(e);
+            if (preActivationContent == null && Window.Current != null)
+            {
+                // Display the initial content
+                var frame = (Frame)Window.Current.Content;
+                frame.Navigate(typeof(MainPage), null);
+            }
         }
     }
 }

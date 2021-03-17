@@ -15,6 +15,7 @@ namespace winrt::{{ namespaceCpp }}::implementation
     {
         App() noexcept;
         void OnLaunched(activation::LaunchActivatedEventArgs const&);
+        void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
         void OnSuspending(IInspectable const&, Windows::ApplicationModel::SuspendingEventArgs const&);
         void OnNavigationFailed(IInspectable const&, {{ xamlNamespaceCpp }}::Navigation::NavigationFailedEventArgs const&);
       private:
