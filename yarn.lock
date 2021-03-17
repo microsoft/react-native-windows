@@ -1632,10 +1632,10 @@
     plist "^3.0.1"
     xcode "^2.0.0"
 
-"@react-native-community/cli-server-api@^5.0.1-alpha.1":
-  version "5.0.1-alpha.1"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-server-api/-/cli-server-api-5.0.1-alpha.1.tgz#2b830411ca9b6922da67ea32c3e1c0492aa001fe"
-  integrity sha512-Ev5drbVEnvC3EB3GCn5sog1fOn+4ULC/TUjWEDe9Ld93na7W1cYb+qAEMRP8hxZUf6R3qCRsFi6JY42qtqa+qQ==
+"@react-native-community/cli-server-api@^5.0.1-alpha.2":
+  version "5.0.1-alpha.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-server-api/-/cli-server-api-5.0.1-alpha.2.tgz#a82557273bad99d188682169892aaa4b283ba149"
+  integrity sha512-qzjoLF51GmvUHQrcJZE+wD3bTmgnTNOnGBU6z4terKmPdt/EBBSUkdXc6ScWWRF6oWP+xpxLZ//tKic2v2f+ag==
   dependencies:
     "@react-native-community/cli-debugger-ui" "^5.0.1-alpha.1"
     "@react-native-community/cli-tools" "^5.0.1-alpha.1"
@@ -1667,13 +1667,13 @@
     ora "^3.4.0"
 
 "@react-native-community/cli@^5.0.1-alpha.0":
-  version "5.0.1-alpha.1"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli/-/cli-5.0.1-alpha.1.tgz#68a1887477e66a6d5206bd951b241730e1c0cbdc"
-  integrity sha512-XmOqkg9noF/jaHujoBLifR1VCmisXZbTr9Lt3S2/QBgDg0jWDLAuraZC58yuBuzUTcG3+kfbD61rW3AWtnx8fA==
+  version "5.0.1-alpha.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli/-/cli-5.0.1-alpha.2.tgz#7e78378120fd4e264e4b577cbcf5e52b5beaa53b"
+  integrity sha512-PP22TVV2VyELXhAX4PcBisasssastSEx23XDklfPoCPIXD2QgGC7y39n/b5I9tOzKi2qYswCEAcDpwXYwevGOg==
   dependencies:
     "@react-native-community/cli-debugger-ui" "^5.0.1-alpha.1"
     "@react-native-community/cli-hermes" "^5.0.1-alpha.1"
-    "@react-native-community/cli-server-api" "^5.0.1-alpha.1"
+    "@react-native-community/cli-server-api" "^5.0.1-alpha.2"
     "@react-native-community/cli-tools" "^5.0.1-alpha.1"
     "@react-native-community/cli-types" "^5.0.1-alpha.1"
     appdirsjs "^1.2.4"
