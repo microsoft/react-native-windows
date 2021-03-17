@@ -17,8 +17,6 @@ const {
   Text,
   TouchableWithoutFeedback,
   View,
-  Switch,
-  TextInput,
 } = require('react-native');
 
 exports.title = 'View';
@@ -517,79 +515,6 @@ exports.examples = [
       }
 
       return <DisplayNoneStyle />;
-    },
-  },
-  {
-    title: '`display:none` style with input',
-    render(): React.Node {
-      type Props = $ReadOnly<{||}>;
-      type State = {|
-        displayNone: boolean,
-        displayNone2: boolean,
-        text: string,
-        text2: string,
-      |};
-
-      class DisplayNoneVisibilityExample extends React.Component<Props, State> {
-        state = {
-          displayNone: false,
-          displayNone2: false,
-          textState: 'TextInput1...',
-          textState2: 'TextInput2...',
-        };
-
-        render() {
-          return (
-            <View>
-              <View testID="view-component-switch-view">
-                <Text>toggle display:none TextInput1</Text>
-                <Switch
-                  onValueChange={this._handlePress}
-                  value={this.state.displayNone}
-                />
-                <Text>toggle display:none TextInput2</Text>
-                <Switch
-                  onValueChange={this._handlePress2}
-                  value={this.state.displayNone2}
-                  testID="toggle-display:none"
-                />
-              </View>
-              <View style={{display: this.state.displayNone ? 'none' : 'flex'}}>
-                <TextInput
-                  style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                  onChangeText={text => this._handleChangeText(text)}
-                  value={this.state.textState}
-                />
-              </View>
-              <View
-                style={{display: this.state.displayNone2 ? 'none' : 'flex'}}>
-                <TextInput
-                  style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                  onChangeText={text => this._handleChangeText2(text)}
-                  value={this.state.textState2}
-                />
-              </View>
-            </View>
-          );
-        }
-
-        _handlePress = () => {
-          this.setState({displayNone: !this.state.displayNone});
-        };
-
-        _handlePress2 = () => {
-          this.setState({displayNone2: !this.state.displayNone2});
-        };
-
-        _handleChangeText = text => {
-          this.setState({textState: text});
-        };
-
-        _handleChangeText2 = text => {
-          this.setState({textState2: text});
-        };
-      }
-      return <DisplayNoneVisibilityExample />;
     },
   },
   {
