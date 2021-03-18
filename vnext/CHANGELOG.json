@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 18 Mar 2021 05:08:24 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.277",
+      "version": "0.0.0-canary.277",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add doc comments to IDL files",
+            "author": "vmorozov@microsoft.com",
+            "commit": "bf61bba060e53480571a4037a2f7db0a1d18d608",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Mar 2021 05:18:22 GMT",
       "tag": "react-native-windows_v0.0.0-canary.276",
       "version": "0.0.0-canary.276",

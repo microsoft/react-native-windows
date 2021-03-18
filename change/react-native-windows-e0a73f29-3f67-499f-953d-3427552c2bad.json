@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add doc comments to IDL files",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

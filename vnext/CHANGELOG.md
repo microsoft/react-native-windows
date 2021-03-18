@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 17 Mar 2021 05:18:22 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Mar 2021 05:08:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.277
+
+Thu, 18 Mar 2021 05:08:24 GMT
+
+### Changes
+
+- Add doc comments to IDL files (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.276
 
