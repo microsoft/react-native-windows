@@ -94,7 +94,7 @@ steps:
   - task: CmdLine@2
     displayName: Init new lib project
     inputs:
-      script: npx create-react-native-module --module-name "testcli" testcli
+      script: npx create-react-native-module@^0.19.0 --module-name "testcli" testcli
       workingDirectory: $(Agent.BuildDirectory)
     condition: and(succeeded(), eq(variables['localProjectType'], 'lib'))
   
