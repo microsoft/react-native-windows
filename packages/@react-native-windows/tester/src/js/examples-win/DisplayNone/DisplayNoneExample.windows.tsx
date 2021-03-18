@@ -63,11 +63,11 @@ export class DisplayNoneExample extends React.Component<{}> {
     this.setState({displayNone2: !this.state.displayNone2});
   };
 
-  _handleChangeText = text => {
+  _handleChangeText = (text: string) => {
     this.setState({textState: text});
   };
 
-  _handleChangeText2 = text => {
+  _handleChangeText2 = (text: string) => {
     this.setState({textState2: text});
   };
 }
