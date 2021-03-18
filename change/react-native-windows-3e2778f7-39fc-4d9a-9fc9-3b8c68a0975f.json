@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "codegen test fix 0.63",
+  "packageName": "react-native-windows",
+  "email": "agnel@microsoft.com",
+  "dependentChangeType": "patch"
+}
