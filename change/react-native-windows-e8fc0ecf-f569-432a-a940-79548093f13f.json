@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add retries to Folly download since it sometimes fails in CI",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
