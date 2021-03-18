@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "DocString.h"
+
 namespace Microsoft.ReactNative
 {
   // JsiByteArrayUser delegate receives a range of bytes as a byte array.
@@ -13,6 +15,13 @@ namespace Microsoft.ReactNative
   // copy data if it wants to store it for the later use. Otherwise it may cause issues due to the memory
   // being overwritten after the call is completed. It may happen if the provided byte array was stored
   // on the call stack or it was a managed memory pinned for the use and then unpinned after that.
+  [experimental]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   delegate void JsiByteArrayUser(UInt8[] bytes);
 
   // IJsiByteBuffer encapsulates a byte array buffer.
@@ -25,7 +34,13 @@ namespace Microsoft.ReactNative
   // JsiByteArrayUser delegate. For example, .Net implementation must pin the memory before the JsiByteArrayUser
   // delegate call and unpin it after that. It means that the provided data is only valid while the
   // JsiByteArrayUser delegate is being called.
-  [webhosthidden]
+  [experimental, webhosthidden]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   interface IJsiByteBuffer
   {
     // Size of the byte buffer data.
@@ -36,6 +51,13 @@ namespace Microsoft.ReactNative
   };
 
   // Type of the JavaScript value. It is currently matching the full JavaScript set of types except for the BigInt type.
+  [experimental]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   enum JsiValueKind
   {
     Undefined,
@@ -47,53 +69,118 @@ namespace Microsoft.ReactNative
     Object,
   };
 
-  [webhosthidden]
+  [experimental, webhosthidden]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   struct JsiValueRef
   {
     JsiValueKind Kind;
     UInt64 Data;
   };
 
+  [experimental]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   struct JsiSymbolRef
   {
     UInt64 Data;
   };
 
+  [experimental]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   struct JsiStringRef
   {
     UInt64 Data;
   };
 
+  [experimental]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   struct JsiObjectRef
   {
     UInt64 Data;
   };
 
+  [experimental]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   struct JsiWeakObjectRef
   {
     UInt64 Data;
   };
 
+  [experimental]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   struct JsiPropertyIdRef
   {
     UInt64 Data;
   };
 
+  [experimental]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   struct JsiScopeState
   {
     UInt64 Data;
   };
 
-  [default_interface]
+  [experimental, default_interface]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   runtimeclass JsiPreparedJavaScript
   {
   };
 
   [experimental]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   delegate JsiValueRef JsiHostFunction(JsiRuntime runtime, JsiValueRef thisArg, JsiValueRef[] args);
 
-  [webhosthidden]
-  [experimental]
+  [experimental, webhosthidden]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   interface IJsiHostObject
   {
     JsiValueRef GetProperty(JsiRuntime runtime, JsiPropertyIdRef propertyId);
@@ -101,13 +188,26 @@ namespace Microsoft.ReactNative
     IVector<JsiPropertyIdRef> GetPropertyIds(JsiRuntime runtime);
   };
 
+  [experimental]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   enum JsiErrorType
   {
     JSError,         // JavaScript error
     NativeException, // JSI native code exception
   };
 
-  [webhosthidden, default_interface]
+  [experimental, webhosthidden, default_interface]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   runtimeclass JsiError
   {
     JsiErrorType ErrorType { get; };
@@ -117,8 +217,13 @@ namespace Microsoft.ReactNative
     JsiValueRef Value { get; };
   };
 
-  [webhosthidden, default_interface]
-  [experimental]
+  [experimental, webhosthidden, default_interface]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
   runtimeclass JsiRuntime
   {
     // TODO : replace with a registered factory method
