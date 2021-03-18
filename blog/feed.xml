@@ -4,7 +4,7 @@
         <title>React Native for Windows + macOS Blog</title>
         <link>https://microsoft.github.io/react-native-windows/blog</link>
         <description>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</description>
-        <lastBuildDate>Wed, 02 Sep 2020 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 16 Mar 2021 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -12,6 +12,14 @@
             <url>https://microsoft.github.io/react-native-windows/img/header_logo.svg</url>
             <link>https://microsoft.github.io/react-native-windows/blog</link>
         </image>
+        <item>
+            <title><![CDATA[Gallery App, TurboModules, and more community modules]]></title>
+            <link>https://microsoft.github.io/react-native-windows/blog/2021/03/16/64updates.html</link>
+            <guid>https://microsoft.github.io/react-native-windows/blog/2021/03/16/64updates.html</guid>
+            <pubDate>Tue, 16 Mar 2021 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>React Native 0.64 is out! Which means it's time to showcase all the work we've put in around supporting more community modules, TurboModules, APIs improvements, and even some tools, all in the effort to improve the developer experience.</p>
+]]></description>
+        </item>
         <item>
             <title><![CDATA[Windows & macOS version 0.63 updates, Hermes, and more]]></title>
             <link>https://microsoft.github.io/react-native-windows/blog/2020/09/02/63updates.html</link>
