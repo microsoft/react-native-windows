@@ -65,4 +65,16 @@ void App::OnLaunched(LaunchActivatedEventArgs const &e) {
   rootFrame.Navigate(xaml_typename<MainPage>(), box_value(e.Arguments()));
 }
 
+/// <summary>
+/// Invoked when the application is activated by some means other than normal launching.
+/// </summary>
+void App::OnActivated(IActivatedEventArgs const &e) {
+  auto preActivationContent = Window::Current().Content();
+  super::OnActivated(e);
+  if (!preActivationContent && Window::Current()) {
+    Frame rootFrame = Window::Current().Content().as<Frame>();
+    rootFrame.Navigate(xaml_typename<MainPage>(), nullptr);
+  }
+}
+
 } // namespace winrt::SampleAppCpp::implementation
