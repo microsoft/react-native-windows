@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Make BaseWebSocketResource destructor noexcept",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2021-03-18T00:04:10.112Z"
+}
