@@ -666,9 +666,9 @@
     <ClInclude Include="Views\PaperShadowNode.h" />
     <ClInclude Include="Views\ShadowNodeRegistry.h" />
     <ClInclude Include="DocString.h" />
-    </ClInclude>
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h">
       <Filter>ReactHost</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />

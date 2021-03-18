@@ -32,6 +32,8 @@ using namespace winrt::Windows::Foundation;
 
 namespace Mso::React {
 
+using IInspectable = winrt::Windows::Foundation::IInspectable;
+
 #ifndef CORE_ABI
 struct RedBox : public std::enable_shared_from_this<RedBox> {
   RedBox(

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Improve Microsoft.ReactNative compilation speed",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

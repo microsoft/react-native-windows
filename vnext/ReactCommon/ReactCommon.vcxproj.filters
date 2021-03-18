@@ -138,6 +138,8 @@
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp">
       <Filter>yoga\event</Filter>
     </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBuffer.cpp" />
+    <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stubs\sys\mman.h">
@@ -260,9 +262,8 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\ReactCommon\JSCallInvoker.h">
-      <Filter>jscallinvoker\ReactCommon</Filter>
-    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
