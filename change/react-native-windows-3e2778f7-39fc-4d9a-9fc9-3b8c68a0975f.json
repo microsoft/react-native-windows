@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "[0.63] codegen test fix for build on new agents",
+  "comment": "Backporting codegen test fix for build on new agents",
   "packageName": "react-native-windows",
   "email": "agnel@microsoft.com",
   "dependentChangeType": "patch"
