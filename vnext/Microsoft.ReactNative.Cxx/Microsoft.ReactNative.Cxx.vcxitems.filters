@@ -12,9 +12,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ReactCommon\TurboModuleUtils.cpp">
-      <Filter>TurboModule</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleProvider.cpp">
       <Filter>TurboModule</Filter>
     </ClCompile>
@@ -26,6 +23,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.cpp">
       <Filter>JSI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.cpp">
+      <Filter>TurboModule</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +130,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleProvider.h">
       <Filter>TurboModule</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactCommon\TurboModuleUtils.h">
-      <Filter>TurboModule</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.h">
       <Filter>JSI</Filter>
     </ClInclude>
@@ -143,6 +140,9 @@
       <Filter>TurboModule</Filter>
     </ClInclude>
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.h">
+      <Filter>TurboModule</Filter>
+    </ClInclude>
+    <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.h">
       <Filter>TurboModule</Filter>
     </ClInclude>
   </ItemGroup>

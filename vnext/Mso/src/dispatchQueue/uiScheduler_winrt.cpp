@@ -16,6 +16,8 @@ namespace Mso {
 
 namespace {
 
+using IInspectable = winrt::Windows::Foundation::IInspectable;
+
 // TODO: consider to move it into its own liblet
 template <class TKey, class TValue>
 struct ThreadSafeMap {
