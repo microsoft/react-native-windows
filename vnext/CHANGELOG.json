@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 19 Mar 2021 05:12:09 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.278",
+      "version": "0.0.0-canary.278",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add retries to Folly download since it sometimes fails in CI",
+            "author": "asklar@microsoft.com",
+            "commit": "80ec5024358706cd953d365a6deacb3798fe3c3a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Make BaseWebSocketResource destructor noexcept",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "0767a683a08a9d0a8471058660282978851ed4d1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Enable overriding WinUI and SDK versions via ExperimentalFeatures.props",
+            "author": "asklar@microsoft.com",
+            "commit": "afb91486ccc280f5979c6088f535c6c02b173123",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 18 Mar 2021 05:08:24 GMT",
       "tag": "react-native-windows_v0.0.0-canary.277",
       "version": "0.0.0-canary.277",

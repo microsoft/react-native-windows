@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enable overriding WinUI and SDK versions via ExperimentalFeatures.props",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 18 Mar 2021 05:08:24 GMT and should not be manually modified.
+This log was last generated on Fri, 19 Mar 2021 05:12:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.278
+
+Fri, 19 Mar 2021 05:12:09 GMT
+
+### Changes
+
+- Add retries to Folly download since it sometimes fails in CI (asklar@microsoft.com)
+- Make BaseWebSocketResource destructor noexcept (julio.rocha@microsoft.com)
+- Enable overriding WinUI and SDK versions via ExperimentalFeatures.props (asklar@microsoft.com)
 
 ## 0.0.0-canary.277
 
