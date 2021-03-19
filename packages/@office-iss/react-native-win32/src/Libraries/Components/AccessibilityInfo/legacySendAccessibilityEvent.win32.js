@@ -8,22 +8,22 @@
  * @flow strict-local
  */
 
-import UIManager from '../../ReactNative/UIManager';
+ import UIManager from '../../ReactNative/UIManager';
 
-/**
- * This is a function exposed to the React Renderer that can be used by the
- * pre-Fabric renderer to emit accessibility events to pre-Fabric nodes.
- */
-function legacySendAccessibilityEvent(
-  reactTag: number,
-  eventType: string,
-): void {
-  if (eventType === 'focus') {
-    UIManager.sendAccessibilityEvent(
-      reactTag,
-      UIManager.getConstants().AccessibilityEventTypes.typeViewFocused,
-    );
-  }
-}
-
-module.exports = legacySendAccessibilityEvent;
+ /**
+  * This is a function exposed to the React Renderer that can be used by the
+  * pre-Fabric renderer to emit accessibility events to pre-Fabric nodes.
+  */
+ function legacySendAccessibilityEvent(
+   reactTag: number,
+   eventType: string,
+ ): void {
+   if (eventType === 'focus') {
+     UIManager.sendAccessibilityEvent(
+       reactTag,
+       UIManager.getConstants().FocusAccessibilityEvent,
+     );
+   }
+ }
+ 
+ module.exports = legacySendAccessibilityEvent;
