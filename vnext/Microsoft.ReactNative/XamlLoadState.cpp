@@ -3,9 +3,9 @@
 
 #include "pch.h"
 #include "XamlLoadState.h"
+#include <cdebug.h>
 #include <sstream>
 #include "Unicode.h"
-#include <cdebug.h>
 
 #ifndef DISABLE_XAML_GUARD
 
@@ -157,7 +157,7 @@ XamlLoadState::~XamlLoadState() {
   (*pfn)(m_cookie);
 }
 
-void XamlLoadState::RegisterDll(const wchar_t* dllName, const wchar_t* path) {
+void XamlLoadState::RegisterDll(const wchar_t *dllName, const wchar_t *path) {
   if (dllName == systemXamlDllName) {
     switch (m_mode) {
       case XamlDialect::Unknown:
@@ -195,7 +195,8 @@ void XamlLoadState::RegisterDll(const wchar_t* dllName, const wchar_t* path) {
         break;
 
       default:
-        cdebug << L"Unexpected XAML mode " << static_cast<int>(m_mode) << L" when trying to load " << (path ? path : dllName);
+        cdebug << L"Unexpected XAML mode " << static_cast<int>(m_mode) << L" when trying to load "
+               << (path ? path : dllName);
         throw std::exception("Unexpected XAML mode ");
     }
   }
