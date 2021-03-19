@@ -161,4 +161,7 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)README.md" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="$(MSBuildThisFileDirectory)JSValue.natvis" />
+  </ItemGroup>
 </Project>
