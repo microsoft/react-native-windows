@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  <Type Name="winrt::Microsoft::ReactNative::JSValue">
+    <DisplayString Condition="m_type == JSValueType::Null">null</DisplayString>
+    <DisplayString Condition="m_type == JSValueType::Object">{m_object}</DisplayString>
+    <DisplayString Condition="m_type == JSValueType::Array">{m_array}</DisplayString>
+    <DisplayString Condition="m_type == JSValueType::String">{m_string}</DisplayString>
+    <DisplayString Condition="m_type == JSValueType::Boolean">{m_bool}</DisplayString>
+    <DisplayString Condition="m_type == JSValueType::Int64">{m_int64} (A={(int8_t)(m_int64>>24),x}, R={(int8_t)(m_int64>>16 &amp; 0xff),x}, G={(int8_t)(m_int64>>8 &amp; 0xff),x}, B={(int8_t)(m_int64 &amp; 0xff),x})</DisplayString>
+    <DisplayString Condition="m_type == JSValueType::Double">{m_double}</DisplayString>
+  </Type>
+</AutoVisualizer>
