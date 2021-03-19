@@ -9,8 +9,13 @@
 #include <jsi/jsi.h>
 
 #ifdef CHAKRACORE
-#include "ChakraCore.h"
-#include "ChakraCoreDebugger.h"
+//#include "ChakraCore.h"
+#define USE_EDGEMODE_JSRT
+#include "jsrt.h"
+//#include "ChakraCoreDebugger.h"
+class DebugProtocolHandler {};
+class DebugService {};
+
 #else
 #ifndef USE_EDGEMODE_JSRT
 #define USE_EDGEMODE_JSRT

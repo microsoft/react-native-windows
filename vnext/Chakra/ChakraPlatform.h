@@ -16,7 +16,9 @@
 #if defined(USE_EDGEMODE_JSRT)
 #include <jsrt.h>
 #else
-#include <ChakraCore.h>
+#define USE_EDGEMODE_JSRT
+#include <jsrt.h>
+//#include <ChakraCore.h>
 #endif
 
 #define CHAKRA_FAILED(jsErrorCode) ((jsErrorCode) != ::JsErrorCode::JsNoError)

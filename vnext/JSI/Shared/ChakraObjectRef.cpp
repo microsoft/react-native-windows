@@ -132,7 +132,7 @@ ChakraObjectRef GetPropertyId(const std::string_view &utf8) {
   // using ChakraCore's JsCreatePropertyId API.
 #ifdef CHAKRACORE
   JsPropertyIdRef id = JS_INVALID_REFERENCE;
-  VerifyChakraErrorElseThrow(JsCreatePropertyId(utf8.data(), utf8.length(), &id));
+  VerifyChakraErrorElseThrow(JsCreatePropertyId(utf8.data(), utf8.length(), &id));//ChakraCore-only
   return ChakraObjectRef(id);
 
 #else
@@ -156,7 +156,7 @@ std::string ToStdString(const ChakraObjectRef &jsString) {
   // using ChakraCore's JsCopyString API.
 #ifdef CHAKRACORE
   size_t length = 0;
-  VerifyChakraErrorElseThrow(JsCopyString(jsString, nullptr, 0, &length));
+  VerifyChakraErrorElseThrow(JsCopyString(jsString, nullptr, 0, &length));//ChakraCore-only
 
   std::string result(length, 'a');
   VerifyChakraErrorElseThrow(JsCopyString(jsString, result.data(), result.length(), &length));
@@ -192,7 +192,7 @@ ChakraObjectRef ToJsString(const std::string_view &utf8) {
   // using ChakraCore's JsCreateString API.
 #ifdef CHAKRACORE
   JsValueRef result = JS_INVALID_REFERENCE;
-  VerifyChakraErrorElseThrow(JsCreateString(utf8.data(), utf8.length(), &result));
+  VerifyChakraErrorElseThrow(JsCreateString(utf8.data(), utf8.length(), &result));//ChakraCore-only
   return ChakraObjectRef(result);
 
 #else
