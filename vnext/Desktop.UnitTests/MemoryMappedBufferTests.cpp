@@ -1,7 +1,10 @@
 #include "MemoryMappedBuffer.h"
 #include "Utilities.h"
 
+#pragma pack(push)
+#pragma warning(disable : 4103)
 #include <CppUnitTest.h>
+#pragma pack(pop)
 
 #include <shlwapi.h>
 #include <windows.h>
