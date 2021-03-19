@@ -30,7 +30,6 @@ struct ReactRootView : ReactRootViewT<ReactRootView> {
   }
   void IsPerspectiveEnabled(bool value) noexcept {
     m_isPerspectiveEnabled = value;
-    UpdatePerspective();
   }
 
   void ReloadView() noexcept;
@@ -46,8 +45,6 @@ struct ReactRootView : ReactRootViewT<ReactRootView> {
   folly::dynamic m_initialProps;
   bool m_isPerspectiveEnabled{true};
   std::shared_ptr<react::uwp::ReactRootControl> m_rootControl;
-
-  void UpdatePerspective();
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
