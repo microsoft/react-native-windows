@@ -237,7 +237,7 @@ bool FrameworkElementViewManager::UpdateProperty(
           element.TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4::identity());
         }
       } else {
-        cdebug << "[Dim down] " << propertyName << std::endl;
+        cdebug << "[Dim down] " << propertyName << "\n";
       }
     } else if (propertyName == "width") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||

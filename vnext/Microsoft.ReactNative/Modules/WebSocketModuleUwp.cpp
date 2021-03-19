@@ -179,8 +179,8 @@ void LegacyWebSocketModule::WebSocket::connect(
     } else {
       error = e.message().c_str();
     }
-    cwdebug << L"WebSocket.connect failed (0x" << std::hex << e.code() << ") " << error << " at "
-            << uri.DisplayUri().c_str() << std::endl;
+    cdebug << "WebSocket.connect failed (0x" << std::to_string(e.code(), 16) << ") " << error << " at "
+            << uri.DisplayUri().c_str() << "\n";
     onError(id, e.code());
   }
 }

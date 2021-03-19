@@ -113,7 +113,7 @@ class Sqlite3Transaction final {
  public:
   Sqlite3Transaction() = default;
   Sqlite3Transaction(sqlite3 *db, const CxxModule::Callback &callback) : m_db(db), m_callback(&callback) {
-    if (!Exec(m_db, *m_callback, u8"BEGIN TRANSACTION")) {
+    if (!Exec(m_db, *m_callback, "BEGIN TRANSACTION")) {
       m_db = nullptr;
       m_callback = nullptr;
     }
@@ -138,7 +138,7 @@ class Sqlite3Transaction final {
 
   void Rollback() {
     if (m_db) {
-      Exec(m_db, *m_callback, u8"ROLLBACK");
+      Exec(m_db, *m_callback, "ROLLBACK");
       m_db = nullptr;
       m_callback = nullptr;
     }
@@ -148,7 +148,7 @@ class Sqlite3Transaction final {
     if (!m_db) {
       return false;
     }
-    auto result = Exec(m_db, *m_callback, u8"COMMIT");
+    auto result = Exec(m_db, *m_callback, "COMMIT");
     m_db = nullptr;
     m_callback = nullptr;
     return result;
@@ -229,12 +229,12 @@ AsyncStorageModuleWin32::AsyncStorageModuleWin32() {
     return SQLITE_OK;
   };
 
-  Exec(m_db, u8"PRAGMA user_version", getUserVersionCallback, &userVersion);
+  Exec(m_db, "PRAGMA user_version", getUserVersionCallback, &userVersion);
 
   if (userVersion == 0) {
     Exec(
         m_db,
-        u8"CREATE TABLE IF NOT EXISTS AsyncLocalStorage(key TEXT PRIMARY KEY, value TEXT NOT NULL); PRAGMA user_version=1");
+        "CREATE TABLE IF NOT EXISTS AsyncLocalStorage(key TEXT PRIMARY KEY, value TEXT NOT NULL); PRAGMA user_version=1");
   }
 }
 
@@ -377,7 +377,7 @@ void AsyncStorageModuleWin32::DBTask::multiGet(sqlite3 *db) {
   }
 
   auto argCount = static_cast<int>(m_args.size());
-  auto sql = MakeSQLiteParameterizedStatement(u8"SELECT key, value FROM AsyncLocalStorage WHERE key IN ", argCount);
+  auto sql = MakeSQLiteParameterizedStatement("SELECT key, value FROM AsyncLocalStorage WHERE key IN ", argCount);
   auto pStmt = PrepareStatement(db, m_callback, sql.data());
   if (!pStmt) {
     return;
@@ -412,7 +412,7 @@ void AsyncStorageModuleWin32::DBTask::multiSet(sqlite3 *db) {
   if (!transaction) {
     return;
   }
-  auto pStmt = PrepareStatement(db, m_callback, u8"INSERT OR REPLACE INTO AsyncLocalStorage VALUES(?, ?)");
+  auto pStmt = PrepareStatement(db, m_callback, "INSERT OR REPLACE INTO AsyncLocalStorage VALUES(?, ?)");
   if (!pStmt) {
     return;
   }
@@ -441,7 +441,7 @@ void AsyncStorageModuleWin32::DBTask::multiRemove(sqlite3 *db) {
   }
 
   auto argCount = static_cast<int>(m_args.size());
-  auto sql = MakeSQLiteParameterizedStatement(u8"DELETE FROM AsyncLocalStorage WHERE key IN ", argCount);
+  auto sql = MakeSQLiteParameterizedStatement("DELETE FROM AsyncLocalStorage WHERE key IN ", argCount);
   auto pStmt = PrepareStatement(db, m_callback, sql.data());
   if (!pStmt) {
     return;
@@ -460,7 +460,7 @@ void AsyncStorageModuleWin32::DBTask::multiRemove(sqlite3 *db) {
 }
 
 void AsyncStorageModuleWin32::DBTask::clear(sqlite3 *db) {
-  if (Exec(db, m_callback, u8"DELETE FROM AsyncLocalStorage")) {
+  if (Exec(db, m_callback, "DELETE FROM AsyncLocalStorage")) {
     m_callback({});
   }
 }
@@ -474,7 +474,7 @@ void AsyncStorageModuleWin32::DBTask::getAllKeys(sqlite3 *db) {
     return SQLITE_OK;
   };
 
-  if (Exec(db, m_callback, u8"SELECT key FROM AsyncLocalStorage", getAllKeysCallback)) {
+  if (Exec(db, m_callback, "SELECT key FROM AsyncLocalStorage", getAllKeysCallback)) {
     m_callback({{}, result});
   }
 }

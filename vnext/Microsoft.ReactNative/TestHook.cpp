@@ -92,7 +92,7 @@ void TestHook::NotifyUnimplementedProperty(
     cdebug << " (" << size << " elems)";
   }
 
-  cdebug << std::endl;
+  cdebug << "\n";
   // DebugBreak();
 }
 
