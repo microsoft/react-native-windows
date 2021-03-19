@@ -8,8 +8,6 @@
 #include <exception>
 #if defined(USE_EDGEMODE_JSRT)
 #include <jsrt.h>
-#else
-#include <ChakraCore.h>
 #endif
 
 namespace facebook {
