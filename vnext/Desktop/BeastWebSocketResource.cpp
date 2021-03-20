@@ -38,7 +38,7 @@ template <typename SocketLayer, typename Stream>
 BaseWebSocketResource<SocketLayer, Stream>::BaseWebSocketResource(Url &&url) : m_url{std::move(url)} {}
 
 template <typename SocketLayer, typename Stream>
-BaseWebSocketResource<SocketLayer, Stream>::~BaseWebSocketResource() {
+BaseWebSocketResource<SocketLayer, Stream>::~BaseWebSocketResource() noexcept {
   if (!m_context.stopped()) {
     if (!m_closeRequested)
       Close(CloseCode::GoingAway, "Terminating instance");
