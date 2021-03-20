@@ -21,9 +21,10 @@
           C4290 - C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
           C4309 - truncation of constant value
           C4324 - structure was padded due to __declspec(align())
+          C4824 - discarding return value of function with 'nodiscard' attribute
           C5205 - delete of an abstract class that has a non-virtual destructor results in undefined behavior
       -->
-    <ExtraWarningsToDisable>4068;4100;4101;4127;4189;4290;4309;4324;5205;$(DisableSpecificWarnings)</ExtraWarningsToDisable>
+    <ExtraWarningsToDisable>4068;4100;4101;4127;4189;4290;4309;4324;4824;5205;$(DisableSpecificWarnings)</ExtraWarningsToDisable>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
