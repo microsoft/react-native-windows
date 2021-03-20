@@ -80,7 +80,7 @@ jobs:
       - task: CopyFiles@2
         displayName: Copy tree dump output files
         inputs:
-          sourceFolder: $(LocalAppData)\Packages\ReactUWPTestApp_kc2bncckyf4ap\LocalState
+          sourceFolder: $(LocalAppData)\Packages\ReactUWPTestApp_cezq6h4ygq1hw\LocalState
           targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
           contents: TreeDump\**
         condition: succeededOrFailed()
