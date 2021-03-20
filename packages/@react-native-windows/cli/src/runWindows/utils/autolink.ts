@@ -434,7 +434,7 @@ export class AutolinkWindows {
                 dependencyIsValid = !!(
                   dependencyIsValid &&
                   item in project &&
-                  project[item] &&
+                  project[item] !== '' &&
                   !project[item]!.toString().startsWith('Error: ')
                 );
               });
