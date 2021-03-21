@@ -101,7 +101,7 @@ const projects: TargetProject[] = [
   project('WithWinUI3', async (folder: string) => {
     await ensureWinUI3Project(folder);
   }),
-  project('WithIndirectDependency', async (folder: string) => {}),
+  project('WithIndirectDependency'),
 ];
 
 // Tests that given userConfig is null, the result will always be null
