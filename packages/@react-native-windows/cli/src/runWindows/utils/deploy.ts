@@ -125,21 +125,31 @@ function getAppxManifestPath(
   projectName?: string,
 ): string {
   const configuration = getBuildConfiguration(options);
-  const appxManifestGlob = `windows/{*/bin/${options.arch}/${configuration},${configuration}/*,target/${options.arch}/${configuration},${options.arch}/${configuration}/*}/AppxManifest.xml`;
+  // C++ x86 manifest would go under windows/Debug whereas x64 goes under windows/x64/Debug
+  // If we've built both, this causes us to end up with two matches, so we have to carefully select the right folder
+  let archFolder;
+  if (options.arch !== 'x86') {
+    archFolder = `${options.arch}/${configuration}`;
+  } else {
+    archFolder = `${configuration}`;
+  }
+
+  const appxManifestGlob = `windows/{*/bin/${options.arch}/${configuration},${archFolder}/*,target/${options.arch}/${configuration}}/AppxManifest.xml`;
   const globs = glob.sync(path.join(options.root, appxManifestGlob));
   let appxPath: string;
   if (globs.length === 1 || !projectName) {
     appxPath = globs[0];
   } else {
     const filteredGlobs = globs.filter(x => x.includes(projectName));
+    appxPath = filteredGlobs[0];
     if (filteredGlobs.length > 1) {
       newWarn(
         `More than one appxmanifest for ${projectName}: ${filteredGlobs.join(
           ',',
         )}`,
       );
+      newWarn(`Choosing ${appxPath}`);
     }
-    appxPath = filteredGlobs[0];
   }
 
   if (!appxPath) {
