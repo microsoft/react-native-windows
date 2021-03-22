@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.64] AzDO image now installs uwp package 6.2.11, not 6.2.10; Update Codegen UnitTest",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

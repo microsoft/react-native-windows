@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 15 Mar 2021 17:23:19 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Mar 2021 17:06:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.1
+
+Mon, 22 Mar 2021 17:06:53 GMT
+
+### Patches
+
+- [0.64] Update cppwinrt package version (asklar@microsoft.com)
+- Fix template for WinUI3 C# App by expanding namespace of argument in AppOnActivated (dannyvv@microsoft.com)
+- Fix deep linking activation (vmorozov@microsoft.com)
+- Make BaseWebSocketResource destructor noexcept (julio.rocha@microsoft.com)
+- [0.64] AzDO image now installs uwp package 6.2.11, not 6.2.10; Update Codegen UnitTest (asklar@microsoft.com)
+- Fix DevMenuControl.xbf copy conflict (vmorozov@microsoft.com)
+- Improve Microsoft.ReactNative compilation speed (vmorozov@microsoft.com)
 
 ## 0.64.0
 

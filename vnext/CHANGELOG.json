@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 22 Mar 2021 17:06:53 GMT",
+      "tag": "react-native-windows_v0.64.1",
+      "version": "0.64.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.64] Update cppwinrt package version",
+            "author": "asklar@microsoft.com",
+            "commit": "0437f2f3edebc443f10a6eb7f8cfcd561ccfdc87",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix template for WinUI3 C# App by expanding namespace of argument in AppOnActivated",
+            "author": "dannyvv@microsoft.com",
+            "commit": "eb8daf4ecdc3ffb466904327de64ed110d838f38",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix deep linking activation",
+            "author": "vmorozov@microsoft.com",
+            "commit": "eb8daf4ecdc3ffb466904327de64ed110d838f38",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Make BaseWebSocketResource destructor noexcept",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "9208f85c44f558d53c500ee803e6a17c7fc4a807",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] AzDO image now installs uwp package 6.2.11, not 6.2.10; Update Codegen UnitTest",
+            "author": "asklar@microsoft.com",
+            "commit": "1615a2432235c267005d044ef5ebf4e3a74cea7d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix DevMenuControl.xbf copy conflict",
+            "author": "vmorozov@microsoft.com",
+            "commit": "459f350412c374439e6e76760adc261945c12ef2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Improve Microsoft.ReactNative compilation speed",
+            "author": "vmorozov@microsoft.com",
+            "commit": "252afeb9e0383eee9a2b13766263566a1fb4aab1",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Mar 2021 17:23:19 GMT",
       "tag": "react-native-windows_v0.64.0",
       "version": "0.64.0",

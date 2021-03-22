@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.64] Update cppwinrt package version",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

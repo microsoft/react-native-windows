@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix DevMenuControl.xbf copy conflict",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
