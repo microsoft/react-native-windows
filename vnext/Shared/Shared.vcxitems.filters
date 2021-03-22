@@ -353,6 +353,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h">
       <Filter>Header Files\JSI</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\include\Shared\cdebug.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">

@@ -305,7 +305,7 @@ void ViewManagerBase::NotifyUnimplementedProperty(
     TestHook::NotifyUnimplementedProperty(
         Microsoft::Common::Unicode::Utf16ToUtf8(viewManagerName), className, propertyName, value);
   } else {
-    cdebug << "[NonIInspectable] viewManagerName = " << viewManagerName << std::endl;
+    cdebug << "[NonIInspectable] viewManagerName = " << viewManagerName << "\n";
   }
 #endif // DEBUG
 }
