@@ -31,6 +31,14 @@ steps:
       installVsComponents: ${{ parameters.installVsComponents }}
       debug: ${{ parameters.debug }}
 
+   # Workaround to get NuGet more reliable per https://github.com/microsoft/artifacts-credprovider/issues/91#issuecomment-530907753
+   # It should behave been fixed from 5.5.x where we use 5.9.0.7134
+   # But maybe ADO's cred provider is not updated yet...
+  - powershell: |
+      Write-Host "##vso[task.setvariable variable=NUGET_PLUGIN_HANDSHAKE_TIMEOUT_IN_SECONDS]20
+      Write-Host "##vso[task.setvariable variable=NUGET_PLUGIN_REQUEST_TIMEOUT_IN_SECONDS]20
+    displayName: Workaround NuGet Auth Issues
+
   # NuGetCommand@2 workaround: https://developercommunity.visualstudio.com/content/problem/288534/vsts-yaml-build-failure-the-task-name-nugetcommand.html
   - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
     displayName: NuGet restore
