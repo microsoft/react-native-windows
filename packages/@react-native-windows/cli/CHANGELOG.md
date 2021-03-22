@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 15 Mar 2021 17:23:19 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Mar 2021 17:06:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.1
+
+Mon, 22 Mar 2021 17:06:53 GMT
+
+### Patches
+
+- [0.64] Update cppwinrt package version (asklar@microsoft.com)
+- Bump xmldom to 0.5.0. (yicyao@microsoft.com)
 
 ## 0.64.0
 

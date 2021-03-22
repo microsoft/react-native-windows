@@ -2,6 +2,21 @@
   "name": "@react-native-windows/tester",
   "entries": [
     {
+      "date": "Mon, 22 Mar 2021 17:06:53 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.1",
+            "author": "asklar@microsoft.com",
+            "commit": "0437f2f3edebc443f10a6eb7f8cfcd561ccfdc87",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Mar 2021 17:23:19 GMT",
       "tag": "@react-native-windows/tester_v0.0.1",
       "version": "0.0.1",
