@@ -30,7 +30,7 @@ variables:
     value: false
 
 schedules:
-- cron: "0 15 * * 1" # 3PM Monday UTC (8AM Monday PST)
+- cron: "0 15 * * Mon" # 3PM Monday UTC (8AM Monday PST)
   displayName: Weekly stable publish build
   branches:
     include:
