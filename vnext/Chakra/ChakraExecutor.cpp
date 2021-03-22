@@ -72,7 +72,11 @@ JsNativeFunction exceptionWrapMethod() {
         }
         ChakraExecutor *executor = nullptr;
         JsGetContextData(ctx, (void **)&executor);
-        return (executor->*method)(argumentCount, pArguments);
+        // JSContextHolder won't be in stack when callback is not called from JS code initiated from executor (e.g. when evaluating script from Debugger).
+        if (!executor)
+          return ChakraValue::makeUndefined();
+        else
+          return (executor->*method)(argumentCount, pArguments);
       } catch (...) {
         return translatePendingCppExceptionToJSError(function);
       }
@@ -209,20 +213,20 @@ JsErrorCode ChakraExecutor::RedirectConsoleToDebugger(JsValueRef debuggerConsole
 
   const char *script =
       "function patchConsoleObject$$1(global, console, debugConsole) {\n"
-      "var obj = {};\n"
-      "for (var fn in console) {\n"
-      "if (typeof console[fn] === \"function\") {\n"
-      "(function(name) {\n"
-      "obj[name] = function(...args) {\n"
-      "console[name](...args);\n"
-      "if (name in debugConsole && typeof debugConsole[name] === \"function\") {\n"
-      "debugConsole[name](...args);\n"
-      "}\n"
-      "}\n"
-      "})(fn);\n"
-      "}\n"
-      "}\n"
-      "global.console = obj;\n"
+        "var obj = {};\n"
+        "for (var fn in console) {\n"
+          "if (typeof console[fn] === \"function\") {\n"
+            "(function(name) {\n"
+              "obj[name] = function(...args) {\n"
+              "console[name](...args);\n"
+              "if (name in debugConsole && typeof debugConsole[name] === \"function\") {\n"
+                "debugConsole[name](...args);\n"
+              "}\n"
+            "}\n"
+            "})(fn);\n"
+          "}\n"
+        "}\n"
+        "global.console = obj;\n"
       "}\n"
       "patchConsoleObject$$1;\n";
 
