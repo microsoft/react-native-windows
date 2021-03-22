@@ -82,6 +82,32 @@ Object {
 }
 `;
 
+exports[`projectConfig - WithIndirectDependency (Ignore react-native.config.js) 1`] = `
+Object {
+  "folder": StringContaining "WithIndirectDependency",
+  "project": Object {
+    "projectFile": "Error: Too many app project files found, please specify in react-native.config.",
+  },
+  "solutionFile": "WithIndirectDependency.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - WithIndirectDependency (Use react-native.config.js) 1`] = `
+Object {
+  "folder": StringContaining "WithIndirectDependency",
+  "project": Object {
+    "projectFile": "WithIndirectDependency\\\\WithIndirectDependency.vcxproj",
+    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectLang": "cpp",
+    "projectName": "WithIndirectDependency",
+  },
+  "solutionFile": "WithIndirectDependency.sln",
+  "sourceDir": "windows",
+  "useWinUI3": false,
+}
+`;
+
 exports[`projectConfig - WithWinUI3 (Ignore react-native.config.js) 1`] = `
 Object {
   "folder": StringContaining "WithWinUI3",

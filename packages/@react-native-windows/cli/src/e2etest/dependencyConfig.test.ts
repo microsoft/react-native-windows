@@ -101,6 +101,7 @@ const projects: TargetProject[] = [
       null,
     );
   }),
+  project('WithIndirectDependency'),
 ];
 
 // Tests that given userConfig is null, the result will always be null
