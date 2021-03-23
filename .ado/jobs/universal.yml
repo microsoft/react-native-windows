@@ -95,7 +95,7 @@
                   displayName: "Publish binaries for testing"
                   inputs:
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-                    artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}"
+                    artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
 
                 - template: ../templates/publish-build-artifacts-for-nuget.yml
                   parameters:
@@ -155,7 +155,7 @@
                   displayName: "Download binaries for testing"
                   inputs:
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-                    artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}"
+                    artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
 
                 # The WinDevBuild Agents run on the c-drive and the hosted agents run on the d-drive.
                 # Some of the output files have the c-drive expanded in the outputs, which results in file not found errors when running tests
