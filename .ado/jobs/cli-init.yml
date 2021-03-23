@@ -19,13 +19,14 @@ jobs:
         matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
           # Start Continuous only
           ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-            ArmDebugCpp:
-              language: cpp
-              configuration: Debug
-              platform: arm
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments: --no-deploy # We don't have Arm agents
+            # Arm32 is broken at the moment as we don't have hermes.lib for arm32.
+            # ArmDebugCpp:
+            #   language: cpp
+            #   configuration: Debug
+            #   platform: arm
+            #   projectType: app
+            #   additionalInitArguments:
+            #   additionalRunArguments: --no-deploy # We don't have Arm agents
             ArmDebugCs:
               language: cs
               configuration: Debug
@@ -33,13 +34,14 @@ jobs:
               projectType: app
               additionalInitArguments:
               additionalRunArguments: --no-deploy # We don't have Arm agents
-            ArmReleaseCpp:
-              language: cpp
-              configuration: Release
-              platform: arm
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments: --no-deploy # We don't have Arm agents
+            # Arm32 is broken at the moment as we don't have hermes.lib for arm32.
+            # ArmReleaseCpp:
+            #   language: cpp
+            #   configuration: Release
+            #   platform: arm
+            #   projectType: app
+            #   additionalInitArguments:
+            #   additionalRunArguments: --no-deploy # We don't have Arm agents
             ArmReleaseCs:
               language: cs
               configuration: Release
