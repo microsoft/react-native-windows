@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 23 Mar 2021 05:06:08 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.66",
+      "version": "0.0.0-canary.66",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Autolinking of non-direct dependencies doesn't add the project to the solution",
+            "author": "asklar@microsoft.com",
+            "commit": "97fdff576d9f0d77f60be487220acf3bbc4405f4",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 14 Mar 2021 05:06:38 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.65",
       "version": "0.0.0-canary.65",

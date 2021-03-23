@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Autolinking of non-direct dependencies doesn't add the project to the solution",
-  "packageName": "@react-native-windows/cli",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
