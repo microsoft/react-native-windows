@@ -1,9 +1,9 @@
 #include "pch.h"
 
-#define DELAYIMP_INSECURE_WRITABLE_HOOKS
+//#define DELAYIMP_INSECURE_WRITABLE_HOOKS
 #include <delayimp.h>
 
-ExternC FARPROC WINAPI ChakraDelayLoadHook(unsigned dliNotify, DelayLoadInfo *pdli) {
+/*ExternC */FARPROC WINAPI ChakraDelayLoadHook(unsigned dliNotify, DelayLoadInfo *pdli) {
   switch (dliNotify) {
     case dliStartProcessing:
       break;
@@ -28,8 +28,8 @@ ExternC FARPROC WINAPI ChakraDelayLoadHook(unsigned dliNotify, DelayLoadInfo *pd
 }
 
 // Install the handler for delay-loading binaries
-ExternC PfnDliHook __pfnDliNotifyHook2 = ChakraDelayLoadHook;
-ExternC PfnDliHook __pfnDliFailureHook2 = ChakraDelayLoadHook;
+ExternC const PfnDliHook __pfnDliNotifyHook2 = ChakraDelayLoadHook;
+ExternC const PfnDliHook __pfnDliFailureHook2 = ChakraDelayLoadHook;
 
 BOOL WINAPI DllMain(_In_ HINSTANCE hinstDLL, _In_ DWORD fdwReason, _In_ LPVOID lpvReserved) {
   if (!__pfnDliNotifyHook2)
