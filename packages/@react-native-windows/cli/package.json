@@ -29,7 +29,7 @@
     "shelljs": "^0.8.4",
     "username": "^5.1.0",
     "uuid": "^3.3.2",
-    "xmldom": "^0.3.0",
+    "xmldom": "^0.5.0",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.27"
   },
@@ -57,7 +57,7 @@
     "templates"
   ],
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.63-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.63] Fix usage of std::thread in RN's RuntimeExecutor",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

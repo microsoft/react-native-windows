@@ -5,6 +5,8 @@ variables:
   - template: variables/release.yml
   - template: variables/vs2019.yml
   - group: RNW Secrets
+  - name: NugetSecurityAnalysisWarningLevel
+    value: 'warn'
 
 schedules:
 - cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)

@@ -2,6 +2,26 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 10 Mar 2021 17:41:09 GMT",
+      "tag": "react-native-windows_v0.63.24",
+      "version": "0.63.24",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.63] Fix usage of std::thread in RN's RuntimeExecutor",
+            "author": "asklar@microsoft.com",
+            "commit": "8d599a608745ab523475175894c910de875e8d2d",
+            "package": "react-native-windows"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "commit": "8d599a608745ab523475175894c910de875e8d2d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 05 Mar 2021 08:02:05 GMT",
       "tag": "react-native-windows_v0.63.23",
       "version": "0.63.23",

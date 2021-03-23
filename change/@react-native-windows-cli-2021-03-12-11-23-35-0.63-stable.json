@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Promote 0.63 to legacy",
+  "packageName": "@react-native-windows/cli",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2021-03-12T19:23:35.054Z"
+}
