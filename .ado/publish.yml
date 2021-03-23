@@ -34,7 +34,7 @@ schedules:
   displayName: Weekly stable publish build
   branches:
     include:
-      - "*-stable"
+      - 0.64-stable
 - cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
   displayName: Nightly master publish build
   branches:
