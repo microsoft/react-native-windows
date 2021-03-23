@@ -3,50 +3,35 @@
 #define DELAYIMP_INSECURE_WRITABLE_HOOKS
 #include <delayimp.h>
 
-static bool g_dliNotifyHookCalled = false;
-// Depending on the flight, load either reac-native-win32.dll or reac-native-win32.chakra.dll
 ExternC FARPROC WINAPI ChakraDelayLoadHook(unsigned dliNotify, DelayLoadInfo *pdli) {
-  // if (fLoadJsiChakra && dliNotify == dliNotePreLoadLibrary) {
-  //  if (0 == ::_stricmp(pdli->szDll, "JSI.Desktop.ChakraCore.dll")) {
-  //    return reinterpret_cast<FARPROC>(LoadLibrary(L"JSI.Desktop.Chakra.dll"));
-  //  }
-  //}
-
-  (void)dliNotify;
-  (void)pdli;
-
-  switch (dliNotify)
-  {
+  switch (dliNotify) {
     case dliStartProcessing:
       break;
 
-      case dliNotePreLoadLibrary:
+    case dliNotePreLoadLibrary:
       break;
 
-      case dliNotePreGetProcAddress:
-        break;
+    case dliNotePreGetProcAddress:
+      break;
 
-        case dliFailLoadLib:
-        break;
+    case dliFailLoadLib:
+      break;
 
-        case dliFailGetProc:
-          break;
+    case dliFailGetProc:
+      break;
 
-          case dliNoteEndProcessing:
-          break;
+    case dliNoteEndProcessing:
+      break;
   }
 
-  //return nullptr; // MsoDelayLoadHook(dliNotify, pdli);
-  g_dliNotifyHookCalled = true;
-  return 0;
+  return NULL;
 }
 
-// Install the handler for delay-loading mso binaries
+// Install the handler for delay-loading binaries
 ExternC PfnDliHook __pfnDliNotifyHook2 = ChakraDelayLoadHook;
+ExternC PfnDliHook __pfnDliFailureHook2 = ChakraDelayLoadHook;
 
-
-BOOL WINAPI DllMain(_In_ HINSTANCE hinstDLL, _In_ DWORD fdwReason, _In_ LPVOID lpvReserved)
-{
+BOOL WINAPI DllMain(_In_ HINSTANCE hinstDLL, _In_ DWORD fdwReason, _In_ LPVOID lpvReserved) {
   if (!__pfnDliNotifyHook2)
     //__pfnDliNotifyHook2 = ChakraDelayLoadHook;
     return FALSE;

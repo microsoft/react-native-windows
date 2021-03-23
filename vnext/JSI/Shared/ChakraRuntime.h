@@ -13,8 +13,8 @@
 //#define USE_EDGEMODE_JSRT
 //#include "jsrt.h"
 #include "ChakraCoreDebugger.h"
-//class DebugProtocolHandler {};
-//class DebugService {};
+// class DebugProtocolHandler {};
+// class DebugService {};
 
 #else
 #ifndef USE_EDGEMODE_JSRT

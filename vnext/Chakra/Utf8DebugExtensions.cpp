@@ -46,7 +46,7 @@ JsErrorCode JsPointerToStringUtf8(
   return JsPointerToString(wstr.c_str(), wstr.size(), string);
 
 #else
-  return JsCreateString(stringValue, stringLength, string);//ChakraCore-only
+  return JsCreateString(stringValue, stringLength, string); // ChakraCore-only
 #endif
 }
 
