@@ -72,7 +72,8 @@ JsNativeFunction exceptionWrapMethod() {
         }
         ChakraExecutor *executor = nullptr;
         JsGetContextData(ctx, (void **)&executor);
-        // JSContextHolder won't be in stack when callback is not called from JS code initiated from executor (e.g. when evaluating script from Debugger).
+        // JSContextHolder won't be in stack when callback is not called from JS code initiated from executor (e.g. when
+        // evaluating script from Debugger).
         if (!executor)
           return ChakraValue::makeUndefined();
         else
@@ -211,24 +212,24 @@ JsErrorCode ChakraExecutor::RedirectConsoleToDebugger(JsValueRef debuggerConsole
     return JsErrorNotImplemented;
   }
 
-  const char *script =
-      "function patchConsoleObject$$1(global, console, debugConsole) {\n"
-        "var obj = {};\n"
-        "for (var fn in console) {\n"
-          "if (typeof console[fn] === \"function\") {\n"
-            "(function(name) {\n"
-              "obj[name] = function(...args) {\n"
-              "console[name](...args);\n"
-              "if (name in debugConsole && typeof debugConsole[name] === \"function\") {\n"
-                "debugConsole[name](...args);\n"
-              "}\n"
-            "}\n"
-            "})(fn);\n"
-          "}\n"
-        "}\n"
-        "global.console = obj;\n"
-      "}\n"
-      "patchConsoleObject$$1;\n";
+  constexpr const char *script =
+      "function patchConsoleObject$$1(global, console, debugConsole) {"
+      "var obj = {};"
+      "for (var fn in console) {"
+      "if (typeof console[fn] === \"function\") {"
+      "(function(name) {"
+      "obj[name] = function(...args) {"
+      "console[name](...args);"
+      "if (name in debugConsole && typeof debugConsole[name] === \"function\") {"
+      "debugConsole[name](...args);"
+      "}"
+      "}"
+      "})(fn);"
+      "}"
+      "}"
+      "global.console = obj;"
+      "}"
+      "patchConsoleObject$$1;";
 
   JsValueRef patchFunction = JS_INVALID_REFERENCE;
 
