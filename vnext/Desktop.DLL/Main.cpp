@@ -5,7 +5,7 @@
 
 static bool g_dliNotifyHookCalled = false;
 // Depending on the flight, load either reac-native-win32.dll or reac-native-win32.chakra.dll
-extern "C" FARPROC WINAPI ChakraDelayLoadHook(unsigned dliNotify, DelayLoadInfo *pdli) {
+ExternC FARPROC WINAPI ChakraDelayLoadHook(unsigned dliNotify, DelayLoadInfo *pdli) {
   // if (fLoadJsiChakra && dliNotify == dliNotePreLoadLibrary) {
   //  if (0 == ::_stricmp(pdli->szDll, "JSI.Desktop.ChakraCore.dll")) {
   //    return reinterpret_cast<FARPROC>(LoadLibrary(L"JSI.Desktop.Chakra.dll"));
@@ -42,7 +42,6 @@ extern "C" FARPROC WINAPI ChakraDelayLoadHook(unsigned dliNotify, DelayLoadInfo 
 }
 
 // Install the handler for delay-loading mso binaries
-//extern PfnDliHook
 ExternC PfnDliHook __pfnDliNotifyHook2 = ChakraDelayLoadHook;
 
 
