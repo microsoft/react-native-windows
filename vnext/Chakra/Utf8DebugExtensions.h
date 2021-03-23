@@ -6,9 +6,9 @@
 #if defined(USE_EDGEMODE_JSRT)
 #include <jsrt.h>
 #else
-//#include <ChakraCore.h>
-#define USE_EDGEMODE_JSRT
-#include <jsrt.h>
+//#define USE_EDGEMODE_JSRT
+//#include <jsrt.h>
+#include <ChakraCore.h>
 #include <cstdint> //for uint16_t in <ChakraCore.h>
 #endif
 

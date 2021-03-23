@@ -28,7 +28,7 @@
 #include <thread>
 #include <type_traits>
 
-#undef USE_EDGEMODE_JSRT//TODO:Remove
+//#undef USE_EDGEMODE_JSRT//TODO:Remove
 
 namespace facebook {
 namespace react {
