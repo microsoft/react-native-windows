@@ -12,7 +12,7 @@ static bool flag = false;
 FARPROC WINAPI ChakraDelayLoadHook(unsigned dliNotify, DelayLoadInfo *pdli) {
   switch (dliNotify) {
     case dliNotePreLoadLibrary:
-      if (Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra") && 0 == lstrcmpA(pdli->szDll, "ChakraCore.dll")) {
+      if (0 == lstrcmpA(pdli->szDll, "ChakraCore.dll") && Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
         return reinterpret_cast<FARPROC>(LoadLibrary(L"Chakra.dll"));
       }
       break;
