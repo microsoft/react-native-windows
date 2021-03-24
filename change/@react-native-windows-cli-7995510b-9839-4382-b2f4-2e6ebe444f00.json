@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.63] Autolinking doesn't add a project marked as a non-direct dependency",
+  "packageName": "@react-native-windows/cli",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
