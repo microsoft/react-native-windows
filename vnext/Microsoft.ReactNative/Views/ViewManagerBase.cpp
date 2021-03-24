@@ -324,6 +324,12 @@ void ViewManagerBase::SetLayoutProps(
   }
   auto fe = element.as<xaml::FrameworkElement>();
 
+  bool layoutHasChanged =
+      left != react::uwp::ViewPanel::GetLeft(element) ||
+      top != react::uwp::ViewPanel::GetTop(element) ||
+      width != fe.Width() ||
+      height != fe.Height();
+
   // Set Position & Size Properties
   react::uwp::ViewPanel::SetLeft(element, left);
   react::uwp::ViewPanel::SetTop(element, top);
@@ -332,7 +338,7 @@ void ViewManagerBase::SetLayoutProps(
   fe.Height(height);
 
   // Fire Events
-  if (nodeToUpdate.m_onLayoutRegistered) {
+  if (layoutHasChanged && nodeToUpdate.m_onLayoutRegistered) {
     int64_t tag = GetTag(viewToUpdate);
     folly::dynamic layout = folly::dynamic::object("x", left)("y", top)("height", height)("width", width);
 
