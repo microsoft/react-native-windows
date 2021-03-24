@@ -5,23 +5,19 @@
 
 #include <delayimp.h>
 
+static bool flag = false;
 FARPROC WINAPI ChakraDelayLoadHook(unsigned dliNotify, DelayLoadInfo *pdli) {
   switch (dliNotify) {
-    case dliStartProcessing:
-      break;
-
     case dliNotePreLoadLibrary:
+      if (0 == lstrcmpA(pdli->szDll, "ChakraCore.dll")) {
+        return reinterpret_cast<FARPROC>(LoadLibrary(L"Chakra.dll"));
+      }
       break;
 
+    case dliStartProcessing:
     case dliNotePreGetProcAddress:
-      break;
-
     case dliFailLoadLib:
-      break;
-
     case dliFailGetProc:
-      break;
-
     case dliNoteEndProcessing:
       break;
   }
