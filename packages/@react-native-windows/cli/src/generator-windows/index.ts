@@ -181,7 +181,7 @@ export async function copyProjectTemplateAndReplace(
   const currentUser = username.sync()!; // Gets the current username depending on the platform.
 
   let mainComponentName = newProjectName;
-  const appJsonPath = findUp.sync('app.json', {cwd: destPath});
+  const appJsonPath = await findUp('app.json', {cwd: destPath});
   if (appJsonPath) {
     mainComponentName = JSON.parse(fs.readFileSync(appJsonPath, 'utf8')).name;
   }
