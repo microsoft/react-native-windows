@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Suppress onLayout event when layout has not changed",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
