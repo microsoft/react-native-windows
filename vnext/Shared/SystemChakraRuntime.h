@@ -5,15 +5,12 @@
 
 #include "ChakraRuntime.h"
 
-//#ifndef USE_EDGEMODE_JSRT
-//#define USE_EDGEMODE_JSRT
-//#endif
-//#include <jsrt.h>
-
-
 namespace Microsoft::JSI {
 
 class SystemChakraRuntime : public ChakraRuntime {
+
+  public:
+  SystemChakraRuntime(ChakraRuntimeArgs &&args) noexcept;
 
   #pragma region ChakraRuntime
 

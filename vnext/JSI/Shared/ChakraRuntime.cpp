@@ -950,6 +950,8 @@ facebook::jsi::Object ChakraRuntime::createHostObjectProxyHandler() noexcept {
   return handler;
 }
 
+/*virtual*/ void ChakraRuntime::setupNativePromiseContinuation() noexcept {}
+
 void ChakraRuntime::setupMemoryTracker() noexcept {
   if (runtimeArgs().memoryTracker) {
     size_t initialMemoryUsage = 0;
@@ -983,6 +985,16 @@ void ChakraRuntime::setupMemoryTracker() noexcept {
   }
 }
 
+/*virtual*/ void ChakraRuntime::startDebuggingIfNeeded() {}
+
+/*virtual*/ void ChakraRuntime::stopDebuggingIfNeeded() {}
+
+/*virtual*/ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
+    const facebook::jsi::Buffer &buffer,
+    const std::string &sourceURL) {
+  return facebook::jsi::Value::null();//TODO: Subtypes are not overriding.
+}
+
 std::once_flag ChakraRuntime::s_runtimeVersionInitFlag;
 uint64_t ChakraRuntime::s_runtimeVersion = 0;
 
@@ -990,7 +1002,7 @@ std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(ChakraRuntimeArgs &&ar
   //return std::make_unique<ChakraRuntime>(std::move(args));
 
   //TODO: This won't hold true for MSRN (UWP)
-  if (React::GetRuntimeOptionBool("")) {
+  if (React::GetRuntimeOptionBool("ForceSystemChakra")) {
     return MakeSystemChakraRuntime(std::move(args));
   } else {
     return MakeChakraCoreRuntime(std::move(args));

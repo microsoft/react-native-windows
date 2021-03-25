@@ -13,6 +13,9 @@ namespace Microsoft::JSI {
 
 class ChakraCoreRuntime : public ChakraRuntime {
 
+  public:
+  ChakraCoreRuntime(ChakraRuntimeArgs &&args) noexcept;
+
   #pragma region ChakraRuntime
 
   void setupNativePromiseContinuation() noexcept override;

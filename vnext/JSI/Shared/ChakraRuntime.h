@@ -299,14 +299,14 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   void PromiseContinuation(JsValueRef value) noexcept;
   void PromiseRejectionTracker(JsValueRef promise, JsValueRef reason, bool handled);
 
-  virtual void setupNativePromiseContinuation() noexcept = 0;
+  virtual void setupNativePromiseContinuation() noexcept;
 
   // Memory tracker helpers
   void setupMemoryTracker() noexcept;
 
   // In-proc debugging helpers
-  virtual void startDebuggingIfNeeded() = 0;
-  virtual void stopDebuggingIfNeeded() = 0;
+  virtual void startDebuggingIfNeeded();
+  virtual void stopDebuggingIfNeeded();
 
   // Version related helpers
   static void initRuntimeVersion() noexcept;//static
@@ -318,7 +318,7 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   virtual std::unique_ptr<const facebook::jsi::Buffer> generatePreparedScript(
       const std::string &sourceURL,
       const facebook::jsi::Buffer &sourceBuffer) noexcept = 0;
-  virtual facebook::jsi::Value evaluateJavaScriptSimple(const facebook::jsi::Buffer &buffer, const std::string &sourceURL) = 0;
+  virtual facebook::jsi::Value evaluateJavaScriptSimple(const facebook::jsi::Buffer &buffer, const std::string &sourceURL);
   virtual bool evaluateSerializedScript(
       const facebook::jsi::Buffer &scriptBuffer,
       const facebook::jsi::Buffer &serializedScriptBuffer,

@@ -7,7 +7,13 @@
 #include "ByteArrayBuffer.h"
 #include "Unicode.h"
 
+// From <chakrart.h>
+STDAPI_(JsErrorCode)
+JsStartDebugging();
+
 namespace Microsoft::JSI {
+
+SystemChakraRuntime::SystemChakraRuntime(ChakraRuntimeArgs&& args) noexcept : ChakraRuntime(std::move(args)) {}
 
 void SystemChakraRuntime::setupNativePromiseContinuation() noexcept {
   // NOP
@@ -28,10 +34,11 @@ std::unique_ptr<const facebook::jsi::Buffer> SystemChakraRuntime::generatePrepar
   const std::wstring scriptUTF16 =
       Microsoft::Common::Unicode::Utf8ToUtf16(reinterpret_cast<const char *>(sourceBuffer.data()), sourceBuffer.size());
 
+  //TODO: Use long when using System Chakra!
   unsigned long bytecodeSize = 0;
-  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) == JsNoError) {
+  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, (unsigned int*)&bytecodeSize) == JsNoError) {
     std::unique_ptr<ByteArrayBuffer> bytecodeBuffer(std::make_unique<ByteArrayBuffer>(bytecodeSize));
-    if (JsSerializeScript(scriptUTF16.c_str(), bytecodeBuffer->data(), &bytecodeSize) == JsNoError) {
+    if (JsSerializeScript(scriptUTF16.c_str(), bytecodeBuffer->data(), (unsigned int *)&bytecodeSize) == JsNoError) {
       return bytecodeBuffer;
     }
   }
@@ -83,6 +90,7 @@ bool SystemChakraRuntime::evaluateSerializedScript(
 std::unique_ptr<facebook::jsi::Runtime> MakeSystemChakraRuntime(ChakraRuntimeArgs&& args) noexcept
 {
   return std::make_unique<SystemChakraRuntime>(std::move(args));
+  // return std::unique_ptr<facebook::jsi::Runtime>(new SystemChakraRuntime(std::move(args)));
 }
 
 } // namespace Microsoft::JSI
