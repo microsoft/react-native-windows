@@ -6,7 +6,7 @@ namespace <%=ns%>
     {
         public App()
         {
-            MainComponentName = "<%=name%>";
+            MainComponentName = "<%=mainComponentName%>";
 
 #if BUNDLE
             JavaScriptBundleFile = "index.windows";

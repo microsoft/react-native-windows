@@ -16,7 +16,7 @@ using namespace winrt::<%=ns%>::implementation;
 /// </summary>
 App::App() noexcept
 {
-    MainComponentName(L"<%=name%>");
+    MainComponentName(L"<%=mainComponentName%>");
 
 #if BUNDLE
     JavaScriptBundleFile(L"index.windows");

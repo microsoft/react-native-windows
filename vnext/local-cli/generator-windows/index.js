@@ -81,11 +81,18 @@ function copyProjectTemplateAndReplace(
   const currentUser = username.sync(); // Gets the current username depending on the platform.
   const certificateThumbprint = generateCertificate(srcPath, destPath, newProjectName, currentUser);
 
+  let mainComponentName = newProjectName;
+  const appJsonPath = path.join(destPath, 'app.json');
+  if (fs.existsSync(appJsonPath)) {
+    mainComponentName = JSON.parse(fs.readFileSync(appJsonPath, 'utf8')).name;
+  }
+
   const templateVars = {
     '// clang-format off': '',
     '// clang-format on': '',
     '<%=ns%>': ns,
     '<%=name%>': newProjectName,
+    '<%=mainComponentName%>': mainComponentName,
     '<%=projectGuid%>': projectGuid,
     '<%=projectGuidUpper%>': projectGuid.toUpperCase(),
     '<%rnwVersion%>' : rnwVersion,
