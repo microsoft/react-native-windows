@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include <SystemChakraRuntime.h>
 #include <ChakraRuntimeFactory.h>
+#include <SystemChakraRuntime.h>
 
 #include "ByteArrayBuffer.h"
 #include "Unicode.h"
@@ -13,13 +13,8 @@ JsStartDebugging();
 
 namespace Microsoft::JSI {
 
-SystemChakraRuntime::SystemChakraRuntime(ChakraRuntimeArgs&& args) noexcept : ChakraRuntime(std::move(args)) {
+SystemChakraRuntime::SystemChakraRuntime(ChakraRuntimeArgs &&args) noexcept : ChakraRuntime(std::move(args)) {
   this->Init();
-}
-
-SystemChakraRuntime::~SystemChakraRuntime() noexcept
-{
-  stopDebuggingIfNeeded();
 }
 
 void SystemChakraRuntime::setupNativePromiseContinuation() noexcept {
@@ -41,9 +36,9 @@ std::unique_ptr<const facebook::jsi::Buffer> SystemChakraRuntime::generatePrepar
   const std::wstring scriptUTF16 =
       Microsoft::Common::Unicode::Utf8ToUtf16(reinterpret_cast<const char *>(sourceBuffer.data()), sourceBuffer.size());
 
-  //TODO: Use long when using System Chakra!
+  // TODO: Use long when using System Chakra!
   unsigned long bytecodeSize = 0;
-  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, (unsigned int*)&bytecodeSize) == JsNoError) {
+  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, (unsigned int *)&bytecodeSize) == JsNoError) {
     std::unique_ptr<ByteArrayBuffer> bytecodeBuffer(std::make_unique<ByteArrayBuffer>(bytecodeSize));
     if (JsSerializeScript(scriptUTF16.c_str(), bytecodeBuffer->data(), (unsigned int *)&bytecodeSize) == JsNoError) {
       return bytecodeBuffer;
@@ -94,10 +89,8 @@ bool SystemChakraRuntime::evaluateSerializedScript(
   }
 }
 
-std::unique_ptr<facebook::jsi::Runtime> MakeSystemChakraRuntime(ChakraRuntimeArgs&& args) noexcept
-{
+std::unique_ptr<facebook::jsi::Runtime> MakeSystemChakraRuntime(ChakraRuntimeArgs &&args) noexcept {
   return std::make_unique<SystemChakraRuntime>(std::move(args));
-  // return std::unique_ptr<facebook::jsi::Runtime>(new SystemChakraRuntime(std::move(args)));
 }
 
 } // namespace Microsoft::JSI

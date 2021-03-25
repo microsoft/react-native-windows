@@ -40,8 +40,7 @@ ChakraCoreRuntime::ChakraCoreRuntime(ChakraRuntimeArgs &&args) noexcept : Chakra
   this->Init();
 }
 
-ChakraCoreRuntime::~ChakraCoreRuntime() noexcept
-{
+ChakraCoreRuntime::~ChakraCoreRuntime() noexcept {
   stopDebuggingIfNeeded();
 }
 
@@ -333,8 +332,7 @@ bool ChakraCoreRuntime::evaluateSerializedScript(
   return false;
 }
 
-std::unique_ptr<facebook::jsi::Runtime> MakeChakraCoreRuntime(ChakraRuntimeArgs&& args) noexcept
-{
+std::unique_ptr<facebook::jsi::Runtime> MakeChakraCoreRuntime(ChakraRuntimeArgs &&args) noexcept {
   return std::make_unique<ChakraCoreRuntime>(std::move(args));
 }
 

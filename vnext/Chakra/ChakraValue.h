@@ -14,8 +14,6 @@
 #include <jsrt.h>
 #else
 #include <ChakraCore.h>
-//#define USE_EDGEMODE_JSRT
-//#include <jsrt.h>
 #endif
 
 #include "Utf8DebugExtensions.h"

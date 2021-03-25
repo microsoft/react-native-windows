@@ -1,22 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+// Do not include this file directly.
+// To obtain a chakra runtime instance, include <ChakraRuntimeFactory.h>.
 #pragma once
 
 #include "ChakraObjectRef.h"
 #include "ChakraRuntimeArgs.h"
 
 #include <jsi/jsi.h>
-
-//#ifdef CHAKRACORE
-//#include "ChakraCore.h"
-//#include "ChakraCoreDebugger.h"
-//#else
-//#ifndef USE_EDGEMODE_JSRT
-//#define USE_EDGEMODE_JSRT
-//#endif
-//#include "jsrt.h"
-//#endif
 
 #include <memory>
 #include <mutex>
@@ -47,10 +39,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   std::string description() override;
 
   bool isInspectable() override;
-
-  virtual facebook::jsi::Value evaluateJavaScriptSimple(
-      const facebook::jsi::Buffer &buffer,
-      const std::string &sourceURL) = 0;
 
   // We use the default instrumentation() implementation that returns an
   // Instrumentation instance which returns no metrics.
@@ -170,12 +158,11 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   constexpr static char DebuggerDefaultRuntimeName[] = "runtime1";
   constexpr static int DebuggerDefaultPort = 9229;
 
-    // These buffers are kept to serve the source callbacks when evaluating
+  // These buffers are kept to serve the source callbacks when evaluating
   // serialized scripts.
   std::vector<std::shared_ptr<const facebook::jsi::Buffer>> m_pinnedScripts;
 
  private:
-
   // ChakraPointerValue is needed for working with Facebook's jsi::Pointer class
   // and must only be used for this purpose. Every instance of
   // ChakraPointerValue should be allocated on the heap and be used as an
@@ -314,7 +301,7 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   virtual void stopDebuggingIfNeeded() = 0;
 
   // Version related helpers
-  static void initRuntimeVersion() noexcept;//static
+  static void initRuntimeVersion() noexcept;
   static uint64_t getRuntimeVersion() {
     return s_runtimeVersion;
   }
@@ -323,7 +310,9 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   virtual std::unique_ptr<const facebook::jsi::Buffer> generatePreparedScript(
       const std::string &sourceURL,
       const facebook::jsi::Buffer &sourceBuffer) noexcept = 0;
-  //virtual facebook::jsi::Value evaluateJavaScriptSimple(const facebook::jsi::Buffer &buffer, const std::string &sourceURL);
+  virtual facebook::jsi::Value evaluateJavaScriptSimple(
+      const facebook::jsi::Buffer &buffer,
+      const std::string &sourceURL) = 0;
   virtual bool evaluateSerializedScript(
       const facebook::jsi::Buffer &scriptBuffer,
       const facebook::jsi::Buffer &serializedScriptBuffer,

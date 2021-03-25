@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <RuntimeOptions.h>
 #include "ChakraHelpers.h"
 #include "ChakraUtils.h"
 #include "ChakraValue.h"
@@ -27,8 +28,6 @@
 #include <string>
 #include <thread>
 #include <type_traits>
-
-//#undef USE_EDGEMODE_JSRT//TODO:Remove
 
 namespace facebook {
 namespace react {
@@ -64,13 +63,14 @@ class ChakraVersionInfo {
 
   bool initialize() noexcept {
 #if !defined(CHAKRACORE_UWP)
-    // This code is win32 only at the moment. We will need to change this
-    // line if we want to support UWP.
-    constexpr wchar_t chakraDllName[] = L"ChakraCore.dll";
-
     auto freeLibraryWrapper = [](void *p) { FreeLibrary((HMODULE)p); };
     HMODULE moduleHandle;
-    if (!GetModuleHandleExW(0, chakraDllName, &moduleHandle)) {
+    // This code is win32 only at the moment. We will need to change these
+    // linel if we want to support UWP.
+    if (!GetModuleHandleExW(
+            0,
+            Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra") ? L"Chakra.dll" : L"ChakraCore.dll",
+            &moduleHandle)) {
       return false;
     }
     std::unique_ptr<void, decltype(freeLibraryWrapper)> moduleHandleWrapper(
@@ -163,12 +163,12 @@ void serializeBytecodeToFileCore(
   const std::wstring scriptUTF16 = Microsoft::Common::Unicode::Utf8ToUtf16(script->c_str(), script->size());
 
   unsigned int bytecodeSize = 0;
-  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) != JsNoError) { // ChakraCore-only
+  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) != JsNoError) {
     return;
   }
 
   std::unique_ptr<uint8_t[]> bytecode(std::make_unique<uint8_t[]>(bytecodeSize));
-  if (JsSerializeScript(scriptUTF16.c_str(), bytecode.get(), &bytecodeSize) != JsNoError) { // ChakraCore-only
+  if (JsSerializeScript(scriptUTF16.c_str(), bytecode.get(), &bytecodeSize) != JsNoError) {
     return;
   }
 
@@ -255,7 +255,7 @@ JsValueRef functionCaller(
   // JsContextRef ctx;
   // JsGetCurrentContext(&ctx);
   void *voidPtr;
-  JsGetContextData(ctx, &voidPtr); // ChakraCore-only
+  JsGetContextData(ctx, &voidPtr);
 
   auto *f = static_cast<ChakraJSFunction *>(voidPtr);
   return (*f)(ctx, thisObject, argumentCount, arguments);
@@ -367,7 +367,7 @@ JsValueRef evaluateScript(JsValueRef script, JsValueRef source) {
   auto result = JsRunScript(scriptRaw, JS_SOURCE_CONTEXT_NONE /*sourceContext*/, sourceRaw, &value);
 #else
   JsSourceContext sourceContext = getNextSourceContext();
-  auto result = JsRun(script, sourceContext, source, JsParseScriptAttributeNone, &value); // ChakraCore-only
+  auto result = JsRun(script, sourceContext, source, JsParseScriptAttributeNone, &value);
 #endif
 
   bool hasException = false;
@@ -433,13 +433,11 @@ JsValueRef evaluateScriptWithBytecode(
   ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_STOP);
   JsValueRef exn = nullptr;
   JsValueRef value = nullptr;
-  JsErrorCode result = JsRunSerialized( // ChakraCore-only
+  JsErrorCode result = JsRunSerialized(
       jsArrayBufferFromBigString(std::move(bytecode)).get(),
-      [](JsSourceContext sourceContext,
-         JsValueRef *value,
-         JsParseScriptAttributes *parseAttributes) { // ChakraCore-only
+      [](JsSourceContext sourceContext, JsValueRef *value, JsParseScriptAttributes *parseAttributes) {
         *value = reinterpret_cast<JsValueRef>(sourceContext);
-        *parseAttributes = JsParseScriptAttributeNone; // ChakraCore-only
+        *parseAttributes = JsParseScriptAttributeNone;
         return true;
       },
       reinterpret_cast<JsSourceContext>(jsScript.get()),

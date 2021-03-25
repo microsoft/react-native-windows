@@ -129,17 +129,21 @@ ChakraObjectRef GetPropertyId(const std::string_view &utf8) {
     throw facebook::jsi::JSINativeException("Property name cannot be a nullptr.");
   }
 
-  // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
-  // using ChakraCore's JsCreatePropertyId API.
-//#ifdef CHAKRACORE
-//  JsPropertyIdRef id = JS_INVALID_REFERENCE;
-//  VerifyChakraErrorElseThrow(JsCreatePropertyId(utf8.data(), utf8.length(), &id)); // ChakraCore-only
-//  return ChakraObjectRef(id);
-//
-//#else
-//  std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8.data(), utf8.length());
-//  return GetPropertyId(utf16);
-//#endif
+// We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
+// using ChakraCore's JsCreatePropertyId API.
+#ifdef CHAKRACORE
+  if (!Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
+    JsPropertyIdRef id = JS_INVALID_REFERENCE;
+    VerifyChakraErrorElseThrow(JsCreatePropertyId(utf8.data(), utf8.length(), &id)); // ChakraCore-only
+    return ChakraObjectRef(id);
+  } else {
+    std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8.data(), utf8.length());
+    return GetPropertyId(utf16);
+  }
+#else
+  std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8.data(), utf8.length());
+  return GetPropertyId(utf16);
+#endif
 
   if (!Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
     JsPropertyIdRef id = JS_INVALID_REFERENCE;
@@ -164,21 +168,24 @@ std::string ToStdString(const ChakraObjectRef &jsString) {
 
   // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
   // using ChakraCore's JsCopyString API.
-//#ifdef CHAKRACORE
-//  size_t length = 0;
-//  VerifyChakraErrorElseThrow(JsCopyString(jsString, nullptr, 0, &length)); // ChakraCore-only
-//
-//  std::string result(length, 'a');
-//  VerifyChakraErrorElseThrow(JsCopyString(jsString, result.data(), result.length(), &length));
-//
-//  if (length != result.length()) {
-//    throw facebook::jsi::JSINativeException("Failed to convert a JS string to a std::string.");
-//  }
-//  return result;
-//
-//#else
-//  return Common::Unicode::Utf16ToUtf8(ToStdWstring(jsString));
-//#endif
+#ifdef CHAKRACORE
+  if (!Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
+    size_t length = 0;
+    VerifyChakraErrorElseThrow(JsCopyString(jsString, nullptr, 0, &length)); // ChakraCore-only
+
+    std::string result(length, 'a');
+    VerifyChakraErrorElseThrow(JsCopyString(jsString, result.data(), result.length(), &length));
+
+    if (length != result.length()) {
+      throw facebook::jsi::JSINativeException("Failed to convert a JS string to a std::string.");
+    }
+    return result;
+  } else {
+    return Common::Unicode::Utf16ToUtf8(ToStdWstring(jsString));
+  }
+#else
+  return Common::Unicode::Utf16ToUtf8(ToStdWstring(jsString));
+#endif
 
   if (!Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
     size_t length = 0;
@@ -213,26 +220,21 @@ ChakraObjectRef ToJsString(const std::string_view &utf8) {
     throw facebook::jsi::JSINativeException("Cannot convert a nullptr to a JS string.");
   }
 
-  // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
-  // using ChakraCore's JsCreateString API.
-//#ifdef CHAKRACORE
-//  JsValueRef result = JS_INVALID_REFERENCE;
-//  VerifyChakraErrorElseThrow(JsCreateString(utf8.data(), utf8.length(), &result)); // ChakraCore-only
-//  return ChakraObjectRef(result);
-//
-//#else
-//  std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8.data(), utf8.length());
-//  return ToJsString(std::wstring_view{utf16.c_str(), utf16.length()});
-//#endif
-
+// We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
+// using ChakraCore's JsCreateString API.
+#ifdef CHAKRACORE
   if (!Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
     JsValueRef result = JS_INVALID_REFERENCE;
-    VerifyChakraErrorElseThrow(JsCreateString(utf8.data(), utf8.length(), &result)); // ChakraCore-only
+    VerifyChakraErrorElseThrow(JsCreateString(utf8.data(), utf8.length(), &result));
     return ChakraObjectRef(result);
   } else {
     std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8.data(), utf8.length());
     return ToJsString(std::wstring_view{utf16.c_str(), utf16.length()});
   }
+#else
+  std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8.data(), utf8.length());
+  return ToJsString(std::wstring_view{utf16.c_str(), utf16.length()});
+#endif
 }
 
 ChakraObjectRef ToJsString(const std::wstring_view &utf16) {

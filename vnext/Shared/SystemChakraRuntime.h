@@ -8,14 +8,10 @@
 namespace Microsoft::JSI {
 
 class SystemChakraRuntime : public ChakraRuntime {
-
-  public:
+ public:
   SystemChakraRuntime(ChakraRuntimeArgs &&args) noexcept;
 
-  //TODO: Remove. Only for testing.
-  ~SystemChakraRuntime() noexcept;
-
-  #pragma region ChakraRuntime
+#pragma region ChakraRuntime
 
   void setupNativePromiseContinuation() noexcept override;
 

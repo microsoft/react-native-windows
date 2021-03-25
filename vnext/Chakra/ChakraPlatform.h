@@ -16,8 +16,6 @@
 #if defined(USE_EDGEMODE_JSRT)
 #include <jsrt.h>
 #else
-//#define USE_EDGEMODE_JSRT
-//#include <jsrt.h>
 #include <ChakraCore.h>
 #endif
 

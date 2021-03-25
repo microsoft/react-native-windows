@@ -110,8 +110,6 @@ void ChakraRuntime::Init() noexcept {
 }
 
 /*virtual*/ ChakraRuntime::~ChakraRuntime() noexcept {
-  //stopDebuggingIfNeeded();//TODO: delete
-
   VerifyChakraErrorElseThrow(JsSetCurrentContext(JS_INVALID_REFERENCE));
   m_context.Invalidate();
 
@@ -991,14 +989,15 @@ std::once_flag ChakraRuntime::s_runtimeVersionInitFlag;
 uint64_t ChakraRuntime::s_runtimeVersion = 0;
 
 std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(ChakraRuntimeArgs &&args) noexcept {
-  //return std::make_unique<ChakraRuntime>(std::move(args));
-
-  //TODO: This won't hold true for MSRN (UWP)
+#ifdef CHAKRACORE
   if (React::GetRuntimeOptionBool("ForceSystemChakra")) {
     return MakeSystemChakraRuntime(std::move(args));
   } else {
     return MakeChakraCoreRuntime(std::move(args));
   }
+#else
+  return MakeSystemChakraRuntime(std::move(args));
+#endif // CHAKRACORE
 }
 
 } // namespace Microsoft::JSI

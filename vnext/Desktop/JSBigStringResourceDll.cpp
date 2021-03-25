@@ -6,9 +6,6 @@
 #include "JSBigStringResourceDll.h"
 
 #include <exception>
-#if defined(USE_EDGEMODE_JSRT)
-#include <jsrt.h>
-#endif
 
 namespace facebook {
 namespace react {

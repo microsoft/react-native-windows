@@ -8,17 +8,15 @@
 #include "ChakraCore.h"
 #include "ChakraCoreDebugger.h"
 
-
 namespace Microsoft::JSI {
 
 class ChakraCoreRuntime : public ChakraRuntime {
-
-  public:
+ public:
   ChakraCoreRuntime(ChakraRuntimeArgs &&args) noexcept;
 
   ~ChakraCoreRuntime() noexcept;
 
-  #pragma region ChakraRuntime
+#pragma region ChakraRuntime
 
   void setupNativePromiseContinuation() noexcept override;
 
@@ -38,9 +36,9 @@ class ChakraCoreRuntime : public ChakraRuntime {
       const facebook::jsi::Buffer &serializedScriptBuffer,
       const std::string &sourceURL) override;
 
-  #pragma endregion
+#pragma endregion
 
-  private:
+ private:
   // core-only??
   JsErrorCode enableDebugging(
       JsRuntimeHandle runtime,
@@ -54,7 +52,7 @@ class ChakraCoreRuntime : public ChakraRuntime {
 
   static void CALLBACK ProcessDebuggerCommandQueueCallback(void *callbackState);
 
-    std::unique_ptr<DebugProtocolHandler> m_debugProtocolHandler;
+  std::unique_ptr<DebugProtocolHandler> m_debugProtocolHandler;
   std::unique_ptr<DebugService> m_debugService;
 };
 
