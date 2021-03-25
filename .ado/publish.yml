@@ -32,6 +32,10 @@ variables:
     value: false
   - name: EnableCodesign
     value: false
+  - name: ArtifactServices.Symbol.AccountName
+    value: microsoft
+  - name: ArtifactServices.Symbol.PAT
+    value: $(pat-symbols-publish-microsoft)
 
 schedules:
 - cron: "0 15 * * Mon" # 3PM Monday UTC (8AM Monday PST)
@@ -282,12 +286,13 @@ jobs:
           scanType: 'Register'
           failOnAlert: $(FailCGOnAlert) # Alerts must fail the run to prevent codesigning
 
-    # Disable for now, not sure this works on github projects anyway.
-    # - task: PublishSymbols@2
-    #   displayName: 'Publish symbols path'
-    #   inputs:
-    #     SearchPattern: 'vnext/target/**/*.pdb'
-    #     SymbolServerType: TeamServices
+      # Make symbols available through http://symweb.
+      - task: PublishSymbols@2
+        displayName: Publish symbols
+        inputs:
+          SearchPattern: vnext/target/**/*.pdb
+          SymbolServerType: TeamServices
+
   - job: RNWNuget
     dependsOn:
       - RnwNpmPublish
