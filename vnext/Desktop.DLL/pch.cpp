@@ -8,7 +8,6 @@
 // Windows API
 #include <delayimp.h>
 
-static bool flag = false;
 FARPROC WINAPI ChakraDelayLoadHook(unsigned dliNotify, DelayLoadInfo *pdli) {
   switch (dliNotify) {
     case dliNotePreLoadLibrary:

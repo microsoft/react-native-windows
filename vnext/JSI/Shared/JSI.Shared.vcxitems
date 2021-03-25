@@ -14,6 +14,7 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_edgemode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraObjectRef.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp" />
   </ItemGroup>

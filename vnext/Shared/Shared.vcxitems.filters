@@ -307,6 +307,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SystemChakraRuntime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraCoreRuntime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)etw\build.bat">

@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 #include "ChakraRuntime.h"
+#include "ChakraRuntimeFactory.h"
 
+#include <MemoryTracker.h>
+#include <RuntimeOptions.h>
 #include "Unicode.h"
 #include "Utilities.h"
 
-#include <MemoryTracker.h>
 #include <cxxreact/MessageQueueThread.h>
 
 #include <cstring>
@@ -14,6 +16,15 @@
 #include <mutex>
 #include <set>
 #include <sstream>
+
+#ifdef CHAKRACORE
+#include <ChakraCore.h>
+#else
+#ifndef USE_EDGEMODE_JSRT
+#define USE_EDGEMODE_JSRT
+#endif
+#include <jsrt.h>
+#endif
 
 namespace Microsoft::JSI {
 
@@ -96,7 +107,7 @@ ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::mo
   evaluateJavaScriptSimple(bootstrapBundleSourceBuffer, "ChakraRuntime_bootstrap.bundle");
 }
 
-ChakraRuntime::~ChakraRuntime() noexcept {
+/*virtual*/ ChakraRuntime::~ChakraRuntime() noexcept {
   stopDebuggingIfNeeded();
 
   VerifyChakraErrorElseThrow(JsSetCurrentContext(JS_INVALID_REFERENCE));
@@ -976,7 +987,14 @@ std::once_flag ChakraRuntime::s_runtimeVersionInitFlag;
 uint64_t ChakraRuntime::s_runtimeVersion = 0;
 
 std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(ChakraRuntimeArgs &&args) noexcept {
-  return std::make_unique<ChakraRuntime>(std::move(args));
+  //return std::make_unique<ChakraRuntime>(std::move(args));
+
+  //TODO: This won't hold true for MSRN (UWP)
+  if (React::GetRuntimeOptionBool("")) {
+    return MakeSystemChakraRuntime(std::move(args));
+  } else {
+    return MakeChakraCoreRuntime(std::move(args));
+  }
 }
 
 } // namespace Microsoft::JSI

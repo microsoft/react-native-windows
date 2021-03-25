@@ -1,34 +1,28 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ChakraRuntime.h"
+#include <SystemChakraRuntime.h>
+#include <ChakraRuntimeFactory.h>
 
 #include "ByteArrayBuffer.h"
 #include "Unicode.h"
 
-#if !defined(CHAKRACORE)
-#include <jsrt.h>
-
 namespace Microsoft::JSI {
 
-void ChakraRuntime::setupNativePromiseContinuation() noexcept {
+void SystemChakraRuntime::setupNativePromiseContinuation() noexcept {
   // NOP
 }
 
-void ChakraRuntime::startDebuggingIfNeeded() {
+void SystemChakraRuntime::startDebuggingIfNeeded() {
   if (runtimeArgs().enableDebugging)
     JsStartDebugging();
 }
 
-void ChakraRuntime::stopDebuggingIfNeeded() {
+void SystemChakraRuntime::stopDebuggingIfNeeded() {
   // NOP AFAIK
 }
 
-void ChakraRuntime::initRuntimeVersion() noexcept {
-  // NOP
-}
-
-std::unique_ptr<const facebook::jsi::Buffer> ChakraRuntime::generatePreparedScript(
+std::unique_ptr<const facebook::jsi::Buffer> SystemChakraRuntime::generatePreparedScript(
     const std::string &sourceURL,
     const facebook::jsi::Buffer &sourceBuffer) noexcept {
   const std::wstring scriptUTF16 =
@@ -45,7 +39,7 @@ std::unique_ptr<const facebook::jsi::Buffer> ChakraRuntime::generatePreparedScri
   return nullptr;
 }
 
-facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
+facebook::jsi::Value SystemChakraRuntime::evaluateJavaScriptSimple(
     const facebook::jsi::Buffer &buffer,
     const std::string &sourceURL) {
   const std::wstring script16 =
@@ -63,7 +57,7 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
 }
 
 // TODO :: Return result
-bool ChakraRuntime::evaluateSerializedScript(
+bool SystemChakraRuntime::evaluateSerializedScript(
     const facebook::jsi::Buffer &scriptBuffer,
     const facebook::jsi::Buffer &serializedScriptBuffer,
     const std::string &sourceURL) {
@@ -86,6 +80,11 @@ bool ChakraRuntime::evaluateSerializedScript(
   }
 }
 
+std::unique_ptr<facebook::jsi::Runtime> MakeSystemChakraRuntime(ChakraRuntimeArgs&& args) noexcept
+{
+  return std::make_unique<SystemChakraRuntime>(std::move(args));
+}
+
 } // namespace Microsoft::JSI
 
-#endif
+//#endif

@@ -8,36 +8,25 @@
 
 #include <jsi/jsi.h>
 
-#ifdef CHAKRACORE
-#include "ChakraCore.h"
+//#ifdef CHAKRACORE
+//#include "ChakraCore.h"
+//#include "ChakraCoreDebugger.h"
+//#else
+//#ifndef USE_EDGEMODE_JSRT
 //#define USE_EDGEMODE_JSRT
+//#endif
 //#include "jsrt.h"
-#include "ChakraCoreDebugger.h"
-// class DebugProtocolHandler {};
-// class DebugService {};
-
-#else
-#ifndef USE_EDGEMODE_JSRT
-#define USE_EDGEMODE_JSRT
-#endif
-#include "jsrt.h"
-#endif
+//#endif
 
 #include <memory>
 #include <mutex>
 #include <sstream>
-
-#if !defined(CHAKRACORE)
-class DebugProtocolHandler {};
-class DebugService {};
-#endif
-
 namespace Microsoft::JSI {
 
 class ChakraRuntime : public facebook::jsi::Runtime {
  public:
   ChakraRuntime(ChakraRuntimeArgs &&args) noexcept;
-  ~ChakraRuntime() noexcept;
+  virtual ~ChakraRuntime() noexcept;
 
 #pragma region Functions_inherited_from_Runtime
 
@@ -158,8 +147,29 @@ class ChakraRuntime : public facebook::jsi::Runtime {
     return m_args;
   }
 
- private:
   void VerifyJsErrorElseThrow(JsErrorCode error);
+
+  // These three functions only performs shallow copies.
+  facebook::jsi::Value ToJsiValue(ChakraObjectRef &&ref);
+  ChakraObjectRef ToChakraObjectRef(const facebook::jsi::Value &value);
+  std::vector<ChakraObjectRef> ToChakraObjectRefs(const facebook::jsi::Value *value, size_t count);
+
+  // Promise Helpers
+  static void CALLBACK PromiseContinuationCallback(JsValueRef funcRef, void *callbackState) noexcept;
+  static void CALLBACK
+  PromiseRejectionTrackerCallback(JsValueRef promise, JsValueRef reason, bool handled, void *callbackState);
+
+  JsRuntimeHandle m_runtime;
+  std::string m_debugRuntimeName;
+  int m_debugPort{0};
+  constexpr static char DebuggerDefaultRuntimeName[] = "runtime1";
+  constexpr static int DebuggerDefaultPort = 9229;
+
+    // These buffers are kept to serve the source callbacks when evaluating
+  // serialized scripts.
+  std::vector<std::shared_ptr<const facebook::jsi::Buffer>> m_pinnedScripts;
+
+ private:
 
   // ChakraPointerValue is needed for working with Facebook's jsi::Pointer class
   // and must only be used for this purpose. Every instance of
@@ -239,11 +249,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
     return static_cast<const ChakraPointerValue *>(getPointerValue(p))->GetRef();
   }
 
-  // These three functions only performs shallow copies.
-  facebook::jsi::Value ToJsiValue(ChakraObjectRef &&ref);
-  ChakraObjectRef ToChakraObjectRef(const facebook::jsi::Value &value);
-  std::vector<ChakraObjectRef> ToChakraObjectRefs(const facebook::jsi::Value *value, size_t count);
-
   // Convenience functions for property access.
   ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const ChakraObjectRef &id);
 
@@ -291,49 +296,33 @@ class ChakraRuntime : public facebook::jsi::Runtime {
       size_t count);
   facebook::jsi::Object createHostObjectProxyHandler() noexcept;
 
-  // Promise Helpers
-  static void CALLBACK PromiseContinuationCallback(JsValueRef funcRef, void *callbackState) noexcept;
-  static void CALLBACK
-  PromiseRejectionTrackerCallback(JsValueRef promise, JsValueRef reason, bool handled, void *callbackState);
-
   void PromiseContinuation(JsValueRef value) noexcept;
   void PromiseRejectionTracker(JsValueRef promise, JsValueRef reason, bool handled);
 
-  void setupNativePromiseContinuation() noexcept;
+  virtual void setupNativePromiseContinuation() noexcept = 0;
 
   // Memory tracker helpers
   void setupMemoryTracker() noexcept;
 
   // In-proc debugging helpers
-  void startDebuggingIfNeeded();
-  void stopDebuggingIfNeeded();
-
-  JsErrorCode enableDebugging(
-      JsRuntimeHandle runtime,
-      std::string const &runtimeName,
-      bool breakOnNextLine,
-      uint16_t port,
-      std::unique_ptr<DebugProtocolHandler> &debugProtocolHandler,
-      std::unique_ptr<DebugService> &debugService);
-  void ProcessDebuggerCommandQueue();
-
-  static void CALLBACK ProcessDebuggerCommandQueueCallback(void *callbackState);
+  virtual void startDebuggingIfNeeded() = 0;
+  virtual void stopDebuggingIfNeeded() = 0;
 
   // Version related helpers
-  static void initRuntimeVersion() noexcept;
+  static void initRuntimeVersion() noexcept;//static
   static uint64_t getRuntimeVersion() {
     return s_runtimeVersion;
   }
 
   // Miscellaneous
-  std::unique_ptr<const facebook::jsi::Buffer> generatePreparedScript(
+  virtual std::unique_ptr<const facebook::jsi::Buffer> generatePreparedScript(
       const std::string &sourceURL,
-      const facebook::jsi::Buffer &sourceBuffer) noexcept;
-  facebook::jsi::Value evaluateJavaScriptSimple(const facebook::jsi::Buffer &buffer, const std::string &sourceURL);
-  bool evaluateSerializedScript(
+      const facebook::jsi::Buffer &sourceBuffer) noexcept = 0;
+  virtual facebook::jsi::Value evaluateJavaScriptSimple(const facebook::jsi::Buffer &buffer, const std::string &sourceURL) = 0;
+  virtual bool evaluateSerializedScript(
       const facebook::jsi::Buffer &scriptBuffer,
       const facebook::jsi::Buffer &serializedScriptBuffer,
-      const std::string &sourceURL);
+      const std::string &sourceURL) = 0;
 
   static std::once_flag s_runtimeVersionInitFlag;
   static uint64_t s_runtimeVersion;
@@ -341,7 +330,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   // Arguments shared by the specializations
   ChakraRuntimeArgs m_args;
 
-  JsRuntimeHandle m_runtime;
   ChakraObjectRef m_context;
 
   // Note: For simplicity, We are pinning the script and serialized script
@@ -351,20 +339,9 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   // which may get created during the execution as that will stop the backing
   // buffer from getting released when the JSValue gets collected.
 
-  // These buffers are kept to serve the source callbacks when evaluating
-  // serialized scripts.
-  std::vector<std::shared_ptr<const facebook::jsi::Buffer>> m_pinnedScripts;
-
   // These buffers back the external array buffers that we handover to
   // ChakraCore.
   std::vector<std::shared_ptr<const facebook::jsi::Buffer>> m_pinnedPreparedScripts;
-
-  std::string m_debugRuntimeName;
-  int m_debugPort{0};
-  std::unique_ptr<DebugProtocolHandler> m_debugProtocolHandler;
-  std::unique_ptr<DebugService> m_debugService;
-  constexpr static char DebuggerDefaultRuntimeName[] = "runtime1";
-  constexpr static int DebuggerDefaultPort = 9229;
 };
 
 } // namespace Microsoft::JSI
