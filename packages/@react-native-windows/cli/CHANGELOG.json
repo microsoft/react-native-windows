@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 25 Mar 2021 05:06:57 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.67",
+      "version": "0.0.0-canary.67",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix app template to use app.json's name for main component name",
+            "author": "jthysell@microsoft.com",
+            "commit": "0ee306b5f13ed42d2cfb4dc54a8bffab374ef03b",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Fix deploy of x64 when x86 has already been built",
+            "author": "asklar@microsoft.com",
+            "commit": "76ffc25b7b98d555729e53151aa47d7cf9f28aeb",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Mar 2021 05:06:08 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.66",
       "version": "0.0.0-canary.66",

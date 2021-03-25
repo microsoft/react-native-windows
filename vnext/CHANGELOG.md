@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 23 Mar 2021 05:06:08 GMT and should not be manually modified.
+This log was last generated on Thu, 25 Mar 2021 05:06:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.280
+
+Thu, 25 Mar 2021 05:06:57 GMT
+
+### Changes
+
+- Fix app template to use app.json's name for main component name (jthysell@microsoft.com)
 
 ## 0.0.0-canary.279
 

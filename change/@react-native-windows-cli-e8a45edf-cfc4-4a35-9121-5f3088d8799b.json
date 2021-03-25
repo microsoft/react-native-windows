@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix deploy of x64 when x86 has already been built",
-  "packageName": "@react-native-windows/cli",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
