@@ -134,7 +134,7 @@ ChakraObjectRef GetPropertyId(const std::string_view &utf8) {
 #ifdef CHAKRACORE
   if (!Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
     JsPropertyIdRef id = JS_INVALID_REFERENCE;
-    VerifyChakraErrorElseThrow(JsCreatePropertyId(utf8.data(), utf8.length(), &id)); // ChakraCore-only
+    VerifyChakraErrorElseThrow(JsCreatePropertyId(utf8.data(), utf8.length(), &id));
     return ChakraObjectRef(id);
   } else {
     std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8.data(), utf8.length());
@@ -144,15 +144,6 @@ ChakraObjectRef GetPropertyId(const std::string_view &utf8) {
   std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8.data(), utf8.length());
   return GetPropertyId(utf16);
 #endif
-
-  if (!Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
-    JsPropertyIdRef id = JS_INVALID_REFERENCE;
-    VerifyChakraErrorElseThrow(JsCreatePropertyId(utf8.data(), utf8.length(), &id)); // ChakraCore-only
-    return ChakraObjectRef(id);
-  } else {
-    std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8.data(), utf8.length());
-    return GetPropertyId(utf16);
-  }
 }
 
 ChakraObjectRef GetPropertyId(const std::wstring &utf16) {
@@ -171,7 +162,7 @@ std::string ToStdString(const ChakraObjectRef &jsString) {
 #ifdef CHAKRACORE
   if (!Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
     size_t length = 0;
-    VerifyChakraErrorElseThrow(JsCopyString(jsString, nullptr, 0, &length)); // ChakraCore-only
+    VerifyChakraErrorElseThrow(JsCopyString(jsString, nullptr, 0, &length));
 
     std::string result(length, 'a');
     VerifyChakraErrorElseThrow(JsCopyString(jsString, result.data(), result.length(), &length));
@@ -186,21 +177,6 @@ std::string ToStdString(const ChakraObjectRef &jsString) {
 #else
   return Common::Unicode::Utf16ToUtf8(ToStdWstring(jsString));
 #endif
-
-  if (!Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
-    size_t length = 0;
-    VerifyChakraErrorElseThrow(JsCopyString(jsString, nullptr, 0, &length)); // ChakraCore-only
-
-    std::string result(length, 'a');
-    VerifyChakraErrorElseThrow(JsCopyString(jsString, result.data(), result.length(), &length));
-
-    if (length != result.length()) {
-      throw facebook::jsi::JSINativeException("Failed to convert a JS string to a std::string.");
-    }
-    return result;
-  } else {
-    return Common::Unicode::Utf16ToUtf8(ToStdWstring(jsString));
-  }
 }
 
 std::wstring ToStdWstring(const ChakraObjectRef &jsString) {
