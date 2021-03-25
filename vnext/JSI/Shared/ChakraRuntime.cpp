@@ -76,7 +76,9 @@ std::vector<JsValueRef> ConstructJsFunctionArguments(
 
 } // namespace
 
-ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::move(args)} {
+ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::move(args)} {}
+
+void ChakraRuntime::Init() noexcept {
   JsRuntimeAttributes runtimeAttributes = JsRuntimeAttributeNone;
 
   if (!m_args.enableJITCompilation) {
@@ -108,7 +110,7 @@ ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::mo
 }
 
 /*virtual*/ ChakraRuntime::~ChakraRuntime() noexcept {
-  stopDebuggingIfNeeded();
+  //stopDebuggingIfNeeded();//TODO: delete
 
   VerifyChakraErrorElseThrow(JsSetCurrentContext(JS_INVALID_REFERENCE));
   m_context.Invalidate();
@@ -983,16 +985,6 @@ void ChakraRuntime::setupMemoryTracker() noexcept {
           return true;
         });
   }
-}
-
-/*virtual*/ void ChakraRuntime::startDebuggingIfNeeded() {}
-
-/*virtual*/ void ChakraRuntime::stopDebuggingIfNeeded() {}
-
-/*virtual*/ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
-    const facebook::jsi::Buffer &buffer,
-    const std::string &sourceURL) {
-  return facebook::jsi::Value::null();//TODO: Subtypes are not overriding.
 }
 
 std::once_flag ChakraRuntime::s_runtimeVersionInitFlag;

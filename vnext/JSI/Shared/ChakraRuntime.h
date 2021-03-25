@@ -26,6 +26,7 @@ namespace Microsoft::JSI {
 class ChakraRuntime : public facebook::jsi::Runtime {
  public:
   ChakraRuntime(ChakraRuntimeArgs &&args) noexcept;
+  void Init() noexcept;
   virtual ~ChakraRuntime() noexcept;
 
 #pragma region Functions_inherited_from_Runtime
@@ -46,6 +47,10 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   std::string description() override;
 
   bool isInspectable() override;
+
+  virtual facebook::jsi::Value evaluateJavaScriptSimple(
+      const facebook::jsi::Buffer &buffer,
+      const std::string &sourceURL) = 0;
 
   // We use the default instrumentation() implementation that returns an
   // Instrumentation instance which returns no metrics.
@@ -305,8 +310,8 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   void setupMemoryTracker() noexcept;
 
   // In-proc debugging helpers
-  virtual void startDebuggingIfNeeded();
-  virtual void stopDebuggingIfNeeded();
+  virtual void startDebuggingIfNeeded() = 0;
+  virtual void stopDebuggingIfNeeded() = 0;
 
   // Version related helpers
   static void initRuntimeVersion() noexcept;//static
@@ -318,7 +323,7 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   virtual std::unique_ptr<const facebook::jsi::Buffer> generatePreparedScript(
       const std::string &sourceURL,
       const facebook::jsi::Buffer &sourceBuffer) noexcept = 0;
-  virtual facebook::jsi::Value evaluateJavaScriptSimple(const facebook::jsi::Buffer &buffer, const std::string &sourceURL);
+  //virtual facebook::jsi::Value evaluateJavaScriptSimple(const facebook::jsi::Buffer &buffer, const std::string &sourceURL);
   virtual bool evaluateSerializedScript(
       const facebook::jsi::Buffer &scriptBuffer,
       const facebook::jsi::Buffer &serializedScriptBuffer,

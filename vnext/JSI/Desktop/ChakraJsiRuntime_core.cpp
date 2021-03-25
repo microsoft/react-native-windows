@@ -36,7 +36,14 @@ struct FileVersionInfoResource {
 
 } // namespace
 
-ChakraCoreRuntime::ChakraCoreRuntime(ChakraRuntimeArgs &&args) noexcept : ChakraRuntime(std::move(args)) {}
+ChakraCoreRuntime::ChakraCoreRuntime(ChakraRuntimeArgs &&args) noexcept : ChakraRuntime(std::move(args)) {
+  this->Init();
+}
+
+ChakraCoreRuntime::~ChakraCoreRuntime() noexcept
+{
+  stopDebuggingIfNeeded();
+}
 
 // TODO (yicyao): We temporarily removed weak reference semantics from
 // ChakraCore based jsi::Runtime.

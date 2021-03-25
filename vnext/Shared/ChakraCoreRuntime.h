@@ -16,6 +16,8 @@ class ChakraCoreRuntime : public ChakraRuntime {
   public:
   ChakraCoreRuntime(ChakraRuntimeArgs &&args) noexcept;
 
+  ~ChakraCoreRuntime() noexcept;
+
   #pragma region ChakraRuntime
 
   void setupNativePromiseContinuation() noexcept override;

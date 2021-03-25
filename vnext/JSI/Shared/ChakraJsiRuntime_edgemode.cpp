@@ -13,7 +13,14 @@ JsStartDebugging();
 
 namespace Microsoft::JSI {
 
-SystemChakraRuntime::SystemChakraRuntime(ChakraRuntimeArgs&& args) noexcept : ChakraRuntime(std::move(args)) {}
+SystemChakraRuntime::SystemChakraRuntime(ChakraRuntimeArgs&& args) noexcept : ChakraRuntime(std::move(args)) {
+  this->Init();
+}
+
+SystemChakraRuntime::~SystemChakraRuntime() noexcept
+{
+  stopDebuggingIfNeeded();
+}
 
 void SystemChakraRuntime::setupNativePromiseContinuation() noexcept {
   // NOP
