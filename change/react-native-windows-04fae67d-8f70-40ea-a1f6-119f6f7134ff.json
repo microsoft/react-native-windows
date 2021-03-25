@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Enable libraries to use NuGet to (avoid mdmerge MDM2009 error)",
+  "comment": "Enable libraries to use NuGet too (avoid mdmerge MDM2009 error)",
   "packageName": "react-native-windows",
   "email": "asklar@microsoft.com",
   "dependentChangeType": "patch"
