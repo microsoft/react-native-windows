@@ -77,7 +77,7 @@ steps:
 
   - powershell: |
         $winmd2md_url = "https://github.com/asklar/winmd2md/releases/download/untagged-65884110232c4f6fa59f/winmd2md.exe"
-        Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\winmd2md.exe
+        Invoke-WebRequest -UseBasicParsing $winmd2md_url -OutFile $env:TEMP\winmd2md.exe
         & $env:TEMP\winmd2md.exe /experimental vnext\target\x64\Debug
     displayName: "Generate WinRT API docs"
     condition: and ( eq(${{parameters.buildConfiguration}}, 'Debug'), eq(${{parameters.buildPlatform}}, 'x86') )
