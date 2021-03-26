@@ -74,3 +74,12 @@ steps:
   - template: upload-build-logs.yml
     parameters:
       buildLogDirectory: $(BuildLogDirectory)
+
+  - task: powershell@2
+      name: winmd2md
+      displayName: "Generate WinRT API docs"
+      script: |
+        $winmd2md_url = "https://github.com/asklar/winmd2md/releases/download/untagged-65884110232c4f6fa59f/winmd2md.exe"
+        Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\winmd2md.exe
+        & $env:TEMP\winmd2md.exe /experimental vnext\target\x64\Debug
+      condition: and ( eq(parameters.buildConfiguration, 'Debug'), eq(parameters.buildPlatform, 'x86') )
