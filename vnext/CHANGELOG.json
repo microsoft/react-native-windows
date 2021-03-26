@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Mar 2021 05:06:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.281",
+      "version": "0.0.0-canary.281",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable libraries to use NuGet too (avoid mdmerge MDM2009 error)",
+            "author": "asklar@microsoft.com",
+            "commit": "5331e0af87fe9311efc416f276ce28d352dc26d4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Suppress onLayout event when layout has not changed",
+            "author": "erozell@outlook.com",
+            "commit": "ce85295fb12b5762b2eecd79635dd86f39747edd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Mar 2021 05:06:57 GMT",
       "tag": "react-native-windows_v0.0.0-canary.280",
       "version": "0.0.0-canary.280",

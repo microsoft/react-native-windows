@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 25 Mar 2021 05:06:57 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Mar 2021 05:06:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.281
+
+Fri, 26 Mar 2021 05:06:37 GMT
+
+### Changes
+
+- Enable libraries to use NuGet too (avoid mdmerge MDM2009 error) (asklar@microsoft.com)
+- Suppress onLayout event when layout has not changed (erozell@outlook.com)
 
 ## 0.0.0-canary.280
 

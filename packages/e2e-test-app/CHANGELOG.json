@@ -2,6 +2,21 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Fri, 26 Mar 2021 05:06:37 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.281",
+            "author": "asklar@microsoft.com",
+            "commit": "5331e0af87fe9311efc416f276ce28d352dc26d4",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Mar 2021 05:06:57 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",
