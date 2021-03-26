@@ -170,4 +170,5 @@ tsdoc-metadata.json
 # cppwinrt
 nul
 
-out/
+winmd2md/
+
