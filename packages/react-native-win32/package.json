@@ -77,7 +77,7 @@
   },
   "peerDependencies": {
     "react": "17.0.1",
-    "react-native": "^0.64.0-rc.1"
+    "react-native": "^0.64.0"
   },
   "beachball": {
     "defaultNpmTag": "latest",
