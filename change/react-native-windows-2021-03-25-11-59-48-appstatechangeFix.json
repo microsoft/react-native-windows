@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix AppStateModule::GetCurrentAppState from returning undefined",
-  "packageName": "react-native-windows",
-  "email": "namrog84@gmail.com",
-  "dependentChangeType": "patch",
-  "date": "2021-03-25T18:59:48.170Z"
-}

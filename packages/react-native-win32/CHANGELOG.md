@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 16 Feb 2021 22:57:36 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Mar 2021 22:43:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.8
+
+Fri, 26 Mar 2021 22:43:28 GMT
+
+### Patches
+
+- Promote 0.63 to legacy (ngerlem@microsoft.com)
 
 ## 0.63.7
 
