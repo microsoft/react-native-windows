@@ -74,14 +74,14 @@ namespace Microsoft.ReactNative
     DOC_STRING(
       "A read-only snapshot of the @ReactInstanceSettings.SourceBundleHost property value "
       "at the time when the React instance was created.\n"
-      "When using a @.UseFastRefresh, @.UseLiveReload, or @.UseWebDebugger this is the server hostname "
+      "When using @ReactInstanceSettings.UseFastRefresh, @ReactInstanceSettings.UseLiveReload, or @ReactInstanceSettings.UseWebDebugger this is the server hostname "
       "that will be used to load the bundle from.")
     String SourceBundleHost { get; };
 
     DOC_STRING(
       "A read-only snapshot of the @ReactInstanceSettings.SourceBundlePort property value "
       "at the time when the React instance was created.\n"
-      "When using a @.UseFastRefresh, @.UseLiveReload, or @.UseWebDebugger this is the server port "
+      "When using @ReactInstanceSettings.UseFastRefresh, @ReactInstanceSettings.UseLiveReload, or @ReactInstanceSettings.UseWebDebugger this is the server port "
       "that will be used to load the bundle from.")
     UInt16 SourceBundlePort { get; };
 

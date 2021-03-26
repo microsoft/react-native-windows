@@ -80,7 +80,7 @@ namespace Microsoft.ReactNative
     DOC_STRING(
       "Gets atomic @IReactPropertyName for the namespace `ns` and the `localName`.\n"
       "**Note that passing `null` as `ns` is reserved for local values in version 0.65. "
-      "In previous versions is was the same as passing @.GlobalNamespace.**")
+      "In previous versions it was the same as passing @.GlobalNamespace.**")
     static IReactPropertyName GetName(IReactPropertyNamespace ns, String localName);
 
     DOC_STRING("Creates new instance of @IReactPropertyBag")

@@ -35,16 +35,16 @@ namespace Microsoft.ReactNative
     DOC_STRING(
       "Sets the @Windows.UI.Xaml.FrameworkElement that will act as the default accessible element for the app. "
       "The element must be able to create an automation peer "
-      "(see @Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer), or have a Landmark property set "
-      "(see @Windows.UI.Xaml.Automation.AutomationProperties.LandmarkTypeProperty Property).\n"
+      "(see @Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer), or have the Landmark type property set "
+      "(see @Windows.UI.Xaml.Automation.AutomationProperties.LandmarkTypeProperty).\n"
       "This must be manually provided to the @ReactInstanceSettings when using XAML Islands "
       "to have access to functionality related to accessibility.")
     static void SetAccessibleRoot(IReactPropertyBag properties, XAML_NAMESPACE.FrameworkElement accessibleRoot);
 
-    DOC_STRING("Retrieves XamlRoot for app.")
+    DOC_STRING("Retrieves the default @Windows.UI.Xaml.XamlRoot for the app.")
     static XAML_NAMESPACE.XamlRoot GetXamlRoot(IReactPropertyBag properties);
 
-    DOC_STRING("Retrieves accessible FrameworkElement for app.")
+    DOC_STRING("Retrieves the default @Windows.UI.Xaml.FrameworkElement that will be used for the app for accessibility purposes (e.g. to announce).")
     static XAML_NAMESPACE.FrameworkElement GetAccessibleRoot(IReactPropertyBag properties);
 
     DOC_STRING(

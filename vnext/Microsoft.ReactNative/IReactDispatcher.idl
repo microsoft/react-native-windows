@@ -50,7 +50,7 @@ namespace Microsoft.ReactNative
 
     DOC_STRING(
       "Gets name of the `JSDispatcher` property for the @IReactPropertyBag.\n"
-      "Generally you can use @ReactContext.JSDispatcher to get the value of this property for "
+      "Generally you can use @IReactContext.JSDispatcher to get the value of this property for "
       "a specific React instance.")
     static IReactPropertyName JSDispatcherProperty { get; };
   }
