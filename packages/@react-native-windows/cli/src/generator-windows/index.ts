@@ -12,6 +12,7 @@ import * as childProcess from 'child_process';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as semver from 'semver';
+import * as findUp from 'find-up';
 import {readProjectFile, findPropertyValue} from '../config/configUtils';
 
 import {
@@ -145,6 +146,13 @@ export async function copyProjectTemplateAndReplace(
   const nugetVersion = options.nuGetTestVersion || rnwVersion;
   const packageGuid = uuid.v4();
   const currentUser = username.sync()!; // Gets the current username depending on the platform.
+
+  let mainComponentName = newProjectName;
+  const appJsonPath = await findUp('app.json', {cwd: destPath});
+  if (appJsonPath) {
+    mainComponentName = JSON.parse(fs.readFileSync(appJsonPath, 'utf8')).name;
+  }
+
   const certificateThumbprint = await generateCertificate(
     srcPath,
     destPath,
@@ -220,6 +228,8 @@ export async function copyProjectTemplateAndReplace(
     namespace: namespace,
     namespaceCpp: namespaceCpp,
     languageIsCpp: language === 'cpp',
+
+    mainComponentName: mainComponentName,
 
     // Visual Studio is very picky about the casing of the guids for projects, project references and the solution
     // https://www.bing.com/search?q=visual+studio+project+guid+casing&cvid=311a5ad7f9fc41089507b24600d23ee7&FORM=ANAB01&PC=U531

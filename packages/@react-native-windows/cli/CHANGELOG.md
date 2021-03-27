@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 15 Feb 2021 15:05:25 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Mar 2021 22:43:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.11
+
+Fri, 26 Mar 2021 22:43:28 GMT
+
+### Patches
+
+- Bump xmldom to 0.5.0. (yicyao@microsoft.com)
+- [0.63] Fix app template to use app.json's name for main component name (#7464) (jthysell@microsoft.com)
+- [0.63] Autolinking doesn't add a project marked as a non-direct dependency (asklar@microsoft.com)
+- Promote 0.63 to legacy (ngerlem@microsoft.com)
 
 ## 0.63.10
 
