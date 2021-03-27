@@ -273,6 +273,13 @@ class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExce
       unsigned short argCount,
       void *callbackState) noexcept;
 
+  static JsValueRef CALLBACK HostObjectGetOwnPropertyDescriptorTrap(
+    JsValueRef callee,
+    bool isConstructCall,
+    JsValueRef* args,
+    unsigned short argCount,
+    void* callbackState) noexcept;
+
   JsValueRef GetHostObjectProxyHandler();
 
   // Evaluate lambda and augment exception messages with the methodName.
@@ -445,6 +452,7 @@ class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExce
     JsRefHolder configurable;
     JsRefHolder enumerable;
     JsRefHolder get;
+    JsRefHolder getOwnPropertyDescriptor;
     JsRefHolder hostFunctionSymbol;
     JsRefHolder hostObjectSymbol;
     JsRefHolder length;
