@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Debugging: Adding variables to watch window crashes the process hosting the addin VSO 4853697",
+  "packageName": "react-native-windows",
+  "email": "anandrag@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2021-03-22T20:33:08.184Z"
+}
