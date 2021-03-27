@@ -816,19 +816,6 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
         return descriptor;
         });
     }
-    //else if (GetValueType(propertyName) == JsValueType::JsSymbol) {
-    //  const auto chakraPropertyId = GetPropertyIdFromSymbol(propertyName);
-    //  if (chakraPropertyId == chakraRuntime->m_propertyId.hostObjectSymbol) {
-    //    // The special property to retrieve the target object.
-    //    return target;
-    //  }
-    //  else {
-    //    const PropNameIDView propertyId{ chakraPropertyId };
-    //    return RunInMethodContext("HostObject::getOwnPropertyDescriptor", [&]() {
-    //      return chakraRuntime->ToJsValueRef(hostObject->get(*chakraRuntime, propertyId));
-    //      });
-    //  }
-    //}
     return static_cast<JsValueRef>(chakraRuntime->m_undefinedValue);
     });
 }
