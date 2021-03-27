@@ -72,7 +72,7 @@ ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::mo
   m_propertyId.configurable = JsRefHolder{GetPropertyIdFromName(L"configurable")};
   m_propertyId.enumerable = JsRefHolder{GetPropertyIdFromName(L"enumerable")};
   m_propertyId.get = JsRefHolder{GetPropertyIdFromName(L"get")};
-  m_propertyId.getOwnPropertyDescriptor = JsRefHolder{ GetPropertyIdFromName(L"getOwnPropertyDescriptor") };
+  m_propertyId.getOwnPropertyDescriptor = JsRefHolder{GetPropertyIdFromName(L"getOwnPropertyDescriptor")};
   m_propertyId.hostFunctionSymbol = JsRefHolder{GetPropertyIdFromSymbol(L"hostFunctionSymbol")};
   m_propertyId.hostObjectSymbol = JsRefHolder{GetPropertyIdFromSymbol(L"hostObjectSymbol")};
   m_propertyId.length = JsRefHolder{GetPropertyIdFromName(L"length")};
@@ -791,33 +791,34 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
 }
 
 /*static*/ JsValueRef CALLBACK ChakraRuntime::HostObjectGetOwnPropertyDescriptorTrap(
-  JsValueRef callee,
-  bool isConstructCall,
-  JsValueRef* args,
-  unsigned short argCount,
-  void* callbackState) noexcept {
-  ChakraRuntime* chakraRuntime = static_cast<ChakraRuntime*>(callbackState);
+    JsValueRef callee,
+    bool isConstructCall,
+    JsValueRef *args,
+    unsigned short argCount,
+    void *callbackState) noexcept {
+  ChakraRuntime *chakraRuntime = static_cast<ChakraRuntime *>(callbackState);
   return chakraRuntime->HandleCallbackExceptions([&]() {
-    ChakraVerifyElseThrow(!isConstructCall, "Constructor call for HostObjectGetOwnPropertyDescriptorTrap() is not supported.");
+    ChakraVerifyElseThrow(
+        !isConstructCall, "Constructor call for HostObjectGetOwnPropertyDescriptorTrap() is not supported.");
 
     // args[0] - the Proxy handler object (this) (unused).
     // args[1] - the Proxy target object.
     // args[2] - the property
     ChakraVerifyElseThrow(argCount == 3, "HostObjectGetOwnPropertyDescriptorTrap() requires 3 arguments.");
     const JsValueRef target = args[1];
-    auto const& hostObject = *static_cast<std::shared_ptr<facebook::jsi::HostObject> *>(GetExternalData(target));
+    auto const &hostObject = *static_cast<std::shared_ptr<facebook::jsi::HostObject> *>(GetExternalData(target));
 
     const JsValueRef propertyName = args[2];
     if (GetValueType(propertyName) == JsValueType::JsString) {
-      const PropNameIDView propertyId{ GetPropertyIdFromName(StringToPointer(propertyName).data()) };
+      const PropNameIDView propertyId{GetPropertyIdFromName(StringToPointer(propertyName).data())};
       return RunInMethodContext("HostObject::getOwnPropertyDescriptor", [&]() {
         auto value = chakraRuntime->ToJsValueRef(hostObject->get(*chakraRuntime, propertyId));
         auto descriptor = chakraRuntime->CreatePropertyDescriptor(value, PropertyAttibutes::None);
         return descriptor;
-        });
+      });
     }
     return static_cast<JsValueRef>(chakraRuntime->m_undefinedValue);
-    });
+  });
 }
 
 JsValueRef ChakraRuntime::GetHostObjectProxyHandler() {
@@ -828,8 +829,9 @@ JsValueRef ChakraRuntime::GetHostObjectProxyHandler() {
     SetProperty(
         handler, m_propertyId.ownKeys, CreateExternalFunction(m_propertyId.ownKeys, 1, HostObjectOwnKeysTrap, this));
     SetProperty(
-      handler, m_propertyId.getOwnPropertyDescriptor, 
-      CreateExternalFunction(m_propertyId.getOwnPropertyDescriptor, 3, HostObjectGetOwnPropertyDescriptorTrap, this));
+        handler,
+        m_propertyId.getOwnPropertyDescriptor,
+        CreateExternalFunction(m_propertyId.getOwnPropertyDescriptor, 3, HostObjectGetOwnPropertyDescriptorTrap, this));
     m_hostObjectProxyHandler = JsRefHolder{handler};
   }
 

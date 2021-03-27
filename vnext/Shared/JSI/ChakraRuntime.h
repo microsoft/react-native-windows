@@ -274,11 +274,11 @@ class ChakraRuntime : public facebook::jsi::Runtime, ChakraApi, ChakraApi::IExce
       void *callbackState) noexcept;
 
   static JsValueRef CALLBACK HostObjectGetOwnPropertyDescriptorTrap(
-    JsValueRef callee,
-    bool isConstructCall,
-    JsValueRef* args,
-    unsigned short argCount,
-    void* callbackState) noexcept;
+      JsValueRef callee,
+      bool isConstructCall,
+      JsValueRef *args,
+      unsigned short argCount,
+      void *callbackState) noexcept;
 
   JsValueRef GetHostObjectProxyHandler();
 
