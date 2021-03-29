@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 29 Mar 2021 16:07:04 GMT",
+      "tag": "@react-native-windows/cli_v0.64.2",
+      "version": "0.64.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.64] Fix app template to use app.json's name for main component name (#7464)",
+            "author": "jthysell@microsoft.com",
+            "commit": "dd05bb443c7ba969de694a6727001f1b5dc25f21",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Autolinking doesn't add a project marked as a non-direct dependency",
+            "author": "asklar@microsoft.com",
+            "commit": "d821f14b2e6a866f6ec7972771c693223d363974",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Mar 2021 17:06:53 GMT",
       "tag": "@react-native-windows/cli_v0.64.1",
       "version": "0.64.1",

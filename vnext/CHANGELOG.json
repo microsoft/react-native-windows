@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 29 Mar 2021 16:07:04 GMT",
+      "tag": "react-native-windows_v0.64.2",
+      "version": "0.64.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.64] Fix app template to use app.json's name for main component name (#7464)",
+            "author": "jthysell@microsoft.com",
+            "commit": "dd05bb443c7ba969de694a6727001f1b5dc25f21",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Implement JSI getOwnPropertyDescriptor",
+            "author": "asklar@microsoft.com",
+            "commit": "1d1bb1b954c3233055f404dcbdc8ef0b1c027897",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump peer dependency to require non-rc version of react-native",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "c7637b30fb4f79e2469ce5d9ec54b8cee2a205eb",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Mar 2021 17:06:53 GMT",
       "tag": "react-native-windows_v0.64.1",
       "version": "0.64.1",

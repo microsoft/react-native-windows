@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.64] Implement JSI getOwnPropertyDescriptor",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

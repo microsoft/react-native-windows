@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 15 Mar 2021 17:23:19 GMT and should not be manually modified.
+This log was last generated on Mon, 29 Mar 2021 16:07:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.1
+
+Mon, 29 Mar 2021 16:07:04 GMT
+
+### Patches
+
+- Bump peer dependency to require non-rc version of react-native (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.64.0
 
