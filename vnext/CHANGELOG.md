@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 26 Mar 2021 22:43:28 GMT and should not be manually modified.
+This log was last generated on Mon, 29 Mar 2021 15:27:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.26
+
+Mon, 29 Mar 2021 15:27:29 GMT
+
+### Patches
+
+- Debugging: Adding variables to watch window crashes the process hosting the addin VSO 4853697 (anandrag@microsoft.com)
 
 ## 0.63.25
 

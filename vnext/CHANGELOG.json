@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 29 Mar 2021 15:27:29 GMT",
+      "tag": "react-native-windows_v0.63.26",
+      "version": "0.63.26",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Debugging: Adding variables to watch window crashes the process hosting the addin VSO 4853697",
+            "author": "anandrag@microsoft.com",
+            "commit": "79cdd5cbd0d5f46f2b82640eb7ee4ff153a624f4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Mar 2021 22:43:28 GMT",
       "tag": "react-native-windows_v0.63.25",
       "version": "0.63.25",
