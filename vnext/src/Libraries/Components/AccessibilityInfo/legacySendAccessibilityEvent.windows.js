@@ -21,7 +21,7 @@ function legacySendAccessibilityEvent(
   if (eventType === 'focus') {
     UIManager.sendAccessibilityEvent(
       reactTag,
-      UIManager.getConstants().FocusAccessibilityEvent,
+      UIManager.getConstants().AccessibilityEventTypes.typeViewFocused,
     );
   }
 }
