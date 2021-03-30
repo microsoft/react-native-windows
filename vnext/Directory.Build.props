@@ -18,7 +18,7 @@
       The PR (windows-vs-pr.yml) and CI (publish.yml() turn it back on.
     -->
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">false</EnableSourceLink>
-    <FollyVersion>2020.10.05.00</FollyVersion>
+    <FollyVersion>2021.03.29.00</FollyVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
