@@ -121,7 +121,12 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       vm->GetConstants(writer);
       writer.WriteObjectEnd();
     }
-    constants.Add(L"FocusAccessibilityEvent", 0);
+    auto AccessibilityEventTypes = React::JSValueObject{
+        {"AccessibilityEventTypes",
+         React::JSValueObject{
+             {"typeViewFocused", 0},
+         }}};
+    constants.Add(L"AccessibilityEventTypes", AccessibilityEventTypes);
   }
 
   void createView(int64_t reactTag, std::string viewName, int64_t rootTag, React::JSValueObject &&props) noexcept {
