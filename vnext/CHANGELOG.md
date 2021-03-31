@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 22 Mar 2021 17:06:53 GMT and should not be manually modified.
+This log was last generated on Mon, 29 Mar 2021 16:07:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.2
+
+Mon, 29 Mar 2021 16:07:04 GMT
+
+### Patches
+
+- [0.64] Fix app template to use app.json's name for main component name (#7464) (jthysell@microsoft.com)
+- [0.64] Implement JSI getOwnPropertyDescriptor (asklar@microsoft.com)
+- Bump peer dependency to require non-rc version of react-native (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.64.1
 

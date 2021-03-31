@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 29 Mar 2021 16:07:04 GMT",
+      "tag": "@office-iss/react-native-win32_v0.64.1",
+      "version": "0.64.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump peer dependency to require non-rc version of react-native",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "c7637b30fb4f79e2469ce5d9ec54b8cee2a205eb",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Mar 2021 17:23:19 GMT",
       "tag": "@office-iss/react-native-win32_v0.64.0",
       "version": "0.64.0",
