@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 10 Mar 2021 17:41:09 GMT and should not be manually modified.
+This log was last generated on Mon, 29 Mar 2021 15:27:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.26
+
+Mon, 29 Mar 2021 15:27:29 GMT
+
+### Patches
+
+- Debugging: Adding variables to watch window crashes the process hosting the addin VSO 4853697 (anandrag@microsoft.com)
+
+## 0.63.25
+
+Fri, 26 Mar 2021 22:43:28 GMT
+
+### Patches
+
+- Fix AppStateModule::GetCurrentAppState from returning undefined (namrog84@gmail.com)
+- Backporting codegen test fix for build on new agents (agnel@microsoft.com)
+- Promote 0.63 to legacy (ngerlem@microsoft.com)
 
 ## 0.63.24
 

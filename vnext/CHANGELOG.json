@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 29 Mar 2021 15:27:29 GMT",
+      "tag": "react-native-windows_v0.63.26",
+      "version": "0.63.26",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Debugging: Adding variables to watch window crashes the process hosting the addin VSO 4853697",
+            "author": "anandrag@microsoft.com",
+            "commit": "79cdd5cbd0d5f46f2b82640eb7ee4ff153a624f4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 26 Mar 2021 22:43:28 GMT",
+      "tag": "react-native-windows_v0.63.25",
+      "version": "0.63.25",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix AppStateModule::GetCurrentAppState from returning undefined",
+            "author": "namrog84@gmail.com",
+            "commit": "6a5dab58fd29d4b7333809134bc380d70298ac0d",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Backporting codegen test fix for build on new agents",
+            "author": "agnel@microsoft.com",
+            "commit": "bbd6a0a24dd2b45319740fea0479c265ee75a807",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Promote 0.63 to legacy",
+            "author": "ngerlem@microsoft.com",
+            "commit": "db69246dc3f7e0b8c31c9d159a66e4432cb70523",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Mar 2021 17:41:09 GMT",
       "tag": "react-native-windows_v0.63.24",
       "version": "0.63.24",
