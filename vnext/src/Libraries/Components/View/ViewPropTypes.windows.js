@@ -379,7 +379,7 @@ type IOSViewProps = $ReadOnly<{|
 
 // [Windows
 
-type HandledKeyboardEvent = $ReadOnly<{|
+export type HandledKeyboardEvent = $ReadOnly<{|
   altKey?: ?boolean,
   ctrlKey?: ?boolean,
   metaKey?: ?boolean,

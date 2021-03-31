@@ -653,18 +653,16 @@ export default class Pressability {
         onKeyUp && onKeyUp(event);
 
         if (
-          event.nativeEvent.code === 'Space' ||
-          event.nativeEvent.code === 'Enter' ||
-          event.nativeEvent.code === 'GamepadA'
+          (event.nativeEvent.code === 'Space' ||
+            event.nativeEvent.code === 'Enter' ||
+            event.nativeEvent.code === 'GamepadA') &&
+          event.defaultPrevented != true
         ) {
-          // flowlint sketchy-null:warn, sketchy-null-bool:off
-          if (!event.defaultPrevented) {
-            const {onPressOut, onPress} = this._config;
-            // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
-            onPressOut && onPressOut(event);
-            // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
-            onPress && onPress(event);
-          }
+          const {onPressOut, onPress} = this._config;
+          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
+          onPressOut && onPressOut(event);
+          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
+          onPress && onPress(event);
         }
       },
       onKeyDown: (event: KeyEvent): void => {
@@ -672,16 +670,14 @@ export default class Pressability {
         onKeyDown && onKeyDown(event);
 
         if (
-          event.nativeEvent.code === 'Space' ||
-          event.nativeEvent.code === 'Enter' ||
-          event.nativeEvent.code === 'GamepadA'
+          (event.nativeEvent.code === 'Space' ||
+            event.nativeEvent.code === 'Enter' ||
+            event.nativeEvent.code === 'GamepadA') &&
+          event.defaultPrevented != true
         ) {
-          // flowlint sketchy-null:warn, sketchy-null-bool:off
-          if (!event.defaultPrevented) {
-            const {onPressIn} = this._config;
-            // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
-            onPressIn && onPressIn(event);
-          }
+          const {onPressIn} = this._config;
+          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
+          onPressIn && onPressIn(event);
         }
       },
     };
