@@ -2,6 +2,39 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 26 Mar 2021 22:43:28 GMT",
+      "tag": "@react-native-windows/cli_v0.63.11",
+      "version": "0.63.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump xmldom to 0.5.0.",
+            "author": "yicyao@microsoft.com",
+            "commit": "83cd427109cb96dac4de4c1f4257274d587ca3ea",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "[0.63] Fix app template to use app.json's name for main component name (#7464)",
+            "author": "jthysell@microsoft.com",
+            "commit": "f577e40862d0836fedfa553a354e92c0f4cb5eca",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "[0.63] Autolinking doesn't add a project marked as a non-direct dependency",
+            "author": "asklar@microsoft.com",
+            "commit": "5915bf7073b30a454af521f9ff6019d5fa246cc2",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Promote 0.63 to legacy",
+            "author": "ngerlem@microsoft.com",
+            "commit": "db69246dc3f7e0b8c31c9d159a66e4432cb70523",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Feb 2021 15:05:25 GMT",
       "tag": "@react-native-windows/cli_v0.63.10",
       "version": "0.63.10",
