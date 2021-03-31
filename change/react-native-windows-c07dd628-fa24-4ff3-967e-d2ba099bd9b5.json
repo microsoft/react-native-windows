@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.64] Enable apps to override WinUI and SDK version for RNW framework projects",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
