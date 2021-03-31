@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update to new Folly version",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
