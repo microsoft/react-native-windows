@@ -32,7 +32,7 @@ namespace Microsoft.ReactNative
       "(https://docs.microsoft.com/windows/apps/desktop/modernize/xaml-islands).")
     static void SetXamlRoot(IReactPropertyBag properties, XAML_NAMESPACE.XamlRoot xamlRoot);
 
-    DOC_STRING("Retrieves XamlRoot for app.")
+    DOC_STRING("Retrieves the default @Windows.UI.Xaml.XamlRoot for the app.")
     static XAML_NAMESPACE.XamlRoot GetXamlRoot(IReactPropertyBag properties);
   }
 } // namespace Microsoft.ReactNative

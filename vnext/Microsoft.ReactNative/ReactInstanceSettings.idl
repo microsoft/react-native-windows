@@ -108,8 +108,8 @@ namespace Microsoft.ReactNative
 
     DOC_STRING(
       "Enables live reload to load the source bundle from the React Native packager.\n"
-      "When the file is saved, the packager will trigger reloading.\n"
-      "**For general use this has been replaced by @.UseFastRefresh.**")
+      "When the file is saved, the packager will trigger reloading.\n")
+    [deprecated("For general use this has been replaced by @.UseFastRefresh.", deprecate, 1)]
     Boolean UseLiveReload { get; set; };
 
     DOC_STRING(
@@ -161,7 +161,7 @@ namespace Microsoft.ReactNative
 
     // Deprecated
     [deprecated(
-      "This has been replaced with @.SourceBundleHost and @.SourceBundlePort and will be removed in a version 0.65.",
+      "This has been replaced with @.SourceBundleHost and @.SourceBundlePort and will be removed in version 0.65.",
       deprecate, 1)]
     DOC_STRING(
       "When using a @.UseFastRefresh, @.UseLiveReload or @.UseWebDebugger this is the server that will be "
