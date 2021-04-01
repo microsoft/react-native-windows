@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 01 Apr 2021 05:07:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.284",
+      "version": "0.0.0-canary.284",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update to new Folly version",
+            "author": "asklar@microsoft.com",
+            "commit": "9ca3fe57b46648daa05a6c3e041f685f5be9a2e8",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 28 Mar 2021 05:06:13 GMT",
       "tag": "react-native-windows_v0.0.0-canary.283",
       "version": "0.0.0-canary.283",

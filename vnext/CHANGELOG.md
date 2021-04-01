@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 28 Mar 2021 05:06:13 GMT and should not be manually modified.
+This log was last generated on Thu, 01 Apr 2021 05:07:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.284
+
+Thu, 01 Apr 2021 05:07:27 GMT
+
+### Changes
+
+- Update to new Folly version (asklar@microsoft.com)
 
 ## 0.0.0-canary.283
 
