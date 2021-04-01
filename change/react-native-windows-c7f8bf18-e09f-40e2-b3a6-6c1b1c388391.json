@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add onKeyDown/onKeyUp to Pressable.",
+  "packageName": "react-native-windows",
+  "email": "igklemen@microsoft.com",
+  "dependentChangeType": "patch"
+}

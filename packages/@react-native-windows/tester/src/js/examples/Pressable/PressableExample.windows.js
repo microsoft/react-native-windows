@@ -17,6 +17,7 @@ import {
   TouchableHighlight,
   Platform,
   View,
+  Switch,
 } from 'react-native';
 
 const {useEffect, useRef, useState} = React;
@@ -294,6 +295,59 @@ function PressableFocusCallbacks() {
   );
 }
 
+function PressWithOnKeyDown() {
+  const [timesPressed, setTimesPressed] = useState(0);
+  const [text, setText] = useState('defaultText');
+
+  let textLog = '';
+  if (timesPressed > 1) {
+    textLog = timesPressed + 'x onPress';
+  } else if (timesPressed > 0) {
+    textLog = 'onPress';
+  }
+
+  const [shouldPreventDefault, setShouldPreventDefault] = useState(false);
+  const toggleSwitch = () =>
+    setShouldPreventDefault(previousState => !previousState);
+
+  function myKeyDown(event) {
+    console.log('keyDown - ' + event.nativeEvent.code);
+    setText(event.nativeEvent.code);
+    if (shouldPreventDefault) {
+      event.preventDefault();
+    }
+  }
+  function myKeyUp(event) {
+    console.log('keyUp - ' + event.nativeEvent.code);
+    setText(event.nativeEvent.code);
+    if (shouldPreventDefault) {
+      event.preventDefault();
+    }
+  }
+
+  return (
+    <>
+      <View style={styles.row}>
+        <Pressable
+          onKeyDown={event => myKeyDown(event)}
+          onKeyUp={event => myKeyUp(event)}
+          onPress={() => {
+            setTimesPressed(current => current + 1);
+          }}>
+          {({pressed}) => (
+            <Text style={styles.text}>{pressed ? 'Pressed!' : 'Press Me'}</Text>
+          )}
+        </Pressable>
+        <Switch onValueChange={toggleSwitch} value={shouldPreventDefault} />
+      </View>
+      <View style={styles.logBox}>
+        <Text testID="pressable_press_console">{textLog}</Text>
+        <Text>{text}</Text>
+      </View>
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
   row: {
     justifyContent: 'center',
@@ -528,6 +582,15 @@ exports.examples = [
       'They also expose onFocus and onBlur callbacks to hadle incoming native events.': string),
     render: function(): React.Node {
       return <PressableFocusCallbacks />;
+    },
+  },
+  {
+    title: 'OnKeyDown/OnKeyUp callbacks on Pressable',
+    description: ('<Pressable> components can be respond to keyDown/keyUp native events.' +
+      ' Additionally, they can be activated by pressing Space or Enter as if they were clicked with the mouse, triggering onPress' +
+      ' - this behavior can be suppressed by calling e.preventDefault() on the event (can be toggled with the switch).': string),
+    render: function(): React.Node {
+      return <PressWithOnKeyDown />;
     },
   },
 ];

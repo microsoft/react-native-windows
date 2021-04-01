@@ -28,7 +28,8 @@ import type {
   PressEvent,
   // [Windows
   BlurEvent,
-  FocusEvent, // Windows]
+  FocusEvent,
+  KeyEvent, // Windows]
 } from '../../Types/CoreEventTypes';
 import View from '../View/View';
 import TextInputState from '../TextInput/TextInputState';
@@ -126,6 +127,16 @@ type Props = $ReadOnly<{|
    */
   onFocus?: ?(event: FocusEvent) => mixed,
 
+  /*
+   * Called after a key down event is detected.
+   */
+  onKeyDown?: ?(event: KeyEvent) => mixed,
+
+  /*
+   * Called after a key up event is detected.
+   */
+  onKeyUp?: ?(event: KeyEvent) => mixed,
+
   /**
    * Either view styles or a function that receives a boolean reflecting whether
    * the component is currently pressed and returns view styles.
@@ -179,6 +190,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
     // [Windows
     onBlur,
     onFocus,
+    onKeyDown,
+    onKeyUp,
     // Windows]
     pressRetentionOffset,
     style,
@@ -259,6 +272,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
       // [Windows
       onBlur,
       onFocus,
+      onKeyDown,
+      onKeyUp,
       // Windows]
     }),
     [
@@ -275,6 +290,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
       // [Windows
       onBlur,
       onFocus,
+      onKeyDown,
+      onKeyUp,
       // Windows]
       pressRetentionOffset,
       setPressed,
