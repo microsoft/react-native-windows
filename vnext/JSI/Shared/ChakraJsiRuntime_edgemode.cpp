@@ -13,6 +13,10 @@ JsStartDebugging();
 
 namespace Microsoft::JSI {
 
+#if defined(USE_EDGEMODE_JSRT) && !defined(CHAKRACORE)
+/*static*/ void ChakraRuntime::initRuntimeVersion() noexcept {}
+#endif
+
 SystemChakraRuntime::SystemChakraRuntime(ChakraRuntimeArgs &&args) noexcept : ChakraRuntime(std::move(args)) {
   this->Init();
 }
@@ -36,11 +40,14 @@ std::unique_ptr<const facebook::jsi::Buffer> SystemChakraRuntime::generatePrepar
   const std::wstring scriptUTF16 =
       Microsoft::Common::Unicode::Utf8ToUtf16(reinterpret_cast<const char *>(sourceBuffer.data()), sourceBuffer.size());
 
-  // TODO: Use long when using System Chakra!
+  #ifdef CHAKRACORE
+  unsigned int bytecodeSize = 0;
+  #else
   unsigned long bytecodeSize = 0;
-  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, (unsigned int *)&bytecodeSize) == JsNoError) {
+  #endif
+  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) == JsNoError) {
     std::unique_ptr<ByteArrayBuffer> bytecodeBuffer(std::make_unique<ByteArrayBuffer>(bytecodeSize));
-    if (JsSerializeScript(scriptUTF16.c_str(), bytecodeBuffer->data(), (unsigned int *)&bytecodeSize) == JsNoError) {
+    if (JsSerializeScript(scriptUTF16.c_str(), bytecodeBuffer->data(), &bytecodeSize) == JsNoError) {
       return bytecodeBuffer;
     }
   }
