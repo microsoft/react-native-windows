@@ -6,27 +6,52 @@ import "ReactInstanceSettings.idl";
 
 #include "DocString.h"
 
-namespace Microsoft.ReactNative {
-
+namespace Microsoft.ReactNative
+{
   [webhosthidden]
   [default_interface]
-  DOC_STRING("This is the main entry-point to create a react-native instance.  The `ReactNativeHost` object exists to configure the instance using @ReactInstanceSettings before its loaded, as well as enabling control of when to load the instance. \n\
-_In the future more lifecycle events will be added to this object to provide better information on when an instance is loaded and unloaded._")
+  DOC_STRING(
+    "This is the main entry-point to create a React instance.\n"
+    "The `ReactNativeHost` object exists to configure the instance using @ReactInstanceSettings before it is loaded, "
+    "as well as enabling control of when to load the instance.\n"
+    "Use @ReactInstanceSettings events to observe instance creation, loading, and destruction.")
   runtimeclass ReactNativeHost {
+    DOC_STRING("Creates a new instance of @ReactNativeHost")
     ReactNativeHost();
 
-    DOC_STRING("Provides access to the list of `IReactPackageProvider`'s that the react instance will use to provide native modules to the application.  This can be used to register additional package providers, such as package providers from community modules or other shared libraries")
+    DOC_STRING(
+      "Provides access to the list of @IReactPackageProvider's that the React instance will use to provide "
+      "native modules to the application. This can be used to register additional package providers, such as "
+      "package providers from community modules or other shared libraries.")
     IVector<IReactPackageProvider> PackageProviders { get; };
 
-    DOC_STRING("Provides access to your this host's @ReactInstanceSettings to configure the react instance.")
+    DOC_STRING("Provides access to this host's @ReactInstanceSettings to configure the react instance.")
     ReactInstanceSettings InstanceSettings { get; set; };
 
+    DOC_STRING("Loads a new React instance. It is an alias for @.ReloadInstance method.")
     Windows.Foundation.IAsyncAction LoadInstance();
 
-    DOC_STRING("This is used to load the instance, which will create an instance of the JS engine and launch your JavaScript code.  If an instance of this host is already running, this will shutdown the already running instance, and load a new instance.")
+    DOC_STRING(
+      "Unloads the current React instance and loads a new one.\n"
+      "The React instance loading creates an instance of the JavaScript engine, "
+      "and launches the provided JavaScript code bundle.\n"
+      "If a React instance is already running in this host, then @.ReloadInstance shuts down the already "
+      "the running React instance, and loads a new React instance.\n"
+      "The React instance lifecycle can be observed with the following events:"
+      "- The @ReactInstanceSettings.InstanceCreated event is raised when the React instance is just created.\n"
+      "- The @ReactInstanceSettings.InstanceLoaded event is raised when the React instance completed"
+      "  loading the JavaScript bundle.\n"
+      "- The @ReactInstanceSettings.InstanceDestroyed event is raised when the React instance is destroyed.")
     Windows.Foundation.IAsyncAction ReloadInstance();
+
+    DOC_STRING(
+      "Unloads current React instance.\n"
+      "After the React instance is unloaded, all the React resources including the JavaScript engine environment "
+      "are cleaned up.\n"
+      "The React instance destruction can be observed with the @ReactInstanceSettings.InstanceDestroyed event.")
     Windows.Foundation.IAsyncAction UnloadInstance();
 
+    DOC_STRING("Returns the @ReactNativeHost instance associated with the given @IReactContext.")
     static ReactNativeHost FromContext(IReactContext reactContext);
   }
 } // namespace Microsoft.ReactNative

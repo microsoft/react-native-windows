@@ -10,7 +10,8 @@ namespace Microsoft.ReactNative
     "JSON-like stream writer.\n"
     "It is used to write data that is sent between native modules and the Microsoft.ReactNative.dll.\n"
     "\n"
-    "The JSON-like streams are data structures that satisfy the [JSON specification](https://tools.ietf.org/html/rfc8259). "
+    "The JSON-like streams are data structures that satisfy the "
+    "[JSON specification](https://tools.ietf.org/html/rfc8259). "
     "The data structure may have objects with name-value pairs and arrays of items. "
     "Property values or array items can be of type `Null`, `Object`, `Array`, `String`, `Boolean`, or `Number`. "
     "The `IJSValueWriter` treats the `Number` type as `Int64` or `Double`. See @JSValueType.\n"
@@ -61,7 +62,7 @@ namespace Microsoft.ReactNative
   }
 
   DOC_STRING(
-    "The `JSValueArgWriter` delegate is used to pass arbitrary value to ABI API. \n"
-    "In a function that implements the delegate use the provided writer to stream custom values.")
+    "The `JSValueArgWriter` delegate is used to pass values to ABI API. \n"
+    "In a function that implements the delegate use the provided `writer` to stream custom values.")
   delegate void JSValueArgWriter(IJSValueWriter writer);
 } // namespace Microsoft.ReactNative

@@ -22,7 +22,8 @@ namespace Microsoft.ReactNative
     "Forward-only reader for JSON-like streams.\n"
     "It is used to read data sent between native modules and the Microsoft.ReactNative library.\n"
     "\n"
-    "The JSON-like streams are data structures that satisfy the [JSON specification](https://tools.ietf.org/html/rfc8259). "
+    "The JSON-like streams are data structures that satisfy the "
+    "[JSON specification](https://tools.ietf.org/html/rfc8259). "
     "The data structure may have objects with name-value pairs and arrays of items. "
     "Property values or array items can be of type `Null`, `Object`, `Array`, `String`, `Boolean`, or `Number`. "
     "The `IJSValueReader` treats the `Number` type as `Int64` or `Double`. See @JSValueType.\n"
@@ -31,7 +32,8 @@ namespace Microsoft.ReactNative
     "For example, if the current value type is `Object`, one must call @.GetNextObjectProperty "
     "to start reading the current object's properties, and if the current type is `Array`, "
     "@.GetNextArrayItem must be called to start reading the elements in the array. "
-    "These functions must be called in a loop until they return false, which signifies that there are no more items within the object or array being traversed.\n"
+    "These functions must be called in a loop until they return false, which signifies that there are "
+    "no more items within the object or array being traversed.\n"
     "\n"
     "See the @IJSValueWriter for the corresponding writer interface.\n"
     "\n"
@@ -49,7 +51,8 @@ namespace Microsoft.ReactNative
     JSValueType ValueType { get; };
 
     DOC_STRING(
-      "Advances the iterator within the current object to fetch the next object property. The property value can then be obtained by calling one of the Get functions.\n"
+      "Advances the iterator within the current object to fetch the next object property. "
+      "The property value can then be obtained by calling one of the Get functions.\n"
       "\n"
       "Returns **`true`** if the next property is acquired successfully. "
       "In that case the `propertyName` is set to the name of the property. "
@@ -62,7 +65,8 @@ namespace Microsoft.ReactNative
     Boolean GetNextObjectProperty(out String propertyName);
 
     DOC_STRING(
-      "Advances the iterator within the current array to fetch the next array element. The element can then be obtained by calling one of the Get functions.\n"
+      "Advances the iterator within the current array to fetch the next array element. "
+      "The element can then be obtained by calling one of the Get functions.\n"
       "\n"
       "Returns **`true`** if the next array item is acquired successfully. "
       "Otherwise, it returns **`false`**, meaning that reading of the JSON-like array is completed.\n"

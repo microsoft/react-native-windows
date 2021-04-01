@@ -6,25 +6,33 @@ import "IReactContext.idl";
 #include "NamespaceRedirect.h"
 #include "DocString.h"
 
-namespace Microsoft.ReactNative {
-
+namespace Microsoft.ReactNative
+{
   [default_interface]
   [webhosthidden]
-  DOC_STRING("Provides access to XAML UI-specific functionality. It provides access to APIs to get a XAML element from a react tag, and to dispatch events to JS components.")
-  runtimeclass XamlUIService {
-    DOC_STRING("Use this method to gain access to the `XamlUIService` from a `ReactContext`.")
+  DOC_STRING(
+    "Provides access to XAML UI-specific functionality. "
+    "It provides access to APIs to get a XAML element from a react tag, and to dispatch events to JS components.")
+  runtimeclass XamlUIService
+  {
+    DOC_STRING("Use this method to get access to the @XamlUIService associated with the @IReactContext.")
     static XamlUIService FromContext(IReactContext context);
 
-    DOC_STRING("Get the backing XAML element from a react tag.")
+    DOC_STRING("Gets the backing XAML element from a react tag.")
     XAML_NAMESPACE.DependencyObject ElementFromReactTag(Int64 reactTag);
 
-    DOC_STRING("Dispatch an event to a JS component.")
-    // Dispatch UI event. This method is to be moved to IReactViewContext.
+    DOC_STRING("Dispatches an event to a JS component.")
     void DispatchEvent(XAML_NAMESPACE.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
 
-    // This needs to be manually provided to the ReactInstanceSettings when using XamlIslands
+    DOC_STRING(
+      "Sets the @Windows.UI.Xaml.XamlRoot element for the app. "
+      "This must be manually provided to the @ReactInstanceSettings object when using XAML Islands "
+      "so that certain APIs work correctly.\n"
+      "For more information, see [Host WinRT XAML Controls in desktop apps (XAML Islands)]"
+      "(https://docs.microsoft.com/windows/apps/desktop/modernize/xaml-islands).")
     static void SetXamlRoot(IReactPropertyBag properties, XAML_NAMESPACE.XamlRoot xamlRoot);
+
+    DOC_STRING("Retrieves the default @Windows.UI.Xaml.XamlRoot for the app.")
     static XAML_NAMESPACE.XamlRoot GetXamlRoot(IReactPropertyBag properties);
   }
-
 } // namespace Microsoft.ReactNative

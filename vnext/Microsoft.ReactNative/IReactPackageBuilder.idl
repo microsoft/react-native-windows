@@ -11,11 +11,11 @@ import "IViewManager.idl";
 
 namespace Microsoft.ReactNative
 {
-  DOC_STRING("Provides information about a custom native module.  See @IReactModuleBuilder.")
+  DOC_STRING("Provides information about a custom native module. See @IReactModuleBuilder.")
   delegate Object ReactModuleProvider(IReactModuleBuilder moduleBuilder);
 
 #ifndef CORE_ABI
-  DOC_STRING("Provides information about a custom view manager.  See @IViewManager.")
+  DOC_STRING("Provides information about a custom view manager. See @IViewManager.")
   delegate IViewManager ReactViewManagerProvider();
 #endif
 
@@ -37,7 +37,7 @@ namespace Microsoft.ReactNative
   DOC_STRING("Experimental extensions to the @IReactPackageBuilder.")
   interface IReactPackageBuilderExperimental requires IReactPackageBuilder
   {
-    DOC_STRING("Adds a custom TurboModule that directly uses the JS Engine API.")
+    DOC_STRING("Adds a custom TurboModule that directly uses the JS Engine API (JSI).")
     void AddTurboModule(String moduleName, ReactModuleProvider moduleProvider);
   }
 } // namespace Microsoft.ReactNative
