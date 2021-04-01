@@ -10,7 +10,12 @@ namespace Microsoft::ReactNative {
 using XamlView = xaml::DependencyObject;
 
 inline int64_t GetTag(XamlView view) {
-  return view.GetValue(xaml::FrameworkElement::TagProperty()).as<winrt::IPropertyValue>().GetInt64();
+  auto tagValue = view.ReadLocalValue(xaml::FrameworkElement::TagProperty());
+  if (tagValue != xaml::DependencyProperty::UnsetValue()) {
+    return tagValue.as<winrt::IPropertyValue>().GetInt64();
+  } else {
+    return -1;
+  }
 }
 
 inline void SetTag(XamlView view, int64_t tag) {

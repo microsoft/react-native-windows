@@ -411,8 +411,9 @@ bool TouchEventHandler::TagFromOriginalSource(
   winrt::IPropertyValue tag(nullptr);
 
   while (sourceElement) {
-    tag = sourceElement.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
-    if (tag) {
+    auto tagValue = sourceElement.ReadLocalValue(xaml::FrameworkElement::TagProperty());
+    if (tagValue != xaml::DependencyProperty::UnsetValue()) {
+      tag = tagValue.try_as<winrt::IPropertyValue>();
       // If a TextBlock was the UIElement event source, perform a more accurate hit test,
       // searching for the tag of the nested Run/Span XAML elements that the user actually clicked.
       // This is to support nested <Text> elements in React.
