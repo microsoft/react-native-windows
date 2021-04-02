@@ -39,7 +39,6 @@ class ChakraCoreRuntime : public ChakraRuntime {
 #pragma endregion
 
  private:
-  // core-only??
   JsErrorCode enableDebugging(
       JsRuntimeHandle runtime,
       std::string const &runtimeName,
