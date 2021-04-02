@@ -26,6 +26,9 @@ TEST_MODULE_INITIALIZE(InitModule) {
 
   // WebSocketJSExecutor can't register native log hooks.
   Microsoft::React::SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
+
+  // Set to true when testing the Chakra.dll JSI runtime.
+  Microsoft::React::SetRuntimeOptionBool("ForceSystemChakra", false);
 }
 
 // None of these tests are runnable

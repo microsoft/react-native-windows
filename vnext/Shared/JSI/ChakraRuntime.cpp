@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 #include "ChakraRuntime.h"
+#include "ChakraRuntimeFactory.h"
 
+#include <MemoryTracker.h>
+#include <RuntimeOptions.h>
 #include "Unicode.h"
 #include "Utilities.h"
 
-#include <MemoryTracker.h>
 #include <cxxreact/MessageQueueThread.h>
 
 #include <cstring>
@@ -14,6 +16,15 @@
 #include <mutex>
 #include <sstream>
 #include <unordered_set>
+
+#ifdef CHAKRACORE
+#include <ChakraCore.h>
+#else
+#ifndef USE_EDGEMODE_JSRT
+#define USE_EDGEMODE_JSRT
+#endif
+#include <jsrt.h>
+#endif
 
 namespace Microsoft::JSI {
 
@@ -38,7 +49,9 @@ struct HostFunctionWrapper final {
 
 } // namespace
 
-ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::move(args)} {
+ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::move(args)} {}
+
+void ChakraRuntime::Init() noexcept {
   JsRuntimeAttributes runtimeAttributes = JsRuntimeAttributeNone;
 
   if (!m_args.enableJITCompilation) {
@@ -88,13 +101,11 @@ ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::mo
   m_undefinedValue = JsRefHolder{GetUndefinedValue()};
 }
 
-ChakraRuntime::~ChakraRuntime() noexcept {
+/*virtual*/ ChakraRuntime::~ChakraRuntime() noexcept {
   m_undefinedValue = {};
   m_propertyId = {};
   m_proxyConstructor = {};
   m_hostObjectProxyHandler = {};
-
-  stopDebuggingIfNeeded();
 
   m_context = {};
   SetCurrentContext(m_prevContext);
@@ -838,6 +849,8 @@ JsValueRef ChakraRuntime::GetHostObjectProxyHandler() {
   return m_hostObjectProxyHandler;
 }
 
+/*virtual*/ void ChakraRuntime::setupNativePromiseContinuation() noexcept {}
+
 void ChakraRuntime::setupMemoryTracker() noexcept {
   if (runtimeArgs().memoryTracker) {
     size_t initialMemoryUsage = 0;
@@ -996,7 +1009,15 @@ std::once_flag ChakraRuntime::s_runtimeVersionInitFlag;
 uint64_t ChakraRuntime::s_runtimeVersion = 0;
 
 std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(ChakraRuntimeArgs &&args) noexcept {
-  return std::make_unique<ChakraRuntime>(std::move(args));
+#ifdef CHAKRACORE
+  if (React::GetRuntimeOptionBool("ForceSystemChakra")) {
+    return MakeSystemChakraRuntime(std::move(args));
+  } else {
+    return MakeChakraCoreRuntime(std::move(args));
+  }
+#else
+  return MakeSystemChakraRuntime(std::move(args));
+#endif // CHAKRACORE
 }
 
 } // namespace Microsoft::JSI

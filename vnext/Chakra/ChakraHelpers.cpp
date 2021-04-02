@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <RuntimeOptions.h>
 #include "ChakraHelpers.h"
 #include "ChakraUtils.h"
 #include "ChakraValue.h"
@@ -62,13 +63,14 @@ class ChakraVersionInfo {
 
   bool initialize() noexcept {
 #if !defined(CHAKRACORE_UWP)
-    // This code is win32 only at the moment. We will need to change this
-    // line if we want to support UWP.
-    constexpr wchar_t chakraDllName[] = L"ChakraCore.dll";
-
     auto freeLibraryWrapper = [](void *p) { FreeLibrary((HMODULE)p); };
     HMODULE moduleHandle;
-    if (!GetModuleHandleExW(0, chakraDllName, &moduleHandle)) {
+    // This code is win32 only at the moment. We will need to change these
+    // lines if we want to support UWP.
+    if (!GetModuleHandleExW(
+            0,
+            Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra") ? L"Chakra.dll" : L"ChakraCore.dll",
+            &moduleHandle)) {
       return false;
     }
     std::unique_ptr<void, decltype(freeLibraryWrapper)> moduleHandleWrapper(
