@@ -142,12 +142,12 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
     return m_args;
   }
 
-   // Promise Helpers
+  // Promise Helpers
   static void CALLBACK PromiseContinuationCallback(JsValueRef funcRef, void *callbackState) noexcept;
   static void CALLBACK
   PromiseRejectionTrackerCallback(JsValueRef promise, JsValueRef reason, bool handled, void *callbackState);
 
-    // Note: For simplicity, We are pinning the script and serialized script
+  // Note: For simplicity, We are pinning the script and serialized script
   // buffers in the facebook::jsi::Runtime instance assuming as these buffers
   // are needed to stay alive for the lifetime of the facebook::jsi::Runtime
   // implementation. This approach doesn't make sense for other external buffers
@@ -159,11 +159,11 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   constexpr static char DebuggerDefaultRuntimeName[] = "runtime1";
   constexpr static int DebuggerDefaultPort = 9229;
 
-    // These buffers are kept to serve the source callbacks when evaluating
+  // These buffers are kept to serve the source callbacks when evaluating
   // serialized scripts.
   std::vector<std::shared_ptr<const facebook::jsi::Buffer>> m_pinnedScripts;
 
-    // These three functions only performs shallow copies.
+  // These three functions only performs shallow copies.
   facebook::jsi::Value ToJsiValue(JsValueRef ref);
   JsValueRef ToJsValueRef(const facebook::jsi::Value &value);
 
@@ -348,7 +348,9 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   virtual std::unique_ptr<const facebook::jsi::Buffer> generatePreparedScript(
       const std::string &sourceURL,
       const facebook::jsi::Buffer &sourceBuffer) noexcept = 0;
-  virtual facebook::jsi::Value evaluateJavaScriptSimple(const facebook::jsi::Buffer &buffer, const std::string &sourceURL) = 0;
+  virtual facebook::jsi::Value evaluateJavaScriptSimple(
+      const facebook::jsi::Buffer &buffer,
+      const std::string &sourceURL) = 0;
   virtual bool evaluateSerializedScript(
       const facebook::jsi::Buffer &scriptBuffer,
       const facebook::jsi::Buffer &serializedScriptBuffer,
