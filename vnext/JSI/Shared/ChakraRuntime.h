@@ -152,6 +152,12 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   static void CALLBACK
   PromiseRejectionTrackerCallback(JsValueRef promise, JsValueRef reason, bool handled, void *callbackState);
 
+  // Note: For simplicity, We are pinning the script and serialized script
+  // buffers in the facebook::jsi::Runtime instance assuming as these buffers
+  // are needed to stay alive for the lifetime of the facebook::jsi::Runtime
+  // implementation. This approach doesn't make sense for other external buffers
+  // which may get created during the execution as that will stop the backing
+  // buffer from getting released when the JSValue gets collected.
   JsRuntimeHandle m_runtime;
   std::string m_debugRuntimeName;
   int m_debugPort{0};
@@ -325,13 +331,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   ChakraRuntimeArgs m_args;
 
   ChakraObjectRef m_context;
-
-  // Note: For simplicity, We are pinning the script and serialized script
-  // buffers in the facebook::jsi::Runtime instance assuming as these buffers
-  // are needed to stay alive for the lifetime of the facebook::jsi::Runtime
-  // implementation. This approach doesn't make sense for other external buffers
-  // which may get created during the execution as that will stop the backing
-  // buffer from getting released when the JSValue gets collected.
 
   // These buffers back the external array buffers that we handover to
   // ChakraCore.

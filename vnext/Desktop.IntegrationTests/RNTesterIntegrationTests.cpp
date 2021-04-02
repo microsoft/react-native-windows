@@ -22,7 +22,9 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 
 TEST_MODULE_INITIALIZE(InitModule) {
   Microsoft::React::SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
-  Microsoft::React::SetRuntimeOptionBool("ForceSystemChakra", true);
+
+  // Set to true when testing the Chakra.dll JSI runtime.
+  Microsoft::React::SetRuntimeOptionBool("ForceSystemChakra", false);
 }
 
 // None of these tests are runnable
