@@ -142,7 +142,7 @@ class ChakraRuntime : public facebook::jsi::Runtime {
 
   void VerifyJsErrorElseThrow(JsErrorCode error);
 
-  // These three functions only performs shallow copies.
+  // These three functions only perform shallow copies.
   facebook::jsi::Value ToJsiValue(ChakraObjectRef &&ref);
   ChakraObjectRef ToChakraObjectRef(const facebook::jsi::Value &value);
   std::vector<ChakraObjectRef> ToChakraObjectRefs(const facebook::jsi::Value *value, size_t count);

@@ -66,7 +66,7 @@ class ChakraVersionInfo {
     auto freeLibraryWrapper = [](void *p) { FreeLibrary((HMODULE)p); };
     HMODULE moduleHandle;
     // This code is win32 only at the moment. We will need to change these
-    // linel if we want to support UWP.
+    // lines if we want to support UWP.
     if (!GetModuleHandleExW(
             0,
             Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra") ? L"Chakra.dll" : L"ChakraCore.dll",

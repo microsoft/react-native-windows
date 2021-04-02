@@ -101,5 +101,3 @@ std::unique_ptr<facebook::jsi::Runtime> MakeSystemChakraRuntime(ChakraRuntimeArg
 }
 
 } // namespace Microsoft::JSI
-
-//#endif
