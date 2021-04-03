@@ -2,6 +2,21 @@
   "name": "sample-apps",
   "entries": [
     {
+      "date": "Fri, 02 Apr 2021 05:07:19 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.285",
+            "author": "igklemen@microsoft.com",
+            "commit": "6dd202bf9380b9bba589adbbaded33904f994ea3",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 01 Apr 2021 05:07:27 GMT",
       "tag": "sample-apps_v0.0.0",
       "version": "0.0.0",
