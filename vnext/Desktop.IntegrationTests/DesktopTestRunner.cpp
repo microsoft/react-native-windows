@@ -7,6 +7,7 @@
 #include <IUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/WebSocketModule.h>
+#include <RuntimeOptions.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <cxxreact/Instance.h>
 #include "ChakraRuntimeHolder.h"
@@ -41,7 +42,9 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   auto nativeQueue = react::uwp::MakeJSQueueThread();
   auto jsQueue = react::uwp::MakeJSQueueThread();
 
-  devSettings->jsiRuntimeHolder = std::make_shared<ChakraRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
+  if (!GetRuntimeOptionBool("ForceSystemChakra")) {
+    devSettings->jsiRuntimeHolder = std::make_shared<ChakraRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
+  }
 
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
       std::make_tuple(

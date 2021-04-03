@@ -112,6 +112,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)RuntimeOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

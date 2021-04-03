@@ -40,6 +40,7 @@
 #include <DevSettings.h>
 #include <DevSupportManager.h>
 #include <IReactRootView.h>
+#include <RuntimeOptions.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 #include "PackagerConnection.h"
@@ -338,6 +339,11 @@ InstanceImpl::InstanceImpl(
     if (m_devSettings->useFastRefresh || m_devSettings->liveReloadCallback) {
       Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*m_devSettings);
     }
+
+if (Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
+      m_devSettings->jsiEngineOverride = JSIEngineOverride::Chakra;
+    }
+
 
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
