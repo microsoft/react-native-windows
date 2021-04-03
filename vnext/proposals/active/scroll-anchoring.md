@@ -44,7 +44,7 @@ Another feature of inverted VirtualizedList is that view port will not jump when
 
 In XAML, we can achieve this using the [`CanBeScrollAnchor`](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.uielement.canbescrollanchor?view=winrt-19041) property on the list items. Under the hood, the XAML ScrollViewer implements `IScrollAnchorProvider`, and if a layout operation will result in a selected scroll anchor changing position, the view port will be synchronously scrolled to keep the scroll anchor in place. The `CanBeScrollAnchor` property simply tells the ScrollViewer which of its descendants are eligible to be scroll anchors.
 
-This view anchoring behavior is actually the default behavior on many Web browsers, and [some Web browsers](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor#browser_compatibility) even expose a CSS property to opt-out of scroll anchoring. Since what we are trying to achieve here has effectively the same semantics as scroll anchoring on Web browsers, we could call the prop to enable scroll anchoring `overflowAnchor` and add it to `View`. Since this is not a platform default behavior, and there is likely some performance penalty to opting in to scroll anchoring, we should add an `enableAnchoring` prop to `ScrollView` to turn on scroll anchoring.
+This view anchoring behavior is actually the default behavior on many Web browsers, and [some Web browsers](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor#browser_compatibility) even expose a CSS property to opt-out of scroll anchoring. Since what we are trying to achieve here has effectively the same semantics as scroll anchoring on Web browsers, we could call the prop to enable scroll anchoring `overflowAnchor` and add it to `View`. Since this is not a platform default behavior, and there is likely some performance penalty to opting in to scroll anchoring, we should add an `overflowAnchorMode` prop to `ScrollView` to switch between `explicit` (opt-in), `implicit` (opt-out), and 
 
 You might ask, why might you even need to specify which values to opt-out of scroll anchoring? Could we not just turn on anchoring for all top-level items in the ScrollContentView and call it a day? We cannot because of VirtualizedList and sticky headers. Consider what might happen if the ScrollView chooses the VirtualizedList spacer as the anchor candidate. As content is rendered in the view port and the spacer shrinks, the view port will scroll to keep the spacer anchored, which is not expected behavior. Similarly for sticky headers, as the sticky header shifts to remain at the top of the view port, if the ScrollView selected the sticky header as the anchor, it may not appear to anchor at all as the sticky header has it's own mechanism to remain anchored to the top of the view port. Note, there is also some precedent for opting out specific views in anchoring on iOS with the `maintainVisibleContentPosition` prop. If you exclude the auto-scroll to top functionality that this iOS prop provides, you could potentially emulate, e.g., `maintainVisibleContentPosition={{minIndexForVisible: 1}}` using `enableAnchoring={true}` and setting `overflowAnchor={'none'}` on the first item in the list (or the first N items where N is the value for `minIndexForVisible`).
 
@@ -58,27 +58,18 @@ To get around this, we should add a new behavior option to the `ScrollView.scrol
 
 ## React Native API Proposal
 
+### Prop Type Changes
+
 ```ts
 // Proposed prop additions
 
 type ScrollViewAnchorProps = {
     anchorEdge?: 'start' | 'end' | 'none',
-    enableAnchoring?: boolean,
+    overflowAnchorMode?: 'explicit' | 'implicit' | 'none',
 }
 
 type ViewAnchorProps = {
     overflowAnchor?: 'auto' | 'none',
-}
-
-// Default prop values
-
-const defaultScrollViewAnchorProps: ScrollViewAnchorProps = {
-    anchorEdge: 'start',
-    enableAnchoring: false,
-}
-
-const defaultViewAnchorProps: ViewAnchorProps = {
-    overflowAnchor: 'auto',
 }
 
 // Proposed ScrollView scrollToEnd change
@@ -94,6 +85,22 @@ ref.scrollToEnd({
     layoutDependent: false,
 });
 ```
+
+### Behavior Table
+
+| **PROP** | **VALUE** | **DESCRIPTION** |
+| --- | --- | --- |
+| overflowAnchorMode | 'explicit' | Only descendants of ScrollViews with `overflowAnchor === 'auto'` are anchor candidates. |
+| overflowAnchorMode | 'implicit' | All descendents of the ScrollView are anchor candidates unless they have set `overflowAnchor === 'none'`. |
+| overflowAnchorMode | 'none' | View anchoring is not enabled. |
+| overflowAnchorMode | null or undefined | Equivalent to 'none'. |
+| overflowAnchor | 'auto' | View is an eligible anchor candidate when anchoring is enabled. |
+| overflowAnchor | 'none' | View is not an anchor candidate when anchoring is enabled. |
+| overflowAnchor | null or undefined | View is an anchor candidate if the first ScrollView ancestor has `overflowAnchorMode === 'implicit'`, otherwise view is not an anchor candidate. |
+| anchorEdge | 'start' | ScrollView anchors to the flex start edge on the primary scrolling axis (i.e., left for horizontal ScrollView in LTR, right for horizontal in RTL, and top for vertical). |
+| anchorEdge | 'end' | ScrollView anchors to the flex end edge on the primary scrolling axis (i.e., right for horizontal ScrollView in LTR, left for horizontal in RTL, and bottom for vertical). |
+| anchorEdge | 'none' | ScrollView does not anchor to an edge. This is likely only relevant if you want a descendent view to be an anchor point while scrolled to the default anchor edge. |
+| anchorEdge | null or undefined | Equivalent to 'start'. |
 
 ## What's next?
 
