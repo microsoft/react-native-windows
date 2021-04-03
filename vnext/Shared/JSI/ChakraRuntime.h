@@ -336,8 +336,6 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   virtual void startDebuggingIfNeeded() = 0;
   virtual void stopDebuggingIfNeeded() = 0;
 
-  static void CALLBACK ProcessDebuggerCommandQueueCallback(void *callbackState);
-
   // Version related helpers
   static void initRuntimeVersion() noexcept;
   static uint64_t getRuntimeVersion() {

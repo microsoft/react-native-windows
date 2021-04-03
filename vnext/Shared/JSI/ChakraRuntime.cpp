@@ -49,6 +49,12 @@ struct HostFunctionWrapper final {
 
 } // namespace
 
+// ES6 Promise callback
+void CALLBACK ChakraRuntime::PromiseContinuationCallback(JsValueRef funcRef, void *callbackState) noexcept {
+  ChakraRuntime *runtime = static_cast<ChakraRuntime *>(callbackState);
+  runtime->PromiseContinuation(funcRef);
+}
+
 ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::move(args)} {}
 
 void ChakraRuntime::Init() noexcept {
@@ -112,6 +118,18 @@ void ChakraRuntime::Init() noexcept {
   m_prevContext = {};
 
   DisposeRuntime(m_runtime);
+}
+
+void ChakraRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
+  if (runtimeArgs().jsQueue) {
+    JsAddRef(funcRef, nullptr);
+    runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
+      JsValueRef undefinedValue;
+      JsGetUndefinedValue(&undefinedValue);
+      ChakraVerifyJsErrorElseThrow(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
+      JsRelease(funcRef, nullptr);
+    });
+  }
 }
 
 JsValueRef ChakraRuntime::CreatePropertyDescriptor(JsValueRef value, PropertyAttibutes attrs) {

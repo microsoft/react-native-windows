@@ -48,12 +48,6 @@ ChakraCoreRuntime::~ChakraCoreRuntime() noexcept {
 // TODO: We temporarily removed weak reference semantics from
 // ChakraCore based jsi::Runtime.
 
-// ES6 Promise callback
-void CALLBACK ChakraRuntime::PromiseContinuationCallback(JsValueRef funcRef, void *callbackState) noexcept {
-  ChakraRuntime *runtime = static_cast<ChakraRuntime *>(callbackState);
-  runtime->PromiseContinuation(funcRef);
-}
-
 void CALLBACK ChakraRuntime::PromiseRejectionTrackerCallback(
     JsValueRef promise,
     JsValueRef reason,
@@ -61,18 +55,6 @@ void CALLBACK ChakraRuntime::PromiseRejectionTrackerCallback(
     void *callbackState) {
   ChakraRuntime *runtime = static_cast<ChakraRuntime *>(callbackState);
   runtime->PromiseRejectionTracker(promise, reason, handled);
-}
-
-void ChakraRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
-  if (runtimeArgs().jsQueue) {
-    JsAddRef(funcRef, nullptr);
-    runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
-      JsValueRef undefinedValue;
-      JsGetUndefinedValue(&undefinedValue);
-      ChakraVerifyJsErrorElseThrow(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
-      JsRelease(funcRef, nullptr);
-    });
-  }
 }
 
 void ChakraRuntime::PromiseRejectionTracker(JsValueRef /*promise*/, JsValueRef reason, bool handled) {

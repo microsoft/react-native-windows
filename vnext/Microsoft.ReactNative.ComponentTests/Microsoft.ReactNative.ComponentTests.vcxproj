@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Shared\JSI\ChakraApi.cpp" />
+    <ClCompile Include="..\Shared\JSI\ChakraJsiRuntime_edgemode.cpp" />
     <ClCompile Include="..\Shared\JSI\ChakraRuntime.cpp" />
     <ClCompile Include="ChakraEdgeRuntimeTests.cpp" />
     <ClCompile Include="DynamicReaderTest.cpp" />

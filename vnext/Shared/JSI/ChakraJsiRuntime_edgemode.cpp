@@ -36,12 +36,6 @@ void SystemChakraRuntime::stopDebuggingIfNeeded() {
   // NOP AFAIK
 }
 
-#if defined(USE_EDGEMODE_JSRT) && !defined(CHAKRACORE)
-void ChakraRuntime::initRuntimeVersion() noexcept {
-  // NOP
-}
-#endif
-
 std::unique_ptr<const facebook::jsi::Buffer> SystemChakraRuntime::generatePreparedScript(
     const std::string & /*sourceURL*/,
     const facebook::jsi::Buffer &sourceBuffer) noexcept {
