@@ -324,15 +324,29 @@ void ViewManagerBase::SetLayoutProps(
   }
   auto fe = element.as<xaml::FrameworkElement>();
 
-  const bool layoutHasChanged = left != react::uwp::ViewPanel::GetLeft(element) ||
-      top != react::uwp::ViewPanel::GetTop(element) || width != fe.Width() || height != fe.Height();
+  bool layoutHasChanged =
+      left != react::uwp::ViewPanel::GetLeft(element) || top != react::uwp::ViewPanel::GetTop(element);
 
   // Set Position & Size Properties
   react::uwp::ViewPanel::SetLeft(element, left);
   react::uwp::ViewPanel::SetTop(element, top);
 
-  fe.Width(width);
-  fe.Height(height);
+  const auto origWidth = fe.Width();
+  const auto origHeight = fe.Height();
+
+  if (!std::isnan(origWidth) && std::isnan(width)) {
+    // respect the existing value
+  } else {
+    fe.Width(width);
+    layoutHasChanged = true;
+  }
+
+  if (!std::isnan(origHeight) && std::isnan(height)) {
+    // respect the existing value
+  } else {
+    fe.Height(height);
+    layoutHasChanged = true;
+  }
 
   // Fire Events
   if (layoutHasChanged && nodeToUpdate.m_onLayoutRegistered) {
