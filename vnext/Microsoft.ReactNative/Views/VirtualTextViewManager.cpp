@@ -5,8 +5,12 @@
 
 #include "VirtualTextViewManager.h"
 
+#include <Views/RawTextViewManager.h>
+
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
+#include <Modules/NativeUIManager.h>
+#include <Modules/PaperUIManagerModule.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 
@@ -20,28 +24,48 @@ using namespace xaml::Documents;
 namespace Microsoft::ReactNative {
 
 void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
-  auto view = static_cast<ShadowNodeBase &>(child).GetView();
-
-  if (auto run = view.try_as<xaml::Documents::Run>()) {
-    transformableText.originalText = run.Text().c_str();
-    run.Text(transformableText.TransformText());
-  } else if (auto span = view.try_as<xaml::Documents::Span>()) {
+  auto &childNode = static_cast<ShadowNodeBase &>(child);
+  ApplyTextTransformToNode(childNode, textTransform);
+  if (auto span = childNode.GetView().try_as<xaml::Documents::Span>()) {
     auto &childVTSN = static_cast<VirtualTextShadowNode &>(child);
-    auto transform = childVTSN.transformableText.textTransform;
-
-    for (const auto &i : span.Inlines()) {
-      if (auto run = i.try_as<xaml::Documents::Run>()) {
-        if (transform == TransformableText::TextTransform::Undefined) {
-          // project the parent transform onto the child
-          childVTSN.transformableText.textTransform = transformableText.textTransform;
-          run.Text(childVTSN.transformableText.TransformText());
-        }
-      }
-    }
-
     m_highlightData.data.emplace_back(childVTSN.m_highlightData);
   }
   Super::AddView(child, index);
+}
+
+void VirtualTextShadowNode::ApplyTextTransform(TransformableText::TextTransform transform, bool fromParent) {
+  if (transform != TransformableText::TextTransform::Undefined) {
+    if (!fromParent || textTransform == TransformableText::TextTransform::Undefined) {
+      if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+        for (auto childTag : m_children) {
+          const auto childNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(childTag));
+          ApplyTextTransformToNode(*childNode, transform);
+        }
+      }
+    }
+  }
+}
+
+void VirtualTextShadowNode::ApplyTextTransformToNode(
+    ShadowNodeBase &node,
+    TransformableText::TextTransform transform) {
+  const auto view = node.GetView();
+  const auto span = view.try_as<winrt::Span>();
+  const auto run = view.try_as<winrt::Run>();
+  if (span) {
+    auto &virtualTextChildNode = static_cast<VirtualTextShadowNode &>(node);
+    virtualTextChildNode.ApplyTextTransform(transform, true);
+  } else if (run) {
+    auto &rawTextChildNode = static_cast<RawTextShadowNode &>(node);
+    auto originalText = rawTextChildNode.originalText;
+    if (originalText.size() != run.Text().size()) {
+      // Lazily setting original text to avoid keeping two copies of all raw text strings
+      originalText = run.Text();
+      rawTextChildNode.originalText = originalText;
+    }
+
+    run.Text(TransformableText::TransformText(originalText, transform));
+  }
 }
 
 VirtualTextViewManager::VirtualTextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -70,7 +94,8 @@ bool VirtualTextViewManager::UpdateProperty(
   } else if (TryUpdateTextDecorationLine<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (propertyName == "textTransform") {
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
-    node->transformableText.textTransform = TransformableText::GetTextTransform(propertyValue);
+    node->textTransform = TransformableText::GetTextTransform(propertyValue);
+    node->ApplyTextTransform(node->textTransform, false);
   } else if (propertyName == "backgroundColor") {
     if (react::uwp::IsValidColorValue(propertyValue)) {
       static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.color = react::uwp::ColorFrom(propertyValue);

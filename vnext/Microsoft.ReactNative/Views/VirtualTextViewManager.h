@@ -13,10 +13,14 @@ namespace Microsoft::ReactNative {
 
 struct VirtualTextShadowNode final : public ShadowNodeBase {
   using Super = ShadowNodeBase;
-  TransformableText transformableText{};
+  TransformableText::TextTransform textTransform{TransformableText::TextTransform::Undefined};
 
   void AddView(ShadowNode &child, int64_t index) override;
 
+  void ApplyTextTransform(TransformableText::TextTransform transform, bool fromParent);
+
+  static void ApplyTextTransformToNode(ShadowNodeBase &node, TransformableText::TextTransform transform);
+  
   struct HighlightData {
     std::vector<HighlightData> data;
     size_t spanIdx = 0;

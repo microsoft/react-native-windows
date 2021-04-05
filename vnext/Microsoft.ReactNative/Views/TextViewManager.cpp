@@ -5,6 +5,7 @@
 
 #include "TextViewManager.h"
 
+#include <Views/RawTextViewManager.h>
 #include <Views/ShadowNodeBase.h>
 #include <Views/VirtualTextViewManager.h>
 
@@ -12,6 +13,8 @@
 #include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
+#include <Modules/NativeUIManager.h>
+#include <Modules/PaperUIManagerModule.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/TransformableText.h>
 #include <Utils/ValueUtils.h>
@@ -43,18 +46,17 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   void AddView(ShadowNode &child, int64_t index) override {
+    auto &childNode = static_cast<ShadowNodeBase &>(child);
+    VirtualTextShadowNode::ApplyTextTransformToNode(childNode, textTransform);
+
+    auto run = childNode.GetView().try_as<winrt::Run>();
     if (index == 0) {
-      auto run = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Run>();
       if (run != nullptr) {
         m_firstChildNode = &child;
         auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
-        std::wstring text(run.Text().c_str());
-        transformableText.originalText = text;
-        text = transformableText.TransformText();
-        textBlock.Text(winrt::hstring(text));
-
+        textBlock.Text(run.Text());
         if (m_ColorValue) {
-          AddHighlighter(m_ColorValue.value(), text.size());
+          AddHighlighter(m_ColorValue.value(), textBlock.Text().size());
         }
 
         m_prevCursorEnd += textBlock.Text().size();
@@ -112,6 +114,19 @@ class TextShadowNode final : public ShadowNodeBase {
     this->GetView().as<xaml::Controls::TextBlock>().TextHighlighters().Append(newHigh);
   }
 
+  void UpdateTextTransform(TransformableText::TextTransform transform) {
+    const auto previousTransform = textTransform;
+    textTransform = transform;
+    if (previousTransform != transform) {
+      if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+        for (auto childTag : m_children) {
+          const auto childNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(childTag));
+          VirtualTextShadowNode::ApplyTextTransformToNode(*childNode, transform);
+        }
+      }
+    }
+  }
+
   void removeAllChildren() override {
     m_firstChildNode = nullptr;
     Super::removeAllChildren();
@@ -124,7 +139,7 @@ class TextShadowNode final : public ShadowNodeBase {
     Super::RemoveChildAt(indexToRemove);
   }
 
-  TransformableText transformableText{};
+  TransformableText::TextTransform textTransform{TransformableText::TextTransform::Undefined};
 };
 
 TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -156,7 +171,7 @@ bool TextViewManager::UpdateProperty(
   } else if (propertyName == "textTransform") {
     auto textNode = static_cast<TextShadowNode *>(nodeToUpdate);
     auto textTransform = TransformableText::GetTextTransform(propertyValue);
-    textNode->transformableText.textTransform = textTransform;
+    textNode->UpdateTextTransform(textTransform);
   } else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {

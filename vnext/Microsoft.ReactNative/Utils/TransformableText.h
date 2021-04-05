@@ -7,13 +7,13 @@ namespace Microsoft::ReactNative {
 struct TransformableText final {
   enum class TextTransform : uint8_t { Undefined, None, Uppercase, Lowercase, Capitalize };
 
-  TextTransform textTransform{TextTransform::Undefined};
-  std::wstring originalText{};
-
-  std::wstring TransformText() const noexcept {
+  static winrt::hstring TransformText(
+      winrt::hstring originalText,
+      TextTransform textTransform) noexcept {
     if (textTransform == TextTransform::Undefined || textTransform == TextTransform::None) {
       return originalText;
     }
+
     DWORD dwMapFlags{};
     switch (textTransform) {
       case TextTransform::Uppercase:
@@ -34,7 +34,7 @@ struct TransformableText final {
         LOCALE_NAME_USER_DEFAULT,
         dwMapFlags,
         originalText.c_str(),
-        static_cast<int>(originalText.length()),
+        static_cast<int>(originalText.size()),
         nullptr,
         0);
 
@@ -44,12 +44,13 @@ struct TransformableText final {
         LOCALE_NAME_USER_DEFAULT,
         dwMapFlags,
         originalText.c_str(),
-        static_cast<int>(originalText.length()),
+        static_cast<int>(originalText.size()),
         str.data(),
         reqChars);
     str.resize(nChars);
     assert(nChars == reqChars);
-    return str;
+    winrt::hstring result{str.c_str()};
+    return result;
   }
 
   static TextTransform GetTextTransform(const winrt::Microsoft::ReactNative::JSValue &propertyValue) noexcept {
