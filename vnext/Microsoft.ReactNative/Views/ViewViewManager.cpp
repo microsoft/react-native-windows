@@ -164,7 +164,7 @@ class ViewShadowNode : public ShadowNodeBase {
         control.Content(nullptr);
       } else {
         std::string name = Microsoft::Common::Unicode::Utf16ToUtf8(winrt::get_class_name(current).c_str());
-        cdebug << "Tearing down, IsControl=true but the control is not a ContentControl, it's a " << name << std::endl;
+        cdebug << "Tearing down, IsControl=true but the control is not a ContentControl, it's a " << name << "\n";
       }
     }
 

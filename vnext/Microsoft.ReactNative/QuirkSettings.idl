@@ -3,27 +3,30 @@
 
 import "ReactInstanceSettings.idl";
 
-namespace Microsoft.ReactNative {
+#include "DocString.h"
 
-  // This can be used to add settings that allow react-native-windows behavior to be maintained across version updates
-  // to facilitate upgrades.  Settings in here are likely to be removed in future releases, so apps should try to update
-  // their code to not rely on settings from here.
+namespace Microsoft.ReactNative
+{
   [webhosthidden]
   [default_interface]
-  runtimeclass QuirkSettings {
-    QuirkSettings();
-
-    // Older versions of react-native-windows did not use yoga's legacy stretch behavior.  This meant that 
-    // react-native-windows would layout views slightly differently that in iOS and Android.
-    // Set this setting to false to maintain the behavior from react-native-windows <= 0.62
-    // The default value is true.
+  DOC_STRING(
+    "This can be used to add settings that allow react-native-windows behavior to be maintained across version updates "
+    "to facilitate upgrades. Settings in this class are likely to be removed in future releases, so apps should try "
+    "to update their code to not rely on these settings.")
+  static runtimeclass QuirkSettings
+  {
+    DOC_STRING(
+      "Older versions of react-native-windows did not use [Yoga](https://github.com/facebook/yoga)'s legacy "
+      "stretch behavior. This meant that react-native-windows would layout views "
+      "slightly differently that in iOS and Android.\n"
+      "Set this setting to false to maintain the behavior from react-native-windows <= 0.62.")
+    DOC_DEFAULT("true")
     static void SetMatchAndroidAndIOSStretchBehavior(ReactInstanceSettings settings, Boolean value);
 
-    // Transitional setting allowing to use the to be retired LegacyWebSocketModule.
+    DOC_STRING("Transitional setting allowing to use the deprecated `LegacyWebSocketModule`.")
     static void SetUseLegacyWebSocketModule(ReactInstanceSettings settings, Boolean value);
 
-    // Runtime setting allowing Networking (HTTP, WebSocket) connections to skip certificate validation.
+    DOC_STRING("Runtime setting allowing Networking (HTTP, WebSocket) connections to skip certificate validation.")
     static void SetAcceptSelfSigned(ReactInstanceSettings settings, Boolean value);
   }
-
 } // namespace Microsoft.ReactNative

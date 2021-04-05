@@ -1,8 +1,112 @@
 # Change Log - @react-native-windows/tester
 
-This log was last generated on Fri, 12 Mar 2021 05:07:46 GMT and should not be manually modified.
+This log was last generated on Fri, 02 Apr 2021 05:07:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Fri, 02 Apr 2021 05:07:19 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.285 (igklemen@microsoft.com)
+
+## 0.0.1
+
+Thu, 01 Apr 2021 05:07:27 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.284 (asklar@microsoft.com)
+
+## 0.0.1
+
+Sun, 28 Mar 2021 05:06:13 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.283 (asklar@microsoft.com)
+
+## 0.0.1
+
+Fri, 26 Mar 2021 21:27:59 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.282 (asklar@microsoft.com)
+
+## 0.0.1
+
+Fri, 26 Mar 2021 05:06:37 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.281 (asklar@microsoft.com)
+
+## 0.0.1
+
+Thu, 25 Mar 2021 05:06:57 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.280 (jthysell@microsoft.com)
+
+## 0.0.1
+
+Tue, 23 Mar 2021 05:06:08 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.279 (asklar@microsoft.com)
+
+## 0.0.1
+
+Fri, 19 Mar 2021 05:12:09 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.278 (asklar@microsoft.com)
+
+## 0.0.1
+
+Thu, 18 Mar 2021 05:08:24 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.277 (vmorozov@microsoft.com)
+
+## 0.0.1
+
+Wed, 17 Mar 2021 05:18:22 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.276 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.1
+
+Tue, 16 Mar 2021 05:07:08 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.275 (asklar@microsoft.com)
+
+## 0.0.1
+
+Sun, 14 Mar 2021 05:06:38 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.274 (asklar@microsoft.com)
+
+## 0.0.1
+
+Sat, 13 Mar 2021 05:08:04 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.273 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.1
 

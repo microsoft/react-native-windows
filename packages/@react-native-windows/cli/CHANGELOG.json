@@ -2,6 +2,63 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 25 Mar 2021 05:06:57 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.67",
+      "version": "0.0.0-canary.67",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix app template to use app.json's name for main component name",
+            "author": "jthysell@microsoft.com",
+            "commit": "0ee306b5f13ed42d2cfb4dc54a8bffab374ef03b",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Fix deploy of x64 when x86 has already been built",
+            "author": "asklar@microsoft.com",
+            "commit": "76ffc25b7b98d555729e53151aa47d7cf9f28aeb",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 23 Mar 2021 05:06:08 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.66",
+      "version": "0.0.0-canary.66",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Autolinking of non-direct dependencies doesn't add the project to the solution",
+            "author": "asklar@microsoft.com",
+            "commit": "97fdff576d9f0d77f60be487220acf3bbc4405f4",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 14 Mar 2021 05:06:38 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.65",
+      "version": "0.0.0-canary.65",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "update to newer cppwinrt, 2-3% reduction in binary size",
+            "author": "asklar@microsoft.com",
+            "commit": "286adbe692092f5268fecf0ec7dc8f4467a9eed0",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Bump xmldom from 0.3.0 to 0.5.0",
+            "author": "asklar@microsoft.com",
+            "commit": "ce0a2f118a3860befbeebfa61dcb8025e650f14a",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Mar 2021 05:07:46 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.64",
       "version": "0.0.0-canary.64",

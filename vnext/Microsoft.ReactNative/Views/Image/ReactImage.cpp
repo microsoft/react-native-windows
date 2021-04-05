@@ -178,8 +178,7 @@ std::wstring GetUriFromImage(const winrt::Uri &uri) {
 
 template <typename TImage>
 void ImageFailed(const TImage &image, const xaml::ExceptionRoutedEventArgs &args) {
-  cwdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << args.ErrorMessage().c_str() << L")"
-          << std::endl;
+  cdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << args.ErrorMessage().c_str() << L")\n";
 }
 
 // TSourceFailedEventArgs can be either LoadedImageSourceLoadCompletedEventArgs or
@@ -192,7 +191,7 @@ void ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
   constexpr std::wstring_view statusNames[] = {L"Success", L"NetworkError", L"InvalidFormat", L"Other"};
   const auto status = (int)args.Status();
   assert(0 <= status && status < ARRAYSIZE(statusNames));
-  cwdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << statusNames[status] << L")" << std::endl;
+  cdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << statusNames[status] << L")\n";
 }
 
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {

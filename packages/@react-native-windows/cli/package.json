@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.64",
+  "version": "0.0.0-canary.67",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -22,6 +22,7 @@
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
     "envinfo": "^7.5.0",
+    "find-up": "^4.1.0",
     "glob": "^7.1.1",
     "inquirer": "^3.0.6",
     "mustache": "^4.0.1",
@@ -32,7 +33,7 @@
     "uuid": "^3.3.2",
     "xml-formatter": "^2.4.0",
     "xml-parser": "^1.2.1",
-    "xmldom": "^0.3.0",
+    "xmldom": "^0.5.0",
     "xpath": "^0.0.27"
   },
   "devDependencies": {

@@ -1,8 +1,34 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 12 Mar 2021 05:07:46 GMT and should not be manually modified.
+This log was last generated on Thu, 25 Mar 2021 05:06:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.67
+
+Thu, 25 Mar 2021 05:06:57 GMT
+
+### Changes
+
+- Fix app template to use app.json's name for main component name (jthysell@microsoft.com)
+- Fix deploy of x64 when x86 has already been built (asklar@microsoft.com)
+
+## 0.0.0-canary.66
+
+Tue, 23 Mar 2021 05:06:08 GMT
+
+### Changes
+
+- Autolinking of non-direct dependencies doesn't add the project to the solution (asklar@microsoft.com)
+
+## 0.0.0-canary.65
+
+Sun, 14 Mar 2021 05:06:38 GMT
+
+### Changes
+
+- update to newer cppwinrt, 2-3% reduction in binary size (asklar@microsoft.com)
+- Bump xmldom from 0.3.0 to 0.5.0 (asklar@microsoft.com)
 
 ## 0.0.0-canary.64
 

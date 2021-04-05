@@ -50,6 +50,8 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <ItemGroup>
+    <ClCompile Include="$(FollyDir)\folly\lang\SafeAssert.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\lang\ToAscii.cpp" />
     <ClCompile Include="$(FollyDir)\folly\lang\Assume.cpp" />
     <ClCompile Include="$(FollyDir)\folly\json_pointer.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Format.cpp" />
@@ -275,7 +277,11 @@
   </Target>
   <Target Name="DownloadFolly" BeforeTargets="PrepareForBuild">
     <Message Importance="High" Text="Downloading folly..." Condition="!Exists('$(FollyDir)..\.follyzip\folly-$(FollyVersion).zip')" />
-    <DownloadFile Condition="!Exists('$(FollyDir)..\.follyzip\folly-$(FollyVersion).zip')" SourceUrl="https://github.com/facebook/folly/archive/v$(FollyVersion).zip" DestinationFileName="folly-$(FollyVersion).zip" DestinationFolder="$(FollyDir)..\.follyzip" />
+    <DownloadFile Condition="!Exists('$(FollyDir)..\.follyzip\folly-$(FollyVersion).zip')" 
+      SourceUrl="https://github.com/facebook/folly/archive/v$(FollyVersion).zip" 
+      DestinationFileName="folly-$(FollyVersion).zip" 
+      DestinationFolder="$(FollyDir)..\.follyzip" 
+      Retries="10"/>
   </Target>
   <Target Name="UnzipFolly" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFolly">
     <Message Importance="High" Text="Unzipping folly to $([MSBuild]::NormalizePath($(FollyDir)..))." Condition="!Exists('$(FollyDir)folly\dynamic.h')" />

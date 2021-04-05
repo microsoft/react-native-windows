@@ -1,8 +1,117 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 12 Mar 2021 05:07:46 GMT and should not be manually modified.
+This log was last generated on Fri, 02 Apr 2021 05:07:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.285
+
+Fri, 02 Apr 2021 05:07:19 GMT
+
+### Changes
+
+- Add onKeyDown/onKeyUp to Pressable. (igklemen@microsoft.com)
+
+## 0.0.0-canary.284
+
+Thu, 01 Apr 2021 05:07:27 GMT
+
+### Changes
+
+- Update to new Folly version (asklar@microsoft.com)
+
+## 0.0.0-canary.283
+
+Sun, 28 Mar 2021 05:06:13 GMT
+
+### Changes
+
+- Implement JSI getOwnPropertyDescriptor (asklar@microsoft.com)
+
+## 0.0.0-canary.282
+
+Fri, 26 Mar 2021 21:27:59 GMT
+
+### Changes
+
+- Fix some doc typos, generate docs in CI (asklar@microsoft.com)
+
+## 0.0.0-canary.281
+
+Fri, 26 Mar 2021 05:06:37 GMT
+
+### Changes
+
+- Enable libraries to use NuGet too (avoid mdmerge MDM2009 error) (asklar@microsoft.com)
+- Suppress onLayout event when layout has not changed (erozell@outlook.com)
+
+## 0.0.0-canary.280
+
+Thu, 25 Mar 2021 05:06:57 GMT
+
+### Changes
+
+- Fix app template to use app.json's name for main component name (jthysell@microsoft.com)
+
+## 0.0.0-canary.279
+
+Tue, 23 Mar 2021 05:06:08 GMT
+
+### Changes
+
+- Fix c++20 issues (asklar@microsoft.com)
+
+## 0.0.0-canary.278
+
+Fri, 19 Mar 2021 05:12:09 GMT
+
+### Changes
+
+- Add retries to Folly download since it sometimes fails in CI (asklar@microsoft.com)
+- Make BaseWebSocketResource destructor noexcept (julio.rocha@microsoft.com)
+- Enable overriding WinUI and SDK versions via ExperimentalFeatures.props (asklar@microsoft.com)
+
+## 0.0.0-canary.277
+
+Thu, 18 Mar 2021 05:08:24 GMT
+
+### Changes
+
+- Add doc comments to IDL files (vmorozov@microsoft.com)
+
+## 0.0.0-canary.276
+
+Wed, 17 Mar 2021 05:18:22 GMT
+
+### Changes
+
+- Fix redbox on boot when using web debugging (30809111+acoates-ms@users.noreply.github.com)
+- Minor docs update for ReactDispatcherHelper (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.275
+
+Tue, 16 Mar 2021 05:07:08 GMT
+
+### Changes
+
+- AzDO image now installs uwp package 6.2.11, not 6.2.10; Update Codegen UnitTest (asklar@microsoft.com)
+
+## 0.0.0-canary.274
+
+Sun, 14 Mar 2021 05:06:38 GMT
+
+### Changes
+
+- update to newer cppwinrt, 2-3% reduction in binary size (asklar@microsoft.com)
+
+## 0.0.0-canary.273
+
+Sat, 13 Mar 2021 05:08:04 GMT
+
+### Changes
+
+- Add method support for Xaml Islands (34109996+chiaramooney@users.noreply.github.com)
+- Change TextInput cursor behavior (erozell@outlook.com)
 
 ## 0.0.0-canary.272
 

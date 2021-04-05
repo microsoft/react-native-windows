@@ -386,3 +386,45 @@ test('autolink with no windows project', () => {
     done();
   });
   
+  test('Indirect autolink dependency', () => {
+    const autolink = new AutolinkTest(
+      {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
+      {
+        superModule: {
+          name: 'superModule',
+          root: 'theRoot',
+          platforms: {
+            windows: {
+              sourceDir: __dirname,
+              projects: [
+                {
+                  directDependency: true,
+                  projectFile: 'superModule.vcxproj',
+                  cppHeaders: ['Garfield.h', 'Snoopy.h'],
+                  cppPackageProviders: ['FamousAnimalCartoons'],
+                },
+                {
+                  directDependency: false,
+                  projectFile: 'indirect.vcxproj',
+                }
+              ],
+            },
+          },
+          assets: [],
+          hooks: {},
+          params: [],
+        },
+      },
+      {
+        check: true,
+        logging: false,
+        proj: 'projects/WithIndirectDependency/windows/WithIndirectDependency/WithIndirectDependency.vcxproj',
+      },
+    );
+    const replacements = autolink.getCppReplacements();
+    expect(replacements.cppIncludes).toMatch(/#include <Garfield.h>/);
+    expect(replacements.cppIncludes).toMatch(/#include <Snoopy.h>/);
+    expect(replacements.cppPackageProviders).toContain(
+      'packageProviders.Append(winrt::FamousAnimalCartoons())',
+    );
+  });

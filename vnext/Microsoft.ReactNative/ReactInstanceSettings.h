@@ -55,7 +55,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 
   Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
 
-  //! This controls the availiablility of various developer support functionality including
+  //! This controls the availability of various developer support functionality including
   //! RedBox, and the Developer Menu
   bool UseDeveloperSupport() noexcept;
   void UseDeveloperSupport(bool value) noexcept;

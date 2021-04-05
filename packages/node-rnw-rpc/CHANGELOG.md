@@ -1,8 +1,112 @@
 # Change Log - node-rnw-rpc
 
-This log was last generated on Fri, 12 Mar 2021 05:07:46 GMT and should not be manually modified.
+This log was last generated on Fri, 02 Apr 2021 05:07:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.5-15
+
+Fri, 02 Apr 2021 05:07:19 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.285 (igklemen@microsoft.com)
+
+## 1.0.5-14
+
+Thu, 01 Apr 2021 05:07:27 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.284 (asklar@microsoft.com)
+
+## 1.0.5-13
+
+Sun, 28 Mar 2021 05:06:13 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.283 (asklar@microsoft.com)
+
+## 1.0.5-12
+
+Fri, 26 Mar 2021 21:27:59 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.282 (asklar@microsoft.com)
+
+## 1.0.5-11
+
+Fri, 26 Mar 2021 05:06:37 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.281 (asklar@microsoft.com)
+
+## 1.0.5-10
+
+Thu, 25 Mar 2021 05:06:57 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.280 (jthysell@microsoft.com)
+
+## 1.0.5-9
+
+Tue, 23 Mar 2021 05:06:08 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.279 (asklar@microsoft.com)
+
+## 1.0.5-8
+
+Fri, 19 Mar 2021 05:12:09 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.278 (asklar@microsoft.com)
+
+## 1.0.5-7
+
+Thu, 18 Mar 2021 05:08:24 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.277 (vmorozov@microsoft.com)
+
+## 1.0.5-6
+
+Wed, 17 Mar 2021 05:18:22 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.276 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.5-5
+
+Tue, 16 Mar 2021 05:07:08 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.275 (asklar@microsoft.com)
+
+## 1.0.5-4
+
+Sun, 14 Mar 2021 05:06:38 GMT
+
+### Changes
+
+- Update packages to new cppwinrt version (asklar@microsoft.com)
+
+## 1.0.5-3
+
+Sat, 13 Mar 2021 05:08:04 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.273 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 1.0.5-2
 
