@@ -33,6 +33,7 @@ void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
       if (auto run = i.try_as<xaml::Documents::Run>()) {
         if (transform == TransformableText::TextTransform::Undefined) {
           // project the parent transform onto the child
+          childVTSN.transformableText.originalText = run.Text().c_str();
           childVTSN.transformableText.textTransform = transformableText.textTransform;
           run.Text(childVTSN.transformableText.TransformText());
         }
