@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 29 Mar 2021 16:07:04 GMT and should not be manually modified.
+This log was last generated on Mon, 05 Apr 2021 17:04:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.3
+
+Mon, 05 Apr 2021 17:04:31 GMT
+
+### Patches
+
+- Add doc comments to IDL files (vmorozov@microsoft.com)
+- Fix some doc typos, generate docs in CI (asklar@microsoft.com)
+- [0.64] Enable apps to override WinUI and SDK version for RNW framework projects (asklar@microsoft.com)
 
 ## 0.64.2
 
