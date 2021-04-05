@@ -121,11 +121,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       vm->GetConstants(writer);
       writer.WriteObjectEnd();
     }
-    const auto accessibilityEventTypes = React::JSValueObject{
-        {"AccessibilityEventTypes",
-         React::JSValueObject{
-             {"typeViewFocused", 8},
-         }}};
+    const auto accessibilityEventTypes = React::JSValueObject{{"typeViewFocused", 8}};
     constants.Add(L"AccessibilityEventTypes", accessibilityEventTypes);
   }
 
@@ -329,7 +325,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   }
 
   void sendAccessibilityEvent(int64_t reactTag, double eventType) noexcept {
-    if (eventType == 0) { // AccessibilityEventTypes.typeViewFocused Type
+    if (eventType == 8) { // AccessibilityEventTypes.typeViewFocused Type
       focus(reactTag);
     } else {
       assert(false);
