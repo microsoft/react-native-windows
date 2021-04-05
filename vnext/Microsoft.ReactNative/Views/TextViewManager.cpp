@@ -47,7 +47,7 @@ class TextShadowNode final : public ShadowNodeBase {
 
   void AddView(ShadowNode &child, int64_t index) override {
     auto &childNode = static_cast<ShadowNodeBase &>(child);
-    VirtualTextShadowNode::ApplyTextTransformToNode(childNode, textTransform);
+    VirtualTextShadowNode::ApplyTextTransformToNode(childNode, textTransform, /* hasChanged = */false);
 
     auto run = childNode.GetView().try_as<winrt::Run>();
     if (index == 0) {
@@ -115,14 +115,11 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   void UpdateTextTransform(TransformableText::TextTransform transform) {
-    const auto previousTransform = textTransform;
     textTransform = transform;
-    if (previousTransform != transform) {
-      if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
-        for (auto childTag : m_children) {
-          const auto childNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(childTag));
-          VirtualTextShadowNode::ApplyTextTransformToNode(*childNode, transform);
-        }
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+      for (auto childTag : m_children) {
+        const auto childNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(childTag));
+        VirtualTextShadowNode::ApplyTextTransformToNode(*childNode, transform, true);
       }
     }
   }
