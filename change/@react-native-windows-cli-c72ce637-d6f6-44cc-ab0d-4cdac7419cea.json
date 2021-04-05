@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "always write nuget.config since it seems to be required now",
+  "packageName": "@react-native-windows/cli",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
