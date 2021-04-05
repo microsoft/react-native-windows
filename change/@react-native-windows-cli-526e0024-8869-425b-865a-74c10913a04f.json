@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Always write nuget.config in init CLI",
+  "packageName": "@react-native-windows/cli",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
