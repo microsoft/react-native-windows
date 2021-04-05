@@ -43,7 +43,6 @@ schedules:
   branches:
     include:
       - "0.64-stable"
-      - "*-stable"
 - cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
   displayName: Nightly canary publish build
   branches:
