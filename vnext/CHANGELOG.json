@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 05 Apr 2021 17:04:31 GMT",
+      "tag": "react-native-windows_v0.64.3",
+      "version": "0.64.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add doc comments to IDL files",
+            "author": "vmorozov@microsoft.com",
+            "commit": "e5077c3d720869e5ff0f22047031d9bf34182f41",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix some doc typos, generate docs in CI",
+            "author": "asklar@microsoft.com",
+            "commit": "e5077c3d720869e5ff0f22047031d9bf34182f41",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Enable apps to override WinUI and SDK version for RNW framework projects",
+            "author": "asklar@microsoft.com",
+            "commit": "d55a22fb8dbf97d1a40e0d5da6936c931539a6e1",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 29 Mar 2021 16:07:04 GMT",
       "tag": "react-native-windows_v0.64.2",
       "version": "0.64.2",
