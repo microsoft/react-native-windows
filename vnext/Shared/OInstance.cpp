@@ -340,10 +340,9 @@ InstanceImpl::InstanceImpl(
       Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*m_devSettings);
     }
 
-if (Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
+    if (Microsoft::React::GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
       m_devSettings->jsiEngineOverride = JSIEngineOverride::Chakra;
     }
-
 
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {

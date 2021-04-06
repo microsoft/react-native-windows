@@ -23,7 +23,6 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   void Init() noexcept;
   virtual ~ChakraRuntime() noexcept;
 
-
 #pragma region Functions_inherited_from_Runtime
 
   facebook::jsi::Value evaluateJavaScript(

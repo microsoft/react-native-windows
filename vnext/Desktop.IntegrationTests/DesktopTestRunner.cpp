@@ -42,7 +42,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   auto nativeQueue = react::uwp::MakeJSQueueThread();
   auto jsQueue = react::uwp::MakeJSQueueThread();
 
-  if (!GetRuntimeOptionBool("ForceSystemChakra")) {
+  if (!GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
     devSettings->jsiRuntimeHolder = std::make_shared<ChakraRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
   }
 
