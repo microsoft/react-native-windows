@@ -169,6 +169,14 @@ export class TextExample extends React.Component<{}, { toggle1: boolean, toggle2
                 x<Text style={{textTransform: 'none'}}>y</Text>z
               </Text>
             </Text>
+            <Text>
+              <Text>
+                Should be "xYz":
+                <Text>
+                  x<Text style={{textTransform: 'uppercase'}}>y</Text>z
+                </Text>
+              </Text>
+            </Text>
             <Text onPress={() => this.setState({toggle1: !this.state.toggle1})}>
               Click to toggle uppercase: <Text style={{textTransform: this.state.toggle1 ? 'uppercase' : 'none'}}>Hello</Text>
             </Text>
