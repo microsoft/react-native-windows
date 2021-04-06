@@ -129,4 +129,4 @@ jobs:
       - template: ../templates/upload-build-logs.yml
         parameters:
           buildLogDirectory: '$(BuildLogDirectory)'
-          condition: succeededOrFailed()
+          condition: always()
