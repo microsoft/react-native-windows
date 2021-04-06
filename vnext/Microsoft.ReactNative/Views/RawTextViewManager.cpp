@@ -50,7 +50,7 @@ bool RawTextViewManager::UpdateProperty(
 
   if (propertyName == "text") {
     run.Text(react::uwp::asHstring(propertyValue));
-
+    static_cast<RawTextShadowNode *>(nodeToUpdate)->originalText = winrt::hstring{};
     if (nodeToUpdate->GetParent() != -1) {
       if (auto uiManager = GetNativeUIManager(*m_context).lock()) {
         const ShadowNodeBase *parent =
@@ -76,13 +76,13 @@ void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate
   if (auto uiManager = GetNativeUIManager(GetReactContext()).lock()) {
     auto host = uiManager->getHost();
     ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(nodeToUpdate->GetParent()));
-    TransformableText::TextTransform textTransform = TransformableText::TextTransform::Undefined;
+    TextTransform textTransform = TextTransform::Undefined;
     while (parent) {
       auto viewManager = parent->GetViewManager();
       const auto nodeType = viewManager->GetName();
       if (!std::wcscmp(nodeType, L"RCTText")) {
         const auto textViewManager = static_cast<TextViewManager *>(viewManager);
-        if (textTransform == TransformableText::TextTransform::Undefined) {
+        if (textTransform == TextTransform::Undefined) {
           textTransform = textViewManager->GetTextTransformValue(parent);
         }
 
@@ -90,7 +90,7 @@ void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate
             *nodeToUpdate, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
         (static_cast<TextViewManager *>(viewManager))->OnDescendantTextPropertyChanged(parent);
       } else if (
-          !std::wcscmp(nodeType, L"RCTVirtualText") && textTransform == TransformableText::TextTransform::Undefined) {
+          !std::wcscmp(nodeType, L"RCTVirtualText") && textTransform == TextTransform::Undefined) {
         textTransform = static_cast<VirtualTextShadowNode *>(parent)->textTransform;
       }
       parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parent->GetParent()));

@@ -12,6 +12,7 @@
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <Utils/PropertyUtils.h>
+#include <Utils/TransformableText.h>
 #include <Utils/ValueUtils.h>
 
 namespace winrt {
@@ -35,15 +36,15 @@ void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
 
 void VirtualTextShadowNode::ApplyTextTransform(
     ShadowNodeBase &node,
-    TransformableText::TextTransform transform,
+    TextTransform transform,
     bool forceUpdate,
     bool isRoot) {
   // The `forceUpdate` option is used to force the tree to update, even if the
   // transform value is undefined or set to 'none'. This is used when a leaf
   // raw text value has changed, or a textTransform prop has changed.
   if (forceUpdate ||
-      (transform != TransformableText::TextTransform::Undefined &&
-       transform != TransformableText::TextTransform::None)) {
+      (transform != TextTransform::Undefined &&
+       transform != TextTransform::None)) {
     // Use the view manager name to determine the node type
     const auto viewManager = node.GetViewManager();
     const auto nodeType = viewManager->GetName();
@@ -53,7 +54,7 @@ void VirtualTextShadowNode::ApplyTextTransform(
       auto &rawTextNode = static_cast<RawTextShadowNode &>(node);
       auto originalText = rawTextNode.originalText;
       auto run = node.GetView().try_as<winrt::Run>();
-      if (std::wcscmp(originalText.c_str(), run.Text().c_str())) {
+      if (originalText.size() == 0) {
         // Lazily setting original text to avoid keeping two copies of all raw text strings
         originalText = run.Text();
         rawTextNode.originalText = originalText;
@@ -70,7 +71,7 @@ void VirtualTextShadowNode::ApplyTextTransform(
       if (!std::wcscmp(nodeType, L"RCTVirtualText")) {
         auto &virtualTextNode = static_cast<VirtualTextShadowNode &>(node);
         // If this is not the root call, we can skip sub-trees with explicit textTransform settings.
-        if (!isRoot && virtualTextNode.textTransform != TransformableText::TextTransform::Undefined) {
+        if (!isRoot && virtualTextNode.textTransform != TextTransform::Undefined) {
           return;
         }
       }

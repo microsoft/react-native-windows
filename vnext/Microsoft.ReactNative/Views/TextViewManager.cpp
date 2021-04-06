@@ -125,7 +125,7 @@ class TextShadowNode final : public ShadowNodeBase {
     Super::RemoveChildAt(indexToRemove);
   }
 
-  TransformableText::TextTransform textTransform{TransformableText::TextTransform::Undefined};
+  TextTransform textTransform{TextTransform::Undefined};
 };
 
 TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -262,7 +262,7 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node) {
   }
 }
 
-TransformableText::TextTransform GetTextTransformValue(ShadowNodeBase *node) {
+TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
   return static_cast<TextShadowNode *>(node)->textTransform;
 }
 

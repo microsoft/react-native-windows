@@ -3,9 +3,10 @@
 
 #pragma once
 
+#include <Utils/TextTransform.h>
+
 namespace Microsoft::ReactNative {
 struct TransformableText final {
-  enum class TextTransform : uint8_t { Undefined, None, Uppercase, Lowercase, Capitalize };
 
   static winrt::hstring TransformText(winrt::hstring originalText, TextTransform textTransform) noexcept {
     if (textTransform == TextTransform::Undefined || textTransform == TextTransform::None) {

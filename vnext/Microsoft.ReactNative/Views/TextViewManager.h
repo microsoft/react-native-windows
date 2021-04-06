@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <Utils/TextTransform.h>
 #include <Views/FrameworkElementViewManager.h>
 
 namespace Microsoft::ReactNative {
@@ -25,7 +26,7 @@ class TextViewManager : public FrameworkElementViewManager {
 
   void OnDescendantTextPropertyChanged(ShadowNodeBase *node);
 
-  TransformableText::TextTransform GetTextTransformValue(ShadowNodeBase *node);
+  TextTransform GetTextTransformValue(ShadowNodeBase *node);
 
  protected:
   bool UpdateProperty(
