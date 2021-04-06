@@ -8,7 +8,7 @@
 // Image inline in Text removed
 
 import * as React from 'react';
-import {/*Image,*/ StyleSheet, Text, View, TextStyle} from 'react-native';
+import {/*Image,*/ StyleSheet, Text, View, TextStyle, TouchableWithoutFeedback} from 'react-native';
 const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');
 
@@ -124,10 +124,10 @@ export class BackgroundColorDemo extends React.Component<{}> {
   }
 }
 
-export class TextExample extends React.Component<{}, { toggle1: boolean, toggle2: boolean }> {
+export class TextExample extends React.Component<{}, { toggle1: boolean, toggle2: boolean, toggle3: boolean }> {
   constructor(props: any) {
     super(props)
-    this.state = {toggle1: false, toggle2: false}
+    this.state = {toggle1: false, toggle2: false, toggle3: false}
   }
 
   public render() {
@@ -138,7 +138,7 @@ export class TextExample extends React.Component<{}, { toggle1: boolean, toggle2
       <RNTesterPage>
         <RNTesterBlock title="textTransform">
           <View>
-          <Text style={{textTransform: 'uppercase'}}>
+            <Text style={{textTransform: 'uppercase'}}>
               <Text>This</Text>
               {' '}
               text should be uppercased.
@@ -175,6 +175,16 @@ export class TextExample extends React.Component<{}, { toggle1: boolean, toggle2
             <Text onPress={() => this.setState({toggle2: !this.state.toggle2})}>
               Click to change raw text: <Text style={{textTransform: 'uppercase'}}>Hello {this.state.toggle2 ? 'Earth' : 'World'}</Text>
             </Text>
+            <TouchableWithoutFeedback onPress={() => this.setState({toggle3: !this.state.toggle3})}>
+              <View>
+                <Text>
+                  Click to toggle fast text on next line (should remain uppercase):
+                </Text>
+                <Text style={{textTransform: 'uppercase'}}>
+                  {this.state.toggle3 ? 'Hello' : 'Howdy'}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </RNTesterBlock>
         <RNTesterBlock title="Wrap">

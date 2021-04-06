@@ -51,21 +51,7 @@ bool RawTextViewManager::UpdateProperty(
   if (propertyName == "text") {
     run.Text(react::uwp::asHstring(propertyValue));
     static_cast<RawTextShadowNode *>(nodeToUpdate)->originalText = winrt::hstring{};
-    if (nodeToUpdate->GetParent() != -1) {
-      if (auto uiManager = GetNativeUIManager(*m_context).lock()) {
-        const ShadowNodeBase *parent =
-            static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(nodeToUpdate->GetParent()));
-        if (parent && parent->m_children.size() == 1) {
-          auto view = parent->GetView();
-          auto textBlock = view.try_as<winrt::TextBlock>();
-          if (textBlock != nullptr) {
-            textBlock.Text(run.Text());
-          }
-        }
-
-        NotifyAncestorsTextChanged(nodeToUpdate);
-      }
-    }
+    NotifyAncestorsTextChanged(nodeToUpdate);
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
@@ -88,6 +74,18 @@ void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate
 
         VirtualTextShadowNode::ApplyTextTransform(
             *nodeToUpdate, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
+
+        if (parent->m_children.size() == 1) {
+          auto view = parent->GetView();
+          auto textBlock = view.try_as<winrt::TextBlock>();
+          if (textBlock != nullptr) {
+            const auto run = nodeToUpdate->GetView().try_as<winrt::Run>();
+            if (run != nullptr) {
+              textBlock.Text(run.Text());
+            }
+          }
+        }
+
         (static_cast<TextViewManager *>(viewManager))->OnDescendantTextPropertyChanged(parent);
       } else if (
           !std::wcscmp(nodeType, L"RCTVirtualText") && textTransform == TextTransform::Undefined) {
