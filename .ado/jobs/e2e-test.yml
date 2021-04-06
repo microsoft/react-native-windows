@@ -56,7 +56,7 @@ jobs:
           msbuildArguments:  '/t:Clean'
 
       - task: NuGetCommand@2
-        displayName: NuGet restore - Playground
+        displayName: NuGet restore
         inputs:
           command: restore
           restoreSolution: packages/e2e-test-app/windows/ReactUWPTestApp.sln
