@@ -340,7 +340,7 @@ InstanceImpl::InstanceImpl(
       Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*m_devSettings);
     }
 
-    if (Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
+    if (Microsoft::React::GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
       m_devSettings->jsiEngineOverride = JSIEngineOverride::Chakra;
     }
 

@@ -28,7 +28,7 @@ TEST_MODULE_INITIALIZE(InitModule) {
   Microsoft::React::SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
 
   // Set to true when testing the Chakra.dll JSI runtime.
-  Microsoft::React::SetRuntimeOptionBool("ForceSystemChakra", false);
+  Microsoft::React::SetRuntimeOptionBool("JSI.ForceSystemChakra", false);
 }
 
 // None of these tests are runnable
