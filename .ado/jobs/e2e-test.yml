@@ -52,14 +52,14 @@ jobs:
       - task: MSBuild@1
         displayName: Clean Solution
         inputs:
-          solution: packages/integration-test-app/windows/$(SolutionFile)
+          solution: packages/e2e-test-app/windows/$(SolutionFile)
           msbuildArguments:  '/t:Clean'
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
         inputs:
           command: restore
-          restoreSolution: packages/integration-test-app/windows/$(SolutionFile)
+          restoreSolution: packages/e2e-test-app/windows/$(SolutionFile)
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
       - task: CmdLine@2
