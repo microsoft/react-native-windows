@@ -117,7 +117,7 @@ jobs:
         inputs:
           artifactName: Targets - IntegrationTest-$(BuildPlatform)-$(System.JobAttempt)
           targetPath: packages/integration-test-app/windows/$(BuildPlatform)/Debug/integrationtest
-        condition: failed()
+        condition: always()
 
       - task: PublishPipelineArtifact@1
         displayName: Upload screenshots
