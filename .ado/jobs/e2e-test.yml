@@ -52,14 +52,14 @@ jobs:
       - task: MSBuild@1
         displayName: Clean Solution
         inputs:
-          solution: packages/e2e-test-app/windows/$(SolutionFile)
+          solution: packages/e2e-test-app/windows/ReactUWPTestApp.sln
           msbuildArguments:  '/t:Clean'
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
         inputs:
           command: restore
-          restoreSolution: packages/e2e-test-app/windows/$(SolutionFile)
+          restoreSolution: packages/e2e-test-app/windows/ReactUWPTestApp.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
       - task: CmdLine@2
