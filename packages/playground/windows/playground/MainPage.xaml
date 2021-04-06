@@ -76,7 +76,6 @@
                     <ComboBoxItem Content="Samples\textinput" />
                     <ComboBoxItem Content="Samples\ticTacToe" />
                     <ComboBoxItem Content="Samples\view" />
-                    <ComboBoxItem Content="Samples\viewKeyBoardEvents" />
                 </ComboBox.Items>
             </ComboBox>
 
