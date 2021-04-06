@@ -39,7 +39,7 @@ steps:
   - task: MSBuild@1
     displayName: Clean Solution
     inputs:
-      solution: $(PathToSln)
+      solution: ${{parameters.project}}
       msbuildArguments:  '/t:Clean'
 
   # NuGetCommand@2 workaround: https://developercommunity.visualstudio.com/content/problem/288534/vsts-yaml-build-failure-the-task-name-nugetcommand.html
