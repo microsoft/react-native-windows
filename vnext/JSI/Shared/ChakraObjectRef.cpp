@@ -132,7 +132,7 @@ ChakraObjectRef GetPropertyId(const std::string_view &utf8) {
 // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
 // using ChakraCore's JsCreatePropertyId API.
 #ifdef CHAKRACORE
-  if (!Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
+  if (!Microsoft::React::GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
     JsPropertyIdRef id = JS_INVALID_REFERENCE;
     VerifyChakraErrorElseThrow(JsCreatePropertyId(utf8.data(), utf8.length(), &id));
     return ChakraObjectRef(id);
@@ -160,7 +160,7 @@ std::string ToStdString(const ChakraObjectRef &jsString) {
   // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
   // using ChakraCore's JsCopyString API.
 #ifdef CHAKRACORE
-  if (!Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
+  if (!Microsoft::React::GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
     size_t length = 0;
     VerifyChakraErrorElseThrow(JsCopyString(jsString, nullptr, 0, &length));
 
@@ -199,7 +199,7 @@ ChakraObjectRef ToJsString(const std::string_view &utf8) {
 // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
 // using ChakraCore's JsCreateString API.
 #ifdef CHAKRACORE
-  if (!Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra")) {
+  if (!Microsoft::React::GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
     JsValueRef result = JS_INVALID_REFERENCE;
     VerifyChakraErrorElseThrow(JsCreateString(utf8.data(), utf8.length(), &result));
     return ChakraObjectRef(result);

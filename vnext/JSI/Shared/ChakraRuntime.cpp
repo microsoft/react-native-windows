@@ -990,7 +990,7 @@ uint64_t ChakraRuntime::s_runtimeVersion = 0;
 
 std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(ChakraRuntimeArgs &&args) noexcept {
 #ifdef CHAKRACORE
-  if (React::GetRuntimeOptionBool("ForceSystemChakra")) {
+  if (React::GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
     return MakeSystemChakraRuntime(std::move(args));
   } else {
     return MakeChakraCoreRuntime(std::move(args));

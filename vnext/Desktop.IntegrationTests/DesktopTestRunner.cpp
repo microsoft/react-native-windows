@@ -44,7 +44,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   auto nativeQueue = make_shared<TestMessageQueueThread>();
   auto jsQueue = make_shared<TestMessageQueueThread>();
 
-  if (!GetRuntimeOptionBool("ForceSystemChakra")) {
+  if (!GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
     devSettings->jsiRuntimeHolder = std::make_shared<ChakraRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
   }
 

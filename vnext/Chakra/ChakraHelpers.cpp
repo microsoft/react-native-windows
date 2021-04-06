@@ -69,7 +69,7 @@ class ChakraVersionInfo {
     // lines if we want to support UWP.
     if (!GetModuleHandleExW(
             0,
-            Microsoft::React::GetRuntimeOptionBool("ForceSystemChakra") ? L"Chakra.dll" : L"ChakraCore.dll",
+            Microsoft::React::GetRuntimeOptionBool("JSI.ForceSystemChakra") ? L"Chakra.dll" : L"ChakraCore.dll",
             &moduleHandle)) {
       return false;
     }
