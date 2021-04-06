@@ -7,9 +7,7 @@ namespace Microsoft::ReactNative {
 struct TransformableText final {
   enum class TextTransform : uint8_t { Undefined, None, Uppercase, Lowercase, Capitalize };
 
-  static winrt::hstring TransformText(
-      winrt::hstring originalText,
-      TextTransform textTransform) noexcept {
+  static winrt::hstring TransformText(winrt::hstring originalText, TextTransform textTransform) noexcept {
     if (textTransform == TextTransform::Undefined || textTransform == TextTransform::None) {
       return originalText;
     }
@@ -31,12 +29,7 @@ struct TransformableText final {
     }
 
     const int reqChars = LCMapStringW(
-        LOCALE_NAME_USER_DEFAULT,
-        dwMapFlags,
-        originalText.c_str(),
-        static_cast<int>(originalText.size()),
-        nullptr,
-        0);
+        LOCALE_NAME_USER_DEFAULT, dwMapFlags, originalText.c_str(), static_cast<int>(originalText.size()), nullptr, 0);
 
     std::wstring str;
     str.resize(reqChars);

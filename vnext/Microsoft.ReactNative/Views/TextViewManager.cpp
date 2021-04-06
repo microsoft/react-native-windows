@@ -13,8 +13,6 @@
 #include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
-#include <Modules/NativeUIManager.h>
-#include <Modules/PaperUIManagerModule.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/TransformableText.h>
 #include <Utils/ValueUtils.h>
@@ -47,7 +45,8 @@ class TextShadowNode final : public ShadowNodeBase {
 
   void AddView(ShadowNode &child, int64_t index) override {
     auto &childNode = static_cast<ShadowNodeBase &>(child);
-    VirtualTextShadowNode::ApplyTextTransformToNode(childNode, textTransform, /* hasChanged = */false);
+    VirtualTextShadowNode::ApplyTextTransform(
+        childNode, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
 
     auto run = childNode.GetView().try_as<winrt::Run>();
     if (index == 0) {
@@ -114,16 +113,6 @@ class TextShadowNode final : public ShadowNodeBase {
     this->GetView().as<xaml::Controls::TextBlock>().TextHighlighters().Append(newHigh);
   }
 
-  void UpdateTextTransform(TransformableText::TextTransform transform) {
-    textTransform = transform;
-    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
-      for (auto childTag : m_children) {
-        const auto childNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(childTag));
-        VirtualTextShadowNode::ApplyTextTransformToNode(*childNode, transform, true);
-      }
-    }
-  }
-
   void removeAllChildren() override {
     m_firstChildNode = nullptr;
     Super::removeAllChildren();
@@ -167,8 +156,9 @@ bool TextViewManager::UpdateProperty(
   } else if (TryUpdateFontProperties(textBlock, propertyName, propertyValue)) {
   } else if (propertyName == "textTransform") {
     auto textNode = static_cast<TextShadowNode *>(nodeToUpdate);
-    auto textTransform = TransformableText::GetTextTransform(propertyValue);
-    textNode->UpdateTextTransform(textTransform);
+    textNode->textTransform = TransformableText::GetTextTransform(propertyValue);
+    VirtualTextShadowNode::ApplyTextTransform(
+        *textNode, textNode->textTransform, /* forceUpdate = */ true, /* isRoot = */ true);
   } else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {
@@ -270,6 +260,10 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node) {
       }
     }
   }
+}
+
+TransformableText::TextTransform GetTextTransformValue(ShadowNodeBase *node) {
+  return static_cast<TextShadowNode *>(node)->textTransform;
 }
 
 } // namespace Microsoft::ReactNative

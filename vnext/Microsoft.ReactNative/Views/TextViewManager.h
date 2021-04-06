@@ -25,6 +25,8 @@ class TextViewManager : public FrameworkElementViewManager {
 
   void OnDescendantTextPropertyChanged(ShadowNodeBase *node);
 
+  TransformableText::TextTransform GetTextTransformValue(ShadowNodeBase *node);
+
  protected:
   bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,

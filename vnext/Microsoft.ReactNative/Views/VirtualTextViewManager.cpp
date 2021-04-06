@@ -7,10 +7,10 @@
 
 #include <Views/RawTextViewManager.h>
 
-#include <UI.Xaml.Controls.h>
-#include <UI.Xaml.Documents.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Documents.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 
@@ -25,7 +25,7 @@ namespace Microsoft::ReactNative {
 
 void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
   auto &childNode = static_cast<ShadowNodeBase &>(child);
-  ApplyTextTransformToNode(childNode, textTransform, /* hasChanged = */false);
+  ApplyTextTransform(childNode, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
   if (auto span = childNode.GetView().try_as<xaml::Documents::Span>()) {
     auto &childVTSN = static_cast<VirtualTextShadowNode &>(child);
     m_highlightData.data.emplace_back(childVTSN.m_highlightData);
@@ -33,45 +33,53 @@ void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
   Super::AddView(child, index);
 }
 
-void VirtualTextShadowNode::ApplyTextTransform(TransformableText::TextTransform transform, bool hasChanged, bool inherited) {
-    if (!inherited || textTransform == TransformableText::TextTransform::Undefined) {
-    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
-      for (auto childTag : m_children) {
-        const auto childNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(childTag));
-        ApplyTextTransformToNode(*childNode, transform, hasChanged);
-      }
-    }
-  }
-}
-
-void VirtualTextShadowNode::ApplyTextTransformToNode(
+void VirtualTextShadowNode::ApplyTextTransform(
     ShadowNodeBase &node,
     TransformableText::TextTransform transform,
-    bool hasChanged) {
-  if (hasChanged ||
+    bool forceUpdate,
+    bool isRoot) {
+  // The `forceUpdate` option is used to force the tree to update, even if the
+  // transform value is undefined or set to 'none'. This is used when a leaf
+  // raw text value has changed, or a textTransform prop has changed.
+  if (forceUpdate ||
       (transform != TransformableText::TextTransform::Undefined &&
        transform != TransformableText::TextTransform::None)) {
-    const auto view = node.GetView();
-    const auto span = view.try_as<winrt::Span>();
-    const auto run = view.try_as<winrt::Run>();
-    if (span) {
-      auto &virtualTextChildNode = static_cast<VirtualTextShadowNode &>(node);
-      virtualTextChildNode.ApplyTextTransform(transform, hasChanged, /* inherited = */true);
-    } else if (run) {
-      auto &rawTextChildNode = static_cast<RawTextShadowNode &>(node);
-      auto originalText = rawTextChildNode.originalText;
-      if (originalText.size() != run.Text().size()) {
+    // Use the view manager name to determine the node type
+    const auto viewManager = node.GetViewManager();
+    const auto nodeType = viewManager->GetName();
+
+    // Base case: apply the inherited textTransform to the raw text node
+    if (!std::wcscmp(nodeType, L"RCTRawText")) {
+      auto &rawTextNode = static_cast<RawTextShadowNode &>(node);
+      auto originalText = rawTextNode.originalText;
+      auto run = node.GetView().try_as<winrt::Run>();
+      if (std::wcscmp(originalText.c_str(), run.Text().c_str())) {
         // Lazily setting original text to avoid keeping two copies of all raw text strings
         originalText = run.Text();
-        rawTextChildNode.originalText = originalText;
+        rawTextNode.originalText = originalText;
       }
 
       run.Text(TransformableText::TransformText(originalText, transform));
 
-      if (transform == TransformableText::TextTransform::Undefined ||
-          transform == TransformableText::TextTransform::None) {
+      if (!std::wcscmp(originalText.c_str(), run.Text().c_str())) {
         // If the transformed text is the same as the original, we no longer need a second copy
-        rawTextChildNode.originalText = winrt::hstring{};
+        rawTextNode.originalText = winrt::hstring{};
+      }
+      // Recursively apply the textTransform to the children of the composite text node
+    } else {
+      if (!std::wcscmp(nodeType, L"RCTVirtualText")) {
+        auto &virtualTextNode = static_cast<VirtualTextShadowNode &>(node);
+        // If this is not the root call, we can skip sub-trees with explicit textTransform settings.
+        if (!isRoot && virtualTextNode.textTransform != TransformableText::TextTransform::Undefined) {
+          return;
+        }
+      }
+
+      if (auto uiManager = GetNativeUIManager(viewManager->GetReactContext()).lock()) {
+        for (auto childTag : node.m_children) {
+          const auto childNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(childTag));
+          ApplyTextTransform(*childNode, transform, forceUpdate, /* isRoot = */ false);
+        }
       }
     }
   }
@@ -104,7 +112,8 @@ bool VirtualTextViewManager::UpdateProperty(
   } else if (propertyName == "textTransform") {
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     node->textTransform = TransformableText::GetTextTransform(propertyValue);
-    node->ApplyTextTransform(node->textTransform, /* hasChanged = */true, /* inherited = */false);
+    VirtualTextShadowNode::ApplyTextTransform(
+        *node, node->textTransform, /* forceUpdate = */ true, /* isRoot = */ true);
   } else if (propertyName == "backgroundColor") {
     if (react::uwp::IsValidColorValue(propertyValue)) {
       static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.color = react::uwp::ColorFrom(propertyValue);
