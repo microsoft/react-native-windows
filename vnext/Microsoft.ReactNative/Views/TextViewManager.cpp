@@ -48,8 +48,8 @@ class TextShadowNode final : public ShadowNodeBase {
     VirtualTextShadowNode::ApplyTextTransform(
         childNode, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
 
-    auto run = childNode.GetView().try_as<winrt::Run>();
     if (index == 0) {
+      auto run = childNode.GetView().try_as<winrt::Run>();
       if (run != nullptr) {
         m_firstChildNode = &child;
         auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
@@ -263,7 +263,11 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node) {
 }
 
 TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
-  return static_cast<TextShadowNode *>(node)->textTransform;
+  if (!std::wcscmp(node->GetViewManager()->GetName(), GetName())) {
+    return static_cast<TextShadowNode *>(node)->textTransform;
+  }
+
+  return TextTransform::Undefined;
 }
 
 } // namespace Microsoft::ReactNative

@@ -87,8 +87,7 @@ void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate
         }
 
         (static_cast<TextViewManager *>(viewManager))->OnDescendantTextPropertyChanged(parent);
-      } else if (
-          !std::wcscmp(nodeType, L"RCTVirtualText") && textTransform == TextTransform::Undefined) {
+      } else if (!std::wcscmp(nodeType, L"RCTVirtualText") && textTransform == TextTransform::Undefined) {
         textTransform = static_cast<VirtualTextShadowNode *>(parent)->textTransform;
       }
       parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parent->GetParent()));

@@ -17,8 +17,7 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
 
   void AddView(ShadowNode &child, int64_t index) override;
 
-  static void
-  ApplyTextTransform(ShadowNodeBase &node, TextTransform transform, bool forceUpdate, bool isRoot);
+  static void ApplyTextTransform(ShadowNodeBase &node, TextTransform transform, bool forceUpdate, bool isRoot);
 
   struct HighlightData {
     std::vector<HighlightData> data;

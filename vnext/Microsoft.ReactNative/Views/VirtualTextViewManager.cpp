@@ -42,9 +42,7 @@ void VirtualTextShadowNode::ApplyTextTransform(
   // The `forceUpdate` option is used to force the tree to update, even if the
   // transform value is undefined or set to 'none'. This is used when a leaf
   // raw text value has changed, or a textTransform prop has changed.
-  if (forceUpdate ||
-      (transform != TextTransform::Undefined &&
-       transform != TextTransform::None)) {
+  if (forceUpdate || (transform != TextTransform::Undefined && transform != TextTransform::None)) {
     // Use the view manager name to determine the node type
     const auto viewManager = node.GetViewManager();
     const auto nodeType = viewManager->GetName();
@@ -54,6 +52,7 @@ void VirtualTextShadowNode::ApplyTextTransform(
       auto &rawTextNode = static_cast<RawTextShadowNode &>(node);
       auto originalText = rawTextNode.originalText;
       auto run = node.GetView().try_as<winrt::Run>();
+      // Set originalText on the raw text node if it hasn't been set yet
       if (originalText.size() == 0) {
         // Lazily setting original text to avoid keeping two copies of all raw text strings
         originalText = run.Text();
@@ -66,8 +65,8 @@ void VirtualTextShadowNode::ApplyTextTransform(
         // If the transformed text is the same as the original, we no longer need a second copy
         rawTextNode.originalText = winrt::hstring{};
       }
-      // Recursively apply the textTransform to the children of the composite text node
     } else {
+      // Recursively apply the textTransform to the children of the composite text node
       if (!std::wcscmp(nodeType, L"RCTVirtualText")) {
         auto &virtualTextNode = static_cast<VirtualTextShadowNode &>(node);
         // If this is not the root call, we can skip sub-trees with explicit textTransform settings.
