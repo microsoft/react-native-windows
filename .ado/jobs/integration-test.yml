@@ -52,7 +52,7 @@ jobs:
       - task: MSBuild@1
         displayName: Clean Solution
         inputs:
-          solution: packages/integration-test-app/windows/integration-test.sln
+          solution: packages/integration-test-app/windows/integrationtest.sln
           msbuildArguments:  '/t:Clean'
 
       - task: NuGetCommand@2
