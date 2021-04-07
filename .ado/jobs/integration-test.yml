@@ -55,17 +55,17 @@ jobs:
           solution: packages/integration-test-app/windows/integrationtest.sln
           msbuildArguments:  '/t:Clean'
 
+      - task: CmdLine@2
+        displayName: NuGet sources
+        inputs:
+          script: 'nuget sources List'
+
       - task: NuGetCommand@2
         displayName: NuGet restore
         inputs:
           command: restore
           restoreSolution: packages/integration-test-app/windows/integration-test.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-      - task: CmdLine@2
-        displayName: NuGet sources
-        inputs:
-          script: 'nuget sources List'
 
       - powershell: |
           Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\$(BuildPlatform)\BuildLogs"
