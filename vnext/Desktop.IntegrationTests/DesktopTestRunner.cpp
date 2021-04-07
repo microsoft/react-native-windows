@@ -42,10 +42,6 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   auto nativeQueue = react::uwp::MakeJSQueueThread();
   auto jsQueue = react::uwp::MakeJSQueueThread();
 
-  if (!GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
-    devSettings->jsiRuntimeHolder = std::make_shared<ChakraRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
-  }
-
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
       std::make_tuple(
           "AsyncLocalStorage",
@@ -85,6 +81,9 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
 
   // Update settings.
   devSettings->platformName = "windesktop";
+
+  // Set to JSIEngineOverride::Chakra when testing the Chakra.dll JSI runtime.
+  devSettings->jsiEngineOverride = JSIEngineOverride::ChakraCore;
 
   auto instanceWrapper = CreateReactInstance(
       std::make_shared<facebook::react::Instance>(),

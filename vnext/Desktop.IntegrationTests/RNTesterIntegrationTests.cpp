@@ -23,9 +23,6 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 TEST_MODULE_INITIALIZE(InitModule) {
   Microsoft::React::SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
   Microsoft::React::SetRuntimeOptionBool("UseBeastWebSocket", false);
-
-  // Set to true when testing the Chakra.dll JSI runtime.
-  Microsoft::React::SetRuntimeOptionBool("JSI.ForceSystemChakra", false);
 }
 
 // None of these tests are runnable
@@ -180,7 +177,6 @@ TEST_CLASS (RNTesterIntegrationTests) {
 
   // ISS:3219193 - Fix intermittent errors, then re-enable.
   BEGIN_TEST_METHOD_ATTRIBUTE(WebSocket)
-  TEST_OWNER(L"Unstable")
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(WebSocket) {
     TestComponent("WebSocketTest");
