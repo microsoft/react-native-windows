@@ -371,10 +371,6 @@ InstanceImpl::InstanceImpl(
       Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*m_devSettings);
     }
 
-    if (Microsoft::React::GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
-      m_devSettings->jsiEngineOverride = JSIEngineOverride::Chakra;
-    }
-
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
@@ -413,6 +409,11 @@ InstanceImpl::InstanceImpl(
 #endif
         }
         case JSIEngineOverride::Chakra:
+          // Applies only to ChakraCore-linked binaries.
+          Microsoft::React::SetRuntimeOptionBool("JSI.ForceSystemChakra", true);
+          m_devSettings->jsiRuntimeHolder =
+              std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
+          break;
         case JSIEngineOverride::ChakraCore:
         default: // TODO: Add other engines once supported
           m_devSettings->jsiRuntimeHolder =
