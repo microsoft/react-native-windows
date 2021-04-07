@@ -543,6 +543,8 @@ bool FrameworkElementViewManager::UpdateProperty(
         } else {
           element.Visibility(xaml::Visibility::Visible);
         }
+      } else if (propertyValue.IsNull()) {
+        element.Visibility(xaml::Visibility::Visible);
       }
     } else {
       return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
