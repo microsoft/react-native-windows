@@ -45,6 +45,24 @@ jobs:
       - template: ../templates/prepare-env.yml
 
       - task: CmdLine@2
+        displayName: Clear Local NuGet Cache
+        inputs:
+          script: 'nuget locals all -clear'
+
+      - task: MSBuild@1
+        displayName: Clean Solution
+        inputs:
+          solution: packages/e2e-test-app/windows/ReactUWPTestApp.sln
+          msbuildArguments:  '/t:Clean'
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore
+        inputs:
+          command: restore
+          restoreSolution: packages/e2e-test-app/windows/ReactUWPTestApp.sln
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: CmdLine@2
         displayName: Set LocalDumps
         inputs:
           script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd ReactUWPTestApp
