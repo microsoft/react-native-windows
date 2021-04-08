@@ -459,10 +459,10 @@ export async function copyProjectTemplateAndReplace(
   if (fs.existsSync(path.join(sharedPath, projDir))) {
     const sharedProjMappings = [];
 
-      sharedProjMappings.push({
-        from: path.join(sharedPath, projDir, 'NuGet.Config'),
-        to: path.join(windowsDir, 'NuGet.Config'),
-      });
+    sharedProjMappings.push({
+      from: path.join(sharedPath, projDir, 'NuGet.Config'),
+      to: path.join(windowsDir, 'NuGet.Config'),
+    });
 
     if (
       fs.existsSync(
