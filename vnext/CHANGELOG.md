@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 02 Apr 2021 05:07:19 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Apr 2021 05:05:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.286
+
+Tue, 06 Apr 2021 05:05:03 GMT
+
+### Changes
+
+- Revert "Fix touch event crash (#6692)" (igklemen@microsoft.com)
 
 ## 0.0.0-canary.285
 
