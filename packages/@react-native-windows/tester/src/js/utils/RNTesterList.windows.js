@@ -26,9 +26,24 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/FlatList/FlatListExample'),
   },
   {
-    key: 'DatePickerExample',
-    category: 'UI',
-    module: require('../examples-win/DatePicker/DatePickerExample'),
+    key: 'FlatList-withSeparators',
+    module: require('../examples/FlatList/FlatList-withSeparators'),
+    category: 'ListView',
+  },
+  {
+    key: 'FlatList-onViewableItemsChanged',
+    module: require('../examples/FlatList/FlatList-onViewableItemsChanged'),
+    category: 'ListView',
+  },
+  {
+    key: 'FlatList-onEndReached',
+    module: require('../examples/FlatList/FlatList-onEndReached'),
+    category: 'ListView',
+  },
+  {
+    key: 'ImageExample',
+    category: 'Basic',
+    module: require('../examples/Image/ImageExample'),
   },
   {
     key: 'FastTextExample',
@@ -44,11 +59,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'GlyphExample',
     category: 'UI',
     module: require('../examples-win/Glyph/GlyphExample'),
-  },
-  {
-    key: 'ImageExample',
-    category: 'Basic',
-    module: require('../examples/Image/ImageExample'),
   },
   // {
   //   key: 'ModalExample',
