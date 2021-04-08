@@ -35,7 +35,7 @@ jobs:
       - task: MSBuild@1
         displayName: Clean Solution
         inputs:
-          solution: packages/integration-test-app/windows/integrationtest.sln
+          solution: packages/IntegrationTest/windows/integrationtest.sln
           msbuildArguments:  '/t:Clean'
 
       - task: CmdLine@2
@@ -47,7 +47,7 @@ jobs:
         displayName: NuGet restore
         inputs:
           command: restore
-          restoreSolution: packages/integration-test-app/windows/integration-test.sln
+          restoreSolution: packages/IntegrationTest/windows/integrationtest.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
       - script: .ado\SetupLocalDumps.cmd integrationtest

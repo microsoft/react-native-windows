@@ -36,7 +36,7 @@ jobs:
       - task: MSBuild@1
         displayName: Clean Solution
         inputs:
-          solution: packages/integration-test-app/windows/integrationtest.sln
+          solution: packages/E2ETest/windows/ReactUWPTestApp.sln
           msbuildArguments:  '/t:Clean'
 
       - task: CmdLine@2
@@ -48,7 +48,7 @@ jobs:
         displayName: NuGet restore
         inputs:
           command: restore
-          restoreSolution: packages/integration-test-app/windows/integration-test.sln
+          restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
       - task: CmdLine@2
