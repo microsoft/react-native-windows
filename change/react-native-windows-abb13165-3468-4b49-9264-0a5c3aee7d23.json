@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix onKeyDown/onKeyUp events not firing after reload",
+  "packageName": "react-native-windows",
+  "email": "stecrain@microsoft.com",
+  "dependentChangeType": "patch"
+}
