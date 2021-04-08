@@ -8,7 +8,13 @@
 // Image inline in Text removed
 
 import * as React from 'react';
-import {/*Image,*/ StyleSheet, Text, View, TextStyle, TouchableWithoutFeedback} from 'react-native';
+import {
+  /*Image,*/ StyleSheet,
+  Text,
+  View,
+  TextStyle,
+  TouchableWithoutFeedback,
+} from 'react-native';
 const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');
 
@@ -124,10 +130,13 @@ export class BackgroundColorDemo extends React.Component<{}> {
   }
 }
 
-export class TextExample extends React.Component<{}, { toggle1: boolean, toggle2: boolean, toggle3: boolean }> {
+export class TextExample extends React.Component<
+  {},
+  {toggle1: boolean; toggle2: boolean; toggle3: boolean}
+> {
   constructor(props: any) {
-    super(props)
-    this.state = {toggle1: false, toggle2: false, toggle3: false}
+    super(props);
+    this.state = {toggle1: false, toggle2: false, toggle3: false};
   }
 
   public render() {
@@ -139,9 +148,7 @@ export class TextExample extends React.Component<{}, { toggle1: boolean, toggle2
         <RNTesterBlock title="textTransform">
           <View>
             <Text style={{textTransform: 'uppercase'}}>
-              <Text>This</Text>
-              {' '}
-              text should be uppercased.
+              <Text>This</Text> text should be uppercased.
             </Text>
             <Text style={{textTransform: 'lowercase'}}>
               This TEXT SHOULD be lowercased.
@@ -160,7 +167,10 @@ export class TextExample extends React.Component<{}, { toggle1: boolean, toggle2
             <Text>
               Should be "ABC":
               <Text style={{textTransform: 'uppercase'}}>
-                a<Text>b<Text>c</Text></Text>
+                a
+                <Text>
+                  b<Text>c</Text>
+                </Text>
               </Text>
             </Text>
             <Text>
@@ -178,15 +188,26 @@ export class TextExample extends React.Component<{}, { toggle1: boolean, toggle2
               </Text>
             </Text>
             <Text onPress={() => this.setState({toggle1: !this.state.toggle1})}>
-              Click to toggle uppercase: <Text style={{textTransform: this.state.toggle1 ? 'uppercase' : 'none'}}>Hello</Text>
+              Click to toggle uppercase:{' '}
+              <Text
+                style={{
+                  textTransform: this.state.toggle1 ? 'uppercase' : 'none',
+                }}>
+                Hello
+              </Text>
             </Text>
             <Text onPress={() => this.setState({toggle2: !this.state.toggle2})}>
-              Click to change raw text: <Text style={{textTransform: 'uppercase'}}>Hello {this.state.toggle2 ? 'Earth' : 'World'}</Text>
+              Click to change raw text:{' '}
+              <Text style={{textTransform: 'uppercase'}}>
+                Hello {this.state.toggle2 ? 'Earth' : 'World'}
+              </Text>
             </Text>
-            <TouchableWithoutFeedback onPress={() => this.setState({toggle3: !this.state.toggle3})}>
+            <TouchableWithoutFeedback
+              onPress={() => this.setState({toggle3: !this.state.toggle3})}>
               <View>
                 <Text>
-                  Click to toggle fast text on next line (should remain uppercase):
+                  Click to toggle fast text on next line (should remain
+                  uppercase):
                 </Text>
                 <Text style={{textTransform: 'uppercase'}}>
                   {this.state.toggle3 ? 'Hello' : 'Howdy'}
