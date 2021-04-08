@@ -2,6 +2,21 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Tue, 06 Apr 2021 05:05:03 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.286",
+            "author": "igklemen@microsoft.com",
+            "commit": "539f941e060949d5d31bce988eb71da2a6bacb67",
+            "package": "integration-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 02 Apr 2021 05:07:19 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",
