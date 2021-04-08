@@ -182,13 +182,6 @@ steps:
       script: npx react-native info
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
-  # https://github.com/dotnet/installer/issues/10171#issuecomment-814984993
-  - task: CmdLine@2
-    displayName: Add nuget.org
-    inputs:
-      script: nuget sources Add -Name nuget.org -Source https://api.nuget.org/v3/index.json
-      workingDirectory: $(Agent.BuildDirectory)\testcli
-
   - task: CmdLine@2
     displayName: Build project (Release)
     inputs:
