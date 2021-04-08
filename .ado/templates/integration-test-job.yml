@@ -27,18 +27,6 @@ jobs:
             
       - template: prepare-env.yml
 
-      - task: CmdLine@2
-        displayName: NuGet sources
-        inputs:
-          script: 'nuget sources List'
-
-      - task: NuGetCommand@2
-        displayName: NuGet restore
-        inputs:
-          command: restore
-          restoreSolution: packages/IntegrationTest/windows/integrationtest.sln
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-
       - script: .ado\SetupLocalDumps.cmd integrationtest
         displayName: Set LocalDumps
 

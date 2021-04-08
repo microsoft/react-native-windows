@@ -29,18 +29,6 @@ jobs:
       - template: prepare-env.yml
 
       - task: CmdLine@2
-        displayName: NuGet sources
-        inputs:
-          script: 'nuget sources List'
-
-      - task: NuGetCommand@2
-        displayName: NuGet restore
-        inputs:
-          command: restore
-          restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-      - task: CmdLine@2
         displayName: Set LocalDumps
         inputs:
           script: $(Build.SourcesDirectory)\.ado\SetupLocalDumps.cmd ReactUWPTestApp
