@@ -2,6 +2,21 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Thu, 08 Apr 2021 05:07:22 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.287",
+            "author": "stecrain@microsoft.com",
+            "commit": "6db01618e7d120453c0de9174754e2de8cdaa56b",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 06 Apr 2021 05:05:03 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",

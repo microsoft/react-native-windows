@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 06 Apr 2021 05:05:03 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Apr 2021 05:07:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.287
+
+Thu, 08 Apr 2021 05:07:22 GMT
+
+### Changes
+
+- Fix onKeyDown/onKeyUp events not firing after reload (stecrain@microsoft.com)
 
 ## 0.0.0-canary.286
 
