@@ -140,7 +140,7 @@ type ButtonProps = $ReadOnly<{|
    * Accessibility props.
    */
   accessibilityState?: ?AccessibilityState,
-  
+
   // [Windows
   /**
     Set the order in which elements receive focus when the user navigates through them by pressing Tab.

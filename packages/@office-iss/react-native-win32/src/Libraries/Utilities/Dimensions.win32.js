@@ -6,9 +6,7 @@
  * @flow
  */
 
- import {
-  type EventSubscription,
-} from '../vendor/emitter/EventEmitter';
+import {type EventSubscription} from '../vendor/emitter/EventEmitter';
 
 class Dimensions {
   static get(dim: string): Object {
@@ -25,7 +23,7 @@ class Dimensions {
 
   static addEventListener(
     type: 'change',
-    handler: Function
+    handler: Function,
   ): EventSubscription {
     throw new Error(
       'Having a global Dimensions object is too simplistic for Win32, so this API does not work',
