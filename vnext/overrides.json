@@ -2,30 +2,22 @@
   "includePatterns": [
     ".flowconfig",
     "ReactCopies/**",
-    "src/**",
-    "ReactCommon/TEMP_UntilReactCommonUpdate/**"
+    "src/**"
   ],
   "excludePatterns": [],
-  "baseVersion": "0.0.0-d477f8011",
+  "baseVersion": "0.0.0-cfb5b5e20",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "f4da69b0623292df17b4cb39406edf68fecabe9d"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBuffer.cpp",
-      "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBuffer.cpp",
-      "baseHash": "f810d614ada443e806fee88a0edf3bb6564d2c7d",
-      "issue": 7309
+      "baseHash": "718336b53dd84d09a5331cc4c6a3726114510030"
     },
     {
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "2241c126cde8163f86570a3f5a4db670cf9a7944",
+      "baseHash": "12842ce403b4851e233d2c2cc4dd7309c0428c64",
       "issue": 3994
     },
     {
@@ -114,7 +106,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
-      "baseHash": "93f4b6047b238d31c2c72c44f11cd689c6a4b071"
+      "baseHash": "19798c7a92e544d8cc413a18ca00c3c169fcfcba"
     },
     {
       "type": "platform",
@@ -232,7 +224,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/RefreshControl/RefreshControl.windows.js",
       "baseFile": "Libraries/Components/RefreshControl/RefreshControl.js",
-      "baseHash": "75d1508da1341e093768b8225de92d1e1eb7c444"
+      "baseHash": "2bed44fc601df3d89d5b85db2b7c9919bc33e60b"
     },
     {
       "type": "derived",
@@ -358,7 +350,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "82f4338c74beba7c2321ab045bd00494b9669f61",
+      "baseHash": "ed5e7153ca1750dea21f40ed5d0ecd76c00cbddf",
       "issue": 4379
     },
     {

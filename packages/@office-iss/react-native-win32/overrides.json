@@ -3,13 +3,13 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-d477f8011",
+  "baseVersion": "0.0.0-cfb5b5e20",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "f4da69b0623292df17b4cb39406edf68fecabe9d"
+      "baseHash": "718336b53dd84d09a5331cc4c6a3726114510030"
     },
     {
       "type": "derived",
@@ -376,7 +376,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Dimensions.win32.js",
       "baseFile": "Libraries/Utilities/Dimensions.js",
-      "baseHash": "33e55564b8716ff243e36de554cdcd90fccbe7e3"
+      "baseHash": "cc2a5b68d9207ece63b461f875ea91b7d1949cb6"
     },
     {
       "type": "platform",
