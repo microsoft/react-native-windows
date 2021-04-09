@@ -11,8 +11,12 @@ describe('visitAllPages', () => {
   const componentExamples = [
     'ActivityIndicator',
     'Button',
+    'DatePicker',
     'Fast Path Texts',
     'FlatList',
+    'FlatList with Separators',
+    'FlatList onViewableItemsChanged',
+    'FlatList onEndReached',
     'Flyout',
     'Glyph UWP',
     'Image',

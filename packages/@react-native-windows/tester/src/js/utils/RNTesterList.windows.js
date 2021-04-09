@@ -21,6 +21,11 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/Button/ButtonExample'),
   },
   {
+    key: 'DatePickerExample',
+    category: 'UI',
+    module: require('../examples-win/DatePicker/DatePickerExample'),
+  },
+  {
     key: 'FlatListExample',
     category: 'ListView',
     module: require('../examples/FlatList/FlatListExample'),
