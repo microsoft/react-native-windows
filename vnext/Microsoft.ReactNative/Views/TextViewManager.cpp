@@ -18,6 +18,7 @@
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <Utils/PropertyUtils.h>
+#include <Utils/TextHitTestUtils.h>
 #include <Utils/TransformableText.h>
 #include <Utils/ValueUtils.h>
 
@@ -183,6 +184,28 @@ class TextShadowNode final : public ShadowNodeBase {
     }
 
     return 0;
+  }
+
+  int64_t GetReactTagAtPoint(const winrt::Point &point) {
+    const auto textBlock = GetView().as<xaml::Controls::TextBlock>();
+    const auto textPointer = TextHitTestUtils::GetPositionFromPoint(textBlock, point);
+    if (textPointer != nullptr) {
+      auto inlineTag = GetTag(textPointer.Parent());
+      if (inlineTag != -1) {
+        if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+          const auto node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(inlineTag));
+          // React Native does not support events targeted to raw text nodes.
+          // Get the parent tag instead.
+          if (!std::wcscmp(node->GetViewManager()->GetName(), L"RCTRawText")) {
+            inlineTag = node->GetParent();
+          }
+        }
+
+        return inlineTag;
+      }
+    }
+
+    return m_tag;
   }
 
   TextTransform textTransform{TextTransform::Undefined};
@@ -362,6 +385,15 @@ TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
   }
 
   return TextTransform::Undefined;
+}
+
+int64_t TextViewManager::GetReactTagAtPoint(ShadowNodeBase *node, const winrt::Point &point) {
+  if (!std::wcscmp(node->GetViewManager()->GetName(), L"RCTText")) {
+    const auto textNode = static_cast<TextShadowNode *>(node);
+    return textNode->GetReactTagAtPoint(point);
+  }
+
+  return node->m_tag;
 }
 
 } // namespace Microsoft::ReactNative
