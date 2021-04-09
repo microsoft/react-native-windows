@@ -11,7 +11,6 @@ describe('visitAllPages', () => {
   const componentExamples = [
     'ActivityIndicator',
     'Button',
-    'DatePicker',
     'Fast Path Texts',
     'FlatList',
     'Flyout',
