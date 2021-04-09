@@ -161,7 +161,7 @@ class TextInputShadowNode : public ShadowNodeBase {
 
   xaml::Controls::Control::GotFocus_revoker m_controlGotFocusRevoker{};
   xaml::Controls::Control::LostFocus_revoker m_controlLostFocusRevoker{};
-  xaml::Controls::Control::PreviewKeyDown_revoker m_controlKeyDownRevoker{};
+  xaml::Controls::Control::PreviewKeyDown_revoker m_controlPreviewKeyDownRevoker{};
   xaml::Controls::Control::SizeChanged_revoker m_controlSizeChangedRevoker{};
   xaml::Controls::Control::CharacterReceived_revoker m_controlCharacterReceivedRevoker{};
   xaml::Controls::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
@@ -365,7 +365,7 @@ void TextInputShadowNode::registerEvents() {
 void TextInputShadowNode::registerPreviewKeyDown() {
   auto control = GetView().as<xaml::Controls::Control>();
   auto tag = m_tag;
-  m_controlKeyDownRevoker =
+  m_controlPreviewKeyDownRevoker =
       control.PreviewKeyDown(winrt::auto_revoke, [=](auto &&, xaml::Input::KeyRoutedEventArgs const &args) {
         auto isMultiline = m_isTextBox && control.as<xaml::Controls::TextBox>().AcceptsReturn();
         auto shouldSubmit = !args.Handled();
@@ -660,7 +660,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
 
   // We need to re-register the PreviewKeyDown handler so it is invoked after the ShadowNodeBase handler
   if (hasKeyDownEvents) {
-    m_controlKeyDownRevoker.revoke();
+    m_controlPreviewKeyDownRevoker.revoke();
     registerPreviewKeyDown();
   }
 
