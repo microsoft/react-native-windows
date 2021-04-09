@@ -309,7 +309,6 @@
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="Views\PaperShadowNode.cpp" />
     <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
-    <ClCompile Include="JSI\ChakraJsiRuntime_edgemode.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
     <ClCompile Include="Utils\BatchingEventEmitter.cpp">
