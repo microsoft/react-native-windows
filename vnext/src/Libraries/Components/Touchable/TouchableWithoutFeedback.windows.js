@@ -174,4 +174,6 @@ function createPressabilityConfig(props: Props): PressabilityConfig {
   };
 }
 
+TouchableWithoutFeedback.displayName = 'TouchableWithoutFeedback';
+
 module.exports = TouchableWithoutFeedback;
