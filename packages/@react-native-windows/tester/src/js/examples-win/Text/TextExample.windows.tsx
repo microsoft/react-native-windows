@@ -8,7 +8,13 @@
 // Image inline in Text removed
 
 import * as React from 'react';
-import {/*Image,*/ StyleSheet, Text, View, TextStyle} from 'react-native';
+import {
+  /*Image,*/ StyleSheet,
+  Text,
+  View,
+  TextStyle,
+  TouchableWithoutFeedback,
+} from 'react-native';
 const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');
 
@@ -124,7 +130,15 @@ export class BackgroundColorDemo extends React.Component<{}> {
   }
 }
 
-export class TextExample extends React.Component<{}> {
+export class TextExample extends React.Component<
+  {},
+  {toggle1: boolean; toggle2: boolean; toggle3: boolean}
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = {toggle1: false, toggle2: false, toggle3: false};
+  }
+
   public render() {
     const lorumIpsum =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.';
@@ -134,7 +148,7 @@ export class TextExample extends React.Component<{}> {
         <RNTesterBlock title="textTransform">
           <View>
             <Text style={{textTransform: 'uppercase'}}>
-              This text should be uppercased.
+              <Text>This</Text> text should be uppercased.
             </Text>
             <Text style={{textTransform: 'lowercase'}}>
               This TEXT SHOULD be lowercased.
@@ -153,7 +167,10 @@ export class TextExample extends React.Component<{}> {
             <Text>
               Should be "ABC":
               <Text style={{textTransform: 'uppercase'}}>
-                a<Text>b</Text>c
+                a
+                <Text>
+                  b<Text>c</Text>
+                </Text>
               </Text>
             </Text>
             <Text>
@@ -162,6 +179,41 @@ export class TextExample extends React.Component<{}> {
                 x<Text style={{textTransform: 'none'}}>y</Text>z
               </Text>
             </Text>
+            <Text>
+              <Text>
+                Should be "xYz":
+                <Text>
+                  x<Text style={{textTransform: 'uppercase'}}>y</Text>z
+                </Text>
+              </Text>
+            </Text>
+            <Text onPress={() => this.setState({toggle1: !this.state.toggle1})}>
+              Click to toggle uppercase:{' '}
+              <Text
+                style={{
+                  textTransform: this.state.toggle1 ? 'uppercase' : 'none',
+                }}>
+                Hello
+              </Text>
+            </Text>
+            <Text onPress={() => this.setState({toggle2: !this.state.toggle2})}>
+              Click to change raw text:{' '}
+              <Text style={{textTransform: 'uppercase'}}>
+                Hello {this.state.toggle2 ? 'Earth' : 'World'}
+              </Text>
+            </Text>
+            <TouchableWithoutFeedback
+              onPress={() => this.setState({toggle3: !this.state.toggle3})}>
+              <View>
+                <Text>
+                  Click to toggle fast text on next line (should remain
+                  uppercase):
+                </Text>
+                <Text style={{textTransform: 'uppercase'}}>
+                  {this.state.toggle3 ? 'Hello' : 'Howdy'}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </RNTesterBlock>
         <RNTesterBlock title="Wrap">
