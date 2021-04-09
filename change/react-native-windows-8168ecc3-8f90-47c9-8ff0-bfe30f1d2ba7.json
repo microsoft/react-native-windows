@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fix textTransform recursion",
+  "comment": "Fixes textTransform recursion", 
   "packageName": "react-native-windows",
   "email": "erozell@outlook.com",
   "dependentChangeType": "patch"
