@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 10 Apr 2021 05:06:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.288",
+      "version": "0.0.0-canary.288",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow swapping to System Chakra at runtime.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "5b105312907cc6ddf5f9b29aa42e32f14ae7460c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixes textTransform recursion",
+            "author": "erozell@outlook.com",
+            "commit": "278a3c1355de878c380d2025953f998f0ff6c8b2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 3/18 nightly RN build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "fd496306e530635b9654efaeefc90639b14c9f0e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Apr 2021 05:07:22 GMT",
       "tag": "react-native-windows_v0.0.0-canary.287",
       "version": "0.0.0-canary.287",

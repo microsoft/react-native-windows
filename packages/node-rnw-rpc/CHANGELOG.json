@@ -2,6 +2,21 @@
   "name": "node-rnw-rpc",
   "entries": [
     {
+      "date": "Sat, 10 Apr 2021 05:06:27 GMT",
+      "tag": "node-rnw-rpc_v1.0.5-18",
+      "version": "1.0.5-18",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 3/18 nightly RN build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "fd496306e530635b9654efaeefc90639b14c9f0e",
+            "package": "node-rnw-rpc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Apr 2021 05:07:22 GMT",
       "tag": "node-rnw-rpc_v1.0.5-17",
       "version": "1.0.5-17",

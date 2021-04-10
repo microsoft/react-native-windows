@@ -1,8 +1,16 @@
 # Change Log - node-rnw-rpc
 
-This log was last generated on Thu, 08 Apr 2021 05:07:22 GMT and should not be manually modified.
+This log was last generated on Sat, 10 Apr 2021 05:06:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.5-18
+
+Sat, 10 Apr 2021 05:06:27 GMT
+
+### Changes
+
+- Integrate 3/18 nightly RN build. (igklemen@microsoft.com)
 
 ## 1.0.5-17
 

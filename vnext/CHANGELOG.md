@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 08 Apr 2021 05:07:22 GMT and should not be manually modified.
+This log was last generated on Sat, 10 Apr 2021 05:06:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.288
+
+Sat, 10 Apr 2021 05:06:27 GMT
+
+### Changes
+
+- Allow swapping to System Chakra at runtime. (julio.rocha@microsoft.com)
+- Fixes textTransform recursion (erozell@outlook.com)
+- Integrate 3/18 nightly RN build. (igklemen@microsoft.com)
 
 ## 0.0.0-canary.287
 
