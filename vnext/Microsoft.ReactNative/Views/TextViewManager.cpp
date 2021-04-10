@@ -58,6 +58,7 @@ class TextShadowNode final : public ShadowNodeBase {
     if (IsVirtualTextShadowNode(&childNode)) {
       auto &textChildNode = static_cast<VirtualTextShadowNode &>(childNode);
       m_hasDescendantBackgroundColor |= textChildNode.m_hasDescendantBackgroundColor;
+      pressableCount += textChildNode.m_pressableCount;
     }
 
     auto addInline = true;
@@ -187,11 +188,13 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   int64_t GetReactTagAtPoint(const winrt::Point &point) {
-    const auto textBlock = GetView().as<xaml::Controls::TextBlock>();
-    const auto textPointer =
-        TextHitTestUtils::GetPositionFromPoint(textBlock.ContentStart(), textBlock.ContentEnd(), point);
+    const auto textPointer = pressableCount > 0
+      ? useBlockHitTest ? TextHitTestUtils::GetPositionFromPoint(GetView().as<winrt::TextBlock>(), point)
+                        : VirtualTextShadowNode::HitTest(*this, point)
+      : nullptr;
+
     if (textPointer != nullptr) {
-      auto inlineTag = GetTag(textPointer.Parent());
+      const auto inlineTag = GetTag(textPointer.Parent());
       if (inlineTag != -1) {
         if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
           const auto node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(inlineTag));
@@ -200,9 +203,9 @@ class TextShadowNode final : public ShadowNodeBase {
           if (!std::wcscmp(node->GetViewManager()->GetName(), L"RCTRawText")) {
             inlineTag = node->GetParent();
           }
-        }
 
-        return inlineTag;
+          return inlineTag;
+        }
       }
     }
 
@@ -212,6 +215,7 @@ class TextShadowNode final : public ShadowNodeBase {
   TextTransform textTransform{TextTransform::Undefined};
   bool m_hasDescendantBackgroundColor{false};
   int pressableCount{0};
+  bool useBlockHitTest{false};
 };
 
 TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -312,6 +316,12 @@ bool TextViewManager::UpdateProperty(
     if (IsValidOptionalColorValue(propertyValue)) {
       node->m_backgroundColor = OptionalColorFrom(propertyValue);
       node->RecalculateTextHighlighters();
+    }
+  } else if (propertyName == "hitTestStrategy") {
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+      static_cast<TextShadowNode *>(nodeToUpdate)->useBlockHitTest = propertyValue.AsString() == "block";
+    } else if (propertyValue.IsNull()) {
+      static_cast<TextShadowNode *>(nodeToUpdate)->useBlockHitTest = false;
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
