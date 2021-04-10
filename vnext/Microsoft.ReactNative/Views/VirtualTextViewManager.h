@@ -19,6 +19,9 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   void AddView(ShadowNode &child, int64_t index) override;
   void RemoveChildAt(int64_t indexToRemove) override;
   void removeAllChildren() override;
+  void onDropViewInstance() override;
+
+  void AddToPressableCount(int pressableCount);
 
   void NotifyAncestorsTextPropertyChanged(PropertyChangeType propertyChangeType);
 
@@ -27,6 +30,8 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   std::optional<winrt::Windows::UI::Color> m_backgroundColor;
   std::optional<winrt::Windows::UI::Color> m_foregroundColor;
   bool m_hasDescendantBackgroundColor{false};
+  bool m_isPressable{false};
+  int m_pressableCount{0};
 };
 
 class VirtualTextViewManager : public ViewManagerBase {
