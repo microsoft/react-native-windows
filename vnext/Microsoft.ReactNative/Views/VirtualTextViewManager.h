@@ -22,6 +22,7 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   void onDropViewInstance() override;
 
   void AddToPressableCount(int pressableCount);
+  void SetPressable(bool isPressable);
 
   void NotifyAncestorsTextPropertyChanged(PropertyChangeType propertyChangeType);
 
