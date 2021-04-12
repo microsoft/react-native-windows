@@ -182,6 +182,11 @@ steps:
       script: npx react-native info
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
+  - task: CmdLine@2
+    displayName: Clear Local NuGet Cache
+    inputs:
+        script: 'nuget locals all -clear'
+
   # https://github.com/actions/virtual-environments/issues/3038#issuecomment-815531497
   - task: PowerShell@2
     displayName: NuGet add source
