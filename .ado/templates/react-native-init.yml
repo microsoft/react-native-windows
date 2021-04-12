@@ -183,7 +183,7 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
   # https://github.com/actions/virtual-environments/issues/3038#issuecomment-816450054
-  - task: CmdLine@2
+  - task: PowerShell@2
     displayName: Remove Empty Config From AppData
     inputs:
       script: Remove-Item $env:APPDATA\NuGet\NuGet.Config
