@@ -187,7 +187,7 @@ steps:
     displayName: NuGet add source
     inputs:
       targetType: inline
-      script: nuget add https://api.nuget.org/v3/index.json -Source nuget.org -configfile $env:APPDATA\NuGet\NuGet.Config
+      script: nuget sources add -Name nuget.org -Source https://api.nuget.org/v3/index.json -ConfigFile $env:APPDATA\NuGet\NuGet.Config
 
   # https://github.com/actions/virtual-environments/issues/3038#issuecomment-816450054
   - task: PowerShell@2
