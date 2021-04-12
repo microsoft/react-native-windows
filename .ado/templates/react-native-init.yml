@@ -182,6 +182,12 @@ steps:
       script: npx react-native info
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
+  # https://github.com/actions/virtual-environments/issues/3038#issuecomment-815531497
+  - task: CmdLine@2
+    displayName: NuGet add source
+    inputs:
+      script: nuget add https://api.nuget.org/v3/index.json -Source nuget.org --configfile $env:APPDATA\NuGet\NuGet.Config
+
   # https://github.com/actions/virtual-environments/issues/3038#issuecomment-816450054
   - task: PowerShell@2
     displayName: Remove Empty Config From AppData
