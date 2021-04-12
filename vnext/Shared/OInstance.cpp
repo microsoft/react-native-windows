@@ -41,6 +41,7 @@
 #include <DevSupportManager.h>
 #include <IReactRootView.h>
 #include <IUIManager.h>
+#include <RuntimeOptions.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 #include "PackagerConnection.h"
@@ -408,6 +409,11 @@ InstanceImpl::InstanceImpl(
 #endif
         }
         case JSIEngineOverride::Chakra:
+          // Applies only to ChakraCore-linked binaries.
+          Microsoft::React::SetRuntimeOptionBool("JSI.ForceSystemChakra", true);
+          m_devSettings->jsiRuntimeHolder =
+              std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
+          break;
         case JSIEngineOverride::ChakraCore:
         default: // TODO: Add other engines once supported
           m_devSettings->jsiRuntimeHolder =

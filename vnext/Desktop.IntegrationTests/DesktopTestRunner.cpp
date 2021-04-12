@@ -8,6 +8,7 @@
 #include <Modules/NetworkingModule.h>
 #include <Modules/WebSocketModule.h>
 #include <NativeModuleFactories.h>
+#include <RuntimeOptions.h>
 #include "ChakraRuntimeHolder.h"
 #include "DesktopTestInstance.h"
 #include "TestMessageQueueThread.h"
@@ -42,8 +43,6 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   auto uiManager = createIUIManager(move(viewManagers), new TestNativeUIManager());
   auto nativeQueue = make_shared<TestMessageQueueThread>();
   auto jsQueue = make_shared<TestMessageQueueThread>();
-
-  devSettings->jsiRuntimeHolder = std::make_shared<ChakraRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
 
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
       make_tuple(
@@ -82,6 +81,9 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
 
   // Update settings.
   devSettings->platformName = "windesktop";
+
+  // Set to JSIEngineOverride::Chakra when testing the Chakra.dll JSI runtime.
+  devSettings->jsiEngineOverride = JSIEngineOverride::ChakraCore;
 
   auto instanceWrapper = CreateReactInstance(
       "",

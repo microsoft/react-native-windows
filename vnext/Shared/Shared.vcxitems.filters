@@ -107,6 +107,9 @@
       <Filter>Source Files\Executors</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RuntimeOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -304,6 +307,13 @@
       <Filter>Header Files\Executors</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SystemChakraRuntime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraCoreRuntime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

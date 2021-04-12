@@ -47,6 +47,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\UIManagerModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RuntimeOptions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ShadowNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)tracing\tracing.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraCoreRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.h" />
@@ -102,6 +104,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Pch\pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SystemChakraRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)targetver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracing.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)tracing\fbsystrace.h" />
