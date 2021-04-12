@@ -186,6 +186,7 @@ steps:
   - task: PowerShell@2
     displayName: Remove Empty Config From AppData
     inputs:
+      targetType: inline
       script: Remove-Item $env:APPDATA\NuGet\NuGet.Config
 
   - task: CmdLine@2
