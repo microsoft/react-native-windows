@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 13 Apr 2021 05:07:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.289",
+      "version": "0.0.0-canary.289",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixes bug where raw text update overwrites all text",
+            "author": "erozell@outlook.com",
+            "commit": "aee8bb2fdd3a93aec397c8e4404878764cf959be",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add functionality to setAccessibilityFocus method",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "79c6f3e7ceaebcb576a995a4c98ce13caa2f0d1e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 10 Apr 2021 05:06:27 GMT",
       "tag": "react-native-windows_v0.0.0-canary.288",
       "version": "0.0.0-canary.288",

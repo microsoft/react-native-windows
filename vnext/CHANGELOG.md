@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 10 Apr 2021 05:06:27 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Apr 2021 05:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.289
+
+Tue, 13 Apr 2021 05:07:37 GMT
+
+### Changes
+
+- Fixes bug where raw text update overwrites all text (erozell@outlook.com)
+- Add functionality to setAccessibilityFocus method (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.288
 

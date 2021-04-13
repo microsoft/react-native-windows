@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes bug where raw text update overwrites all text",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
