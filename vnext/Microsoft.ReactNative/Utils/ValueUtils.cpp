@@ -86,6 +86,10 @@ xaml::Media::Brush BrushFromColorObject(winrt::hstring resourceName) {
 
   winrt::IInspectable resource{winrt::Application::Current().Resources().Lookup(winrt::box_value(resourceName))};
 
+  if (auto color = resource.try_as<ui::Color>()) {
+    return xaml::Media::SolidColorBrush(color.value());
+  }
+
   return winrt::unbox_value<winrt::Brush>(resource);
 }
 
