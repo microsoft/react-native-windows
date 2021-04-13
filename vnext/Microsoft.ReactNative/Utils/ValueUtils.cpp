@@ -86,11 +86,17 @@ xaml::Media::Brush BrushFromColorObject(winrt::hstring resourceName) {
 
   winrt::IInspectable resource{winrt::Application::Current().Resources().Lookup(winrt::box_value(resourceName))};
 
-  if (auto color = resource.try_as<ui::Color>()) {
-    return xaml::Media::SolidColorBrush(color.value());
+  if (auto brush = resource.try_as<xaml::Media::Brush>()) {
+    return brush;
+  }
+  else if (auto color = resource.try_as<winrt::Windows::UI::Color>()) {
+    auto brush = xaml::Media::SolidColorBrush(color.value());
+    accentColorMap[resourceName] = winrt::make_weak(brush);
+    return brush;
   }
 
-  return winrt::unbox_value<winrt::Brush>(resource);
+  assert(false && "Resource is not a Color or Brush");
+  return nullptr;
 }
 
 xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d) {
