@@ -24,6 +24,12 @@ describe('DisplayNoneTest', () => {
     const dump = await dumpVisualTree('view-component-switch-view');
     expect(dump).toMatchSnapshot();
   });
+
+  /* Test case #3: Not using display:none; testing potential issue in CI snapshot testing*/
+  test('NotUsingDisplayNoneTest', async () => {
+    const dump = await dumpVisualTree('view-component-test-base');
+    expect(dump).toMatchSnapshot();
+  });
 });
 
 async function toggleDisplayNone() {
