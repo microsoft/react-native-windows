@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 29 Mar 2021 15:27:29 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Apr 2021 02:52:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.27
+
+Tue, 13 Apr 2021 02:52:41 GMT
+
+### Patches
+
+- Allow swapping to System Chakra at runtime. (julio.rocha@microsoft.com)
 
 ## 0.63.26
 

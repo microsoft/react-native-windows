@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 13 Apr 2021 02:52:41 GMT",
+      "tag": "react-native-windows_v0.63.27",
+      "version": "0.63.27",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow swapping to System Chakra at runtime.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "cb3d8109815dc1e0fa3025c9e0d42884ae9c0698",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 29 Mar 2021 15:27:29 GMT",
       "tag": "react-native-windows_v0.63.26",
       "version": "0.63.26",

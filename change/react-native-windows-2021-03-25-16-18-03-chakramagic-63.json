@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Allow swapping to System Chakra at runtime.",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2021-03-25T23:18:03.736Z"
-}
