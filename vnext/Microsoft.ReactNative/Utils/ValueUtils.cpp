@@ -88,8 +88,7 @@ xaml::Media::Brush BrushFromColorObject(winrt::hstring resourceName) {
 
   if (auto brush = resource.try_as<xaml::Media::Brush>()) {
     return brush;
-  }
-  else if (auto color = resource.try_as<winrt::Windows::UI::Color>()) {
+  } else if (auto color = resource.try_as<winrt::Windows::UI::Color>()) {
     auto brush = xaml::Media::SolidColorBrush(color.value());
     accentColorMap[resourceName] = winrt::make_weak(brush);
     return brush;
