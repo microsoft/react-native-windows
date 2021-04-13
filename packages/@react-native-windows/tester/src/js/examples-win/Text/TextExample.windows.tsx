@@ -197,9 +197,11 @@ export class TextExample extends React.Component<
               </Text>
             </Text>
             <Text onPress={() => this.setState({toggle2: !this.state.toggle2})}>
-              Click to change raw text:{' '}
-              <Text style={{textTransform: 'uppercase'}}>
-                Hello {this.state.toggle2 ? 'Earth' : 'World'}
+              <Text>
+                Click to change raw text:{' '}
+                <Text style={{textTransform: 'uppercase'}}>
+                  Hello {this.state.toggle2 ? 'Earth' : 'World'}
+                </Text>
               </Text>
             </Text>
             <TouchableWithoutFeedback

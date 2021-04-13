@@ -63,6 +63,7 @@ void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate
     auto host = uiManager->getHost();
     ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(nodeToUpdate->GetParent()));
     TextTransform textTransform = TextTransform::Undefined;
+    auto isNested = false;
     while (parent) {
       auto viewManager = parent->GetViewManager();
       const auto nodeType = viewManager->GetName();
@@ -75,7 +76,7 @@ void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate
         VirtualTextShadowNode::ApplyTextTransform(
             *nodeToUpdate, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
 
-        if (parent->m_children.size() == 1) {
+        if (!isNested && parent->m_children.size() == 1) {
           auto view = parent->GetView();
           auto textBlock = view.try_as<winrt::TextBlock>();
           if (textBlock != nullptr) {
@@ -90,7 +91,9 @@ void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate
       } else if (!std::wcscmp(nodeType, L"RCTVirtualText") && textTransform == TextTransform::Undefined) {
         textTransform = static_cast<VirtualTextShadowNode *>(parent)->textTransform;
       }
+
       parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parent->GetParent()));
+      isNested = true;
     }
   }
 }
