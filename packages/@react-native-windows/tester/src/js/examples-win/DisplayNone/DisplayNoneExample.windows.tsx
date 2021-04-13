@@ -25,7 +25,7 @@ export class DisplayNoneExample extends React.Component<{}> {
         <RNTesterBlock title="Display:none style with TextInput">
           <View>
             <View testID="view-component-test-base">
-              <View>
+              <View style={{width: 1074}}>
                 <Text>Useless Switch.</Text>
                 <Switch />
                 <Text>Useless Switch2.</Text>
@@ -48,7 +48,7 @@ export class DisplayNoneExample extends React.Component<{}> {
             </View>
           </View>
           <View>
-            <View testID="view-component-switch-view">
+            <View style={{width: 1074}} testID="view-component-switch-view">
               <Text>toggle display:none TextInput1</Text>
               <Switch
                 onValueChange={this._handlePress}
