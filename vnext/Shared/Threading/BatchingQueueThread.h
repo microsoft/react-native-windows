@@ -13,8 +13,6 @@ class Instance;
 
 namespace react::uwp {
 
-struct BatchingQueueThread;
-
 struct BatchingQueueCallInvoker : facebook::react::CallInvoker {
   BatchingQueueCallInvoker(std::shared_ptr<facebook::react::MessageQueueThread> const &queueThread);
 
