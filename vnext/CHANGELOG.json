@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 14 Apr 2021 05:08:14 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.290",
+      "version": "0.0.0-canary.290",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable any platform color to be used in PlatformColor()",
+            "author": "asklar@microsoft.com",
+            "commit": "9bd1a7ba1339ab8cdcf1801f084543b1610ae53d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Apr 2021 05:07:37 GMT",
       "tag": "react-native-windows_v0.0.0-canary.289",
       "version": "0.0.0-canary.289",
