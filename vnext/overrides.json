@@ -2,7 +2,8 @@
   "includePatterns": [
     ".flowconfig",
     "ReactCopies/**",
-    "src/**"
+    "src/**",
+    "ReactCommon/TEMP_UntilReactCommonUpdate/**"
   ],
   "excludePatterns": [],
   "baseVersion": "0.0.0-d04ec4dc6",
@@ -12,6 +13,13 @@
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
       "baseHash": "7c2f3e8ecf80e5229d4e1fdad2b6ef324acae0c4"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBufferBuilder.cpp",
+      "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBufferBuilder.cpp",
+      "baseHash": "1efe331e2def36ae16146df78afcd12e8a8fd2f6",
+      "issue": 7591
     },
     {
       "type": "patch",
