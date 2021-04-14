@@ -51,6 +51,7 @@
     "axios": "^0.21.1",
     "eslint-plugin-react": "^7.14.1",
     "eslint-plugin-react-hooks": "4.0.7",
+    "handlebars": "^4.7.7",
     "kind-of": "6.0.3",
     "node-fetch": "2.6.1",
     "webdriver": "git+https://github.com/react-native-windows/webdriver.git",
