@@ -184,10 +184,10 @@ steps:
 
   # https://github.com/actions/virtual-environments/issues/3038#issuecomment-815531497
   - task: PowerShell@2
-    displayName: NuGet add source
+    displayName: Nuget Add Source If Missing
     inputs:
-      targetType: inline
-      script: nuget sources add -Name nuget.org -Source https://api.nuget.org/v3/index.json -ConfigFile $env:APPDATA\NuGet\NuGet.Config
+      targetType: filePath
+      filePath: $(Build.SourcesDirectory)/.ado/ConditionalNugetAdd.ps1
 
   # https://github.com/actions/virtual-environments/issues/3038#issuecomment-816450054
   - task: PowerShell@2
