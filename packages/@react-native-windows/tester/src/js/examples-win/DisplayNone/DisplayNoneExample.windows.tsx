@@ -15,38 +15,12 @@ export class DisplayNoneExample extends React.Component<{}> {
     displayNone2: false,
     textState: 'TextInput1...',
     textState2: 'TextInput2...',
-    textState3: 'TextInput3...',
-    textState4: 'TextInput3...',
   };
 
   public render() {
     return (
       <RNTesterPage>
         <RNTesterBlock title="Display:none style with TextInput">
-          <View>
-            <View testID="view-component-test-base">
-              <View style={{width: 1074}}>
-                <Text>Useless Switch.</Text>
-                <Switch />
-                <Text>Useless Switch2.</Text>
-                <Switch />
-              </View>
-              <View>
-                <TextInput
-                  style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                  onChangeText={text => this._handleChangeText(text)}
-                  value={this.state.textState}
-                />
-              </View>
-              <View>
-                <TextInput
-                  style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                  onChangeText={text => this._handleChangeText2(text)}
-                  value={this.state.textState2}
-                />
-              </View>
-            </View>
-          </View>
           <View>
             <View style={{width: 1074}} testID="view-component-switch-view">
               <Text>toggle display:none TextInput1</Text>
@@ -65,14 +39,14 @@ export class DisplayNoneExample extends React.Component<{}> {
               <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1}}
                 onChangeText={text => this._handleChangeText(text)}
-                value={this.state.textState3}
+                value={this.state.textState}
               />
             </View>
             <View style={{display: this.state.displayNone2 ? 'none' : 'flex'}}>
               <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1}}
                 onChangeText={text => this._handleChangeText2(text)}
-                value={this.state.textState4}
+                value={this.state.textState2}
               />
             </View>
           </View>
