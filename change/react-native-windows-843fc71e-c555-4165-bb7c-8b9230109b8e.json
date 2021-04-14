@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Enable any platform color to be used in PlatformColor()",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
