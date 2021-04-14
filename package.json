@@ -35,7 +35,6 @@
   },
   "resolutions": {
     "acorn": "^7.1.1",
-    "handlebars": "^4.7.7",
     "logkitty": "^0.7.1",
     "**/eslint-plugin-react": "^7.14.1",
     "**/@wdio/appium-service": "5.12.1",
