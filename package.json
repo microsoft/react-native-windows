@@ -38,6 +38,7 @@
   },
   "resolutions": {
     "eslint-plugin-react-hooks": "4.0.7",
+    "handlebars": "^4.7.7",
     "kind-of": "6.0.3",
     "node-fetch": "2.6.1",
     "node-notifier": "^9.0.0",
