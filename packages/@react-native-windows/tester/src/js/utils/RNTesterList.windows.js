@@ -51,6 +51,11 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/Image/ImageExample'),
   },
   {
+    key: 'Display:NoneExample',
+    category: 'UI',
+    module: require('../examples-win/DisplayNone/DisplayNoneExample'),
+  },
+  {
     key: 'FastTextExample',
     category: 'Basic',
     module: require('../examples-win/FastText/FastTextExample'),
