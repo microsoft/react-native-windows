@@ -14,8 +14,6 @@ BatchingQueueCallInvoker::BatchingQueueCallInvoker(
     : m_queueThread(queueThread) {}
 
 void BatchingQueueCallInvoker::invokeAsync(std::function<void()> &&func) noexcept {
-  std::scoped_lock lck(m_mutex);
-
   EnsureQueue();
   m_taskQueue->emplace_back(std::move(func));
 
@@ -57,12 +55,10 @@ void BatchingQueueCallInvoker::PostBatch() noexcept {
 }
 
 void BatchingQueueCallInvoker::onBatchComplete() noexcept {
-  std::scoped_lock lck(m_mutex);
   PostBatch();
 }
 
 void BatchingQueueCallInvoker::quitSynchronous() noexcept {
-  std::scoped_lock lck(m_mutex);
   PostBatch();
   m_queueThread->quitSynchronous();
 }
@@ -82,6 +78,7 @@ BatchingQueueThread::BatchingQueueThread(
 // getDecoratedNativeCallInvoker will work.
 void BatchingQueueThread::decoratedNativeCallInvokerReady(
     std::weak_ptr<facebook::react::Instance> wkInstance) noexcept {
+  std::scoped_lock lck(m_mutex);
   m_callInvoker->invokeAsync([wkInstance, this] {
     if (auto instance = wkInstance.lock()) {
       m_callInvoker = instance->getDecoratedNativeCallInvoker(m_callInvoker);
@@ -92,10 +89,12 @@ void BatchingQueueThread::decoratedNativeCallInvokerReady(
 BatchingQueueThread::~BatchingQueueThread() noexcept {}
 
 void BatchingQueueThread::runOnQueue(std::function<void()> &&func) noexcept {
+  std::scoped_lock lck(m_mutex);
   m_callInvoker->invokeAsync(std::move(func));
 }
 
 void BatchingQueueThread::onBatchComplete() noexcept {
+  std::scoped_lock lck(m_mutex);
   m_batchingQueueCallInvoker->onBatchComplete();
 }
 
@@ -105,6 +104,7 @@ void BatchingQueueThread::runOnQueueSync(std::function<void()> && /*func*/) noex
 }
 
 void BatchingQueueThread::quitSynchronous() noexcept {
+  std::scoped_lock lck(m_mutex);
   m_batchingQueueCallInvoker->quitSynchronous();
 }
 

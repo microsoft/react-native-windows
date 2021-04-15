@@ -29,7 +29,6 @@ struct BatchingQueueCallInvoker : facebook::react::CallInvoker {
 
   using WorkItemQueue = std::vector<std::function<void()>>;
   std::shared_ptr<WorkItemQueue> m_taskQueue;
-  std::mutex m_mutex;
 
 #if DEBUG
   std::thread::id m_expectedThreadId{};
@@ -55,6 +54,7 @@ struct BatchingQueueThread final : facebook::react::BatchingMessageQueueThread {
   void onBatchComplete() noexcept override;
 
  private:
+  std::mutex m_mutex;
   std::shared_ptr<facebook::react::CallInvoker> m_callInvoker;
   std::shared_ptr<BatchingQueueCallInvoker> m_batchingQueueCallInvoker;
 };
