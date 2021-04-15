@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 14 Apr 2021 05:08:14 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Apr 2021 05:09:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.291
+
+Thu, 15 Apr 2021 05:09:36 GMT
+
+### Changes
+
+- Fix XAML Visibility for `display:none` (agnel@microsoft.com)
+- re-enabling 4267 & 4100 (agnel@microsoft.com)
 
 ## 0.0.0-canary.290
 

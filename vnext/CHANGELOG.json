@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 15 Apr 2021 05:09:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.291",
+      "version": "0.0.0-canary.291",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix XAML Visibility for `display:none`",
+            "author": "agnel@microsoft.com",
+            "commit": "8a0d14474eefa9fc63a9675c8d26274fcdd78979",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "re-enabling 4267 & 4100",
+            "author": "agnel@microsoft.com",
+            "commit": "32432175497cf6b59e35f98f05dd99b0f154015e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Apr 2021 05:08:14 GMT",
       "tag": "react-native-windows_v0.0.0-canary.290",
       "version": "0.0.0-canary.290",

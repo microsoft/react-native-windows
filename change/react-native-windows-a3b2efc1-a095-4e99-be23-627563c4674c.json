@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "re-enabling 4267 & 4100",
-  "packageName": "react-native-windows",
-  "email": "agnel@microsoft.com",
-  "dependentChangeType": "patch"
-}

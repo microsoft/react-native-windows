@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix XAML Visibility for `display:none`",
-  "packageName": "react-native-windows",
-  "email": "agnel@microsoft.com",
-  "dependentChangeType": "patch"
-}
