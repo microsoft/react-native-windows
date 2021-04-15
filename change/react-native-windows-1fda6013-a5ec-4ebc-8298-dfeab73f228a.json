@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "[0.64] Enable any platform color to be used in PlatformColor()",
+  "comment": "Enable any platform color to be used in PlatformColor()",
   "packageName": "react-native-windows",
   "email": "asklar@microsoft.com",
   "dependentChangeType": "patch"
