@@ -562,7 +562,10 @@ module.exports = {
 };
 
 if (__DEV__) {
-  // $FlowFixMe This is intentional: Flow will error when attempting to access ART.
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access ART. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access ART. */
   Object.defineProperty(module.exports, 'ART', {
     configurable: true,
     get() {
@@ -575,7 +578,10 @@ if (__DEV__) {
     },
   });
 
-  // $FlowFixMe This is intentional: Flow will error when attempting to access ListView.
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access ListView. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access ListView. */
   Object.defineProperty(module.exports, 'ListView', {
     configurable: true,
     get() {
@@ -588,7 +594,10 @@ if (__DEV__) {
     },
   });
 
-  // $FlowFixMe This is intentional: Flow will error when attempting to access SwipeableListView.
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access SwipeableListView. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access SwipeableListView. */
   Object.defineProperty(module.exports, 'SwipeableListView', {
     configurable: true,
     get() {
@@ -601,7 +610,10 @@ if (__DEV__) {
     },
   });
 
-  // $FlowFixMe This is intentional: Flow will error when attempting to access WebView.
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access WebView. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access WebView. */
   Object.defineProperty(module.exports, 'WebView', {
     configurable: true,
     get() {
@@ -614,7 +626,10 @@ if (__DEV__) {
     },
   });
 
-  // $FlowFixMe This is intentional: Flow will error when attempting to access NetInfo.
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access NetInfo. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access NetInfo. */
   Object.defineProperty(module.exports, 'NetInfo', {
     configurable: true,
     get() {
@@ -627,7 +642,10 @@ if (__DEV__) {
     },
   });
 
-  // $FlowFixMe This is intentional: Flow will error when attempting to access CameraRoll.
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access CameraRoll. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access CameraRoll. */
   Object.defineProperty(module.exports, 'CameraRoll', {
     configurable: true,
     get() {
@@ -640,7 +658,10 @@ if (__DEV__) {
     },
   });
 
-  // $FlowFixMe This is intentional: Flow will error when attempting to access ImageStore.
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access ImageStore. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access ImageStore. */
   Object.defineProperty(module.exports, 'ImageStore', {
     configurable: true,
     get() {
@@ -654,7 +675,10 @@ if (__DEV__) {
     },
   });
 
-  // $FlowFixMe This is intentional: Flow will error when attempting to access ImageEditor.
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access ImageEditor. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access ImageEditor. */
   Object.defineProperty(module.exports, 'ImageEditor', {
     configurable: true,
     get() {
@@ -667,7 +691,10 @@ if (__DEV__) {
     },
   });
 
-  // $FlowFixMe This is intentional: Flow will error when attempting to access TimePickerAndroid.
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access TimePickerAndroid. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access TimePickerAndroid. */
   Object.defineProperty(module.exports, 'TimePickerAndroid', {
     configurable: true,
     get() {
@@ -680,7 +707,10 @@ if (__DEV__) {
     },
   });
 
-  // $FlowFixMe This is intentional: Flow will error when attempting to access ToolbarAndroid.
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access ToolbarAndroid. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access ToolbarAndroid. */
   Object.defineProperty(module.exports, 'ToolbarAndroid', {
     configurable: true,
     get() {
@@ -693,7 +723,10 @@ if (__DEV__) {
     },
   });
 
-  // $FlowFixMe This is intentional: Flow will error when attempting to access ViewPagerAndroid.
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access ViewPagerAndroid. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access ViewPagerAndroid. */
   Object.defineProperty(module.exports, 'ViewPagerAndroid', {
     configurable: true,
     get() {
@@ -706,7 +739,10 @@ if (__DEV__) {
     },
   });
 
-  // $FlowFixMe This is intentional: Flow will error when attempting to access CheckBox.
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access CheckBox. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access CheckBox. */
   Object.defineProperty(module.exports, 'CheckBox', {
     configurable: true,
     get() {
