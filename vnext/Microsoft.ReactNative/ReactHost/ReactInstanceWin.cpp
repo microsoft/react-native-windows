@@ -112,48 +112,50 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
   virtual ~BridgeUIBatchInstanceCallback() = default;
   void onBatchComplete() override {
     if (auto instance = m_wkInstance.GetStrongPtr()) {
-      if (instance->UseWebDebugger()) {
-        // While using a CxxModule for UIManager (which we do when running under webdebugger)
-        // We need to post the batch complete to the NativeQueue to ensure that the UIManager
-        // has posted everything from this batch into its queue before we complete the batch.
-        instance->m_jsDispatchQueue.Load().Post([wkInstance = m_wkInstance]() {
-          if (auto instance = wkInstance.GetStrongPtr()) {
-            instance->m_batchingUIThread->runOnQueue([wkInstance]() {
-              if (auto instance = wkInstance.GetStrongPtr()) {
-                if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
-                  uiManager->onBatchComplete();
+      if (instance->IsLoaded()) {
+        if (instance->UseWebDebugger()) {
+          // While using a CxxModule for UIManager (which we do when running under webdebugger)
+          // We need to post the batch complete to the NativeQueue to ensure that the UIManager
+          // has posted everything from this batch into its queue before we complete the batch.
+          instance->m_jsDispatchQueue.Load().Post([wkInstance = m_wkInstance]() {
+            if (auto instance = wkInstance.GetStrongPtr()) {
+              instance->m_batchingUIThread->runOnQueue([wkInstance]() {
+                if (auto instance = wkInstance.GetStrongPtr()) {
+                  if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
+                    uiManager->onBatchComplete();
+                  }
                 }
-              }
-            });
+              });
 
 #ifdef WINRT
-            // For UWP we use a batching message queue to optimize the usage
-            // of the CoreDispatcher.  Win32 already has an optimized queue.
-            facebook::react::BatchingMessageQueueThread *batchingUIThread =
-                static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
-            if (batchingUIThread != nullptr) {
-              batchingUIThread->onBatchComplete();
-            }
+              // For UWP we use a batching message queue to optimize the usage
+              // of the CoreDispatcher.  Win32 already has an optimized queue.
+              facebook::react::BatchingMessageQueueThread *batchingUIThread =
+                  static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
+              if (batchingUIThread != nullptr) {
+                batchingUIThread->onBatchComplete();
+              }
 #endif
-          }
-        });
-      } else {
-        instance->m_batchingUIThread->runOnQueue([wkInstance = m_wkInstance]() {
-          if (auto instance = wkInstance.GetStrongPtr()) {
-            if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
-              uiManager->onBatchComplete();
             }
-          }
-        });
+          });
+        } else {
+          instance->m_batchingUIThread->runOnQueue([wkInstance = m_wkInstance]() {
+            if (auto instance = wkInstance.GetStrongPtr()) {
+              if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
+                uiManager->onBatchComplete();
+              }
+            }
+          });
 #ifdef WINRT
-        // For UWP we use a batching message queue to optimize the usage
-        // of the CoreDispatcher.  Win32 already has an optimized queue.
-        facebook::react::BatchingMessageQueueThread *batchingUIThread =
-            static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
-        if (batchingUIThread != nullptr) {
-          batchingUIThread->onBatchComplete();
-        }
+          // For UWP we use a batching message queue to optimize the usage
+          // of the CoreDispatcher.  Win32 already has an optimized queue.
+          facebook::react::BatchingMessageQueueThread *batchingUIThread =
+              static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
+          if (batchingUIThread != nullptr) {
+            batchingUIThread->onBatchComplete();
+          }
 #endif
+        }
       }
     }
   }
@@ -593,7 +595,13 @@ void ReactInstanceWin::InitUIMessageThread() noexcept {
   m_uiMessageThread.Exchange(
       std::make_shared<MessageDispatchQueue>(m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
-  m_batchingUIThread = react::uwp::MakeBatchingQueueThread(m_uiMessageThread.Load());
+  auto batchingUIThread = react::uwp::MakeBatchingQueueThread(m_uiMessageThread.Load());
+  m_batchingUIThread = batchingUIThread;
+
+  m_jsDispatchQueue.Load().Post(
+      [batchingUIThread, instance = std::weak_ptr<facebook::react::Instance>(m_instance.Load())]() noexcept {
+        batchingUIThread->decoratedNativeCallInvokerReady(instance);
+      });
 }
 
 void ReactInstanceWin::InitUIManager() noexcept {
