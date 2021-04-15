@@ -182,6 +182,20 @@ steps:
       script: npx react-native info
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
+  # https://github.com/actions/virtual-environments/issues/3038#issuecomment-815531497
+  - task: PowerShell@2
+    displayName: Nuget Add Source If Missing
+    inputs:
+      targetType: filePath
+      filePath: $(Build.SourcesDirectory)/.ado/ConditionalNugetAdd.ps1
+
+  # https://github.com/actions/virtual-environments/issues/3038#issuecomment-816450054
+  - task: PowerShell@2
+    displayName: Remove Empty Config From AppData
+    inputs:
+      targetType: inline
+      script: Remove-Item $env:APPDATA\NuGet\NuGet.Config
+
   - task: CmdLine@2
     displayName: Build project (Release)
     inputs:
