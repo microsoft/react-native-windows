@@ -678,6 +678,9 @@
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
+    <ClInclude Include="Views\ViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />

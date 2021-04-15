@@ -317,6 +317,18 @@ void ViewManagerBase::SetLayoutProps(
     float top,
     float width,
     float height) {
+
+  if (auto uiManager = GetNativeUIManager(GetReactContext()).lock()) {
+    auto parent = nodeToUpdate.GetParent();
+    if (parent != -1) {
+      const auto &parentShadowNode = uiManager->getHost()->GetShadowNodeForTag(parent);
+      const auto &parentVM = parentShadowNode.m_viewManager;
+      if (parentVM->RequiresNativeLayout()) {
+        return;
+      }
+    }
+  }
+  
   auto element = viewToUpdate.as<xaml::UIElement>();
   if (element == nullptr) {
     // TODO: Assert
@@ -324,29 +336,15 @@ void ViewManagerBase::SetLayoutProps(
   }
   auto fe = element.as<xaml::FrameworkElement>();
 
-  bool layoutHasChanged =
-      left != react::uwp::ViewPanel::GetLeft(element) || top != react::uwp::ViewPanel::GetTop(element);
+  const bool layoutHasChanged = left != react::uwp::ViewPanel::GetLeft(element) ||
+      top != react::uwp::ViewPanel::GetTop(element) || width != fe.Width() || height != fe.Height();
 
   // Set Position & Size Properties
   react::uwp::ViewPanel::SetLeft(element, left);
   react::uwp::ViewPanel::SetTop(element, top);
 
-  const auto origWidth = fe.Width();
-  const auto origHeight = fe.Height();
-
-  if (!std::isnan(origWidth) && std::isnan(width)) {
-    // respect the existing value
-  } else {
-    fe.Width(width);
-    layoutHasChanged = true;
-  }
-
-  if (!std::isnan(origHeight) && std::isnan(height)) {
-    // respect the existing value
-  } else {
-    fe.Height(height);
-    layoutHasChanged = true;
-  }
+  fe.Width(width);
+  fe.Height(height);
 
   // Fire Events
   if (layoutHasChanged && nodeToUpdate.m_onLayoutRegistered) {

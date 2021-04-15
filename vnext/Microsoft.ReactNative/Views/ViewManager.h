@@ -25,6 +25,10 @@ class IViewManager {
       const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const = 0;
   virtual void GetExportedCustomDirectEventTypeConstants(
       const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const = 0;
+
+  virtual bool RequiresNativeLayout() const {
+    return false;
+  }
 };
 
 } // namespace Microsoft::ReactNative

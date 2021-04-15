@@ -61,6 +61,10 @@ class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewMana
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
   ::Microsoft::ReactNative::ShadowNode *createShadow() const override;
 
+  bool RequiresNativeLayout() const override {
+    return m_viewManagerRequiresNativeLayout != nullptr && m_viewManagerRequiresNativeLayout.RequiresNativeLayout();
+  }
+
  protected:
   xaml::DependencyObject CreateViewCore(int64_t, const winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
