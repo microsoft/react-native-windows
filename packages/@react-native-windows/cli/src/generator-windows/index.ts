@@ -459,13 +459,10 @@ export async function copyProjectTemplateAndReplace(
   if (fs.existsSync(path.join(sharedPath, projDir))) {
     const sharedProjMappings = [];
 
-    // Once we are publishing to nuget.org, this shouldn't be needed anymore
-    if (options.experimentalNuGetDependency) {
-      sharedProjMappings.push({
-        from: path.join(sharedPath, projDir, 'NuGet.Config'),
-        to: path.join(windowsDir, 'NuGet.Config'),
-      });
-    }
+    sharedProjMappings.push({
+      from: path.join(sharedPath, projDir, 'NuGet.Config'),
+      to: path.join(windowsDir, 'NuGet.Config'),
+    });
 
     if (
       fs.existsSync(
