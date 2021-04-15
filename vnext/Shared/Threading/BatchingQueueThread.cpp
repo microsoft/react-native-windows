@@ -26,16 +26,6 @@ void BatchingQueueCallInvoker::invokeAsync(std::function<void()> &&func) noexcep
 #endif
 }
 
-void BatchingQueueCallInvoker::ThreadCheck() noexcept {
-#if DEBUG
-  if (m_expectedThreadId == std::thread::id{}) {
-    m_expectedThreadId = std::this_thread::get_id();
-  } else {
-    assert(m_expectedThreadId == std::this_thread::get_id());
-  }
-#endif
-}
-
 void BatchingQueueCallInvoker::EnsureQueue() noexcept {
   if (!m_taskQueue) {
     m_taskQueue = std::make_shared<WorkItemQueue>();

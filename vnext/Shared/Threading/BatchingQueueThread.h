@@ -16,7 +16,6 @@ namespace react::uwp {
 struct BatchingQueueCallInvoker : facebook::react::CallInvoker {
   BatchingQueueCallInvoker(std::shared_ptr<facebook::react::MessageQueueThread> const &queueThread);
 
-  void ThreadCheck() noexcept;
   void invokeAsync(std::function<void()> &&func) noexcept override;
   void EnsureQueue() noexcept;
   void onBatchComplete() noexcept;
@@ -29,10 +28,6 @@ struct BatchingQueueCallInvoker : facebook::react::CallInvoker {
 
   using WorkItemQueue = std::vector<std::function<void()>>;
   std::shared_ptr<WorkItemQueue> m_taskQueue;
-
-#if DEBUG
-  std::thread::id m_expectedThreadId{};
-#endif
 };
 
 // Executes the function on the provided UI Dispatcher
