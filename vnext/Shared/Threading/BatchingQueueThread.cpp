@@ -71,6 +71,7 @@ void BatchingQueueThread::decoratedNativeCallInvokerReady(
   std::scoped_lock lck(m_mutex);
   m_callInvoker->invokeAsync([wkInstance, this] {
     if (auto instance = wkInstance.lock()) {
+      std::scoped_lock lck(m_mutex);
       m_callInvoker = instance->getDecoratedNativeCallInvoker(m_callInvoker);
     }
   });
