@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 15 Apr 2021 05:09:36 GMT and should not be manually modified.
+This log was last generated on Fri, 16 Apr 2021 05:08:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.292
+
+Fri, 16 Apr 2021 05:08:38 GMT
+
+### Changes
+
+- Integrate 4/1 nightly RN build. (igklemen@microsoft.com)
+- Calling UIManager.dispatchViewManagerCommand should trigger updates (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.291
 

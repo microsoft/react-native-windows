@@ -1,8 +1,20 @@
 # Change Log - e2e-test-app
 
-This log was last generated on Thu, 15 Apr 2021 05:09:36 GMT and should not be manually modified.
+This log was last generated on Fri, 16 Apr 2021 05:08:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Fri, 16 Apr 2021 05:08:38 GMT
+
+### Patches
+
+- Bump node-rnw-rpc to v1.0.5-22 (igklemen@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.292 (igklemen@microsoft.com)
 
 ## 0.0.0
 

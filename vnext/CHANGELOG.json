@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 16 Apr 2021 05:08:38 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.292",
+      "version": "0.0.0-canary.292",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 4/1 nightly RN build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "1235cabde3ef7a2eb9ae29eae4863513d739b030",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Calling UIManager.dispatchViewManagerCommand should trigger updates",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "9fd338e1e9edfbe8d5f39a8a3fc68313bcb7a5c4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 15 Apr 2021 05:09:36 GMT",
       "tag": "react-native-windows_v0.0.0-canary.291",
       "version": "0.0.0-canary.291",
