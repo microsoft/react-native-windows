@@ -309,7 +309,6 @@
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="Views\PaperShadowNode.cpp" />
     <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
-    <ClCompile Include="JSI\ChakraJsiRuntime_edgemode.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
     <ClCompile Include="Utils\BatchingEventEmitter.cpp">
@@ -680,6 +679,9 @@
     </ClInclude>
     <ClInclude Include="Views\ViewManager.h">
       <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\TextTransform.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

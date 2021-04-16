@@ -57,9 +57,6 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Shared\Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\JSI\ChakraJsiRuntime_edgemode.cpp">
-      <Filter>ExternalFiles\Microsoft.ReactNative\JSI</Filter>
-    </ClCompile>
     <ClCompile Include="..\Shared\JSI\ChakraRuntime.cpp">
       <Filter>ExternalFiles\Shared\JSI</Filter>
     </ClCompile>

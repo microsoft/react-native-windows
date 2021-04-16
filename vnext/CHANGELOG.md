@@ -1,8 +1,60 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 02 Apr 2021 05:07:19 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Apr 2021 05:09:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.291
+
+Thu, 15 Apr 2021 05:09:36 GMT
+
+### Changes
+
+- Fix XAML Visibility for `display:none` (agnel@microsoft.com)
+- re-enabling 4267 & 4100 (agnel@microsoft.com)
+
+## 0.0.0-canary.290
+
+Wed, 14 Apr 2021 05:08:14 GMT
+
+### Changes
+
+- Enable any platform color to be used in PlatformColor() (asklar@microsoft.com)
+
+## 0.0.0-canary.289
+
+Tue, 13 Apr 2021 05:07:37 GMT
+
+### Changes
+
+- Fixes bug where raw text update overwrites all text (erozell@outlook.com)
+- Add functionality to setAccessibilityFocus method (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.288
+
+Sat, 10 Apr 2021 05:06:27 GMT
+
+### Changes
+
+- Allow swapping to System Chakra at runtime. (julio.rocha@microsoft.com)
+- Fixes textTransform recursion (erozell@outlook.com)
+- Integrate 3/18 nightly RN build. (igklemen@microsoft.com)
+
+## 0.0.0-canary.287
+
+Thu, 08 Apr 2021 05:07:22 GMT
+
+### Changes
+
+- Fix onKeyDown/onKeyUp events not firing after reload (stecrain@microsoft.com)
+
+## 0.0.0-canary.286
+
+Tue, 06 Apr 2021 05:05:03 GMT
+
+### Changes
+
+- Revert "Fix touch event crash (#6692)" (igklemen@microsoft.com)
 
 ## 0.0.0-canary.285
 

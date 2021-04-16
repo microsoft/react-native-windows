@@ -106,7 +106,7 @@ jobs:
       - script: yarn integration-test
         displayName: yarn integration-test
         workingDirectory: packages/integration-test-app
-        condition: eq(variables.NoDeployOption, '')
+        condition: and(succeeded(), eq(variables.NoDeployOption, ''))
 
       - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/after-test.png
         displayName: Screenshot desktop after tests

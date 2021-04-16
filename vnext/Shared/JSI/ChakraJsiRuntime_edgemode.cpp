@@ -1,58 +1,52 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include <SystemChakraRuntime.h>
+
 #include <JSI/ByteArrayBuffer.h>
 #include <JSI/ChakraRuntime.h>
+#include <JSI/ChakraRuntimeFactory.h>
 #include <cxxreact/MessageQueueThread.h>
 #include "Unicode.h"
 
-#if !defined(CHAKRACORE)
-#include <jsrt.h>
+// From <chakrart.h>
+STDAPI_(JsErrorCode)
+JsStartDebugging();
 
 namespace Microsoft::JSI {
 
-void ChakraRuntime::setupNativePromiseContinuation() noexcept {
+#if defined(USE_EDGEMODE_JSRT) && !defined(CHAKRACORE)
+/*static*/ void ChakraRuntime::initRuntimeVersion() noexcept {}
+#endif
+
+SystemChakraRuntime::SystemChakraRuntime(ChakraRuntimeArgs &&args) noexcept : ChakraRuntime(std::move(args)) {
+  this->Init();
+}
+
+void SystemChakraRuntime::setupNativePromiseContinuation() noexcept {
   JsSetPromiseContinuationCallback(PromiseContinuationCallback, this);
 }
 
-// ES6 Promise callback
-void CALLBACK ChakraRuntime::PromiseContinuationCallback(JsValueRef funcRef, void *callbackState) noexcept {
-  ChakraRuntime *runtime = static_cast<ChakraRuntime *>(callbackState);
-  runtime->PromiseContinuation(funcRef);
-}
-
-void ChakraRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
-  if (runtimeArgs().jsQueue) {
-    JsAddRef(funcRef, nullptr);
-    runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
-      JsValueRef undefinedValue;
-      JsGetUndefinedValue(&undefinedValue);
-      ChakraVerifyJsErrorElseThrow(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
-      JsRelease(funcRef, nullptr);
-    });
-  }
-}
-
-void ChakraRuntime::startDebuggingIfNeeded() {
+void SystemChakraRuntime::startDebuggingIfNeeded() {
   if (runtimeArgs().enableDebugging)
     JsStartDebugging();
 }
 
-void ChakraRuntime::stopDebuggingIfNeeded() {
+void SystemChakraRuntime::stopDebuggingIfNeeded() {
   // NOP AFAIK
 }
 
-void ChakraRuntime::initRuntimeVersion() noexcept {
-  // NOP
-}
-
-std::unique_ptr<const facebook::jsi::Buffer> ChakraRuntime::generatePreparedScript(
+std::unique_ptr<const facebook::jsi::Buffer> SystemChakraRuntime::generatePreparedScript(
     const std::string & /*sourceURL*/,
     const facebook::jsi::Buffer &sourceBuffer) noexcept {
   const std::wstring scriptUTF16 =
       Microsoft::Common::Unicode::Utf8ToUtf16(reinterpret_cast<const char *>(sourceBuffer.data()), sourceBuffer.size());
 
+#ifdef CHAKRACORE
+  unsigned int bytecodeSize = 0;
+#else
   unsigned long bytecodeSize = 0;
+#endif
   if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) == JsNoError) {
     std::unique_ptr<ByteArrayBuffer> bytecodeBuffer(std::make_unique<ByteArrayBuffer>(bytecodeSize));
     if (JsSerializeScript(scriptUTF16.c_str(), bytecodeBuffer->data(), &bytecodeSize) == JsNoError) {
@@ -63,7 +57,7 @@ std::unique_ptr<const facebook::jsi::Buffer> ChakraRuntime::generatePreparedScri
   return nullptr;
 }
 
-facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
+facebook::jsi::Value SystemChakraRuntime::evaluateJavaScriptSimple(
     const facebook::jsi::Buffer &buffer,
     const std::string &sourceURL) {
   const std::wstring script16 =
@@ -80,7 +74,7 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
   return ToJsiValue(result);
 }
 
-bool ChakraRuntime::evaluateSerializedScript(
+bool SystemChakraRuntime::evaluateSerializedScript(
     const facebook::jsi::Buffer &scriptBuffer,
     const facebook::jsi::Buffer &serializedScriptBuffer,
     const std::string &sourceURL,
@@ -103,6 +97,8 @@ bool ChakraRuntime::evaluateSerializedScript(
   }
 }
 
-} // namespace Microsoft::JSI
+std::unique_ptr<facebook::jsi::Runtime> MakeSystemChakraRuntime(ChakraRuntimeArgs &&args) noexcept {
+  return std::make_unique<SystemChakraRuntime>(std::move(args));
+}
 
-#endif
+} // namespace Microsoft::JSI

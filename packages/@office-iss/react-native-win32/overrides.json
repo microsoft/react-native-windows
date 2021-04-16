@@ -3,45 +3,45 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-d477f8011",
+  "baseVersion": "0.0.0-d04ec4dc6",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "f4da69b0623292df17b4cb39406edf68fecabe9d"
+      "baseHash": "7c2f3e8ecf80e5229d4e1fdad2b6ef324acae0c4"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "ca978f1d83fd841a2aa9f30f3bfabb620de21273"
+      "baseHash": "84a9a90c70deaf3e42a67c82beafb1240c41bc95"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.win32.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseHash": "6ea428202edeea40370df390a6b8f7ab794270ac"
+      "baseHash": "99f0bc2c38daf35d5f08a0e0abeb5f21e583ce4e"
     },
     {
       "type": "patch",
       "file": "src/Libraries/BatchedBridge/MessageQueue.win32.js",
       "baseFile": "Libraries/BatchedBridge/MessageQueue.js",
-      "baseHash": "85eea8e9510b516c12e19fcfedc4553b990feb11",
+      "baseHash": "c47cdef67892acc92ca1df8aceef6909db24a029",
       "issue": 5807
     },
     {
       "type": "copy",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseHash": "a1534c3bec8ef3537345310684e129e7819b769f",
+      "baseHash": "54cf7e87dff60489f95adef777d73427eab0c866",
       "issue": 4578
     },
     {
       "type": "copy",
       "file": "src/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.android.js",
-      "baseHash": "1255817acafffa2461805c76a10daafc233de377",
+      "baseHash": "154f615eba014a1df9ff2d54591219dbbc53f381",
       "issue": 4578
     },
     {
@@ -152,7 +152,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "4f5fe56bdded55bbeee1b54356f82361bb1f8b02"
+      "baseHash": "506d84a349fef1ad532b7c02a1836fce7befa616"
     },
     {
       "type": "patch",
@@ -233,7 +233,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "9fb656bbb836310325789d897879f769124eb31c",
+      "baseHash": "bb70db26cb8d42b51037d43a6ab9eace183a0f71",
       "issue": 4320
     },
     {
@@ -376,7 +376,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Dimensions.win32.js",
       "baseFile": "Libraries/Utilities/Dimensions.js",
-      "baseHash": "33e55564b8716ff243e36de554cdcd90fccbe7e3"
+      "baseHash": "cc2a5b68d9207ece63b461f875ea91b7d1949cb6"
     },
     {
       "type": "platform",

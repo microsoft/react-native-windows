@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integrate 4/1 nightly RN build.",
+  "packageName": "node-rnw-rpc",
+  "email": "igklemen@microsoft.com",
+  "dependentChangeType": "patch"
+}

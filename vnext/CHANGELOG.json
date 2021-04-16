@@ -2,6 +2,120 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 15 Apr 2021 05:09:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.291",
+      "version": "0.0.0-canary.291",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix XAML Visibility for `display:none`",
+            "author": "agnel@microsoft.com",
+            "commit": "8a0d14474eefa9fc63a9675c8d26274fcdd78979",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "re-enabling 4267 & 4100",
+            "author": "agnel@microsoft.com",
+            "commit": "32432175497cf6b59e35f98f05dd99b0f154015e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Apr 2021 05:08:14 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.290",
+      "version": "0.0.0-canary.290",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable any platform color to be used in PlatformColor()",
+            "author": "asklar@microsoft.com",
+            "commit": "9bd1a7ba1339ab8cdcf1801f084543b1610ae53d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 13 Apr 2021 05:07:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.289",
+      "version": "0.0.0-canary.289",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixes bug where raw text update overwrites all text",
+            "author": "erozell@outlook.com",
+            "commit": "aee8bb2fdd3a93aec397c8e4404878764cf959be",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add functionality to setAccessibilityFocus method",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "79c6f3e7ceaebcb576a995a4c98ce13caa2f0d1e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 10 Apr 2021 05:06:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.288",
+      "version": "0.0.0-canary.288",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow swapping to System Chakra at runtime.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "5b105312907cc6ddf5f9b29aa42e32f14ae7460c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixes textTransform recursion",
+            "author": "erozell@outlook.com",
+            "commit": "278a3c1355de878c380d2025953f998f0ff6c8b2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 3/18 nightly RN build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "fd496306e530635b9654efaeefc90639b14c9f0e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Apr 2021 05:07:22 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.287",
+      "version": "0.0.0-canary.287",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix onKeyDown/onKeyUp events not firing after reload",
+            "author": "stecrain@microsoft.com",
+            "commit": "6db01618e7d120453c0de9174754e2de8cdaa56b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Apr 2021 05:05:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.286",
+      "version": "0.0.0-canary.286",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Revert \"Fix touch event crash (#6692)\"",
+            "author": "igklemen@microsoft.com",
+            "commit": "539f941e060949d5d31bce988eb71da2a6bacb67",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 02 Apr 2021 05:07:19 GMT",
       "tag": "react-native-windows_v0.0.0-canary.285",
       "version": "0.0.0-canary.285",
