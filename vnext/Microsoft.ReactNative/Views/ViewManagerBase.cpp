@@ -317,7 +317,6 @@ void ViewManagerBase::SetLayoutProps(
     float top,
     float width,
     float height) {
-
   if (auto uiManager = GetNativeUIManager(GetReactContext()).lock()) {
     auto parent = nodeToUpdate.GetParent();
     if (parent != -1) {
@@ -328,7 +327,7 @@ void ViewManagerBase::SetLayoutProps(
       }
     }
   }
-  
+
   auto element = viewToUpdate.as<xaml::UIElement>();
   if (element == nullptr) {
     // TODO: Assert
