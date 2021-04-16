@@ -347,6 +347,7 @@
     <ClInclude Include="Views\TextViewManager.h" />
     <ClInclude Include="Views\TouchEventHandler.h" />
     <ClInclude Include="Views\ViewControl.h" />
+    <ClInclude Include="Views\ViewManager.h" />
     <ClInclude Include="Views\ViewManagerBase.h" />
     <ClInclude Include="Views\ViewPanel.h" />
     <ClInclude Include="Views\ViewViewManager.h" />

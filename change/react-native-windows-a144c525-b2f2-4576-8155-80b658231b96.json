@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Layout wrongly overwrites width/height coming from view manager",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

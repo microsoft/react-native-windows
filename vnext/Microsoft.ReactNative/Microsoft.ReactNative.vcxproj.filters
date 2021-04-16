@@ -677,6 +677,9 @@
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
+    <ClInclude Include="Views\ViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
     <ClInclude Include="Utils\TextTransform.h">
       <Filter>Utils</Filter>
     </ClInclude>
