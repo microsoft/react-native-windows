@@ -30,12 +30,18 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraApi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraCoreRuntime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraApi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_edgemode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

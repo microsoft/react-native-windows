@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ChakraRuntime.h"
+#include "ChakraCoreRuntime.h"
 #include "ChakraRuntimeFactory.h"
 
 #include <cxxreact/MessageQueueThread.h>
@@ -36,14 +36,16 @@ struct FileVersionInfoResource {
 
 } // namespace
 
+ChakraCoreRuntime::ChakraCoreRuntime(ChakraRuntimeArgs &&args) noexcept : ChakraRuntime(std::move(args)) {
+  this->Init();
+}
+
+ChakraCoreRuntime::~ChakraCoreRuntime() noexcept {
+  stopDebuggingIfNeeded();
+}
+
 // TODO: We temporarily removed weak reference semantics from
 // ChakraCore based jsi::Runtime.
-
-// ES6 Promise callback
-void CALLBACK ChakraRuntime::PromiseContinuationCallback(JsValueRef funcRef, void *callbackState) noexcept {
-  ChakraRuntime *runtime = static_cast<ChakraRuntime *>(callbackState);
-  runtime->PromiseContinuation(funcRef);
-}
 
 void CALLBACK ChakraRuntime::PromiseRejectionTrackerCallback(
     JsValueRef promise,
@@ -52,18 +54,6 @@ void CALLBACK ChakraRuntime::PromiseRejectionTrackerCallback(
     void *callbackState) {
   ChakraRuntime *runtime = static_cast<ChakraRuntime *>(callbackState);
   runtime->PromiseRejectionTracker(promise, reason, handled);
-}
-
-void ChakraRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
-  if (runtimeArgs().jsQueue) {
-    JsAddRef(funcRef, nullptr);
-    runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
-      JsValueRef undefinedValue;
-      JsGetUndefinedValue(&undefinedValue);
-      ChakraVerifyJsErrorElseThrow(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
-      JsRelease(funcRef, nullptr);
-    });
-  }
 }
 
 void ChakraRuntime::PromiseRejectionTracker(JsValueRef /*promise*/, JsValueRef reason, bool handled) {
@@ -99,14 +89,14 @@ void ChakraRuntime::PromiseRejectionTracker(JsValueRef /*promise*/, JsValueRef r
   }
 }
 
-void ChakraRuntime::setupNativePromiseContinuation() noexcept {
+void ChakraCoreRuntime::setupNativePromiseContinuation() noexcept {
   if (runtimeArgs().enableNativePromiseSupport) {
     JsSetPromiseContinuationCallback(PromiseContinuationCallback, this);
     JsSetHostPromiseRejectionTracker(PromiseRejectionTrackerCallback, this);
   }
 }
 
-void ChakraRuntime::startDebuggingIfNeeded() {
+void ChakraCoreRuntime::startDebuggingIfNeeded() {
   auto &args = runtimeArgs();
   if (args.enableDebugging) {
     auto port = args.debuggerPort == 0 ? DebuggerDefaultPort : args.debuggerPort;
@@ -137,7 +127,7 @@ void ChakraRuntime::startDebuggingIfNeeded() {
   }
 }
 
-void ChakraRuntime::stopDebuggingIfNeeded() {
+void ChakraCoreRuntime::stopDebuggingIfNeeded() {
   if (m_debugService) {
     JsErrorCode result = m_debugService->Close();
 
@@ -149,7 +139,7 @@ void ChakraRuntime::stopDebuggingIfNeeded() {
   m_debugProtocolHandler = nullptr;
 }
 
-JsErrorCode ChakraRuntime::enableDebugging(
+JsErrorCode ChakraCoreRuntime::enableDebugging(
     JsRuntimeHandle runtime,
     std::string const &runtimeName,
     bool breakOnNextLine,
@@ -185,7 +175,7 @@ JsErrorCode ChakraRuntime::enableDebugging(
   return result;
 }
 
-void ChakraRuntime::ProcessDebuggerCommandQueue() {
+void ChakraCoreRuntime::ProcessDebuggerCommandQueue() {
   if (runtimeArgs().jsQueue) {
     runtimeArgs().jsQueue->runOnQueue([this]() {
       if (m_debugProtocolHandler) {
@@ -195,8 +185,8 @@ void ChakraRuntime::ProcessDebuggerCommandQueue() {
   }
 }
 
-/* static */ void ChakraRuntime::ProcessDebuggerCommandQueueCallback(void *callbackState) {
-  ChakraRuntime *runtime = reinterpret_cast<ChakraRuntime *>(callbackState);
+/* static */ void ChakraCoreRuntime::ProcessDebuggerCommandQueueCallback(void *callbackState) {
+  ChakraCoreRuntime *runtime = reinterpret_cast<ChakraCoreRuntime *>(callbackState);
 
   if (runtime) {
     runtime->ProcessDebuggerCommandQueue();
@@ -242,7 +232,7 @@ void ChakraRuntime::ProcessDebuggerCommandQueue() {
 #endif
 }
 
-std::unique_ptr<const facebook::jsi::Buffer> ChakraRuntime::generatePreparedScript(
+std::unique_ptr<const facebook::jsi::Buffer> ChakraCoreRuntime::generatePreparedScript(
     const std::string &sourceURL,
     const facebook::jsi::Buffer &sourceBuffer) noexcept {
   const std::wstring scriptUTF16 =
@@ -259,7 +249,7 @@ std::unique_ptr<const facebook::jsi::Buffer> ChakraRuntime::generatePreparedScri
   return nullptr;
 }
 
-facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
+facebook::jsi::Value ChakraCoreRuntime::evaluateJavaScriptSimple(
     const facebook::jsi::Buffer &buffer,
     const std::string &sourceURL) {
   JsValueRef sourceRef;
@@ -275,7 +265,7 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
   return ToJsiValue(result);
 }
 
-bool ChakraRuntime::evaluateSerializedScript(
+bool ChakraCoreRuntime::evaluateSerializedScript(
     const facebook::jsi::Buffer &scriptBuffer,
     const facebook::jsi::Buffer &serializedScriptBuffer,
     const std::string &sourceURL,
@@ -321,6 +311,10 @@ bool ChakraRuntime::evaluateSerializedScript(
   }
 
   return false;
+}
+
+std::unique_ptr<facebook::jsi::Runtime> MakeChakraCoreRuntime(ChakraRuntimeArgs &&args) noexcept {
+  return std::make_unique<ChakraCoreRuntime>(std::move(args));
 }
 
 } // namespace Microsoft::JSI
