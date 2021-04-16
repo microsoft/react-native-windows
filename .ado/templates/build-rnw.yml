@@ -67,3 +67,4 @@ steps:
   - template: upload-build-logs.yml
     parameters:
       buildLogDirectory: '${{ parameters.BuildLogDirectory }}'
+
