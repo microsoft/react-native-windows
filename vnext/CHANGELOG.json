@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 17 Apr 2021 05:08:13 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.293",
+      "version": "0.0.0-canary.293",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Layout wrongly overwrites width/height coming from view manager",
+            "author": "asklar@microsoft.com",
+            "commit": "dac28d771a058630d98f33f0e0f9ae1be225c3ce",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 16 Apr 2021 05:08:38 GMT",
       "tag": "react-native-windows_v0.0.0-canary.292",
       "version": "0.0.0-canary.292",

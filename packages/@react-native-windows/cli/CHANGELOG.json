@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 17 Apr 2021 05:08:13 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.68",
+      "version": "0.0.0-canary.68",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Always write nuget.config in init CLI",
+            "author": "asklar@microsoft.com",
+            "commit": "660de7bc81b67e4d2f1bb4ab475e085eefdd5ae7",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Mar 2021 05:06:57 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.67",
       "version": "0.0.0-canary.67",

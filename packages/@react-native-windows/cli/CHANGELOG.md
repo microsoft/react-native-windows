@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 25 Mar 2021 05:06:57 GMT and should not be manually modified.
+This log was last generated on Sat, 17 Apr 2021 05:08:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.68
+
+Sat, 17 Apr 2021 05:08:13 GMT
+
+### Changes
+
+- Always write nuget.config in init CLI (asklar@microsoft.com)
 
 ## 0.0.0-canary.67
 
