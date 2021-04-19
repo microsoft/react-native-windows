@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix filter project merge",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
