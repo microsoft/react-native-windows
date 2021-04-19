@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 19 Apr 2021 17:00:53 GMT",
+      "tag": "@react-native-windows/cli_v0.64.3",
+      "version": "0.64.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.64]adding nuget.configs",
+            "author": "agnel@microsoft.com",
+            "commit": "f9f4c89421686d53c0aefcee32f1750100cd04ab",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 29 Mar 2021 16:07:04 GMT",
       "tag": "@react-native-windows/cli_v0.64.2",
       "version": "0.64.2",

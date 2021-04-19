@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 05 Apr 2021 17:04:31 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Apr 2021 17:00:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.4
+
+Mon, 19 Apr 2021 17:00:53 GMT
+
+### Patches
+
+- Enable any platform color to be used in PlatformColor() (asklar@microsoft.com)
+- Calling UIManager.dispatchViewManagerCommand should trigger updates (30809111+acoates-ms@users.noreply.github.com)
+- Allow swapping to System Chakra at runtime. (julio.rocha@microsoft.com)
 
 ## 0.64.3
 

@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Apr 2021 17:00:53 GMT",
+      "tag": "react-native-windows_v0.64.4",
+      "version": "0.64.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Enable any platform color to be used in PlatformColor()",
+            "author": "asklar@microsoft.com",
+            "commit": "09ac2fd1485d17d3baac2d4e1b709306b18bfe5e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Calling UIManager.dispatchViewManagerCommand should trigger updates",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "ebf82d623c82652991990e0c9e627c3ad7ad422f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow swapping to System Chakra at runtime.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "d731a4f118124b89db8d5a1f3d626568556510e2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Apr 2021 17:04:31 GMT",
       "tag": "react-native-windows_v0.64.3",
       "version": "0.64.3",
