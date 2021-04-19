@@ -14,7 +14,11 @@ import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
 import Platform from '../../Utilities/Platform';
 import type EventEmitter from '../../vendor/emitter/EventEmitter';
 import type {EventSubscription} from '../../vendor/emitter/EventEmitter';
+<<<<<<< HEAD
 import NativeAccessibilityInfo from './NativeAccessibilityInfo';
+=======
+import NativeAccessibilityInfoAndroid from './NativeAccessibilityInfo';
+>>>>>>> 75fe11b9f (Integration Apr 1 - Apr 15)
 import NativeAccessibilityManagerIOS from './NativeAccessibilityManager';
 import legacySendAccessibilityEvent from './legacySendAccessibilityEvent';
 import type {ElementRef} from 'react';
