@@ -60,4 +60,4 @@ if (Platform.OS === 'android' || Platform.OS === 'win32') {
   );
 }
 
-module.exports = exported;
+export default exported;

@@ -12,8 +12,8 @@
   "dependencies": {
     "chai": "^4.2.0",
     "node-rnw-rpc": "^1.0.5-25",
-    "react": "17.0.1",
-    "react-native": "0.0.0-d04ec4dc6",
+    "react": "17.0.2",
+    "react-native": "0.0.0-ae07c53d0",
     "react-native-windows": "^0.0.0-canary.295"
   },
   "devDependencies": {
