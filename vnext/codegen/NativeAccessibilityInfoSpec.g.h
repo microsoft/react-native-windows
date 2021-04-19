@@ -19,6 +19,7 @@ struct AccessibilityInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(Callback<React::JSValue>) noexcept>{1, L"isTouchExplorationEnabled"},
       Method<void(double) noexcept>{2, L"setAccessibilityFocus"},
       Method<void(std::string) noexcept>{3, L"announceForAccessibility"},
+      Method<void(double, Callback<React::JSValue>) noexcept>{4, L"getRecommendedTimeoutMillis"},
   };
 
   template <class TModule>
@@ -45,6 +46,11 @@ struct AccessibilityInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "announceForAccessibility",
           "    REACT_METHOD(announceForAccessibility) void announceForAccessibility(std::string announcement) noexcept { /* implementation */ }}\n"
           "    REACT_METHOD(announceForAccessibility) static void announceForAccessibility(std::string announcement) noexcept { /* implementation */ }}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          4,
+          "getRecommendedTimeoutMillis",
+          "    REACT_METHOD(getRecommendedTimeoutMillis) void getRecommendedTimeoutMillis(double mSec, std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getRecommendedTimeoutMillis) static void getRecommendedTimeoutMillis(double mSec, std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}\n");
   }
 };
 

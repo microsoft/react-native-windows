@@ -15,9 +15,13 @@ import convertRequestBody from './convertRequestBody';
 
 // [Win32
 import type {RequestBody} from './convertRequestBody';
+<<<<<<< Upstream
+import Platform from '../Utilities/Platform';
+=======
 const NativeModules = require('../BatchedBridge/NativeModules');
 const RCTNetworkingNative = NativeModules.Networking;
 // Win32]
+>>>>>>> Override
 
 type Header = [string, string];
 
