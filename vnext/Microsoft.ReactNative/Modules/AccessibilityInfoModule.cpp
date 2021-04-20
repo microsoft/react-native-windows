@@ -71,7 +71,9 @@ void AccessibilityInfo::announceForAccessibility(std::string announcement) noexc
   });
 }
 
-void AccessibilityInfo::getRecommendedTimeoutMillis(double mSec, std::function<void(React::JSValue const &)> const & onSuccess) noexcept{
+void AccessibilityInfo::getRecommendedTimeoutMillis(
+    double mSec,
+    std::function<void(React::JSValue const &)> const &onSuccess) noexcept {
   mSec = 0;
 }
 
