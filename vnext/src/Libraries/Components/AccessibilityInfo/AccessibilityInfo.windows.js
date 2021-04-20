@@ -15,10 +15,14 @@ import Platform from '../../Utilities/Platform';
 import type EventEmitter from '../../vendor/emitter/EventEmitter';
 import type {EventSubscription} from '../../vendor/emitter/EventEmitter';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import NativeAccessibilityInfo from './NativeAccessibilityInfo';
 =======
 import NativeAccessibilityInfoAndroid from './NativeAccessibilityInfo';
 >>>>>>> 75fe11b9f (Integration Apr 1 - Apr 15)
+=======
+import NativeAccessibilityInfo from './NativeAccessibilityInfo';
+>>>>>>> 3962c031e (Make Requested Changes)
 import NativeAccessibilityManagerIOS from './NativeAccessibilityManager';
 import legacySendAccessibilityEvent from './legacySendAccessibilityEvent';
 import type {ElementRef} from 'react';
@@ -43,7 +47,7 @@ type AccessibilityEventTypes = 'click' | 'focus';
 
 // Mapping of public event names to platform-specific event names.
 const EventNames: Map<$Keys<AccessibilityEventDefinitions>, string> =
-  Platform.OS === 'android'
+  Platform.OS === 'android' || Platform.OS === 'windows'
     ? new Map([
         ['change', 'touchExplorationDidChange'],
         ['reduceMotionChanged', 'reduceMotionDidChange'],
@@ -189,7 +193,11 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#isReduceTransparencyEnabled
    */
   isReduceTransparencyEnabled(): Promise<boolean> {
+<<<<<<< HEAD
     if (Platform.OS === 'android' || Platform.OS === 'windows') {
+=======
+    if (Platform.OS === 'android' || Promise.OS === 'windows') {
+>>>>>>> 3962c031e (Make Requested Changes)
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {
