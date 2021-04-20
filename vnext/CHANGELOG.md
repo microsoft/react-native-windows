@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 17 Apr 2021 05:08:13 GMT and should not be manually modified.
+This log was last generated on Tue, 20 Apr 2021 05:06:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.294
+
+Tue, 20 Apr 2021 05:06:21 GMT
+
+### Changes
+
+- fix filter project merge (asklar@microsoft.com)
 
 ## 0.0.0-canary.293
 
