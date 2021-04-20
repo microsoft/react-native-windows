@@ -179,7 +179,7 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#isReduceTransparencyEnabled
    */
   isReduceTransparencyEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android' || Promise.OS === 'windows') {
+    if (Platform.OS === 'android' || Platform.OS === 'windows') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {
