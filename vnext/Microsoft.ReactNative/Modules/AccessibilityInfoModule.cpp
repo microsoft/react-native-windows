@@ -72,7 +72,7 @@ void AccessibilityInfo::announceForAccessibility(std::string announcement) noexc
 }
 
 void AccessibilityInfo::getRecommendedTimeoutMillis(double mSec, std::function<void(React::JSValue const &)> const & onSuccess) noexcept{
-  /* implementation */
+  mSec = 0;
 }
 
 } // namespace Microsoft::ReactNative
