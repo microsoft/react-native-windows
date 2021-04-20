@@ -14,7 +14,7 @@ import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
 import Platform from '../../Utilities/Platform';
 import type EventEmitter from '../../vendor/emitter/EventEmitter';
 import type {EventSubscription} from '../../vendor/emitter/EventEmitter';
-import NativeAccessibilityInfoAndroid from './NativeAccessibilityInfo';
+import NativeAccessibilityInfo from './NativeAccessibilityInfo';
 import NativeAccessibilityManagerIOS from './NativeAccessibilityManager';
 import legacySendAccessibilityEvent from './legacySendAccessibilityEvent';
 import type {ElementRef} from 'react';
@@ -39,7 +39,7 @@ type AccessibilityEventTypes = 'click' | 'focus';
 
 // Mapping of public event names to platform-specific event names.
 const EventNames: Map<$Keys<AccessibilityEventDefinitions>, string> =
-  Platform.OS === 'android'
+  Platform.OS === 'android' || Platform.OS === 'windows'
     ? new Map([
         ['change', 'touchExplorationDidChange'],
         ['reduceMotionChanged', 'reduceMotionDidChange'],
@@ -75,7 +75,7 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#isBoldTextEnabled
    */
   isBoldTextEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android' || Platform.OS === 'windows') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {
@@ -100,7 +100,7 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#isGrayscaleEnabled
    */
   isGrayscaleEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android' || Platform.OS === 'windows') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {
@@ -125,7 +125,7 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#isInvertColorsEnabled
    */
   isInvertColorsEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android' || Platform.OS === 'windows') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {
@@ -151,9 +151,9 @@ const AccessibilityInfo = {
    */
   isReduceMotionEnabled(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      if (Platform.OS === 'android') {
-        if (NativeAccessibilityInfoAndroid != null) {
-          NativeAccessibilityInfoAndroid.isReduceMotionEnabled(resolve);
+      if (Platform.OS === 'android' || Platform.OS === 'windows') {
+        if (NativeAccessibilityInfo != null) {
+          NativeAccessibilityInfo.isReduceMotionEnabled(resolve);
         } else {
           reject(null);
         }
@@ -179,7 +179,7 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#isReduceTransparencyEnabled
    */
   isReduceTransparencyEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android' || Promise.OS === 'windows') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {
@@ -205,9 +205,9 @@ const AccessibilityInfo = {
    */
   isScreenReaderEnabled(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      if (Platform.OS === 'android') {
-        if (NativeAccessibilityInfoAndroid != null) {
-          NativeAccessibilityInfoAndroid.isTouchExplorationEnabled(resolve);
+      if (Platform.OS === 'android' || Platform.OS === 'windows') {
+        if (NativeAccessibilityInfo != null) {
+          NativeAccessibilityInfo.isTouchExplorationEnabled(resolve);
         } else {
           reject(null);
         }
@@ -298,8 +298,8 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#announceforaccessibility
    */
   announceForAccessibility(announcement: string): void {
-    if (Platform.OS === 'android') {
-      NativeAccessibilityInfoAndroid?.announceForAccessibility(announcement);
+    if (Platform.OS === 'android' || Platform.OS === 'windows') {
+      NativeAccessibilityInfo?.announceForAccessibility(announcement);
     } else {
       NativeAccessibilityManagerIOS?.announceForAccessibility(announcement);
     }
@@ -332,8 +332,8 @@ const AccessibilityInfo = {
   getRecommendedTimeoutMillis(originalTimeout: number): Promise<number> {
     if (Platform.OS === 'android') {
       return new Promise((resolve, reject) => {
-        if (NativeAccessibilityInfoAndroid?.getRecommendedTimeoutMillis) {
-          NativeAccessibilityInfoAndroid.getRecommendedTimeoutMillis(
+        if (NativeAccessibilityInfo?.getRecommendedTimeoutMillis) {
+          NativeAccessibilityInfo.getRecommendedTimeoutMillis(
             originalTimeout,
             resolve,
           );

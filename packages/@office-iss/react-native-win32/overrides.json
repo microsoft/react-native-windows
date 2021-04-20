@@ -31,7 +31,7 @@
       "issue": 5807
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
       "baseHash": "62ba2b9057a68227a1328b338dfa83b2c72925ae",
