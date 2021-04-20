@@ -14,15 +14,7 @@ import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
 import Platform from '../../Utilities/Platform';
 import type EventEmitter from '../../vendor/emitter/EventEmitter';
 import type {EventSubscription} from '../../vendor/emitter/EventEmitter';
-<<<<<<< HEAD
-<<<<<<< HEAD
 import NativeAccessibilityInfo from './NativeAccessibilityInfo';
-=======
-import NativeAccessibilityInfoAndroid from './NativeAccessibilityInfo';
->>>>>>> 75fe11b9f (Integration Apr 1 - Apr 15)
-=======
-import NativeAccessibilityInfo from './NativeAccessibilityInfo';
->>>>>>> 3962c031e (Make Requested Changes)
 import NativeAccessibilityManagerIOS from './NativeAccessibilityManager';
 import legacySendAccessibilityEvent from './legacySendAccessibilityEvent';
 import type {ElementRef} from 'react';
@@ -194,10 +186,14 @@ const AccessibilityInfo = {
    */
   isReduceTransparencyEnabled(): Promise<boolean> {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (Platform.OS === 'android' || Platform.OS === 'windows') {
 =======
     if (Platform.OS === 'android' || Promise.OS === 'windows') {
 >>>>>>> 3962c031e (Make Requested Changes)
+=======
+    if (Platform.OS === 'android' || Platform.OS === 'windows') {
+>>>>>>> e4793e81e (Fix Typo, Fix New API)
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {
