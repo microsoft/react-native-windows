@@ -2,6 +2,242 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 17 Apr 2021 05:08:13 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.68",
+      "version": "0.0.0-canary.68",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Always write nuget.config in init CLI",
+            "author": "asklar@microsoft.com",
+            "commit": "660de7bc81b67e4d2f1bb4ab475e085eefdd5ae7",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 25 Mar 2021 05:06:57 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.67",
+      "version": "0.0.0-canary.67",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix app template to use app.json's name for main component name",
+            "author": "jthysell@microsoft.com",
+            "commit": "0ee306b5f13ed42d2cfb4dc54a8bffab374ef03b",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Fix deploy of x64 when x86 has already been built",
+            "author": "asklar@microsoft.com",
+            "commit": "76ffc25b7b98d555729e53151aa47d7cf9f28aeb",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 23 Mar 2021 05:06:08 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.66",
+      "version": "0.0.0-canary.66",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Autolinking of non-direct dependencies doesn't add the project to the solution",
+            "author": "asklar@microsoft.com",
+            "commit": "97fdff576d9f0d77f60be487220acf3bbc4405f4",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 14 Mar 2021 05:06:38 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.65",
+      "version": "0.0.0-canary.65",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "update to newer cppwinrt, 2-3% reduction in binary size",
+            "author": "asklar@microsoft.com",
+            "commit": "286adbe692092f5268fecf0ec7dc8f4467a9eed0",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Bump xmldom from 0.3.0 to 0.5.0",
+            "author": "asklar@microsoft.com",
+            "commit": "ce0a2f118a3860befbeebfa61dcb8025e650f14a",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Mar 2021 05:07:46 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.64",
+      "version": "0.0.0-canary.64",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Include Hermes NuGet Package By Default",
+            "author": "ngerlem@microsoft.com",
+            "commit": "89ceb6d7c2e76bd43b8c2264a2b5243dab1f6e51",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 23 Feb 2021 05:06:42 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.63",
+      "version": "0.0.0-canary.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix autolinking for solutions that have 'Any CPU' projects",
+            "author": "asklar@microsoft.com",
+            "commit": "e2ab2be6d6367dad6132c9897c27de478e4f510b",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 20 Feb 2021 05:06:12 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.62",
+      "version": "0.0.0-canary.62",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix projectName issue with C# projects and deploy tool version check",
+            "author": "asklar@microsoft.com",
+            "commit": "27f894c831735c6a41497b7dbd28527672599e6c",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 18 Feb 2021 05:07:11 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.61",
+      "version": "0.0.0-canary.61",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Avoid MaxPath issue with telemetry in UnitTest project",
+            "author": "dannyvv@microsoft.com",
+            "commit": "ba25733c4bc09d74796d80a011ac9ddf5fc67adf",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Integrate rnw-dependencies into react-native doctor",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "fe0fe222dffe5f097553d5201a42a34f63f95adc",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Fixes autolink check error to incude command to fix it",
+            "author": "jthysell@microsoft.com",
+            "commit": "294fea85543ed6c7e65972cfd42a1e8f96ac24cb",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 14 Feb 2021 05:06:10 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.60",
+      "version": "0.0.0-canary.60",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update WinUI 3 package to Preview 4",
+            "author": "asklar@microsoft.com",
+            "commit": "4eaeb870a85038fef7e0396349482da056f23689",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "fix xml indentation of autolinkedNativeModules.g.targets",
+            "author": "asklar@microsoft.com",
+            "commit": "3ff91dcef101db8369ddb8b9446632a80be32b45",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Feb 2021 05:19:35 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.59",
+      "version": "0.0.0-canary.59",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "move autolink FS operations to async",
+            "author": "asklar@microsoft.com",
+            "commit": "d7a56e503a532058321fc962664fb013e531541d",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 11 Feb 2021 05:08:29 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.58",
+      "version": "0.0.0-canary.58",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Refactor autolinking code",
+            "author": "asklar@microsoft.com",
+            "commit": "3a875c2bf27354dc0b5cf96a291ab9105bf3a774",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Rename \"BuildFlags.props\" to \"ExperimentalFeatures.props\"",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Better dependency warning on run-windows build error",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cf6a97e48f5a8ae59fdb29ef39e71800394a73dc",
+            "package": "@react-native-windows/cli"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.1.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.2.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ab41a9b88db59cba0eae1ff7a59c1b550cc8c2bf",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Feb 2021 05:06:37 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.57",
+      "version": "0.0.0-canary.57",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Build apps for either/or WinUI 3 or XAML",
+            "author": "asklar@microsoft.com",
+            "commit": "504cd4293df706f9089562bb630242c13ec4028f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Feb 2021 05:07:37 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.56",
       "version": "0.0.0-canary.56",

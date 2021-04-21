@@ -10,15 +10,19 @@ const fs = require('fs');
 const path = require('path');
 
 const {
+  argv,
   cleanTask,
   eslintTask,
   logger,
   jestTask,
+  option,
   series,
   task,
   tscTask,
   tscWatchTask,
 } = require('just-scripts');
+
+option('updateSnapshot', {alias: 'u', boolean: true})
 
 task('clean', cleanTask(['lib-commonjs']));
 
@@ -43,7 +47,7 @@ task(
   'unitTest',
   jestTask({
     config: require.resolve('@rnw-scripts/jest-unittest-config'),
-    _: ['--verbose'],
+    updateSnapshot: argv().updateSnapshot
   }),
 );
 task(
@@ -51,7 +55,7 @@ task(
   jestTask({
     config: require.resolve('@rnw-scripts/jest-e2e-config'),
     runInBand: true,
-    _: ['--verbose'],
+    updateSnapshot: argv().updateSnapshot
   }),
 );
 

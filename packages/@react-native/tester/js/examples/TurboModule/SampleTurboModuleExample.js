@@ -8,8 +8,6 @@
  * @flow strict-local
  */
 
-'use strict';
-
 import NativeSampleTurboModule from 'react-native/Libraries/TurboModule/samples/NativeSampleTurboModule';
 import type {RootTag} from 'react-native/Libraries/ReactNative/RootTag';
 import {
@@ -77,14 +75,14 @@ class SampleTurboModuleExample extends React.Component<{||}, State> {
 
   _setResult(name, result) {
     this.setState(({testResults}) => ({
-      /* $FlowFixMe(>=0.122.0 site=react_native_fb) This comment suppresses an
-       * error found when Flow v0.122.0 was deployed. To see the error, delete
-       * this comment and run Flow. */
+      /* $FlowFixMe[cannot-spread-indexer] (>=0.122.0 site=react_native_fb)
+       * This comment suppresses an error found when Flow v0.122.0 was
+       * deployed. To see the error, delete this comment and run Flow. */
       testResults: {
         ...testResults,
-        /* $FlowFixMe(>=0.111.0 site=react_native_fb) This comment suppresses
-         * an error found when Flow v0.111 was deployed. To see the error,
-         * delete this comment and run Flow. */
+        /* $FlowFixMe[invalid-computed-prop] (>=0.111.0 site=react_native_fb)
+         * This comment suppresses an error found when Flow v0.111 was
+         * deployed. To see the error, delete this comment and run Flow. */
         [name]: {value: result, type: typeof result},
       },
     }));

@@ -10,8 +10,6 @@
  * @flow
  */
 
-'use strict';
-
 import type {Spec} from './NativeDeviceInfo';
 
 const DeviceInfo: Spec = {

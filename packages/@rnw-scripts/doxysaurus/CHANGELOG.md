@@ -1,8 +1,24 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Mar 2021 05:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.2
+
+Thu, 04 Mar 2021 05:05:53 GMT
+
+### Patches
+
+- Update yargs version used and patch y18n version 4.0.0 to 4.0.1 as used by detox of transitive dependencies to address https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-7774 (dannyvv@microsoft.com)
+
+## 0.1.1
+
+Thu, 11 Feb 2021 05:08:29 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.0 (ngerlem@microsoft.com)
 
 ## 0.1.0
 

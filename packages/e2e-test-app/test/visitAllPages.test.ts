@@ -5,7 +5,7 @@
  * @format
  */
 
-import {goToComponentExample, goToApiExample} from './Helpers';
+import {goToComponentExample, goToApiExample} from './framework';
 
 describe('visitAllPages', () => {
   const componentExamples = [
@@ -14,6 +14,9 @@ describe('visitAllPages', () => {
     'DatePicker',
     'Fast Path Texts',
     'FlatList',
+    'FlatList with Separators',
+    'FlatList onViewableItemsChanged',
+    'FlatList onEndReached',
     'Flyout',
     'Glyph UWP',
     'Image',

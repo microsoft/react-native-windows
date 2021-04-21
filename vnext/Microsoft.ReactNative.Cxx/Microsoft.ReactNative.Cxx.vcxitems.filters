@@ -145,6 +145,7 @@
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.h">
       <Filter>TurboModule</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DesktopWindowBridge.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="JSI">

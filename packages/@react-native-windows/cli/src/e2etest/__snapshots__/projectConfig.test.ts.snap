@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`projectConfig - BlankApp (Ignore react-native.config.js) 1`] = `null`;
+
+exports[`projectConfig - BlankApp (Use react-native.config.js) 1`] = `null`;
+
+exports[`projectConfig - MissingProjectFilesApp (Ignore react-native.config.js) 1`] = `
+Object {
+  "folder": StringContaining "MissingProjectFilesApp",
+  "project": Object {
+    "projectFile": "Error: No app project file found, please specify in react-native.config.",
+  },
+  "solutionFile": "Error: No app solution file found, please specify in react-native.config.",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - MissingProjectFilesApp (Use react-native.config.js) 1`] = `
+Object {
+  "folder": StringContaining "MissingProjectFilesApp",
+  "project": Object {
+    "projectFile": "Error: Project is required but not specified in react-native.config.",
+  },
+  "solutionFile": "Error: Solution file is required but not specified in react-native.config.",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - SimpleCSharpApp (Ignore react-native.config.js) 1`] = `
+Object {
+  "folder": StringContaining "SimpleCSharpApp",
+  "project": Object {
+    "projectFile": "SimpleCSharpApp\\\\SimpleCSharpApp.csproj",
+    "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
+    "projectLang": "cs",
+    "projectName": "SimpleCSharpApp",
+  },
+  "solutionFile": "SimpleCSharpApp.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - SimpleCSharpApp (Use react-native.config.js) 1`] = `
+Object {
+  "folder": StringContaining "SimpleCSharpApp",
+  "project": Object {
+    "projectFile": "SimpleCSharpApp\\\\SimpleCSharpApp.csproj",
+    "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
+    "projectLang": "cs",
+    "projectName": "SimpleCSharpApp",
+  },
+  "solutionFile": "SimpleCSharpApp.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - SimpleCppApp (Ignore react-native.config.js) 1`] = `
+Object {
+  "folder": StringContaining "SimpleCppApp",
+  "project": Object {
+    "projectFile": "SimpleCppApp\\\\SimpleCppApp.vcxproj",
+    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectLang": "cpp",
+    "projectName": "SimpleCppApp",
+  },
+  "solutionFile": "SimpleCppApp.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - SimpleCppApp (Use react-native.config.js) 1`] = `
+Object {
+  "folder": StringContaining "SimpleCppApp",
+  "project": Object {
+    "projectFile": "SimpleCppApp\\\\SimpleCppApp.vcxproj",
+    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectLang": "cpp",
+    "projectName": "SimpleCppApp",
+  },
+  "solutionFile": "SimpleCppApp.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - WithIndirectDependency (Ignore react-native.config.js) 1`] = `
+Object {
+  "folder": StringContaining "WithIndirectDependency",
+  "project": Object {
+    "projectFile": "Error: Too many app project files found, please specify in react-native.config.",
+  },
+  "solutionFile": "WithIndirectDependency.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - WithIndirectDependency (Use react-native.config.js) 1`] = `
+Object {
+  "folder": StringContaining "WithIndirectDependency",
+  "project": Object {
+    "projectFile": "WithIndirectDependency\\\\WithIndirectDependency.vcxproj",
+    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectLang": "cpp",
+    "projectName": "WithIndirectDependency",
+  },
+  "solutionFile": "WithIndirectDependency.sln",
+  "sourceDir": "windows",
+  "useWinUI3": false,
+}
+`;
+
+exports[`projectConfig - WithWinUI3 (Ignore react-native.config.js) 1`] = `
+Object {
+  "folder": StringContaining "WithWinUI3",
+  "project": Object {
+    "projectFile": "WithWinUI3\\\\WithWinUI3.vcxproj",
+    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectLang": "cpp",
+    "projectName": "WithWinUI3",
+  },
+  "solutionFile": "WithWinUI3.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - WithWinUI3 (Use react-native.config.js) 1`] = `
+Object {
+  "folder": StringContaining "WithWinUI3",
+  "project": Object {
+    "projectFile": "WithWinUI3\\\\WithWinUI3.vcxproj",
+    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectLang": "cpp",
+    "projectName": "WithWinUI3",
+  },
+  "solutionFile": "WithWinUI3.sln",
+  "sourceDir": "windows",
+  "useWinUI3": true,
+}
+`;
+
+exports[`useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
+<packages>
+  <package id=\\"Microsoft.ReactNative.Cxx\\" version=\\"1.0.0\\" targetFramework=\\"native\\"/>
+  <package id=\\"Microsoft.WinUI\\" version=\\"3.0.0-preview4.210210.4\\" targetFramework=\\"native\\"/>
+</packages>"
+`;
+
+exports[`useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props 2`] = `
+"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
+<Project xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
+
+  <PropertyGroup Label=\\"Microsoft.ReactNative Experimental Features\\">
+    
+    <!--
+      Enables default usage of Hermes.
+      
+      See https://microsoft.github.io/react-native-windows/docs/0.64/hermes
+    -->
+    <UseHermes>false</UseHermes>
+
+    <!--
+      Changes compilation to assume use of WinUI 3 instead of System XAML.
+      Requires creation of new project.
+
+      See https://microsoft.github.io/react-native-windows/docs/0.64/winui3
+    -->
+    <UseWinUI3>true</UseWinUI3>
+  
+  </PropertyGroup>
+
+</Project>"
+`;

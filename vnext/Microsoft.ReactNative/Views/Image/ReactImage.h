@@ -13,7 +13,8 @@
 
 namespace react::uwp {
 
-enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2, Svg = 3 };
+enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2 };
+enum class ImageSourceFormat { Bitmap = 0, Svg = 1 };
 
 struct ReactImageSource {
   std::string uri;
@@ -25,6 +26,7 @@ struct ReactImageSource {
   double scale = 1.0;
   bool packagerAsset = false;
   ImageSourceType sourceType = ImageSourceType::Uri;
+  ImageSourceFormat sourceFormat = ImageSourceFormat::Bitmap;
 };
 
 struct ReactImage : xaml::Controls::GridT<ReactImage> {
@@ -71,6 +73,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
 
   bool m_useCompositionBrush{false};
   float m_blurRadius{0};
+  int m_imageSourceId{0};
   ReactImageSource m_imageSource;
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
   winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};

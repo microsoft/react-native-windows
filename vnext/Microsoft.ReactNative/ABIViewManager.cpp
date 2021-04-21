@@ -53,9 +53,15 @@ const wchar_t *ABIViewManager::GetName() const {
   return m_name.c_str();
 }
 
-xaml::DependencyObject ABIViewManager::CreateViewCore(int64_t) {
-  auto view = m_viewManager.CreateView();
-  return view;
+xaml::DependencyObject ABIViewManager::CreateViewCore(
+    int64_t,
+    const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  if (auto viewCreateProps = m_viewManager.try_as<IViewManagerCreateWithProperties>()) {
+    auto view = viewCreateProps.CreateViewWithProperties(
+        MakeJSValueTreeReader(winrt::Microsoft::ReactNative::JSValue(props.Copy())));
+    return view.as<xaml::DependencyObject>();
+  }
+  return m_viewManager.CreateView();
 }
 
 void ABIViewManager::GetExportedViewConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
@@ -94,6 +100,9 @@ void ABIViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValu
         case ViewManagerPropertyType::Color:
           writer.WriteString(L"Color");
           break;
+        case ViewManagerPropertyType::Function:
+          writer.WriteString(L"function");
+          break;
       }
     }
   }
@@ -107,7 +116,7 @@ void ABIViewManager::UpdateProperties(
 
     if (props.size() > 0) {
       m_viewManagerWithNativeProperties.UpdateProperties(
-          view, MakeJSValueTreeReader(winrt::Microsoft::ReactNative::JSValue(std::move(props.Copy()))));
+          view, MakeJSValueTreeReader(winrt::Microsoft::ReactNative::JSValue(props.Copy())));
     }
   }
 

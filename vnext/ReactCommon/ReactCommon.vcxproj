@@ -65,7 +65,7 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemDefinitionGroup>
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>
@@ -78,6 +78,11 @@
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4715;4251;4800;4804;4305;4722;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessToFile>false</PreprocessToFile>
+      <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <!--
+        Using Strict FloatingPointModel on x64 to workaround a compiler issue, See https://github.com/microsoft/react-native-windows/issues/4122
+      -->
+      <FloatingPointModel Condition="'$(Platform)' == 'x64'">Strict</FloatingPointModel>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -124,6 +129,7 @@
     <ClInclude Include="$(YogaDir)\yoga\YGMacros.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGNodeList.h" />
     <ClInclude Include="$(YogaDir)\yoga\Yoga.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.cpp" />
@@ -131,7 +137,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBundleType.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSIndexedRAMBundle.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\MethodCall.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\MethodCall.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ModuleRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\RAMBundleRegistry.cpp" />
@@ -144,28 +150,32 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\log.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(YogaDir)\yoga\log.cpp"/>
     <!-- We should ideally upstream a fix for missing stdexcept, but Yoga hasn't been accepting PRs as of May 2020 -->
-    <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" ForcedIncludeFiles="stdexcept" />
+    <ClCompile Include="$(YogaDir)\yoga\Utils.cpp">
+      <ForcedIncludeFiles>stdexcept;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp"/>
+    <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp"/>
+    <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp"/>
+    <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp"/>
+    <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp"/>
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBuffer.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\TransactionTelemetry.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBufferBuilder.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp" />
     <!--
-      Using Strict FloatingPointModel on x64 to workaround a compiler issue, See https://github.com/microsoft/react-native-windows/issues/4122
       Using a patched copy of Yoga due to https://github.com/microsoft/react-native-windows/issues/3994
     -->
-    <ClCompile Condition="'$(Platform)' == 'x64'" Include=".\Yoga.cpp" AdditionalIncludeDirectories="$(YogaDir)\yoga;%(AdditionalIncludeDirectories)" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" FloatingPointModel="Strict" />
-    <ClCompile Condition="'$(Platform)' != 'x64'" Include=".\Yoga.cpp" AdditionalIncludeDirectories="$(YogaDir)\yoga;%(AdditionalIncludeDirectories)" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="Yoga.cpp" AdditionalIncludeDirectories="$(YogaDir)\yoga;%(AdditionalIncludeDirectories)"/>
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.h" />
@@ -174,7 +184,7 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.h" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp" DisableSpecificWarnings="4267;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
@@ -198,5 +208,13 @@
     <Error Condition="!Exists('$(ReactNativePackageDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
     <Error Condition="!Exists('$(YogaDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
   </Target>
+  <ItemGroup>
+    <TemporaryReactCommonPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilReactCommonUpdate\**\*.*" />
+  </ItemGroup>
   <Target Name="Deploy" />
+  <!-- Reenable this task if we need to temporarily replace any folly files for fixes, while we wait for PRs to land in folly -->
+  <Target Name="ApplyReactCommonTemporaryPatch" BeforeTargets="PrepareForBuild">
+    <Copy DestinationFiles="@(TemporaryReactCommonPatchFiles->'$(ReactNativeDir)\ReactCommon\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryReactCommonPatchFiles)" />
+  </Target>
+
 </Project>

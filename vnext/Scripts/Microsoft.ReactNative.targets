@@ -9,7 +9,7 @@
   </PropertyGroup>
   
   <ItemGroup Condition="'$(TargetPlatformIdentifier)' == 'UAP'">
-    <Reference Include="$(MSBuildThisFileDirectory)..\..\lib\uap10.0\Microsoft.ReactNative.winmd">
+    <Reference Include="$(MSBuildThisFileDirectory)..\..\lib\uap10.0\Microsoft.ReactNative.winmd" Private="false">
       <Implementation>Microsoft.ReactNative.dll</Implementation>
     </Reference>
     

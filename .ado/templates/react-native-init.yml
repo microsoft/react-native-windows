@@ -67,6 +67,8 @@ steps:
       node .ado/scripts/npmAddUser.js user pass mail@nomail.com http://localhost:4873
     displayName: Add npm user to verdaccio
 
+  - template: ../templates/compute-beachball-branch-name.yml
+
   - script: |
       npx --no-install beachball publish --branch origin/$(BeachBallBranchName) --no-push --registry http://localhost:4873 --yes --access public --changehint "Run `yarn change` from root of repo to generate a change file."
     displayName: Publish packages to verdaccio
@@ -106,7 +108,7 @@ steps:
   - task: CmdLine@2
     displayName: Init new lib project
     inputs:
-      script: npx create-react-native-module --module-name "testcli" testcli
+      script: npx create-react-native-module --package-name "testcli" testcli
       workingDirectory: $(Agent.BuildDirectory)
     condition: and(succeeded(), eq(variables['localProjectType'], 'lib'))
   
@@ -192,6 +194,13 @@ steps:
     displayName: React Native Info
     inputs:
       script: npx react-native info
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+
+  # Verify react-native doctor command works
+  - task: CmdLine@2
+    displayName: React Native Doctor
+    inputs:
+      script: npx react-native doctor
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - task: CmdLine@2

@@ -11,70 +11,158 @@ import "IReactPropertyBag.idl";
 
 #include "DocString.h"
 
-namespace Microsoft.ReactNative {
-
+namespace Microsoft.ReactNative
+{
 #ifndef CORE_ABI
   [webhosthidden]
-  interface IReactSettingsSnapshot {
+  DOC_STRING("An immutable snapshot of the @ReactInstanceSettings used to create the current React instance.")
+  interface IReactSettingsSnapshot
+  {
+    DOC_STRING(
+      "A read-only snapshot of the @ReactInstanceSettings.UseWebDebugger property value "
+      "at the time when the React instance was created.\n"
+      "Controls whether the instance JavaScript runs in a remote environment such as within a browser.\n"
+      "By default, this is using a browser navigated to http://localhost:8081/debugger-ui served by Metro/Haul.\n"
+      "Debugging will start as soon as the react native instance is loaded.")
     Boolean UseWebDebugger { get; };
+
+    DOC_STRING(
+      "A read-only snapshot of the @ReactInstanceSettings.UseFastRefresh property value "
+      "at the time when the React instance was created.\n"
+      "Controls whether the instance triggers the hot module reload logic when it first loads the instance.\n"
+      "Most edits should be visible within a second or two without the instance having to reload.\n"
+      "Non-compatible changes still cause full reloads.\n"
+      "See [Fast Refresh](https://reactnative.dev/docs/fast-refresh) for more information on Fast Refresh.")
     Boolean UseFastRefresh { get; };
+
+    DOC_STRING(
+      "A read-only snapshot of the @ReactInstanceSettings.UseDirectDebugger property value "
+      "at the time when the React instance was created.\n"
+      "Enables debugging in the JavaScript engine (if supported).\n"
+      "For Chakra this enables debugging of the JS runtime directly within the app using "
+      "Visual Studio -> Attach to process (Script)")
     Boolean UseDirectDebugger { get; };
+
+    DOC_STRING(
+      "A read-only snapshot of the @ReactInstanceSettings.DebuggerBreakOnNextLine property value "
+      "at the time when the React instance was created.\n"
+      "For direct debugging, controls whether to break on the next line of JavaScript that is executed.\n"
+      "This can help debug issues hit early in the JavaScript bundle load.\n"
+      "***Note: this is not supported with the Chakra JS engine which is the currently used JavaScript engine. "
+      "As a workaround you could add the `debugger` keyword in the beginning of the bundle.***")
     Boolean DebuggerBreakOnNextLine { get; };
+
+    DOC_STRING(
+      "A read-only snapshot of the @ReactInstanceSettings.DebuggerPort property value "
+      "at the time when the React instance was created.\n"
+      "When @.UseDirectDebugger is enabled, this controls the port that the JavaScript engine debugger will run on.")
     UInt16 DebuggerPort { get; };
+
+
+    DOC_STRING(
+      "A read-only snapshot of the @ReactInstanceSettings.DebugBundlePath property value "
+      "at the time when the React instance was created.\n"
+      "When loading from a bundle server (such as metro), this is the path that will be requested from the server.")
     String DebugBundlePath { get; };
+
+    DOC_STRING(
+      "A read-only snapshot of the @ReactInstanceSettings.BundleRootPath property value "
+      "at the time when the React instance was created.\n"
+      "Base path used for the location of the bundle.")
     String BundleRootPath { get; };
+
+    DOC_STRING(
+      "A read-only snapshot of the @ReactInstanceSettings.SourceBundleHost property value "
+      "at the time when the React instance was created.\n"
+      "When using @ReactInstanceSettings.UseFastRefresh, @ReactInstanceSettings.UseLiveReload, or @ReactInstanceSettings.UseWebDebugger this is the server hostname "
+      "that will be used to load the bundle from.")
     String SourceBundleHost { get; };
+
+    DOC_STRING(
+      "A read-only snapshot of the @ReactInstanceSettings.SourceBundlePort property value "
+      "at the time when the React instance was created.\n"
+      "When using @ReactInstanceSettings.UseFastRefresh, @ReactInstanceSettings.UseLiveReload, or @ReactInstanceSettings.UseWebDebugger this is the server port "
+      "that will be used to load the bundle from.")
     UInt16 SourceBundlePort { get; };
+
+    DOC_STRING(
+      "A read-only snapshot of the @ReactInstanceSettings.JavaScriptBundleFile property value "
+      "at the time when the React instance was created.\n"
+      "The name of the JavaScript bundle file to load. This should be a relative path from @.BundleRootPath. "
+      "The `.bundle` extension will be appended to the end, when looking for the bundle file.")
     String JavaScriptBundleFile { get; };
   }
 #endif
 
   [webhosthidden]
   DOC_STRING(
-    "The `IReactContext` object is given to native modules to communicate with other native modules, views, application, and the React Native instance. \n"
-    "It has the same lifetime as the React instance. When the React instance is reloaded or unloaded, the `IReactContext` is destroyed. \n"
-    "- Use the Properties to share native module's data with other components. \n"
-    "- Use the Notifications to exchange events with other components. \n"
-    "- Use @.CallJSFunction to call JavaScript functions, and @.EmitJSEvent to raise JavaScript events. \n"
-    "- Use @.UIDispatcher to schedule work in UI thread. \n"
-    "- Use @.JSDispatcher to schedule work in UI thread.")
-  interface IReactContext {
+    "The `IReactContext` object is a weak pointer to the React instance. "
+    "It allows native modules and view managers to communicate with the application, and with other "
+    "native modules and view managers.\n"
+    "Since the @IReactContext is a weak pointer to the React instance, some of its functionality becomes unavailable "
+    "after the React instance is unloaded. When a React instance is reloaded inside of the @ReactNativeHost, the "
+    "previous React instance is unloaded and then a new React instance is created with a new @IReactContext.\n"
+    "- Use the @.Properties to share native module's data with other components.\n"
+    "- Use the @.Notifications to exchange events with other components.\n"
+    "- Use @.CallJSFunction to call JavaScript functions, and @.EmitJSEvent to raise JavaScript events.\n"
+    "- Use @.UIDispatcher to post asynchronous work in the UI thread.\n"
+    "- Use @.JSDispatcher to post asynchronous work in the JavaScript engine thread.")
+  interface IReactContext
+  {
 #ifndef CORE_ABI
-    DOC_STRING("Get settings snapshot that were used to start the React instance.")
+    DOC_STRING("Gets the settings snapshot that was used to start the React instance.")
     IReactSettingsSnapshot SettingsSnapshot { get; };
 #endif
 
-    DOC_STRING("Properties shared with the @ReactInstanceSettings.Properties. It can be used to share values and state between components.")
+    DOC_STRING(
+      "Gets @IReactPropertyBag shared with the @ReactInstanceSettings.Properties.\n"
+      "It can be used to share values and state between components and the applications.")
     IReactPropertyBag Properties { get; };
 
     DOC_STRING(
-      "Notifications shared with the @ReactInstanceSettings.Notifications. They can be used to exchange events between components. \n"
-      "All subscriptions added to the `IReactContext.Notifications` are automatically removed after the `IReactContext` is destroyed. \n"
-      "The subscriptions added to the `ReactInstanceSettings.Notifications` are kept as long as `ReactInstanceSettings` is alive.")
+      "Gets @IReactNotificationService shared with the @ReactInstanceSettings.Notifications.\n"
+      "It can be used to send notifications events between components and the application.\n"
+      "All notification subscriptions added to the @IReactContext.Notifications are automatically removed "
+      "after the @IReactContext is destroyed.\n"
+      "The notification subscriptions added to the @ReactInstanceSettings.Notifications are kept "
+      "as long as the @ReactInstanceSettings is alive.")
     IReactNotificationService Notifications { get; };
 
     DOC_STRING(
-      "Get the UI thread dispatcher. \n"
-      "It is a shortcut for the `ReactDispatcherHelper::UIDispatcherProperty` from the @.Properties property bag.")
+      "Gets the UI thread dispatcher.\n"
+      "It is a shortcut for the @ReactDispatcherHelper.UIDispatcherProperty from the @.Properties property bag.")
     IReactDispatcher UIDispatcher { get; };
 
     DOC_STRING(
-      "Get the JS thread dispatcher. \n"
-      "It is a shortcut for the `ReactDispatcherHelper::JSDispatcherProperty` from the @.Properties property bag.")
+      "Gets the JavaScript engine thread dispatcher.\n"
+      "It is a shortcut for the @ReactDispatcherHelper.JSDispatcherProperty from the @.Properties property bag.")
     IReactDispatcher JSDispatcher { get; };
 
-    DOC_STRING("Get the JavaScript runtime for the running React instance. It can be null if Web debugging is used.")
+    DOC_STRING(
+      "Gets the JavaScript runtime for the running React instance.\n"
+      "It can be null if Web debugging is used.\n"
+      "**Note: do not use this property directly. "
+      "It is an experimental property that may be removed or changed in version 0.65.")
     Object JSRuntime { get; };
 
 #ifndef CORE_ABI
     [deprecated("Use @XamlUIService.DispatchEvent instead", deprecate, 1)]
+    DOC_STRING("Deprecated property. Use @XamlUIService.DispatchEvent instead. It will be removed in version 0.65.")
     void DispatchEvent(XAML_NAMESPACE.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
 #endif
 
-    DOC_STRING("Call the JavaScript function named `methodName` of `moduleName`.")
+    DOC_STRING(
+      "Calls the JavaScript function named `methodName` of `moduleName` with the `paramsArgWriter`.\n"
+      "The `paramsArgWriter` is a @JSValueArgWriter delegate that receives @IJSValueWriter to serialize "
+      "the method parameters.")
     void CallJSFunction(String moduleName, String methodName, JSValueArgWriter paramsArgWriter);
 
-    DOC_STRING("Call JavaScript module event. It is a specialized `CallJSFunction` call where method name is always 'emit'.")
+    DOC_STRING(
+      "Emits JavaScript module event `eventName` for the `eventEmitterName` with the `paramsArgWriter`.\n"
+      "It is a specialized @.CallJSFunction` call where the method name is always `emit` and the "
+      "`eventName` is added to parameters.\n"
+      "The `paramsArgWriter` is a @JSValueArgWriter delegate that receives @IJSValueWriter to serialize "
+      "the event parameters.")
     void EmitJSEvent(String eventEmitterName, String eventName, JSValueArgWriter paramsArgWriter);
   }
 } // namespace Microsoft.ReactNative

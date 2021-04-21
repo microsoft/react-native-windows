@@ -19,13 +19,14 @@ jobs:
         matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
           # Start Continuous only
           ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-            ArmDebugCpp:
-              language: cpp
-              configuration: Debug
-              platform: arm
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments: --no-deploy # We don't have Arm agents
+            # Arm32 is broken at the moment as we don't have hermes.lib for arm32.
+            # ArmDebugCpp:
+            #   language: cpp
+            #   configuration: Debug
+            #   platform: arm
+            #   projectType: app
+            #   additionalInitArguments:
+            #   additionalRunArguments: --no-deploy # We don't have Arm agents
             ArmDebugCs:
               language: cs
               configuration: Debug
@@ -33,23 +34,21 @@ jobs:
               projectType: app
               additionalInitArguments:
               additionalRunArguments: --no-deploy # We don't have Arm agents
-          # END Continuous only
-          ArmReleaseCpp:
-            language: cpp
-            configuration: Release
-            platform: arm
-            projectType: app
-            additionalInitArguments:
-            additionalRunArguments: --no-deploy # We don't have Arm agents
-          ArmReleaseCs:
-            language: cs
-            configuration: Release
-            platform: arm
-            projectType: app
-            additionalInitArguments:
-            additionalRunArguments: --no-deploy # We don't have Arm agents
-          # Start Continuous only
-          ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+            # Arm32 is broken at the moment as we don't have hermes.lib for arm32.
+            # ArmReleaseCpp:
+            #   language: cpp
+            #   configuration: Release
+            #   platform: arm
+            #   projectType: app
+            #   additionalInitArguments:
+            #   additionalRunArguments: --no-deploy # We don't have Arm agents
+            ArmReleaseCs:
+              language: cs
+              configuration: Release
+              platform: arm
+              projectType: app
+              additionalInitArguments:
+              additionalRunArguments: --no-deploy # We don't have Arm agents
             Arm64DebugCpp:
               language: cpp
               configuration: Debug
@@ -169,20 +168,29 @@ jobs:
             additionalInitArguments: --useWinUI3 true
             additionalRunArguments:
 
-          X64DebugCppHermes:
+          X86DebugCppHermes:
             language: cpp
             configuration: Debug
-            platform: x64
-            projectType: app
-            additionalInitArguments:
-            additionalRunArguments:
-          X86ReleaseCppHermes:
-            language: cpp
-            configuration: Release
             platform: x86
             projectType: app
-            additionalInitArguments:
+            additionalInitArguments: --useHermes
             additionalRunArguments:
+          # #7225 ReactNative.Hermes.Windows is not yet seen as compatible for usage in C# projects
+          # Arm64ReleaseCsHermes:
+          #   language: cs
+          #   configuration: Release
+          #   platform: ARM64
+          #   projectType: app
+          #   additionalInitArguments: --useHermes
+          #   additionalRunArguments:
+          X64ReleaseCppHermes:
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            additionalInitArguments: --useHermes
+            additionalRunArguments:
+
       pool: $(AgentPool.Medium)
       timeoutInMinutes: 60
       cancelTimeoutInMinutes: 5

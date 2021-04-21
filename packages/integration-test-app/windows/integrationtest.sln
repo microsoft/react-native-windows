@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.ReactNative.Manag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteropTestModuleCS", "InteropTestModuleCS\InteropTestModuleCS.csproj", "{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NodeRpc", "..\..\node-rnw-rpc\windows\NodeRpc\NodeRpc.vcxproj", "{C0A69310-6119-46DC-A6D6-0BAB7826DC92}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\vnext\Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
@@ -196,6 +198,22 @@ Global
 		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Release|x64.Build.0 = Release|x64
 		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Release|x86.ActiveCfg = Release|x86
 		{ED39F2DF-B047-4717-8D6F-23A3CECC7EC5}.Release|x86.Build.0 = Release|x86
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|ARM.Build.0 = Debug|ARM
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|ARM64.Build.0 = Debug|ARM64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|x64.ActiveCfg = Debug|x64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|x64.Build.0 = Debug|x64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|x86.ActiveCfg = Debug|Win32
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|x86.Build.0 = Debug|Win32
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|ARM.ActiveCfg = Release|ARM
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|ARM.Build.0 = Release|ARM
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|ARM64.ActiveCfg = Release|ARM64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|ARM64.Build.0 = Release|ARM64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|x64.ActiveCfg = Release|x64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|x64.Build.0 = Release|x64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|x86.ActiveCfg = Release|Win32
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

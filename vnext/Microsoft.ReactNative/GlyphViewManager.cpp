@@ -31,7 +31,7 @@ class GlyphShadowNode : public ShadowNodeBase {
  public:
   GlyphShadowNode() = default;
 
-  void createView() override;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
  private:
@@ -41,8 +41,8 @@ class GlyphShadowNode : public ShadowNodeBase {
   double m_height = 24;
 };
 
-void GlyphShadowNode::createView() {
-  Super::createView();
+void GlyphShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  Super::createView(props);
   auto glyphs = GetView().as<winrt::Glyphs>();
 
   glyphs.FontRenderingEmSize(24);
@@ -158,7 +158,7 @@ void GlyphViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVa
   writer.WriteString(L"boolean");
 }
 
-XamlView GlyphViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView GlyphViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   winrt::Glyphs glyphs = winrt::Glyphs();
   return glyphs;
 }

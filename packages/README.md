@@ -12,7 +12,7 @@ Several packages are organized into specific package scopes:
 
 ## Unscoped packages
 
-Several pacakges do not belong to a scope for intentional (or historical) reasons. E.g. `react-native-platform-override` isn't RNW-specific and
+Several packages do not belong to a scope for intentional (or historical) reasons. E.g. `react-native-platform-override` isn't RNW-specific and
 is unscoped. `react-native-windows-init` is run by name, and as such makes sense to be unscoped.
 
 ## Adding a new scope

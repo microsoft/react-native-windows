@@ -191,8 +191,8 @@ void ViewManagerBase::GetExportedCustomDirectEventTypeConstants(
   }
 }
 
-XamlView ViewManagerBase::CreateView(int64_t tag) {
-  XamlView view = CreateViewCore(tag);
+XamlView ViewManagerBase::CreateView(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  XamlView view = CreateViewCore(tag, props);
 
   OnViewCreated(view);
   // Set the tag if the element type supports it
@@ -305,7 +305,7 @@ void ViewManagerBase::NotifyUnimplementedProperty(
     TestHook::NotifyUnimplementedProperty(
         Microsoft::Common::Unicode::Utf16ToUtf8(viewManagerName), className, propertyName, value);
   } else {
-    cdebug << "[NonIInspectable] viewManagerName = " << viewManagerName << std::endl;
+    cdebug << "[NonIInspectable] viewManagerName = " << viewManagerName << "\n";
   }
 #endif // DEBUG
 }
@@ -317,12 +317,26 @@ void ViewManagerBase::SetLayoutProps(
     float top,
     float width,
     float height) {
+  if (auto uiManager = GetNativeUIManager(GetReactContext()).lock()) {
+    auto parent = nodeToUpdate.GetParent();
+    if (parent != -1) {
+      const auto &parentShadowNode = uiManager->getHost()->GetShadowNodeForTag(parent);
+      const auto &parentVM = parentShadowNode.m_viewManager;
+      if (parentVM->RequiresNativeLayout()) {
+        return;
+      }
+    }
+  }
+
   auto element = viewToUpdate.as<xaml::UIElement>();
   if (element == nullptr) {
     // TODO: Assert
     return;
   }
   auto fe = element.as<xaml::FrameworkElement>();
+
+  const bool layoutHasChanged = left != react::uwp::ViewPanel::GetLeft(element) ||
+      top != react::uwp::ViewPanel::GetTop(element) || width != fe.Width() || height != fe.Height();
 
   // Set Position & Size Properties
   react::uwp::ViewPanel::SetLeft(element, left);
@@ -332,7 +346,7 @@ void ViewManagerBase::SetLayoutProps(
   fe.Height(height);
 
   // Fire Events
-  if (nodeToUpdate.m_onLayoutRegistered) {
+  if (layoutHasChanged && nodeToUpdate.m_onLayoutRegistered) {
     int64_t tag = GetTag(viewToUpdate);
     folly::dynamic layout = folly::dynamic::object("x", left)("y", top)("height", height)("width", width);
 

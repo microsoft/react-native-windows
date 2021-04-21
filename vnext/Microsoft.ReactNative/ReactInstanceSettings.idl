@@ -10,10 +10,13 @@ import "RedBoxHandler.idl";
 
 #include "DocString.h"
 
-namespace Microsoft.ReactNative {
-
+namespace Microsoft.ReactNative
+{
+  DOC_STRING(
+    "A JavaScript engine type that can be set for a React instance in @ReactInstanceSettings.JSIEngineOverride")
   // Keep in sync with enum in IReactInstance.h
-  enum JSIEngine {
+  enum JSIEngine
+  {
     Chakra = 0,
     Hermes = 1,
     V8 = 2
@@ -21,127 +24,230 @@ namespace Microsoft.ReactNative {
 
   [webhosthidden]
   [default_interface]
-  runtimeclass InstanceCreatedEventArgs {
+  DOC_STRING("The arguments for the @ReactInstanceSettings.InstanceCreated event.")
+  runtimeclass InstanceCreatedEventArgs
+  {
+    DOC_STRING("Gets the @IReactContext for the React instance that was just created.")
     IReactContext Context { get; };
   }
 
   [webhosthidden]
   [default_interface]
-  runtimeclass InstanceLoadedEventArgs {
+  DOC_STRING("The arguments for the @ReactInstanceSettings.InstanceLoaded event.")
+  runtimeclass InstanceLoadedEventArgs
+  {
+    DOC_STRING("Gets the @IReactContext for the React instance that finished loading the bundle.")
     IReactContext Context { get; };
+
+    DOC_STRING("Returns `true` if the JavaScript bundle failed to load.")
     Boolean Failed { get; };
   }
 
   [webhosthidden]
-  [default_interface] runtimeclass InstanceDestroyedEventArgs {
+  [default_interface]
+  DOC_STRING("The arguments for the @ReactInstanceSettings.InstanceDestroyed event.")
+  runtimeclass InstanceDestroyedEventArgs
+  {
+    DOC_STRING("Gets the @IReactContext for the React instance that just destroyed.")
     IReactContext Context { get; };
   }
 
   [webhosthidden]
-  DOC_STRING("Provides configuration of the react instance.")
-  runtimeclass ReactInstanceSettings 
+  DOC_STRING("Provides settings to create a React instance.")
+  runtimeclass ReactInstanceSettings
   {
+    DOC_STRING("Creates new instance of @ReactInstanceSettings")
     ReactInstanceSettings();
 
-    DOC_STRING("Properties are shared with @IReactContext.Properties. It can be used to configure and share values and state between components.")
+    DOC_STRING(
+      "Gets a @IReactPropertyBag to share values between components and the application.\n"
+      "Use @IReactContext.Properties to access this @IReactPropertyBag from native components and view managers.")
     IReactPropertyBag Properties { get; };
 
-    DOC_STRING("Provides access to the `IReactNotificationService`, which allows easy communication between custom native modules or view managers.")
+    DOC_STRING(
+      "Gets a @IReactNotificationService to send notifications between components and the application.\n"
+      "Use @IReactContext.Notifications to access this @IReactNotificationService "
+      "from native components or view managers.")
     IReactNotificationService Notifications { get; };
 
-    DOC_STRING("Provides a list of additional native modules and custom view managers that should be included in the instance.")
+    DOC_STRING(
+      "Gets a list of @IReactPackageProvider.\n"
+      "Add an implementation of @IReactPackageProvider to this list to define additional "
+      "native modules and custom view managers to be included in the React instance.\n"
+      "Auto-linking automatically adds @IReactPackageProvider to the application's @.PackageProviders.")
     IVector<IReactPackageProvider> PackageProviders { get; };
 
-    DOC_STRING("This controls whether various developer experience features are available for this instance.  In particular the developer menu, the default `RedBox` and `LogBox` experience and loading UI during bundle load.")
+    DOC_STRING(
+      "This controls whether various developer experience features are available for this instance. "
+      "In particular, it enables the developer menu, the default `RedBox` and `LogBox` experience.")
     Boolean UseDeveloperSupport { get; set; };
 
     // Deprecated - use JavaScriptBundleFile instead
-    DOC_STRING("Name of the JavaScript bundle file.  If @.JavaScriptBundleFile is specified it is used instead.")
-    [deprecated("use JavaScriptBundleFile instead", deprecate, 1)]
+    [deprecated("Use @.JavaScriptBundleFile instead. It will be removed in version 0.65.", deprecate, 1)]
+    DOC_STRING("Name of the JavaScript bundle file. If @.JavaScriptBundleFile is specified it is used instead.")
     String JavaScriptMainModuleName { get; set; };
 
-    DOC_STRING("The name of the JavaScript bundle file to load. This should be a relative path from @.BundleRootPath.  `.bundle` will be appended to the end, when looking for the bundle file.")
+    DOC_STRING(
+      "The name of the JavaScript bundle file to load. This should be a relative path from @.BundleRootPath. "
+      "The `.bundle` extension will be appended to the end, when looking for the bundle file.")
     DOC_DEFAULT("index.windows")
     String JavaScriptBundleFile { get; set; };
 
-    DOC_STRING("Should the instance run in a remote environment such as within a browser.\n\
-By default, this is using a browser navigated to  http://localhost:8081/debugger-ui served by Metro/Haul.\n\
-Debugging will start as soon as the react native instance is loaded.")
+    DOC_STRING(
+      "Controls whether the instance JavaScript runs in a remote environment such as within a browser.\n"
+      "By default, this is using a browser navigated to http://localhost:8081/debugger-ui served by Metro/Haul.\n"
+      "Debugging will start as soon as the react native instance is loaded.")
     Boolean UseWebDebugger { get; set; };
 
-    DOC_STRING("Should the instance trigger the hot module reload logic when it first loads the instance.\n\
-Most edits should be visible within a second or two without the instance having to reload.\n\
-Non-compatible changes still cause full reloads.\n\
-See [Fast Refresh](https://reactnative.dev/docs/fast-refresh) for more information on Fast Refresh.")
+    DOC_STRING(
+      "Controls whether the instance triggers the hot module reload logic when it first loads the instance.\n"
+      "Most edits should be visible within a second or two without the instance having to reload.\n"
+      "Non-compatible changes still cause full reloads.\n"
+      "See [Fast Refresh](https://reactnative.dev/docs/fast-refresh) for more information on Fast Refresh.")
     Boolean UseFastRefresh { get; set; };
 
-    DOC_STRING("Enable live reload to load the source bundle from the React Native packager.\n\
-When the file is saved, the packager will trigger reloading.\n\
-**For general use this has been replaced by @.UseFastRefresh.**")
+    DOC_STRING(
+      "Enables live reload to load the source bundle from the React Native packager.\n"
+      "When the file is saved, the packager will trigger reloading.\n")
+    [deprecated("For general use this has been replaced by @.UseFastRefresh.", deprecate, 1)]
     Boolean UseLiveReload { get; set; };
 
-    DOC_STRING("Enables debugging in the JavaScript engine (if supported).  \n\
-For Chakra this enables you to debug the JS runtime directly within your app using Visual Studio -> Attach to process (Script)")
+    DOC_STRING(
+      "Enables debugging in the JavaScript engine (if supported).\n"
+      "For Chakra this enables debugging of the JS runtime directly within the app using "
+      "Visual Studio -> Attach to process (Script)")
     Boolean UseDirectDebugger { get; set; };
 
-    DOC_STRING("For direct debugging, whether to break on the next line of JavaScript that is executed.  This can help debug issues hit early in the JavaScript bundle load.\n\
-***Note: this is not supported with the Chakra JS engine which is the currently used JavaScript engine***")
+    DOC_STRING(
+      "For direct debugging, controls whether to break on the next line of JavaScript that is executed.\n"
+      "This can help debug issues hit early in the JavaScript bundle load.\n"
+      "***Note: this is not supported with the Chakra JS engine which is the currently used JavaScript engine. "
+      "As a workaround you could add the `debugger` keyword in the beginning of the bundle.***")
     Boolean DebuggerBreakOnNextLine { get; set; };
-
-    DOC_STRING("This controls if the JavaScript bridge should use the newer JSI runtime or use the legacy executor.  The JSI runtime is used by default, and the legacy executor will be removed in a future release. \n\
-> **It is not recommended to change this setting.**")
-    Boolean UseJsi { get; set; };
 
     DOC_STRING("Flag controlling whether the JavaScript engine uses JIT compilation.")
     DOC_DEFAULT("true")
     Boolean EnableJITCompilation { get; set; };
 
-    DOC_STRING("For JS engines that support bytecode generation, this controls if bytecode should be generated when a JavaScript bundle is first loaded.\n\
-Subsequent runs of the application should be faster as the JavaScript will be loaded from bytecode instead of the raw JavaScript.  \n\
-@.ByteCodeFileUri must be set to a location the application has write access to in order for the bytecode to be successfully cached.")
+    DOC_STRING(
+      "For JS engines that support bytecode generation, this controls if bytecode should be generated when "
+      "a JavaScript bundle is first loaded.\n"
+      "Subsequent runs of the application should be faster as the JavaScript will be loaded from bytecode "
+      "instead of the raw JavaScript.\n"
+      "@.ByteCodeFileUri must be set to a location the application has write access to in order for "
+      "the bytecode to be successfully cached.\n"
+      "**Note that currently the byte code generation is not implemented for UWP applications.**")
     DOC_DEFAULT("false")
     Boolean EnableByteCodeCaching { get; set; };
 
-    DOC_STRING("This controls whether various developer experience features are available for this instance.  In particular the developer menu, the default `RedBox` experience and the loading UI during bundle load.")
-    [deprecated("This property has been replaced by @.UseDeveloperSupport. In version 0.63 both properties will do the same thing.", deprecate, 1)]
+    // Deprecated
+    [deprecated(
+      "This property has been replaced by @.UseDeveloperSupport. "
+      "In version 0.63 both properties will do the same thing. It will be removed in version 0.65.", deprecate, 1)]
+    DOC_STRING(
+      "This controls whether various developer experience features are available for this instance. "
+      "In particular the developer menu, and the default `RedBox` experience.")
     Boolean EnableDeveloperMenu { get; set; };
 
-    DOC_STRING("Set this to a location the application has write access to in order for bytecode to be successfully cached. See @.EnableByteCodeCaching.")
+    DOC_STRING(
+      "Set this to a location the application has write access to in order for bytecode to be successfully cached. "
+      "See @.EnableByteCodeCaching.\n"
+      "**Note that currently the byte code generation is not implemented for UWP applications.**")
     String ByteCodeFileUri { get; set; };
 
-    DOC_STRING("When using a @.UseFastRefresh, @.UseLiveReload or @.UseWebDebugger this is the server that will be used to load the bundle from.")
-    [deprecated("This has been replaced with @.SourceBundleHost and @.SourceBundlePort and will be removed in a future version.", deprecate, 1)]
+    // Deprecated
+    [deprecated(
+      "This has been replaced with @.SourceBundleHost and @.SourceBundlePort and will be removed in version 0.65.",
+      deprecate, 1)]
+    DOC_STRING(
+      "When using a @.UseFastRefresh, @.UseLiveReload or @.UseWebDebugger this is the server that will be "
+      "used to load the bundle from.")
     DOC_DEFAULT("localhost:8081")
     String DebugHost { get; set; };
 
-    DOC_STRING("When loading from a bundle server (such as metro), this is the path that will be requested from the server.  If this is not provided the value of @.JavaScriptBundleFile or @.JavaScriptMainModuleName is used.")
+    DOC_STRING(
+      "When loading from a bundle server (such as metro), this is the path that will be requested from the server. "
+      "If this is not provided the value of @.JavaScriptBundleFile or @.JavaScriptMainModuleName is used.")
     String DebugBundlePath { get; set; };
 
     DOC_STRING("Base path used for the location of the bundle.")
     DOC_DEFAULT("ms-appx:///Bundle/")
     String BundleRootPath { get; set; };
 
-    DOC_STRING("When @.UseDirectDebugger is enabled, this controls the port that the JavaScript engine debugger will run on.")
+    DOC_STRING(
+      "When @.UseDirectDebugger is enabled, this controls the port that the JavaScript engine debugger will run on.")
     DOC_DEFAULT("9229")
     UInt16 DebuggerPort { get; set; };
 
-    DOC_STRING("Provides an extension point to allow custom error handling within the react instance. See @IRedBoxHandler for more information.")
+    DOC_STRING(
+      "Provides an extension point to allow custom error handling within the react instance. "
+      "See @IRedBoxHandler for more information.")
     IRedBoxHandler RedBoxHandler { get; set; };
 
-    DOC_STRING("Control the main UI dispatcher to be used by the React instance.  If the @ReactInstanceSettings object is initially created on a UI thread, then this will default to that thread.  The value provided here will be available to native modules and view managers using @IReactContext.UIDispatcher")
+    DOC_STRING(
+      "Control the main UI dispatcher to be used by the React instance. "
+      "If the @ReactInstanceSettings object is initially created on a UI thread, then this will "
+      "default to that thread. The value provided here will be available to native modules and view managers "
+      "using @IReactContext.UIDispatcher")
     IReactDispatcher UIDispatcher { get; set; };
 
-    DOC_STRING("When using a @.UseFastRefresh, @.UseLiveReload or @.UseWebDebugger this is the server hostname that will be used to load the bundle from.")
+    DOC_STRING(
+      "When using a @.UseFastRefresh, @.UseLiveReload, or @.UseWebDebugger this is the server hostname "
+      "that will be used to load the bundle from.")
     DOC_DEFAULT("localhost")
     String SourceBundleHost { get; set; };
 
-    DOC_STRING("When using a @.UseFastRefresh, @.UseLiveReload or @.UseWebDebugger this is the server port that will be used to load the bundle from.")
+    DOC_STRING(
+      "When using a @.UseFastRefresh, @.UseLiveReload, or @.UseWebDebugger this is the server port "
+      "that will be used to load the bundle from.")
     DOC_DEFAULT("8081")
     UInt16 SourceBundlePort { get; set; };
 
+    DOC_STRING(
+      "The @JSIEngine override to be used with the React instance.\n"
+      "In order the override to work the Microsoft.ReactNative must be compiled with support of that engine.")
+    DOC_DEFAULT("JSIEngine.Chakra")
     JSIEngine JSIEngineOverride { get; set; };
+
+    DOC_STRING(
+      "The @InstanceCreated event is triggered right after the React Native instance is created.\n"
+      "\n"
+      "It is triggered on the JSDispatcher thread before any other JSDispatcher work items.\n"
+      "No JavaScript code is loaded in the JavaScript engine yet.\n"
+      "The @InstanceCreatedEventArgs.Context property on the event arguments provides access to the instance context.\n"
+      "\n"
+      "Note that the @InstanceCreated event is triggered in response to the 'InstanceCreated' notification "
+      "raised in the 'ReactNative.InstanceSettings' namespace. "
+      "Consider using @Notifications to handle the notification in a dispatcher different from the JSDispatcher.")
     event Windows.Foundation.EventHandler<InstanceCreatedEventArgs> InstanceCreated;
+
+    DOC_STRING(
+      "The @InstanceLoaded event is triggered when React Native instance has finished loading the JavaScript bundle.\n"
+      "\n"
+      "It is triggered on the JSDispatcher thread.\n"
+      "If there were errors, then the @InstanceLoadedEventArgs.Failed property on the event arguments will be true.\n"
+      "The error types include:\n"
+      "\n"
+      "* JavaScript syntax errors.\n"
+      "* Global JavaScript exceptions thrown.\n"
+      "\n"
+      "The @InstanceLoadedEventArgs.Context property on the event arguments provides access to the instance context.\n"
+      "\n"
+      "Note that the @InstanceLoaded event is triggered in response to the 'InstanceLoaded' notification "
+      "raised in the 'ReactNative.InstanceSettings' namespace. "
+      "Consider using @Notifications to handle the notification in a dispatcher different from the JSDispatcher.")
     event Windows.Foundation.EventHandler<InstanceLoadedEventArgs> InstanceLoaded;
+
+    DOC_STRING(
+      "The @InstanceDestroyed event is triggered when React Native instance is destroyed.\n"
+      "\n"
+      "It is triggered on the JSDispatcher thread as the last work item before it shuts down.\n"
+      "No new JSDispatcher work can be executed after that.\n"
+      "The @InstanceDestroyedEventArgs.Context property on the event arguments provides access to the instance context.\n"
+      "\n"
+      "Note that the @InstanceDestroyed event is triggered in response to the 'InstanceDestroyed' notification "
+      "raised in the 'ReactNative.InstanceSettings' namespace. "
+      "Consider using @Notifications to handle the notification in a dispatcher different from the JSDispatcher.")
     event Windows.Foundation.EventHandler<InstanceDestroyedEventArgs> InstanceDestroyed;
   }
 }

@@ -16,6 +16,9 @@ const smallImageUri =
 const dataImageUri =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==';
 
+const dataImageSvg =
+  'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEzLjEyNSAwSDBWMTMuMTI1SDEzLjEyNVYwWiIgZmlsbD0iI0YyNTAyMiI+PC9wYXRoPjxwYXRoIGQ9Ik0yOCAwSDE0Ljg3NVYxMy4xMjVIMjhWMFoiIGZpbGw9IiM3RkJBMDAiPjwvcGF0aD48cGF0aCBkPSJNMTMuMTI1IDE0Ljg3NUgwVjI4SDEzLjEyNVYxNC44NzVaIiBmaWxsPSIjMDBBNEVGIj48L3BhdGg+PHBhdGggZD0iTTI4IDE0Ljg3NUgxNC44NzVWMjhIMjhWMTQuODc1WiIgZmlsbD0iI0ZGQjkwMCI+PC9wYXRoPjwvc3ZnPiA=';
+
 export default class Bootstrap extends React.Component<
   {},
   {
@@ -51,6 +54,8 @@ export default class Bootstrap extends React.Component<
       imageUri = smallImageUri;
     } else if (value === 'large') {
       imageUri = largeImageUri;
+    } else if (value === 'data-svg') {
+      imageUri = dataImageSvg;
     } else if (value === 'data') {
       imageUri = dataImageUri;
     }
@@ -83,6 +88,7 @@ export default class Bootstrap extends React.Component<
             <Picker.Item label="small" value="small" />
             <Picker.Item label="large" value="large" />
             <Picker.Item label="data" value="data" />
+            <Picker.Item label="data-svg" value="data-svg" />
             <Picker.Item label="svg" value="svg" />
           </Picker>
         </View>

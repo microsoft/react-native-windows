@@ -125,21 +125,31 @@ function getAppxManifestPath(
   projectName?: string,
 ): string {
   const configuration = getBuildConfiguration(options);
-  const appxManifestGlob = `windows/{*/bin/${options.arch}/${configuration},${configuration}/*,target/${options.arch}/${configuration},${options.arch}/${configuration}/*}/AppxManifest.xml`;
+  // C++ x86 manifest would go under windows/Debug whereas x64 goes under windows/x64/Debug
+  // If we've built both, this causes us to end up with two matches, so we have to carefully select the right folder
+  let archFolder;
+  if (options.arch !== 'x86') {
+    archFolder = `${options.arch}/${configuration}`;
+  } else {
+    archFolder = `${configuration}`;
+  }
+
+  const appxManifestGlob = `windows/{*/bin/${options.arch}/${configuration},${archFolder}/*,target/${options.arch}/${configuration}}/AppxManifest.xml`;
   const globs = glob.sync(path.join(options.root, appxManifestGlob));
   let appxPath: string;
   if (globs.length === 1 || !projectName) {
     appxPath = globs[0];
   } else {
     const filteredGlobs = globs.filter(x => x.includes(projectName));
+    appxPath = filteredGlobs[0];
     if (filteredGlobs.length > 1) {
       newWarn(
         `More than one appxmanifest for ${projectName}: ${filteredGlobs.join(
           ',',
         )}`,
       );
+      newWarn(`Choosing ${appxPath}`);
     }
-    appxPath = filteredGlobs[0];
   }
 
   if (!appxPath) {
@@ -240,7 +250,7 @@ export async function deployToDesktop(
   const projectName =
     windowsConfig && windowsConfig.project && windowsConfig.project.projectName
       ? windowsConfig.project.projectName
-      : options.proj!;
+      : path.parse(options.proj!).name;
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options, projectName);
   const appxManifest = parseAppxManifest(appxManifestPath);
@@ -291,7 +301,7 @@ export async function deployToDesktop(
       'InstallAppFailure',
     );
   } else {
-    // If we have DeployAppRecipe.exe, use it (start in 16.9 Preview 2, don't use 16.8 even if it's there as that version has bugs)
+    // If we have DeployAppRecipe.exe, use it (start in 16.8.4, earlier 16.8 versions have bugs)
     const appxRecipe = path.join(
       path.dirname(appxManifestPath),
       `${projectName}.build.appxrecipe`,
@@ -299,7 +309,7 @@ export async function deployToDesktop(
     const ideFolder = `${buildTools.installationPath}\\Common7\\IDE`;
     const deployAppxRecipeExePath = `${ideFolder}\\DeployAppRecipe.exe`;
     if (
-      vsVersion.gte(Version.fromString('16.9.30801.93')) &&
+      vsVersion.gte(Version.fromString('16.8.30906.45')) &&
       fs.existsSync(deployAppxRecipeExePath)
     ) {
       await commandWithProgress(

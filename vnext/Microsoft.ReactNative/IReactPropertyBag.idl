@@ -3,85 +3,87 @@
 
 #include "DocString.h"
 
-namespace Microsoft.ReactNative {
-
-  // The delegate is used to create property value on-demand.
+namespace Microsoft.ReactNative
+{
   [webhosthidden]
-  DOC_STRING("This delegate is used to create a property value on-demand.")
+  DOC_STRING("This delegate is used to create a @IReactPropertyBag property value on-demand.")
   delegate Object ReactCreatePropertyValue();
 
-  // Namespace for the property name.
-  // Use ReactPropertyBagHelper.GetNamespace to get atomic property namespace for a string.
   [webhosthidden]
+  DOC_STRING(
+    "A namespace for a @IReactPropertyBag property name.\n"
+    "Use @ReactPropertyBagHelper.GetNamespace to get atomic property namespace for a string.")
   interface IReactPropertyNamespace
   {
-    // Get String name representation of the property namespace.
+    DOC_STRING("Gets String representation of the @IReactPropertyNamespace.")
     String NamespaceName { get; };
   }
 
-  // Name of a property.
-  // Use ReactPropertyBagHelper.GetName to get atomic property name for a string.
   [webhosthidden]
+  DOC_STRING(
+    "A name for a @IReactPropertyBag property.\n"
+    "Use @ReactPropertyBagHelper.GetName to get atomic property name for a string in a @IReactPropertyNamespace.\n"
+    "Each @IReactPropertyName object has a unique @.LocalName in context of the @IReactPropertyNamespace")
   interface IReactPropertyName
   {
-    // The local property name String in context of the property namespace.
+    DOC_STRING("Gets String representation of the @IReactPropertyName.")
     String LocalName { get; };
 
-    // The namespace the property name is defined in.
+    DOC_STRING("Gets the @IReactPropertyNamespace where the property name is defined.")
     IReactPropertyNamespace Namespace { get; };
   }
 
-  // The IReactPropertyBag provides a thread-safe property storage.
-  // Properties are identified by IReactPropertyName instance.
-  // It is expected that there will be no direct use of this interface.
-  // Ideally, all usage should happen through a strongly typed accessors.
   [webhosthidden]
-  DOC_STRING("`IReactPropertyBag` provides a thread-safe property storage. Properties are identified by an instance of `IReactPropertyName`. It is expected that there will be no direct use of this interface. Ideally, all usage should happen through strongly-typed accessors.")
+  DOC_STRING(
+    "`IReactPropertyBag` provides a thread-safe property storage.\n"
+    "Properties are identified by an instance of @IReactPropertyName. "
+    "It is expected that there will be no direct use of this interface. "
+    "Ideally, all usage should happen through strongly-typed accessors.")
   interface IReactPropertyBag
   {
-    // Get a property's value. It returns null if the property does not exist.
-    DOC_STRING("Get a property's value. It returns null if the property does not exist.")
+    DOC_STRING(
+      "Gets value of the `name` property.\n"
+      "It returns null if the property does not exist.")
     Object Get(IReactPropertyName name);
 
-    // Get property value for the property name.
-    // If the property does not exist, then create it by calling createValue delegate.
-    // The function may return null if the createValue returns null when called.
-    // The createValue is called outside of lock. It is possible that its
-    // result is not used in case if other thread sets the property value before
-    // the created value is applied.
-    DOC_STRING("Get a property's value. If the property does not exist, this method creates it by calling the `createValue` delegate. \
-The function may return null if the `createValue` returns null when called.\
-The `createValue` is called outside of any locks. \
-It is possible that its result is not used in case another thread sets the property value before the created value is applied.")
+    DOC_STRING(
+      "Gets or creates value of the `name` property.\n"
+      "If the property exists, then the method returns its value. "
+      "If the property does not exist, then this method creates it by calling the `createValue` delegate.\n"
+      "The function may return null if the `createValue` returns null when called. "
+      "The `createValue` is called outside of any locks. "
+      "It is possible that `createValue` result is not used when another thread sets the property value before "
+      "the created value is stored.")
     Object GetOrCreate(IReactPropertyName name, ReactCreatePropertyValue createValue);
 
-    // Set property value for the property name.
-    // It returns previously stored property value.
-    // It returns null if property did not exist.
-    // If the new value is null, then the property is removed.
-    DOC_STRING("Set a property's value. \
-It returns the previously-stored property value. \
-It returns null if the property did not exist. \
-If the new value is null, then the property is removed.")
+    DOC_STRING(
+      "Sets property `name` to `value`.\n"
+      "It returns the previously-stored property value. "
+      "It returns null if the property did not exist.\n"
+      "If the new value is null, then the property is removed.")
     Object Set(IReactPropertyName name, Object value);
   }
 
-  // Helper methods for the property bag implementation.
   [webhosthidden]
+  DOC_STRING("Helper methods for the property bag implementation.")
   static runtimeclass ReactPropertyBagHelper
   {
-    // Return a global namespace that corresponds to an empty string.
+    [deprecated("Do not use. It will be removed in version 0.65.", deprecate, 1)]
+    DOC_STRING("Deprecated. Do not use. It will be removed in version 0.65.")
     static IReactPropertyNamespace GlobalNamespace { get; };
 
-    // Get an atomic IReactPropertyNamespace for a provided namespaceName.
-    // Consider to use module name as a namespace for module-specific properties.
+    DOC_STRING(
+      "Gets an atomic @IReactPropertyNamespace for a provided `namespaceName`.\n"
+      "Consider using module name as the namespace for module-specific properties.")
     static IReactPropertyNamespace GetNamespace(String namespaceName);
 
-    // Get atomic IReactPropertyName for the namespace and local name.
-    // If ns is null, then it uses IReactPropertyNamespace.GlobalNamespace.
+    DOC_STRING(
+      "Gets atomic @IReactPropertyName for the namespace `ns` and the `localName`.\n"
+      "**Note that passing `null` as `ns` is reserved for local values in version 0.65. "
+      "In previous versions it was the same as passing @.GlobalNamespace.**")
     static IReactPropertyName GetName(IReactPropertyNamespace ns, String localName);
 
-    // Create new instance of IReactPropertyBag
+    DOC_STRING("Creates new instance of @IReactPropertyBag")
     static IReactPropertyBag CreatePropertyBag();
   }
 } // namespace Microsoft.ReactNative

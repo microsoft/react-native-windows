@@ -55,7 +55,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 
   Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
 
-  //! This controls the availiablility of various developer support functionality including
+  //! This controls the availability of various developer support functionality including
   //! RedBox, and the Developer Menu
   bool UseDeveloperSupport() noexcept;
   void UseDeveloperSupport(bool value) noexcept;
@@ -92,9 +92,6 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   //! This allows a JS debugger to be able to debug the boot JS code with in the instance
   bool DebuggerBreakOnNextLine() noexcept;
   void DebuggerBreakOnNextLine(bool value) noexcept;
-
-  bool UseJsi() noexcept;
-  void UseJsi(bool value) noexcept;
 
   bool EnableJITCompilation() noexcept;
   void EnableJITCompilation(bool value) noexcept;
@@ -168,7 +165,6 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
       single_threaded_vector<IReactPackageProvider>()};
   hstring m_javaScriptMainModuleName{};
   hstring m_javaScriptBundleFile{};
-  bool m_useJsi{true};
   bool m_enableJITCompilation{true};
   bool m_enableByteCodeCaching{false};
   hstring m_byteCodeFileUri{};
@@ -229,14 +225,6 @@ inline hstring ReactInstanceSettings::JavaScriptBundleFile() noexcept {
 
 inline void ReactInstanceSettings::JavaScriptBundleFile(hstring const &value) noexcept {
   m_javaScriptBundleFile = value;
-}
-
-inline bool ReactInstanceSettings::UseJsi() noexcept {
-  return m_useJsi;
-}
-
-inline void ReactInstanceSettings::UseJsi(bool value) noexcept {
-  m_useJsi = value;
 }
 
 inline bool ReactInstanceSettings::EnableJITCompilation() noexcept {

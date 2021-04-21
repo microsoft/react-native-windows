@@ -15,7 +15,7 @@
 {{^languageIsCpp}}
         x:Name="reactRootView"
 {{/languageIsCpp}}
-        ComponentName="{{ name }}"
+        ComponentName="{{ mainComponentName }}"
         Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
         MinHeight="400"/>
 </Page>

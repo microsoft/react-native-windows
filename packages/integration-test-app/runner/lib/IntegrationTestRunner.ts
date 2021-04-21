@@ -6,9 +6,6 @@
  */
 
 import * as ora from 'ora';
-import * as psList from 'ps-list';
-
-import {execSync} from 'child_process';
 
 import IntegrationTestClient, {
   TestCommandResponse,
@@ -21,10 +18,9 @@ export default class IntegrationTestRunner {
   static async initialize(
     startingComponent: string,
   ): Promise<IntegrationTestRunner> {
-    await ensureLoopbackServerExemption();
     const testClient = await this.connectToHostWithRetry();
     const res = await testClient.sendTestCommand({
-      command: 'GoToComponent',
+      name: 'GoToComponent',
       component: startingComponent,
     });
 
@@ -45,7 +41,7 @@ export default class IntegrationTestRunner {
 
     try {
       res = await this.testClient.sendTestCommand({
-        command: 'RunTestComponent',
+        name: 'RunTestComponent',
         component: componentName,
       });
     } catch (ex) {
@@ -136,15 +132,6 @@ export default class IntegrationTestRunner {
         }
       }
     }
-  }
-}
-
-async function ensureLoopbackServerExemption(): Promise<void> {
-  const processes = await psList();
-  if (!processes.some(p => p.name === 'CheckNetIsolation.exe')) {
-    execSync(
-      'powershell Start-Process CheckNetIsolation.exe -ArgumentList "LoopbackExempt","-is" -Verb runAs',
-    );
   }
 }
 

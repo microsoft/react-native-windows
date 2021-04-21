@@ -8,8 +8,6 @@
  * @format
  */
 
-'use strict';
-
 import * as React from 'react';
 import {useMemo, useState, useRef, useImperativeHandle} from 'react';
 import useAndroidRippleForView, {
@@ -30,7 +28,8 @@ import type {
   PressEvent,
   // [Windows
   BlurEvent,
-  FocusEvent, // Windows]
+  FocusEvent,
+  KeyEvent, // Windows]
 } from '../../Types/CoreEventTypes';
 import View from '../View/View';
 import TextInputState from '../TextInput/TextInputState';
@@ -59,6 +58,12 @@ type Props = $ReadOnly<{|
   focusable?: ?boolean,
   importantForAccessibility?: ?('auto' | 'yes' | 'no' | 'no-hide-descendants'),
   onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
+
+  /**
+   * Whether a press gesture can be interrupted by a parent gesture such as a
+   * scroll event. Defaults to true.
+   */
+  cancelable?: ?boolean,
 
   /**
    * Either children or a render prop that receives a boolean reflecting whether
@@ -90,27 +95,27 @@ type Props = $ReadOnly<{|
   /**
    * Called when this view's layout changes.
    */
-  onLayout?: ?(event: LayoutEvent) => void,
+  onLayout?: ?(event: LayoutEvent) => mixed,
 
   /**
    * Called when a long-tap gesture is detected.
    */
-  onLongPress?: ?(event: PressEvent) => void,
+  onLongPress?: ?(event: PressEvent) => mixed,
 
   /**
    * Called when a single tap gesture is detected.
    */
-  onPress?: ?(event: PressEvent) => void,
+  onPress?: ?(event: PressEvent) => mixed,
 
   /**
    * Called when a touch is engaged before `onPress`.
    */
-  onPressIn?: ?(event: PressEvent) => void,
+  onPressIn?: ?(event: PressEvent) => mixed,
 
   /**
    * Called when a touch is released before `onPress`.
    */
-  onPressOut?: ?(event: PressEvent) => void,
+  onPressOut?: ?(event: PressEvent) => mixed,
 
   /**
    * Called after the element loses focus.
@@ -121,6 +126,16 @@ type Props = $ReadOnly<{|
    * Called after the element is focused.
    */
   onFocus?: ?(event: FocusEvent) => mixed,
+
+  /*
+   * Called after a key down event is detected.
+   */
+  onKeyDown?: ?(event: KeyEvent) => mixed,
+
+  /*
+   * Called after a key up event is detected.
+   */
+  onKeyUp?: ?(event: KeyEvent) => mixed,
 
   /**
    * Either view styles or a function that receives a boolean reflecting whether
@@ -163,6 +178,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
     accessible,
     android_disableSound,
     android_ripple,
+    cancelable,
     children,
     delayLongPress,
     disabled,
@@ -174,6 +190,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
     // [Windows
     onBlur,
     onFocus,
+    onKeyDown,
+    onKeyUp,
     // Windows]
     pressRetentionOffset,
     style,
@@ -207,16 +225,23 @@ function Pressable(props: Props, forwardedRef): React.Node {
 
   const hitSlop = normalizeRect(props.hitSlop);
 
+  const accessibilityState =
+    disabled != null
+      ? {...props.accessibilityState, disabled}
+      : props.accessibilityState;
+
   const restPropsWithDefaults: React.ElementConfig<typeof View> = {
     ...restProps,
     ...android_rippleConfig?.viewProps,
     accessible: accessible !== false,
+    accessibilityState,
     focusable: focusable !== false,
     hitSlop,
   };
 
   const config = useMemo(
     () => ({
+      cancelable,
       disabled,
       hitSlop,
       pressRectOffset: pressRetentionOffset,
@@ -247,11 +272,14 @@ function Pressable(props: Props, forwardedRef): React.Node {
       // [Windows
       onBlur,
       onFocus,
+      onKeyDown,
+      onKeyUp,
       // Windows]
     }),
     [
       android_disableSound,
       android_rippleConfig,
+      cancelable,
       delayLongPress,
       disabled,
       hitSlop,
@@ -262,6 +290,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
       // [Windows
       onBlur,
       onFocus,
+      onKeyDown,
+      onKeyUp,
       // Windows]
       pressRetentionOffset,
       setPressed,

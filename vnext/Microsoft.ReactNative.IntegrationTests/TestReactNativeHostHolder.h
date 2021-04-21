@@ -16,6 +16,8 @@ struct TestReactNativeHostHolder {
       Mso::Functor<void(winrt::Microsoft::ReactNative::ReactNativeHost const &)> &&hostInitializer) noexcept;
   ~TestReactNativeHostHolder() noexcept;
 
+  winrt::Microsoft::ReactNative::ReactNativeHost const &Host() const noexcept;
+
  private:
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Windows::System::DispatcherQueueController m_queueController{nullptr};

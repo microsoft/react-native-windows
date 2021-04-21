@@ -21,14 +21,39 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/Button/ButtonExample'),
   },
   {
+    key: 'DatePickerExample',
+    category: 'UI',
+    module: require('../examples-win/DatePicker/DatePickerExample'),
+  },
+  {
     key: 'FlatListExample',
     category: 'ListView',
     module: require('../examples/FlatList/FlatListExample'),
   },
   {
-    key: 'DatePickerExample',
+    key: 'FlatList-withSeparators',
+    module: require('../examples/FlatList/FlatList-withSeparators'),
+    category: 'ListView',
+  },
+  {
+    key: 'FlatList-onViewableItemsChanged',
+    module: require('../examples/FlatList/FlatList-onViewableItemsChanged'),
+    category: 'ListView',
+  },
+  {
+    key: 'FlatList-onEndReached',
+    module: require('../examples/FlatList/FlatList-onEndReached'),
+    category: 'ListView',
+  },
+  {
+    key: 'ImageExample',
+    category: 'Basic',
+    module: require('../examples/Image/ImageExample'),
+  },
+  {
+    key: 'Display:NoneExample',
     category: 'UI',
-    module: require('../examples-win/DatePicker/DatePickerExample'),
+    module: require('../examples-win/DisplayNone/DisplayNoneExample'),
   },
   {
     key: 'FastTextExample',
@@ -44,11 +69,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'GlyphExample',
     category: 'UI',
     module: require('../examples-win/Glyph/GlyphExample'),
-  },
-  {
-    key: 'ImageExample',
-    category: 'Basic',
-    module: require('../examples/Image/ImageExample'),
   },
   // {
   //   key: 'ModalExample',
@@ -93,6 +113,36 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'ScrollViewSimpleExample',
     category: 'Basic',
     module: require('../examples/ScrollView/ScrollViewSimpleExample'),
+  },
+  {
+    key: 'ScrollViewAnimatedExample',
+    category: 'Basic',
+    module: require('../examples/ScrollView/ScrollViewAnimatedExample'),
+  },
+  {
+    key: 'SectionList-onEndReached',
+    module: require('../examples/SectionList/SectionList-onEndReached'),
+    category: 'ListView',
+  },
+  {
+    key: 'SectionList-inverted',
+    module: require('../examples/SectionList/SectionList-inverted'),
+    category: 'ListView',
+  },
+  {
+    key: 'SectionList-onViewableItemsChanged',
+    module: require('../examples/SectionList/SectionList-onViewableItemsChanged'),
+    category: 'ListView',
+  },
+  {
+    key: 'SectionList-stickyHeadersEnabled',
+    module: require('../examples/SectionList/SectionList-stickyHeadersEnabled'),
+    category: 'ListView',
+  },
+  {
+    key: 'SectionList-withSeparators',
+    module: require('../examples/SectionList/SectionList-withSeparators'),
+    category: 'ListView',
   },
   {
     key: 'SectionListExample',

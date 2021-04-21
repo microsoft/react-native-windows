@@ -8,8 +8,6 @@
  * @format
  */
 
-'use strict';
-
 const NativeModules = require('../BatchedBridge/NativeModules');
 const Platform = require('../Utilities/Platform');
 const UIManagerProperties = require('./UIManagerProperties');
@@ -35,6 +33,7 @@ function getConstants(): Object {
 function getViewManagerConfig(viewManagerName: string): any {
   if (
     viewManagerConfigs[viewManagerName] === undefined &&
+    global.nativeCallSyncHook && // [Windows] getConstantsForViewManager doesn't work while web debugging. So skip calling it since all constants will have been provided ahead of time.
     NativeUIManager.getConstantsForViewManager
   ) {
     try {
@@ -42,6 +41,12 @@ function getViewManagerConfig(viewManagerName: string): any {
         viewManagerName
       ] = NativeUIManager.getConstantsForViewManager(viewManagerName);
     } catch (e) {
+      console.error(
+        "NativeUIManager.getConstantsForViewManager('" +
+          viewManagerName +
+          "') threw an exception.",
+        e,
+      );
       viewManagerConfigs[viewManagerName] = null;
     }
   }
@@ -92,6 +97,9 @@ UIManagerJS.getConstants = getConstants;
 //  },
 // $FlowFixMe
 UIManagerJS.getViewManagerConfig = getViewManagerConfig;
+
+UIManagerJS.hasViewManagerConfig = (viewManagerName: string) =>
+  getViewManagerConfig(viewManagerName) != null;
 
 //};
 

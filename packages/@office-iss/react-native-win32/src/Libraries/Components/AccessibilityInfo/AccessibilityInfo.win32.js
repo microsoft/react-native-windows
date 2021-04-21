@@ -8,21 +8,16 @@
  * @flow strict-local
  */
 
-'use strict';
-
 import RCTDeviceEventEmitter from '../../EventEmitter/RCTDeviceEventEmitter';
-
-// [Win32
-// import UIManager from '../../ReactNative/UIManager';
-
-const SCREEN_READER_CHANGED_EVENT = 'screenReaderChanged';
-// Win32]
-
 import NativeAccessibilityInfo from './NativeAccessibilityInfo';
 import type {EventSubscription} from 'react-native/Libraries/vendor/emitter/EventEmitter';
+import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
+import {sendAccessibilityEvent} from '../../Renderer/shims/ReactNative';
+import legacySendAccessibilityEvent from './legacySendAccessibilityEvent';
+import {type ElementRef} from 'react';
 
 const REDUCE_MOTION_EVENT = 'reduceMotionDidChange';
-// const TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange'; [Win32]
+const TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange';
 
 type AccessibilityEventDefinitions = {
   reduceMotionChanged: [boolean],
@@ -30,6 +25,8 @@ type AccessibilityEventDefinitions = {
   // alias for screenReaderChanged
   change: [boolean],
 };
+
+type AccessibilityEventTypes = 'focus' | 'click';
 
 const _subscriptions = new Map();
 
@@ -85,9 +82,7 @@ const AccessibilityInfo = {
   isScreenReaderEnabled: function(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       if (NativeAccessibilityInfo) {
-        // [Windows
-        NativeAccessibilityInfo.isScreenReaderEnabled(resolve);
-        // Windows]
+        NativeAccessibilityInfo.isTouchExplorationEnabled(resolve);
       } else {
         reject(false);
       }
@@ -115,7 +110,7 @@ const AccessibilityInfo = {
 
     if (eventName === 'change' || eventName === 'screenReaderChanged') {
       listener = RCTDeviceEventEmitter.addListener(
-        SCREEN_READER_CHANGED_EVENT, // Windows: Change from TOUCH_EXPLORATION_EVENT to SCREEN_READER_CHANGED_EVENT
+        TOUCH_EXPLORATION_EVENT,
         handler,
       );
     } else if (eventName === 'reduceMotionChanged') {
@@ -156,12 +151,23 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#setaccessibilityfocus
    */
   setAccessibilityFocus: function(reactTag: number): void {
-    // [Windows
-    // UIManager.sendAccessibilityEvent(
-    //   reactTag,
-    //   UIManager.getConstants().AccessibilityEventTypes.typeViewFocused,
-    // );
-    // Windows]
+    legacySendAccessibilityEvent(reactTag, 'focus');
+  },
+
+  /**
+   * Send a named accessibility event to a HostComponent.
+   */
+  sendAccessibilityEvent_unstable: function(
+    handle: ElementRef<HostComponent<mixed>>,
+    eventType: AccessibilityEventTypes,
+  ) {
+    // route through React renderer to distinguish between Fabric and non-Fabric handles
+    // iOS only supports 'focus' event types
+    if (eventType === 'focus') {
+      sendAccessibilityEvent(handle, eventType);
+    } else if (eventType === 'click') {
+      // Do nothing!
+    }
   },
 
   /**
@@ -169,13 +175,9 @@ const AccessibilityInfo = {
    *
    * See https://reactnative.dev/docs/accessibilityinfo.html#announceforaccessibility
    */
-  // [Windows] add reactTag
-  announceForAccessibility: function(
-    announcement: string,
-    reactTag?: ?number,
-  ): void {
+  announceForAccessibility: function(announcement: string): void {
     if (NativeAccessibilityInfo) {
-      NativeAccessibilityInfo.announceForAccessibility(announcement, reactTag);
+      NativeAccessibilityInfo.announceForAccessibility(announcement);
     }
   },
 };

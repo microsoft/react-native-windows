@@ -24,6 +24,8 @@ jobs:
 
       - template: ../templates/yarn-install.yml
 
+      - template: ../templates/compute-beachball-branch-name.yml
+
       - task: CmdLine@2
         displayName: Check for change files
         inputs:

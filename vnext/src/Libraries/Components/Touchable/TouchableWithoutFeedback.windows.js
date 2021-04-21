@@ -8,8 +8,6 @@
  * @format
  */
 
-'use strict';
-
 import Pressability, {
   type PressabilityConfig,
 } from '../../Pressability/Pressability';
@@ -175,5 +173,7 @@ function createPressabilityConfig(props: Props): PressabilityConfig {
     onMouseLeave: props.onMouseLeave, // [Windows]
   };
 }
+
+TouchableWithoutFeedback.displayName = 'TouchableWithoutFeedback';
 
 module.exports = TouchableWithoutFeedback;

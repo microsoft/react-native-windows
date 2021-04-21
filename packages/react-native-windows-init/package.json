@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-init",
-  "version": "1.1.47",
+  "version": "1.1.53",
   "description": "CLI to add react-native-windows to an existing react-native project",
   "main": "index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -18,21 +18,22 @@
     "react-native-windows-init": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/telemetry": "^0.0.0-canary.16",
+    "@react-native-windows/telemetry": "^0.0.0-canary.17",
     "chalk": "^4.1.0",
+    "find-up": "^4.1.0",
     "mustache": "^4.0.1",
     "npm-registry": "^0.1.13",
     "prompts": "^2.3.0",
     "semver": "^7.3.2",
     "source-map-support": "^0.5.19",
     "valid-url": "^1.0.9",
-    "yargs": "^15.4.1"
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@react-native-windows/cli": "0.0.0-canary.56",
+    "@react-native-windows/cli": "0.0.0-canary.68",
     "@rnw-scripts/eslint-config": "1.1.6",
-    "@rnw-scripts/jest-unittest-config": "1.1.1",
-    "@rnw-scripts/just-task": "2.0.2",
+    "@rnw-scripts/jest-unittest-config": "1.2.0",
+    "@rnw-scripts/just-task": "2.1.0",
     "@rnw-scripts/ts-config": "1.1.0",
     "@types/chalk": "^2.2.0",
     "@types/jest": "^26.0.20",
@@ -40,7 +41,7 @@
     "@types/prompts": "^2.4.0",
     "@types/semver": "7.3.3",
     "@types/valid-url": "^1.0.3",
-    "@types/yargs": "15.0.5",
+    "@types/yargs": "16.0.0",
     "babel-jest": "^26.3.0",
     "eslint": "7.12.0",
     "jest": "^26.5.2",

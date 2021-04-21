@@ -6,6 +6,7 @@
 #include <UI.Composition.h>
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Documents.h>
+#include <UI.Xaml.Media.h>
 #include "Utils/Helpers.h"
 
 namespace Microsoft::ReactNative {
@@ -45,8 +46,12 @@ comp::Compositor GetCompositor() {
     return xaml::Window::Current().Compositor();
   }
   comp::Compositor compositor;
+#ifndef USE_WINUI3
   assert(tlsCompositor != nullptr);
   return tlsCompositor;
+#else
+  return tlsCompositor ? tlsCompositor : xaml::Media::CompositionTarget::GetCompositorForCurrentThread();
+#endif
 }
 
 } // namespace Microsoft::ReactNative

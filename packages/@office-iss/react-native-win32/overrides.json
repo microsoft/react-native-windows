@@ -3,44 +3,46 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-c66aa8abc",
+  "baseVersion": "0.0.0-d04ec4dc6",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "7cf410def8e724302967198174da14a06a118c7b"
+      "baseHash": "7c2f3e8ecf80e5229d4e1fdad2b6ef324acae0c4"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "64001fe0d4f24d7219d2b6f3c4c1fa0c0c8a88ea"
+      "baseHash": "84a9a90c70deaf3e42a67c82beafb1240c41bc95"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.win32.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseHash": "b4867752830f6953516c5898a7e2fc0dc796dcfa"
+      "baseHash": "99f0bc2c38daf35d5f08a0e0abeb5f21e583ce4e"
     },
     {
       "type": "patch",
       "file": "src/Libraries/BatchedBridge/MessageQueue.win32.js",
       "baseFile": "Libraries/BatchedBridge/MessageQueue.js",
-      "baseHash": "85eea8e9510b516c12e19fcfedc4553b990feb11",
+      "baseHash": "c47cdef67892acc92ca1df8aceef6909db24a029",
       "issue": 5807
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseHash": "b91fdc5e531daa8fac236898c80efe228bbdb8d7"
+      "baseHash": "54cf7e87dff60489f95adef777d73427eab0c866",
+      "issue": 4578
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfo.win32.js",
-      "baseFile": "Libraries/Components/AccessibilityInfo/NativeAccessibilityInfo.js",
-      "baseHash": "7b519b61f8100b5997c999b21552fd270abafce7"
+      "type": "copy",
+      "file": "src/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.win32.js",
+      "baseFile": "Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.android.js",
+      "baseHash": "154f615eba014a1df9ff2d54591219dbbc53f381",
+      "issue": 4578
     },
     {
       "type": "platform",
@@ -128,6 +130,10 @@
     },
     {
       "type": "platform",
+      "file": "src/Libraries/Components/Text/Tests/TextWin32Test.tsx"
+    },
+    {
+      "type": "platform",
       "file": "src/Libraries/Components/Text/TextWin32.Props.ts"
     },
     {
@@ -146,13 +152,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "97e9917d3fa2dbe2fe6c03c4264f756634026796"
+      "baseHash": "506d84a349fef1ad532b7c02a1836fce7befa616"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "e982deb23d7ad5312ab0c09508a6d58c152b5be7"
+      "baseHash": "9b941d27fadc82ac74153cd52c08080b0b1c7c8f"
     },
     {
       "type": "copy",
@@ -195,7 +201,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.win32.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseHash": "a4e696834cba3bfe5a5057f44f928e481109f2b8"
+      "baseHash": "ba99e0917fe2c518eb11e8b640f759f631621b40"
     },
     {
       "type": "platform",
@@ -205,7 +211,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "147459dc889f04f2405db051445833f791726895",
+      "baseHash": "008986be49bbb3166c1d9bccf3f25e577bbc9e04",
       "issue": 5843
     },
     {
@@ -220,14 +226,14 @@
       "type": "patch",
       "file": "src/Libraries/Core/ReactNativeVersionCheck.win32.js",
       "baseFile": "Libraries/Core/ReactNativeVersionCheck.js",
-      "baseHash": "1158beed7e691478c59af78c5a1097d76890cec8",
+      "baseHash": "dfed43df2bfebbf0fb3588cb827be451ee5286a3",
       "issue": 5170
     },
     {
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "8d053f7bcb66ea71fd361a5c882e4142b5977202",
+      "baseHash": "bb70db26cb8d42b51037d43a6ab9eace183a0f71",
       "issue": 4320
     },
     {
@@ -238,7 +244,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/NativeImageLoaderWin32.js",
       "baseFile": "Libraries/Image/NativeImageLoaderIOS.js",
-      "baseHash": "50b70af2498caf216229426a1b74b1d3d3ee5334",
+      "baseHash": "fde33e1ab6ab396a91bf469da0aa4bbb4f639383",
       "issue": 4320
     },
     {
@@ -281,7 +287,7 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "Libraries/Inspector/Inspector.js",
-      "baseHash": "60aa482532caac00745f8ae8611a36c756fb5b75"
+      "baseHash": "fb36e8419f4cb0b358505e991d59e1dc938432f9"
     },
     {
       "type": "patch",
@@ -293,21 +299,21 @@
       "type": "derived",
       "file": "src/Libraries/LogBox/UI/LogBoxInspectorStackFrame.win32.js",
       "baseFile": "Libraries/LogBox/UI/LogBoxInspectorStackFrame.js",
-      "baseHash": "a1f75145b083be2bc83ddc240cadbcdf93931e0d",
+      "baseHash": "d7a69edf4a2530a046a939d805707615fef1a7f4",
       "issue": 5885
     },
     {
       "type": "derived",
       "file": "src/Libraries/LogBox/UI/LogBoxStyle.win32.js",
       "baseFile": "Libraries/LogBox/UI/LogBoxStyle.js",
-      "baseHash": "118cad1437e07c7cb6c5c1fc3bb927b0c4dd1d52",
+      "baseHash": "044516da9d57212c7df6bc679efd7a271d7141e0",
       "issue": 5886
     },
     {
       "type": "derived",
       "file": "src/Libraries/Network/RCTNetworking.win32.js",
       "baseFile": "Libraries/Network/RCTNetworking.android.js",
-      "baseHash": "f37f4609ac267e701ba28bbe7af2d202e39c86ab",
+      "baseHash": "80f0e55a30b8ca1d89220deffc77a9c5a4c2cbe3",
       "issue": 4318
     },
     {
@@ -347,23 +353,30 @@
       "baseHash": "95ed8a2da162e168c7d740640a9d6c0fdb282c84"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Text/TextNativeComponent.win32.js",
+      "baseFile": "Libraries/Text/TextNativeComponent.js",
+      "baseHash": "1a196691fb0e9b656c348b7d42427c1c6163c9bb",
+      "issue": 7074
+    },
+    {
       "type": "copy",
       "file": "src/Libraries/Utilities/BackHandler.win32.js",
       "baseFile": "Libraries/Utilities/BackHandler.android.js",
-      "baseHash": "972b0cbe23ba57207ee7c855975c0b3d4c28f0d2",
+      "baseHash": "dd36bd088f6aa9b5cf5ab3b4d9ba8de1439d8e14",
       "issue": 4629
     },
     {
       "type": "derived",
       "file": "src/Libraries/Utilities/DeviceInfo.win32.js",
       "baseFile": "Libraries/Utilities/DeviceInfo.js",
-      "baseHash": "19aa984db7404750d8b86ad1359057dfe8912b24"
+      "baseHash": "1fa221f86411cf85fb57207ee731049f792794ae"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Utilities/Dimensions.win32.js",
       "baseFile": "Libraries/Utilities/Dimensions.js",
-      "baseHash": "a3cdcfacd5c32db430c3fbdd070e17c4aab007e0"
+      "baseHash": "cc2a5b68d9207ece63b461f875ea91b7d1949cb6"
     },
     {
       "type": "platform",
@@ -377,13 +390,13 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/NativePlatformConstantsWin.js",
       "baseFile": "Libraries/Utilities/NativePlatformConstantsIOS.js",
-      "baseHash": "71ec2fb1dbf35d65562538d2c63d099ec1392d00"
+      "baseHash": "4bbc29afd2148eb7a2348908976aa275c3e9353c"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.win32.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
-      "baseHash": "5330352b660b0a0ab7dcea5117dddfadadbe2e78"
+      "baseHash": "fe62d1e6d0fb9e3ba8126104099fcd314faaa657"
     },
     {
       "type": "platform",

@@ -4,14 +4,12 @@
 #pragma once
 
 #include "XamlUIService.g.h"
-
 #include "INativeUIManager.h"
 #include "ReactHost/React.h"
 #include "ReactPropertyBag.h"
 #include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
-
 struct XamlUIService : XamlUIServiceT<XamlUIService> {
  public:
   XamlUIService(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
@@ -25,7 +23,14 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
       JSValueArgWriter const &eventDataArgWriter) noexcept;
 
   static void SetXamlRoot(IReactPropertyBag const &properties, xaml::XamlRoot const &xamlRoot) noexcept;
+  static void SetAccessibleRoot(
+      IReactPropertyBag const &properties,
+      xaml::FrameworkElement const &accessibleRoot) noexcept;
   static xaml::XamlRoot GetXamlRoot(IReactPropertyBag const &properties) noexcept;
+  static xaml::FrameworkElement GetAccessibleRoot(IReactPropertyBag const &properties) noexcept;
+
+  static void SetIslandWindowHandle(IReactPropertyBag const &properties, uint64_t hwnd) noexcept;
+  static uint64_t GetIslandWindowHandle(IReactPropertyBag const &properties) noexcept;
 
  private:
   std::weak_ptr<::Microsoft::ReactNative::INativeUIManagerHost> m_wkUIManager;

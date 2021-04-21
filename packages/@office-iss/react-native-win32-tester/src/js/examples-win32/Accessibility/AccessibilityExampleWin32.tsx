@@ -2,7 +2,6 @@
 import * as React from 'react';
 import {
   View,
-  findNodeHandle,
   AccessibilityInfo,
   FlatList,
   StyleSheet,
@@ -363,18 +362,10 @@ const AccessibilityInfoExample: React.FunctionComponent<{}> =() => {
   const onClick = React.useCallback(() => {
     AccessibilityInfo.announceForAccessibility('AccessibilityInfo announcement succeeded!');
   }, []);
-  const ref = React.useRef();
-  const onClickTag = React.useCallback(() => {
-     // @ts-ignore (We changed the API for announceForAccessibility)
-    AccessibilityInfo.announceForAccessibility('AccessibilityInfo announcement from tag', findNodeHandle(ref.current));
-  }, [ref]);
   return (
     <View style={styles.box}>
       <TouchableHighlight onPress={onClick}>
         <Text>AccessibilityInfo.announceForAccessibility</Text>
-      </TouchableHighlight>
-      <TouchableHighlight ref={ref} onPress={onClickTag}>
-        <Text>AccessibilityInfo.announceForAccessibility with target</Text>
       </TouchableHighlight>
     </View>
   );

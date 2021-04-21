@@ -10,7 +10,6 @@
 ; initRNLibraries build step
 <PROJECT_ROOT>/index.js
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
-<PROJECT_ROOT>/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfo.js
 <PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
@@ -54,7 +53,6 @@
 .*/react-native-win32/src/.*
 
 [untyped]
-<PROJECT_ROOT>/Libraries/DeprecatedPropTypes/.*
 .*/node_modules/@react-native-community/cli/.*/.*
 ; Should work out how to do this properly
 .*/react-native-win32/Libraries/Image/resolveAssetSource.win32.js
@@ -90,8 +88,6 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
-experimental.abstract_locations=true
-
 [lints]
 sketchy-null-number=warn
 sketchy-null-mixed=warn
@@ -113,4 +109,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.142.0
+^0.148.0

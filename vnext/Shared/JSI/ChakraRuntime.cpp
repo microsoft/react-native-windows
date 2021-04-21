@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 #include "ChakraRuntime.h"
+#include "ChakraRuntimeFactory.h"
 
+#include <MemoryTracker.h>
+#include <RuntimeOptions.h>
 #include "Unicode.h"
 #include "Utilities.h"
 
-#include <MemoryTracker.h>
 #include <cxxreact/MessageQueueThread.h>
 
 #include <cstring>
@@ -14,6 +16,15 @@
 #include <mutex>
 #include <sstream>
 #include <unordered_set>
+
+#ifdef CHAKRACORE
+#include <ChakraCore.h>
+#else
+#ifndef USE_EDGEMODE_JSRT
+#define USE_EDGEMODE_JSRT
+#endif
+#include <jsrt.h>
+#endif
 
 namespace Microsoft::JSI {
 
@@ -38,7 +49,15 @@ struct HostFunctionWrapper final {
 
 } // namespace
 
-ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::move(args)} {
+// ES6 Promise callback
+void CALLBACK ChakraRuntime::PromiseContinuationCallback(JsValueRef funcRef, void *callbackState) noexcept {
+  ChakraRuntime *runtime = static_cast<ChakraRuntime *>(callbackState);
+  runtime->PromiseContinuation(funcRef);
+}
+
+ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::move(args)} {}
+
+void ChakraRuntime::Init() noexcept {
   JsRuntimeAttributes runtimeAttributes = JsRuntimeAttributeNone;
 
   if (!m_args.enableJITCompilation) {
@@ -72,6 +91,7 @@ ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::mo
   m_propertyId.configurable = JsRefHolder{GetPropertyIdFromName(L"configurable")};
   m_propertyId.enumerable = JsRefHolder{GetPropertyIdFromName(L"enumerable")};
   m_propertyId.get = JsRefHolder{GetPropertyIdFromName(L"get")};
+  m_propertyId.getOwnPropertyDescriptor = JsRefHolder{GetPropertyIdFromName(L"getOwnPropertyDescriptor")};
   m_propertyId.hostFunctionSymbol = JsRefHolder{GetPropertyIdFromSymbol(L"hostFunctionSymbol")};
   m_propertyId.hostObjectSymbol = JsRefHolder{GetPropertyIdFromSymbol(L"hostObjectSymbol")};
   m_propertyId.length = JsRefHolder{GetPropertyIdFromName(L"length")};
@@ -87,19 +107,29 @@ ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::mo
   m_undefinedValue = JsRefHolder{GetUndefinedValue()};
 }
 
-ChakraRuntime::~ChakraRuntime() noexcept {
+/*virtual*/ ChakraRuntime::~ChakraRuntime() noexcept {
   m_undefinedValue = {};
   m_propertyId = {};
   m_proxyConstructor = {};
   m_hostObjectProxyHandler = {};
-
-  stopDebuggingIfNeeded();
 
   m_context = {};
   SetCurrentContext(m_prevContext);
   m_prevContext = {};
 
   DisposeRuntime(m_runtime);
+}
+
+void ChakraRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
+  if (runtimeArgs().jsQueue) {
+    JsAddRef(funcRef, nullptr);
+    runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
+      JsValueRef undefinedValue;
+      JsGetUndefinedValue(&undefinedValue);
+      ChakraVerifyJsErrorElseThrow(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
+      JsRelease(funcRef, nullptr);
+    });
+  }
 }
 
 JsValueRef ChakraRuntime::CreatePropertyDescriptor(JsValueRef value, PropertyAttibutes attrs) {
@@ -675,8 +705,6 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
   HostFunctionWrapper *hostFuncWraper = static_cast<HostFunctionWrapper *>(callbackState);
   ChakraRuntime &chakraRuntime = hostFuncWraper->GetRuntime();
   return chakraRuntime.HandleCallbackExceptions([&]() {
-    ChakraVerifyElseThrow(!isConstructCall, "Constructor call for HostObjectGetTrap() is not supported.");
-
     ChakraVerifyElseThrow(argCount > 0, "There must be at least 'this' argument.");
     const JsiValueView jsiThisArg{*args};
     const JsiValueViewArgs jsiArgs{args + 1, argCount - 1u};
@@ -696,8 +724,6 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
     void *callbackState) noexcept {
   ChakraRuntime *chakraRuntime = static_cast<ChakraRuntime *>(callbackState);
   return chakraRuntime->HandleCallbackExceptions([&]() {
-    ChakraVerifyElseThrow(!isConstructCall, "Constructor call for HostObjectGetTrap() is not supported.");
-
     // args[0] - the Proxy handler object (this) (unused).
     // args[1] - the Proxy target object.
     // args[2] - the name of the property to set.
@@ -737,8 +763,6 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
     void *callbackState) noexcept {
   ChakraRuntime *chakraRuntime = static_cast<ChakraRuntime *>(callbackState);
   return chakraRuntime->HandleCallbackExceptions([&]() {
-    ChakraVerifyElseThrow(!isConstructCall, "Constructor call for HostObjectSetTrap() is not supported.");
-
     // args[0] - the Proxy handler object (this) (unused).
     // args[1] - the Proxy target object.
     // args[2] - the name of the property to set.
@@ -795,6 +819,37 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
   });
 }
 
+/*static*/ JsValueRef CALLBACK ChakraRuntime::HostObjectGetOwnPropertyDescriptorTrap(
+    JsValueRef callee,
+    bool isConstructCall,
+    JsValueRef *args,
+    unsigned short argCount,
+    void *callbackState) noexcept {
+  ChakraRuntime *chakraRuntime = static_cast<ChakraRuntime *>(callbackState);
+  return chakraRuntime->HandleCallbackExceptions([&]() {
+    ChakraVerifyElseThrow(
+        !isConstructCall, "Constructor call for HostObjectGetOwnPropertyDescriptorTrap() is not supported.");
+
+    // args[0] - the Proxy handler object (this) (unused).
+    // args[1] - the Proxy target object.
+    // args[2] - the property
+    ChakraVerifyElseThrow(argCount == 3, "HostObjectGetOwnPropertyDescriptorTrap() requires 3 arguments.");
+    const JsValueRef target = args[1];
+    auto const &hostObject = *static_cast<std::shared_ptr<facebook::jsi::HostObject> *>(GetExternalData(target));
+
+    const JsValueRef propertyName = args[2];
+    if (GetValueType(propertyName) == JsValueType::JsString) {
+      const PropNameIDView propertyId{GetPropertyIdFromName(StringToPointer(propertyName).data())};
+      return RunInMethodContext("HostObject::getOwnPropertyDescriptor", [&]() {
+        auto value = chakraRuntime->ToJsValueRef(hostObject->get(*chakraRuntime, propertyId));
+        auto descriptor = chakraRuntime->CreatePropertyDescriptor(value, PropertyAttibutes::None);
+        return descriptor;
+      });
+    }
+    return static_cast<JsValueRef>(chakraRuntime->m_undefinedValue);
+  });
+}
+
 JsValueRef ChakraRuntime::GetHostObjectProxyHandler() {
   if (!m_hostObjectProxyHandler) {
     const JsValueRef handler = CreateObject();
@@ -802,11 +857,17 @@ JsValueRef ChakraRuntime::GetHostObjectProxyHandler() {
     SetProperty(handler, m_propertyId.set, CreateExternalFunction(m_propertyId.set, 3, HostObjectSetTrap, this));
     SetProperty(
         handler, m_propertyId.ownKeys, CreateExternalFunction(m_propertyId.ownKeys, 1, HostObjectOwnKeysTrap, this));
+    SetProperty(
+        handler,
+        m_propertyId.getOwnPropertyDescriptor,
+        CreateExternalFunction(m_propertyId.getOwnPropertyDescriptor, 3, HostObjectGetOwnPropertyDescriptorTrap, this));
     m_hostObjectProxyHandler = JsRefHolder{handler};
   }
 
   return m_hostObjectProxyHandler;
 }
+
+/*virtual*/ void ChakraRuntime::setupNativePromiseContinuation() noexcept {}
 
 void ChakraRuntime::setupMemoryTracker() noexcept {
   if (runtimeArgs().memoryTracker) {
@@ -966,7 +1027,15 @@ std::once_flag ChakraRuntime::s_runtimeVersionInitFlag;
 uint64_t ChakraRuntime::s_runtimeVersion = 0;
 
 std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(ChakraRuntimeArgs &&args) noexcept {
-  return std::make_unique<ChakraRuntime>(std::move(args));
+#ifdef CHAKRACORE
+  if (React::GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
+    return MakeSystemChakraRuntime(std::move(args));
+  } else {
+    return MakeChakraCoreRuntime(std::move(args));
+  }
+#else
+  return MakeSystemChakraRuntime(std::move(args));
+#endif // CHAKRACORE
 }
 
 } // namespace Microsoft::JSI

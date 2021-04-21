@@ -136,6 +136,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   const Mso::Promise<void> m_whenCreated;
   const Mso::Promise<void> m_whenLoaded;
   const Mso::Promise<void> m_whenDestroyed;
+  Mso::Future<void> m_whenDestroyedResult; // To be returned from the Destroy() method.
 
   const Mso::VoidFunctor m_updateUI;
   const bool m_debuggerBreakOnNextLine : 1;

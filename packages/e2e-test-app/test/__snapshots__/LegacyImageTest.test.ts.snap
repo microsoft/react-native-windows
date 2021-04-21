@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LegacyImageTest ImageRTLTest 1`] = `
+Object {
+  "AutomationId": "image-container",
+  "Background": "#FFFFFF00",
+  "BorderBrush": null,
+  "BorderThickness": "0,0,0,0",
+  "Clip": null,
+  "CornerRadius": "0,0,0,0",
+  "FlowDirection": "LeftToRight",
+  "Height": 300,
+  "HorizontalAlignment": "Stretch",
+  "Left": 0,
+  "Margin": "0,0,0,0",
+  "Padding": "0,0,0,0",
+  "Top": 0,
+  "VerticalAlignment": "Stretch",
+  "Visibility": "Visible",
+  "Width": 500,
+  "XamlType": "Windows.UI.Xaml.Controls.Border",
+  "children": Array [
+    Object {
+      "Background": null,
+      "BorderBrush": "#00000000",
+      "BorderThickness": "0,0,0,0",
+      "Clip": null,
+      "CornerRadius": "0,0,0,0",
+      "FlowDirection": "LeftToRight",
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Top": 0,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "XamlType": "Microsoft.ReactNative.ViewPanel",
+      "children": Array [
+        Object {
+          "Left": 0,
+          "Top": 0,
+          "XamlType": "Windows.UI.Xaml.DependencyObject",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`LegacyImageTest ImageWithBorderTest 1`] = `
+Object {
+  "AutomationId": "image-container",
+  "Background": "#FFFFFF00",
+  "BorderBrush": "#5500FF00",
+  "BorderThickness": "10,10,10,10",
+  "Clip": null,
+  "CornerRadius": "10,10,10,10",
+  "FlowDirection": "LeftToRight",
+  "Height": 300,
+  "HorizontalAlignment": "Stretch",
+  "Left": 0,
+  "Margin": "0,0,0,0",
+  "Padding": "0,0,0,0",
+  "Top": 0,
+  "VerticalAlignment": "Stretch",
+  "Visibility": "Visible",
+  "Width": 500,
+  "XamlType": "Windows.UI.Xaml.Controls.Border",
+  "children": Array [
+    Object {
+      "Background": null,
+      "BorderBrush": "#5500FF00",
+      "BorderThickness": "10,10,10,10",
+      "Clip": null,
+      "CornerRadius": "10,10,10,10",
+      "FlowDirection": "LeftToRight",
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Top": 0,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "XamlType": "Microsoft.ReactNative.ViewPanel",
+      "children": Array [
+        Object {
+          "Left": 10,
+          "Top": 10,
+          "XamlType": "Windows.UI.Xaml.DependencyObject",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`LegacyImageTest ImageWithoutBorderTest 1`] = `
+Object {
+  "AutomationId": "image-container",
+  "Background": "#FFFFFF00",
+  "BorderBrush": "#00000000",
+  "BorderThickness": "0,0,0,0",
+  "Clip": null,
+  "CornerRadius": "0,0,0,0",
+  "FlowDirection": "LeftToRight",
+  "Height": 300,
+  "HorizontalAlignment": "Stretch",
+  "Left": 0,
+  "Margin": "0,0,0,0",
+  "Top": 0,
+  "VerticalAlignment": "Stretch",
+  "Visibility": "Visible",
+  "Width": 500,
+  "XamlType": "Microsoft.ReactNative.ViewPanel",
+  "children": Array [
+    Object {
+      "Left": 0,
+      "Top": 0,
+      "XamlType": "Windows.UI.Xaml.DependencyObject",
+    },
+  ],
+}
+`;
+
+exports[`LegacyImageTest ImageWithoutBorderTestOneMoreClick 1`] = `
+Object {
+  "AutomationId": "image-container",
+  "Background": "#FFFFFF00",
+  "BorderBrush": null,
+  "BorderThickness": "0,0,0,0",
+  "Clip": null,
+  "CornerRadius": "0,0,0,0",
+  "FlowDirection": "LeftToRight",
+  "Height": 300,
+  "HorizontalAlignment": "Stretch",
+  "Left": 0,
+  "Margin": "0,0,0,0",
+  "Padding": "0,0,0,0",
+  "Top": 0,
+  "VerticalAlignment": "Stretch",
+  "Visibility": "Visible",
+  "Width": 500,
+  "XamlType": "Windows.UI.Xaml.Controls.Border",
+  "children": Array [
+    Object {
+      "Background": null,
+      "BorderBrush": "#00000000",
+      "BorderThickness": "0,0,0,0",
+      "Clip": null,
+      "CornerRadius": "0,0,0,0",
+      "FlowDirection": "LeftToRight",
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Top": 0,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "XamlType": "Microsoft.ReactNative.ViewPanel",
+      "children": Array [
+        Object {
+          "Left": 0,
+          "Top": 0,
+          "XamlType": "Windows.UI.Xaml.DependencyObject",
+        },
+      ],
+    },
+  ],
+}
+`;

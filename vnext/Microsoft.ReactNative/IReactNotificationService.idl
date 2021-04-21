@@ -13,33 +13,33 @@ namespace Microsoft.ReactNative {
 
   [webhosthidden]
   DOC_STRING(
-    "A subscription to a notification.\n"
+    "A subscription to a @IReactNotificationService notification.\n"
     "The subscription is removed when this object is deleted or the @.Unsubscribe method is called.")
   interface IReactNotificationSubscription
   {
     DOC_STRING(
       "The notification service for the subscription.\n"
-      "It can be null if @.IsSubscribed is true and the service is already deleted.")
+      "It can be null if @.IsSubscribed is true and the notification service was already deleted.")
     IReactNotificationService NotificationService { get; };
 
     DOC_STRING("Name of the notification.")
     IReactPropertyName NotificationName { get; };
 
     DOC_STRING(
-      "The @IReactDispatcher provided when the notification subscription created.\n"
-      "All notifications will be handled using this dispatcher.\n"
-      "In case if it is null, the events are handled synchronously.")
+      "The @IReactDispatcher that was provided when the notification subscription was created.\n"
+      "All notifications for this subscription will be handled using this dispatcher.\n"
+      "If the dispatcher is null, then the events are handled synchronously.")
     IReactDispatcher Dispatcher { get; };
 
     DOC_STRING(
       "True if the subscription is still active.\n"
-      "This property is checked before notification handler is invoked.")
+      "This property is checked internally before the notification handler is invoked.")
     Boolean IsSubscribed { get; };
 
     DOC_STRING(
       "Removes the subscription.\n"
       "Because of the multi-threaded nature of the notifications, the handler can be still called "
-      "after the @.Unsubscribe method called if the @.IsSubscribed property is already checked. "
+      "after the @.Unsubscribe method has been called if the @.IsSubscribed property has already been checked. "
       "Consider calling the @.Unsubscribe method and the handler in the same @IReactDispatcher "
       "to ensure that no handler is invoked after the @.Unsubscribe method call.")
     void Unsubscribe();
@@ -56,27 +56,30 @@ namespace Microsoft.ReactNative {
 
     DOC_STRING(
       "The data sent with the notification. It can be any WinRT type. "
-      "Consider using @IReactPropertyBag for semi-structured data. "
-      "It can be null if notification has no data. ")
+      "Consider using @IReactPropertyBag for sending semi-structured data. "
+      "It can be null if the notification has no data associated with it.")
     Object Data { get; };
   }
 
   [webhosthidden]
   DOC_STRING(
     "Delegate to handle notifications.\n"
-    "The `sender` parameter is the object that sent the notification. It can be null. "
-    "The `args` contain the notification-specific data and the notification subscription.")
+    "- The `sender` parameter is the object that sent the notification. It can be null.\n"
+    "- The `args` contain the notification-specific data and the notification subscription.")
   delegate void ReactNotificationHandler(Object sender, IReactNotificationArgs args);
 
   [webhosthidden]
-  DOC_STRING("The notification service is used to subscribe to notifications and to send notifications.")
+  DOC_STRING(
+    "The notification service that can be used to send notifications between different components in an app.\n"
+    "Use the @.Subscribe method to subscribe to notifications and the @.SendNotification method to send notifications.")
   interface IReactNotificationService
   {
     DOC_STRING(
       "Subscribes to a notification.\n"
-      "The `notificationName` is a non-null property name and can belong to a specific namespace.\n"
-      "The `dispatcher` is used to call notification handlers. If it is null, then the handler is called synchronously.\n"
-      "The `handler` is a delegate that can be implemented as a lambda to handle notifications.\n"
+      "- `notificationName` is a non-null notification name that can belong to a specific namespace"
+      "  like any @IReactPropertyName.\n"
+      "- `dispatcher` is used to call notification handlers. If it is null, then the handler is called synchronously.\n"
+      "- `handler` is a delegate that can be implemented as a lambda to handle notifications.\n"
       "The method returns a @IReactNotificationSubscription that must be kept alive while the subscription "
       "is active. The subscription is removed when the @IReactNotificationSubscription is destroyed.")
     IReactNotificationSubscription Subscribe(
@@ -84,19 +87,19 @@ namespace Microsoft.ReactNative {
 
     DOC_STRING(
       "Sends the notification with `notificationName`.\n"
-      "The `notificationName` must not be null.\n"
-      "The `sender` is the object that sends notification. It can be null.\n"
-      "The `data` is the data associated with the notification. It can be null.\n"
+      "- `notificationName` is the name of the notification to send. It must not be null.\n"
+      "- `sender` is the object that sends notification. It can be null.\n"
+      "- `data` is the data associated with the notification. It can be null.\n"
       "Consider using @IReactPropertyBag for sending semi-structured data. It can be created "
       "using the @ReactPropertyBagHelper.CreatePropertyBag method.")
     void SendNotification(IReactPropertyName notificationName, Object sender, Object data);
   }
 
   [webhosthidden]
-  DOC_STRING("Helper methods for the notification service implementation.")
+  DOC_STRING("Helper methods for the @IReactNotificationService implementation.")
   static runtimeclass ReactNotificationServiceHelper
   {
-    DOC_STRING("Creates new instance of IReactNotificationService")
+    DOC_STRING("Creates a new instance of @IReactNotificationService")
     static IReactNotificationService CreateNotificationService();
   }
 } // namespace Microsoft.ReactNative

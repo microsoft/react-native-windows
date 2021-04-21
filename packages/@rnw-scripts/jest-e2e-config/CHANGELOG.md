@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/jest-e2e-config
 
-This log was last generated on Thu, 01 Oct 2020 05:08:11 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Feb 2021 05:08:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.2
+
+Thu, 11 Feb 2021 05:08:29 GMT
+
+### Patches
+
+- Do not try to run snapshots (ngerlem@microsoft.com)
 
 ## 0.1.1
 

@@ -1,8 +1,30 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Tue, 09 Feb 2021 05:07:37 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Mar 2021 05:05:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.29
+
+Thu, 04 Mar 2021 05:05:53 GMT
+
+### Patches
+
+- Update yargs version used and patch y18n version 4.0.0 to 4.0.1 as used by detox of transitive dependencies to address https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-7774 (dannyvv@microsoft.com)
+
+## 1.0.28
+
+Thu, 11 Feb 2021 05:08:29 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.19 (ngerlem@microsoft.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.16 (ngerlem@microsoft.com)
+- Bump react-native-platform-override to v1.4.12 (ngerlem@microsoft.com)
 
 ## 1.0.27
 

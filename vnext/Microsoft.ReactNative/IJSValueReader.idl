@@ -20,22 +20,25 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   DOC_STRING(
     "Forward-only reader for JSON-like streams.\n"
-    "It is used to read data sent between native modules and the Microsoft.ReactNative.dll.\n"
+    "It is used to read data sent between native modules and the Microsoft.ReactNative library.\n"
     "\n"
-    "The JSON-like streams are data structures that satisfy the [JSON specification](https://tools.ietf.org/html/rfc8259). "
+    "The JSON-like streams are data structures that satisfy the "
+    "[JSON specification](https://tools.ietf.org/html/rfc8259). "
     "The data structure may have objects with name-value pairs and arrays of items. "
     "Property values or array items can be of type `Null`, `Object`, `Array`, `String`, `Boolean`, or `Number`. "
     "The `IJSValueReader` treats the `Number` type as `Int64` or `Double`. See @JSValueType.\n"
     "\n"
     "When `IJSValueReader` reads data it must walk the whole tree without skipping any items. "
-    "It means that if the current value type is `Object`, then we must call @.GetNextObjectProperty "
-    "to start reading its properties, and if the current type is `Array`, then we must call "
-    "@.GetNextArrayItem to start reading its items.\n"
+    "For example, if the current value type is `Object`, one must call @.GetNextObjectProperty "
+    "to start reading the current object's properties, and if the current type is `Array`, "
+    "@.GetNextArrayItem must be called to start reading the elements in the array. "
+    "These functions must be called in a loop until they return false, which signifies that there are "
+    "no more items within the object or array being traversed.\n"
     "\n"
     "See the @IJSValueWriter for the corresponding writer interface.\n"
     "\n"
     "The @IJSValueReader and @IJSValueWriter must be rarely used directly. "
-    "Use them to create serializer and deserializer functions for a type. "
+    "Use them to create functions that serialize a native type or deserialize into a native type. "
     "The rest of application code must use these functions to serialize/deserialize values. "
     "The `Microsoft.ReactNative.Cxx` and `Microsoft.ReactNative.Managed` projects offer "
     "serializer/deserializer functions for many standard types. Use them directly or to define "
@@ -48,28 +51,30 @@ namespace Microsoft.ReactNative
     JSValueType ValueType { get; };
 
     DOC_STRING(
-      "Gets the next object property and makes its value to be the current value.\n"
+      "Advances the iterator within the current object to fetch the next object property. "
+      "The property value can then be obtained by calling one of the Get functions.\n"
       "\n"
-      "It returns **`true`** if the next property is acquired successfully. "
+      "Returns **`true`** if the next property is acquired successfully. "
       "In that case the `propertyName` is set to the name of the property. "
-      "Otherwise, it returns **`false`**, that means that reading of the JSON-like object is completed.\n"
+      "Otherwise, it returns **`false`**, meaning that reading of the JSON-like object is completed.\n"
       "\n"
       "**Note**\n"
       "- Use @.ValueType to get the type of the property value and other GetXXX methods to read it.\n"
-      "- Use @.GetNextObjectProperty method to start reading property value of type`JSValueType::Object`.\n"
-      "- Use @.GetNextArrayItem method to start reading property value of type`JSValueType::Array`")
+      "- Use @.GetNextObjectProperty method to start reading property value of type @JSValueType `Object`.\n"
+      "- Use @.GetNextArrayItem method to start reading property value of type @JSValueType `Array")
     Boolean GetNextObjectProperty(out String propertyName);
 
     DOC_STRING(
-      "Gets the next array item and makes its value to be the current value.\n"
+      "Advances the iterator within the current array to fetch the next array element. "
+      "The element can then be obtained by calling one of the Get functions.\n"
       "\n"
-      "It returns **`true`** if the next array item is acquired successfully. "
-      "Otherwise, it returns **`false`**, and it means that reading of the JSON-like array is completed.\n"
+      "Returns **`true`** if the next array item is acquired successfully. "
+      "Otherwise, it returns **`false`**, meaning that reading of the JSON-like array is completed.\n"
       "\n"
       "**Note**\n"
       "- Use @.ValueType to get the type of the array item and other GetXXX methods to read it.\n"
-      "- Use @.GetNextObjectProperty method to start reading property value of type`JSValueType::Object`.\n"
-      "- Use @.GetNextArrayItem method to start reading property value of type`JSValueType::Array`")
+      "- Use @.GetNextObjectProperty method to start reading property value of type @JSValueType `Object`.\n"
+      "- Use @.GetNextArrayItem method to start reading property value of type @JSValueType `Array")
     Boolean GetNextArrayItem();
 
     DOC_STRING("Gets the current `String` value.")

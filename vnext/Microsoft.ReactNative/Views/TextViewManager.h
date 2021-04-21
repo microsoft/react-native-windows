@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <Utils/TextTransform.h>
 #include <Views/FrameworkElementViewManager.h>
 
 namespace Microsoft::ReactNative {
@@ -25,13 +26,15 @@ class TextViewManager : public FrameworkElementViewManager {
 
   void OnDescendantTextPropertyChanged(ShadowNodeBase *node);
 
+  TextTransform GetTextTransformValue(ShadowNodeBase *node);
+
  protected:
   bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,
       const std::string &propertyName,
       const winrt::Microsoft::ReactNative::JSValue &propertyValue) override;
 
-  XamlView CreateViewCore(int64_t tag) override;
+  XamlView CreateViewCore(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &) override;
 };
 
 } // namespace Microsoft::ReactNative

@@ -13,6 +13,10 @@ parameters:
   displayName: Skip Deploying Bots to Azure Functions
   type: boolean
   default: false
+- name: skipStableCodesign
+  displayName: Skip Codesigning for Stable Branch
+  type: boolean
+  default: false
 
 variables:
   - template: variables/msbuild.yml
@@ -22,19 +26,28 @@ variables:
     value: ''
   - name: SkipGitPushPublishArgs
     value: ''
+  - name: NugetSecurityAnalysisWarningLevel
+    value: 'warn'
+  - name: FailCGOnAlert
+    value: false
+  - name: EnableCodesign
+    value: false
+  - name: ArtifactServices.Symbol.AccountName
+    value: microsoft
+  - name: ArtifactServices.Symbol.PAT
+    value: $(pat-symbols-publish-microsoft)
 
 schedules:
-- cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
-  displayName: Nightly master publish build
-  branches:
-    include:
-      - master
-
-- cron: "0 15 * * 1" # 3PM Monday UTC (8AM Monday PST)
+- cron: "0 15 * * Mon" # 3PM Monday UTC (8AM Monday PST)
   displayName: Weekly stable publish build
   branches:
     include:
-      - "*-stable"
+    - refs/heads/0.64-stable
+- cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
+  displayName: Nightly canary publish build
+  branches:
+    include:
+    - master
 
 trigger: none
 pr: none
@@ -183,15 +196,24 @@ jobs:
           contents: |
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
-      
+
+      - script: |
+          echo ##vso[task.setvariable variable=EnableCodesign]true
+        displayName: Set EnableCodesign
+        condition: or(eq(variables['EnableCodesign'], 'true'), and(endsWith(variables['Build.SourceBranchName'], '-stable'), not(${{ parameters.skipStableCodesign }})))
+
+      - script: |
+          echo ##vso[task.setvariable variable=FailCGOnAlert]true
+        displayName: Set FailCGOnAlert
+        condition: or(eq(variables['FailCGOnAlert'], 'true'), eq(variables['EnableCodesign'], 'true'))
+
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: 'Component Governance Detection'
         inputs:
           alertWarningLevel: Medium
           scanType: 'Register'
-          # Uncomment this once we have codesigning working
-          # ${{ if endsWith(variables['Build.SourceBranchName'], '-stable') }}: # Fail on stable release builds
-          #   failOnAlert: true
+          # Uncomment this once we have codesigning for Desktop working
+          # failOnAlert: $(FailCGOnAlert) # Alerts must fail the run to prevent codesigning
 
   - job: RnwNativeBuildUniversal
     displayName: Build Universal
@@ -245,22 +267,31 @@ jobs:
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
             Microsoft.ReactNative.Managed.CodeGen\**
-      
+
+      - script: |
+          echo ##vso[task.setvariable variable=EnableCodesign]true
+        displayName: Set EnableCodesign
+        condition: or(eq(variables['EnableCodesign'], 'true'), and(endsWith(variables['Build.SourceBranchName'], '-stable'), not(${{ parameters.skipStableCodesign }})))
+
+      - script: |
+          echo ##vso[task.setvariable variable=FailCGOnAlert]true
+        displayName: Set FailCGOnAlert
+        condition: or(eq(variables['FailCGOnAlert'], 'true'), eq(variables['EnableCodesign'], 'true'))
+
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: 'Component Governance Detection'
         inputs:
           alertWarningLevel: Medium
           scanType: 'Register'
-          # Uncomment this once we have codesigning working
-          # ${{ if endsWith(variables['Build.SourceBranchName'], '-stable') }}: # Fail on stable release builds
-          #   failOnAlert: true
+          failOnAlert: $(FailCGOnAlert) # Alerts must fail the run to prevent codesigning
 
-    # Disable for now, not sure this works on github projects anyway.
-    # - task: PublishSymbols@2
-    #   displayName: 'Publish symbols path'
-    #   inputs:
-    #     SearchPattern: 'vnext/target/**/*.pdb'
-    #     SymbolServerType: TeamServices
+      # Make symbols available through http://symweb.
+      - task: PublishSymbols@2
+        displayName: Publish symbols
+        inputs:
+          SearchPattern: vnext/target/**/*.pdb
+          SymbolServerType: TeamServices
+
   - job: RNWNuget
     dependsOn:
       - RnwNpmPublish
@@ -269,19 +300,9 @@ jobs:
     displayName: Sign Binaries and Publish NuGet
     pool:
       vmImage: $(VmImage)
-      # Disable codesign for now, until we're sure
-      # vmImage: Package ES Lab E
 
     steps:
       - checkout: none
-
-      # Disable codesign for now, until we're sure
-      # - task: PkgESSetupBuild@10
-      #   displayName: 'XESSetupBuild'
-      #   inputs:
-      #     productName: microsoftreactnative
-      #     branchVersion: false
-      #     nugetVer: true
 
       - template: templates/apply-published-version-vars.yml
 
@@ -294,8 +315,8 @@ jobs:
         parameters:
           publishCommitId: $(publishCommitId)
           npmVersion: $(npmVersion)
-          # Disable codesign for now, until we're sure
-          # signMicrosoft: true
+          ${{ if or(eq(variables['EnableCodesign'], 'true'), and(endsWith(variables['Build.SourceBranchName'], '-stable'), not(parameters.skipStableCodesign))) }}: # Sign on stable release builds
+            signMicrosoft: true
 
       - task: PublishPipelineArtifact@1
         displayName: "Publish final nuget artifacts"

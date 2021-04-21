@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation.
+// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #pragma once
@@ -10,3 +10,13 @@
 #endif
 
 #include <windows.h>
+#include <math.h>
+
+#include <condition_variable>
+#include <functional>
+#include <iostream>
+#include <map>
+#include <string>
+
+#include <folly/dynamic.h>
+#include <folly/json.h>

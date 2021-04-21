@@ -23,7 +23,6 @@ jobs:
           (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
           (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
           (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
-          (FullyQualifiedName!~WebSocketModule_)&
           (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
 
       #6799 -
@@ -38,20 +37,17 @@ jobs:
 
     strategy:
       matrix:
-        # Arm Desktop does not build on non-arm agents
-        # ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-        #   ArmDebug:
-        #     BuildConfiguration: Debug
-        #     BuildPlatform: ARM
-        #   ArmRelease:
-        #     BuildConfiguration: Release
-        #     BuildPlatform: ARM
-        # # End Continuous only
-        Arm64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM64
-        # Start Continuous only
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+          # Arm Desktop does not build on non-arm agents
+          # ArmDebug:
+          #   BuildConfiguration: Debug
+          #   BuildPlatform: ARM
+          # ArmRelease:
+          #   BuildConfiguration: Release
+          #   BuildPlatform: ARM
+          Arm64Debug:
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64
           Arm64Release:
             BuildConfiguration: Release
             BuildPlatform: ARM64
@@ -173,3 +169,4 @@ jobs:
         inputs:
           alertWarningLevel: Medium
           scanType: 'Register'
+        condition: false # Temporarily disabling CG, see https://github.com/microsoft/react-native-windows/issues/7261

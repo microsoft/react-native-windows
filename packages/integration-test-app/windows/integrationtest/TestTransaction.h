@@ -4,7 +4,9 @@
 #pragma once
 
 #include <winrt/Microsoft.ReactNative.h>
-#include "TestCommandListener.h"
+#include <winrt/Windows.Data.Json.h>
+
+#include "ExceptionInfo.h"
 
 namespace IntegrationTest {
 
@@ -31,8 +33,8 @@ enum class HostAction {
   // should be notifed after by calling OnEventsFlushed.
   FlushEvents,
 
-  // A test result is ready to be submitted
-  SubmitResult,
+  // A test result is ready
+  ResultReady,
 };
 
 //! Describes the peding transaction result
@@ -68,9 +70,9 @@ class TestTransaction final : public winrt::implements<TestTransaction, winrt::W
   //! All test events have been flushed
   [[nodiscard]] HostAction OnEventsFlushed() noexcept;
 
-  //! Submits a result based on the completed transaction. Must only be
+  //! Retrives a result based on the completed transaction. Must only be
   //! called once the test is complete.
-  void SubmitResult(TestCommandResponse &response) noexcept;
+  winrt::Windows::Data::Json::JsonObject GetResult() noexcept;
 
  private:
   TestState m_state{TestState::Started};

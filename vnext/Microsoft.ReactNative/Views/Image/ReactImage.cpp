@@ -141,8 +141,11 @@ void ReactImage::Source(ReactImageSource source) {
       source.sourceType = ImageSourceType::Download;
     } else if (scheme == L"data") {
       source.sourceType = ImageSourceType::InlineData;
+      if (source.uri.find("image/svg+xml;base64") != std::string::npos) {
+        source.sourceFormat = ImageSourceFormat::Svg;
+      }
     } else if (ext == L".svg" || ext == L".svgz") {
-      source.sourceType = ImageSourceType::Svg;
+      source.sourceFormat = ImageSourceFormat::Svg;
     }
 
     m_imageSource = source;
@@ -175,8 +178,7 @@ std::wstring GetUriFromImage(const winrt::Uri &uri) {
 
 template <typename TImage>
 void ImageFailed(const TImage &image, const xaml::ExceptionRoutedEventArgs &args) {
-  cwdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << args.ErrorMessage().c_str() << L")"
-          << std::endl;
+  cdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << args.ErrorMessage().c_str() << L")\n";
 }
 
 // TSourceFailedEventArgs can be either LoadedImageSourceLoadCompletedEventArgs or
@@ -189,12 +191,15 @@ void ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
   constexpr std::wstring_view statusNames[] = {L"Success", L"NetworkError", L"InvalidFormat", L"Other"};
   const auto status = (int)args.Status();
   assert(0 <= status && status < ARRAYSIZE(statusNames));
-  cwdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << statusNames[status] << L")" << std::endl;
+  cdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << statusNames[status] << L")\n";
 }
 
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   const ReactImageSource source{m_imageSource};
   winrt::Uri uri{react::uwp::UriTryCreate(Utf8ToUtf16(source.uri))};
+
+  // Increment the image source ID before any co_await calls
+  auto currentImageSourceId = ++m_imageSourceId;
 
   const bool fromStream{
       source.sourceType == ImageSourceType::Download || source.sourceType == ImageSourceType::InlineData};
@@ -219,9 +224,15 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
     if (strong_this && fireLoadEndEvent) {
       strong_this->m_onLoadEndEvent(*strong_this, false);
     }
+    co_return;
   }
 
   if (auto strong_this{weak_this.get()}) {
+    // If the image source has been updated since this operation started, do not continue
+    if (currentImageSourceId != strong_this->m_imageSourceId) {
+      co_return;
+    }
+
     if (strong_this->m_useCompositionBrush) {
       const auto compositionBrush{ReactImageBrush::Create()};
 
@@ -236,8 +247,9 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
             compositionBrush->AvailableSize(args.NewSize());
           });
 
-      if (strong_this->m_surfaceLoadedRevoker)
+      if (strong_this->m_surfaceLoadedRevoker) {
         strong_this->m_surfaceLoadedRevoker.revoke();
+      }
 
       if (surface) {
         strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
@@ -289,17 +301,12 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         strong_this->m_imageBrushOpenedRevoker =
             imageBrush.ImageOpened(winrt::auto_revoke, [weak_this, imageBrush](const auto &, const auto &) {
               if (auto strong_this{weak_this.get()}) {
-                if (auto bitmap{imageBrush.ImageSource().try_as<winrt::BitmapImage>()}) {
-                  strong_this->m_imageSource.height = bitmap.PixelHeight();
-                  strong_this->m_imageSource.width = bitmap.PixelWidth();
-                }
-
                 imageBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
               }
             });
       }
 
-      if (source.sourceType == ImageSourceType::Svg) {
+      if (source.sourceFormat == ImageSourceFormat::Svg) {
         winrt::SvgImageSource svgImageSource{imageBrush.ImageSource().try_as<winrt::SvgImageSource>()};
 
         if (!svgImageSource) {
@@ -325,7 +332,11 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
           imageBrush.ImageSource(svgImageSource);
         }
 
-        svgImageSource.UriSource(uri);
+        if (fromStream) {
+          co_await svgImageSource.SetSourceAsync(memoryStream);
+        } else {
+          svgImageSource.UriSource(uri);
+        }
 
       } else {
         winrt::BitmapImage bitmapImage{imageBrush.ImageSource().try_as<winrt::BitmapImage>()};
@@ -339,6 +350,11 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
 
                 auto strong_this{weak_this.get()};
                 if (strong_this && fireLoadEndEvent) {
+                  if (auto bitmap{imageBrush.ImageSource().try_as<winrt::BitmapImage>()}) {
+                    strong_this->m_imageSource.height = bitmap.PixelHeight();
+                    strong_this->m_imageSource.width = bitmap.PixelWidth();
+                  }
+
                   strong_this->m_onLoadEndEvent(*strong_this, true);
                 }
               });
@@ -363,9 +379,15 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         } else {
           bitmapImage.UriSource(uri);
 
-          // TODO: When we change the source of a BitmapImage, we're getting a flicker of the old image
-          // being resized to the size of the new image. This is a temporary workaround.
-          imageBrush.Opacity(0);
+          // It is possible that the same URI will be set twice if an intermediate update occurs that requires
+          // asynchronous behavior (e.g., when the ImageSourceType is ::Download or ::InlineData). In this case,
+          // do not set the opacity to zero as the ImageOpened event will not fire.
+          auto currentUri = bitmapImage.UriSource();
+          if (uri && currentUri && uri.AbsoluteUri() != currentUri.AbsoluteUri()) {
+            // TODO: When we change the source of a BitmapImage, we're getting a flicker of the old image
+            // being resized to the size of the new image. This is a temporary workaround.
+            imageBrush.Opacity(0);
+          }
         }
       }
 

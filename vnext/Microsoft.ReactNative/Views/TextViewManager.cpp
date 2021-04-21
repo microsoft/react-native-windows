@@ -5,6 +5,7 @@
 
 #include "TextViewManager.h"
 
+#include <Views/RawTextViewManager.h>
 #include <Views/ShadowNodeBase.h>
 #include <Views/VirtualTextViewManager.h>
 
@@ -43,18 +44,18 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   void AddView(ShadowNode &child, int64_t index) override {
+    auto &childNode = static_cast<ShadowNodeBase &>(child);
+    VirtualTextShadowNode::ApplyTextTransform(
+        childNode, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
+
     if (index == 0) {
-      auto run = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Run>();
+      auto run = childNode.GetView().try_as<winrt::Run>();
       if (run != nullptr) {
         m_firstChildNode = &child;
         auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
-        std::wstring text(run.Text().c_str());
-        transformableText.originalText = text;
-        text = transformableText.TransformText();
-        textBlock.Text(winrt::hstring(text));
-
+        textBlock.Text(run.Text());
         if (m_ColorValue) {
-          AddHighlighter(m_ColorValue.value(), text.size());
+          AddHighlighter(m_ColorValue.value(), textBlock.Text().size());
         }
 
         m_prevCursorEnd += textBlock.Text().size();
@@ -124,7 +125,7 @@ class TextShadowNode final : public ShadowNodeBase {
     Super::RemoveChildAt(indexToRemove);
   }
 
-  TransformableText transformableText{};
+  TextTransform textTransform{TextTransform::Undefined};
 };
 
 TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -137,7 +138,7 @@ const wchar_t *TextViewManager::GetName() const {
   return L"RCTText";
 }
 
-XamlView TextViewManager::CreateViewCore(int64_t /*tag*/) {
+XamlView TextViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   auto textBlock = xaml::Controls::TextBlock();
   textBlock.TextWrapping(xaml::TextWrapping::Wrap); // Default behavior in React Native
   return textBlock;
@@ -155,8 +156,9 @@ bool TextViewManager::UpdateProperty(
   } else if (TryUpdateFontProperties(textBlock, propertyName, propertyValue)) {
   } else if (propertyName == "textTransform") {
     auto textNode = static_cast<TextShadowNode *>(nodeToUpdate);
-    auto textTransform = TransformableText::GetTextTransform(propertyValue);
-    textNode->transformableText.textTransform = textTransform;
+    textNode->textTransform = TransformableText::GetTextTransform(propertyValue);
+    VirtualTextShadowNode::ApplyTextTransform(
+        *textNode, textNode->textTransform, /* forceUpdate = */ true, /* isRoot = */ true);
   } else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {
@@ -258,6 +260,14 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node) {
       }
     }
   }
+}
+
+TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
+  if (!std::wcscmp(node->GetViewManager()->GetName(), GetName())) {
+    return static_cast<TextShadowNode *>(node)->textTransform;
+  }
+
+  return TextTransform::Undefined;
 }
 
 } // namespace Microsoft::ReactNative

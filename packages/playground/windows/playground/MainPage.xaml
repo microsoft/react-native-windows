@@ -106,16 +106,19 @@
             BorderThickness="1,0,0,0"
             BorderBrush="{ThemeResource SystemBaseMediumColor}">
             <CheckBox x:Name="x_UseWebDebuggerCheckBox"
-                 Margin="8,4,4,4"
-                 VerticalAlignment="Center"
-                 IsChecked="true"
-                 Content="Web Debugger"/>
+                Margin="8,4,4,4"
+                VerticalAlignment="Center"
+                IsChecked="true"
+                Checked="x_UseWebDebuggerCheckBox_Checked"
+                Unchecked="x_UseWebDebuggerCheckBox_Unchecked"
+                Content="Web Debugger"/>
             <CheckBox x:Name="x_UseDirectDebuggerCheckBox"
-                 Margin="4"
-                 VerticalAlignment="Center"
-                 IsChecked="false"
-                 Content="Direct Debugging"/>
+                Margin="4"
+                VerticalAlignment="Center"
+                IsChecked="false"
+                Content="Direct Debugging"/>
             <CheckBox x:Name="x_BreakOnFirstLineCheckBox"
+                IsEnabled="false"
                 Margin="4"
                 VerticalAlignment="Center"
                 IsChecked="false"
@@ -130,6 +133,7 @@
                 VerticalAlignment="Center"
                 Text="Debugger Port"/>
             <TextBox x:Name="x_DebuggerPort"
+                IsEnabled="false"
                 Margin="4"
                 VerticalAlignment="Center"
                 InputScope="Number"
@@ -140,6 +144,7 @@
                 Text="JS Engine:"/>
             <ComboBox
                 x:Name="x_JsEngine"
+                IsEnabled="false"
                 Margin="4"
                 MinWidth="150"
                 HorizontalAlignment="Stretch"

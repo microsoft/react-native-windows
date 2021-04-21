@@ -12,10 +12,10 @@ jobs:
     strategy:
       matrix:
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          ARM:
+          Arm:
             BuildPlatform: ARM
             NoDeployOption: --no-deploy # We don't have Arm agents
-          ARM64:
+          Arm64:
             BuildPlatform: ARM64
             NoDeployOption: --no-deploy # We don't have Arm agents
         # End Continuous only
@@ -56,11 +56,6 @@ jobs:
       - script: yarn windows --no-launch --no-packager --no-deploy --no-autolink --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory)
         displayName: yarn windows --no-launch
         workingDirectory: packages/integration-test-app
-
-      # This will normally be run during tests if it isn't already, but running
-      # it before helps avoid our window from being obscured.
-      - powershell: Start-Process CheckNetIsolation.exe -ArgumentList "LoopbackExempt","-is" -Verb runAs
-        displayName: Exempt loopback server
 
       - powershell: Start-Process npm -ArgumentList "run","start"
         displayName: Start packager
@@ -111,7 +106,7 @@ jobs:
       - script: yarn integration-test
         displayName: yarn integration-test
         workingDirectory: packages/integration-test-app
-        condition: eq(variables.NoDeployOption, '')
+        condition: and(succeeded(), eq(variables.NoDeployOption, ''))
 
       - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/after-test.png
         displayName: Screenshot desktop after tests

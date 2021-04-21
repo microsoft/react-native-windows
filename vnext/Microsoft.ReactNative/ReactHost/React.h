@@ -238,7 +238,6 @@ struct ReactOptions {
 
   std::string ByteCodeFileUri;
   bool EnableByteCodeCaching{true};
-  bool UseJsi{true};
   JSIEngine JsiEngine{JSIEngine::Chakra};
 
   //! Enable function nativePerformanceNow.

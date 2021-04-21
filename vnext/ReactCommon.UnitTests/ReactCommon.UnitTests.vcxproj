@@ -111,7 +111,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\tests\StateReconciliationTest.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\tests\TransactionTelemetryTest.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\tests\TransactionTelemetryTest.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\templateprocessor\tests\UITemplateProcessorTest.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>

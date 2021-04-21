@@ -5,7 +5,7 @@
  * @format
  */
 
-import {goToComponentExample, assertTreeDumpPassed} from './Helpers';
+import {goToComponentExample, dumpVisualTree} from './framework';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyImageTest');
@@ -14,24 +14,28 @@ beforeAll(async () => {
 describe('LegacyImageTest', () => {
   /* Test case #1: view and image displayed with no border and cornerRadius */
   test('ImageWithoutBorderTest', async () => {
-    await assertTreeDumpPassed();
+    const dump = await dumpVisualTree('image-container');
+    expect(dump).toMatchSnapshot();
   });
 
   /* Test case #2: Click button once, update view and image with round border*/
   test('ImageWithBorderTest', async () => {
     await toggleImageBorder();
-    await assertTreeDumpPassed();
+    const dump = await dumpVisualTree('image-container');
+    expect(dump).toMatchSnapshot();
   });
 
   /* Test case #3: Click button one more, remove border from view and image but tree sturcture is different from #1*/
   test('ImageWithoutBorderTestOneMoreClick', async () => {
     await toggleImageBorder();
-    await assertTreeDumpPassed();
+    const dump = await dumpVisualTree('image-container');
+    expect(dump).toMatchSnapshot();
   });
 
   test('ImageRTLTest', async () => {
     await toggleRTLMode();
-    await assertTreeDumpPassed();
+    const dump = await dumpVisualTree('image-container');
+    expect(dump).toMatchSnapshot();
   });
 });
 

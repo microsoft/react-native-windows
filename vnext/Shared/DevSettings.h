@@ -35,13 +35,6 @@ enum class JSIEngineOverride : int32_t {
   Last = V8Lite
 };
 
-struct ChakraBundleMetadata {
-  uint64_t version;
-  std::string bytecodeFilename;
-};
-
-using ChakraBundleUrlMetadataMap = std::map<std::string, ChakraBundleMetadata>;
-
 struct DevSettings {
   bool useJITCompilation{true};
   uint16_t sourceBundlePort{0};
@@ -99,11 +92,6 @@ struct DevSettings {
   // Until the ABI story is addressed we'll use this instead of the above for
   // the purposes of selecting a JSI Runtime to use.
   JSIEngineOverride jsiEngineOverride{JSIEngineOverride::Default};
-
-  /// Optionally used by ChakraExecutor to allow bundle bytecode caching.
-  /// Superseded by PreparedScriptStore on the JSI stack, and will be removed
-  /// soon. (See #3603)
-  ChakraBundleUrlMetadataMap chakraBundleUrlMetadataMap;
 
   /// Callback to show the devmenu
   std::function<void()> showDevMenuCallback;

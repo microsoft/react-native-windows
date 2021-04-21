@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AppProjectExperimentalFeaturesProps Condition="'$(AppProjectExperimentalFeaturesProps)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'windows\ExperimentalFeatures.props'))\windows\ExperimentalFeatures.props</AppProjectExperimentalFeaturesProps>
+  </PropertyGroup>
+  <Import Project="$(AppProjectExperimentalFeaturesProps)" Condition="Exists('$(AppProjectExperimentalFeaturesProps)')"/>
+</Project>

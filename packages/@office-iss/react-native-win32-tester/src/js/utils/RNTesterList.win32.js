@@ -30,6 +30,21 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/FlatList/FlatListExample'),
   },
   {
+    key: 'FlatList-withSeparators',
+    module: require('../examples/FlatList/FlatList-withSeparators'),
+    category: 'ListView',
+  },
+  {
+    key: 'FlatList-onViewableItemsChanged',
+    module: require('../examples/FlatList/FlatList-onViewableItemsChanged'),
+    category: 'ListView',
+  },
+  {
+    key: 'FlatList-onEndReached',
+    module: require('../examples/FlatList/FlatList-onEndReached'),
+    category: 'ListView',
+  },
+  {
     key: 'ImageExample',
     category: 'Basic',
     module: require('../examples/Image/ImageExample'),
@@ -58,6 +73,31 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/ScrollView/ScrollViewSimpleExample'),
   } /*
   {
+    key: 'SectionList-onEndReached',
+    module: require('../examples/SectionList/SectionList-onEndReached'),
+    category: 'ListView',
+  },
+  {
+    key: 'SectionList-inverted',
+    module: require('../examples/SectionList/SectionList-inverted'),
+    category: 'ListView',
+  },
+  {
+    key: 'SectionList-onViewableItemsChanged',
+    module: require('../examples/SectionList/SectionList-onViewableItemsChanged'),
+    category: 'ListView',
+  },
+  {
+    key: 'SectionList-stickyHeadersEnabled',
+    module: require('../examples/SectionList/SectionList-stickyHeadersEnabled'),
+    category: 'ListView',
+  },
+  {
+    key: 'SectionList-withSeparators',
+    module: require('../examples/SectionList/SectionList-withSeparators'),
+    category: 'ListView',
+  },
+  {
     key: 'SectionListExample',
     category: 'ListView',
     module: require('../examples/SectionList/SectionListExample'),
@@ -83,6 +123,10 @@ const ComponentExamples: Array<RNTesterExample> = [
   {
     key: 'ViewWin32Test',
     module: require('@office-iss/react-native-win32/Libraries/Components/View/Tests/ViewWin32Test'),
+  },
+  {
+    key: 'TextWin32Test',
+    module: require('@office-iss/react-native-win32/Libraries/Components/Text/Tests/TextWin32Test'),
   },
   {
     key: 'TextInputExample',

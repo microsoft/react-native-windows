@@ -18,6 +18,7 @@ namespace Microsoft.ReactNative
     Array,
     Map,
     Color,
+    Function,
   };
 
   [webhosthidden]

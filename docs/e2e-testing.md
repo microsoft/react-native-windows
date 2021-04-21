@@ -14,6 +14,16 @@ A test app, test library and test cases are in [`/packages/e2e-test-app/`](../pa
 
 This will be automatically done for you if you use the [RNW dependency script](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies) with `rnwDev` as an argument.
 
+The E2E tests assume it is installed in the default location under `C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe`. If you choose a different path, you will need to specify it in [`/packages/e2e-test-app/jest.config.js`](../packages/e2e-test-app/jest.config.js).
+```js
+module.exports = {
+...
+  testEnvironmentOptions: {
+    ...
+    winAppDriverBin: 'D:\\Program Files (x86)\\Windows Application Driver\\WinAppDriver.exe',
+  },
+};
+```
 
 **Build the native test app**
 
@@ -25,9 +35,16 @@ This will be automatically done for you if you use the [RNW dependency script](h
 
 > C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest`
 
+or
+
+> C:\repo\react-native-windows\packages\e2e-test-app\test> `yarn e2etest`
+
+
 **Running a specific test**
 
-> C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest -t visitAllPages`
+> C:\repo\react-native-windows\packages\e2e-test-app\test> `yarn e2etest .\visitAllPages.test.ts`
+
+⚠ This command will only work from the `test` directory ([#7272](https://github.com/microsoft/react-native-windows/issues/7272))
 
 ## Debugging E2E Tests in CI
 ### Increasing verbosity
@@ -164,42 +181,24 @@ export const examples = [
   ...
 ```
 
-## Tree dumps and masters
+## Snapshot tests
 
-E2E tests can be summarized as follows:
-- they are tests that run the ReactUWPTestApp
-- use UI Automation to navigate between pages, query the state of elements, click on them, etc.
-- the ReactUWPTestApp has code to produce a dump of the its own visual tree ("tree dump output") and compares it with a checked in copy ("tree dump masters") to make sure nothing has regressed. The tree dumps are produced in Json format (there is also an option to produce them in a custom text format of key=value, but that is deprecated now).
+E2ETests uses [snapshot tests](https://jestjs.io/docs/en/snapshot-testing) to detect unintended visual changes. Instead
+of testing againt the react tree, e2e-test-app compares the fully rendered XAML tree. This allows testing the
+correctness of ViewManagers.
 
-So you've added or updated some tests: great! you get a cookie*. But now you probably need to update the masters, or the tests will fail and break the CI.
+```ts
+import {dumpVisualTree} from './framework';
 
-\* void where prohibited, prizes and participation may vary.
-
-![testFail](img/e2e-testfail.png)
-
-The best way to do this is by letting the CI run and fail, then downloading the generated tree dump output files, and comparing to the masters. Make sure the differences are expected, copy over them and check them in. The reason is that the masters will include things like the size elements rendered at, which can be dependent on DPI, scale factor, resolution, and in some cases (due to bugs) even differ based on bitness (see #4628).
-
-When an output doesn't match its master, a file with `.err` extension will be produced under the `TreeDump` folder in the `ReactUWPTestAppTreeDump` artifact. The content of the `.err` file will usually just say:
-
-```txt
-Tree dump file does not match master at C:\Program Files\WindowsApps\ReactUWPTestApp_1.0.0.0_x64__cezq6h4ygq1hw\Assets\TreeDump\masters\ControlStyleRoundBorder.json - See output at C:\Users\VssAdministrator\Documents\ReactUWPTestApp_cezq6h4ygq1hw\LocalState\TreeDump\ControlStyleRoundBorder.json
+test('Example test', async () => {
+  const dump = await dumpVisualTree('test-id-here');
+  expect(dump).toMatchSnapshot();
+});
 ```
 
-![Errors](img/e2e-errors.png)
-
-Find the corresponding `.json` file in that folder and compare it to its master. The masters live in [e2etest\windows\ReactUWPTestApp\Assets\TreeDump\masters](https://github.com/microsoft/react-native-windows/tree/master/packages/e2e-test-app/windows/ReactUWPTestApp/Assets/TreeDump/masters).
-
-Sometimes you'll have an element in your test that produces output that should not be used for comparison. You can manually edit the generated json and set the output that you want to ignore to the `<ANYTHING>` value:
-
-```json
-...
-"Windows.UI.Xaml.Button":
-{
-  "Text": "<ANYTHING>",
-  ...
-}
-...
-```
+Snapshots can be updated by either:
+1. Locally running `jest --updateSnapshot`.
+2. Copying from the "shapshots" artifact uploaded from a failing PR
 
 
  

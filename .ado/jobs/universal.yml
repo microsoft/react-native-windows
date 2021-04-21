@@ -10,44 +10,60 @@
       default:
         - BuildEnvironment: PullRequest
           Matrix:
-            - Name: ArmRelease
-              BuildConfiguration: Release
-              BuildPlatform: ARM
-            - Name: X64Release
+            - Name: X64ReleaseFast
               BuildConfiguration: Release
               BuildPlatform: X64
-            - Name: X64Debug
+              FastBuild: true
+            - Name: X86DebugFast
               BuildConfiguration: Debug
               BuildPlatform: X86
               LayoutHeaders: true
+              FastBuild: true
         - BuildEnvironment: Continuous
           Matrix:
             - Name: ArmDebug
               BuildConfiguration: Debug
               BuildPlatform: ARM
+              FastBuild: false
             - Name: ArmRelease
               BuildConfiguration: Release
               BuildPlatform: ARM
+              FastBuild: false
             - Name: Arm64RDebug
               BuildConfiguration: Debug
               BuildPlatform: ARM64
+              FastBuild: false
             - Name: Arm64Release
               BuildConfiguration: Release
               BuildPlatform: ARM64
+              FastBuild: false
             - Name: X64Debug
               BuildConfiguration: Debug
               BuildPlatform: X64
+              FastBuild: false
             - Name: X64Release
               BuildConfiguration: Release
               BuildPlatform: X64
+              FastBuild: false
             - Name: X86Debug
               BuildConfiguration: Debug
               BuildPlatform: X86
               LayoutHeaders: true
+              FastBuild: false
             - Name: X86Release
               BuildConfiguration: Release
               BuildPlatform: X86
-      
+              FastBuild: false
+            - Name: X64ReleaseFast
+              BuildConfiguration: Release
+              BuildPlatform: X64
+              FastBuild: true
+            - Name: X86DebugFast
+              BuildConfiguration: Debug
+              BuildPlatform: X86
+              LayoutHeaders: true
+              FastBuild: true
+
   jobs:
     - ${{ each config in parameters.buildMatrix }}:
       - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
@@ -73,12 +89,13 @@
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
                     multicoreBuild: true
+                    msbuildArguments: /p:RNW_FASTBUILD=${{ matrix.FastBuild }}
 
                 - task: PublishPipelineArtifact@1
                   displayName: "Publish binaries for testing"
                   inputs:
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-                    artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}"
+                    artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
 
                 - template: ../templates/publish-build-artifacts-for-nuget.yml
                   parameters:
@@ -96,6 +113,7 @@
                   inputs:
                     alertWarningLevel: Medium
                     scanType: 'Register'
+                  condition: false # Temporarily disabling CG, see https://github.com/microsoft/react-native-windows/issues/7261
 
                 
             - job: UniversalTest${{ matrix.Name }}
@@ -137,7 +155,7 @@
                   displayName: "Download binaries for testing"
                   inputs:
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-                    artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}"
+                    artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
 
                 # The WinDevBuild Agents run on the c-drive and the hosted agents run on the d-drive.
                 # Some of the output files have the c-drive expanded in the outputs, which results in file not found errors when running tests
