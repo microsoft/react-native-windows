@@ -39,11 +39,17 @@ type AccessibilityEventTypes = 'click' | 'focus';
 
 // Mapping of public event names to platform-specific event names.
 const EventNames: Map<$Keys<AccessibilityEventDefinitions>, string> =
-  Platform.OS === 'android' || Platform.OS === 'windows'
+  Platform.OS === 'android'
     ? new Map([
         ['change', 'touchExplorationDidChange'],
         ['reduceMotionChanged', 'reduceMotionDidChange'],
         ['screenReaderChanged', 'touchExplorationDidChange'],
+      ])
+    : Platform.OS === 'windows'
+    ? new Map([
+        ['change', 'TOUCH_EXPLORATION_EVENT'],
+        ['reduceMotionChanged', 'REDUCE_MOTION_EVENT'],
+        ['screenReaderChanged', 'TOUCH_EXPLORATION_EVENT'],
       ])
     : new Map([
         ['announcementFinished', 'announcementFinished'],
