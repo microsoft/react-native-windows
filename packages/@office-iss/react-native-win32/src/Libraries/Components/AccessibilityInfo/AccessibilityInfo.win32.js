@@ -39,11 +39,17 @@ type AccessibilityEventTypes = 'click' | 'focus';
 
 // Mapping of public event names to platform-specific event names.
 const EventNames: Map<$Keys<AccessibilityEventDefinitions>, string> =
-  Platform.OS === 'android' || Platform.OS === 'windows'
+  Platform.OS === 'android'
     ? new Map([
         ['change', 'touchExplorationDidChange'],
         ['reduceMotionChanged', 'reduceMotionDidChange'],
         ['screenReaderChanged', 'touchExplorationDidChange'],
+      ])
+    : Platform.OS === 'win32'
+    ? new Map([
+        ['change', 'TOUCH_EXPLORATION_EVENT'],
+        ['reduceMotionChanged', 'REDUCE_MOTION_EVENT'],
+        ['screenReaderChanged', 'TOUCH_EXPLORATION_EVENT'],
       ])
     : new Map([
         ['announcementFinished', 'announcementFinished'],
@@ -75,7 +81,7 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#isBoldTextEnabled
    */
   isBoldTextEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android' || Platform.OS === 'windows') {
+    if (Platform.OS === 'android' || Platform.OS === 'win32') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {
@@ -100,7 +106,7 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#isGrayscaleEnabled
    */
   isGrayscaleEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android' || Platform.OS === 'windows') {
+    if (Platform.OS === 'android' || Platform.OS === 'win32') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {
@@ -125,7 +131,7 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#isInvertColorsEnabled
    */
   isInvertColorsEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android' || Platform.OS === 'windows') {
+    if (Platform.OS === 'android' || Platform.OS === 'win32') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {
@@ -151,7 +157,7 @@ const AccessibilityInfo = {
    */
   isReduceMotionEnabled(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      if (Platform.OS === 'android' || Platform.OS === 'windows') {
+      if (Platform.OS === 'android' || Platform.OS === 'win32') {
         if (NativeAccessibilityInfo != null) {
           NativeAccessibilityInfo.isReduceMotionEnabled(resolve);
         } else {
@@ -179,7 +185,7 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#isReduceTransparencyEnabled
    */
   isReduceTransparencyEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android' || Platform.OS === 'windows') {
+    if (Platform.OS === 'android' || Platform.OS === 'win32') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {
@@ -205,7 +211,7 @@ const AccessibilityInfo = {
    */
   isScreenReaderEnabled(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      if (Platform.OS === 'android' || Platform.OS === 'windows') {
+      if (Platform.OS === 'android' || Platform.OS === 'win32') {
         if (NativeAccessibilityInfo != null) {
           NativeAccessibilityInfo.isTouchExplorationEnabled(resolve);
         } else {
@@ -298,7 +304,7 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#announceforaccessibility
    */
   announceForAccessibility(announcement: string): void {
-    if (Platform.OS === 'android' || Platform.OS === 'windows') {
+    if (Platform.OS === 'android' || Platform.OS === 'win32') {
       NativeAccessibilityInfo?.announceForAccessibility(announcement);
     } else {
       NativeAccessibilityManagerIOS?.announceForAccessibility(announcement);
