@@ -16,10 +16,10 @@ namespace react {
 
 TextLayoutManager::~TextLayoutManager() {}
 
-// TODO: This is a placeholder implementation to get basic text rendering.  This should not be considered a real implementation.  
-// It currently has various performance issues (like creating a new factory on every run), and only handles single strings,
-// and makes all kinds of assumptions around things like locale, font family etc.
-// This whole implementation will need to be replaced to get text rendering/layout to work properly.
+// TODO: This is a placeholder implementation to get basic text rendering.  This should not be considered a real
+// implementation. It currently has various performance issues (like creating a new factory on every run), and only
+// handles single strings, and makes all kinds of assumptions around things like locale, font family etc. This whole
+// implementation will need to be replaced to get text rendering/layout to work properly.
 TextMeasurement TextLayoutManager::measure(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,

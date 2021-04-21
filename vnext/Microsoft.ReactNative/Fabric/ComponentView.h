@@ -12,8 +12,7 @@
 
 namespace Microsoft::ReactNative {
 
-enum class RNComponentViewUpdateMask : std::uint_fast8_t
-{
+enum class RNComponentViewUpdateMask : std::uint_fast8_t {
   None = 0,
   Props = 1 << 0,
   EventEmitter = 1 << 1,

@@ -66,7 +66,7 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
   }
   void ClipChildren(bool value);
 
-  void SetOnMeasure(Mso::Functor<void(winrt::Windows::Foundation::Size&)> &&fn) noexcept;
+  void SetOnMeasure(Mso::Functor<void(winrt::Windows::Foundation::Size &)> &&fn) noexcept;
 
   // ViewPanel Properties
   static xaml::DependencyProperty ViewBackgroundProperty();
@@ -98,7 +98,7 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
  private:
   bool m_propertiesChanged{false};
 
-  Mso::Functor<void(winrt::Windows::Foundation::Size&)> m_onMeasure;
+  Mso::Functor<void(winrt::Windows::Foundation::Size &)> m_onMeasure;
 
   // Child Elements
   xaml::Controls::Border m_border{nullptr};

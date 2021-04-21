@@ -14,6 +14,7 @@
 #pragma warning(push)
 #pragma warning(disable : 4244)
 #include <react/renderer/scheduler/SchedulerDelegate.h>
+#include <react/renderer/scheduler/SurfaceManager.h>
 #pragma warning(pop)
 
 namespace facebook::react {
@@ -188,6 +189,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   // std::shared_ptr<UIManagerModule> m_module;
   winrt::Microsoft::ReactNative::ReactContext m_context;
   std::shared_ptr<facebook::react::Scheduler> m_scheduler;
+  std::shared_ptr<facebook::react::SurfaceManager> m_surfaceManager;
   std::mutex m_schedulerMutex; // Protect m_scheduler
   bool m_collapseDeleteCreateMountingInstructions{false};
   bool m_disablePreallocateViews{false};
@@ -210,13 +212,10 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       const facebook::react::ShadowView &shadowView,
       std::string const &commandName,
       folly::dynamic const args) override;
-  virtual void schedulerDidSetJSResponder(
-      facebook::react::SurfaceId surfaceId,
+  virtual void schedulerDidSetIsJSResponder(facebook::react::ShadowView const &shadowView, bool isJSResponder, bool blockNativeResponder) override;
+  virtual void schedulerDidSendAccessibilityEvent(
       const facebook::react::ShadowView &shadowView,
-      const facebook::react::ShadowView &initialShadowView,
-      bool blockNativeResponder) override;
-  virtual void schedulerDidClearJSResponder() override;
-  virtual void schedulerDidSendAccessibilityEvent(const facebook::react::ShadowView &shadowView, std::string const &eventType) override;
+      std::string const &eventType) override;
 };
 
 } // namespace Microsoft::ReactNative

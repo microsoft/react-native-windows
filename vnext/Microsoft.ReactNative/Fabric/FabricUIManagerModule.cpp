@@ -257,6 +257,7 @@ void FabricUIManager::installFabricUIManager( // in android this is Binding::ins
     */
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
       toolbox, (/*animationDriver_ ? animationDriver_.get() :*/ nullptr), this);
+  m_surfaceManager = std::make_shared<facebook::react::SurfaceManager>(*m_scheduler);
 }
 
 const ComponentViewRegistry &FabricUIManager::GetViewRegistry() const noexcept {
@@ -302,22 +303,20 @@ void FabricUIManager::startSurface(
 
   // LayoutContext context;
   // context.pointScaleFactor = pointScaleFactor_;
-  m_scheduler->startSurface(
+  m_surfaceManager->startSurface(
       surfaceId,
       moduleName,
       initialProps,
       std::move(constraints), // layout constraints
-      context, // layout context
-      {} // animationDriver_
+      context // layout context
   );
 }
 
 void FabricUIManager::constraintSurfaceLayout(
-  facebook::react::SurfaceId surfaceId,
-  const facebook::react::LayoutConstraints& layoutConstraints,
-  const facebook::react::LayoutContext& layoutContext) const noexcept
-{
-  m_scheduler->constraintSurfaceLayout(surfaceId, layoutConstraints, layoutContext);
+    facebook::react::SurfaceId surfaceId,
+    const facebook::react::LayoutConstraints &layoutConstraints,
+    const facebook::react::LayoutContext &layoutContext) const noexcept {
+  m_surfaceManager->constraintSurfaceLayout(surfaceId, layoutConstraints, layoutContext);
 }
 
 void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {
@@ -343,7 +342,6 @@ void FabricUIManager::RCTPerformMountInstructions(
     // facebook::react::RCTComponentViewRegistry* registry,
     // facebook::react::RCTMountingTransactionObserverCoordinator& observerCoordinator,
     facebook::react::SurfaceId surfaceId) {
-
   for (auto const &mutation : mutations) {
     switch (mutation.type) {
       case facebook::react::ShadowViewMutation::Create: {
@@ -519,19 +517,16 @@ void FabricUIManager::schedulerDidDispatchCommand(
   assert(false);
 }
 
-void FabricUIManager::schedulerDidSetJSResponder(
-    facebook::react::SurfaceId surfaceId,
+void FabricUIManager::schedulerDidSetIsJSResponder(
+  facebook::react::ShadowView const &shadowView,
+  bool isJSResponder,
+  bool blockNativeResponder) {
+  assert(false);
+}
+
+void FabricUIManager::schedulerDidSendAccessibilityEvent(
     const facebook::react::ShadowView &shadowView,
-    const facebook::react::ShadowView &initialShadowView,
-    bool blockNativeResponder) {
-  assert(false);
-}
-
-void FabricUIManager::schedulerDidClearJSResponder() {
-  assert(false);
-}
-
-void FabricUIManager::schedulerDidSendAccessibilityEvent(const facebook::react::ShadowView &shadowView, std::string const &eventType) {
+    std::string const &eventType) {
   assert(false);
 }
 

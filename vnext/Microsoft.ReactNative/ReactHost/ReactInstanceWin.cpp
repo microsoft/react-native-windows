@@ -331,7 +331,7 @@ void ReactInstanceWin::Initialize() noexcept {
       Microsoft::ReactNative::I18nManager::InitI18nInfo(
           winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
       strongThis->m_appearanceListener =
-          Mso::Make<react::uwp::AppearanceChangeListener>(strongThis->GetReactContext(), strongThis->m_uiQueue);
+          Mso::Make<::react::uwp::AppearanceChangeListener>(strongThis->GetReactContext(), strongThis->m_uiQueue);
 
       Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(strongThis->GetReactContext());
     }
@@ -417,9 +417,9 @@ void ReactInstanceWin::Initialize() noexcept {
 #endif
         case JSIEngine::Chakra:
           if (m_options.EnableByteCodeCaching || !m_options.ByteCodeFileUri.empty()) {
-            scriptStore = std::make_unique<react::uwp::UwpScriptStore>();
+            scriptStore = std::make_unique<::react::uwp::UwpScriptStore>();
             preparedScriptStore =
-                std::make_unique<react::uwp::UwpPreparedScriptStore>(winrt::to_hstring(m_options.ByteCodeFileUri));
+                std::make_unique<::react::uwp::UwpPreparedScriptStore>(winrt::to_hstring(m_options.ByteCodeFileUri));
           }
           devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
               devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
@@ -443,7 +443,7 @@ void ReactInstanceWin::Initialize() noexcept {
             std::move(devSettings));
 
         m_instanceWrapper.Exchange(std::move(instanceWrapper));
-    
+
         // Eagerly init the FabricUI binding
         if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
                 winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()))) {
@@ -620,7 +620,7 @@ void ReactInstanceWin::InitUIMessageThread() noexcept {
   m_uiMessageThread.Exchange(
       std::make_shared<MessageDispatchQueue>(m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
-  auto batchingUIThread = react::uwp::MakeBatchingQueueThread(m_uiMessageThread.Load());
+  auto batchingUIThread = ::react::uwp::MakeBatchingQueueThread(m_uiMessageThread.Load());
   m_batchingUIThread = batchingUIThread;
 
   m_jsDispatchQueue.Load().Post(

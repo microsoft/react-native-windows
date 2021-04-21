@@ -37,8 +37,7 @@ void ShadowNodeBase::createView(const winrt::Microsoft::ReactNative::JSValueObje
   if (g_HasActualSizeProperty == TriBit::Undefined) {
     if (auto uielement = m_view.try_as<xaml::UIElement>()) {
       // ActualSize works on 19H1+ only
-      g_HasActualSizeProperty =
-          (uielement.try_as<xaml::IUIElement10>()) ? TriBit::Set : TriBit::NotSet;
+      g_HasActualSizeProperty = (uielement.try_as<xaml::IUIElement10>()) ? TriBit::Set : TriBit::NotSet;
     }
   }
 }
