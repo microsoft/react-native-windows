@@ -552,6 +552,7 @@
     <ClCompile Include="TurboModulesProvider.cpp" />
     <ClCompile Include="Fabric\ComponentViewRegistry.cpp" />
     <ClCompile Include="Fabric\FabricUIManagerModule.cpp" />
+    <ClCompile Include="Fabric\ImageComponentView.cpp" />
     <ClCompile Include="Fabric\ImageManager.cpp" />
     <ClCompile Include="Fabric\ImageRequest.cpp" />
     <ClCompile Include="Fabric\ParagraphComponentView.cpp" />

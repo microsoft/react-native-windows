@@ -249,14 +249,9 @@ void ReactInstanceWin::LoadModules(
     }
   };
 
-  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()))) {
+  if (m_options.EnableFabric()) {
     registerTurboModule(
         L"FabricUIManagerBinding",
-        // Spec incorrectly reports commandID as a number, but its actually a number | string.. so dont use the spec for
-        // now
-        // winrt::Microsoft::ReactNative::MakeTurboModuleProvider < ::Microsoft::ReactNative::UIManager,
-        //::Microsoft::ReactNativeSpecs::UIManagerSpec>());
         winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
   }
 
@@ -445,8 +440,7 @@ void ReactInstanceWin::Initialize() noexcept {
         m_instanceWrapper.Exchange(std::move(instanceWrapper));
 
         // Eagerly init the FabricUI binding
-        if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
-                winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()))) {
+        if (m_options.EnableFabric()) {
           Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
               winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()),
               m_instanceWrapper.Load()->GetInstance()->getRuntimeExecutor());
@@ -874,8 +868,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
   int64_t rootTag = -1;
   rootView->ResetView();
 
-  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()))) {
+  if (m_options.EnableFabric()) {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
 
@@ -894,7 +887,8 @@ void ReactInstanceWin::AttachMeasuredRootView(
     std::string jsMainModuleName = rootView->JSComponentName();
     folly::dynamic params = folly::dynamic::array(
         std::move(jsMainModuleName),
-        folly::dynamic::object("initialProps", std::move(initialProps))("rootTag", rootTag));
+        folly::dynamic::object("initialProps", std::move(initialProps))("rootTag", rootTag)(
+            "fabric", m_options.EnableFabric()));
     CallJsFunction("AppRegistry", "runApplication", std::move(params));
   }
 }
@@ -906,8 +900,11 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView)
   auto rootTag = rootView->GetTag();
   folly::dynamic params = folly::dynamic::array(rootTag);
 
-  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableFabric(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()))) {
+  if (m_options.EnableFabric()) {
+    auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+        winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
+    uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(rootTag));
+
     CallJsFunction("ReactFabric", "unmountComponentAtNode", std::move(params));
   } else {
     CallJsFunction("AppRegistry", "unmountApplicationComponentAtRootTag", std::move(params));

@@ -9,16 +9,26 @@
 #pragma warning(disable : 4305)
 #include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #pragma warning(pop)
+
+#include <react/renderer/components/image/ImageShadowNode.h>
+#include <react/renderer/components/root/RootShadowNode.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
+#include <react/renderer/components/text/RawTextShadowNode.h>
 #include <react/renderer/components/text/TextShadowNode.h>
+#include <react/renderer/components/textinput/iostextinput/TextInputShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
 
+#include "ImageComponentView.h"
 #include "ParagraphComponentView.h"
 #include "ScrollViewComponentView.h"
 #include "TextComponentView.h"
 #include "ViewComponentView.h"
 
 namespace Microsoft::ReactNative {
+
+void ComponentViewRegistry::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  m_context = reactContext;
+}
 
 ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithComponentHandle(
     facebook::react::ComponentHandle componentHandle,
@@ -33,10 +43,16 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<ParagraphComponentView>();
   } else if (componentHandle == facebook::react::ScrollViewShadowNode::Handle()) {
     view = std::make_shared<ScrollViewComponentView>();
-  }
+  } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
+    view = std::make_shared<ImageComponentView>(m_context);
+  } else {
+    // Just to keep track of what kinds of shadownodes we are being used verify we know about them here
+    assert(
+        componentHandle == facebook::react::RawTextShadowNode::Handle() ||
+        componentHandle == facebook::react::TextInputShadowNode::Handle() ||
+        componentHandle == facebook::react::RootShadowNode::Handle() ||
+        componentHandle == facebook::react::ViewShadowNode::Handle());
 
-  else {
-    // Currently we are treating a lot of component just as normal views...
     view = std::make_shared<ViewComponentView>();
   }
 

@@ -19,11 +19,7 @@ bool ReactNativeConfigProperties::getBool(const std::string &param) const {
       winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(winrt::hstring(L"ReactNativeConfig")),
       winrt::hstring(Common::Unicode::Utf8ToUtf16(param))));
 
-  winrt::Windows::Foundation::IReference<bool> result;
-  if (value.try_as<winrt::Windows::Foundation::IReference<bool>>(result)) {
-    return result.GetBoolean();
-  }
-  return false;
+  return winrt::unbox_value_or<bool>(value, false);
 }
 
 std::string ReactNativeConfigProperties::getString(const std::string &param) const {
@@ -43,11 +39,7 @@ int64_t ReactNativeConfigProperties::getInt64(const std::string &param) const {
       winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(winrt::hstring(L"ReactNativeConfig")),
       winrt::hstring(Common::Unicode::Utf8ToUtf16(param))));
 
-  winrt::Windows::Foundation::IReference<int64_t> result;
-  if (value.try_as<winrt::Windows::Foundation::IReference<int64_t>>(result)) {
-    return result.GetInt64();
-  }
-  return false;
+  return winrt::unbox_value_or<int64_t>(value, 0);
 }
 
 double ReactNativeConfigProperties::getDouble(const std::string &param) const {
@@ -55,11 +47,7 @@ double ReactNativeConfigProperties::getDouble(const std::string &param) const {
       winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(winrt::hstring(L"ReactNativeConfig")),
       winrt::hstring(Common::Unicode::Utf8ToUtf16(param))));
 
-  winrt::Windows::Foundation::IReference<double> result;
-  if (value.try_as<winrt::Windows::Foundation::IReference<double>>(result)) {
-    return result.GetDouble();
-  }
-  return false;
+  return winrt::unbox_value_or<double>(value, 0);
 }
 
 } // namespace Microsoft::ReactNative

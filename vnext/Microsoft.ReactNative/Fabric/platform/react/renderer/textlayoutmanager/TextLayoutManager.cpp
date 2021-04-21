@@ -29,13 +29,23 @@ TextMeasurement TextLayoutManager::measure(
       DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown **>(spDWriteFactory.put()));
 
   for (auto &fragment : attributedStringBox.getValue().getFragments()) {
+
+    DWRITE_FONT_STYLE style = DWRITE_FONT_STYLE_NORMAL;
+    if (fragment.textAttributes.fontStyle == facebook::react::FontStyle::Italic)
+      style = DWRITE_FONT_STYLE_ITALIC;
+    else if (fragment.textAttributes.fontStyle == facebook::react::FontStyle::Oblique)
+      style = DWRITE_FONT_STYLE_OBLIQUE;
+
     winrt::com_ptr<IDWriteTextFormat> spTextFormat;
     spDWriteFactory->CreateTextFormat(
-        L"Gabriola", // Font family name.
+        fragment.textAttributes.fontFamily.empty()
+            ? L"Segoe UI"
+            : Microsoft::Common::Unicode::Utf8ToUtf16(fragment.textAttributes.fontFamily)
+                  .c_str(),
         NULL, // Font collection (NULL sets it to use the system font collection).
         static_cast<DWRITE_FONT_WEIGHT>(fragment.textAttributes.fontWeight.value_or(
             static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
-        DWRITE_FONT_STYLE_NORMAL,
+        style,
         DWRITE_FONT_STRETCH_NORMAL,
         fragment.textAttributes.fontSize,
         L"en-us",
