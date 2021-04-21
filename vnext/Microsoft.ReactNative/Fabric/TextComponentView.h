@@ -4,14 +4,9 @@
 
 #pragma once
 
-#include "ComponentView.h"
-
-#include "ViewComponentView.h"
-
-#pragma warning(push)
-#pragma warning(disable : 4244)
 #include <react/renderer/components/text/TextProps.h>
-#pragma warning(pop)
+#include "ComponentView.h"
+#include "ViewComponentView.h"
 
 namespace Microsoft::ReactNative {
 

@@ -8,12 +8,7 @@
 
 #include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
-
-#pragma warning(push)
-#pragma warning(disable : 4244)
 #include <react/renderer/components/text/ParagraphShadowNode.h>
-#pragma warning(pop)
-
 #include <react/renderer/components/text/ParagraphState.h>
 #include <unicode.h>
 

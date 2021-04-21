@@ -4,12 +4,8 @@
 
 #pragma once
 
-#pragma warning(push)
-#pragma warning(disable : 4244)
 #include <react/renderer/components/view/ViewEventEmitter.h>
 #include <react/renderer/components/view/ViewProps.h>
-#pragma warning(pop)
-
 #include "ComponentView.h"
 
 namespace Microsoft::ReactNative {

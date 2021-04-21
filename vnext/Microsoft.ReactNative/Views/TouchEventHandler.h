@@ -5,14 +5,11 @@
 #include <IReactInstance.h>
 #include <UI.Xaml.Documents.h>
 #include <folly/dynamic.h>
+#include <react/renderer/components/view/Touch.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
 #include <set>
 #include "XamlView.h"
-#pragma warning(push)
-#pragma warning(disable : 4244)
-#include <react/renderer/components/view/Touch.h>
-#pragma warning(pop)
 
 namespace winrt {
 using namespace Windows::UI;

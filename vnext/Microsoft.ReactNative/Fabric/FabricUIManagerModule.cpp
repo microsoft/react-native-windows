@@ -13,33 +13,30 @@
 #include <IXamlRootView.h>
 #include <JSI/jsi.h>
 #include <Modules\NativeUIManager.h>
+#include <SchedulerSettings.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Media.h>
 #include <Views/ViewManager.h>
 #include <XamlUtils.h>
-#include <react/renderer/core/EventBeat.h>
-#include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
-#include "ShadowNodeBase.h"
-#include "Unicode.h"
-#include "XamlUIService.h"
-#pragma warning(push)
-#pragma warning(disable : 4244)
-#include <react/renderer/scheduler/Scheduler.h>
-#include <react/renderer/scheduler/SchedulerToolbox.h>
-#include <react/utils/ContextContainer.h>
-#pragma warning(pop)
-#include <SchedulerSettings.h>
-
-#pragma warning(push)
-#pragma warning(disable : 4244 4305)
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>
-#include <react/renderer/components/scrollview/ScrollViewComponentDescriptor.h>
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/components/text/RawTextComponentDescriptor.h>
 #include <react/renderer/components/text/TextComponentDescriptor.h>
 #include <react/renderer/components/textinput/iostextinput/TextInputComponentDescriptor.h>
 #include <react/renderer/components/view/ViewComponentDescriptor.h>
+#include <react/renderer/core/EventBeat.h>
+#include <react/renderer/scheduler/Scheduler.h>
+#include <react/renderer/scheduler/SchedulerToolbox.h>
+#include <react/utils/ContextContainer.h>
+#include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
+#include "ShadowNodeBase.h"
+#include "Unicode.h"
+#include "XamlUIService.h"
+
+#pragma warning(push)
+#pragma warning(disable : 4305)
+#include <react/renderer/components/scrollview/ScrollViewComponentDescriptor.h>
 #pragma warning(pop)
 
 namespace Microsoft::ReactNative {
@@ -518,9 +515,9 @@ void FabricUIManager::schedulerDidDispatchCommand(
 }
 
 void FabricUIManager::schedulerDidSetIsJSResponder(
-  facebook::react::ShadowView const &shadowView,
-  bool isJSResponder,
-  bool blockNativeResponder) {
+    facebook::react::ShadowView const &shadowView,
+    bool isJSResponder,
+    bool blockNativeResponder) {
   assert(false);
 }
 

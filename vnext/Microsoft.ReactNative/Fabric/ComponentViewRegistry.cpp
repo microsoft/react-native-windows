@@ -6,12 +6,12 @@
 #include "ComponentViewRegistry.h"
 
 #pragma warning(push)
-#pragma warning(disable : 4244 4305)
+#pragma warning(disable : 4305)
 #include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
+#pragma warning(pop)
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/TextShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
-#pragma warning(pop)
 
 #include "ParagraphComponentView.h"
 #include "ScrollViewComponentView.h"

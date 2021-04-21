@@ -3,17 +3,13 @@
 
 #pragma once
 
-#include <memory>
-
-#pragma warning(push)
-#pragma warning(disable : 4244)
 #include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <react/renderer/attributedstring/ParagraphAttributes.h>
 #include <react/renderer/core/LayoutConstraints.h>
 #include <react/renderer/textlayoutmanager/TextMeasureCache.h>
 #include <react/utils/ContextContainer.h>
-#pragma warning(pop)
+#include <memory>
 
 namespace facebook {
 namespace react {

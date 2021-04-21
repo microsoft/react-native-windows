@@ -15,17 +15,13 @@
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
+#include <react/renderer/components/view/TouchEventEmitter.h>
 
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Input.h>
-
-#pragma warning(push)
-#pragma warning(disable : 4244 4305)
-#include <react/renderer/components/view/TouchEventEmitter.h>
-#pragma warning(pop)
 
 #ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Input.Experimental.h>

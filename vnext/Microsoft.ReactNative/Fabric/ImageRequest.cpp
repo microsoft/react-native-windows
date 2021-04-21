@@ -3,10 +3,7 @@
 
 #include "pch.h"
 
-#pragma warning(push)
-#pragma warning(disable : 4244)
 #include <react/renderer/imagemanager/ImageRequest.h>
-#pragma warning(pop)
 
 namespace facebook {
 namespace react {

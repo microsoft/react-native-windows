@@ -10,7 +10,7 @@
 #include <Utils/ValueUtils.h>
 
 #pragma warning(push)
-#pragma warning(disable : 4244 4305)
+#pragma warning(disable : 4305)
 #include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #pragma warning(pop)
 

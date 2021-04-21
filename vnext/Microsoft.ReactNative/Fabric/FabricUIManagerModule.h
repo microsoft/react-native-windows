@@ -7,15 +7,11 @@
 #include <NativeModules.h>
 #include <React.h>
 #include <Views/ShadowNodeRegistry.h>
+#include <react/renderer/scheduler/SchedulerDelegate.h>
+#include <react/renderer/scheduler/SurfaceManager.h>
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/Windows.Foundation.h>
 #include "ComponentViewRegistry.h"
-
-#pragma warning(push)
-#pragma warning(disable : 4244)
-#include <react/renderer/scheduler/SchedulerDelegate.h>
-#include <react/renderer/scheduler/SurfaceManager.h>
-#pragma warning(pop)
 
 namespace facebook::react {
 class Scheduler;
@@ -212,7 +208,10 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       const facebook::react::ShadowView &shadowView,
       std::string const &commandName,
       folly::dynamic const args) override;
-  virtual void schedulerDidSetIsJSResponder(facebook::react::ShadowView const &shadowView, bool isJSResponder, bool blockNativeResponder) override;
+  virtual void schedulerDidSetIsJSResponder(
+      facebook::react::ShadowView const &shadowView,
+      bool isJSResponder,
+      bool blockNativeResponder) override;
   virtual void schedulerDidSendAccessibilityEvent(
       const facebook::react::ShadowView &shadowView,
       std::string const &eventType) override;

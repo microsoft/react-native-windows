@@ -4,11 +4,8 @@
 
 #pragma once
 
-#pragma warning(push)
-#pragma warning(disable : 4244)
 #include <react/renderer/componentregistry/ComponentDescriptorProvider.h>
 #include <react/renderer/core/LayoutMetrics.h>
-#pragma warning(pop)
 
 namespace Microsoft::ReactNative {
 
