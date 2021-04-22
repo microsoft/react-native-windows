@@ -12,8 +12,6 @@
 
 #include <react/renderer/components/image/ImageShadowNode.h>
 #include <react/renderer/components/root/RootShadowNode.h>
-#include <react/renderer/components/image/ImageShadowNode.h>
-#include <react/renderer/components/root/RootShadowNode.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/RawTextShadowNode.h>
 #include <react/renderer/components/text/TextShadowNode.h>

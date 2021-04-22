@@ -7,8 +7,8 @@
 #include "ComponentView.h"
 
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
-#include "ViewComponentView.h"
 #include <Views/Image/ReactImage.h>
+#include "ViewComponentView.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4244 4305)

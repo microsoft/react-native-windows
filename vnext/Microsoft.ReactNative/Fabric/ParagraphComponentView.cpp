@@ -8,10 +8,10 @@
 
 #include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
+#include <dwrite.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/ParagraphState.h>
 #include <unicode.h>
-#include <dwrite.h>
 
 namespace Microsoft::ReactNative {
 
@@ -81,12 +81,13 @@ void ParagraphComponentView::updateProps(
         assert(false);
     }
   }
-  
+
   if (oldViewProps.textAttributes.fontFamily != newViewProps.textAttributes.fontFamily) {
     if (newViewProps.textAttributes.fontFamily.empty())
       m_element.FontFamily(xaml::Media::FontFamily(L"Segoe UI"));
     else
-      m_element.FontFamily(xaml::Media::FontFamily(Microsoft::Common::Unicode::Utf8ToUtf16(newViewProps.textAttributes.fontFamily)));
+      m_element.FontFamily(
+          xaml::Media::FontFamily(Microsoft::Common::Unicode::Utf8ToUtf16(newViewProps.textAttributes.fontFamily)));
   }
 
   m_props = std::static_pointer_cast<facebook::react::ParagraphProps const>(props);

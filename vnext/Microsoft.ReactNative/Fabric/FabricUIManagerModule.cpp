@@ -13,6 +13,7 @@
 #include <IXamlRootView.h>
 #include <JSI/jsi.h>
 #include <SchedulerSettings.h>
+#include <UI.Xaml.Controls.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
@@ -25,13 +26,8 @@
 #include <react/renderer/scheduler/SchedulerToolbox.h>
 #include <react/utils/ContextContainer.h>
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
-#include <UI.Xaml.Controls.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include "Unicode.h"
-#include <react/renderer/scheduler/Scheduler.h>
-#include <react/renderer/scheduler/SchedulerToolbox.h>
-#include <react/utils/ContextContainer.h>
-#include <SchedulerSettings.h>
 
 #pragma warning(push)
 #pragma warning(disable : 4305)

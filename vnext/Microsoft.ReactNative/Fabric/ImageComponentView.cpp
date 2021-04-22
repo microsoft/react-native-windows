@@ -18,7 +18,8 @@
 
 namespace Microsoft::ReactNative {
 
-ImageComponentView::ImageComponentView(winrt::Microsoft::ReactNative::ReactContext const &reactContext) : m_context(reactContext) {
+ImageComponentView::ImageComponentView(winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : m_context(reactContext) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
 }
@@ -30,12 +31,12 @@ ImageComponentView::supplementalComponentDescriptorProviders() noexcept {
 
 void ImageComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
-  //m_element.Children().InsertAt(index, static_cast<const BaseComponentView &>(childComponentView).Element());
+  // m_element.Children().InsertAt(index, static_cast<const BaseComponentView &>(childComponentView).Element());
 }
 
 void ImageComponentView::unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
-  //m_element.Children().RemoveAt(index);
+  // m_element.Children().RemoveAt(index);
 }
 
 void ImageComponentView::updateProps(
@@ -45,7 +46,6 @@ void ImageComponentView::updateProps(
   const auto &newImageProps = *std::static_pointer_cast<const facebook::react::ImageProps>(props);
 
   if (oldImageProps.sources != newImageProps.sources) {
-
     if (newImageProps.sources.empty()) {
       // TODO clear image
     } else {

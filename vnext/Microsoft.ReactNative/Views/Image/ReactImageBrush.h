@@ -4,9 +4,9 @@
 #pragma once
 
 #include <UI.Xaml.Media.h>
+#include <react/renderer/imagemanager/primitives.h>
 #include <winrt/Windows.Foundation.h>
 #include "CppWinRTIncludes.h"
-#include <react/renderer/imagemanager/primitives.h>
 
 namespace react::uwp {
 
