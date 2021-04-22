@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update Microsoft.ChakraCore to 1.11.24",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
