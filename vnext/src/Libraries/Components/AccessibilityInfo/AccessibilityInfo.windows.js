@@ -336,7 +336,7 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo.html#getrecommendedtimeoutmillis
    */
   getRecommendedTimeoutMillis(originalTimeout: number): Promise<number> {
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android' || Platform.OS === 'windows') {
       return new Promise((resolve, reject) => {
         if (NativeAccessibilityInfo?.getRecommendedTimeoutMillis) {
           NativeAccessibilityInfo.getRecommendedTimeoutMillis(
