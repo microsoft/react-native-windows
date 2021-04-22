@@ -46,6 +46,7 @@ export default class NativeEventEmitter<TEventToArgsMap: {...}>
         '`new NativeEventEmitter()` requires a non-null argument.',
       );
     }
+    // [win32
     const hasAddListener =
       !!nativeModule && typeof nativeModule.addListener === 'function';
     const hasRemoveListeners =
@@ -65,6 +66,7 @@ export default class NativeEventEmitter<TEventToArgsMap: {...}>
         );
       }
     }
+    // win32]
   }
 
   addListener<TEvent: $Keys<TEventToArgsMap>>(
