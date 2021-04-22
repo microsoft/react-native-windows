@@ -10,10 +10,7 @@
 #include "debugAssertApi/debugAssertApi.h"
 #include "typeTraits/typeTraits.h"
 
-#pragma warning(push)
-#pragma warning(disable : 4996) // wmemcpy
 #include <utility>
-#pragma warning(pop)
 
 namespace Mso {
 
@@ -255,7 +252,6 @@ class THolder {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #endif
-#pragma warning(suppress : 4996) // deprecated function
     TEmptyTraits::UnsafeEmpty(m_pT);
 #if defined(__clang__)
 #pragma clang diagnostic pop
