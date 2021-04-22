@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "restore some SDL warnings",
+  "packageName": "react-native-windows",
+  "email": "agnel@microsoft.com",
+  "dependentChangeType": "patch"
+}
