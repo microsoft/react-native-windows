@@ -326,6 +326,13 @@
       "baseHash": "c6d80f9ea60e5802d2e67ed50a78f2b6840d1162"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/EventEmitter/NativeEventEmitter.windows.js",
+      "baseFile": "Libraries/EventEmitter/NativeEventEmitter.js",
+      "baseHash": "5a9088dfae0144f6720ddfcff1b33e25af394fb0",
+      "issue": 7618
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
