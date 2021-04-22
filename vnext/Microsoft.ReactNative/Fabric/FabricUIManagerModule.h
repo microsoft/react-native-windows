@@ -4,11 +4,8 @@
 
 #include <NativeModules.h>
 #include <React.h>
-//#include <Views/ShadowNodeRegistry.h>
 #include <react/renderer/scheduler/SchedulerDelegate.h>
 #include <react/renderer/scheduler/SurfaceManager.h>
-//#include <winrt/Windows.ApplicationModel.h>
-//#include <winrt/Windows.Foundation.h>
 #include "ComponentViewRegistry.h"
 
 namespace facebook::react {
