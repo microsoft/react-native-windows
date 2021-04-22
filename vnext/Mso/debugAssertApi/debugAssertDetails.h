@@ -109,8 +109,7 @@ static
           DeclareMsoAssertParams(dwTag, szFile, iLine);                                                         \
       params.framesToSkip++;                                                                                    \
       const int32_t _assertResult_ = MsoAssertSzTagProcInline(PassMsoAssertParams(params), szFmt, __VA_ARGS__); \
-      __pragma(warning(suppress : 4700)) /* MSVC is unhappy with this used in a loop conditional */             \
-          if (_assertResult_ == c_assertDebugBreak) {                                                           \
+      if (_assertResult_ == c_assertDebugBreak) {                                                               \
         AssertBreak(wzAnnotation);                                                                              \
       }                                                                                                         \
       _fIgnore_ = (_assertResult_ == c_assertAlwaysIgnore);                                                     \
