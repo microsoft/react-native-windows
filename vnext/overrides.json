@@ -6,7 +6,7 @@
     "ReactCommon/TEMP_UntilReactCommonUpdate/**"
   ],
   "excludePatterns": [],
-  "baseVersion": "0.0.0-d04ec4dc6",
+  "baseVersion": "0.0.0-ae07c53d0",
   "overrides": [
     {
       "type": "derived",
@@ -18,7 +18,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBufferBuilder.cpp",
       "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBufferBuilder.cpp",
-      "baseHash": "1efe331e2def36ae16146df78afcd12e8a8fd2f6",
+      "baseHash": "2e62e00a44f48cfbbe9e60a6b7dfd1786fb6fe6e",
       "issue": 7591
     },
     {
@@ -60,7 +60,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "84a9a90c70deaf3e42a67c82beafb1240c41bc95"
+      "baseHash": "377a293707e3a0d18d920af383490957b2e145a5"
     },
     {
       "type": "platform",
@@ -97,10 +97,10 @@
       "file": "src/Libraries/AppTheme/AppThemeTypes.ts"
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
-      "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseHash": "54cf7e87dff60489f95adef777d73427eab0c866",
+      "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
+      "baseHash": "62ba2b9057a68227a1328b338dfa83b2c72925ae",
       "issue": 4578
     },
     {
@@ -238,7 +238,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.windows.js",
       "baseFile": "Libraries/Components/SafeAreaView/SafeAreaView.js",
-      "baseHash": "db15a0f43bd49e0be23b74b192fb28ee70fd3fee"
+      "baseHash": "ee67db1c7371b336887e89ea8c0d26f1b5a60b4d"
     },
     {
       "type": "derived",
@@ -296,7 +296,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.windows.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "008986be49bbb3166c1d9bccf3f25e577bbc9e04",
+      "baseHash": "77bfbef8e835e4fee49311779bb039a99ae44372",
       "issue": 5843
     },
     {
@@ -324,6 +324,13 @@
       "file": "src/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.windows.js",
       "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js",
       "baseHash": "c6d80f9ea60e5802d2e67ed50a78f2b6840d1162"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/EventEmitter/NativeEventEmitter.windows.js",
+      "baseFile": "Libraries/EventEmitter/NativeEventEmitter.js",
+      "baseHash": "5a9088dfae0144f6720ddfcff1b33e25af394fb0",
+      "issue": 7618
     },
     {
       "type": "patch",

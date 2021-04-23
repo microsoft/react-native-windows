@@ -3,7 +3,7 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-d04ec4dc6",
+  "baseVersion": "0.0.0-ae07c53d0",
   "overrides": [
     {
       "type": "derived",
@@ -15,7 +15,7 @@
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "84a9a90c70deaf3e42a67c82beafb1240c41bc95"
+      "baseHash": "377a293707e3a0d18d920af383490957b2e145a5"
     },
     {
       "type": "patch",
@@ -31,10 +31,10 @@
       "issue": 5807
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
-      "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.android.js",
-      "baseHash": "54cf7e87dff60489f95adef777d73427eab0c866",
+      "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
+      "baseHash": "62ba2b9057a68227a1328b338dfa83b2c72925ae",
       "issue": 4578
     },
     {
@@ -119,7 +119,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.win32.js",
       "baseFile": "Libraries/Components/SafeAreaView/SafeAreaView.js",
-      "baseHash": "db15a0f43bd49e0be23b74b192fb28ee70fd3fee"
+      "baseHash": "ee67db1c7371b336887e89ea8c0d26f1b5a60b4d"
     },
     {
       "type": "copy",
@@ -211,7 +211,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "008986be49bbb3166c1d9bccf3f25e577bbc9e04",
+      "baseHash": "77bfbef8e835e4fee49311779bb039a99ae44372",
       "issue": 5843
     },
     {
@@ -228,6 +228,13 @@
       "baseFile": "Libraries/Core/ReactNativeVersionCheck.js",
       "baseHash": "dfed43df2bfebbf0fb3588cb827be451ee5286a3",
       "issue": 5170
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/EventEmitter/NativeEventEmitter.win32.js",
+      "baseFile": "Libraries/EventEmitter/NativeEventEmitter.js",
+      "baseHash": "5a9088dfae0144f6720ddfcff1b33e25af394fb0",
+      "issue": 7618
     },
     {
       "type": "derived",
@@ -313,7 +320,7 @@
       "type": "derived",
       "file": "src/Libraries/Network/RCTNetworking.win32.js",
       "baseFile": "Libraries/Network/RCTNetworking.android.js",
-      "baseHash": "80f0e55a30b8ca1d89220deffc77a9c5a4c2cbe3",
+      "baseHash": "68edb853aa9091794c71ec1044dbb7f69d8e0b29",
       "issue": 4318
     },
     {
