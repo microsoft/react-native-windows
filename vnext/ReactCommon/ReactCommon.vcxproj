@@ -70,6 +70,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>
         $(ReactNativeDir)\ReactCommon\jsi;
+        $(FmtDir)\include;
         $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)\Shared\tracing;
         %(AdditionalIncludeDirectories);

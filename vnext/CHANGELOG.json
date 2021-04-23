@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 23 Apr 2021 05:08:07 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.296",
+      "version": "0.0.0-canary.296",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "restore some SDL warnings",
+            "author": "agnel@microsoft.com",
+            "commit": "271e71581a02f93058931ab2cb723c1da859ad02",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Apr 2021 05:06:31 GMT",
       "tag": "react-native-windows_v0.0.0-canary.295",
       "version": "0.0.0-canary.295",
