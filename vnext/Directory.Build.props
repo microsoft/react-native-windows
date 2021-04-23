@@ -19,6 +19,7 @@
     -->
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">false</EnableSourceLink>
     <FollyVersion>2021.03.29.00</FollyVersion>
+    <FmtVersion>7.1.3</FmtVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
@@ -53,6 +54,9 @@
 
     <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativePackageDir)..\..\node_modules))')">$(ReactNativePackageDir)..\..\node_modules\.folly\folly-$(FollyVersion)</FollyDir>
     <FollyDir>$([MSBuild]::NormalizeDirectory($(FollyDir)))</FollyDir>
+
+    <FmtDir Condition="'$(FmtDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativePackageDir)..\..\node_modules))')">$(ReactNativePackageDir)..\..\node_modules\.fmt\fmt-$(FmtVersion)</FmtDir>
+    <FmtDir>$([MSBuild]::NormalizeDirectory($(FmtDir)))</FmtDir>
   </PropertyGroup>
 
 </Project>

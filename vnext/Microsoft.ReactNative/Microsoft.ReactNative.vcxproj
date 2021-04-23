@@ -104,6 +104,7 @@
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj</AdditionalOptions>
       <AdditionalIncludeDirectories>
+        $(FmtDir)\include;
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
         $(ReactNativeWindowsDir)Microsoft.ReactNative\Pch;
         $(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost;

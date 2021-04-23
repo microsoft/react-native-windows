@@ -91,6 +91,7 @@
     "/Chakra",
     "/Common",
     "/DeforkingPatches",
+    "fmt",
     "/Folly",
     "/generate.js",
     "/include",
