@@ -440,7 +440,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawProps.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsKey.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsKeyMap.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsParser.cpp"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsParser.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNode.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeFamily.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
