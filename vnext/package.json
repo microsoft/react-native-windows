@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.295",
+  "version": "0.0.0-canary.296",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -91,6 +91,7 @@
     "/Chakra",
     "/Common",
     "/DeforkingPatches",
+    "fmt",
     "/Folly",
     "/generate.js",
     "/include",
