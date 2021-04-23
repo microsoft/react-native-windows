@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 21 Apr 2021 05:06:31 GMT and should not be manually modified.
+This log was last generated on Fri, 23 Apr 2021 05:08:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.296
+
+Fri, 23 Apr 2021 05:08:07 GMT
+
+### Changes
+
+- restore some SDL warnings (agnel@microsoft.com)
 
 ## 0.0.0-canary.295
 
