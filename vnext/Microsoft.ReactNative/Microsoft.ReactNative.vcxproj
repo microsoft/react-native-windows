@@ -434,6 +434,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventQueue.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutableShadowNode.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutConstraints.cpp"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutMetrics.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Props.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawEvent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawProps.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
@@ -455,6 +456,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\LeakChecker.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\WeakFamilyRegistry.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\Differentiator.cpp" DisableSpecificWarnings="4389;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\DifferentiatorFlatteningClassic.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingCoordinator.cpp" DisableSpecificWarnings="4459;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingTransaction.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowTree.cpp"/>
@@ -465,6 +467,9 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\StubView.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\StubViewTree.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\TelemetryController.cpp" DisableSpecificWarnings="4267;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerBinding.cpp"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\Task.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\Scheduler.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\SurfaceHandler.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\SurfaceManager.cpp"/>
@@ -473,7 +478,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\templateprocessor\UITemplateProcessor.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\textlayoutmanager\TextMeasureCache.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManager.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManagerBinding.cpp" DisableSpecificWarnings="4389;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManagerBinding.cpp" DisableSpecificWarnings="4389;4715;%(DisableSpecificWarnings)"/>
     <ClCompile Include="Base\CoreNativeModules.cpp" />
     <ClCompile Include="Base\CoreUIManagers.cpp" />
     <ClCompile Include="Utils\BatchingEventEmitter.cpp" />
