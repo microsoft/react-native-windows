@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Change TextInput cursor behavior (#7285)",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
