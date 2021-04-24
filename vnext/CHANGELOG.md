@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 23 Apr 2021 05:08:07 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Apr 2021 05:06:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.297
+
+Sat, 24 Apr 2021 05:06:52 GMT
+
+### Changes
+
+- Replace fmt stub with real implementation (30809111+acoates-ms@users.noreply.github.com)
+- Adds declarative props to clear/submit TextInput (erozell@outlook.com)
+- Integration Apr 1 - Apr 15 (34109996+chiaramooney@users.noreply.github.com)
+- Remove unused ChakraNativeModules files (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.296
 

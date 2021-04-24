@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adds declarative props to clear/submit TextInput",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
