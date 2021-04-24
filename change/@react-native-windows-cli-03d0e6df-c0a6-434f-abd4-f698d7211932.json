@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "☠ ARM32",
+  "packageName": "@react-native-windows/cli",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
