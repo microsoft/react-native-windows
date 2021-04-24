@@ -21,14 +21,6 @@
               FastBuild: true
         - BuildEnvironment: Continuous
           Matrix:
-            - Name: ArmDebug
-              BuildConfiguration: Debug
-              BuildPlatform: ARM
-              FastBuild: false
-            - Name: ArmRelease
-              BuildConfiguration: Release
-              BuildPlatform: ARM
-              FastBuild: false
             - Name: Arm64RDebug
               BuildConfiguration: Debug
               BuildPlatform: ARM64

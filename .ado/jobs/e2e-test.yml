@@ -14,8 +14,6 @@ jobs:
       matrix:
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
           # Arm E2E does not build on non-arm agents
-          # Arm:
-          #   BuildPlatform: ARM
           # Arm64:
           #   BuildPlatform: ARM64
           x64:

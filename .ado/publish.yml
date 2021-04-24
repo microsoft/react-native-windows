@@ -226,9 +226,6 @@ jobs:
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: arm
         Arm64Debug:
           BuildConfiguration: Debug
           BuildPlatform: arm64
@@ -239,9 +236,6 @@ jobs:
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
-        ArmRelease:
-          BuildConfiguration: Release
-          BuildPlatform: arm
         Arm64Release:
           BuildConfiguration: Release
           BuildPlatform: arm64
