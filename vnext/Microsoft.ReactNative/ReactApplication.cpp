@@ -37,6 +37,7 @@ ReactApplication::ReactApplication(IInspectable const &outer) noexcept : ReactAp
         f.CreateInstance(outer ? outer : static_cast<IInspectable const &>(*this), this->m_inner);
   });
 
+#ifndef USE_WINUI3
   Suspending({this, &ReactApplication::OnSuspending});
 
 #if defined _DEBUG && !defined DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION
@@ -46,6 +47,7 @@ ReactApplication::ReactApplication(IInspectable const &outer) noexcept : ReactAp
       __debugbreak();
     }
   });
+#endif
 #endif
 }
 
