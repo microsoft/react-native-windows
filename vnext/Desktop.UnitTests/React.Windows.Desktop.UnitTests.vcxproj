@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="16.0"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <!--
       Disable WINRT_LEAN_AND_MEAN - Allow out-of-library interface implementations
@@ -53,21 +54,17 @@
       <SDLCheck>true</SDLCheck>
       <!-- See //https://stackoverflow.com/questions/42847103/stdtr1-with-visual-studio-2017. -->
       <PreprocessorDefinitions>
-        _HAS_AUTO_PTR_ETC;
-        _WIN32_WINNT=$(WinVer);
+        _HAS_AUTO_PTR_ETC; _WIN32_WINNT=$(WinVer);
         _WINSOCK_DEPRECATED_NO_WARNINGS;
         _WINDOWS;
         WIN32;
         BOOST_ASIO_HAS_IOCP;
         FOLLY_NO_CONFIG;
         NOMINMAX;
-        CHAKRACORE;
-        RN_EXPORT=;
-        JSI_EXPORT=;
+        CHAKRACORE; RN_EXPORT=; JSI_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
-        $(FmtDir)include;
         $(VCInstallDir)UnitTest\include;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>

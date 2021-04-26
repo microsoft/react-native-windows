@@ -89,7 +89,6 @@
         $(ReactNativeWindowsDir)Shared\tracing;
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
         $(YogaDir);
-        $(FmtDir)include;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
       <UseFullPaths>true</UseFullPaths>
