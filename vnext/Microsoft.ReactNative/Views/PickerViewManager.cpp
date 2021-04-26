@@ -58,7 +58,7 @@ PickerShadowNode::PickerShadowNode() : Super() {
         ? TriBit::Set
         : TriBit::NotSet;
 #else
-        react::uwp::TriBit::Set;
+        TriBit::Set;
 #endif
   }
 }

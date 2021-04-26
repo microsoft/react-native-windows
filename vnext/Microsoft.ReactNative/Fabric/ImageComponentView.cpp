@@ -19,7 +19,8 @@
 namespace Microsoft::ReactNative {
 
 ImageComponentView::ImageComponentView(winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : m_context(reactContext) {
+    : m_context(reactContext)
+    , m_element(::react::uwp::ReactImage::Create()) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
 }
@@ -31,12 +32,12 @@ ImageComponentView::supplementalComponentDescriptorProviders() noexcept {
 
 void ImageComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
-  // m_element.Children().InsertAt(index, static_cast<const BaseComponentView &>(childComponentView).Element());
+  // m_element->Children().InsertAt(index, static_cast<const BaseComponentView &>(childComponentView).Element());
 }
 
 void ImageComponentView::unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
-  // m_element.Children().RemoveAt(index);
+  // m_element->Children().RemoveAt(index);
 }
 
 void ImageComponentView::updateProps(
@@ -65,12 +66,12 @@ void ImageComponentView::updateProps(
         ris.uri.replace(0, 7, ris.bundleRootPath);
       }
       // EmitImageEvent(grid, "topLoadStart", sources[0]);
-      m_element.Source(ris);
+      m_element->Source(ris);
     }
   }
 
   if (oldImageProps.resizeMode != newImageProps.resizeMode) {
-    m_element.ResizeMode(newImageProps.resizeMode);
+    m_element->ResizeMode(newImageProps.resizeMode);
   }
 
   m_props = std::static_pointer_cast<facebook::react::ImageProps const>(props);
@@ -86,11 +87,11 @@ void ImageComponentView::updateLayoutMetrics(
 
   m_layoutMetrics = layoutMetrics;
 
-  winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_element, layoutMetrics.frame.origin.x);
-  winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_element, layoutMetrics.frame.origin.y);
+  winrt::Microsoft::ReactNative::ViewPanel::SetLeft(*m_element, layoutMetrics.frame.origin.x);
+  winrt::Microsoft::ReactNative::ViewPanel::SetTop(*m_element, layoutMetrics.frame.origin.y);
 
-  m_element.Width(layoutMetrics.frame.size.width);
-  m_element.Height(layoutMetrics.frame.size.height);
+  m_element->Width(layoutMetrics.frame.size.width);
+  m_element->Height(layoutMetrics.frame.size.height);
 }
 void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
 void ImageComponentView::prepareForRecycle() noexcept {}
@@ -100,7 +101,7 @@ facebook::react::SharedProps ImageComponentView::props() noexcept {
 }
 
 const xaml::FrameworkElement ImageComponentView::Element() const noexcept {
-  return m_element;
+  return *m_element;
 }
 
 } // namespace Microsoft::ReactNative

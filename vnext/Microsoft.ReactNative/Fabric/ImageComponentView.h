@@ -40,7 +40,7 @@ struct ImageComponentView : BaseComponentView {
  private:
   facebook::react::SharedViewProps m_props;
   facebook::react::LayoutMetrics m_layoutMetrics;
-  ::react::uwp::ReactImage m_element;
+  winrt::com_ptr<::react::uwp::ReactImage> m_element;
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
