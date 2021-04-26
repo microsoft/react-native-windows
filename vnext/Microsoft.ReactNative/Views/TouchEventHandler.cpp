@@ -6,8 +6,12 @@
 #include <Views/ShadowNodeBase.h>
 #include "TouchEventHandler.h"
 
+#ifdef USE_FABRIC
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ViewComponentView.h>
+#include <react/renderer/components/view/TouchEventEmitter.h>
+#endif
+
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
 #include <UI.Xaml.Controls.h>
@@ -15,7 +19,6 @@
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
-#include <react/renderer/components/view/TouchEventEmitter.h>
 
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Devices.Input.h>
@@ -334,7 +337,8 @@ folly::dynamic TouchEventHandler::GetPointerJson(const ReactPointer &pointer, in
   return json;
 }
 
-// This work should probably be delegated to the CompnentViews
+#ifdef USE_FABRIC
+// This work should probably be delegated to the ComponentViews
 facebook::react::SharedEventEmitter EventEmitterForElement(
     std::shared_ptr<FabricUIManager> &uimanager,
     facebook::react::Tag tag) noexcept {
@@ -373,11 +377,13 @@ facebook::react::Touch TouchEventHandler::TouchForPointer(const ReactPointer &po
   t.timestamp = static_cast<facebook::react::Float>(pointer.timestamp);
   return t;
 }
+#endif
 
 void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex) {
   folly::dynamic changedIndices = folly::dynamic::array();
   changedIndices.push_back(pointerIndex);
 
+#ifdef USE_FABRIC
   if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
           winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
     std::unordered_set<facebook::react::SharedTouchEventEmitter> uniqueEventEmitters = {};
@@ -423,7 +429,9 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
           break;
       }
     }
-  } else {
+  } else
+#endif // USE_FABRIC
+   {
     auto touches = folly::dynamic::array();
     for (const auto &pointer : m_pointers) {
       folly::dynamic touch = GetPointerJson(pointer, pointer.target);

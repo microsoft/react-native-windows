@@ -5,11 +5,14 @@
 #include <IReactInstance.h>
 #include <UI.Xaml.Documents.h>
 #include <folly/dynamic.h>
-#include <react/renderer/components/view/Touch.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
 #include <set>
 #include "XamlView.h"
+
+#ifdef USE_FABRIC
+#include <react/renderer/components/view/Touch.h>
+#endif
 
 namespace winrt {
 using namespace Windows::UI;
@@ -72,7 +75,9 @@ class TouchEventHandler {
   UpdateReactPointer(ReactPointer &pointer, const winrt::PointerRoutedEventArgs &args, xaml::UIElement sourceElement);
   void UpdatePointersInViews(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::UIElement sourceElement);
 
+#ifdef USE_FABRIC
   facebook::react::Touch TouchForPointer(const ReactPointer &pointer) noexcept;
+#endif
   enum class TouchEventType { Start = 0, End, Move, Cancel, PointerEntered, PointerExited, PointerMove };
   void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
   void DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex);

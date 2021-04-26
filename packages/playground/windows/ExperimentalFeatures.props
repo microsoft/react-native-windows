@@ -3,6 +3,7 @@
 
   <PropertyGroup Label="Microsoft.ReactNative Experimental Features">
     <UseHermes>true</UseHermes>
+    <UseFabric>true</UseFabric>
   </PropertyGroup>
 
 </Project>

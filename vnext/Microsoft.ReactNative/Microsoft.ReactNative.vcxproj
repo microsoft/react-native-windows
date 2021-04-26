@@ -98,7 +98,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(UseFabric)' == 'true'">true</RuntimeTypeInfo>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -390,95 +390,95 @@
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\config\ReactNativeConfig.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\AttributedString.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\AttributedStringBox.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\ParagraphAttributes.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\TextAttributes.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\ComponentDescriptorProviderRegistry.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\ComponentDescriptorRegistry.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\componentNameByReactViewName.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageProps.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageShadowNode.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageState.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\root\RootProps.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\root\RootShadowNode.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewEventEmitter.cpp" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewProps.cpp" DisableSpecificWarnings="4018;4305;4715;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewShadowNode.cpp" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewState.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\TextProps.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\BaseTextProps.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\BaseTextShadowNode.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphEventEmitter.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphProps.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphShadowNode.cpp" DisableSpecificWarnings="4018;4305;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\RawTextProps.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\TextShadowNode.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\RawTextShadowNode.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\iostextinput\TextInputProps.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\iostextinput\TextInputShadowNode.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\AccessibilityProps.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\TouchEventEmitter.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\ViewEventEmitter.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\ViewProps.cpp" DisableSpecificWarnings="4459;4715;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\ViewShadowNode.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\YogaLayoutableShadowNode.cpp" DisableSpecificWarnings="4701;4715;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\YogaStylableProps.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\BatchedEventQueue.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ComponentDescriptor.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventBeat.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventDispatcher.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventEmitter.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventTarget.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventQueue.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutableShadowNode.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutConstraints.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutMetrics.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Props.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawEvent.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawProps.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsKey.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsKeyMap.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsParser.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNode.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeFamily.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeFamilyFragment.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeFragment.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeTraits.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\State.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\UnbatchedEventQueue.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx\react\renderer\graphics\Color.cpp" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Transform.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\LeakChecker.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\WeakFamilyRegistry.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\Differentiator.cpp" DisableSpecificWarnings="4018;4389;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\DifferentiatorFlatteningClassic.cpp" DisableSpecificWarnings="4018;4389;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingCoordinator.cpp" DisableSpecificWarnings="4459;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingTransaction.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowTree.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowTreeRegistry.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowView.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowViewMutation.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\Stubs.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\StubView.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\StubViewTree.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\TelemetryController.cpp" DisableSpecificWarnings="4267;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerBinding.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\Task.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\Scheduler.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\SurfaceHandler.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\SurfaceManager.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\SurfaceTelemetry.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\templateprocessor\UITemplateProcessor.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\textlayoutmanager\TextMeasureCache.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManager.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManagerBinding.cpp" DisableSpecificWarnings="4389;4715;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\config\ReactNativeConfig.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\AttributedString.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\AttributedStringBox.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\ParagraphAttributes.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\TextAttributes.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\ComponentDescriptorProviderRegistry.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\ComponentDescriptorRegistry.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\componentNameByReactViewName.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageProps.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageShadowNode.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageState.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\root\RootProps.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\root\RootShadowNode.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewEventEmitter.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewProps.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;4305;4715;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewShadowNode.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewState.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\TextProps.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\BaseTextProps.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\BaseTextShadowNode.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphEventEmitter.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphProps.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphShadowNode.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;4305;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\RawTextProps.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\TextShadowNode.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\RawTextShadowNode.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\iostextinput\TextInputProps.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\textinput\iostextinput\TextInputShadowNode.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\AccessibilityProps.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\TouchEventEmitter.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\ViewEventEmitter.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\ViewProps.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4459;4715;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\ViewShadowNode.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\YogaLayoutableShadowNode.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4701;4715;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\YogaStylableProps.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\BatchedEventQueue.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ComponentDescriptor.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventBeat.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventDispatcher.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventEmitter.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventTarget.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventQueue.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutableShadowNode.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutConstraints.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutMetrics.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Props.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawEvent.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawProps.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsKey.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsKeyMap.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\RawPropsParser.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNode.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeFamily.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeFamilyFragment.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeFragment.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeTraits.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\State.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\UnbatchedEventQueue.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx\react\renderer\graphics\Color.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Transform.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\LeakChecker.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\WeakFamilyRegistry.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\Differentiator.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;4389;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\DifferentiatorFlatteningClassic.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;4389;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingCoordinator.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4459;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingTransaction.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowTree.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowTreeRegistry.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowView.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowViewMutation.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\Stubs.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\StubView.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\StubViewTree.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\TelemetryController.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4267;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerBinding.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\Task.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\Scheduler.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\SurfaceHandler.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\SurfaceManager.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\SurfaceTelemetry.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\templateprocessor\UITemplateProcessor.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\textlayoutmanager\TextMeasureCache.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManager.cpp" Condition="'$(UseFabric)' == 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManagerBinding.cpp" Condition="'$(UseFabric)' == 'true'" DisableSpecificWarnings="4389;4715;%(DisableSpecificWarnings)"/>
     <ClCompile Include="Base\CoreNativeModules.cpp" />
     <ClCompile Include="Base\CoreUIManagers.cpp" />
     <ClCompile Include="Utils\BatchingEventEmitter.cpp" />
@@ -556,17 +556,17 @@
     <ClCompile Include="RedBoxErrorInfo.cpp" />
     <ClCompile Include="RedBoxErrorFrameInfo.cpp" />
     <ClCompile Include="TurboModulesProvider.cpp" />
-    <ClCompile Include="Fabric\ComponentViewRegistry.cpp" />
-    <ClCompile Include="Fabric\FabricUIManagerModule.cpp" />
-    <ClCompile Include="Fabric\ImageComponentView.cpp" />
-    <ClCompile Include="Fabric\ImageManager.cpp" />
-    <ClCompile Include="Fabric\ImageRequest.cpp" />
-    <ClCompile Include="Fabric\ParagraphComponentView.cpp" />
-    <ClCompile Include="Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp" />
-    <ClCompile Include="Fabric\ReactNativeConfigProperties.cpp" />
-    <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
-    <ClCompile Include="Fabric\TextComponentView.cpp" />
-    <ClCompile Include="Fabric\ViewComponentView.cpp" />
+    <ClCompile Include="Fabric\ComponentViewRegistry.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="Fabric\FabricUIManagerModule.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="Fabric\ImageComponentView.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="Fabric\ImageManager.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="Fabric\ImageRequest.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="Fabric\ParagraphComponentView.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="Fabric\ReactNativeConfigProperties.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="Fabric\ScrollViewComponentView.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="Fabric\TextComponentView.cpp" Condition="'$(UseFabric)' == 'true'" />
+    <ClCompile Include="Fabric\ViewComponentView.cpp" Condition="'$(UseFabric)' == 'true'" />
     <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -648,7 +648,7 @@
     <ClCompile Include="Views\XamlFeatures.cpp" />
     <ClCompile Include="XamlLoadState.cpp" />
     <ClCompile Include="XamlView.cpp" />
-    <ClCompile Include="SchedulerSettings.cpp" />
+    <ClCompile Include="SchedulerSettings.cpp" Condition="'$(UseFabric)' == 'true'" />
     <ClCompile Include="XamlUIService.cpp">
       <DependentUpon>XamlUIService.idl</DependentUpon>
       <SubType>Code</SubType>

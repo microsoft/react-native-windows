@@ -21,7 +21,12 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 
+#ifdef USE_FABRIC
 #include <Fabric/FabricUIManagerModule.h>
+#include <react/renderer/core/LayoutConstraints.h>
+#include <react/renderer/core/LayoutContext.h>
+#endif
+
 #include <QuirkSettings.h>
 #include <ReactHost/React.h>
 #include <ReactHost/React_Win.h>
@@ -38,9 +43,6 @@
 
 #include "DevMenu.h"
 #include "Modules/DevSettingsModule.h"
-
-#include <react/renderer/core/LayoutConstraints.h>
-#include <react/renderer/core/LayoutContext.h>
 
 namespace react::uwp {
 
@@ -168,6 +170,7 @@ void ReactRootControl::InitRootView(
   m_previewKeyboardEventHandlerOnRoot->hook(xamlRootView);
   m_SIPEventHandler->AttachView(xamlRootView, /*fireKeyboradEvents:*/ true);
 
+#ifdef USE_FABRIC
   if (m_reactOptions->EnableFabric()) {
     auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
 
@@ -201,6 +204,7 @@ void ReactRootControl::InitRootView(
           }
         });
   }
+#endif
 
   UpdateRootViewInternal();
   AttachBackHandlers(xamlRootView);
