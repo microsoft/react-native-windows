@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="16.0"
-  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM64">
       <Configuration>Debug</Configuration>
@@ -89,16 +88,21 @@
         BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
         CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
       -->
-      <PreprocessorDefinitions> ENABLE_BEAST=$(EnableBeast);
+      <PreprocessorDefinitions>
+        ENABLE_BEAST=$(EnableBeast);
         BOOST_ASIO_HAS_IOCP;
-        _WINSOCK_DEPRECATED_NO_WARNINGS; _WIN32_WINNT=$(WinVer);
+        _WINSOCK_DEPRECATED_NO_WARNINGS;
+        _WIN32_WINNT=$(WinVer);
         WIN32;
         CORE_ABI;
         _WINDOWS;
         FOLLY_NO_CONFIG;
         NOMINMAX;
         _HAS_AUTO_PTR_ETC;
-        CHAKRACORE; RN_PLATFORM=win32; RN_EXPORT=; JSI_EXPORT=;
+        CHAKRACORE;
+        RN_PLATFORM=win32;
+        RN_EXPORT=;
+        JSI_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>

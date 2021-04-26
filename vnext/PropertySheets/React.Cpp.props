@@ -79,11 +79,13 @@
         WINRT_LEAN_AND_MEAN           - Disable rarely used cppwinrt templates that impact compile-time/PCH size.
       -->
       <PreprocessorDefinitions>
-        _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS; BOOST_ALL_NO_LIB=1;
+        _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;
+        BOOST_ALL_NO_LIB=1;
         BOOST_ERROR_CODE_HEADER_ONLY;
         BOOST_NO_RTTI;
         BOOST_NO_TYPEID;
-        BOOST_SYSTEM_SOURCE; GTEST_HAS_RTTI=0;
+        BOOST_SYSTEM_SOURCE;
+        GTEST_HAS_RTTI=0;
         WIN32_LEAN_AND_MEAN;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>

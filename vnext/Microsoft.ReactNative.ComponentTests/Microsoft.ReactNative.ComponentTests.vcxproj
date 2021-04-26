@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="16.0"
-  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -70,12 +69,16 @@
       <PreprocessorDefinitions>
         BOOST_ASIO_HAS_IOCP;
         USE_EDGEMODE_JSRT;
-        WINRT; _WIN32_WINNT=$(WinVer);
+        WINRT;
+        _WIN32_WINNT=$(WinVer);
         WIN32;
         _WINDOWS;
         FOLLY_NO_CONFIG;
         NOMINMAX;
-        _HAS_AUTO_PTR_ETC; RN_PLATFORM=windesktop; RN_EXPORT=; JSI_EXPORT=;
+        _HAS_AUTO_PTR_ETC;
+        RN_PLATFORM=windesktop;
+        RN_EXPORT=;
+        JSI_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
@@ -89,6 +92,7 @@
         $(ReactNativeWindowsDir)Shared\tracing;
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
         $(YogaDir);
+        $(FmtDir)include;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
       <UseFullPaths>true</UseFullPaths>
