@@ -164,7 +164,6 @@ jobs:
         inputs:
           alertWarningLevel: Medium
           scanType: 'Register'
-        condition: false # Temporarily disabling CG, see https://github.com/microsoft/react-native-windows/issues/7261
 
   - job: RNW_WinUI3
     variables:
@@ -510,7 +509,6 @@ jobs:
         inputs:
           alertWarningLevel: Medium
           scanType: 'Register'
-        condition: false # Temporarily disabling CG, see https://github.com/microsoft/react-native-windows/issues/7261
 
   - job: CliInit
     variables:
