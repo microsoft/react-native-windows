@@ -2,6 +2,27 @@
   "name": "node-rnw-rpc",
   "entries": [
     {
+      "date": "Sat, 24 Apr 2021 05:06:52 GMT",
+      "tag": "node-rnw-rpc_v1.0.5-27",
+      "version": "1.0.5-27",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Replace fmt stub with real implementation",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "0517a5d1701c367e64796c5302e1d4169e531744",
+            "package": "node-rnw-rpc"
+          },
+          {
+            "comment": "Integration Apr 1 - Apr 15",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "65abd5be6d9aa353e90608537ef8286577d679c9",
+            "package": "node-rnw-rpc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Apr 2021 05:08:07 GMT",
       "tag": "node-rnw-rpc_v1.0.5-26",
       "version": "1.0.5-26",

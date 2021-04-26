@@ -421,10 +421,37 @@ type AndroidProps = $ReadOnly<{|
   underlineColorAndroid?: ?ColorValue,
 |}>;
 
+// [Windows
+
+type SubmitKeyEvent = $ReadOnly<{|
+  altKey?: ?boolean,
+  ctrlKey?: ?boolean,
+  metaKey?: ?boolean,
+  shiftKey?: ?boolean,
+  code: string,
+|}>;
+
+type WindowsProps = $ReadOnly<{|
+  /**
+   * If `true`, clears the text field synchronously before `onSubmitEditing` is emitted.
+   * @platform windows
+   */
+  clearTextOnSubmit?: ?boolean,
+
+  /**
+   * Configures keys that can be used to submit editing for the TextInput.
+   * @platform windows
+   */
+  submitKeyEvents?: ?$ReadOnlyArray<SubmitKeyEvent>,
+|}>;
+
+// Windows]
+
 export type Props = $ReadOnly<{|
   ...$Diff<ViewProps, $ReadOnly<{|style: ?ViewStyleProp|}>>,
   ...IOSProps,
   ...AndroidProps,
+  ...WindowsProps, // [Windows]
 
   /**
    * Can tell `TextInput` to automatically capitalize certain characters.

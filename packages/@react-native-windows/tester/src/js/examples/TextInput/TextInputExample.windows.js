@@ -455,4 +455,37 @@ exports.examples = ([
       return <PressInOutEvents />;
     },
   },
+  // [Windows
+  {
+    title: 'Clear text on submit',
+    render: function(): React.Node {
+      return (
+        <View>
+          <Text>Default submit key (Enter):</Text>
+          <TextInput clearTextOnSubmit style={styles.singleLine} />
+          <Text>Custom submit key event (Shift + Enter), single-line:</Text>
+          <TextInput
+            clearTextOnSubmit
+            style={styles.singleLine}
+            submitKeyEvents={[{code: 'Enter', shiftKey: true}]}
+          />
+          <Text>Custom submit key event (Shift + Enter), multi-line:</Text>
+          <TextInput
+            multiline
+            clearTextOnSubmit
+            style={styles.multiline}
+            submitKeyEvents={[{code: 'Enter', shiftKey: true}]}
+          />
+          <Text>Submit with Enter key, return key with Shift + Enter</Text>
+          <TextInput
+            multiline
+            clearTextOnSubmit
+            style={styles.multiline}
+            submitKeyEvents={[{code: 'Enter'}]}
+          />
+        </View>
+      );
+    },
+  },
+  // Windows]
 ]: Array<RNTesterExampleModuleItem>);

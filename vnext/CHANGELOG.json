@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 24 Apr 2021 05:06:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.297",
+      "version": "0.0.0-canary.297",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Replace fmt stub with real implementation",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "0517a5d1701c367e64796c5302e1d4169e531744",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Adds declarative props to clear/submit TextInput",
+            "author": "erozell@outlook.com",
+            "commit": "914219e3f03120d3bc6936e7c23d019e03c0b67f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integration Apr 1 - Apr 15",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "65abd5be6d9aa353e90608537ef8286577d679c9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove unused ChakraNativeModules files",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "8b25ef7d47582ae3a29c69c90fe499026e0cdd01",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Apr 2021 05:08:07 GMT",
       "tag": "react-native-windows_v0.0.0-canary.296",
       "version": "0.0.0-canary.296",
