@@ -102,6 +102,7 @@
       <!-- Add include directories expected by React Native C++ code and headers -->
       <AdditionalIncludeDirectories>
         $(FollyDir);
+        $(FmtDir)include;
         $(ReactNativeDir)\ReactCommon;
         $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeDir)\ReactCommon\jsi;
