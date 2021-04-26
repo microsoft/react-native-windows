@@ -431,7 +431,7 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
     }
   } else
 #endif // USE_FABRIC
-   {
+  {
     auto touches = folly::dynamic::array();
     for (const auto &pointer : m_pointers) {
       folly::dynamic touch = GetPointerJson(pointer, pointer.target);
