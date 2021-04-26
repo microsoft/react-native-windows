@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 19 Apr 2021 17:00:53 GMT and should not be manually modified.
+This log was last generated on Mon, 26 Apr 2021 18:47:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.5
+
+Mon, 26 Apr 2021 18:47:14 GMT
+
+### Patches
+
+- Suppress onLayout event when layout has not changed (#7470) (erozell@outlook.com)
+- Change TextInput cursor behavior (#7285) (erozell@outlook.com)
 
 ## 0.64.4
 

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 26 Apr 2021 18:47:14 GMT",
+      "tag": "react-native-windows_v0.64.5",
+      "version": "0.64.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Suppress onLayout event when layout has not changed (#7470)",
+            "author": "erozell@outlook.com",
+            "commit": "a29cccfaa9bc3fcfb154a02fca718b2acb4674e9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Change TextInput cursor behavior (#7285)",
+            "author": "erozell@outlook.com",
+            "commit": "51feac94af8a5d572b1e1c3203b2094619edc634",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Apr 2021 17:00:53 GMT",
       "tag": "react-native-windows_v0.64.4",
       "version": "0.64.4",
