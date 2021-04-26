@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix CI after change to Format library",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
