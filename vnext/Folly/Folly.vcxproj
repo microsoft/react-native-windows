@@ -50,6 +50,15 @@
   <PropertyGroup>
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
+  <ItemGroup Condition="'$(UseFabric)' == 'true'">
+    <ClCompile Include="$(FollyDir)\folly\SharedMutex.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\concurrency\CacheLocality.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\detail\Futex.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\synchronization\ParkingLot.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\synchronization\SanitizeThread.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\portability\SysResource.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\portability\Unistd.cpp" />
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(FollyDir)\folly\lang\SafeAssert.cpp" />
     <ClCompile Include="$(FollyDir)\folly\lang\ToAscii.cpp" />
@@ -57,18 +66,11 @@
     <ClCompile Include="$(FollyDir)\folly\json_pointer.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Format.cpp" />
     <ClCompile Include="$(FollyDir)\folly\String.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\SharedMutex.cpp" Condition="'$(UseFabric)' == 'true'" />
     <ClCompile Include="$(FollyDir)\folly\container\detail\F14Table.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\concurrency\CacheLocality.cpp" Condition="'$(UseFabric)' == 'true'" />
     <ClCompile Include="$(FollyDir)\folly\Conv.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\detail\Futex.cpp" Condition="'$(UseFabric)' == 'true'" />
-    <ClCompile Include="$(FollyDir)\folly\synchronization\ParkingLot.cpp" Condition="'$(UseFabric)' == 'true'" />
-    <ClCompile Include="$(FollyDir)\folly\synchronization\SanitizeThread.cpp" Condition="'$(UseFabric)' == 'true'" />
     <ClCompile Include="$(FollyDir)\folly\portability\string.cpp">
       <ObjectFileName>$(IntDir)\portabilityString.obj</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="$(FollyDir)\folly\portability\SysResource.cpp" Condition="'$(UseFabric)' == 'true'" />
-    <ClCompile Include="$(FollyDir)\folly\portability\Unistd.cpp" Condition="'$(UseFabric)' == 'true'" />
     <ClCompile Include="$(FollyDir)\folly\Demangle.cpp" />
     <ClCompile Include="$(FollyDir)\folly\dynamic.cpp" />
     <ClCompile Include="$(FollyDir)\folly\json.cpp" />
