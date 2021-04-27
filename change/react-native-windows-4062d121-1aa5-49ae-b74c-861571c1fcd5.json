@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update brush cache when theme changes",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
