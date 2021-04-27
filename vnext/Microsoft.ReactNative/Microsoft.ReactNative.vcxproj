@@ -387,7 +387,6 @@
     </ClInclude>
     <ClInclude Include="XamlView.h" />
   </ItemGroup>
-  <ItemGroup>
   <ItemGroup Condition="'$(UseFabric)' == 'true'">
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\config\ReactNativeConfig.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\AttributedString.cpp" />
