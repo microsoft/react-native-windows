@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 27 Apr 2021 05:09:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.298",
+      "version": "0.0.0-canary.298",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update Microsoft.ChakraCore to 1.11.24",
+            "author": "jthysell@microsoft.com",
+            "commit": "f277b8e015fb47cde6544b9d5998e726bf38ea42",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix CI after change to Format library",
+            "author": "dannyvv@microsoft.com",
+            "commit": "960b7411dd6cfa07ea52bac197f9dcf2fd9d8e81",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Apr 2021 05:06:52 GMT",
       "tag": "react-native-windows_v0.0.0-canary.297",
       "version": "0.0.0-canary.297",
