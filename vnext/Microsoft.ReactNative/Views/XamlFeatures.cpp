@@ -4,8 +4,8 @@
 #include <pch.h>
 #include "XamlFeatures.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 TriBit g_HasActualSizeProperty{TriBit::Undefined};
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

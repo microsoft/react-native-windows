@@ -16,6 +16,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/leakchecker/LeakChecker.cpp",
+      "baseFile": "ReactCommon/react/renderer/leakchecker/LeakChecker.cpp",
+      "baseHash": "71e63e48a41f515954445737b6b09540b8416113",
+      "issue": 7619
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBufferBuilder.cpp",
       "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBufferBuilder.cpp",
       "baseHash": "2e62e00a44f48cfbbe9e60a6b7dfd1786fb6fe6e",

@@ -21,6 +21,13 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 
+#ifdef USE_FABRIC
+#include <Fabric/FabricUIManagerModule.h>
+#include <react/renderer/core/LayoutConstraints.h>
+#include <react/renderer/core/LayoutContext.h>
+#endif
+
+#include <QuirkSettings.h>
 #include <ReactHost/React.h>
 #include <ReactHost/React_Win.h>
 #include <dispatchQueue/dispatchQueue.h>
@@ -162,6 +169,42 @@ void ReactRootControl::InitRootView(
   m_touchEventHandler->AddTouchHandlers(xamlRootView);
   m_previewKeyboardEventHandlerOnRoot->hook(xamlRootView);
   m_SIPEventHandler->AttachView(xamlRootView, /*fireKeyboradEvents:*/ true);
+
+#ifdef USE_FABRIC
+  if (m_reactOptions->EnableFabric()) {
+    auto xamlRootGrid{xamlRootView.as<winrt::Grid>()};
+
+    m_rootSizeChangedRevoker = xamlRootGrid.SizeChanged(
+        winrt::auto_revoke,
+        [wkThis = weak_from_this(), context = m_context](
+            winrt::Windows::Foundation::IInspectable const &sender, xaml::SizeChangedEventArgs const &e) noexcept {
+          if (auto strongThis = wkThis.lock()) {
+            if (strongThis->GetTag()) {
+              auto root = sender.as<winrt::Grid>();
+
+              if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+                      winrt::Microsoft::ReactNative::ReactPropertyBag(context->Properties()))) {
+                facebook::react::LayoutContext context;
+                // TODO scaling factor
+                context.pointScaleFactor = 1; // pointScaleFactor_;
+
+                facebook::react::LayoutConstraints constraints;
+                constraints.minimumSize.height = static_cast<facebook::react::Float>(e.NewSize().Height);
+                constraints.minimumSize.width = static_cast<facebook::react::Float>(e.NewSize().Width);
+                constraints.maximumSize.height = static_cast<facebook::react::Float>(e.NewSize().Height);
+                constraints.maximumSize.width = static_cast<facebook::react::Float>(e.NewSize().Width);
+                constraints.layoutDirection = root.FlowDirection() == xaml::FlowDirection::LeftToRight
+                    ? facebook::react::LayoutDirection::LeftToRight
+                    : facebook::react::LayoutDirection::RightToLeft;
+
+                fabricuiManager->constraintSurfaceLayout(
+                    static_cast<facebook::react::SurfaceId>(strongThis->GetTag()), std::move(constraints), context);
+              }
+            }
+          }
+        });
+  }
+#endif
 
   UpdateRootViewInternal();
   AttachBackHandlers(xamlRootView);
@@ -363,7 +406,7 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
    * we should just skip hooking up the BackButton handler. SystemNavigationManager->GetForCurrentView seems to
    * crash with XamlIslands so we can't just bail if that call fails.
    */
-  if (react::uwp::IsXamlIsland())
+  if (::react::uwp::IsXamlIsland())
     return;
 
   auto weakThis = weak_from_this();
@@ -410,7 +453,7 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
   altLeft.Modifiers(winrt::Windows::System::VirtualKeyModifiers::Menu);
 
   // Hide keyboard accelerator tooltips
-  if (react::uwp::IsRS4OrHigher()) {
+  if (::react::uwp::IsRS4OrHigher()) {
     rootElement.KeyboardAcceleratorPlacementMode(xaml::Input::KeyboardAcceleratorPlacementMode::Hidden);
   }
 }

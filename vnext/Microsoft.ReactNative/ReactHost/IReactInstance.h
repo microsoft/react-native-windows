@@ -13,12 +13,12 @@
 
 namespace Microsoft::ReactNative {
 struct INativeUIManager;
+class ExpressionAnimationStore;
 } // namespace Microsoft::ReactNative
 
 namespace react::uwp {
 
 struct IXamlRootView;
-class ExpressionAnimationStore;
 
 typedef unsigned int LiveReloadCallbackCookie;
 typedef unsigned int ErrorCallbackCookie;

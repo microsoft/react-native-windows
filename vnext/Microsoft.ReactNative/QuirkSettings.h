@@ -24,6 +24,8 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
 
   static bool GetAcceptSelfSigned(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
+  static bool GetEnableFabric(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+
 #pragma region Public API - part of IDL interface
   static void SetMatchAndroidAndIOSStretchBehavior(
       winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
@@ -34,6 +36,8 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
       bool value) noexcept;
 
   static void SetAcceptSelfSigned(winrt::Microsoft::ReactNative::ReactInstanceSettings settings, bool value) noexcept;
+
+  static void SetEnableFabric(winrt::Microsoft::ReactNative::ReactInstanceSettings settings, bool value) noexcept;
 #pragma endregion Public API - part of IDL interface
 };
 

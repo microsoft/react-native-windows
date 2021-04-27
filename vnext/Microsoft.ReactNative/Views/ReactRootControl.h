@@ -107,6 +107,7 @@ struct ReactRootControl final : std::enable_shared_from_this<ReactRootControl>, 
 
   xaml::Controls::ContentControl m_focusSafeHarbor{nullptr};
   xaml::Controls::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};
+  xaml::FrameworkElement::SizeChanged_revoker m_rootSizeChangedRevoker{};
   winrt::Grid m_greenBoxGrid{nullptr};
   winrt::TextBlock m_waitingTextBlock{nullptr};
   winrt::SystemNavigationManager::BackRequested_revoker m_backRequestedRevoker{};

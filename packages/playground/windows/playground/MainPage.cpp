@@ -73,6 +73,9 @@ void MainPage::OnLoadClick(
     host.InstanceSettings().DebugHost(m_bundlerHostname);
   }
 
+  winrt::Microsoft::ReactNative::QuirkSettings::SetEnableFabric(
+      host.InstanceSettings(), x_UseFabric().IsChecked().GetBoolean());
+
   host.InstanceSettings().InstanceCreated(
       [wkThis = get_weak()](auto sender, winrt::Microsoft::ReactNative::InstanceCreatedEventArgs args) {
         if (auto strongThis = wkThis.get()) {
