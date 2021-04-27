@@ -106,7 +106,6 @@
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
-        "$(FmtDir)include";
         %(AdditionalIncludeDirectories);
         "$(ReactNativeWindowsDir)Microsoft.ReactNative";
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost";
