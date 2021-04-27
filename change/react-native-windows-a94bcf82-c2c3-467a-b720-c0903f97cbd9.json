@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Forked folly for SDL compliance",
+  "packageName": "react-native-windows",
+  "email": "agnel@microsoft.com",
+  "dependentChangeType": "patch"
+}
