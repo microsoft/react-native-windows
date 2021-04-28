@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Changes required to run in a Reunion app",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

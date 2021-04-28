@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 28 Apr 2021 05:07:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.299",
+      "version": "0.0.0-canary.299",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Changes required to run in a Reunion app",
+            "author": "asklar@microsoft.com",
+            "commit": "53e4ae5fc8d10ddcf94d3f34c684492761183750",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Very early fabric implementation",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "c1e00cfb3e6054c5e2dc43c681735836824b260a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Apr 2021 05:09:48 GMT",
       "tag": "react-native-windows_v0.0.0-canary.298",
       "version": "0.0.0-canary.298",
