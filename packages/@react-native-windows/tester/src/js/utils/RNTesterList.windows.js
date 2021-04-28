@@ -21,11 +21,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/Button/ButtonExample'),
   },
   {
-    key: 'DatePickerExample',
-    category: 'UI',
-    module: require('../examples-win/DatePicker/DatePickerExample'),
-  },
-  {
     key: 'FlatListExample',
     category: 'ListView',
     module: require('../examples/FlatList/FlatListExample'),
@@ -83,11 +78,6 @@ const ComponentExamples: Array<RNTesterExample> = [
   {
     key: 'NewAppScreenExample',
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
-  },
-  {
-    key: 'PickerWindowsExample',
-    category: 'UI',
-    module: require('../examples-win/Picker/PickerWindowsExample'),
   },
   {
     key: 'PressableExample',

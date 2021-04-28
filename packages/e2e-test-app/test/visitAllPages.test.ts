@@ -11,7 +11,6 @@ describe('visitAllPages', () => {
   const componentExamples = [
     'ActivityIndicator',
     'Button',
-    'DatePicker',
     'Fast Path Texts',
     'FlatList',
     'FlatList with Separators',
@@ -22,7 +21,6 @@ describe('visitAllPages', () => {
     'Image',
     //  'FlatList - MultiColumn',
     'New App Screen',
-    'PickerWindows',
     'Pressable',
     'Popup',
     'ScrollViewSimpleExample',
