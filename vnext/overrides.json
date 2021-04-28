@@ -6,13 +6,13 @@
     "ReactCommon/TEMP_UntilReactCommonUpdate/**"
   ],
   "excludePatterns": [],
-  "baseVersion": "0.0.0-ae07c53d0",
+  "baseVersion": "0.0.0-5127c71d6",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "7c2f3e8ecf80e5229d4e1fdad2b6ef324acae0c4"
+      "baseHash": "da1871d982a9d96c7f8235bb6c6efbb790f17cd1"
     },
     {
       "type": "patch",
@@ -25,7 +25,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBufferBuilder.cpp",
       "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBufferBuilder.cpp",
-      "baseHash": "2e62e00a44f48cfbbe9e60a6b7dfd1786fb6fe6e",
+      "baseHash": "2aed54df1dcb93f3e4366eb083804af541aa8b13",
       "issue": 7591
     },
     {
@@ -291,7 +291,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "7b74ecfc6ddef9b4d17ae95527b777c8886d40b4"
+      "baseHash": "62a01fc8b51f0ebc15320a28772c78d7c3ac58e1"
     },
     {
       "type": "patch",
@@ -331,13 +331,6 @@
       "file": "src/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.windows.js",
       "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js",
       "baseHash": "c6d80f9ea60e5802d2e67ed50a78f2b6840d1162"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/EventEmitter/NativeEventEmitter.windows.js",
-      "baseFile": "Libraries/EventEmitter/NativeEventEmitter.js",
-      "baseHash": "5a9088dfae0144f6720ddfcff1b33e25af394fb0",
-      "issue": 7618
     },
     {
       "type": "patch",
