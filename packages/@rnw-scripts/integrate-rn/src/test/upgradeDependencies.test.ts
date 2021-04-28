@@ -543,6 +543,64 @@ test('Out-of-tree platform (RN peerDependency satisfied)', () => {
   expectSortedDeps(deps);
 });
 
+test('Out-of-tree platform (RN peerDependency prerelease to prerelease)', () => {
+  const outOfTreeDeps: LocalPackageDeps = {
+    ...olderReactNative,
+    peerDependencies: {
+      ...olderReactNative.peerDependencies,
+      'react-native': '^0.63.0-rc.0',
+    },
+    packageName: 'react-native-windows',
+    outOfTreePlatform: true,
+  };
+
+  const deps = calcPackageDependencies('0.63.0-rc.1', rnDiff, repoConfigDiff, [
+    outOfTreeDeps,
+  ]);
+
+  expect(deps.length).toEqual(1);
+  expect(deps[0]).toEqual({
+    ...outOfTreeDeps,
+    dependencies: newerReactNative.dependencies,
+    peerDependencies: {
+      ...newerReactNative.peerDependencies,
+      'react-native': '^0.63.0-rc.1',
+    },
+    devDependencies: newerReactNative.devDependencies,
+  });
+
+  expectSortedDeps(deps);
+});
+
+test('Out-of-tree platform (RN peerDependency prerelease to release)', () => {
+  const outOfTreeDeps: LocalPackageDeps = {
+    ...olderReactNative,
+    peerDependencies: {
+      ...olderReactNative.peerDependencies,
+      'react-native': '^0.63.0-rc.1',
+    },
+    packageName: 'react-native-windows',
+    outOfTreePlatform: true,
+  };
+
+  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
+    outOfTreeDeps,
+  ]);
+
+  expect(deps.length).toEqual(1);
+  expect(deps[0]).toEqual({
+    ...outOfTreeDeps,
+    dependencies: newerReactNative.dependencies,
+    peerDependencies: {
+      ...newerReactNative.peerDependencies,
+      'react-native': '^0.63.0',
+    },
+    devDependencies: newerReactNative.devDependencies,
+  });
+
+  expectSortedDeps(deps);
+});
+
 test('Out-of-tree platform (RN peerDependency version unsatisfied)', () => {
   const outOfTreeDeps: LocalPackageDeps = {
     ...olderReactNative,

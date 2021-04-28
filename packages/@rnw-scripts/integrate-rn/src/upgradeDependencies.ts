@@ -364,15 +364,16 @@ function ensureValidReactNativePeerDep(
   }
 
   // If we have a range, such as in our stable branches, only bump if needed,
-  // as changing the peer depenedncy is a breaking change.
+  // as changing the peer depenedncy is a breaking change. Any prerelease may
+  // be breaking.
+  const peerDep = pkg.peerDependencies['react-native'];
+
   if (
     // Semver satisfaction logic for * is too strict, so we need to special
     // case it https://github.com/npm/node-semver/issues/130
-    pkg.peerDependencies['react-native'] === '*' ||
-    semver.satisfies(
-      newReactNativeVersion,
-      pkg.peerDependencies['react-native'],
-    )
+    peerDep === '*' ||
+    (semver.prerelease(semver.minVersion(peerDep)!) === null &&
+      semver.satisfies(newReactNativeVersion, peerDep))
   ) {
     return;
   }
@@ -426,6 +427,36 @@ function bumpSemver(origVersion: string, newVersion: string): string {
   // to reason about how to bump all of those and just bail if we see them.
   const simpleSemver = /([\^~]?)(\d+\.\d+(\.\d+)?(-\w+\.\d+)?)/;
   if (!simpleSemver.test(origVersion)) {
+    throw new Error(`Unable to bump complicated semver '${origVersion}'`);
+  }
+
+  if (origVersion.startsWith(`~`) || origVersion.startsWith('^')) {
+    return `${origVersion[0]}${newVersion}`;
+  } else {
+    return newVersion;
+  }
+}
+
+/**
+ * Checks whether a semver version of range includes a prerelease segment.
+ *
+ * @param version semver version/range
+ */
+function isPrerelease(version: string): boolean {
+  if (semver.valid(version)) {
+    return semver.prerelease(version) !== null;
+  }
+
+  if (semver.validRange(version)) {
+    return semver.prerelease(version) !== null;
+  }
+
+  throw new Error(`Invalid semver ${version}`);
+
+  // Semver allows multiple ranges, hypen ranges, star ranges, etc. Don't try
+  // to reason about how to bump all of those and just bail if we see them.
+  const simpleSemver = /([\^~]?)(\d+\.\d+(\.\d+)?(-\w+\.\d+)?)/;
+  if (!simpleSemver.test(version)) {
     throw new Error(`Unable to bump complicated semver '${origVersion}'`);
   }
 
