@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Link to curated release notes in patch release notes",
+  "packageName": "@rnw-scripts/create-github-releases",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
