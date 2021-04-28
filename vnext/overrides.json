@@ -303,8 +303,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.windows.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "77bfbef8e835e4fee49311779bb039a99ae44372",
-      "issue": 5843
+      "baseHash": "77bfbef8e835e4fee49311779bb039a99ae44372"
     },
     {
       "type": "patch",
