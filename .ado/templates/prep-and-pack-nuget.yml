@@ -38,7 +38,7 @@ steps:
       parameters:
         packageId: Microsoft.ReactNative
         packageVersion: ${{parameters.npmVersion}}
-        slices: ${{ coalesce(parameters.slices, '("x64.Release","x86.Release", "ARM.Release", "ARM64.Release")') }}
+        slices: ${{ coalesce(parameters.slices, '("x64.Release","x86.Release", "ARM64.Release")') }}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}
@@ -67,7 +67,7 @@ steps:
       parameters:
         packageId: Microsoft.ReactNative.Managed
         packageVersion: ${{parameters.npmVersion}}
-        slices: ${{ coalesce(parameters.slices, '("x64.Release","x86.Release", "ARM.Release", "ARM64.Release")') }}
+        slices: ${{ coalesce(parameters.slices, '("x64.Release","x86.Release", "ARM64.Release")') }}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}

@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "☠ ARM32",
+  "comment": "Remove ARM32 Support",
   "packageName": "@react-native-windows/cli",
   "email": "ngerlem@microsoft.com",
   "dependentChangeType": "patch"
