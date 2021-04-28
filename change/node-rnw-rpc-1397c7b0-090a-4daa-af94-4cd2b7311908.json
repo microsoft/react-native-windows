@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Remove ARM32 Support",
+  "packageName": "node-rnw-rpc",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}

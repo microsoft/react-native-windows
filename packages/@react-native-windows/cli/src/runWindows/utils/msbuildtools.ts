@@ -255,8 +255,6 @@ function getVCToolsByArch(buildArch: BuildArch): string {
     case 'x86':
     case 'x64':
       return 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64';
-    case 'ARM':
-      return 'Microsoft.VisualStudio.Component.VC.Tools.ARM';
     case 'ARM64':
       return 'Microsoft.VisualStudio.Component.VC.Tools.ARM64';
   }
