@@ -101,8 +101,10 @@ const octokit = new Octokit({
   );
 
   const releasesToPublish: Release[] = [];
+  const allReleases: Release[] = [];
   for (const changelog of changelogs) {
     for (const release of aggregateReleases(changelog)) {
+      allReleases.push(release);
       if (needsRelease(release, localTags, githubReleases)) {
         releasesToPublish.push(release);
       }
@@ -123,7 +125,7 @@ const octokit = new Octokit({
   }
 
   for (const release of releasesToPublish) {
-    await publishRelease(release);
+    await publishRelease(release, allReleases);
   }
 
   console.log(chalk.green('All done!'));
@@ -162,7 +164,7 @@ function needsRelease(
 /**
  * Create a release for the given change entry
  */
-async function publishRelease(release: Release) {
+async function publishRelease(release: Release, allReleases: Release[]) {
   const pre = semver.prerelease(release.version);
   console.log(
     `Creating release for ${release.packageName} ${release.version}...`,
@@ -171,7 +173,7 @@ async function publishRelease(release: Release) {
   await octokit.repos.createRelease({
     tag_name: release.tag,
     name: `${packageTitle(release.packageName)} ${release.version}`,
-    body: createReleaseMarkdown(release),
+    body: createReleaseMarkdown(release, allReleases),
     prerelease: !!pre,
     draft: shouldBeDraft(release),
     ...RNW_REPO,
@@ -204,8 +206,28 @@ function aggregateReleases(changelog: Changelog): Release[] {
 /**
  * Create the markdown representation of a release
  */
-function createReleaseMarkdown(release: Release): string {
+function createReleaseMarkdown(
+  release: Release,
+  allReleases: Release[],
+): string {
   let md = '';
+
+  if (release.packageName === 'react-native-windows') {
+    const firstVersionLink = getFirstMajorVersionLink(release, allReleases);
+    if (firstVersionLink) {
+      if (semver.prerelease(release.version)) {
+        md += `This is a preview of the next version of react-native-windows. To see a summary of changes in this major release, look [here](${firstVersionLink}).\n`;
+      } else {
+        md += `This is patch release of react-native-windows, fixing bugs or adding non-breaking enhancements. To see a summary of changes in this major release, look [here](${firstVersionLink}).\n`;
+      }
+    } else {
+      console.warn(
+        chalk.yellow(
+          `Could not parse react-native-windows semver "${release.version}". Omitting release links`,
+        ),
+      );
+    }
+  }
 
   for (const change of release.comments) {
     const abbrevCommit = change.commit.substr(0, 8);
@@ -213,6 +235,46 @@ function createReleaseMarkdown(release: Release): string {
   }
 
   return md;
+}
+
+/**
+ * Finds a link to the the first stable/prerelease release notes of the major
+ * version. These notes are curated, and we want them to be visible on all
+ * releases.
+ */
+function getFirstMajorVersionLink(
+  release: Release,
+  allReleases: Release[],
+): string | null {
+  const releaseSemver = semver.parse(release.version);
+  if (!releaseSemver) {
+    return null;
+  }
+
+  let firstVersion: semver.SemVer;
+  if (releaseSemver.prerelease.length === 0) {
+    firstVersion = semver.parse(
+      `${releaseSemver.major}.${releaseSemver.minor}.0`,
+    )!;
+  } else if (
+    releaseSemver.prerelease.length === 2 &&
+    releaseSemver.prerelease[0] === 'preview'
+  ) {
+    firstVersion = semver.parse(
+      `${releaseSemver.major}.${releaseSemver.minor}.${releaseSemver.patch}.${releaseSemver.prerelease[0]}.1`,
+    )!;
+  } else {
+    return null;
+  }
+
+  const matchingRelease = allReleases.find(
+    r => r.packageName === release.packageName && r.version === firstVersion,
+  );
+  if (!matchingRelease) {
+    return null;
+  }
+
+  return `https://github.com/microsoft/react-native-windows/releases/tag/${matchingRelease.tag}`;
 }
 
 /**
