@@ -25,13 +25,6 @@
     },
     {
       "type": "patch",
-      "file": "src/Libraries/BatchedBridge/MessageQueue.win32.js",
-      "baseFile": "Libraries/BatchedBridge/MessageQueue.js",
-      "baseHash": "c47cdef67892acc92ca1df8aceef6909db24a029",
-      "issue": 5807
-    },
-    {
-      "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
       "baseHash": "62ba2b9057a68227a1328b338dfa83b2c72925ae",
