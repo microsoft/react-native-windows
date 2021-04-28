@@ -133,6 +133,7 @@ class TextInputShadowNode : public ShadowNodeBase {
   void SetSelection(int64_t start, int64_t end);
   winrt::Shape FindCaret(xaml::DependencyObject element);
 
+  bool m_autoFocus = false;
   bool m_shouldClearTextOnFocus = false;
   bool m_shouldSelectTextOnFocus = false;
   bool m_contextMenuHidden = false;
@@ -308,6 +309,10 @@ void TextInputShadowNode::registerEvents() {
       });
 
   m_controlLoadedRevoker = control.Loaded(winrt::auto_revoke, [=](auto &&, auto &&) {
+    if (m_autoFocus) {
+      control.Focus(xaml::FocusState::Keyboard);
+    }
+
     auto contentElement = control.GetTemplateChild(L"ContentElement");
     auto textBoxView = contentElement.as<xaml::Controls::ScrollViewer>();
     if (textBoxView) {
@@ -599,6 +604,9 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         m_submitKeyEvents.clear();
     } else if (propertyName == "keyDownEvents") {
       hasKeyDownEvents = propertyValue.ItemCount() > 0;
+    } else if (propertyName == "autoFocus") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+        m_autoFocus = propertyValue.AsBoolean();
     } else {
       if (m_isTextBox) { // Applicable properties for TextBox
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
@@ -761,6 +769,7 @@ void TextInputViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::I
   React::WriteProperty(writer, L"autoCapitalize", L"string");
   React::WriteProperty(writer, L"clearTextOnSubmit", L"boolean");
   React::WriteProperty(writer, L"submitKeyEvents", L"array");
+  React::WriteProperty(writer, L"autoFocus", L"boolean");
 }
 
 void TextInputViewManager::GetExportedCustomDirectEventTypeConstants(
