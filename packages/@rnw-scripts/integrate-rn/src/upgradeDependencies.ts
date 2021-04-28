@@ -436,33 +436,3 @@ function bumpSemver(origVersion: string, newVersion: string): string {
     return newVersion;
   }
 }
-
-/**
- * Checks whether a semver version of range includes a prerelease segment.
- *
- * @param version semver version/range
- */
-function isPrerelease(version: string): boolean {
-  if (semver.valid(version)) {
-    return semver.prerelease(version) !== null;
-  }
-
-  if (semver.validRange(version)) {
-    return semver.prerelease(version) !== null;
-  }
-
-  throw new Error(`Invalid semver ${version}`);
-
-  // Semver allows multiple ranges, hypen ranges, star ranges, etc. Don't try
-  // to reason about how to bump all of those and just bail if we see them.
-  const simpleSemver = /([\^~]?)(\d+\.\d+(\.\d+)?(-\w+\.\d+)?)/;
-  if (!simpleSemver.test(version)) {
-    throw new Error(`Unable to bump complicated semver '${origVersion}'`);
-  }
-
-  if (origVersion.startsWith(`~`) || origVersion.startsWith('^')) {
-    return `${origVersion[0]}${newVersion}`;
-  } else {
-    return newVersion;
-  }
-}
