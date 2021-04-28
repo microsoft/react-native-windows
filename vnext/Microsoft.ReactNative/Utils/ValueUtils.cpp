@@ -67,7 +67,7 @@ xaml::Media::Brush BrushFromTheme(winrt::hstring resourceName) {
   return brush;
 }
 
-struct BrushCache : public std::map<winrt::hstring, winrt::weak_ref<xaml::Media::SolidColorBrush>> {
+struct BrushCache {
   std::map<winrt::hstring, xaml::Media::Brush> m_map;
   winrt::Windows::UI::ViewManagement::UISettings m_uiSettings{nullptr};
   BrushCache() {
