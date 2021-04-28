@@ -159,11 +159,7 @@ jobs:
             Microsoft.ReactNative.Managed\**
             Microsoft.ReactNative.Managed.CodeGen\**
       
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: 'Component Governance Detection'
-        inputs:
-          alertWarningLevel: Medium
-          scanType: 'Register'
+      - template: templates/component-governance.yml
 
   - job: RNW_WinUI3
     variables:
@@ -504,11 +500,7 @@ jobs:
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
 
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: 'Component Governance Detection'
-        inputs:
-          alertWarningLevel: Medium
-          scanType: 'Register'
+      - template: templates/component-governance.yml
 
   - job: CliInit
     variables:
