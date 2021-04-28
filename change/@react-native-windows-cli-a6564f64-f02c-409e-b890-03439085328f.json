@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Replace `inquirer` with `prompts` in CLI",
+  "packageName": "@react-native-windows/cli",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
