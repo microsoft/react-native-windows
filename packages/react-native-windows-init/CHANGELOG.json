@@ -2,6 +2,29 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Thu, 29 Apr 2021 05:07:20 GMT",
+      "tag": "react-native-windows-init_v1.1.54",
+      "version": "1.1.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Replace `inquirer` with `prompts` in CLI",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a10d0e11f2bd623b70cbfd4a548cc387545417ca",
+            "package": "react-native-windows-init"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.69",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f219f010eab46aff4b307eb45820db85beb9271c",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 17 Apr 2021 05:08:13 GMT",
       "tag": "react-native-windows-init_v1.1.53",
       "version": "1.1.53",

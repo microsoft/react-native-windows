@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bump RN peerDependency whenever it is prerelease",
-  "packageName": "@rnw-scripts/integrate-rn",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

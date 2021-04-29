@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 29 Apr 2021 05:07:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.300",
+      "version": "0.0.0-canary.300",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adds 'autoFocus' prop to TextInput",
+            "author": "erozell@outlook.com",
+            "commit": "af8215a9ef99691db6fac60dfa73bfa7ee6dff93",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate April 22 RN Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d43249ae3de5d6a45f84bd6ab622aa1eb3ababe1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix MSBuild Bundling When Path Contains Spaces",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a4f65ded7b6a82a5fd7245b651ceb83037ccb650",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove Forking Due to \"acceptsKeyboardFocus\" Invariant Checks",
+            "author": "ngerlem@microsoft.com",
+            "commit": "1e88c115aec700b87dd55be9d5a39bc0dc644092",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove ARM32 Support",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f219f010eab46aff4b307eb45820db85beb9271c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update to latest @types/react-native",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d0074bcceb9f13fdcf0a7262aee53819fdb9434a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove version from ExperimentalFeatures.props links",
+            "author": "ngerlem@microsoft.com",
+            "commit": "686801d84cbc0ec32f7d254080883369b9bbae55",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 28 Apr 2021 05:07:02 GMT",
       "tag": "react-native-windows_v0.0.0-canary.299",
       "version": "0.0.0-canary.299",

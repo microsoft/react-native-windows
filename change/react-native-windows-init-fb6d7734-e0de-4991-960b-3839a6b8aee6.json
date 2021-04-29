@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Replace `inquirer` with `prompts` in CLI",
-  "packageName": "react-native-windows-init",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,35 @@
   "name": "node-rnw-rpc",
   "entries": [
     {
+      "date": "Thu, 29 Apr 2021 05:07:20 GMT",
+      "tag": "node-rnw-rpc_v1.0.5",
+      "version": "1.0.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Remove ARM32 Support",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f219f010eab46aff4b307eb45820db85beb9271c",
+            "package": "node-rnw-rpc"
+          },
+          {
+            "comment": "Integrate April 22 RN Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d43249ae3de5d6a45f84bd6ab622aa1eb3ababe1",
+            "package": "node-rnw-rpc"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.300",
+            "author": "erozell@outlook.com",
+            "commit": "af8215a9ef99691db6fac60dfa73bfa7ee6dff93",
+            "package": "node-rnw-rpc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 28 Apr 2021 05:07:02 GMT",
       "tag": "node-rnw-rpc_v1.0.5-29",
       "version": "1.0.5-29",

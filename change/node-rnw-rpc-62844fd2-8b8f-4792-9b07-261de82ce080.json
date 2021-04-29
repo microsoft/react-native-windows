@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Integrate April 22 RN Nightly Build",
-  "packageName": "node-rnw-rpc",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

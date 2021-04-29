@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update to latest @types/react-native",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

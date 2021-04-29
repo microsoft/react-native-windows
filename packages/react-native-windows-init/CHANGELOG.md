@@ -1,8 +1,20 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Sat, 17 Apr 2021 05:08:13 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Apr 2021 05:07:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.54
+
+Thu, 29 Apr 2021 05:07:20 GMT
+
+### Patches
+
+- Replace `inquirer` with `prompts` in CLI (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.69 (ngerlem@microsoft.com)
 
 ## 1.1.53
 

@@ -1,8 +1,21 @@
 # Change Log - node-rnw-rpc
 
-This log was last generated on Wed, 28 Apr 2021 05:07:02 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Apr 2021 05:07:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.5
+
+Thu, 29 Apr 2021 05:07:20 GMT
+
+### Patches
+
+- Remove ARM32 Support (ngerlem@microsoft.com)
+- Integrate April 22 RN Nightly Build (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.300 (erozell@outlook.com)
 
 ## 1.0.5-29
 
