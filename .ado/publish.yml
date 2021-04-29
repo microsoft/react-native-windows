@@ -37,19 +37,6 @@ variables:
   - name: ArtifactServices.Symbol.PAT
     value: $(pat-symbols-publish-microsoft)
 
-schedules:
-- cron: "0 15 * * Mon" # 3PM Monday UTC (8AM Monday PST)
-  displayName: Weekly stable publish build
-  branches:
-    include:
-    - 0.64-stable
-    - 0.65-stable
-- cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
-  displayName: Nightly canary publish build
-  branches:
-    include:
-    - master
-
 trigger: none
 pr: none
 
