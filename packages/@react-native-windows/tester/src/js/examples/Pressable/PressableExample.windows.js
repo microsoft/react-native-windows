@@ -348,6 +348,68 @@ function PressWithOnKeyDown() {
   );
 }
 
+function PressWithKeyCapture() {
+  const [eventLog, setEventLog] = useState([]);
+  const [shouldStopPropagation, setShouldStopPropagation] = useState(false);
+  const toggleSwitch2 = () =>
+    setShouldStopPropagation(shouldStopPropagation => !shouldStopPropagation);
+
+  function appendEvent(eventName) {
+    const limit = 6;
+    setEventLog(current => {
+      return [eventName].concat(current.slice(0, limit - 1));
+    });
+  }
+
+  function myKeyDown(event) {
+    appendEvent('keyDown ' + event.nativeEvent.code);
+
+    if (shouldStopPropagation) {
+      event.stopPropagation();
+    }
+  }
+
+  function myKeyUp(event) {
+    appendEvent('keyUp ' + event.nativeEvent.code);
+
+    if (shouldStopPropagation) {
+      event.stopPropagation();
+    }
+  }
+
+  function myKeyDownCapture(event) {
+    appendEvent('keyDownCapture ' + event.nativeEvent.code);
+
+    if (shouldStopPropagation) {
+      event.stopPropagation();
+    }
+  }
+
+  return (
+    <>
+      <View testID="pressable_feedback_events">
+        <View
+          style={[styles.row, styles.centered]}
+          onKeyDownCapture={event => myKeyDownCapture(event)}>
+          <Pressable
+            style={styles.wrapper}
+            onKeyDown={event => myKeyDown(event)}
+            onKeyUp={event => myKeyUp(event)}
+            onPress={() => appendEvent('press')}>
+            <Text style={styles.button}>Press Me</Text>
+          </Pressable>
+        </View>
+        <View style={styles.eventLogBox}>
+          {eventLog.map((e, ii) => (
+            <Text key={ii}>{e}</Text>
+          ))}
+        </View>
+        <Switch onValueChange={toggleSwitch2} value={shouldStopPropagation} />
+      </View>
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
   row: {
     justifyContent: 'center',
@@ -591,6 +653,16 @@ exports.examples = [
       ' - this behavior can be suppressed by calling e.preventDefault() on the event (can be toggled with the switch).': string),
     render: function(): React.Node {
       return <PressWithOnKeyDown />;
+    },
+  },
+  {
+    title: 'OnKeyDownCapture on Pressable (View)',
+    description: ('You can intercept routed KeyDown/KeyUp events by specifying the onKeyDownCapture/onKeyUpCapture callbacks.' +
+      " In the example below, set focus to the 'Press me' element (by tabbing into it), and start pressing letters (or any other keys) on the keyboard to observe the event log below." +
+      " Additionally, it's possible to control whether the intercepted event will continue down the route to its originating element, by toggling the switch below." +
+      " This specifies that the stopPropagation() method will be called on the event. When the switch is on, you'll see the KeyDown event doesn't show up after the KeyDownCapture for a given key.": string),
+    render: function(): React.Node {
+      return <PressWithKeyCapture />;
     },
   },
 ];
