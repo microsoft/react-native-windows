@@ -133,14 +133,14 @@ class TextInputShadowNode : public ShadowNodeBase {
   void SetSelection(int64_t start, int64_t end);
   winrt::Shape FindCaret(xaml::DependencyObject element);
 
-  bool m_initialUpdateComplete : 1 = false;
-  bool m_autoFocus : 1 = false;
-  bool m_shouldClearTextOnFocus : 1 = false;
-  bool m_shouldSelectTextOnFocus : 1 = false;
-  bool m_contextMenuHidden : 1 = false;
-  bool m_hideCaret : 1 = false;
-  bool m_isTextBox : 1 = true;
-  bool m_shouldClearTextOnSubmit : 1 = false;
+  bool m_initialUpdateComplete = false;
+  bool m_autoFocus = false;
+  bool m_shouldClearTextOnFocus = false;
+  bool m_shouldSelectTextOnFocus = false;
+  bool m_contextMenuHidden = false;
+  bool m_hideCaret = false;
+  bool m_isTextBox = true;
+  bool m_shouldClearTextOnSubmit = false;
 
   winrt::Microsoft::ReactNative::JSValue m_placeholderTextColor;
   std::vector<HandledKeyboardEvent> m_submitKeyEvents{};
