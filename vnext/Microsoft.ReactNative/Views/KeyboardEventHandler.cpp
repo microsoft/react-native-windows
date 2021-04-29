@@ -369,7 +369,6 @@ static const std::vector<std::pair<int, std::string>> g_virtualKeyToCode{
     {to_underlying(winrt::Windows::System::VirtualKey::Back), "Backspace"},
     {219, "BracketLeft"},
     {221, "BracketRight"},
-    {192, "BracketLeft"},
     {188, "Comma"},
     {187, "Equal"},
     //{to_underlying(winrt::Windows::System::None), "IntlBackslash"},
