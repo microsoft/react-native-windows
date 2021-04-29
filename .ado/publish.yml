@@ -29,13 +29,6 @@ variables:
   - name: EnableCodesign
     value: false
 
-schedules:
-- cron: "0 15 * * Mon" # 3PM Monday UTC (8AM Monday PST)
-  displayName: Weekly stable publish build
-  branches:
-    include:
-    - 0.64-stable
-
 trigger: none
 pr: none
 
