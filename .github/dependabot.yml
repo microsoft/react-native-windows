@@ -4,7 +4,8 @@ updates:
   directory: "/"
   schedule:
     interval: daily
-    time: "13:00"
+    time: "05:00"
+    timezone: "America/Los_Angeles"
   labels:
   - dependencies
   versioning-strategy: lockfile-only
