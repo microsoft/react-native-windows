@@ -155,6 +155,12 @@
                     <ComboBoxItem Content="V8" x:Name="x_engineV8" />
                 </ComboBox.Items>
             </ComboBox>
+            <CheckBox x:Name="x_UseFabric"
+                Margin="4"
+                VerticalAlignment="Center"
+                IsChecked="false"
+                Content="Enable Fabric"/>
+
         </StackPanel>
         <react:ReactRootView x:Name="ReactRootView"
             BorderThickness="0,1,0,0"

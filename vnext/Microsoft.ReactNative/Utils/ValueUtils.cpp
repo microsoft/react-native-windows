@@ -106,7 +106,7 @@ xaml::Media::Brush BrushFromColorObject(const winrt::Microsoft::ReactNative::JSV
   return BrushFromColorObject(winrt::to_hstring(v["windowsbrush"].AsString()));
 }
 
-winrt::Color ColorFromNumber(DWORD argb) {
+winrt::Color ColorFromNumber(DWORD argb) noexcept {
   return winrt::ColorHelper::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
 }
 
@@ -145,6 +145,15 @@ SolidColorBrushFrom(const winrt::Microsoft::ReactNative::JSValue &v) {
   }
 
   return SolidBrushFromColor(ColorFrom(v));
+}
+
+xaml::Media::SolidColorBrush SolidColorBrushFrom(facebook::react::Color argb) noexcept {
+  return SolidBrushFromColor(
+      winrt::ColorHelper::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb)));
+}
+
+xaml::Media::SolidColorBrush SolidColorBrushFrom(facebook::react::SharedColor color) noexcept {
+  return SolidColorBrushFrom(*color);
 }
 
 REACTWINDOWS_API_(xaml::Media::SolidColorBrush)

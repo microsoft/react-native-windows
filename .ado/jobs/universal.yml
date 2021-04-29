@@ -21,14 +21,6 @@
               FastBuild: true
         - BuildEnvironment: Continuous
           Matrix:
-            - Name: ArmDebug
-              BuildConfiguration: Debug
-              BuildPlatform: ARM
-              FastBuild: false
-            - Name: ArmRelease
-              BuildConfiguration: Release
-              BuildPlatform: ARM
-              FastBuild: false
             - Name: Arm64RDebug
               BuildConfiguration: Debug
               BuildPlatform: ARM64
@@ -108,11 +100,7 @@
                       Microsoft.ReactNative.Managed\**
                       Microsoft.ReactNative.Managed.CodeGen\**
                 
-                - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-                  displayName: 'Component Governance Detection'
-                  inputs:
-                    alertWarningLevel: Medium
-                    scanType: 'Register'
+                - template: ../templates/component-governance.yml
 
                 
             - job: UniversalTest${{ matrix.Name }}

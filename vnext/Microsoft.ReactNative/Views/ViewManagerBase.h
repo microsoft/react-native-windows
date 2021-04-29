@@ -81,7 +81,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
   const Mso::React::IReactContext &GetReactContext() const {
     return *m_context;
   }
-  std::shared_ptr<react::uwp::ExpressionAnimationStore> GetExpressionAnimationStore() noexcept;
+  std::shared_ptr<ExpressionAnimationStore> GetExpressionAnimationStore() noexcept;
   void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept;
 
   virtual void TransferProperties(const XamlView &oldView, const XamlView &newView);

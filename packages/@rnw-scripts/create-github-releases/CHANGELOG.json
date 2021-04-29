@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Thu, 29 Apr 2021 05:07:20 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v1.0.27",
+      "version": "1.0.27",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update @octokit/rest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "46b8ac76740b6483956efd404029a1faab1b7e91",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Mar 2021 05:05:53 GMT",
       "tag": "@rnw-scripts/create-github-releases_v1.0.26",
       "version": "1.0.26",

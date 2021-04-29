@@ -92,7 +92,7 @@ const octokit = new Octokit({
 
   console.log('Fetching releases...');
   const githubReleases = await octokit.paginate(
-    octokit.repos.listReleases,
+    'GET /repos/{owner}/{repo}/releases',
     RNW_REPO,
   );
 

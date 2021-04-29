@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Thu, 29 Apr 2021 05:07:20 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v1.0.30",
+      "version": "1.0.30",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump RN peerDependency whenever it is prerelease",
+            "author": "ngerlem@microsoft.com",
+            "commit": "06936c9f99ff3d106ff813bd48bf9889f46abfec",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Mar 2021 05:05:53 GMT",
       "tag": "@rnw-scripts/integrate-rn_v1.0.29",
       "version": "1.0.29",

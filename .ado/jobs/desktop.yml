@@ -38,13 +38,6 @@ jobs:
     strategy:
       matrix:
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          # Arm Desktop does not build on non-arm agents
-          # ArmDebug:
-          #   BuildConfiguration: Debug
-          #   BuildPlatform: ARM
-          # ArmRelease:
-          #   BuildConfiguration: Release
-          #   BuildPlatform: ARM
           Arm64Debug:
             BuildConfiguration: Debug
             BuildPlatform: ARM64
@@ -164,8 +157,4 @@ jobs:
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
 
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: 'Component Governance Detection'
-        inputs:
-          alertWarningLevel: Medium
-          scanType: 'Register'
+      - template: ../templates/component-governance.yml

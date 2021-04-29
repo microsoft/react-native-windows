@@ -3,13 +3,13 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-ae07c53d0",
+  "baseVersion": "0.0.0-5127c71d6",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "7c2f3e8ecf80e5229d4e1fdad2b6ef324acae0c4"
+      "baseHash": "da1871d982a9d96c7f8235bb6c6efbb790f17cd1"
     },
     {
       "type": "derived",
@@ -211,8 +211,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "77bfbef8e835e4fee49311779bb039a99ae44372",
-      "issue": 5843
+      "baseHash": "77bfbef8e835e4fee49311779bb039a99ae44372"
     },
     {
       "type": "platform",
@@ -228,13 +227,6 @@
       "baseFile": "Libraries/Core/ReactNativeVersionCheck.js",
       "baseHash": "dfed43df2bfebbf0fb3588cb827be451ee5286a3",
       "issue": 5170
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/EventEmitter/NativeEventEmitter.win32.js",
-      "baseFile": "Libraries/EventEmitter/NativeEventEmitter.js",
-      "baseHash": "5a9088dfae0144f6720ddfcff1b33e25af394fb0",
-      "issue": 7618
     },
     {
       "type": "derived",

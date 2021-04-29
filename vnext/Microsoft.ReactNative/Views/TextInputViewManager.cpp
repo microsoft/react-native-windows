@@ -133,14 +133,16 @@ class TextInputShadowNode : public ShadowNodeBase {
   void SetSelection(int64_t start, int64_t end);
   winrt::Shape FindCaret(xaml::DependencyObject element);
 
-  bool m_initialUpdateComplete = false;
-  bool m_shouldClearTextOnFocus = false;
-  bool m_shouldSelectTextOnFocus = false;
-  bool m_contextMenuHidden = false;
-  bool m_hideCaret = false;
-  bool m_isTextBox = true;
+  bool m_initialUpdateComplete : 1 = false;
+  bool m_autoFocus : 1 = false;
+  bool m_shouldClearTextOnFocus : 1 = false;
+  bool m_shouldSelectTextOnFocus : 1 = false;
+  bool m_contextMenuHidden : 1 = false;
+  bool m_hideCaret : 1 = false;
+  bool m_isTextBox : 1 = true;
+  bool m_shouldClearTextOnSubmit : 1 = false;
+
   winrt::Microsoft::ReactNative::JSValue m_placeholderTextColor;
-  bool m_shouldClearTextOnSubmit = false;
   std::vector<HandledKeyboardEvent> m_submitKeyEvents{};
 
   // Javascripts is running in a different thread. If the typing is very fast,
@@ -318,6 +320,10 @@ void TextInputShadowNode::registerEvents() {
       });
 
   m_controlLoadedRevoker = control.Loaded(winrt::auto_revoke, [=](auto &&, auto &&) {
+    if (m_autoFocus) {
+      control.Focus(xaml::FocusState::Keyboard);
+    }
+
     auto contentElement = control.GetTemplateChild(L"ContentElement");
     auto textBoxView = contentElement.as<xaml::Controls::ScrollViewer>();
     if (textBoxView) {
@@ -609,6 +615,9 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         m_submitKeyEvents.clear();
     } else if (propertyName == "keyDownEvents") {
       hasKeyDownEvents = propertyValue.ItemCount() > 0;
+    } else if (propertyName == "autoFocus") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
+        m_autoFocus = propertyValue.AsBoolean();
     } else {
       if (m_isTextBox) { // Applicable properties for TextBox
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
@@ -772,6 +781,7 @@ void TextInputViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::I
   React::WriteProperty(writer, L"autoCapitalize", L"string");
   React::WriteProperty(writer, L"clearTextOnSubmit", L"boolean");
   React::WriteProperty(writer, L"submitKeyEvents", L"array");
+  React::WriteProperty(writer, L"autoFocus", L"boolean");
 }
 
 void TextInputViewManager::GetExportedCustomDirectEventTypeConstants(

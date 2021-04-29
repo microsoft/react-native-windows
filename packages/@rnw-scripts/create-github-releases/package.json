@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/create-github-releases",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -13,7 +13,7 @@
     "create-github-releases": "./bin.js"
   },
   "dependencies": {
-    "@octokit/rest": "^18.0.12",
+    "@octokit/rest": "^18.5.3",
     "@react-native-windows/find-repo-root": "^0.0.0-canary.19",
     "chalk": "^4.1.0",
     "glob": "^7.1.6",

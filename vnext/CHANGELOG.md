@@ -1,8 +1,40 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 24 Apr 2021 05:06:52 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Apr 2021 05:07:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.300
+
+Thu, 29 Apr 2021 05:07:20 GMT
+
+### Changes
+
+- Adds 'autoFocus' prop to TextInput (erozell@outlook.com)
+- Integrate April 22 RN Nightly Build (ngerlem@microsoft.com)
+- Fix MSBuild Bundling When Path Contains Spaces (ngerlem@microsoft.com)
+- Remove Forking Due to "acceptsKeyboardFocus" Invariant Checks (ngerlem@microsoft.com)
+- Remove ARM32 Support (ngerlem@microsoft.com)
+- Update to latest @types/react-native (ngerlem@microsoft.com)
+- Remove version from ExperimentalFeatures.props links (ngerlem@microsoft.com)
+
+## 0.0.0-canary.299
+
+Wed, 28 Apr 2021 05:07:02 GMT
+
+### Changes
+
+- Changes required to run in a Reunion app (asklar@microsoft.com)
+- Very early fabric implementation (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.298
+
+Tue, 27 Apr 2021 05:09:48 GMT
+
+### Changes
+
+- Update Microsoft.ChakraCore to 1.11.24 (jthysell@microsoft.com)
+- Fix CI after change to Format library (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.297
 

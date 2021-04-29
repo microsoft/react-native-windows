@@ -3,9 +3,9 @@
 
 #pragma once
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 enum class TriBit { Undefined = -1, NotSet = 0, Set = 1 };
 extern TriBit g_HasActualSizeProperty;
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -50,10 +50,10 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   }
   void Source(ReactImageSource source);
 
-  react::uwp::ResizeMode ResizeMode() {
+  ::react::uwp::ResizeMode ResizeMode() {
     return m_resizeMode;
   }
-  void ResizeMode(react::uwp::ResizeMode value);
+  void ResizeMode(::react::uwp::ResizeMode value);
 
   float BlurRadius() {
     return m_blurRadius;
@@ -66,7 +66,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   void TintColor(winrt::Windows::UI::Color value);
 
  private:
-  xaml::Media::Stretch ResizeModeToStretch(react::uwp::ResizeMode value);
+  xaml::Media::Stretch ResizeModeToStretch(::react::uwp::ResizeMode value);
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
   GetImageMemoryStreamAsync(ReactImageSource source);
   winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
@@ -75,7 +75,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   float m_blurRadius{0};
   int m_imageSourceId{0};
   ReactImageSource m_imageSource;
-  react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
+  ::react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
   winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};
 
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;

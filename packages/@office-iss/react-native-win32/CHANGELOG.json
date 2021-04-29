@@ -2,6 +2,33 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 29 Apr 2021 05:07:20 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.89",
+      "version": "0.0.0-canary.89",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Forking Due to \"acceptsKeyboardFocus\" Invariant Checks",
+            "author": "ngerlem@microsoft.com",
+            "commit": "1e88c115aec700b87dd55be9d5a39bc0dc644092",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Update to latest @types/react-native",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d0074bcceb9f13fdcf0a7262aee53819fdb9434a",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate April 22 RN Nightly Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d43249ae3de5d6a45f84bd6ab622aa1eb3ababe1",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Apr 2021 05:06:52 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.88",
       "version": "0.0.0-canary.88",

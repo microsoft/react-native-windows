@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Thu, 04 Mar 2021 05:05:53 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Apr 2021 05:07:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.30
+
+Thu, 29 Apr 2021 05:07:20 GMT
+
+### Patches
+
+- Bump RN peerDependency whenever it is prerelease (ngerlem@microsoft.com)
 
 ## 1.0.29
 

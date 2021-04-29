@@ -84,6 +84,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>
+        $(FmtDir)include;
         $(ProjectDir)pch;
         $(VCInstallDir)UnitTest\include;
         $(ReactNativeWindowsDir);

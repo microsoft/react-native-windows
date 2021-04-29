@@ -2,6 +2,33 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 29 Apr 2021 05:07:20 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.69",
+      "version": "0.0.0-canary.69",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove ARM32 Support",
+            "author": "ngerlem@microsoft.com",
+            "commit": "f219f010eab46aff4b307eb45820db85beb9271c",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Remove version from ExperimentalFeatures.props links",
+            "author": "ngerlem@microsoft.com",
+            "commit": "686801d84cbc0ec32f7d254080883369b9bbae55",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Replace `inquirer` with `prompts` in CLI",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a10d0e11f2bd623b70cbfd4a548cc387545417ca",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 17 Apr 2021 05:08:13 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.68",
       "version": "0.0.0-canary.68",

@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 17 Apr 2021 05:08:13 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Apr 2021 05:07:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.69
+
+Thu, 29 Apr 2021 05:07:20 GMT
+
+### Changes
+
+- Remove ARM32 Support (ngerlem@microsoft.com)
+- Remove version from ExperimentalFeatures.props links (ngerlem@microsoft.com)
+- Replace `inquirer` with `prompts` in CLI (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.68
 

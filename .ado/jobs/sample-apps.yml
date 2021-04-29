@@ -17,14 +17,6 @@ jobs:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         # Start Continuous only
         ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          ArmDebug:
-            BuildConfiguration: Debug
-            BuildPlatform: ARM
-            NoDeployOption: --no-deploy # We don't have Arm agents
-          ArmRelease:
-            BuildConfiguration: Release
-            BuildPlatform: ARM
-            NoDeployOption: --no-deploy # We don't have Arm agents
           Arm64Debug:
             BuildConfiguration: Debug
             BuildPlatform: ARM64

@@ -17,7 +17,7 @@ using NativeViewManager = std::unique_ptr<Microsoft::ReactNative::IViewManager>;
 
 struct ViewManagerProvider {
   virtual std::vector<NativeViewManager> GetViewManagers(
-      const std::shared_ptr<react::uwp::IReactInstance> &instance) = 0;
+      const std::shared_ptr<::react::uwp::IReactInstance> &instance) = 0;
 };
 
 } // namespace Microsoft::ReactNative
