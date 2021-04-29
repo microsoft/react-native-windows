@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove incorrect mapping from virtual key 192",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
