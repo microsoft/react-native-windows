@@ -56,17 +56,23 @@ using to_ascii_alphabet_upper = to_ascii_alphabet<true>;
 
 namespace detail {
 
-FOLLY_ERASE int to_ascii_port_clzll(uint64_t v) {
+#if defined(_M_IX86)
+FOLLY_ERASE auto to_ascii_port_clzll(uint64_t v) {
+  return __builtin_clzll(v);
+}
+#else
+FOLLY_ERASE auto to_ascii_port_clzll(uint64_t v) {
 #if _MSC_VER
 #if FOLLY_X64
-  return static_cast<int>(__lzcnt64(v));
+  return __lzcnt64(v);
 #else
-  __assume(0);
+  return __assume(0), 0;
 #endif
 #else
   return __builtin_clzll(v);
 #endif
 }
+#endif
 
 template <uint64_t Base, typename Alphabet>
 struct to_ascii_array {
@@ -224,7 +230,7 @@ FOLLY_ALWAYS_INLINE size_t to_ascii_size_clzll(uint64_t v) {
   }
 
   //  log2 is approx log<2>(v)
-  size_t const vlog2 = 64 - to_ascii_port_clzll(v);
+  size_t const vlog2 = 64 - static_cast<size_t>(to_ascii_port_clzll(v));
 
   //  handle directly when Base is power-of-two
   if (!(Base & (Base - 1))) {
