@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Allow `lineHeight` settings less than font height",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
