@@ -1,0 +1,68 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "13:00"
+  labels:
+  - dependencies
+  versioning-strategy: lockfile-only
+  ignore:
+  - dependency-name: beachball
+    versions:
+    - ">= 1.45.a, < 1.46"
+  - dependency-name: beachball
+    versions:
+    - ">= 1.46.a, < 1.47"
+  - dependency-name: beachball
+    versions:
+    - ">= 1.47.a, < 1.48"
+  - dependency-name: beachball
+    versions:
+    - ">= 1.48.a, < 1.49"
+  - dependency-name: "@octokit/rest"
+    versions:
+    - ">= 18.1.1.a, < 18.1.2"
+  - dependency-name: "@octokit/rest"
+    versions:
+    - ">= 18.2.a, < 18.3"
+  - dependency-name: "@octokit/rest"
+    versions:
+    - ">= 18.3.a, < 18.4"
+  - dependency-name: "@octokit/rest"
+    versions:
+    - ">= 18.4.a, < 18.5"
+  - dependency-name: "@babel/traverse"
+    versions:
+    - 7.12.17
+    - 7.13.15
+    - 7.13.17
+  - dependency-name: "@babel/runtime"
+    versions:
+    - 7.13.16
+  - dependency-name: "@babel/generator"
+    versions:
+    - 7.13.16
+  - dependency-name: fp-ts
+    versions:
+    - 2.10.2
+    - 2.10.4
+  - dependency-name: "@babel/parser"
+    versions:
+    - 7.12.13
+    - 7.13.10
+    - 7.13.15
+    - 7.13.16
+  - dependency-name: react-devtools-core
+    versions:
+    - 4.12.2
+  - dependency-name: "@babel/core"
+    versions:
+    - 7.13.13
+  - dependency-name: "@octokit/rest"
+    versions:
+    - 18.5.0
+  - dependency-name: whatwg-fetch
+    versions:
+    - 3.6.0
