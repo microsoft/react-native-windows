@@ -34,12 +34,7 @@ schedules:
   displayName: Weekly stable publish build
   branches:
     include:
-    - refs/heads/0.64-stable
-- cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
-  displayName: Nightly canary publish build
-  branches:
-    include:
-    - master
+    - 0.64-stable
 
 trigger: none
 pr: none
