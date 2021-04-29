@@ -33,7 +33,7 @@ Object {
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 1074,
+      "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": Array [
         Object {
@@ -49,7 +49,7 @@ Object {
           "Top": 0,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
-          "Width": 1074,
+          "Width": 718,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
         Object {
@@ -283,7 +283,7 @@ Object {
           "Top": 50,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
-          "Width": 1074,
+          "Width": 718,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
         Object {
@@ -940,7 +940,7 @@ Object {
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 1074,
+      "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": Array [
         Object {
@@ -956,7 +956,7 @@ Object {
           "Top": 0,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
-          "Width": 1074,
+          "Width": 718,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
         Object {
@@ -1190,7 +1190,7 @@ Object {
           "Top": 50,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
-          "Width": 1074,
+          "Width": 718,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
         Object {
