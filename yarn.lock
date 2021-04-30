@@ -6458,9 +6458,9 @@ istanbul-reports@^3.0.2:
     istanbul-lib-report "^3.0.0"
 
 isutf8@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/isutf8/-/isutf8-3.0.0.tgz#797a0331a9736212a6972d20b602b731dd48cc98"
-  integrity sha512-/tETZNCes3JH0qIkGmharPXscm4DSRQY4qSlGBUx0EizzX7XJ3NVTehpEaDecOeyzfecq6afwpxSe6F8eA/Brw==
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/isutf8/-/isutf8-3.1.1.tgz#3f2ac77f49affb23ae54813da1a4ab44aadf1d7b"
+  integrity sha512-5P2FgGyDsSnRMaLPVGVIgYgMxj50lBujvi5lsVgP1qvMWhxvkmVBWtPcIKgXw9j+/RnmxSvHg3e9tbDnPxx6dw==
 
 jest-changed-files@^26.6.2:
   version "26.6.2"
