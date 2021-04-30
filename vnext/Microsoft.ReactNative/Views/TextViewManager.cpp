@@ -187,10 +187,13 @@ bool TextViewManager::UpdateProperty(
     }
   } else if (propertyName == "lineHeight") {
     if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
       textBlock.LineHeight(propertyValue.AsInt32());
-    else if (propertyValue.IsNull())
+      textBlock.LineStackingStrategy(xaml::LineStackingStrategy::BlockLineHeight);
+    } else if (propertyValue.IsNull()) {
       textBlock.ClearValue(xaml::Controls::TextBlock::LineHeightProperty());
+      textBlock.ClearValue(xaml::Controls::TextBlock::LineStackingStrategyProperty());
+    }
   } else if (propertyName == "selectable") {
     if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
       textBlock.IsTextSelectionEnabled(propertyValue.AsBoolean());

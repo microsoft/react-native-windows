@@ -501,6 +501,11 @@ export class TextExample extends React.Component<
             benefits. <Text style={{fontSize: 20}}>Continually</Text> expedite
             magnetic potentialities rather than client-focused interfaces.
           </Text>
+          <Text style={{lineHeight: 15}}>
+            Holisticly formulate inexpensive ideas before best-of-breed
+            benefits. <Text style={{fontSize: 20}}>Continually</Text> expedite
+            magnetic potentialities rather than client-focused interfaces.
+          </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Letter Spacing">
           <View>
