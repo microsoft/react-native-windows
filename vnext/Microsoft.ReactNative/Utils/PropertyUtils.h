@@ -140,7 +140,7 @@ bool TryUpdateForeground(
     const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "color") {
     if (react::uwp::IsValidColorValue(propertyValue)) {
-      const auto brush = react::uwp::BrushFrom(propertyValue);
+      const auto brush = react::uwp::BrushFrom(propertyValue).as<xaml::Media::SolidColorBrush>();
       element.Foreground(brush);
       react::uwp::UpdateControlForegroundResourceBrushes(element, brush);
     } else if (propertyValue.IsNull()) {
