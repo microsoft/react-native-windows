@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 30 Apr 2021 05:06:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.301",
+      "version": "0.0.0-canary.301",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow `lineHeight` settings less than font height",
+            "author": "erozell@outlook.com",
+            "commit": "ce9d64702a907902f254581c52c5ee6c1b6b0307",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove incorrect mapping from virtual key 192",
+            "author": "erozell@outlook.com",
+            "commit": "beaeb78f30691e276e64aa5d35bf83111b7d4042",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Apr 2021 05:07:20 GMT",
       "tag": "react-native-windows_v0.0.0-canary.300",
       "version": "0.0.0-canary.300",

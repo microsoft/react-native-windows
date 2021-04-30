@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 29 Apr 2021 05:07:20 GMT and should not be manually modified.
+This log was last generated on Fri, 30 Apr 2021 05:06:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.301
+
+Fri, 30 Apr 2021 05:06:16 GMT
+
+### Changes
+
+- Allow `lineHeight` settings less than font height (erozell@outlook.com)
+- Remove incorrect mapping from virtual key 192 (erozell@outlook.com)
 
 ## 0.0.0-canary.300
 
