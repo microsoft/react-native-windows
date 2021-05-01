@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 01 May 2021 05:05:57 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.302",
+      "version": "0.0.0-canary.302",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Forked folly for SDL compliance",
+            "author": "agnel@microsoft.com",
+            "commit": "29481ff5a5e93785e47735b8bf67ba6a3f911a92",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update brush cache when theme changes",
+            "author": "asklar@microsoft.com",
+            "commit": "8f44b0dba8372088fdf342648ad706f0d7b11d59",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 Apr 2021 05:06:16 GMT",
       "tag": "react-native-windows_v0.0.0-canary.301",
       "version": "0.0.0-canary.301",

@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 30 Apr 2021 05:06:16 GMT and should not be manually modified.
+This log was last generated on Sat, 01 May 2021 05:05:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.302
+
+Sat, 01 May 2021 05:05:57 GMT
+
+### Changes
+
+- Forked folly for SDL compliance (agnel@microsoft.com)
+- Update brush cache when theme changes (asklar@microsoft.com)
 
 ## 0.0.0-canary.301
 
