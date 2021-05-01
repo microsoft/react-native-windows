@@ -118,12 +118,13 @@ bool VirtualTextViewManager::UpdateProperty(
         *node, node->textTransform, /* forceUpdate = */ true, /* isRoot = */ true);
   } else if (propertyName == "backgroundColor") {
     if (react::uwp::IsValidColorValue(propertyValue)) {
-      static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.backgroundColor = react::uwp::ColorFrom(propertyValue);
+      static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.backgroundColor =
+          react::uwp::ColorFrom(propertyValue);
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
-  
+
   return true;
 }
 

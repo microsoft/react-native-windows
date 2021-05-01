@@ -66,6 +66,7 @@ Object {
       "TextHighlighters": Array [
         Object {
           "Background": "#FF0000FF",
+          "Foreground": "#FFFFFFFF",
           "Ranges": Array [
             Object {
               "Length": 20,
@@ -110,6 +111,7 @@ Object {
       "TextHighlighters": Array [
         Object {
           "Background": "#FF008000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 14,
@@ -119,6 +121,7 @@ Object {
         },
         Object {
           "Background": "#FF008000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 1,
@@ -128,6 +131,7 @@ Object {
         },
         Object {
           "Background": "#FF008000",
+          "Foreground": "#FFFFFFFF",
           "Ranges": Array [
             Object {
               "Length": 29,
@@ -155,6 +159,7 @@ Object {
       "TextHighlighters": Array [
         Object {
           "Background": "#FF008000",
+          "Foreground": "#FFFFA500",
           "Ranges": Array [
             Object {
               "Length": 21,
@@ -164,6 +169,7 @@ Object {
         },
         Object {
           "Background": "#FF008000",
+          "Foreground": "#FFFFA500",
           "Ranges": Array [
             Object {
               "Length": 1,
@@ -173,6 +179,7 @@ Object {
         },
         Object {
           "Background": "#FF0000FF",
+          "Foreground": "#FFFFFFFF",
           "Ranges": Array [
             Object {
               "Length": 20,
@@ -200,6 +207,7 @@ Object {
       "TextHighlighters": Array [
         Object {
           "Background": "#FF0000FF",
+          "Foreground": "#FFFFFFFF",
           "Ranges": Array [
             Object {
               "Length": 20,
@@ -227,6 +235,7 @@ Object {
       "TextHighlighters": Array [
         Object {
           "Background": "#FF0000FF",
+          "Foreground": "#FFFFA500",
           "Ranges": Array [
             Object {
               "Length": 29,
@@ -254,6 +263,7 @@ Object {
       "TextHighlighters": Array [
         Object {
           "Background": "#FF008000",
+          "Foreground": "#FFFFFFFF",
           "Ranges": Array [
             Object {
               "Length": 18,
@@ -263,6 +273,7 @@ Object {
         },
         Object {
           "Background": "#FF008000",
+          "Foreground": "#FFFFFFFF",
           "Ranges": Array [
             Object {
               "Length": 1,
@@ -272,6 +283,7 @@ Object {
         },
         Object {
           "Background": "#FF0000FF",
+          "Foreground": "#FFFF00FF",
           "Ranges": Array [
             Object {
               "Length": 18,
@@ -281,6 +293,7 @@ Object {
         },
         Object {
           "Background": "#FF008000",
+          "Foreground": "#FFFFFFFF",
           "Ranges": Array [
             Object {
               "Length": 1,
@@ -290,6 +303,7 @@ Object {
         },
         Object {
           "Background": "#FF008000",
+          "Foreground": "#FFFFFFFF",
           "Ranges": Array [
             Object {
               "Length": 10,
@@ -317,6 +331,7 @@ Object {
       "TextHighlighters": Array [
         Object {
           "Background": "#FF0000FF",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 18,
@@ -344,6 +359,7 @@ Object {
       "TextHighlighters": Array [
         Object {
           "Background": "#FF008000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 19,
@@ -353,6 +369,7 @@ Object {
         },
         Object {
           "Background": "#FF008000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 27,
@@ -362,6 +379,7 @@ Object {
         },
         Object {
           "Background": "#FF008000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 1,
@@ -371,6 +389,7 @@ Object {
         },
         Object {
           "Background": "#FF008000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 10,
@@ -398,6 +417,7 @@ Object {
       "TextHighlighters": Array [
         Object {
           "Background": "#FFFF0000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 9,
@@ -407,6 +427,7 @@ Object {
         },
         Object {
           "Background": "#FFFF0000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 1,
@@ -416,6 +437,7 @@ Object {
         },
         Object {
           "Background": "#FFFF0000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 25,
@@ -425,6 +447,7 @@ Object {
         },
         Object {
           "Background": "#FFFF0000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 25,
@@ -434,6 +457,7 @@ Object {
         },
         Object {
           "Background": "#FFFF0000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 1,
@@ -443,6 +467,7 @@ Object {
         },
         Object {
           "Background": "#FFFF0000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 10,
@@ -452,6 +477,7 @@ Object {
         },
         Object {
           "Background": "#FFFF0000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 1,
@@ -461,6 +487,7 @@ Object {
         },
         Object {
           "Background": "#FFFF0000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 11,
@@ -488,6 +515,7 @@ Object {
       "TextHighlighters": Array [
         Object {
           "Background": "#FFFF0000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 9,
@@ -497,6 +525,7 @@ Object {
         },
         Object {
           "Background": "#FFFF0000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 1,
@@ -506,6 +535,7 @@ Object {
         },
         Object {
           "Background": "#FF008000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 18,
@@ -515,6 +545,7 @@ Object {
         },
         Object {
           "Background": "#FF008000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 1,
@@ -524,6 +555,7 @@ Object {
         },
         Object {
           "Background": "#FF0000FF",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 18,
@@ -533,6 +565,7 @@ Object {
         },
         Object {
           "Background": "#FF008000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 1,
@@ -542,6 +575,7 @@ Object {
         },
         Object {
           "Background": "#FF008000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 10,
@@ -551,6 +585,7 @@ Object {
         },
         Object {
           "Background": "#FFFF0000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 1,
@@ -560,6 +595,7 @@ Object {
         },
         Object {
           "Background": "#FFFF0000",
+          "Foreground": null,
           "Ranges": Array [
             Object {
               "Length": 11,

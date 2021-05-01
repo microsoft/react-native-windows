@@ -122,7 +122,7 @@ export class BackgroundColorDemo extends React.Component<{}> {
           <Text style={{backgroundColor: 'green', color: 'white'}}>
             START_NESTED green{' '}
             <Text style={{backgroundColor: 'blue', color: 'magenta'}}>
-              DEEPER_NESTED blue
+              DEEPER_NESTED magenta on blue
             </Text>{' '}
             END_NESTED
           </Text>{' '}
