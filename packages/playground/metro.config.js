@@ -165,6 +165,7 @@ module.exports = {
       new RegExp(
         `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
       ),
+      /.*.tlog/,
     ]),
     resolveRequest: devResolveRequest,
   },

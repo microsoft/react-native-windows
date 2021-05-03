@@ -5,16 +5,7 @@
 
 #include "ViewPanel.g.h"
 
-#ifndef PROJECT_ROOT_NAMESPACE
-#define PROJECT_ROOT_NAMESPACE react::uwp
-#else
-namespace winrt::Microsoft::ReactNative {}
-namespace winrt::react::uwp {
-using namespace winrt::Microsoft::ReactNative;
-}
-#endif
-
-namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 //
 // ViewPanel is our custom Panel used by ViewViewManager
@@ -105,11 +96,11 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
   static void PositionPropertyChanged(xaml::DependencyObject sender, xaml::DependencyPropertyChangedEventArgs e);
 };
 
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
+} // namespace winrt::Microsoft::ReactNative::implementation
 
-namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation {
+namespace winrt::Microsoft::ReactNative::factory_implementation {
 struct ViewPanel : ViewPanelT<ViewPanel, implementation::ViewPanel> {};
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation
+} // namespace winrt::Microsoft::ReactNative::factory_implementation
 
 namespace react::uwp {
 // Issue #2172: Calling static members on winrt::react::uwp::ViewPanel fails to
@@ -118,5 +109,5 @@ namespace react::uwp {
 // using cppwinrt. This workaround is so that consumers in react::uwp can just
 // call ViewPanel
 
-using ViewPanel = winrt::PROJECT_ROOT_NAMESPACE::implementation::ViewPanel;
+using ViewPanel = winrt::Microsoft::ReactNative::implementation::ViewPanel;
 } // namespace react::uwp

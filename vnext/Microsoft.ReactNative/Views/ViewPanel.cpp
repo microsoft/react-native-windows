@@ -28,7 +28,7 @@ using namespace xaml::Media;
 using namespace Windows::Foundation;
 } // namespace winrt
 
-namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 const winrt::TypeName viewPanelTypeName{winrt::hstring{L"ViewPanel"}, winrt::TypeKind::Metadata};
 
@@ -376,4 +376,4 @@ void ViewPanel::UpdateClip(winrt::Size &finalSize) {
   }
 }
 
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
+} // namespace winrt::Microsoft::ReactNative::implementation
