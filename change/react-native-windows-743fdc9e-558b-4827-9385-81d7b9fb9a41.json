@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Remove version from ExperimentalFeatures.props links",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
