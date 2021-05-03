@@ -88,6 +88,9 @@ void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate
         }
 
         (static_cast<TextViewManager *>(viewManager))->OnDescendantTextPropertyChanged(parent);
+
+        // We have reached the parent TextBlock, so there're no more parent <Text> elements in this tree.
+        break;
       } else if (!std::wcscmp(nodeType, L"RCTVirtualText") && textTransform == TextTransform::Undefined) {
         textTransform = static_cast<VirtualTextShadowNode *>(parent)->textTransform;
       }
