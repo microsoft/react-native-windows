@@ -58,7 +58,7 @@ class TextShadowNode final : public ShadowNodeBase {
         textBlock.Text(run.Text());
 
         if (m_backgroundColor) {
-          AddHighlighter(m_backgroundColor, m_foregroundColor, textBlock.Text().size());
+          AddHighlighter(m_backgroundColor.value(), m_foregroundColor, textBlock.Text().size());
         }
         m_prevCursorEnd += textBlock.Text().size();
 
@@ -75,7 +75,7 @@ class TextShadowNode final : public ShadowNodeBase {
 
     if (auto run = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Run>()) {
       if (m_backgroundColor) {
-        AddHighlighter(m_backgroundColor, m_foregroundColor, run.Text().size());
+        AddHighlighter(m_backgroundColor.value(), m_foregroundColor, run.Text().size());
       }
       m_prevCursorEnd += run.Text().size();
     } else if (auto span = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Span>()) {
@@ -85,12 +85,12 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   void AddNestedTextHighlighter(
-      const std::optional<winrt::Windows::UI::Color> &parentColor,
+      const std::optional<winrt::Windows::UI::Color> &parentBackColor,
       const std::optional<winrt::Windows::UI::Color> &parentForeColor,
       winrt::Span &span,
       VirtualTextShadowNode::HighlightData highData) {
-    if (!highData.backgroundColor && parentColor) {
-      highData.backgroundColor = parentColor;
+    if (!highData.backgroundColor && parentBackColor) {
+      highData.backgroundColor = parentBackColor;
     }
 
     if (!highData.foregroundColor && parentForeColor) {
@@ -100,7 +100,7 @@ class TextShadowNode final : public ShadowNodeBase {
     for (const auto &el : span.Inlines()) {
       if (auto run = el.try_as<winrt::Run>()) {
         if (highData.backgroundColor) {
-          AddHighlighter(highData.backgroundColor, highData.foregroundColor, run.Text().size());
+          AddHighlighter(highData.backgroundColor.value(), highData.foregroundColor, run.Text().size());
         }
 
         m_prevCursorEnd += run.Text().size();
@@ -112,11 +112,11 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   void AddHighlighter(
-      const std::optional<winrt::Windows::UI::Color> &backgroundColor,
+      const winrt::Windows::UI::Color &backgroundColor,
       const std::optional<winrt::Windows::UI::Color> &foregroundColor,
       size_t runSize) {
     auto newHigh = winrt::TextHighlighter{};
-    newHigh.Background(react::uwp::SolidBrushFromColor(backgroundColor.value()));
+    newHigh.Background(react::uwp::SolidBrushFromColor(backgroundColor));
 
     if (foregroundColor) {
       newHigh.Foreground(react::uwp::SolidBrushFromColor(foregroundColor.value()));
