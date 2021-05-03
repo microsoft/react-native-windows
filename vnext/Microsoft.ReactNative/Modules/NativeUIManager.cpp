@@ -152,7 +152,7 @@ struct RootShadowNode final : public ShadowNodeBase {
   RootShadowNode() = delete;
 
   RootShadowNode(facebook::react::IReactRootView *rootView, INativeUIManagerHost *host) {
-    auto reactRootView = static_cast<react::uwp::IXamlRootView *>(rootView);
+    auto reactRootView = static_cast<IXamlRootView *>(rootView);
     m_view = reactRootView->GetXamlView();
   }
 
@@ -214,7 +214,7 @@ int64_t NativeUIManager::AddMeasuredRootView(facebook::react::IReactRootView *ro
 }
 
 void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReactRootView *pReactRootView) {
-  auto xamlRootView = static_cast<react::uwp::IXamlRootView *>(pReactRootView);
+  auto xamlRootView = static_cast<IXamlRootView *>(pReactRootView);
   XamlView view = xamlRootView->GetXamlView();
   m_tagsToXamlReactControl.emplace(shadowNode.m_tag, xamlRootView->GetXamlReactControl());
 
@@ -1124,7 +1124,7 @@ void NativeUIManager::blur(int64_t reactTag) {
 // ReactControl is used here. To get the IXamlReactControl for any node, we
 // first iterate its parent until reaching the root node. Then look up
 // m_tagsToXamlReactControl to get the IXamlReactControl
-std::weak_ptr<react::uwp::IXamlReactControl> NativeUIManager::GetParentXamlReactControl(int64_t tag) const {
+std::weak_ptr<IXamlReactControl> NativeUIManager::GetParentXamlReactControl(int64_t tag) const {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindParentRootShadowNode(tag))) {
     auto it = m_tagsToXamlReactControl.find(shadowNode->m_tag);
     if (it != m_tagsToXamlReactControl.end()) {

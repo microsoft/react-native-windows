@@ -294,7 +294,7 @@ struct WindowData {
 
             // auto cmbEngines = GetDlgItem(hwnd, IDC_JSENGINE);
             // int itemIndex = (int)SendMessageW(cmbEngines, (UINT)CB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-            // self->m_jsEngine = static_cast<react::uwp::JSIEngine>(itemIndex);
+            // self->m_jsEngine = static_cast<Microsoft::ReactNative::JSIEngine>(itemIndex);
           }
             [[fallthrough]];
           case IDCANCEL:

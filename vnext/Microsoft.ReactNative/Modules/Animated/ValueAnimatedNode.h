@@ -10,7 +10,7 @@ namespace winrt {
 using namespace comp;
 }
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class ValueAnimatedNode : public AnimatedNode {
  public:
   ValueAnimatedNode(
@@ -53,4 +53,4 @@ class ValueAnimatedNode : public AnimatedNode {
   std::unordered_set<int64_t> m_activeAnimations{};
   std::unordered_set<int64_t> m_activeTrackingNodes{};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

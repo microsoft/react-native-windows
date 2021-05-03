@@ -29,7 +29,7 @@ using namespace Windows::Web::Http;
 
 using Microsoft::Common::Unicode::Utf8ToUtf16;
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 /*static*/ winrt::com_ptr<ReactImage> ReactImage::Create() {
   auto reactImage = winrt::make_self<ReactImage>();
@@ -57,11 +57,12 @@ void ReactImage::OnLoadEnd(winrt::event_token const &token) noexcept {
   m_onLoadEndEvent.remove(token);
 }
 
-void ReactImage::ResizeMode(react::uwp::ResizeMode value) {
+void ReactImage::ResizeMode(facebook::react::ImageResizeMode value) {
   if (m_resizeMode != value) {
     m_resizeMode = value;
 
-    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
+    bool shouldUseCompositionBrush{
+        m_resizeMode == facebook::react::ImageResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
     bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
 
     if (switchBrushes) {
@@ -79,7 +80,8 @@ void ReactImage::BlurRadius(float value) {
   if (m_blurRadius != value) {
     m_blurRadius = value;
 
-    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
+    bool shouldUseCompositionBrush{
+        m_resizeMode == facebook::react::ImageResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
     bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
 
     if (switchBrushes) {
@@ -97,7 +99,8 @@ void ReactImage::TintColor(winrt::Color value) {
 
   if (!sameColor) {
     m_tintColor = value;
-    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
+    bool shouldUseCompositionBrush{
+        m_resizeMode == facebook::react::ImageResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
     bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
 
     if (switchBrushes) {
@@ -109,13 +112,13 @@ void ReactImage::TintColor(winrt::Color value) {
   }
 }
 
-winrt::Stretch ReactImage::ResizeModeToStretch(react::uwp::ResizeMode value) {
+winrt::Stretch ReactImage::ResizeModeToStretch(facebook::react::ImageResizeMode value) {
   switch (value) {
-    case ResizeMode::Cover:
+    case facebook::react::ImageResizeMode::Cover:
       return winrt::Stretch::UniformToFill;
-    case ResizeMode::Stretch:
+    case facebook::react::ImageResizeMode::Stretch:
       return winrt::Stretch::Fill;
-    case ResizeMode::Contain:
+    case facebook::react::ImageResizeMode::Contain:
       return winrt::Stretch::Uniform;
     default: // ResizeMode::Center || ResizeMode::Repeat
       if (m_imageSource.height < ActualHeight() && m_imageSource.width < ActualWidth()) {
@@ -133,7 +136,7 @@ void ReactImage::Source(ReactImageSource source) {
   }
 
   try {
-    winrt::Uri uri{react::uwp::UriTryCreate(Utf8ToUtf16(source.uri))};
+    winrt::Uri uri{UriTryCreate(Utf8ToUtf16(source.uri))};
     winrt::hstring scheme{uri ? uri.SchemeName() : L""};
     winrt::hstring ext{uri ? uri.Extension() : L""};
 
@@ -196,7 +199,7 @@ void ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
 
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   const ReactImageSource source{m_imageSource};
-  winrt::Uri uri{react::uwp::UriTryCreate(Utf8ToUtf16(source.uri))};
+  winrt::Uri uri{UriTryCreate(Utf8ToUtf16(source.uri))};
 
   // Increment the image source ID before any co_await calls
   auto currentImageSourceId = ++m_imageSourceId;
@@ -458,4 +461,4 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsyn
 
   co_return nullptr;
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -12,7 +12,7 @@
 #include <React.h>
 #include "IReactInstance.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 // Listens for the current theme on the UI thread, storing the most recent. Will emit JS events on Appearance change.
 class AppearanceChangeListener final : public Mso::ActiveObject<> {
@@ -46,4 +46,4 @@ class AppearanceModule final : public facebook::xplat::module::CxxModule {
   Mso::CntPtr<AppearanceChangeListener> m_changeListener;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

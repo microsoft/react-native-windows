@@ -44,9 +44,7 @@
 #include "DevMenu.h"
 #include "Modules/DevSettingsModule.h"
 
-namespace react::uwp {
-
-using XamlView = Microsoft::ReactNative::XamlView;
+namespace Microsoft::ReactNative {
 
 //===========================================================================
 // ReactRootControl implementation
@@ -406,7 +404,7 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
    * we should just skip hooking up the BackButton handler. SystemNavigationManager->GetForCurrentView seems to
    * crash with XamlIslands so we can't just bail if that call fails.
    */
-  if (::react::uwp::IsXamlIsland())
+  if (IsXamlIsland())
     return;
 
   auto weakThis = weak_from_this();
@@ -453,7 +451,7 @@ void ReactRootControl::AttachBackHandlers(XamlView const &rootView) noexcept {
   altLeft.Modifiers(winrt::Windows::System::VirtualKeyModifiers::Menu);
 
   // Hide keyboard accelerator tooltips
-  if (::react::uwp::IsRS4OrHigher()) {
+  if (IsRS4OrHigher()) {
     rootElement.KeyboardAcceleratorPlacementMode(xaml::Input::KeyboardAcceleratorPlacementMode::Hidden);
   }
 }
@@ -523,4 +521,4 @@ Mso::Future<void> ReactViewInstance::UninitRootView() noexcept {
   return PostInUIQueue([](ReactRootControl &rootControl) mutable noexcept { rootControl.UninitRootView(); });
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

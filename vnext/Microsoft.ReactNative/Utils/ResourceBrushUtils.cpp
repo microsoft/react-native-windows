@@ -6,7 +6,7 @@
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/StandardControlResourceKeyNames.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 DefaultBrushStore::DefaultBrushStore() {}
 
@@ -147,4 +147,4 @@ void UpdateControlBorderResourceBrushes(const xaml::FrameworkElement &element, c
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

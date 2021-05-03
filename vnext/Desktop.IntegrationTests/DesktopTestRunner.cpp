@@ -41,8 +41,8 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
     string &&jsBundleFile,
     vector<tuple<string, CxxModule::Provider>> &&cxxModules,
     shared_ptr<DevSettings> devSettings) noexcept {
-  auto nativeQueue = react::uwp::MakeJSQueueThread();
-  auto jsQueue = react::uwp::MakeJSQueueThread();
+  auto nativeQueue = Microsoft::ReactNative::MakeJSQueueThread();
+  auto jsQueue = Microsoft::ReactNative::MakeJSQueueThread();
 
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
       {"AsyncLocalStorage",

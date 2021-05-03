@@ -102,12 +102,12 @@ namespace winrt::Microsoft::ReactNative::factory_implementation {
 struct ViewPanel : ViewPanelT<ViewPanel, implementation::ViewPanel> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation
 
-namespace react::uwp {
-// Issue #2172: Calling static members on winrt::react::uwp::ViewPanel fails to
+namespace Microsoft::ReactNative {
+// Issue #2172: Calling static members on winrt::Microsoft::ReactNative::ViewPanel fails to
 // call
-// down into winrt::react::uwp::implementation::ViewPanel because of how we're
-// using cppwinrt. This workaround is so that consumers in react::uwp can just
+// down into winrt::Microsoft::ReactNative::implementation::ViewPanel because of how we're
+// using cppwinrt. This workaround is so that consumers in Microsoft::ReactNative can just
 // call ViewPanel
 
 using ViewPanel = winrt::Microsoft::ReactNative::implementation::ViewPanel;
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

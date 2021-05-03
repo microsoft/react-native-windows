@@ -118,7 +118,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
     xaml::FrameworkElement root{nullptr};
 
-    if (react::uwp::Is19H1OrHigher()) {
+    if (Microsoft::ReactNative::Is19H1OrHigher()) {
       // XamlRoot added in 19H1
       if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
         if (auto xamlRoot =

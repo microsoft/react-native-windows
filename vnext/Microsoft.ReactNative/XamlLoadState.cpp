@@ -9,7 +9,7 @@
 
 #ifndef DISABLE_XAML_GUARD
 
-using namespace react::uwp;
+using namespace Microsoft::ReactNative;
 
 constexpr std::wstring_view systemXamlDllName{L"Windows.UI.Xaml.dll"};
 constexpr std::wstring_view winUIDllName{L"Microsoft.UI.Xaml.dll"};

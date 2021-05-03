@@ -26,7 +26,7 @@ namespace winrt {
 using namespace Windows::Networking::Sockets;
 }
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 void OutputDebugString(const char *format, winrt::hresult_error const &e) {
   char buffer[1024];
@@ -315,4 +315,4 @@ auto LegacyWebSocketModule::getMethods() -> std::vector<Method> {
   };
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

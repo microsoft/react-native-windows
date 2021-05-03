@@ -223,7 +223,7 @@ void FabricUIManager::startSurface(
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
-  auto xamlRootView = static_cast<::react::uwp::IXamlRootView *>(rootview);
+  auto xamlRootView = static_cast<IXamlRootView *>(rootview);
   auto rootFE = xamlRootView->GetXamlView().as<xaml::FrameworkElement>();
 
   m_surfaceRegistry.insert({surfaceId, xamlRootView->GetXamlView()});

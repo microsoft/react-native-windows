@@ -13,7 +13,7 @@ using namespace xaml::Controls;
 using namespace xaml::Controls::Primitives;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class SnapPointManagingContentControl
     : public xaml::Controls::ContentControlT<SnapPointManagingContentControl, winrt::IScrollSnapPointsInfo> {
@@ -74,4 +74,4 @@ class SnapPointManagingContentControl
   float m_viewportHeight{0};
   float m_viewportWidth{0};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

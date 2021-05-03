@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Remove macro that was used for react::uwp namespace replacement",
+  "comment": "Rename remaining react::uwp namespaces to Microsoft::ReactNative",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

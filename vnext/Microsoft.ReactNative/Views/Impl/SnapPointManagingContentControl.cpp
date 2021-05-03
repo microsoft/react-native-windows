@@ -2,7 +2,7 @@
 
 #include "SnapPointManagingContentControl.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 SnapPointManagingContentControl::SnapPointManagingContentControl() {
   IsTabStop(false);
@@ -175,4 +175,4 @@ void SnapPointManagingContentControl::SetHeightBounds(float startHeight, float e
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

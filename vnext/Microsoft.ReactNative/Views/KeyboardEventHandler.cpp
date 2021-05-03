@@ -21,8 +21,6 @@ static constexpr auto KEY = "key";
 static constexpr auto TARGET = "target";
 static constexpr auto CODE = "code";
 
-using namespace react::uwp;
-
 template <>
 struct json_type_traits<Microsoft::ReactNative::HandledKeyboardEvent> {
   static Microsoft::ReactNative::HandledKeyboardEvent parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {
@@ -43,7 +41,8 @@ struct json_type_traits<Microsoft::ReactNative::HandledKeyboardEvent> {
       else if (propertyName == CODE)
         event.code = propertyValue.AsString();
       else if (propertyName == EVENT_PHASE)
-        event.handledEventPhase = asEnum<Microsoft::ReactNative::HandledEventPhase>(propertyValue);
+        event.handledEventPhase =
+            Microsoft::ReactNative::asEnum<Microsoft::ReactNative::HandledEventPhase>(propertyValue);
     }
 
     return event;

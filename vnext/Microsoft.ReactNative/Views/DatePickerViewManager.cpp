@@ -65,12 +65,12 @@ void DatePickerShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSVal
 
     if (propertyName == "dayOfWeekFormat") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String)
-        datePicker.DayOfWeekFormat(react::uwp::asHstring(propertyValue));
+        datePicker.DayOfWeekFormat(asHstring(propertyValue));
       else if (propertyValue.IsNull())
         datePicker.ClearValue(xaml::Controls::CalendarDatePicker::DayOfWeekFormatProperty());
     } else if (propertyName == "dateFormat") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String)
-        datePicker.DateFormat(react::uwp::asHstring(propertyValue));
+        datePicker.DateFormat(asHstring(propertyValue));
       else if (propertyValue.IsNull())
         datePicker.ClearValue(xaml::Controls::CalendarDatePicker::DateFormatProperty());
     } else if (propertyName == "firstDayOfWeek") {
@@ -97,7 +97,7 @@ void DatePickerShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSVal
       }
     } else if (propertyName == "placeholderText") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String)
-        datePicker.PlaceholderText(react::uwp::asHstring(propertyValue));
+        datePicker.PlaceholderText(asHstring(propertyValue));
       else if (propertyValue.IsNull())
         datePicker.ClearValue(xaml::Controls::CalendarDatePicker::PlaceholderTextProperty());
     } else if (propertyName == "selectedDate") {
@@ -118,13 +118,13 @@ void DatePickerShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSVal
   }
 
   if (updateMaxDate)
-    datePicker.MaxDate(react::uwp::DateTimeFrom(m_maxTime, m_timeZoneOffsetInSeconds));
+    datePicker.MaxDate(DateTimeFrom(m_maxTime, m_timeZoneOffsetInSeconds));
 
   if (updateMinDate)
-    datePicker.MinDate(react::uwp::DateTimeFrom(m_minTime, m_timeZoneOffsetInSeconds));
+    datePicker.MinDate(DateTimeFrom(m_minTime, m_timeZoneOffsetInSeconds));
 
   if (updateSelectedDate)
-    datePicker.Date(react::uwp::DateTimeFrom(m_selectedTime, m_timeZoneOffsetInSeconds));
+    datePicker.Date(DateTimeFrom(m_selectedTime, m_timeZoneOffsetInSeconds));
 
   Super::updateProperties(props);
   m_updating = false;
@@ -134,7 +134,7 @@ void DatePickerShadowNode::OnDateChanged(
     const Mso::React::IReactContext &context,
     int64_t tag,
     winrt::DateTime const &newDate) {
-  auto timeInMilliseconds = react::uwp::DateTimeToDynamic(newDate, m_timeZoneOffsetInSeconds);
+  auto timeInMilliseconds = DateTimeToDynamic(newDate, m_timeZoneOffsetInSeconds);
   if (!timeInMilliseconds.isNull()) {
     folly::dynamic eventData = folly::dynamic::object("target", tag)("newDate", timeInMilliseconds);
     context.DispatchEvent(tag, "topChange", std::move(eventData));

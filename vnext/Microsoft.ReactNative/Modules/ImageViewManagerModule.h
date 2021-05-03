@@ -10,7 +10,7 @@ class MessageQueueThread;
 }
 } // namespace facebook
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class ImageViewManagerModule : public facebook::xplat::module::CxxModule {
  public:
@@ -29,4 +29,4 @@ class ImageViewManagerModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<ImageViewManagerModuleImpl> m_imageViewManagerModule;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

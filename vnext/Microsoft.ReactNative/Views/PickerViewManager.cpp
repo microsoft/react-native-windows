@@ -83,7 +83,7 @@ void PickerShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
       }
       folly::dynamic text;
       if (s_isEditableComboboxSupported == TriBit::Set && index == -1)
-        text = react::uwp::HstringToDynamic(combobox.Text());
+        text = HstringToDynamic(combobox.Text());
       OnSelectionChanged(GetViewManager()->GetReactContext(), m_tag, std::move(value), index, std::move(text));
     }
   });
@@ -115,7 +115,7 @@ void PickerShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueOb
     } else if (propertyName == "text") {
       if (s_isEditableComboboxSupported == TriBit::Set) {
         if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String)
-          combobox.Text(react::uwp::asHstring(propertyValue));
+          combobox.Text(asHstring(propertyValue));
         else if (propertyValue.IsNull())
           combobox.ClearValue(xaml::Controls::ComboBox::TextProperty());
       }
@@ -155,8 +155,8 @@ void PickerShadowNode::RepopulateItems() {
 
       comboboxItem.Content(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(label)));
 
-      if (!item["textColor"].IsNull() && react::uwp::IsValidColorValue(item["textColor"]))
-        comboboxItem.Foreground(react::uwp::BrushFrom(item["textColor"]));
+      if (!item["textColor"].IsNull() && IsValidColorValue(item["textColor"]))
+        comboboxItem.Foreground(BrushFrom(item["textColor"]));
 
       comboBoxItems.Append(comboboxItem);
     }

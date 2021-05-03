@@ -47,13 +47,13 @@ void DeviceInfoHolder::InitDeviceInfoHolder(const Mso::React::IReactContext &con
             }
           });
     } else {
-      assert(react::uwp::IsXamlIsland());
+      assert(IsXamlIsland());
       // This is either a WinUI 3 island or a system XAML island
       // system XAML islands have a CoreWindow so we want to use the GetForCurrentView APIs
       // For WinUI 3 islands we require the app to forward window messages as ReactNotifications
     }
 
-    if (!react::uwp::IsWinUI3Island()) {
+    if (!IsWinUI3Island()) {
       // UWP or system XAML island
       auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
 
@@ -142,7 +142,7 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
 
   winrt::Windows::UI::ViewManagement::UISettings uiSettings;
   m_textScaleFactor = uiSettings.TextScaleFactor();
-  if (!react::uwp::IsWinUI3Island()) {
+  if (!IsWinUI3Island()) {
     auto const displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
     m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
     m_dpi = displayInfo.LogicalDpi();

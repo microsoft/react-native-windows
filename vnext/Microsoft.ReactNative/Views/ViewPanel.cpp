@@ -321,7 +321,7 @@ void ViewPanel::FinalizeProperties() {
         // Borders with no brush draw something other than transparent on other platforms.
         // To match, we'll use a default border brush if one isn't already set.
         // Note:  Keep this in sync with code in TryUpdateBorderProperties().
-        m_border.BorderBrush(::react::uwp::DefaultBrushStore::Instance().GetDefaultBorderBrush());
+        m_border.BorderBrush(::Microsoft::ReactNative::DefaultBrushStore::Instance().GetDefaultBorderBrush());
       }
     } else
       m_border.ClearValue(xaml::Controls::Border::BorderThicknessProperty());

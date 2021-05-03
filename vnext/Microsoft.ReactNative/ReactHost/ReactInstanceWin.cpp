@@ -325,12 +325,12 @@ void ReactInstanceWin::Initialize() noexcept {
   Mso::PostFuture(m_uiQueue, [weakThis = Mso::WeakPtr{this}]() noexcept {
     // Objects that must be created on the UI thread
     if (auto strongThis = weakThis.GetStrongPtr()) {
-      strongThis->m_appTheme = std::make_shared<::react::uwp::AppTheme>(
+      strongThis->m_appTheme = std::make_shared<Microsoft::ReactNative::AppTheme>(
           strongThis->GetReactContext(), strongThis->m_uiMessageThread.LoadWithLock());
       Microsoft::ReactNative::I18nManager::InitI18nInfo(
           winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
-      strongThis->m_appearanceListener =
-          Mso::Make<::react::uwp::AppearanceChangeListener>(strongThis->GetReactContext(), strongThis->m_uiQueue);
+      strongThis->m_appearanceListener = Mso::Make<Microsoft::ReactNative::AppearanceChangeListener>(
+          strongThis->GetReactContext(), strongThis->m_uiQueue);
 
       Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(strongThis->GetReactContext());
     }
@@ -374,7 +374,7 @@ void ReactInstanceWin::Initialize() noexcept {
 
       // Acquire default modules and then populate with custom modules.
       // Note that some of these have custom thread affinity.
-      std::vector<facebook::react::NativeModuleDescription> cxxModules = ::react::uwp::GetCoreModules(
+      std::vector<facebook::react::NativeModuleDescription> cxxModules = Microsoft::ReactNative::GetCoreModules(
           m_batchingUIThread,
           m_jsMessageThread.Load(),
           std::move(m_appTheme),
@@ -416,9 +416,9 @@ void ReactInstanceWin::Initialize() noexcept {
 #endif
         case JSIEngine::Chakra:
           if (m_options.EnableByteCodeCaching || !m_options.ByteCodeFileUri.empty()) {
-            scriptStore = std::make_unique<::react::uwp::UwpScriptStore>();
-            preparedScriptStore =
-                std::make_unique<::react::uwp::UwpPreparedScriptStore>(winrt::to_hstring(m_options.ByteCodeFileUri));
+            scriptStore = std::make_unique<Microsoft::ReactNative::UwpScriptStore>();
+            preparedScriptStore = std::make_unique<Microsoft::ReactNative::UwpPreparedScriptStore>(
+                winrt::to_hstring(m_options.ByteCodeFileUri));
           }
           devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
               devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
@@ -620,7 +620,7 @@ void ReactInstanceWin::InitUIMessageThread() noexcept {
   m_uiMessageThread.Exchange(
       std::make_shared<MessageDispatchQueue>(m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
-  auto batchingUIThread = ::react::uwp::MakeBatchingQueueThread(m_uiMessageThread.Load());
+  auto batchingUIThread = Microsoft::ReactNative::MakeBatchingQueueThread(m_uiMessageThread.Load());
   m_batchingUIThread = batchingUIThread;
 
   m_jsDispatchQueue.Load().Post(

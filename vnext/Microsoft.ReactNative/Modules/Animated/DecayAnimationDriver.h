@@ -6,7 +6,7 @@
 #include "AnimatedNode.h"
 #include "CalculatedAnimationDriver.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class DecayAnimationDriver : public CalculatedAnimationDriver {
  public:
   DecayAnimationDriver(
@@ -33,4 +33,4 @@ class DecayAnimationDriver : public CalculatedAnimationDriver {
   static constexpr std::wstring_view s_decelerationParameterName{L"deceleration"};
   static constexpr std::wstring_view s_durationName{L"duration"};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -103,13 +103,13 @@ struct DynamicAutomationProperties
     : DynamicAutomationPropertiesT<DynamicAutomationProperties, implementation::DynamicAutomationProperties> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 // Issue #2172: Calling static members on
-// winrt::react::uwp::DynamicAutomationProperties fails to call
-// down into winrt::react::uwp::implementation::DynamicAutomationProperties
+// winrt::Microsoft::ReactNative::DynamicAutomationProperties fails to call
+// down into winrt::Microsoft::ReactNative::implementation::DynamicAutomationProperties
 // because of how we're
-// using cppwinrt. This workaround is so that consumers in react::uwp can just
+// using cppwinrt. This workaround is so that consumers in Microsoft::ReactNative can just
 // call DynamicAutomationProperties
 
 using DynamicAutomationProperties = winrt::Microsoft::ReactNative::implementation::DynamicAutomationProperties;
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

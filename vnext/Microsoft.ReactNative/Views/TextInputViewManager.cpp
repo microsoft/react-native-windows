@@ -32,18 +32,18 @@ using namespace xaml::Media;
 using namespace xaml::Shapes;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 struct Selection {
   int64_t start = -1;
   int64_t end = -1;
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative
 
 // Such code is better to move to a seperate parser layer
 template <>
-struct json_type_traits<react::uwp::Selection> {
-  static react::uwp::Selection parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {
-    react::uwp::Selection selection;
+struct json_type_traits<Microsoft::ReactNative::Selection> {
+  static Microsoft::ReactNative::Selection parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {
+    Microsoft::ReactNative::Selection selection;
     for (auto &item : json.AsObject()) {
       if (item.first == "start") {
         auto start = item.second.AsInt64();
@@ -181,8 +181,8 @@ void TextInputShadowNode::dispatchTextInputChangeEvent(winrt::hstring newText) {
     return;
   }
   m_nativeEventCount++;
-  folly::dynamic eventData = folly::dynamic::object("target", m_tag)("text", react::uwp::HstringToDynamic(newText))(
-      "eventCount", m_nativeEventCount);
+  folly::dynamic eventData =
+      folly::dynamic::object("target", m_tag)("text", HstringToDynamic(newText))("eventCount", m_nativeEventCount);
   GetViewManager()->GetReactContext().DispatchEvent(m_tag, "topTextInputChange", std::move(eventData));
 }
 
@@ -280,11 +280,11 @@ void TextInputShadowNode::registerEvents() {
     folly::dynamic eventDataBlur = folly::dynamic::object("target", tag);
     folly::dynamic eventDataEndEditing = {};
     if (m_isTextBox) {
-      eventDataEndEditing = folly::dynamic::object("target", tag)(
-          "text", react::uwp::HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
+      eventDataEndEditing =
+          folly::dynamic::object("target", tag)("text", HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
     } else {
       eventDataEndEditing = folly::dynamic::object("target", tag)(
-          "text", react::uwp::HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
+          "text", HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
     }
     if (!m_updating) {
       GetViewManager()->GetReactContext().DispatchEvent(tag, "topTextInputBlur", std::move(eventDataBlur));
@@ -407,10 +407,10 @@ void TextInputShadowNode::registerPreviewKeyDown() {
           folly::dynamic eventDataSubmitEditing = {};
           if (m_isTextBox) {
             eventDataSubmitEditing = folly::dynamic::object("target", tag)(
-                "text", react::uwp::HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
+                "text", HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
           } else {
             eventDataSubmitEditing = folly::dynamic::object("target", tag)(
-                "text", react::uwp::HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
+                "text", HstringToDynamic(control.as<xaml::Controls::PasswordBox>().Password()));
           }
 
           if (m_shouldClearTextOnSubmit) {
@@ -467,7 +467,7 @@ void TextInputShadowNode::setPasswordBoxPlaceholderForeground(
     const winrt::Microsoft::ReactNative::JSValue &color) {
   m_placeholderTextColor = color.Copy();
   auto defaultRD = xaml::ResourceDictionary();
-  auto solidColorBrush = react::uwp::ColorFrom(m_placeholderTextColor);
+  auto solidColorBrush = ColorFrom(m_placeholderTextColor);
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForeground"), winrt::box_value(solidColorBrush));
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundFocused"), winrt::box_value(solidColorBrush));
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundPointerOver"), winrt::box_value(solidColorBrush));
@@ -541,7 +541,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
             control = newTextBox.as<xaml::Controls::Control>();
             textBox = newTextBox;
             if (!m_placeholderTextColor.IsNull()) {
-              textBox.PlaceholderForeground(react::uwp::SolidColorBrushFrom(m_placeholderTextColor));
+              textBox.PlaceholderForeground(SolidColorBrushFrom(m_placeholderTextColor));
             }
           }
         }
@@ -563,18 +563,18 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         control.SetValue(
             m_isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
                         : xaml::Controls::PasswordBox::PlaceholderTextProperty(),
-            winrt::PropertyValue::CreateString(react::uwp::asHstring(propertyValue)));
+            winrt::PropertyValue::CreateString(asHstring(propertyValue)));
       } else if (propertyValue.IsNull()) {
         control.ClearValue(
             m_isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
                         : xaml::Controls::PasswordBox::PlaceholderTextProperty());
       }
     } else if (propertyName == "selectionColor") {
-      if (react::uwp::IsValidColorValue(propertyValue)) {
+      if (IsValidColorValue(propertyValue)) {
         control.SetValue(
             m_isTextBox ? xaml::Controls::TextBox::SelectionHighlightColorProperty()
                         : xaml::Controls::PasswordBox::SelectionHighlightColorProperty(),
-            react::uwp::SolidColorBrushFrom(propertyValue));
+            SolidColorBrushFrom(propertyValue));
       } else if (propertyValue.IsNull())
         control.ClearValue(
             m_isTextBox ? xaml::Controls::TextBox::SelectionHighlightColorProperty()
@@ -597,12 +597,12 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
     } else if (propertyName == "placeholderTextColor") {
       m_placeholderTextColor = nullptr;
       if (textBox.try_as<xaml::Controls::ITextBox6>() && m_isTextBox) {
-        if (react::uwp::IsValidColorValue(propertyValue)) {
+        if (IsValidColorValue(propertyValue)) {
           m_placeholderTextColor = propertyValue.Copy();
-          textBox.PlaceholderForeground(react::uwp::SolidColorBrushFrom(propertyValue));
+          textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
         } else if (propertyValue.IsNull())
           textBox.ClearValue(xaml::Controls::TextBox::PlaceholderForegroundProperty());
-      } else if (m_isTextBox != true && react::uwp::IsValidColorValue(propertyValue)) {
+      } else if (m_isTextBox != true && IsValidColorValue(propertyValue)) {
         setPasswordBoxPlaceholderForeground(passwordBox, propertyValue);
       }
     } else if (propertyName == "clearTextOnSubmit") {
@@ -644,7 +644,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
           }
         } else if (propertyName == "selection") {
           if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
-            auto selection = json_type_traits<react::uwp::Selection>::parseJson(propertyValue);
+            auto selection = json_type_traits<Selection>::parseJson(propertyValue);
             SetSelection(selection.start, selection.end);
           }
         } else if (propertyName == "spellCheck") {
@@ -697,7 +697,7 @@ void TextInputShadowNode::SetText(const winrt::Microsoft::ReactNative::JSValue &
         auto oldCursor = textBox.SelectionStart();
         auto oldSelectionLength = textBox.SelectionLength();
         auto oldValue = textBox.Text();
-        auto newValue = react::uwp::asHstring(text);
+        auto newValue = asHstring(text);
         if (oldValue != newValue) {
           textBox.Text(newValue);
           if (oldValue.size() == newValue.size()) {
@@ -711,7 +711,7 @@ void TextInputShadowNode::SetText(const winrt::Microsoft::ReactNative::JSValue &
     } else {
       if (text.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         auto oldValue = passwordBox.Password();
-        auto newValue = react::uwp::asHstring(text);
+        auto newValue = asHstring(text);
         if (oldValue != newValue) {
           passwordBox.Password(newValue);
         }

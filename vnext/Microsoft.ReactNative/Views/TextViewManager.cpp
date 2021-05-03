@@ -116,10 +116,10 @@ class TextShadowNode final : public ShadowNodeBase {
       const std::optional<winrt::Windows::UI::Color> &foregroundColor,
       size_t runSize) {
     auto newHigh = winrt::TextHighlighter{};
-    newHigh.Background(react::uwp::SolidBrushFromColor(backgroundColor));
+    newHigh.Background(SolidBrushFromColor(backgroundColor));
 
     if (foregroundColor) {
-      newHigh.Foreground(react::uwp::SolidBrushFromColor(foregroundColor.value()));
+      newHigh.Foreground(SolidBrushFromColor(foregroundColor.value()));
     }
 
     winrt::TextRange newRange{m_prevCursorEnd, static_cast<int32_t>(runSize)};
@@ -168,7 +168,7 @@ bool TextViewManager::UpdateProperty(
     return true;
 
   if (TryUpdateForeground(textBlock, propertyName, propertyValue)) {
-    static_cast<TextShadowNode *>(nodeToUpdate)->m_foregroundColor = react::uwp::ColorFrom(propertyValue);
+    static_cast<TextShadowNode *>(nodeToUpdate)->m_foregroundColor = ColorFrom(propertyValue);
   } else if (TryUpdateFontProperties(textBlock, propertyName, propertyValue)) {
   } else if (propertyName == "textTransform") {
     auto textNode = static_cast<TextShadowNode *>(nodeToUpdate);
@@ -222,13 +222,13 @@ bool TextViewManager::UpdateProperty(
       textBlock.ClearValue(xaml::Controls::TextBlock::IsTextScaleFactorEnabledProperty());
     }
   } else if (propertyName == "selectionColor") {
-    if (react::uwp::IsValidColorValue(propertyValue)) {
-      textBlock.SelectionHighlightColor(react::uwp::SolidColorBrushFrom(propertyValue));
+    if (IsValidColorValue(propertyValue)) {
+      textBlock.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
     } else
       textBlock.ClearValue(xaml::Controls::TextBlock::SelectionHighlightColorProperty());
   } else if (propertyName == "backgroundColor") {
-    if (react::uwp::IsValidColorValue(propertyValue)) {
-      static_cast<TextShadowNode *>(nodeToUpdate)->m_backgroundColor = react::uwp::ColorFrom(propertyValue);
+    if (IsValidColorValue(propertyValue)) {
+      static_cast<TextShadowNode *>(nodeToUpdate)->m_backgroundColor = ColorFrom(propertyValue);
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);

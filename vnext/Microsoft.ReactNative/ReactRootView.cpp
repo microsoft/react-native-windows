@@ -10,7 +10,7 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 ReactRootView::ReactRootView() noexcept {
-  m_rootControl = std::make_shared<react::uwp::ReactRootControl>(*this);
+  m_rootControl = std::make_shared<::Microsoft::ReactNative::ReactRootControl>(*this);
   UpdatePerspective();
   Loaded([this](auto &&, auto &&) {
     ::Microsoft::ReactNative::SetCompositor(::Microsoft::ReactNative::GetCompositor(*this));

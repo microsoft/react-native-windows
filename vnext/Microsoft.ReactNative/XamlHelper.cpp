@@ -12,12 +12,12 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 xaml::Media::Brush XamlHelper::BrushFrom(JSValueArgWriter const &valueProvider) noexcept {
   auto value = GetFollyDynamicFromValueProvider(valueProvider);
-  return react::uwp::IsValidColorValue(value) ? react::uwp::BrushFrom(value) : nullptr;
+  return ::Microsoft::ReactNative::IsValidColorValue(value) ? ::Microsoft::ReactNative::BrushFrom(value) : nullptr;
 }
 
 Windows::UI::Color XamlHelper::ColorFrom(JSValueArgWriter const &valueProvider) noexcept {
   auto value = GetFollyDynamicFromValueProvider(valueProvider);
-  return react::uwp::ColorFrom(value);
+  return ::Microsoft::ReactNative::ColorFrom(value);
 }
 
 folly::dynamic XamlHelper::GetFollyDynamicFromValueProvider(JSValueArgWriter const &valueProvider) noexcept {

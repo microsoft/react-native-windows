@@ -18,7 +18,7 @@ namespace winrt::Microsoft::ReactNative {
 struct JSValue;
 }
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d);
 xaml::Media::Brush BrushFromColorObject(const winrt::Microsoft::ReactNative::JSValue &v);
@@ -61,4 +61,4 @@ winrt::Uri UriTryCreate(winrt::param::hstring const &uri);
 winrt::Windows::UI::Color ColorFromNumber(DWORD argb) noexcept;
 xaml::Media::SolidColorBrush SolidColorBrushFrom(facebook::react::Color) noexcept;
 xaml::Media::SolidColorBrush SolidColorBrushFrom(facebook::react::SharedColor) noexcept;
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

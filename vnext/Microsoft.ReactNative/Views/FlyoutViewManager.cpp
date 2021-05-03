@@ -202,7 +202,7 @@ void FlyoutShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
         // of open popups/flyouts. We apply this translation on open of the
         // flyout. (Translation is only supported on RS5+, eg. IUIElement9)
         if (auto uiElement9 = GetView().try_as<xaml::IUIElement9>()) {
-          auto numOpenPopups = react::uwp::CountOpenPopups();
+          auto numOpenPopups = CountOpenPopups();
           if (numOpenPopups > 0) {
             winrt::Numerics::float3 translation{0, 0, (float)16 * numOpenPopups};
             flyoutPresenter.Translation(translation);
@@ -435,7 +435,7 @@ const wchar_t *FlyoutViewManager::GetName() const {
 }
 
 XamlView FlyoutViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
-  return winrt::make<winrt::react::uwp::implementation::ViewPanel>().as<XamlView>();
+  return winrt::make<winrt::Microsoft::ReactNative::implementation::ViewPanel>().as<XamlView>();
 }
 
 ShadowNode *FlyoutViewManager::createShadow() const {

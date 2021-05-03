@@ -6,7 +6,7 @@
 #include "NativeAnimatedNodeManager.h"
 #include "ValueAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 typedef std::function<void(std::vector<folly::dynamic>)> Callback;
 
 class ValueAnimatedNode;
@@ -73,4 +73,4 @@ class AnimationDriver {
   // #22399779
   winrt::event_token m_scopedBatchCompletedToken{};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative
