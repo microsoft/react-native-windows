@@ -312,33 +312,70 @@ class Button extends React.Component<ButtonProps> {
     const Touchable = TouchableHighlight;
     //  Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
     // Windows]
-    return (
-      <Touchable
-        accessibilityLabel={accessibilityLabel}
-        accessibilityRole="button"
-        accessibilityState={accessibilityState}
-        hasTVPreferredFocus={hasTVPreferredFocus}
-        nextFocusDown={nextFocusDown}
-        nextFocusForward={nextFocusForward}
-        nextFocusLeft={nextFocusLeft}
-        nextFocusRight={nextFocusRight}
-        nextFocusUp={nextFocusUp}
-        testID={testID}
-        disabled={disabled}
-        onPress={onPress}
-        tabIndex={tabIndex}
-        touchSoundDisabled={touchSoundDisabled}>
-        <View style={buttonStyles}>
-          <Text style={textStyles} disabled={disabled}>
-            {formattedTitle}
-          </Text>
+    // [Windows
+    if (Platform.OS === 'windows') {
+      return (
+        <View style={styles.touchable}>
+          <Touchable
+            accessibilityLabel={accessibilityLabel}
+            accessibilityRole="button"
+            accessibilityState={accessibilityState}
+            hasTVPreferredFocus={hasTVPreferredFocus}
+            nextFocusDown={nextFocusDown}
+            nextFocusForward={nextFocusForward}
+            nextFocusLeft={nextFocusLeft}
+            nextFocusRight={nextFocusRight}
+            nextFocusUp={nextFocusUp}
+            testID={testID}
+            disabled={disabled}
+            onPress={onPress}
+            tabIndex={tabIndex}
+            touchSoundDisabled={touchSoundDisabled}
+            activeOpacity={0.8}
+            underlayColor="#FFFFFF">
+            <View style={buttonStyles}>
+              <Text style={textStyles} disabled={disabled}>
+                {formattedTitle}
+              </Text>
+            </View>
+          </Touchable>
         </View>
-      </Touchable>
-    );
+      );
+    } else {
+      return (
+        <Touchable
+          accessibilityLabel={accessibilityLabel}
+          accessibilityRole="button"
+          accessibilityState={accessibilityState}
+          hasTVPreferredFocus={hasTVPreferredFocus}
+          nextFocusDown={nextFocusDown}
+          nextFocusForward={nextFocusForward}
+          nextFocusLeft={nextFocusLeft}
+          nextFocusRight={nextFocusRight}
+          nextFocusUp={nextFocusUp}
+          testID={testID}
+          disabled={disabled}
+          onPress={onPress}
+          tabIndex={tabIndex}
+          touchSoundDisabled={touchSoundDisabled}>
+          <View style={buttonStyles}>
+            <Text style={textStyles} disabled={disabled}>
+              {formattedTitle}
+            </Text>
+          </View>
+        </Touchable>
+      );
+    }
+    // Windows]
   }
 }
 
 const styles = StyleSheet.create({
+  // [Windows
+  touchable: {
+    borderRadius: 3,
+  },
+  // Windows]
   button: Platform.select({
     ios: {},
     android: {
@@ -349,8 +386,8 @@ const styles = StyleSheet.create({
     },
     // [Windows
     windows: {
-      backgroundColor: '#2196F3',
-      borderRadius: 2,
+      backgroundColor: '#005FB7',
+      borderRadius: 3,
     },
     // Windows]
   }),
@@ -369,8 +406,9 @@ const styles = StyleSheet.create({
       },
       // [Windows
       windows: {
-        color: 'white',
-        fontWeight: '500',
+        color: '#FFFFFF',
+        fontWeight: '400',
+        fontSize: 14,
       },
       // Windows]
     }),
@@ -382,7 +420,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#dfdfdf',
     },
     windows: {
-      backgroundColor: '#dfdfdf',
+      backgroundColor: 'rgba(0, 0, 0, 0.2169);',
     },
   }),
   textDisabled: Platform.select({
@@ -394,7 +432,7 @@ const styles = StyleSheet.create({
     },
     // [Windows
     windows: {
-      color: '#a1a1a1',
+      color: '#FFFFFF',
     },
     // Windows]
   }),
