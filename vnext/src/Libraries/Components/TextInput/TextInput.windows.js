@@ -1162,6 +1162,7 @@ function InternalTextInput(props: Props): React.Node {
         ref={_setNativeRef}
         {...props}
         dataDetectorTypes={props.dataDetectorTypes}
+        mostRecentEventCount={mostRecentEventCount}
         onBlur={_onBlur}
         onChange={_onChange}
         onContentSizeChange={props.onContentSizeChange}
