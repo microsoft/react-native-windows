@@ -133,14 +133,16 @@ class TextInputShadowNode : public ShadowNodeBase {
   void SetSelection(int64_t start, int64_t end);
   winrt::Shape FindCaret(xaml::DependencyObject element);
 
+  bool m_initialUpdateComplete = false;
   bool m_autoFocus = false;
   bool m_shouldClearTextOnFocus = false;
   bool m_shouldSelectTextOnFocus = false;
   bool m_contextMenuHidden = false;
   bool m_hideCaret = false;
   bool m_isTextBox = true;
-  winrt::Microsoft::ReactNative::JSValue m_placeholderTextColor;
   bool m_shouldClearTextOnSubmit = false;
+
+  winrt::Microsoft::ReactNative::JSValue m_placeholderTextColor;
   std::vector<HandledKeyboardEvent> m_submitKeyEvents{};
 
   // Javascripts is running in a different thread. If the typing is very fast,
@@ -175,6 +177,9 @@ void TextInputShadowNode::createView(const winrt::Microsoft::ReactNative::JSValu
 }
 
 void TextInputShadowNode::dispatchTextInputChangeEvent(winrt::hstring newText) {
+  if (!m_initialUpdateComplete) {
+    return;
+  }
   m_nativeEventCount++;
   folly::dynamic eventData = folly::dynamic::object("target", m_tag)("text", react::uwp::HstringToDynamic(newText))(
       "eventCount", m_nativeEventCount);
@@ -199,14 +204,20 @@ void TextInputShadowNode::registerEvents() {
   // another TextChanged event with correct event count.
   if (m_isTextBox) {
     m_passwordBoxPasswordChangingRevoker = {};
-    m_textBoxTextChangingRevoker = control.as<xaml::Controls::TextBox>().TextChanging(
-        winrt::auto_revoke, [=](auto &&, auto &&) { m_nativeEventCount++; });
+    m_textBoxTextChangingRevoker =
+        control.as<xaml::Controls::TextBox>().TextChanging(winrt::auto_revoke, [=](auto &&, auto &&) {
+          if (m_initialUpdateComplete)
+            m_nativeEventCount++;
+        });
   } else {
     m_textBoxTextChangingRevoker = {};
 
     if (control.try_as<xaml::Controls::IPasswordBox4>()) {
-      m_passwordBoxPasswordChangingRevoker = control.as<xaml::Controls::IPasswordBox4>().PasswordChanging(
-          winrt::auto_revoke, [=](auto &&, auto &&) { m_nativeEventCount++; });
+      m_passwordBoxPasswordChangingRevoker =
+          control.as<xaml::Controls::IPasswordBox4>().PasswordChanging(winrt::auto_revoke, [=](auto &&, auto &&) {
+            if (m_initialUpdateComplete)
+              m_nativeEventCount++;
+          });
     }
   }
 
@@ -673,6 +684,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
   }
 
   m_updating = false;
+  m_initialUpdateComplete = true;
 }
 
 void TextInputShadowNode::SetText(const winrt::Microsoft::ReactNative::JSValue &text) {
