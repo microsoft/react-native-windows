@@ -392,7 +392,6 @@ InstanceImpl::InstanceImpl(
 #endif
         case JSIEngineOverride::V8: {
 #if defined(USE_V8)
-          std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
           char tempPath[MAX_PATH];
@@ -401,7 +400,7 @@ InstanceImpl::InstanceImpl(
           }
 
           m_devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-              m_devSettings, m_jsThread, std::move(scriptStore), std::move(preparedScriptStore));
+              m_devSettings, m_jsThread, std::move(preparedScriptStore));
           break;
 #else
           assert(false); // V8 is not available in this build, fallthrough

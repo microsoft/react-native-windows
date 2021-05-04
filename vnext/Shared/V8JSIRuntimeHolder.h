@@ -8,8 +8,6 @@
 #include <JSI/Shared/RuntimeHolder.h>
 #include <JSI/Shared/ScriptStore.h>
 
-#include <Logging.h>
-
 namespace facebook {
 namespace react {
 
@@ -20,13 +18,11 @@ class V8JSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
   V8JSIRuntimeHolder(
       std::shared_ptr<facebook::react::DevSettings> devSettings,
       std::shared_ptr<facebook::react::MessageQueueThread> jsQueue,
-      std::unique_ptr<facebook::jsi::ScriptStore> &&scriptStore,
       std::unique_ptr<facebook::jsi::PreparedScriptStore> &&preparedScriptStore) noexcept
       : useDirectDebugger_(devSettings->useDirectDebugger),
         debuggerBreakOnNextLine_(devSettings->debuggerBreakOnNextLine),
         debuggerPort_(devSettings->debuggerPort),
         jsQueue_(std::move(jsQueue)),
-        scriptStore_(std::move(scriptStore)),
         preparedScriptStore_(std::move(preparedScriptStore)) {}
 
  private:
@@ -35,7 +31,6 @@ class V8JSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
   std::shared_ptr<facebook::jsi::Runtime> runtime_;
   std::shared_ptr<facebook::react::MessageQueueThread> jsQueue_;
 
-  std::unique_ptr<facebook::jsi::ScriptStore> scriptStore_;
   std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore_;
 
   std::once_flag once_flag_;

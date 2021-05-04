@@ -30,9 +30,9 @@ enum class JSIEngineOverride : int32_t {
   ChakraCore = 2, // Use the JSIExecutorFactory with ChakraCoreRuntime
   Hermes = 3, // Use the JSIExecutorFactory with Hermes
   V8 = 4, // Use the JSIExecutorFactory with V8
-  V8Lite = 5, // Use the JSIExecutorFactory with V8Lite
+  V8NAPI = 5, // Use the JSIExecutorFactory with V8-NAPI
 
-  Last = V8Lite
+  Last = V8NAPI
 };
 
 struct ChakraBundleMetadata {
