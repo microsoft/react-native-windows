@@ -47,7 +47,7 @@ void ViewComponentView::updateProps(
     auto color = *newViewProps.backgroundColor;
 
     if (newViewProps.backgroundColor) {
-      m_element.ViewBackground(::react::uwp::SolidColorBrushFrom(newViewProps.backgroundColor));
+      m_element.ViewBackground(SolidColorBrushFrom(newViewProps.backgroundColor));
     } else {
       m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::ViewBackgroundProperty());
     }
@@ -55,7 +55,7 @@ void ViewComponentView::updateProps(
 
   if (oldViewProps.borderColors != newViewProps.borderColors) {
     if (newViewProps.borderColors.all) {
-      m_element.BorderBrush(::react::uwp::SolidColorBrushFrom(*newViewProps.borderColors.all));
+      m_element.BorderBrush(SolidColorBrushFrom(*newViewProps.borderColors.all));
     } else {
       m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::BorderBrushProperty());
     }

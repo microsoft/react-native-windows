@@ -6,7 +6,7 @@
 #include "DivisionAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 DivisionAnimatedNode::DivisionAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -37,4 +37,4 @@ DivisionAnimatedNode::DivisionAnimatedNode(
     return anim;
   }());
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

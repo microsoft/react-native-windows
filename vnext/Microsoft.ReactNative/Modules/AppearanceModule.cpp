@@ -12,7 +12,7 @@ using UISettings = winrt::Windows::UI::ViewManagement::UISettings;
 
 using Method = facebook::xplat::module::CxxModule::Method;
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 AppearanceChangeListener::AppearanceChangeListener(
     const Mso::React::IReactContext &context,
@@ -65,4 +65,4 @@ std::vector<Method> AppearanceModule::getMethods() {
       "getColorScheme", [this](folly::dynamic /*args*/) { return m_changeListener->GetColorScheme(); }, SyncTag)};
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

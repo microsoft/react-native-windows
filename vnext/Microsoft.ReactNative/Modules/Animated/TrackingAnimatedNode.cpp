@@ -6,7 +6,7 @@
 #include "NativeAnimatedNodeManager.h"
 #include "TrackingAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 TrackingAnimatedNode::TrackingAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -35,4 +35,4 @@ void TrackingAnimatedNode::StartAnimation() {
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

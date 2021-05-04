@@ -19,7 +19,7 @@
 namespace Microsoft::ReactNative {
 
 ImageComponentView::ImageComponentView(winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : m_context(reactContext), m_element(::react::uwp::ReactImage::Create()) {
+    : m_context(reactContext), m_element(ReactImage::Create()) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
 }
@@ -49,7 +49,7 @@ void ImageComponentView::updateProps(
     if (newImageProps.sources.empty()) {
       // TODO clear image
     } else {
-      ::react::uwp::ReactImageSource ris;
+      ReactImageSource ris;
       ris.uri = newImageProps.sources[0].uri;
       ris.width = newImageProps.sources[0].size.width;
       ris.height = newImageProps.sources[0].size.height;

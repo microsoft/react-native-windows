@@ -8,7 +8,7 @@
 #include "DynamicAutomationPeer.g.h"
 #include "DynamicValueProvider.g.h"
 
-namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 struct DynamicValueProvider : DynamicValueProviderT<DynamicValueProvider> {
   using Super = DynamicValueProviderT<DynamicValueProvider>;
@@ -25,8 +25,8 @@ struct DynamicValueProvider : DynamicValueProviderT<DynamicValueProvider> {
   winrt::hstring GetAccessibilityValue() const;
   xaml::Automation::Peers::FrameworkElementAutomationPeer m_peer{nullptr};
 };
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
+} // namespace winrt::Microsoft::ReactNative::implementation
 
-namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation {
+namespace winrt::Microsoft::ReactNative::factory_implementation {
 struct DynamicValueProvider : DynamicValueProviderT<DynamicValueProvider, implementation::DynamicValueProvider> {};
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation
+} // namespace winrt::Microsoft::ReactNative::factory_implementation

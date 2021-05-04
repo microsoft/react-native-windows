@@ -23,7 +23,7 @@ using namespace Windows::Foundation;
 using namespace Windows::System;
 using namespace ::Microsoft::Common::Unicode;
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 //
 // LinkingManagerModule helpers
@@ -124,4 +124,4 @@ auto LinkingManagerModule::getMethods() -> std::vector<Method> {
   };
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -22,7 +22,7 @@ using namespace Windows::Foundation;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 // A class that implements IXamlRootView and IXamlReactControl interfaces.
 // It keeps a weak reference to the XAML ReactRootView.
@@ -152,4 +152,4 @@ inline Mso::Future<void> ReactViewInstance::PostInUIQueue(TAction &&action) noex
       });
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

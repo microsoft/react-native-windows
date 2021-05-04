@@ -2,7 +2,7 @@
 #include <JSI/ScriptStore.h>
 #include <future>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class UwpScriptStore : public facebook::jsi::ScriptStore {
  public:
@@ -19,4 +19,4 @@ class UwpScriptStore : public facebook::jsi::ScriptStore {
   std::future<facebook::jsi::ScriptVersion_t> getScriptVersionAsync(const std::string &bundleUri);
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

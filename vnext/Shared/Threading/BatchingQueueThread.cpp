@@ -7,7 +7,7 @@
 #include <eventWaitHandle/eventWaitHandle.h>
 #include <cassert>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 BatchingQueueCallInvoker::BatchingQueueCallInvoker(
     std::shared_ptr<facebook::react::MessageQueueThread> const &queueThread)
@@ -99,4 +99,4 @@ void BatchingQueueThread::quitSynchronous() noexcept {
   m_batchingQueueCallInvoker->quitSynchronous();
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

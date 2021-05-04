@@ -49,7 +49,7 @@ bool RawTextViewManager::UpdateProperty(
     return true;
 
   if (propertyName == "text") {
-    run.Text(react::uwp::asHstring(propertyValue));
+    run.Text(asHstring(propertyValue));
     static_cast<RawTextShadowNode *>(nodeToUpdate)->originalText = winrt::hstring{};
     NotifyAncestorsTextChanged(nodeToUpdate);
   } else {

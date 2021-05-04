@@ -117,7 +117,7 @@ facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(
     return [this, settings, errorCallback](
                std::shared_ptr<facebook::react::ExecutorDelegate> delegate,
                std::shared_ptr<facebook::react::MessageQueueThread> jsQueue) {
-      auto websocketJSE = std::make_unique<react::uwp::WebSocketJSExecutor>(delegate, jsQueue);
+      auto websocketJSE = std::make_unique<WebSocketJSExecutor>(delegate, jsQueue);
       try {
         websocketJSE
             ->ConnectAsync(

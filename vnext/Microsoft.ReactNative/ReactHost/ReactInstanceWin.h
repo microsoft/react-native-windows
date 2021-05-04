@@ -174,8 +174,8 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
 
   std::shared_ptr<IRedBoxHandler> m_redboxHandler;
 #ifndef CORE_ABI
-  std::shared_ptr<react::uwp::AppTheme> m_appTheme;
-  Mso::CntPtr<react::uwp::AppearanceChangeListener> m_appearanceListener;
+  std::shared_ptr<Microsoft::ReactNative::AppTheme> m_appTheme;
+  Mso::CntPtr<Microsoft::ReactNative::AppearanceChangeListener> m_appearanceListener;
 #endif
   Mso::DispatchQueue m_uiQueue;
   std::deque<JSCallEntry> m_jsCallQueue;

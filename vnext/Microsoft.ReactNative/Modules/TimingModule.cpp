@@ -25,7 +25,7 @@ using namespace xaml::Media;
 } // namespace winrt
 using namespace std;
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 //
 // TimerQueue
@@ -198,14 +198,14 @@ auto TimingModule::getMethods() -> std::vector<Method> {
   };
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative
 
 namespace facebook {
 namespace react {
 
 std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
     const std::shared_ptr<facebook::react::MessageQueueThread> &) noexcept {
-  return std::make_unique<::react::uwp::TimingModule>();
+  return std::make_unique<Microsoft::ReactNative::TimingModule>();
 }
 
 } // namespace react

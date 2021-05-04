@@ -11,7 +11,7 @@ namespace facebook::react {
 class Instance;
 }
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 struct BatchingQueueCallInvoker : facebook::react::CallInvoker {
   BatchingQueueCallInvoker(std::shared_ptr<facebook::react::MessageQueueThread> const &queueThread);
@@ -54,4 +54,4 @@ struct BatchingQueueThread final : facebook::react::BatchingMessageQueueThread {
   std::shared_ptr<BatchingQueueCallInvoker> m_batchingQueueCallInvoker;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

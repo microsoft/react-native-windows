@@ -13,7 +13,7 @@ namespace Microsoft::ReactNative {
 struct ShadowNodeBase;
 }
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class PropsAnimatedNode final : public AnimatedNode {
  public:
   PropsAnimatedNode(
@@ -50,4 +50,4 @@ class PropsAnimatedNode final : public AnimatedNode {
 
   static constexpr int64_t s_connectedViewTagUnset{-1};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

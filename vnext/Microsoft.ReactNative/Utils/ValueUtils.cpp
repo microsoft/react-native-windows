@@ -24,7 +24,7 @@ using namespace xaml::Input;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 inline BYTE GetAFromArgb(DWORD v) {
   return ((BYTE)((v & 0xFF000000) >> 24));
@@ -326,4 +326,4 @@ winrt::Uri UriTryCreate(winrt::param::hstring const &uri) {
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

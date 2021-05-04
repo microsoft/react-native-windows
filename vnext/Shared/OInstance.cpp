@@ -478,7 +478,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 #else
       std::string bundlePath = (fs::path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).string();
 
-      auto bundleString = std::make_unique<::react::uwp::StorageFileBigString>(bundlePath);
+      auto bundleString = std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
       m_innerInstance->loadScriptFromString(std::move(bundleString), jsBundleRelativePath, synchronously);
 #endif
     }

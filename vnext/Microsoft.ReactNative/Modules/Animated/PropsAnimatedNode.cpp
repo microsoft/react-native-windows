@@ -12,7 +12,7 @@
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 PropsAnimatedNode::PropsAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -279,4 +279,4 @@ xaml::UIElement PropsAnimatedNode::GetUIElement() {
   }
   return nullptr;
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

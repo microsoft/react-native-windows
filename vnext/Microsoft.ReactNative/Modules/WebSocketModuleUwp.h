@@ -6,7 +6,7 @@
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class LegacyWebSocketModule : public facebook::xplat::module::CxxModule {
  public:
@@ -25,4 +25,4 @@ class LegacyWebSocketModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<WebSocket> m_webSocket;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative
