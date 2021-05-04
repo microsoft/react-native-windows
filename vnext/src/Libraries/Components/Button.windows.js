@@ -20,10 +20,15 @@ const TouchableHighlight = require('./Touchable/TouchableHighlight');
 // Windows]
 const View = require('./View/View');
 const invariant = require('invariant');
+// [Windows
+const ReactNative = require('react-native');
+const {PlatformColor} = ReactNative;
+// Windows]
 
 import type {AccessibilityState} from './View/ViewAccessibility';
 import type {PressEvent} from '../Types/CoreEventTypes';
 import type {ColorValue} from '../StyleSheet/StyleSheet';
+import {PlatformOverride} from 'react-native-platform-override';
 
 type ButtonProps = $ReadOnly<{|
   /**
@@ -315,31 +320,34 @@ class Button extends React.Component<ButtonProps> {
     // [Windows
     if (Platform.OS === 'windows') {
       return (
-        <View style={styles.touchable}>
-          <Touchable
-            accessibilityLabel={accessibilityLabel}
-            accessibilityRole="button"
-            accessibilityState={accessibilityState}
-            hasTVPreferredFocus={hasTVPreferredFocus}
-            nextFocusDown={nextFocusDown}
-            nextFocusForward={nextFocusForward}
-            nextFocusLeft={nextFocusLeft}
-            nextFocusRight={nextFocusRight}
-            nextFocusUp={nextFocusUp}
-            testID={testID}
-            disabled={disabled}
-            onPress={onPress}
-            tabIndex={tabIndex}
-            touchSoundDisabled={touchSoundDisabled}
-            activeOpacity={0.8}
-            underlayColor="#FFFFFF">
-            <View style={buttonStyles}>
-              <Text style={textStyles} disabled={disabled}>
-                {formattedTitle}
-              </Text>
-            </View>
-          </Touchable>
-        </View>
+        <Touchable
+          accessibilityLabel={accessibilityLabel}
+          accessibilityRole="button"
+          accessibilityState={accessibilityState}
+          hasTVPreferredFocus={hasTVPreferredFocus}
+          nextFocusDown={nextFocusDown}
+          nextFocusForward={nextFocusForward}
+          nextFocusLeft={nextFocusLeft}
+          nextFocusRight={nextFocusRight}
+          nextFocusUp={nextFocusUp}
+          testID={testID}
+          disabled={disabled}
+          onPress={onPress}
+          tabIndex={tabIndex}
+          touchSoundDisabled={touchSoundDisabled}
+          underlayColor={
+            color
+              ? PlatformColor('SystemColorWindowColor')
+              : PlatformColor('ButtonBackgroundPressed')
+          }
+          activeOpacity={0.8}
+          style={buttonStyles}>
+          <View style={color ? buttonStyles : {}}>
+            <Text style={textStyles} disabled={disabled}>
+              {formattedTitle}
+            </Text>
+          </View>
+        </Touchable>
       );
     } else {
       return (
@@ -371,11 +379,6 @@ class Button extends React.Component<ButtonProps> {
 }
 
 const styles = StyleSheet.create({
-  // [Windows
-  touchable: {
-    borderRadius: 3,
-  },
-  // Windows]
   button: Platform.select({
     ios: {},
     android: {
@@ -386,7 +389,7 @@ const styles = StyleSheet.create({
     },
     // [Windows
     windows: {
-      backgroundColor: '#005FB7',
+      backgroundColor: PlatformColor('ButtonBackground'),
       borderRadius: 3,
     },
     // Windows]
@@ -406,7 +409,7 @@ const styles = StyleSheet.create({
       },
       // [Windows
       windows: {
-        color: '#FFFFFF',
+        color: PlatformColor('ButtonForeground'),
         fontWeight: '400',
         fontSize: 14,
       },
@@ -420,7 +423,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#dfdfdf',
     },
     windows: {
-      backgroundColor: 'rgba(0, 0, 0, 0.2169);',
+      backgroundColor: PlatformColor('ButtonBackgroundDisabled'),
     },
   }),
   textDisabled: Platform.select({
@@ -432,7 +435,7 @@ const styles = StyleSheet.create({
     },
     // [Windows
     windows: {
-      color: '#FFFFFF',
+      color: PlatformColor('ButtonForegroundDisabled'),
     },
     // Windows]
   }),
