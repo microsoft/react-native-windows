@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 04 May 2021 05:10:45 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.303",
+      "version": "0.0.0-canary.303",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Text foreground overwritten by backgroundColor.",
+            "author": "igklemen@microsoft.com",
+            "commit": "36fa243c226e2279afa45c93e8db1e29a32370dd",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "If initial value is set, updated TextInput.value changes will not be reflected",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "1d8410d90b5898698e38cf856acbe10f0406ee99",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 01 May 2021 05:05:57 GMT",
       "tag": "react-native-windows_v0.0.0-canary.302",
       "version": "0.0.0-canary.302",

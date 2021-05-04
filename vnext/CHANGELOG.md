@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 01 May 2021 05:05:57 GMT and should not be manually modified.
+This log was last generated on Tue, 04 May 2021 05:10:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.303
+
+Tue, 04 May 2021 05:10:45 GMT
+
+### Changes
+
+- Fix Text foreground overwritten by backgroundColor. (igklemen@microsoft.com)
+- If initial value is set, updated TextInput.value changes will not be reflected (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.302
 
