@@ -28,7 +28,6 @@ const {PlatformColor} = ReactNative;
 import type {AccessibilityState} from './View/ViewAccessibility';
 import type {PressEvent} from '../Types/CoreEventTypes';
 import type {ColorValue} from '../StyleSheet/StyleSheet';
-import {PlatformOverride} from 'react-native-platform-override';
 
 type ButtonProps = $ReadOnly<{|
   /**
