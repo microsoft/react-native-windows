@@ -24,6 +24,7 @@ class ReactQueueBackedTaskRunner : public v8runtime::JSITaskRunner {
     std::shared_ptr<v8runtime::JSITask> shared_task(task.release());
     jsQueue_->runOnQueue([shared_task2 = std::move(shared_task)]() { shared_task2->run(); });
   }
+
  private:
   ReactQueueBackedTaskRunner(const ReactQueueBackedTaskRunner &) = delete;
   ReactQueueBackedTaskRunner &operator=(const ReactQueueBackedTaskRunner &) = delete;
