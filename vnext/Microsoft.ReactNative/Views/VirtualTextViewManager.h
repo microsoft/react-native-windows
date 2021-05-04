@@ -27,8 +27,7 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   void NotifyAncestorsTextPropertyChanged(PropertyChangeType propertyChangeType);
 
   static void ApplyTextTransform(ShadowNodeBase &node, TextTransform transform, bool forceUpdate, bool isRoot);
-  static xaml::DependencyObject
-  HitTest(const ShadowNodeBase &node, const winrt::Point &point, bool hasPressableParent);
+  static xaml::DependencyObject HitTest(const ShadowNodeBase &node, const winrt::Point &point, bool hasPressableParent);
 
   std::optional<winrt::Windows::UI::Color> m_backgroundColor;
   std::optional<winrt::Windows::UI::Color> m_foregroundColor;
