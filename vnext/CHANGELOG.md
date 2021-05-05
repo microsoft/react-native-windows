@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 26 Apr 2021 18:47:14 GMT and should not be manually modified.
+This log was last generated on Mon, 03 May 2021 14:06:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.6
+
+Mon, 03 May 2021 14:06:32 GMT
+
+### Patches
+
+- Remove version from ExperimentalFeatures.props links (ngerlem@microsoft.com)
 
 ## 0.64.5
 

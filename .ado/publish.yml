@@ -13,6 +13,10 @@ parameters:
   displayName: Skip Codesigning for Stable Branch
   type: boolean
   default: false
+- name: stopOnNoCI
+  displayName: Stop if latest commit is ***NO_CI***
+  type: boolean
+  default: true
 
 variables:
   - template: variables/msbuild.yml
@@ -28,18 +32,6 @@ variables:
     value: false
   - name: EnableCodesign
     value: false
-
-schedules:
-- cron: "0 15 * * Mon" # 3PM Monday UTC (8AM Monday PST)
-  displayName: Weekly stable publish build
-  branches:
-    include:
-    - refs/heads/0.64-stable
-- cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
-  displayName: Nightly canary publish build
-  branches:
-    include:
-    - master
 
 trigger: none
 pr: none
@@ -63,6 +55,11 @@ jobs:
       - script: yarn build
         displayName: yarn build
 
+      - powershell: |
+          Write-Error "Stopping because commit message contains ***NO_CI***."
+        displayName: Stop pipeline if latest commit message contains ***NO_CI***
+        condition: and(${{ parameters.stopOnNoCI }}, contains(variables['Build.SourceVersionMessage'], '***NO_CI***'))
+
       - script: |
           echo ##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish
         displayName: Enable No-Publish
@@ -75,6 +72,15 @@ jobs:
 
       - script: yarn build
         displayName: yarn build
+
+      # Ensure EnableCodesign is set properly so CG fails appropriately
+      - script: |
+          echo ##vso[task.setvariable variable=EnableCodesign]true
+        displayName: Set EnableCodesign
+        condition: or(eq(variables['EnableCodesign'], 'true'), and(endsWith(variables['Build.SourceBranchName'], '-stable'), not(${{ parameters.skipStableCodesign }})))
+      
+      # Running CG here as a sanity check to fail the job before any beachball bump
+      - template: templates/component-governance.yml
 
       - script: npx --no-install beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags
         displayName: Beachball Publish (Master Branch)
@@ -142,23 +148,18 @@ jobs:
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
 
+      # Ensure EnableCodesign is set properly so CG fails appropriately
       - script: |
           echo ##vso[task.setvariable variable=EnableCodesign]true
         displayName: Set EnableCodesign
         condition: or(eq(variables['EnableCodesign'], 'true'), and(endsWith(variables['Build.SourceBranchName'], '-stable'), not(${{ parameters.skipStableCodesign }})))
 
+      # We are not codesigning Desktop at this time, so turning it off. Remove this script task if we do start signing Desktop
       - script: |
-          echo ##vso[task.setvariable variable=FailCGOnAlert]true
-        displayName: Set FailCGOnAlert
-        condition: or(eq(variables['FailCGOnAlert'], 'true'), eq(variables['EnableCodesign'], 'true'))
-
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: 'Component Governance Detection'
-        inputs:
-          alertWarningLevel: Medium
-          scanType: 'Register'
-          # Uncomment this once we have codesigning for Desktop working
-          # failOnAlert: $(FailCGOnAlert) # Alerts must fail the run to prevent codesigning
+          echo ##vso[task.setvariable variable=EnableCodesign]false
+        displayName: Set EnableCodesign to false for Desktop
+      
+      - template: templates/component-governance.yml
 
   - job: RnwNativeBuildUniversal
     displayName: Build Universal
@@ -208,23 +209,14 @@ jobs:
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
             Microsoft.ReactNative.Managed.CodeGen\**
-
+      
+      # Ensure EnableCodesign is set properly so CG fails appropriately
       - script: |
           echo ##vso[task.setvariable variable=EnableCodesign]true
         displayName: Set EnableCodesign
         condition: or(eq(variables['EnableCodesign'], 'true'), and(endsWith(variables['Build.SourceBranchName'], '-stable'), not(${{ parameters.skipStableCodesign }})))
-
-      - script: |
-          echo ##vso[task.setvariable variable=FailCGOnAlert]true
-        displayName: Set FailCGOnAlert
-        condition: or(eq(variables['FailCGOnAlert'], 'true'), eq(variables['EnableCodesign'], 'true'))
-
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: 'Component Governance Detection'
-        inputs:
-          alertWarningLevel: Medium
-          scanType: 'Register'
-          failOnAlert: $(FailCGOnAlert) # Alerts must fail the run to prevent codesigning
+      
+      - template: templates/component-governance.yml
 
     # Disable for now, not sure this works on github projects anyway.
     # - task: PublishSymbols@2

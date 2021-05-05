@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 03 May 2021 14:06:32 GMT",
+      "tag": "react-native-windows_v0.64.6",
+      "version": "0.64.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Remove version from ExperimentalFeatures.props links",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4b552ca018919b71fd8ae34af92f538b0a069cd8",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 Apr 2021 18:47:14 GMT",
       "tag": "react-native-windows_v0.64.5",
       "version": "0.64.5",
