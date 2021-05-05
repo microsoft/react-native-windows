@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 05 May 2021 16:27:31 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.304",
+      "version": "0.0.0-canary.304",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rename remaining react::uwp namespaces to Microsoft::ReactNative",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "fe6d6a12c143267eb2a84a89cc417b1c43221006",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 May 2021 05:10:45 GMT",
       "tag": "react-native-windows_v0.0.0-canary.303",
       "version": "0.0.0-canary.303",
