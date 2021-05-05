@@ -17,13 +17,10 @@ const Text = require('../Text/Text');
 // const TouchableNativeFeedback = require('./Touchable/TouchableNativeFeedback');
 // const TouchableOpacity = require('./Touchable/TouchableOpacity');
 const TouchableHighlight = require('./Touchable/TouchableHighlight');
+const {PlatformColor} = require('../StyleSheet/PlatformColorValueTypes');
 // Windows]
 const View = require('./View/View');
 const invariant = require('invariant');
-// [Windows
-const ReactNative = require('react-native');
-const {PlatformColor} = ReactNative;
-// Windows]
 
 import type {AccessibilityState} from './View/ViewAccessibility';
 import type {PressEvent} from '../Types/CoreEventTypes';
@@ -264,11 +261,14 @@ type ButtonProps = $ReadOnly<{|
   ```
  */
 
-class Button extends React.Component<ButtonProps> {
+class Button extends React.Component<ButtonProps, {hover: boolean}> {
   // [Windows
-  state = {
-    hover: false,
-  };
+  constructor(props: Object) {
+    super(props);
+    this.state = {
+      hover: false,
+    };
+  }
   // Windows]
   render(): React.Node {
     const {
