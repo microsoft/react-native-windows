@@ -265,9 +265,11 @@ type ButtonProps = $ReadOnly<{|
  */
 
 class Button extends React.Component<ButtonProps> {
+  // [Windows
   state = {
     hover: false,
   };
+  // Windows]
   render(): React.Node {
     const {
       accessibilityLabel,
@@ -354,11 +356,9 @@ class Button extends React.Component<ButtonProps> {
           onMouseLeave={() => {
             if (!disabled) this.setState({hover: false});
           }}>
-          <View>
-            <Text style={textStyles} disabled={disabled}>
-              {formattedTitle}
-            </Text>
-          </View>
+          <Text style={textStyles} disabled={disabled}>
+            {formattedTitle}
+          </Text>
         </Touchable>
       );
     } else {
