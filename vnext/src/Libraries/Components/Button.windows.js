@@ -265,6 +265,9 @@ type ButtonProps = $ReadOnly<{|
  */
 
 class Button extends React.Component<ButtonProps> {
+  state = {
+    hover: false,
+  };
   render(): React.Node {
     const {
       accessibilityLabel,
@@ -334,14 +337,24 @@ class Button extends React.Component<ButtonProps> {
           onPress={onPress}
           tabIndex={tabIndex}
           touchSoundDisabled={touchSoundDisabled}
-          underlayColor={
-            color
-              ? PlatformColor('SystemColorWindowColor')
-              : PlatformColor('ButtonBackgroundPressed')
+          underlayColor={PlatformColor('SystemBaseMediumLowColor')}
+          style={
+            this.state.hover
+              ? [
+                  buttonStyles,
+                  {
+                    backgroundColor: PlatformColor('SystemListLowColor'),
+                  },
+                ]
+              : buttonStyles
           }
-          activeOpacity={0.8}
-          style={buttonStyles}>
-          <View style={color ? buttonStyles : {}}>
+          onMouseEnter={() => {
+            if (!disabled) this.setState({hover: true});
+          }}
+          onMouseLeave={() => {
+            if (!disabled) this.setState({hover: false});
+          }}>
+          <View>
             <Text style={textStyles} disabled={disabled}>
               {formattedTitle}
             </Text>
@@ -388,7 +401,7 @@ const styles = StyleSheet.create({
     },
     // [Windows
     windows: {
-      backgroundColor: PlatformColor('ButtonBackground'),
+      backgroundColor: PlatformColor('SystemBaseLowColor'),
       borderRadius: 3,
     },
     // Windows]
@@ -408,7 +421,7 @@ const styles = StyleSheet.create({
       },
       // [Windows
       windows: {
-        color: PlatformColor('ButtonForeground'),
+        color: PlatformColor('SystemBaseHighColor'),
         fontWeight: '400',
         fontSize: 14,
       },
@@ -422,7 +435,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#dfdfdf',
     },
     windows: {
-      backgroundColor: PlatformColor('ButtonBackgroundDisabled'),
+      backgroundColor: PlatformColor('SystemBaseLowColor'),
     },
   }),
   textDisabled: Platform.select({
@@ -434,7 +447,7 @@ const styles = StyleSheet.create({
     },
     // [Windows
     windows: {
-      color: PlatformColor('ButtonForegroundDisabled'),
+      color: PlatformColor('SystemBaseMediumLowColor'),
     },
     // Windows]
   }),
