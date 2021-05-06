@@ -84,6 +84,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
+      <DisableSpecificWarnings>4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <!--
         BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
         CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.

@@ -14,6 +14,10 @@
 #include <memory>
 #include <string>
 
+#if defined(USE_HERMES)
+#include <InspectorPackagerConnection.h>
+#endif
+
 namespace facebook {
 namespace react {
 struct DevSettings;
@@ -43,8 +47,15 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
       std::function<void()> onChangeCallback) override;
   virtual void StopPollingLiveReload() override;
 
+  virtual void startInspector(const std::string &packagerHost, const uint16_t packagerPort) override;
+  virtual void stopInspector() override;
+
  private:
   std::atomic_bool m_cancellation_token;
+
+#if defined(USE_HERMES)
+  std::unique_ptr<InspectorPackagerConnection> m_InspectorPackagerConnection;
+#endif
 };
 
 } // namespace Microsoft::ReactNative

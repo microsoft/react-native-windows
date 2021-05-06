@@ -35,6 +35,9 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings) noexcept {
+  if (devSettings->useDirectDebugger)
+    GetSharedDevManager()->startInspector(devSettings->sourceBundleHost, devSettings->sourceBundlePort);
+
   // Now create the instance
   std::shared_ptr<InstanceWrapper> inner = InstanceImpl::MakeNoBundle(
       std::move(instance),
