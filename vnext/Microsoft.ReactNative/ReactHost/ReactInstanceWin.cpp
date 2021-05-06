@@ -401,10 +401,10 @@ void ReactInstanceWin::Initialize() noexcept {
       switch (m_options.JsiEngine) {
         case JSIEngine::Hermes:
 #if defined(USE_HERMES)
-                devSettings->jsiRuntimeHolder =
-                    std::make_shared<facebook::react::HermesRuntimeHolder>(devSettings, m_jsMessageThread.Load());
-                devSettings->inlineSourceMap = false;
-                break;
+          devSettings->jsiRuntimeHolder =
+              std::make_shared<facebook::react::HermesRuntimeHolder>(devSettings, m_jsMessageThread.Load());
+          devSettings->inlineSourceMap = false;
+          break;
 #endif
         case JSIEngine::V8:
 #if defined(USE_V8)

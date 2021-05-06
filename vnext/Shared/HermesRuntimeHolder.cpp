@@ -86,8 +86,8 @@ HermesRuntimeHolder::HermesRuntimeHolder(
     : m_devSettings(devSettings), m_jsQueue(jsQueue) {}
 
 void HermesRuntimeHolder::initRuntime() noexcept {
-  ::hermes::vm::RuntimeConfig runtimeConfig = ::hermes::vm::RuntimeConfig();
-  std::unique_ptr<facebook::hermes::HermesRuntime> hermesRuntime = makeHermesRuntimeSystraced(runtimeConfig);
+  auto runtimeConfig = ::hermes::vm::RuntimeConfig();
+  auto hermesRuntime = makeHermesRuntimeSystraced(runtimeConfig);
   facebook::hermes::HermesRuntime &hermesRuntimeRef = *hermesRuntime;
 
   m_runtime = std::move(hermesRuntime);

@@ -2,8 +2,8 @@
 #include "pch.h"
 
 #include <folly/json.h>
-#include "InspectorPackagerConnection.h"
 #include <tracing/tracing.h>
+#include "InspectorPackagerConnection.h"
 
 namespace Microsoft::ReactNative {
 
@@ -26,8 +26,8 @@ struct InspectorProtocol {
     if (0 == event.compare(InspectorMessage_eventName_getPages)) {
       return EventType::GetPages;
     }
-    
-    if (0 == event.compare(InspectorMessage_eventName_wrappedEvent)){
+
+    if (0 == event.compare(InspectorMessage_eventName_wrappedEvent)) {
       return EventType::WrappedEvent;
     }
 
@@ -148,7 +148,7 @@ winrt::fire_and_forget InspectorPackagerConnection::disconnectAsync() {
 
 winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
   co_await winrt::resume_background();
-  
+
   std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
   m_packagerWebSocketConnection =
       std::make_shared<Microsoft::React::WinRTWebSocketResource>(m_url, std::move(certExceptions));
@@ -158,11 +158,9 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
   });
 
   m_packagerWebSocketConnection->SetOnConnect(
-      []() {
-    facebook::react::tracing::log("Inspector: Websocket connection succeeded.");
-  });
+      []() { facebook::react::tracing::log("Inspector: Websocket connection succeeded."); });
 
-  m_packagerWebSocketConnection->SetOnMessage([self = shared_from_this() ](
+  m_packagerWebSocketConnection->SetOnMessage([self = shared_from_this()](
                                                   size_t length, const std::string &message, bool isBinary) {
     assert(!isBinary && "We don't expect any binary messages !");
     folly::dynamic messageDyn = folly::parseJson(message);

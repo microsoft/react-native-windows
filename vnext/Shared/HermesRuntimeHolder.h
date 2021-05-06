@@ -16,7 +16,7 @@ class HermesRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
  public:
   std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept override;
 
-HermesRuntimeHolder(
+  HermesRuntimeHolder(
       std::shared_ptr<facebook::react::DevSettings> devSettings,
       std::shared_ptr<facebook::react::MessageQueueThread> jsQueue) noexcept;
 

@@ -4,8 +4,8 @@
 #include "pch.h"
 
 #include <TraceLoggingProvider.h>
-#include <winmeta.h>
 #include <jsi/jsi.h>
+#include <winmeta.h>
 #include "tracing/fbsystrace.h"
 
 #include <array>
