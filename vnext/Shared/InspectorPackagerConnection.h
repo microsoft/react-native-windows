@@ -1,8 +1,6 @@
 #pragma once
 
 #include <WinRTWebSocketResource.h>
-#include <hermes/DebuggerAPI.h>
-#include <hermes/hermes.h>
 #include <jsinspector/InspectorInterfaces.h>
 
 namespace Microsoft::ReactNative {

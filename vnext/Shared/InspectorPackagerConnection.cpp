@@ -5,6 +5,12 @@
 #include <tracing/tracing.h>
 #include "InspectorPackagerConnection.h"
 
+namespace facebook {
+namespace react {
+IDestructible::~IDestructible() {}
+} // namespace react
+} // namespace facebook
+
 namespace Microsoft::ReactNative {
 
 namespace {
