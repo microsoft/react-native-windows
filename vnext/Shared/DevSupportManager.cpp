@@ -237,19 +237,24 @@ void DevSupportManager::StopPollingLiveReload() {
   m_cancellation_token = true;
 }
 
-void DevSupportManager::startInspector(const std::string &packagerHost, const uint16_t packagerPort) {
+void DevSupportManager::startInspector(
+    [[maybe_unused]] const std::string &packagerHost,
+    [[maybe_unused]] const uint16_t packagerPort) {
 #ifdef USE_HERMES
   std::string packageName("RNW");
-  if (winrt::Windows::ApplicationModel::Package::Current())
-    std::string packageName = winrt::to_string(winrt::Windows::ApplicationModel::Package::Current().DisplayName());
+  if (winrt::Windows::ApplicationModel::Package::Current()) {
+    packageName = winrt::to_string(winrt::Windows::ApplicationModel::Package::Current().DisplayName());
+  }
 
   std::string deviceName("RNWHost");
   auto hostNames = winrt::Windows::Networking::Connectivity::NetworkInformation::GetHostNames();
-  if (hostNames && hostNames.First() && hostNames.First().Current())
+  if (hostNames && hostNames.First() && hostNames.First().Current()) {
     deviceName = winrt::to_string(hostNames.First().Current().DisplayName());
+  }
 
-  m_InspectorPackagerConnection = std::make_unique<InspectorPackagerConnection>(
+  m_InspectorPackagerConnection = std::make_shared<InspectorPackagerConnection>(
       facebook::react::DevServerHelper::get_InspectorDeviceUrl(packagerHost, packagerPort, deviceName, packageName));
+  long use = m_InspectorPackagerConnection.use_count();
   m_InspectorPackagerConnection->connectAsync();
 #endif
 }

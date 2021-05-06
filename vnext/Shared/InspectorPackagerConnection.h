@@ -7,7 +7,7 @@
 
 namespace Microsoft::ReactNative {
 
-class InspectorPackagerConnection final {
+class InspectorPackagerConnection : public std::enable_shared_from_this<InspectorPackagerConnection> {
  public:
   InspectorPackagerConnection(std::string &&url);
   winrt::fire_and_forget connectAsync();

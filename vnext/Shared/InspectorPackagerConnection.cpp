@@ -23,14 +23,22 @@ struct InspectorProtocol {
 
   static EventType getEventType(const folly::dynamic &messageFromPackager) {
     std::string event = messageFromPackager.at(InspectorProtocol::InspectorMessage_EVENT).getString();
-    if (0 == event.compare(InspectorMessage_eventName_getPages))
+    if (0 == event.compare(InspectorMessage_eventName_getPages)) {
       return EventType::GetPages;
-    if (0 == event.compare(InspectorMessage_eventName_wrappedEvent))
+    }
+    
+    if (0 == event.compare(InspectorMessage_eventName_wrappedEvent)){
       return EventType::WrappedEvent;
-    if (0 == event.compare(InspectorMessage_eventName_connect))
+    }
+
+    if (0 == event.compare(InspectorMessage_eventName_connect)) {
       return EventType::Connect;
-    if (0 == event.compare(InspectorMessage_eventName_disconnect))
+    }
+
+    if (0 == event.compare(InspectorMessage_eventName_disconnect)) {
       return EventType::Disconnect;
+    }
+
     assert(false && "Unknown event!");
     std::abort();
   }
@@ -140,21 +148,22 @@ winrt::fire_and_forget InspectorPackagerConnection::disconnectAsync() {
 
 winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
   co_await winrt::resume_background();
-
+  
   std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
   m_packagerWebSocketConnection =
       std::make_shared<Microsoft::React::WinRTWebSocketResource>(m_url, std::move(certExceptions));
 
-  m_packagerWebSocketConnection->SetOnError([this](const Microsoft::React::IWebSocketResource::Error &err) {
+  m_packagerWebSocketConnection->SetOnError([](const Microsoft::React::IWebSocketResource::Error &err) {
     facebook::react::tracing::error(err.Message.c_str());
-    assert(false && "Websocket connection failed !");
   });
 
-  m_packagerWebSocketConnection->SetOnConnect([this]() {
+  m_packagerWebSocketConnection->SetOnConnect(
+      []() {
     facebook::react::tracing::log("Inspector: Websocket connection succeeded.");
   });
 
-  m_packagerWebSocketConnection->SetOnMessage([this](size_t length, const std::string &message, bool isBinary) {
+  m_packagerWebSocketConnection->SetOnMessage([self = shared_from_this() ](
+                                                  size_t length, const std::string &message, bool isBinary) {
     assert(!isBinary && "We don't expect any binary messages !");
     folly::dynamic messageDyn = folly::parseJson(message);
 
@@ -167,39 +176,39 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
             InspectorProtocol::constructGetPagesResponsePayloadForPackager(inspetorPages));
 
         std::string responsestr = folly::toJson(response);
-        sendMessageToPackager(std::move(responsestr));
+        self->sendMessageToPackager(std::move(responsestr));
       } break;
 
       case InspectorProtocol::EventType::WrappedEvent: {
         folly::dynamic payload = messageDyn[InspectorProtocol::InspectorMessage_PAYLOAD];
         int64_t pageId = payload[InspectorProtocol::InspectorMessage_PAGEID].asInt();
 
-        if (m_localConnections.find(pageId) == m_localConnections.end()) {
+        if (self->m_localConnections.find(pageId) == self->m_localConnections.end()) {
           break;
         }
 
         std::string wrappedEvent = payload[InspectorProtocol::InspectorMessage_eventName_wrappedEvent].getString();
-        sendMessageToVM(pageId, std::move(wrappedEvent));
+        self->sendMessageToVM(pageId, std::move(wrappedEvent));
       } break;
 
       case InspectorProtocol::EventType::Connect: {
         folly::dynamic payload = messageDyn[InspectorProtocol::InspectorMessage_PAYLOAD];
         int64_t pageId = payload[InspectorProtocol::InspectorMessage_PAGEID].asInt();
 
-        if (m_localConnections.find(pageId) != m_localConnections.end()) {
+        if (self->m_localConnections.find(pageId) != self->m_localConnections.end()) {
           break;
         }
 
-        m_localConnections[pageId] = facebook::react::getInspectorInstance().connect(
-            static_cast<int>(pageId), std::make_unique<RemoteConnection>(pageId, *this));
+        self->m_localConnections[pageId] = facebook::react::getInspectorInstance().connect(
+            static_cast<int>(pageId), std::make_unique<RemoteConnection>(pageId, *self));
       } break;
 
       case InspectorProtocol::EventType::Disconnect: {
         folly::dynamic payload = messageDyn[InspectorProtocol::InspectorMessage_PAYLOAD];
         int64_t pageId = payload[InspectorProtocol::InspectorMessage_PAGEID].asInt();
-        if (m_localConnections.find(pageId) != m_localConnections.end()) {
-          m_localConnections[pageId]->disconnect();
-          m_localConnections.erase(pageId);
+        if (self->m_localConnections.find(pageId) != self->m_localConnections.end()) {
+          self->m_localConnections[pageId]->disconnect();
+          self->m_localConnections.erase(pageId);
         }
 
       } break;

@@ -54,7 +54,7 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
   std::atomic_bool m_cancellation_token;
 
 #if defined(USE_HERMES)
-  std::unique_ptr<InspectorPackagerConnection> m_InspectorPackagerConnection;
+  std::shared_ptr<InspectorPackagerConnection> m_InspectorPackagerConnection;
 #endif
 };
 
