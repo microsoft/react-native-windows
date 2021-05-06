@@ -13,6 +13,10 @@ parameters:
   displayName: Skip Codesigning for Stable Branch
   type: boolean
   default: false
+- name: stopOnNoCI
+  displayName: Stop if latest commit is ***NO_CI***
+  type: boolean
+  default: true
 
 variables:
   - template: variables/msbuild.yml
@@ -50,6 +54,11 @@ jobs:
 
       - script: yarn build
         displayName: yarn build
+
+      - powershell: |
+          Write-Error "Stopping because commit message contains ***NO_CI***."
+        displayName: Stop pipeline if latest commit message contains ***NO_CI***
+        condition: and(${{ parameters.stopOnNoCI }}, contains(variables['Build.SourceVersionMessage'], '***NO_CI***'))
 
       - script: |
           echo ##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish
