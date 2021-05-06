@@ -339,13 +339,15 @@ class Button extends React.Component<ButtonProps, {hover: boolean}> {
           onPress={onPress}
           tabIndex={tabIndex}
           touchSoundDisabled={touchSoundDisabled}
-          underlayColor={PlatformColor('SystemBaseMediumLowColor')}
+          underlayColor={PlatformColor('ButtonBackgroundPressed')}
           style={
             this.state.hover
               ? [
                   buttonStyles,
                   {
-                    backgroundColor: PlatformColor('SystemListLowColor'),
+                    backgroundColor: PlatformColor(
+                      'ButtonBackgroundPointerOver',
+                    ),
                   },
                 ]
               : buttonStyles
@@ -401,7 +403,7 @@ const styles = StyleSheet.create({
     },
     // [Windows
     windows: {
-      backgroundColor: PlatformColor('SystemBaseLowColor'),
+      backgroundColor: PlatformColor('ButtonBackground'),
       borderRadius: 3,
     },
     // Windows]
@@ -421,7 +423,7 @@ const styles = StyleSheet.create({
       },
       // [Windows
       windows: {
-        color: PlatformColor('SystemBaseHighColor'),
+        color: PlatformColor('ButtonForeground'),
         fontWeight: '400',
         fontSize: 14,
       },
@@ -435,7 +437,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#dfdfdf',
     },
     windows: {
-      backgroundColor: PlatformColor('SystemBaseLowColor'),
+      backgroundColor: PlatformColor('ButtonBackgroundDisabled'),
     },
   }),
   textDisabled: Platform.select({
@@ -447,7 +449,7 @@ const styles = StyleSheet.create({
     },
     // [Windows
     windows: {
-      color: PlatformColor('SystemBaseMediumLowColor'),
+      color: PlatformColor('ButtonForegroundDisabled'),
     },
     // Windows]
   }),
