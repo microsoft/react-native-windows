@@ -3,7 +3,6 @@
 
 #include <CreateModules.h>
 #include <Modules/WebSocketModule.h>
-#include <Modules/WebSocketModuleUwp.h>
 #include <QuirkSettings.h>
 #include <React.h>
 #include <ReactPropertyBag.h>
@@ -28,9 +27,7 @@ std::shared_ptr<IWebSocketResource> IWebSocketResource::Make(std::string &&urlSt
 
 std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
     Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept {
-  if (context && QuirkSettings::GetUseLegacyWebSocketModule(ReactPropertyBag(context->Properties()))) {
-    return std::make_unique<Microsoft::ReactNative::LegacyWebSocketModule>();
-  }
+
   return std::make_unique<WebSocketModule>();
 }
 
