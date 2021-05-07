@@ -5,7 +5,6 @@
 #include "WebSocketModuleUwp.h"
 #include <Utils/CppWinrtLessExceptions.h>
 #include <WinInet.h>
-#include <Windows.Storage.Streams.h>
 #include <cdebug.h>
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Security.Cryptography.h>
@@ -112,10 +111,13 @@ void LegacyWebSocketModule::WebSocket::connect(
       std::string response;
 
       // Use ABI to avoid throwing exceptions on standard errors
-      winrt::com_ptr<ABI::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> abiArgs{
-          args.as<ABI::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs>()};
-      winrt::com_ptr<ABI::Windows::Storage::Streams::IDataReader> abiReader;
-      auto hr = abiArgs->GetDataReader(abiReader.put());
+      auto abiArgs = reinterpret_cast<
+          winrt::impl::abi_t<winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> *>(
+          winrt::get_abi(
+              static_cast<winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs const &>(
+                  args)));
+      winrt::com_ptr<winrt::Windows::Storage::Streams::IDataReader> abiReader;
+      auto hr = abiArgs->GetDataReader(abiReader.put_void());
       if (FAILED(hr)) {
         onError(connectionId, hr);
         return;

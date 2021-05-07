@@ -238,6 +238,10 @@ struct TerminateHandlerRestorer {
   std::terminate_handler Handler;
 };
 
+#pragma warning(push)
+#pragma warning(disable : 4611) // interaction between '_setjmp' and C++ object destruction is non-portable
+                                // Comment: this function must be used only for checking std::terminate in limited
+                                // scopes. It may cause memory leaks and other issues if not used with care.
 template <class TLambda>
 inline bool ExpectTerminateCore(TLambda const &lambda) {
   static jmp_buf buf;
@@ -253,6 +257,7 @@ inline bool ExpectTerminateCore(TLambda const &lambda) {
     return true; // executed if longjmp is executed in the terminate handler.
   }
 }
+#pragma warning(pop)
 
 template <class TLambda>
 inline void
