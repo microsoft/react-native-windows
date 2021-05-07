@@ -872,7 +872,6 @@ void ReactInstanceWin::AttachMeasuredRootView(
     return;
 
   int64_t rootTag = -1;
-  rootView->ResetView();
 
 #ifdef USE_FABRIC
   if (m_options.EnableFabric()) {

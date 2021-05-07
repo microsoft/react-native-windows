@@ -251,13 +251,20 @@ void FabricUIManager::startSurface(
       surfaceId,
       moduleName,
       initialProps,
-      std::move(constraints), // layout constraints
+      constraints, // layout constraints
       context // layout context
   );
 }
 
 void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept {
   m_surfaceManager->stopSurface(surfaceId);
+}
+
+facebook::react::Size FabricUIManager::measureSurface(
+    facebook::react::SurfaceId surfaceId,
+    const facebook::react::LayoutConstraints &layoutConstraints,
+    const facebook::react::LayoutContext &layoutContext) const noexcept {
+  return m_surfaceManager->measureSurface(surfaceId, layoutConstraints, layoutContext);
 }
 
 void FabricUIManager::constraintSurfaceLayout(

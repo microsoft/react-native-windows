@@ -327,7 +327,7 @@
     <ClInclude Include="Views\PickerViewManager.h" />
     <ClInclude Include="Views\PopupViewManager.h" />
     <ClInclude Include="Views\RawTextViewManager.h" />
-    <ClInclude Include="Views\ReactRootControl.h" />
+    <ClInclude Include="Views\ReactViewInstance.h" />
     <ClInclude Include="Views\RefreshControlManager.h" />
     <ClInclude Include="Views\RootViewManager.h" />
     <ClInclude Include="Views\ScrollContentViewManager.h" />
@@ -620,7 +620,7 @@
     <ClCompile Include="Views\PickerViewManager.cpp" />
     <ClCompile Include="Views\PopupViewManager.cpp" />
     <ClCompile Include="Views\RawTextViewManager.cpp" />
-    <ClCompile Include="Views\ReactRootControl.cpp" />
+    <ClCompile Include="Views\ReactViewInstance.cpp" />
     <ClCompile Include="Views\RefreshControlManager.cpp" />
     <ClCompile Include="Views\RootViewManager.cpp" />
     <ClCompile Include="Views\ScrollContentViewManager.cpp" />
