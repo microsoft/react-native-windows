@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 07 May 2021 05:07:30 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.305",
+      "version": "0.0.0-canary.305",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix ReactContext::DispatchEvent",
+            "author": "vmorozov@microsoft.com",
+            "commit": "56e264ea58a4217968397047b145bcf5bfb085da",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 May 2021 16:27:31 GMT",
       "tag": "react-native-windows_v0.0.0-canary.304",
       "version": "0.0.0-canary.304",
