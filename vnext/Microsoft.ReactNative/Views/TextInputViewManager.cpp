@@ -203,7 +203,7 @@ void TextInputShadowNode::registerEvents() {
     m_passwordBoxPasswordChangingRevoker = {};
     auto textBox = control.as<xaml::Controls::TextBox>();
     m_textBoxTextChangingRevoker = textBox.TextChanging(
-      winrt::auto_revoke, [=](auto &&, auto &&) { dispatchTextInputChangeEvent(textBox.Text()); });
+        winrt::auto_revoke, [=](auto &&, auto &&) { dispatchTextInputChangeEvent(textBox.Text()); });
   } else {
     m_textBoxTextChangingRevoker = {};
     auto passwordBox = control.as<xaml::Controls::PasswordBox>();
