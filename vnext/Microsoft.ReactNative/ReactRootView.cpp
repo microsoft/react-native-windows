@@ -409,9 +409,8 @@ void ReactRootView::ReactViewHost(Mso::React::IReactViewHost *viewHost) noexcept
   }
 }
 
-Windows::Foundation::Size ReactRootView::MeasureOverride(Windows::Foundation::Size const& availableSize) const {
-
-  Windows::Foundation::Size size { 0.0f, 0.0f };
+Windows::Foundation::Size ReactRootView::MeasureOverride(Windows::Foundation::Size const &availableSize) const {
+  Windows::Foundation::Size size{0.0f, 0.0f};
 
   for (xaml::UIElement child : Children()) {
     child.Measure(availableSize);
@@ -425,7 +424,7 @@ Windows::Foundation::Size ReactRootView::MeasureOverride(Windows::Foundation::Si
 #ifdef USE_FABRIC
   if (m_isInitialized && m_reactOptions->EnableFabric() && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-        winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+            winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
       facebook::react::LayoutContext context;
       // TODO scaling factor
       context.pointScaleFactor = 1; // pointScaleFactor_;
@@ -437,14 +436,16 @@ Windows::Foundation::Size ReactRootView::MeasureOverride(Windows::Foundation::Si
 
       // TODO should support MaxHeight/MaxWidth props?
       constraints.minimumSize.height = constraints.maximumSize.height =
-static_cast<facebook::react::Float>(availableSize.Height); constraints.minimumSize.width = constraints.maximumSize.width
-= static_cast<facebook::react::Float>(availableSize.Width); constraints.layoutDirection = FlowDirection() ==
-xaml::FlowDirection::LeftToRight ? facebook::react::LayoutDirection::LeftToRight :
-facebook::react::LayoutDirection::RightToLeft;
+          static_cast<facebook::react::Float>(availableSize.Height);
+      constraints.minimumSize.width = constraints.maximumSize.width =
+          static_cast<facebook::react::Float>(availableSize.Width);
+      constraints.layoutDirection = FlowDirection() == xaml::FlowDirection::LeftToRight
+          ? facebook::react::LayoutDirection::LeftToRight
+          : facebook::react::LayoutDirection::RightToLeft;
 
-      auto yogaSize = fabricuiManager->measureSurface(
-          static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
-      return {std::min(yogaSize.width, availableSize.Width) , std::min(yogaSize.height, availableSize.Height)};
+      auto yogaSize =
+          fabricuiManager->measureSurface(static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
+      return {std::min(yogaSize.width, availableSize.Width), std::min(yogaSize.height, availableSize.Height)};
     }
   }
 #endif
@@ -453,7 +454,6 @@ facebook::react::LayoutDirection::RightToLeft;
 }
 
 Windows::Foundation::Size ReactRootView::ArrangeOverride(Windows::Foundation::Size finalSize) const {
-
   for (xaml::UIElement child : Children()) {
     child.Arrange(winrt::Rect(0, 0, finalSize.Width, finalSize.Height));
   }
@@ -461,7 +461,7 @@ Windows::Foundation::Size ReactRootView::ArrangeOverride(Windows::Foundation::Si
 #ifdef USE_FABRIC
   if (m_isInitialized && m_reactOptions->EnableFabric() && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-        winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+            winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
       facebook::react::LayoutContext context;
       // TODO scaling factor
       context.pointScaleFactor = 1; // pointScaleFactor_;
@@ -473,10 +473,12 @@ Windows::Foundation::Size ReactRootView::ArrangeOverride(Windows::Foundation::Si
 
       // TODO should support MaxHeight/MaxWidth props?
       constraints.minimumSize.height = constraints.maximumSize.height =
-static_cast<facebook::react::Float>(finalSize.Height); constraints.minimumSize.width = constraints.maximumSize.width =
-static_cast<facebook::react::Float>(finalSize.Width); constraints.layoutDirection = FlowDirection() ==
-xaml::FlowDirection::LeftToRight ? facebook::react::LayoutDirection::LeftToRight :
-facebook::react::LayoutDirection::RightToLeft;
+          static_cast<facebook::react::Float>(finalSize.Height);
+      constraints.minimumSize.width = constraints.maximumSize.width =
+          static_cast<facebook::react::Float>(finalSize.Width);
+      constraints.layoutDirection = FlowDirection() == xaml::FlowDirection::LeftToRight
+          ? facebook::react::LayoutDirection::LeftToRight
+          : facebook::react::LayoutDirection::RightToLeft;
 
       fabricuiManager->constraintSurfaceLayout(
           static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);

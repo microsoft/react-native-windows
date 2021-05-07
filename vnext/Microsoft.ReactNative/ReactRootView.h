@@ -55,7 +55,7 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
   void UpdateRootView() noexcept;
   void UninitRootView() noexcept;
 
-  Windows::Foundation::Size MeasureOverride(Windows::Foundation::Size const& availableSize) const;
+  Windows::Foundation::Size MeasureOverride(Windows::Foundation::Size const &availableSize) const;
   Windows::Foundation::Size ArrangeOverride(Windows::Foundation::Size finalSize) const;
 
   void blur(::Microsoft::ReactNative::XamlView const &xamlView) noexcept;
