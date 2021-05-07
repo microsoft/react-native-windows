@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include <CreateModules.h>
-#include <Modules/WebSocketModule.h>
 #include <QuirkSettings.h>
 #include <React.h>
 #include <ReactPropertyBag.h>
@@ -23,12 +22,6 @@ namespace Microsoft::React {
 std::shared_ptr<IWebSocketResource> IWebSocketResource::Make(std::string &&urlString) {
   std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
   return std::make_shared<WinRTWebSocketResource>(std::move(urlString), std::move(certExceptions));
-}
-
-std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
-    Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept {
-
-  return std::make_unique<WebSocketModule>();
 }
 
 } // namespace Microsoft::React
