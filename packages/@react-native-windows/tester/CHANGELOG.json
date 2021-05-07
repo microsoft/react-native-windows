@@ -2,6 +2,36 @@
   "name": "@react-native-windows/tester",
   "entries": [
     {
+      "date": "Fri, 07 May 2021 05:07:30 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.305",
+            "author": "vmorozov@microsoft.com",
+            "commit": "56e264ea58a4217968397047b145bcf5bfb085da",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 05 May 2021 16:27:31 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.304",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "fe6d6a12c143267eb2a84a89cc417b1c43221006",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 May 2021 05:10:45 GMT",
       "tag": "@react-native-windows/tester_v0.0.1",
       "version": "0.0.1",
