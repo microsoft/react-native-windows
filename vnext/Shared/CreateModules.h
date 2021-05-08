@@ -34,10 +34,4 @@ namespace Microsoft::React {
 
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept;
 
-// This method is to create a unique_ptr of a native WebSocket module.
-// @param An IReactContext smart pointer to provide runtime configuration values.
-// @return Native WebSocket module.
-std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
-    Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
-
 } // namespace Microsoft::React

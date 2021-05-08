@@ -23,9 +23,6 @@ namespace Microsoft.ReactNative
     DOC_DEFAULT("true")
     static void SetMatchAndroidAndIOSStretchBehavior(ReactInstanceSettings settings, Boolean value);
 
-    DOC_STRING("Transitional setting allowing to use the deprecated `LegacyWebSocketModule`.")
-    static void SetUseLegacyWebSocketModule(ReactInstanceSettings settings, Boolean value);
-
     DOC_STRING("Runtime setting allowing Networking (HTTP, WebSocket) connections to skip certificate validation.")
     static void SetAcceptSelfSigned(ReactInstanceSettings settings, Boolean value);
 
