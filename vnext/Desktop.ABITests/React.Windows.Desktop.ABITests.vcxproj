@@ -67,6 +67,7 @@
       <PreprocessorDefinitions>
         _CONSOLE;
         CORE_ABI;
+        MSO_MOTIFCPP;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

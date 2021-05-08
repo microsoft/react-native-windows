@@ -4,6 +4,7 @@
 #pragma once
 #ifndef MSO_MOTIFCPP_TESTINFO_H
 #define MSO_MOTIFCPP_TESTINFO_H
+#ifdef MSO_MOTIFCPP
 
 #include <memory>
 #include <vector>
@@ -165,4 +166,5 @@ TMethodInfo TestMethodInfoReg<TMethodInfo>::Instance;
 
 } // namespace Mso::UnitTests::Internal
 
+#endif // MSO_MOTIFCPP
 #endif // MSO_MOTIFCPP_TESTINFO_H

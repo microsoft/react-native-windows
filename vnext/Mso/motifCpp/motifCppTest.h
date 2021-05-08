@@ -4,6 +4,7 @@
 #pragma once
 #ifndef MSO_MOTIFCPP_MOTIFCPPTEST_H
 #define MSO_MOTIFCPP_MOTIFCPPTEST_H
+#ifdef MSO_MOTIFCPP
 
 #include <csetjmp>
 #include <csignal>
@@ -498,4 +499,5 @@ inline void ExpectVEC(const Fn &fn, const WCHAR *message = L"") {
 
 } // namespace TestAssert
 
+#endif // MSO_MOTIFCPP
 #endif // MSO_MOTIFCPP_MOTIFCPPTEST_H
