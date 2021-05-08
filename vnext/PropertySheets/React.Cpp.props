@@ -67,6 +67,10 @@
     <Import Project="$(ConfigurationType)\$(Configuration).props" />
   </ImportGroup>
 
+  <PropertyGroup>
+    <CppStandard Condition="'$(CppStandard)'==''">stdcpp17</CppStandard>
+  </PropertyGroup>
+
   <ItemDefinitionGroup>
     <ClCompile>
       <!--
@@ -94,7 +98,7 @@
         WINRT_LEAN_AND_MEAN;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>$(CppStandard)</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
