@@ -37,6 +37,9 @@ TEST_CLASS(ScriptStoreIntegrationTest)
     const auto runtimeSignature = JSRuntimeSignature{"V8", 8};
     const char *prepareTag = "prepareTag";
     preparedScriptStore->persistPreparedScript(script, scriptSignature, runtimeSignature, "prepareTag");
+
+    auto prepd = preparedScriptStore->tryGetPreparedScript(scriptSignature, runtimeSignature, "prepareTag");
+    auto size = prepd->size();
   }
 };
 } // namespace Microsoft::JSI::Test
