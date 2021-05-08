@@ -273,7 +273,7 @@ inline MethodResultCallback ReactModuleBuilderMock::ResolveCallback(
     std::index_sequence<I...>,
     Mso::Promise<bool> const &promise) noexcept {
   return [this, resolve, promise](IJSValueWriter const &writer) noexcept {
-    std::tuple<RemoveConstRef<TArgs>...> args;
+    [[maybe_unused]] std::tuple<RemoveConstRef<TArgs>...> args;
     ReadArgs(MakeJSValueTreeReader(TakeJSValue(writer)), std::get<I>(args)...);
     resolve(std::get<I>(args)...);
     m_isResolveCallbackCalled = true;
@@ -287,7 +287,7 @@ inline MethodResultCallback ReactModuleBuilderMock::RejectCallback(
     std::index_sequence<I...>,
     Mso::Promise<bool> const &promise) noexcept {
   return [this, reject, promise](IJSValueWriter const &writer) noexcept {
-    std::tuple<RemoveConstRef<TArgs>...> args;
+    [[maybe_unused]] std::tuple<RemoveConstRef<TArgs>...> args;
     ReadArgs(MakeJSValueTreeReader(TakeJSValue(writer)), std::get<I>(args)...);
     reject(std::get<I>(args)...);
     m_isRejectCallbackCalled = true;

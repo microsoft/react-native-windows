@@ -79,6 +79,7 @@
         RN_PLATFORM=windesktop;
         RN_EXPORT=;
         JSI_EXPORT=;
+        MSO_MOTIFCPP;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
