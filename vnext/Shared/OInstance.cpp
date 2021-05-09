@@ -301,6 +301,10 @@ InstanceImpl::InstanceImpl(
   facebook::react::tracing::initializeETW();
 #endif
 
+  if (m_devSettings->useDirectDebugger && !m_devSettings->useWebDebugger) {
+    m_devManager->startInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
+  }
+
   // Default (common) NativeModules
   auto modules = GetDefaultNativeModules(nativeQueue);
 
@@ -488,6 +492,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 }
 
 InstanceImpl::~InstanceImpl() {
+  m_devManager->stopInspector();
   m_nativeQueue->quitSynchronous();
 }
 

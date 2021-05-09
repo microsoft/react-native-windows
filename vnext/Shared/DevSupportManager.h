@@ -14,7 +14,7 @@
 #include <memory>
 #include <string>
 
-#if defined(USE_HERMES)
+#if defined(HERMES_ENABLE_DEBUGGER)
 #include <InspectorPackagerConnection.h>
 #endif
 
@@ -53,7 +53,7 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
  private:
   std::atomic_bool m_cancellation_token;
 
-#if defined(USE_HERMES)
+#if defined(HERMES_ENABLE_DEBUGGER)
   std::shared_ptr<InspectorPackagerConnection> m_InspectorPackagerConnection;
 #endif
 };

@@ -1,6 +1,8 @@
 
 #include "pch.h"
 
+#ifdef HERMES_ENABLE_DEBUGGER
+
 #include <folly/json.h>
 #include <tracing/tracing.h>
 #include "InspectorPackagerConnection.h"
@@ -227,3 +229,5 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
 }
 
 } // namespace Microsoft::ReactNative
+
+#endif

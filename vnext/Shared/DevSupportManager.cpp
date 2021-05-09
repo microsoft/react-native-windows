@@ -21,7 +21,7 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
-#ifdef USE_HERMES
+#ifdef HERMES_ENABLE_DEBUGGER
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.Networking.Connectivity.h>
 #endif
@@ -240,7 +240,7 @@ void DevSupportManager::StopPollingLiveReload() {
 void DevSupportManager::startInspector(
     [[maybe_unused]] const std::string &packagerHost,
     [[maybe_unused]] const uint16_t packagerPort) {
-#ifdef USE_HERMES
+#ifdef HERMES_ENABLE_DEBUGGER
   std::string packageName("RNW");
   if (winrt::Windows::ApplicationModel::Package::Current()) {
     packageName = winrt::to_string(winrt::Windows::ApplicationModel::Package::Current().DisplayName());
@@ -260,9 +260,11 @@ void DevSupportManager::startInspector(
 }
 
 void DevSupportManager::stopInspector() {
-#ifdef USE_HERMES
-  m_InspectorPackagerConnection->disconnectAsync();
-  m_InspectorPackagerConnection = nullptr;
+#ifdef HERMES_ENABLE_DEBUGGER
+  if (m_InspectorPackagerConnection) {
+    m_InspectorPackagerConnection->disconnectAsync();
+    m_InspectorPackagerConnection = nullptr;
+  }
 #endif
 }
 
