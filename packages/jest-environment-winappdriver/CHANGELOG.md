@@ -1,8 +1,16 @@
 # Change Log - jest-environment-winappdriver
 
-This log was last generated on Sat, 08 May 2021 05:05:56 GMT and should not be manually modified.
+This log was last generated on Sun, 09 May 2021 05:06:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.6-9
+
+Sun, 09 May 2021 05:06:22 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.6-6 (vmorozov@microsoft.com)
 
 ## 1.1.6-8
 

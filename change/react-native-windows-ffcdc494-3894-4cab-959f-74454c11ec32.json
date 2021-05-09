@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move fmt project into 'Dependencies (External)' folder",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
