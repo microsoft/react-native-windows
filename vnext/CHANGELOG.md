@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 07 May 2021 05:07:30 GMT and should not be manually modified.
+This log was last generated on Sun, 09 May 2021 05:06:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.307
+
+Sun, 09 May 2021 05:06:22 GMT
+
+### Changes
+
+- Fix warnings and improve C++ includes (vmorozov@microsoft.com)
+- Move fmt project into 'Dependencies (External)' folder (vmorozov@microsoft.com)
+
+## 0.0.0-canary.306
+
+Sat, 08 May 2021 05:05:56 GMT
+
+### Changes
+
+- Update Button Styling for Windows (34109996+chiaramooney@users.noreply.github.com)
+- Remove legacy UWP WebSocket module (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.305
 

@@ -7,7 +7,6 @@
 
 #include <Shared/DevServerHelper.h>
 #include <Utils/CppWinrtLessExceptions.h>
-#include <Windows.Storage.Streams.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Foundation.h>
@@ -94,10 +93,13 @@ winrt::fire_and_forget PackagerConnection::Connect() {
         try {
           if (auto strongThis = weakThis.lock()) {
             // Use ABI to avoid throwing exceptions on standard errors
-            winrt::com_ptr<ABI::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> abiArgs{
-                args.as<ABI::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs>()};
-            winrt::com_ptr<ABI::Windows::Storage::Streams::IDataReader> abiReader;
-            auto hr = abiArgs->GetDataReader(abiReader.put());
+            auto abiArgs = reinterpret_cast<
+                winrt::impl::abi_t<winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs> *>(
+                winrt::get_abi(
+                    static_cast<winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs const &>(
+                        args)));
+            winrt::com_ptr<winrt::Windows::Storage::Streams::IDataReader> abiReader;
+            auto hr = abiArgs->GetDataReader(abiReader.put_void());
             if (FAILED(hr)) {
               return;
             }

@@ -51,11 +51,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
   std::vector<facebook::react::NativeModuleDescription> modules;
 
   modules.emplace_back(
-      "WebSocketModule",
-      [context]() { return Microsoft::React::CreateWebSocketModule(Mso::CntPtr<Mso::React::IReactContext>(context)); },
-      jsMessageQueue);
-
-  modules.emplace_back(
       Microsoft::React::NetworkingModule::Name,
       []() { return std::make_unique<Microsoft::React::NetworkingModule>(); },
       jsMessageQueue);

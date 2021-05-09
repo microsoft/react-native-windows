@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 09 May 2021 05:06:22 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.307",
+      "version": "0.0.0-canary.307",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix warnings and improve C++ includes",
+            "author": "vmorozov@microsoft.com",
+            "commit": "153412a0516c875b032a026b9590770dd9c858e6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Move fmt project into 'Dependencies (External)' folder",
+            "author": "vmorozov@microsoft.com",
+            "commit": "0385e19481effb782ab9c0cb36f1fe96863709a3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 08 May 2021 05:05:56 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.306",
+      "version": "0.0.0-canary.306",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update Button Styling for Windows",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "7a72b1e6e1630794067124d445105e0c3ba14f18",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove legacy UWP WebSocket module",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "41197b331209c717057b14c827a808b8c11a06e1",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 07 May 2021 05:07:30 GMT",
       "tag": "react-native-windows_v0.0.0-canary.305",
       "version": "0.0.0-canary.305",

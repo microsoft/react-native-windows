@@ -4,6 +4,7 @@
 #pragma once
 #ifndef MSO_MOTIFCPP_ASSERT_MOTIFAPI_H
 #define MSO_MOTIFCPP_ASSERT_MOTIFAPI_H
+#ifdef MSO_MOTIFCPP
 
 #include "motifCppTest.h"
 
@@ -13,4 +14,5 @@
 
 #define EndSupportFileMap()
 
+#endif // MSO_MOTIFCPP
 #endif // MSO_MOTIFCPP_ASSERT_MOTIFAPI_H
