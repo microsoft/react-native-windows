@@ -35,7 +35,6 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings) noexcept {
-
   // Now create the instance
   std::shared_ptr<InstanceWrapper> inner = InstanceImpl::MakeNoBundle(
       std::move(instance),
