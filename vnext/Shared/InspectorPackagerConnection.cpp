@@ -27,7 +27,7 @@ struct InspectorProtocol {
   static constexpr std::string_view Message_eventName_disconnect = "disconnect";
 
   static constexpr std::string_view Message_EVENT = "event";
-  
+
   enum class EventType { GetPages, WrappedEvent, Connect, Disconnect };
 
   static EventType getEventType(const folly::dynamic &messageFromPackager) {
@@ -60,8 +60,7 @@ struct InspectorProtocol {
         response[InspectorProtocol::Message_EVENT] = InspectorProtocol::Message_eventName_getPages;
         break;
       case EventType::WrappedEvent:
-        response[InspectorProtocol::Message_EVENT] =
-            InspectorProtocol::Message_eventName_wrappedEvent;
+        response[InspectorProtocol::Message_EVENT] = InspectorProtocol::Message_eventName_wrappedEvent;
         break;
       case EventType::Connect:
         response[InspectorProtocol::Message_EVENT] = InspectorProtocol::Message_eventName_connect;
@@ -81,7 +80,7 @@ struct InspectorProtocol {
   static folly::dynamic constructGetPagesResponsePayloadForPackager(
       const std::vector<facebook::react::InspectorPage> &pages) {
     folly::dynamic payload = folly::dynamic::array;
-    for (const facebook::react::InspectorPage& page : pages) {
+    for (const facebook::react::InspectorPage &page : pages) {
       folly::dynamic pageDyn = folly::dynamic::object;
       pageDyn["id"] = page.id;
       pageDyn["title"] = page.title;
