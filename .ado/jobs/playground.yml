@@ -68,9 +68,8 @@ jobs:
           restoreSolution: packages/playground/windows/$(SolutionFile)
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
-
       - task: VSBuild@1
-        displayName: VSBuild - Playground
+        displayName: VSBuild - Playground PR
         inputs:
           solution: packages/playground/windows/$(SolutionFile)
           vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
@@ -84,15 +83,43 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             $(BuildWinUI3Properties)
-            /p:BaseIntDir=$(BaseIntDir) 
+            /p:BaseIntDir=$(BaseIntDir)
+            /p:AppxPackageSigningEnabled=false
+        condition: eq($(BuildEnvironment), PullRequest)
+
+      - task: DownloadSecureFile@1
+        name: signingCert
+        displayName: 'Download CA certificate'
+        inputs:
+          secureFile: 'playground_Key.pfx'
+        condition: eq($(BuildEnvironment), Continuous)
+
+      - task: VSBuild@1
+        displayName: VSBuild - Playground CI
+        inputs:
+          solution: packages/playground/windows/$(SolutionFile)
+          vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          clean: true # Optional
+          maximumCpuCount: false # Optional
+          restoreNugetPackages: false # Optional
+          msbuildArgs:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
+            $(BuildWinUI3Properties)
+            /p:BaseIntDir=$(BaseIntDir)
+            /p:PackageCertificateKeyFile="$(signingCert.secureFilePath)"
+        condition: eq($(BuildEnvironment), Continuous)
 
       - powershell: $(Build.SourcesDirectory)/.ado/scripts/TestWACK.ps1 $(BuildPlatform) $(BuildConfiguration) $(Build.StagingDirectory)\WACK
         displayName: Test WACK
-        condition: and(succeeded(), eq(variables.TestWACK, true))
+        condition: and(succeeded(), eq(variables.TestWACK, true), eq($(BuildEnvironment), Continuous))
 
       - task: PublishBuildArtifacts@1
         displayName: Upload WACK report
-        condition: and(succeededOrFailed(), eq(variables.TestWACK, true))
+        condition: and(succeededOrFailed(), eq(variables.TestWACK, true), eq($(BuildEnvironment), Continuous))
         inputs:
           pathtoPublish: '$(Build.StagingDirectory)/WACK'
           artifactName: 'WACK report $(BuildPlatform) $(BuildConfiguration) ($(System.JobAttempt))'
