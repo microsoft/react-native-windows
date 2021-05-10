@@ -85,14 +85,14 @@ jobs:
             $(BuildWinUI3Properties)
             /p:BaseIntDir=$(BaseIntDir)
             /p:AppxPackageSigningEnabled=false
-        condition: eq(parameters.BuildEnvironment, PullRequest)
+        condition: eq('${{ parameters.BuildEnvironment }}', 'PullRequest')
 
       - task: DownloadSecureFile@1
         name: signingCert
         displayName: 'Download CA certificate'
         inputs:
           secureFile: 'playground_Key.pfx'
-        condition: eq(parameters.BuildEnvironment, Continuous)
+        condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
 
       - task: VSBuild@1
         displayName: VSBuild - Playground CI
@@ -111,15 +111,15 @@ jobs:
             $(BuildWinUI3Properties)
             /p:BaseIntDir=$(BaseIntDir)
             /p:PackageCertificateKeyFile="$(signingCert.secureFilePath)"
-        condition: eq(parameters.BuildEnvironment, Continuous)
+        condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
 
       - powershell: $(Build.SourcesDirectory)/.ado/scripts/TestWACK.ps1 $(BuildPlatform) $(BuildConfiguration) $(Build.StagingDirectory)\WACK
         displayName: Test WACK
-        condition: and(succeeded(), eq(variables.TestWACK, true), eq(parameters.BuildEnvironment, Continuous))
+        condition: and(succeeded(), eq(variables.TestWACK, true), eq('${{ parameters.BuildEnvironment }}', 'Continuous'))
 
       - task: PublishBuildArtifacts@1
         displayName: Upload WACK report
-        condition: and(succeededOrFailed(), eq(variables.TestWACK, true), eq(parameters.BuildEnvironment, Continuous))
+        condition: and(succeededOrFailed(), eq(variables.TestWACK, true), eq('${{ parameters.BuildEnvironment }}', 'Continuous'))
         inputs:
           pathtoPublish: '$(Build.StagingDirectory)/WACK'
           artifactName: 'WACK report $(BuildPlatform) $(BuildConfiguration) ($(System.JobAttempt))'
