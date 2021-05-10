@@ -216,7 +216,10 @@ int64_t NativeUIManager::AddMeasuredRootView(facebook::react::IReactRootView *ro
 void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReactRootView *pReactRootView) {
   auto xamlRootView = static_cast<IXamlRootView *>(pReactRootView);
   XamlView view = xamlRootView->GetXamlView();
-  m_tagsToXamlReactControl.emplace(shadowNode.m_tag, xamlRootView->GetXamlReactControl());
+  m_tagsToXamlReactControl.emplace(
+      shadowNode.m_tag,
+      winrt::weak_ref<winrt::Microsoft::ReactNative::ReactRootView>(
+          view.as<winrt::Microsoft::ReactNative::ReactRootView>()));
 
   // Push the appropriate FlowDirection into the root view.
   view.as<xaml::FrameworkElement>().FlowDirection(
@@ -1110,8 +1113,8 @@ void NativeUIManager::blur(int64_t reactTag) {
     auto view = shadowNode->GetView();
     // Only blur if current UI is focused to avoid problem described in PR #2687
     if (view == xaml::Input::FocusManager::GetFocusedElement().try_as<xaml::DependencyObject>()) {
-      if (auto reactControl = GetParentXamlReactControl(reactTag).lock()) {
-        reactControl->blur(shadowNode->GetView());
+      if (auto reactControl = GetParentXamlReactControl(reactTag).get()) {
+        reactControl.as<winrt::Microsoft::ReactNative::implementation::ReactRootView>()->blur(shadowNode->GetView());
       } else {
         assert(false);
       }
@@ -1124,7 +1127,8 @@ void NativeUIManager::blur(int64_t reactTag) {
 // ReactControl is used here. To get the IXamlReactControl for any node, we
 // first iterate its parent until reaching the root node. Then look up
 // m_tagsToXamlReactControl to get the IXamlReactControl
-std::weak_ptr<IXamlReactControl> NativeUIManager::GetParentXamlReactControl(int64_t tag) const {
+winrt::weak_ref<winrt::Microsoft::ReactNative::ReactRootView> NativeUIManager::GetParentXamlReactControl(
+    int64_t tag) const {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindParentRootShadowNode(tag))) {
     auto it = m_tagsToXamlReactControl.find(shadowNode->m_tag);
     if (it != m_tagsToXamlReactControl.end()) {
