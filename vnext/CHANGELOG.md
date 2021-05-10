@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 13 Apr 2021 02:52:41 GMT and should not be manually modified.
+This log was last generated on Mon, 10 May 2021 15:06:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.28
+
+Mon, 10 May 2021 15:06:43 GMT
+
+### Patches
+
+- Update V8 package version (tudor.mihai@microsoft.com)
 
 ## 0.63.27
 
