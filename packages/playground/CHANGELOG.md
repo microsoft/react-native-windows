@@ -1,8 +1,16 @@
 # Change Log - playground
 
-This log was last generated on Mon, 03 May 2021 14:06:32 GMT and should not be manually modified.
+This log was last generated on Mon, 10 May 2021 15:06:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.54
+
+Mon, 10 May 2021 15:06:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/tester to v0.0.1 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.54
 

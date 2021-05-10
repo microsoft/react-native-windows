@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.64] Update Microsoft.ChakraCore to 1.11.24 (#7628)",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
