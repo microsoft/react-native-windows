@@ -111,7 +111,7 @@ jobs:
             $(BuildWinUI3Properties)
             /p:BaseIntDir=$(BaseIntDir)
             /p:PackageCertificateKeyFile="$(signingCert.secureFilePath)"
-        condition: eq(paramters.BuildEnvironment, Continuous)
+        condition: eq(parameters.BuildEnvironment, Continuous)
 
       - powershell: $(Build.SourcesDirectory)/.ado/scripts/TestWACK.ps1 $(BuildPlatform) $(BuildConfiguration) $(Build.StagingDirectory)\WACK
         displayName: Test WACK
