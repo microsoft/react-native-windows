@@ -18,32 +18,33 @@ namespace Microsoft::ReactNative {
 namespace {
 
 struct InspectorProtocol {
-  static constexpr const char InspectorMessage_EVENT[] = "event";
-  static constexpr const char InspectorMessage_PAGEID[] = "pageId";
-  static constexpr const char InspectorMessage_PAYLOAD[] = "payload";
+  static constexpr std::string_view Message_PAGEID = "pageId";
+  static constexpr std::string_view Message_PAYLOAD = "payload";
 
-  static constexpr const char InspectorMessage_eventName_wrappedEvent[] = "wrappedEvent";
-  static constexpr const char InspectorMessage_eventName_getPages[] = "getPages";
-  static constexpr const char InspectorMessage_eventName_connect[] = "connect";
-  static constexpr const char InspectorMessage_eventName_disconnect[] = "disconnect";
+  static constexpr std::string_view Message_eventName_wrappedEvent = "wrappedEvent";
+  static constexpr std::string_view Message_eventName_getPages = "getPages";
+  static constexpr std::string_view Message_eventName_connect = "connect";
+  static constexpr std::string_view Message_eventName_disconnect = "disconnect";
 
+  static constexpr std::string_view Message_EVENT = "event";
+  
   enum class EventType { GetPages, WrappedEvent, Connect, Disconnect };
 
   static EventType getEventType(const folly::dynamic &messageFromPackager) {
-    std::string event = messageFromPackager.at(InspectorProtocol::InspectorMessage_EVENT).getString();
-    if (0 == event.compare(InspectorMessage_eventName_getPages)) {
+    std::string event = messageFromPackager.at(InspectorProtocol::Message_EVENT).getString();
+    if (0 == event.compare(Message_eventName_getPages)) {
       return EventType::GetPages;
     }
 
-    if (0 == event.compare(InspectorMessage_eventName_wrappedEvent)) {
+    if (0 == event.compare(Message_eventName_wrappedEvent)) {
       return EventType::WrappedEvent;
     }
 
-    if (0 == event.compare(InspectorMessage_eventName_connect)) {
+    if (0 == event.compare(Message_eventName_connect)) {
       return EventType::Connect;
     }
 
-    if (0 == event.compare(InspectorMessage_eventName_disconnect)) {
+    if (0 == event.compare(Message_eventName_disconnect)) {
       return EventType::Disconnect;
     }
 
@@ -56,31 +57,31 @@ struct InspectorProtocol {
 
     switch (eventType) {
       case EventType::GetPages:
-        response[InspectorProtocol::InspectorMessage_EVENT] = InspectorProtocol::InspectorMessage_eventName_getPages;
+        response[InspectorProtocol::Message_EVENT] = InspectorProtocol::Message_eventName_getPages;
         break;
       case EventType::WrappedEvent:
-        response[InspectorProtocol::InspectorMessage_EVENT] =
-            InspectorProtocol::InspectorMessage_eventName_wrappedEvent;
+        response[InspectorProtocol::Message_EVENT] =
+            InspectorProtocol::Message_eventName_wrappedEvent;
         break;
       case EventType::Connect:
-        response[InspectorProtocol::InspectorMessage_EVENT] = InspectorProtocol::InspectorMessage_eventName_connect;
+        response[InspectorProtocol::Message_EVENT] = InspectorProtocol::Message_eventName_connect;
         break;
       case EventType::Disconnect:
-        response[InspectorProtocol::InspectorMessage_EVENT] = InspectorProtocol::InspectorMessage_eventName_disconnect;
+        response[InspectorProtocol::Message_EVENT] = InspectorProtocol::Message_eventName_disconnect;
         break;
       default:
         assert(false && "Unknown event Type.");
         std::abort();
     }
 
-    response[InspectorProtocol::InspectorMessage_PAYLOAD] = std::move(payload);
+    response[InspectorProtocol::Message_PAYLOAD] = std::move(payload);
     return response;
   }
 
   static folly::dynamic constructGetPagesResponsePayloadForPackager(
       const std::vector<facebook::react::InspectorPage> &pages) {
     folly::dynamic payload = folly::dynamic::array;
-    for (facebook::react::InspectorPage page : pages) {
+    for (const facebook::react::InspectorPage& page : pages) {
       folly::dynamic pageDyn = folly::dynamic::object;
       pageDyn["id"] = page.id;
       pageDyn["title"] = page.title;
@@ -96,14 +97,14 @@ struct InspectorProtocol {
 
   static folly::dynamic constructVMResponsePayloadForPackager(int64_t pageId, std::string &&messageFromVM) {
     folly::dynamic payload = folly::dynamic::object;
-    payload[InspectorProtocol::InspectorMessage_eventName_wrappedEvent] = messageFromVM;
-    payload[InspectorProtocol::InspectorMessage_PAGEID] = pageId;
+    payload[InspectorProtocol::Message_eventName_wrappedEvent] = messageFromVM;
+    payload[InspectorProtocol::Message_PAGEID] = pageId;
     return payload;
   }
 
   static folly::dynamic constructVMResponsePayloadOnDisconnectForPackager(int64_t pageId) {
     folly::dynamic payload = folly::dynamic::object;
-    payload[InspectorProtocol::InspectorMessage_PAGEID] = pageId;
+    payload[InspectorProtocol::Message_PAGEID] = pageId;
     return payload;
   }
 };
@@ -186,20 +187,20 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
       } break;
 
       case InspectorProtocol::EventType::WrappedEvent: {
-        folly::dynamic payload = messageDyn[InspectorProtocol::InspectorMessage_PAYLOAD];
-        int64_t pageId = payload[InspectorProtocol::InspectorMessage_PAGEID].asInt();
+        folly::dynamic payload = messageDyn[InspectorProtocol::Message_PAYLOAD];
+        int64_t pageId = payload[InspectorProtocol::Message_PAGEID].asInt();
 
         if (self->m_localConnections.find(pageId) == self->m_localConnections.end()) {
           break;
         }
 
-        std::string wrappedEvent = payload[InspectorProtocol::InspectorMessage_eventName_wrappedEvent].getString();
+        std::string wrappedEvent = payload[InspectorProtocol::Message_eventName_wrappedEvent].getString();
         self->sendMessageToVM(pageId, std::move(wrappedEvent));
       } break;
 
       case InspectorProtocol::EventType::Connect: {
-        folly::dynamic payload = messageDyn[InspectorProtocol::InspectorMessage_PAYLOAD];
-        int64_t pageId = payload[InspectorProtocol::InspectorMessage_PAGEID].asInt();
+        folly::dynamic payload = messageDyn[InspectorProtocol::Message_PAYLOAD];
+        int64_t pageId = payload[InspectorProtocol::Message_PAGEID].asInt();
 
         if (self->m_localConnections.find(pageId) != self->m_localConnections.end()) {
           break;
@@ -210,8 +211,8 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
       } break;
 
       case InspectorProtocol::EventType::Disconnect: {
-        folly::dynamic payload = messageDyn[InspectorProtocol::InspectorMessage_PAYLOAD];
-        int64_t pageId = payload[InspectorProtocol::InspectorMessage_PAGEID].asInt();
+        folly::dynamic payload = messageDyn[InspectorProtocol::Message_PAYLOAD];
+        int64_t pageId = payload[InspectorProtocol::Message_PAGEID].asInt();
         if (self->m_localConnections.find(pageId) != self->m_localConnections.end()) {
           self->m_localConnections[pageId]->disconnect();
           self->m_localConnections.erase(pageId);
