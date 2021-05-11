@@ -107,6 +107,30 @@
     <Message Importance="High" Text="Unzipping fmt to $([MSBuild]::NormalizePath($(FmtDir)..))." Condition="!Exists('$(FmtDir)src\format.cc')" />
     <Unzip Condition="!Exists('$(FmtDir)')" SourceFiles="$(FmtDir)..\.fmtzip\fmt-$(FmtVersion).zip" DestinationFolder="$([MSBuild]::NormalizePath($(FmtDir)..))" OverwriteReadOnlyFiles="true" />
   </Target>
+  <Target Name="WriteCGManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFmt">
+    <Message Importance="High" Text="Generating $([MSBuild]::NormalizePath($(FmtDir)..))\cgmanifest.json." Condition="!Exists('$([MSBuild]::NormalizePath($(FmtDir)..))\cgmanifest.json')" />
+    <PropertyGroup>
+      <CGManifestText>{
+    "Registrations": [ 
+        {
+            "Component": { 
+                "Type": "other", 
+                "Other": {
+                  "Name": "fmt",
+                  "Version": "$(FmtVersion)",
+                  "DownloadUrl": "https://github.com/fmtlib/fmt/archive/refs/tags/$(FmtVersion).zip"
+                }
+            },
+            "DevelopmentDependency": false
+        }
+    ]
+}</CGManifestText>
+    </PropertyGroup>
+    <WriteLinesToFile
+        File="$([MSBuild]::NormalizePath($(FmtDir)..))\cgmanifest.json"
+        Overwrite="true"
+        Lines="$(CGManifestText)" />
+  </Target>
   <ItemGroup>
     <TemporaryFmtPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFmtUpdate\**\*.*" />
   </ItemGroup>
