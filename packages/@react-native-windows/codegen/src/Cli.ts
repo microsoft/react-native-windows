@@ -172,6 +172,8 @@ function generate(
     .generate;
   const generatorComponentDescriptorH = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateComponentDescriptorH')
     .generate;
+  const generatorEventEmitterH = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateEventEmitterH')
+    .generate;
 
   generatedModuleFiles.push(
     ...generateNM2(libraryName, schema, moduleSpecName),
@@ -183,6 +185,7 @@ function generate(
     ...generatorShadowNodeH(libraryName, schema, moduleSpecName),
     ...generatorShadowNodeCPP(libraryName, schema, moduleSpecName),
     ...generatorComponentDescriptorH(libraryName, schema, moduleSpecName),
+    ...generatorEventEmitterH(libraryName, schema, moduleSpecName),
   );
 
   const moduleFilesToUpdate = new Map<string, string>([
