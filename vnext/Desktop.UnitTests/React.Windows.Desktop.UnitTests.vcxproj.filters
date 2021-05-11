@@ -58,7 +58,7 @@
     <ClCompile Include="WinRTNetworkingMocks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScriptStoreIntegrationTests.cpp">
+    <ClCompile Include="ScriptStoreTests.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>
   </ItemGroup>
