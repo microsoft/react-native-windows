@@ -95,7 +95,7 @@
     <ClCompile Include="LayoutAnimationTests.cpp" />
     <ClCompile Include="MemoryMappedBufferTests.cpp" />
     <ClCompile Include="InstanceMocks.cpp" />
-    <ClCompile Include="ScriptStoreIntegrationTests.cpp" />
+    <ClCompile Include="ScriptStoreTests.cpp" />
     <ClCompile Include="UnicodeConversionTest.cpp" />
     <ClCompile Include="UnicodeTestStrings.cpp" />
     <ClCompile Include="StringConversionTest_Desktop.cpp" />
