@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Generate cgmanifest.json for downloaded source dependencies",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

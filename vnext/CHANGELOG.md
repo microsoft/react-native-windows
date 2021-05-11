@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 09 May 2021 05:06:22 GMT and should not be manually modified.
+This log was last generated on Tue, 11 May 2021 05:06:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.308
+
+Tue, 11 May 2021 05:06:47 GMT
+
+### Changes
+
+- Enable C++20 builds (asklar@microsoft.com)
+- Generate cgmanifest.json for downloaded source dependencies (jthysell@microsoft.com)
+- Combine ReactRootView and ReactRootControl (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.307
 

@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 11 May 2021 05:06:47 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.308",
+      "version": "0.0.0-canary.308",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable C++20 builds",
+            "author": "asklar@microsoft.com",
+            "commit": "88cc4eaa83ebe4fa0bb7cef4e38870d8207871d7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Generate cgmanifest.json for downloaded source dependencies",
+            "author": "jthysell@microsoft.com",
+            "commit": "b6f78d2f550a6cb8cd1f666df74b1943e8d626bc",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Combine ReactRootView and ReactRootControl",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "a1a858e30e6de4910fa469f3775c61308c3f6089",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 09 May 2021 05:06:22 GMT",
       "tag": "react-native-windows_v0.0.0-canary.307",
       "version": "0.0.0-canary.307",
