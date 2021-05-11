@@ -13,8 +13,7 @@
 
 namespace Microsoft::ReactNative {
 
-ActivityIndicatorComponentView::ActivityIndicatorComponentView()
-    : m_element(xaml::Controls::ProgressRing()) {
+ActivityIndicatorComponentView::ActivityIndicatorComponentView() : m_element(xaml::Controls::ProgressRing()) {
   static auto const defaultProps = std::make_shared<facebook::react::ActivityIndicatorViewProps const>();
   m_props = defaultProps;
 }
@@ -24,11 +23,15 @@ ActivityIndicatorComponentView::supplementalComponentDescriptorProviders() noexc
   return {};
 }
 
-void ActivityIndicatorComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void ActivityIndicatorComponentView::mountChildComponentView(
+    const IComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
 }
 
-void ActivityIndicatorComponentView::unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void ActivityIndicatorComponentView::unmountChildComponentView(
+    const IComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
 }
 
@@ -37,7 +40,6 @@ void ActivityIndicatorComponentView::updateProps(
     facebook::react::Props::Shared const &oldProps) noexcept {
   const auto &oldActivityProps = *std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
   const auto &newActivityProps = *std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(props);
-
 
   if (oldActivityProps.animating != newActivityProps.animating) {
     m_element.IsActive(newActivityProps.animating);
