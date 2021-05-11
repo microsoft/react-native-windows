@@ -162,15 +162,15 @@ function generate(
 */
 
   const generateNM2 = createNM2Generator({namespace: argv.namespace});
-  const generatorPropsH = require('../../../../node_modules/react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsH')
+  const generatorPropsH = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsH')
     .generate;
-  const generatorPropsCPP = require('../../../../node_modules/react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsCPP')
+  const generatorPropsCPP = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsCPP')
     .generate;
-  const generatorShadowNodeH = require('../../../../node_modules/react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeH')
+  const generatorShadowNodeH = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeH')
     .generate;
-  const generatorShadowNodeCPP = require('../../../../node_modules/react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeCPP')
+  const generatorShadowNodeCPP = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeCPP')
     .generate;
-  const generatorComponentDescriptorH = require('../../../../node_modules/react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateComponentDescriptorH')
+  const generatorComponentDescriptorH = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateComponentDescriptorH')
     .generate;
 
   generatedModuleFiles.push(
