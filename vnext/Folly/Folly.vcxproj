@@ -289,6 +289,30 @@
     <Message Importance="High" Text="Unzipping folly to $([MSBuild]::NormalizePath($(FollyDir)..))." Condition="!Exists('$(FollyDir)folly\dynamic.h')" />
     <Unzip Condition="!Exists('$(FollyDir)')" SourceFiles="$(FollyDir)..\.follyzip\folly-$(FollyVersion).zip" DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))" OverwriteReadOnlyFiles="true" />
   </Target>
+  <Target Name="WriteCGManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFolly">
+    <Message Importance="High" Text="Generating $([MSBuild]::NormalizePath($(FollyDir)..))\cgmanifest.json." Condition="!Exists('$([MSBuild]::NormalizePath($(FollyDir)..))\cgmanifest.json')" />
+    <PropertyGroup>
+      <CGManifestText>{
+    "Registrations": [ 
+        {
+            "Component": { 
+                "Type": "other", 
+                "Other": {
+                  "Name": "folly",
+                  "Version": "$(FollyVersion)",
+                  "DownloadUrl": "https://github.com/facebook/folly/archive/v$(FollyVersion).zip"
+                }
+            },
+            "DevelopmentDependency": false
+        }
+    ]
+}</CGManifestText>
+    </PropertyGroup>
+    <WriteLinesToFile
+        File="$([MSBuild]::NormalizePath($(FollyDir)..))\cgmanifest.json"
+        Overwrite="true"
+        Lines="$(CGManifestText)" />
+  </Target>
   <ItemGroup>
     <TemporaryFollyPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFollyUpdate\**\*.*" />
   </ItemGroup>
