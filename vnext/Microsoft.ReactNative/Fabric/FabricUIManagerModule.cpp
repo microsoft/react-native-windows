@@ -14,6 +14,7 @@
 #include <JSI/jsi.h>
 #include <SchedulerSettings.h>
 #include <UI.Xaml.Controls.h>
+#include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
@@ -134,6 +135,8 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
 std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> sharedProviderRegistry() {
   static auto providerRegistry = []() -> std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry> {
     auto providerRegistry = std::make_shared<facebook::react::ComponentDescriptorProviderRegistry>();
+    providerRegistry->add(facebook::react::concreteComponentDescriptorProvider<
+                          facebook::react::ActivityIndicatorViewComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ImageComponentDescriptor>());
     providerRegistry->add(

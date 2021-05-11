@@ -33,6 +33,10 @@ const argv = yargs.options({
     describe: 'C++/C# Namespace to put generated native modules in',
     default: 'MyNamespace',
   },
+  libraryName: {
+    type: 'string',
+    describe: 'Used for part of the path generated within the codegen dir',
+  },
 }).argv;
 
 import {SchemaType} from 'react-native-tscodegen';
@@ -141,7 +145,14 @@ function generate(
 ): boolean {
   schemaValidator.validate(schema);
 
-  const generatedFiles = [];
+  const componentOutputdir = path.join(
+    outputDirectory,
+    'react/components',
+    libraryName,
+  );
+
+  const generatedModuleFiles = [];
+  const generatedComponentFiles = [];
   /*
   for (const name of generators) {
     for (const generator of GENERATORS[name]) {
@@ -151,20 +162,56 @@ function generate(
 */
 
   const generateNM2 = createNM2Generator({namespace: argv.namespace});
+  const generatorPropsH = require('../../../../node_modules/react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsH')
+    .generate;
+  const generatorPropsCPP = require('../../../../node_modules/react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsCPP')
+    .generate;
+  const generatorShadowNodeH = require('../../../../node_modules/react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeH')
+    .generate;
+  const generatorShadowNodeCPP = require('../../../../node_modules/react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeCPP')
+    .generate;
+  const generatorComponentDescriptorH = require('../../../../node_modules/react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateComponentDescriptorH')
+    .generate;
 
-  generatedFiles.push(...generateNM2(libraryName, schema, moduleSpecName));
+  generatedModuleFiles.push(
+    ...generateNM2(libraryName, schema, moduleSpecName),
+  );
 
-  const filesToUpdate = new Map<string, string>([...generatedFiles]);
+  generatedComponentFiles.push(
+    ...generatorPropsH(libraryName, schema, moduleSpecName),
+    ...generatorPropsCPP(libraryName, schema, moduleSpecName),
+    ...generatorShadowNodeH(libraryName, schema, moduleSpecName),
+    ...generatorShadowNodeCPP(libraryName, schema, moduleSpecName),
+    ...generatorComponentDescriptorH(libraryName, schema, moduleSpecName),
+  );
+
+  const moduleFilesToUpdate = new Map<string, string>([
+    ...generatedModuleFiles,
+  ]);
+  const componentFilesToUpdate = new Map<string, string>([
+    ...generatedComponentFiles,
+  ]);
 
   if (test === true) {
-    return checkFilesForChanges(filesToUpdate, outputDirectory);
+    return (
+      checkFilesForChanges(moduleFilesToUpdate, outputDirectory) &&
+      checkFilesForChanges(componentFilesToUpdate, componentOutputdir)
+    );
   }
 
-  return writeMapToFiles(filesToUpdate, outputDirectory);
+  return (
+    writeMapToFiles(moduleFilesToUpdate, outputDirectory) &&
+    writeMapToFiles(componentFilesToUpdate, componentOutputdir)
+  );
 }
 
 if ((argv.file && argv.files) || (!argv.file && !argv.files)) {
   console.error('You must specify either --file or --files.');
+  process.exit(1);
+}
+
+if (!argv.libraryName) {
+  console.error('You must specify --libraryName');
   process.exit(1);
 }
 
@@ -175,7 +222,7 @@ if (argv.file) {
   schema = combineSchemas(globby.sync(argv.files as string[]));
 }
 
-const libraryName = 'libraryName';
+const libraryName = argv.libraryName;
 const moduleSpecName = 'moduleSpecName';
 const outputDirectory = 'codegen';
 generate(
