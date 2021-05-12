@@ -35,6 +35,7 @@ const argv = yargs.options({
   },
   libraryName: {
     type: 'string',
+    required: true,
     describe: 'Used for part of the path generated within the codegen dir',
   },
 }).argv;
@@ -210,11 +211,6 @@ function generate(
 
 if ((argv.file && argv.files) || (!argv.file && !argv.files)) {
   console.error('You must specify either --file or --files.');
-  process.exit(1);
-}
-
-if (!argv.libraryName) {
-  console.error('You must specify --libraryName');
   process.exit(1);
 }
 
