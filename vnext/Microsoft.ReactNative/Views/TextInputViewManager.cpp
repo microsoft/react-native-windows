@@ -154,7 +154,6 @@ class TextInputShadowNode : public ShadowNodeBase {
 
  private:
   xaml::Controls::TextBox::TextChanging_revoker m_textBoxTextChangingRevoker{};
-  xaml::Controls::TextBox::TextChanged_revoker m_textBoxTextChangedRevoker{};
   xaml::Controls::TextBox::SelectionChanged_revoker m_textBoxSelectionChangedRevoker{};
   xaml::Controls::TextBox::ContextMenuOpening_revoker m_textBoxContextMenuOpeningRevoker{};
 
@@ -203,34 +202,21 @@ void TextInputShadowNode::registerEvents() {
   // TextChanging is used to drop the Javascript response of 'A' and expect
   // another TextChanged event with correct event count.
   if (m_isTextBox) {
-    m_passwordBoxPasswordChangingRevoker = {};
-    m_textBoxTextChangingRevoker =
-        control.as<xaml::Controls::TextBox>().TextChanging(winrt::auto_revoke, [=](auto &&, auto &&) {
-          if (m_initialUpdateComplete)
-            m_nativeEventCount++;
-        });
-  } else {
-    m_textBoxTextChangingRevoker = {};
-
-    if (control.try_as<xaml::Controls::IPasswordBox4>()) {
-      m_passwordBoxPasswordChangingRevoker =
-          control.as<xaml::Controls::IPasswordBox4>().PasswordChanging(winrt::auto_revoke, [=](auto &&, auto &&) {
-            if (m_initialUpdateComplete)
-              m_nativeEventCount++;
-          });
-    }
-  }
-
-  if (m_isTextBox) {
     m_passwordBoxPasswordChangedRevoker = {};
+    m_passwordBoxPasswordChangingRevoker = {};
     auto textBox = control.as<xaml::Controls::TextBox>();
-    m_textBoxTextChangedRevoker = textBox.TextChanged(
+    m_textBoxTextChangingRevoker = textBox.TextChanging(
         winrt::auto_revoke, [=](auto &&, auto &&) { dispatchTextInputChangeEvent(textBox.Text()); });
   } else {
-    m_textBoxTextChangedRevoker = {};
+    m_textBoxTextChangingRevoker = {};
     auto passwordBox = control.as<xaml::Controls::PasswordBox>();
-    m_passwordBoxPasswordChangedRevoker = passwordBox.PasswordChanged(
-        winrt::auto_revoke, [=](auto &&, auto &&) { dispatchTextInputChangeEvent(passwordBox.Password()); });
+    if (control.try_as<xaml::Controls::IPasswordBox4>()) {
+      m_passwordBoxPasswordChangingRevoker = passwordBox.PasswordChanging(
+          winrt::auto_revoke, [=](auto &&, auto &&) { dispatchTextInputChangeEvent(passwordBox.Password()); });
+    } else {
+      m_passwordBoxPasswordChangedRevoker = passwordBox.PasswordChanged(
+          winrt::auto_revoke, [=](auto &&, auto &&) { dispatchTextInputChangeEvent(passwordBox.Password()); });
+    }
   }
 
   if (m_isTextBox) {

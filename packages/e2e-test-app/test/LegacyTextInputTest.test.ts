@@ -74,6 +74,15 @@ describe('LegacyTextInputTest', () => {
 
     expect(await textInput.getText()).toBe('abc\rdef');
   });
+
+  test('TextInput onChange before onSelectionChange', async () => {
+    const textInput = await textInputField();
+    await textInput.setValue('a');
+    await assertLogContainsInOrder(
+      'onChange text: a',
+      'onSelectionChange range: 1,1',
+    );
+  });
 });
 
 async function textInputField() {
@@ -98,6 +107,33 @@ async function assertLogContains(text: string) {
     },
     {
       timeoutMsg: `"${await textLogComponent.getText()}" did not contain "${text}"`,
+    },
+  );
+}
+
+async function assertLogContainsInOrder(...expectedLines: string[]) {
+  const textLogComponent = await $('~textinput-log');
+
+  await browser.waitUntil(
+    async () => {
+      const loggedText = await textLogComponent.getText();
+      const actualLines = loggedText.split('\n');
+      let previousIndex = Number.MAX_VALUE;
+      for (const line of expectedLines) {
+        const index = actualLines.findIndex(l => l === line);
+        if (index === -1 || index > previousIndex) {
+          return false;
+        }
+
+        previousIndex = index;
+      }
+
+      return true;
+    },
+    {
+      timeoutMsg: `"${await textLogComponent.getText()}" did not contain lines "${expectedLines.join(
+        ', ',
+      )}"`,
     },
   );
 }
