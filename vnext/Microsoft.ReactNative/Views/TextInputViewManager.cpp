@@ -176,6 +176,9 @@ void TextInputShadowNode::createView(const winrt::Microsoft::ReactNative::JSValu
 }
 
 void TextInputShadowNode::dispatchTextInputChangeEvent(winrt::hstring newText) {
+  if (!m_initialUpdateComplete) {
+    return;
+  }
   m_nativeEventCount++;
   folly::dynamic eventData =
       folly::dynamic::object("target", m_tag)("text", HstringToDynamic(newText))("eventCount", m_nativeEventCount);
