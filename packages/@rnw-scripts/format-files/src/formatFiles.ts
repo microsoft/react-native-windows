@@ -8,13 +8,7 @@
 import * as async from 'async';
 import * as path from 'path';
 
-import {
-  SpawnSyncOptions,
-  StdioOptions,
-  execSync,
-  spawn,
-  spawnSync,
-} from 'child_process';
+import {SpawnSyncOptions, StdioOptions, spawn, spawnSync} from 'child_process';
 
 // @ts-ignore (no typings for clang-format)
 import {getNativeBinary} from 'clang-format';
@@ -23,6 +17,8 @@ import {getNativeBinary} from 'clang-format';
 const includeEndsWith = ['.h', '.cpp'];
 const excludePathContains: string[] = ['vnext/codegen'];
 const excludePathEndsWith = ['.g.h', '.g.cpp'];
+
+const rootDir = path.resolve(__dirname, '../..');
 
 const VERIFY_FLAG = '-verify';
 
@@ -41,12 +37,22 @@ function main() {
 }
 
 function queryNoOpenFiles() {
-  const opened = execSync('git status -s').toString();
-  if (opened) {
-    console.error('The following files have incorrect formatting:');
-    console.error(opened);
-    console.error('Running `yarn format` from the repo root should fix this.');
-    process.exit(2);
+  const results = git(['status', '-s', '--porcelain'], {
+    cwd: rootDir,
+  });
+
+  if (results.success) {
+    let files = results.stdout.split('\n');
+    files = filterFiles(files);
+
+    if (files.length > 0) {
+      console.error('The following files have incorrect formatting:');
+      console.error(files.join('\n'));
+      console.error(
+        'Running `yarn format` from the repo root should fix this.',
+      );
+      process.exit(2);
+    }
   }
 }
 
@@ -84,6 +90,16 @@ function listAllTrackedFiles(cwd: string) {
   return [];
 }
 
+function filterFiles(files: string[]) {
+  // Apply file filters from constants
+  return files.filter(
+    file =>
+      includeEndsWith.some(_ => file.endsWith(_)) &&
+      !excludePathContains.some(_ => file.includes(_)) &&
+      !excludePathEndsWith.some(_ => file.endsWith(_)),
+  );
+}
+
 /**
  * Spawn the clang-format binary with given arguments.
  */
@@ -103,15 +119,10 @@ function spawnClangFormat(
     return;
   }
 
-  let files = listAllTrackedFiles(path.resolve(__dirname, '../..'));
+  let files = listAllTrackedFiles(rootDir);
 
   // Apply file filters from constants
-  files = files.filter(
-    file =>
-      includeEndsWith.some(_ => file.endsWith(_)) &&
-      !excludePathContains.some(_ => file.includes(_)) &&
-      !excludePathEndsWith.some(_ => file.endsWith(_)),
-  );
+  files = filterFiles(files);
 
   // split file array into chunks of 30
   let i: number;
