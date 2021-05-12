@@ -35,6 +35,7 @@ task(
     execSync(
       'npx --no-install @react-native-windows/codegen --files Libraries/**/*NativeComponent.js --namespace Microsoft::ReactNativeSpecs --libraryName rnwcore',
     );
+    fs.writeFileSync('codegen/.clang-format', 'DisableFormat: true');
   }),
 );
 
