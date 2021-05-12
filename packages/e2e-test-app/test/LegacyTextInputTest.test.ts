@@ -120,7 +120,7 @@ async function assertLogContainsInOrder(...expectedLines: string[]) {
       const actualLines = loggedText.split('\n');
       let previousIndex = Number.MAX_VALUE;
       for (const line of expectedLines) {
-        const index = actualLines.findIndex(l => l === line)
+        const index = actualLines.findIndex(l => l === line);
         if (index === -1 || index > previousIndex) {
           return false;
         }
@@ -131,7 +131,9 @@ async function assertLogContainsInOrder(...expectedLines: string[]) {
       return true;
     },
     {
-      timeoutMsg: `"${await textLogComponent.getText()}" did not contain lines "${expectedLines.join(', ')}"`,
+      timeoutMsg: `"${await textLogComponent.getText()}" did not contain lines "${expectedLines.join(
+        ', ',
+      )}"`,
     },
   );
 }
