@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Dont format files in codegen",
+  "packageName": "@rnw-scripts/format-files",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
