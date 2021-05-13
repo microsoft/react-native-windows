@@ -32,16 +32,12 @@ TEST_CLASS (ScriptStoreIntegrationTest) {
     }
 
     constexpr size_t fileSize = 4 * 1024 * 1024;
-    constexpr size_t bufferSize = fileSize + 1; // +1 for trailing \0
-    char *buffer = static_cast<char *>(std::malloc(bufferSize * sizeof(char)));
-    int cursor = 0;
-    char id = 0;
-    while (cursor < fileSize) {
-      cursor += sprintf_s(buffer + cursor, bufferSize - cursor, "var v%019X = 'x';\n", id++);
+    std::vector<char> chars{};
+    while (chars.size() < fileSize) {
+      chars.emplace_back(static_cast<char>('0' + chars.size() % 16));
     }
 
-    auto stringBuffer = make_shared<StringBuffer>(buffer);
-    std::free(buffer);
+    auto stringBuffer = make_shared<StringBuffer>(std::string{chars.cbegin(), chars.cend()});
     const auto scriptSignature = ScriptSignature{"myscheme://my/path.js", 0};
     const auto runtimeSignature = JSRuntimeSignature{"V8", 8};
     const char *prepareTag = "prepareTag";
