@@ -62,7 +62,7 @@ jobs:
           workingDirectory: packages/e2e-test-app
         condition: eq('${{ parameters.BuildEnvironment }}', 'PullRequest')
 
-    - task: DownloadSecureFile@1
+      - task: DownloadSecureFile@1
         name: signingCert
         displayName: 'Download CA certificate'
         inputs:
