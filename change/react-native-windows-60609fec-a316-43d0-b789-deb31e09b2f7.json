@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Emit TextInput onChangeText before onSelectionChange",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

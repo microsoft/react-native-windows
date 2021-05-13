@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 11 May 2021 05:06:47 GMT and should not be manually modified.
+This log was last generated on Thu, 13 May 2021 05:11:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.309
+
+Thu, 13 May 2021 05:11:48 GMT
+
+### Changes
+
+- Hook up view component codegen (30809111+acoates-ms@users.noreply.github.com)
+- Emit TextInput onChangeText before onSelectionChange (erozell@outlook.com)
 
 ## 0.0.0-canary.308
 

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Thu, 04 Mar 2021 05:05:53 GMT and should not be manually modified.
+This log was last generated on Thu, 13 May 2021 05:11:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.5
+
+Thu, 13 May 2021 05:11:48 GMT
+
+### Changes
+
+- Hook up view component codegen (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.4
 

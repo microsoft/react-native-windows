@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 13 May 2021 05:11:48 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.5",
+      "version": "0.0.0-canary.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Hook up view component codegen",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "36e48e2715549fe72544ac35296a62e22acd8c4e",
+            "package": "@react-native-windows/codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Mar 2021 05:05:53 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.4",
       "version": "0.0.0-canary.4",

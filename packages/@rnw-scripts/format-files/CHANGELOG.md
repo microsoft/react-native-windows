@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/format-files
 
-This log was last generated on Thu, 11 Feb 2021 05:08:29 GMT and should not be manually modified.
+This log was last generated on Thu, 13 May 2021 05:11:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.20
+
+Thu, 13 May 2021 05:11:48 GMT
+
+### Patches
+
+- Dont format files in codegen (30809111+acoates-ms@users.noreply.github.com)
 
 ## 1.0.19
 

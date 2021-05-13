@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/format-files",
   "entries": [
     {
+      "date": "Thu, 13 May 2021 05:11:48 GMT",
+      "tag": "@rnw-scripts/format-files_v1.0.20",
+      "version": "1.0.20",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Dont format files in codegen",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "36e48e2715549fe72544ac35296a62e22acd8c4e",
+            "package": "@rnw-scripts/format-files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Feb 2021 05:08:29 GMT",
       "tag": "@rnw-scripts/format-files_v1.0.19",
       "version": "1.0.19",

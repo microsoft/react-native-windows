@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 13 May 2021 05:11:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.309",
+      "version": "0.0.0-canary.309",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Hook up view component codegen",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "36e48e2715549fe72544ac35296a62e22acd8c4e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Emit TextInput onChangeText before onSelectionChange",
+            "author": "erozell@outlook.com",
+            "commit": "a7e7f54391ef631994d45674d9f2bd26a08bcc55",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 11 May 2021 05:06:47 GMT",
       "tag": "react-native-windows_v0.0.0-canary.308",
       "version": "0.0.0-canary.308",
