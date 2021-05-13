@@ -66,7 +66,7 @@ jobs:
         name: signingCert
         displayName: 'Download CA certificate'
         inputs:
-          secureFile: 'playground_Key.pfx'
+          secureFile: 'reactUWPTestApp_Key.pfx'
         condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
 
       - task: CmdLine@2
