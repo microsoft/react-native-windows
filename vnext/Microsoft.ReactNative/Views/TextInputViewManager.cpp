@@ -18,6 +18,7 @@
 #include <IReactInstance.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
+#include <Views/FrameworkElementTransferProperties.h>
 
 #ifdef USE_WINUI3
 namespace winrt::Microsoft::UI::Xaml::Controls {

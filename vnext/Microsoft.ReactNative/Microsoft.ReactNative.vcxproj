@@ -313,6 +313,7 @@
     <ClInclude Include="Views\DynamicValueProvider.h" />
     <ClInclude Include="Views\ExpressionAnimationStore.h" />
     <ClInclude Include="Views\FlyoutViewManager.h" />
+    <ClInclude Include="Views\FrameworkElementTransferProperties.h" />
     <ClInclude Include="Views\FrameworkElementViewManager.h" />
     <ClInclude Include="Views\Image\Effects.h" />
     <ClInclude Include="Views\Image\ImageViewManager.h" />
@@ -613,6 +614,7 @@
     <ClCompile Include="Views\DynamicValueProvider.cpp" />
     <ClCompile Include="Views\ExpressionAnimationStore.cpp" />
     <ClCompile Include="Views\FlyoutViewManager.cpp" />
+    <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
     <ClCompile Include="Views\FrameworkElementViewManager.cpp" />
     <ClCompile Include="Views\Image\ImageViewManager.cpp" />
     <ClCompile Include="Views\Image\ReactImage.cpp" />
