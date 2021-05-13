@@ -58,7 +58,7 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows - PR
         inputs:
-          script: yarn windows --arch $(BuildPlatform) --debug --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir) AppxPackageSigningEnabled=false
+          script: yarn windows --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir) AppxPackageSigningEnabled=false
           workingDirectory: packages/e2e-test-app
         condition: eq('${{ parameters.BuildEnvironment }}', 'PullRequest')
 
