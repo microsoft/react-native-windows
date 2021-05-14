@@ -15,6 +15,7 @@
 #pragma warning(disable : 4244 4305)
 #include <react/renderer/components/image/ImageProps.h>
 #pragma warning(pop)
+#include <react/renderer/components/image/ImageEventEmitter.h>
 
 namespace Microsoft::ReactNative {
 
@@ -22,6 +23,15 @@ ImageComponentView::ImageComponentView(winrt::Microsoft::ReactNative::ReactConte
     : m_context(reactContext), m_element(ReactImage::Create()) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
+
+  m_onLoadEndToken = m_element->OnLoadEnd([=](const auto &, const bool &succeeded) {
+    if (succeeded) {
+      std::static_pointer_cast<const facebook::react::ImageEventEmitter>(m_eventEmitter)->onLoad();
+    } else {
+      std::static_pointer_cast<const facebook::react::ImageEventEmitter>(m_eventEmitter)->onError();
+    }
+    std::static_pointer_cast<const facebook::react::ImageEventEmitter>(m_eventEmitter)->onLoadEnd();
+  });
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
@@ -64,8 +74,22 @@ void ImageComponentView::updateProps(
       if (/*packager_assert && */ ris.uri.find("file://") == 0) {
         ris.uri.replace(0, 7, ris.bundleRootPath);
       }
-      // EmitImageEvent(grid, "topLoadStart", sources[0]);
+
+      // Delay this until finalizeUpdates since the event emitter isn't set until after initial updateProps
+      m_needsOnLoadStart = true;
       m_element->Source(ris);
+    }
+  }
+
+  if (oldImageProps.blurRadius != newImageProps.blurRadius) {
+    m_element->BlurRadius(newImageProps.blurRadius);
+  }
+
+  if (oldImageProps.tintColor != newImageProps.tintColor) {
+    if (newImageProps.tintColor) {
+      m_element->TintColor(ColorFromNumber(*(newImageProps.tintColor)));
+    } else {
+      m_element->TintColor(winrt::Colors::Transparent());
     }
   }
 
@@ -79,6 +103,7 @@ void ImageComponentView::updateProps(
 void ImageComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {}
+
 void ImageComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
@@ -92,7 +117,14 @@ void ImageComponentView::updateLayoutMetrics(
   m_element->Width(layoutMetrics.frame.size.width);
   m_element->Height(layoutMetrics.frame.size.height);
 }
-void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
+
+void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+  if (m_needsOnLoadStart) {
+    std::static_pointer_cast<const facebook::react::ImageEventEmitter>(m_eventEmitter)->onLoadStart();
+    m_needsOnLoadStart = false;
+  }
+}
+
 void ImageComponentView::prepareForRecycle() noexcept {}
 facebook::react::SharedProps ImageComponentView::props() noexcept {
   assert(false);
