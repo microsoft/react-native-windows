@@ -199,10 +199,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'LegacyImageTest',
     module: require('../examples-win/LegacyTests/ImageTestPage'),
   },
-  {
-    key: 'LegacyTextBackgroundColorTest',
-    module: require('../examples-win/LegacyTests/TextBackgroundColorTestPage'),
-  },
 ];
 
 const APIExamples: Array<RNTesterExample> = [
