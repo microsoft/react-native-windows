@@ -56,7 +56,7 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
 
 #if defined(HERMES_ENABLE_DEBUGGER)
   std::shared_ptr<InspectorPackagerConnection> m_inspectorPackagerConnection;
-#endif
+
   struct BundleStatusProvider : public InspectorPackagerConnection::IBundleStatusProvider {
     virtual InspectorPackagerConnection::BundleStatus getBundleStatus() {
       return m_bundleStatus;
@@ -71,6 +71,7 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
     InspectorPackagerConnection::BundleStatus m_bundleStatus;
   };
   std::shared_ptr<BundleStatusProvider> m_BundleStatusProvider = std::make_shared<BundleStatusProvider>();
+#endif
 };
 
 } // namespace Microsoft::ReactNative

@@ -269,7 +269,9 @@ void DevSupportManager::StopInspector() noexcept {
 }
 
 void DevSupportManager::UpdateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) noexcept {
+#ifdef HERMES_ENABLE_DEBUGGER
   m_BundleStatusProvider->updateBundleStatus(isLastDownloadSucess, updateTimestamp);
+#endif
 }
 
 std::pair<std::string, bool> GetJavaScriptFromServer(
