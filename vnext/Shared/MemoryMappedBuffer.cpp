@@ -34,24 +34,8 @@ MemoryMappedBuffer::MemoryMappedBuffer(const wchar_t *const filename, uint32_t o
     throw facebook::jsi::JSINativeException("MemoryMappedBuffer constructor is called with nullptr filename.");
   }
 
-  // Because we still need to support Windows 7, and APIs such as CreateFile2
-  // and CreateFileMappingFromApp are only available on Windows 8+, we currently
-  // use APIs such as CreateFileW and CreateFileMapping for Win32.
-#if (defined(WINRT))
   std::unique_ptr<void, decltype(&CloseHandle)> fileHandle{
       CreateFile2(filename, GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, nullptr /* pCreateExParams */), &CloseHandle};
-#else
-  std::unique_ptr<void, decltype(&CloseHandle)> fileHandle{
-      CreateFileW(
-          filename,
-          GENERIC_READ,
-          FILE_SHARE_READ,
-          nullptr /* lpSecurityAttributes */,
-          OPEN_EXISTING,
-          FILE_ATTRIBUTE_NORMAL,
-          nullptr /* hTemplateFile */),
-      &CloseHandle};
-#endif
 
   if (fileHandle.get() == INVALID_HANDLE_VALUE) {
     throw facebook::jsi::JSINativeException(
@@ -78,35 +62,16 @@ MemoryMappedBuffer::MemoryMappedBuffer(const wchar_t *const filename, uint32_t o
     throw facebook::jsi::JSINativeException("Invalid offset.");
   }
 
-#if (defined(WINRT))
   m_fileMapping.reset(CreateFileMappingFromApp(
       fileHandle.get(), nullptr /* SecurityAttributes */, PAGE_READONLY, m_fileSize, nullptr /* Name */));
-#else
-  m_fileMapping.reset(CreateFileMapping(
-      fileHandle.get(),
-      nullptr /* lpAttributes */,
-      PAGE_READONLY,
-      0 /* dwMaximumSizeHigh */,
-      m_fileSize,
-      nullptr /* lpName */));
-#endif
 
   if (!m_fileMapping) {
     throw facebook::jsi::JSINativeException(
         "CreateFileMapping/CreateFileMappingFromApp failed with last error " + std::to_string(GetLastError()));
   }
 
-#if (defined(WINRT))
   m_fileData.reset(
       MapViewOfFileFromApp(m_fileMapping.get(), FILE_MAP_READ, 0 /* FileOffset */, 0 /* NumberOfBytesToMap */));
-#else
-  m_fileData.reset(MapViewOfFile(
-      m_fileMapping.get(),
-      FILE_MAP_READ,
-      0 /* dwFileOffsetHigh */,
-      0 /* dwFileOffsetLow */,
-      0 /* dwNumberOfBytesToMap */));
-#endif
 
   if (!m_fileData) {
     throw facebook::jsi::JSINativeException(
@@ -128,8 +93,8 @@ const uint8_t *MemoryMappedBuffer::data() const {
 
 namespace Microsoft::JSI {
 
-std::shared_ptr<facebook::jsi::Buffer> MakeMemoryMappedBuffer(const wchar_t *const filename, uint32_t offset) {
-  return std::make_shared<MemoryMappedBuffer>(filename, offset);
+std::unique_ptr<facebook::jsi::Buffer> MakeMemoryMappedBuffer(const wchar_t *const filename, uint32_t offset) {
+  return std::make_unique<MemoryMappedBuffer>(filename, offset);
 }
 
 } // namespace Microsoft::JSI
