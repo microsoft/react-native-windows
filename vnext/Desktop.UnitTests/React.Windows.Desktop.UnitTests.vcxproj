@@ -46,7 +46,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir)\Mso;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Desktop;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include\Shared;$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)ReactCommon\callinvoker;$(JSI_Source);$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)\Mso;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Desktop;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include\Shared;$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)ReactCommon\callinvoker;$(JSI_Source);$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -94,6 +94,7 @@
     <ClCompile Include="LayoutAnimationTests.cpp" />
     <ClCompile Include="MemoryMappedBufferTests.cpp" />
     <ClCompile Include="InstanceMocks.cpp" />
+    <ClCompile Include="ScriptStoreTests.cpp" />
     <ClCompile Include="UnicodeConversionTest.cpp" />
     <ClCompile Include="UnicodeTestStrings.cpp" />
     <ClCompile Include="StringConversionTest_Desktop.cpp" />
