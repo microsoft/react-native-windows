@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
 #include "pch.h"
 
@@ -32,19 +34,19 @@ struct InspectorProtocol {
 
   static EventType getEventType(const folly::dynamic &messageFromPackager) {
     std::string event = messageFromPackager.at(InspectorProtocol::Message_EVENT).getString();
-    if (0 == event.compare(Message_eventName_getPages)) {
+    if (event == Message_eventName_getPages) {
       return EventType::GetPages;
     }
 
-    if (0 == event.compare(Message_eventName_wrappedEvent)) {
+    if (event == Message_eventName_wrappedEvent) {
       return EventType::WrappedEvent;
     }
 
-    if (0 == event.compare(Message_eventName_connect)) {
+    if (event == Message_eventName_connect) {
       return EventType::Connect;
     }
 
-    if (0 == event.compare(Message_eventName_disconnect)) {
+    if (event == Message_eventName_disconnect) {
       return EventType::Disconnect;
     }
 
@@ -78,7 +80,8 @@ struct InspectorProtocol {
   }
 
   static folly::dynamic constructGetPagesResponsePayloadForPackager(
-      const std::vector<facebook::react::InspectorPage> &pages) {
+      const std::vector<facebook::react::InspectorPage> &pages,
+      InspectorPackagerConnection::BundleStatus bundleStatus) {
     folly::dynamic payload = folly::dynamic::array;
     for (const facebook::react::InspectorPage &page : pages) {
       folly::dynamic pageDyn = folly::dynamic::object;
@@ -86,8 +89,8 @@ struct InspectorProtocol {
       pageDyn["title"] = page.title;
       pageDyn["vm"] = page.vm;
 
-      pageDyn["isLastBundleDownloadSuccess"] = true;
-      pageDyn["bundleUpdateTimestamp"] = "0";
+      pageDyn["isLastBundleDownloadSuccess"] = bundleStatus.m_isLastDownloadSucess;
+      pageDyn["bundleUpdateTimestamp"] = bundleStatus.m_updateTimestamp;
 
       payload.push_back(pageDyn);
     }
@@ -145,7 +148,10 @@ void InspectorPackagerConnection::sendMessageToVM(int64_t pageId, std::string &&
   m_localConnections[pageId]->sendMessage(std::move(message));
 }
 
-InspectorPackagerConnection::InspectorPackagerConnection(std::string &&url) : m_url(std::move(url)) {}
+InspectorPackagerConnection::InspectorPackagerConnection(
+    std::string &&url,
+    std::shared_ptr<IBundleStatusProvider> bundleStatusProvider)
+    : m_url(std::move(url)), m_bundleStatusProvider(std::move(bundleStatusProvider)) {}
 
 winrt::fire_and_forget InspectorPackagerConnection::disconnectAsync() {
   co_await winrt::resume_background();
@@ -169,7 +175,7 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
       []() { facebook::react::tracing::log("Inspector: Websocket connection succeeded."); });
 
   m_packagerWebSocketConnection->SetOnMessage([self = shared_from_this()](
-                                                  size_t length, const std::string &message, bool isBinary) {
+                                                  size_t /*length*/, const std::string &message, bool isBinary) {
     assert(!isBinary && "We don't expect any binary messages !");
     folly::dynamic messageDyn = folly::parseJson(message);
 
@@ -179,7 +185,8 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
         std::vector<facebook::react::InspectorPage> inspetorPages = facebook::react::getInspectorInstance().getPages();
         folly::dynamic response = InspectorProtocol::constructResponseForPackager(
             InspectorProtocol::EventType::GetPages,
-            InspectorProtocol::constructGetPagesResponsePayloadForPackager(inspetorPages));
+            InspectorProtocol::constructGetPagesResponsePayloadForPackager(
+                inspetorPages, self->m_bundleStatusProvider->getBundleStatus()));
 
         std::string responsestr = folly::toJson(response);
         self->sendMessageToPackager(std::move(responsestr));

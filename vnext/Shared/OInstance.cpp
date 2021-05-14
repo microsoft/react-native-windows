@@ -293,7 +293,7 @@ InstanceImpl::InstanceImpl(
 #endif
 
   if (m_devSettings->useDirectDebugger && !m_devSettings->useWebDebugger) {
-    m_devManager->startInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
+    m_devManager->StartInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
   }
 
   // Default (common) NativeModules
@@ -432,9 +432,15 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           m_devSettings->inlineSourceMap);
 
       if (!success) {
+        m_devManager->UpdateBundleStatus(false, -1);
         m_devSettings->errorCallback(jsBundleString);
         return;
       }
+
+      int64_t currentTimeInMilliSeconds =
+          std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono ::system_clock::now().time_since_epoch())
+              .count();
+      m_devManager->UpdateBundleStatus(true, currentTimeInMilliSeconds);
 
       auto bundleUrl = DevServerHelper::get_BundleUrl(
           m_devSettings->sourceBundleHost,
@@ -483,7 +489,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 }
 
 InstanceImpl::~InstanceImpl() {
-  m_devManager->stopInspector();
+  m_devManager->StopInspector();
   m_nativeQueue->quitSynchronous();
 }
 

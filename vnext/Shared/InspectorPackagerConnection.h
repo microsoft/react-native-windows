@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include <WinRTWebSocketResource.h>
@@ -5,11 +8,26 @@
 
 namespace Microsoft::ReactNative {
 
-class InspectorPackagerConnection : public std::enable_shared_from_this<InspectorPackagerConnection> {
+class InspectorPackagerConnection final : public std::enable_shared_from_this<InspectorPackagerConnection> {
  public:
-  InspectorPackagerConnection(std::string &&url);
   winrt::fire_and_forget connectAsync();
   winrt::fire_and_forget disconnectAsync();
+
+  class BundleStatus {
+   public:
+    bool m_isLastDownloadSucess;
+    int64_t m_updateTimestamp = -1;
+
+    BundleStatus(bool isLastDownloadSucess, long updateTimestamp)
+        : m_isLastDownloadSucess(isLastDownloadSucess), m_updateTimestamp(updateTimestamp) {}
+    BundleStatus() : m_isLastDownloadSucess(false), m_updateTimestamp(-1) {}
+  };
+
+  struct IBundleStatusProvider {
+    virtual BundleStatus getBundleStatus() = 0;
+  };
+
+  InspectorPackagerConnection(std::string &&url, std::shared_ptr<IBundleStatusProvider> bundleStatusProvider);
 
  private:
   friend class RemoteConnection;
@@ -23,10 +41,11 @@ class InspectorPackagerConnection : public std::enable_shared_from_this<Inspecto
 
   std::unordered_map<int64_t, std::unique_ptr<facebook::react::ILocalConnection>> m_localConnections;
   std::shared_ptr<Microsoft::React::WinRTWebSocketResource> m_packagerWebSocketConnection;
+  std::shared_ptr<IBundleStatusProvider> m_bundleStatusProvider;
   std::string m_url;
 };
 
-class RemoteConnection : public facebook::react::IRemoteConnection {
+class RemoteConnection final : public facebook::react::IRemoteConnection {
  public:
   RemoteConnection(int64_t pageId, const InspectorPackagerConnection &packagerConnection);
   void onMessage(std::string message) override;

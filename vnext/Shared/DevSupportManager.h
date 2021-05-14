@@ -47,15 +47,30 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
       std::function<void()> onChangeCallback) override;
   virtual void StopPollingLiveReload() override;
 
-  virtual void startInspector(const std::string &packagerHost, const uint16_t packagerPort) override;
-  virtual void stopInspector() override;
+  virtual void StartInspector(const std::string &packagerHost, const uint16_t packagerPort) noexcept override;
+  virtual void StopInspector() noexcept override;
+  virtual void UpdateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) noexcept override;
 
  private:
   std::atomic_bool m_cancellation_token;
 
 #if defined(HERMES_ENABLE_DEBUGGER)
-  std::shared_ptr<InspectorPackagerConnection> m_InspectorPackagerConnection;
+  std::shared_ptr<InspectorPackagerConnection> m_inspectorPackagerConnection;
 #endif
+  struct BundleStatusProvider : public InspectorPackagerConnection::IBundleStatusProvider {
+    virtual InspectorPackagerConnection::BundleStatus getBundleStatus() {
+      return m_bundleStatus;
+    }
+
+    void updateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) {
+      m_bundleStatus.m_isLastDownloadSucess = isLastDownloadSucess;
+      m_bundleStatus.m_updateTimestamp = updateTimestamp;
+    }
+
+   private:
+    InspectorPackagerConnection::BundleStatus m_bundleStatus;
+  };
+  std::shared_ptr<BundleStatusProvider> m_BundleStatusProvider = std::make_shared<BundleStatusProvider>();
 };
 
 } // namespace Microsoft::ReactNative

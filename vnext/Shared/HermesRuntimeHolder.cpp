@@ -30,7 +30,7 @@ std::unique_ptr<facebook::hermes::HermesRuntime> makeHermesRuntimeSystraced(
 }
 
 #ifdef HERMES_ENABLE_DEBUGGER
-class HermesExecutorRuntimeAdapter : public facebook::hermes::inspector::RuntimeAdapter {
+class HermesExecutorRuntimeAdapter final : public facebook::hermes::inspector::RuntimeAdapter {
  public:
   HermesExecutorRuntimeAdapter(
       std::shared_ptr<jsi::Runtime> runtime,
@@ -83,7 +83,7 @@ std::shared_ptr<jsi::Runtime> HermesRuntimeHolder::getRuntime() noexcept {
 HermesRuntimeHolder::HermesRuntimeHolder(
     std::shared_ptr<facebook::react::DevSettings> devSettings,
     std::shared_ptr<facebook::react::MessageQueueThread> jsQueue) noexcept
-    : m_devSettings(devSettings), m_jsQueue(jsQueue) {}
+    : m_devSettings(std::move(devSettings)), m_jsQueue(std::move(jsQueue)) {}
 
 void HermesRuntimeHolder::initRuntime() noexcept {
   auto runtimeConfig = ::hermes::vm::RuntimeConfig();

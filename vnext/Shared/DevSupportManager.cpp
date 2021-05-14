@@ -237,13 +237,13 @@ void DevSupportManager::StopPollingLiveReload() {
   m_cancellation_token = true;
 }
 
-void DevSupportManager::startInspector(
+void DevSupportManager::StartInspector(
     [[maybe_unused]] const std::string &packagerHost,
-    [[maybe_unused]] const uint16_t packagerPort) {
+    [[maybe_unused]] const uint16_t packagerPort) noexcept {
 #ifdef HERMES_ENABLE_DEBUGGER
   std::string packageName("RNW");
-  if (winrt::Windows::ApplicationModel::Package::Current()) {
-    packageName = winrt::to_string(winrt::Windows::ApplicationModel::Package::Current().DisplayName());
+  if (auto currentPackage = winrt::Windows::ApplicationModel::Package::Current()) {
+    packageName = winrt::to_string(currentPackage.DisplayName());
   }
 
   std::string deviceName("RNWHost");
@@ -252,20 +252,24 @@ void DevSupportManager::startInspector(
     deviceName = winrt::to_string(hostNames.First().Current().DisplayName());
   }
 
-  m_InspectorPackagerConnection = std::make_shared<InspectorPackagerConnection>(
-      facebook::react::DevServerHelper::get_InspectorDeviceUrl(packagerHost, packagerPort, deviceName, packageName));
-  long use = m_InspectorPackagerConnection.use_count();
-  m_InspectorPackagerConnection->connectAsync();
+  m_inspectorPackagerConnection = std::make_shared<InspectorPackagerConnection>(
+      facebook::react::DevServerHelper::get_InspectorDeviceUrl(packagerHost, packagerPort, deviceName, packageName),
+      m_BundleStatusProvider);
+  m_inspectorPackagerConnection->connectAsync();
 #endif
 }
 
-void DevSupportManager::stopInspector() {
+void DevSupportManager::StopInspector() noexcept {
 #ifdef HERMES_ENABLE_DEBUGGER
-  if (m_InspectorPackagerConnection) {
-    m_InspectorPackagerConnection->disconnectAsync();
-    m_InspectorPackagerConnection = nullptr;
+  if (m_inspectorPackagerConnection) {
+    m_inspectorPackagerConnection->disconnectAsync();
+    m_inspectorPackagerConnection = nullptr;
   }
 #endif
+}
+
+void DevSupportManager::UpdateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) noexcept {
+  m_BundleStatusProvider->updateBundleStatus(isLastDownloadSucess, updateTimestamp);
 }
 
 std::pair<std::string, bool> GetJavaScriptFromServer(

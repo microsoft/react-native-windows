@@ -51,7 +51,6 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <SDLCheck>true</SDLCheck>
-      <DisableSpecificWarnings>4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <!-- See //https://stackoverflow.com/questions/42847103/stdtr1-with-visual-studio-2017. -->
       <PreprocessorDefinitions>
         _HAS_AUTO_PTR_ETC;
