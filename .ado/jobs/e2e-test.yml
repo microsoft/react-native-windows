@@ -62,17 +62,10 @@ jobs:
           workingDirectory: packages/e2e-test-app
         condition: eq('${{ parameters.BuildEnvironment }}', 'PullRequest')
 
-      - task: DownloadSecureFile@1
-        name: signingCert
-        displayName: 'Download CA certificate'
-        inputs:
-          secureFile: 'reactUWPTestApp_Key.pfx'
-        condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
-
       - task: CmdLine@2
         displayName: run-windows - CI
         inputs:
-          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir) PackageCertificateKeyFile="$(signingCert.secureFilePath)"
+          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir) PackageCertificateKeyFile="$(reactUWPTestApp-Key)"
           workingDirectory: packages/e2e-test-app
         condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
 
