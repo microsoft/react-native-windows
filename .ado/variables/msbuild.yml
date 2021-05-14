@@ -2,5 +2,5 @@ variables:
   MSBuildArchitecture: x64
   MSBuildPreferredToolArchitecture: x64
   MSBuildPlatformToolset: v142
-  TargetPlatformVersion: 10.0.18362.0
-  Win10Version: 18362
+  TargetPlatformVersion: 10.0.19041.0
+  Win10Version: 19041

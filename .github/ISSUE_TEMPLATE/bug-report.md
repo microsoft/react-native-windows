@@ -16,7 +16,7 @@ Run the following in your terminal and copy the results here.
 2. `npx react-native info`:
 
 <!-- Consider including this information as well:
-What SDK version are you building for? Choose from 10.0.15063, 10.0.16299, 10.0.18362, etc.
+What SDK version are you building for? Choose from 10.0.15063, 10.0.16299, 10.0.19041, etc.
 - Target Platform Version(s):
 What device(s) are you targeting? Choose any from Desktop, Xbox, Hololens)
 - Target Device(s):

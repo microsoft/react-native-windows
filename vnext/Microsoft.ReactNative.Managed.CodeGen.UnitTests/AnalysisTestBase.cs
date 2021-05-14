@@ -91,7 +91,7 @@ public class TestClass
             // ways one can run inttests, this seemed to be the most reasonable out of a lot of poor options.
             var win10SdkFolder = @"C:\Program Files (x86)\Windows Kits\10";
 #if win10SdkVersion10_0_18362_0
-      var win10SdkVersion = "10.0.18362.0";
+      var win10SdkVersion = "10.0.19041.0";
 #else
 #error The Win10 Sdk Version must be updated in code when updated in MSBuild.
 #endif
