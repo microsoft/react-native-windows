@@ -26,7 +26,7 @@ TEST_CLASS (ScriptStoreIntegrationTest) {
 
   // Do not run this test in parallel with others.
   // It uses process telemetry and should run on isolation.
-  TEST_METHOD(V8_PersistPreparedScript) {
+  TEST_METHOD(RetrievePreparedScriptMemoryUsage) {
     unique_ptr<PreparedScriptStore> preparedScriptStore = nullptr;
 
     char tempPath[MAX_PATH];
