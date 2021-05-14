@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use memory mapping for ScriptStore::tryGetPreparedScript",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -6,6 +6,7 @@
 
 // Windows API
 #include <Windows.h>
+#include <winrt/Windows.System.Diagnostics.h>
 
 // Standard Library
 #include <cstdio>
@@ -17,11 +18,14 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using std::make_shared;
 using std::make_unique;
 using std::unique_ptr;
+using winrt::Windows::System::Diagnostics::ProcessDiagnosticInfo;
 
 namespace Microsoft::JSI::Test {
 
 TEST_CLASS (ScriptStoreIntegrationTest) {
-  TEST_METHOD(V8_PersistPreparedScript) {
+  // Do not run this test in parallel with others.
+  // It uses process telemetry and should run on isolation.
+  TEST_METHOD(RetrievePreparedScriptMemoryUsage) {
     unique_ptr<PreparedScriptStore> preparedScriptStore = nullptr;
 
     char tempPath[MAX_PATH];
@@ -43,10 +47,18 @@ TEST_CLASS (ScriptStoreIntegrationTest) {
     const char *prepareTag = "prepareTag";
     preparedScriptStore->persistPreparedScript(stringBuffer, scriptSignature, runtimeSignature, "prepareTag");
 
-    auto prepd = preparedScriptStore->tryGetPreparedScript(scriptSignature, runtimeSignature, "prepareTag");
-    auto size = prepd->size();
+    auto startWorkingSet =
+        ProcessDiagnosticInfo::GetForCurrentProcess().MemoryUsage().GetReport().WorkingSetSizeInBytes();
 
-    Assert::AreEqual(fileSize, size);
+    auto prepd = preparedScriptStore->tryGetPreparedScript(scriptSignature, runtimeSignature, "prepareTag");
+    Assert::AreEqual(fileSize, prepd->size());
+
+    auto endWorkingSet =
+        ProcessDiagnosticInfo::GetForCurrentProcess().MemoryUsage().GetReport().WorkingSetSizeInBytes();
+
+    // Without memory mapping: about 4.25 MB (fileSize + overhead)
+    // Expected working set delta: 0x047000 bytes, about 0.28 MB (6.9% of the 4MB file size).
+    Assert::IsTrue(endWorkingSet - startWorkingSet < 0.3 * 1024 * 1024);
   }
 };
 } // namespace Microsoft::JSI::Test
