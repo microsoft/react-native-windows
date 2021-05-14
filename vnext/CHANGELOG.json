@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 14 May 2021 05:06:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.310",
+      "version": "0.0.0-canary.310",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use memory mapping for ScriptStore::tryGetPreparedScript",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "3a5b9572401e024fcb25f563ea366c082b5aa5a7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 May 2021 05:11:48 GMT",
       "tag": "react-native-windows_v0.0.0-canary.309",
       "version": "0.0.0-canary.309",
