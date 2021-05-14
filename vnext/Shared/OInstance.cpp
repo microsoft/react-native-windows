@@ -53,13 +53,8 @@
 #include <ReactCommon/TurboModuleBinding.h>
 #include "ChakraRuntimeHolder.h"
 
+#include <tracing/tracing.h>
 namespace fs = std::filesystem;
-
-// forward declaration.
-namespace facebook::react::tracing {
-void initializeETW();
-void initializeJSHooks(facebook::jsi::Runtime &runtime);
-} // namespace facebook::react::tracing
 
 namespace {
 
@@ -297,6 +292,10 @@ InstanceImpl::InstanceImpl(
   facebook::react::tracing::initializeETW();
 #endif
 
+  if (m_devSettings->useDirectDebugger && !m_devSettings->useWebDebugger) {
+    m_devManager->StartInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
+  }
+
   // Default (common) NativeModules
   auto modules = GetDefaultNativeModules(nativeQueue);
 
@@ -345,7 +344,7 @@ InstanceImpl::InstanceImpl(
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
 #if defined(USE_HERMES)
-          m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>();
+          m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>(m_devSettings, m_jsThread);
           m_devSettings->inlineSourceMap = false;
           break;
 #else
@@ -433,9 +432,15 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           m_devSettings->inlineSourceMap);
 
       if (!success) {
+        m_devManager->UpdateBundleStatus(false, -1);
         m_devSettings->errorCallback(jsBundleString);
         return;
       }
+
+      int64_t currentTimeInMilliSeconds =
+          std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono ::system_clock::now().time_since_epoch())
+              .count();
+      m_devManager->UpdateBundleStatus(true, currentTimeInMilliSeconds);
 
       auto bundleUrl = DevServerHelper::get_BundleUrl(
           m_devSettings->sourceBundleHost,
@@ -484,6 +489,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 }
 
 InstanceImpl::~InstanceImpl() {
+  m_devManager->StopInspector();
   m_nativeQueue->quitSynchronous();
 }
 

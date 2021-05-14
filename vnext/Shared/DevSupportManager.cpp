@@ -21,6 +21,11 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
+#ifdef HERMES_ENABLE_DEBUGGER
+#include <winrt/Windows.ApplicationModel.Activation.h>
+#include <winrt/Windows.Networking.Connectivity.h>
+#endif
+
 #pragma warning(push)
 #pragma warning(disable : 4068 4251 4101 4804 4309)
 #include <cxxreact/JSExecutor.h>
@@ -230,6 +235,43 @@ void DevSupportManager::StartPollingLiveReload(
 
 void DevSupportManager::StopPollingLiveReload() {
   m_cancellation_token = true;
+}
+
+void DevSupportManager::StartInspector(
+    [[maybe_unused]] const std::string &packagerHost,
+    [[maybe_unused]] const uint16_t packagerPort) noexcept {
+#ifdef HERMES_ENABLE_DEBUGGER
+  std::string packageName("RNW");
+  if (auto currentPackage = winrt::Windows::ApplicationModel::Package::Current()) {
+    packageName = winrt::to_string(currentPackage.DisplayName());
+  }
+
+  std::string deviceName("RNWHost");
+  auto hostNames = winrt::Windows::Networking::Connectivity::NetworkInformation::GetHostNames();
+  if (hostNames && hostNames.First() && hostNames.First().Current()) {
+    deviceName = winrt::to_string(hostNames.First().Current().DisplayName());
+  }
+
+  m_inspectorPackagerConnection = std::make_shared<InspectorPackagerConnection>(
+      facebook::react::DevServerHelper::get_InspectorDeviceUrl(packagerHost, packagerPort, deviceName, packageName),
+      m_BundleStatusProvider);
+  m_inspectorPackagerConnection->connectAsync();
+#endif
+}
+
+void DevSupportManager::StopInspector() noexcept {
+#ifdef HERMES_ENABLE_DEBUGGER
+  if (m_inspectorPackagerConnection) {
+    m_inspectorPackagerConnection->disconnectAsync();
+    m_inspectorPackagerConnection = nullptr;
+  }
+#endif
+}
+
+void DevSupportManager::UpdateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) noexcept {
+#ifdef HERMES_ENABLE_DEBUGGER
+  m_BundleStatusProvider->updateBundleStatus(isLastDownloadSucess, updateTimestamp);
+#endif
 }
 
 std::pair<std::string, bool> GetJavaScriptFromServer(

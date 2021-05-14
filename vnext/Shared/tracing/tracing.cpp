@@ -5,6 +5,7 @@
 
 #include <TraceLoggingProvider.h>
 #include <jsi/jsi.h>
+#include <winmeta.h>
 #include "tracing/fbsystrace.h"
 
 #include <array>
@@ -381,6 +382,16 @@ void initializeETW() {
     TraceLoggingRegister(g_hTraceLoggingProvider);
     etwInitialized = true;
   }
+}
+
+void log(const char *msg) {
+  TraceLoggingWrite(
+      g_hTraceLoggingProvider, "Trace", TraceLoggingLevel(WINEVENT_LEVEL_INFO), TraceLoggingString(msg, "message"));
+}
+
+void error(const char *msg) {
+  TraceLoggingWrite(
+      g_hTraceLoggingProvider, "Trace", TraceLoggingLevel(WINEVENT_LEVEL_ERROR), TraceLoggingString(msg, "message"));
 }
 
 } // namespace tracing
