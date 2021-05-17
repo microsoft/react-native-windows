@@ -39,7 +39,7 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\RequireSolution.targets" />
   <ItemDefinitionGroup>
     <Reference>
-        <Private Condition="'$(ConfigurationType)' != 'Application'">false</Private>
+        <Private Condition="'$(OutputType)' != 'AppContainerExe'">false</Private>
     </Reference>
   </ItemDefinitionGroup>
 </Project>
