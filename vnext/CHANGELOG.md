@@ -1,8 +1,43 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 26 Apr 2021 18:47:14 GMT and should not be manually modified.
+This log was last generated on Mon, 17 May 2021 17:16:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.8
+
+Mon, 17 May 2021 17:16:08 GMT
+
+### Patches
+
+- [0.64] Upgrade JSI.Desktop projects version of ChakraCore (jthysell@microsoft.com)
+- Use memory-mapping in BasePreparedScriptStoreImpl::tryGetPreparedScript (julio.rocha@microsoft.com)
+- Update brush cache when theme changes (asklar@microsoft.com)
+
+## 0.64.7
+
+Mon, 10 May 2021 15:06:33 GMT
+
+### Patches
+
+- If initial value is set, updated TextInput.value changes will not be reflected (30809111+acoates-ms@users.noreply.github.com)
+- [0.64] Update Microsoft.ChakraCore to 1.11.24 (#7628) (jthysell@microsoft.com)
+- Initialize ETW provider only once (asklar@microsoft.com)
+- Last year, we had plumbed the Systrace sections and events in the core react native to windows code and fired ETW events. But, it was hard for people to use because we used manifest based ETW events. This change converts the event triggering code to use Tracelogging APIs (aka self describing events) which doesn't require the manifest to be registered on the host machine to inspect traces.
+ Post this change, the systrace events can be inspected on any windows machines where the RNW based apps are running by issuing the following commands, 
+wpr.exe -start rnw.wprp
+wpr.exe -stop rnw.etl
+wpa.exe rnw.etl
+
+This works for Win32 apps too, say Office. (mganandraj@outlook.com)
+
+## 0.64.6
+
+Mon, 03 May 2021 14:06:32 GMT
+
+### Patches
+
+- Remove version from ExperimentalFeatures.props links (ngerlem@microsoft.com)
 
 ## 0.64.5
 

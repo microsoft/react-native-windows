@@ -4,7 +4,12 @@
 #include "pch.h"
 
 #include "BaseScriptStoreImpl.h"
+#include "MemoryMappedBuffer.h"
 
+// C++/WinRT
+#include <winrt/base.h>
+
+// Standard Library
 #include <fstream>
 
 namespace facebook {
@@ -139,22 +144,7 @@ std::unique_ptr<const jsi::Buffer> LocalFileSimpleBufferStore::getBuffer(const s
     std::terminate();
   }
 
-  // Treat buffer id as the relative path fragment.
-  std::ifstream file(storeDirectory_ + bufferId, std::ios::binary | std::ios::ate);
-
-  if (!file) {
-    return nullptr;
-  }
-
-  std::streamsize size = file.tellg();
-  file.seekg(0, std::ios::beg);
-
-  auto buffer = std::make_unique<ByteArrayBuffer>(static_cast<size_t>(size));
-  if (!file.read(reinterpret_cast<char *>(buffer->data()), size)) {
-    return nullptr;
-  }
-
-  return buffer;
+  return Microsoft::JSI::MakeMemoryMappedBuffer(winrt::to_hstring(storeDirectory_ + bufferId).c_str());
 }
 
 bool LocalFileSimpleBufferStore::persistBuffer(

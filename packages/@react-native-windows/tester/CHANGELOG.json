@@ -2,6 +2,51 @@
   "name": "@react-native-windows/tester",
   "entries": [
     {
+      "date": "Mon, 17 May 2021 17:16:08 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.8",
+            "author": "jthysell@microsoft.com",
+            "commit": "7734d7bf647f3dc79fa70ef02c5003496b84cf29",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 10 May 2021 15:06:33 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.7",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "82f12b42b73624f69eb094592492228d3abd48fe",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 03 May 2021 14:06:32 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.6",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4b552ca018919b71fd8ae34af92f538b0a069cd8",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 Apr 2021 18:47:14 GMT",
       "tag": "@react-native-windows/tester_v0.0.1",
       "version": "0.0.1",
