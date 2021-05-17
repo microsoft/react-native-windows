@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Exit early during text transform upward tree traversal.",
+  "packageName": "react-native-windows",
+  "email": "igklemen@microsoft.com",
+  "dependentChangeType": "patch"
+}
