@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 17 May 2021 05:11:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.312",
+      "version": "0.0.0-canary.312",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Exit early during text transform upward tree traversal.",
+            "author": "igklemen@microsoft.com",
+            "commit": "5d131ed94f74d4444a44387906368dd452b40dfe",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 May 2021 05:06:21 GMT",
       "tag": "react-native-windows_v0.0.0-canary.311",
       "version": "0.0.0-canary.311",

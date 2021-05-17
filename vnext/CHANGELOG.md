@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 15 May 2021 05:06:21 GMT and should not be manually modified.
+This log was last generated on Mon, 17 May 2021 05:11:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.312
+
+Mon, 17 May 2021 05:11:32 GMT
+
+### Changes
+
+- Exit early during text transform upward tree traversal. (igklemen@microsoft.com)
 
 ## 0.0.0-canary.311
 
