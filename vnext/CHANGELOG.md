@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 10 May 2021 15:06:33 GMT and should not be manually modified.
+This log was last generated on Mon, 17 May 2021 17:16:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.8
+
+Mon, 17 May 2021 17:16:08 GMT
+
+### Patches
+
+- [0.64] Upgrade JSI.Desktop projects version of ChakraCore (jthysell@microsoft.com)
+- Use memory-mapping in BasePreparedScriptStoreImpl::tryGetPreparedScript (julio.rocha@microsoft.com)
+- Update brush cache when theme changes (asklar@microsoft.com)
 
 ## 0.64.7
 

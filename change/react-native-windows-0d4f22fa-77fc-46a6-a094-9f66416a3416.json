@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Use memory-mapping in BasePreparedScriptStoreImpl::tryGetPreparedScript",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

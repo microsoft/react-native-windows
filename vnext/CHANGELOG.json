@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 17 May 2021 17:16:08 GMT",
+      "tag": "react-native-windows_v0.64.8",
+      "version": "0.64.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.64] Upgrade JSI.Desktop projects version of ChakraCore",
+            "author": "jthysell@microsoft.com",
+            "commit": "7734d7bf647f3dc79fa70ef02c5003496b84cf29",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use memory-mapping in BasePreparedScriptStoreImpl::tryGetPreparedScript",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "d00548f578f2f871caad0d5c0e96c0ddcbac1009",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update brush cache when theme changes",
+            "author": "asklar@microsoft.com",
+            "commit": "269861da60a56c94f71ae784fdcb04074f96c0be",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 10 May 2021 15:06:33 GMT",
       "tag": "react-native-windows_v0.64.7",
       "version": "0.64.7",

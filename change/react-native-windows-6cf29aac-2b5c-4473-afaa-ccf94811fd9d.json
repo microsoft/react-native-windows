@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.64] Upgrade JSI.Desktop projects version of ChakraCore",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
