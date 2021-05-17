@@ -40,10 +40,16 @@ struct ViewComponentView : BaseComponentView {
   virtual const xaml::FrameworkElement Element() const noexcept;
 
  private:
+  bool shouldBeControl() const noexcept;
+
   bool m_needsBorderUpdate{false};
+  bool m_needsControlUpdate{false};
+  bool m_needsControl{false};
   facebook::react::SharedViewProps m_props;
   facebook::react::LayoutMetrics m_layoutMetrics;
-  winrt::Microsoft::ReactNative::ViewPanel m_element;
+  winrt::Microsoft::ReactNative::ViewControl m_control{nullptr};
+  winrt::Microsoft::ReactNative::ViewPanel m_panel;
+  xaml::Controls::Border m_outerBorder{nullptr};
 };
 
 } // namespace Microsoft::ReactNative
