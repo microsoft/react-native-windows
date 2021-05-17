@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Ensure C# apps have ConfigurationType set to Application",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
