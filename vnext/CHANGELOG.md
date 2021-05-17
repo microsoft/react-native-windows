@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 10 May 2021 15:06:43 GMT and should not be manually modified.
+This log was last generated on Mon, 17 May 2021 15:09:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.29
+
+Mon, 17 May 2021 15:09:02 GMT
+
+### Patches
+
+- Use memory-mapping in BasePreparedScriptStoreImpl::tryGetPreparedScript (julio.rocha@microsoft.com)
 
 ## 0.63.28
 
