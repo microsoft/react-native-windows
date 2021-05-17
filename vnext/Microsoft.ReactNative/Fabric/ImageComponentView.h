@@ -38,10 +38,12 @@ struct ImageComponentView : BaseComponentView {
   const xaml::FrameworkElement Element() const noexcept override;
 
  private:
+  bool m_needsOnLoadStart{false};
   facebook::react::SharedViewProps m_props;
   facebook::react::LayoutMetrics m_layoutMetrics;
   winrt::com_ptr<ReactImage> m_element;
   winrt::Microsoft::ReactNative::ReactContext m_context;
+  winrt::event_token m_onLoadEndToken;
 };
 
 } // namespace Microsoft::ReactNative
