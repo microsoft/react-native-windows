@@ -59,7 +59,7 @@ jobs:
         inputs:
           targetType: 'inline'
           script: |
-            $PfxBytes = [System.Convert]::FromBase64String(${reactUWPTestApp-Key})
+            $PfxBytes = [System.Convert]::FromBase64String("${reactUWPTestApp-Key}")
             $PfxPath = ${Build.SourcesDirectory} + "\reactUWPTestApp-Key.pfx"
             echo $PfxPath
             [System.IO.File]::WriteAllBytes($PfxPath, $PfxBytes)
