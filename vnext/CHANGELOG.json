@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 18 May 2021 05:05:13 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.313",
+      "version": "0.0.0-canary.313",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fabric: Add support view View.opacity and View.borderRadius",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "99e2ca031c58e55063a1f6d593dbcfd593b3e72b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fabric: Add support for Image events, blurRadius and tintColor",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "c06d88c6e86ce34882a307cd9010b180dabee58a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 May 2021 05:11:32 GMT",
       "tag": "react-native-windows_v0.0.0-canary.312",
       "version": "0.0.0-canary.312",

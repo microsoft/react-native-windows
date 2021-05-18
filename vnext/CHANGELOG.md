@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 17 May 2021 05:11:32 GMT and should not be manually modified.
+This log was last generated on Tue, 18 May 2021 05:05:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.313
+
+Tue, 18 May 2021 05:05:13 GMT
+
+### Changes
+
+- Fabric: Add support view View.opacity and View.borderRadius (30809111+acoates-ms@users.noreply.github.com)
+- Fabric: Add support for Image events, blurRadius and tintColor (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.312
 
