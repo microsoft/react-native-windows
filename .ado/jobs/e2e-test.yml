@@ -60,16 +60,14 @@ jobs:
           targetType: 'inline'
           script: |
             $PfxBytes = [System.Convert]::FromBase64String(${reactUWPTestApp-Key})
-            $PfxPath = "\packages\e2e-test-app\windows\ReactUWPTestApp\reactUWPTestApp-Key.pfx"
+            $PfxPath = ${Build.SourcesDirectory} + "\reactUWPTestApp-Key.pfx"
             echo $PfxPath
             [System.IO.File]::WriteAllBytes($PfxPath, $PfxBytes)
 
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script: |
-            yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
-            Get-Location
+          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir) PackageCertificateKeyFile="\reactUWPTestApp-Key.pfx"
           workingDirectory: packages/e2e-test-app
 
       - script: |
