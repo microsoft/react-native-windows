@@ -91,6 +91,7 @@ jobs:
           script: |
             $PfxBytes = [System.Convert]::FromBase64String(${reactUWPTestApp-Key})
             $PfxPath = ${Build.SourcesDirectory} + "\reactUWPTestApp.pfx"
+            echo $PfxPath
             [System.IO.File]::WriteAllBytes($PfxPath, $PfxBytes)
 
       - task: CmdLine@2
