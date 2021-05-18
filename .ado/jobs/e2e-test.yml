@@ -55,49 +55,18 @@ jobs:
           workingDirectory: $(Build.SourcesDirectory)
         condition: false # Must be manually enabled, since it causes a 5x perf reduction that causes test instability
 
-      - script: |
-          echo ##vso[task.setvariable variable=Release]--release
-        displayName: Specify Release Build
-        condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
-
-      - script: |
-          echo ##vso[task.setvariable variable=NoPackager]--no-packager
-        displayName: Specify No Packager
-        condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
-
-      - script: |
-          echo ##vso[task.setvariable variable=NoLaunch]--no-launch
-        displayName: Specify No Launch
-        condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
-
-      - script: |
-          echo ##vso[task.setvariable variable=DisableAppxPackage]GenerateAppxPackageOnBuild=False 
-        displayName: Disable Appx Package
-        condition: eq('${{ parameters.BuildEnvironment }}', 'Pull Request')
-
-      - script: |
-          echo ##vso[task.setvariable variable=DisableAppxSigning]AppxPackageSigningEnabled=False 
-        displayName: Disable Appx Signing
-        condition: eq('${{ parameters.BuildEnvironment }}', 'Pull Request')
-
-      - script: |
-          echo ##vso[task.setvariable variable=SigningCertificate]PackageCertificateKeyFile="$(reactUWPTestApp-Key)"
-        displayName: Specify Signing Certificate
-        condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
-
       - task: PowerShell@2
         inputs:
           targetType: 'inline'
           script: |
             $PfxBytes = [System.Convert]::FromBase64String(${reactUWPTestApp-Key})
-            $PfxPath = ${Build.SourcesDirectory} + "\reactUWPTestApp.pfx"
-            echo $PfxPath
+            $PfxPath = ${Build.SourcesDirectory} + "\packages\e2e-test-app\windows\ReactUWPTestApp\reactUWPTestApp-Key.pfx"
             [System.IO.File]::WriteAllBytes($PfxPath, $PfxBytes)
 
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir) PackageCertificateKeyFile="\reactUWPTestApp-Key.pfx"
+          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
           workingDirectory: packages/e2e-test-app
 
       - script: |
