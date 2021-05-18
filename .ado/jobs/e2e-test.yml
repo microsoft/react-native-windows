@@ -85,10 +85,18 @@ jobs:
         displayName: Specify Signing Certificate
         condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
 
-      - task: CmdLine@2
-        displayName: run-windows - PR
+      - task: PowerShell@2
         inputs:
-          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir) AppxPackageSigningEnabled=false GenerateAppxPackageOnBuild=false
+          targetType: 'inline'
+          script: |
+            $PfxBytes = [System.Convert]::FromBase64String($(reactUWPTestApp-Key))
+            $PfxPath = [Environment]::GetFolderPath("packages") + "\reactUWPTestApp.pfx"
+            [System.IO.File]::WriteAllBytes($PfxPath, $PfxBytes)
+
+      - task: CmdLine@2
+        displayName: run-windows
+        inputs:
+          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir) PackageCertificateKeyFile="packages\reactUWPTestApp-Key.pfx"
           workingDirectory: packages/e2e-test-app
 
       - script: |
