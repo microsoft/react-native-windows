@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.64] Fix transitive dependencies for C# nuget-based apps #7786",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
