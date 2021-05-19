@@ -45,7 +45,8 @@ export const ViewWin32 = React.forwardRef(
 
     const [labeledByTarget, setLabeledByTarget] = React.useState(null);
     const [describedByTarget, setDescribedByTarget] = React.useState(null);
-    const {accessibilityLabeledBy, accessibilityDescribedBy, ...rest} = props;
+    const [controlsTarget, setControlsTarget] = React.useState(null);
+    const {accessibilityLabeledBy, accessibilityDescribedBy, accessibilityControls, ...rest} = props;
     React.useLayoutEffect(() => {
       if (accessibilityLabeledBy !== undefined && accessibilityLabeledBy.current !== null)
       {
@@ -64,7 +65,16 @@ export const ViewWin32 = React.forwardRef(
           | React.Component<any, any, any>
           | React.ComponentClass<any, any>));
       }
-    }, [accessibilityLabeledBy, accessibilityDescribedBy]);
+
+      if(accessibilityControls !== undefined && accessibilityControls.current !== null)
+      {
+        setControlsTarget(findNodeHandle(accessibilityControls.current as
+          | null
+          | number
+          | React.Component<any, any, any>
+          | React.ComponentClass<any, any>));
+      }
+    }, [accessibilityLabeledBy, accessibilityDescribedBy, accessibilityControls]);
 
     /**
      * Set up the forwarding ref to enable adding the focus method.
@@ -94,6 +104,7 @@ export const ViewWin32 = React.forwardRef(
 
     return <View ref={setNativeRef}
     {...(rest as InnerViewWin32Props)}
+    {...((controlsTarget !== null) ? {accessibilityControls:controlsTarget} : {})}
     {...((labeledByTarget !== null) ? {accessibilityLabeledBy:labeledByTarget} : {})}
     {...((describedByTarget !== null) ? {accessibilityDescribedBy:describedByTarget} : {})}
     />;
