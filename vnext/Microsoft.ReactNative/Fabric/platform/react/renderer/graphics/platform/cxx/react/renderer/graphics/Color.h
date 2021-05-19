@@ -11,20 +11,18 @@
 #include <functional>
 #include <limits>
 
+#include <CppWinRTIncludes.h>
 #include <better/optional.h>
 #include <react/renderer/graphics/ColorComponents.h>
-#include <CppWinRTIncludes.h>
 
-namespace facebook
-{
-namespace react
-{
+namespace facebook {
+namespace react {
 
 struct Color {
-  bool operator==(const Color& otherColor) const {
+  bool operator==(const Color &otherColor) const {
     return m_color == otherColor.m_color && m_platformColor == otherColor.m_platformColor;
   }
-  bool operator!=(const Color& otherColor) const {
+  bool operator!=(const Color &otherColor) const {
     return m_color != otherColor.m_color || m_platformColor != otherColor.m_platformColor;
   }
 
@@ -41,23 +39,22 @@ struct Color {
 class SharedColor {
   friend std::hash<SharedColor>;
 
-public:
+ public:
   SharedColor() : m_color(nullptr) {}
 
-  SharedColor(const SharedColor& sharedColor) : m_color(sharedColor.m_color) {}
+  SharedColor(const SharedColor &sharedColor) : m_color(sharedColor.m_color) {}
 
   SharedColor(ui::Color color) {
     m_color = std::make_shared<Color>();
     m_color->m_color = color;
   }
 
-  SharedColor(std::string&& windowsBrush) {
+  SharedColor(std::string &&windowsBrush) {
     m_color = std::make_shared<Color>();
     m_color->m_platformColor = std::move(windowsBrush);
   }
 
-
-  SharedColor& operator=(const SharedColor& sharedColor) {
+  SharedColor &operator=(const SharedColor &sharedColor) {
     m_color = sharedColor.m_color;
     return *this;
   }
@@ -66,7 +63,7 @@ public:
     return *m_color;
   }
 
-  bool operator==(const SharedColor& otherColor) const {
+  bool operator==(const SharedColor &otherColor) const {
     if (!m_color && !otherColor.m_color)
       return true;
     if (!m_color || !otherColor.m_color)
@@ -74,7 +71,7 @@ public:
     return *m_color == *otherColor.m_color;
   }
 
-  bool operator!=(const SharedColor& otherColor) const {
+  bool operator!=(const SharedColor &otherColor) const {
     if (!m_color && !otherColor.m_color)
       return false;
     if (!m_color || !otherColor.m_color)
@@ -92,7 +89,7 @@ public:
 
   xaml::Media::Brush AsWindowsBrush() const;
 
-private:
+ private:
   std::shared_ptr<Color> m_color;
 };
 
@@ -106,12 +103,12 @@ SharedColor whiteColor();
 } // namespace react
 } // namespace facebook
 
-namespace std
-{
+namespace std {
 template <>
 struct hash<facebook::react::SharedColor> {
-  size_t operator()(const facebook::react::SharedColor& sharedColor) const {
-    size_t h = sharedColor.m_color->m_color.A + (sharedColor.m_color->m_color.B << 8) + (sharedColor.m_color->m_color.G << 16) + (sharedColor.m_color->m_color.R << 24);
+  size_t operator()(const facebook::react::SharedColor &sharedColor) const {
+    size_t h = sharedColor.m_color->m_color.A + (sharedColor.m_color->m_color.B << 8) +
+        (sharedColor.m_color->m_color.G << 16) + (sharedColor.m_color->m_color.R << 24);
     return h ^ hash<decltype(sharedColor.m_color->m_platformColor)>{}(sharedColor.m_color->m_platformColor);
   }
 };

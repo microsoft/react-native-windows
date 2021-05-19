@@ -41,10 +41,10 @@ inline void fromRawValue(const RawValue &value, SharedColor &result) {
     green = items.at(1);
     blue = items.at(2);
     alpha = length == 4 ? items.at(3) : 1.0f;
-// [Windows - Add support for windowsBrush colors (PlatformColor)
+    // [Windows - Add support for windowsBrush colors (PlatformColor)
   } else if (value.hasType<better::map<std::string, std::string>>()) {
     auto map = (better::map<std::string, std::string>)value;
-    for (const auto& pair : map) {
+    for (const auto &pair : map) {
       if (pair.first == "windowsbrush") {
         result = SharedColor(std::string(pair.second));
         return;
@@ -62,20 +62,16 @@ inline folly::dynamic toDynamic(const SharedColor &color) {
   ColorComponents components = colorComponentsFromColor(color);
   auto ratio = 255.f;
   return (
-      ((int)round(components.alpha * ratio) & 0xff) << 24 |
-      ((int)round(components.red * ratio) & 0xff) << 16 |
-      ((int)round(components.green * ratio) & 0xff) << 8 |
-      ((int)round(components.blue * ratio) & 0xff));
+      ((int)round(components.alpha * ratio) & 0xff) << 24 | ((int)round(components.red * ratio) & 0xff) << 16 |
+      ((int)round(components.green * ratio) & 0xff) << 8 | ((int)round(components.blue * ratio) & 0xff));
 }
 
 inline int toMapBuffer(const SharedColor &color) {
   ColorComponents components = colorComponentsFromColor(color);
   auto ratio = 255.f;
   return (
-      ((int)round(components.alpha * ratio) & 0xff) << 24 |
-      ((int)round(components.red * ratio) & 0xff) << 16 |
-      ((int)round(components.green * ratio) & 0xff) << 8 |
-      ((int)round(components.blue * ratio) & 0xff));
+      ((int)round(components.alpha * ratio) & 0xff) << 24 | ((int)round(components.red * ratio) & 0xff) << 16 |
+      ((int)round(components.green * ratio) & 0xff) << 8 | ((int)round(components.blue * ratio) & 0xff));
 }
 
 #endif
@@ -83,8 +79,8 @@ inline int toMapBuffer(const SharedColor &color) {
 inline std::string toString(const SharedColor &value) {
   ColorComponents components = colorComponentsFromColor(value);
   auto ratio = 255.f;
-  return "rgba(" + folly::to<std::string>(round(components.red * ratio)) +
-      ", " + folly::to<std::string>(round(components.green * ratio)) + ", " +
+  return "rgba(" + folly::to<std::string>(round(components.red * ratio)) + ", " +
+      folly::to<std::string>(round(components.green * ratio)) + ", " +
       folly::to<std::string>(round(components.blue * ratio)) + ", " +
       folly::to<std::string>(round(components.alpha * ratio)) + ")";
 }
@@ -234,13 +230,11 @@ inline void fromRawValue(const RawValue &value, CornerInsets &result) {
 }
 
 inline std::string toString(const Point &point) {
-  return "{" + folly::to<std::string>(point.x) + ", " +
-      folly::to<std::string>(point.y) + "}";
+  return "{" + folly::to<std::string>(point.x) + ", " + folly::to<std::string>(point.y) + "}";
 }
 
 inline std::string toString(const Size &size) {
-  return "{" + folly::to<std::string>(size.width) + ", " +
-      folly::to<std::string>(size.height) + "}";
+  return "{" + folly::to<std::string>(size.width) + ", " + folly::to<std::string>(size.height) + "}";
 }
 
 inline std::string toString(const Rect &rect) {
@@ -248,17 +242,14 @@ inline std::string toString(const Rect &rect) {
 }
 
 inline std::string toString(const EdgeInsets &edgeInsets) {
-  return "{" + folly::to<std::string>(edgeInsets.left) + ", " +
-      folly::to<std::string>(edgeInsets.top) + ", " +
-      folly::to<std::string>(edgeInsets.right) + ", " +
-      folly::to<std::string>(edgeInsets.bottom) + "}";
+  return "{" + folly::to<std::string>(edgeInsets.left) + ", " + folly::to<std::string>(edgeInsets.top) + ", " +
+      folly::to<std::string>(edgeInsets.right) + ", " + folly::to<std::string>(edgeInsets.bottom) + "}";
 }
 
 inline std::string toString(const CornerInsets &cornerInsets) {
-  return "{" + folly::to<std::string>(cornerInsets.topLeft) + ", " +
-      folly::to<std::string>(cornerInsets.topRight) + ", " +
-      folly::to<std::string>(cornerInsets.bottomLeft) + ", " +
-      folly::to<std::string>(cornerInsets.bottomRight) + "}";
+  return "{" + folly::to<std::string>(cornerInsets.topLeft) + ", " + folly::to<std::string>(cornerInsets.topRight) +
+      ", " + folly::to<std::string>(cornerInsets.bottomLeft) + ", " + folly::to<std::string>(cornerInsets.bottomRight) +
+      "}";
 }
 
 } // namespace react

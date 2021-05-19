@@ -4,10 +4,8 @@
 #include "Color.h"
 #include <Utils/ValueUtils.h>
 
-namespace facebook
-{
-namespace react
-{
+namespace facebook {
+namespace react {
 
 xaml::Media::Brush SharedColor::AsWindowsBrush() const {
   if (!m_color)
@@ -20,31 +18,32 @@ xaml::Media::Brush SharedColor::AsWindowsBrush() const {
 
 SharedColor colorFromComponents(ColorComponents components) {
   float ratio = 255;
-  return SharedColor(ui::ColorHelper::FromArgb((int)round(components.alpha * ratio) & 0xff, (int)round(components.red * ratio) & 0xff, (int)round(components.green * ratio) & 0xff, (int)round(components.blue * ratio) & 0xff));
+  return SharedColor(ui::ColorHelper::FromArgb(
+      (int)round(components.alpha * ratio) & 0xff,
+      (int)round(components.red * ratio) & 0xff,
+      (int)round(components.green * ratio) & 0xff,
+      (int)round(components.blue * ratio) & 0xff));
 }
 
 ColorComponents colorComponentsFromColor(SharedColor sharedColor) {
   float ratio = 255;
   auto color = sharedColor.AsWindowsColor();
-  return ColorComponents {
-      (float)color.R / ratio,
-      (float)color.G / ratio,
-      (float)color.B / ratio,
-      (float)color.A / ratio };
+  return ColorComponents{
+      (float)color.R / ratio, (float)color.G / ratio, (float)color.B / ratio, (float)color.A / ratio};
 }
 
 SharedColor clearColor() {
-  static SharedColor color = colorFromComponents(ColorComponents { 0, 0, 0, 0 });
+  static SharedColor color = colorFromComponents(ColorComponents{0, 0, 0, 0});
   return color;
 }
 
 SharedColor blackColor() {
-  static SharedColor color = colorFromComponents(ColorComponents { 0, 0, 0, 1 });
+  static SharedColor color = colorFromComponents(ColorComponents{0, 0, 0, 1});
   return color;
 }
 
 SharedColor whiteColor() {
-  static SharedColor color = colorFromComponents(ColorComponents { 1, 1, 1, 1 });
+  static SharedColor color = colorFromComponents(ColorComponents{1, 1, 1, 1});
   return color;
 }
 
