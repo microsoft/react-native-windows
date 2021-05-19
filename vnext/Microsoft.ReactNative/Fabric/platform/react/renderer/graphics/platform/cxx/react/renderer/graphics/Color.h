@@ -26,7 +26,7 @@ struct Color {
     return m_color != otherColor.m_color || m_platformColor != otherColor.m_platformColor;
   }
 
-  ui::Color m_color;
+  winrt::Windows::UI::Color m_color;
   std::string m_platformColor;
 };
 
@@ -44,7 +44,7 @@ class SharedColor {
 
   SharedColor(const SharedColor &sharedColor) : m_color(sharedColor.m_color) {}
 
-  SharedColor(ui::Color color) {
+  SharedColor(winrt::Windows::UI::Color color) {
     m_color = std::make_shared<Color>();
     m_color->m_color = color;
   }
@@ -83,7 +83,7 @@ class SharedColor {
     return m_color != nullptr;
   }
 
-  ui::Color AsWindowsColor() const {
+  winrt::Windows::UI::Color AsWindowsColor() const {
     return m_color->m_color;
   }
 
