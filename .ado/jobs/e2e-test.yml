@@ -61,7 +61,7 @@ jobs:
           targetType: 'inline'
           script: |
             $PfxBytes = [System.Convert]::FromBase64String("${reactUWPTestApp-Key}")
-            $PfxPath = ${Build.SourcesDirectory} + "\reactUWPTestApp-Key.pfx"
+            $PfxPath = "${Build.SourcesDirectory}" + "\reactUWPTestApp-Key.pfx"
             echo $PfxPath
             [System.IO.File]::WriteAllBytes($PfxPath, $PfxBytes)
 
@@ -74,6 +74,7 @@ jobs:
             dir
             cd ..
             dir
+            echo $(Build.SourcesDirectory)
           workingDirectory: packages/e2e-test-app
 
       - task: CmdLine@2
