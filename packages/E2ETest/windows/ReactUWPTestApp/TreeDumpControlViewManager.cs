@@ -106,7 +106,7 @@ namespace TreeDumpLibrary
 
         public async static Task<bool> DoesTreeDumpMatchForRNTester(DependencyObject root)
         {
-            string json = VisualTreeDumper.DumpTree(root, null, new string[] { }, DumpTreeMode.Json);
+            string json = VisualTreeDumper.DumpTree(root, null, new string[] { }, new AttachedProperty[] { });
             try
             {
                 var obj = JsonValue.Parse(json).GetObject();
@@ -181,7 +181,7 @@ namespace TreeDumpLibrary
             }
         }
 
-        internal static async Task<bool> MatchTreeDumpFromLayoutUpdateAsync(string dumpID, string uiaId, TextBlock textBlock, IList<string> additionalProperties, DumpTreeMode mode, string dumpExpectedText)
+        internal static async Task<bool> MatchTreeDumpFromLayoutUpdateAsync(string dumpID, string uiaId, TextBlock textBlock, IList<string> additionalProperties, string dumpExpectedText)
         {
             // First find root
             DependencyObject current = textBlock;
@@ -203,7 +203,7 @@ namespace TreeDumpLibrary
                 }
             }
 
-            string dumpText = VisualTreeDumper.DumpTree(dumpRoot, textBlock, additionalProperties, mode);
+            string dumpText = VisualTreeDumper.DumpTree(dumpRoot, textBlock, additionalProperties, new AttachedProperty[] { });
             if (dumpText != dumpExpectedText)
             {
                 return await MatchDump(dumpText, GetMasterFile(dumpID), GetOutputFile(dumpID));
@@ -216,7 +216,7 @@ namespace TreeDumpLibrary
             m_timer.Stop();
             if (VisualTreeHelper.GetParent(m_textBlock) != null)
             {
-                var matchSuccessful = await MatchTreeDumpFromLayoutUpdateAsync(m_dumpID, m_uiaID, m_textBlock, m_additionalProperties, DumpTreeMode.Json, m_dumpExpectedText);
+                var matchSuccessful = await MatchTreeDumpFromLayoutUpdateAsync(m_dumpID, m_uiaID, m_textBlock, m_additionalProperties, m_dumpExpectedText);
                 if (!matchSuccessful)
                 {
                     StorageFolder storageFolder = KnownFolders.DocumentsLibrary;
