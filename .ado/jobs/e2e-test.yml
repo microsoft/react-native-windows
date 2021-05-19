@@ -62,7 +62,7 @@ jobs:
           script: |
             $PfxPath = Join-Path -Path $(Build.SourcesDirectory) -ChildPath reactUWPTestApp-Key.pfx
             echo $PfxPath
-            $PfxBytes = [System.Convert]::FromBase64String($(reactUWPTestApp-Key))
+            $PfxBytes = [System.Convert]::FromBase64String($(env:reactUWPTestApp-Key))
             [System.IO.File]::WriteAllBytes($PfxPath, $PfxBytes)
 
       - task: CmdLine@2
