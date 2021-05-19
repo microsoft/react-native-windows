@@ -15,6 +15,12 @@ PointerEventKind ReactPointerEventArgs::Kind() const noexcept {
   return m_kind;
 }
 
+void ReactPointerEventArgs::Kind(PointerEventKind kind) noexcept {
+  assert(kind != PointerEventKind::Start);
+  assert(kind == PointerEventKind::Cancel || kind == PointerEventKind::End);
+  m_kind = kind;
+}
+
 winrt::IInspectable ReactPointerEventArgs::Target() const noexcept {
   return m_target;
 }

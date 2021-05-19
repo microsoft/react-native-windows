@@ -36,6 +36,7 @@ std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag, i
 
 TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context, bool fabric)
     : m_xamlView(nullptr),
+      m_rootView(nullptr),
       m_context(&context),
       m_fabric(fabric),
       m_batchingEventEmitter{
@@ -45,33 +46,49 @@ TouchEventHandler::~TouchEventHandler() {
   RemoveTouchHandlers();
 }
 
-void TouchEventHandler::AddTouchHandlers(XamlView xamlView) {
+void TouchEventHandler::AddTouchHandlers(XamlView xamlView, XamlView rootView, bool handledEventsToo) {
   auto uiElement(xamlView.as<xaml::UIElement>());
   if (uiElement == nullptr) {
     assert(false);
     return;
   }
 
-  m_xamlView = xamlView;
-
   RemoveTouchHandlers();
 
-  m_pressedRevoker = uiElement.PointerPressed(winrt::auto_revoke, {this, &TouchEventHandler::OnPointerPressed});
-  m_releasedRevoker = uiElement.PointerReleased(winrt::auto_revoke, {this, &TouchEventHandler::OnPointerReleased});
-  m_canceledRevoker = uiElement.PointerCanceled(winrt::auto_revoke, {this, &TouchEventHandler::OnPointerCanceled});
-  m_captureLostRevoker =
-      uiElement.PointerCaptureLost(winrt::auto_revoke, {this, &TouchEventHandler::OnPointerCaptureLost});
-  m_exitedRevoker = uiElement.PointerExited(winrt::auto_revoke, {this, &TouchEventHandler::OnPointerExited});
-  m_movedRevoker = uiElement.PointerMoved(winrt::auto_revoke, {this, &TouchEventHandler::OnPointerMoved});
+  m_xamlView = xamlView;
+  m_rootView = rootView;
+  m_pressedHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerPressed});
+  m_releasedHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerReleased});
+  m_canceledHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerCanceled});
+  m_captureLostHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerCaptureLost});
+  m_exitedHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerExited});
+  m_movedHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerMoved});
+  uiElement.AddHandler(xaml::UIElement::PointerPressedEvent(), m_pressedHandler, handledEventsToo);
+  uiElement.AddHandler(xaml::UIElement::PointerReleasedEvent(), m_releasedHandler, handledEventsToo);
+  uiElement.AddHandler(xaml::UIElement::PointerCanceledEvent(), m_canceledHandler, handledEventsToo);
+  uiElement.AddHandler(xaml::UIElement::PointerCaptureLostEvent(), m_captureLostHandler, handledEventsToo);
+  uiElement.AddHandler(xaml::UIElement::PointerExitedEvent(), m_exitedHandler, handledEventsToo);
+  uiElement.AddHandler(xaml::UIElement::PointerMovedEvent(), m_movedHandler, handledEventsToo);
 }
 
 void TouchEventHandler::RemoveTouchHandlers() {
-  m_pressedRevoker.revoke();
-  m_releasedRevoker.revoke();
-  m_canceledRevoker.revoke();
-  m_captureLostRevoker.revoke();
-  m_exitedRevoker.revoke();
-  m_movedRevoker.revoke();
+  if (m_xamlView) {
+    auto uiElement(m_xamlView.as<xaml::UIElement>());
+    uiElement.RemoveHandler(xaml::UIElement::PointerPressedEvent(), m_pressedHandler);
+    uiElement.RemoveHandler(xaml::UIElement::PointerReleasedEvent(), m_releasedHandler);
+    uiElement.RemoveHandler(xaml::UIElement::PointerCanceledEvent(), m_canceledHandler);
+    uiElement.RemoveHandler(xaml::UIElement::PointerCaptureLostEvent(), m_captureLostHandler);
+    uiElement.RemoveHandler(xaml::UIElement::PointerExitedEvent(), m_exitedHandler);
+    uiElement.RemoveHandler(xaml::UIElement::PointerMovedEvent(), m_movedHandler);
+    m_pressedHandler = nullptr;
+    m_releasedHandler = nullptr;
+    m_canceledHandler = nullptr;
+    m_captureLostHandler = nullptr;
+    m_exitedHandler = nullptr;
+    m_movedHandler = nullptr;
+    m_rootView = nullptr;
+    m_xamlView = nullptr;
+  }
 }
 
 winrt::Microsoft::ReactNative::BatchingEventEmitter &TouchEventHandler::BatchingEmitter() noexcept {
@@ -251,7 +268,7 @@ void TouchEventHandler::UpdateReactPointer(
     ReactPointer &pointer,
     const winrt::PointerRoutedEventArgs &args,
     xaml::UIElement sourceElement) {
-  auto rootPoint = args.GetCurrentPoint(m_xamlView.as<xaml::FrameworkElement>());
+  auto rootPoint = args.GetCurrentPoint(m_rootView.as<xaml::FrameworkElement>());
   auto point = args.GetCurrentPoint(sourceElement);
   auto props = point.Properties();
   auto keyModifiers = static_cast<uint32_t>(args.KeyModifiers());

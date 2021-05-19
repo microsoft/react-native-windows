@@ -48,9 +48,18 @@ namespace Microsoft.ReactNative {
     XAML_NAMESPACE.Input.PointerRoutedEventArgs Args {
       get;
     };
-    DOC_STRING("Gets the pointer event kind.")
+    DOC_STRING(
+      "Gets or sets the pointer event kind. The only valid overrides are:\n "
+      "- @PointerEventKind.Cancel\n"
+      "- @PointerEventKind.End\n"
+      "View managers must not override @PointerEventKind.Start kinds.\n"
+      "E.g., a view manager may choose to cancel the React pointer event "
+      "sequence after the pointer moves beyond a given threshold, or to "
+      "switch a @PointerEventKind.CaptureLost event to @PointerEventKind.End."
+    )
     PointerEventKind Kind {
       get;
+      set;
     };
     DOC_STRING("Gets or sets the React target for the pointer event.")
     Object Target {
