@@ -46,7 +46,7 @@ void ActivityIndicatorComponentView::updateProps(
   }
 
   if (oldActivityProps.color != newActivityProps.color) {
-    m_element.Foreground(SolidColorBrushFrom(newActivityProps.color));
+    m_element.Foreground(newActivityProps.color.AsWindowsBrush());
   }
 
   m_props = std::static_pointer_cast<facebook::react::ActivityIndicatorViewProps const>(props);
