@@ -6,7 +6,7 @@
     "ReactCommon/TEMP_UntilReactCommonUpdate/**"
   ],
   "excludePatterns": [],
-  "baseVersion": "0.0.0-5127c71d6",
+  "baseVersion": "0.0.0-7e05480cc",
   "overrides": [
     {
       "type": "derived",
@@ -67,7 +67,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "377a293707e3a0d18d920af383490957b2e145a5"
+      "baseHash": "f0b44bc2db7a958ed54e45131169b3f6734890f2"
     },
     {
       "type": "platform",
@@ -121,6 +121,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
+      "baseVersion": "0.0.0-5127c71d6",
       "baseHash": "19798c7a92e544d8cc413a18ca00c3c169fcfcba"
     },
     {
@@ -131,6 +132,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.windows.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
+      "baseVersion": "0.0.0-5127c71d6",
       "baseHash": "218895e2a5f3d7614a2cb577da187800857850ea"
     },
     {
@@ -183,6 +185,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Picker/Picker.windows.js",
       "baseFile": "Libraries/Components/Picker/Picker.js",
+      "baseVersion": "0.0.0-5127c71d6",
       "baseHash": "35fc72402bbad87945f1553d8834e88603c84b22",
       "issue": 4611
     },
@@ -206,6 +209,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/Picker/PickerWindows.tsx",
       "baseFile": "Libraries/Components/Picker/PickerIOS.ios.js",
+      "baseVersion": "0.0.0-5127c71d6",
       "baseHash": "b3988cd5371385622254319a5fc89aad91dc1805",
       "issue": 4611
     },
@@ -233,6 +237,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/ProgressViewIOS/ProgressViewIOS.windows.js",
       "baseFile": "Libraries/Components/ProgressViewIOS/ProgressViewIOS.android.js",
+      "baseVersion": "0.0.0-5127c71d6",
       "baseHash": "f0b35fdee6b1c9e7bfe860a9e0aefc00337ea7fd"
     },
     {
@@ -251,13 +256,14 @@
       "type": "derived",
       "file": "src/Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.windows.js",
       "baseFile": "Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.android.js",
+      "baseVersion": "0.0.0-5127c71d6",
       "baseHash": "37cea8b532ea4e4335120c6f8b2d3d3548e31b18"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "506d84a349fef1ad532b7c02a1836fce7befa616"
+      "baseHash": "5eb78ac95aeaa6ea8c5128050a2e908759af6aff"
     },
     {
       "type": "patch",
@@ -297,7 +303,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.windows.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseHash": "ba99e0917fe2c518eb11e8b640f759f631621b40"
+      "baseHash": "7d6114901e76fa8f73f84dbb3f486ea2e1c9ce0e"
     },
     {
       "type": "patch",
@@ -335,7 +341,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "bb70db26cb8d42b51037d43a6ab9eace183a0f71",
+      "baseHash": "c20b0134e74a8e8d69d0b2694b4296fe2bf69d3f",
       "issue": 4590
     },
     {
@@ -371,6 +377,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
+      "baseVersion": "0.0.0-5127c71d6",
       "baseHash": "0c91dcfdf2dde817965dac55416009800a906a56"
     },
     {
