@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 19 May 2021 05:06:54 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.69",
+      "version": "0.0.0-canary.69",
+      "comments": {
+        "none": [
+          {
+            "comment": "Adding the useWinUI3 and useHermes tag in the Readme",
+            "author": "38923768+imrishabh18@users.noreply.github.com",
+            "commit": "c20b325c1eae525331ac2345c65d6d3dba9801e8",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Apr 2021 05:07:20 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.69",
       "version": "0.0.0-canary.69",

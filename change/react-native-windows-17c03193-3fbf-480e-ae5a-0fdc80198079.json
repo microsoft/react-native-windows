@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix transitive dependencies for C# nuget-based apps",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

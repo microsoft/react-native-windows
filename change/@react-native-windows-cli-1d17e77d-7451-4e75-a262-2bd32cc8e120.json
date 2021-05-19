@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Adding the useWinUI3 and useHermes tag in the Readme",
-  "packageName": "@react-native-windows/cli",
-  "email": "38923768+imrishabh18@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
