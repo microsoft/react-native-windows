@@ -9,22 +9,21 @@
 
 'use strict';
 
-const Platform = require('../Utilities/Platform');
-const React = require('react');
-const StyleSheet = require('../StyleSheet/StyleSheet');
-const Text = require('../Text/Text');
+import * as React from 'react';
+import Platform from '../Utilities/Platform';
+import StyleSheet, {type ColorValue} from '../StyleSheet/StyleSheet';
+import Text from '../Text/Text';
 // [Windows
-// const TouchableNativeFeedback = require('./Touchable/TouchableNativeFeedback');
-// const TouchableOpacity = require('./Touchable/TouchableOpacity');
-const TouchableHighlight = require('./Touchable/TouchableHighlight');
-const {PlatformColor} = require('../StyleSheet/PlatformColorValueTypes');
+// import TouchableNativeFeedback from './Touchable/TouchableNativeFeedback';
+// import TouchableOpacity from './Touchable/TouchableOpacity';
+import TouchableHighlight from './Touchable/TouchableHighlight';
+import {PlatformColor} from '../StyleSheet/PlatformColorValueTypes';
 // Windows]
-const View = require('./View/View');
-const invariant = require('invariant');
+import View from './View/View';
+import invariant from 'invariant';
 
 import type {AccessibilityState} from './View/ViewAccessibility';
 import type {PressEvent} from '../Types/CoreEventTypes';
-import type {ColorValue} from '../StyleSheet/StyleSheet';
 
 type ButtonProps = $ReadOnly<{|
   /**

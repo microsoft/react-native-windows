@@ -15,6 +15,7 @@ const UIManagerProperties = require('./UIManagerProperties');
 const defineLazyObjectProperty = require('../Utilities/defineLazyObjectProperty');
 
 import NativeUIManager from './NativeUIManager';
+// import type {RootTag} from 'react-native/Libraries/Types/RootTagTypes'; [Windows]
 
 const viewManagerConfigs = {};
 

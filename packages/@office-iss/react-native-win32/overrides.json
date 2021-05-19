@@ -113,8 +113,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/ProgressViewIOS/ProgressViewIOS.win32.js",
       "baseFile": "Libraries/Components/ProgressViewIOS/ProgressViewIOS.android.js",
-      "baseVersion": "0.0.0-5127c71d6",
-      "baseHash": "f0b35fdee6b1c9e7bfe860a9e0aefc00337ea7fd"
+      "baseHash": "8c3173a8f5eef870de3aa55593202ab49c62f7e1"
     },
     {
       "type": "patch",
@@ -153,8 +152,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseVersion": "0.0.0-5127c71d6",
-      "baseHash": "506d84a349fef1ad532b7c02a1836fce7befa616"
+      "baseHash": "5eb78ac95aeaa6ea8c5128050a2e908759af6aff"
     },
     {
       "type": "patch",
