@@ -115,7 +115,7 @@ jobs:
                 workingDirectory: packages/integration-test-app
 
             - ${{ if eq(matrix.BuildConfiguration, 'Release') }}:
-              - script: yarn windows --release {{ matrix.DeployOptions }} --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging --buildLogDirectory $(BuildLogDirectory)
+              - script: yarn windows --release ${{ matrix.DeployOptions }} --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging --buildLogDirectory $(BuildLogDirectory)
                 displayName: yarn windows --release
                 workingDirectory: packages/integration-test-app
 
