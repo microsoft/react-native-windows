@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix Typo in Autolinking Source",
+  "packageName": "@react-native-windows/cli",
+  "email": "34109996+chiaramooney@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
