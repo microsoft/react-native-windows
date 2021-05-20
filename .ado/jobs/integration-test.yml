@@ -72,6 +72,11 @@ jobs:
             - script: .ado\scripts\SetupLocalDumps.cmd integrationtest
               displayName: Set LocalDumps
 
+            - ${{ if eq(matrix.UseHermes, 'true') }}:
+              - powershell: (Get-Content .\windows\ExperimentalFeatures.props) -replace 'false','true' | Set-Content .\windows\ExperimentalFeatures.props
+                displayName: Enable Hermes
+                workingDirectory: packages/integration-test-app
+
             - ${{ if eq(matrix.BuildConfiguration, 'Debug') }}:
               # The build is more likely to crash after we've started other bits that
               # take up memory. Do the expensive parts of the build first.
@@ -117,11 +122,6 @@ jobs:
               # take up memory. Do the expensive parts of the build first.
               - script: yarn windows --release --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging --buildLogDirectory $(BuildLogDirectory)
                 displayName: yarn windows --release
-                workingDirectory: packages/integration-test-app
-
-            - ${{ if eq(matrix.UseHermes, 'true') }}:
-              - powershell: (Get-Content .\windows\ExperimentalFeatures.props) -replace 'false','true' | Set-Content .\windows\ExperimentalFeatures.props
-                displayName: Enable Hermes
                 workingDirectory: packages/integration-test-app
 
             - powershell: |
