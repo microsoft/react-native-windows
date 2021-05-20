@@ -119,27 +119,34 @@ jobs:
                 displayName: yarn windows --release
                 workingDirectory: packages/integration-test-app
 
-            - powershell: |
-                $wshell = New-Object -ComObject wscript.shell
-                $wshell.AppActivate('integrationtest')
-              displayName: Activate test window
+            - ${{ if ne(matrix.DeployOptions, '--no-deploy') }}:
+              - powershell: |
+                  $wshell = New-Object -ComObject wscript.shell
+                  $wshell.AppActivate('integrationtest')
+                displayName: Activate test window
 
-            # Wait a brief moment before taking a screenshot to give the bundle a chance to load
-            - powershell: Start-Sleep -s 5
-              displayName: Pause before screenshot
+              # Wait a brief moment before taking a screenshot to give the bundle a chance to load
+              - powershell: Start-Sleep -s 5
+                displayName: Pause before screenshot
 
-            - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/before-test.png
-              displayName: Screenshot desktop before tests
-              condition: succeededOrFailed()
+              - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/before-test.png
+                displayName: Screenshot desktop before tests
+                condition: succeededOrFailed()
 
-            - script: yarn integration-test
-              displayName: yarn integration-test
-              workingDirectory: packages/integration-test-app
-              condition: and(succeeded(), eq(variables.DeployOptions, ''))
+              - script: yarn integration-test
+                displayName: yarn integration-test
+                workingDirectory: packages/integration-test-app
 
-            - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/after-test.png
-              displayName: Screenshot desktop after tests
-              condition: succeededOrFailed()
+              - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/after-test.png
+                displayName: Screenshot desktop after tests
+                condition: succeededOrFailed()
+
+              - task: PublishPipelineArtifact@1
+                displayName: Upload screenshots
+                inputs:
+                  artifactName: Screenshots - IntegrationTest-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
+                  targetPath: $(Build.StagingDirectory)/Screenshots
+                condition: succeededOrFailed()
 
             - task: PublishPipelineArtifact@1
               displayName: Upload targets
@@ -147,13 +154,6 @@ jobs:
                 artifactName: Targets - IntegrationTest-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
                 targetPath: packages/integration-test-app/windows/${{ matrix.BuildPlatform }}/Debug/integrationtest
               condition: failed()
-
-            - task: PublishPipelineArtifact@1
-              displayName: Upload screenshots
-              inputs:
-                artifactName: Screenshots - IntegrationTest-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
-                targetPath: $(Build.StagingDirectory)/Screenshots
-              condition: succeededOrFailed()
 
             - template: ../templates/upload-build-logs.yml
               parameters:
