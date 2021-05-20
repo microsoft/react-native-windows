@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 20 May 2021 05:07:14 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.90",
+      "version": "0.0.0-canary.90",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use Rex with V8 JSI Runtime",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8340dd7b1295832ec1d71c1c9948d3b653eb4773",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Apr 2021 05:07:20 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.89",
       "version": "0.0.0-canary.89",
