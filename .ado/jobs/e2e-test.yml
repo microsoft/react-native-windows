@@ -64,11 +64,14 @@ jobs:
           script: |
             $PfxPath = Join-Path -Path $(Build.SourcesDirectory) -ChildPath reactUWPTestApp-Key.pfx
             New-Item $PfxPath -Value $env:TESTAPPKEY
+            cd ..
+            cd ..
+            dir
 
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir) PackageCertificateKeyFile="..\..\reactUWPTestApp-Key.pfx"
+          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir) PackageCertificateKeyFile=$(Build.SourcesDirectory)\reactUWPTestApp-Key.pfx
           workingDirectory: packages/e2e-test-app
 
       - script: |
