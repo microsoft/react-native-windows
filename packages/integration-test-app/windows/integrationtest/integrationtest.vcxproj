@@ -21,6 +21,7 @@
   <PropertyGroup Label="ReactNativeWindowsProps">
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
     <ConsumeCSharpModules Condition="'$(ConsumeCSharpModules)' == ''">true</ConsumeCSharpModules>
+    <BundleEntryFile Condition="'$(BundleEntryFile)' == ''">index.tsx</BundleEntryFile>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM64">
