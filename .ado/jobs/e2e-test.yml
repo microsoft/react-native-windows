@@ -58,9 +58,9 @@ jobs:
       - task: AzurePowerShell@4
         displayName: 'Azure PowerShell script - inline'
         inputs:
-          azureSubscription: '8735cced-c5b3-4da5-867b-2c3f680273c8'
-          ScriptType: 'InlineScript'
-          Inline: |
+          azureSubscription: CXE - RNW CI & Anomaly-Detection
+          scriptType: InlineScript
+          inline: |
             $PfxPath = Join-Path -Path $(Build.SourcesDirectory) -ChildPath reactUWPTestApp-Key.pfx
             echo $PfxPath
             $PfxBytes = [System.Convert]::FromBase64String($(reactUWPTestApp-Key))
