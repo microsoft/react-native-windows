@@ -56,23 +56,38 @@ jobs:
         condition: false # Must be manually enabled, since it causes a 5x perf reduction that causes test instability
 
       - task: PowerShell@2
-        displayName: Set up certificate
-        env:
-          TestAppKey: $(reactUWPTestApp-Key)
+        displayName: Set Up Certificate
         inputs:
           targetType: 'inline'
           script: |
-            $PfxPath = Join-Path -Path $(Build.SourcesDirectory) -ChildPath reactUWPTestApp-Key.pfx
-            New-Item $PfxPath -Value $env:TESTAPPKEY
-            cd ..
-            cd ..
-            dir
+            $PfxBytes = [System.Convert]::FromBase64String($(reactUWPTestAppEncodedKey))
+            $PfxPath = [System.IO.Path]::GetFullPath( (Join-Path -Path $(Build.SourcesDirectory) -ChildPath reactUWPTestApp-Key.pfx) )
+            [System.IO.File]::WriteAllBytes("$PfxPath", $PfxBytes)
+        condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
 
       - task: CmdLine@2
-        displayName: run-windows
+        displayName: run-windows - PR
         inputs:
-          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir) PackageCertificateKeyFile=$(Build.SourcesDirectory)\reactUWPTestApp-Key.pfx
+          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir),AppxPackageSigningEnabled=False
           workingDirectory: packages/e2e-test-app
+        condition: eq('${{ parameters.BuildEnvironment }}', 'PullRequest')
+
+      - task: CmdLine@2
+        displayName: run-windows - CI
+        inputs:
+          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir),PackageCertificateKeyFile=$(Build.SourcesDirectory)\reactUWPTestApp-Key.pfx
+          workingDirectory: packages/e2e-test-app
+        condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
+
+      - task: PowerShell@2
+        displayName: Remove Certificate
+        inputs:
+          targetType: 'inline'
+          script: |
+            $PfxPath = Join-Path -Path $(Build.SourcesDirectory) -ChildPath playground-Key.pfx
+            Write-Host $PfxPath
+            Remove-Item -path $PfxPath
+        condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
 
       - script: |
           echo ##vso[task.setvariable variable=StartedTests]true
