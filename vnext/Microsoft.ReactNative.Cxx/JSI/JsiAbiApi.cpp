@@ -222,6 +222,13 @@ Value JsiAbiRuntime::evaluatePreparedJavaScript(const std::shared_ptr<const Prep
   throw;
 }
 
+bool JsiAbiRuntime::drainMicrotasks(int maxMicrotasksHint) try {
+  return m_runtime.DrainMicrotasks(maxMicrotasksHint);
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
 Object JsiAbiRuntime::global() try { return MakeObject(m_runtime.Global()); } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
