@@ -144,15 +144,15 @@ jobs:
               - task: PublishPipelineArtifact@1
                 displayName: Upload screenshots
                 inputs:
-                  artifactName: Screenshots - IntegrationTest-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
+                  artifactName: Screenshots - IntegrationTest-${{ matrix.Name }}-$(System.JobAttempt)
                   targetPath: $(Build.StagingDirectory)/Screenshots
                 condition: succeededOrFailed()
 
             - task: PublishPipelineArtifact@1
               displayName: Upload targets
               inputs:
-                artifactName: Targets - IntegrationTest-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
-                targetPath: packages/integration-test-app/windows/${{ matrix.BuildPlatform }}/Debug/integrationtest
+                artifactName: Targets - IntegrationTest-${{ matrix.Name }}-$(System.JobAttempt)
+                targetPath: packages/integration-test-app/windows/${{ matrix.Name }}}/Debug/integrationtest
               condition: failed()
 
             - template: ../templates/upload-build-logs.yml
