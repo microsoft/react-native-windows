@@ -47,8 +47,8 @@ jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - job: IntegrationTest
-          displayName: Integration Test App
+        - job: IntegrationTest${{ matrix.Name }}
+          displayName: Integration Test App ${{ matrix.Name }}
           variables:
             - template: ../variables/vs2019.yml
 
