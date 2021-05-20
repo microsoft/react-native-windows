@@ -115,8 +115,6 @@ jobs:
                 workingDirectory: packages/integration-test-app
 
             - ${{ if eq(matrix.BuildConfiguration, 'Release') }}:
-              # The build is more likely to crash after we've started other bits that
-              # take up memory. Do the expensive parts of the build first.
               - script: yarn windows --release --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging --buildLogDirectory $(BuildLogDirectory)
                 displayName: yarn windows --release
                 workingDirectory: packages/integration-test-app
