@@ -172,8 +172,8 @@ async function publishRelease(release: Release, allReleases: Release[]) {
 
   await octokit.repos.createRelease({
     tag_name: release.tag,
-    name: `${packageTitle(release.packageName)} ${release.version}`,
-    body: createReleaseMarkdown(release, allReleases),
+    name: releaseTitle(release),
+    body: releaseMarkdown(release, allReleases),
     prerelease: !!pre,
     draft: shouldBeDraft(release),
     ...RNW_REPO,
@@ -206,29 +206,36 @@ function aggregateReleases(changelog: Changelog): Release[] {
 /**
  * Create the markdown representation of a release
  */
-function createReleaseMarkdown(
-  release: Release,
-  allReleases: Release[],
-): string {
+function releaseMarkdown(release: Release, allReleases: Release[]): string {
   let md = '';
 
   if (release.packageName === 'react-native-windows') {
-    const firstVersionLink = getFirstMajorVersionLink(release, allReleases);
-    if (firstVersionLink) {
+    const mostRecentMajor = mostRecentMajorRelease(release, allReleases);
+
+    if (mostRecentMajor) {
       if (semver.prerelease(release.version)) {
-        md += `This is a preview of the next version of react-native-windows. To see a summary of changes in this major release, look [here](${firstVersionLink}).\n`;
+        md +=
+          `This is a preview of the next version of react-native-windows. ` +
+          `To see a summary of changes in this major release, see [release notes for ${releaseTitle(
+            mostRecentMajor,
+          )}](${releaseLink(mostRecentMajor)}).\n`;
       } else {
-        md += `This is patch release of react-native-windows, fixing bugs or adding non-breaking enhancements. To see a summary of changes in this major release, look [here](${firstVersionLink}).\n`;
+        md +=
+          `This is patch release of react-native-windows, fixing bugs or adding non-breaking enhancements. ` +
+          `To see a summary of changes in this major release, see [release notes for ${releaseTitle(
+            mostRecentMajor,
+          )}](${releaseLink(mostRecentMajor)}).\n`;
       }
     } else {
       console.warn(
         chalk.yellow(
-          `Could not parse react-native-windows semver "${release.version}". Omitting release links`,
+          `Could not determine the most recent major version before "${release.version}". Omitting release links`,
         ),
       );
     }
   }
 
+  md += `### New changes\n`;
   for (const change of release.comments) {
     const abbrevCommit = change.commit.substr(0, 8);
     md += `- ${abbrevCommit} ${change.comment} (${change.author})\n`;
@@ -238,14 +245,13 @@ function createReleaseMarkdown(
 }
 
 /**
- * Finds a link to the the first stable/prerelease release notes of the major
- * version. These notes are curated, and we want them to be visible on all
- * releases.
+ * The most recently published major (first preview or stable) release. These
+ * have curated release notes that we can link to from other releases.
  */
-function getFirstMajorVersionLink(
+function mostRecentMajorRelease(
   release: Release,
   allReleases: Release[],
-): string | null {
+): Release | null {
   const releaseSemver = semver.parse(release.version);
   if (!releaseSemver) {
     return null;
@@ -267,14 +273,27 @@ function getFirstMajorVersionLink(
     return null;
   }
 
-  const matchingRelease = allReleases.find(
-    r => r.packageName === release.packageName && r.version === firstVersion,
-  );
-  if (!matchingRelease) {
-    return null;
-  }
+  const matchingRelease = allReleases.find(r => {
+    return (
+      r.packageName === release.packageName &&
+      semver.eq(r.version, firstVersion)
+    );
+  });
+  return matchingRelease || null;
+}
 
-  return `https://github.com/microsoft/react-native-windows/releases/tag/${matchingRelease.tag}`;
+/**
+ * Returns a GitHub release link to a given release
+ */
+function releaseLink(release: Release): string {
+  return `https://github.com/microsoft/react-native-windows/releases/tag/${release.tag}`;
+}
+
+/**
+ * Return a full release title from a release
+ */
+function releaseTitle(release: Release): string {
+  return `${packageTitle(release.packageName)} ${release.version}`;
 }
 
 /**
