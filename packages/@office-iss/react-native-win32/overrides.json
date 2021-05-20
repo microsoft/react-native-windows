@@ -110,7 +110,7 @@
       "issue": 4378
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src/Libraries/Components/ProgressViewIOS/ProgressViewIOS.win32.js",
       "baseFile": "Libraries/Components/ProgressViewIOS/ProgressViewIOS.android.js",
       "baseHash": "8c3173a8f5eef870de3aa55593202ab49c62f7e1"
