@@ -13,34 +13,34 @@ parameters:
           - Name: X64Debug
             BuildPlatform: x64
             BuildConfiguration: Debug
-            NoDeployOption:
+            DeployOptions:
             UseHermes: false
           - Name: X64ReleaseHermes
             BuildPlatform: x64
             BuildConfiguration: Release
-            NoDeployOption:
+            DeployOptions:
             UseHermes: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: Arm64Debug
             BuildPlatform: ARM64
             BuildConfiguration: Debug
-            NoDeployOption: --no-deploy # We don't have Arm agents
+            DeployOptions: --no-deploy # We don't have Arm agents
             UseHermes: false
           - Name: X64Debug
             BuildPlatform: x64
             BuildConfiguration: Debug
-            NoDeployOption:
+            DeployOptions:
             UseHermes: false
           - Name: X64ReleaseHermes
             BuildPlatform: x64
             BuildConfiguration: Release
-            NoDeployOption:
+            DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
             UseHermes: true
           - Name: X86Debug
             BuildPlatform: x86
             BuildConfiguration: Debug
-            NoDeployOption:
+            DeployOptions:
             UseHermes: false
 
 jobs:
@@ -110,12 +110,12 @@ jobs:
               # There's a slight race condition here, where we assume Chrome will open
               # before this launches the app. This step takes ~1m on CI machines so it
               # shouldn't be a practical concern.
-              - script: yarn windows --no-build $(NoDeployOption) --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging
+              - script: yarn windows --no-build ${{ matrix.DeployOptions }} --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging
                 displayName: yarn windows --no-build
                 workingDirectory: packages/integration-test-app
 
             - ${{ if eq(matrix.BuildConfiguration, 'Release') }}:
-              - script: yarn windows --release --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging --buildLogDirectory $(BuildLogDirectory)
+              - script: yarn windows --release {{ matrix.DeployOptions }} --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging --buildLogDirectory $(BuildLogDirectory)
                 displayName: yarn windows --release
                 workingDirectory: packages/integration-test-app
 
@@ -135,7 +135,7 @@ jobs:
             - script: yarn integration-test
               displayName: yarn integration-test
               workingDirectory: packages/integration-test-app
-              condition: and(succeeded(), eq(variables.NoDeployOption, ''))
+              condition: and(succeeded(), eq(variables.DeployOptions, ''))
 
             - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/after-test.png
               displayName: Screenshot desktop after tests

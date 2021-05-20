@@ -280,7 +280,7 @@ export async function deployToDesktop(
 
   const appPackageFolder = getAppPackage(options, projectName);
 
-  if (options.release) {
+  if (options.release && !options.deployFromLayout) {
     await runPowerShellScriptFunction(
       'Removing old version of the app',
       windowsStoreAppUtils,
