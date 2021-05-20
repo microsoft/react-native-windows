@@ -232,6 +232,7 @@ namespace Microsoft.ReactNative
     JsiValueRef EvaluateJavaScript(IJsiByteBuffer buffer, String sourceUrl);
     JsiPreparedJavaScript PrepareJavaScript(IJsiByteBuffer buffer, String sourceUrl);
     JsiValueRef EvaluatePreparedJavaScript(JsiPreparedJavaScript js);
+    Boolean DrainMicrotasks(Int32 maxMicrotasksHint);
     JsiObjectRef Global { get; };
     String Description { get; };
     Boolean IsInspectable { get; };

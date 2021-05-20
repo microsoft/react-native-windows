@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integrate Apr 28 (base of 0.65) Nightly RN Build",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}

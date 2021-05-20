@@ -253,6 +253,23 @@ static inline std::string toString(const DatePickerMode &value) {
     case DatePickerMode::Datetime: return "datetime";
   }
 }
+enum class DatePickerPickerStyle { Compact, Spinner, Inline };
+
+static inline void fromRawValue(const RawValue &value, DatePickerPickerStyle &result) {
+  auto string = (std::string)value;
+  if (string == "compact") { result = DatePickerPickerStyle::Compact; return; }
+  if (string == "spinner") { result = DatePickerPickerStyle::Spinner; return; }
+  if (string == "inline") { result = DatePickerPickerStyle::Inline; return; }
+  abort();
+}
+
+static inline std::string toString(const DatePickerPickerStyle &value) {
+  switch (value) {
+    case DatePickerPickerStyle::Compact: return "compact";
+    case DatePickerPickerStyle::Spinner: return "spinner";
+    case DatePickerPickerStyle::Inline: return "inline";
+  }
+}
 
 class DatePickerProps final : public ViewProps {
  public:
@@ -269,6 +286,7 @@ class DatePickerProps final : public ViewProps {
   DatePickerMinuteInterval minuteInterval{DatePickerMinuteInterval::MinuteInterval1};
   DatePickerMode mode{DatePickerMode::Date};
   Float timeZoneOffsetInMinutes{0.0};
+  DatePickerPickerStyle pickerStyle{DatePickerPickerStyle::Spinner};
 };
 
 enum class AndroidDrawerLayoutKeyboardDismissMode { None, OnDrag };
