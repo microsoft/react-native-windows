@@ -63,9 +63,7 @@ jobs:
           targetType: 'inline'
           script: |
             $PfxPath = Join-Path -Path $(Build.SourcesDirectory) -ChildPath reactUWPTestApp-Key.pfx
-            echo $PfxPath
-            $PfxBytes = [System.Convert]::FromBase64String($env:TESTAPPKEY)
-            [System.IO.File]::WriteAllBytes($PfxPath, $PfxBytes)
+            [System.IO.File]::WriteAllBytes($PfxPath, $env:TESTAPPKEY)
 
       - task: CmdLine@2
         displayName: run-windows
