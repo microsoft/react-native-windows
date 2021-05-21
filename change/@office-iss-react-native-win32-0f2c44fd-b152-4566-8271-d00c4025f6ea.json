@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Use Rex with V8 JSI Runtime",
+  "comment": "Integrate Apr 28 (base of 0.65) Nightly RN Build",
   "packageName": "@office-iss/react-native-win32",
   "email": "ngerlem@microsoft.com",
   "dependentChangeType": "patch"

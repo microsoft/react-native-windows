@@ -449,7 +449,7 @@ void ReactInstanceWin::Initialize() noexcept {
         if (m_options.EnableFabric()) {
           Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
               winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()),
-              m_instanceWrapper.Load()->GetInstance()->getRuntimeExecutor());
+              m_instanceWrapper.Load()->GetInstance()->getRuntimeExecutor(false /*shouldFlush*/));
           m_options.TurboModuleProvider->getModule("FabricUIManagerBinding", m_instance.Load()->getJSCallInvoker());
         }
 #endif
