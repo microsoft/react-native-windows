@@ -2,11 +2,22 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://microsoft.github.io/react-native-windows/blog</id>
     <title>React Native for Windows + macOS Blog</title>
-    <updated>2021-03-16T06:00:00.000Z</updated>
+    <updated>2021-05-17T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://microsoft.github.io/react-native-windows/blog"/>
     <subtitle>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</subtitle>
     <logo>https://microsoft.github.io/react-native-windows/img/header_logo.svg</logo>
+    <entry>
+        <title type="html"><![CDATA[Using CodePush in a React Native for Windows application]]></title>
+        <id>https://microsoft.github.io/react-native-windows/blog/2021/05/17/codepush.html</id>
+        <link href="https://microsoft.github.io/react-native-windows/blog/2021/05/17/codepush.html"/>
+        <updated>2021-05-17T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>CodePush is a service built by Microsoft, now incorporated into the <a href="https://appcenter.ms/">Visual Studio App Center platform</a>, which provides a way for React Native and Cordova developers to be more agile in delivering updates to their applications. Thanks to CodePush, you ...</p>]]></summary>
+        <author>
+            <name>Matteo Pagani</name>
+            <uri>https://twitter.com/ReactNativeMSFT</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Gallery App, TurboModules, and more community modules]]></title>
         <id>https://microsoft.github.io/react-native-windows/blog/2021/03/16/64updates.html</id>

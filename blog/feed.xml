@@ -4,7 +4,7 @@
         <title>React Native for Windows + macOS Blog</title>
         <link>https://microsoft.github.io/react-native-windows/blog</link>
         <description>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</description>
-        <lastBuildDate>Tue, 16 Mar 2021 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 17 May 2021 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -12,6 +12,13 @@
             <url>https://microsoft.github.io/react-native-windows/img/header_logo.svg</url>
             <link>https://microsoft.github.io/react-native-windows/blog</link>
         </image>
+        <item>
+            <title><![CDATA[Using CodePush in a React Native for Windows application]]></title>
+            <link>https://microsoft.github.io/react-native-windows/blog/2021/05/17/codepush.html</link>
+            <guid>https://microsoft.github.io/react-native-windows/blog/2021/05/17/codepush.html</guid>
+            <pubDate>Mon, 17 May 2021 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>CodePush is a service built by Microsoft, now incorporated into the <a href="https://appcenter.ms/">Visual Studio App Center platform</a>, which provides a way for React Native and Cordova developers to be more agile in delivering updates to their applications. Thanks to CodePush, you ...</p>]]></description>
+        </item>
         <item>
             <title><![CDATA[Gallery App, TurboModules, and more community modules]]></title>
             <link>https://microsoft.github.io/react-native-windows/blog/2021/03/16/64updates.html</link>
