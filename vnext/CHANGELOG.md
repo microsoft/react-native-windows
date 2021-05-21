@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 21 May 2021 05:17:18 GMT and should not be manually modified.
+This log was last generated on Fri, 21 May 2021 21:40:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.316
+
+Fri, 21 May 2021 21:40:00 GMT
+
+### Changes
+
+- [Fabric] Add support for PlatformColor (30809111+acoates-ms@users.noreply.github.com)
+- Fixes bug in BatchingEventEmitter (erozell@outlook.com)
+- folly update (agnel@microsoft.com)
 
 ## 0.0.0-canary.315
 

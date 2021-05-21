@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 21 May 2021 21:40:00 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.71",
+      "version": "0.0.0-canary.71",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add \"--deploy-from-layout\" option",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0ee34d6ba5a5fda0800813e43ed8af5144eeb1b5",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 May 2021 05:17:18 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.70",
       "version": "0.0.0-canary.70",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add \"--deploy-from-layout\" option",
-  "packageName": "@react-native-windows/cli",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

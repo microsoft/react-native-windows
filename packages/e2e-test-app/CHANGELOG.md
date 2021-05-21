@@ -1,8 +1,16 @@
 # Change Log - e2e-test-app
 
-This log was last generated on Fri, 21 May 2021 05:17:18 GMT and should not be manually modified.
+This log was last generated on Fri, 21 May 2021 21:40:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Fri, 21 May 2021 21:40:00 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.316 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0
 
