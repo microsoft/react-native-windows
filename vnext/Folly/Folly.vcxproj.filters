@@ -30,6 +30,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(FollyDir)\folly\system\ThreadId.cpp">
+      <Filter>Source Files\lang</Filter>
+    </ClCompile>
     <ClCompile Include="$(FollyDir)\folly\lang\SafeAssert.cpp">
       <Filter>Source Files\lang</Filter>
     </ClCompile>

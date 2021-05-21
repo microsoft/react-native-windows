@@ -52,6 +52,7 @@
     <ClCompile Include="$(FollyDir)\folly\portability\Unistd.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(FollyDir)\folly\system\ThreadId.cpp" />
     <ClCompile Include="$(FollyDir)\folly\lang\SafeAssert.cpp" />
     <ClCompile Include="$(FollyDir)\folly\lang\ToAscii.cpp" />
     <ClCompile Include="$(FollyDir)\folly\lang\Assume.cpp" />
