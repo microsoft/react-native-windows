@@ -87,7 +87,7 @@ void ImageComponentView::updateProps(
 
   if (oldImageProps.tintColor != newImageProps.tintColor) {
     if (newImageProps.tintColor) {
-      m_element->TintColor(ColorFromNumber(*(newImageProps.tintColor)));
+      m_element->TintColor(newImageProps.tintColor.AsWindowsColor());
     } else {
       m_element->TintColor(winrt::Colors::Transparent());
     }

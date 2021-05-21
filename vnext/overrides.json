@@ -16,6 +16,27 @@
     },
     {
       "type": "patch",
+      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.cpp",
+      "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.cpp",
+      "baseHash": "72f43acae8d5d34ed0607636008ff2618b5c734f",
+      "issue": 7821
+    },
+    {
+      "type": "patch",
+      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/conversions.h",
+      "baseFile": "ReactCommon/react/renderer/graphics/conversions.h",
+      "baseHash": "a77dfb26acdaeaf0b7cd1df893843cd176364b17",
+      "issue": 7821
+    },
+    {
+      "type": "patch",
+      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.h",
+      "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.h",
+      "baseHash": "93c4d57329747bec83201898ba807d0a23700570",
+      "issue": 7821
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/leakchecker/LeakChecker.cpp",
       "baseFile": "ReactCommon/react/renderer/leakchecker/LeakChecker.cpp",
       "baseHash": "71e63e48a41f515954445737b6b09540b8416113",
