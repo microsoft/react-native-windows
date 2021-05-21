@@ -25,6 +25,7 @@ export type BuildConfig = 'Debug' | 'DebugBundle' | 'Release' | 'ReleaseBundle';
  *    no-launch: Boolean - Do not launch the app after deployment
  *    no-build: Boolean - Do not build the solution
  *    no-deploy: Boolean - Do not deploy the app
+ *    deploy-from-layout: Force deploy from layout, even in release builds
  *    sln: String - Solution file to build
  *    msbuildprops: String - Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2
  *    direct-debugging: Number - Enable direct debugging on specified port
@@ -46,6 +47,7 @@ export interface RunWindowsOptions {
   autolink: boolean;
   build: boolean;
   deploy: boolean;
+  deployFromLayout?: boolean;
   sln?: string;
   proj?: string;
   msbuildprops?: string;
@@ -126,6 +128,11 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--no-deploy',
     description: 'Do not deploy the app',
+    default: false,
+  },
+  {
+    name: '--deploy-from-layout',
+    description: 'Force deploy from layout, even in release builds',
     default: false,
   },
   {

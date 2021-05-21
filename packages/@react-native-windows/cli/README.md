@@ -30,6 +30,7 @@ Options:
 | `--no-autolink`       | Do not run autolinking | [boolean] | 
 | `--no-build`          | Do not build the solution | [boolean] |
 | `--no-deploy`         | Do not deploy the app | [boolean] |
+| `--deploy-from-layout`| Force deploy from layout, even in release builds | [boolean] |
 | `--sln`               | Override the app solution file determined by 'react-native config', e.g. windows\myApp.sln | [string] | 
 | `--proj`              | Override the app project file determined by 'react-native config', e.g. windows\myApp\myApp.vcxproj | [string] |
 | `--msbuildprops`      | Comma separated props to pass to MSBuild, eg: prop1=value1,prop2=value2 | [string] |
