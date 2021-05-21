@@ -2,6 +2,21 @@
   "name": "@rnw-bots/coordinator",
   "entries": [
     {
+      "date": "Fri, 21 May 2021 05:17:18 GMT",
+      "tag": "@rnw-bots/coordinator_v1.0.6",
+      "version": "1.0.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Integrate Apr 28 (base of 0.65) Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "@rnw-bots/coordinator"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Feb 2021 05:08:29 GMT",
       "tag": "@rnw-bots/coordinator_v1.0.5",
       "version": "1.0.5",

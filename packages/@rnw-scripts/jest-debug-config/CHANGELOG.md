@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/jest-debug-config
 
-This log was last generated on Fri, 12 Feb 2021 05:19:35 GMT and should not be manually modified.
+This log was last generated on Fri, 21 May 2021 05:17:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.1
+
+Fri, 21 May 2021 05:17:18 GMT
+
+### Patches
+
+- Integrate Apr 28 (base of 0.65) Nightly RN Build (ngerlem@microsoft.com)
 
 ## 1.2.0
 

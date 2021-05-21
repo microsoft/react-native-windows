@@ -1,6 +1,6 @@
 {
   "name": "jest-environment-winappdriver",
-  "version": "1.1.6-15",
+  "version": "1.1.6",
   "description": "A Jest Environment for WinAppDriver + WebDriverIO",
   "main": "lib-commonjs/WinAppDriverEnvironment.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -14,12 +14,12 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "node-rnw-rpc": "^1.0.6-12",
+    "node-rnw-rpc": "^1.0.6",
     "webdriverio": "^6.9.0"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.6",
-    "@rnw-scripts/just-task": "2.1.0",
+    "@rnw-scripts/just-task": "2.1.1",
     "@rnw-scripts/ts-config": "1.1.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",

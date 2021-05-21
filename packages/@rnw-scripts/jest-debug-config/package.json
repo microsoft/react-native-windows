@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/jest-debug-config",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "license": "MIT",
   "main": "jest.debug.config.js",
   "dependencies": {

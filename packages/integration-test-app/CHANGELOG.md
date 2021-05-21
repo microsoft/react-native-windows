@@ -1,8 +1,21 @@
 # Change Log - integration-test-app
 
-This log was last generated on Tue, 18 May 2021 05:05:13 GMT and should not be manually modified.
+This log was last generated on Fri, 21 May 2021 05:17:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Fri, 21 May 2021 05:17:18 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.1 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.315 (ngerlem@microsoft.com)
+- Bump node-rnw-rpc to v1.0.6 (ngerlem@microsoft.com)
 
 ## 0.0.0
 
