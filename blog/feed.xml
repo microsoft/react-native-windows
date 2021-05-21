@@ -17,7 +17,9 @@
             <link>https://microsoft.github.io/react-native-windows/blog/2021/05/17/codepush.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2021/05/17/codepush.html</guid>
             <pubDate>Mon, 17 May 2021 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>CodePush is a service built by Microsoft, now incorporated into the <a href="https://appcenter.ms/">Visual Studio App Center platform</a>, which provides a way for React Native and Cordova developers to be more agile in delivering updates to their applications. Thanks to CodePush, you ...</p>]]></description>
+            <description><![CDATA[<p>CodePush is a service built by Microsoft, now incorporated into the <a href="https://appcenter.ms/">Visual Studio App Center platform</a>, which provides a way for React Native and Cordova developers to be more agile in delivering updates to their applications.
+Thanks to CodePush, you are able to deliver a new bundle (which might contain updated JavaScript files, new images, etc.) without having to fully redeploy a new package. This means, for example, that you can update the content of your application published on a Store without submitting a new package and waiting for the certification process to be completed; or that you can add a new feature in your LOB app without having to redeploy it via Intune or another MDM solution to all your employees.</p>
+]]></description>
         </item>
         <item>
             <title><![CDATA[Gallery App, TurboModules, and more community modules]]></title>
