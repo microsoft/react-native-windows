@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Prepare files for default branch rename",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
