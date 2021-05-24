@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 19 Apr 2021 17:00:53 GMT and should not be manually modified.
+This log was last generated on Mon, 24 May 2021 15:09:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.4
+
+Mon, 24 May 2021 15:09:06 GMT
+
+### Patches
+
+- Fix Typo in Autolinking Source (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.64.3
 

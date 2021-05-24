@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 17 May 2021 17:16:08 GMT and should not be manually modified.
+This log was last generated on Mon, 24 May 2021 15:09:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.9
+
+Mon, 24 May 2021 15:09:06 GMT
+
+### Patches
+
+- Fix MSBuild Bundling When Path Contains Spaces (ngerlem@microsoft.com)
+- [0.64] Fix transitive dependencies for C# nuget-based apps #7786 (jthysell@microsoft.com)
 
 ## 0.64.8
 

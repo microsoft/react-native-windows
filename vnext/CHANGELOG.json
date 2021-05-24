@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 May 2021 15:09:06 GMT",
+      "tag": "react-native-windows_v0.64.9",
+      "version": "0.64.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix MSBuild Bundling When Path Contains Spaces",
+            "author": "ngerlem@microsoft.com",
+            "commit": "061fc642d25fa40fb9a7e08a888a88bc10eabb40",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Fix transitive dependencies for C# nuget-based apps #7786",
+            "author": "jthysell@microsoft.com",
+            "commit": "8e1ef742828122055a6e6da75613d4e4db0df1f1",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 May 2021 17:16:08 GMT",
       "tag": "react-native-windows_v0.64.8",
       "version": "0.64.8",
