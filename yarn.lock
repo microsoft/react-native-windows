@@ -2165,9 +2165,9 @@
     "@types/node" "*"
 
 "@types/react-native@^0.64.4":
-  version "0.64.5"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.5.tgz#219738b52b2e372ec057d3c8f20fbd6c37b245cd"
-  integrity sha512-k0r8MnQX7UFboZDvMKLov26gFLXKrNgLhCfSVhjaZ6wMUofKijxvee7/wgfAqtT2zS5FR4an4+qn0r72SCbw3g==
+  version "0.64.6"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.6.tgz#a3227badd99a1ba883be4b0a62af8ccf0fc08543"
+  integrity sha512-xVDpYIcgtopJ7bj2FsVO+Ch6/BVs9L591cXMNqoYTed+eNRF9JDWAGxyqcQDZmsC5Ty3Uaw066+cM5T8avBpcA==
   dependencies:
     "@types/react" "*"
 
