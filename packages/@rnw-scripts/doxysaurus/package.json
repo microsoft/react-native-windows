@@ -46,5 +46,6 @@
     "bin.js",
     "lib-commonjs",
     "templates"
-  ]
+  ],
+  "private": true
 }
