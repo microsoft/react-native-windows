@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Prepare files for default branch rename",
+  "packageName": "@rnw-scripts/promote-release",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
