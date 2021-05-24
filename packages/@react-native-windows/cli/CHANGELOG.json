@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 24 May 2021 15:06:11 GMT",
+      "tag": "@react-native-windows/cli_v0.63.12",
+      "version": "0.63.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Typo in Autolinking Source",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "e58da5def0770e44feba86494c580ca2ee1bacc1",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Mar 2021 22:43:28 GMT",
       "tag": "@react-native-windows/cli_v0.63.11",
       "version": "0.63.11",
