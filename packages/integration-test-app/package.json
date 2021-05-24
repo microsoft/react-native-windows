@@ -14,7 +14,7 @@
     "node-rnw-rpc": "^1.0.7-0",
     "react": "17.0.2",
     "react-native": "0.0.0-7e05480cc",
-    "react-native-windows": "^0.0.0-canary.316"
+    "react-native-windows": "0.65.0-preview.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

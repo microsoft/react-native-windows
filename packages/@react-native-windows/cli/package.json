@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.71",
+  "version": "0.65.0-preview.0",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,8 +17,8 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/package-utils": "^0.0.0-canary.17",
-    "@react-native-windows/telemetry": "^0.0.0-canary.18",
+    "@react-native-windows/package-utils": "0.65.0-preview.0",
+    "@react-native-windows/telemetry": "0.65.0-preview.0",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
     "envinfo": "^7.5.0",
@@ -65,7 +65,7 @@
     "powershell"
   ],
   "beachball": {
-    "defaultNpmTag": "canary",
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
       "major",
       "minor",
