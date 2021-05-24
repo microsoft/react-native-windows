@@ -70,7 +70,7 @@ If you have access to the AzureDevOps pipeline you'll be able to see test failur
 Here are the artifacts that are produced during the build:
 - error screenshots of the app when a test failed
 - test run XML - this contains some information like the name of the wdio test that failed and the JS stack
-- tree dump outputs - you can compare these to the masters to see if there is a the difference responsible for the test failing. 
+- tree dump outputs - you can compare these to the output of the main branch to see if there is a the difference responsible for the test failing. 
 - crash dumps of the e2e test app (ReactUWPTestApp)
 
 You can access these by going to the AzureDevOps run for your PR and clicking on the artifacts link:
@@ -83,7 +83,7 @@ Then you can access crash dumps under the `ReactUWPTestAppTreeDump\CrashDumps` f
 You can get the symbols from the `appxsym` (just download it and rename it to `.zip`):
 ![SymbolsPackage](img/e2e-syms.png)
 
- The `ReactUWPTestAppTreeDump` folder will also contain any tree dump outputs that were produced that did not match the masters.
+ The `ReactUWPTestAppTreeDump` folder will also contain any tree dump outputs that were produced that did not match the main branch.
 
 ## Architecture
 

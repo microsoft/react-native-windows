@@ -100,7 +100,7 @@ ReactEurope 2015, Paris - Spencer Ahrens - Facebook
 
 # React Native: Animated
 
-- Landing soon in master (days)
+- Landing soon in main branch (days)
 - GitHub: @vjeux, @sahrens
 - Questions?
 
