@@ -1202,6 +1202,22 @@ inline ReactModuleProvider MakeTurboModuleProvider() noexcept {
   return MakeModuleProvider<TModule>();
 }
 
+template <class TModule>
+inline ReactModuleInfo const &GetReactModuleInfo() noexcept {
+  return GetReactModuleInfo(static_cast<TModule*>(nullptr));
+}
+
+template <class TDerived>
+struct ReactPackageProvider : implements<TDerived, IReactPackageProvider> {
+  template <class TModule>
+  void AddModule(IReactPackageBuilder const &packageBuilder) noexcept {
+    packageBuilder.as<ReactPackageBuilder>().AddDispatchedModule(
+        GetReactModuleInfo<TModule>().ModuleName,
+        MakeModuleProvider<TModule>(),
+        GetReactModuleInfo<TModule>().DispatcherName);
+  }
+};
+
 } // namespace winrt::Microsoft::ReactNative
 
 namespace React {
