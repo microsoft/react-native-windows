@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Fri, 21 May 2021 05:17:18 GMT and should not be manually modified.
+This log was last generated on Tue, 25 May 2021 19:36:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.21
+
+Tue, 25 May 2021 19:36:43 GMT
+
+### Patches
+
+- Prepare files for default branch rename (dannyvv@microsoft.com)
 
 ## 1.2.20
 
