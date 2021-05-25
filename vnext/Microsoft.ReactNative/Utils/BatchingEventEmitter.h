@@ -14,9 +14,8 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 struct BatchedEvent {
   winrt::hstring emitterMethod;
-  int64_t tag{};
-  winrt::hstring eventName;
-  JSValue eventObject;
+  winrt::hstring coalescingKey;
+  JSValueArgWriter paramsWriter;
 };
 } // namespace winrt::Microsoft::ReactNative::implementation
 
@@ -31,18 +30,18 @@ struct BatchingEventEmitter : public std::enable_shared_from_this<BatchingEventE
   BatchingEventEmitter(Mso::CntPtr<const Mso::React::IReactContext> &&context) noexcept;
 
   //! Queues an event to be fired via RCTEventEmitter, calling receiveEvent() by default.
-  void EmitJSEvent(int64_t tag, winrt::hstring &&eventName, JSValue &&eventObject) noexcept;
-  void
-  EmitJSEvent(winrt::hstring &&emitterMethod, int64_t tag, winrt::hstring &&eventName, JSValue &&eventObject) noexcept;
+  void EmitJSEvent(JSValueArgWriter &&paramsWriter) noexcept;
+  void EmitJSEvent(
+      winrt::hstring &&emitterMethod,
+      JSValueArgWriter &&paramsWriter) noexcept;
 
   //! Queues an event to be fired via RCTEventEmitter, calling receiveEvent() by default. Existing events in the batch
   //! with the same name and tag will be removed.
-  void EmitCoalescingJSEvent(int64_t tag, winrt::hstring &&eventName, JSValue &&eventObject) noexcept;
+  void EmitCoalescingJSEvent(winrt::hstring &&coalescingKey, JSValueArgWriter &&paramsWriter) noexcept;
   void EmitCoalescingJSEvent(
       winrt::hstring &&emitterMethod,
-      int64_t tag,
-      winrt::hstring &&eventName,
-      JSValue &&eventObject) noexcept;
+      winrt::hstring &&coalescingKey,
+      JSValueArgWriter &&paramsWriter) noexcept;
 
  private:
   void RegisterFrameCallback() noexcept;

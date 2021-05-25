@@ -3,11 +3,12 @@
 
 #pragma once
 #include <IReactInstance.h>
+#include <JSValueWriter.h>
 #include <UI.Xaml.Documents.h>
-#include <folly/dynamic.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
 #include <set>
+#include "Utils/BatchingEventEmitter.h"
 #include "XamlView.h"
 
 #ifdef USE_FABRIC
@@ -33,6 +34,7 @@ class TouchEventHandler {
 
   void AddTouchHandlers(XamlView xamlView);
   void RemoveTouchHandlers();
+  winrt::Microsoft::ReactNative::BatchingEventEmitter &BatchingEmitter() noexcept;
 
  private:
   void OnPointerPressed(const winrt::IInspectable &, const winrt::PointerRoutedEventArgs &args);
@@ -86,7 +88,7 @@ class TouchEventHandler {
   const char *GetTouchEventTypeName(TouchEventType eventType) noexcept;
 
   std::optional<size_t> IndexOfPointerWithId(uint32_t pointerId);
-  folly::dynamic GetPointerJson(const ReactPointer &pointer, int64_t target);
+  winrt::Microsoft::ReactNative::JSValue GetPointerJson(const ReactPointer &pointer, int64_t target);
 
   struct TagSet {
     std::unordered_set<int64_t> tags;
@@ -105,6 +107,7 @@ class TouchEventHandler {
 
   XamlView m_xamlView;
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
+  std::shared_ptr<winrt::Microsoft::ReactNative::BatchingEventEmitter> m_batchingEventEmitter;
 };
 
 } // namespace Microsoft::ReactNative

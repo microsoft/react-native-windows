@@ -359,9 +359,28 @@ void ScrollViewShadowNode::EmitScrollEvent(
   auto *viewManager = static_cast<ScrollViewManager *>(GetViewManager());
 
   if (coalesceType == CoalesceType::CoalesceByTag) {
-    viewManager->BatchingEmitter().EmitCoalescingJSEvent(tag, std::move(eventName), std::move(eventJson));
+    std::wostringstream coalescingKeyStream;
+    coalescingKeyStream << eventName.c_str() << tag;
+    viewManager->BatchingEmitter().EmitCoalescingJSEvent(
+        winrt::hstring{coalescingKeyStream.str()},
+        [tag, eventName = std::move(eventName), eventJson = std::move(eventJson)](
+            winrt::Microsoft::ReactNative::IJSValueWriter const &paramsWriter) noexcept {
+          paramsWriter.WriteArrayBegin();
+          WriteValue(paramsWriter, tag);
+          WriteValue(paramsWriter, eventName);
+          WriteValue(paramsWriter, std::move(eventJson));
+          paramsWriter.WriteArrayEnd();          
+        });
   } else {
-    viewManager->BatchingEmitter().EmitJSEvent(tag, std::move(eventName), std::move(eventJson));
+    viewManager->BatchingEmitter().EmitJSEvent(
+        [tag, eventName = std::move(eventName), eventJson = std::move(eventJson)](
+            winrt::Microsoft::ReactNative::IJSValueWriter const &paramsWriter) noexcept {
+          paramsWriter.WriteArrayBegin();
+          WriteValue(paramsWriter, tag);
+          WriteValue(paramsWriter, eventName);
+          WriteValue(paramsWriter, std::move(eventJson));
+          paramsWriter.WriteArrayEnd();
+        });
   }
 } // namespace Microsoft::ReactNative
 

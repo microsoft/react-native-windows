@@ -112,9 +112,13 @@ class PanResponderExample extends React.Component<Props, State> {
               styles.circle,
               // $FlowFixMe[incompatible-type]
               {
-                translateX: this.state.left,
-                translateY: this.state.top,
-                backgroundColor: this.state.pressed ? 'blue' : 'green',
+                transform: [
+                  {
+                    translateX: this.state.left,
+                    translateY: this.state.top,
+                    backgroundColor: this.state.pressed ? 'blue' : 'green',
+                  },
+                ],
               },
             ]}
             {...this._panResponder.panHandlers}
