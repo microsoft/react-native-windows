@@ -51,6 +51,7 @@
     "xmldom": "^0.5.0"
   },
   "beachball": {
+    "branch": "main",
     "gitTags": false
   },
   "engines": {
