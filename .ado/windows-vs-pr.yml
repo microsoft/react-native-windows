@@ -208,6 +208,7 @@ jobs:
             /p:BaseIntDir=$(BaseIntDir)
             /p:AppxPackageSigningEnabled=false
             /p:UseWinUI3=true
+            /p:AppxPackageSigningEnabled=false
         continueOnError: true # See issue #6129
 
       - task: PublishBuildArtifacts@1
@@ -266,6 +267,7 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
+            /p:AppxPackageSigningEnabled=false
 
       - powershell: .ado/TestWACK.ps1 $(BuildPlatform) $(BuildConfiguration) $(Build.StagingDirectory)\WACK
         displayName: Test WACK
