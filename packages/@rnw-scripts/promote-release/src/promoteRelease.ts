@@ -48,6 +48,9 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
 
     await rootPkg.mergeProps({
       scripts: {change: `beachball change --branch ${branchName}`},
+      beachball: {
+        branch: branchName,
+      },
     });
 
     console.log('Updating package versions...');
