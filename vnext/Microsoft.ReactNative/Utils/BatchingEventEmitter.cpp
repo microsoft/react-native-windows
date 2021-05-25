@@ -3,6 +3,8 @@
 
 #include "pch.h"
 #include "BatchingEventEmitter.h"
+#include "DynamicWriter.h"
+#include "JSValueWriter.h"
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -13,19 +15,28 @@ BatchingEventEmitter::BatchingEventEmitter(Mso::CntPtr<const Mso::React::IReactC
 
 void BatchingEventEmitter::DispatchEvent(
     int64_t tag,
-    const std::string &eventName,
-    folly::dynamic &&eventData) noexcept {
-  folly::dynamic params = folly::dynamic::array(tag, eventName, std::move(eventData));
-  return EmitJSEvent("RCTEventEmitter", "receiveEvent", std::move(params));
+    winrt::hstring &&eventName,
+    const JSValueArgWriter &eventDataWriter) noexcept {
+  return EmitJSEvent(
+      L"RCTEventEmitter",
+      L"receiveEvent",
+      [tag, eventName = std::move(eventName), &eventDataWriter](const IJSValueWriter &paramsWriter) {
+        paramsWriter.WriteArrayBegin();
+        WriteValue(paramsWriter, tag);
+        WriteValue(paramsWriter, std::move(eventName));
+        eventDataWriter(paramsWriter);
+        paramsWriter.WriteArrayEnd();
+      });
 }
 
 void BatchingEventEmitter::EmitJSEvent(
-    const std::string &eventEmitterName,
-    const std::string &emitterMethod,
-    folly::dynamic &&params) noexcept {
+    winrt::hstring &&eventEmitterName,
+    winrt::hstring &&emitterMethod,
+    const JSValueArgWriter &eventDataWriter) noexcept {
   VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
 
-  implementation::BatchedEvent newEvent{eventEmitterName, emitterMethod, "", 0, std::move(params)};
+  implementation::BatchedEvent newEvent{
+      std::move(eventEmitterName), std::move(emitterMethod), L"", 0, DynamicWriter::ToDynamic(eventDataWriter)};
   bool isFirstEventInBatch = false;
 
   {
@@ -42,21 +53,36 @@ void BatchingEventEmitter::EmitJSEvent(
 
 void BatchingEventEmitter::DispatchCoalescingEvent(
     int64_t tag,
-    const std::string &eventName,
-    folly::dynamic &&eventData) noexcept {
-  folly::dynamic params = folly::dynamic::array(tag, eventName, std::move(eventData));
-  EmitCoalescingJSEvent("RCTEventEmitter", "receiveEvent", eventName, tag, std::move(params));
+    winrt::hstring &&eventName,
+    const JSValueArgWriter &eventDataWriter) noexcept {
+  EmitCoalescingJSEvent(
+      L"RCTEventEmitter",
+      L"receiveEvent",
+      std::move(eventName),
+      tag,
+      [tag, eventName = std::move(eventName), &eventDataWriter](const IJSValueWriter &paramsWriter) {
+        paramsWriter.WriteArrayBegin();
+        WriteValue(paramsWriter, tag);
+        WriteValue(paramsWriter, std::move(eventName));
+        eventDataWriter(paramsWriter);
+        paramsWriter.WriteArrayEnd();
+      });
 }
 
 void BatchingEventEmitter::EmitCoalescingJSEvent(
-    const std::string &eventEmitterName,
-    const std::string &emitterMethod,
-    const std::string &eventName,
+    winrt::hstring &&eventEmitterName,
+    winrt::hstring &&emitterMethod,
+    winrt::hstring &&eventName,
     int64_t coalescingKey,
-    folly::dynamic &&params) noexcept {
+    const JSValueArgWriter &params) noexcept {
   VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
 
-  implementation::BatchedEvent newEvent{eventEmitterName, emitterMethod, eventName, coalescingKey, std::move(params)};
+  implementation::BatchedEvent newEvent{
+      std::move(eventEmitterName),
+      std::move(emitterMethod),
+      std::move(eventName),
+      coalescingKey,
+      DynamicWriter::ToDynamic(params)};
   bool isFirstEventInBatch = false;
 
   {
@@ -65,9 +91,8 @@ void BatchingEventEmitter::EmitCoalescingJSEvent(
     isFirstEventInBatch = m_eventQueue.size() == 0;
 
     auto endIter = std::remove_if(m_eventQueue.begin(), m_eventQueue.end(), [&](const auto &evt) noexcept {
-      const auto shouldCoalesce = evt.eventEmitterName == eventEmitterName && evt.emitterMethod == emitterMethod &&
-          evt.eventName == eventName && evt.coalescingKey == coalescingKey;
-      return shouldCoalesce;
+      return evt.eventEmitterName == newEvent.eventEmitterName && evt.emitterMethod == newEvent.emitterMethod &&
+          evt.eventName == newEvent.eventName && evt.coalescingKey == newEvent.coalescingKey;
     });
 
     m_eventQueue.erase(endIter, m_eventQueue.end());
@@ -114,7 +139,8 @@ void BatchingEventEmitter::OnFrameJS() noexcept {
 
   while (!currentBatch.empty()) {
     auto &evt = currentBatch.front();
-    m_context->CallJSFunction(std::move(evt.eventEmitterName), std::move(evt.emitterMethod), std::move(evt.params));
+    m_context->CallJSFunction(
+        winrt::to_string(evt.eventEmitterName), winrt::to_string(evt.emitterMethod), std::move(evt.params));
     currentBatch.pop_front();
   }
 }

@@ -13,9 +13,9 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 struct BatchedEvent {
-  std::string eventEmitterName;
-  std::string emitterMethod;
-  std::string eventName;
+  winrt::hstring eventEmitterName;
+  winrt::hstring emitterMethod;
+  winrt::hstring eventName;
   int64_t coalescingKey;
   folly::dynamic params;
 };
@@ -32,20 +32,22 @@ struct BatchingEventEmitter : public std::enable_shared_from_this<BatchingEventE
   BatchingEventEmitter(Mso::CntPtr<const Mso::React::IReactContext> &&context) noexcept;
 
   //! Dispatches an event from a view manager.
-  void DispatchEvent(int64_t tag, const std::string &eventName, folly::dynamic &&eventData) noexcept;
+  void DispatchEvent(int64_t tag, winrt::hstring &&eventName, const JSValueArgWriter &eventData) noexcept;
   //! Queues an event to be fired.
-  void
-  EmitJSEvent(const std::string &eventEmitterName, const std::string &emitterMethod, folly::dynamic &&params) noexcept;
+  void EmitJSEvent(
+      winrt::hstring &&eventEmitterName,
+      winrt::hstring &&emitterMethod,
+      const JSValueArgWriter &params) noexcept;
 
   //! Dispatches an event from a view manager. Existing events in the batch with the same name and tag will be removed.
-  void DispatchCoalescingEvent(int64_t tag, const std::string &eventName, folly::dynamic &&eventData) noexcept;
+  void DispatchCoalescingEvent(int64_t tag, winrt::hstring &&eventName, const JSValueArgWriter &eventData) noexcept;
   //! Queues an event to be fired. Existing events in the batch with the same name and tag will be removed.
   void EmitCoalescingJSEvent(
-      const std::string &eventEmitterName,
-      const std::string &emitterMethod,
-      const std::string &eventName,
+      winrt::hstring &&eventEmitterName,
+      winrt::hstring &&emitterMethod,
+      winrt::hstring &&eventName,
       int64_t coalescingKey,
-      folly::dynamic &&params) noexcept;
+      const JSValueArgWriter &params) noexcept;
 
  private:
   void RegisterFrameCallback() noexcept;
