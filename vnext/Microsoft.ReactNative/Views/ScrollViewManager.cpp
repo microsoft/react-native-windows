@@ -369,7 +369,7 @@ void ScrollViewShadowNode::EmitScrollEvent(
           WriteValue(paramsWriter, tag);
           WriteValue(paramsWriter, eventName);
           WriteValue(paramsWriter, std::move(eventJson));
-          paramsWriter.WriteArrayEnd();          
+          paramsWriter.WriteArrayEnd();
         });
   } else {
     viewManager->BatchingEmitter().EmitJSEvent(

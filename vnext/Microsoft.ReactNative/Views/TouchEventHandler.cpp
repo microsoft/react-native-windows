@@ -37,7 +37,8 @@ std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag);
 TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context)
     : m_xamlView(nullptr),
       m_context(&context),
-      m_batchingEventEmitter{std::make_shared<winrt::Microsoft::ReactNative::BatchingEventEmitter>(Mso::CntPtr(&context))} {}
+      m_batchingEventEmitter{
+          std::make_shared<winrt::Microsoft::ReactNative::BatchingEventEmitter>(Mso::CntPtr(&context))} {}
 
 TouchEventHandler::~TouchEventHandler() {
   RemoveTouchHandlers();
@@ -346,29 +347,29 @@ void TouchEventHandler::UpdatePointersInViews(
   }
 }
 
-winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const ReactPointer &pointer, int64_t target){
+winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const ReactPointer &pointer, int64_t target) {
   winrt::Microsoft::ReactNative::JSValueObject json{
-    {"target", target},
-    {"identifier", pointer.identifier},
-    {"pageX", pointer.positionRoot.X},
-    {"pageY", pointer.positionRoot.Y},
-    {"locationX", pointer.positionView.X},
-    {"locationY", pointer.positionView.Y},
-    {"timestamp", pointer.timestamp},
-    {
-        "pointerType",
-        GetPointerDeviceTypeName(pointer.deviceType),
-    },
-    {"force", pointer.pressure},
-    {"isLeftButton", pointer.isLeftButton},
-    {"isRightButton", pointer.isRightButton},
-    {"isMiddleButton", pointer.isMiddleButton},
-    {"isBarrelButtonPressed", pointer.isBarrelButton},
-    {"isHorizontalScrollWheel", pointer.isHorizontalScrollWheel},
-    {"isEraser", pointer.isEraser},
-    {"shiftKey", pointer.shiftKey},
-    {"ctrlKey", pointer.ctrlKey},
-    {"altKey", pointer.altKey}};
+      {"target", target},
+      {"identifier", pointer.identifier},
+      {"pageX", pointer.positionRoot.X},
+      {"pageY", pointer.positionRoot.Y},
+      {"locationX", pointer.positionView.X},
+      {"locationY", pointer.positionView.Y},
+      {"timestamp", pointer.timestamp},
+      {
+          "pointerType",
+          GetPointerDeviceTypeName(pointer.deviceType),
+      },
+      {"force", pointer.pressure},
+      {"isLeftButton", pointer.isLeftButton},
+      {"isRightButton", pointer.isRightButton},
+      {"isMiddleButton", pointer.isMiddleButton},
+      {"isBarrelButtonPressed", pointer.isBarrelButton},
+      {"isHorizontalScrollWheel", pointer.isHorizontalScrollWheel},
+      {"isEraser", pointer.isEraser},
+      {"shiftKey", pointer.shiftKey},
+      {"ctrlKey", pointer.ctrlKey},
+      {"altKey", pointer.altKey}};
   return json;
 }
 
@@ -475,8 +476,7 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
     const char *eventName = GetTouchEventTypeName(eventType);
     if (eventName == nullptr)
       return;
-    winrt::Microsoft::ReactNative::JSValueArray params {
-      eventName, std::move(touches), std::move(changedIndices)};
+    winrt::Microsoft::ReactNative::JSValueArray params{eventName, std::move(touches), std::move(changedIndices)};
 
     if (eventType == TouchEventType::Move || eventType == TouchEventType::PointerMove) {
       std::wostringstream coalescingKeyStream;
@@ -484,15 +484,13 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
       BatchingEmitter().EmitCoalescingJSEvent(
           L"receiveTouches",
           winrt::hstring{coalescingKeyStream.str()},
-          [params = std::move(params)](
-              winrt::Microsoft::ReactNative::IJSValueWriter const &paramsWriter) noexcept {
+          [params = std::move(params)](winrt::Microsoft::ReactNative::IJSValueWriter const &paramsWriter) noexcept {
             WriteValue(paramsWriter, std::move(params));
           });
     } else {
       BatchingEmitter().EmitJSEvent(
           L"receiveTouches",
-          [params = std::move(params)](
-              winrt::Microsoft::ReactNative::IJSValueWriter const &paramsWriter) noexcept {
+          [params = std::move(params)](winrt::Microsoft::ReactNative::IJSValueWriter const &paramsWriter) noexcept {
             WriteValue(paramsWriter, std::move(params));
           });
     }

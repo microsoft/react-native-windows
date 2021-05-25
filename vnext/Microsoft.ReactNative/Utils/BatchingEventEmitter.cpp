@@ -17,9 +17,7 @@ void BatchingEventEmitter::EmitJSEvent(JSValueArgWriter &&paramsWriter) noexcept
   return EmitJSEvent(L"receiveEvent", std::move(paramsWriter));
 }
 
-void BatchingEventEmitter::EmitJSEvent(
-    winrt::hstring &&emitterMethod,
-    JSValueArgWriter &&paramsWriter) noexcept {
+void BatchingEventEmitter::EmitJSEvent(winrt::hstring &&emitterMethod, JSValueArgWriter &&paramsWriter) noexcept {
   VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
 
   implementation::BatchedEvent newEvent{std::move(emitterMethod), L"", std::move(paramsWriter)};
@@ -106,7 +104,7 @@ void BatchingEventEmitter::OnFrameJS() noexcept {
   while (!currentBatch.empty()) {
     auto &evt = currentBatch.front();
     m_context->CallJSFunction(
-            "RCTEventEmitter", winrt::to_string(evt.emitterMethod), DynamicWriter::ToDynamic(evt.paramsWriter));
+        "RCTEventEmitter", winrt::to_string(evt.emitterMethod), DynamicWriter::ToDynamic(evt.paramsWriter));
     currentBatch.pop_front();
   }
 }

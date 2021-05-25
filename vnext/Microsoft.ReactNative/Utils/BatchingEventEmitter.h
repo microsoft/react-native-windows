@@ -31,9 +31,7 @@ struct BatchingEventEmitter : public std::enable_shared_from_this<BatchingEventE
 
   //! Queues an event to be fired via RCTEventEmitter, calling receiveEvent() by default.
   void EmitJSEvent(JSValueArgWriter &&paramsWriter) noexcept;
-  void EmitJSEvent(
-      winrt::hstring &&emitterMethod,
-      JSValueArgWriter &&paramsWriter) noexcept;
+  void EmitJSEvent(winrt::hstring &&emitterMethod, JSValueArgWriter &&paramsWriter) noexcept;
 
   //! Queues an event to be fired via RCTEventEmitter, calling receiveEvent() by default. Existing events in the batch
   //! with the same name and tag will be removed.
