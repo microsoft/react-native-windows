@@ -36,5 +36,8 @@ namespace Microsoft.ReactNative
 
     DOC_STRING("Reloads the current @ReactRootView UI components.")
     void ReloadView();
+
+    DOC_STRING("Use Fabric for this ReactRootView")
+    Boolean ExperimentalUseFabric { get; set; };
   }
 } // namespace Microsoft.ReactNative

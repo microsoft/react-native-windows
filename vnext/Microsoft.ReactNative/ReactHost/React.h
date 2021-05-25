@@ -86,8 +86,9 @@ struct IReactInstance : IUnknown {
 
   virtual void AttachMeasuredRootView(
       facebook::react::IReactRootView *rootView,
-      folly::dynamic &&initialProps) noexcept = 0;
-  virtual void DetachRootView(facebook::react::IReactRootView *rootView) noexcept = 0;
+      folly::dynamic &&initialProps,
+      bool useFabric) noexcept = 0;
+  virtual void DetachRootView(facebook::react::IReactRootView *rootView, bool useFabric) noexcept = 0;
 };
 
 MSO_GUID(IReactSettingsSnapshot, "6652bb2e-4c5e-49f7-b642-e817b0fef4de")
@@ -127,6 +128,9 @@ struct ReactViewOptions {
 
   //! Set of initial component properties. It is a JSON string.
   folly::dynamic InitialProps;
+
+  //! Use Fabric for this ReactView
+  bool UseFabric;
 };
 
 struct ReactDevOptions {

@@ -868,14 +868,15 @@ bool ReactInstanceWin::IsLoaded() const noexcept {
 
 void ReactInstanceWin::AttachMeasuredRootView(
     facebook::react::IReactRootView *rootView,
-    folly::dynamic &&initialProps) noexcept {
+    folly::dynamic &&initialProps,
+    bool useFabric) noexcept {
   if (State() == ReactInstanceState::HasError)
     return;
 
   int64_t rootTag = -1;
 
 #ifdef USE_FABRIC
-  if (m_options.EnableFabric()) {
+  if (useFabric) {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
 
@@ -901,7 +902,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
   }
 }
 
-void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView) noexcept {
+void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView, bool useFabric) noexcept {
   if (State() == ReactInstanceState::HasError)
     return;
 
@@ -909,7 +910,7 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView)
   folly::dynamic params = folly::dynamic::array(rootTag);
 
 #ifdef USE_FABRIC
-  if (m_options.EnableFabric()) {
+  if (useFabric) {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
     uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(rootTag));
