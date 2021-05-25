@@ -3,8 +3,8 @@
 
 #pragma once
 #include <IReactInstance.h>
-#include <JSValueWriter.h>
 #include <UI.Xaml.Documents.h>
+#include <folly/dynamic.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
 #include <set>
@@ -88,7 +88,7 @@ class TouchEventHandler {
   const char *GetTouchEventTypeName(TouchEventType eventType) noexcept;
 
   std::optional<size_t> IndexOfPointerWithId(uint32_t pointerId);
-  winrt::Microsoft::ReactNative::JSValue GetPointerJson(const ReactPointer &pointer, int64_t target);
+  folly::dynamic GetPointerJson(const ReactPointer &pointer, int64_t target);
 
   struct TagSet {
     std::unordered_set<int64_t> tags;

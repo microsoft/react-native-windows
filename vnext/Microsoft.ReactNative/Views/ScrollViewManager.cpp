@@ -41,7 +41,7 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   void EmitScrollEvent(
       const winrt::ScrollViewer &scrollViewer,
       int64_t tag,
-      winrt::hstring &&eventName,
+      const char *eventName,
       double x,
       double y,
       double zoom,
@@ -248,7 +248,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
           EmitScrollEvent(
               scrollViewerNotNull,
               m_tag,
-              L"topScrollEndDrag",
+              "topScrollEndDrag",
               args.NextView().HorizontalOffset(),
               args.NextView().VerticalOffset(),
               args.NextView().ZoomFactor(),
@@ -257,7 +257,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
           EmitScrollEvent(
               scrollViewerNotNull,
               m_tag,
-              L"topScrollBeginMomentum",
+              "topScrollBeginMomentum",
               args.NextView().HorizontalOffset(),
               args.NextView().VerticalOffset(),
               args.NextView().ZoomFactor(),
@@ -267,7 +267,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
         EmitScrollEvent(
             scrollViewerNotNull,
             m_tag,
-            L"topScroll",
+            "topScroll",
             args.NextView().HorizontalOffset(),
             args.NextView().VerticalOffset(),
             args.NextView().ZoomFactor(),
@@ -286,7 +286,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
         EmitScrollEvent(
             scrollViewer,
             m_tag,
-            L"topScrollBeginDrag",
+            "topScrollBeginDrag",
             scrollViewer.HorizontalOffset(),
             scrollViewer.VerticalOffset(),
             scrollViewer.ZoomFactor(),
@@ -300,7 +300,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
           EmitScrollEvent(
               scrollViewer,
               m_tag,
-              L"topScrollEndMomentum",
+              "topScrollEndMomentum",
               scrollViewer.HorizontalOffset(),
               scrollViewer.VerticalOffset(),
               scrollViewer.ZoomFactor(),
@@ -309,7 +309,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
           EmitScrollEvent(
               scrollViewer,
               m_tag,
-              L"topScrollEndDrag",
+              "topScrollEndDrag",
               scrollViewer.HorizontalOffset(),
               scrollViewer.VerticalOffset(),
               scrollViewer.ZoomFactor(),
@@ -331,56 +331,33 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
 void ScrollViewShadowNode::EmitScrollEvent(
     const winrt::ScrollViewer &scrollViewer,
     int64_t tag,
-    winrt::hstring &&eventName,
+    const char *eventName,
     double x,
     double y,
     double zoom,
     CoalesceType coalesceType) {
   const auto scrollViewerNotNull = scrollViewer;
 
-  JSValueObject contentOffset{{"x", x}, {"y", y}};
-  JSValueObject contentInset{{"left", 0}, {"top", 0}, {"right", 0}, {"bottom", 0}};
+  folly::dynamic offset = folly::dynamic::object("x", x)("y", y);
 
-  JSValueObject contentSize{
-      {"width", scrollViewerNotNull.ExtentWidth()}, {"height", scrollViewerNotNull.ExtentHeight()}};
+  folly::dynamic contentInset = folly::dynamic::object("left", 0)("top", 0)("right", 0)("bottom", 0);
 
-  JSValueObject layoutMeasurement{
-      {"width", scrollViewerNotNull.ActualWidth()}, {"height", scrollViewerNotNull.ActualHeight()}};
+  folly::dynamic contentSize =
+      folly::dynamic::object("width", scrollViewerNotNull.ExtentWidth())("height", scrollViewerNotNull.ExtentHeight());
 
-  JSValueObject eventJson{
-      {"target", tag},
-      {"responderIgnoreScroll", true},
-      {"contentOffset", std::move(contentOffset)},
-      {"contentInset", std::move(contentInset)},
-      {"contentSize", std::move(contentSize)},
-      {"layoutMeasurement", std::move(layoutMeasurement)},
-      {"zoomScale", zoom}};
+  folly::dynamic layoutSize =
+      folly::dynamic::object("width", scrollViewerNotNull.ActualWidth())("height", scrollViewerNotNull.ActualHeight());
+
+  folly::dynamic eventJson =
+      folly::dynamic::object("target", tag)("responderIgnoreScroll", true)("contentOffset", offset)(
+          "contentInset", contentInset)("contentSize", contentSize)("layoutMeasurement", layoutSize)("zoomScale", zoom);
 
   auto *viewManager = static_cast<ScrollViewManager *>(GetViewManager());
 
   if (coalesceType == CoalesceType::CoalesceByTag) {
-    std::wostringstream coalescingKeyStream;
-    coalescingKeyStream << eventName.c_str() << tag;
-    viewManager->BatchingEmitter().EmitCoalescingJSEvent(
-        winrt::hstring{coalescingKeyStream.str()},
-        [tag, eventName = std::move(eventName), eventJson = std::move(eventJson)](
-            winrt::Microsoft::ReactNative::IJSValueWriter const &paramsWriter) noexcept {
-          paramsWriter.WriteArrayBegin();
-          WriteValue(paramsWriter, tag);
-          WriteValue(paramsWriter, eventName);
-          WriteValue(paramsWriter, std::move(eventJson));
-          paramsWriter.WriteArrayEnd();
-        });
+    viewManager->BatchingEmitter().DispatchCoalescingEvent(tag, eventName, std::move(eventJson));
   } else {
-    viewManager->BatchingEmitter().EmitJSEvent(
-        [tag, eventName = std::move(eventName), eventJson = std::move(eventJson)](
-            winrt::Microsoft::ReactNative::IJSValueWriter const &paramsWriter) noexcept {
-          paramsWriter.WriteArrayBegin();
-          WriteValue(paramsWriter, tag);
-          WriteValue(paramsWriter, eventName);
-          WriteValue(paramsWriter, std::move(eventJson));
-          paramsWriter.WriteArrayEnd();
-        });
+    viewManager->BatchingEmitter().DispatchEvent(tag, eventName, std::move(eventJson));
   }
 } // namespace Microsoft::ReactNative
 

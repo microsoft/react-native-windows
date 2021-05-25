@@ -13,9 +13,11 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 struct BatchedEvent {
-  winrt::hstring emitterMethod;
-  winrt::hstring coalescingKey;
-  JSValueArgWriter paramsWriter;
+  std::string eventEmitterName;
+  std::string emitterMethod;
+  std::string eventName;
+  int64_t coalescingKey;
+  folly::dynamic params;
 };
 } // namespace winrt::Microsoft::ReactNative::implementation
 
@@ -29,17 +31,21 @@ struct BatchingEventEmitter : public std::enable_shared_from_this<BatchingEventE
  public:
   BatchingEventEmitter(Mso::CntPtr<const Mso::React::IReactContext> &&context) noexcept;
 
-  //! Queues an event to be fired via RCTEventEmitter, calling receiveEvent() by default.
-  void EmitJSEvent(JSValueArgWriter &&paramsWriter) noexcept;
-  void EmitJSEvent(winrt::hstring &&emitterMethod, JSValueArgWriter &&paramsWriter) noexcept;
+  //! Dispatches an event from a view manager.
+  void DispatchEvent(int64_t tag, const std::string &eventName, folly::dynamic &&eventData) noexcept;
+  //! Queues an event to be fired.
+  void
+  EmitJSEvent(const std::string &eventEmitterName, const std::string &emitterMethod, folly::dynamic &&params) noexcept;
 
-  //! Queues an event to be fired via RCTEventEmitter, calling receiveEvent() by default. Existing events in the batch
-  //! with the same name and tag will be removed.
-  void EmitCoalescingJSEvent(winrt::hstring &&coalescingKey, JSValueArgWriter &&paramsWriter) noexcept;
+  //! Dispatches an event from a view manager. Existing events in the batch with the same name and tag will be removed.
+  void DispatchCoalescingEvent(int64_t tag, const std::string &eventName, folly::dynamic &&eventData) noexcept;
+  //! Queues an event to be fired. Existing events in the batch with the same name and tag will be removed.
   void EmitCoalescingJSEvent(
-      winrt::hstring &&emitterMethod,
-      winrt::hstring &&coalescingKey,
-      JSValueArgWriter &&paramsWriter) noexcept;
+      const std::string &eventEmitterName,
+      const std::string &emitterMethod,
+      const std::string &eventName,
+      int64_t coalescingKey,
+      folly::dynamic &&params) noexcept;
 
  private:
   void RegisterFrameCallback() noexcept;

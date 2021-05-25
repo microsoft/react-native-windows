@@ -312,15 +312,7 @@ void TouchEventHandler::UpdatePointersInViews(
 
         ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(existingTag));
         if (node != nullptr && node->m_onMouseLeaveRegistered)
-          BatchingEmitter().EmitJSEvent(
-              [tag = existingTag, pointer = std::move(GetPointerJson(pointer, existingTag))](
-                  winrt::Microsoft::ReactNative::IJSValueWriter const &paramsWriter) noexcept {
-                paramsWriter.WriteArrayBegin();
-                WriteValue(paramsWriter, tag);
-                WriteValue(paramsWriter, L"topMouseLeave");
-                WriteValue(paramsWriter, pointer);
-                paramsWriter.WriteArrayEnd();
-              });
+          BatchingEmitter().DispatchEvent(existingTag, "topMouseLeave", GetPointerJson(pointer, existingTag));
       }
     }
 
@@ -333,43 +325,22 @@ void TouchEventHandler::UpdatePointersInViews(
 
       ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(newTag));
       if (node != nullptr && node->m_onMouseEnterRegistered)
-        BatchingEmitter().EmitJSEvent([tag = newTag, pointer = std::move(GetPointerJson(pointer, newTag))](
-                                          winrt::Microsoft::ReactNative::IJSValueWriter const &paramsWriter) noexcept {
-          paramsWriter.WriteArrayBegin();
-          WriteValue(paramsWriter, tag);
-          WriteValue(paramsWriter, L"topMouseEnter");
-          WriteValue(paramsWriter, pointer);
-          paramsWriter.WriteArrayEnd();
-        });
+        BatchingEmitter().DispatchEvent(newTag, "topMouseEnter", GetPointerJson(pointer, newTag));
     }
 
     m_pointersInViews[pointerId] = {std::move(newViewsSet), std::move(newViews)};
   }
 }
 
-winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const ReactPointer &pointer, int64_t target) {
-  winrt::Microsoft::ReactNative::JSValueObject json{
-      {"target", target},
-      {"identifier", pointer.identifier},
-      {"pageX", pointer.positionRoot.X},
-      {"pageY", pointer.positionRoot.Y},
-      {"locationX", pointer.positionView.X},
-      {"locationY", pointer.positionView.Y},
-      {"timestamp", pointer.timestamp},
-      {
-          "pointerType",
-          GetPointerDeviceTypeName(pointer.deviceType),
-      },
-      {"force", pointer.pressure},
-      {"isLeftButton", pointer.isLeftButton},
-      {"isRightButton", pointer.isRightButton},
-      {"isMiddleButton", pointer.isMiddleButton},
-      {"isBarrelButtonPressed", pointer.isBarrelButton},
-      {"isHorizontalScrollWheel", pointer.isHorizontalScrollWheel},
-      {"isEraser", pointer.isEraser},
-      {"shiftKey", pointer.shiftKey},
-      {"ctrlKey", pointer.ctrlKey},
-      {"altKey", pointer.altKey}};
+folly::dynamic TouchEventHandler::GetPointerJson(const ReactPointer &pointer, int64_t target) {
+  folly::dynamic json =
+      folly::dynamic::object()("target", target)("identifier", pointer.identifier)("pageX", pointer.positionRoot.X)(
+          "pageY", pointer.positionRoot.Y)("locationX", pointer.positionView.X)("locationY", pointer.positionView.Y)(
+          "timestamp", pointer.timestamp)("pointerType", GetPointerDeviceTypeName(pointer.deviceType))(
+          "force", pointer.pressure)("isLeftButton", pointer.isLeftButton)("isRightButton", pointer.isRightButton)(
+          "isMiddleButton", pointer.isMiddleButton)("isBarrelButtonPressed", pointer.isBarrelButton)(
+          "isHorizontalScrollWheel", pointer.isHorizontalScrollWheel)("isEraser", pointer.isEraser)(
+          "shiftKey", pointer.shiftKey)("ctrlKey", pointer.ctrlKey)("altKey", pointer.altKey);
   return json;
 }
 
@@ -416,7 +387,8 @@ facebook::react::Touch TouchEventHandler::TouchForPointer(const ReactPointer &po
 #endif
 
 void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex) {
-  winrt::Microsoft::ReactNative::JSValueArray changedIndices{{pointerIndex}};
+  folly::dynamic changedIndices = folly::dynamic::array();
+  changedIndices.push_back(pointerIndex);
 
 #ifdef USE_FABRIC
   if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
@@ -467,32 +439,23 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
   } else
 #endif // USE_FABRIC
   {
-    winrt::Microsoft::ReactNative::JSValueArray touches;
+    auto touches = folly::dynamic::array();
     for (const auto &pointer : m_pointers) {
-      touches.push_back(GetPointerJson(pointer, pointer.target));
+      folly::dynamic touch = GetPointerJson(pointer, pointer.target);
+      touches.push_back(touch);
     }
 
     // Package up parameters and invoke the JS event emitter
     const char *eventName = GetTouchEventTypeName(eventType);
     if (eventName == nullptr)
       return;
-    winrt::Microsoft::ReactNative::JSValueArray params{eventName, std::move(touches), std::move(changedIndices)};
+    folly::dynamic params = folly::dynamic::array(eventName, std::move(touches), std::move(changedIndices));
 
     if (eventType == TouchEventType::Move || eventType == TouchEventType::PointerMove) {
-      std::wostringstream coalescingKeyStream;
-      coalescingKeyStream << eventName << m_pointers[pointerIndex].pointerId;
       BatchingEmitter().EmitCoalescingJSEvent(
-          L"receiveTouches",
-          winrt::hstring{coalescingKeyStream.str()},
-          [params = std::move(params)](winrt::Microsoft::ReactNative::IJSValueWriter const &paramsWriter) noexcept {
-            WriteValue(paramsWriter, std::move(params));
-          });
+          "RCTEventEmitter", "receiveTouches", eventName, m_pointers[pointerIndex].pointerId, std::move(params));
     } else {
-      BatchingEmitter().EmitJSEvent(
-          L"receiveTouches",
-          [params = std::move(params)](winrt::Microsoft::ReactNative::IJSValueWriter const &paramsWriter) noexcept {
-            WriteValue(paramsWriter, std::move(params));
-          });
+      BatchingEmitter().EmitJSEvent("RCTEventEmitter", "receiveTouches", std::move(params));
     }
   }
 }
@@ -581,18 +544,7 @@ bool TouchEventHandler::TagFromOriginalSource(
       break;
     }
 
-    auto foundParent = false;
-    if (const auto frameworkElement = sourceElement.try_as<xaml::FrameworkElement>()) {
-      const auto parent = frameworkElement.Parent().try_as<xaml::UIElement>();
-      if (parent) {
-        sourceElement = parent;
-        foundParent = true;
-      }
-    }
-
-    if (!foundParent) {
-      sourceElement = winrt::VisualTreeHelper::GetParent(sourceElement).try_as<xaml::UIElement>();
-    }
+    sourceElement = winrt::VisualTreeHelper::GetParent(sourceElement).try_as<xaml::UIElement>();
   }
 
   if (tag == nullptr) {
