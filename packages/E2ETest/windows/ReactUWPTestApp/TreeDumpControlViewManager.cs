@@ -30,8 +30,9 @@ namespace TreeDumpLibrary
             m_textBlock = new TextBlock();
             m_textBlock.TextWrapping = TextWrapping.Wrap;
             m_textBlock.IsTextSelectionEnabled = false;
-            m_textBlock.LayoutUpdated += (source, e) =>
+            m_textBlock.LayoutUpdated += async (source, e) =>
             {
+                await KnownFolders.DocumentsLibrary.CreateFolderAsync("TreeDump", CreationCollisionOption.OpenIfExists);
                 ApplicationView.GetForCurrentView().TryResizeView(new Size(800, 600));
                 var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
                 if (bounds.Width != 800 || bounds.Height != 600)
@@ -160,7 +161,7 @@ namespace TreeDumpLibrary
         public static async Task<bool> MatchDump(string outputJson, string masterFileRelativePath, string outputFileRelativePath)
         {
             Debug.WriteLine($"master file = {Windows.ApplicationModel.Package.Current.InstalledLocation.Path}\\Assets\\{masterFileRelativePath}");
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFolder storageFolder = KnownFolders.DocumentsLibrary;
             Debug.WriteLine($"output file = {storageFolder.Path + "\\" + outputFileRelativePath}");
 
             StorageFile outFile = await storageFolder.CreateFileAsync(outputFileRelativePath, CreationCollisionOption.ReplaceExisting);
@@ -218,7 +219,7 @@ namespace TreeDumpLibrary
                 var matchSuccessful = await MatchTreeDumpFromLayoutUpdateAsync(m_dumpID, m_uiaID, m_textBlock, m_additionalProperties, DumpTreeMode.Json, m_dumpExpectedText);
                 if (!matchSuccessful)
                 {
-                    StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+                    StorageFolder storageFolder = KnownFolders.DocumentsLibrary;
                     StorageFile outFile = await storageFolder.GetFileAsync(GetOutputFile(m_dumpID));
                     StorageFile masterFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync($@"Assets\{GetMasterFile(m_dumpID)}");
 
@@ -310,7 +311,7 @@ namespace TreeDumpLibrary
 
         private async Task WriteErrorFile()
         {
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFolder storageFolder = KnownFolders.DocumentsLibrary;
             string fileNameError = "TreeDump\\" + m_dumpID + ".err";
             try
             {
