@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update Pipeline",
+  "packageName": "jest-environment-winappdriver",
+  "email": "34109996+chiaramooney@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

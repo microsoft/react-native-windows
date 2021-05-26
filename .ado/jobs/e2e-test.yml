@@ -60,7 +60,7 @@ jobs:
         inputs:
           targetType: 'inline'
           script: |
-            $PfxBytes = [System.Convert]::FromBase64String($(reactUWPTestAppEncodedKey))
+            $PfxBytes = [System.Convert]::FromBase64String("$(reactUWPTestAppEncodedKey)")
             $PfxPath = [System.IO.Path]::GetFullPath( (Join-Path -Path $(Build.SourcesDirectory) -ChildPath reactUWPTestApp-Key.pfx) )
             [System.IO.File]::WriteAllBytes("$PfxPath", $PfxBytes)
         condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
@@ -68,7 +68,7 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows - PR
         inputs:
-          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir),AppxPackageSigningEnabled=False
+          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --deploy-from-layout --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir),AppxPackageSigningEnabled=False
           workingDirectory: packages/e2e-test-app
         condition: eq('${{ parameters.BuildEnvironment }}', 'PullRequest')
 
@@ -84,7 +84,7 @@ jobs:
         inputs:
           targetType: 'inline'
           script: |
-            $PfxPath = Join-Path -Path $(Build.SourcesDirectory) -ChildPath playground-Key.pfx
+            $PfxPath = Join-Path -Path $(Build.SourcesDirectory) -ChildPath reactUWPTestApp-Key.pfx
             Write-Host $PfxPath
             Remove-Item -path $PfxPath
         condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
