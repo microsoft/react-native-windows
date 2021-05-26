@@ -20,7 +20,7 @@ void BatchingEventEmitter::DispatchEvent(
   return EmitJSEvent(
       L"RCTEventEmitter",
       L"receiveEvent",
-      [tag, eventName = std::move(eventName), &eventDataWriter](const IJSValueWriter &paramsWriter) {
+      [tag, eventName = std::move(eventName), eventDataWriter](const IJSValueWriter &paramsWriter) mutable {
         paramsWriter.WriteArrayBegin();
         WriteValue(paramsWriter, tag);
         WriteValue(paramsWriter, std::move(eventName));
@@ -49,7 +49,7 @@ void BatchingEventEmitter::EmitJSEvent(
   if (isFirstEventInBatch) {
     RegisterFrameCallback();
   }
-} // namespace winrt::Microsoft::ReactNative
+}
 
 void BatchingEventEmitter::DispatchCoalescingEvent(
     int64_t tag,

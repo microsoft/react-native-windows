@@ -315,10 +315,7 @@ void TouchEventHandler::UpdatePointersInViews(
           BatchingEmitter().DispatchEvent(
               existingTag,
               L"topMouseLeave",
-              [pointer = GetPointerJson(pointer, existingTag)](
-                  const winrt::Microsoft::ReactNative::IJSValueWriter &paramsWriter) {
-                WriteValue(paramsWriter, pointer);
-              });
+              winrt::Microsoft::ReactNative::MakeJSValueWriter(GetPointerJson(pointer, existingTag)));
       }
     }
 
@@ -334,10 +331,7 @@ void TouchEventHandler::UpdatePointersInViews(
         BatchingEmitter().DispatchEvent(
             newTag,
             L"topMouseEnter",
-            [pointer =
-                 GetPointerJson(pointer, newTag)](const winrt::Microsoft::ReactNative::IJSValueWriter &paramsWriter) {
-              WriteValue(paramsWriter, pointer);
-            });
+            winrt::Microsoft::ReactNative::MakeJSValueWriter(GetPointerJson(pointer, newTag)));
     }
 
     m_pointersInViews[pointerId] = {std::move(newViewsSet), std::move(newViews)};
@@ -473,21 +467,17 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
     const wchar_t *eventName = GetTouchEventTypeName(eventType);
     if (eventName == nullptr)
       return;
-    winrt::Microsoft::ReactNative::JSValueArray params{
-        {winrt::to_string(eventName), std::move(touches), std::move(changedIndices)}};
-    const winrt::Microsoft::ReactNative::JSValueArgWriter eventDataWriter =
-        [params = std::move(params)](const winrt::Microsoft::ReactNative::IJSValueWriter &paramsWriter) {
-          WriteValue(paramsWriter, params);
-        };
+
+    const auto paramsWriter = MakeJSValueArgWriter(eventName, std::move(touches), std::move(changedIndices));
     if (eventType == TouchEventType::Move || eventType == TouchEventType::PointerMove) {
       BatchingEmitter().EmitCoalescingJSEvent(
-          std::move(L"RCTEventEmitter"),
-          std::move(L"receiveTouches"),
+          L"RCTEventEmitter",
+          L"receiveTouches",
           std::move(eventName),
           m_pointers[pointerIndex].pointerId,
-          eventDataWriter);
+          paramsWriter);
     } else {
-      BatchingEmitter().EmitJSEvent(std::move(L"RCTEventEmitter"), std::move(L"receiveTouches"), eventDataWriter);
+      BatchingEmitter().EmitJSEvent(L"RCTEventEmitter", L"receiveTouches", paramsWriter);
     }
   }
 }
@@ -497,11 +487,7 @@ bool TouchEventHandler::DispatchBackEvent() {
     return false;
 
   BatchingEmitter().EmitJSEvent(
-      L"RCTDeviceEventEmitter", L"emit", [](const winrt::Microsoft::ReactNative::IJSValueWriter &paramsWriter) {
-        paramsWriter.WriteArrayBegin();
-        WriteValue(paramsWriter, "hardwardBackPress");
-        paramsWriter.WriteArrayEnd();
-      });
+      L"RCTDeviceEventEmitter", L"emit", winrt::Microsoft::ReactNative::MakeJSValueArgWriter(L"hardwardBackPress"));
 
   return true;
 }

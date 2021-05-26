@@ -360,14 +360,9 @@ void ScrollViewShadowNode::EmitScrollEvent(
 
   if (coalesceType == CoalesceType::CoalesceByTag) {
     viewManager->BatchingEmitter().DispatchCoalescingEvent(
-        tag, std::move(eventName), [eventJson = std::move(eventJson)](const IJSValueWriter &paramsWriter) {
-          WriteValue(paramsWriter, eventJson);
-        });
+        tag, std::move(eventName), MakeJSValueWriter(std::move(eventJson)));
   } else {
-    viewManager->BatchingEmitter().DispatchEvent(
-        tag, std::move(eventName), [eventJson = std::move(eventJson)](const IJSValueWriter &paramsWriter) {
-          WriteValue(paramsWriter, eventJson);
-        });
+    viewManager->BatchingEmitter().DispatchEvent(tag, std::move(eventName), MakeJSValueWriter(std::move(eventJson)));
   }
 } // namespace Microsoft::ReactNative
 
