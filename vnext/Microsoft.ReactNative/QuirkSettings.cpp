@@ -46,12 +46,6 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> AcceptSelfSignedCertsProper
   ReactPropertyBag(settings.Properties()).Set(AcceptSelfSignedCertsProperty(), value);
 }
 
-/*static*/ void QuirkSettings::SetEnableFabric(
-    winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
-    bool value) noexcept {
-  Mso::React::ReactOptions::SetEnableFabric(settings.Properties(), value);
-}
-
 #pragma endregion IDL interface
 
 /*static*/ bool QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(ReactPropertyBag properties) noexcept {
@@ -60,10 +54,6 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> AcceptSelfSignedCertsProper
 
 /*static*/ bool QuirkSettings::GetAcceptSelfSigned(ReactPropertyBag properties) noexcept {
   return properties.Get(AcceptSelfSignedCertsProperty()).value_or(false);
-}
-
-/*static*/ bool QuirkSettings::GetEnableFabric(ReactPropertyBag properties) noexcept {
-  return Mso::React::ReactOptions::EnableFabric(properties.Handle());
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

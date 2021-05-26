@@ -252,7 +252,7 @@ void ReactInstanceWin::LoadModules(
   };
 
 #ifdef USE_FABRIC
-  if (m_options.EnableFabric()) {
+  if (!m_options.UseWebDebugger()) {
     registerTurboModule(
         L"FabricUIManagerBinding",
         winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
@@ -446,7 +446,7 @@ void ReactInstanceWin::Initialize() noexcept {
 
 #ifdef USE_FABRIC
         // Eagerly init the FabricUI binding
-        if (m_options.EnableFabric()) {
+        if (!m_options.UseWebDebugger()) {
           Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
               winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()),
               m_instanceWrapper.Load()->GetInstance()->getRuntimeExecutor(false /*shouldFlush*/));
@@ -876,7 +876,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
   int64_t rootTag = -1;
 
 #ifdef USE_FABRIC
-  if (useFabric) {
+  if (useFabric && !m_useWebDebugger) {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
 
@@ -910,7 +910,7 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView,
   folly::dynamic params = folly::dynamic::array(rootTag);
 
 #ifdef USE_FABRIC
-  if (useFabric) {
+  if (useFabric && !m_useWebDebugger) {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
     uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(rootTag));

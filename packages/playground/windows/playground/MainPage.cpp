@@ -51,10 +51,6 @@ void MainPage::OnLoadClick(
   }
   host.InstanceSettings().JavaScriptBundleFile(bundleFile);
 
-  winrt::Microsoft::ReactNative::QuirkSettings::SetEnableFabric(
-      host.InstanceSettings(), x_UseFabric().IsChecked().GetBoolean());
-  ReactRootView().ExperimentalUseFabric(x_UseFabric().IsChecked().GetBoolean());
-
   auto item = x_rootComponentNameCombo().SelectedItem();
   winrt::hstring mainComponentName;
   if (auto selected = item.try_as<ComboBoxItem>()) {
@@ -63,6 +59,7 @@ void MainPage::OnLoadClick(
     mainComponentName = unbox_value<hstring>(item);
   }
   ReactRootView().ComponentName(mainComponentName);
+  ReactRootView().ExperimentalUseFabric(x_UseFabric().IsChecked().GetBoolean());
   ReactRootView().ReactNativeHost(host);
 
   host.InstanceSettings().UseDeveloperSupport(true);

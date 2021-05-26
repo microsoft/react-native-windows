@@ -434,7 +434,7 @@ Windows::Foundation::Size ReactRootView::MeasureOverride(Windows::Foundation::Si
   }
 
 #ifdef USE_FABRIC
-  if (m_isInitialized && m_useFabric && m_rootTag != -1) {
+  if (m_isInitialized && m_useFabric && !Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()) && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
       facebook::react::LayoutContext context;
@@ -471,7 +471,7 @@ Windows::Foundation::Size ReactRootView::ArrangeOverride(Windows::Foundation::Si
   }
 
 #ifdef USE_FABRIC
-  if (m_isInitialized && m_useFabric && m_rootTag != -1) {
+  if (m_isInitialized && m_useFabric && !Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()) && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
       facebook::react::LayoutContext context;
