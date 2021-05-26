@@ -78,7 +78,7 @@ steps:
   - powershell: |
         $winmd2md_url = "https://github.com/asklar/winmd2md/releases/download/v0.1.12/winmd2md.exe"
         Invoke-WebRequest -UseBasicParsing $winmd2md_url -OutFile $env:TEMP\winmd2md.exe
-        & $env:TEMP\winmd2md.exe /experimental /outputDirectory /apiVersion 0.65 vnext\target\winmd2md vnext\target\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.winmd
+        & $env:TEMP\winmd2md.exe /experimental /outputDirectory vnext\target\winmd2md /apiVersion 0.65 vnext\target\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.winmd
     displayName: "Generate WinRT API docs"
     condition: and ( eq('${{parameters.buildConfiguration}}', 'Debug'), eq('${{parameters.buildPlatform}}', 'x86') )
 
