@@ -76,11 +76,48 @@ export class BackgroundColorDemo extends React.Component<{}> {
   public render() {
     return (
       <View>
+        <Text style={{color: 'pink'}}>Outer pink</Text>
+        <Text style={{}}>
+          Outer <Text style={{color: 'red'}}>red nested</Text>
+        </Text>
+        <Text style={{}}>
+          Outer{' '}
+          <Text style={{backgroundColor: 'blue', color: 'white'}}>
+            nested white on blue
+          </Text>
+        </Text>
+        <Text style={{color: 'pink'}}>
+          Outer pink <Text style={{color: 'red'}}>nested red</Text>
+        </Text>
+        <Text style={{backgroundColor: 'green'}}>
+          Outer on green{' '}
+          <Text style={{color: 'white'}}>nested white on inherit green</Text>
+        </Text>
+        <Text style={{backgroundColor: 'green', color: 'orange'}}>
+          Outer orange on green{' '}
+          <Text style={{backgroundColor: 'blue', color: 'white'}}>
+            nested white on blue
+          </Text>
+        </Text>
+        <Text style={{color: 'orange'}}>
+          Outer orange{' '}
+          <Text style={{backgroundColor: 'blue', color: 'white'}}>
+            nested white on blue
+          </Text>
+        </Text>
+        <Text style={{color: 'orange'}}>
+          <Text style={{backgroundColor: 'blue'}}>
+            nested orange inherit on blue
+          </Text>
+        </Text>
+
         <Text>
           Outer no_color{' '}
-          <Text style={{backgroundColor: 'green'}}>
+          <Text style={{backgroundColor: 'green', color: 'white'}}>
             START_NESTED green{' '}
-            <Text style={{backgroundColor: 'blue'}}>DEEPER_NESTED blue</Text>{' '}
+            <Text style={{backgroundColor: 'blue', color: 'magenta'}}>
+              DEEPER_NESTED magenta on blue
+            </Text>{' '}
             END_NESTED
           </Text>{' '}
           attributes.
