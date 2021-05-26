@@ -70,6 +70,8 @@ emoji=true
 
 exact_by_default=true
 
+format.bracket_spacing=false
+
 module.file_ext=.js
 module.file_ext=.json
 module.file_ext=.win32.js
@@ -109,4 +111,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.149.0
+^0.150.0

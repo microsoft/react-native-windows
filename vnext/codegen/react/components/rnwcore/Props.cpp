@@ -22,6 +22,7 @@ ModalHostViewProps::ModalHostViewProps(
     transparent(convertRawProp(rawProps, "transparent", sourceProps.transparent, {false})),
     statusBarTranslucent(convertRawProp(rawProps, "statusBarTranslucent", sourceProps.statusBarTranslucent, {false})),
     hardwareAccelerated(convertRawProp(rawProps, "hardwareAccelerated", sourceProps.hardwareAccelerated, {false})),
+    visible(convertRawProp(rawProps, "visible", sourceProps.visible, {false})),
     animated(convertRawProp(rawProps, "animated", sourceProps.animated, {false})),
     supportedOrientations(convertRawProp(rawProps, "supportedOrientations", sourceProps.supportedOrientations, {static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)})),
     identifier(convertRawProp(rawProps, "identifier", sourceProps.identifier, {0}))
