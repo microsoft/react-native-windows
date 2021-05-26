@@ -28,6 +28,7 @@
     <UWPCoreRuntimeSdkVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.UWPCoreRuntimeSdk\2.2.9\build\Microsoft.Net.UWPCoreRuntimeSdk.props')">2.2.9</UWPCoreRuntimeSdkVersion>
     <UWPCoreRuntimeSdkVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.UWPCoreRuntimeSdk\2.2.10\build\Microsoft.Net.UWPCoreRuntimeSdk.props')">2.2.10</UWPCoreRuntimeSdkVersion>
     <UWPCoreRuntimeSdkVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.UWPCoreRuntimeSdk\2.2.11\build\Microsoft.Net.UWPCoreRuntimeSdk.props')">2.2.11</UWPCoreRuntimeSdkVersion>
+    <UWPCoreRuntimeSdkVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.UWPCoreRuntimeSdk\2.2.12\build\Microsoft.Net.UWPCoreRuntimeSdk.props')">2.2.12</UWPCoreRuntimeSdkVersion>
     <!-- End Custom .NET Native properties -->
   </PropertyGroup>
 
