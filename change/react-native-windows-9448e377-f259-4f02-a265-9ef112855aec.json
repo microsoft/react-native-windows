@@ -1,9 +1,6 @@
 {
   "type": "prerelease",
-  "comment": {
-    "title": "",
-    "value": ""
-  },
+  "comment": "Add uwp version 2.2.12",
   "packageName": "react-native-windows",
   "email": "agnel@microsoft.com",
   "dependentChangeType": "patch"
