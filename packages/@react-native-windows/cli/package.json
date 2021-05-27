@@ -15,7 +15,6 @@
     "lint:fix": "rnw-scripts lint:fix",
     "test": "rnw-scripts test",
     "watch": "rnw-scripts watch",
-    "postinstall": "node ./lib-commonjs/postinstall.js"
   },
   "onPublish": {
     "scripts": {
