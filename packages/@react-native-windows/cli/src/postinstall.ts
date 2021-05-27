@@ -39,7 +39,8 @@ async function replaceCliDependency(dependencyName: string) {
     searchPath: process.cwd(),
   });
   if (!rnPackage) {
-    terminateWithError('Unable to locate "react-native" package');
+    // We may not have a hoisted RN package above us to go off of
+    return;
   }
 
   const cliPackage = await findPackage('@react-native-community/cli', {
