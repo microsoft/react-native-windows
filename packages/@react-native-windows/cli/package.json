@@ -15,7 +15,7 @@
     "lint:fix": "rnw-scripts lint:fix",
     "test": "rnw-scripts test",
     "watch": "rnw-scripts watch",
-    "postinstall": "node ./postinstall.js"
+    "postinstall": "node ./lib-commonjs/postinstall.js"
   },
   "dependencies": {
     "@react-native-windows/package-utils": "0.65.0-preview.0",
@@ -69,8 +69,7 @@
   },
   "files": [
     "lib-commonjs",
-    "powershell",
-    "postinstall.js"
+    "powershell"
   ],
   "beachball": {
     "defaultNpmTag": "preview",

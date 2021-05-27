@@ -3,16 +3,15 @@
  * Licensed under the MIT License.
  *
  * @format
- * @ts-check
  */
 
-const chalk = require('chalk');
-const {rm, cp} = require('shelljs');
+import * as chalk from 'chalk';
+import {rm, cp} from 'shelljs';
 
-const {
+import {
   WritableNpmPackage,
   findPackage,
-} = require('@react-native-windows/package-utils');
+} from '@react-native-windows/package-utils';
 
 (async () => {
   await applyRnPatches();
@@ -35,7 +34,7 @@ async function applyRnPatches() {
   }
 }
 
-async function replaceCliDependency(dependencyName) {
+async function replaceCliDependency(dependencyName: string) {
   const rnPackage = await findPackage('react-native', {
     searchPath: process.cwd(),
   });
@@ -75,7 +74,7 @@ async function replaceCliDependency(dependencyName) {
   }
 
   const writableCliPackage = await WritableNpmPackage.fromPath(cliPackage.path);
-  await writableCliPackage.mergeProps({
+  await writableCliPackage!.mergeProps({
     dependencies: {
       [dependencyName]: localDep.json.version,
     },
@@ -85,7 +84,7 @@ async function replaceCliDependency(dependencyName) {
   cp('-r', localDep.path, cliDep.path);
 }
 
-function terminateWithError(err) {
+function terminateWithError(err: string): never {
   console.error(chalk.red(err));
   process.exit(1);
 }
