@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Add .net uwp package version",
+  "comment": "Update .net uwp package version",
   "packageName": "react-native-windows",
   "email": "agnel@microsoft.com",
   "dependentChangeType": "patch"
