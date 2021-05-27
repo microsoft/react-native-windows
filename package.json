@@ -50,9 +50,6 @@
     "metro-runtime": "^0.66.0",
     "xmldom": "^0.5.0"
   },
-  "beachball": {
-    "gitTags": false
-  },
   "engines": {
     "node": ">12.0.0"
   }
