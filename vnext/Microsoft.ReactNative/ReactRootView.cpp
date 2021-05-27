@@ -162,7 +162,8 @@ void ReactRootView::InitRootView(
   m_context = &reactInstance->GetReactContext();
   m_reactViewOptions = std::make_unique<Mso::React::ReactViewOptions>(std::move(reactViewOptions));
 
-  m_touchEventHandler = std::make_shared<::Microsoft::ReactNative::TouchEventHandler>(*m_context);
+  m_touchEventHandler = std::make_shared<::Microsoft::ReactNative::TouchEventHandler>(
+      *m_context, m_reactViewOptions->UseFabric && !reactInstance->Options().UseWebDebugger());
   m_SIPEventHandler = std::make_shared<::Microsoft::ReactNative::SIPEventHandler>(*m_context);
   m_previewKeyboardEventHandlerOnRoot =
       std::make_shared<::Microsoft::ReactNative::PreviewKeyboardEventHandlerOnRoot>(*m_context);
