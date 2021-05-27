@@ -439,13 +439,13 @@ void JSValueArray::WriteTo(IJSValueWriter const &writer) const noexcept {
 JSValue::JSValue(JSValue &&other) noexcept : m_type{other.m_type} {
   switch (m_type) {
     case JSValueType::Object:
-      new (&m_object) JSValueObject(std::move(other.m_object));
+      new (std::addressof(m_object)) JSValueObject(std::move(other.m_object));
       break;
     case JSValueType::Array:
-      new (&m_array) JSValueArray(std::move(other.m_array));
+      new (std::addressof(m_array)) JSValueArray(std::move(other.m_array));
       break;
     case JSValueType::String:
-      new (&m_string) std::string(std::move(other.m_string));
+      new (std::addressof(m_string)) std::string(std::move(other.m_string));
       break;
     case JSValueType::Boolean:
       m_bool = other.m_bool;
@@ -458,8 +458,7 @@ JSValue::JSValue(JSValue &&other) noexcept : m_type{other.m_type} {
       break;
   }
 
-  other.m_type = JSValueType::Null;
-  other.m_int64 = 0;
+  other.~JSValue();
 }
 #pragma warning(pop)
 
