@@ -1,8 +1,21 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Thu, 11 Feb 2021 05:08:29 GMT and should not be manually modified.
+This log was last generated on Fri, 21 May 2021 05:17:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.18
+
+Fri, 21 May 2021 05:17:18 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/jest-unittest-config to v1.2.1 (ngerlem@microsoft.com)
+
+### Changes
+
+- Integrate Apr 28 (base of 0.65) Nightly RN Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.17
 

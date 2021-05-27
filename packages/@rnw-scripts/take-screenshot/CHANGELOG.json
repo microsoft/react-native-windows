@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/take-screenshot",
   "entries": [
     {
+      "date": "Fri, 21 May 2021 05:17:18 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v1.0.12",
+      "version": "1.0.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.1.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "@rnw-scripts/take-screenshot"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Mar 2021 05:05:53 GMT",
       "tag": "@rnw-scripts/take-screenshot_v1.0.11",
       "version": "1.0.11",

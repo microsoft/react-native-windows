@@ -2,6 +2,44 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Tue, 25 May 2021 19:36:43 GMT",
+      "tag": "@rnw-scripts/promote-release_v1.2.21",
+      "version": "1.2.21",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Prepare files for default branch rename",
+            "author": "dannyvv@microsoft.com",
+            "commit": "6083bce7cd5949d8730f273e2ce7ee68157c1419",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 May 2021 05:17:18 GMT",
+      "tag": "@rnw-scripts/promote-release_v1.2.20",
+      "version": "1.2.20",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.1.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.17",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Mar 2021 05:05:53 GMT",
       "tag": "@rnw-scripts/promote-release_v1.2.19",
       "version": "1.2.19",

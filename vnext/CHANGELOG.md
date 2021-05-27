@@ -1,8 +1,72 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 14 May 2021 05:06:39 GMT and should not be manually modified.
+This log was last generated on Tue, 25 May 2021 19:36:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.317
+
+Tue, 25 May 2021 19:36:43 GMT
+
+### Changes
+
+- Prepare files for default branch rename (dannyvv@microsoft.com)
+- add forked ToAscii.h unblocking CI (agnel@microsoft.com)
+
+## 0.0.0-canary.316
+
+Fri, 21 May 2021 21:40:00 GMT
+
+### Changes
+
+- [Fabric] Add support for PlatformColor (30809111+acoates-ms@users.noreply.github.com)
+- Fixes bug in BatchingEventEmitter (erozell@outlook.com)
+- folly update (agnel@microsoft.com)
+
+## 0.0.0-canary.315
+
+Fri, 21 May 2021 05:17:18 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.4.14 (ngerlem@microsoft.com)
+
+### Changes
+
+- Integrate Apr 28 (base of 0.65) Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.314
+
+Wed, 19 May 2021 05:06:54 GMT
+
+### Changes
+
+- Fix transitive dependencies for C# nuget-based apps (jthysell@microsoft.com)
+
+## 0.0.0-canary.313
+
+Tue, 18 May 2021 05:05:13 GMT
+
+### Changes
+
+- Fabric: Add support view View.opacity and View.borderRadius (30809111+acoates-ms@users.noreply.github.com)
+- Fabric: Add support for Image events, blurRadius and tintColor (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.312
+
+Mon, 17 May 2021 05:11:32 GMT
+
+### Changes
+
+- Exit early during text transform upward tree traversal. (igklemen@microsoft.com)
+
+## 0.0.0-canary.311
+
+Sat, 15 May 2021 05:06:21 GMT
+
+### Changes
+
+- Enabling Hermes Inspector (anandrag@microsoft.com)
 
 ## 0.0.0-canary.310
 

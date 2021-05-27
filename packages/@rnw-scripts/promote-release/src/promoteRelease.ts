@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  *
  * This script automatically changes files to prepare to move a release from
- * one stage to another. E.g. going from a release in our master branch to a
+ * one stage to another. E.g. going from a release in our main branch to a
  * preview release in a stable branch, promoting a preview to latest, or moving
  * latest to legacy.
  *
@@ -48,13 +48,16 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
 
     await rootPkg.mergeProps({
       scripts: {change: `beachball change --branch ${branchName}`},
+      beachball: {
+        branch: branchName,
+      },
     });
 
     console.log('Updating package versions...');
     await updatePackageVersions(`${argv.rnVersion}.0-preview.0`);
 
-    console.log('Setting packages published from master as private...');
-    await markMasterPackagesPrivate();
+    console.log('Setting packages published from main branch as private...');
+    await markMainBranchPackagesPrivate();
   }
 
   console.log('Committing changes...');
@@ -209,16 +212,16 @@ async function updatePackageVersions(version: string) {
 }
 
 /**
- * Sets all packages that are published from our master branch as private, to
+ * Sets all packages that are published from our main branch as private, to
  * avoid bumping and publishing them from our stable branch. Beachball will
  * ensure we do not depend on any of these in our published packages.
  */
-async function markMasterPackagesPrivate() {
-  const masterPublishedPackages = await enumerateRepoPackages(
+async function markMainBranchPackagesPrivate() {
+  const mainBranchPublishedPackages = await enumerateRepoPackages(
     async pkg => !pkg.json.promoteRelease && !pkg.json.private,
   );
 
-  for (const pkg of masterPublishedPackages) {
+  for (const pkg of mainBranchPublishedPackages) {
     await pkg.assignProps({private: true});
   }
 }

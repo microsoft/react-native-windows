@@ -8,6 +8,7 @@
 
 #include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
+#include <Views/FrameworkElementTransferProperties.h>
 
 namespace Microsoft::ReactNative {
 
@@ -30,11 +31,11 @@ ViewComponentView::supplementalComponentDescriptorProviders() noexcept {
 }
 
 void ViewComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
-  m_element.Children().InsertAt(index, static_cast<const BaseComponentView &>(childComponentView).Element());
+  m_panel.Children().InsertAt(index, static_cast<const BaseComponentView &>(childComponentView).Element());
 }
 
 void ViewComponentView::unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
-  m_element.Children().RemoveAt(index);
+  m_panel.Children().RemoveAt(index);
 }
 
 void ViewComponentView::updateProps(
@@ -47,25 +48,34 @@ void ViewComponentView::updateProps(
     auto color = *newViewProps.backgroundColor;
 
     if (newViewProps.backgroundColor) {
-      m_element.ViewBackground(SolidColorBrushFrom(newViewProps.backgroundColor));
+      m_panel.ViewBackground(newViewProps.backgroundColor.AsWindowsBrush());
     } else {
-      m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::ViewBackgroundProperty());
+      m_panel.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::ViewBackgroundProperty());
     }
   }
 
   if (oldViewProps.borderColors != newViewProps.borderColors) {
     if (newViewProps.borderColors.all) {
-      m_element.BorderBrush(SolidColorBrushFrom(*newViewProps.borderColors.all));
+      m_panel.BorderBrush(newViewProps.borderColors.all->AsWindowsBrush());
     } else {
-      m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::BorderBrushProperty());
+      m_panel.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::BorderBrushProperty());
     }
   }
 
-  if (oldViewProps.borderStyles != newViewProps.borderStyles) {
+  if (oldViewProps.opacity != newViewProps.opacity) {
+    m_panel.Opacity(newViewProps.opacity);
+  }
+
+  if (oldViewProps.borderStyles != newViewProps.borderStyles || oldViewProps.borderRadii != newViewProps.borderRadii) {
     m_needsBorderUpdate = true;
   }
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
+}
+
+bool ViewComponentView::shouldBeControl() const noexcept {
+  // Fabric does not appear to have the focusable prop right now...
+  return false; // m_props.focusable || HasDynamicAutomationProperties(view);
 }
 
 void ViewComponentView::updateState(
@@ -79,33 +89,109 @@ void ViewComponentView::updateLayoutMetrics(
   m_needsBorderUpdate = true;
   m_layoutMetrics = layoutMetrics;
 
-  winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_element, layoutMetrics.frame.origin.x);
-  winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_element, layoutMetrics.frame.origin.y);
+  winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_panel, layoutMetrics.frame.origin.x);
+  winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_panel, layoutMetrics.frame.origin.y);
 
-  m_element.Width(layoutMetrics.frame.size.width);
-  m_element.Height(layoutMetrics.frame.size.height);
+  m_panel.Width(layoutMetrics.frame.size.width);
+  m_panel.Height(layoutMetrics.frame.size.height);
 }
+
 void ViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   if (m_needsBorderUpdate) {
-    m_needsBorderUpdate = false;
     auto const borderMetrics = m_props->resolveBorderMetrics(m_layoutMetrics);
-    m_element.BorderThickness(xaml::ThicknessHelper::FromLengths(
+    m_panel.BorderThickness(xaml::ThicknessHelper::FromLengths(
         borderMetrics.borderWidths.left,
         borderMetrics.borderWidths.top,
         borderMetrics.borderWidths.right,
         borderMetrics.borderWidths.bottom));
+
+    xaml::CornerRadius cornerRadius;
+    cornerRadius.BottomLeft = borderMetrics.borderRadii.bottomLeft;
+    cornerRadius.BottomRight = borderMetrics.borderRadii.bottomRight;
+    cornerRadius.TopLeft = borderMetrics.borderRadii.topLeft;
+    cornerRadius.TopRight = borderMetrics.borderRadii.topRight;
+    m_panel.CornerRadius(cornerRadius);
+
+    m_needsBorderUpdate = false;
   }
 
-  m_element.FinalizeProperties();
+  auto oldControl = m_control;
+  auto oldOuterBorder = m_outerBorder;
+
+  auto oldElement = Element();
+  auto parent = oldElement.Parent();
+
+  m_panel.FinalizeProperties();
+
+  bool needsControl = shouldBeControl();
+  if ((bool)m_control != needsControl || m_outerBorder != m_panel.GetOuterBorder()) {
+    // -- Remove old children that are no longer needed
+    if (needsControl && !m_control) {
+      assert(false); // NYI
+      // m_control = CreateViewControl();
+    } else if (!needsControl && m_control) {
+      m_control.Content(nullptr);
+    }
+    if (!needsControl) {
+      m_control = nullptr;
+    }
+
+    if (m_panel.GetOuterBorder() && !m_outerBorder) {
+      m_panel.GetOuterBorder().Child(nullptr);
+    }
+
+    m_outerBorder = m_panel.GetOuterBorder();
+
+    auto newElement = Element();
+
+    // -- Transfer properties to new element
+    TransferFrameworkElementProperties(oldElement, newElement);
+    m_panel.FinalizeProperties();
+
+    // -- if the root element changes, we need to modify our parents child
+    if (parent && oldElement != newElement) {
+      // RefreshProperties(); - Transfer EnableFocusRing,TabIndex,IsFocusable
+      auto parentPanel = parent.try_as<xaml::Controls::Panel>();
+      if (parentPanel) {
+        uint32_t index;
+        auto found = parentPanel.Children().IndexOf(oldElement, index);
+        assert(found);
+        parentPanel.Children().SetAt(index, newElement);
+      } else {
+        assert(false); // TODO handle border/control parent
+      }
+    }
+
+    // -- Ensure new heirarchy is setup properly
+    if (m_outerBorder) {
+      m_outerBorder.Child(m_panel);
+    }
+
+    if (m_control) {
+      if (m_outerBorder)
+        m_control.Content(m_outerBorder);
+      else
+        m_control.Content(m_panel);
+    }
+  }
 }
+
 void ViewComponentView::prepareForRecycle() noexcept {}
 facebook::react::SharedProps ViewComponentView::props() noexcept {
   assert(false);
   return {};
 }
 
+// View is implemented with up to three elements, which get nested
+// 1) ViewControl  - if focusable
+// 2) Outer Border - if rounded corners or other clipping
+// 3) ViewPanel
 const xaml::FrameworkElement ViewComponentView::Element() const noexcept {
-  return m_element;
+  if (m_control)
+    return m_control;
+  if (m_outerBorder)
+    return m_outerBorder;
+  return m_panel;
 }
 
 } // namespace Microsoft::ReactNative

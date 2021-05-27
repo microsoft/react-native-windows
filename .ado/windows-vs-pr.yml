@@ -3,6 +3,7 @@ name: $(Date:yyyyMMdd).$(Rev:r)
 trigger: none # will disable CI builds entirely
 
 pr:
+  - main
   - master
   - "*-stable"
 

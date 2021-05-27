@@ -2,6 +2,35 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 21 May 2021 05:17:18 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.6",
+      "version": "0.0.0-canary.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate Apr 28 (base of 0.65) Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "@react-native-windows/codegen"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.1.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "@react-native-windows/codegen"
+          },
+          {
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.2.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "@react-native-windows/codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 May 2021 05:11:48 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.5",
       "version": "0.0.0-canary.5",

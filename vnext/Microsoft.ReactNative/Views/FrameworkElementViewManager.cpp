@@ -6,6 +6,7 @@
 #include <IReactInstance.h>
 
 #include <Views/ExpressionAnimationStore.h>
+#include <Views/FrameworkElementTransferProperties.h>
 #include <Views/FrameworkElementViewManager.h>
 
 #include <JSValueWriter.h>
@@ -75,78 +76,8 @@ using DynamicAutomationProperties = Microsoft::ReactNative::DynamicAutomationPro
 
 FrameworkElementViewManager::FrameworkElementViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-void FrameworkElementViewManager::TransferProperty(
-    const XamlView &oldView,
-    const XamlView &newView,
-    xaml::DependencyProperty dp) {
-  TransferProperty(oldView, newView, dp, dp);
-}
-
-void FrameworkElementViewManager::TransferProperty(
-    const XamlView &oldView,
-    const XamlView &newView,
-    xaml::DependencyProperty oldViewDP,
-    xaml::DependencyProperty newViewDP) {
-  auto oldValue = oldView.ReadLocalValue(oldViewDP);
-  if (oldValue != nullptr) {
-    oldView.ClearValue(oldViewDP);
-    newView.SetValue(newViewDP, oldValue);
-  }
-}
-
 void FrameworkElementViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
-  // Render Properties
-  TransferProperty(oldView, newView, xaml::UIElement::OpacityProperty());
-
-  // Layout Properties
-  TransferProperty(oldView, newView, xaml::FrameworkElement::WidthProperty());
-  TransferProperty(oldView, newView, xaml::FrameworkElement::HeightProperty());
-  TransferProperty(oldView, newView, xaml::FrameworkElement::MinWidthProperty());
-  TransferProperty(oldView, newView, xaml::FrameworkElement::MinHeightProperty());
-  TransferProperty(oldView, newView, xaml::FrameworkElement::MaxWidthProperty());
-  TransferProperty(oldView, newView, xaml::FrameworkElement::MaxHeightProperty());
-  TransferProperty(oldView, newView, xaml::FrameworkElement::FlowDirectionProperty());
-  TransferProperty(oldView, newView, winrt::Canvas::ZIndexProperty());
-  TransferProperty(oldView, newView, Microsoft::ReactNative::ViewPanel::LeftProperty());
-  TransferProperty(oldView, newView, Microsoft::ReactNative::ViewPanel::TopProperty());
-
-  // Accessibility Properties
-  TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::AutomationIdProperty());
-  TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::NameProperty());
-  TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::HelpTextProperty());
-  TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::LiveSettingProperty());
-  TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::PositionInSetProperty());
-  TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::SizeOfSetProperty());
-  auto accessibilityView = xaml::Automation::AutomationProperties::GetAccessibilityView(oldView);
-  xaml::Automation::AutomationProperties::SetAccessibilityView(newView, accessibilityView);
-  xaml::Automation::AutomationProperties::SetAccessibilityView(oldView, winrt::Peers::AccessibilityView::Raw);
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityRoleProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateSelectedProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateDisabledProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateCheckedProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateUncheckedProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateBusyProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateExpandedProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateCollapsedProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityValueMinProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityValueMaxProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityValueNowProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityValueTextProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityInvokeEventHandlerProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityActionEventHandlerProperty());
-  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityActionsProperty());
-
-  auto tooltip = winrt::ToolTipService::GetToolTip(oldView);
-  oldView.ClearValue(winrt::ToolTipService::ToolTipProperty());
-  winrt::ToolTipService::SetToolTip(newView, tooltip);
-
-  // Clear the TransformMatrix from the old View.  The TransformMatrix will be
-  // set on the new View a bit later in RefreshProperties() (as we need data
-  // from the ShadowNode not available here).
-  auto oldElement = oldView.try_as<xaml::UIElement>();
-  if (oldElement && oldElement.try_as<xaml::IUIElement10>()) {
-    oldElement.TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4::identity());
-  }
+  TransferFrameworkElementProperties(oldView, newView);
 }
 
 static void GetAccessibilityStateProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) {

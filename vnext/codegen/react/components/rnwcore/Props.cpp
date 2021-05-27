@@ -46,7 +46,8 @@ DatePickerProps::DatePickerProps(
     minimumDate(convertRawProp(rawProps, "minimumDate", sourceProps.minimumDate, {0.0})),
     minuteInterval(convertRawProp(rawProps, "minuteInterval", sourceProps.minuteInterval, {DatePickerMinuteInterval::MinuteInterval1})),
     mode(convertRawProp(rawProps, "mode", sourceProps.mode, {DatePickerMode::Date})),
-    timeZoneOffsetInMinutes(convertRawProp(rawProps, "timeZoneOffsetInMinutes", sourceProps.timeZoneOffsetInMinutes, {0.0}))
+    timeZoneOffsetInMinutes(convertRawProp(rawProps, "timeZoneOffsetInMinutes", sourceProps.timeZoneOffsetInMinutes, {0.0})),
+    pickerStyle(convertRawProp(rawProps, "pickerStyle", sourceProps.pickerStyle, {DatePickerPickerStyle::Spinner}))
       {}
 AndroidDrawerLayoutProps::AndroidDrawerLayoutProps(
     const AndroidDrawerLayoutProps &sourceProps,

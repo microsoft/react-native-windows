@@ -266,6 +266,11 @@ facebook::jsi::Value ChakraRuntime::evaluatePreparedJavaScript(
   }
 }
 
+bool ChakraRuntime::drainMicrotasks(int /*maxMicrotasksHint*/) {
+  // Not implemented
+  return true;
+}
+
 facebook::jsi::Object ChakraRuntime::global() {
   return MakePointer<facebook::jsi::Object>(GetGlobalObject());
 }

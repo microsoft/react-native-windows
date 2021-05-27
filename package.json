@@ -31,10 +31,10 @@
     ]
   },
   "devDependencies": {
-    "beachball": "^1.32.0",
+    "beachball": "^2.4.0",
     "husky": "^4.2.5",
     "unbroken": "1.0.27",
-    "lage": "^0.24.0"
+    "lage": "^0.29.3"
   },
   "resolutions": {
     "eslint-plugin-react-hooks": "4.0.7",
@@ -51,6 +51,7 @@
     "xmldom": "^0.5.0"
   },
   "beachball": {
+    "branch": "main",
     "gitTags": false
   },
   "engines": {

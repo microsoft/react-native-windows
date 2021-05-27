@@ -2,6 +2,44 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 21 May 2021 05:17:18 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.91",
+      "version": "0.0.0-canary.91",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate Apr 28 (base of 0.65) Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.14",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 20 May 2021 05:07:14 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.90",
+      "version": "0.0.0-canary.90",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use Rex with V8 JSI Runtime",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8340dd7b1295832ec1d71c1c9948d3b653eb4773",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Apr 2021 05:07:20 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.89",
       "version": "0.0.0-canary.89",

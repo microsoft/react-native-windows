@@ -110,7 +110,6 @@
         $(ReactNativeWindowsDir)Shared;
         $(ReactNativeWindowsDir)Shared\tracing;
         $(ReactNativeWindowsDir)include\Shared;
-        $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         $(YogaDir);
         $(GeneratedFilesDir);
         %(AdditionalIncludeDirectories)
@@ -313,6 +312,7 @@
     <ClInclude Include="Views\DynamicValueProvider.h" />
     <ClInclude Include="Views\ExpressionAnimationStore.h" />
     <ClInclude Include="Views\FlyoutViewManager.h" />
+    <ClInclude Include="Views\FrameworkElementTransferProperties.h" />
     <ClInclude Include="Views\FrameworkElementViewManager.h" />
     <ClInclude Include="Views\Image\Effects.h" />
     <ClInclude Include="Views\Image\ImageViewManager.h" />
@@ -386,6 +386,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\ComponentDescriptorProviderRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\ComponentDescriptorRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\componentNameByReactViewName.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageEventEmitter.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageProps.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageState.cpp" />
@@ -439,7 +440,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\UnbatchedEventQueue.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx\react\renderer\graphics\Color.cpp" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Transform.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\LeakChecker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\WeakFamilyRegistry.cpp" />
@@ -479,6 +479,7 @@
     <ClCompile Include="Fabric\ImageRequest.cpp" />
     <ClCompile Include="Fabric\ParagraphComponentView.cpp" />
     <ClCompile Include="Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp" />
+    <ClCompile Include="Fabric\platform\react\renderer\graphics\Color.cpp" />
     <ClCompile Include="Fabric\ReactNativeConfigProperties.cpp" />
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\TextComponentView.cpp" />
@@ -613,6 +614,7 @@
     <ClCompile Include="Views\DynamicValueProvider.cpp" />
     <ClCompile Include="Views\ExpressionAnimationStore.cpp" />
     <ClCompile Include="Views\FlyoutViewManager.cpp" />
+    <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
     <ClCompile Include="Views\FrameworkElementViewManager.cpp" />
     <ClCompile Include="Views\Image\ImageViewManager.cpp" />
     <ClCompile Include="Views\Image\ReactImage.cpp" />

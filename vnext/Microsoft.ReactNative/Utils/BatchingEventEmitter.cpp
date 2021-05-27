@@ -62,7 +62,7 @@ void BatchingEventEmitter::EmitCoalescingJSEvent(
     isFirstEventInBatch = m_eventQueue.size() == 0;
 
     auto endIter = std::remove_if(m_eventQueue.begin(), m_eventQueue.end(), [&](const auto &evt) noexcept {
-      return evt.eventName == eventName && evt.tag == tag;
+      return evt.eventName == newEvent.eventName && evt.tag == tag;
     });
 
     m_eventQueue.erase(endIter, m_eventQueue.end());

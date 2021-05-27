@@ -2,6 +2,131 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Tue, 25 May 2021 19:36:43 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.317",
+            "author": "dannyvv@microsoft.com",
+            "commit": "6083bce7cd5949d8730f273e2ce7ee68157c1419",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 May 2021 21:40:00 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.316",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "2bb6811005935dcfc2d581675b3604bc20c706b5",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 May 2021 05:17:18 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "e2e-test-app"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.315",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "e2e-test-app"
+          },
+          {
+            "comment": "Bump node-rnw-rpc to v1.0.6",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "e2e-test-app"
+          },
+          {
+            "comment": "Bump jest-environment-winappdriver to v1.1.6",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 May 2021 05:06:54 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.314",
+            "author": "38923768+imrishabh18@users.noreply.github.com",
+            "commit": "c20b325c1eae525331ac2345c65d6d3dba9801e8",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 18 May 2021 05:05:13 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.313",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "99e2ca031c58e55063a1f6d593dbcfd593b3e72b",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 May 2021 05:11:32 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.312",
+            "author": "igklemen@microsoft.com",
+            "commit": "5d131ed94f74d4444a44387906368dd452b40dfe",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 15 May 2021 05:06:21 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.311",
+            "author": "anandrag@microsoft.com",
+            "commit": "945ccd4ae2166d3885b2d57a02792e48c8077eb7",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 May 2021 05:06:39 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",

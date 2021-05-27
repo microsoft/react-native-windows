@@ -2,6 +2,65 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 21 May 2021 21:40:00 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.71",
+      "version": "0.0.0-canary.71",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add \"--deploy-from-layout\" option",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0ee34d6ba5a5fda0800813e43ed8af5144eeb1b5",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 May 2021 05:17:18 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.70",
+      "version": "0.0.0-canary.70",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate Apr 28 (base of 0.65) Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "@react-native-windows/cli"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.1.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.2.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 May 2021 05:06:54 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.69",
+      "version": "0.0.0-canary.69",
+      "comments": {
+        "none": [
+          {
+            "comment": "Adding the useWinUI3 and useHermes tag in the Readme",
+            "author": "38923768+imrishabh18@users.noreply.github.com",
+            "commit": "c20b325c1eae525331ac2345c65d6d3dba9801e8",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Apr 2021 05:07:20 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.69",
       "version": "0.0.0-canary.69",

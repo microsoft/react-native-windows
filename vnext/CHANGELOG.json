@@ -2,6 +2,151 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 25 May 2021 19:36:43 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.317",
+      "version": "0.0.0-canary.317",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Prepare files for default branch rename",
+            "author": "dannyvv@microsoft.com",
+            "commit": "6083bce7cd5949d8730f273e2ce7ee68157c1419",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add forked ToAscii.h unblocking CI",
+            "author": "agnel@microsoft.com",
+            "commit": "23bcdc71ea6140c28160f4531408db8db550b10c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 May 2021 21:40:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.316",
+      "version": "0.0.0-canary.316",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "[Fabric] Add support for PlatformColor",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "2bb6811005935dcfc2d581675b3604bc20c706b5",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fixes bug in BatchingEventEmitter",
+            "author": "erozell@outlook.com",
+            "commit": "88bd9a6d2dacb51155dad7ead2eef0328f6816c1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "folly update",
+            "author": "agnel@microsoft.com",
+            "commit": "c50f44bf5adb043ac9c0fb123826bc738aaf1f42",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 May 2021 05:17:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.315",
+      "version": "0.0.0-canary.315",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate Apr 28 (base of 0.65) Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.14",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5cc9c87a48b392d287fa953d8d23a8188b689545",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 May 2021 05:06:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.314",
+      "version": "0.0.0-canary.314",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix transitive dependencies for C# nuget-based apps",
+            "author": "jthysell@microsoft.com",
+            "commit": "ff6441367d2149e1481a9ff51ffe898971741bf1",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.69",
+            "author": "38923768+imrishabh18@users.noreply.github.com",
+            "commit": "c20b325c1eae525331ac2345c65d6d3dba9801e8",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 18 May 2021 05:05:13 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.313",
+      "version": "0.0.0-canary.313",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fabric: Add support view View.opacity and View.borderRadius",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "99e2ca031c58e55063a1f6d593dbcfd593b3e72b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fabric: Add support for Image events, blurRadius and tintColor",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "c06d88c6e86ce34882a307cd9010b180dabee58a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 May 2021 05:11:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.312",
+      "version": "0.0.0-canary.312",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Exit early during text transform upward tree traversal.",
+            "author": "igklemen@microsoft.com",
+            "commit": "5d131ed94f74d4444a44387906368dd452b40dfe",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 15 May 2021 05:06:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.311",
+      "version": "0.0.0-canary.311",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enabling Hermes Inspector",
+            "author": "anandrag@microsoft.com",
+            "commit": "945ccd4ae2166d3885b2d57a02792e48c8077eb7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 May 2021 05:06:39 GMT",
       "tag": "react-native-windows_v0.0.0-canary.310",
       "version": "0.0.0-canary.310",

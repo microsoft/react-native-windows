@@ -24,10 +24,7 @@
 #include <folly/Utility.h>
 #include <folly/lang/Align.h>
 #include <folly/lang/CArray.h>
-
-#if _MSC_VER
-#include <intrin.h>
-#endif
+#include <folly/portability/Builtins.h>
 
 namespace folly {
 
@@ -56,24 +53,6 @@ using to_ascii_alphabet_upper = to_ascii_alphabet<true>;
 
 namespace detail {
 
-#if defined(_M_IX86)
-FOLLY_ERASE auto to_ascii_port_clzll(uint64_t v) {
-  return __builtin_clzll(v);
-}
-#else
-FOLLY_ERASE auto to_ascii_port_clzll(uint64_t v) {
-#if _MSC_VER
-#if FOLLY_X64
-  return __lzcnt64(v);
-#else
-  return __assume(0), 0;
-#endif
-#else
-  return __builtin_clzll(v);
-#endif
-}
-#endif
-
 template <uint64_t Base, typename Alphabet>
 struct to_ascii_array {
   using data_type_ = c_array<uint8_t, Base>;
@@ -92,7 +71,7 @@ struct to_ascii_array {
   }
 };
 template <uint64_t Base, typename Alphabet>
-alignas(hardware_constructive_interference_size)
+alignas(kIsMobile ? sizeof(size_t) : hardware_constructive_interference_size)
     typename to_ascii_array<Base, Alphabet>::data_type_ const
     to_ascii_array<Base, Alphabet>::data =
         to_ascii_array<Base, Alphabet>::data_();
@@ -230,10 +209,10 @@ FOLLY_ALWAYS_INLINE size_t to_ascii_size_clzll(uint64_t v) {
   }
 
   //  log2 is approx log<2>(v)
-  size_t const vlog2 = 64 - static_cast<size_t>(to_ascii_port_clzll(v));
+  size_t const vlog2 = 64 - static_cast<size_t>(__builtin_clzll(v));
 
   //  handle directly when Base is power-of-two
-  if (!(Base & (Base - 1))) {
+  if constexpr(!(Base & (Base - 1))) {
     constexpr auto const blog2 = constexpr_log2(Base);
     return vlog2 / blog2 + size_t(vlog2 % blog2 != 0);
   }
@@ -249,7 +228,7 @@ FOLLY_ALWAYS_INLINE size_t to_ascii_size_clzll(uint64_t v) {
 }
 
 template <uint64_t Base>
-FOLLY_ALWAYS_INLINE size_t to_ascii_size(uint64_t v) {
+FOLLY_ALWAYS_INLINE size_t to_ascii_size_route(uint64_t v) {
   return kIsArchAmd64 && !(Base & (Base - 1)) //
       ? to_ascii_size_clzll<Base>(v)
       : to_ascii_size_array<Base>(v);
@@ -268,16 +247,10 @@ FOLLY_ALWAYS_INLINE void to_ascii_with_basic(
     //  keep /, % together so a peephole optimization computes them together
     auto const q = v / Base;
     auto const r = v % Base;
-    out[pos] = xlate(r);
+    out[pos] = xlate(uint8_t(r));
     v = q;
   }
-  out[0] = xlate(v);
-}
-template <uint64_t Base, typename Alphabet>
-FOLLY_ALWAYS_INLINE size_t to_ascii_with_basic(char* out, uint64_t v) {
-  auto const size = to_ascii_size<Base>(v);
-  to_ascii_with_basic<Base, Alphabet>(out, size, v);
-  return size;
+  out[0] = xlate(uint8_t(v));
 }
 
 //  A variant of the straightforward implementation, but using a lookup table.
@@ -286,12 +259,6 @@ FOLLY_ALWAYS_INLINE void to_ascii_with_array(
     char* out, size_t size, uint64_t v) {
   using array = to_ascii_array<Base, Alphabet>; // also an alphabet
   to_ascii_with_basic<Base, array>(out, size, v);
-}
-template <uint64_t Base, typename Alphabet>
-FOLLY_ALWAYS_INLINE size_t to_ascii_with_array(char* out, uint64_t v) {
-  auto const size = to_ascii_size<Base>(v);
-  to_ascii_with_array<Base, Alphabet>(out, size, v);
-  return size;
 }
 
 //  A trickier implementation which performs half as many divides as the other,
@@ -325,9 +292,27 @@ FOLLY_ALWAYS_INLINE void to_ascii_with_table(
 }
 template <uint64_t Base, typename Alphabet>
 FOLLY_ALWAYS_INLINE size_t to_ascii_with_table(char* out, uint64_t v) {
-  auto const size = to_ascii_size<Base>(v);
+  auto const size = to_ascii_size_route<Base>(v);
   to_ascii_with_table<Base, Alphabet>(out, size, v);
   return size;
+}
+
+template <uint64_t Base, typename Alphabet>
+FOLLY_ALWAYS_INLINE size_t
+to_ascii_with_route(char* outb, char const* oute, uint64_t v) {
+  auto const size = to_ascii_size_route<Base>(v);
+  if (FOLLY_UNLIKELY(oute < outb || size_t(oute - outb) < size)) {
+    return 0;
+  }
+  kIsMobile //
+      ? to_ascii_with_array<Base, Alphabet>(outb, size, v)
+      : to_ascii_with_table<Base, Alphabet>(outb, size, v);
+  return size;
+}
+template <uint64_t Base, typename Alphabet, size_t N>
+FOLLY_ALWAYS_INLINE size_t to_ascii_with_route(char (&out)[N], uint64_t v) {
+  static_assert(N >= to_ascii_powers<Base, decltype(v)>::size, "out too small");
+  return to_ascii_with_table<Base, Alphabet>(out, v);
 }
 
 } // namespace detail
@@ -339,22 +324,16 @@ FOLLY_ALWAYS_INLINE size_t to_ascii_with_table(char* out, uint64_t v) {
 //
 //  In base 10, u64 requires at most 20 bytes, u32 at most 10, u16 at most 5,
 //  and u8 at most 3.
-//
-//  async-signal-safe
 template <uint64_t Base, typename I>
-constexpr size_t to_ascii_size_max() {
-  return detail::to_ascii_powers<Base, I>::size;
-}
+FOLLY_INLINE_VARIABLE constexpr size_t to_ascii_size_max =
+    detail::to_ascii_powers<Base, I>::size;
 
 //  to_ascii_size_max_decimal
 //
 //  An alias to to_ascii_size_max<10>.
-//
-//  async-signal-safe
 template <typename I>
-constexpr size_t to_ascii_size_max_decimal() {
-  return to_ascii_size_max<10, I>();
-}
+FOLLY_INLINE_VARIABLE constexpr size_t to_ascii_size_max_decimal =
+    to_ascii_size_max<10, I>;
 
 //  to_ascii_size
 //
@@ -364,7 +343,7 @@ constexpr size_t to_ascii_size_max_decimal() {
 //  async-signal-safe
 template <uint64_t Base>
 size_t to_ascii_size(uint64_t v) {
-  return detail::to_ascii_size<Base>(v);
+  return detail::to_ascii_size_route<Base>(v);
 }
 
 //  to_ascii_size_decimal
@@ -390,8 +369,12 @@ inline size_t to_ascii_size_decimal(uint64_t v) {
 //
 //  async-signal-safe
 template <uint64_t Base, typename Alphabet>
-size_t to_ascii_with(char* out, uint64_t v) {
-  return detail::to_ascii_with_table<Base, Alphabet>(out, v);
+size_t to_ascii_with(char* outb, char const* oute, uint64_t v) {
+  return detail::to_ascii_with_route<Base, Alphabet>(outb, oute, v);
+}
+template <uint64_t Base, typename Alphabet, size_t N>
+size_t to_ascii_with(char (&out)[N], uint64_t v) {
+  return detail::to_ascii_with_route<Base, Alphabet>(out, v);
 }
 
 //  to_ascii_lower
@@ -400,7 +383,11 @@ size_t to_ascii_with(char* out, uint64_t v) {
 //
 //  async-signal-safe
 template <uint64_t Base>
-size_t to_ascii_lower(char* out, uint64_t v) {
+size_t to_ascii_lower(char* outb, char const* oute, uint64_t v) {
+  return to_ascii_with<Base, to_ascii_alphabet_lower>(outb, oute, v);
+}
+template <uint64_t Base, size_t N>
+size_t to_ascii_lower(char (&out)[N], uint64_t v) {
   return to_ascii_with<Base, to_ascii_alphabet_lower>(out, v);
 }
 
@@ -410,7 +397,11 @@ size_t to_ascii_lower(char* out, uint64_t v) {
 //
 //  async-signal-safe
 template <uint64_t Base>
-size_t to_ascii_upper(char* out, uint64_t v) {
+size_t to_ascii_upper(char* outb, char const* oute, uint64_t v) {
+  return to_ascii_with<Base, to_ascii_alphabet_upper>(outb, oute, v);
+}
+template <uint64_t Base, size_t N>
+size_t to_ascii_upper(char (&out)[N], uint64_t v) {
   return to_ascii_with<Base, to_ascii_alphabet_upper>(out, v);
 }
 
@@ -419,7 +410,11 @@ size_t to_ascii_upper(char* out, uint64_t v) {
 //  An alias to to_ascii<10, false>.
 //
 //  async-signals-afe
-inline size_t to_ascii_decimal(char* out, uint64_t v) {
+inline size_t to_ascii_decimal(char* outb, char const* oute, uint64_t v) {
+  return to_ascii_lower<10>(outb, oute, v);
+}
+template <size_t N>
+inline size_t to_ascii_decimal(char (&out)[N], uint64_t v) {
   return to_ascii_lower<10>(out, v);
 }
 

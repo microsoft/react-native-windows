@@ -48,7 +48,7 @@ void ParagraphComponentView::updateProps(
 
   if (oldViewProps.textAttributes.foregroundColor != newViewProps.textAttributes.foregroundColor) {
     if (newViewProps.textAttributes.foregroundColor)
-      m_element.Foreground(SolidColorBrushFrom(newViewProps.textAttributes.foregroundColor));
+      m_element.Foreground(newViewProps.textAttributes.foregroundColor.AsWindowsBrush());
     else
       m_element.ClearValue(::xaml::Controls::TextBlock::ForegroundProperty());
   }

@@ -1,8 +1,24 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Thu, 29 Apr 2021 05:07:20 GMT and should not be manually modified.
+This log was last generated on Fri, 21 May 2021 05:17:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.0
+
+Fri, 21 May 2021 05:17:18 GMT
+
+### Minor changes
+
+- Link to curated release notes in patch release notes (ngerlem@microsoft.com)
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.1 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.20 (ngerlem@microsoft.com)
 
 ## 1.0.27
 
