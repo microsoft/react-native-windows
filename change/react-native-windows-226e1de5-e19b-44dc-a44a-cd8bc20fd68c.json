@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Hermes inspector was broken on Hermes v0.8 package as some changes were not correctly migrated from 0.7 branch.",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
