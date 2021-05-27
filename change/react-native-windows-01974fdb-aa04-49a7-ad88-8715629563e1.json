@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix JSValue memory leak in move constructor",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
