@@ -17,6 +17,11 @@
     "watch": "rnw-scripts watch",
     "postinstall": "node ./lib-commonjs/postinstall.js"
   },
+  "onPublish": {
+    "scripts": {
+      "postinstall": "node ./lib-commonjs/postinstall.js"
+    }
+  },
   "dependencies": {
     "@react-native-windows/package-utils": "0.65.0-preview.0",
     "@react-native-windows/telemetry": "0.65.0-preview.0",
