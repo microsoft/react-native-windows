@@ -14,7 +14,7 @@
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
     "test": "rnw-scripts test",
-    "watch": "rnw-scripts watch",
+    "watch": "rnw-scripts watch"
   },
   "onPublish": {
     "scripts": {
