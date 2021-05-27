@@ -81,46 +81,53 @@ Start an <strong>elevated</strong> PowerShell window and run:
 <p>Alternatively, you can setup your environment manually:</p>
 <ul>
 <li>Ensure Developer Mode is turned ON in Windows Settings App.</li>
-<li>Install <a href="https://www.visualstudio.com/downloads">Visual Studio 2019 (version 16.5 or greater)</a> <strong>with the following options checked</strong>:
+<li>It is <em>highly</em> recommended to update the Windows system.</li>
+<li>Install a recent version of <a href="https://www.visualstudio.com/downloads">Visual Studio 2019</a> <strong>with the following options checked</strong>:
 <ul>
-<li>Workloads
+<li><strong>Workloads</strong>
 <ul>
-<li>Universal Windows Platform development
+<li>Node.js development, or one of the following alternatives:
 <ul>
-<li>Include <code>C++ (v142) Universal Windows Platform tools</code> (under 'Optional')</li>
-</ul></li>
-<li>Desktop development with C++</li>
-<li>.NET Desktop development</li>
-</ul></li>
-<li>Individual Components
+<li>Install from <strong>Individual Components</strong>:
 <ul>
 <li>Development activities
 <ul>
-<li>Node.js development support (optional)</li>
+<li>Node.js development support</li>
 </ul></li>
 </ul></li>
+<li>Install Node.js separately, see below for some options</li>
 </ul></li>
-</ul>
-<p>You will also need to ensure that certain settings are enabled:</p>
+<li>.NET Desktop development</li>
+<li>Desktop development with C++</li>
+<li>Universal Windows Platform development
 <ul>
-<li>Long path support</li>
-<li>Developer mode enabled</li>
+<li>Include <code>C++ (v142) Universal Windows Platform tools</code> (under 'Optional')</li>
+<li>Older Windows 10 SDK version may be needed at this point.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>Ensure that long path support is enabled.</li>
 </ul>
-<h4><a class="anchor" aria-hidden="true" id="react-native-development-dependencies"></a><a href="#react-native-development-dependencies" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>React Native Development Dependencies</h4>
-<ul>
-<li><p>Install the <a href="https://reactnative.dev/docs/environment-setup">standard React Native dependencies</a></p></li>
-<li><p>Install <a href="https://nodejs.org">Node.js</a> via one of the following methods:</p>
+<p>Options to install <a href="https://nodejs.org">Node.js</a> separately:</p>
 <ul>
 <li>Using <a href="https://chocolatey.org/">Chocolatey</a> (<em>React Native recommended</em>). To use chocolatey, from an elevated Command Prompt, run:</li>
 </ul>
 <pre><code class="hljs css language-bat">choco install nodejs-lts
 </code></pre>
 <ul>
+<li>Using <a href="https://nodejs.org/en/download/package-manager/">another package manager</a> such as <a href="https://scoop.sh/">Scoop</a> or <a href="https://github.com/jasongin/nvs">Node Version Switcher (nvs)</a></li>
 <li>Directly from <a href="https://nodejs.org/en/download/">Node.js</a></li>
-<li>By selecting the &quot;Node.js development support&quot; component in the Visual Studio 2019 installer (above)</li>
+</ul>
+<p>Optional steps that are <em>highly recommended</em>:</p>
+<ul>
+<li>Install <a href="https://www.google.com/chrome/">Chrome</a> (needed for JS debugging)</li>
+<li>Install <a href="https://yarnpkg.com/en/docs/install">Yarn</a> (<strong>required</strong> to contribute to react-native-windows)</li>
+<li>Install <code>git</code> using a method such as:
+<ul>
+<li>Using a package manager such as <a href="https://chocolatey.org/">Chocolatey</a> or <a href="https://scoop.sh/">Scoop</a></li>
+<li>Install <a href="https://gitforwindows.org/">git for Windows</a></li>
+<li>Install <a href="https://desktop.github.com/">GitHub Desktop</a></li>
 </ul></li>
-<li><p>Install <a href="https://www.google.com/chrome/">Chrome</a> (<em>optional</em>, but needed for JS debugging)</p></li>
-<li><p>Install <a href="https://yarnpkg.com/en/docs/install">Yarn</a> (<em>optional</em> if only consuming react-native-windows, but <strong>required</strong> to contribute to react-native-windows)</p></li>
 </ul>
 <h3><a class="anchor" aria-hidden="true" id="troubleshooting"></a><a href="#troubleshooting" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Troubleshooting</h3>
 <ul>
