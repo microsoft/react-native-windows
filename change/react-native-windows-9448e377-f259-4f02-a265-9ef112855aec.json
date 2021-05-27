@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update .net uwp version",
+  "packageName": "react-native-windows",
+  "email": "agnel@microsoft.com",
+  "dependentChangeType": "patch"
+}
