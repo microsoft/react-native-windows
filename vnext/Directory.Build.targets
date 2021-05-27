@@ -55,6 +55,11 @@
     <Message Text="=> MSBuildExtensionsPath32 [$(MSBuildExtensionsPath32)]" />
     <Message Text="=> MSBuildExtensionsPath64 [$(MSBuildExtensionsPath64)]" />
     <Message Text="=> VCTargetsPath           [$(VCTargetsPath)]" />
+
+    <Message Text="%0A" />
+    <Message Text="JS Engine" />
+    <Message Text="=> V8AppPlatform [$(V8AppPlatform)]" />
+    <Message Text="=> V8Package     [$(V8Package)]" />
   </Target>
 
   <Target Name="_ComputePrecompToCleanUp">
