@@ -168,6 +168,14 @@ export type BasePropsWin32 = {
   */
   accessibilityDescribedBy?: React.RefObject<any>;
   accessibilityLabeledBy?: React.RefObject<any>;
+
+  /**
+  * Identifies the element whose contents or presence are controlled by another element. 
+  * 
+  * This is mainly used for a Textbox with a Dropdown PeoplePicker-type list.  This allows an 
+  * accessibility tool to query those other providers for properties and listen to their events.
+  */
+   accessibilityControls?: React.RefObject<any>;    
 };
 
 export type ViewWin32OmitTypes = RN.ViewPropsAndroid &
