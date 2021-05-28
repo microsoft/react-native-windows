@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[0.65] Bump ws dependency",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
