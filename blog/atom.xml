@@ -2,11 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://microsoft.github.io/react-native-windows/blog</id>
     <title>React Native for Windows + macOS Blog</title>
-    <updated>2021-05-17T06:00:00.000Z</updated>
+    <updated>2021-05-25T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://microsoft.github.io/react-native-windows/blog"/>
     <subtitle>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</subtitle>
     <logo>https://microsoft.github.io/react-native-windows/img/header_logo.svg</logo>
+    <entry>
+        <title type="html"><![CDATA[Add inking to your React Native for Windows application]]></title>
+        <id>https://microsoft.github.io/react-native-windows/blog/2021/05/25/inking.html</id>
+        <link href="https://microsoft.github.io/react-native-windows/blog/2021/05/25/inking.html"/>
+        <updated>2021-05-25T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>Windows 10 is one of the most powerful platforms on the market when it comes to supporting digital inking experiences. As such, the Universal Windows Platform comes with a dedicated series of controls that you can add to your application to enable inking experiences. Thanks to these controls, you can easily implements features like capturing signatures, text and shape recognition, etc.</p>
+<p>If you're building a Windows application with React Native, there are a few options you can explore to add such a feature. One of them is using a community module called <a href="https://github.com/creambyemute/react-native-sketch-canvas">react-native-sketch-canvas</a>, which provides a Windows implementation as well. This module is based on Win2D and it enables the recording and playback of ink strokes. While this solution can be a great fit for many applications, there are scenarios in which you need more precision and better integration with the Windows ecosystem, like when you need to capture a signature. For these purposes, Windows 10 offers a native control called <a href="https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.InkCanvas"><code>InkCanvas</code></a>, which enables powerful inking experiences. <code>InkCanvas</code> is specifically a Windows control and isn't exposed automatically by React Native. As such, we'll have to wrap it with a <a href="https://microsoft.github.io/react-native-windows/docs/view-managers">native UI component</a>, which is a feature provided by React Native which exposes native UI controls for Windows, Android or iOS to the JavaScript layer using JSX.</p>
+<p>In this article we'll walk through the process of wrapping the <code>InkCanvas</code> control, with the dual goals of enabling your apps to support inking and walking you through the process of creating a native UI component, which can be useful for exposing other native controls.</p>
+]]></summary>
+        <author>
+            <name>Matteo Pagani</name>
+            <uri>https://twitter.com/qmatteoq</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Using CodePush in a React Native for Windows application]]></title>
         <id>https://microsoft.github.io/react-native-windows/blog/2021/05/17/codepush.html</id>
