@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <UseHermes Condition="'$(UseHermes)' == ''">false</UseHermes>
-    <HermesVersion Condition="'$(HermesVersion)' == ''">0.8.0-staging2</HermesVersion>
+    <HermesVersion Condition="'$(HermesVersion)' == ''">0.8.0-staging3</HermesVersion>
     <HermesPackage Condition="'$(HermesPackage)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HermesVersion)</HermesPackage>
     <!-- TODO: Can we automatically distinguish between uwp and win32 here? -->
     <HermesArch Condition="'$(HermesArch)' == ''">uwp</HermesArch>
