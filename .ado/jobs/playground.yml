@@ -79,7 +79,7 @@ jobs:
         inputs:
           targetType: 'inline'
           script: |
-            $PfxBytes = [System.Convert]::FromBase64String($(playgroundEncodedKey))
+            $PfxBytes = [System.Convert]::FromBase64String("$(playgroundEncodedKey)")
             $PfxPath = [System.IO.Path]::GetFullPath( (Join-Path -Path $(Build.SourcesDirectory) -ChildPath playground-Key.pfx) )
             [System.IO.File]::WriteAllBytes("$PfxPath", $PfxBytes)
         condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
