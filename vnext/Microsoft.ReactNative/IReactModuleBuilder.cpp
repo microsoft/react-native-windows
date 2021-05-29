@@ -47,7 +47,8 @@ struct Terminator final {
           StringCchPrintf(
               buf,
               ARRAYSIZE(buf),
-              L"An unhandled exception (0x%x) occurred in a native module. The exception message was:\n\n%s",
+              L"An unhandled exception (0x%x) occurred in a native module. "
+              L"The exception message was:\n\n%s",
               hr.code(),
               hr.message().c_str());
           auto messageBox = reinterpret_cast<decltype(&MessageBoxW)>(
@@ -56,7 +57,8 @@ struct Terminator final {
             StringCchCat(
                 buf,
                 ARRAYSIZE(buf),
-                L"\n\nIt's likely that the native module called a Windows API that needs to be called from the UI thread. For more information, see https://aka.ms/RNW-UIAPI");
+                L"\n\nIt's likely that the native module called a Windows API that needs to be called from the UI thread. "
+                L"For more information, see https://aka.ms/RNW-UIAPI");
           }
           messageBox(nullptr, buf, L"Unhandled exception in native module", MB_ICONERROR | MB_OK);
         } catch (...) {
