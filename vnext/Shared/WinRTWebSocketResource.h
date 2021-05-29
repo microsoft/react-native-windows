@@ -64,12 +64,12 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
       winrt::Windows::Storage::Streams::IDataWriter &&writer,
       winrt::Windows::Foundation::Uri &&uri,
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult>
-          &&certExeptions) noexcept;
+          &&certExeptions);
 
   WinRTWebSocketResource(
       const std::string &urlString,
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult>
-          &&certExeptions) noexcept;
+          &&certExeptions);
 
   ~WinRTWebSocketResource() noexcept override;
 

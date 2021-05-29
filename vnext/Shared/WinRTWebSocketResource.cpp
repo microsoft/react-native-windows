@@ -87,19 +87,7 @@ string HResultToString(hresult &&result) {
 
 namespace Microsoft::React {
 
-WinRTWebSocketResource::WinRTWebSocketResource(
-    IMessageWebSocket &&socket,
-    IDataWriter &&writer,
-    Uri &&uri,
-    vector<ChainValidationResult> &&certExeptions) noexcept
-    : m_uri{std::move(uri)}, m_socket{std::move(socket)}, m_writer{std::move(writer)} {
-  m_socket.MessageReceived({this, &WinRTWebSocketResource::OnMessageReceived});
-
-  for (const auto &certException : certExeptions) {
-    m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
-  }
-}
-
+//private
 WinRTWebSocketResource::WinRTWebSocketResource(
     IMessageWebSocket &&socket,
     Uri &&uri,
@@ -111,8 +99,21 @@ WinRTWebSocketResource::WinRTWebSocketResource(
           std::move(certExeptions)) {}
 
 WinRTWebSocketResource::WinRTWebSocketResource(
+    IMessageWebSocket &&socket,
+    IDataWriter &&writer,
+    Uri &&uri,
+    vector<ChainValidationResult> &&certExeptions)
+    : m_uri{std::move(uri)}, m_socket{std::move(socket)}, m_writer{std::move(writer)} {
+  m_socket.MessageReceived({this, &WinRTWebSocketResource::OnMessageReceived});
+
+  for (const auto &certException : certExeptions) {
+    m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
+  }
+}
+
+WinRTWebSocketResource::WinRTWebSocketResource(
     const string &urlString,
-    vector<ChainValidationResult> &&certExeptions) noexcept
+    vector<ChainValidationResult> &&certExeptions)
     : WinRTWebSocketResource(MessageWebSocket{}, Uri{winrt::to_hstring(urlString)}, std::move(certExeptions)) {}
 
 WinRTWebSocketResource::~WinRTWebSocketResource() noexcept /*override*/
