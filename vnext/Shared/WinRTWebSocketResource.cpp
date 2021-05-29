@@ -87,7 +87,7 @@ string HResultToString(hresult &&result) {
 
 namespace Microsoft::React {
 
-//private
+// private
 WinRTWebSocketResource::WinRTWebSocketResource(
     IMessageWebSocket &&socket,
     Uri &&uri,
@@ -111,9 +111,7 @@ WinRTWebSocketResource::WinRTWebSocketResource(
   }
 }
 
-WinRTWebSocketResource::WinRTWebSocketResource(
-    const string &urlString,
-    vector<ChainValidationResult> &&certExeptions)
+WinRTWebSocketResource::WinRTWebSocketResource(const string &urlString, vector<ChainValidationResult> &&certExeptions)
     : WinRTWebSocketResource(MessageWebSocket{}, Uri{winrt::to_hstring(urlString)}, std::move(certExeptions)) {}
 
 WinRTWebSocketResource::~WinRTWebSocketResource() noexcept /*override*/
