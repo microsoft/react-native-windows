@@ -4,8 +4,8 @@
   <PropertyGroup Label="Globals">
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
-    <!-- Use 19H1 SDK (10.0.18362.0)  Support running on RS3+ (10.0.16299.0) -->
-    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)'=='' Or '$(WindowsTargetPlatformVersion)'=='10.0.0.0'">10.0.18362.0</WindowsTargetPlatformVersion>
+    <!-- Use 20H1 SDK (10.0.19041.0)  Support running on RS3+ (10.0.16299.0) -->
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)'=='' Or '$(WindowsTargetPlatformVersion)'=='10.0.0.0'">10.0.19041.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion Condition="'$(WindowsTargetPlatformMinVersion)'=='' Or '$(WindowsTargetPlatformMinVersion)'=='10.0.0.0'">10.0.16299.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
 
@@ -14,8 +14,6 @@
     <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
     <CharacterSet>Unicode</CharacterSet>
     <EnableWinRtLeanAndMean Condition="'$(EnableWinRtLeanAndMean)' == ''">true</EnableWinRtLeanAndMean>
-    <LinkIncremental Condition="'$(LinkIncremental)' == '' and '$(Configuration)'=='Debug'" Label="Configuration">true</LinkIncremental>
-    <LinkIncremental Condition="'$(LinkIncremental)' == '' and '$(Configuration)'=='Release'" Label="Configuration">false</LinkIncremental>
   </PropertyGroup>
 
   <PropertyGroup Label="Desktop">

@@ -61,7 +61,7 @@ public class TestClass
             var references = new List<string>();
 
             var uapVersion = "uap10.0.15138";
-            var uwpPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), 
+            var uwpPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
                 "Microsoft SDKs", "UWPNuGetPackages", "microsoft.netcore.universalwindowsplatform");
 
             var versions = Directory.GetDirectories(uwpPath).Select(x => new Version(Path.GetFileName(x)));
@@ -90,8 +90,8 @@ public class TestClass
             // of the unitest runners are allowed to pick up a variable from the build file. And given the many
             // ways one can run inttests, this seemed to be the most reasonable out of a lot of poor options.
             var win10SdkFolder = @"C:\Program Files (x86)\Windows Kits\10";
-#if win10SdkVersion10_0_18362_0
-      var win10SdkVersion = "10.0.18362.0";
+#if win10SdkVersion10_0_19041_0
+      var win10SdkVersion = "10.0.19041.0";
 #else
 #error The Win10 Sdk Version must be updated in code when updated in MSBuild.
 #endif
