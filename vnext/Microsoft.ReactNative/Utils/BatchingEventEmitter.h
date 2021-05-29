@@ -51,12 +51,16 @@ struct BatchingEventEmitter : public std::enable_shared_from_this<BatchingEventE
       const JSValueArgWriter &params) noexcept;
 
  private:
+  size_t GetCoalescingEventKey(winrt::hstring eventEmitterName, winrt::hstring emitterMethod, winrt::hstring eventName);
+  void AddOrCoalesceEvent(implementation::BatchedEvent event);
   void RegisterFrameCallback() noexcept;
   void OnFrameUI() noexcept;
   void OnFrameJS() noexcept;
 
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
   std::deque<implementation::BatchedEvent> m_eventQueue;
+  std::map<std::tuple<winrt::hstring, winrt::hstring, winrt::hstring>, size_t> m_coalescingEventIds;
+  std::map<std::tuple<int64_t, size_t>, size_t> m_lastEventIndex;
   std::mutex m_eventQueueMutex;
   xaml::Media::CompositionTarget::Rendering_revoker m_renderingRevoker;
   IReactDispatcher m_uiDispatcher;

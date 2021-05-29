@@ -90,13 +90,7 @@ void BatchingEventEmitter::EmitCoalescingJSEvent(
 
     isFirstEventInBatch = m_eventQueue.size() == 0;
 
-    auto endIter = std::remove_if(m_eventQueue.begin(), m_eventQueue.end(), [&](const auto &evt) noexcept {
-      return evt.eventEmitterName == newEvent.eventEmitterName && evt.emitterMethod == newEvent.emitterMethod &&
-          evt.eventName == newEvent.eventName && evt.coalescingKey == newEvent.coalescingKey;
-    });
-
-    m_eventQueue.erase(endIter, m_eventQueue.end());
-    m_eventQueue.push_back(std::move(newEvent));
+    AddOrCoalesceEvent(newEvent);
   }
 
   if (isFirstEventInBatch) {
@@ -113,6 +107,34 @@ void BatchingEventEmitter::RegisterFrameCallback() noexcept {
           strongThis->OnFrameUI();
         }
       });
+}
+
+size_t BatchingEventEmitter::GetCoalescingEventKey(
+    winrt::hstring eventEmitterName,
+    winrt::hstring emitterMethod,
+    winrt::hstring eventName) {
+  std::tuple<winrt::hstring, winrt::hstring, winrt::hstring> eventKey{eventEmitterName, emitterMethod, eventName};
+  const auto iter = m_coalescingEventIds.find(eventKey);
+  if (iter == m_coalescingEventIds.end()) {
+    const auto size = m_coalescingEventIds.size();
+    m_coalescingEventIds.insert({eventKey, size});
+    return size;
+  }
+
+  return iter->second;
+}
+
+void BatchingEventEmitter::AddOrCoalesceEvent(implementation::BatchedEvent evt) {
+  const auto eventId = GetCoalescingEventKey(evt.eventEmitterName, evt.emitterMethod, evt.eventName);
+  const std::tuple<int64_t, size_t> lastEventKey{evt.coalescingKey, eventId};
+  const auto iter = m_lastEventIndex.find(lastEventKey);
+  if (iter == m_lastEventIndex.end()) {
+    const auto index = m_eventQueue.size();
+    m_eventQueue.push_back(evt);
+    m_lastEventIndex.insert({lastEventKey, index});
+  } else {
+    m_eventQueue.at(iter->second).params = evt.params;
+  }
 }
 
 void BatchingEventEmitter::OnFrameUI() noexcept {
@@ -135,6 +157,7 @@ void BatchingEventEmitter::OnFrameJS() noexcept {
   {
     std::scoped_lock lock(m_eventQueueMutex);
     currentBatch.swap(m_eventQueue);
+    m_lastEventIndex.clear();
   }
 
   while (!currentBatch.empty()) {

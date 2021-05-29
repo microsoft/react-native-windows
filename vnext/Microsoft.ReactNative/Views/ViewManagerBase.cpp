@@ -352,7 +352,7 @@ void ViewManagerBase::SetLayoutProps(
 
     React::JSValueObject eventData{{"target", tag}, {"layout", std::move(layout)}};
 
-    m_batchingEventEmitter->DispatchEvent(tag, L"topLayout", MakeJSValueWriter(std::move(eventData)));
+    m_batchingEventEmitter->DispatchCoalescingEvent(tag, L"topLayout", MakeJSValueWriter(std::move(eventData)));
   }
 }
 
