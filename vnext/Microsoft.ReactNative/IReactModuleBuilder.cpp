@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "IReactModuleBuilder.h"
+#include <strsafe.h>
 #include "DynamicWriter.h"
 #include "ReactHost/MsoUtils.h"
 
