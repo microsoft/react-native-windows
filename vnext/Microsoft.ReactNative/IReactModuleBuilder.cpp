@@ -29,10 +29,10 @@ void ReactModuleBuilder::AddConstantProvider(ConstantProviderDelegate const &con
 // Modules will usually call Windows APIs, and those APIs might expect to be called in the UI thread.
 // Developers can dispatch work to the UI thread via reactContext.UIDispatcher().Post(). When they fail to do so,
 // cppwinrt will grab the failure HRESULT (RPC_E_WRONG_THREAD), convert it to a C++ exception, and throw it.
-// However, native module methods are noexcept, meaning the CRT will call std::terminate and not propagate exceptions up the stack.
-// Developers are then left with a crashing app and no good way to debug it.
-// To improve developers' experience, we can replace the terminate handler temporarily while we call out to the native method.
-// In the terminate handler, we can inspect the exception that was thrown and give an error message before going down.
+// However, native module methods are noexcept, meaning the CRT will call std::terminate and not propagate exceptions up
+// the stack. Developers are then left with a crashing app and no good way to debug it. To improve developers'
+// experience, we can replace the terminate handler temporarily while we call out to the native method. In the terminate
+// handler, we can inspect the exception that was thrown and give an error message before going down.
 struct Terminator final {
   Terminator() {
     m_oldHandler = std::get_terminate();
