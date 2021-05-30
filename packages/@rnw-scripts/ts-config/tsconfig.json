@@ -16,6 +16,7 @@
     "isolatedModules": true,
     "inlineSources": true,
     "experimentalDecorators": true,
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    "forceConsistentCasingInFileNames": true
   }
 }
