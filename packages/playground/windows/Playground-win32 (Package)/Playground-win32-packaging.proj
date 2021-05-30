@@ -62,7 +62,7 @@
   <PropertyGroup>
     <UseWinUI3>true</UseWinUI3>
   </PropertyGroup>
-  <Import Project="..\..\..\..\packages/react-native-windows\PropertySheets\WinUI.props" />
+  <Import Project="..\..\..\..\packages\react-native-windows\PropertySheets\WinUI.props" />
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
   <Import Project="..\packages\$(WinUIPackageName).$(WinUI3Version)\build\Microsoft.WinUI.AppX.targets" />
 </Project>

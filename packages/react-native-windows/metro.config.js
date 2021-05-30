@@ -49,7 +49,7 @@ module.exports = {
       'react-native-windows': rnwPath,
     },
     blockList: exclusionList([
-      // Avoid error EBUSY: resource busy or locked, open '...\packages/react-native-windows\msbuild.ProjectImports.zip' when building 'packages/react-native-windows\Microsoft.ReactNative.sln' with '/bl'
+      // Avoid error EBUSY: resource busy or locked, open '...\packages\react-native-windows\msbuild.ProjectImports.zip' when building 'packages/react-native-windows\Microsoft.ReactNative.sln' with '/bl'
       /.*\.ProjectImports\.zip/,
     ]),
   },
