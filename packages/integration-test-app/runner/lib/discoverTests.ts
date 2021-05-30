@@ -5,7 +5,7 @@
  * @format
  */
 
-import parser from '@babel/parser';
+import * as parser from '@babel/parser';
 import fs from 'fs';
 import path from 'path';
 import walkdir from 'walkdir';
