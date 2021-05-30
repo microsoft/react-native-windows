@@ -8,7 +8,7 @@
     <Keyword>Win32Proj</Keyword>
     <!-- <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier> -->
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <BuildMSRNCxx>false</BuildMSRNCxx>
     <RunAutolinkCheck>false</RunAutolinkCheck>
     <DefaultLanguage>en-US</DefaultLanguage>

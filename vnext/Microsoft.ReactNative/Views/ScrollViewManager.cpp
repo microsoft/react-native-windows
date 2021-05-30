@@ -359,9 +359,10 @@ void ScrollViewShadowNode::EmitScrollEvent(
   auto *viewManager = static_cast<ScrollViewManager *>(GetViewManager());
 
   if (coalesceType == CoalesceType::CoalesceByTag) {
-    viewManager->BatchingEmitter().EmitCoalescingJSEvent(tag, std::move(eventName), std::move(eventJson));
+    viewManager->BatchingEmitter().DispatchCoalescingEvent(
+        tag, std::move(eventName), MakeJSValueWriter(std::move(eventJson)));
   } else {
-    viewManager->BatchingEmitter().EmitJSEvent(tag, std::move(eventName), std::move(eventJson));
+    viewManager->BatchingEmitter().DispatchEvent(tag, std::move(eventName), MakeJSValueWriter(std::move(eventJson)));
   }
 } // namespace Microsoft::ReactNative
 
