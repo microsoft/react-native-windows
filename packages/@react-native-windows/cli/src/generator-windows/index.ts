@@ -597,7 +597,7 @@ export async function installScriptsAndDependencies(options: {
   if (metroConfigPackage) {
     await projectPackage.mergeProps({
       devDependencies: {
-        'metro-config': metroConfigPackage.json.version,
+        'metro-config': `^${metroConfigPackage.json.version}`,
       },
     });
   }
