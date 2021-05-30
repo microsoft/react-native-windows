@@ -26,8 +26,7 @@
       "packages/@react-native-windows/*",
       "packages/@react-native/*",
       "packages/@rnw-bots/*",
-      "packages/@rnw-scripts/*",
-      "packages/react-native-windows"
+      "packages/@rnw-scripts/*"
     ]
   },
   "devDependencies": {
