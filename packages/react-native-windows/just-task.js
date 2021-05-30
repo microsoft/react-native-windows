@@ -44,11 +44,11 @@ task(
 
 task('copyReadmeAndLicenseFromRoot', () => {
   fs.copyFileSync(
-    path.resolve(__dirname, '../README.md'),
+    path.resolve(__dirname, '../../README.md'),
     path.resolve(__dirname, 'README.md'),
   );
   fs.copyFileSync(
-    path.resolve(__dirname, '../LICENSE'),
+    path.resolve(__dirname, '../../LICENSE'),
     path.resolve(__dirname, 'LICENSE'),
   );
 });
