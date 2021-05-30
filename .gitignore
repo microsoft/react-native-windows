@@ -170,3 +170,5 @@ tsdoc-metadata.json
 # cppwinrt
 nul
 
+# Graveyard of older packages which may have local build outputs
+/vnext
