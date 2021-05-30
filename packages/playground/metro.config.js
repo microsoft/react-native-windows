@@ -27,7 +27,7 @@ function isRelativeImport(filePath) {
   return /^[.][.]?(?:[/]|$)/.test(filePath);
 }
 
-// Example: devResolve('C:/Repos/react-native-windows/vnext/', './Libraries/Text/Text');
+// Example: devResolve('C:/Repos/react-native-windows/packages/react-native-windows/', './Libraries/Text/Text');
 // Returns a full path to the resolved location which would be in the src subdirectory if
 // the file exists or the directory root otherwise
 function devResolve(packageName, originDir, moduleName) {
@@ -174,8 +174,11 @@ module.exports = {
   server: {
     enhanceMiddleware: middleware => {
       return (req, res, next) => {
-        if (req.url.startsWith('/vnext')) {
-          req.url = req.url.replace('/vnext', '/assets/../../vnext');
+        if (req.url.startsWith('/packages/react-native-windows')) {
+          req.url = req.url.replace(
+            '/packages/react-native-windows',
+            '/assets/../../packages/react-native-windows',
+          );
         }
         return middleware(req, res, next);
       };

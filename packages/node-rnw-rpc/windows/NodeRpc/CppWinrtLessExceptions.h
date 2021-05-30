@@ -3,7 +3,7 @@
 
 #include <winrt/base.h>
 
-// Copied from "vnext\Shared\Utils\CppWinrtLessExceptions.h" until we have a good way to share between packages
+// Copied from "packages/react-native-windows\Shared\Utils\CppWinrtLessExceptions.h" until we have a good way to share between packages
 
 namespace winrt::NodeRpc {
 

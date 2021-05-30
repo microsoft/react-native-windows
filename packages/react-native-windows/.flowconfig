@@ -1,0 +1,120 @@
+[ignore]
+; We fork some components by platform - ignore all platforms except windows
+.*/*[.]android.js
+.*/*[.]ios.js
+.*/*[.]macos.js
+
+; These modules have base components and Windows versions.
+; Ideally we'd delete the base versions of files that had .windows overrides as part of the
+; initRNLibraries build step
+<PROJECT_ROOT>/index.js
+<PROJECT_ROOT>/Libraries/Alert/Alert.js
+<PROJECT_ROOT>/Libraries/Components/Button.js
+<PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
+<PROJECT_ROOT>/Libraries/Components/Picker/RCTPickerNativeComponent.js
+<PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
+<PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
+<PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
+<PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
+<PROJECT_ROOT>/Libraries/Components/Touchable/TouchableBounce.js
+<PROJECT_ROOT>/Libraries/Components/Touchable/TouchableHighlight.js
+<PROJECT_ROOT>/Libraries/Components/Touchable/TouchableOpacity.js
+<PROJECT_ROOT>/Libraries/Components/Touchable/TouchableWithoutFeedback.js
+<PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
+<PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
+<PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
+<PROJECT_ROOT>/Libraries/Components/View/View.js
+<PROJECT_ROOT>/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
+<PROJECT_ROOT>/Libraries/Image/Image.js
+<PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
+<PROJECT_ROOT>/Libraries/NewAppScreen/components/DebugInstructions.js
+<PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
+<PROJECT_ROOT>/Libraries/Pressability/Pressability.js
+<PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
+
+; Ignore react-native files in node_modules since they are copied into project root
+.*/node_modules/react-native/.*
+
+; Ignore react-native-windows' build output. Flow is not compiled with long path support and after running unittests these folders have long paths
+.*/node_modules/react-native-windows/build/.*
+.*/node_modules/react-native-windows/target/.*
+.*/node_modules/react-native-windows/Microsoft.ReactNative.Managed.CodeGen.UnitTests/.*
+.*/node_modules/react-native-windows/Microsoft.ReactNative.Managed.UnitTests/.*
+.target/.*
+
+; These files dont need to be checked and just increase the build time
+.*/node_modules/e2etest/.*
+.*/node_modules/sample-apps/.*
+.*/node_modules/playground/.*
+
+; Ignore templates for 'react-native init'
+<PROJECT_ROOT>/template/.*
+
+; Ignore the Dangerfile
+<PROJECT_ROOT>/bots/dangerfile.js
+
+; Ignore "BUCK" generated dirs
+<PROJECT_ROOT>/\.buckd/
+
+; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
+.*/packages/react-native-windows/src/.*
+
+; Ignore RN copies, which cause duplicate violations to be shown
+.*/packages/react-native-windows/ReactCopies/.*
+
+[untyped]
+.*/node_modules/@react-native-community/cli/.*/.*
+
+[include]
+; Need to include hoisted modules
+../node_modules/
+
+[libs]
+interface.js
+flow/
+
+[options]
+emoji=true
+
+exact_by_default=true
+
+module.file_ext=.js
+module.file_ext=.json
+module.file_ext=.windows.js
+
+munge_underscores=true
+
+module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.windows.js'
+module.name_mapper='^react-native-windows$' -> '<PROJECT_ROOT>/index.windows.js'
+module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
+module.name_mapper='^react-native-windows/\(.*\)$' -> '<PROJECT_ROOT>/\1'
+module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
+
+suppress_type=$FlowIssue
+suppress_type=$FlowFixMe
+suppress_type=$FlowFixMeProps
+suppress_type=$FlowFixMeState
+suppress_type=$FlowFixMeEmpty
+
+[lints]
+sketchy-null-number=warn
+sketchy-null-mixed=warn
+sketchy-number=warn
+untyped-type-import=warn
+nonstrict-import=warn
+deprecated-type=warn
+unsafe-getters-setters=warn
+unnecessary-invariant=warn
+signature-verification-failure=warn
+
+[strict]
+deprecated-type
+nonstrict-import
+sketchy-null
+unclear-type
+unsafe-getters-setters
+untyped-import
+untyped-type-import
+
+[version]
+^0.149.0

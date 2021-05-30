@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { copyAndReplace } from '../generator-common';
 
-export const templateRoot = path.resolve('../../../vnext/template');
+export const templateRoot = path.resolve('../../../packages/react-native-windows/template');
 
 export const testProjectGuid = '{416476D5-974A-4EE2-8145-4E331297247E}';
 

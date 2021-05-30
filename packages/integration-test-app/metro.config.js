@@ -41,8 +41,11 @@ module.exports = {
   server: {
     enhanceMiddleware: middleware => {
       return (req, res, next) => {
-        if (req.url.startsWith('/vnext')) {
-          req.url = req.url.replace('/vnext', '/assets/../../vnext');
+        if (req.url.startsWith('/packages/react-native-windows')) {
+          req.url = req.url.replace(
+            '/packages/react-native-windows',
+            '/assets/../../packages/react-native-windows',
+          );
         }
         return middleware(req, res, next);
       };

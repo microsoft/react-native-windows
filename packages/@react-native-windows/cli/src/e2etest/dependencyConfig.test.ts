@@ -14,7 +14,9 @@ import {
 
 import {copyAndReplace} from '../generator-common';
 
-const templateRoot = path.resolve('../../../vnext/template');
+const templateRoot = path.resolve(
+  '../../../packages/react-native-windows/template',
+);
 
 const testProjectGuid = '{416476D5-974A-4EE2-8145-4E331297247E}';
 

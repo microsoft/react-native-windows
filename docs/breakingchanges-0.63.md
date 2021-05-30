@@ -9,13 +9,13 @@ In 0.63 we have deprecated the Microsoft.ReactNative.SharedManaged project in fa
 1. Update your `.sln` file in the following ways:
    1. Replace the shared project with the regular project:
       ```diff
-      - Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Microsoft.ReactNative.SharedManaged", "..\..\..\vnext\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.shproj", "{67A1076F-7790-4203-86EA-4402CCB5E782}"
+      - Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Microsoft.ReactNative.SharedManaged", "..\..\..\packages/react-native-windows\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.shproj", "{67A1076F-7790-4203-86EA-4402CCB5E782}"
       + Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.ReactNative.Managed", "..\node_modules\react-native-windows\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj", "{F2824844-CE15-4242-9420-308923CD76C3}"
       ```
    1. Remove the shared project section of the old project:
       ```diff
         GlobalSection(SharedMSBuildProjectFiles) = preSolution
-      -   ..\..\..\vnext\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.    SharedManaged.projitems*{67a1076f-7790-4203-86ea-4402ccb5e782}*SharedItemsImports     = 13
+      -   ..\..\..\packages/react-native-windows\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.    SharedManaged.projitems*{67a1076f-7790-4203-86ea-4402ccb5e782}*SharedItemsImports     = 13
       ```
    1. Insert the configuration section for the new project
       ```diff

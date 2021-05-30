@@ -10,14 +10,14 @@ steps:
   - task: PowerShell@2
     displayName: Copy NuGet header files
     inputs:
-      filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
-      arguments: -TargetRoot $(Build.StagingDirectory) -BuildRoot $(Build.SourcesDirectory)\vnext\target
+      filePath: packages/react-native-windows/Scripts/Tfs/Layout-Headers.ps1
+      arguments: -TargetRoot $(Build.StagingDirectory) -BuildRoot $(Build.SourcesDirectory)\packages/react-native-windows\target
     condition: ${{ parameters.layoutHeaders }}
 
   - task: CopyFiles@2
     displayName: Copy NuGet artifacts
     inputs:
-      sourceFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+      sourceFolder: $(Build.SourcesDirectory)/packages/react-native-windows/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
       targetFolder: $(Build.StagingDirectory)/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
       contents: ${{parameters.contents}}
 

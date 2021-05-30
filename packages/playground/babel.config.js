@@ -1,4 +1,4 @@
 module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
-  // plugins: [require('../../vnext/src/babel-plugin-codegen')], #6570
+  // plugins: [require('../../packages/react-native-windows/src/babel-plugin-codegen')], #6570
 };

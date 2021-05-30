@@ -1,3 +1,3 @@
 module.exports = {
-  reactNativePath: '../../vnext',
+  reactNativePath: '../../packages/react-native-windows',
 };

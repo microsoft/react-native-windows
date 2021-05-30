@@ -1,6 +1,6 @@
 !**/node_modules
-!vnext/packages
-!vnext/ReactCopies
+!packages/react-native-windows/packages
+!packages/react-native-windows/ReactCopies
 !packages/react-native-platform-override/node_modules
 !packages/override-tools/node_modules
 !packages/@office-iss/react-native-win32/node_modules

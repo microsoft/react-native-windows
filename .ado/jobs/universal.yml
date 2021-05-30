@@ -77,7 +77,7 @@
 
                 - template: ../templates/build-rnw.yml
                   parameters:
-                    project: vnext/Microsoft.ReactNative.sln
+                    project: packages/react-native-windows/Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
                     multicoreBuild: true
@@ -86,7 +86,7 @@
                 - task: PublishPipelineArtifact@1
                   displayName: "Publish binaries for testing"
                   inputs:
-                    targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    targetPath: $(Build.SourcesDirectory)/packages/react-native-windows/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
 
                 - template: ../templates/publish-build-artifacts-for-nuget.yml
@@ -123,7 +123,7 @@
                   displayName: "Check if this environment meets the development dependencies"
                   inputs:
                     targetType: filePath
-                    filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
+                    filePath: $(Build.SourcesDirectory)\packages/react-native-windows\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
                     
                 - template: ../templates/prepare-env.yml
@@ -132,16 +132,16 @@
                   displayName: NuGet restore
                   inputs:
                     command: restore
-                    restoreSolution: vnext/Microsoft.ReactNative.sln
+                    restoreSolution: packages/react-native-windows/Microsoft.ReactNative.sln
                     feedsToUse: config
-                    nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
+                    nugetConfigPath: $(Build.SourcesDirectory)/packages/react-native-windows/NuGet.config
                     restoreDirectory: packages/
                     verbosityRestore: Detailed # Options: quiet, normal, detailed
                     
                 - task: DownloadPipelineArtifact@1
                   displayName: "Download binaries for testing"
                   inputs:
-                    targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    targetPath: $(Build.SourcesDirectory)/packages/react-native-windows/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
 
                 # The WinDevBuild Agents run on the c-drive and the hosted agents run on the d-drive.
@@ -168,7 +168,7 @@
                       Microsoft.ReactNative.IntegrationTests/Microsoft.ReactNative.IntegrationTests.exe
                       Mso.UnitTests/Mso.UnitTests.exe
                     pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
-                    searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    searchFolder: $(Build.SourcesDirectory)/packages/react-native-windows/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     runTestsInIsolation: true
                     platform: ${{ matrix.BuildPlatform }}
                     configuration: ${{ matrix.BuildConfiguration }}
@@ -184,7 +184,7 @@
                     testSelector: testAssemblies
                     testAssemblyVer2: |
                       Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
-                    searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    searchFolder: $(Build.SourcesDirectory)/packages/react-native-windows/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     runTestsInIsolation: true
                     platform: ${{ matrix.BuildPlatform }}
                     configuration: ${{ matrix.BuildConfiguration }}
@@ -201,7 +201,7 @@
                     testSelector: testAssemblies
                     testAssemblyVer2: |
                       Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
-                    searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    searchFolder: $(Build.SourcesDirectory)/packages/react-native-windows/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     runTestsInIsolation: true
                     platform: ${{ matrix.BuildPlatform }}
                     configuration: ${{ matrix.BuildConfiguration }}

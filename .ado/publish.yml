@@ -185,7 +185,7 @@ jobs:
 
       - template: templates/build-rnw.yml
         parameters:
-          project: vnext/ReactWindows-Desktop.sln
+          project: packages/react-native-windows/ReactWindows-Desktop.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
           msbuildArguments:
@@ -248,7 +248,7 @@ jobs:
 
       - template: templates/build-rnw.yml
         parameters:
-          project: vnext/Microsoft.ReactNative.sln
+          project: packages/react-native-windows/Microsoft.ReactNative.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
 
@@ -275,7 +275,7 @@ jobs:
       - task: PublishSymbols@2
         displayName: Publish symbols
         inputs:
-          SearchPattern: vnext/target/**/*.pdb
+          SearchPattern: packages/react-native-windows/target/**/*.pdb
           SymbolServerType: TeamServices
 
   - job: RNWNuget

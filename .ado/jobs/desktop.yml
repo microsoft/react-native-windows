@@ -79,7 +79,7 @@ jobs:
 
       - template: ../templates/build-rnw.yml
         parameters:
-          project: vnext/ReactWindows-Desktop.sln
+          project: packages/react-native-windows/ReactWindows-Desktop.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
 
@@ -105,7 +105,7 @@ jobs:
             React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
             ReactCommon.UnitTests/ReactCommon.UnitTests.exe
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
-          searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          searchFolder: $(Build.SourcesDirectory)/packages/react-native-windows/target/$(BuildPlatform)/$(BuildConfiguration)
           testFiltercriteria: $(Desktop.UnitTests.Filter)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
@@ -118,8 +118,8 @@ jobs:
         displayName: Set up test servers
         inputs:
           targetType: filePath # filePath | inline
-          filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
-          arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
+          filePath: $(Build.SourcesDirectory)\packages/react-native-windows\Scripts\Tfs\Start-TestServers.ps1
+          arguments: -SourcesDirectory $(Build.SourcesDirectory)\packages/react-native-windows -Preload -SleepSeconds 120
         condition: and(succeeded(), ne(variables['Desktop.IntegrationTests.SkipRNTester'], 'true'), ne(variables['BuildConfiguration'], 'Debug'))
 
       - task: PowerShell@2
@@ -134,7 +134,7 @@ jobs:
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
-          searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
+          searchFolder: $(Build.SourcesDirectory)\packages/react-native-windows\target\$(BuildPlatform)\$(BuildConfiguration)
           testFiltercriteria: $(Desktop.IntegrationTests.Filter)
           runTestsInIsolation: true
           platform: $(BuildPlatform)

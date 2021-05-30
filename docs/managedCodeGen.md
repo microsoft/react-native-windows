@@ -9,7 +9,7 @@ In earlier versions of react-native-windows managed modules registered themselve
 Doing it at build time should result in developers seeing all errors up front, rather than only seeing errors for the code being tested. And the runtime cost is not incurred every single time.
 
 ## How it works
-This change adds a new targets file that is imported from the [CSharpLib.targets](https://github.com/microsoft/react-native-windows/blob/master/vnext/PropertySheets/External/Microsoft.ReactNative.Uwp.CppLib.targets) and [CSharpApp.targets](https://github.com/microsoft/react-native-windows/blob/master/vnext/PropertySheets/External/Microsoft.ReactNative.Uwp.CppApp.targets). That will enable the codegen for managed projects.
+This change adds a new targets file that is imported from the [CSharpLib.targets](https://github.com/microsoft/react-native-windows/blob/master/packages/react-native-windows/PropertySheets/External/Microsoft.ReactNative.Uwp.CppLib.targets) and [CSharpApp.targets](https://github.com/microsoft/react-native-windows/blob/master/packages/react-native-windows/PropertySheets/External/Microsoft.ReactNative.Uwp.CppApp.targets). That will enable the codegen for managed projects.
 
 Those targets will collect all the C# source files, assembly references and defines from the app (or library) and invoke the CodeGen tool to generate a C# file. This is very similar to how the translation of Xaml to csharp code behind files works.
 The generated C# file will contain a class called `ReactPackageProvider` in the default namespace of your project. The generate class implements `Microsoft.ReactNative.IReactPackageProvider`. The implementation of the generated class  will:

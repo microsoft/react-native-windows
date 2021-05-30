@@ -6,7 +6,7 @@
  */
 const path = require('path');
 const exclusionList = require('metro-config/src/defaults/exclusionList');
-const rnwPath = path.resolve(__dirname, '../../vnext');
+const rnwPath = path.resolve(__dirname, '../../packages/react-native-windows');
 
 module.exports = {
   // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
@@ -36,8 +36,11 @@ module.exports = {
   server: {
     enhanceMiddleware: middleware => {
       return (req, res, next) => {
-        if (req.url.startsWith('/vnext')) {
-          req.url = req.url.replace('/vnext', '/assets/../../vnext');
+        if (req.url.startsWith('/packages/react-native-windows')) {
+          req.url = req.url.replace(
+            '/packages/react-native-windows',
+            '/assets/../../packages/react-native-windows',
+          );
         }
         return middleware(req, res, next);
       };

@@ -3,7 +3,7 @@
 const targetCS = false;
 
 module.exports = {
-  reactNativePath: '../../vnext',
+  reactNativePath: '../../packages/react-native-windows',
   project: {
     windows: {
       sourceDir: 'windows',

@@ -55,7 +55,7 @@ steps:
     displayName: Install Visual Studio dependencies
     inputs:
       targetType: filePath
-      filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
+      filePath: $(Build.SourcesDirectory)/packages/react-native-windows/Scripts/Tfs/Install-VsFeatures.ps1
       arguments:
         -Components ${{ parameters.vsComponents }}
         -Collect:$${{ parameters.debug }}
