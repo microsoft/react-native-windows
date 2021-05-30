@@ -587,17 +587,20 @@ export async function installScriptsAndDependencies(options: {
 
   // We add an exclusionList from metro config. This will be hoisted, but add
   // an explict dep because we require it directly.
-  const metroConfigPackage = await findPackage('metro-config', {
+  const cliPackage = await findPackage('@react-native-community/cli', {
     searchPath: rnPackage.path,
   });
-  if (!metroConfigPackage) {
-    throw new Error('Could not locate the package for metro-config');
-  }
-  await projectPackage.mergeProps({
-    devDependencies: {
-      'metro-config': metroConfigPackage.json.version,
-    },
+  const metroConfigPackage = await findPackage('metro-config', {
+    searchPath: cliPackage?.path || rnPackage.path,
   });
+
+  if (metroConfigPackage) {
+    await projectPackage.mergeProps({
+      devDependencies: {
+        'metro-config': metroConfigPackage.json.version,
+      },
+    });
+  }
 
   const rnPeerDependency = rnwPackage.json.peerDependencies['react-native'];
 
