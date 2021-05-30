@@ -5,10 +5,10 @@
  * @format
  */
 
-import * as parser from '@babel/parser';
-import * as fs from 'fs';
-import * as path from 'path';
-import * as walkdir from 'walkdir';
+import parser from '@babel/parser';
+import fs from 'fs';
+import path from 'path';
+import walkdir from 'walkdir';
 
 import traverse from '@babel/traverse';
 import {File} from '@babel/types';

@@ -5,7 +5,7 @@
  * @format
  */
 
-import * as ora from 'ora';
+import ora from 'ora';
 
 import IntegrationTestClient, {
   TestCommandResponse,
