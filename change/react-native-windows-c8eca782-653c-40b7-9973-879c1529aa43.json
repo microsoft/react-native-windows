@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add error message when an exception happens in a native module (in Debug)",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

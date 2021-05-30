@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update prompterelease to stamp beachball branch configuration",
+  "packageName": "@rnw-scripts/promote-release",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}

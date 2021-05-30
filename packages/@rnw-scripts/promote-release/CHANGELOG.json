@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Tue, 25 May 2021 19:36:43 GMT",
+      "tag": "@rnw-scripts/promote-release_v1.2.21",
+      "version": "1.2.21",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Prepare files for default branch rename",
+            "author": "dannyvv@microsoft.com",
+            "commit": "6083bce7cd5949d8730f273e2ce7ee68157c1419",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 May 2021 05:17:18 GMT",
       "tag": "@rnw-scripts/promote-release_v1.2.20",
       "version": "1.2.20",

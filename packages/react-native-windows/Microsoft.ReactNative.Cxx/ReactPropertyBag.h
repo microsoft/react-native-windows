@@ -43,7 +43,7 @@
 //
 // To pass values through the ABI boundary the non-IInspectable types must be WinRT types
 // which are described here:
-// https://docs.microsoft.com/en-us/uwp/api/windows.foundation.propertytype?view=winrt-18362
+// https://docs.microsoft.com/uwp/api/windows.foundation.propertytype
 //
 // In case if we do not have a requirement to pass values across the DLL/EXE boundary,
 // we can use the ReactNonAbiValue<T> wrapper to store non-ABI safe values.

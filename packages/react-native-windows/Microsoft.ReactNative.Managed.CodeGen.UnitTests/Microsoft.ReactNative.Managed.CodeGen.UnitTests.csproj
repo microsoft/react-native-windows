@@ -34,7 +34,7 @@
 
    <!-- Ensure the Win10 SDK binaries loaded by the unittest match our apps SDK versions -->
   <PropertyGroup>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersionEncoded>$(WindowsTargetPlatformVersion.Replace('.', '_'))</WindowsTargetPlatformVersionEncoded>
     <DefineConstants>$(p:DefineConstants);win10SdkVersion$(WindowsTargetPlatformVersionEncoded)</DefineConstants>
   </PropertyGroup>
