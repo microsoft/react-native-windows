@@ -15,6 +15,7 @@
   "dependencies": {},
   "devDependencies": {
     "@azure/functions": "^1.0.2-beta2",
+    "@rnw-scripts/eslint-config": "1.1.6",
     "@rnw-scripts/jest-unittest-config": "1.2.1",
     "@rnw-scripts/just-task": "2.1.1",
     "@rnw-scripts/ts-config": "1.1.0",

@@ -22,9 +22,6 @@ module.exports = {
   // The pattern or patterns Jest uses to detect test files
   testRegex: '/test/.*\\.test\.ts$',
 
-  // Specifies the maximum number of workers the worker-pool will spawn for running tests.
-  maxWorkers: 1,
-
   // Indicates whether each individual test should be reported during the run.
   verbose: true,
 

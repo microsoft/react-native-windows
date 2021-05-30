@@ -15,11 +15,13 @@
   },
   "peerDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.91",
+    "react": "17.0.2",
     "react-native": "0.0.0-7e05480cc"
   },
   "devDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.91",
     "@rnw-scripts/eslint-config": "1.1.6",
+    "@rnw-scripts/just-task": "2.1.1",
     "@rnw-scripts/ts-config": "1.1.0",
     "@types/node": "^14.14.22",
     "eslint": "7.12.0",

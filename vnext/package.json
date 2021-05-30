@@ -65,6 +65,7 @@
     "flow-bin": "^0.149.0",
     "jscodeshift": "^0.11.0",
     "just-scripts": "^1.3.3",
+    "metro-config": "^0.66.0",
     "prettier": "1.19.1",
     "react": "17.0.2",
     "react-native": "0.0.0-7e05480cc",
