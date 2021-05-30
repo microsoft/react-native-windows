@@ -6,8 +6,8 @@
  */
 
 import * as FileSearch from './FileSearch';
-import * as inquirer from 'inquirer';
-import * as path from 'path';
+import inquirer from 'inquirer';
+import path from 'path';
 
 import Override from './Override';
 import OverrideFactory from './OverrideFactory';

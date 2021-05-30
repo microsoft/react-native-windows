@@ -1,5 +1,5 @@
 'use strict';
-import * as React from 'react';
+import React from 'react'
 import { Button, View } from 'react-native';
 import { TextWin32 } from '../../Text/TextWin32';
 import { ViewWin32 } from '../../View/ViewWin32';

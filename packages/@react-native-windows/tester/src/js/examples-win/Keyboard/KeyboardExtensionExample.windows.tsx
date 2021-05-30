@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {View, StyleSheet, Text, TextInput} from 'react-native';
 import {
   HandledEventPhase,

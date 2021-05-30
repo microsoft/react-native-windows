@@ -6,8 +6,8 @@
  */
 
 import * as Serialized from './Serialized';
-import * as _ from 'lodash';
-import * as path from 'path';
+import _ from 'lodash';
+import path from 'path';
 
 import Override, {deserializeOverride} from './Override';
 import {ReactFileRepository, WritableFileRepository} from './FileRepository';

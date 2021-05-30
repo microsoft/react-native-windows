@@ -1,0 +1,25 @@
+/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ * @format
+ */
+import { ViewProps } from 'react-native';
+export interface IImageSourceProps {
+    uri?: string;
+    method?: string;
+    headers?: {
+        [key: string]: string;
+    };
+    body?: string;
+    width?: number;
+    height?: number;
+    scale?: number;
+}
+export interface IImageProps extends ViewProps {
+    source?: string | IImageSourceProps;
+    resizeMode?: 'cover' | 'contain' | 'stretch' | 'center';
+    onLoad: () => void;
+    onError: () => void;
+}
+export interface IImageState {
+}

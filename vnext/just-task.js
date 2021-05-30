@@ -53,17 +53,7 @@ task('copyReadmeAndLicenseFromRoot', () => {
   );
 });
 
-task(
-  'compileTsPlatformOverrides',
-  tscTask({
-    pretty: true,
-    ...(argv().production && {
-      inlineSources: true,
-    }),
-    target: 'es5',
-    module: 'commonjs',
-  }),
-);
+task('compileTsPlatformOverrides', tscTask());
 
 task(
   'build',

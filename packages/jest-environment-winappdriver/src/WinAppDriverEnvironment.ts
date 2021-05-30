@@ -6,11 +6,11 @@
  */
 
 import {spawn, ChildProcess} from 'child_process';
-import * as fs from 'fs';
+import fs from 'fs';
 
 import NodeEnvironment = require('jest-environment-node');
 
-import * as webdriverio from 'webdriverio';
+import webdriverio from 'webdriverio';
 import {BrowserObject, RemoteOptions} from 'webdriverio';
 import {Config} from '@jest/types';
 import {waitForConnection, RpcClient} from 'node-rnw-rpc';

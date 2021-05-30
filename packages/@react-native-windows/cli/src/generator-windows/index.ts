@@ -4,16 +4,16 @@
  * @format
  */
 
-import * as chalk from 'chalk';
-import * as path from 'path';
-import * as username from 'username';
-import * as uuid from 'uuid';
-import * as childProcess from 'child_process';
-import * as fs from 'fs';
-import * as os from 'os';
-import * as semver from 'semver';
-import * as _ from 'lodash';
-import * as findUp from 'find-up';
+import chalk from 'chalk';
+import path from 'path';
+import username from 'username';
+import uuid from 'uuid';
+import childProcess from 'child_process';
+import fs from 'fs';
+import os from 'os';
+import semver from 'semver';
+import _ from 'lodash';
+import findUp from 'find-up';
 import {readProjectFile, findPropertyValue} from '../config/configUtils';
 
 import {

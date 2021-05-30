@@ -5,11 +5,11 @@
  * @format
  */
 
-import * as crypto from 'crypto';
-import * as fs from 'fs';
-import * as globby from 'globby';
-import * as os from 'os';
-import * as path from 'path';
+import crypto from 'crypto';
+import fs from 'fs';
+import globby from 'globby';
+import os from 'os';
+import path from 'path';
 
 import FileSystemRepository from '../FileSystemRepository';
 import GitReactFileRepository from '../GitReactFileRepository';

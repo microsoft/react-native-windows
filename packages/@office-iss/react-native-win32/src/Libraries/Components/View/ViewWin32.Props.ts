@@ -1,5 +1,5 @@
 'use strict';
-import * as React from 'react';
+import React from 'react'
 import RN = require('react-native');
 
 // removes from interface T the members of interface K

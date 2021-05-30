@@ -5,10 +5,10 @@
  * @format
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
-import * as semver from 'semver';
-import * as yargs from 'yargs';
+import fs from 'fs';
+import path from 'path';
+import semver from 'semver';
+import yargs from 'yargs';
 
 import {
   findPackage,

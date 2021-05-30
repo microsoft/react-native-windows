@@ -12,7 +12,7 @@ import {
   sanitizeFrame,
   tryGetErrorCode,
 } from '../telemetry';
-import * as appInsights from 'applicationinsights';
+import appInsights from 'applicationinsights';
 import {basename} from 'path';
 import {CodedError} from '../CodedError';
 

@@ -5,8 +5,8 @@
  * @format
  */
 
-import * as async from 'async';
-import * as path from 'path';
+import async from 'async';
+import path from 'path';
 
 import {
   SpawnSyncOptions,

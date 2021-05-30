@@ -7,7 +7,7 @@
 
 import {requireNativeComponent, StyleSheet} from 'react-native';
 import {IDatePickerProps, IDatePickerChangeEvent} from './DatePickerProps';
-import * as React from 'react';
+import React from 'react';
 
 const styles = StyleSheet.create({
   rctDatePicker: {

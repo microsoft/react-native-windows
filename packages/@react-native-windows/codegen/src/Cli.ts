@@ -5,15 +5,15 @@
  * @format
  */
 
-import * as yargs from 'yargs';
-import * as path from 'path';
-import * as fs from 'fs';
-import * as globby from 'globby';
+import yargs from 'yargs';
+import path from 'path';
+import fs from 'fs';
+import globby from 'globby';
 import {createNM2Generator} from './generators/GenerateNM2';
 // @ts-ignore
 import {parseFile} from 'react-native-tscodegen/lib/rncodegen/src/parsers/flow';
 // @ts-ignore
-import * as schemaValidator from 'react-native-tscodegen/lib/rncodegen/src/schemaValidator';
+import schemaValidator from 'react-native-tscodegen/lib/rncodegen/src/schemaValidator';
 
 const argv = yargs.options({
   file: {

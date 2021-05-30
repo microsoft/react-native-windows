@@ -6,7 +6,7 @@
  */
 
 import * as Serialized from './Serialized';
-import * as path from 'path';
+import path from 'path';
 
 import DiffStrategy, {DiffStrategies} from './DiffStrategy';
 import UpgradeStrategy, {UpgradeStrategies} from './UpgradeStrategy';

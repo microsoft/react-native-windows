@@ -12,5 +12,10 @@
     "noImplicitReturns": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "inlineSources": true,
+    "experimentalDecorators": true,
+    "noEmitOnError": true
   }
 }

@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as path from 'path';
+import path from 'path';
 
 import MSBuildTools from './msbuildtools';
 import Version from './version';
