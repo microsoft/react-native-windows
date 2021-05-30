@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Allow propagating WinRT WS resource constructor exceptions",
+  "comment": "Allow propagating WinRTWebSocketResource constructor exceptions (#7892)",
   "packageName": "react-native-windows",
   "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"
