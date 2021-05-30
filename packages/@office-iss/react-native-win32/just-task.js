@@ -7,7 +7,14 @@
 
 const path = require('path');
 const fs = require('fs');
-const {task, series, condition, option, argv} = require('just-scripts');
+const {
+  task,
+  series,
+  condition,
+  option,
+  argv,
+  tscTask,
+} = require('just-scripts');
 
 // Use the shared base configuration
 require('@rnw-scripts/just-task');
@@ -15,6 +22,8 @@ require('@rnw-scripts/just-task/react-native-tasks');
 
 option('production');
 option('clean');
+
+task('ts', tscTask());
 
 task('prepareBundle', () => {
   fs.mkdirSync(
