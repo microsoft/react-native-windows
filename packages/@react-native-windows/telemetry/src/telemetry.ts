@@ -6,7 +6,7 @@
 
 import path from 'path';
 import {randomBytes} from 'crypto';
-import appInsights from 'applicationinsights';
+import * as appInsights from 'applicationinsights';
 import {execSync} from 'child_process';
 import {CodedError} from './CodedError';
 
