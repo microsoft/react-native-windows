@@ -2,7 +2,7 @@ import * as path from 'path';
 
 import { execSync} from 'child_process';
 
-const rnDir = require.resolve('react-native/package.json', {paths: [process.cwd()]});
+const rnDir = path.dirname(require.resolve('react-native/package.json', {paths: [process.cwd()]}));
 const cliDir = path.dirname(require.resolve('@react-native-community/cli/package.json', {paths: [rnDir]}));
 const execaPath = require.resolve('execa', { paths: [cliDir] });
 const execa = require(execaPath);
