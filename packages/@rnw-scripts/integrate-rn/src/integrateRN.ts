@@ -25,7 +25,7 @@ import {
 
 import runCommand from './runCommand';
 import upgradeDependencies from './upgradeDependencies';
-import {Logger, CompositeLogger, ConsoleLogger, MarkdownLogger} from './Logger';
+import {Logger, CompositeLogger, ConsoleLogger, MarkdownLogger} from './logger';
 
 let logger: Logger;
 
