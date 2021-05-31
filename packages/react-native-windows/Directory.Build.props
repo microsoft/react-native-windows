@@ -59,7 +59,7 @@
     <FmtDir>$([MSBuild]::NormalizeDirectory($(FmtDir)))</FmtDir>
 
     <!-- Avoid OutDir for AppX package generation which is length sensitive and already encodes project name -->
-    <AppxPackageDir Condition="'$(AppxPackageDir)' == '' and '$(OutDirWasSpecified)' == 'true'">$(RootOutDir)\AppPackages\</AppxPackageDir>
+    <AppxPackageDir Condition="'$(AppxPackageDir)' == ''">$(RootOutDir)\AppPackages\</AppxPackageDir>
   </PropertyGroup>
 
 </Project>
