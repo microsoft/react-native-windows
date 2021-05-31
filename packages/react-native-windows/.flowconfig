@@ -67,7 +67,7 @@
 
 [include]
 ; Need to include hoisted modules
-../node_modules/
+../../node_modules/
 
 [libs]
 interface.js
