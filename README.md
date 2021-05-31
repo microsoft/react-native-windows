@@ -16,7 +16,7 @@
   </a>
 </p>
 
-![Hero Image with Logo](https://github.com/microsoft/react-native-windows/raw/master/.github/hero2.png)
+![Hero Image with Logo](https://github.com/microsoft/react-native-windows/blob/main/.github/hero2.png)
 
 > See the official [React Native website](https://reactnative.dev/) for an introduction to React Native.
 
