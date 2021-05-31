@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Mon, 31 May 2021 15:23:18 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v1.0.31",
+      "version": "1.0.31",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.14",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d6d7f00b51a68c7ab7c3b3e50cdb2be8b17929f",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 May 2021 05:17:18 GMT",
       "tag": "@rnw-scripts/integrate-rn_v1.0.31",
       "version": "1.0.31",

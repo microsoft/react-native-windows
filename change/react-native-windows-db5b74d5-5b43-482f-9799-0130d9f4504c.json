@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[0.65] Update .net UWP package versions",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
