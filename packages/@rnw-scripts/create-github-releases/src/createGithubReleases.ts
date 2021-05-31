@@ -267,7 +267,7 @@ function mostRecentMajorRelease(
     releaseSemver.prerelease[0] === 'preview'
   ) {
     firstVersion = semver.parse(
-      `${releaseSemver.major}.${releaseSemver.minor}.${releaseSemver.patch}.${releaseSemver.prerelease[0]}.1`,
+      `${releaseSemver.major}.${releaseSemver.minor}.${releaseSemver.patch}-${releaseSemver.prerelease[0]}.1`,
     )!;
   } else {
     return null;
