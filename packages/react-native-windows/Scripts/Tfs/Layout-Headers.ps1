@@ -10,7 +10,7 @@ param(
 	[string[]] $Extensions = ('h', 'hpp', 'def')
 )
 
-[xml]$props = gc $PSScriptRoot\..\..\..\Directory.Build.props
+[xml]$props = gc $PSScriptRoot\..\..\Directory.Build.props
 [string] $FollyVersion = $props.Project.PropertyGroup.FollyVersion;
 $FollyVersion = $FollyVersion.Trim() # The extracted FollyVersion contains a space at the end that isn't actually present, issue #6216
 [System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}";
