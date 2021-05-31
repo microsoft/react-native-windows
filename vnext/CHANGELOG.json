@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 31 May 2021 15:25:41 GMT",
+      "tag": "react-native-windows_v0.64.10",
+      "version": "0.64.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Text.BackgroundColor overwriting foreground. (#7707)",
+            "author": "igklemen@microsoft.com",
+            "commit": "440f694353b7387812735878299c22b5f8d0ebcf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add error message when an exception happens in a native module (in Debug)",
+            "author": "asklar@microsoft.com",
+            "commit": "fb0db424fc037358dc786f3455dc2f7a76e4aa10",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix JSValue memory leak in move constructor",
+            "author": "vmorozov@microsoft.com",
+            "commit": "3bfe8e154a17ad87c2297fca57a5256a8c572e68",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update .net uwp package version",
+            "author": "agnel@microsoft.com",
+            "commit": "8209eb5308bfcb4e8865b8c3ff365f505aa31b4b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 May 2021 15:09:06 GMT",
       "tag": "react-native-windows_v0.64.9",
       "version": "0.64.9",

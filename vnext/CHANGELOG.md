@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 24 May 2021 15:09:06 GMT and should not be manually modified.
+This log was last generated on Mon, 31 May 2021 15:25:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.10
+
+Mon, 31 May 2021 15:25:41 GMT
+
+### Patches
+
+- Fix Text.BackgroundColor overwriting foreground. (#7707) (igklemen@microsoft.com)
+- Add error message when an exception happens in a native module (in Debug) (asklar@microsoft.com)
+- Fix JSValue memory leak in move constructor (vmorozov@microsoft.com)
+- Update .net uwp package version (agnel@microsoft.com)
 
 ## 0.64.9
 

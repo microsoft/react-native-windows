@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/tester
 
-This log was last generated on Mon, 24 May 2021 15:09:06 GMT and should not be manually modified.
+This log was last generated on Mon, 31 May 2021 15:25:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Mon, 31 May 2021 15:25:41 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.64.10 (igklemen@microsoft.com)
 
 ## 0.0.1
 
