@@ -40,7 +40,14 @@ task('rebuild', series('clean', 'build'));
 
 task('depcheck', async () => {
   const depcheckConfig = path.join(process.cwd(), 'depcheck.config.js');
-  const depcheckOptions = fs.existsSync(depcheckConfig) ? require(depcheckConfig) : {};
+  const userDepcheckOptions = fs.existsSync(depcheckConfig) ? require(depcheckConfig) : {};
+  const depcheckOptions = {
+    ...userDepcheckOptions,
+    specials: [
+      depcheck.special.eslint,
+      depcheck.special.jest,
+    ],
+  }
 
   const result = await depcheck(process.cwd(), depcheckOptions);
   if (Object.keys(result.missing).length !== 0) {
