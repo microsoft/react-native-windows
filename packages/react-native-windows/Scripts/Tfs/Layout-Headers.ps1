@@ -2,7 +2,7 @@
 # Licensed under the MIT License.
 
 param(
-	[string] $SourceRoot = ($PSScriptRoot | Split-Path | Split-Path | Split-Path),
+	[string] $SourceRoot = ($PSScriptRoot | Split-Path | Split-Path | Split-Path | Split-Path),
 	[string] $BuildRoot = "$SourceRoot\packages\react-native-windows\target",
 	[string] $TargetRoot = "$SourceRoot\packages\react-native-windows\target",
 	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\packages\react-native-windows",
@@ -10,7 +10,7 @@ param(
 	[string[]] $Extensions = ('h', 'hpp', 'def')
 )
 
-[xml]$props = gc $PSScriptRoot\..\..\Directory.Build.props
+[xml]$props = gc $PSScriptRoot\..\..\..\Directory.Build.props
 [string] $FollyVersion = $props.Project.PropertyGroup.FollyVersion;
 $FollyVersion = $FollyVersion.Trim() # The extracted FollyVersion contains a space at the end that isn't actually present, issue #6216
 [System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}";
