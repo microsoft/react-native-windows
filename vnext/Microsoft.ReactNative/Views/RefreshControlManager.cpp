@@ -38,7 +38,7 @@ void RefreshControlShadowNode::createView(const winrt::Microsoft::ReactNative::J
         refreshContainer.RefreshRequested(winrt::auto_revoke, [this](auto &&, winrt::RefreshRequestedEventArgs args) {
           m_refreshDeferral = args.GetDeferral();
           winrt::Microsoft::ReactNative::JSValueObject eventData{};
-          GetViewManager()->DispatchEvent(m_tag, L"topOnRefresh", MakeJSValueArgWriter(std::move(eventData)));
+          GetViewManager()->DispatchEvent(m_tag, L"topOnRefresh", MakeJSValueWriter(std::move(eventData)));
         });
   }
 }
