@@ -57,6 +57,9 @@
 
     <FmtDir Condition="'$(FmtDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativePackageDir)..\..\node_modules))')">$(ReactNativePackageDir)..\..\node_modules\.fmt\fmt-$(FmtVersion)</FmtDir>
     <FmtDir>$([MSBuild]::NormalizeDirectory($(FmtDir)))</FmtDir>
+
+    <!-- Avoid OutDir for AppX package generation which is length sensitive and already encodes project name -->
+    <AppxPackageDir Condition="'$(AppxPackageDir)' == '' and '$(OutDirWasSpecified)' == 'true'">$(RootOutDir)\AppPackages\</AppxPackageDir>
   </PropertyGroup>
 
 </Project>

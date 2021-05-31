@@ -12,7 +12,7 @@
   <mp:PhoneIdentity PhoneProductId="275f6fce-b23e-420f-a82a-1c30fb308a0f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Managed.UnitTests</DisplayName>
+    <DisplayName>Microsoft.ReactNative.Managed.UnitTests</DisplayName>
     <PublisherDisplayName>react-native-windows-testing</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -29,7 +29,7 @@
         Executable="$targetnametoken$.exe"
         EntryPoint="Microsoft.ReactNative.Managed.UnitTests.App">
       <uap:VisualElements
-        DisplayName="Managed.UnitTests"
+        DisplayName="Microsoft.ReactNative.Managed.UnitTests"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="Microsoft.ReactNative.Managed.UnitTests"
