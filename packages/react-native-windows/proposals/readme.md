@@ -1,6 +1,6 @@
 # Proposals for React Native for Windows
 
-This folder contains archived and in-progress proposals for features that are more substantial than simple bug fixes and would benefit from additional review and documentation specific to `react-native-windows @packages/react-native-windows`. 
+This folder contains archived and in-progress proposals for features that are more substantial than simple bug fixes and would benefit from additional review and documentation specific to `react-native-windows`. 
 
 [Active Proposal List](https://github.com/microsoft/react-native-windows/pulls?q=is%3Aopen+is%3Apr+label%3AProposal)
 
@@ -31,5 +31,5 @@ The proposal process here takes its inspiration from the react-native-community 
 
 7. Once the feature has been implemented and shipped:
    * Add the following header to your proposal:
-     > This proposal is archived and the feature was shipped as part of `<insert react-native-windows @packages/react-native-windows version number>`
+     > This proposal is archived and the feature was shipped as part of `<insert react-native-windows version number>`
    * Move your proposal from [active](active/readme.md) to [archive](archive/readme.md)
