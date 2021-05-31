@@ -3,9 +3,9 @@
 
 param(
 	[string] $SourceRoot = ($PSScriptRoot | Split-Path | Split-Path | Split-Path),
-	[string] $BuildRoot = "$SourceRoot\packages/react-native-windows\target",
-	[string] $TargetRoot = "$SourceRoot\packages/react-native-windows\target",
-	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\packages/react-native-windows",
+	[string] $BuildRoot = "$SourceRoot\packages\react-native-windows\target",
+	[string] $TargetRoot = "$SourceRoot\packages\react-native-windows\target",
+	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\packages\react-native-windows",
 	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\node_modules\react-native",	
 	[string[]] $Extensions = ('h', 'hpp', 'def')
 )

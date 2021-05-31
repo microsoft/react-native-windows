@@ -1,7 +1,7 @@
 
 # Building React-Native-Windows
 
-- Make sure you have installed [dependencies](https://microsoft.github.io/react-native-windows/docs/next/rnw-dependencies). Just run `packages/react-native-windows\scripts\rnw-dependencies.ps1` in an elevated PowerShell session.
+- Make sure you have installed [dependencies](https://microsoft.github.io/react-native-windows/docs/next/rnw-dependencies). Just run `packages\react-native-windows\scripts\rnw-dependencies.ps1` in an elevated PowerShell session.
 - Install [Git](https://git-scm.com/download/win) if you don't have it installed in your development machine
 
 ## Build Steps

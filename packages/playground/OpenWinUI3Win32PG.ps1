@@ -30,8 +30,8 @@ $to = (Split-Path $PackagePath -Leaf).Replace('Microsoft.WinUI.', '').Replace('.
 
 # Convert WinUI from 3.0.0-preview2.200713.0 to 3.0.0-development.200706.1-CI
 $filesToUpdate = @(
-    "$rnwDir\packages/react-native-windows\PropertySheets\WinUI.props",
-    "$rnwDir\packages/react-native-windows\Microsoft.ReactNative\packages.config",
+    "$rnwDir\packages\react-native-windows\PropertySheets\WinUI.props",
+    "$rnwDir\packages\react-native-windows\Microsoft.ReactNative\packages.config",
     "$rnwDir\packages\playground\windows\playground\packages.config"
 );
 

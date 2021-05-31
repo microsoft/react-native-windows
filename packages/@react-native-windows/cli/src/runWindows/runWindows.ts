@@ -106,7 +106,7 @@ async function runWindows(
 
   const hasRunRnwDependencies =
     process.env.LocalAppData &&
-    fs.existsSync(path.join(process.env.LocalAppData, 'rnw-dependencies.txt')); // CODESYNC \packages/react-native-windows\scripts\rnw-dependencies.ps1
+    fs.existsSync(path.join(process.env.LocalAppData, 'rnw-dependencies.txt')); // CODESYNC \packages\react-native-windows\scripts\rnw-dependencies.ps1
 
   if (options.info) {
     try {

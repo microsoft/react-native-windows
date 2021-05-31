@@ -11,7 +11,7 @@ steps:
     displayName: Copy NuGet header files
     inputs:
       filePath: packages/react-native-windows/Scripts/Tfs/Layout-Headers.ps1
-      arguments: -TargetRoot $(Build.StagingDirectory) -BuildRoot $(Build.SourcesDirectory)\packages/react-native-windows\target
+      arguments: -TargetRoot $(Build.StagingDirectory) -BuildRoot $(Build.SourcesDirectory)\packages\react-native-windows\target
     condition: ${{ parameters.layoutHeaders }}
 
   - task: CopyFiles@2

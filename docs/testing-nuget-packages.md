@@ -29,7 +29,7 @@ Today we support the following projects as a NuGet package:
    1. Repeat the preivous msbuild step for any other slices you might want to include
 1. Publish the NuGet packages
    1. open terminal for your enlistment
-   1. `packages/react-native-windows\Scripts\PublishNuGetPackagesLocally.cmd 0.0.1-MyTest001`
+   1. `packages\react-native-windows\Scripts\PublishNuGetPackagesLocally.cmd 0.0.1-MyTest001`
    > See below for a breakdown of the arguments
 1. Link your repo for fast CLI testing
    1. open terminal for your enlsitment
@@ -81,7 +81,7 @@ Let's break down all arguments:
 
 ### react-native-windows-init ... cli.js
 This script has many options, but let's break down the ones from the sample:
-* `--version 0.0.0 --useDevMode`: The version doesn't matter when using dev mode, which means that the npm package is used that is registred as the dev package using `yarn link` per instructions above. This saves copying all the output files to your package directory, to your yarn cache. It is also a lot faster and since it is a link, you can make changes to your enlistment i.e. to `packages/react-native-windows\StyleSheets` and you don't have to reinstall between testing
+* `--version 0.0.0 --useDevMode`: The version doesn't matter when using dev mode, which means that the npm package is used that is registred as the dev package using `yarn link` per instructions above. This saves copying all the output files to your package directory, to your yarn cache. It is also a lot faster and since it is a link, you can make changes to your enlistment i.e. to `packages\react-native-windows\StyleSheets` and you don't have to reinstall between testing
 * `--overwrite`: This just overwites files that already exist instead of prompting. This is very usefull when running the script multiple times to test the templates or to code that emits the template.
 * `--language cs`: this is one of the public flags to generate a cs project instead of a cpp project. 
 * `--experimentalNuGetDependency`: This is the critical one to let the template emit referneces to NuGet package rather than source packages. When we make it the default this will likely be renamed back to source for those that need a tight loop between test projects from template and the product code for developers working 'on' react-native-windows. If it proves that the sample and test apps we have in the repo satisfy this need, it can be removed and the tempaltes can be cleaned up by removing a lot of the conditionals bewteen the two.

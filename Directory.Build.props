@@ -7,7 +7,7 @@
     -->
 
   <PropertyGroup>
-    <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)\packages/react-native-windows\</ReactNativeWindowsDir>
+    <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)\packages\react-native-windows\</ReactNativeWindowsDir>
     <ReactNativePackageDir>$(MSBuildThisFileDirectory)\node_modules\react-native\</ReactNativePackageDir>
     <RootIntDir>$(ReactNativeWindowsDir)\build</RootIntDir>
     <RootOutDir>$(ReactNativeWindowsDir)\target</RootOutDir>

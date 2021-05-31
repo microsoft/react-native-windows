@@ -32,7 +32,7 @@ You are required to create a pull request in `react-native-macos` to prove that 
 
 ## Affected Files
 
-- packages/react-native-windows\Microsoft.ReactNative.Cxx
+- packages\react-native-windows\Microsoft.ReactNative.Cxx
   - StructInfo.h
   - JSValue.h
   - JSValue.cpp
@@ -54,12 +54,12 @@ You are required to create a pull request in `react-native-macos` to prove that 
   - ReactPromise.h
   - ReactPromise.cpp
   - NativeModules.h
-- packages/react-native-windows\Microsoft.ReactNative
+- packages\react-native-windows\Microsoft.ReactNative
   - JsiReader.h
   - JsiReader.cpp
   - JsiWriter.h
   - JsiWriter.cpp
   - TurboModulesProvider.h
   - TurboModulesProvider.cpp
-- packages/react-native-windows\Shared
+- packages\react-native-windows\Shared
   - TurboModuleRegistry

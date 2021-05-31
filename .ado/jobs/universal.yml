@@ -123,7 +123,7 @@
                   displayName: "Check if this environment meets the development dependencies"
                   inputs:
                     targetType: filePath
-                    filePath: $(Build.SourcesDirectory)\packages/react-native-windows\Scripts\rnw-dependencies.ps1
+                    filePath: $(Build.SourcesDirectory)\packages\react-native-windows\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
                     
                 - template: ../templates/prepare-env.yml

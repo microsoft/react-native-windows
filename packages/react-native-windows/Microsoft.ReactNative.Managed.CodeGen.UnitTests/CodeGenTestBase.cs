@@ -41,7 +41,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests
             }
             else
             {
-                var generateMessage = @"To generate the file, set 'CodeGenTestBase.AutoFixLkgs' temporarily to true in C# file 'packages/react-native-windows\Microsoft.ReactNative.Managed.CodeGen.UnitTests\CodeGenTestBase.cs'.";
+                var generateMessage = @"To generate the file, set 'CodeGenTestBase.AutoFixLkgs' temporarily to true in C# file 'packages\react-native-windows\Microsoft.ReactNative.Managed.CodeGen.UnitTests\CodeGenTestBase.cs'.";
 
                 var lkgFile = GetLkgPath(lkgName);
                 if (!File.Exists(lkgFile))

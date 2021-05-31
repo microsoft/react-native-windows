@@ -5,7 +5,7 @@ steps:
   - task: powershell@2
     inputs:
       targetType: filePath
-      filePath: packages/react-native-windows\Scripts\Install-WindowsSdkISO.ps1
+      filePath: packages\react-native-windows\Scripts\Install-WindowsSdkISO.ps1
       arguments: ${{ parameters.sdkVersion }}
     displayName: 'Install Insider SDK (${{ parameters.sdkVersion }})'
     condition: ne('', '${{ parameters.sdkVersion }}')
