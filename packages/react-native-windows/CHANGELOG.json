@@ -3064,7 +3064,7 @@
         ],
         "none": [
           {
-            "comment": "Update packages/react-native-windows/Microsoft.ReactNative.Cxx/README.md",
+            "comment": "Update vnext/Microsoft.ReactNative.Cxx/README.md",
             "author": "zihanc@microsoft.com",
             "commit": "ea5925217f8bd2e8f34da11a666bb35ba0b9e6a7",
             "package": "react-native-windows"
@@ -3506,7 +3506,7 @@
             "package": "react-native-windows"
           },
           {
-            "comment": "Enable reload while editing of files in packages/react-native-windows/src",
+            "comment": "Enable reload while editing of files in vnext/src",
             "author": "acoates-ms@noreply.github.com",
             "commit": "1f2049d2dfc6f3398f71bb176e14911efb780643",
             "package": "react-native-windows"
@@ -4825,7 +4825,7 @@
             "package": "react-native-windows"
           },
           {
-            "comment": "Fix #4810: Remove the /packages/react-native-windows/etc/react-native-windows.api.md file from the shipping npm package",
+            "comment": "Fix #4810: Remove the /vnext/etc/react-native-windows.api.md file from the shipping npm package",
             "author": "dannyvv@microsoft.com",
             "commit": "7cfed33bb3ee4118a4e2aedc0e365ff8f81cca5f",
             "package": "react-native-windows"
@@ -8321,7 +8321,7 @@
             "commit": "f9b9271570c9269d9e43f4178892ded384fb8769"
           },
           {
-            "comment": "Configure packages/react-native-windows validate-overrides to check both override manifests",
+            "comment": "Configure vnext validate-overrides to check both override manifests",
             "author": "ngerlem@microsoft.com",
             "commit": "f9b9271570c9269d9e43f4178892ded384fb8769"
           }
@@ -9111,8 +9111,8 @@
     },
     {
       "date": "Thu, 30 Jan 2020 23:29:21 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.133",
-      "version": "0.60.0-packages/react-native-windows.133",
+      "tag": "react-native-windows_v0.60.0-vnext.133",
+      "version": "0.60.0-vnext.133",
       "comments": {
         "prerelease": [
           {
@@ -9125,8 +9125,8 @@
     },
     {
       "date": "Thu, 30 Jan 2020 22:08:51 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.132",
-      "version": "0.60.0-packages/react-native-windows.132",
+      "tag": "react-native-windows_v0.60.0-vnext.132",
+      "version": "0.60.0-vnext.132",
       "comments": {
         "prerelease": [
           {
@@ -9139,8 +9139,8 @@
     },
     {
       "date": "Thu, 30 Jan 2020 21:10:31 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.131",
-      "version": "0.60.0-packages/react-native-windows.131",
+      "tag": "react-native-windows_v0.60.0-vnext.131",
+      "version": "0.60.0-vnext.131",
       "comments": {
         "prerelease": [
           {
@@ -9153,8 +9153,8 @@
     },
     {
       "date": "Thu, 30 Jan 2020 09:17:27 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.130",
-      "version": "0.60.0-packages/react-native-windows.130",
+      "tag": "react-native-windows_v0.60.0-vnext.130",
+      "version": "0.60.0-vnext.130",
       "comments": {
         "prerelease": [
           {
@@ -9167,8 +9167,8 @@
     },
     {
       "date": "Thu, 30 Jan 2020 01:22:53 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.129",
-      "version": "0.60.0-packages/react-native-windows.129",
+      "tag": "react-native-windows_v0.60.0-vnext.129",
+      "version": "0.60.0-vnext.129",
       "comments": {
         "prerelease": [
           {
@@ -9181,8 +9181,8 @@
     },
     {
       "date": "Wed, 29 Jan 2020 18:46:55 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.128",
-      "version": "0.60.0-packages/react-native-windows.128",
+      "tag": "react-native-windows_v0.60.0-vnext.128",
+      "version": "0.60.0-vnext.128",
       "comments": {
         "none": [
           {
@@ -9195,8 +9195,8 @@
     },
     {
       "date": "Wed, 29 Jan 2020 01:55:04 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.128",
-      "version": "0.60.0-packages/react-native-windows.128",
+      "tag": "react-native-windows_v0.60.0-vnext.128",
+      "version": "0.60.0-vnext.128",
       "comments": {
         "prerelease": [
           {
@@ -9209,8 +9209,8 @@
     },
     {
       "date": "Tue, 28 Jan 2020 18:08:35 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.127",
-      "version": "0.60.0-packages/react-native-windows.127",
+      "tag": "react-native-windows_v0.60.0-vnext.127",
+      "version": "0.60.0-vnext.127",
       "comments": {
         "prerelease": [
           {
@@ -9223,8 +9223,8 @@
     },
     {
       "date": "Tue, 28 Jan 2020 16:46:27 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.126",
-      "version": "0.60.0-packages/react-native-windows.126",
+      "tag": "react-native-windows_v0.60.0-vnext.126",
+      "version": "0.60.0-vnext.126",
       "comments": {
         "prerelease": [
           {
@@ -9237,8 +9237,8 @@
     },
     {
       "date": "Tue, 28 Jan 2020 06:50:47 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.125",
-      "version": "0.60.0-packages/react-native-windows.125",
+      "tag": "react-native-windows_v0.60.0-vnext.125",
+      "version": "0.60.0-vnext.125",
       "comments": {
         "prerelease": [
           {
@@ -9251,8 +9251,8 @@
     },
     {
       "date": "Sat, 25 Jan 2020 21:45:06 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.124",
-      "version": "0.60.0-packages/react-native-windows.124",
+      "tag": "react-native-windows_v0.60.0-vnext.124",
+      "version": "0.60.0-vnext.124",
       "comments": {
         "prerelease": [
           {
@@ -9265,8 +9265,8 @@
     },
     {
       "date": "Fri, 24 Jan 2020 22:33:56 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.123",
-      "version": "0.60.0-packages/react-native-windows.123",
+      "tag": "react-native-windows_v0.60.0-vnext.123",
+      "version": "0.60.0-vnext.123",
       "comments": {
         "prerelease": [
           {
@@ -9279,8 +9279,8 @@
     },
     {
       "date": "Fri, 24 Jan 2020 21:21:47 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.122",
-      "version": "0.60.0-packages/react-native-windows.122",
+      "tag": "react-native-windows_v0.60.0-vnext.122",
+      "version": "0.60.0-vnext.122",
       "comments": {
         "prerelease": [
           {
@@ -9293,8 +9293,8 @@
     },
     {
       "date": "Thu, 23 Jan 2020 18:42:26 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.121",
-      "version": "0.60.0-packages/react-native-windows.121",
+      "tag": "react-native-windows_v0.60.0-vnext.121",
+      "version": "0.60.0-vnext.121",
       "comments": {
         "prerelease": [
           {
@@ -9307,8 +9307,8 @@
     },
     {
       "date": "Thu, 23 Jan 2020 06:39:59 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.120",
-      "version": "0.60.0-packages/react-native-windows.120",
+      "tag": "react-native-windows_v0.60.0-vnext.120",
+      "version": "0.60.0-vnext.120",
       "comments": {
         "none": [
           {
@@ -9328,8 +9328,8 @@
     },
     {
       "date": "Thu, 23 Jan 2020 05:29:39 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.119",
-      "version": "0.60.0-packages/react-native-windows.119",
+      "tag": "react-native-windows_v0.60.0-vnext.119",
+      "version": "0.60.0-vnext.119",
       "comments": {
         "none": [
           {
@@ -9342,8 +9342,8 @@
     },
     {
       "date": "Thu, 23 Jan 2020 00:16:13 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.119",
-      "version": "0.60.0-packages/react-native-windows.119",
+      "tag": "react-native-windows_v0.60.0-vnext.119",
+      "version": "0.60.0-vnext.119",
       "comments": {
         "prerelease": [
           {
@@ -9356,8 +9356,8 @@
     },
     {
       "date": "Wed, 22 Jan 2020 07:24:31 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.118",
-      "version": "0.60.0-packages/react-native-windows.118",
+      "tag": "react-native-windows_v0.60.0-vnext.118",
+      "version": "0.60.0-vnext.118",
       "comments": {
         "none": [
           {
@@ -9377,8 +9377,8 @@
     },
     {
       "date": "Wed, 22 Jan 2020 03:15:49 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.117",
-      "version": "0.60.0-packages/react-native-windows.117",
+      "tag": "react-native-windows_v0.60.0-vnext.117",
+      "version": "0.60.0-vnext.117",
       "comments": {
         "prerelease": [
           {
@@ -9396,8 +9396,8 @@
     },
     {
       "date": "Wed, 22 Jan 2020 01:31:33 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.116",
-      "version": "0.60.0-packages/react-native-windows.116",
+      "tag": "react-native-windows_v0.60.0-vnext.116",
+      "version": "0.60.0-vnext.116",
       "comments": {
         "none": [
           {
@@ -9422,8 +9422,8 @@
     },
     {
       "date": "Thu, 16 Jan 2020 06:19:11 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.115",
-      "version": "0.60.0-packages/react-native-windows.115",
+      "tag": "react-native-windows_v0.60.0-vnext.115",
+      "version": "0.60.0-vnext.115",
       "comments": {
         "none": [
           {
@@ -9436,8 +9436,8 @@
     },
     {
       "date": "Thu, 16 Jan 2020 05:34:40 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.115",
-      "version": "0.60.0-packages/react-native-windows.115",
+      "tag": "react-native-windows_v0.60.0-vnext.115",
+      "version": "0.60.0-vnext.115",
       "comments": {
         "prerelease": [
           {
@@ -9450,8 +9450,8 @@
     },
     {
       "date": "Thu, 16 Jan 2020 03:02:14 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.114",
-      "version": "0.60.0-packages/react-native-windows.114",
+      "tag": "react-native-windows_v0.60.0-vnext.114",
+      "version": "0.60.0-vnext.114",
       "comments": {
         "prerelease": [
           {
@@ -9464,8 +9464,8 @@
     },
     {
       "date": "Wed, 15 Jan 2020 21:22:45 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.113",
-      "version": "0.60.0-packages/react-native-windows.113",
+      "tag": "react-native-windows_v0.60.0-vnext.113",
+      "version": "0.60.0-vnext.113",
       "comments": {
         "prerelease": [
           {
@@ -9478,8 +9478,8 @@
     },
     {
       "date": "Tue, 14 Jan 2020 17:57:10 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.112",
-      "version": "0.60.0-packages/react-native-windows.112",
+      "tag": "react-native-windows_v0.60.0-vnext.112",
+      "version": "0.60.0-vnext.112",
       "comments": {
         "none": [
           {
@@ -9492,8 +9492,8 @@
     },
     {
       "date": "Mon, 13 Jan 2020 18:48:12 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.112",
-      "version": "0.60.0-packages/react-native-windows.112",
+      "tag": "react-native-windows_v0.60.0-vnext.112",
+      "version": "0.60.0-vnext.112",
       "comments": {
         "none": [
           {
@@ -9506,8 +9506,8 @@
     },
     {
       "date": "Thu, 09 Jan 2020 23:20:10 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.112",
-      "version": "0.60.0-packages/react-native-windows.112",
+      "tag": "react-native-windows_v0.60.0-vnext.112",
+      "version": "0.60.0-vnext.112",
       "comments": {
         "none": [
           {
@@ -9527,8 +9527,8 @@
     },
     {
       "date": "Thu, 09 Jan 2020 22:06:05 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.111",
-      "version": "0.60.0-packages/react-native-windows.111",
+      "tag": "react-native-windows_v0.60.0-vnext.111",
+      "version": "0.60.0-vnext.111",
       "comments": {
         "prerelease": [
           {
@@ -9546,8 +9546,8 @@
     },
     {
       "date": "Wed, 08 Jan 2020 23:03:25 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.110",
-      "version": "0.60.0-packages/react-native-windows.110",
+      "tag": "react-native-windows_v0.60.0-vnext.110",
+      "version": "0.60.0-vnext.110",
       "comments": {
         "prerelease": [
           {
@@ -9560,8 +9560,8 @@
     },
     {
       "date": "Wed, 08 Jan 2020 01:43:57 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.109",
-      "version": "0.60.0-packages/react-native-windows.109",
+      "tag": "react-native-windows_v0.60.0-vnext.109",
+      "version": "0.60.0-vnext.109",
       "comments": {
         "prerelease": [
           {
@@ -9574,8 +9574,8 @@
     },
     {
       "date": "Tue, 07 Jan 2020 22:43:44 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.108",
-      "version": "0.60.0-packages/react-native-windows.108",
+      "tag": "react-native-windows_v0.60.0-vnext.108",
+      "version": "0.60.0-vnext.108",
       "comments": {
         "none": [
           {
@@ -9593,8 +9593,8 @@
     },
     {
       "date": "Tue, 07 Jan 2020 19:44:17 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.108",
-      "version": "0.60.0-packages/react-native-windows.108",
+      "tag": "react-native-windows_v0.60.0-vnext.108",
+      "version": "0.60.0-vnext.108",
       "comments": {
         "prerelease": [
           {
@@ -9607,8 +9607,8 @@
     },
     {
       "date": "Mon, 06 Jan 2020 21:29:21 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.107",
-      "version": "0.60.0-packages/react-native-windows.107",
+      "tag": "react-native-windows_v0.60.0-vnext.107",
+      "version": "0.60.0-vnext.107",
       "comments": {
         "prerelease": [
           {
@@ -9621,8 +9621,8 @@
     },
     {
       "date": "Mon, 30 Dec 2019 22:14:37 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.106",
-      "version": "0.60.0-packages/react-native-windows.106",
+      "tag": "react-native-windows_v0.60.0-vnext.106",
+      "version": "0.60.0-vnext.106",
       "comments": {
         "prerelease": [
           {
@@ -9635,8 +9635,8 @@
     },
     {
       "date": "Mon, 30 Dec 2019 20:33:37 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.105",
-      "version": "0.60.0-packages/react-native-windows.105",
+      "tag": "react-native-windows_v0.60.0-vnext.105",
+      "version": "0.60.0-vnext.105",
       "comments": {
         "none": [
           {
@@ -9649,8 +9649,8 @@
     },
     {
       "date": "Fri, 27 Dec 2019 17:01:20 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.105",
-      "version": "0.60.0-packages/react-native-windows.105",
+      "tag": "react-native-windows_v0.60.0-vnext.105",
+      "version": "0.60.0-vnext.105",
       "comments": {
         "prerelease": [
           {
@@ -9663,8 +9663,8 @@
     },
     {
       "date": "Sat, 21 Dec 2019 03:41:33 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.104",
-      "version": "0.60.0-packages/react-native-windows.104",
+      "tag": "react-native-windows_v0.60.0-vnext.104",
+      "version": "0.60.0-vnext.104",
       "comments": {
         "prerelease": [
           {
@@ -9677,8 +9677,8 @@
     },
     {
       "date": "Sat, 21 Dec 2019 00:18:22 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.103",
-      "version": "0.60.0-packages/react-native-windows.103",
+      "tag": "react-native-windows_v0.60.0-vnext.103",
+      "version": "0.60.0-vnext.103",
       "comments": {
         "prerelease": [
           {
@@ -9691,8 +9691,8 @@
     },
     {
       "date": "Fri, 20 Dec 2019 19:01:50 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.102",
-      "version": "0.60.0-packages/react-native-windows.102",
+      "tag": "react-native-windows_v0.60.0-vnext.102",
+      "version": "0.60.0-vnext.102",
       "comments": {
         "prerelease": [
           {
@@ -9705,8 +9705,8 @@
     },
     {
       "date": "Fri, 20 Dec 2019 18:19:02 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.101",
-      "version": "0.60.0-packages/react-native-windows.101",
+      "tag": "react-native-windows_v0.60.0-vnext.101",
+      "version": "0.60.0-vnext.101",
       "comments": {
         "prerelease": [
           {
@@ -9719,8 +9719,8 @@
     },
     {
       "date": "Thu, 14 Nov 2019 01:13:19 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.70",
-      "version": "0.60.0-packages/react-native-windows.70",
+      "tag": "react-native-windows_v0.60.0-vnext.70",
+      "version": "0.60.0-vnext.70",
       "comments": {
         "none": [
           {
@@ -9733,8 +9733,8 @@
     },
     {
       "date": "Tue, 12 Nov 2019 19:25:32 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.70",
-      "version": "0.60.0-packages/react-native-windows.70",
+      "tag": "react-native-windows_v0.60.0-vnext.70",
+      "version": "0.60.0-vnext.70",
       "comments": {
         "none": [
           {
@@ -9747,8 +9747,8 @@
     },
     {
       "date": "Tue, 12 Nov 2019 04:50:06 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.70",
-      "version": "0.60.0-packages/react-native-windows.70",
+      "tag": "react-native-windows_v0.60.0-vnext.70",
+      "version": "0.60.0-vnext.70",
       "comments": {
         "prerelease": [
           {
@@ -9761,8 +9761,8 @@
     },
     {
       "date": "Tue, 12 Nov 2019 01:59:08 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.69",
-      "version": "0.60.0-packages/react-native-windows.69",
+      "tag": "react-native-windows_v0.60.0-vnext.69",
+      "version": "0.60.0-vnext.69",
       "comments": {
         "none": [
           {
@@ -9775,8 +9775,8 @@
     },
     {
       "date": "Mon, 11 Nov 2019 22:01:18 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.69",
-      "version": "0.60.0-packages/react-native-windows.69",
+      "tag": "react-native-windows_v0.60.0-vnext.69",
+      "version": "0.60.0-vnext.69",
       "comments": {
         "prerelease": [
           {
@@ -9789,8 +9789,8 @@
     },
     {
       "date": "Sat, 09 Nov 2019 01:27:15 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.68",
-      "version": "0.60.0-packages/react-native-windows.68",
+      "tag": "react-native-windows_v0.60.0-vnext.68",
+      "version": "0.60.0-vnext.68",
       "comments": {
         "prerelease": [
           {
@@ -9803,8 +9803,8 @@
     },
     {
       "date": "Fri, 08 Nov 2019 00:30:50 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.67",
-      "version": "0.60.0-packages/react-native-windows.67",
+      "tag": "react-native-windows_v0.60.0-vnext.67",
+      "version": "0.60.0-vnext.67",
       "comments": {
         "prerelease": [
           {
@@ -9817,8 +9817,8 @@
     },
     {
       "date": "Thu, 07 Nov 2019 17:37:11 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.66",
-      "version": "0.60.0-packages/react-native-windows.66",
+      "tag": "react-native-windows_v0.60.0-vnext.66",
+      "version": "0.60.0-vnext.66",
       "comments": {
         "prerelease": [
           {
@@ -9831,8 +9831,8 @@
     },
     {
       "date": "Wed, 06 Nov 2019 23:32:18 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.65",
-      "version": "0.60.0-packages/react-native-windows.65",
+      "tag": "react-native-windows_v0.60.0-vnext.65",
+      "version": "0.60.0-vnext.65",
       "comments": {
         "none": [
           {
@@ -9845,8 +9845,8 @@
     },
     {
       "date": "Wed, 06 Nov 2019 13:58:14 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.65",
-      "version": "0.60.0-packages/react-native-windows.65",
+      "tag": "react-native-windows_v0.60.0-vnext.65",
+      "version": "0.60.0-vnext.65",
       "comments": {
         "prerelease": [
           {
@@ -9859,8 +9859,8 @@
     },
     {
       "date": "Wed, 06 Nov 2019 06:59:22 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.64",
-      "version": "0.60.0-packages/react-native-windows.64",
+      "tag": "react-native-windows_v0.60.0-vnext.64",
+      "version": "0.60.0-vnext.64",
       "comments": {
         "prerelease": [
           {
@@ -9873,8 +9873,8 @@
     },
     {
       "date": "Wed, 06 Nov 2019 01:56:47 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.63",
-      "version": "0.60.0-packages/react-native-windows.63",
+      "tag": "react-native-windows_v0.60.0-vnext.63",
+      "version": "0.60.0-vnext.63",
       "comments": {
         "prerelease": [
           {
@@ -9887,8 +9887,8 @@
     },
     {
       "date": "Tue, 05 Nov 2019 23:11:52 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.62",
-      "version": "0.60.0-packages/react-native-windows.62",
+      "tag": "react-native-windows_v0.60.0-vnext.62",
+      "version": "0.60.0-vnext.62",
       "comments": {
         "prerelease": [
           {
@@ -9901,8 +9901,8 @@
     },
     {
       "date": "Fri, 01 Nov 2019 23:40:12 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.61",
-      "version": "0.60.0-packages/react-native-windows.61",
+      "tag": "react-native-windows_v0.60.0-vnext.61",
+      "version": "0.60.0-vnext.61",
       "comments": {
         "none": [
           {
@@ -9922,8 +9922,8 @@
     },
     {
       "date": "Fri, 01 Nov 2019 21:25:27 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.60",
-      "version": "0.60.0-packages/react-native-windows.60",
+      "tag": "react-native-windows_v0.60.0-vnext.60",
+      "version": "0.60.0-vnext.60",
       "comments": {
         "none": [
           {
@@ -9943,8 +9943,8 @@
     },
     {
       "date": "Fri, 01 Nov 2019 18:09:07 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.59",
-      "version": "0.60.0-packages/react-native-windows.59",
+      "tag": "react-native-windows_v0.60.0-vnext.59",
+      "version": "0.60.0-vnext.59",
       "comments": {
         "none": [
           {
@@ -9964,8 +9964,8 @@
     },
     {
       "date": "Thu, 31 Oct 2019 18:11:20 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.58",
-      "version": "0.60.0-packages/react-native-windows.58",
+      "tag": "react-native-windows_v0.60.0-vnext.58",
+      "version": "0.60.0-vnext.58",
       "comments": {
         "prerelease": [
           {
@@ -9978,8 +9978,8 @@
     },
     {
       "date": "Thu, 31 Oct 2019 16:59:45 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.57",
-      "version": "0.60.0-packages/react-native-windows.57",
+      "tag": "react-native-windows_v0.60.0-vnext.57",
+      "version": "0.60.0-vnext.57",
       "comments": {
         "prerelease": [
           {
@@ -9992,8 +9992,8 @@
     },
     {
       "date": "Wed, 30 Oct 2019 22:56:11 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.56",
-      "version": "0.60.0-packages/react-native-windows.56",
+      "tag": "react-native-windows_v0.60.0-vnext.56",
+      "version": "0.60.0-vnext.56",
       "comments": {
         "prerelease": [
           {
@@ -10006,8 +10006,8 @@
     },
     {
       "date": "Wed, 30 Oct 2019 17:12:12 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.55",
-      "version": "0.60.0-packages/react-native-windows.55",
+      "tag": "react-native-windows_v0.60.0-vnext.55",
+      "version": "0.60.0-vnext.55",
       "comments": {
         "prerelease": [
           {
@@ -10042,8 +10042,8 @@
     },
     {
       "date": "Tue, 29 Oct 2019 23:29:07 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.54",
-      "version": "0.60.0-packages/react-native-windows.54",
+      "tag": "react-native-windows_v0.60.0-vnext.54",
+      "version": "0.60.0-vnext.54",
       "comments": {
         "prerelease": [
           {
@@ -10056,8 +10056,8 @@
     },
     {
       "date": "Tue, 29 Oct 2019 19:36:34 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.53",
-      "version": "0.60.0-packages/react-native-windows.53",
+      "tag": "react-native-windows_v0.60.0-vnext.53",
+      "version": "0.60.0-vnext.53",
       "comments": {
         "prerelease": [
           {
@@ -10070,8 +10070,8 @@
     },
     {
       "date": "Tue, 29 Oct 2019 01:31:27 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.52",
-      "version": "0.60.0-packages/react-native-windows.52",
+      "tag": "react-native-windows_v0.60.0-vnext.52",
+      "version": "0.60.0-vnext.52",
       "comments": {
         "prerelease": [
           {
@@ -10084,8 +10084,8 @@
     },
     {
       "date": "Mon, 28 Oct 2019 23:51:07 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.51",
-      "version": "0.60.0-packages/react-native-windows.51",
+      "tag": "react-native-windows_v0.60.0-vnext.51",
+      "version": "0.60.0-vnext.51",
       "comments": {
         "prerelease": [
           {
@@ -10098,8 +10098,8 @@
     },
     {
       "date": "Sat, 26 Oct 2019 21:50:14 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.50",
-      "version": "0.60.0-packages/react-native-windows.50",
+      "tag": "react-native-windows_v0.60.0-vnext.50",
+      "version": "0.60.0-vnext.50",
       "comments": {
         "prerelease": [
           {
@@ -10112,8 +10112,8 @@
     },
     {
       "date": "Sat, 26 Oct 2019 02:55:31 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.49",
-      "version": "0.60.0-packages/react-native-windows.49",
+      "tag": "react-native-windows_v0.60.0-vnext.49",
+      "version": "0.60.0-vnext.49",
       "comments": {
         "none": [
           {
@@ -10133,8 +10133,8 @@
     },
     {
       "date": "Fri, 25 Oct 2019 23:07:25 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.48",
-      "version": "0.60.0-packages/react-native-windows.48",
+      "tag": "react-native-windows_v0.60.0-vnext.48",
+      "version": "0.60.0-vnext.48",
       "comments": {
         "prerelease": [
           {
@@ -10147,8 +10147,8 @@
     },
     {
       "date": "Fri, 25 Oct 2019 21:43:48 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.47",
-      "version": "0.60.0-packages/react-native-windows.47",
+      "tag": "react-native-windows_v0.60.0-vnext.47",
+      "version": "0.60.0-vnext.47",
       "comments": {
         "prerelease": [
           {
@@ -10161,8 +10161,8 @@
     },
     {
       "date": "Fri, 25 Oct 2019 20:56:10 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.46",
-      "version": "0.60.0-packages/react-native-windows.46",
+      "tag": "react-native-windows_v0.60.0-vnext.46",
+      "version": "0.60.0-vnext.46",
       "comments": {
         "prerelease": [
           {
@@ -10175,8 +10175,8 @@
     },
     {
       "date": "Fri, 25 Oct 2019 01:44:45 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.45",
-      "version": "0.60.0-packages/react-native-windows.45",
+      "tag": "react-native-windows_v0.60.0-vnext.45",
+      "version": "0.60.0-vnext.45",
       "comments": {
         "none": [
           {
@@ -10206,8 +10206,8 @@
     },
     {
       "date": "Thu, 24 Oct 2019 18:04:40 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.44",
-      "version": "0.60.0-packages/react-native-windows.44",
+      "tag": "react-native-windows_v0.60.0-vnext.44",
+      "version": "0.60.0-vnext.44",
       "comments": {
         "prerelease": [
           {
@@ -10220,8 +10220,8 @@
     },
     {
       "date": "Thu, 24 Oct 2019 09:06:03 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.43",
-      "version": "0.60.0-packages/react-native-windows.43",
+      "tag": "react-native-windows_v0.60.0-vnext.43",
+      "version": "0.60.0-vnext.43",
       "comments": {
         "none": [
           {
@@ -10241,8 +10241,8 @@
     },
     {
       "date": "Wed, 23 Oct 2019 20:38:22 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.42",
-      "version": "0.60.0-packages/react-native-windows.42",
+      "tag": "react-native-windows_v0.60.0-vnext.42",
+      "version": "0.60.0-vnext.42",
       "comments": {
         "none": [
           {
@@ -10272,8 +10272,8 @@
     },
     {
       "date": "Tue, 22 Oct 2019 03:28:58 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.41",
-      "version": "0.60.0-packages/react-native-windows.41",
+      "tag": "react-native-windows_v0.60.0-vnext.41",
+      "version": "0.60.0-vnext.41",
       "comments": {
         "prerelease": [
           {
@@ -10286,8 +10286,8 @@
     },
     {
       "date": "Tue, 22 Oct 2019 01:01:42 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.40",
-      "version": "0.60.0-packages/react-native-windows.40",
+      "tag": "react-native-windows_v0.60.0-vnext.40",
+      "version": "0.60.0-vnext.40",
       "comments": {
         "prerelease": [
           {
@@ -10307,8 +10307,8 @@
     },
     {
       "date": "Fri, 18 Oct 2019 21:22:01 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.39",
-      "version": "0.60.0-packages/react-native-windows.39",
+      "tag": "react-native-windows_v0.60.0-vnext.39",
+      "version": "0.60.0-vnext.39",
       "comments": {
         "prerelease": [
           {
@@ -10321,8 +10321,8 @@
     },
     {
       "date": "Fri, 18 Oct 2019 20:36:35 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.38",
-      "version": "0.60.0-packages/react-native-windows.38",
+      "tag": "react-native-windows_v0.60.0-vnext.38",
+      "version": "0.60.0-vnext.38",
       "comments": {
         "none": [
           {
@@ -10342,8 +10342,8 @@
     },
     {
       "date": "Thu, 17 Oct 2019 23:10:13 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.37",
-      "version": "0.60.0-packages/react-native-windows.37",
+      "tag": "react-native-windows_v0.60.0-vnext.37",
+      "version": "0.60.0-vnext.37",
       "comments": {
         "prerelease": [
           {
@@ -10356,8 +10356,8 @@
     },
     {
       "date": "Thu, 17 Oct 2019 20:58:22 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.36",
-      "version": "0.60.0-packages/react-native-windows.36",
+      "tag": "react-native-windows_v0.60.0-vnext.36",
+      "version": "0.60.0-vnext.36",
       "comments": {
         "prerelease": [
           {
@@ -10370,8 +10370,8 @@
     },
     {
       "date": "Thu, 17 Oct 2019 16:18:52 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.35",
-      "version": "0.60.0-packages/react-native-windows.35",
+      "tag": "react-native-windows_v0.60.0-vnext.35",
+      "version": "0.60.0-vnext.35",
       "comments": {
         "prerelease": [
           {
@@ -10384,8 +10384,8 @@
     },
     {
       "date": "Thu, 17 Oct 2019 02:48:28 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.34",
-      "version": "0.60.0-packages/react-native-windows.34",
+      "tag": "react-native-windows_v0.60.0-vnext.34",
+      "version": "0.60.0-vnext.34",
       "comments": {
         "prerelease": [
           {
@@ -10398,8 +10398,8 @@
     },
     {
       "date": "Thu, 17 Oct 2019 00:14:32 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.33",
-      "version": "0.60.0-packages/react-native-windows.33",
+      "tag": "react-native-windows_v0.60.0-vnext.33",
+      "version": "0.60.0-vnext.33",
       "comments": {
         "prerelease": [
           {
@@ -10412,8 +10412,8 @@
     },
     {
       "date": "Wed, 16 Oct 2019 02:19:39 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.32",
-      "version": "0.60.0-packages/react-native-windows.32",
+      "tag": "react-native-windows_v0.60.0-vnext.32",
+      "version": "0.60.0-vnext.32",
       "comments": {
         "prerelease": [
           {
@@ -10426,8 +10426,8 @@
     },
     {
       "date": "Tue, 15 Oct 2019 23:45:52 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.31",
-      "version": "0.60.0-packages/react-native-windows.31",
+      "tag": "react-native-windows_v0.60.0-vnext.31",
+      "version": "0.60.0-vnext.31",
       "comments": {
         "prerelease": [
           {
@@ -10440,8 +10440,8 @@
     },
     {
       "date": "Tue, 15 Oct 2019 22:35:30 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.30",
-      "version": "0.60.0-packages/react-native-windows.30",
+      "tag": "react-native-windows_v0.60.0-vnext.30",
+      "version": "0.60.0-vnext.30",
       "comments": {
         "none": [
           {
@@ -10461,8 +10461,8 @@
     },
     {
       "date": "Tue, 15 Oct 2019 13:17:22 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.29",
-      "version": "0.60.0-packages/react-native-windows.29",
+      "tag": "react-native-windows_v0.60.0-vnext.29",
+      "version": "0.60.0-vnext.29",
       "comments": {
         "prerelease": [
           {
@@ -10475,8 +10475,8 @@
     },
     {
       "date": "Mon, 14 Oct 2019 23:02:23 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.28",
-      "version": "0.60.0-packages/react-native-windows.28",
+      "tag": "react-native-windows_v0.60.0-vnext.28",
+      "version": "0.60.0-vnext.28",
       "comments": {
         "prerelease": [
           {
@@ -10489,8 +10489,8 @@
     },
     {
       "date": "Sat, 12 Oct 2019 16:49:47 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.27",
-      "version": "0.60.0-packages/react-native-windows.27",
+      "tag": "react-native-windows_v0.60.0-vnext.27",
+      "version": "0.60.0-vnext.27",
       "comments": {
         "prerelease": [
           {
@@ -10503,8 +10503,8 @@
     },
     {
       "date": "Fri, 11 Oct 2019 22:15:37 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.26",
-      "version": "0.60.0-packages/react-native-windows.26",
+      "tag": "react-native-windows_v0.60.0-vnext.26",
+      "version": "0.60.0-vnext.26",
       "comments": {
         "prerelease": [
           {
@@ -10517,8 +10517,8 @@
     },
     {
       "date": "Fri, 11 Oct 2019 20:47:08 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.25",
-      "version": "0.60.0-packages/react-native-windows.25",
+      "tag": "react-native-windows_v0.60.0-vnext.25",
+      "version": "0.60.0-vnext.25",
       "comments": {
         "none": [
           {
@@ -10538,8 +10538,8 @@
     },
     {
       "date": "Fri, 11 Oct 2019 10:21:12 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.24",
-      "version": "0.60.0-packages/react-native-windows.24",
+      "tag": "react-native-windows_v0.60.0-vnext.24",
+      "version": "0.60.0-vnext.24",
       "comments": {
         "prerelease": [
           {
@@ -10579,8 +10579,8 @@
     },
     {
       "date": "Wed, 09 Oct 2019 18:17:42 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.23",
-      "version": "0.60.0-packages/react-native-windows.23",
+      "tag": "react-native-windows_v0.60.0-vnext.23",
+      "version": "0.60.0-vnext.23",
       "comments": {
         "prerelease": [
           {
@@ -10593,8 +10593,8 @@
     },
     {
       "date": "Wed, 09 Oct 2019 15:13:21 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.22",
-      "version": "0.60.0-packages/react-native-windows.22",
+      "tag": "react-native-windows_v0.60.0-vnext.22",
+      "version": "0.60.0-vnext.22",
       "comments": {
         "none": [
           {
@@ -10619,8 +10619,8 @@
     },
     {
       "date": "Tue, 08 Oct 2019 18:33:16 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.21",
-      "version": "0.60.0-packages/react-native-windows.21",
+      "tag": "react-native-windows_v0.60.0-vnext.21",
+      "version": "0.60.0-vnext.21",
       "comments": {
         "none": [
           {
@@ -10640,8 +10640,8 @@
     },
     {
       "date": "Mon, 07 Oct 2019 21:46:39 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.20",
-      "version": "0.60.0-packages/react-native-windows.20",
+      "tag": "react-native-windows_v0.60.0-vnext.20",
+      "version": "0.60.0-vnext.20",
       "comments": {
         "none": [
           {
@@ -10661,8 +10661,8 @@
     },
     {
       "date": "Fri, 04 Oct 2019 19:04:20 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.19",
-      "version": "0.60.0-packages/react-native-windows.19",
+      "tag": "react-native-windows_v0.60.0-vnext.19",
+      "version": "0.60.0-vnext.19",
       "comments": {
         "prerelease": [
           {
@@ -10675,8 +10675,8 @@
     },
     {
       "date": "Fri, 04 Oct 2019 16:32:45 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.18",
-      "version": "0.60.0-packages/react-native-windows.18",
+      "tag": "react-native-windows_v0.60.0-vnext.18",
+      "version": "0.60.0-vnext.18",
       "comments": {
         "prerelease": [
           {
@@ -10689,8 +10689,8 @@
     },
     {
       "date": "Thu, 03 Oct 2019 22:17:13 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.17",
-      "version": "0.60.0-packages/react-native-windows.17",
+      "tag": "react-native-windows_v0.60.0-vnext.17",
+      "version": "0.60.0-vnext.17",
       "comments": {
         "prerelease": [
           {
@@ -10725,8 +10725,8 @@
     },
     {
       "date": "Tue, 01 Oct 2019 18:17:42 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.16",
-      "version": "0.60.0-packages/react-native-windows.16",
+      "tag": "react-native-windows_v0.60.0-vnext.16",
+      "version": "0.60.0-vnext.16",
       "comments": {
         "prerelease": [
           {
@@ -10751,8 +10751,8 @@
     },
     {
       "date": "Mon, 30 Sep 2019 18:28:23 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.11",
-      "version": "0.60.0-packages/react-native-windows.11",
+      "tag": "react-native-windows_v0.60.0-vnext.11",
+      "version": "0.60.0-vnext.11",
       "comments": {
         "prerelease": [
           {
@@ -10765,8 +10765,8 @@
     },
     {
       "date": "Mon, 30 Sep 2019 16:21:08 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.10",
-      "version": "0.60.0-packages/react-native-windows.10",
+      "tag": "react-native-windows_v0.60.0-vnext.10",
+      "version": "0.60.0-vnext.10",
       "comments": {
         "prerelease": [
           {
@@ -10779,8 +10779,8 @@
     },
     {
       "date": "Sat, 28 Sep 2019 01:21:33 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.9",
-      "version": "0.60.0-packages/react-native-windows.9",
+      "tag": "react-native-windows_v0.60.0-vnext.9",
+      "version": "0.60.0-vnext.9",
       "comments": {
         "prerelease": [
           {
@@ -10793,8 +10793,8 @@
     },
     {
       "date": "Sat, 28 Sep 2019 00:21:32 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.8",
-      "version": "0.60.0-packages/react-native-windows.8",
+      "tag": "react-native-windows_v0.60.0-vnext.8",
+      "version": "0.60.0-vnext.8",
       "comments": {
         "prerelease": [
           {
@@ -10807,8 +10807,8 @@
     },
     {
       "date": "Fri, 27 Sep 2019 17:40:33 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.7",
-      "version": "0.60.0-packages/react-native-windows.7",
+      "tag": "react-native-windows_v0.60.0-vnext.7",
+      "version": "0.60.0-vnext.7",
       "comments": {
         "prerelease": [
           {
@@ -10821,8 +10821,8 @@
     },
     {
       "date": "Fri, 27 Sep 2019 17:34:59 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.6",
-      "version": "0.60.0-packages/react-native-windows.6",
+      "tag": "react-native-windows_v0.60.0-vnext.6",
+      "version": "0.60.0-vnext.6",
       "comments": {
         "prerelease": [
           {
@@ -10835,8 +10835,8 @@
     },
     {
       "date": "Fri, 27 Sep 2019 00:08:28 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.5",
-      "version": "0.60.0-packages/react-native-windows.5",
+      "tag": "react-native-windows_v0.60.0-vnext.5",
+      "version": "0.60.0-vnext.5",
       "comments": {
         "none": [
           {
@@ -10850,7 +10850,7 @@
             "commit": "0d0de897ea568ffa189941d3680e4f3d89e544cc"
           },
           {
-            "comment": "Only publish react-native-windows using packages/react-native-windows tag",
+            "comment": "Only publish react-native-windows using vnext tag",
             "author": "acoates@microsoft.com",
             "commit": "a5f8ac0327970f73404ddc2599655497f6a404e2"
           }
@@ -10866,8 +10866,8 @@
     },
     {
       "date": "Wed, 25 Sep 2019 18:32:05 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.4",
-      "version": "0.60.0-packages/react-native-windows.4",
+      "tag": "react-native-windows_v0.60.0-vnext.4",
+      "version": "0.60.0-vnext.4",
       "comments": {
         "none": [
           {
@@ -10887,8 +10887,8 @@
     },
     {
       "date": "Tue, 24 Sep 2019 23:29:18 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.3",
-      "version": "0.60.0-packages/react-native-windows.3",
+      "tag": "react-native-windows_v0.60.0-vnext.3",
+      "version": "0.60.0-vnext.3",
       "comments": {
         "prerelease": [
           {
@@ -10901,8 +10901,8 @@
     },
     {
       "date": "Tue, 24 Sep 2019 19:11:20 GMT",
-      "tag": "react-native-windows_v0.60.0-packages/react-native-windows.2",
-      "version": "0.60.0-packages/react-native-windows.2",
+      "tag": "react-native-windows_v0.60.0-vnext.2",
+      "version": "0.60.0-vnext.2",
       "comments": {
         "prerelease": [
           {
@@ -10927,8 +10927,8 @@
     },
     {
       "date": "Thu, 19 Sep 2019 17:02:46 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.190",
-      "version": "0.59.0-packages/react-native-windows.190",
+      "tag": "react-native-windows_v0.59.0-vnext.190",
+      "version": "0.59.0-vnext.190",
       "comments": {
         "prerelease": [
           {
@@ -10953,8 +10953,8 @@
     },
     {
       "date": "Wed, 18 Sep 2019 18:18:37 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.189",
-      "version": "0.59.0-packages/react-native-windows.189",
+      "tag": "react-native-windows_v0.59.0-vnext.189",
+      "version": "0.59.0-vnext.189",
       "comments": {
         "prerelease": [
           {
@@ -10974,8 +10974,8 @@
     },
     {
       "date": "Tue, 17 Sep 2019 17:42:42 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.188",
-      "version": "0.59.0-packages/react-native-windows.188",
+      "tag": "react-native-windows_v0.59.0-vnext.188",
+      "version": "0.59.0-vnext.188",
       "comments": {
         "prerelease": [
           {
@@ -10988,8 +10988,8 @@
     },
     {
       "date": "Tue, 17 Sep 2019 11:32:39 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.187",
-      "version": "0.59.0-packages/react-native-windows.187",
+      "tag": "react-native-windows_v0.59.0-vnext.187",
+      "version": "0.59.0-vnext.187",
       "comments": {
         "prerelease": [
           {
@@ -11002,8 +11002,8 @@
     },
     {
       "date": "Tue, 17 Sep 2019 05:17:28 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.186",
-      "version": "0.59.0-packages/react-native-windows.186",
+      "tag": "react-native-windows_v0.59.0-vnext.186",
+      "version": "0.59.0-vnext.186",
       "comments": {
         "prerelease": [
           {
@@ -11016,8 +11016,8 @@
     },
     {
       "date": "Sat, 14 Sep 2019 14:09:03 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.185",
-      "version": "0.59.0-packages/react-native-windows.185",
+      "tag": "react-native-windows_v0.59.0-vnext.185",
+      "version": "0.59.0-vnext.185",
       "comments": {
         "none": [
           {
@@ -11037,8 +11037,8 @@
     },
     {
       "date": "Fri, 13 Sep 2019 21:56:22 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.184",
-      "version": "0.59.0-packages/react-native-windows.184",
+      "tag": "react-native-windows_v0.59.0-vnext.184",
+      "version": "0.59.0-vnext.184",
       "comments": {
         "prerelease": [
           {
@@ -11063,8 +11063,8 @@
     },
     {
       "date": "Fri, 13 Sep 2019 15:59:25 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.183",
-      "version": "0.59.0-packages/react-native-windows.183",
+      "tag": "react-native-windows_v0.59.0-vnext.183",
+      "version": "0.59.0-vnext.183",
       "comments": {
         "prerelease": [
           {
@@ -11084,8 +11084,8 @@
     },
     {
       "date": "Thu, 12 Sep 2019 23:51:35 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.182",
-      "version": "0.59.0-packages/react-native-windows.182",
+      "tag": "react-native-windows_v0.59.0-vnext.182",
+      "version": "0.59.0-vnext.182",
       "comments": {
         "prerelease": [
           {
@@ -11103,8 +11103,8 @@
     },
     {
       "date": "Wed, 11 Sep 2019 18:44:17 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.179",
-      "version": "0.59.0-packages/react-native-windows.179",
+      "tag": "react-native-windows_v0.59.0-vnext.179",
+      "version": "0.59.0-vnext.179",
       "comments": {
         "none": [
           {
@@ -11124,8 +11124,8 @@
     },
     {
       "date": "Tue, 10 Sep 2019 23:25:37 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.178",
-      "version": "0.59.0-packages/react-native-windows.178",
+      "tag": "react-native-windows_v0.59.0-vnext.178",
+      "version": "0.59.0-vnext.178",
       "comments": {
         "prerelease": [
           {
@@ -11138,8 +11138,8 @@
     },
     {
       "date": "Tue, 10 Sep 2019 19:16:08 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.177",
-      "version": "0.59.0-packages/react-native-windows.177",
+      "tag": "react-native-windows_v0.59.0-vnext.177",
+      "version": "0.59.0-vnext.177",
       "comments": {
         "prerelease": [
           {
@@ -11152,8 +11152,8 @@
     },
     {
       "date": "Tue, 10 Sep 2019 00:44:04 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.176",
-      "version": "0.59.0-packages/react-native-windows.176",
+      "tag": "react-native-windows_v0.59.0-vnext.176",
+      "version": "0.59.0-vnext.176",
       "comments": {
         "prerelease": [
           {
@@ -11164,7 +11164,7 @@
         ],
         "none": [
           {
-            "comment": "Change the CLI bundle name index.bundle (packages/react-native-windows)",
+            "comment": "Change the CLI bundle name index.bundle (vnext)",
             "author": "brkeyonz@microsoft.com",
             "commit": "f8a82c11e642baaf36a9c3889810b3e98ee61fa4"
           }
@@ -11173,8 +11173,8 @@
     },
     {
       "date": "Mon, 09 Sep 2019 21:39:46 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.175",
-      "version": "0.59.0-packages/react-native-windows.175",
+      "tag": "react-native-windows_v0.59.0-vnext.175",
+      "version": "0.59.0-vnext.175",
       "comments": {
         "prerelease": [
           {
@@ -11187,8 +11187,8 @@
     },
     {
       "date": "Mon, 09 Sep 2019 19:22:09 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.174",
-      "version": "0.59.0-packages/react-native-windows.174",
+      "tag": "react-native-windows_v0.59.0-vnext.174",
+      "version": "0.59.0-vnext.174",
       "comments": {
         "prerelease": [
           {
@@ -11201,8 +11201,8 @@
     },
     {
       "date": "Sat, 07 Sep 2019 20:17:19 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.173",
-      "version": "0.59.0-packages/react-native-windows.173",
+      "tag": "react-native-windows_v0.59.0-vnext.173",
+      "version": "0.59.0-vnext.173",
       "comments": {
         "none": [
           {
@@ -11222,8 +11222,8 @@
     },
     {
       "date": "Fri, 06 Sep 2019 18:03:18 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.172",
-      "version": "0.59.0-packages/react-native-windows.172",
+      "tag": "react-native-windows_v0.59.0-vnext.172",
+      "version": "0.59.0-vnext.172",
       "comments": {
         "none": [
           {
@@ -11243,8 +11243,8 @@
     },
     {
       "date": "Thu, 05 Sep 2019 17:37:33 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.171",
-      "version": "0.59.0-packages/react-native-windows.171",
+      "tag": "react-native-windows_v0.59.0-vnext.171",
+      "version": "0.59.0-vnext.171",
       "comments": {
         "none": [
           {
@@ -11274,8 +11274,8 @@
     },
     {
       "date": "Tue, 03 Sep 2019 21:49:49 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.170",
-      "version": "0.59.0-packages/react-native-windows.170",
+      "tag": "react-native-windows_v0.59.0-vnext.170",
+      "version": "0.59.0-vnext.170",
       "comments": {
         "prerelease": [
           {
@@ -11288,8 +11288,8 @@
     },
     {
       "date": "Tue, 03 Sep 2019 20:24:37 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.169",
-      "version": "0.59.0-packages/react-native-windows.169",
+      "tag": "react-native-windows_v0.59.0-vnext.169",
+      "version": "0.59.0-vnext.169",
       "comments": {
         "none": [
           {
@@ -11309,8 +11309,8 @@
     },
     {
       "date": "Fri, 30 Aug 2019 23:08:02 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.168",
-      "version": "0.59.0-packages/react-native-windows.168",
+      "tag": "react-native-windows_v0.59.0-vnext.168",
+      "version": "0.59.0-vnext.168",
       "comments": {
         "prerelease": [
           {
@@ -11323,8 +11323,8 @@
     },
     {
       "date": "Fri, 30 Aug 2019 20:30:25 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.167",
-      "version": "0.59.0-packages/react-native-windows.167",
+      "tag": "react-native-windows_v0.59.0-vnext.167",
+      "version": "0.59.0-vnext.167",
       "comments": {
         "prerelease": [
           {
@@ -11337,8 +11337,8 @@
     },
     {
       "date": "Fri, 30 Aug 2019 20:17:20 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.166",
-      "version": "0.59.0-packages/react-native-windows.166",
+      "tag": "react-native-windows_v0.59.0-vnext.166",
+      "version": "0.59.0-vnext.166",
       "comments": {
         "prerelease": [
           {
@@ -11351,8 +11351,8 @@
     },
     {
       "date": "Fri, 30 Aug 2019 19:46:18 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.165",
-      "version": "0.59.0-packages/react-native-windows.165",
+      "tag": "react-native-windows_v0.59.0-vnext.165",
+      "version": "0.59.0-vnext.165",
       "comments": {
         "prerelease": [
           {
@@ -11387,8 +11387,8 @@
     },
     {
       "date": "Thu, 29 Aug 2019 22:14:06 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.164",
-      "version": "0.59.0-packages/react-native-windows.164",
+      "tag": "react-native-windows_v0.59.0-vnext.164",
+      "version": "0.59.0-vnext.164",
       "comments": {
         "prerelease": [
           {
@@ -11401,8 +11401,8 @@
     },
     {
       "date": "Thu, 29 Aug 2019 20:21:10 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.163",
-      "version": "0.59.0-packages/react-native-windows.163",
+      "tag": "react-native-windows_v0.59.0-vnext.163",
+      "version": "0.59.0-vnext.163",
       "comments": {
         "prerelease": [
           {
@@ -11420,8 +11420,8 @@
     },
     {
       "date": "Thu, 29 Aug 2019 19:38:17 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.162",
-      "version": "0.59.0-packages/react-native-windows.162",
+      "tag": "react-native-windows_v0.59.0-vnext.162",
+      "version": "0.59.0-vnext.162",
       "comments": {
         "prerelease": [
           {
@@ -11434,8 +11434,8 @@
     },
     {
       "date": "Thu, 29 Aug 2019 01:41:01 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.161",
-      "version": "0.59.0-packages/react-native-windows.161",
+      "tag": "react-native-windows_v0.59.0-vnext.161",
+      "version": "0.59.0-vnext.161",
       "comments": {
         "prerelease": [
           {
@@ -11448,8 +11448,8 @@
     },
     {
       "date": "Thu, 29 Aug 2019 01:33:54 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.160",
-      "version": "0.59.0-packages/react-native-windows.160",
+      "tag": "react-native-windows_v0.59.0-vnext.160",
+      "version": "0.59.0-vnext.160",
       "comments": {
         "none": [
           {
@@ -11469,8 +11469,8 @@
     },
     {
       "date": "Wed, 28 Aug 2019 19:55:48 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.159",
-      "version": "0.59.0-packages/react-native-windows.159",
+      "tag": "react-native-windows_v0.59.0-vnext.159",
+      "version": "0.59.0-vnext.159",
       "comments": {
         "prerelease": [
           {
@@ -11488,8 +11488,8 @@
     },
     {
       "date": "Wed, 28 Aug 2019 18:34:51 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.158",
-      "version": "0.59.0-packages/react-native-windows.158",
+      "tag": "react-native-windows_v0.59.0-vnext.158",
+      "version": "0.59.0-vnext.158",
       "comments": {
         "prerelease": [
           {
@@ -11502,8 +11502,8 @@
     },
     {
       "date": "Wed, 28 Aug 2019 02:44:14 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.157",
-      "version": "0.59.0-packages/react-native-windows.157",
+      "tag": "react-native-windows_v0.59.0-vnext.157",
+      "version": "0.59.0-vnext.157",
       "comments": {
         "prerelease": [
           {
@@ -11516,8 +11516,8 @@
     },
     {
       "date": "Tue, 27 Aug 2019 04:41:01 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.156",
-      "version": "0.59.0-packages/react-native-windows.156",
+      "tag": "react-native-windows_v0.59.0-vnext.156",
+      "version": "0.59.0-vnext.156",
       "comments": {
         "prerelease": [
           {
@@ -11530,8 +11530,8 @@
     },
     {
       "date": "Mon, 26 Aug 2019 21:10:00 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.155",
-      "version": "0.59.0-packages/react-native-windows.155",
+      "tag": "react-native-windows_v0.59.0-vnext.155",
+      "version": "0.59.0-vnext.155",
       "comments": {
         "prerelease": [
           {
@@ -11544,8 +11544,8 @@
     },
     {
       "date": "Sat, 24 Aug 2019 15:32:08 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.154",
-      "version": "0.59.0-packages/react-native-windows.154",
+      "tag": "react-native-windows_v0.59.0-vnext.154",
+      "version": "0.59.0-vnext.154",
       "comments": {
         "prerelease": [
           {
@@ -11558,8 +11558,8 @@
     },
     {
       "date": "Sat, 24 Aug 2019 04:24:35 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.153",
-      "version": "0.59.0-packages/react-native-windows.153",
+      "tag": "react-native-windows_v0.59.0-vnext.153",
+      "version": "0.59.0-vnext.153",
       "comments": {
         "prerelease": [
           {
@@ -11572,8 +11572,8 @@
     },
     {
       "date": "Sat, 24 Aug 2019 04:09:20 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.152",
-      "version": "0.59.0-packages/react-native-windows.152",
+      "tag": "react-native-windows_v0.59.0-vnext.152",
+      "version": "0.59.0-vnext.152",
       "comments": {
         "prerelease": [
           {
@@ -11586,8 +11586,8 @@
     },
     {
       "date": "Fri, 23 Aug 2019 01:27:19 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.151",
-      "version": "0.59.0-packages/react-native-windows.151",
+      "tag": "react-native-windows_v0.59.0-vnext.151",
+      "version": "0.59.0-vnext.151",
       "comments": {
         "prerelease": [
           {
@@ -11600,8 +11600,8 @@
     },
     {
       "date": "Thu, 22 Aug 2019 21:17:45 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.150",
-      "version": "0.59.0-packages/react-native-windows.150",
+      "tag": "react-native-windows_v0.59.0-vnext.150",
+      "version": "0.59.0-vnext.150",
       "comments": {
         "prerelease": [
           {
@@ -11614,8 +11614,8 @@
     },
     {
       "date": "Thu, 22 Aug 2019 15:43:48 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.149",
-      "version": "0.59.0-packages/react-native-windows.149",
+      "tag": "react-native-windows_v0.59.0-vnext.149",
+      "version": "0.59.0-vnext.149",
       "comments": {
         "prerelease": [
           {
@@ -11628,8 +11628,8 @@
     },
     {
       "date": "Wed, 21 Aug 2019 23:36:09 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.148",
-      "version": "0.59.0-packages/react-native-windows.148",
+      "tag": "react-native-windows_v0.59.0-vnext.148",
+      "version": "0.59.0-vnext.148",
       "comments": {
         "none": [
           {
@@ -11642,8 +11642,8 @@
     },
     {
       "date": "Wed, 21 Aug 2019 21:34:46 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.148",
-      "version": "0.59.0-packages/react-native-windows.148",
+      "tag": "react-native-windows_v0.59.0-vnext.148",
+      "version": "0.59.0-vnext.148",
       "comments": {
         "none": [
           {
@@ -11656,8 +11656,8 @@
     },
     {
       "date": "Wed, 21 Aug 2019 20:44:12 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.148",
-      "version": "0.59.0-packages/react-native-windows.148",
+      "tag": "react-native-windows_v0.59.0-vnext.148",
+      "version": "0.59.0-vnext.148",
       "comments": {
         "prerelease": [
           {
@@ -11670,8 +11670,8 @@
     },
     {
       "date": "Wed, 21 Aug 2019 18:17:53 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.147",
-      "version": "0.59.0-packages/react-native-windows.147",
+      "tag": "react-native-windows_v0.59.0-vnext.147",
+      "version": "0.59.0-vnext.147",
       "comments": {
         "none": [
           {
@@ -11684,8 +11684,8 @@
     },
     {
       "date": "Wed, 21 Aug 2019 06:12:54 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.147",
-      "version": "0.59.0-packages/react-native-windows.147",
+      "tag": "react-native-windows_v0.59.0-vnext.147",
+      "version": "0.59.0-vnext.147",
       "comments": {
         "prerelease": [
           {
@@ -11698,8 +11698,8 @@
     },
     {
       "date": "Wed, 21 Aug 2019 00:42:37 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.146",
-      "version": "0.59.0-packages/react-native-windows.146",
+      "tag": "react-native-windows_v0.59.0-vnext.146",
+      "version": "0.59.0-vnext.146",
       "comments": {
         "prerelease": [
           {
@@ -11712,8 +11712,8 @@
     },
     {
       "date": "Tue, 20 Aug 2019 23:40:14 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.145",
-      "version": "0.59.0-packages/react-native-windows.145",
+      "tag": "react-native-windows_v0.59.0-vnext.145",
+      "version": "0.59.0-vnext.145",
       "comments": {
         "prerelease": [
           {
@@ -11731,8 +11731,8 @@
     },
     {
       "date": "Tue, 20 Aug 2019 21:54:07 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.144",
-      "version": "0.59.0-packages/react-native-windows.144",
+      "tag": "react-native-windows_v0.59.0-vnext.144",
+      "version": "0.59.0-vnext.144",
       "comments": {
         "prerelease": [
           {
@@ -11745,8 +11745,8 @@
     },
     {
       "date": "Tue, 20 Aug 2019 07:26:49 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.143",
-      "version": "0.59.0-packages/react-native-windows.143",
+      "tag": "react-native-windows_v0.59.0-vnext.143",
+      "version": "0.59.0-vnext.143",
       "comments": {
         "prerelease": [
           {
@@ -11759,8 +11759,8 @@
     },
     {
       "date": "Tue, 20 Aug 2019 03:02:53 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.142",
-      "version": "0.59.0-packages/react-native-windows.142",
+      "tag": "react-native-windows_v0.59.0-vnext.142",
+      "version": "0.59.0-vnext.142",
       "comments": {
         "prerelease": [
           {
@@ -11773,8 +11773,8 @@
     },
     {
       "date": "Mon, 19 Aug 2019 23:00:04 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.141",
-      "version": "0.59.0-packages/react-native-windows.141",
+      "tag": "react-native-windows_v0.59.0-vnext.141",
+      "version": "0.59.0-vnext.141",
       "comments": {
         "none": [
           {
@@ -11787,8 +11787,8 @@
     },
     {
       "date": "Mon, 19 Aug 2019 22:09:54 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.141",
-      "version": "0.59.0-packages/react-native-windows.141",
+      "tag": "react-native-windows_v0.59.0-vnext.141",
+      "version": "0.59.0-vnext.141",
       "comments": {
         "none": [
           {
@@ -11801,8 +11801,8 @@
     },
     {
       "date": "Mon, 19 Aug 2019 20:59:57 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.141",
-      "version": "0.59.0-packages/react-native-windows.141",
+      "tag": "react-native-windows_v0.59.0-vnext.141",
+      "version": "0.59.0-vnext.141",
       "comments": {
         "prerelease": [
           {
@@ -11815,8 +11815,8 @@
     },
     {
       "date": "Mon, 19 Aug 2019 16:43:43 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.140",
-      "version": "0.59.0-packages/react-native-windows.140",
+      "tag": "react-native-windows_v0.59.0-vnext.140",
+      "version": "0.59.0-vnext.140",
       "comments": {
         "prerelease": [
           {
@@ -11876,8 +11876,8 @@
     },
     {
       "date": "Wed, 14 Aug 2019 14:23:33 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.139",
-      "version": "0.59.0-packages/react-native-windows.139",
+      "tag": "react-native-windows_v0.59.0-vnext.139",
+      "version": "0.59.0-vnext.139",
       "comments": {
         "none": [
           {
@@ -11890,8 +11890,8 @@
     },
     {
       "date": "Tue, 13 Aug 2019 19:56:52 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.139",
-      "version": "0.59.0-packages/react-native-windows.139",
+      "tag": "react-native-windows_v0.59.0-vnext.139",
+      "version": "0.59.0-vnext.139",
       "comments": {
         "prerelease": [
           {
@@ -11909,8 +11909,8 @@
     },
     {
       "date": "Mon, 12 Aug 2019 23:13:59 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.138",
-      "version": "0.59.0-packages/react-native-windows.138",
+      "tag": "react-native-windows_v0.59.0-vnext.138",
+      "version": "0.59.0-vnext.138",
       "comments": {
         "prerelease": [
           {
@@ -11923,8 +11923,8 @@
     },
     {
       "date": "Mon, 12 Aug 2019 21:06:24 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.137",
-      "version": "0.59.0-packages/react-native-windows.137",
+      "tag": "react-native-windows_v0.59.0-vnext.137",
+      "version": "0.59.0-vnext.137",
       "comments": {
         "prerelease": [
           {
@@ -11937,8 +11937,8 @@
     },
     {
       "date": "Mon, 12 Aug 2019 20:02:04 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.136",
-      "version": "0.59.0-packages/react-native-windows.136",
+      "tag": "react-native-windows_v0.59.0-vnext.136",
+      "version": "0.59.0-vnext.136",
       "comments": {
         "prerelease": [
           {
@@ -11951,8 +11951,8 @@
     },
     {
       "date": "Sun, 11 Aug 2019 04:57:41 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.135",
-      "version": "0.59.0-packages/react-native-windows.135",
+      "tag": "react-native-windows_v0.59.0-vnext.135",
+      "version": "0.59.0-vnext.135",
       "comments": {
         "prerelease": [
           {
@@ -11965,8 +11965,8 @@
     },
     {
       "date": "Sat, 10 Aug 2019 19:21:55 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.134",
-      "version": "0.59.0-packages/react-native-windows.134",
+      "tag": "react-native-windows_v0.59.0-vnext.134",
+      "version": "0.59.0-vnext.134",
       "comments": {
         "prerelease": [
           {
@@ -11979,8 +11979,8 @@
     },
     {
       "date": "Fri, 09 Aug 2019 22:37:48 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.133",
-      "version": "0.59.0-packages/react-native-windows.133",
+      "tag": "react-native-windows_v0.59.0-vnext.133",
+      "version": "0.59.0-vnext.133",
       "comments": {
         "prerelease": [
           {
@@ -11993,8 +11993,8 @@
     },
     {
       "date": "Fri, 09 Aug 2019 19:20:03 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.132",
-      "version": "0.59.0-packages/react-native-windows.132",
+      "tag": "react-native-windows_v0.59.0-vnext.132",
+      "version": "0.59.0-vnext.132",
       "comments": {
         "prerelease": [
           {
@@ -12007,8 +12007,8 @@
     },
     {
       "date": "Fri, 09 Aug 2019 06:07:04 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.131",
-      "version": "0.59.0-packages/react-native-windows.131",
+      "tag": "react-native-windows_v0.59.0-vnext.131",
+      "version": "0.59.0-vnext.131",
       "comments": {
         "prerelease": [
           {
@@ -12021,8 +12021,8 @@
     },
     {
       "date": "Fri, 09 Aug 2019 04:18:45 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.130",
-      "version": "0.59.0-packages/react-native-windows.130",
+      "tag": "react-native-windows_v0.59.0-vnext.130",
+      "version": "0.59.0-vnext.130",
       "comments": {
         "prerelease": [
           {
@@ -12035,8 +12035,8 @@
     },
     {
       "date": "Fri, 09 Aug 2019 03:27:03 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.129",
-      "version": "0.59.0-packages/react-native-windows.129",
+      "tag": "react-native-windows_v0.59.0-vnext.129",
+      "version": "0.59.0-vnext.129",
       "comments": {
         "prerelease": [
           {
@@ -12049,8 +12049,8 @@
     },
     {
       "date": "Thu, 08 Aug 2019 23:35:13 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.128",
-      "version": "0.59.0-packages/react-native-windows.128",
+      "tag": "react-native-windows_v0.59.0-vnext.128",
+      "version": "0.59.0-vnext.128",
       "comments": {
         "prerelease": [
           {
@@ -12063,8 +12063,8 @@
     },
     {
       "date": "Thu, 08 Aug 2019 22:19:50 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.127",
-      "version": "0.59.0-packages/react-native-windows.127",
+      "tag": "react-native-windows_v0.59.0-vnext.127",
+      "version": "0.59.0-vnext.127",
       "comments": {
         "prerelease": [
           {
@@ -12077,8 +12077,8 @@
     },
     {
       "date": "Thu, 08 Aug 2019 20:57:44 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.126",
-      "version": "0.59.0-packages/react-native-windows.126",
+      "tag": "react-native-windows_v0.59.0-vnext.126",
+      "version": "0.59.0-vnext.126",
       "comments": {
         "prerelease": [
           {
@@ -12091,8 +12091,8 @@
     },
     {
       "date": "Thu, 08 Aug 2019 19:59:38 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.125",
-      "version": "0.59.0-packages/react-native-windows.125",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
       "comments": {
         "none": [
           {
@@ -12105,8 +12105,8 @@
     },
     {
       "date": "Thu, 08 Aug 2019 05:33:20 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.125",
-      "version": "0.59.0-packages/react-native-windows.125",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
       "comments": {
         "none": [
           {
@@ -12119,8 +12119,8 @@
     },
     {
       "date": "Thu, 08 Aug 2019 03:25:36 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.125",
-      "version": "0.59.0-packages/react-native-windows.125",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
       "comments": {
         "none": [
           {
@@ -12133,8 +12133,8 @@
     },
     {
       "date": "Wed, 07 Aug 2019 20:23:35 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.125",
-      "version": "0.59.0-packages/react-native-windows.125",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
       "comments": {
         "none": [
           {
@@ -12147,8 +12147,8 @@
     },
     {
       "date": "Wed, 07 Aug 2019 17:07:35 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.125",
-      "version": "0.59.0-packages/react-native-windows.125",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
       "comments": {
         "prerelease": [
           {
@@ -12161,8 +12161,8 @@
     },
     {
       "date": "Wed, 07 Aug 2019 16:00:25 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.124",
-      "version": "0.59.0-packages/react-native-windows.124",
+      "tag": "react-native-windows_v0.59.0-vnext.124",
+      "version": "0.59.0-vnext.124",
       "comments": {
         "prerelease": [
           {
@@ -12175,8 +12175,8 @@
     },
     {
       "date": "Tue, 06 Aug 2019 21:09:10 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.123",
-      "version": "0.59.0-packages/react-native-windows.123",
+      "tag": "react-native-windows_v0.59.0-vnext.123",
+      "version": "0.59.0-vnext.123",
       "comments": {
         "prerelease": [
           {
@@ -12189,8 +12189,8 @@
     },
     {
       "date": "Tue, 06 Aug 2019 18:30:23 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.122",
-      "version": "0.59.0-packages/react-native-windows.122",
+      "tag": "react-native-windows_v0.59.0-vnext.122",
+      "version": "0.59.0-vnext.122",
       "comments": {
         "prerelease": [
           {
@@ -12203,8 +12203,8 @@
     },
     {
       "date": "Tue, 06 Aug 2019 15:46:10 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.121",
-      "version": "0.59.0-packages/react-native-windows.121",
+      "tag": "react-native-windows_v0.59.0-vnext.121",
+      "version": "0.59.0-vnext.121",
       "comments": {
         "prerelease": [
           {
@@ -12217,8 +12217,8 @@
     },
     {
       "date": "Tue, 06 Aug 2019 00:59:54 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.120",
-      "version": "0.59.0-packages/react-native-windows.120",
+      "tag": "react-native-windows_v0.59.0-vnext.120",
+      "version": "0.59.0-vnext.120",
       "comments": {
         "prerelease": [
           {
@@ -12231,8 +12231,8 @@
     },
     {
       "date": "Mon, 05 Aug 2019 17:37:47 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.119",
-      "version": "0.59.0-packages/react-native-windows.119",
+      "tag": "react-native-windows_v0.59.0-vnext.119",
+      "version": "0.59.0-vnext.119",
       "comments": {
         "prerelease": [
           {
@@ -12250,8 +12250,8 @@
     },
     {
       "date": "Mon, 05 Aug 2019 16:01:04 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.118",
-      "version": "0.59.0-packages/react-native-windows.118",
+      "tag": "react-native-windows_v0.59.0-vnext.118",
+      "version": "0.59.0-vnext.118",
       "comments": {
         "none": [
           {
@@ -12264,8 +12264,8 @@
     },
     {
       "date": "Mon, 05 Aug 2019 06:09:37 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.118",
-      "version": "0.59.0-packages/react-native-windows.118",
+      "tag": "react-native-windows_v0.59.0-vnext.118",
+      "version": "0.59.0-vnext.118",
       "comments": {
         "prerelease": [
           {
@@ -12278,8 +12278,8 @@
     },
     {
       "date": "Mon, 05 Aug 2019 00:09:47 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.117",
-      "version": "0.59.0-packages/react-native-windows.117",
+      "tag": "react-native-windows_v0.59.0-vnext.117",
+      "version": "0.59.0-vnext.117",
       "comments": {
         "prerelease": [
           {
@@ -12292,8 +12292,8 @@
     },
     {
       "date": "Sat, 03 Aug 2019 17:26:50 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.116",
-      "version": "0.59.0-packages/react-native-windows.116",
+      "tag": "react-native-windows_v0.59.0-vnext.116",
+      "version": "0.59.0-vnext.116",
       "comments": {
         "prerelease": [
           {
@@ -12306,8 +12306,8 @@
     },
     {
       "date": "Sat, 03 Aug 2019 04:30:38 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.115",
-      "version": "0.59.0-packages/react-native-windows.115",
+      "tag": "react-native-windows_v0.59.0-vnext.115",
+      "version": "0.59.0-vnext.115",
       "comments": {
         "prerelease": [
           {
@@ -12367,8 +12367,8 @@
     },
     {
       "date": "Sun, 28 Jul 2019 12:44:00 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.110",
-      "version": "0.59.0-packages/react-native-windows.110",
+      "tag": "react-native-windows_v0.59.0-vnext.110",
+      "version": "0.59.0-vnext.110",
       "comments": {
         "prerelease": [
           {
@@ -12381,8 +12381,8 @@
     },
     {
       "date": "Fri, 26 Jul 2019 08:32:04 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.109",
-      "version": "0.59.0-packages/react-native-windows.109",
+      "tag": "react-native-windows_v0.59.0-vnext.109",
+      "version": "0.59.0-vnext.109",
       "comments": {
         "prerelease": [
           {
@@ -12395,8 +12395,8 @@
     },
     {
       "date": "Fri, 26 Jul 2019 07:23:20 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.108",
-      "version": "0.59.0-packages/react-native-windows.108",
+      "tag": "react-native-windows_v0.59.0-vnext.108",
+      "version": "0.59.0-vnext.108",
       "comments": {
         "prerelease": [
           {
@@ -12409,8 +12409,8 @@
     },
     {
       "date": "Fri, 26 Jul 2019 05:43:01 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.107",
-      "version": "0.59.0-packages/react-native-windows.107",
+      "tag": "react-native-windows_v0.59.0-vnext.107",
+      "version": "0.59.0-vnext.107",
       "comments": {
         "prerelease": [
           {
@@ -12423,8 +12423,8 @@
     },
     {
       "date": "Thu, 25 Jul 2019 00:29:50 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.106",
-      "version": "0.59.0-packages/react-native-windows.106",
+      "tag": "react-native-windows_v0.59.0-vnext.106",
+      "version": "0.59.0-vnext.106",
       "comments": {
         "prerelease": [
           {
@@ -12437,8 +12437,8 @@
     },
     {
       "date": "Wed, 24 Jul 2019 21:03:23 GMT",
-      "tag": "react-native-windows_v0.59.0-packages/react-native-windows.105",
-      "version": "0.59.0-packages/react-native-windows.105",
+      "tag": "react-native-windows_v0.59.0-vnext.105",
+      "version": "0.59.0-vnext.105",
       "comments": {
         "prerelease": [
           {
