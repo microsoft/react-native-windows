@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 17 May 2021 15:09:02 GMT and should not be manually modified.
+This log was last generated on Mon, 31 May 2021 15:07:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.31
+
+Mon, 31 May 2021 15:07:23 GMT
+
+### Patches
+
+- Update .net uwp version (agnel@microsoft.com)
 
 ## 0.63.29
 
