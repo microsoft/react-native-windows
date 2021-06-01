@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 31 May 2021 15:23:18 GMT",
+      "tag": "react-native-windows_v0.65.0-preview.1",
+      "version": "0.65.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add forked ToAscii.h unblocking CI",
+            "author": "agnel@microsoft.com",
+            "commit": "af8adfa9a7bded3a3db2e187579d3e9213b783b1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add error message when an exception happens in a native module (in Debug)",
+            "author": "asklar@microsoft.com",
+            "commit": "a62113bf40fa51d832d067ae76678fd7bb2e5495",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.65] Update .net UWP package versions",
+            "author": "asklar@microsoft.com",
+            "commit": "a81f139821cd12c30ec29cf43ae1cacbe657e33e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix JSValue memory leak in move constructor",
+            "author": "vmorozov@microsoft.com",
+            "commit": "90a788dc3832c6bb0e0227d146a87ee339466de2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Hermes inspector was broken on Hermes v0.8 package as some changes were not correctly migrated from 0.7 branch.",
+            "author": "email not defined",
+            "commit": "b44beafda110bccb4b4c812b46d0d3c961452dc3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Native build logic shouldn't delete PCH's on all CI machines",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a23ed1c405b58d652a9de36b69c1e45ad42bb165",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Promote 0.65 to preview",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d6d7f00b51a68c7ab7c3b3e50cdb2be8b17929f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 May 2021 21:40:00 GMT",
       "tag": "react-native-windows_v0.0.0-canary.316",
       "version": "0.0.0-canary.316",

@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 21 May 2021 21:40:00 GMT and should not be manually modified.
+This log was last generated on Mon, 31 May 2021 15:23:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.65.0-preview.1
+
+Mon, 31 May 2021 15:23:18 GMT
+
+### Changes
+
+- add forked ToAscii.h unblocking CI (agnel@microsoft.com)
+- Add error message when an exception happens in a native module (in Debug) (asklar@microsoft.com)
+- [0.65] Update .net UWP package versions (asklar@microsoft.com)
+- Fix JSValue memory leak in move constructor (vmorozov@microsoft.com)
+- Hermes inspector was broken on Hermes v0.8 package as some changes were not correctly migrated from 0.7 branch. (email not defined)
+- Native build logic shouldn't delete PCH's on all CI machines (ngerlem@microsoft.com)
+- Promote 0.65 to preview (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.316
 

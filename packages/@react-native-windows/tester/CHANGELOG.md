@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/tester
 
-This log was last generated on Fri, 21 May 2021 21:40:00 GMT and should not be manually modified.
+This log was last generated on Mon, 31 May 2021 15:23:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Mon, 31 May 2021 15:23:18 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.65.0-preview.1 (agnel@microsoft.com)
 
 ## 0.0.1
 

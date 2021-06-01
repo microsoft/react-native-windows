@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32-tester
 
-This log was last generated on Fri, 21 May 2021 05:17:18 GMT and should not be manually modified.
+This log was last generated on Mon, 31 May 2021 15:23:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Mon, 31 May 2021 15:23:18 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.4.14 (ngerlem@microsoft.com)
 
 ## 0.0.1
 

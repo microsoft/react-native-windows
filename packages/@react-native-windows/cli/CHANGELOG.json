@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 31 May 2021 15:23:18 GMT",
+      "tag": "@react-native-windows/cli_v0.65.0-preview.1",
+      "version": "0.65.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Patch Community CLI Metro in RNW CLI postinstall",
+            "author": "ngerlem@microsoft.com",
+            "commit": "94d595c0615c3fb03ddf71a68aaf031188a34252",
+            "package": "@react-native-windows/cli"
+          },
+          {
+            "comment": "Promote 0.65 to preview",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d6d7f00b51a68c7ab7c3b3e50cdb2be8b17929f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 May 2021 21:40:00 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.71",
       "version": "0.0.0-canary.71",
