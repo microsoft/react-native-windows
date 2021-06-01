@@ -59,6 +59,7 @@ void MainPage::OnLoadClick(
     mainComponentName = unbox_value<hstring>(item);
   }
   ReactRootView().ComponentName(mainComponentName);
+  ReactRootView().ExperimentalUseFabric(x_UseFabric().IsChecked().GetBoolean());
   ReactRootView().ReactNativeHost(host);
 
   host.InstanceSettings().UseDeveloperSupport(true);
@@ -72,9 +73,6 @@ void MainPage::OnLoadClick(
   if (!m_bundlerHostname.empty()) {
     host.InstanceSettings().DebugHost(m_bundlerHostname);
   }
-
-  winrt::Microsoft::ReactNative::QuirkSettings::SetEnableFabric(
-      host.InstanceSettings(), x_UseFabric().IsChecked().GetBoolean());
 
   host.InstanceSettings().InstanceCreated(
       [wkThis = get_weak()](auto sender, winrt::Microsoft::ReactNative::InstanceCreatedEventArgs args) {

@@ -34,9 +34,10 @@ namespace Microsoft::ReactNative {
 
 std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag);
 
-TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context)
+TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context, bool fabric)
     : m_xamlView(nullptr),
       m_context(&context),
+      m_fabric(fabric),
       m_batchingEventEmitter{
           std::make_shared<winrt::Microsoft::ReactNative::BatchingEventEmitter>(Mso::CntPtr(&context))} {}
 
@@ -410,8 +411,10 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
   changedIndices.push_back(pointerIndex);
 
 #ifdef USE_FABRIC
-  if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+  std::shared_ptr<FabricUIManager> fabricuiManager;
+  if (m_fabric &&
+      !!(fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties())))) {
     std::unordered_set<facebook::react::SharedTouchEventEmitter> uniqueEventEmitters = {};
     std::vector<facebook::react::SharedTouchEventEmitter> emittersForIndex;
 

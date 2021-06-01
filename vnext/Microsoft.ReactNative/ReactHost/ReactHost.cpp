@@ -161,30 +161,6 @@ bool ReactOptions::UseWebDebugger() const noexcept {
   return winrt::unbox_value_or<bool>(properties.Get(UseWebDebuggerProperty()), false);
 }
 
-void ReactOptions::SetEnableFabric(bool enabled) noexcept {
-  SetEnableFabric(Properties, enabled);
-}
-
-bool ReactOptions::EnableFabric() const noexcept {
-  return EnableFabric(Properties);
-}
-
-/*static*/ void ReactOptions::SetEnableFabric(
-    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
-    bool value) noexcept {
-  properties.Set(EnableFabricProperty(), winrt::box_value(value));
-
-  if (value) {
-    // Fabric is incompatible with WebDebugging
-    SetUseWebDebugger(properties, false);
-  }
-}
-
-/*static*/ bool ReactOptions::EnableFabric(
-    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
-  return winrt::unbox_value_or<bool>(properties.Get(EnableFabricProperty()), false);
-}
-
 bool ReactOptions::UseLiveReload() const noexcept {
   return UseLiveReload(Properties);
 }

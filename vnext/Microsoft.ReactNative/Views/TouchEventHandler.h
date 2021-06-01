@@ -29,7 +29,7 @@ namespace Microsoft::ReactNative {
 
 class TouchEventHandler {
  public:
-  TouchEventHandler(const Mso::React::IReactContext &context);
+  TouchEventHandler(const Mso::React::IReactContext &context, bool fabric);
   virtual ~TouchEventHandler();
 
   void AddTouchHandlers(XamlView xamlView);
@@ -107,6 +107,7 @@ class TouchEventHandler {
 
   XamlView m_xamlView;
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
+  bool m_fabric;
   std::shared_ptr<winrt::Microsoft::ReactNative::BatchingEventEmitter> m_batchingEventEmitter;
 };
 
