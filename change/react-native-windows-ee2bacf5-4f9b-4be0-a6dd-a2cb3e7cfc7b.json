@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "CG: Update vulnerable versions of ws to 7.4.6",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
