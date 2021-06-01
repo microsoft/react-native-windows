@@ -91,7 +91,7 @@ namespace Microsoft::React {
 WinRTWebSocketResource::WinRTWebSocketResource(
     IMessageWebSocket &&socket,
     Uri &&uri,
-    vector<ChainValidationResult> certExeptions) noexcept
+    vector<ChainValidationResult> &&certExeptions) noexcept
     : WinRTWebSocketResource(
           std::move(socket),
           DataWriter{socket.OutputStream()},

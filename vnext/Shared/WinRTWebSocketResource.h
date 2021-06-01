@@ -46,7 +46,8 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
   WinRTWebSocketResource(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
       winrt::Windows::Foundation::Uri &&uri,
-      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExeptions) noexcept;
+      std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExeptions)
+      noexcept;
 
   winrt::Windows::Foundation::IAsyncAction PerformConnect() noexcept;
   winrt::fire_and_forget PerformPing() noexcept;
