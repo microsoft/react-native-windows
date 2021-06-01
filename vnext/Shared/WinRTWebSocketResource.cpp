@@ -73,9 +73,10 @@ auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
 } // resume_in_queue
 
 string HResultToString(hresult_error const &e) {
-  std::stringstream hexCode;
-  hexCode << "[0x" << std::hex << e.code() << "] ";
-  return hexCode.str() + winrt::to_string(e.message());
+  std::stringstream stream;
+  stream << "[0x" << std::hex << e.code() << "] " << winrt::to_string(e.message());
+
+  return stream.str();
 }
 
 string HResultToString(hresult &&result) {
@@ -90,28 +91,28 @@ namespace Microsoft::React {
 WinRTWebSocketResource::WinRTWebSocketResource(
     IMessageWebSocket &&socket,
     Uri &&uri,
-    vector<ChainValidationResult> certExeptions) noexcept
+    vector<ChainValidationResult> &&certExceptions)
     : WinRTWebSocketResource(
           std::move(socket),
           DataWriter{socket.OutputStream()},
           std::move(uri),
-          std::move(certExeptions)) {}
+          std::move(certExceptions)) {}
 
 WinRTWebSocketResource::WinRTWebSocketResource(
     IMessageWebSocket &&socket,
     IDataWriter &&writer,
     Uri &&uri,
-    vector<ChainValidationResult> &&certExeptions)
+    vector<ChainValidationResult> &&certExceptions)
     : m_uri{std::move(uri)}, m_socket{std::move(socket)}, m_writer{std::move(writer)} {
   m_socket.MessageReceived({this, &WinRTWebSocketResource::OnMessageReceived});
 
-  for (const auto &certException : certExeptions) {
+  for (const auto &certException : certExceptions) {
     m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
   }
 }
 
-WinRTWebSocketResource::WinRTWebSocketResource(const string &urlString, vector<ChainValidationResult> &&certExeptions)
-    : WinRTWebSocketResource(MessageWebSocket{}, Uri{winrt::to_hstring(urlString)}, std::move(certExeptions)) {}
+WinRTWebSocketResource::WinRTWebSocketResource(const string &urlString, vector<ChainValidationResult> &&certExceptions)
+    : WinRTWebSocketResource(MessageWebSocket{}, Uri{winrt::to_hstring(urlString)}, std::move(certExceptions)) {}
 
 WinRTWebSocketResource::~WinRTWebSocketResource() noexcept /*override*/
 {
