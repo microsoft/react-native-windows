@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix Text.BackgroundColor overwriting foreground. (#7707)",
-  "packageName": "react-native-windows",
-  "email": "igklemen@microsoft.com",
-  "dependentChangeType": "patch"
-}

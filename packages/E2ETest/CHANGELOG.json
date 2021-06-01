@@ -2,6 +2,21 @@
   "name": "e2etest",
   "entries": [
     {
+      "date": "Mon, 31 May 2021 15:25:41 GMT",
+      "tag": "e2etest_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "igklemen@microsoft.com",
+            "commit": "440f694353b7387812735878299c22b5f8d0ebcf",
+            "package": "e2etest"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 May 2021 15:09:06 GMT",
       "tag": "e2etest_v0.0.54",
       "version": "0.0.54",
