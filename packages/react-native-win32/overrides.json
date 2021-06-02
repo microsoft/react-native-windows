@@ -331,6 +331,14 @@
       "issue": "LEGACY_FIXME"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/LogBox/UI/LogBoxInspectorHeader.win32.js",
+      "baseFile": "Libraries/LogBox/UI/LogBoxInspectorHeader.js",
+      "baseVersion": "0.63.2",
+      "baseHash": "a69f43f63a365875af68538ed95080c537597266",
+      "issue": 5886
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/LogBox/UI/LogBoxInspectorStackFrame.win32.js",
       "baseFile": "Libraries/LogBox/UI/LogBoxInspectorStackFrame.js",
