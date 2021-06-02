@@ -18,6 +18,7 @@
     "webdriverio": "^6.9.0"
   },
   "devDependencies": {
+    "@jest/types": "^26.6.2",
     "@rnw-scripts/eslint-config": "1.1.6",
     "@rnw-scripts/just-task": "2.1.1",
     "@rnw-scripts/ts-config": "1.1.0",
@@ -29,7 +30,8 @@
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
-    "jest": ">=26.0.0"
+    "jest": ">=26.0.0",
+    "jest-environment-node": ">=26.0.0"
   },
   "files": [
     "lib-commonjs",

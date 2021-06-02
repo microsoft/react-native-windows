@@ -4,7 +4,8 @@
   "license": "MIT",
   "main": "eslintrc.js",
   "dependencies": {
-    "@react-native-community/eslint-config": "^2.0.0"
+    "@react-native-community/eslint-config": "^2.0.0",
+    "eslint-config-prettier": "^6.0.0"
   },
   "devDependencies": {
     "eslint": "7.12.0",

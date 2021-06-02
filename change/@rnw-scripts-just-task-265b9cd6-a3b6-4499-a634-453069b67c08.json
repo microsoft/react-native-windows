@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Check for missing dependencies during lint",
+  "packageName": "@rnw-scripts/just-task",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
