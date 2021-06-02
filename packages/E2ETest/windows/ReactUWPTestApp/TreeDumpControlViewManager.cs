@@ -30,8 +30,9 @@ namespace TreeDumpLibrary
             m_textBlock = new TextBlock();
             m_textBlock.TextWrapping = TextWrapping.Wrap;
             m_textBlock.IsTextSelectionEnabled = false;
-            m_textBlock.LayoutUpdated += (source, e) =>
+            m_textBlock.LayoutUpdated += async (source, e) =>
             {
+                await KnownFolders.DocumentsLibrary.CreateFolderAsync("TreeDump", CreationCollisionOption.OpenIfExists);
                 ApplicationView.GetForCurrentView().TryResizeView(new Size(800, 600));
                 var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
                 if (bounds.Width != 800 || bounds.Height != 600)
@@ -105,7 +106,7 @@ namespace TreeDumpLibrary
 
         public async static Task<bool> DoesTreeDumpMatchForRNTester(DependencyObject root)
         {
-            string json = VisualTreeDumper.DumpTree(root, null, new string[] { }, DumpTreeMode.Json);
+            string json = VisualTreeDumper.DumpTree(root, null, new string[] { }, new AttachedProperty[] { });
             try
             {
                 var obj = JsonValue.Parse(json).GetObject();
@@ -160,7 +161,7 @@ namespace TreeDumpLibrary
         public static async Task<bool> MatchDump(string outputJson, string masterFileRelativePath, string outputFileRelativePath)
         {
             Debug.WriteLine($"master file = {Windows.ApplicationModel.Package.Current.InstalledLocation.Path}\\Assets\\{masterFileRelativePath}");
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFolder storageFolder = KnownFolders.DocumentsLibrary;
             Debug.WriteLine($"output file = {storageFolder.Path + "\\" + outputFileRelativePath}");
 
             StorageFile outFile = await storageFolder.CreateFileAsync(outputFileRelativePath, CreationCollisionOption.ReplaceExisting);
@@ -180,7 +181,7 @@ namespace TreeDumpLibrary
             }
         }
 
-        internal static async Task<bool> MatchTreeDumpFromLayoutUpdateAsync(string dumpID, string uiaId, TextBlock textBlock, IList<string> additionalProperties, DumpTreeMode mode, string dumpExpectedText)
+        internal static async Task<bool> MatchTreeDumpFromLayoutUpdateAsync(string dumpID, string uiaId, TextBlock textBlock, IList<string> additionalProperties, string dumpExpectedText)
         {
             // First find root
             DependencyObject current = textBlock;
@@ -202,7 +203,7 @@ namespace TreeDumpLibrary
                 }
             }
 
-            string dumpText = VisualTreeDumper.DumpTree(dumpRoot, textBlock, additionalProperties, mode);
+            string dumpText = VisualTreeDumper.DumpTree(dumpRoot, textBlock, additionalProperties, new AttachedProperty[] { });
             if (dumpText != dumpExpectedText)
             {
                 return await MatchDump(dumpText, GetMasterFile(dumpID), GetOutputFile(dumpID));
@@ -215,10 +216,10 @@ namespace TreeDumpLibrary
             m_timer.Stop();
             if (VisualTreeHelper.GetParent(m_textBlock) != null)
             {
-                var matchSuccessful = await MatchTreeDumpFromLayoutUpdateAsync(m_dumpID, m_uiaID, m_textBlock, m_additionalProperties, DumpTreeMode.Json, m_dumpExpectedText);
+                var matchSuccessful = await MatchTreeDumpFromLayoutUpdateAsync(m_dumpID, m_uiaID, m_textBlock, m_additionalProperties, m_dumpExpectedText);
                 if (!matchSuccessful)
                 {
-                    StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+                    StorageFolder storageFolder = KnownFolders.DocumentsLibrary;
                     StorageFile outFile = await storageFolder.GetFileAsync(GetOutputFile(m_dumpID));
                     StorageFile masterFile = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync($@"Assets\{GetMasterFile(m_dumpID)}");
 
@@ -310,7 +311,7 @@ namespace TreeDumpLibrary
 
         private async Task WriteErrorFile()
         {
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFolder storageFolder = KnownFolders.DocumentsLibrary;
             string fileNameError = "TreeDump\\" + m_dumpID + ".err";
             try
             {

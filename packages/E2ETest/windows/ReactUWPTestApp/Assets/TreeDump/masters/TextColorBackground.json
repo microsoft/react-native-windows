@@ -6,15 +6,188 @@
   "Clip": null,
   "CornerRadius": "0,0,0,0",
   "FlowDirection": "LeftToRight",
-  "Height": 95,
+  "Height": 247,
   "HorizontalAlignment": "Stretch",
   "Margin": "0,0,0,0",
-  "RenderSize": [800, 95],
+  "RenderSize": [800, 247],
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
   "Width": 800,
   "AutomationId": "TextColorBackgroundView",
   "children": [
+  {
+    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    "Clip": null,
+    "FlowDirection": "LeftToRight",
+    "Foreground": "#FFFFC0CB",
+    "Height": 19,
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [800, 19],
+    "Text": "Outer pink",
+    "TextHighlighters": [],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "Width": 800
+  },
+  {
+    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    "Clip": null,
+    "FlowDirection": "LeftToRight",
+    "Foreground": "#FF000000",
+    "Height": 19,
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [800, 19],
+    "Text": "Outer red nested",
+    "TextHighlighters": [],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "Width": 800
+  },
+  {
+    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    "Clip": null,
+    "FlowDirection": "LeftToRight",
+    "Foreground": "#FF000000",
+    "Height": 19,
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [800, 19],
+    "Text": "Outer nested white on blue",
+    "TextHighlighters": [{
+"Background": "#FF0000FF",
+"Foreground": "#FFFFFFFF",
+"Ranges": [{"StartIndex":6,"Length":20}]
+}
+],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "Width": 800
+  },
+  {
+    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    "Clip": null,
+    "FlowDirection": "LeftToRight",
+    "Foreground": "#FFFFC0CB",
+    "Height": 19,
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [800, 19],
+    "Text": "Outer pink nested red",
+    "TextHighlighters": [],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "Width": 800
+  },
+  {
+    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    "Clip": null,
+    "FlowDirection": "LeftToRight",
+    "Foreground": "#FF000000",
+    "Height": 19,
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [800, 19],
+    "Text": "Outer on green nested white on inherit green",
+    "TextHighlighters": [{
+"Background": "#FF008000",
+"Foreground": null,
+"Ranges": [{"StartIndex":0,"Length":14}]
+}
+,{
+"Background": "#FF008000",
+"Foreground": null,
+"Ranges": [{"StartIndex":14,"Length":1}]
+}
+,{
+"Background": "#FF008000",
+"Foreground": "#FFFFFFFF",
+"Ranges": [{"StartIndex":15,"Length":29}]
+}
+],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "Width": 800
+  },
+  {
+    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    "Clip": null,
+    "FlowDirection": "LeftToRight",
+    "Foreground": "#FFFFA500",
+    "Height": 19,
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [800, 19],
+    "Text": "Outer orange on green nested white on blue",
+    "TextHighlighters": [{
+"Background": "#FF008000",
+"Foreground": "#FFFFA500",
+"Ranges": [{"StartIndex":0,"Length":21}]
+}
+,{
+"Background": "#FF008000",
+"Foreground": "#FFFFA500",
+"Ranges": [{"StartIndex":21,"Length":1}]
+}
+,{
+"Background": "#FF0000FF",
+"Foreground": "#FFFFFFFF",
+"Ranges": [{"StartIndex":22,"Length":20}]
+}
+],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "Width": 800
+  },
+  {
+    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    "Clip": null,
+    "FlowDirection": "LeftToRight",
+    "Foreground": "#FFFFA500",
+    "Height": 19,
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [800, 19],
+    "Text": "Outer orange nested white on blue",
+    "TextHighlighters": [{
+"Background": "#FF0000FF",
+"Foreground": "#FFFFFFFF",
+"Ranges": [{"StartIndex":13,"Length":20}]
+}
+],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "Width": 800
+  },
+  {
+    "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    "Clip": null,
+    "FlowDirection": "LeftToRight",
+    "Foreground": "#FFFFA500",
+    "Height": 19,
+    "HorizontalAlignment": "Stretch",
+    "Margin": "0,0,0,0",
+    "Padding": "0,0,0,0",
+    "RenderSize": [800, 19],
+    "Text": "nested orange inherit on blue",
+    "TextHighlighters": [{
+"Background": "#FF0000FF",
+"Foreground": "#FFFFA500",
+"Ranges": [{"StartIndex":0,"Length":29}]
+}
+],
+    "VerticalAlignment": "Stretch",
+    "Visibility": "Visible",
+    "Width": 800
+  },
   {
     "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     "Clip": null,
@@ -28,22 +201,27 @@
     "Text": "Outer no_color START_NESTED green DEEPER_NESTED blue END_NESTED attributes.",
     "TextHighlighters": [{
 "Background": "#FF008000",
+"Foreground": null,
 "Ranges": [{"StartIndex":15,"Length":18}]
 }
 ,{
 "Background": "#FF008000",
+"Foreground": null,
 "Ranges": [{"StartIndex":33,"Length":1}]
 }
 ,{
 "Background": "#FF0000FF",
+"Foreground": null,
 "Ranges": [{"StartIndex":34,"Length":18}]
 }
 ,{
 "Background": "#FF008000",
+"Foreground": null,
 "Ranges": [{"StartIndex":52,"Length":1}]
 }
 ,{
 "Background": "#FF008000",
+"Foreground": null,
 "Ranges": [{"StartIndex":53,"Length":10}]
 }
 ],
@@ -64,6 +242,7 @@
     "Text": "Outer no_color START_NESTED no_color DEEPER_NESTED blue END_NESTED attributes.",
     "TextHighlighters": [{
 "Background": "#FF0000FF",
+"Foreground": null,
 "Ranges": [{"StartIndex":37,"Length":18}]
 }
 ],
@@ -84,18 +263,22 @@
     "Text": "Outer no_color START_NESTED green DEEPER_NESTED inherit green END_NESTED attributes.",
     "TextHighlighters": [{
 "Background": "#FF008000",
+"Foreground": null,
 "Ranges": [{"StartIndex":15,"Length":19}]
 }
 ,{
 "Background": "#FF008000",
+"Foreground": null,
 "Ranges": [{"StartIndex":34,"Length":27}]
 }
 ,{
 "Background": "#FF008000",
+"Foreground": null,
 "Ranges": [{"StartIndex":61,"Length":1}]
 }
 ,{
 "Background": "#FF008000",
+"Foreground": null,
 "Ranges": [{"StartIndex":62,"Length":10}]
 }
 ],
@@ -116,34 +299,42 @@
     "Text": "Outer red START_NESTED inherit red DEEPER_NESTED inherit red END_NESTED attributes.",
     "TextHighlighters": [{
 "Background": "#FFFF0000",
+"Foreground": null,
 "Ranges": [{"StartIndex":0,"Length":9}]
 }
 ,{
 "Background": "#FFFF0000",
+"Foreground": null,
 "Ranges": [{"StartIndex":9,"Length":1}]
 }
 ,{
 "Background": "#FFFF0000",
+"Foreground": null,
 "Ranges": [{"StartIndex":10,"Length":25}]
 }
 ,{
 "Background": "#FFFF0000",
+"Foreground": null,
 "Ranges": [{"StartIndex":35,"Length":25}]
 }
 ,{
 "Background": "#FFFF0000",
+"Foreground": null,
 "Ranges": [{"StartIndex":60,"Length":1}]
 }
 ,{
 "Background": "#FFFF0000",
+"Foreground": null,
 "Ranges": [{"StartIndex":61,"Length":10}]
 }
 ,{
 "Background": "#FFFF0000",
+"Foreground": null,
 "Ranges": [{"StartIndex":71,"Length":1}]
 }
 ,{
 "Background": "#FFFF0000",
+"Foreground": null,
 "Ranges": [{"StartIndex":72,"Length":11}]
 }
 ],
@@ -164,38 +355,47 @@
     "Text": "Outer red START_NESTED green DEEPER_NESTED blue END_NESTED attributes.",
     "TextHighlighters": [{
 "Background": "#FFFF0000",
+"Foreground": null,
 "Ranges": [{"StartIndex":0,"Length":9}]
 }
 ,{
 "Background": "#FFFF0000",
+"Foreground": null,
 "Ranges": [{"StartIndex":9,"Length":1}]
 }
 ,{
 "Background": "#FF008000",
+"Foreground": null,
 "Ranges": [{"StartIndex":10,"Length":18}]
 }
 ,{
 "Background": "#FF008000",
+"Foreground": null,
 "Ranges": [{"StartIndex":28,"Length":1}]
 }
 ,{
 "Background": "#FF0000FF",
+"Foreground": null,
 "Ranges": [{"StartIndex":29,"Length":18}]
 }
 ,{
 "Background": "#FF008000",
+"Foreground": null,
 "Ranges": [{"StartIndex":47,"Length":1}]
 }
 ,{
 "Background": "#FF008000",
+"Foreground": null,
 "Ranges": [{"StartIndex":48,"Length":10}]
 }
 ,{
 "Background": "#FFFF0000",
+"Foreground": null,
 "Ranges": [{"StartIndex":58,"Length":1}]
 }
 ,{
 "Background": "#FFFF0000",
+"Foreground": null,
 "Ranges": [{"StartIndex":59,"Length":11}]
 }
 ],
