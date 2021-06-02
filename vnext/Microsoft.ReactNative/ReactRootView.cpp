@@ -69,11 +69,22 @@ void ReactRootView::InitialProps(ReactNative::JSValueArgWriter const &value) noe
   }
 }
 
+bool ReactRootView::ExperimentalUseFabric() const noexcept {
+  return m_useFabric;
+}
+void ReactRootView::ExperimentalUseFabric(bool value) noexcept {
+  if (m_useFabric != value) {
+    m_useFabric = value;
+    ReloadView();
+  }
+}
+
 void ReactRootView::ReloadView() noexcept {
   if (m_reactNativeHost && !m_componentName.empty()) {
     Mso::React::ReactViewOptions viewOptions{};
     viewOptions.ComponentName = to_string(m_componentName);
     viewOptions.InitialProps = m_initialProps;
+    viewOptions.UseFabric = m_useFabric;
     if (auto reactViewHost = ReactViewHost()) {
       reactViewHost->ReloadViewInstanceWithOptions(std::move(viewOptions));
     } else {
@@ -151,7 +162,8 @@ void ReactRootView::InitRootView(
   m_context = &reactInstance->GetReactContext();
   m_reactViewOptions = std::make_unique<Mso::React::ReactViewOptions>(std::move(reactViewOptions));
 
-  m_touchEventHandler = std::make_shared<::Microsoft::ReactNative::TouchEventHandler>(*m_context);
+  m_touchEventHandler = std::make_shared<::Microsoft::ReactNative::TouchEventHandler>(
+      *m_context, m_reactViewOptions->UseFabric && !reactInstance->Options().UseWebDebugger());
   m_SIPEventHandler = std::make_shared<::Microsoft::ReactNative::SIPEventHandler>(*m_context);
   m_previewKeyboardEventHandlerOnRoot =
       std::make_shared<::Microsoft::ReactNative::PreviewKeyboardEventHandlerOnRoot>(*m_context);
@@ -200,7 +212,7 @@ void ReactRootView::UninitRootView() noexcept {
 
   if (m_isJSViewAttached) {
     if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
-      reactInstance->DetachRootView(this);
+      reactInstance->DetachRootView(this, m_reactViewHost->Options().UseFabric);
     }
   }
 
@@ -269,7 +281,8 @@ void ReactRootView::ShowInstanceLoaded() noexcept {
     ClearLoadingUI();
 
     if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
-      reactInstance->AttachMeasuredRootView(this, Mso::Copy(m_reactViewOptions->InitialProps));
+      reactInstance->AttachMeasuredRootView(
+          this, Mso::Copy(m_reactViewOptions->InitialProps), m_reactViewOptions->UseFabric);
     }
     m_isJSViewAttached = true;
   }
@@ -422,7 +435,8 @@ Windows::Foundation::Size ReactRootView::MeasureOverride(Windows::Foundation::Si
   }
 
 #ifdef USE_FABRIC
-  if (m_isInitialized && m_reactOptions->EnableFabric() && m_rootTag != -1) {
+  if (m_isInitialized && m_useFabric && !Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()) &&
+      m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
       facebook::react::LayoutContext context;
@@ -459,7 +473,8 @@ Windows::Foundation::Size ReactRootView::ArrangeOverride(Windows::Foundation::Si
   }
 
 #ifdef USE_FABRIC
-  if (m_isInitialized && m_reactOptions->EnableFabric() && m_rootTag != -1) {
+  if (m_isInitialized && m_useFabric && !Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()) &&
+      m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
       facebook::react::LayoutContext context;
