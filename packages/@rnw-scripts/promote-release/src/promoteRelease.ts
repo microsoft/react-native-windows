@@ -12,10 +12,10 @@
  * @format
  */
 
-import * as chalk from 'chalk';
-import * as child_process from 'child_process';
-import * as simplegit from 'simple-git/promise';
-import * as yargs from 'yargs';
+import chalk from 'chalk';
+import child_process from 'child_process';
+import simplegit from 'simple-git/promise';
+import yargs from 'yargs';
 
 import {
   enumerateRepoPackages,

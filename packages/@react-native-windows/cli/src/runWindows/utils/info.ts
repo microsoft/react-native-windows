@@ -5,7 +5,7 @@
  */
 
 // @ts-ignore no typings
-import * as envinfo from 'envinfo';
+import envinfo from 'envinfo';
 
 export async function getEnvironmentInfo(): Promise<string> {
   return await envinfo.run({

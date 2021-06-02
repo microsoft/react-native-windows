@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  * @format
  */
-import * as React from 'react';
+import React from 'react';
 import {AppRegistry, View} from 'react-native';
 
 export default class Bootstrap extends React.Component {

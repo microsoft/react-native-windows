@@ -9,7 +9,7 @@
 // guarantee correct types
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
-import * as path from 'path';
+import path from 'path';
 
 import * as configUtils from './configUtils';
 

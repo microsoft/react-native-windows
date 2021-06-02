@@ -5,9 +5,9 @@
  * @format
  */
 
-import * as _ from 'lodash';
-import * as path from 'path';
-import * as semver from 'semver';
+import _ from 'lodash';
+import path from 'path';
+import semver from 'semver';
 import {
   enumerateRepoPackages,
   findPackage,

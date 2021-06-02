@@ -6,8 +6,8 @@
 
 import {CodedError} from '@react-native-windows/telemetry';
 import {execSync} from 'child_process';
-import * as path from 'path';
-import * as shell from 'shelljs';
+import path from 'path';
+import shell from 'shelljs';
 import Version from './version';
 
 type Requirement =

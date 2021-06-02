@@ -5,12 +5,12 @@
  */
 
 import {totalmem, EOL} from 'os';
-import * as fs from 'fs';
-import * as path from 'path';
-import * as child_process from 'child_process';
-import * as chalk from 'chalk';
-import * as os from 'os';
-import * as shell from 'shelljs';
+import fs from 'fs';
+import path from 'path';
+import child_process from 'child_process';
+import chalk from 'chalk';
+import os from 'os';
+import shell from 'shelljs';
 import Version from './version';
 import * as checkRequirements from './checkRequirements';
 import {

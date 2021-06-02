@@ -4,9 +4,9 @@
  * @format
  */
 
-import * as crypto from 'crypto';
-import * as fs from 'fs';
-import * as path from 'path';
+import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
 import {
   Telemetry,
   isMSFTInternal,
@@ -17,7 +17,7 @@ import {
 } from '@react-native-windows/telemetry';
 
 import * as build from './utils/build';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import * as deploy from './utils/deploy';
 import {newError, newInfo, newWarn} from './utils/commandWithProgress';
 import * as info from './utils/info';

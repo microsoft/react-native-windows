@@ -5,7 +5,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {PlatformColor, StyleSheet, Text, View} from 'react-native';
 
 const TestInstructions: React.FC = () => {

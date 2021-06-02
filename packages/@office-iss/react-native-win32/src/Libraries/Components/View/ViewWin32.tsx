@@ -4,7 +4,7 @@
  * RN-specific implementation of the cross-platform View abstraction.
  */
 
-import * as React from 'react';
+import React from 'react'
 import RN = require('react-native');
 import { View, findNodeHandle, NativeModules } from 'react-native';
 import { IViewWin32Props, UseFrom } from './ViewWin32.Props';

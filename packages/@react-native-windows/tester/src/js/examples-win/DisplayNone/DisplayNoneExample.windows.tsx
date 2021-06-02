@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {Switch, Text, TextInput, View} from 'react-native';
 const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');

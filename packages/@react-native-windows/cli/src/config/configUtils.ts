@@ -4,12 +4,12 @@
  * @format
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
-import * as glob from 'glob';
+import fs from 'fs';
+import path from 'path';
+import glob from 'glob';
 
 import {DOMParser} from 'xmldom';
-import * as xpath from 'xpath';
+import xpath from 'xpath';
 import {CodedError} from '@react-native-windows/telemetry';
 
 const msbuildSelect = xpath.useNamespaces({

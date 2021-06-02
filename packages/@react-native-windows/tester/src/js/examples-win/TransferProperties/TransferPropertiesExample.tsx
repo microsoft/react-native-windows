@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {StyleSheet, Button, Text, View} from 'react-native';
 
 const styles = StyleSheet.create({

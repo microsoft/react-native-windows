@@ -5,7 +5,7 @@
  * @format
  */
 
-import * as xml2js from 'xml2js';
+import xml2js from 'xml2js';
 import {applyTemplateRules} from './string-template';
 import {DocCompound, DocMemberOverload} from '../doc-model';
 import {DoxMember} from '../doxygen-model';

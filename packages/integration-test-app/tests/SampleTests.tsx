@@ -5,7 +5,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {assert} from 'chai';
 import {AsyncStorage, Image, Platform} from 'react-native';
 import {functionTest, componentTest} from './lib/TestDefinition';

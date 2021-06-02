@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {Text, TouchableHighlight, View, ViewStyle} from 'react-native';
 import {Picker} from 'react-native-windows';
 

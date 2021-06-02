@@ -1,4 +1,4 @@
-import * as path from 'path';
+import path from 'path';
 import { projectConfigWindows } from '../config/projectConfig';
 import {AutolinkWindows} from '../runWindows/utils/autolink';
 import {DOMParser} from 'xmldom';

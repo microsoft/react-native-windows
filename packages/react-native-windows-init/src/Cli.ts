@@ -5,16 +5,16 @@
  * @format
  */
 
-import * as yargs from 'yargs';
-import * as fs from 'fs';
-import * as semver from 'semver';
+import yargs from 'yargs';
+import fs from 'fs';
+import semver from 'semver';
 import {exec, execSync} from 'child_process';
-import * as validUrl from 'valid-url';
-import * as prompts from 'prompts';
-import * as findUp from 'find-up';
-import * as chalk from 'chalk';
+import validUrl from 'valid-url';
+import prompts from 'prompts';
+import findUp from 'find-up';
+import chalk from 'chalk';
 // @ts-ignore
-import * as Registry from 'npm-registry';
+import Registry from 'npm-registry';
 
 import {
   Telemetry,
