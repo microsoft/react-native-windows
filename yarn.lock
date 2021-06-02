@@ -9962,12 +9962,12 @@ scheduler@^0.20.1, scheduler@^0.20.2:
     object-assign "^4.1.1"
 
 screenshot-desktop@^1.12.2:
-  version "1.12.3"
-  resolved "https://registry.yarnpkg.com/screenshot-desktop/-/screenshot-desktop-1.12.3.tgz#49a84d6494c4c8711ab21099aa0b38dce3d66a93"
-  integrity sha512-lNUldOOSNbbz36OUR224tkpnBzViLVY+ohElubC8yqtfRXHuZucOcacmweKm9+yyGd+EuuYtrDhaAZ8jfh6V1A==
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/screenshot-desktop/-/screenshot-desktop-1.12.4.tgz#4502a0ce5b3915936985848ee2b8badce17e3c5e"
+  integrity sha512-93gM8PV6W5CEbl60bcEBwuErA23O1jh+svEPdwCoRbZ2VP3z2eGVeSMmxC9Bj3Gofw0XY4CPenhbwjKwKGB25A==
   dependencies:
     pinkie-promise "^2.0.1"
-    temp "^0.9.0"
+    temp "^0.9.4"
 
 scss-parser@^1.0.4:
   version "1.0.4"
@@ -10731,11 +10731,12 @@ temp@^0.8.1:
   dependencies:
     rimraf "~2.6.2"
 
-temp@^0.9.0:
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/temp/-/temp-0.9.1.tgz#2d666114fafa26966cd4065996d7ceedd4dd4697"
-  integrity sha512-WMuOgiua1xb5R56lE0eH6ivpVmg/lq2OHm4+LtT/xtEtPQ+sz6N3bBM6WZ5FvO1lO4IKIOb43qnhoc4qxP5OeA==
+temp@^0.9.4:
+  version "0.9.4"
+  resolved "https://registry.yarnpkg.com/temp/-/temp-0.9.4.tgz#cd20a8580cb63635d0e4e9d4bd989d44286e7620"
+  integrity sha512-yYrrsWnrXMcdsnu/7YMYAofM1ktpL5By7vZhf15CrXijWWrEYZks5AXBudalfSWJLlnen/QUJUB5aoB0kqZUGA==
   dependencies:
+    mkdirp "^0.5.1"
     rimraf "~2.6.2"
 
 tempfile@^2.0.0:
