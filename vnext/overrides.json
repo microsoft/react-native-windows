@@ -6,13 +6,13 @@
     "ReactCommon/TEMP_UntilReactCommonUpdate/**"
   ],
   "excludePatterns": [],
-  "baseVersion": "0.0.0-7e05480cc",
+  "baseVersion": "0.0.0-438a4cf59",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "da1871d982a9d96c7f8235bb6c6efbb790f17cd1"
+      "baseHash": "4ffdd0f412a3de45ad8a532a4d105b22f0d5ea49"
     },
     {
       "type": "patch",
@@ -41,13 +41,6 @@
       "baseFile": "ReactCommon/react/renderer/leakchecker/LeakChecker.cpp",
       "baseHash": "71e63e48a41f515954445737b6b09540b8416113",
       "issue": 7619
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBufferBuilder.cpp",
-      "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBufferBuilder.cpp",
-      "baseHash": "2aed54df1dcb93f3e4366eb083804af541aa8b13",
-      "issue": 7591
     },
     {
       "type": "patch",
@@ -88,7 +81,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "f0b44bc2db7a958ed54e45131169b3f6734890f2"
+      "baseHash": "ef954129bcecf1cba9f786bd2a32327adfb735a5"
     },
     {
       "type": "platform",
@@ -330,7 +323,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "2d01902a9edd76f728e9044e2ed8a35d44f34424"
+      "baseHash": "094dff18be0d1ae4af56cb826c193cf113c2902e"
     },
     {
       "type": "patch",
@@ -350,7 +343,7 @@
       "type": "patch",
       "file": "src/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.windows.js",
       "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js",
-      "baseHash": "c6d80f9ea60e5802d2e67ed50a78f2b6840d1162"
+      "baseHash": "4feb9470b41bf6bc9b492c5f6f3ff75f872e4668"
     },
     {
       "type": "patch",
