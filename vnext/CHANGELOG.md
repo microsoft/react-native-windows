@@ -1,8 +1,36 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 25 May 2021 19:36:43 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Jun 2021 05:09:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.318
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.4.15 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.7 (ngerlem@microsoft.com)
+
+### Changes
+
+- Upgrade Windows SDK to 10.0.19041.0 (julio.rocha@microsoft.com)
+- Update V8 package version (tudor.mihai@microsoft.com)
+- Allow propagating WinRT WS resource constructor exceptions (julio.rocha@microsoft.com)
+- Do not mark instance as IsProfiling when using fastrefresh (30809111+acoates-ms@users.noreply.github.com)
+- Adds event coalescing to TouchEventHandler (erozell@outlook.com)
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
+- I18n.AllowRTL should default to true (30809111+acoates-ms@users.noreply.github.com)
+- Add uwp version 2.2.12 (agnel@microsoft.com)
+- Add error message when an exception happens in a native module (in Debug) (asklar@microsoft.com)
+- Make private constructor certExceptions r-value (julio.rocha@microsoft.com)
+- Check for missing dependencies during lint (ngerlem@microsoft.com)
+- Hermes inspector was broken on Hermes v0.8 package as some changes were not correctly migrated from 0.7 branch. (email not defined)
+- Integrate RN nightly May 5. (igklemen@microsoft.com)
+- Native build logic shouldn't delete PCH's on all CI machines (ngerlem@microsoft.com)
+- Make Fabric a per RootView setting (30809111+acoates-ms@users.noreply.github.com)
+- Fix JSValue memory leak in move constructor (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.317
 

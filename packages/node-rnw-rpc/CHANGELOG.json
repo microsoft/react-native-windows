@@ -2,6 +2,47 @@
   "name": "node-rnw-rpc",
   "entries": [
     {
+      "date": "Thu, 03 Jun 2021 05:09:47 GMT",
+      "tag": "node-rnw-rpc_v1.0.7",
+      "version": "1.0.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable esModuleInterop Repo Wide",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6c871e6ba27888804c776e5deeefbc7064e181d0",
+            "package": "node-rnw-rpc"
+          },
+          {
+            "comment": "Integrate RN nightly May 5.",
+            "author": "igklemen@microsoft.com",
+            "commit": "c20df6949bc907e6170faee00616c8a31a757a37",
+            "package": "node-rnw-rpc"
+          },
+          {
+            "comment": "Upgrade Windows SDK to 10.0.19041.0",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "933eee37877a1c50abb523b8ce90c44e77ee496b",
+            "package": "node-rnw-rpc"
+          },
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.318",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b481f0a4ea68a8100860eb061902b715fca6652e",
+            "package": "node-rnw-rpc"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.1.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b481f0a4ea68a8100860eb061902b715fca6652e",
+            "package": "node-rnw-rpc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 May 2021 19:36:43 GMT",
       "tag": "node-rnw-rpc_v1.0.7-1",
       "version": "1.0.7-1",

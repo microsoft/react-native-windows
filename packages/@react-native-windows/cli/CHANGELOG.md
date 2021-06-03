@@ -1,8 +1,25 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 21 May 2021 21:40:00 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Jun 2021 05:09:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.72
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.2 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/ts-config to v2.0.0 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.7 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/jest-unittest-config to v1.2.2 (ngerlem@microsoft.com)
+
+### Changes
+
+- Upgrade Windows SDK to 10.0.19041.0 (julio.rocha@microsoft.com)
+- Check for missing dependencies during lint (ngerlem@microsoft.com)
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.71
 

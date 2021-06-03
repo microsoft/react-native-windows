@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Check for missing dependencies during lint",
-  "packageName": "@rnw-bots/coordinator",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

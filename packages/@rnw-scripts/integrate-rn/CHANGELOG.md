@@ -1,8 +1,22 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Fri, 21 May 2021 05:17:18 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Jun 2021 05:09:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.32
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-platform-override to v1.4.15 (ngerlem@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.21 (ngerlem@microsoft.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.18 (ngerlem@microsoft.com)
 
 ## 1.0.31
 

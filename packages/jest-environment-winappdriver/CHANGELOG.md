@@ -1,8 +1,21 @@
 # Change Log - jest-environment-winappdriver
 
-This log was last generated on Tue, 25 May 2021 19:36:43 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Jun 2021 05:09:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.7
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Check for missing dependencies during lint (ngerlem@microsoft.com)
+
+### Changes
+
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
+- Bump node-rnw-rpc to v1.0.7 (ngerlem@microsoft.com)
 
 ## 1.1.7-1
 

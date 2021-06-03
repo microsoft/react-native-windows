@@ -2,6 +2,125 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 03 Jun 2021 05:09:47 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.318",
+      "version": "0.0.0-canary.318",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade Windows SDK to 10.0.19041.0",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "933eee37877a1c50abb523b8ce90c44e77ee496b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 package version",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "f2e98c11333bc8fe4f8dbfdf8cdd5a9123ca08e0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow propagating WinRT WS resource constructor exceptions",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "89535226a5e2121bf986105cdb67dfbca2c25df0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Do not mark instance as IsProfiling when using fastrefresh",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "fa07c47b56acbe1b6671fa18830f7130246f9294",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Adds event coalescing to TouchEventHandler",
+            "author": "erozell@outlook.com",
+            "commit": "6cdb97acc166f209cf7e63202fd4a55c3e2cb041",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Enable esModuleInterop Repo Wide",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6c871e6ba27888804c776e5deeefbc7064e181d0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "I18n.AllowRTL should default to true",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e106221f7298037833918a905c0b903640ed6dd2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add uwp version 2.2.12",
+            "author": "agnel@microsoft.com",
+            "commit": "b9832d0422cfb2c4e2e0bbc709aa645f837f6d99",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add error message when an exception happens in a native module (in Debug)",
+            "author": "asklar@microsoft.com",
+            "commit": "141d453df621de42e8de542fce3a7ad23f098c64",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Make private constructor certExceptions r-value",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "ab1879c84e7b61c8118208c896d0695eda2b9c20",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Check for missing dependencies during lint",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b481f0a4ea68a8100860eb061902b715fca6652e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Hermes inspector was broken on Hermes v0.8 package as some changes were not correctly migrated from 0.7 branch.",
+            "author": "email not defined",
+            "commit": "c2c94ea1d394c661fd3dc13a485f45adc09be525",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate RN nightly May 5.",
+            "author": "igklemen@microsoft.com",
+            "commit": "c20df6949bc907e6170faee00616c8a31a757a37",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Native build logic shouldn't delete PCH's on all CI machines",
+            "author": "ngerlem@microsoft.com",
+            "commit": "237c9f02f1e3afc327da924eb39fae5283b3308a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Make Fabric a per RootView setting",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "b8d9904fd91df22f6e3059881736ac2bddae79aa",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix JSValue memory leak in move constructor",
+            "author": "vmorozov@microsoft.com",
+            "commit": "ef5d7d66a850a6ce16a3e1cdf808059c1eef93ce",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.15",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6c871e6ba27888804c776e5deeefbc7064e181d0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.7",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b481f0a4ea68a8100860eb061902b715fca6652e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 May 2021 19:36:43 GMT",
       "tag": "react-native-windows_v0.0.0-canary.317",
       "version": "0.0.0-canary.317",

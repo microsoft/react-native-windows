@@ -1,8 +1,23 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 21 May 2021 05:17:18 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Jun 2021 05:09:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.92
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.4.15 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.7 (ngerlem@microsoft.com)
+
+### Changes
+
+- Integrate RN nightly May 5. (igklemen@microsoft.com)
+- Adding accessibilityControls property on ViewWin32. Needed for the Live Persona Picker (safreibe@microsoft.com)
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.91
 

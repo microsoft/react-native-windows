@@ -2,6 +2,35 @@
   "name": "jest-environment-winappdriver",
   "entries": [
     {
+      "date": "Thu, 03 Jun 2021 05:09:47 GMT",
+      "tag": "jest-environment-winappdriver_v1.1.7",
+      "version": "1.1.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable esModuleInterop Repo Wide",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6c871e6ba27888804c776e5deeefbc7064e181d0",
+            "package": "jest-environment-winappdriver"
+          },
+          {
+            "comment": "Bump node-rnw-rpc to v1.0.7",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b481f0a4ea68a8100860eb061902b715fca6652e",
+            "package": "jest-environment-winappdriver"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Check for missing dependencies during lint",
+            "author": "ngerlem@microsoft.com",
+            "commit": "b481f0a4ea68a8100860eb061902b715fca6652e",
+            "package": "jest-environment-winappdriver"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 May 2021 19:36:43 GMT",
       "tag": "jest-environment-winappdriver_v1.1.7-1",
       "version": "1.1.7-1",

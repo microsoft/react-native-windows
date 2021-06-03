@@ -1,8 +1,22 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Fri, 21 May 2021 21:40:00 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Jun 2021 05:09:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.56
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Check for missing dependencies during lint (ngerlem@microsoft.com)
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.72 (julio.rocha@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.19 (ngerlem@microsoft.com)
 
 ## 1.1.55
 

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrade Windows SDK to 10.0.19041.0",
-  "packageName": "node-rnw-rpc",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

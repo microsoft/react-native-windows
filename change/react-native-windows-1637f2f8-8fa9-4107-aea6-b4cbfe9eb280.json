@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Check for missing dependencies during lint",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

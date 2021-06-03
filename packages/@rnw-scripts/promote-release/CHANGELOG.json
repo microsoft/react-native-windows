@@ -2,6 +2,41 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Thu, 03 Jun 2021 05:09:47 GMT",
+      "tag": "@rnw-scripts/promote-release_v1.2.22",
+      "version": "1.2.22",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update prompterelease to stamp beachball branch configuration",
+            "author": "dannyvv@microsoft.com",
+            "commit": "4764c627853ddde73b7ec0ae2a17c7dc2e6fc188",
+            "package": "@rnw-scripts/promote-release"
+          },
+          {
+            "comment": "Enable esModuleInterop Repo Wide",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6c871e6ba27888804c776e5deeefbc7064e181d0",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.21",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6c871e6ba27888804c776e5deeefbc7064e181d0",
+            "package": "@rnw-scripts/promote-release"
+          },
+          {
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.18",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6c871e6ba27888804c776e5deeefbc7064e181d0",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 May 2021 19:36:43 GMT",
       "tag": "@rnw-scripts/promote-release_v1.2.21",
       "version": "1.2.21",

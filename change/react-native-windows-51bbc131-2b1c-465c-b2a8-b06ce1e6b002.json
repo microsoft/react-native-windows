@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Native build logic shouldn't delete PCH's on all CI machines",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
