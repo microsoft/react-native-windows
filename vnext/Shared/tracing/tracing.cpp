@@ -174,11 +174,11 @@ void counterJSHook(uint64_t tag, const std::string &profile_name, int value) {
       TraceLoggingInt64(value, "value"));
 }
 
-void initializeJSHooks(jsi::Runtime &runtime) {
+void initializeJSHooks(jsi::Runtime &runtime, bool isProfiling) {
   // TODO:: Assess the performance impact of hooking up the JS trace events. Especially when the tracing is not enabled.
   // If significant, this should be put under flag based on devsettings
 
-  runtime.global().setProperty(runtime, "__RCTProfileIsProfiling", true);
+  runtime.global().setProperty(runtime, "__RCTProfileIsProfiling", isProfiling);
 
   runtime.global().setProperty(
       runtime,
