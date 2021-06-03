@@ -10,7 +10,6 @@
 
 'use strict';
 
-import Image from '../../Image/Image';
 import Platform from '../../Utilities/Platform';
 import * as React from 'react';
 import StyleSheet from '../../StyleSheet/StyleSheet';
@@ -61,7 +60,6 @@ function LogBoxInspectorHeader(props: Props): React.Node {
         </View>
         <LogBoxInspectorHeaderButton
           disabled={props.total <= 1}
-          focusable={true}
           level={props.level}
           image={'→'}
           onPress={() => props.onSelectIndex(nextIndex)}
