@@ -288,6 +288,13 @@
       "baseHash": "b11d03daa2e3f828a350667f543b2cda4fa65dbf"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/LogBox/UI/LogBoxInspectorHeader.win32.js",
+      "baseFile": "Libraries/LogBox/UI/LogBoxInspectorHeader.js",
+      "baseHash": "03ecf9d83da622e51396fe37136d5c15d26ccbe2",
+      "issue": 5886
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/LogBox/UI/LogBoxInspectorStackFrame.win32.js",
       "baseFile": "Libraries/LogBox/UI/LogBoxInspectorStackFrame.js",
