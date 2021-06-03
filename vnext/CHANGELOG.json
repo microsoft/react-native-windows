@@ -2,6 +2,120 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 31 May 2021 15:25:41 GMT",
+      "tag": "react-native-windows_v0.64.10",
+      "version": "0.64.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Text.BackgroundColor overwriting foreground. (#7707)",
+            "author": "igklemen@microsoft.com",
+            "commit": "440f694353b7387812735878299c22b5f8d0ebcf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add error message when an exception happens in a native module (in Debug)",
+            "author": "asklar@microsoft.com",
+            "commit": "fb0db424fc037358dc786f3455dc2f7a76e4aa10",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix JSValue memory leak in move constructor",
+            "author": "vmorozov@microsoft.com",
+            "commit": "3bfe8e154a17ad87c2297fca57a5256a8c572e68",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update .net uwp package version",
+            "author": "agnel@microsoft.com",
+            "commit": "8209eb5308bfcb4e8865b8c3ff365f505aa31b4b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 May 2021 15:09:06 GMT",
+      "tag": "react-native-windows_v0.64.9",
+      "version": "0.64.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix MSBuild Bundling When Path Contains Spaces",
+            "author": "ngerlem@microsoft.com",
+            "commit": "061fc642d25fa40fb9a7e08a888a88bc10eabb40",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Fix transitive dependencies for C# nuget-based apps #7786",
+            "author": "jthysell@microsoft.com",
+            "commit": "8e1ef742828122055a6e6da75613d4e4db0df1f1",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 May 2021 17:16:08 GMT",
+      "tag": "react-native-windows_v0.64.8",
+      "version": "0.64.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.64] Upgrade JSI.Desktop projects version of ChakraCore",
+            "author": "jthysell@microsoft.com",
+            "commit": "7734d7bf647f3dc79fa70ef02c5003496b84cf29",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use memory-mapping in BasePreparedScriptStoreImpl::tryGetPreparedScript",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "d00548f578f2f871caad0d5c0e96c0ddcbac1009",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update brush cache when theme changes",
+            "author": "asklar@microsoft.com",
+            "commit": "269861da60a56c94f71ae784fdcb04074f96c0be",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 10 May 2021 15:06:33 GMT",
+      "tag": "react-native-windows_v0.64.7",
+      "version": "0.64.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "If initial value is set, updated TextInput.value changes will not be reflected",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "82f12b42b73624f69eb094592492228d3abd48fe",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Update Microsoft.ChakraCore to 1.11.24 (#7628)",
+            "author": "jthysell@microsoft.com",
+            "commit": "04b400432f3c6db0874de7732715eb264960eca4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Initialize ETW provider only once",
+            "author": "asklar@microsoft.com",
+            "commit": "e7efb40200b0817d5490a5b6e9a76c3df7329b76",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Last year, we had plumbed the Systrace sections and events in the core react native to windows code and fired ETW events. But, it was hard for people to use because we used manifest based ETW events. This change converts the event triggering code to use Tracelogging APIs (aka self describing events) which doesn't require the manifest to be registered on the host machine to inspect traces.\n Post this change, the systrace events can be inspected on any windows machines where the RNW based apps are running by issuing the following commands, \nwpr.exe -start rnw.wprp\nwpr.exe -stop rnw.etl\nwpa.exe rnw.etl\n\nThis works for Win32 apps too, say Office.",
+            "author": "mganandraj@outlook.com",
+            "commit": "e7efb40200b0817d5490a5b6e9a76c3df7329b76",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 May 2021 14:06:32 GMT",
       "tag": "react-native-windows_v0.64.6",
       "version": "0.64.6",

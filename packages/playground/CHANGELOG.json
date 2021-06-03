@@ -2,6 +2,66 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Mon, 31 May 2021 15:25:41 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "igklemen@microsoft.com",
+            "commit": "440f694353b7387812735878299c22b5f8d0ebcf",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 May 2021 15:09:06 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "061fc642d25fa40fb9a7e08a888a88bc10eabb40",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 May 2021 17:16:08 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "jthysell@microsoft.com",
+            "commit": "7734d7bf647f3dc79fa70ef02c5003496b84cf29",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 10 May 2021 15:06:33 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "82f12b42b73624f69eb094592492228d3abd48fe",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 May 2021 14:06:32 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",
