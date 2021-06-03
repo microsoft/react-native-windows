@@ -61,7 +61,6 @@ function LogBoxInspectorHeader(props: Props): React.Node {
         </View>
         <LogBoxInspectorHeaderButton
           disabled={props.total <= 1}
-          focusable={true}
           level={props.level}
           image={'→'}
           onPress={() => props.onSelectIndex(nextIndex)}
