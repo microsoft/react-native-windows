@@ -61,7 +61,6 @@
          </View>
          <LogBoxInspectorHeaderButton
            disabled={props.total <= 1}
-           focusable={true}
            level={props.level}
            image={'→'}
            onPress={() => props.onSelectIndex(nextIndex)}
