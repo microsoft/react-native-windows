@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 04 Jun 2021 23:23:19 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.9",
+      "version": "0.63.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use text instead of images for LogBox arrows",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "8428e608a976d502c75428a1e4d1607644238ff0",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Mar 2021 22:43:28 GMT",
       "tag": "@office-iss/react-native-win32_v0.63.8",
       "version": "0.63.8",

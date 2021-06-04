@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 04 Jun 2021 23:23:19 GMT",
+      "tag": "react-native-windows_v0.63.32",
+      "version": "0.63.32",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow propagating WinRTWebSocketResource constructor exceptions (#7892)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "4026d6ba20f8ab171cee2394e36abbcdde8f9977",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Try to work around new nuget braking change",
+            "author": "dannyvv@microsoft.com",
+            "commit": "bc22bbc0809e09fb0a2eae2406fe10f2bf481c06",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "V8 package update",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "1575e0a8d7feda58cb6b59a6e6bcac8338f47d96",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add JSI.MemoryMappedScriptStore runtime option to control usage of MemoryMappedBuffer (#7943)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "4567dace6e5d31da6cf067a420ac2e761dc82d47",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix JSValue memory leak in move constructor",
+            "author": "vmorozov@microsoft.com",
+            "commit": "e5df6cce082c8d6344a19bfdb7dfe1a2fd7b0daa",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 May 2021 15:07:23 GMT",
       "tag": "react-native-windows_v0.63.31",
       "version": "0.63.31",

@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Try to work around new nuget braking change",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2021-06-02T04:05:37.421Z"
-}

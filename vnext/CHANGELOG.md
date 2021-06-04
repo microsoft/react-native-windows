@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 31 May 2021 15:07:23 GMT and should not be manually modified.
+This log was last generated on Fri, 04 Jun 2021 23:23:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.32
+
+Fri, 04 Jun 2021 23:23:19 GMT
+
+### Patches
+
+- Allow propagating WinRTWebSocketResource constructor exceptions (#7892) (julio.rocha@microsoft.com)
+- Try to work around new nuget braking change (dannyvv@microsoft.com)
+- V8 package update (tudor.mihai@microsoft.com)
+- Add JSI.MemoryMappedScriptStore runtime option to control usage of MemoryMappedBuffer (#7943) (julio.rocha@microsoft.com)
+- Fix JSValue memory leak in move constructor (vmorozov@microsoft.com)
 
 ## 0.63.31
 

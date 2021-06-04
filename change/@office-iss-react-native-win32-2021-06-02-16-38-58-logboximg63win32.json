@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Use text instead of images for LogBox arrows",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch",
-  "date": "2021-06-02T23:38:58.846Z"
-}
