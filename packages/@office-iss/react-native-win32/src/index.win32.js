@@ -249,7 +249,7 @@ module.exports = {
     return require('./Libraries/Components/StatusBar/StatusBar');
   },
   get Switch(): Switch {
-    return require('./Libraries/Components/Switch/Switch').default;
+    return require('./Libraries/Components/Switch/Switch');
   },
   get Text(): Text {
     return require('./Libraries/Text/Text');
