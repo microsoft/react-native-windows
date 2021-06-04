@@ -142,11 +142,6 @@ namespace facebook {
 namespace react {
 
 namespace {
-void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
-#ifdef ENABLE_JS_SYSTRACE_TO_ETW
-  facebook::react::tracing::initializeJSHooks(runtime);
-#endif
-}
 
 class OJSIExecutorFactory : public JSExecutorFactory {
  public:
@@ -179,24 +174,34 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     }
 
     return std::make_unique<JSIExecutor>(
-        runtimeHolder_->getRuntime(), std::move(delegate), JSIExecutor::defaultTimeoutInvoker, runtimeInstaller);
+        runtimeHolder_->getRuntime(),
+        std::move(delegate),
+        JSIExecutor::defaultTimeoutInvoker,
+        [isProfiling = isProfilingEnabled_]([[maybe_unused]] jsi::Runtime &runtime) {
+#ifdef ENABLE_JS_SYSTRACE_TO_ETW
+          facebook::react::tracing::initializeJSHooks(runtime, isProfiling);
+#endif
+        });
   }
 
   OJSIExecutorFactory(
       std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+      bool isProfilingEnabled,
       std::shared_ptr<CallInvoker> jsCallInvoker) noexcept
       : runtimeHolder_{std::move(runtimeHolder)},
         loggingHook_{std::move(loggingHook)},
         turboModuleRegistry_{std::move(turboModuleRegistry)},
-        jsCallInvoker_{std::move(jsCallInvoker)} {}
+        jsCallInvoker_{std::move(jsCallInvoker)},
+        isProfilingEnabled_{isProfilingEnabled} {}
 
  private:
   std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
   std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
   std::shared_ptr<CallInvoker> jsCallInvoker_;
   NativeLoggingHook loggingHook_;
+  bool isProfilingEnabled_;
 };
 
 } // namespace
@@ -338,6 +343,7 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder,
           m_devSettings->loggingCallback,
           m_turboModuleRegistry,
+          !m_devSettings->useFastRefresh,
           m_innerInstance->getJSCallInvoker());
     } else {
       assert(m_devSettings->jsiEngineOverride != JSIEngineOverride::Default);
@@ -385,6 +391,7 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder,
           m_devSettings->loggingCallback,
           m_turboModuleRegistry,
+          !m_devSettings->useFastRefresh,
           m_innerInstance->getJSCallInvoker());
     }
   }
@@ -429,6 +436,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName,
+          true /* dev */,
+          m_devSettings->useFastRefresh,
           m_devSettings->inlineSourceMap);
 
       if (!success) {
@@ -526,7 +535,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
             m_devSettings->debugBundlePath,
             m_devSettings->platformName,
             true /*dev*/,
-            false /*hot*/,
+            m_devSettings->useFastRefresh,
             m_devSettings->inlineSourceMap)
       : std::string();
   modules.push_back(std::make_unique<CxxNativeModule>(

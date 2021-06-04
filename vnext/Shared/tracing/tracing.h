@@ -11,7 +11,7 @@ namespace facebook {
 namespace react {
 namespace tracing {
 void initializeETW();
-void initializeJSHooks(facebook::jsi::Runtime &runtime);
+void initializeJSHooks(facebook::jsi::Runtime &runtime, bool isProfiling);
 
 void log(const char *msg);
 void error(const char *msg);
