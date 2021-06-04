@@ -131,11 +131,11 @@ jobs:
 
       - powershell: $(Build.SourcesDirectory)/.ado/scripts/TestWACK.ps1 $(BuildPlatform) $(BuildConfiguration) $(Build.StagingDirectory)\WACK
         displayName: Test WACK
-        condition: and(succeeded(), eq(variables.TestWACK, true), eq('${{ parameters.BuildEnvironment }}', 'Continuous'))
+        condition: and(succeeded(), eq(variables.TestWACK, true))
 
       - task: PublishBuildArtifacts@1
         displayName: Upload WACK report
-        condition: and(succeededOrFailed(), eq(variables.TestWACK, true), eq('${{ parameters.BuildEnvironment }}', 'Continuous'))
+        condition: and(succeededOrFailed(), eq(variables.TestWACK, true))
         inputs:
           pathtoPublish: '$(Build.StagingDirectory)/WACK'
           artifactName: 'WACK report $(BuildPlatform) $(BuildConfiguration) ($(System.JobAttempt))'
