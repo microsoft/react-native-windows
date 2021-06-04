@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Condition using memory mapped buffer to runtime option JSI.MemoryMappedScriptStore",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
