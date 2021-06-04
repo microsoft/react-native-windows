@@ -3,19 +3,19 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-7e05480cc",
+  "baseVersion": "0.0.0-438a4cf59",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "da1871d982a9d96c7f8235bb6c6efbb790f17cd1"
+      "baseHash": "4ffdd0f412a3de45ad8a532a4d105b22f0d5ea49"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "f0b44bc2db7a958ed54e45131169b3f6734890f2"
+      "baseHash": "ef954129bcecf1cba9f786bd2a32327adfb735a5"
     },
     {
       "type": "patch",
