@@ -51,7 +51,9 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\tests\TextAttributesTest.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\root\tests\RootShadowNodeTest.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\root\tests\RootShadowNodeTest.cpp">
+     <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\tests\ScrollViewTest.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\slider\tests\SliderTest.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\tests\ParagraphLocalDataTest.cpp">
