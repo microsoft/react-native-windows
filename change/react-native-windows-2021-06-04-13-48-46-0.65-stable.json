@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "V8 Package Update",
+  "packageName": "react-native-windows",
+  "email": "tudor.mihai@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2021-06-04T20:48:46.697Z"
+}
