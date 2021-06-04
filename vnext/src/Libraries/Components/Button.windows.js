@@ -260,12 +260,18 @@ type ButtonProps = $ReadOnly<{|
   ```
  */
 
-class Button extends React.Component<ButtonProps, {hover: boolean}> {
+class Button extends React.Component<
+  ButtonProps,
+  {hover: boolean, pressed: boolean},
+> {
   // [Windows
   constructor(props: Object) {
     super(props);
     this.state = {
       hover: false,
+      // Workaround for MUX2.5; remove after update to MUX2.6 is completed.
+      // https://github.com/microsoft/react-native-windows/issues/7425
+      pressed: false,
     };
   }
   // Windows]
@@ -338,15 +344,26 @@ class Button extends React.Component<ButtonProps, {hover: boolean}> {
           onPress={onPress}
           tabIndex={tabIndex}
           touchSoundDisabled={touchSoundDisabled}
+          // Workaround for MUX2.5; remove after update to MUX2.6 is completed.
+          // https://github.com/microsoft/react-native-windows/issues/7425
           underlayColor={PlatformColor('ButtonBackgroundPressed')}
+          onShowUnderlay={() => {
+            this.setState({pressed: true});
+          }}
+          onHideUnderlay={() => {
+            this.setState({pressed: false});
+          }}
           style={
-            this.state.hover
+            this.state.hover && !this.state.pressed
               ? [
                   buttonStyles,
                   {
                     backgroundColor: PlatformColor(
                       'ButtonBackgroundPointerOver',
                     ),
+                    // Workaround for MUX2.5; remove after update to MUX2.6 is completed.
+                    // https://github.com/microsoft/react-native-windows/issues/7425
+                    opacity: 0.1,
                   },
                 ]
               : buttonStyles
