@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add JSI.MemoryMappedScriptStore runtime option to control usage of MemoryMappedBuffer (#7943)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
