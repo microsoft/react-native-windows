@@ -9371,10 +9371,10 @@ react-native-tscodegen@0.66.1:
     nullthrows "1.1.1"
     typescript "^3.5.3"
 
-react-native@0.0.0-438a4cf59:
-  version "0.0.0-438a4cf59"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-438a4cf59.tgz#13dfe07a1cf11544a1a2a317738ffdc82a606931"
-  integrity sha512-fpSMYDvDssIfKaoTTV6TClqyYHu52e1M00URDhHgxY+nEqce+PE3YXrew38dwZmeeU5ydSuuvAD54jtxa4EaFg==
+react-native@0.0.0-903eae491:
+  version "0.0.0-903eae491"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-903eae491.tgz#4ec67ea4277d8d97373bda6574e33f5869ddd9f7"
+  integrity sha512-acwQOhfsTvHWARQ/Dob990ch0uaD0WDHB/+CvjQ+4dXgKzfAzSbuU/zOadVXMbx7Ox+RAuxVOu/rJh9wQyTFqA==
   dependencies:
     "@jest/create-cache-key-function" "^26.5.0"
     "@react-native-community/cli" "^5.0.1-alpha.0"
