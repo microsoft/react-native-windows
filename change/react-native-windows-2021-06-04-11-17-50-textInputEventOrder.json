@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Emit `onSubmitEditing` before clearing text",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch",
+  "date": "2021-06-04T15:17:50.448Z"
+}
