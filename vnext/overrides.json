@@ -6,7 +6,7 @@
     "ReactCommon/TEMP_UntilReactCommonUpdate/**"
   ],
   "excludePatterns": [],
-  "baseVersion": "0.0.0-438a4cf59",
+  "baseVersion": "0.0.0-903eae491",
   "overrides": [
     {
       "type": "derived",
@@ -34,13 +34,6 @@
       "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.h",
       "baseHash": "93c4d57329747bec83201898ba807d0a23700570",
       "issue": 7821
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/leakchecker/LeakChecker.cpp",
-      "baseFile": "ReactCommon/react/renderer/leakchecker/LeakChecker.cpp",
-      "baseHash": "71e63e48a41f515954445737b6b09540b8416113",
-      "issue": 7619
     },
     {
       "type": "patch",
@@ -401,7 +394,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "f782aaf60f162419c71948fd548dfebb7746dd4f"
+      "baseHash": "4437d86c40009c937c279b9ce9e924ebfa46ddd6"
     },
     {
       "type": "patch",
