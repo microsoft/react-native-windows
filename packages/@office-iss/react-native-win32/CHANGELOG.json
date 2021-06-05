@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 05 Jun 2021 05:09:53 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.93",
+      "version": "0.0.0-canary.93",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate May 12th RN nightly build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "6643b43171289acba50ae3b55cdc7bbe4c6fea4b",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Use text instead of images for LogBox arrows",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "f170b22b68ad15e87cab86ba433412bb1eb405bd",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Jun 2021 05:09:47 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.92",
       "version": "0.0.0-canary.92",

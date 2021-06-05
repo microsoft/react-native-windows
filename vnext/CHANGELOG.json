@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 05 Jun 2021 05:09:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.319",
+      "version": "0.0.0-canary.319",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Condition using memory mapped buffer to runtime option JSI.MemoryMappedScriptStore",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "29e81ab898abd90d5ac65d467a411d27b4404893",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Mark QuirkSettings as Experimental",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "939b24b63d8bc550dea7b61a4694f0e0121e1193",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Emit `onSubmitEditing` before clearing text",
+            "author": "erozell@outlook.com",
+            "commit": "93a7118960e7c2a9743580239c10efe9cfb8c731",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update Button Hover",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "304ebe844506c6d1dd7c51d06dc4f421d670f777",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate May 12th RN nightly build.",
+            "author": "igklemen@microsoft.com",
+            "commit": "6643b43171289acba50ae3b55cdc7bbe4c6fea4b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Jun 2021 05:09:47 GMT",
       "tag": "react-native-windows_v0.0.0-canary.318",
       "version": "0.0.0-canary.318",

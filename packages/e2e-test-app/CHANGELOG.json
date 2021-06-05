@@ -2,6 +2,35 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Sat, 05 Jun 2021 05:09:53 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.319",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "29e81ab898abd90d5ac65d467a411d27b4404893",
+            "package": "e2e-test-app"
+          },
+          {
+            "comment": "Bump node-rnw-rpc to v1.0.8",
+            "author": "igklemen@microsoft.com",
+            "commit": "6643b43171289acba50ae3b55cdc7bbe4c6fea4b",
+            "package": "e2e-test-app"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump jest-environment-winappdriver to v1.1.8-0",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "8e1dba544f17cb07711e57749981e3f41502d4c7",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Jun 2021 05:09:47 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",

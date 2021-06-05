@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 03 Jun 2021 05:09:47 GMT and should not be manually modified.
+This log was last generated on Sat, 05 Jun 2021 05:09:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.73
+
+Sat, 05 Jun 2021 05:09:53 GMT
+
+### Changes
+
+- Integrate May 12th RN nightly build. (igklemen@microsoft.com)
 
 ## 0.0.0-canary.72
 

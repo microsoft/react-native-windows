@@ -1,8 +1,16 @@
 # Change Log - jest-environment-winappdriver
 
-This log was last generated on Thu, 03 Jun 2021 05:09:47 GMT and should not be manually modified.
+This log was last generated on Sat, 05 Jun 2021 05:09:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.8-0
+
+Sat, 05 Jun 2021 05:09:53 GMT
+
+### Changes
+
+- Update Pipeline (34109996+chiaramooney@users.noreply.github.com)
 
 ## 1.1.7
 

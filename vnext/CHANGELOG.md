@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 03 Jun 2021 05:09:47 GMT and should not be manually modified.
+This log was last generated on Sat, 05 Jun 2021 05:09:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.319
+
+Sat, 05 Jun 2021 05:09:53 GMT
+
+### Changes
+
+- Condition using memory mapped buffer to runtime option JSI.MemoryMappedScriptStore (julio.rocha@microsoft.com)
+- Mark QuirkSettings as Experimental (30809111+acoates-ms@users.noreply.github.com)
+- Emit `onSubmitEditing` before clearing text (erozell@outlook.com)
+- Update Button Hover (34109996+chiaramooney@users.noreply.github.com)
+- Integrate May 12th RN nightly build. (igklemen@microsoft.com)
 
 ## 0.0.0-canary.318
 

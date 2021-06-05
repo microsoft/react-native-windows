@@ -30,7 +30,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@react-native-windows/cli": "0.0.0-canary.72",
+    "@react-native-windows/cli": "0.0.0-canary.73",
     "@rnw-scripts/eslint-config": "1.1.7",
     "@rnw-scripts/jest-unittest-config": "1.2.2",
     "@rnw-scripts/just-task": "2.1.2",
