@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 31 May 2021 15:25:41 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Jun 2021 18:47:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.11
+
+Mon, 07 Jun 2021 18:47:25 GMT
+
+### Patches
+
+- Fix FashRefresh when not using WebDebugger (30809111+acoates-ms@users.noreply.github.com)
+- Allow propagating WinRTWebSocketResource constructor exceptions (#7892) (julio.rocha@microsoft.com)
+- Add JSI.MemoryMappedScriptStore runtime option to control usage of MemoryMappedBuffer (#7943) (julio.rocha@microsoft.com)
+- [0.64] Bump ws dependency (dannyvv@microsoft.com)
 
 ## 0.64.10
 
