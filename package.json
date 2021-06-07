@@ -39,6 +39,7 @@
   "resolutions": {
     "eslint-plugin-react-hooks": "4.0.7",
     "kind-of": "6.0.3",
+    "glob-parent": "^5.1.2",
     "node-fetch": "2.6.1",
     "node-notifier": "^9.0.0",
     "///": "Until @react-native-community/cli updates to use metro 0.66, we need to force it here to keep fast refresh working",
