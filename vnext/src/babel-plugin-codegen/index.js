@@ -144,8 +144,11 @@ module.exports = function({parse, types: t}) {
             const viewConfig = generateViewConfig(this.filename, this.code);
             this.defaultExport.replaceWithMultiple(
               // [Win adding filename param see: https://github.com/facebook/react-native/pull/29230
-              parse(viewConfig, {filename: this.filename}).program.body,
-              // Win]
+              parse(viewConfig, {
+                babelrc: false,
+                browserslistConfigFile: false,
+                filename: this.filename
+              }).program.body, // Win]
             );
             if (this.commandsExport != null) {
               this.commandsExport.remove();
