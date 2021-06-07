@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.64] Bump ws dependency",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

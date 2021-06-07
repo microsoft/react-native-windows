@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 29 Mar 2021 16:07:04 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Jun 2021 18:47:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.2
+
+Mon, 07 Jun 2021 18:47:25 GMT
+
+### Patches
+
+- Use text instead of images for LogBox arrows (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.64.1
 
