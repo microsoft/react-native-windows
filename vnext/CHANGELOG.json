@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Jun 2021 18:28:32 GMT",
+      "tag": "react-native-windows_v0.65.0-preview.2",
+      "version": "0.65.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "V8 Package Update",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "792e308ddd46f1cebf6b6a5d3829d29557d7e5c6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow propagating WinRTWebSocketResource constructor exceptions (#7892)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "405b65df512f4bb0f698ef5685d5ad0ec7f85a9f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add JSI.MemoryMappedScriptStore runtime option to control usage of MemoryMappedBuffer (#7943)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "ccdbf30dfa6d7969dbe145aafcafc6a1677e6067",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Do not mark instance as IsProfiling when using fastrefresh",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "aa6793e0399f4a6ec3609849e784c731e1abdf28",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update Button Hover",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "d2cf65efd3fe0eff551287fbb96de11a61e7c8e1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Mark QuirkSettings as Experimental",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "8ccbaea2ced6ca24bf4eed0e2d9f56fc95dcaedc",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 May 2021 15:23:18 GMT",
       "tag": "react-native-windows_v0.65.0-preview.1",
       "version": "0.65.0-preview.1",
