@@ -12,11 +12,11 @@
   "dependencies": {
     "@react-native-windows/tester": "0.0.1",
     "react": "17.0.2",
-    "react-native": "0.0.0-903eae491",
+    "react-native": "0.0.0-b2ec89fdf",
     "react-native-windows": "0.0.0-canary.319"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
+    "@babel/core": "^7.14.0",
     "@babel/runtime": "^7.8.4",
     "@rnw-scripts/eslint-config": "1.1.7",
     "@rnw-scripts/just-task": "2.1.2",

@@ -6,13 +6,13 @@
     "ReactCommon/TEMP_UntilReactCommonUpdate/**"
   ],
   "excludePatterns": [],
-  "baseVersion": "0.0.0-903eae491",
+  "baseVersion": "0.0.0-b2ec89fdf",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "4ffdd0f412a3de45ad8a532a4d105b22f0d5ea49"
+      "baseHash": "d1aa1043bb0f92bda99d69376c385189ce35a406"
     },
     {
       "type": "patch",
@@ -46,7 +46,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "3b5f8abaaab638b2fcfad8544a40bf40b19f54bf",
+      "baseHash": "229b98d24f76d2cbd843f1943466deaeb27f2378",
       "issue": 4054
     },
     {
@@ -60,14 +60,14 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "c98895783fafdc8ce5afa50f443b80e70594709b",
+      "baseHash": "08c12222a63e1f9332bb0c3f327c58609a3cf13f",
       "issue": 5430
     },
     {
       "type": "patch",
       "file": "src/babel-plugin-codegen/package.json",
       "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseHash": "d491012387a81a906bf4b1c2378b2591470d9543",
+      "baseHash": "8dfbb3e7f6ea17e219746d9b56cf794e933d824b",
       "issue": 5430
     },
     {
@@ -292,7 +292,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "cbbc20281bbf0ff9ed0a6a6286a9df5bfc7c7558"
+      "baseHash": "f46b26885fc37d6f8c5aa9d298ffd6828efc0921"
     },
     {
       "type": "patch",
