@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Integrate May 19th",
+  "packageName": "react-native-platform-override",
+  "email": "igklemen@microsoft.com",
+  "dependentChangeType": "patch"
+}
