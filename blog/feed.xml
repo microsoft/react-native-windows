@@ -4,7 +4,7 @@
         <title>React Native for Windows + macOS Blog</title>
         <link>https://microsoft.github.io/react-native-windows/blog</link>
         <description>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</description>
-        <lastBuildDate>Fri, 04 Jun 2021 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 25 May 2021 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -12,14 +12,6 @@
             <url>https://microsoft.github.io/react-native-windows/img/header_logo.svg</url>
             <link>https://microsoft.github.io/react-native-windows/blog</link>
         </image>
-        <item>
-            <title><![CDATA[Add Toast notifications to your React Native for Windows application]]></title>
-            <link>https://microsoft.github.io/react-native-windows/blog/2021/06/04/notifications.html</link>
-            <guid>https://microsoft.github.io/react-native-windows/blog/2021/06/04/notifications.html</guid>
-            <pubDate>Fri, 04 Jun 2021 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>In this article, we will discuss how to enable your app to show toast notifications, which you can use to notify the user that something needs their attention, or to notify them that a long running operation has completed.</p>
-]]></description>
-        </item>
         <item>
             <title><![CDATA[Add inking to your React Native for Windows application]]></title>
             <link>https://microsoft.github.io/react-native-windows/blog/2021/05/25/inking.html</link>
