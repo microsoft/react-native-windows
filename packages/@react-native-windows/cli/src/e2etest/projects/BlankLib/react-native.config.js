@@ -5,6 +5,4 @@ module.exports = {
       windows: null,
     }
   },
-  expectedConfig: null,
-  expectedConfigIgnoringOverride: null,
 };

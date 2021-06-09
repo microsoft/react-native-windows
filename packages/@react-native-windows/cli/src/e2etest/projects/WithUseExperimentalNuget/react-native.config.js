@@ -1,8 +1,8 @@
 const projectConfig = {
   sourceDir: 'windows',
-  solutionFile: 'SimpleCSharpApp.sln',
+  solutionFile: 'WithUseExperimentalNuget.sln',
   project: {
-    projectFile: 'SimpleCSharpApp\\SimpleCSharpApp.csproj',
+    projectFile: 'WithUseExperimentalNuget\\WithUseExperimentalNuget.vcxproj',
   },
 };
 

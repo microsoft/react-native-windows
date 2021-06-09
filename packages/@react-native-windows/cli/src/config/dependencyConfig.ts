@@ -9,6 +9,7 @@
 // guarantee correct types
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
+import {platform} from 'os';
 import * as path from 'path';
 
 import * as configUtils from './configUtils';
@@ -117,6 +118,10 @@ export function dependencyConfigWindows(
   folder: string,
   userConfig: Partial<WindowsDependencyConfig> | null = {},
 ): WindowsDependencyConfig | null {
+  if (platform() !== 'win32') {
+    return null;
+  }
+
   if (userConfig === null) {
     return null;
   }
@@ -225,6 +230,8 @@ export function dependencyConfigWindows(
       const projectFile = path.join(sourceDir, project.projectFile);
 
       const projectContents = configUtils.readProjectFile(projectFile);
+
+      project.projectFile = path.relative(sourceDir, projectFile);
 
       // Calculating (auto) items
       project.projectName = configUtils.getProjectName(
