@@ -8,7 +8,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const OS = require('OS');
+const os = require('os');
 
 const {
   argv,
@@ -86,7 +86,7 @@ task(
 );
 
 const windowsOnly = JSON.parse(fs.readFileSync(path.join(process.cwd, 'package.json'))).windowsOnly;
-if (OS.platform() !== 'win32' && windowsOnly === true) {
+if (os.platform() !== 'win32' && windowsOnly === true) {
   task('test', () => logger.warn('Skipping tests since "package.json" has set "windowsOnly"'));
 } else {
   const hasE2eTests = fs.existsSync(path.join(process.cwd(), 'src', 'e2etest'));
