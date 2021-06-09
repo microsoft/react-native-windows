@@ -85,7 +85,7 @@ task(
   }),
 );
 
-const windowsOnly = JSON.parse(fs.readFileSync(path.join(process.cwd, 'package.json'))).windowsOnly;
+const windowsOnly = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'))).windowsOnly;
 if (os.platform() !== 'win32' && windowsOnly === true) {
   task('test', () => logger.warn('Skipping tests since "package.json" has set "windowsOnly"'));
 } else {
