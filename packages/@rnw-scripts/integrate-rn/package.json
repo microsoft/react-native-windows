@@ -49,5 +49,6 @@
   "files": [
     "bin.js",
     "lib-commonjs"
-  ]
+  ],
+  "windowsOnly": true,
 }
