@@ -68,10 +68,7 @@
     "**/jsdom/ws": "^7.4.6",
     "**/puppeteer-core/ws": "^7.4.6",
     "**/react-devtools-core/ws": "^7.4.6",
-    "**/react-native/ws": "^7.4.6",
-    "**/detox/ws": "^5.2.3",
-    "**/@react-native-community/cli-server-api/ws": "^5.2.3",
-    "**/metro/**/ws": "^5.2.3"
+    "**/react-native/ws": "^7.4.6"
   },
   "beachball": {
     "gitTags": false
