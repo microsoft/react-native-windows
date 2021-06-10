@@ -12,11 +12,11 @@
           Matrix:
             - Name: X64ReleaseFast
               BuildConfiguration: Release
-              BuildPlatform: X64
+              BuildPlatform: x64
               FastBuild: true
             - Name: X86DebugFast
               BuildConfiguration: Debug
-              BuildPlatform: X86
+              BuildPlatform: x86
               LayoutHeaders: true
               FastBuild: true
         - BuildEnvironment: Continuous
@@ -31,28 +31,28 @@
               FastBuild: false
             - Name: X64Debug
               BuildConfiguration: Debug
-              BuildPlatform: X64
+              BuildPlatform: x64
               FastBuild: false
             - Name: X64Release
               BuildConfiguration: Release
-              BuildPlatform: X64
+              BuildPlatform: x64
               FastBuild: false
             - Name: X86Debug
               BuildConfiguration: Debug
-              BuildPlatform: X86
+              BuildPlatform: x86
               LayoutHeaders: true
               FastBuild: false
             - Name: X86Release
               BuildConfiguration: Release
-              BuildPlatform: X86
+              BuildPlatform: x86
               FastBuild: false
             - Name: X64ReleaseFast
               BuildConfiguration: Release
-              BuildPlatform: X64
+              BuildPlatform: x64
               FastBuild: true
             - Name: X86DebugFast
               BuildConfiguration: Debug
-              BuildPlatform: X86
+              BuildPlatform: x86
               LayoutHeaders: true
               FastBuild: true
 
@@ -175,7 +175,7 @@
                     publishRunAttachments: true
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
-                  condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (UWP)
@@ -192,7 +192,7 @@
                     codeCoverageEnabled: true
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
-                  condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (NetCore)
@@ -209,7 +209,7 @@
                     codeCoverageEnabled: true
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
-                  condition: and(succeeded(), eq(variables.BuildPlatform, 'x64'))
+                  condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'))
 
     # This job is the one that accumulates the spread out build tasks into one dependency
     - job: UniversalBuild
