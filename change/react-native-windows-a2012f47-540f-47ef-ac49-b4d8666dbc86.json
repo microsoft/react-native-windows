@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Disable test that seems to hang on PR validaton",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
