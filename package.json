@@ -61,7 +61,17 @@
     "xmldom": "^0.5.0",
     "xpath": "^0.0.27",
     "yargs-parser": "^18.1.1",
-    "ws": "^7.4.6"
+    "**/appium/**/ws": "^7.4.6",
+    "**/@react-native/repo-config/ws": "^7.4.6",
+    "**/react-native-windows/ws": "^7.4.6",
+    "**/@office-iss/react-native-win32/ws": "^7.4.6",
+    "**/jsdom/ws": "^7.4.6",
+    "**/puppeteer-core/ws": "^7.4.6",
+    "**/react-devtools-core/ws": "^7.4.6",
+    "**/react-native/ws": "^7.4.6",
+    "**/detox/ws": "^5.2.3",
+    "**/@react-native-community/cli-server-api/ws": "^5.2.3",
+    "**/metro/**/ws": "^5.2.3"
   },
   "beachball": {
     "gitTags": false
