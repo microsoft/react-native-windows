@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix Microsoft.ReactNative unit tests",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

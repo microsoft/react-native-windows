@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 09 Jun 2021 05:10:07 GMT and should not be manually modified.
+This log was last generated on Thu, 10 Jun 2021 05:10:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.75
+
+Thu, 10 Jun 2021 05:10:10 GMT
+
+### Changes
+
+- Disable project/dependency config when not running on windows (jthysell@microsoft.com)
 
 ## 0.0.0-canary.74
 

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 09 Jun 2021 05:10:07 GMT and should not be manually modified.
+This log was last generated on Thu, 10 Jun 2021 05:10:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.321
+
+Thu, 10 Jun 2021 05:10:10 GMT
+
+### Changes
+
+- Fix Microsoft.ReactNative unit tests (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.320
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 10 Jun 2021 05:10:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.321",
+      "version": "0.0.0-canary.321",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Microsoft.ReactNative unit tests",
+            "author": "vmorozov@microsoft.com",
+            "commit": "31d303345031ae6c38a3b25c7147df7b9c1694c9",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Jun 2021 05:10:07 GMT",
       "tag": "react-native-windows_v0.0.0-canary.320",
       "version": "0.0.0-canary.320",

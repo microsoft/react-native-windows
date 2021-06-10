@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 10 Jun 2021 05:10:10 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.75",
+      "version": "0.0.0-canary.75",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Disable project/dependency config when not running on windows",
+            "author": "jthysell@microsoft.com",
+            "commit": "80c434c8c820d3f41598ae959cb0213a8c6632a7",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Jun 2021 05:10:07 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.74",
       "version": "0.0.0-canary.74",
