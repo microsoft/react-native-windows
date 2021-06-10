@@ -171,6 +171,7 @@
                     publishRunAttachments: true
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
+                    failOnMinTestsNotRun: true
                   # Issue #8003 Tracks restoring this test whose condition should be resotred disabled as it times out on releasex64...
                   # condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
                   condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x86'))
@@ -190,6 +191,7 @@
                     codeCoverageEnabled: true
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
+                    failOnMinTestsNotRun: true
                   condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
 
                 - task: VSTest@2
@@ -207,6 +209,7 @@
                     codeCoverageEnabled: true
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
+                    failOnMinTestsNotRun: true
                   condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'))
 
     # This job is the one that accumulates the spread out build tasks into one dependency
