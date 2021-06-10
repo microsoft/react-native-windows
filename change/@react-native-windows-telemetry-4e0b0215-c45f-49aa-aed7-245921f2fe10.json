@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Mark windowsOnly",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
