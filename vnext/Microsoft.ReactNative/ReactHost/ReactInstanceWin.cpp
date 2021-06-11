@@ -542,7 +542,6 @@ void ReactInstanceWin::OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) no
       m_state = ReactInstanceState::HasError;
       m_whenLoaded.SetError(errorCode);
       OnError(errorCode);
-      AbandonJSCallQueue();
     }
   }
 }
