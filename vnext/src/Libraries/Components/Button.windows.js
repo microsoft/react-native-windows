@@ -296,13 +296,10 @@ class Button extends React.Component<
       nextFocusRight,
       nextFocusUp,
       testID,
-<<<<<<< Upstream
       accessible,
       accessibilityActions,
       onAccessibilityAction,
-=======
       tabIndex,
->>>>>>> Override
     } = this.props;
     const buttonStyles = [styles.button];
     const textStyles = [styles.text];
@@ -335,30 +332,6 @@ class Button extends React.Component<
     );
     const formattedTitle =
       Platform.OS === 'android' ? title.toUpperCase() : title;
-<<<<<<< Upstream
-    const Touchable =
-      Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
-
-    return (
-      <Touchable
-        accessible={accessible}
-        accessibilityActions={accessibilityActions}
-        onAccessibilityAction={onAccessibilityAction}
-        accessibilityLabel={accessibilityLabel}
-        accessibilityRole="button"
-        accessibilityState={accessibilityState}
-        hasTVPreferredFocus={hasTVPreferredFocus}
-        nextFocusDown={nextFocusDown}
-        nextFocusForward={nextFocusForward}
-        nextFocusLeft={nextFocusLeft}
-        nextFocusRight={nextFocusRight}
-        nextFocusUp={nextFocusUp}
-        testID={testID}
-        disabled={disabled}
-        onPress={onPress}
-        touchSoundDisabled={touchSoundDisabled}>
-        <View style={buttonStyles}>
-=======
     // [Windows - render a TouchableHighlight
     const Touchable = TouchableHighlight;
     //  Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
@@ -411,7 +384,6 @@ class Button extends React.Component<
           onMouseLeave={() => {
             if (!disabled) this.setState({hover: false});
           }}>
->>>>>>> Override
           <Text style={textStyles} disabled={disabled}>
             {formattedTitle}
           </Text>
@@ -420,6 +392,9 @@ class Button extends React.Component<
     } else {
       return (
         <Touchable
+          accessible={accessible}
+          accessibilityActions={accessibilityActions}
+          onAccessibilityAction={onAccessibilityAction}
           accessibilityLabel={accessibilityLabel}
           accessibilityRole="button"
           accessibilityState={accessibilityState}
@@ -432,7 +407,6 @@ class Button extends React.Component<
           testID={testID}
           disabled={disabled}
           onPress={onPress}
-          tabIndex={tabIndex}
           touchSoundDisabled={touchSoundDisabled}>
           <View style={buttonStyles}>
             <Text style={textStyles} disabled={disabled}>

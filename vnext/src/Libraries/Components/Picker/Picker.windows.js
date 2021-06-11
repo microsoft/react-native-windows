@@ -18,14 +18,12 @@ import UnimplementedView from '../UnimplementedViews/UnimplementedView';
 
 import type {TextStyleProp, ColorValue} from '../../StyleSheet/StyleSheet';
 
-<<<<<<< Upstream
 import type {
   AccessibilityActionEvent,
   AccessibilityActionInfo,
 } from '../View/ViewAccessibility';
-=======
+
 import {Picker as PickerWindows} from './PickerWindows'; // [Windows]
->>>>>>> Override
 
 const MODE_DIALOG = 'dialog';
 const MODE_DROPDOWN = 'dropdown';
