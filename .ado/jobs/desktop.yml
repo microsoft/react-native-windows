@@ -110,6 +110,7 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
+          failOnMinTestsNotRun: true
 
       - task: PowerShell@2
         displayName: Set up test servers
@@ -139,6 +140,7 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
+          failOnMinTestsNotRun: true
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
         # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
         condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
