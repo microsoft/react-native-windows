@@ -2,6 +2,35 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 11 Jun 2021 05:08:55 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.322",
+      "version": "0.0.0-canary.322",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix pipeline casing of x64/x86 as yaml string compare is case sensitive",
+            "author": "dannyvv@microsoft.com",
+            "commit": "968a9131e26ce42222b7dfdd03c93d3924dec164",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Disable test that seems to hang on PR validaton",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b3f0850465697bc45b362a84209999a575b20c94",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.17",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3d7c8d8fcf14a3cbda83a93c85b0bcf1e4e4f829",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Jun 2021 05:10:10 GMT",
       "tag": "react-native-windows_v0.0.0-canary.321",
       "version": "0.0.0-canary.321",

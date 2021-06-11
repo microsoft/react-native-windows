@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix pipeline casing of x64/x86 as yaml string compare is case sensitive",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

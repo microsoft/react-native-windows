@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Allow marking tested packages windowsOnly",
-  "packageName": "@rnw-scripts/just-task",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
