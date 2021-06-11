@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Reduce string conversions when reporting hresult_error",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
