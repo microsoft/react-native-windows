@@ -733,9 +733,7 @@ void ReactInstanceWin::OnError(const Mso::ErrorCode &errorCode) noexcept {
     m_redboxHandler->showNewError(std::move(errorInfo), ErrorType::Native);
   }
 
-  InvokeInQueue([this, errorCode]() noexcept {
-    m_options.OnError(errorCode);
-   });
+  InvokeInQueue([this, errorCode]() noexcept { m_options.OnError(errorCode); });
 
   m_updateUI();
 }
