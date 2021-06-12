@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 12 Jun 2021 05:06:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.323",
+      "version": "0.0.0-canary.323",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Better reporting of failures to load the bundle file",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "7b2bcbb597ae8f2dae93d4a09cef6787cdb82903",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Reduce string conversions when reporting hresult_error",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "3e9802cfe14c71e093c04f3462c9a5a8f615c705",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Jun 2021 05:08:55 GMT",
       "tag": "react-native-windows_v0.0.0-canary.322",
       "version": "0.0.0-canary.322",
