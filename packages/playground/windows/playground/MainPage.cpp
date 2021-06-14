@@ -70,7 +70,13 @@ void MainPage::OnLoadClick(
   host.InstanceSettings().JSIEngineOverride(
       static_cast<Microsoft::ReactNative::JSIEngine>(x_JsEngine().SelectedIndex()));
   if (!m_bundlerHostname.empty()) {
-    host.InstanceSettings().DebugHost(m_bundlerHostname);
+    std::wstring dhost(m_bundlerHostname);
+    auto colonPos = dhost.find(L':');
+    if (colonPos != std::wstring::npos) {
+      host.InstanceSettings().SourceBundleHost(hstring(dhost.substr(0, colonPos)));
+      dhost.erase(0, colonPos + 1);
+      host.InstanceSettings().SourceBundlePort(static_cast<uint16_t>(std::stoi(dhost)));
+    }
   }
 
   winrt::Microsoft::ReactNative::QuirkSettings::SetEnableFabric(
