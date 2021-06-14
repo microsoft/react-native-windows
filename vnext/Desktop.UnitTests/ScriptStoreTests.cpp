@@ -3,6 +3,7 @@
 
 #include <BaseScriptStoreImpl.h>
 #include <CppUnitTest.h>
+#include <RuntimeOptions.h>
 
 // Windows API
 #include <Windows.h>
@@ -23,6 +24,10 @@ using winrt::Windows::System::Diagnostics::ProcessDiagnosticInfo;
 namespace Microsoft::JSI::Test {
 
 TEST_CLASS (ScriptStoreIntegrationTest) {
+  TEST_CLASS_INITIALIZE(Init) {
+    React::SetRuntimeOptionBool("JSI.MemoryMappedScriptStore", true);
+  }
+
   // Do not run this test in parallel with others.
   // It uses process telemetry and should run on isolation.
   TEST_METHOD(RetrievePreparedScriptMemoryUsage) {
@@ -56,9 +61,11 @@ TEST_CLASS (ScriptStoreIntegrationTest) {
     auto endWorkingSet =
         ProcessDiagnosticInfo::GetForCurrentProcess().MemoryUsage().GetReport().WorkingSetSizeInBytes();
 
-    // Without memory mapping: about 4.25 MB (fileSize + overhead)
-    // Expected working set delta: 0x047000 bytes, about 0.28 MB (6.9% of the 4MB file size).
-    Assert::IsTrue(endWorkingSet - startWorkingSet < 0.3 * 1024 * 1024);
+    // Based on recurring local testing:
+    // Without memory mapping: about 6.11 MB (fileSize + app overhead)
+    // With memory mapping: about 2.14 MB (view overhead + app overhead)
+    // Expected working set size should be lower than the actual file size, provided it is larger than the app overhead
+    Assert::IsTrue(endWorkingSet - startWorkingSet < fileSize);
   }
 };
 } // namespace Microsoft::JSI::Test

@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 31 May 2021 15:23:18 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Jun 2021 18:28:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.65.0-preview.2
+
+Mon, 07 Jun 2021 18:28:32 GMT
+
+### Changes
+
+- V8 Package Update (tudor.mihai@microsoft.com)
+- Allow propagating WinRTWebSocketResource constructor exceptions (#7892) (julio.rocha@microsoft.com)
+- Add JSI.MemoryMappedScriptStore runtime option to control usage of MemoryMappedBuffer (#7943) (julio.rocha@microsoft.com)
+- Do not mark instance as IsProfiling when using fastrefresh (30809111+acoates-ms@users.noreply.github.com)
+- Update Button Hover (34109996+chiaramooney@users.noreply.github.com)
+- Mark QuirkSettings as Experimental (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.65.0-preview.1
 
