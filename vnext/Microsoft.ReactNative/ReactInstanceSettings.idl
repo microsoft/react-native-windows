@@ -152,7 +152,7 @@ namespace Microsoft.ReactNative
 
     DOC_STRING(
       "When loading from a bundle server (such as metro), this is the path that will be requested from the server. "
-      "If this is not provided the value of @.JavaScriptBundleFile is used.")
+      "If this is not provided, the value of @.JavaScriptBundleFile is used.")
     String DebugBundlePath { get; set; };
 
     DOC_STRING("Base path used for the location of the bundle.")
