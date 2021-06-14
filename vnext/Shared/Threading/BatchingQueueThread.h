@@ -51,7 +51,7 @@ struct BatchingQueueThread final : facebook::react::BatchingMessageQueueThread {
  private:
   std::mutex m_mutex;
   std::mutex m_mutexQuitting;
-  bool m_quitting{ false };
+  bool m_quitting{false};
   std::shared_ptr<facebook::react::CallInvoker> m_callInvoker;
   std::shared_ptr<BatchingQueueCallInvoker> m_batchingQueueCallInvoker;
 };
