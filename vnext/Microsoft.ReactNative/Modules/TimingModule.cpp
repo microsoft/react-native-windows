@@ -21,6 +21,7 @@ using namespace facebook::xplat;
 using namespace folly;
 namespace winrt {
 using namespace Windows::Foundation;
+using namespace Windows::System;
 using namespace xaml::Media;
 } // namespace winrt
 using namespace std;
@@ -68,11 +69,13 @@ bool TimerQueue::IsEmpty() {
 // Timing
 //
 
-Timing::Timing(TimingModule *parent) : m_parent(parent) {}
+Timing::Timing(TimingModule *parent) : m_parent(parent), m_dispatcherQueueTimer{nullptr} {}
 
 void Timing::Disconnect() {
   m_parent = nullptr;
+  m_usingRendering = false;
   m_rendering.revoke();
+  EnsureDispatcherQueueTimer().Stop();
 }
 
 std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
@@ -82,7 +85,7 @@ std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
   return m_parent->getInstance();
 }
 
-void Timing::OnRendering() {
+void Timing::OnTick() {
   std::vector<int64_t> readyTimers;
   auto now = winrt::DateTime::clock::now();
 
@@ -93,11 +96,17 @@ void Timing::OnRendering() {
     readyTimers.push_back(next.Id);
 
     // If timer is repeating push it back onto the queue for the next repetition
+    
     if (next.Repeat)
       m_timerQueue.Push(next.Id, now + next.Period, next.Period, true);
 
-    if (m_timerQueue.IsEmpty())
+    if (m_timerQueue.IsEmpty()) {
+      m_usingRendering = false;
       m_rendering.revoke();
+      EnsureDispatcherQueueTimer().Stop();
+    } else {
+      UpdateScheduler();
+    }
   }
 
   if (!readyTimers.empty()) {
@@ -113,6 +122,52 @@ void Timing::OnRendering() {
   }
 }
 
+void Timing::UpdateScheduler() {
+  const auto nextTimer = m_timerQueue.Front();
+  UpdateScheduler(nextTimer.Period, nextTimer.TargetTime);
+}
+
+void Timing::UpdateScheduler(TTimeSpan period, TDateTime targetTime) {
+  const auto useRendering = period < std::chrono::milliseconds(2);
+  if (!useRendering) {
+    m_usingRendering = false;
+    m_rendering.revoke();
+    auto timer = EnsureDispatcherQueueTimer();
+    timer.Interval(std::max(targetTime - winrt::DateTime::clock::now(), TTimeSpan::zero()));
+    timer.Start();
+  } else if (!m_usingRendering) {
+    m_usingRendering = true;
+    EnsureDispatcherQueueTimer().Stop();
+    EnsureRenderingCallback();
+  }
+}
+
+void Timing::EnsureRenderingCallback() {
+  m_rendering = xaml::Media::CompositionTarget::Rendering(
+      winrt::auto_revoke,
+      [wkThis = std::weak_ptr(this->shared_from_this())](
+           const winrt::IInspectable &, const winrt::IInspectable & /*args*/) {
+        if (auto pThis = wkThis.lock()) {
+          pThis->OnTick();
+        }
+      });
+}
+
+winrt::DispatcherQueueTimer Timing::EnsureDispatcherQueueTimer() {
+  if (!m_dispatcherQueueTimer) {
+    winrt::DispatcherQueue queue = winrt::DispatcherQueue::GetForCurrentThread();
+    m_dispatcherQueueTimer = queue.CreateTimer();
+    m_dispatcherQueueTimer.IsRepeating(true);
+    m_dispatcherQueueTimer.Tick([wkThis = std::weak_ptr(this->shared_from_this())](auto &&...) {
+      if (auto pThis = wkThis.lock()) {
+        pThis->OnTick();
+      }
+    });
+  }
+
+  return m_dispatcherQueueTimer;
+}
+
 void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, bool repeat) {
   if (duration == 0 && !repeat) {
     if (auto instance = getInstance().lock()) {
@@ -123,23 +178,15 @@ void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, b
     return;
   }
 
-  if (m_timerQueue.IsEmpty()) {
-    m_rendering.revoke();
-    m_rendering = xaml::Media::CompositionTarget::Rendering(
-        winrt::auto_revoke,
-        [wkThis = std::weak_ptr(this->shared_from_this())](
-            const winrt::IInspectable &, const winrt::IInspectable & /*args*/) {
-          if (auto pThis = wkThis.lock()) {
-            pThis->OnRendering();
-          }
-        });
-  }
-
   // Convert double duration in ms to TimeSpan
   auto period = TimeSpanFromMs(duration);
   const int64_t msFrom1601to1970 = 11644473600000;
   winrt::DateTime scheduledTime(TimeSpanFromMs(jsSchedulingTime + msFrom1601to1970));
   auto initialTargetTime = scheduledTime + period;
+
+  if (m_timerQueue.IsEmpty()) {
+    UpdateScheduler(period, initialTargetTime);
+  }
 
   m_timerQueue.Push(id, initialTargetTime, period, repeat);
 }
@@ -147,8 +194,11 @@ void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, b
 void Timing::deleteTimer(int64_t id) {
   m_timerQueue.Remove(id);
 
-  if (m_timerQueue.IsEmpty())
+  if (m_timerQueue.IsEmpty()) {
+    m_usingRendering = false;
     m_rendering.revoke();
+    EnsureDispatcherQueueTimer().Stop();
+  }
 }
 
 void Timing::setSendIdleEvents(bool /*sendIdleEvents*/) {
