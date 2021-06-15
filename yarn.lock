@@ -9782,9 +9782,9 @@ scheduler@^0.20.1, scheduler@^0.20.2:
     object-assign "^4.1.1"
 
 screenshot-desktop@^1.12.2:
-  version "1.12.5"
-  resolved "https://registry.yarnpkg.com/screenshot-desktop/-/screenshot-desktop-1.12.5.tgz#fd77067d50d91cbed8c31918b6df7b09063b6476"
-  integrity sha512-yVUGDV8hh6sD88ohCSW2cBAMpfbJRNhRlZnUfGuuG6KmaVUUC/1nFWSRTadylWNjGRLuuCU8Omxt/bGbBYIDtw==
+  version "1.12.6"
+  resolved "https://registry.yarnpkg.com/screenshot-desktop/-/screenshot-desktop-1.12.6.tgz#0ef511ca42a9de5ec7d2aca34523a943bc36e896"
+  integrity sha512-nOTLz8RkTIMn28QvJxBaxEh4Xf2jQbroytkUVWeHtQnZEDL0tI8t5l2+vEr4OA4eD7NVPX1VUDihZPWM6/W2Kg==
   dependencies:
     pinkie-promise "^2.0.1"
     temp "^0.9.4"
