@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 15 Jun 2021 05:06:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.324",
+      "version": "0.0.0-canary.324",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove JavaScriptMainModuleName and DebugHost",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "22e1206ce28eb55e75af5e7740ef8bb8ad25e183",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Jun 2021 05:06:29 GMT",
       "tag": "react-native-windows_v0.0.0-canary.323",
       "version": "0.0.0-canary.323",
