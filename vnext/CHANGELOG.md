@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 12 Jun 2021 05:06:29 GMT and should not be manually modified.
+This log was last generated on Tue, 15 Jun 2021 05:06:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.324
+
+Tue, 15 Jun 2021 05:06:39 GMT
+
+### Changes
+
+- Remove JavaScriptMainModuleName and DebugHost (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.323
 
