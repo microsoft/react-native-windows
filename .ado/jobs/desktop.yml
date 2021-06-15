@@ -111,6 +111,7 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
           failOnMinTestsNotRun: true
+        condition: and(succeeded(), not(eq(variables['BuildPlatform'], 'arm64')))
 
       - task: PowerShell@2
         displayName: Set up test servers
