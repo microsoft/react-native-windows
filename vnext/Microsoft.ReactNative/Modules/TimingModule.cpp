@@ -73,9 +73,7 @@ Timing::Timing(TimingModule *parent) : m_parent(parent), m_dispatcherQueueTimer{
 
 void Timing::Disconnect() {
   m_parent = nullptr;
-  m_usingRendering = false;
-  m_rendering.revoke();
-  EnsureDispatcherQueueTimer().Stop();
+  StopTicks();
 }
 
 std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
@@ -85,73 +83,6 @@ std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
   return m_parent->getInstance();
 }
 
-void Timing::OnTick() {
-  std::vector<int64_t> readyTimers;
-  auto now = winrt::DateTime::clock::now();
-
-  while (!m_timerQueue.IsEmpty() && m_timerQueue.Front().TargetTime < now) {
-    // Pop first timer from the queue and add it to list of timers ready to fire
-    Timer next = m_timerQueue.Front();
-    m_timerQueue.Pop();
-    readyTimers.push_back(next.Id);
-
-    // If timer is repeating push it back onto the queue for the next repetition
-    
-    if (next.Repeat)
-      m_timerQueue.Push(next.Id, now + next.Period, next.Period, true);
-
-    if (m_timerQueue.IsEmpty()) {
-      m_usingRendering = false;
-      m_rendering.revoke();
-      EnsureDispatcherQueueTimer().Stop();
-    } else {
-      UpdateScheduler();
-    }
-  }
-
-  if (!readyTimers.empty()) {
-    if (auto instance = getInstance().lock()) {
-      // Package list of Timer Ids to fire in a dynamic array to pass as
-      // parameter
-      folly::dynamic params = folly::dynamic::array();
-      for (size_t i = 0, c = readyTimers.size(); i < c; ++i)
-        params.push_back(folly::dynamic(readyTimers[i]));
-
-      instance->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(params));
-    }
-  }
-}
-
-void Timing::UpdateScheduler() {
-  const auto nextTimer = m_timerQueue.Front();
-  UpdateScheduler(nextTimer.Period, nextTimer.TargetTime);
-}
-
-void Timing::UpdateScheduler(TTimeSpan period, TDateTime targetTime) {
-  const auto useRendering = period < std::chrono::milliseconds(2);
-  if (!useRendering) {
-    m_usingRendering = false;
-    m_rendering.revoke();
-    auto timer = EnsureDispatcherQueueTimer();
-    timer.Interval(std::max(targetTime - winrt::DateTime::clock::now(), TTimeSpan::zero()));
-    timer.Start();
-  } else if (!m_usingRendering) {
-    m_usingRendering = true;
-    EnsureDispatcherQueueTimer().Stop();
-    EnsureRenderingCallback();
-  }
-}
-
-void Timing::EnsureRenderingCallback() {
-  m_rendering = xaml::Media::CompositionTarget::Rendering(
-      winrt::auto_revoke,
-      [wkThis = std::weak_ptr(this->shared_from_this())](
-           const winrt::IInspectable &, const winrt::IInspectable & /*args*/) {
-        if (auto pThis = wkThis.lock()) {
-          pThis->OnTick();
-        }
-      });
-}
 
 winrt::DispatcherQueueTimer Timing::EnsureDispatcherQueueTimer() {
   if (!m_dispatcherQueueTimer) {
@@ -168,6 +99,85 @@ winrt::DispatcherQueueTimer Timing::EnsureDispatcherQueueTimer() {
   return m_dispatcherQueueTimer;
 }
 
+void Timing::OnTick() {
+  std::vector<int64_t> readyTimers;
+  auto now = TDateTime::clock::now();
+
+  while (!m_timerQueue.IsEmpty() && m_timerQueue.Front().TargetTime < now) {
+    // Pop first timer from the queue and add it to list of timers ready to fire
+    Timer next = m_timerQueue.Front();
+    m_timerQueue.Pop();
+    readyTimers.push_back(next.Id);
+
+    // If timer is repeating push it back onto the queue for the next repetition
+    
+    if (next.Repeat)
+      m_timerQueue.Push(next.Id, now + next.Period, next.Period, true);
+
+    if (m_timerQueue.IsEmpty()) {
+      StopTicks();
+    } else {
+      const auto &nextTimer = m_timerQueue.Front();
+      if (!m_usingRendering && nextTimer.Period < std::chrono::milliseconds(2)) {
+        StartRendering();
+      } else if (nextTimer.Period >= std::chrono::milliseconds(2)) {
+        m_nextDueTime = TDateTime::max();
+        UpdateTimer(nextTimer.TargetTime);
+      }
+    }
+  }
+
+  if (!readyTimers.empty()) {
+    if (auto instance = getInstance().lock()) {
+      // Package list of Timer Ids to fire in a dynamic array to pass as
+      // parameter
+      folly::dynamic params = folly::dynamic::array();
+      for (size_t i = 0, c = readyTimers.size(); i < c; ++i)
+        params.push_back(folly::dynamic(readyTimers[i]));
+
+      instance->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(params));
+    }
+  }
+}
+
+void Timing::StartRendering() {
+  if (m_dispatcherQueueTimer) {
+    m_nextDueTime = TDateTime::max();
+    m_dispatcherQueueTimer.Stop();
+  }
+
+  m_rendering.revoke();
+  m_rendering = xaml::Media::CompositionTarget::Rendering(
+      winrt::auto_revoke,
+      [wkThis = std::weak_ptr(this->shared_from_this())](
+          const winrt::IInspectable &, const winrt::IInspectable & /*args*/) {
+        if (auto pThis = wkThis.lock()) {
+          pThis->OnTick();
+        }
+      });
+}
+
+void Timing::StopTicks() {
+  m_usingRendering = false;
+  m_rendering.revoke();
+  if (m_dispatcherQueueTimer) {
+    m_nextDueTime = TDateTime::max();
+    m_dispatcherQueueTimer.Stop();
+  }
+}
+
+void Timing::UpdateTimer(TDateTime targetTime) {
+  const auto shouldUpdateTimer = m_timerQueue.IsEmpty() || targetTime < m_nextDueTime;
+  if (shouldUpdateTimer) {
+    m_rendering.revoke();
+    m_usingRendering = false;
+    m_nextDueTime = targetTime;
+    auto timer = EnsureDispatcherQueueTimer();
+    timer.Interval(std::max(targetTime - TDateTime::clock::now(), TTimeSpan::zero()));
+    timer.Start();
+  }
+}
+
 void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, bool repeat) {
   if (duration == 0 && !repeat) {
     if (auto instance = getInstance().lock()) {
@@ -181,11 +191,14 @@ void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, b
   // Convert double duration in ms to TimeSpan
   auto period = TimeSpanFromMs(duration);
   const int64_t msFrom1601to1970 = 11644473600000;
-  winrt::DateTime scheduledTime(TimeSpanFromMs(jsSchedulingTime + msFrom1601to1970));
+  TDateTime scheduledTime(TimeSpanFromMs(jsSchedulingTime + msFrom1601to1970));
   auto initialTargetTime = scheduledTime + period;
-
-  if (m_timerQueue.IsEmpty()) {
-    UpdateScheduler(period, initialTargetTime);
+  if (!m_usingRendering) {
+    if (period < std::chrono::milliseconds(2)) {
+      StartRendering();
+    } else {
+      UpdateTimer(initialTargetTime);
+    }
   }
 
   m_timerQueue.Push(id, initialTargetTime, period, repeat);

@@ -68,17 +68,18 @@ class Timing : public std::enable_shared_from_this<Timing> {
  private:
   std::weak_ptr<facebook::react::Instance> getInstance() noexcept;
   void OnTick();
-  void UpdateScheduler();
-  void UpdateScheduler(TTimeSpan period, TDateTime targetTime);
   winrt::Windows::System::DispatcherQueueTimer EnsureDispatcherQueueTimer();
-  void EnsureRenderingCallback();
+  void StartRendering();
+  void StopTicks();
+  void UpdateTimer(TDateTime targetTime);
 
  private:
   TimingModule *m_parent;
   TimerQueue m_timerQueue;
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
   winrt::Windows::System::DispatcherQueueTimer m_dispatcherQueueTimer;
-  bool m_usingRendering;
+  bool m_usingRendering{false};
+  TDateTime m_nextDueTime{TDateTime::max()};
 };
 
 class TimingModule : public facebook::xplat::module::CxxModule {
