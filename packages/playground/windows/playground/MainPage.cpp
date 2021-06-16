@@ -37,6 +37,12 @@ MainPage::MainPage() {
   x_JsEngine().SelectedIndex(1);
 }
 
+void MainPage::OnUnloadClick(
+    Windows::Foundation::IInspectable const & /*sender*/,
+    xaml::RoutedEventArgs const & /*args*/) {
+  Host().UnloadInstance();
+}
+
 void MainPage::OnLoadClick(
     Windows::Foundation::IInspectable const & /*sender*/,
     xaml::RoutedEventArgs const & /*args*/) {
