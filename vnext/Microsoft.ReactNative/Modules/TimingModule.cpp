@@ -83,7 +83,6 @@ std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
   return m_parent->getInstance();
 }
 
-
 winrt::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
   if (!m_dispatcherQueueTimer) {
     winrt::DispatcherQueue queue = winrt::DispatcherQueue::GetForCurrentThread();
@@ -149,6 +148,7 @@ void Timing::StartRendering() {
     m_dispatcherQueueTimer.Stop();
   }
 
+  m_usingRendering = true;
   m_rendering.revoke();
   m_rendering = xaml::Media::CompositionTarget::Rendering(
       winrt::auto_revoke,
@@ -213,9 +213,7 @@ void Timing::deleteTimer(int64_t id) {
   m_timerQueue.Remove(id);
 
   if (m_timerQueue.IsEmpty()) {
-    m_usingRendering = false;
-    m_rendering.revoke();
-    EnsureDispatcherTimer().Stop();
+    StopTicks();
   }
 }
 
