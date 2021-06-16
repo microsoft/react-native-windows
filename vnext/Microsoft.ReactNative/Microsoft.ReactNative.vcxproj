@@ -421,6 +421,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventEmitter.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventTarget.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventQueue.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventQueueProcessor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutableShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutConstraints.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutMetrics.cpp" />
