@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Fix XAML Visibility for `display:none`",
+  "comment": "[0.64]Fix XAML Visibility for `display:none`",
   "packageName": "react-native-windows",
   "email": "agnel@microsoft.com",
   "dependentChangeType": "patch"
