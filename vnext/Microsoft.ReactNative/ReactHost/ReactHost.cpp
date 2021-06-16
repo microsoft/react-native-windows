@@ -393,10 +393,10 @@ Mso::Future<void> ReactHost::UnloadInQueue(size_t unloadActionId) noexcept {
   return Mso::WhenAllCompleted(unloadCompletionList).Then(m_executor, [this](Mso::Maybe<void> && /*value*/) noexcept {
     Mso::Future<void> onUnloaded;
     if (auto reactInstance = m_reactInstance.Exchange(nullptr)) {
-      m_isInstanceUnloading.Store(false);
       onUnloaded = reactInstance->Destroy();
     }
 
+    m_isInstanceUnloading.Store(false);
     m_lastError.Store({});
 
     if (!onUnloaded) {
@@ -537,7 +537,7 @@ Mso::Future<void> ReactViewHost::InitViewInstanceInQueue() noexcept {
     return Mso::MakeCanceledFuture();
   }
 
-  //// We cannot load if instance is in the process of being unloaded.
+  // We cannot load if instance is in the process of being unloaded.
   if (m_reactHost->IsInstanceUnloading()) {
     return Mso::MakeCanceledFuture();
   }
