@@ -43,6 +43,8 @@ inline FacadeType StringToFacadeType(const std::string &value) noexcept {
     return FacadeType::TranslateY;
   if (value == "perspective")
     return FacadeType::Perspective;
+  if (value == "progress")
+    return FacadeType::Progress;
 
   // None of the above facade has been recognized
   return FacadeType::None;
