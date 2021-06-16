@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 15 Jun 2021 05:06:39 GMT and should not be manually modified.
+This log was last generated on Wed, 16 Jun 2021 05:08:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.325
+
+Wed, 16 Jun 2021 05:08:34 GMT
+
+### Changes
+
+- Fix deadlock when rapidly reloading instance (30809111+acoates-ms@users.noreply.github.com)
+- TurboModules might be kept alive by RNH when instance is shutdown (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.324
 

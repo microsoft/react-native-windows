@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 16 Jun 2021 05:08:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.325",
+      "version": "0.0.0-canary.325",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix deadlock when rapidly reloading instance",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "9fb0e939a51d4221af15ace68f51a10f64752ec1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "TurboModules might be kept alive by RNH when instance is shutdown",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "31accd17b5a86afcd3a2c92c24bd5419c4fa8977",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Jun 2021 05:06:39 GMT",
       "tag": "react-native-windows_v0.0.0-canary.324",
       "version": "0.0.0-canary.324",
