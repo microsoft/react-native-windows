@@ -8,25 +8,25 @@ parameters:
   - name: encodedKey
     type: string
 
-jobs:
-  - job: Set Up Certificate
+steps:
+  - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(sampleAppCPPEncodedKey)"
+    displayName: Specify Certificate
+    condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'sampleAppCPPEncodedKey'))
+  
+  - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(reactUWPTestAppEncodedKey)"
+    displayName: Specify Certificate
+    condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'reactUWPTestAppEncodedKey'))
+
+  - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(playgroundEncodedKey)"
+    displayName: Specify Certificate
+    condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'playgroundEncodedKey'))
+
+  - task: PowerShell@2
     displayName: Set Up Certificate
-    strategy:
-      matrix:
-        ${{if eq(parameters.buildEnvironment, 'Continuous')}}:
-          ${{ if eq(parameters.encodedKey, 'sampleAppCPPEncodedKey') }}:
-            EncodedKey: $(sampleAppCPPEncodedKey)
-          ${{ if eq(parameters.encodedKey, 'reactUWPTestAppEncodedKey') }}:
-            EncodedKey: $(reactUWPTestAppEncodedKey)
-          ${{ if eq(parameters.encodedKey, 'playgroundEncodedKey') }}:
-            EncodedKey: $(playgroundEncodedKey)
-    steps:
-      - task: PowerShell@2
-        displayName: Generate PFX
-        inputs:
-          targetType: 'inline'
-          script: |
-            $PfxBytes = [System.Convert]::FromBase64String("$(EncodedKey)")
-            $PfxPath = [System.IO.Path]::GetFullPath( (Join-Path -Path $(Build.SourcesDirectory) -ChildPath EncodedKey.pfx) )
-            [System.IO.File]::WriteAllBytes("$PfxPath", $PfxBytes)
-        condition: eq('${{ parameters.buildEnvironment }}', 'Continuous')
+    inputs:
+      targetType: 'inline'
+      script: |
+        $PfxBytes = [System.Convert]::FromBase64String("$(EncodedKey)")
+        $PfxPath = [System.IO.Path]::GetFullPath( (Join-Path -Path $(Build.SourcesDirectory) -ChildPath EncodedKey.pfx) )
+        [System.IO.File]::WriteAllBytes("$PfxPath", $PfxBytes)
+    condition: eq('${{ parameters.buildEnvironment }}', 'Continuous')
