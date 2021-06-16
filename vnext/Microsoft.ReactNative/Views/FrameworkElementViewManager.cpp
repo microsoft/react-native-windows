@@ -501,7 +501,7 @@ bool FrameworkElementViewManager::UpdateProperty(
       DynamicAutomationProperties::SetAccessibilityActions(element, value);
     } else if (propertyName == "display") {
       if (propertyValue.isString()) {
-        auto value = react::uwp::asHstring(propertyValue);
+        auto value = propertyValue.getString();
         if (value == "none") {
           element.Visibility(xaml::Visibility::Collapsed);
         } else {
