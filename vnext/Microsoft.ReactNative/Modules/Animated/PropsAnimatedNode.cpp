@@ -90,8 +90,9 @@ void PropsAnimatedNode::UpdateView() {
         }
       } else if (const auto &valueNode = manager->GetValueAnimatedNode(entry.second)) {
         const auto &facade = StringToFacadeType(entry.first);
-        if (facade != FacadeType::None)
+        if (facade != FacadeType::None) {
           MakeAnimation(entry.second, facade);
+        }
       }
     }
   }

@@ -31,8 +31,9 @@ std::unordered_map<FacadeType, int64_t> StyleAnimatedNode::GetMapping() {
     }
 
     const auto &facade = StringToFacadeType(prop.first);
-    if (facade != FacadeType::None)
+    if (facade != FacadeType::None) {
       mapping.insert({facade, prop.second});
+    }
   }
   return mapping;
 }

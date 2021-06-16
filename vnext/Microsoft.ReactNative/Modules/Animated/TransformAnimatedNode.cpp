@@ -29,8 +29,9 @@ std::unordered_map<FacadeType, int64_t> TransformAnimatedNode::GetMapping() {
   for (const auto &config : m_transformConfigs) {
     if (config.nodeTag != s_unsetNodeTag) {
       const auto &facade = StringToFacadeType(config.property);
-      if (facade != FacadeType::None)
+      if (facade != FacadeType::None) {
         mapping.insert({facade, config.nodeTag});
+      }
     }
   }
   return mapping;
