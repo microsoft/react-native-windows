@@ -84,7 +84,7 @@ std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
 }
 
 
-winrt::DispatcherQueueTimer Timing::EnsureDispatcherQueueTimer() {
+winrt::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
   if (!m_dispatcherQueueTimer) {
     winrt::DispatcherQueue queue = winrt::DispatcherQueue::GetForCurrentThread();
     m_dispatcherQueueTimer = queue.CreateTimer();
@@ -110,19 +110,22 @@ void Timing::OnTick() {
     readyTimers.push_back(next.Id);
 
     // If timer is repeating push it back onto the queue for the next repetition
-    
     if (next.Repeat)
       m_timerQueue.Push(next.Id, now + next.Period, next.Period, true);
 
     if (m_timerQueue.IsEmpty()) {
+      // If the queue is empty, stop any active tick schedulers
       StopTicks();
     } else {
+      // Otherwise, update the dispatcher timer interval if the next timer
+      // period is greater than 1ms (used for requestAnimationFrame), or swap
+      // to the rendering callback if not already active.
       const auto &nextTimer = m_timerQueue.Front();
-      if (!m_usingRendering && nextTimer.Period < std::chrono::milliseconds(2)) {
-        StartRendering();
-      } else if (nextTimer.Period >= std::chrono::milliseconds(2)) {
+      if (nextTimer.Period > std::chrono::milliseconds(1)) {
         m_nextDueTime = TDateTime::max();
-        UpdateTimer(nextTimer.TargetTime);
+        UpdateDispatcherTimer(nextTimer.TargetTime);
+      } else if (!m_usingRendering) {
+        StartRendering();
       }
     }
   }
@@ -166,13 +169,13 @@ void Timing::StopTicks() {
   }
 }
 
-void Timing::UpdateTimer(TDateTime targetTime) {
-  const auto shouldUpdateTimer = m_timerQueue.IsEmpty() || targetTime < m_nextDueTime;
-  if (shouldUpdateTimer) {
+void Timing::UpdateDispatcherTimer(TDateTime targetTime) {
+  const auto shouldUpdateDispatcherTimer = m_timerQueue.IsEmpty() || targetTime < m_nextDueTime;
+  if (shouldUpdateDispatcherTimer) {
     m_rendering.revoke();
     m_usingRendering = false;
     m_nextDueTime = targetTime;
-    auto timer = EnsureDispatcherQueueTimer();
+    auto timer = EnsureDispatcherTimer();
     timer.Interval(std::max(targetTime - TDateTime::clock::now(), TTimeSpan::zero()));
     timer.Start();
   }
@@ -193,12 +196,14 @@ void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, b
   const int64_t msFrom1601to1970 = 11644473600000;
   TDateTime scheduledTime(TimeSpanFromMs(jsSchedulingTime + msFrom1601to1970));
   auto initialTargetTime = scheduledTime + period;
-  if (!m_usingRendering) {
-    if (period < std::chrono::milliseconds(2)) {
-      StartRendering();
-    } else {
-      UpdateTimer(initialTargetTime);
-    }
+  if (!m_usingRendering && period > std::chrono::milliseconds(1)) {
+    // If we don't have an active rendering callback and the next period is
+    // greater than 1ms (used for requestAnimationFrame), update the dispatcher
+    // timer interval.
+    UpdateDispatcherTimer(initialTargetTime);
+  } else if (!m_usingRendering) {
+    // Otherwise, if we don't have an active rendering callback, start one.
+    StartRendering();
   }
 
   m_timerQueue.Push(id, initialTargetTime, period, repeat);
@@ -210,7 +215,7 @@ void Timing::deleteTimer(int64_t id) {
   if (m_timerQueue.IsEmpty()) {
     m_usingRendering = false;
     m_rendering.revoke();
-    EnsureDispatcherQueueTimer().Stop();
+    EnsureDispatcherTimer().Stop();
   }
 }
 

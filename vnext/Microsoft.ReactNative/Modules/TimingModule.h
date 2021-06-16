@@ -68,10 +68,10 @@ class Timing : public std::enable_shared_from_this<Timing> {
  private:
   std::weak_ptr<facebook::react::Instance> getInstance() noexcept;
   void OnTick();
-  winrt::Windows::System::DispatcherQueueTimer EnsureDispatcherQueueTimer();
+  winrt::Windows::System::DispatcherQueueTimer EnsureDispatcherTimer();
   void StartRendering();
   void StopTicks();
-  void UpdateTimer(TDateTime targetTime);
+  void UpdateDispatcherTimer(TDateTime targetTime);
 
  private:
   TimingModule *m_parent;
