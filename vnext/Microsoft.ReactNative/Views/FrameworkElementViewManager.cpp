@@ -500,14 +500,14 @@ bool FrameworkElementViewManager::UpdateProperty(
       auto value = json_type_traits<winrt::IVector<winrt::react::uwp::AccessibilityAction>>::parseJson(propertyValue);
       DynamicAutomationProperties::SetAccessibilityActions(element, value);
     } else if (propertyName == "display") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
-        auto value = propertyValue.AsString();
+      if (propertyValue.isString()) {
+        auto value = react::uwp::asHstring(propertyValue);
         if (value == "none") {
           element.Visibility(xaml::Visibility::Collapsed);
         } else {
           element.Visibility(xaml::Visibility::Visible);
         }
-      } else if (propertyValue.IsNull()) {
+      } else if (propertyValue.isNull()) {
         element.ClearValue(xaml::UIElement::VisibilityProperty());
       }
     } else {
