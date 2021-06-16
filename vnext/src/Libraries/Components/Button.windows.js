@@ -22,7 +22,11 @@ import {PlatformColor} from '../StyleSheet/PlatformColorValueTypes';
 import View from './View/View';
 import invariant from 'invariant';
 
-import type {AccessibilityState} from './View/ViewAccessibility';
+import type {
+  AccessibilityState,
+  AccessibilityActionEvent,
+  AccessibilityActionInfo,
+} from './View/ViewAccessibility';
 import type {PressEvent} from '../Types/CoreEventTypes';
 
 type ButtonProps = $ReadOnly<{|
@@ -139,6 +143,9 @@ type ButtonProps = $ReadOnly<{|
   /**
    * Accessibility props.
    */
+  accessible?: ?boolean,
+  accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
+  onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
   accessibilityState?: ?AccessibilityState,
 
   // [Windows
@@ -289,7 +296,13 @@ class Button extends React.Component<
       nextFocusRight,
       nextFocusUp,
       testID,
+<<<<<<< Upstream
+      accessible,
+      accessibilityActions,
+      onAccessibilityAction,
+=======
       tabIndex,
+>>>>>>> Override
     } = this.props;
     const buttonStyles = [styles.button];
     const textStyles = [styles.text];
@@ -322,6 +335,30 @@ class Button extends React.Component<
     );
     const formattedTitle =
       Platform.OS === 'android' ? title.toUpperCase() : title;
+<<<<<<< Upstream
+    const Touchable =
+      Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+
+    return (
+      <Touchable
+        accessible={accessible}
+        accessibilityActions={accessibilityActions}
+        onAccessibilityAction={onAccessibilityAction}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityRole="button"
+        accessibilityState={accessibilityState}
+        hasTVPreferredFocus={hasTVPreferredFocus}
+        nextFocusDown={nextFocusDown}
+        nextFocusForward={nextFocusForward}
+        nextFocusLeft={nextFocusLeft}
+        nextFocusRight={nextFocusRight}
+        nextFocusUp={nextFocusUp}
+        testID={testID}
+        disabled={disabled}
+        onPress={onPress}
+        touchSoundDisabled={touchSoundDisabled}>
+        <View style={buttonStyles}>
+=======
     // [Windows - render a TouchableHighlight
     const Touchable = TouchableHighlight;
     //  Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
@@ -374,6 +411,7 @@ class Button extends React.Component<
           onMouseLeave={() => {
             if (!disabled) this.setState({hover: false});
           }}>
+>>>>>>> Override
           <Text style={textStyles} disabled={disabled}>
             {formattedTitle}
           </Text>

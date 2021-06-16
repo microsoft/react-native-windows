@@ -7,6 +7,14 @@
 namespace facebook {
 namespace react {
 
+<<<<<<< Upstream
+bool isColorMeaningful(SharedColor const &color) noexcept {
+  if (!color) {
+    return false;
+  }
+
+  return colorComponentsFromColor(color).alpha > 0;
+=======
 xaml::Media::Brush SharedColor::AsWindowsBrush() const {
   if (!m_color)
     return nullptr;
@@ -14,6 +22,7 @@ xaml::Media::Brush SharedColor::AsWindowsBrush() const {
     return Microsoft::ReactNative::BrushFromColorObject(winrt::to_hstring(m_color->m_platformColor));
   }
   return xaml::Media::SolidColorBrush(m_color->m_color);
+>>>>>>> Override
 }
 
 SharedColor colorFromComponents(ColorComponents components) {
