@@ -77,7 +77,7 @@ class Timing : public std::enable_shared_from_this<Timing> {
   TimingModule *m_parent;
   TimerQueue m_timerQueue;
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
-  winrt::Windows::System::DispatcherQueueTimer m_dispatcherQueueTimer;
+  winrt::Windows::System::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
   bool m_usingRendering{false};
   TDateTime m_nextDueTime{TDateTime::max()};
 };

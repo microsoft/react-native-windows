@@ -69,7 +69,7 @@ bool TimerQueue::IsEmpty() {
 // Timing
 //
 
-Timing::Timing(TimingModule *parent) : m_parent(parent), m_dispatcherQueueTimer{nullptr} {}
+Timing::Timing(TimingModule *parent) : m_parent(parent) {}
 
 void Timing::Disconnect() {
   m_parent = nullptr;
@@ -81,21 +81,6 @@ std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
     return std::weak_ptr<facebook::react::Instance>();
 
   return m_parent->getInstance();
-}
-
-winrt::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
-  if (!m_dispatcherQueueTimer) {
-    winrt::DispatcherQueue queue = winrt::DispatcherQueue::GetForCurrentThread();
-    m_dispatcherQueueTimer = queue.CreateTimer();
-    m_dispatcherQueueTimer.IsRepeating(true);
-    m_dispatcherQueueTimer.Tick([wkThis = std::weak_ptr(this->shared_from_this())](auto &&...) {
-      if (auto pThis = wkThis.lock()) {
-        pThis->OnTick();
-      }
-    });
-  }
-
-  return m_dispatcherQueueTimer;
 }
 
 void Timing::OnTick() {
@@ -140,6 +125,21 @@ void Timing::OnTick() {
       instance->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(params));
     }
   }
+}
+
+winrt::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
+  if (!m_dispatcherQueueTimer) {
+    winrt::DispatcherQueue queue = winrt::DispatcherQueue::GetForCurrentThread();
+    m_dispatcherQueueTimer = queue.CreateTimer();
+    m_dispatcherQueueTimer.IsRepeating(true);
+    m_dispatcherQueueTimer.Tick([wkThis = std::weak_ptr(this->shared_from_this())](auto &&...) {
+      if (auto pThis = wkThis.lock()) {
+        pThis->OnTick();
+      }
+    });
+  }
+
+  return m_dispatcherQueueTimer;
 }
 
 void Timing::StartRendering() {
