@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>Microsoft.ReactNative</id>
+    <id>Microsoft.ProjectReunion.ReactNative</id>
     <version>0.0.1-prerelease</version>
     <authors>Microsoft</authors>
     <description>React Native for Windows</description>
@@ -19,7 +19,7 @@
     <file src="..\target\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\netcoreapp3.0\Microsoft.ReactNative.winmd" />
     <file src="..\target\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\uap10.0\Microsoft.ReactNative.winmd" />
     <file src="..\target\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\net46\Microsoft.ReactNative.winmd" />
-    <file src="..\build\x64\Release\Microsoft.ReactNativeInterop\bin\Microsoft.ReactNativeInterop.dll" target="lib\net5.0\Microsoft.ProjectReunion.ReactNative.dll" />
+    <file src="..\build\x64\Release\Microsoft.ProjectReunion.ReactNative\Microsoft.ProjectReunion.ReactNative\bin\Microsoft.ProjectReunion.ReactNative.dll" target="lib\net5.0\Microsoft.ProjectReunion.ReactNative.dll" />
     <file src="..\target\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x64\native\Microsoft.ReactNative.dll" />
   </files>
 </package>
