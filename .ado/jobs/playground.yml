@@ -111,7 +111,7 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             $(BuildWinUI3Properties)
             /p:BaseIntDir=$(BaseIntDir)
-            /p:PackageCertificateKeyFile=$(Build.SourcesDirectory)\playground-Key.pfx
+            /p:PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
         condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
 
       - template: ../templates/cleanup-certificate.yml
