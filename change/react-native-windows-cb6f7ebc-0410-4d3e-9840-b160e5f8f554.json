@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "FacadeType extended with None to avoid crash for unsupported values",
+  "packageName": "react-native-windows",
+  "email": "Bartosz.Klonowski@callstack.com",
+  "dependentChangeType": "patch"
+}
