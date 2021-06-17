@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
+    <Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CsWinRTIncludes>Microsoft.ReactNative</CsWinRTIncludes>
+    <CsWinRTGeneratedFilesDir>$(OutDir)</CsWinRTGeneratedFilesDir>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="boost" Version="1.72.0" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.2.5" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--<PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.1" />-->
+    <PackageReference Include="Microsoft.ProjectReunion" Version="0.5.5" />
+    <PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.5.5" />
+    <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.5.5" />
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.18362.16" />
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.18362.16" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <GeneratedNugetDir>..\nuget\</GeneratedNugetDir>
+    <NuspecFile>$(GeneratedNugetDir)Microsoft.ReactNative.Interop.nuspec</NuspecFile>
+    <OutputPath>$(GeneratedNugetDir)</OutputPath>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+</Project>

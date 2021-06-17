@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup Condition="'$(SolutionName)'=='Microsoft.ProjectReunion.ReactNative'">
+    <UseWinUI3>true</UseWinUI3>
+  </PropertyGroup>
+</Project>

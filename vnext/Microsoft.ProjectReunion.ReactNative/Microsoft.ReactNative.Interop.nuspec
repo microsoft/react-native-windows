@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.ReactNative</id>
+    <version>0.0.1-prerelease</version>
+    <authors>Microsoft</authors>
+    <description>React Native for Windows</description>
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.0" />
+      <group targetFramework="UAP10.0" />
+      <group targetFramework=".NETFramework4.6" />
+      <group targetFramework="net5.0">
+        <dependency id="Microsoft.Windows.CsWinRT" version="1.0.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <!--Support netcore3, uap, net46+, net5, c++ -->
+    <file src="..\target\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\netcoreapp3.0\Microsoft.ReactNative.winmd" />
+    <file src="..\target\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\uap10.0\Microsoft.ReactNative.winmd" />
+    <file src="..\target\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\net46\Microsoft.ReactNative.winmd" />
+    <file src="..\build\x64\Release\Microsoft.ReactNativeInterop\bin\Microsoft.ReactNativeInterop.dll" target="lib\net5.0\Microsoft.ProjectReunion.ReactNative.dll" />
+    <file src="..\target\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x64\native\Microsoft.ReactNative.dll" />
+  </files>
+</package>
