@@ -70,16 +70,15 @@ class Timing : public std::enable_shared_from_this<Timing> {
   void OnTick();
   winrt::Windows::System::DispatcherQueueTimer EnsureDispatcherTimer();
   void StartRendering();
+  void StartDispatcherTimer();
   void StopTicks();
-  void UpdateDispatcherTimer(TDateTime targetTime);
 
  private:
   TimingModule *m_parent;
   TimerQueue m_timerQueue;
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
   winrt::Windows::System::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
-  bool m_usingRendering{false};
-  TDateTime m_nextDueTime{TDateTime::max()};
+  int64_t m_animationFrameRequests{0};
 };
 
 class TimingModule : public facebook::xplat::module::CxxModule {

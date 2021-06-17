@@ -29,6 +29,13 @@ using namespace std;
 namespace Microsoft::ReactNative {
 
 //
+// IsAnimationFrameRequest
+//
+static bool IsAnimationFrameRequest(TTimeSpan period, bool repeat) {
+  return !repeat && period == std::chrono::milliseconds(1);
+}
+
+//
 // TimerQueue
 //
 
@@ -93,25 +100,21 @@ void Timing::OnTick() {
     m_timerQueue.Pop();
     readyTimers.push_back(next.Id);
 
+    // If timer is an animation frame request, decrement count
+    if (IsAnimationFrameRequest(next.Period, next.Repeat))
+      --m_animationFrameRequests;
+
     // If timer is repeating push it back onto the queue for the next repetition
     if (next.Repeat)
       m_timerQueue.Push(next.Id, now + next.Period, next.Period, true);
+  }
 
-    if (m_timerQueue.IsEmpty()) {
-      // If the queue is empty, stop any active tick schedulers
-      StopTicks();
-    } else {
-      // Otherwise, update the dispatcher timer interval if the next timer
-      // period is greater than 1ms (used for requestAnimationFrame), or swap
-      // to the rendering callback if not already active.
-      const auto &nextTimer = m_timerQueue.Front();
-      if (nextTimer.Period > std::chrono::milliseconds(1)) {
-        m_nextDueTime = TDateTime::max();
-        UpdateDispatcherTimer(nextTimer.TargetTime);
-      } else if (!m_usingRendering) {
-        StartRendering();
-      }
-    }
+  if (m_timerQueue.IsEmpty()) {
+    StopTicks();
+  } else if (m_animationFrameRequests == 0) {
+    // If there are no remaining animation frame requests, then we need to
+    // update the dispatcher timer interval.
+    StartDispatcherTimer();
   }
 
   if (!readyTimers.empty()) {
@@ -131,7 +134,6 @@ winrt::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
   if (!m_dispatcherQueueTimer) {
     winrt::DispatcherQueue queue = winrt::DispatcherQueue::GetForCurrentThread();
     m_dispatcherQueueTimer = queue.CreateTimer();
-    m_dispatcherQueueTimer.IsRepeating(true);
     m_dispatcherQueueTimer.Tick([wkThis = std::weak_ptr(this->shared_from_this())](auto &&...) {
       if (auto pThis = wkThis.lock()) {
         pThis->OnTick();
@@ -143,12 +145,9 @@ winrt::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
 }
 
 void Timing::StartRendering() {
-  if (m_dispatcherQueueTimer) {
-    m_nextDueTime = TDateTime::max();
+  if (m_dispatcherQueueTimer)
     m_dispatcherQueueTimer.Stop();
-  }
 
-  m_usingRendering = true;
   m_rendering.revoke();
   m_rendering = xaml::Media::CompositionTarget::Rendering(
       winrt::auto_revoke,
@@ -160,25 +159,18 @@ void Timing::StartRendering() {
       });
 }
 
-void Timing::StopTicks() {
-  m_usingRendering = false;
+void Timing::StartDispatcherTimer() {
+  const auto &nextTimer = m_timerQueue.Front();
   m_rendering.revoke();
-  if (m_dispatcherQueueTimer) {
-    m_nextDueTime = TDateTime::max();
-    m_dispatcherQueueTimer.Stop();
-  }
+  auto timer = EnsureDispatcherTimer();
+  timer.Interval(std::max(nextTimer.TargetTime - TDateTime::clock::now(), TTimeSpan::zero()));
+  timer.Start();
 }
 
-void Timing::UpdateDispatcherTimer(TDateTime targetTime) {
-  const auto shouldUpdateDispatcherTimer = m_timerQueue.IsEmpty() || targetTime < m_nextDueTime;
-  if (shouldUpdateDispatcherTimer) {
-    m_rendering.revoke();
-    m_usingRendering = false;
-    m_nextDueTime = targetTime;
-    auto timer = EnsureDispatcherTimer();
-    timer.Interval(std::max(targetTime - TDateTime::clock::now(), TTimeSpan::zero()));
-    timer.Start();
-  }
+void Timing::StopTicks() {
+  m_rendering.revoke();
+  if (m_dispatcherQueueTimer)
+    m_dispatcherQueueTimer.Stop();
 }
 
 void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, bool repeat) {
@@ -196,25 +188,25 @@ void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, b
   const int64_t msFrom1601to1970 = 11644473600000;
   TDateTime scheduledTime(TimeSpanFromMs(jsSchedulingTime + msFrom1601to1970));
   auto initialTargetTime = scheduledTime + period;
-  if (!m_usingRendering && period > std::chrono::milliseconds(1)) {
-    // If we don't have an active rendering callback and the next period is
-    // greater than 1ms (used for requestAnimationFrame), update the dispatcher
-    // timer interval.
-    UpdateDispatcherTimer(initialTargetTime);
-  } else if (!m_usingRendering) {
-    // Otherwise, if we don't have an active rendering callback, start one.
-    StartRendering();
+  m_timerQueue.Push(id, initialTargetTime, period, repeat);
+  const auto isAnimationFrameRequest = IsAnimationFrameRequest(period, repeat);
+  if (m_animationFrameRequests == 0) {
+    if (isAnimationFrameRequest) {
+      StartRendering();
+    } else if (initialTargetTime <= m_timerQueue.Front().TargetTime) {
+      StartDispatcherTimer();
+    }
   }
 
-  m_timerQueue.Push(id, initialTargetTime, period, repeat);
+  if (isAnimationFrameRequest)
+    ++m_animationFrameRequests;
 }
 
 void Timing::deleteTimer(int64_t id) {
   m_timerQueue.Remove(id);
 
-  if (m_timerQueue.IsEmpty()) {
+  if (m_timerQueue.IsEmpty())
     StopTicks();
-  }
 }
 
 void Timing::setSendIdleEvents(bool /*sendIdleEvents*/) {
