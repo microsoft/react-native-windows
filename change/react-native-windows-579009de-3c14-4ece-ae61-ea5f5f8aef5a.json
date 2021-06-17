@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "More cases of *Undefined* are popping up in MsBuild",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
