@@ -94,26 +94,27 @@ void Timing::OnTick() {
   std::vector<int64_t> readyTimers;
   auto now = TDateTime::clock::now();
 
+  auto emittedAnimationFrame = false;
   while (!m_timerQueue.IsEmpty() && m_timerQueue.Front().TargetTime < now) {
     // Pop first timer from the queue and add it to list of timers ready to fire
     Timer next = m_timerQueue.Front();
     m_timerQueue.Pop();
     readyTimers.push_back(next.Id);
 
-    // If timer is an animation frame request, decrement count
-    if (IsAnimationFrameRequest(next.Period, next.Repeat))
-      --m_animationFrameRequests;
-
     // If timer is repeating push it back onto the queue for the next repetition
     if (next.Repeat)
       m_timerQueue.Push(next.Id, now + next.Period, next.Period, true);
+    else if (IsAnimationFrameRequest(next.Period, next.Repeat))
+      emittedAnimationFrame = true;
   }
 
   if (m_timerQueue.IsEmpty()) {
     StopTicks();
-  } else if (m_animationFrameRequests == 0) {
-    // If there are no remaining animation frame requests, then we need to
-    // update the dispatcher timer interval.
+  } else if (!m_usingRendering || !emittedAnimationFrame) {
+    // If we're using a rendering callback, check if any animation frame
+    // requests were emitted in this tick. If not, start the dispatcher timer.
+    // This extra frame gives JS a chance to enqueue an additional animation
+    // frame request before switching tick schedulers.
     StartDispatcherTimer();
   }
 
@@ -149,6 +150,7 @@ void Timing::StartRendering() {
     m_dispatcherQueueTimer.Stop();
 
   m_rendering.revoke();
+  m_usingRendering = true;
   m_rendering = xaml::Media::CompositionTarget::Rendering(
       winrt::auto_revoke,
       [wkThis = std::weak_ptr(this->shared_from_this())](
@@ -162,6 +164,7 @@ void Timing::StartRendering() {
 void Timing::StartDispatcherTimer() {
   const auto &nextTimer = m_timerQueue.Front();
   m_rendering.revoke();
+  m_usingRendering = false;
   auto timer = EnsureDispatcherTimer();
   timer.Interval(std::max(nextTimer.TargetTime - TDateTime::clock::now(), TTimeSpan::zero()));
   timer.Start();
@@ -169,6 +172,7 @@ void Timing::StartDispatcherTimer() {
 
 void Timing::StopTicks() {
   m_rendering.revoke();
+  m_usingRendering = false;
   if (m_dispatcherQueueTimer)
     m_dispatcherQueueTimer.Stop();
 }
@@ -189,22 +193,17 @@ void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, b
   TDateTime scheduledTime(TimeSpanFromMs(jsSchedulingTime + msFrom1601to1970));
   auto initialTargetTime = scheduledTime + period;
   m_timerQueue.Push(id, initialTargetTime, period, repeat);
-  const auto isAnimationFrameRequest = IsAnimationFrameRequest(period, repeat);
-  if (m_animationFrameRequests == 0) {
-    if (isAnimationFrameRequest) {
+  if (!m_usingRendering) {
+    if (IsAnimationFrameRequest(period, repeat)) {
       StartRendering();
     } else if (initialTargetTime <= m_timerQueue.Front().TargetTime) {
       StartDispatcherTimer();
     }
   }
-
-  if (isAnimationFrameRequest)
-    ++m_animationFrameRequests;
 }
 
 void Timing::deleteTimer(int64_t id) {
   m_timerQueue.Remove(id);
-
   if (m_timerQueue.IsEmpty())
     StopTicks();
 }
