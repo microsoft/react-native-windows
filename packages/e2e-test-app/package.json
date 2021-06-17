@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "@react-native-windows/tester": "0.0.1",
-    "node-rnw-rpc": "^1.0.11-2",
+    "node-rnw-rpc": "^1.0.11-3",
     "react": "17.0.2",
     "react-native": "0.0.0-0d32aef3a",
-    "react-native-windows": "^0.0.0-canary.325"
+    "react-native-windows": "^0.0.0-canary.326"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
@@ -33,7 +33,7 @@
     "babel-jest": "^26.3.0",
     "eslint": "7.12.0",
     "jest": "^26.6.3",
-    "jest-environment-winappdriver": "^1.1.10-2",
+    "jest-environment-winappdriver": "^2.0.0",
     "just-scripts": "^1.3.3",
     "metro-config": "^0.66.0",
     "metro-react-native-babel-preset": "^0.56.0",

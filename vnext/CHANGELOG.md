@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 16 Jun 2021 05:08:34 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Jun 2021 05:07:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.326
+
+Thu, 17 Jun 2021 05:07:57 GMT
+
+### Changes
+
+- Fix crash when adding a ReactRootView while reloading a ReactHost (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 6/2 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.325
 

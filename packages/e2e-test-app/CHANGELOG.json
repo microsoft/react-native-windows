@@ -2,6 +2,29 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Thu, 17 Jun 2021 05:07:57 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.326",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "5b02d1a16b870d838169937d699dcf7108b02f4f",
+            "package": "e2e-test-app"
+          }
+        ],
+        "major": [
+          {
+            "comment": "Bump node-rnw-rpc to v1.0.11-3",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "e56b49798037e86698f166f62cb45941564784f6",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 16 Jun 2021 05:08:34 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",

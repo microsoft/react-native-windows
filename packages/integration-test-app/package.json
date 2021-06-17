@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "chai": "^4.2.0",
-    "node-rnw-rpc": "^1.0.11-2",
+    "node-rnw-rpc": "^1.0.11-3",
     "react": "17.0.2",
     "react-native": "0.0.0-0d32aef3a",
-    "react-native-windows": "^0.0.0-canary.325"
+    "react-native-windows": "^0.0.0-canary.326"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",

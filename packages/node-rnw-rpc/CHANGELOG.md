@@ -1,8 +1,16 @@
 # Change Log - node-rnw-rpc
 
-This log was last generated on Wed, 16 Jun 2021 05:08:34 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Jun 2021 05:07:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.11-3
+
+Thu, 17 Jun 2021 05:07:57 GMT
+
+### Changes
+
+- Integrate 6/2 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 1.0.11-2
 
