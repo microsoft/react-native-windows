@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Create cswinrt projection nuget project",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
