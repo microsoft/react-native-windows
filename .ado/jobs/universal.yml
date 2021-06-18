@@ -102,7 +102,7 @@
                 
                 - template: ../templates/component-governance.yml
 
-                - template: set-version-vars.yml
+                - template: ../templates/set-version-vars.yml
                   parameters:
                     buildEnvironment: ${{ parameters.buildEnvironment }}
 
