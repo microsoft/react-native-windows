@@ -132,10 +132,10 @@
                       # /flp3:verbosity=diagnostic;logfile=$(BuildLogDirectory)\MsBuild.log
   
 
-                - template: upload-build-logs.yml
-                  condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'), eq('${{ matrix.BuildConfiguration }}', 'Release'))
-                  parameters:
-                    buildLogDirectory: $(BuildLogDirectory)
+                # - template: upload-build-logs.yml
+                #   condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'), eq('${{ matrix.BuildConfiguration }}', 'Release'))
+                #   parameters:
+                #     buildLogDirectory: $(BuildLogDirectory)
 
                 - task: PublishPipelineArtifact@1
                   displayName: "Publish Reunion NuGet package"
