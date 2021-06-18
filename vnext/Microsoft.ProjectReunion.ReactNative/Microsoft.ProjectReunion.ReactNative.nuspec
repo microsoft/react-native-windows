@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Microsoft.ProjectReunion.ReactNative</id>
-    <version>0.0.1-prerelease</version>
+    <version>$version$</version>
     <authors>Microsoft</authors>
     <description>React Native for Windows</description>
     <dependencies>
