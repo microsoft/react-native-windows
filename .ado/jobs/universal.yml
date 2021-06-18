@@ -119,7 +119,7 @@
                       /p:RNW_FASTBUILD=true
                       /p:UseWinUI3=true
                       /p:PreferredToolArchitecture=x64
-                      /p:PlatformToolset=x64
+                      /p:PlatformToolset=v142
                       /restore
                       # /p:BaseIntDir=$(BaseIntDir)
                       # /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
