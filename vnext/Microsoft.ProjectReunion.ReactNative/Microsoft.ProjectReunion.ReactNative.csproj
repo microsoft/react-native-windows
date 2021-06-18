@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <PropertyGroup>
+    <Version>$(RNW_PKG_VERSION_STR)</Version>
     <GeneratedNugetDir>..\target\$(Platform)\$(Configuration)\</GeneratedNugetDir>
     <NuspecFile>Microsoft.ProjectReunion.ReactNative.nuspec</NuspecFile>
     <OutputPath>$(GeneratedNugetDir)</OutputPath>
