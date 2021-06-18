@@ -102,7 +102,22 @@
                 
                 - template: ../templates/component-governance.yml
 
-                
+                - template: ../templates/build-rnw.yml
+                  parameters:
+                    project: vnext/Microsoft.ProjectReunion.ReactNative.sln
+                    buildPlatform: x64
+                    buildConfiguration: Release
+                    multicoreBuild: true
+                    msbuildArguments: /p:RNW_FASTBUILD=${{ matrix.FastBuild }} /p:UseWinUI3=true
+                    displayName: Build ProjectReunion x64 Release
+
+                - task: PublishPipelineArtifact@1
+                  displayName: "Publish Reunion nuget package"
+                  inputs:
+                    targetPath: $(Build.SourcesDirectory)/vnext/target/x64/Release/Microsoft.ProjectReunion.ReactNative.*.nupkg
+                    artifactName: "ProjectReunion-x64-Release"
+
+
             - job: UniversalTest${{ matrix.Name }}
               variables:
                 - template: ../variables/vs2019.yml
