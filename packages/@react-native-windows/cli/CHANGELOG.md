@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 11 Jun 2021 05:08:55 GMT and should not be manually modified.
+This log was last generated on Fri, 18 Jun 2021 05:06:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.77
+
+Fri, 18 Jun 2021 05:06:48 GMT
+
+### Changes
+
+- Best-effort autolinking - if a module was built without the standard module project template, use it for autolinking anyway (asklar@microsoft.com)
 
 ## 0.0.0-canary.76
 

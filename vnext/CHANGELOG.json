@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 18 Jun 2021 05:06:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.327",
+      "version": "0.0.0-canary.327",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "FacadeType extended with None to avoid crash for unsupported values",
+            "author": "Bartosz.Klonowski@callstack.com",
+            "commit": "491120a68924b5261928fa57c5fbab77685b5357",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "More cases of *Undefined* are popping up in MsBuild",
+            "author": "dannyvv@microsoft.com",
+            "commit": "92c7d665915c8d1756f4c6c35c092e0ba3fa54ab",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Jun 2021 05:07:57 GMT",
       "tag": "react-native-windows_v0.0.0-canary.326",
       "version": "0.0.0-canary.326",

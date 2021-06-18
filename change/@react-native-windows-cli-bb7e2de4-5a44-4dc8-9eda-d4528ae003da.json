@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Best-effort autolinking - if a module was built without the standard module project template, use it for autolinking anyway",
-  "packageName": "@react-native-windows/cli",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

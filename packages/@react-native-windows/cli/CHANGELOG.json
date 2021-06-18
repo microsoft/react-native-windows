@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 18 Jun 2021 05:06:48 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.77",
+      "version": "0.0.0-canary.77",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Best-effort autolinking - if a module was built without the standard module project template, use it for autolinking anyway",
+            "author": "asklar@microsoft.com",
+            "commit": "11a322b373c28d0e73dde83550dc42cee1352457",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Jun 2021 05:08:55 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.76",
       "version": "0.0.0-canary.76",
