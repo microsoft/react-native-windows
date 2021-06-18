@@ -10,14 +10,13 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="boost" Version="1.72.0" />
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.2.5" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.3.0" />
   </ItemGroup>
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.1" />-->
-    <PackageReference Include="Microsoft.ProjectReunion" Version="0.5.5" />
-    <PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.5.5" />
-    <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.5.5" />
+    <PackageReference Include="Microsoft.ProjectReunion" Version="0.8.0-preview" />
+    <PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.0-preview" />
+    <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.0-preview" />
     <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.18362.16" />
     <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.18362.16" />
   </ItemGroup>
