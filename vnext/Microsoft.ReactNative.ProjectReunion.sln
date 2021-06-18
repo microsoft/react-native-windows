@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.ProjectReunion.ReactNative", "Microsoft.ProjectReunion.ReactNative\Microsoft.ProjectReunion.ReactNative.csproj", "{FB80EBB0-1E51-465D-953C-72829AE0E9EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.ReactNative.ProjectReunion", "Microsoft.ReactNative.ProjectReunion\Microsoft.ReactNative.ProjectReunion.csproj", "{FB80EBB0-1E51-465D-953C-72829AE0E9EF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}"
 EndProject

@@ -26,7 +26,7 @@
 
   <PropertyGroup>
     <GeneratedNugetDir>..\target\$(Platform)\$(Configuration)\</GeneratedNugetDir>
-    <NuspecFile>Microsoft.ProjectReunion.ReactNative.nuspec</NuspecFile>
+    <NuspecFile>Microsoft.ReactNative.ProjectReunion.nuspec</NuspecFile>
     <OutputPath>$(GeneratedNugetDir)</OutputPath>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>

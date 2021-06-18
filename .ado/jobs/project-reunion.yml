@@ -1,0 +1,57 @@
+parameters:
+  - name: buildEnvironment
+    type: string
+    default : PullRequest
+    values:
+     - PullRequest
+     - Continuous
+
+jobs:
+  - job: Reunion
+    displayName: Project Reunion
+    variables:
+      - template: ../variables/vs2019.yml
+
+    strategy:
+      matrix:
+        # ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+        x64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        # X86Debug:
+        #   BuildConfiguration: Debug
+        #   BuildPlatform: x86
+
+    pool: $(AgentPool.Medium)
+    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+
+    steps:
+      - checkout: self
+        clean: false
+        submodules: false
+
+      - template: ../templates/apply-published-version-vars.yml
+
+      - template: ../templates/build-rnw.yml
+        parameters:
+          project: vnext/Microsoft.ReactNative.ProjectReunion.sln
+          buildPlatform: $(BuildPlatform)
+          buildConfiguration: $(BuildConfiguration)
+          msbuildArguments: /p:UseWinUI3=true
+
+      - task: CopyFiles@2
+        displayName: Copy NuGet artifacts
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+          targetFolder: $(Build.StagingDirectory)/nuget
+          contents: Microsoft.ProjectReunion.ReactNative.$(RNW_PKG_VER_STR).nupkg
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: Project Reunion"
+        inputs:
+          artifactName: ReactWindows
+          pathToPublish: $(Build.StagingDirectory)
+          parallel: true
+
+      - template: ../templates/component-governance.yml
