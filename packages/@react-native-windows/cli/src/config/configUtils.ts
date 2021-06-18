@@ -140,7 +140,15 @@ export function findDependencyProjectFiles(winFolder: string): string[] {
 
   // Try to find any project file that appears to be a dependency project
   for (const projectFile of allProjects) {
-    if (isRnwDependencyProject(path.join(winFolder, projectFile))) {
+    // A project is marked as a RNW dependency iff either:
+    // - If the project has the standard native module imports, or
+    // - If we only have a single project (and it doesn't have the standard native module imports),
+    // pick it and hope for the best. This enables autolinking for modules that were written
+    // before the standard native module template existed.
+    if (
+      allProjects.length === 1 ||
+      isRnwDependencyProject(path.join(winFolder, projectFile))
+    ) {
       dependencyProjectFiles.push(path.normalize(projectFile));
     }
   }
