@@ -102,7 +102,7 @@
                 
                 - template: ../templates/component-governance.yml
 
-                - ${{ if eq(matrix.BuildPlatform, 'x64') and eq (matrix.BuildConfiguration, 'Release') }}:
+                - ${{ if eq(matrix.BuildPlatform, 'x64') and eq(matrix.BuildConfiguration, 'Release') }}:
                   - task: VSBuild@1
                     displayName: Reunion ${{parameters.project}}
                     inputs:
