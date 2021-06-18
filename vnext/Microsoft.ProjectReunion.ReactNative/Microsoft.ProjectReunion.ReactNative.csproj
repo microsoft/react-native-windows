@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
     <Platforms>x64</Platforms>
@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <GeneratedNugetDir>.\nuget\</GeneratedNugetDir>
+    <GeneratedNugetDir>..\target\$(Platform)\$(Configuration)\</GeneratedNugetDir>
     <NuspecFile>Microsoft.ProjectReunion.ReactNative.nuspec</NuspecFile>
     <OutputPath>$(GeneratedNugetDir)</OutputPath>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
