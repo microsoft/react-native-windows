@@ -107,12 +107,12 @@
                   condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'), eq('${{ matrix.BuildConfiguration }}', 'Release'))
                   inputs:
                     solution: vnext/Microsoft.ProjectReunion.ReactNative.sln
-                    vsVersion: $(MSBuildVersion)
+                    vsVersion: 16.0
                     platform: x64
                     configuration: Release
                     clean: true # Optional
                     maximumCpuCount: true # Optional
-                    restoreNugetPackages: true # Optional
+                    restoreNugetPackages: false # Optional
                     createLogFile: true
                     logFileVerbosity: detailed
                     msbuildArgs:
@@ -120,6 +120,7 @@
                       /p:UseWinUI3=true
                       /p:PreferredToolArchitecture=x64
                       /p:PlatformToolset=x64
+                      /restore
                       # /p:BaseIntDir=$(BaseIntDir)
                       # /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
                       # /p:RNW_PKG_VERSION_MAJOR="$(RNW_PKG_VERSION_MAJOR)"
