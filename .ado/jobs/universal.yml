@@ -103,12 +103,12 @@
                 - template: ../templates/component-governance.yml
 
                 - task: VSBuild@1
-                  displayName: Reunion ${{parameters.project}}
+                  displayName: Reunion X64Release 
                   inputs:
                     solution: vnext/Microsoft.ProjectReunion.ReactNative.sln
                     platform: x64
                     configuration: Release
-                    clean: false # Optional
+                    clean: true # Optional
                     maximumCpuCount: true # Optional
                     restoreNugetPackages: true # Optional
                     createLogFile: true
