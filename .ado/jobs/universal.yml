@@ -102,6 +102,10 @@
                 
                 - template: ../templates/component-governance.yml
 
+                - template: set-version-vars.yml
+                  parameters:
+                    buildEnvironment: ${{ parameters.buildEnvironment }}
+
                 - task: VSBuild@1
                   displayName: Reunion X64Release 
                   condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'), eq('${{ matrix.BuildConfiguration }}', 'Release'))
