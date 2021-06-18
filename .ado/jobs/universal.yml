@@ -119,7 +119,7 @@
                       /p:UseWinUI3=true
                       /p:PreferredToolArchitecture=x64
                       /p:PlatformToolset=x64
-                      /p:BaseIntDir=$(BaseIntDir)
+                      # /p:BaseIntDir=$(BaseIntDir)
                       # /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
                       # /p:RNW_PKG_VERSION_MAJOR="$(RNW_PKG_VERSION_MAJOR)"
                       # /p:RNW_PKG_VERSION_MINOR="$(RNW_PKG_VERSION_MINOR)"
