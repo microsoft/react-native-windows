@@ -16,10 +16,10 @@
   </metadata>
   <files>
     <!-- Support netcore3, uap, net46+, net5, c++ -->
-    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\netcoreapp3.0\Microsoft.ReactNative.winmd" />
-    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\uap10.0\Microsoft.ReactNative.winmd" />
-    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\net46\Microsoft.ReactNative.winmd" />
-    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x64\native\Microsoft.ReactNative.dll" />
-    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.ProjectReunion\Microsoft.ReactNative.ProjectReunion.dll" target="lib\net5.0\Microsoft.ReactNative.ProjectReunion.dll" />
+    <file src="..\target\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\netcoreapp3.0\Microsoft.ReactNative.winmd" />
+    <file src="..\target\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\uap10.0\Microsoft.ReactNative.winmd" />
+    <file src="..\target\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\net46\Microsoft.ReactNative.winmd" />
+    <file src="..\target\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x64\native\Microsoft.ReactNative.dll" />
+    <file src="..\target\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.ProjectReunion\Microsoft.ReactNative.ProjectReunion.dll" target="lib\net5.0\Microsoft.ReactNative.ProjectReunion.dll" />
   </files>
 </package>
