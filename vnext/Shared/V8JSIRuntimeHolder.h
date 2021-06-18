@@ -21,6 +21,7 @@ class V8JSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
       std::unique_ptr<facebook::jsi::PreparedScriptStore> &&preparedScriptStore) noexcept
       : useDirectDebugger_(devSettings->useDirectDebugger),
         debuggerBreakOnNextLine_(devSettings->debuggerBreakOnNextLine),
+        debuggerRuntimeName_(devSettings->debuggerRuntimeName),
         debuggerPort_(devSettings->debuggerPort),
         jsQueue_(std::move(jsQueue)),
         preparedScriptStore_(std::move(preparedScriptStore)) {}
@@ -39,6 +40,7 @@ class V8JSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
   uint16_t debuggerPort_;
   bool useDirectDebugger_;
   bool debuggerBreakOnNextLine_;
+  std::string debuggerRuntimeName_;
 };
 
 } // namespace react
