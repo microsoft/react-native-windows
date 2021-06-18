@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.ProjectReunion.ReactNative</id>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <description>React Native for Windows for Project Reunion apps</description>
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.0" />
+      <group targetFramework="UAP10.0" />
+      <group targetFramework=".NETFramework4.6" />
+      <group targetFramework="net5.0">
+        <dependency id="Microsoft.Windows.CsWinRT" version="1.3.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <!-- Support netcore3, uap, net46+, net5, c++ -->
+    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\netcoreapp3.0\Microsoft.ReactNative.winmd" />
+    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\uap10.0\Microsoft.ReactNative.winmd" />
+    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\net46\Microsoft.ReactNative.winmd" />
+    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x64\native\Microsoft.ReactNative.dll" />
+    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.ProjectReunion\Microsoft.ReactNative.ProjectReunion.dll" target="lib\net5.0\Microsoft.ReactNative.ProjectReunion.dll" />
+  </files>
+</package>

@@ -25,9 +25,18 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <GeneratedNugetDir>..\target\$(Platform)\$(Configuration)\</GeneratedNugetDir>
-    <NuspecFile>Microsoft.ReactNative.ProjectReunion.nuspec</NuspecFile>
-    <OutputPath>$(GeneratedNugetDir)</OutputPath>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!-- we don't generate the nuget package from within MSBuild since we have to codesign it.
+    Instead we pack it with nuget.exe, unpack it, sign the binaries, re-pack it and sign the package -->
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <Target Name="CopyOutputDll" AfterTargets="CopyFilesToOutputDirectory">
+    <Copy 
+      SourceFiles="..\build\$(Platform)\$(Configuration)\Microsoft.ReactNative.ProjectReunion\Microsoft.ReactNative.ProjectReunion\bin\Microsoft.ReactNative.ProjectReunion.dll"
+      DestinationFolder="..\target\$(Platform)\$(Configuration)\Microsoft.ReactNative.ProjectReunion"
+      SkipUnchangedFiles="true" />
+    <ItemGroup>
+      <FilesWritten Include="..\target\$(Platform)\$(Configuration)\Microsoft.ReactNative.ProjectReunion\Microsoft.ReactNative.ProjectReunion.dll"/>
+    </ItemGroup>
+  </Target>
 </Project>

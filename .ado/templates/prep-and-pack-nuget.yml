@@ -11,6 +11,7 @@ parameters:
   packMicrosoftReactNativeCxx: true
   packMicrosoftReactNativeManaged: true
   packMicrosoftReactNativeManagedCodeGen: true
+  packMicrosoftReactNativeProjectReunion: false
   signMicrosoft: false
 
 steps:
@@ -81,3 +82,14 @@ steps:
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}
+
+  - ${{ if eq(parameters.packMicrosoftReactNativeProjectReunion, true) }}:
+    - template: prep-and-pack-single.yml
+      parameters:
+        packageId: Microsoft.ReactNative.ProjectReunion
+        packageVersion: ${{parameters.npmVersion}}
+        slices: ''
+        buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
+        codesignBinaries: ${{ parameters.signMicrosoft }}
+        codesignNuget: ${{ parameters.signMicrosoft }}
+

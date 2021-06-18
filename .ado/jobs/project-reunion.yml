@@ -38,7 +38,21 @@ jobs:
           project: vnext/Microsoft.ReactNative.ProjectReunion.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
-          msbuildArguments: /p:UseWinUI3=true /p:Version=$(RNW_PKG_VERSION_STR)
+          msbuildArguments: /p:UseWinUI3=true
+
+      - task: NuGetToolInstaller@0
+        inputs:
+          versionSpec: ">=5.8.0"
+
+      - template: ../templates/prep-and-pack-nuget.yml
+        parameters:
+          packDesktop: false
+          packMicrosoftReactNative: false
+          packMicrosoftReactNativeCxx: false
+          packMicrosoftReactNativeManaged: false
+          packMicrosoftReactNativeManagedCodeGen: false
+          packMicrosoftReactNativeProjectReunion: true
+          slices: '("x64.Release")'
 
       - task: CopyFiles@2
         displayName: Copy NuGet artifacts
