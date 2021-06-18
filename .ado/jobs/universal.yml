@@ -107,6 +107,7 @@
                   condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'), eq('${{ matrix.BuildConfiguration }}', 'Release'))
                   inputs:
                     solution: vnext/Microsoft.ProjectReunion.ReactNative.sln
+                    vsVersion: $(MSBuildVersion)
                     platform: x64
                     configuration: Release
                     clean: true # Optional
