@@ -43,7 +43,7 @@ jobs:
       - task: CopyFiles@2
         displayName: Copy NuGet artifacts
         inputs:
-          sourceFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+          sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           targetFolder: $(Build.StagingDirectory)/nuget
           contents: Microsoft.ProjectReunion.ReactNative.$(RNW_PKG_VER_STR).nupkg
 
