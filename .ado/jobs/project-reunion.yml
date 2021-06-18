@@ -38,7 +38,7 @@ jobs:
           project: vnext/Microsoft.ReactNative.ProjectReunion.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
-          msbuildArguments: /p:UseWinUI3=true
+          msbuildArguments: /p:UseWinUI3=true /p:Version=$(RNW_PKG_VERSION_STR)
 
       - task: CopyFiles@2
         displayName: Copy NuGet artifacts
