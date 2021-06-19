@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Have script store return nullptr on facebook::jsi::JSINativeException",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
