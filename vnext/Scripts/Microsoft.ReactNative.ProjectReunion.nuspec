@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>Microsoft.ProjectReunion.ReactNative</id>
+    <id>Microsoft.ReactNative.ProjectReunion</id>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <description>React Native for Windows for Project Reunion apps</description>
@@ -16,6 +16,7 @@
   </metadata>
   <files>
     <!-- Support netcore3, uap, net46+, net5, c++ -->
+    <!-- Use the contents in the target folder since those are built with UseWinUI3, as opposed to the content in $nugetroot$ which -->
     <file src="..\target\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\netcoreapp3.0\Microsoft.ReactNative.winmd" />
     <file src="..\target\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\uap10.0\Microsoft.ReactNative.winmd" />
     <file src="..\target\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\net46\Microsoft.ReactNative.winmd" />
