@@ -1,5 +1,6 @@
 module.exports = {
   resolver: './jest-resolver.js',
+  snapshotResolver: './jest-snapshot-resolver.js',
   transform: {
     '^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$':
       '<rootDir>/jest/assetFileTransformer.js',
