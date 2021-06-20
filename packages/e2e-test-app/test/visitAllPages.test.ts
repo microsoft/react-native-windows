@@ -9,16 +9,12 @@ import {goToComponentExample, goToApiExample} from './framework';
 
 type RNTesterExampleModule = {
   title: string;
-  testTitle?: string | null;
   description: string;
-  displayName?: string | null;
 };
 
 type RNTesterExample = {
   key: string;
   module: RNTesterExampleModule;
-  category?: string;
-  exampleType?: 'components' | 'apis';
 };
 
 type RNTesterList = {
