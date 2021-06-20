@@ -14,7 +14,7 @@ type RNTesterExampleModule = {
   displayName?: string | null;
 };
 
-export type RNTesterExample = {
+type RNTesterExample = {
   key: string;
   module: RNTesterExampleModule;
   category?: string;
