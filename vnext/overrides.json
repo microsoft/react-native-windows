@@ -99,6 +99,12 @@
       "file": "src/IntegrationTests/XHRTest.js"
     },
     {
+      "type": "copy",
+      "file": "src/Libraries/.npmignore",
+      "baseFile": "Libraries/.npmignore",
+      "baseHash": "41a5e3a8e06cac85f71510c4e7e6c50a6850f86f"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.windows.js",
       "baseFile": "Libraries/Alert/Alert.js",
