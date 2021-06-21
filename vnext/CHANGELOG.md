@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 18 Jun 2021 00:57:20 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Jun 2021 15:08:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.34
+
+Mon, 21 Jun 2021 15:08:21 GMT
+
+### Patches
+
+- [0.63]Fix XAML Visibility for display:none (agnel@microsoft.com)
+- [0.63] More cases of *Undefined* are popping up in MsBuild (dannyvv@microsoft.com)
 
 ## 0.63.33
 

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Jun 2021 15:08:21 GMT",
+      "tag": "react-native-windows_v0.63.34",
+      "version": "0.63.34",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.63]Fix XAML Visibility for display:none",
+            "author": "agnel@microsoft.com",
+            "commit": "fa668985a75327ef7c0000c12f5e5dbaefe68b79",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.63] More cases of *Undefined* are popping up in MsBuild",
+            "author": "dannyvv@microsoft.com",
+            "commit": "77449a20966a9f6a4f85745ac272be6cec3073c5",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Jun 2021 00:57:20 GMT",
       "tag": "react-native-windows_v0.63.33",
       "version": "0.63.33",
