@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Hermes cannot currently be used in C# apps, so blocking it in the CLI",
+  "packageName": "react-native-windows-init",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
