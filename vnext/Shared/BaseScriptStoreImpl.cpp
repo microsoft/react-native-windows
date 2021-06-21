@@ -149,7 +149,7 @@ std::unique_ptr<const jsi::Buffer> LocalFileSimpleBufferStore::getBuffer(const s
   if (Microsoft::React::GetRuntimeOptionBool("JSI.MemoryMappedScriptStore")) {
     try {
       return Microsoft::JSI::MakeMemoryMappedBuffer(winrt::to_hstring(storeDirectory_ + bufferId).c_str());
-    } catch (const facebook::jsi::JSINativeException &e) {
+    } catch (const facebook::jsi::JSINativeException &) {
       return nullptr;
     }
   } else {
