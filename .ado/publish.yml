@@ -300,15 +300,22 @@ jobs:
           buildConfiguration: $(BuildConfiguration)
           msbuildArguments: /p:UseWinUI3=true
 
-      - template: templates/publish-build-artifacts-for-nuget.yml
-        parameters:
-          artifactName: ReactWindows
-          buildPlatform: $(BuildPlatform)
-          buildConfiguration: $(BuildConfiguration)
-          layoutHeaders: eq('true', variables['LayoutHeaders'])
+      - task: CopyFiles@2
+        displayName: Copy NuGet artifacts
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          targetFolder: $(Build.StagingDirectory)/reunion/${(BuildPlatform)/$(BuildConfiguration)
           contents: |
+            Microsoft.ReactNative\**
             Microsoft.ReactNative.ProjectReunion\**
-      
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: ReactWindows"
+        inputs:
+          artifactName: ReactWindows
+          pathToPublish: $(Build.StagingDirectory)
+          parallel: true
+
       # Ensure EnableCodesign is set properly so CG fails appropriately
       - script: |
           echo ##vso[task.setvariable variable=EnableCodesign]true
