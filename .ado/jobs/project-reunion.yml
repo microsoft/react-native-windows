@@ -42,6 +42,13 @@ jobs:
       - task: CopyFiles@2
         displayName: Copy NuGet artifacts
         inputs:
+          sourceFolder: $(Build.SourcesDirectory)\vnext\scripts
+          targetFolder: $(Build.StagingDirectory)
+          contents: Microsoft.ReactNative.ProjectReunion.nuspec
+
+      - task: CopyFiles@2
+        displayName: Copy NuGet artifacts
+        inputs:
           sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           targetFolder: $(Build.StagingDirectory)/reunion/$(BuildPlatform)/$(BuildConfiguration)
           contents: |
