@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 21 Jun 2021 15:08:21 GMT and should not be manually modified.
+This log was last generated on Tue, 22 Jun 2021 22:30:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.35
+
+Tue, 22 Jun 2021 22:30:55 GMT
+
+### Patches
+
+- Have script store return nullptr on facebook::jsi::JSINativeException (#8068) (julio.rocha@microsoft.com)
 
 ## 0.63.34
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 22 Jun 2021 22:30:55 GMT",
+      "tag": "react-native-windows_v0.63.35",
+      "version": "0.63.35",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Have script store return nullptr on facebook::jsi::JSINativeException (#8068)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "2803ec0b8b81edc4b2f3966b1074dfdef046c150",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Jun 2021 15:08:21 GMT",
       "tag": "react-native-windows_v0.63.34",
       "version": "0.63.34",
