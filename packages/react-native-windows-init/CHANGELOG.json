@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 22 Jun 2021 05:07:16 GMT",
+      "tag": "react-native-windows-init_v1.1.59",
+      "version": "1.1.59",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Hermes cannot currently be used in C# apps, so blocking it in the CLI",
+            "author": "asklar@microsoft.com",
+            "commit": "cbd81f3c1d41be5066e576e3217034d386375321",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Jun 2021 05:06:48 GMT",
       "tag": "react-native-windows-init_v1.1.58",
       "version": "1.1.58",

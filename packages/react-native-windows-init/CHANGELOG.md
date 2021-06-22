@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Fri, 18 Jun 2021 05:06:48 GMT and should not be manually modified.
+This log was last generated on Tue, 22 Jun 2021 05:07:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.59
+
+Tue, 22 Jun 2021 05:07:16 GMT
+
+### Patches
+
+- Hermes cannot currently be used in C# apps, so blocking it in the CLI (asklar@microsoft.com)
 
 ## 1.1.58
 

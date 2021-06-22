@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 22 Jun 2021 05:07:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.328",
+      "version": "0.0.0-canary.328",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Have script store return nullptr on facebook::jsi::JSINativeException",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "46cbceb816e78fa345be3c633328ea0829ee604b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Jun 2021 05:06:48 GMT",
       "tag": "react-native-windows_v0.0.0-canary.327",
       "version": "0.0.0-canary.327",
