@@ -102,7 +102,6 @@
                 
                 - template: ../templates/component-governance.yml
 
-                
             - job: UniversalTest${{ matrix.Name }}
               variables:
                 - template: ../variables/vs2019.yml
