@@ -32,9 +32,9 @@
 
   <Target Name="CopyOutputDll" AfterTargets="CopyFilesToOutputDirectory">
     <Copy 
- SourceFiles="..\build\$(Platform)\$(Configuration)\Microsoft.ReactNative.ProjectReunion\Microsoft.ReactNative.ProjectReunion\bin\Microsoft.ReactNative.ProjectReunion.dll"
- DestinationFolder="..\target\$(Platform)\$(Configuration)\Microsoft.ReactNative.ProjectReunion"
- SkipUnchangedFiles="true" />
+      SourceFiles="..\build\$(Platform)\$(Configuration)\Microsoft.ReactNative.ProjectReunion\Microsoft.ReactNative.ProjectReunion\bin\Microsoft.ReactNative.ProjectReunion.dll"
+      DestinationFolder="..\target\$(Platform)\$(Configuration)\Microsoft.ReactNative.ProjectReunion"
+      SkipUnchangedFiles="true" />
     <ItemGroup>
       <FilesWritten Include="..\target\$(Platform)\$(Configuration)\Microsoft.ReactNative.ProjectReunion\Microsoft.ReactNative.ProjectReunion.dll"/>
     </ItemGroup>
