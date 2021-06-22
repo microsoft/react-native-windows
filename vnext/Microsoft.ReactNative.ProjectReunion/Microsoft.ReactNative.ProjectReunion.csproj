@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0-windows10.0.18362.0</TargetFramework>
+    <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
     <Platforms>x64</Platforms>
   </PropertyGroup>
 
@@ -8,7 +8,7 @@
     <CsWinRTIncludes>Microsoft.ReactNative</CsWinRTIncludes>
     <CsWinRTGeneratedFilesDir>$(OutDir)</CsWinRTGeneratedFilesDir>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.3.0" />
   </ItemGroup>
@@ -32,9 +32,9 @@
 
   <Target Name="CopyOutputDll" AfterTargets="CopyFilesToOutputDirectory">
     <Copy 
-      SourceFiles="..\build\$(Platform)\$(Configuration)\Microsoft.ReactNative.ProjectReunion\Microsoft.ReactNative.ProjectReunion\bin\Microsoft.ReactNative.ProjectReunion.dll"
-      DestinationFolder="..\target\$(Platform)\$(Configuration)\Microsoft.ReactNative.ProjectReunion"
-      SkipUnchangedFiles="true" />
+ SourceFiles="..\build\$(Platform)\$(Configuration)\Microsoft.ReactNative.ProjectReunion\Microsoft.ReactNative.ProjectReunion\bin\Microsoft.ReactNative.ProjectReunion.dll"
+ DestinationFolder="..\target\$(Platform)\$(Configuration)\Microsoft.ReactNative.ProjectReunion"
+ SkipUnchangedFiles="true" />
     <ItemGroup>
       <FilesWritten Include="..\target\$(Platform)\$(Configuration)\Microsoft.ReactNative.ProjectReunion\Microsoft.ReactNative.ProjectReunion.dll"/>
     </ItemGroup>
