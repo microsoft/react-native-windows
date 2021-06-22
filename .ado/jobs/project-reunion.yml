@@ -11,7 +11,6 @@ jobs:
     displayName: Project Reunion
     variables:
       - template: ../variables/vs2019.yml
-
     strategy:
       matrix:
         # ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
@@ -41,10 +40,10 @@ jobs:
           msbuildArguments: /p:UseWinUI3=true
 
       - task: CopyFiles@2
-        displayName: Copy artifacts
+        displayName: Copy NuGet artifacts
         inputs:
           sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
-          targetFolder: $(Build.StagingDirectory)/reunion
+          targetFolder: $(Build.StagingDirectory)/reunion/$(BuildPlatform)/$(BuildConfiguration)
           contents: |
             Microsoft.ReactNative\**
             Microsoft.ReactNative.ProjectReunion\**
@@ -69,5 +68,13 @@ jobs:
           packMicrosoftReactNativeManagedCodeGen: false
           packMicrosoftReactNativeProjectReunion: true
           slices: '("x64.Release")'
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: Project Reunion NuGet"
+        inputs:
+          artifactName: ReunionNuGet
+          pathToPublish: $(Build.SourcesDirectory)/NugetRootFinal/Microsoft.ReactNative.ProjectReunion.0.0.1-pr.nupkg
+          parallel: true
+
 
       - template: ../templates/component-governance.yml
