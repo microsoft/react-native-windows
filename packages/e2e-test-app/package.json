@@ -39,6 +39,7 @@
     "metro-react-native-babel-preset": "^0.56.0",
     "prettier": "1.19.1",
     "react-test-renderer": "17.0.2",
+    "resolve": "^1.14.2",
     "sanitize-filename": "^1.6.3",
     "typescript": "^3.8.3"
   }
