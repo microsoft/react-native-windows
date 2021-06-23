@@ -1,6 +1,8 @@
 <Project>
   <PropertyGroup Condition="'$(SolutionName)'=='Microsoft.ReactNative.ProjectReunion'">
     <UseWinUI3>true</UseWinUI3>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <!-- Ideally WindowsTargetPlatformVersion should be 17763, but we can't do that 
+      until https://github.com/microsoft/ProjectReunion/issues/921 is fixed -->
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
 </Project>
