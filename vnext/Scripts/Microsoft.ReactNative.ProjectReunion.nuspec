@@ -17,9 +17,7 @@
       <group targetFramework=".NETCoreApp3.0" />
       <group targetFramework="UAP10.0" />
       <group targetFramework=".NETFramework4.6" />
-      <group targetFramework="net5.0">
-        <dependency id="Microsoft.Windows.CsWinRT" version="1.3.0" exclude="Build,Analyzers" />
-      </group>
+      <group targetFramework="net5.0" />
     </dependencies>
   </metadata>
   <files>
