@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 23 Jun 2021 00:22:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.329",
+      "version": "0.0.0-canary.329",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Create cswinrt projection nuget project",
+            "author": "asklar@microsoft.com",
+            "commit": "d5d7c1592c6f78f2a69124110e12204b9222a03b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Jun 2021 05:07:16 GMT",
       "tag": "react-native-windows_v0.0.0-canary.328",
       "version": "0.0.0-canary.328",
