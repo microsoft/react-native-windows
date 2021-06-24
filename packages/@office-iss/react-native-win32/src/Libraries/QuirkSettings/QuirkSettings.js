@@ -10,7 +10,7 @@ import QuirkStorage from './QuirkStorage';
 
 const QuirkSettings = {
   // Enables a refactored VirtualizedList with better keyboarding behavior
-  get enableFocusAwareRealization(): ?boolean {
+  enableFocusAwareRealization(): () => ?boolean {
     return QuirkStorage.enableFocusAwareRealization();
   },
 };
