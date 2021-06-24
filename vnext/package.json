@@ -17,7 +17,8 @@
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint",
     "start": "react-native start",
-    "validate-overrides": "react-native-platform-override validate"
+    "validate-overrides": "react-native-platform-override validate",
+    "test": "jest"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
@@ -72,6 +73,7 @@
     "react-native-platform-override": "^1.4.17",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
+    "resolve": "^1.14.2",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
