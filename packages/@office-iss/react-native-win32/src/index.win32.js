@@ -78,6 +78,7 @@ import typeof PanResponder from './Libraries/Interaction/PanResponder';
 import typeof PermissionsAndroid from './Libraries/PermissionsAndroid/PermissionsAndroid';
 import typeof PixelRatio from './Libraries/Utilities/PixelRatio';
 import typeof PushNotificationIOS from './Libraries/PushNotificationIOS/PushNotificationIOS';
+import typeof QuirkSettings from './Libraries/QuirkSettings/QuirkSettings';
 import typeof Settings from './Libraries/Settings/Settings';
 import typeof Share from './Libraries/Share/Share';
 import typeof StatusBarIOS from './Libraries/Components/StatusBar/StatusBarIOS';
@@ -407,6 +408,9 @@ module.exports = {
         'See https://github.com/react-native-push-notification-ios/push-notification-ios',
     );
     return require('./Libraries/PushNotificationIOS/PushNotificationIOS');
+  },
+  get QuirkSettings(): QuirkSettings {
+    return require('./Libraries/QuirkSettings/QuirkSettings').default;
   },
   // $FlowFixMe[value-as-type]
   get Settings(): Settings {

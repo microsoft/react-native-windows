@@ -27,4 +27,5 @@ export * from './Libraries/Components/Touchable/TouchableWin32.Types';
 export * from './Libraries/Components/Touchable/TouchableWin32';
 export * from './Libraries/PersonaCoin/PersonaCoin';
 export * from './Libraries/PersonaCoin/PersonaCoinTypes';
+export * from './Libraries/QuirkSettings/QuirkSettings';
 export * from './Libraries/Utilities/FocusManager.win32';
