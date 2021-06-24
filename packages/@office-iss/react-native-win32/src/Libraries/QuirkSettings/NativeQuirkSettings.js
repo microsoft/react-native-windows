@@ -8,11 +8,10 @@
 
 import type {TurboModule} from '../TurboModule/RCTExport';
 import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
+import type {Quirks} from './Quirks';
 
 export interface Spec extends TurboModule {
-  +getConstants: () => {|
-    enableFocusAwareRealization: boolean,
-  |};
+  +getConstants: () => Quirks;
 }
 
-export default (TurboModuleRegistry.get<Spec>('QuirkStorage'): ?Spec);
+export default (TurboModuleRegistry.get<Spec>('QuirkSettings'): ?Spec);

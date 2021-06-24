@@ -6,12 +6,28 @@
  * @flow strict
  */
 
-import QuirkStorage from './QuirkStorage';
+import type {Quirks} from './Quirks';
+import {DefaultQuirks} from './Quirks';
+import NativeQuirkSettings from './CachingNativeQuirkSettings';
 
-const QuirkSettings = {
-  // Enables a refactored VirtualizedList with better keyboarding behavior
-  enableFocusAwareRealization(): () => ?boolean {
-    return QuirkStorage.enableFocusAwareRealization();
+const QuirkSettings: Quirks = {
+  // Enable VirtualizedList using refactored cell representation
+  // $FlowFixMe[unsafe-getters-setters]
+  get enableCellRenderMask(): boolean {
+    return (
+      NativeQuirkSettings.getConstants().enableCellRenderMask ||
+      DefaultQuirks.enableCellRenderMask
+    );
+  },
+
+  // Keeps VirtualizedList cells realized if last focused and
+  // enableCellRenderMask is also enabled.
+  // $FlowFixMe[unsafe-getters-setters]
+  get enableFocusAwareRealization(): boolean {
+    return (
+      NativeQuirkSettings.getConstants().enableFocusAwareRealization ||
+      DefaultQuirks.enableFocusAwareRealization
+    );
   },
 };
 
