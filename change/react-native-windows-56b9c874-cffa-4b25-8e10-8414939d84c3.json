@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use older SDK for the purpose of Reunion projection",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

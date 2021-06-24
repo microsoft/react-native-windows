@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 23 Jun 2021 00:22:52 GMT and should not be manually modified.
+This log was last generated on Thu, 24 Jun 2021 05:08:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.330
+
+Thu, 24 Jun 2021 05:08:43 GMT
+
+### Changes
+
+- Use older SDK for the purpose of Reunion projection (asklar@microsoft.com)
+- Update V8 package version (tudor.mihai@microsoft.com)
 
 ## 0.0.0-canary.329
 
