@@ -273,11 +273,12 @@ export function dependencyConfigWindows(
 
       const projectContents = configUtils.readProjectFile(projectFile);
 
-      const configurationType = configUtils.getConfigurationType(
+      const projectType = configUtils.getProjectType(
+        projectFile,
         projectContents,
       );
 
-      if (configurationType === 'DynamicLibrary') {
+      if (projectType === 'dynamiclibrary' || projectType === 'winmdobj') {
         const projectLang = configUtils.getProjectLanguage(projectFile);
 
         const projectName = configUtils.getProjectName(
@@ -322,7 +323,7 @@ export function dependencyConfigWindows(
       } else {
         const projectPath = path.relative(sourceDir, projectFile);
         result.projects.push({
-          projectFile: `Error: ${projectPath} has configuration type '${configurationType}'`,
+          projectFile: `Error: ${projectPath} is type '${projectType}'`,
           directDependency: false,
           projectName: '',
           projectLang: null,

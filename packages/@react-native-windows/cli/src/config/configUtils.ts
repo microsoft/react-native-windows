@@ -292,11 +292,11 @@ export function importProjectExists(
 }
 
 export type ConfigurationType =
-  | 'Application'
-  | 'DynamicLibrary'
-  | 'Generic'
-  | 'StaticLibrary'
-  | 'Unknown';
+  | 'application'
+  | 'dynamiclibrary'
+  | 'generic'
+  | 'staticlibrary'
+  | 'unknown';
 
 /**
  * Gets the configuration type of the project from the project contents.
@@ -307,17 +307,73 @@ export function getConfigurationType(projectContents: Node): ConfigurationType {
   const configurationType = tryFindPropertyValue(
     projectContents,
     'ConfigurationType',
-  );
+  )?.toLowerCase();
 
   switch (configurationType) {
-    case 'Application':
-    case 'DynamicLibrary':
-    case 'Generic':
-    case 'StaticLibrary':
+    case 'application':
+    case 'dynamiclibrary':
+    case 'generic':
+    case 'staticlibrary':
       return configurationType;
 
     default:
-      return 'Unknown';
+      return 'unknown';
+  }
+}
+
+export type OutputType =
+  | 'appcontainerexe'
+  | 'exe'
+  | 'library'
+  | 'module'
+  | 'unknown'
+  | 'winexe'
+  | 'winmdobj';
+
+/**
+ * Gets the output type of the project from the project contents.
+ * @param projectContents The XML project contents.
+ * @return The project output type.
+ */
+export function getOutputType(projectContents: Node): OutputType {
+  const outputType = tryFindPropertyValue(
+    projectContents,
+    'OutputType',
+  )?.toLowerCase();
+
+  switch (outputType) {
+    case 'appcontainerexe':
+    case 'exe':
+    case 'library':
+    case 'module':
+    case 'winexe':
+    case 'winmdobj':
+      return outputType;
+
+    default:
+      return 'unknown';
+  }
+}
+
+/**
+ * Gets the type of the project from the project contents.
+ * @param projectPath The project file path to check.
+ * @param projectContents The XML project contents.
+ * @return The project type.
+ */
+export function getProjectType(
+  projectPath: string,
+  projectContents: Node,
+): ConfigurationType | OutputType {
+  switch (getProjectLanguage(projectPath)) {
+    case 'cpp':
+      return getConfigurationType(projectContents);
+
+    case 'cs':
+      return getOutputType(projectContents);
+
+    default:
+      return 'unknown';
   }
 }
 
