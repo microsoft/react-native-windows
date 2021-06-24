@@ -15,7 +15,7 @@ const QuirkSettings: Quirks = {
   // $FlowFixMe[unsafe-getters-setters]
   get enableCellRenderMask(): boolean {
     return (
-      NativeQuirkSettings.getConstants().enableCellRenderMask ||
+      NativeQuirkSettings.getConstants().enableCellRenderMask ??
       DefaultQuirks.enableCellRenderMask
     );
   },
@@ -25,7 +25,7 @@ const QuirkSettings: Quirks = {
   // $FlowFixMe[unsafe-getters-setters]
   get enableFocusAwareRealization(): boolean {
     return (
-      NativeQuirkSettings.getConstants().enableFocusAwareRealization ||
+      NativeQuirkSettings.getConstants().enableFocusAwareRealization ??
       DefaultQuirks.enableFocusAwareRealization
     );
   },
