@@ -291,6 +291,36 @@ export function importProjectExists(
   return nodes.length > 0;
 }
 
+export type ConfigurationType =
+  | 'Application'
+  | 'DynamicLibrary'
+  | 'Generic'
+  | 'StaticLibrary'
+  | 'Unknown';
+
+/**
+ * Gets the configuration type of the project from the project contents.
+ * @param projectContents The XML project contents.
+ * @return The project configuration type.
+ */
+export function getConfigurationType(projectContents: Node): ConfigurationType {
+  const configurationType = tryFindPropertyValue(
+    projectContents,
+    'ConfigurationType',
+  );
+
+  switch (configurationType) {
+    case 'Application':
+    case 'DynamicLibrary':
+    case 'Generic':
+    case 'StaticLibrary':
+      return configurationType;
+
+    default:
+      return 'Unknown';
+  }
+}
+
 /**
  * Gets the name of the project from the project contents.
  * @param projectPath The project file path to check.
