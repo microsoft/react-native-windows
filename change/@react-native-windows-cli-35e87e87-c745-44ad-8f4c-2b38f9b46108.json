@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Normalize paths provided by react-native.config.js",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

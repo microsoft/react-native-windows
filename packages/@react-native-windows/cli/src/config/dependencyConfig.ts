@@ -231,6 +231,8 @@ export function dependencyConfigWindows(
 
       const projectContents = configUtils.readProjectFile(projectFile);
 
+      project.projectFile = path.relative(sourceDir, projectFile);
+
       // Calculating (auto) items
       project.projectName = configUtils.getProjectName(
         projectFile,
