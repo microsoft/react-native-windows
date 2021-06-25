@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 24 Jun 2021 05:08:43 GMT and should not be manually modified.
+This log was last generated on Fri, 25 Jun 2021 05:09:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.331
+
+Fri, 25 Jun 2021 05:09:48 GMT
+
+### Changes
+
+- Run RN List Jest Tests (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.330
 
