@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 18 Jun 2021 05:06:48 GMT and should not be manually modified.
+This log was last generated on Fri, 25 Jun 2021 05:09:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.78
+
+Fri, 25 Jun 2021 05:09:48 GMT
+
+### Changes
+
+- Normalize paths provided by react-native.config.js (jthysell@microsoft.com)
 
 ## 0.0.0-canary.77
 
