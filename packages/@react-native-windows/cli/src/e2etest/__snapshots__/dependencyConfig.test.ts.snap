@@ -26,7 +26,7 @@ Object {
 
 exports[`dependencyConfig - SimpleCSharpApp (Ignore react-native.config.js) 1`] = `
 Object {
-  "folder": "D:\\\\Source\\\\react-native-windows\\\\packages\\\\@react-native-windows\\\\cli\\\\src\\\\e2etest\\\\projects\\\\SimpleCSharpApp",
+  "folder": StringContaining "SimpleCSharpApp",
   "nugetPackages": Array [],
   "projects": ArrayContaining [
     ObjectContaining {
@@ -40,7 +40,7 @@ Object {
 
 exports[`dependencyConfig - SimpleCSharpApp (Use react-native.config.js) 1`] = `
 Object {
-  "folder": "D:\\\\Source\\\\react-native-windows\\\\packages\\\\@react-native-windows\\\\cli\\\\src\\\\e2etest\\\\projects\\\\SimpleCSharpApp",
+  "folder": StringContaining "SimpleCSharpApp",
   "nugetPackages": Array [],
   "projects": ArrayContaining [
     ObjectContaining {
@@ -114,7 +114,7 @@ Object {
 
 exports[`dependencyConfig - SimpleCppApp (Ignore react-native.config.js) 1`] = `
 Object {
-  "folder": "D:\\\\Source\\\\react-native-windows\\\\packages\\\\@react-native-windows\\\\cli\\\\src\\\\e2etest\\\\projects\\\\SimpleCppApp",
+  "folder": StringContaining "SimpleCppApp",
   "nugetPackages": Array [],
   "projects": ArrayContaining [
     ObjectContaining {
@@ -128,7 +128,7 @@ Object {
 
 exports[`dependencyConfig - SimpleCppApp (Use react-native.config.js) 1`] = `
 Object {
-  "folder": "D:\\\\Source\\\\react-native-windows\\\\packages\\\\@react-native-windows\\\\cli\\\\src\\\\e2etest\\\\projects\\\\SimpleCppApp",
+  "folder": StringContaining "SimpleCppApp",
   "nugetPackages": Array [],
   "projects": ArrayContaining [
     ObjectContaining {

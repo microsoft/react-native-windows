@@ -199,6 +199,7 @@ test.each(projects)(
       expect(dependencyConfigWindows(folder, userConfig)).toMatchSnapshot();
     } else if (name.endsWith('App')) {
       expect(dependencyConfigWindows(folder, userConfig)).toMatchSnapshot({
+        folder: expect.stringContaining(name),
         projects: expect.arrayContaining([
           expect.objectContaining({
             projectFile: expect.stringMatching(
@@ -231,6 +232,7 @@ test.each(projects)(
       expect(dependencyConfigWindows(folder, userConfig)).toMatchSnapshot();
     } else if (name.endsWith('App')) {
       expect(dependencyConfigWindows(folder, userConfig)).toMatchSnapshot({
+        folder: expect.stringContaining(name),
         projects: expect.arrayContaining([
           expect.objectContaining({
             projectFile: expect.stringMatching(
