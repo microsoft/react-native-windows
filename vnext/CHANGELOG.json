@@ -2,6 +2,35 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 24 Jun 2021 05:08:43 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.330",
+      "version": "0.0.0-canary.330",
+      "comments": {
+        "none": [
+          {
+            "comment": "applying package updates ***NO_CI***",
+            "author": "asklar@microsoft.com",
+            "commit": "61eb55b2e5fa4dddfd8f1e20d04d83d3ea3cdaf2",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Use older SDK for the purpose of Reunion projection",
+            "author": "asklar@microsoft.com",
+            "commit": "990abee34fa95b8be861535f1b1f08a9afdf51d7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update V8 package version",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "32079c8634d7f28d3290939af6ce29a8ba21e8ea",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 23 Jun 2021 00:22:52 GMT",
       "tag": "react-native-windows_v0.0.0-canary.329",
       "version": "0.0.0-canary.329",

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "applying package updates ***NO_CI***",
-  "packageName": "jest-environment-winappdriver",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "none"
-}
