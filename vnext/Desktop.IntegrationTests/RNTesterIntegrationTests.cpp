@@ -3,8 +3,8 @@
 
 #include <CppUnitTest.h>
 
-#include <Test/WebSocketServer.h>
 #include <RuntimeOptions.h>
+#include <Test/WebSocketServer.h>
 #include "TestRunner.h"
 
 using namespace Microsoft::React::Test;
