@@ -113,7 +113,7 @@ test('Sanitize message, other path', () => {
       - ${process.env.AppData}\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\lib-commonjs\\Cli.js
       - ${process.env.AppData}\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\bin.js`,
     ),
-  ).toEqual(`Cannot find module  react-native/package.json
+  ).toEqual(`Cannot find module  react-native/package.json 
       Require stack:
       - [AppData]\\???(${
         (
@@ -135,13 +135,13 @@ test('Sanitize message, forward slashes', () => {
       `EPERM: operation not permitted, scandir  ${process.env.UserProfile!.replace(
         /\\/g,
         '/',
-      )}/source/repos/rn2/wintest/windows/packages/boost.1.76.0.0/lib/native/include`,
+      )}/source/repos/rn2/wintest/windows/packages/boost.1.72.0.0/lib/native/include`,
     ),
   ).toEqual(
     `EPERM: operation not permitted, scandir  [UserProfile]\\???(${
       (
         process.env.UserProfile +
-        '/source/repos/rn2/wintest/windows/packages/boost.1.76.0.0/lib/native/include'
+        '/source/repos/rn2/wintest/windows/packages/boost.1.72.0.0/lib/native/include'
       ).length
     })`,
   );
