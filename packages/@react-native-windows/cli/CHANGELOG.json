@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 25 Jun 2021 05:09:48 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.78",
+      "version": "0.0.0-canary.78",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Normalize paths provided by react-native.config.js",
+            "author": "jthysell@microsoft.com",
+            "commit": "04f9cad0161295fafc8ff6e40ec535dbc923ea8f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Jun 2021 05:06:48 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.77",
       "version": "0.0.0-canary.77",
