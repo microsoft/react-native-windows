@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Removed Microsoft.ReactNative.Manager.ReactPackageProvider registration from C# template",
+  "packageName": "react-native-windows",
+  "email": "matteo.pagani@microsoft.com",
+  "dependentChangeType": "patch"
+}
