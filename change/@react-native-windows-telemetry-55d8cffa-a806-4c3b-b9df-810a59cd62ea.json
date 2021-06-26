@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrade to boost 1.76.0.0",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

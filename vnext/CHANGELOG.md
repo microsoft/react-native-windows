@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 25 Jun 2021 05:09:48 GMT and should not be manually modified.
+This log was last generated on Sat, 26 Jun 2021 05:06:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.332
+
+Sat, 26 Jun 2021 05:06:48 GMT
+
+### Changes
+
+- Upgrade to boost 1.76.0.0 (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.331
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 26 Jun 2021 05:06:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.332",
+      "version": "0.0.0-canary.332",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade to boost 1.76.0.0",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "50e13c8cc7938d38bb19ca96225b5a85955c5ae5",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 25 Jun 2021 05:09:48 GMT",
       "tag": "react-native-windows_v0.0.0-canary.331",
       "version": "0.0.0-canary.331",
