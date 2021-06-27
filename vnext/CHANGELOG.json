@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 27 Jun 2021 05:08:11 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.333",
+      "version": "0.0.0-canary.333",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Removed Microsoft.ReactNative.Manager.ReactPackageProvider registration from C# template",
+            "author": "matteo.pagani@microsoft.com",
+            "commit": "8abeebde3b1591b0f5915b71defd5392b1ba6821",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 26 Jun 2021 05:06:48 GMT",
       "tag": "react-native-windows_v0.0.0-canary.332",
       "version": "0.0.0-canary.332",

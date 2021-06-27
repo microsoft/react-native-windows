@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sun, 27 Jun 2021 05:08:11 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.80",
+      "version": "0.0.0-canary.80",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Detect whether a project file is a dynamic library",
+            "author": "4123478+tido64@users.noreply.github.com",
+            "commit": "c1d6b97065bf35b758b43ae17b9d87b274fbf50d",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 26 Jun 2021 05:06:48 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.79",
       "version": "0.0.0-canary.79",
