@@ -4,6 +4,7 @@
 #pragma once
 #ifndef MSO_MOTIFCPP_GTESTADAPTER_H
 #define MSO_MOTIFCPP_GTESTADAPTER_H
+#ifdef MSO_MOTIFCPP
 
 #include "gtest/gtest.h"
 #include "motifCpp/testInfo.h"
@@ -84,4 +85,5 @@ inline void RegisterUnitTests() {
 
 } // namespace Mso::UnitTests::GTest
 
+#endif // MSO_MOTIFCPP
 #endif // MSO_MOTIFCPP_GTESTADAPTER_H

@@ -10,6 +10,7 @@
 #include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #pragma warning(pop)
 
+#include <react/components/rnwcore/ShadowNodes.h>
 #include <react/renderer/components/image/ImageShadowNode.h>
 #include <react/renderer/components/root/RootShadowNode.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
@@ -18,6 +19,7 @@
 #include <react/renderer/components/textinput/iostextinput/TextInputShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
 
+#include "ActivityIndicatorComponentView.h"
 #include "ImageComponentView.h"
 #include "ParagraphComponentView.h"
 #include "ScrollViewComponentView.h"
@@ -45,6 +47,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<ScrollViewComponentView>();
   } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
     view = std::make_shared<ImageComponentView>(m_context);
+  } else if (componentHandle == facebook::react::ActivityIndicatorViewShadowNode::Handle()) {
+    view = std::make_shared<ActivityIndicatorComponentView>();
   } else {
     // Just to keep track of what kinds of shadownodes we are being used verify we know about them here
     assert(

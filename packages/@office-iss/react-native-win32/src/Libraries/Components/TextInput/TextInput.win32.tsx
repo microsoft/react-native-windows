@@ -23,7 +23,7 @@
  * 3. Any base/default styling work
  */
 
-import * as React from 'react';
+import React from 'react'
 import {
   findNodeHandle,
   NativeModules,

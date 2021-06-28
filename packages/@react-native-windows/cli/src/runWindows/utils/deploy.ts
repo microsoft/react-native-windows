@@ -5,11 +5,11 @@
  */
 
 import {spawn, execSync, SpawnOptions} from 'child_process';
-import * as fs from 'fs';
-import * as http from 'http';
-import * as path from 'path';
-import * as glob from 'glob';
-import * as parse from 'xml-parser';
+import fs from 'fs';
+import http from 'http';
+import path from 'path';
+import glob from 'glob';
+import parse from 'xml-parser';
 import WinAppDeployTool from './winappdeploytool';
 import {
   newInfo,
@@ -280,7 +280,7 @@ export async function deployToDesktop(
 
   const appPackageFolder = getAppPackage(options, projectName);
 
-  if (options.release) {
+  if (options.release && !options.deployFromLayout) {
     await runPowerShellScriptFunction(
       'Removing old version of the app',
       windowsStoreAppUtils,

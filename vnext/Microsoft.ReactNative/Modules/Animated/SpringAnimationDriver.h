@@ -7,7 +7,7 @@
 #include "AnimatedNode.h"
 #include "CalculatedAnimationDriver.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class SpringAnimationDriver : public CalculatedAnimationDriver {
  public:
   SpringAnimationDriver(
@@ -48,5 +48,5 @@ class SpringAnimationDriver : public CalculatedAnimationDriver {
   static constexpr std::string_view s_displacementFromRestThresholdParameterName{"restDisplacementThreshold"};
   static constexpr std::string_view s_overshootClampingEnabledParameterName{"overshootClamping"};
   static constexpr std::string_view s_iterationsParameterName{"iterations"};
-}; // namespace uwp
-} // namespace react::uwp
+};
+} // namespace Microsoft::ReactNative

@@ -1,5 +1,5 @@
 'use strict';
-import * as React from 'react';
+import React from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 // Disabling no-jsx-lambda so functional components are more convenient to use

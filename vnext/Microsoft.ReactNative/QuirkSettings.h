@@ -20,8 +20,6 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
       bool value) noexcept;
   static bool GetMatchAndroidAndIOSStretchBehavior(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
-  static bool GetUseLegacyWebSocketModule(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
-
   static bool GetAcceptSelfSigned(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
   static bool GetEnableFabric(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
@@ -31,13 +29,7 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
       winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
       bool value) noexcept;
 
-  static void SetUseLegacyWebSocketModule(
-      winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
-      bool value) noexcept;
-
   static void SetAcceptSelfSigned(winrt::Microsoft::ReactNative::ReactInstanceSettings settings, bool value) noexcept;
-
-  static void SetEnableFabric(winrt::Microsoft::ReactNative::ReactInstanceSettings settings, bool value) noexcept;
 #pragma endregion Public API - part of IDL interface
 };
 

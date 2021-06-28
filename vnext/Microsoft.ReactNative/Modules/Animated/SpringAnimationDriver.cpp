@@ -7,7 +7,7 @@
 #include <math.h>
 #include "SpringAnimationDriver.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 SpringAnimationDriver::SpringAnimationDriver(
     int64_t id,
     int64_t animatedValueTag,
@@ -85,4 +85,4 @@ double SpringAnimationDriver::ToValue() {
   return m_endValue;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -135,13 +135,13 @@ test('Sanitize message, forward slashes', () => {
       `EPERM: operation not permitted, scandir  ${process.env.UserProfile!.replace(
         /\\/g,
         '/',
-      )}/source/repos/rn2/wintest/windows/packages/boost.1.72.0.0/lib/native/include`,
+      )}/source/repos/rn2/wintest/windows/packages/boost.1.76.0.0/lib/native/include`,
     ),
   ).toEqual(
     `EPERM: operation not permitted, scandir  [UserProfile]\\???(${
       (
         process.env.UserProfile +
-        '/source/repos/rn2/wintest/windows/packages/boost.1.72.0.0/lib/native/include'
+        '/source/repos/rn2/wintest/windows/packages/boost.1.76.0.0/lib/native/include'
       ).length
     })`,
   );

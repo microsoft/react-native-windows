@@ -37,6 +37,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DesktopWindowBridge.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleProvider.h" />
     <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\CallInvoker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XamlUtils.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.h" />
@@ -67,7 +68,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Input.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Popups.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Text.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)XamlHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.Peers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Controls.Primitives.h" />

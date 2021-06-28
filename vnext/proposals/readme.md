@@ -20,7 +20,7 @@ The proposal process here takes its inspiration from the react-native-community 
 3. Author your proposal using the [proposal template](https://github.com/react-native-community/discussions-and-proposals/blob/master/proposals/0000-template.md).  
 
 4. When your proposal is ready for review:
-   * Open a new pull request to merge your proposal to the ```master``` branch
+   * Open a new pull request to merge your proposal to the ```main``` branch
    * Update the related issue(s) with a link to the proposal PR
    * Add the label - `Proposal` - to your PR so it shows up in the active proposals list.
 

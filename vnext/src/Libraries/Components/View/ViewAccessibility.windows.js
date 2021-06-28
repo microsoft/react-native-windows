@@ -52,6 +52,7 @@ export type AccessibilityNodeInfoProp = {
 export type AccessibilityRole =
   | 'none'
   | 'button'
+  | 'togglebutton'
   | 'link'
   | 'search'
   | 'image'

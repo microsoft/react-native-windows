@@ -6,7 +6,7 @@
 #include "AnimatedNode.h"
 #include "AnimationDriver.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class FrameAnimationDriver : public AnimationDriver {
  public:
   FrameAnimationDriver(
@@ -29,4 +29,4 @@ class FrameAnimationDriver : public AnimationDriver {
   std::vector<double> m_frames{};
   double m_toValue{0};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

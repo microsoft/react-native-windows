@@ -1,8 +1,300 @@
 # Change Log - node-rnw-rpc
 
-This log was last generated on Wed, 28 Apr 2021 05:07:02 GMT and should not be manually modified.
+This log was last generated on Sun, 27 Jun 2021 05:08:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.11-10
+
+Sun, 27 Jun 2021 05:08:11 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.333 (matteo.pagani@microsoft.com)
+
+## 1.0.11-9
+
+Sat, 26 Jun 2021 05:06:48 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.332 (julio.rocha@microsoft.com)
+
+## 1.0.11-8
+
+Fri, 25 Jun 2021 05:09:48 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.331 (ngerlem@microsoft.com)
+
+## 1.0.11-7
+
+Thu, 24 Jun 2021 05:08:43 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.330 (asklar@microsoft.com)
+
+## 1.0.11-6
+
+Wed, 23 Jun 2021 00:22:52 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.329 (asklar@microsoft.com)
+
+## 1.0.11-5
+
+Tue, 22 Jun 2021 05:07:16 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.328 (julio.rocha@microsoft.com)
+
+## 1.0.11-4
+
+Fri, 18 Jun 2021 05:06:48 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.327 (Bartosz.Klonowski@callstack.com)
+
+## 1.0.11-3
+
+Thu, 17 Jun 2021 05:07:57 GMT
+
+### Changes
+
+- Integrate 6/2 (34109996+chiaramooney@users.noreply.github.com)
+
+## 1.0.11-2
+
+Wed, 16 Jun 2021 05:08:34 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.325 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.11-1
+
+Tue, 15 Jun 2021 05:06:39 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.324 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.11-0
+
+Sat, 12 Jun 2021 05:06:29 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.323 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.10
+
+Fri, 11 Jun 2021 05:08:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.2.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.322 (dannyvv@microsoft.com)
+
+## 1.0.10-0
+
+Thu, 10 Jun 2021 05:10:10 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.321 (vmorozov@microsoft.com)
+
+## 1.0.9
+
+Wed, 09 Jun 2021 05:10:07 GMT
+
+### Patches
+
+- Integrate May 19th (igklemen@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.320 (igklemen@microsoft.com)
+
+## 1.0.8
+
+Sat, 05 Jun 2021 05:09:53 GMT
+
+### Patches
+
+- Integrate May 12th RN nightly build. (igklemen@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.319 (julio.rocha@microsoft.com)
+
+## 1.0.7
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.2 (ngerlem@microsoft.com)
+
+### Changes
+
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
+- Integrate RN nightly May 5. (igklemen@microsoft.com)
+- Upgrade Windows SDK to 10.0.19041.0 (julio.rocha@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.318 (ngerlem@microsoft.com)
+
+## 1.0.7-1
+
+Tue, 25 May 2021 19:36:43 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.317 (dannyvv@microsoft.com)
+
+## 1.0.7-0
+
+Fri, 21 May 2021 21:40:00 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.316 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.6
+
+Fri, 21 May 2021 05:17:18 GMT
+
+### Patches
+
+- Integrate Apr 28 (base of 0.65) Nightly RN Build (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.315 (ngerlem@microsoft.com)
+
+## 1.0.6-12
+
+Tue, 18 May 2021 05:05:13 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.313 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.6-11
+
+Mon, 17 May 2021 05:11:32 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.312 (igklemen@microsoft.com)
+
+## 1.0.6-10
+
+Sat, 15 May 2021 05:06:21 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.311 (anandrag@microsoft.com)
+
+## 1.0.6-9
+
+Fri, 14 May 2021 05:06:39 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.310 (julio.rocha@microsoft.com)
+
+## 1.0.6-8
+
+Thu, 13 May 2021 05:11:48 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.309 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.6-7
+
+Tue, 11 May 2021 05:06:47 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.308 (asklar@microsoft.com)
+
+## 1.0.6-6
+
+Sun, 09 May 2021 05:06:22 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.307 (vmorozov@microsoft.com)
+
+## 1.0.6-5
+
+Sat, 08 May 2021 05:05:56 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.306 (34109996+chiaramooney@users.noreply.github.com)
+
+## 1.0.6-4
+
+Fri, 07 May 2021 05:07:30 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.305 (vmorozov@microsoft.com)
+
+## 1.0.6-3
+
+Wed, 05 May 2021 16:27:31 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.304 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.6-2
+
+Tue, 04 May 2021 05:10:45 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.303 (igklemen@microsoft.com)
+
+## 1.0.6-1
+
+Sat, 01 May 2021 05:05:57 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.302 (agnel@microsoft.com)
+
+## 1.0.6-0
+
+Fri, 30 Apr 2021 05:06:16 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.301 (erozell@outlook.com)
+
+## 1.0.5
+
+Thu, 29 Apr 2021 05:07:20 GMT
+
+### Patches
+
+- Remove ARM32 Support (ngerlem@microsoft.com)
+- Integrate April 22 RN Nightly Build (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.300 (erozell@outlook.com)
 
 ## 1.0.5-29
 

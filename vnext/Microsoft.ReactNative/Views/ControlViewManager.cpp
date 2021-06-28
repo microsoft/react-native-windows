@@ -6,6 +6,7 @@
 #include <UI.Xaml.Controls.h>
 
 #include <Views/ControlViewManager.h>
+#include <Views/FrameworkElementTransferProperties.h>
 #include <Views/ShadowNodeBase.h>
 
 #include <JSValueWriter.h>

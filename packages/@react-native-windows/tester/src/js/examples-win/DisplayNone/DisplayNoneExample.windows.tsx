@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {Switch, Text, TextInput, View} from 'react-native';
 const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');
@@ -22,7 +22,7 @@ export class DisplayNoneExample extends React.Component<{}> {
       <RNTesterPage>
         <RNTesterBlock title="Display:none style with TextInput">
           <View testID="view-component-switch-view">
-            <View style={{width: 1074}}>
+            <View>
               <Text>toggle display:none TextInput1</Text>
               <Switch
                 onValueChange={this._handlePress}

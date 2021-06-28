@@ -1,6 +1,10 @@
 {
-    "extends": "@rnw-scripts/ts-config",
-    "include": ["src"],
-    "exclude": ["node_modules"]
+  "extends": "@rnw-scripts/ts-config",
+  "include": ["src"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    // Not clean
+    "isolatedModules": false
+  }
 }
   

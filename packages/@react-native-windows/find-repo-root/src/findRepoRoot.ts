@@ -6,8 +6,8 @@
  * @ts-check
  */
 
-import * as findUp from 'find-up';
-import * as path from 'path';
+import findUp from 'find-up';
+import path from 'path';
 
 /**
  * Find the root directory of a repo upward from cwd

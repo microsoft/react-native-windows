@@ -5,7 +5,7 @@
 #include <folly/dynamic.h>
 #include "ValueAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class DiffClampAnimatedNode final : public ValueAnimatedNode {
  public:
   DiffClampAnimatedNode(
@@ -25,4 +25,4 @@ class DiffClampAnimatedNode final : public ValueAnimatedNode {
   static constexpr std::wstring_view s_minParameterName{L"min"};
   static constexpr std::wstring_view s_maxParameterName{L"max"};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

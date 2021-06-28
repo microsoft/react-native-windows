@@ -3,32 +3,25 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-ae07c53d0",
+  "baseVersion": "0.0.0-0d32aef3a",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "7c2f3e8ecf80e5229d4e1fdad2b6ef324acae0c4"
+      "baseHash": "a5b0a0d2669d5d35a548c3990577a2e9c5d861b4"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "377a293707e3a0d18d920af383490957b2e145a5"
+      "baseHash": "ef954129bcecf1cba9f786bd2a32327adfb735a5"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.win32.js",
       "baseFile": "Libraries/Alert/Alert.js",
       "baseHash": "99f0bc2c38daf35d5f08a0e0abeb5f21e583ce4e"
-    },
-    {
-      "type": "patch",
-      "file": "src/Libraries/BatchedBridge/MessageQueue.win32.js",
-      "baseFile": "Libraries/BatchedBridge/MessageQueue.js",
-      "baseHash": "c47cdef67892acc92ca1df8aceef6909db24a029",
-      "issue": 5807
     },
     {
       "type": "patch",
@@ -56,7 +49,7 @@
       "type": "copy",
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.win32.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
-      "baseHash": "218895e2a5f3d7614a2cb577da187800857850ea",
+      "baseHash": "a9a4a6c92de922a11f8b81642b1bf1270d0b7b96",
       "issue": 4378
     },
     {
@@ -110,10 +103,10 @@
       "issue": 4378
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src/Libraries/Components/ProgressViewIOS/ProgressViewIOS.win32.js",
       "baseFile": "Libraries/Components/ProgressViewIOS/ProgressViewIOS.android.js",
-      "baseHash": "f0b35fdee6b1c9e7bfe860a9e0aefc00337ea7fd"
+      "baseHash": "8c3173a8f5eef870de3aa55593202ab49c62f7e1"
     },
     {
       "type": "patch",
@@ -125,7 +118,7 @@
       "type": "copy",
       "file": "src/Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.js",
       "baseFile": "Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.android.js",
-      "baseHash": "37cea8b532ea4e4335120c6f8b2d3d3548e31b18",
+      "baseHash": "6cc05293331f46ca64f1e70d0fa537c5685d3af3",
       "issue": 4378
     },
     {
@@ -152,7 +145,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "506d84a349fef1ad532b7c02a1836fce7befa616"
+      "baseHash": "5eb78ac95aeaa6ea8c5128050a2e908759af6aff"
     },
     {
       "type": "patch",
@@ -195,13 +188,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewAttributes.win32.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewAttributes.js",
-      "baseHash": "0825b0257e19cfef2d626f19d219256a01c54b67"
+      "baseHash": "9479c8ccfeeadc90721ae2d3327eeaa76818bfaf"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.win32.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseHash": "ba99e0917fe2c518eb11e8b640f759f631621b40"
+      "baseHash": "7d6114901e76fa8f73f84dbb3f486ea2e1c9ce0e"
     },
     {
       "type": "platform",
@@ -211,8 +204,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "77bfbef8e835e4fee49311779bb039a99ae44372",
-      "issue": 5843
+      "baseHash": "77bfbef8e835e4fee49311779bb039a99ae44372"
     },
     {
       "type": "platform",
@@ -231,16 +223,9 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/EventEmitter/NativeEventEmitter.win32.js",
-      "baseFile": "Libraries/EventEmitter/NativeEventEmitter.js",
-      "baseHash": "5a9088dfae0144f6720ddfcff1b33e25af394fb0",
-      "issue": 7618
-    },
-    {
-      "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "bb70db26cb8d42b51037d43a6ab9eace183a0f71",
+      "baseHash": "c20b0134e74a8e8d69d0b2694b4296fe2bf69d3f",
       "issue": 4320
     },
     {
@@ -251,7 +236,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/NativeImageLoaderWin32.js",
       "baseFile": "Libraries/Image/NativeImageLoaderIOS.js",
-      "baseHash": "fde33e1ab6ab396a91bf469da0aa4bbb4f639383",
+      "baseHash": "3f2be4d90a74ceb6e023dc46fcd0cf3d5a7c47ad",
       "issue": 4320
     },
     {
@@ -294,13 +279,20 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "Libraries/Inspector/Inspector.js",
-      "baseHash": "fb36e8419f4cb0b358505e991d59e1dc938432f9"
+      "baseHash": "356c1439a84636333d253a385470b9cf4d0311b7"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Inspector/InspectorOverlay.win32.js",
       "baseFile": "Libraries/Inspector/InspectorOverlay.js",
       "baseHash": "b11d03daa2e3f828a350667f543b2cda4fa65dbf"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/LogBox/UI/LogBoxInspectorHeader.win32.js",
+      "baseFile": "Libraries/LogBox/UI/LogBoxInspectorHeader.js",
+      "baseHash": "03ecf9d83da622e51396fe37136d5c15d26ccbe2",
+      "issue": 7952
     },
     {
       "type": "derived",

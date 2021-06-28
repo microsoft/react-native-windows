@@ -6,7 +6,7 @@
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 struct LinkingManagerModule final : facebook::xplat::module::CxxModule {
   LinkingManagerModule() noexcept;
@@ -28,4 +28,4 @@ struct LinkingManagerModule final : facebook::xplat::module::CxxModule {
   static std::vector<LinkingManagerModule *> s_linkingModules;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

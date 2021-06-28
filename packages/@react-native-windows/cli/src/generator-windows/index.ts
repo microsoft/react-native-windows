@@ -4,16 +4,16 @@
  * @format
  */
 
-import * as chalk from 'chalk';
-import * as path from 'path';
-import * as username from 'username';
-import * as uuid from 'uuid';
-import * as childProcess from 'child_process';
-import * as fs from 'fs';
-import * as os from 'os';
-import * as semver from 'semver';
-import * as _ from 'lodash';
-import * as findUp from 'find-up';
+import chalk from 'chalk';
+import path from 'path';
+import username from 'username';
+import uuid from 'uuid';
+import childProcess from 'child_process';
+import fs from 'fs';
+import os from 'os';
+import semver from 'semver';
+import _ from 'lodash';
+import findUp from 'find-up';
 import {readProjectFile, findPropertyValue} from '../config/configUtils';
 
 import {
@@ -583,6 +583,23 @@ export async function installScriptsAndDependencies(options: {
   const rnPackage = await findPackage('react-native');
   if (!rnPackage) {
     throw new Error('Could not locate the package for react-native');
+  }
+
+  // We add an exclusionList from metro config. This will be hoisted, but add
+  // an explict dep because we require it directly.
+  const cliPackage = await findPackage('@react-native-community/cli', {
+    searchPath: rnPackage.path,
+  });
+  const metroConfigPackage = await findPackage('metro-config', {
+    searchPath: cliPackage?.path || rnPackage.path,
+  });
+
+  if (metroConfigPackage) {
+    await projectPackage.mergeProps({
+      devDependencies: {
+        'metro-config': `^${metroConfigPackage.json.version}`,
+      },
+    });
   }
 
   const rnPeerDependency = rnwPackage.json.peerDependencies['react-native'];

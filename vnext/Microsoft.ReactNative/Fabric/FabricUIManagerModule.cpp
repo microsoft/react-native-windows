@@ -14,6 +14,7 @@
 #include <JSI/jsi.h>
 #include <SchedulerSettings.h>
 #include <UI.Xaml.Controls.h>
+#include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
@@ -47,9 +48,6 @@ FabicUIManagerProperty() noexcept {
 
 /*static*/ std::shared_ptr<FabricUIManager> FabricUIManager::FromProperties(
     const winrt::Microsoft::ReactNative::ReactPropertyBag &props) {
-  if (!Mso::React::ReactOptions::EnableFabric(props.Handle()))
-    return nullptr;
-
   return props.Get(FabicUIManagerProperty()).Value();
 }
 
@@ -134,6 +132,8 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
 std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> sharedProviderRegistry() {
   static auto providerRegistry = []() -> std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry> {
     auto providerRegistry = std::make_shared<facebook::react::ComponentDescriptorProviderRegistry>();
+    providerRegistry->add(facebook::react::concreteComponentDescriptorProvider<
+                          facebook::react::ActivityIndicatorViewComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ImageComponentDescriptor>());
     providerRegistry->add(
@@ -223,7 +223,7 @@ void FabricUIManager::startSurface(
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
-  auto xamlRootView = static_cast<::react::uwp::IXamlRootView *>(rootview);
+  auto xamlRootView = static_cast<IXamlRootView *>(rootview);
   auto rootFE = xamlRootView->GetXamlView().as<xaml::FrameworkElement>();
 
   m_surfaceRegistry.insert({surfaceId, xamlRootView->GetXamlView()});
@@ -251,13 +251,20 @@ void FabricUIManager::startSurface(
       surfaceId,
       moduleName,
       initialProps,
-      std::move(constraints), // layout constraints
+      constraints, // layout constraints
       context // layout context
   );
 }
 
 void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept {
   m_surfaceManager->stopSurface(surfaceId);
+}
+
+facebook::react::Size FabricUIManager::measureSurface(
+    facebook::react::SurfaceId surfaceId,
+    const facebook::react::LayoutConstraints &layoutConstraints,
+    const facebook::react::LayoutContext &layoutContext) const noexcept {
+  return m_surfaceManager->measureSurface(surfaceId, layoutConstraints, layoutContext);
 }
 
 void FabricUIManager::constraintSurfaceLayout(

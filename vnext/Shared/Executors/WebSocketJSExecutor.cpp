@@ -26,7 +26,7 @@
 #pragma optimize("", off)
 #endif
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 WebSocketJSExecutor::WebSocketJSExecutor(
     std::shared_ptr<facebook::react::ExecutorDelegate> delegate,
@@ -296,6 +296,6 @@ void WebSocketJSExecutor::OnMessageReceived(const std::string &msg) {
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative
 
 #pragma warning(pop)

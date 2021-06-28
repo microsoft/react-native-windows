@@ -82,7 +82,7 @@ const wchar_t *RefreshControlViewManager::GetName() const {
 XamlView RefreshControlViewManager::CreateViewCore(
     int64_t /*tag*/,
     const winrt::Microsoft::ReactNative::JSValueObject &) {
-  if (react::uwp::IsRS4OrHigher()) {
+  if (IsRS4OrHigher()) {
     // refreshContainer is supported >= RS4
     return winrt::RefreshContainer();
   } else {

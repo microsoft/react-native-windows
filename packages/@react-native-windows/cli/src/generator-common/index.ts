@@ -4,11 +4,11 @@
  * @format
  */
 
-import * as fs from 'fs';
-import * as chalk from 'chalk';
-import * as inquirer from 'inquirer';
-import * as path from 'path';
-import * as mustache from 'mustache';
+import fs from 'fs';
+import chalk from 'chalk';
+import prompts from 'prompts';
+import path from 'path';
+import mustache from 'mustache';
 import {CodedError} from '@react-native-windows/telemetry';
 
 /**
@@ -303,12 +303,12 @@ async function upgradeFileContentChangedCallback(
         `You can see the new version here: ${absoluteSrcFilePath}`,
     );
 
-    const {shouldReplace} = await inquirer.prompt([
+    const {shouldReplace} = await prompts([
       {
         name: 'shouldReplace',
         type: 'confirm',
         message: `Do you want to replace ${relativeDestPath}?`,
-        default: false,
+        initial: false,
       },
     ]);
 

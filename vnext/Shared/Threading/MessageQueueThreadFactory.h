@@ -6,7 +6,7 @@
 #include <BatchingMessageQueueThread.h>
 #include <cxxreact/MessageQueueThread.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 std::shared_ptr<facebook::react::MessageQueueThread> MakeJSQueueThread() noexcept;
 
@@ -15,4 +15,4 @@ std::shared_ptr<facebook::react::MessageQueueThread> MakeUIQueueThread() noexcep
 std::shared_ptr<facebook::react::BatchingMessageQueueThread> MakeBatchingQueueThread(
     std::shared_ptr<facebook::react::MessageQueueThread> const &queueThread) noexcept;
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

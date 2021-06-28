@@ -314,32 +314,30 @@ export function createNM2Generator({namespace}: {namespace: string}) {
     const files = new Map<string, string>();
 
     const nativeModules = Object.keys(schema.modules)
-      .map(moduleName => {
-        const modules = schema.modules[moduleName].nativeModules;
-        if (!modules) {
-          throw new Error('modules does not exist');
-        }
-
-        return modules;
-      })
+      .map(moduleName => schema.modules[moduleName].nativeModules)
       .filter(Boolean)
       .reduce((acc, components) => Object.assign(acc, components), {});
 
-    Object.keys(nativeModules).forEach(name => {
-      console.log(`Generating Native${name}Spec.g.h`);
-      const {properties} = nativeModules[name];
-      const traversedProperties = renderProperties(properties, false);
-      const traversedPropertyTuples = renderProperties(properties, true);
+    if (nativeModules) {
+      Object.keys(nativeModules).forEach(name => {
+        console.log(`Generating Native${name}Spec.g.h`);
+        const {properties} = nativeModules[name];
+        const traversedProperties = renderProperties(properties, false);
+        const traversedPropertyTuples = renderProperties(properties, true);
 
-      files.set(
-        `Native${name}Spec.g.h`,
-        moduleTemplate
-          .replace(/::_MODULE_PROPERTIES_TUPLE_::/g, traversedPropertyTuples)
-          .replace(/::_MODULE_PROPERTIES_SPEC_ERRORS_::/g, traversedProperties)
-          .replace(/::_MODULE_NAME_::/g, name)
-          .replace(/::_NAMESPACE_::/g, namespace),
-      );
-    });
+        files.set(
+          `Native${name}Spec.g.h`,
+          moduleTemplate
+            .replace(/::_MODULE_PROPERTIES_TUPLE_::/g, traversedPropertyTuples)
+            .replace(
+              /::_MODULE_PROPERTIES_SPEC_ERRORS_::/g,
+              traversedProperties,
+            )
+            .replace(/::_MODULE_NAME_::/g, name)
+            .replace(/::_NAMESPACE_::/g, namespace),
+        );
+      });
+    }
 
     return files;
   };

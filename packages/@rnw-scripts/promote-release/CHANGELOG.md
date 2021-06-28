@@ -1,8 +1,66 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Thu, 04 Mar 2021 05:05:53 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Jun 2021 05:08:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.24
+
+Fri, 11 Jun 2021 05:08:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.2.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/package-utils to v0.0.0-canary.20 (ngerlem@microsoft.com)
+
+## 1.2.23
+
+Wed, 09 Jun 2021 05:10:07 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.3 (igklemen@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/package-utils to v0.0.0-canary.19 (igklemen@microsoft.com)
+
+## 1.2.22
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Update prompterelease to stamp beachball branch configuration (dannyvv@microsoft.com)
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.21 (ngerlem@microsoft.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.18 (ngerlem@microsoft.com)
+
+## 1.2.21
+
+Tue, 25 May 2021 19:36:43 GMT
+
+### Patches
+
+- Prepare files for default branch rename (dannyvv@microsoft.com)
+
+## 1.2.20
+
+Fri, 21 May 2021 05:17:18 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.1 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/package-utils to v0.0.0-canary.17 (ngerlem@microsoft.com)
 
 ## 1.2.19
 

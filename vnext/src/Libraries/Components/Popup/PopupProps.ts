@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {ViewProps} from 'react-native';
 
 export interface IPopupProps extends ViewProps {

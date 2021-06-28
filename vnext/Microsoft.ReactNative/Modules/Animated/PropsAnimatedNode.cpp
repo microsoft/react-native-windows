@@ -12,7 +12,7 @@
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 PropsAnimatedNode::PropsAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -89,7 +89,10 @@ void PropsAnimatedNode::UpdateView() {
           MakeAnimation(styleEntry.second, styleEntry.first);
         }
       } else if (const auto &valueNode = manager->GetValueAnimatedNode(entry.second)) {
-        MakeAnimation(entry.second, StringToFacadeType(entry.first));
+        const auto &facade = StringToFacadeType(entry.first);
+        if (facade != FacadeType::None) {
+          MakeAnimation(entry.second, facade);
+        }
       }
     }
   }
@@ -279,4 +282,4 @@ xaml::UIElement PropsAnimatedNode::GetUIElement() {
   }
   return nullptr;
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

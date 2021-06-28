@@ -37,6 +37,12 @@ MainPage::MainPage() {
   x_JsEngine().SelectedIndex(1);
 }
 
+void MainPage::OnUnloadClick(
+    Windows::Foundation::IInspectable const & /*sender*/,
+    xaml::RoutedEventArgs const & /*args*/) {
+  Host().UnloadInstance();
+}
+
 void MainPage::OnLoadClick(
     Windows::Foundation::IInspectable const & /*sender*/,
     xaml::RoutedEventArgs const & /*args*/) {
@@ -59,6 +65,7 @@ void MainPage::OnLoadClick(
     mainComponentName = unbox_value<hstring>(item);
   }
   ReactRootView().ComponentName(mainComponentName);
+  ReactRootView().ExperimentalUseFabric(x_UseFabric().IsChecked().GetBoolean());
   ReactRootView().ReactNativeHost(host);
 
   host.InstanceSettings().UseDeveloperSupport(true);
@@ -70,11 +77,14 @@ void MainPage::OnLoadClick(
   host.InstanceSettings().JSIEngineOverride(
       static_cast<Microsoft::ReactNative::JSIEngine>(x_JsEngine().SelectedIndex()));
   if (!m_bundlerHostname.empty()) {
-    host.InstanceSettings().DebugHost(m_bundlerHostname);
+    std::wstring dhost(m_bundlerHostname);
+    auto colonPos = dhost.find(L':');
+    if (colonPos != std::wstring::npos) {
+      host.InstanceSettings().SourceBundleHost(hstring(dhost.substr(0, colonPos)));
+      dhost.erase(0, colonPos + 1);
+      host.InstanceSettings().SourceBundlePort(static_cast<uint16_t>(std::stoi(dhost)));
+    }
   }
-
-  winrt::Microsoft::ReactNative::QuirkSettings::SetEnableFabric(
-      host.InstanceSettings(), x_UseFabric().IsChecked().GetBoolean());
 
   host.InstanceSettings().InstanceCreated(
       [wkThis = get_weak()](auto sender, winrt::Microsoft::ReactNative::InstanceCreatedEventArgs args) {

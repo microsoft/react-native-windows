@@ -252,7 +252,7 @@ void ReactInstanceWin::LoadModules(
   };
 
 #ifdef USE_FABRIC
-  if (m_options.EnableFabric()) {
+  if (!m_options.UseWebDebugger()) {
     registerTurboModule(
         L"FabricUIManagerBinding",
         winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
@@ -325,12 +325,12 @@ void ReactInstanceWin::Initialize() noexcept {
   Mso::PostFuture(m_uiQueue, [weakThis = Mso::WeakPtr{this}]() noexcept {
     // Objects that must be created on the UI thread
     if (auto strongThis = weakThis.GetStrongPtr()) {
-      strongThis->m_appTheme = std::make_shared<::react::uwp::AppTheme>(
+      strongThis->m_appTheme = std::make_shared<Microsoft::ReactNative::AppTheme>(
           strongThis->GetReactContext(), strongThis->m_uiMessageThread.LoadWithLock());
       Microsoft::ReactNative::I18nManager::InitI18nInfo(
           winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
-      strongThis->m_appearanceListener =
-          Mso::Make<::react::uwp::AppearanceChangeListener>(strongThis->GetReactContext(), strongThis->m_uiQueue);
+      strongThis->m_appearanceListener = Mso::Make<Microsoft::ReactNative::AppearanceChangeListener>(
+          strongThis->GetReactContext(), strongThis->m_uiQueue);
 
       Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(strongThis->GetReactContext());
     }
@@ -374,7 +374,7 @@ void ReactInstanceWin::Initialize() noexcept {
 
       // Acquire default modules and then populate with custom modules.
       // Note that some of these have custom thread affinity.
-      std::vector<facebook::react::NativeModuleDescription> cxxModules = ::react::uwp::GetCoreModules(
+      std::vector<facebook::react::NativeModuleDescription> cxxModules = Microsoft::ReactNative::GetCoreModules(
           m_batchingUIThread,
           m_jsMessageThread.Load(),
           std::move(m_appTheme),
@@ -401,7 +401,8 @@ void ReactInstanceWin::Initialize() noexcept {
       switch (m_options.JsiEngine) {
         case JSIEngine::Hermes:
 #if defined(USE_HERMES)
-          devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
+          devSettings->jsiRuntimeHolder =
+              std::make_shared<facebook::react::HermesRuntimeHolder>(devSettings, m_jsMessageThread.Load());
           devSettings->inlineSourceMap = false;
           break;
 #endif
@@ -416,9 +417,9 @@ void ReactInstanceWin::Initialize() noexcept {
 #endif
         case JSIEngine::Chakra:
           if (m_options.EnableByteCodeCaching || !m_options.ByteCodeFileUri.empty()) {
-            scriptStore = std::make_unique<::react::uwp::UwpScriptStore>();
-            preparedScriptStore =
-                std::make_unique<::react::uwp::UwpPreparedScriptStore>(winrt::to_hstring(m_options.ByteCodeFileUri));
+            scriptStore = std::make_unique<Microsoft::ReactNative::UwpScriptStore>();
+            preparedScriptStore = std::make_unique<Microsoft::ReactNative::UwpPreparedScriptStore>(
+                winrt::to_hstring(m_options.ByteCodeFileUri));
           }
           devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
               devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
@@ -445,7 +446,7 @@ void ReactInstanceWin::Initialize() noexcept {
 
 #ifdef USE_FABRIC
         // Eagerly init the FabricUI binding
-        if (m_options.EnableFabric()) {
+        if (!m_options.UseWebDebugger()) {
           Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
               winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()),
               m_instanceWrapper.Load()->GetInstance()->getRuntimeExecutor());
@@ -540,7 +541,7 @@ void ReactInstanceWin::OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) no
     } else {
       m_state = ReactInstanceState::HasError;
       m_whenLoaded.SetError(errorCode);
-      AbandonJSCallQueue();
+      OnError(errorCode);
     }
   }
 }
@@ -620,7 +621,7 @@ void ReactInstanceWin::InitUIMessageThread() noexcept {
   m_uiMessageThread.Exchange(
       std::make_shared<MessageDispatchQueue>(m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
-  auto batchingUIThread = ::react::uwp::MakeBatchingQueueThread(m_uiMessageThread.Load());
+  auto batchingUIThread = Microsoft::ReactNative::MakeBatchingQueueThread(m_uiMessageThread.Load());
   m_batchingUIThread = batchingUIThread;
 
   m_jsDispatchQueue.Load().Post(
@@ -718,22 +719,23 @@ std::function<void(std::string)> ReactInstanceWin::GetErrorCallback() noexcept {
 }
 
 void ReactInstanceWin::OnErrorWithMessage(const std::string &errorMessage) noexcept {
+  OnError(Mso::React::ReactErrorProvider().MakeErrorCode(Mso::React::ReactError{errorMessage.c_str()}));
+}
+
+void ReactInstanceWin::OnError(const Mso::ErrorCode &errorCode) noexcept {
   m_state = ReactInstanceState::HasError;
   AbandonJSCallQueue();
 
   if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
     ErrorInfo errorInfo;
-    errorInfo.Message = errorMessage;
+    errorInfo.Message = errorCode.ToString();
     errorInfo.Id = 0;
     m_redboxHandler->showNewError(std::move(errorInfo), ErrorType::Native);
   }
 
-  OnError(Mso::React::ReactErrorProvider().MakeErrorCode(Mso::React::ReactError{errorMessage.c_str()}));
-  m_updateUI();
-}
-
-void ReactInstanceWin::OnError(const Mso::ErrorCode &errorCode) noexcept {
   InvokeInQueue([this, errorCode]() noexcept { m_options.OnError(errorCode); });
+
+  m_updateUI();
 }
 
 void ReactInstanceWin::OnLiveReload() noexcept {
@@ -867,15 +869,15 @@ bool ReactInstanceWin::IsLoaded() const noexcept {
 
 void ReactInstanceWin::AttachMeasuredRootView(
     facebook::react::IReactRootView *rootView,
-    folly::dynamic &&initialProps) noexcept {
+    folly::dynamic &&initialProps,
+    bool useFabric) noexcept {
   if (State() == ReactInstanceState::HasError)
     return;
 
   int64_t rootTag = -1;
-  rootView->ResetView();
 
 #ifdef USE_FABRIC
-  if (m_options.EnableFabric()) {
+  if (useFabric && !m_useWebDebugger) {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
 
@@ -901,7 +903,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
   }
 }
 
-void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView) noexcept {
+void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView, bool useFabric) noexcept {
   if (State() == ReactInstanceState::HasError)
     return;
 
@@ -909,7 +911,7 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView)
   folly::dynamic params = folly::dynamic::array(rootTag);
 
 #ifdef USE_FABRIC
-  if (m_options.EnableFabric()) {
+  if (useFabric && !m_useWebDebugger) {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
     uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(rootTag));

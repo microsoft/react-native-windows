@@ -333,12 +333,12 @@ void ViewManagerBase::SetLayoutProps(
   }
   auto fe = element.as<xaml::FrameworkElement>();
 
-  const bool layoutHasChanged = left != react::uwp::ViewPanel::GetLeft(element) ||
-      top != react::uwp::ViewPanel::GetTop(element) || width != fe.Width() || height != fe.Height();
+  const bool layoutHasChanged = left != ViewPanel::GetLeft(element) || top != ViewPanel::GetTop(element) ||
+      width != fe.Width() || height != fe.Height();
 
   // Set Position & Size Properties
-  react::uwp::ViewPanel::SetLeft(element, left);
-  react::uwp::ViewPanel::SetTop(element, top);
+  ViewPanel::SetLeft(element, left);
+  ViewPanel::SetTop(element, top);
 
   fe.Width(width);
   fe.Height(height);

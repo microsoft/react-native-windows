@@ -5,7 +5,7 @@
 #include <folly/dynamic.h>
 #include "ValueAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class SubtractionAnimatedNode final : public ValueAnimatedNode {
  public:
   SubtractionAnimatedNode(
@@ -21,4 +21,4 @@ class SubtractionAnimatedNode final : public ValueAnimatedNode {
 
   static constexpr std::wstring_view s_baseName{L"base"};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

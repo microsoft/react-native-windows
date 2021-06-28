@@ -7,7 +7,7 @@
 #include <memory>
 #include <vector>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class NativeAnimatedNodeManager;
 class AnimatedNode {
  public:
@@ -27,4 +27,4 @@ class AnimatedNode {
   const std::weak_ptr<NativeAnimatedNodeManager> m_manager;
   std::vector<int64_t> m_children{};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

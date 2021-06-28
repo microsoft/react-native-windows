@@ -21,7 +21,7 @@ using namespace Windows::Storage::Streams;
 using namespace xaml::Media::Imaging;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 //
 // ImageViewManagerModule::ImageViewManagerModuleImpl
 //
@@ -168,4 +168,4 @@ auto ImageViewManagerModule::getMethods() -> std::vector<Method> {
   };
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

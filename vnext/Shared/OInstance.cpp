@@ -23,9 +23,6 @@
 #include <cxxreact/MessageQueueThread.h>
 #include <cxxreact/ModuleRegistry.h>
 
-#if (defined(_MSC_VER) && !defined(WINRT))
-#include <Modules/WebSocketModule.h>
-#endif
 #include <Modules/ExceptionsManagerModule.h>
 #include <Modules/PlatformConstantsModule.h>
 #include <Modules/SourceCodeModule.h>
@@ -56,18 +53,8 @@
 #include <ReactCommon/TurboModuleBinding.h>
 #include "ChakraRuntimeHolder.h"
 
-#if (defined(_MSC_VER) && !defined(WINRT))
-// Type only available in Desktop.
-using Microsoft::React::WebSocketModule;
-#endif
-
+#include <tracing/tracing.h>
 namespace fs = std::filesystem;
-
-// forward declaration.
-namespace facebook::react::tracing {
-void initializeETW();
-void initializeJSHooks(facebook::jsi::Runtime &runtime);
-} // namespace facebook::react::tracing
 
 namespace {
 
@@ -155,11 +142,6 @@ namespace facebook {
 namespace react {
 
 namespace {
-void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
-#ifdef ENABLE_JS_SYSTRACE_TO_ETW
-  facebook::react::tracing::initializeJSHooks(runtime);
-#endif
-}
 
 class OJSIExecutorFactory : public JSExecutorFactory {
  public:
@@ -192,24 +174,34 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     }
 
     return std::make_unique<JSIExecutor>(
-        runtimeHolder_->getRuntime(), std::move(delegate), JSIExecutor::defaultTimeoutInvoker, runtimeInstaller);
+        runtimeHolder_->getRuntime(),
+        std::move(delegate),
+        JSIExecutor::defaultTimeoutInvoker,
+        [isProfiling = isProfilingEnabled_]([[maybe_unused]] jsi::Runtime &runtime) {
+#ifdef ENABLE_JS_SYSTRACE_TO_ETW
+          facebook::react::tracing::initializeJSHooks(runtime, isProfiling);
+#endif
+        });
   }
 
   OJSIExecutorFactory(
       std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+      bool isProfilingEnabled,
       std::shared_ptr<CallInvoker> jsCallInvoker) noexcept
       : runtimeHolder_{std::move(runtimeHolder)},
         loggingHook_{std::move(loggingHook)},
         turboModuleRegistry_{std::move(turboModuleRegistry)},
-        jsCallInvoker_{std::move(jsCallInvoker)} {}
+        jsCallInvoker_{std::move(jsCallInvoker)},
+        isProfilingEnabled_{isProfilingEnabled} {}
 
  private:
   std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
   std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
   std::shared_ptr<CallInvoker> jsCallInvoker_;
   NativeLoggingHook loggingHook_;
+  bool isProfilingEnabled_;
 };
 
 } // namespace
@@ -305,6 +297,10 @@ InstanceImpl::InstanceImpl(
   facebook::react::tracing::initializeETW();
 #endif
 
+  if (m_devSettings->useDirectDebugger && !m_devSettings->useWebDebugger) {
+    m_devManager->StartInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
+  }
+
   // Default (common) NativeModules
   auto modules = GetDefaultNativeModules(nativeQueue);
 
@@ -347,13 +343,14 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder,
           m_devSettings->loggingCallback,
           m_turboModuleRegistry,
+          !m_devSettings->useFastRefresh,
           m_innerInstance->getJSCallInvoker());
     } else {
       assert(m_devSettings->jsiEngineOverride != JSIEngineOverride::Default);
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
 #if defined(USE_HERMES)
-          m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>();
+          m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>(m_devSettings, m_jsThread);
           m_devSettings->inlineSourceMap = false;
           break;
 #else
@@ -394,6 +391,7 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder,
           m_devSettings->loggingCallback,
           m_turboModuleRegistry,
+          !m_devSettings->useFastRefresh,
           m_innerInstance->getJSCallInvoker());
     }
   }
@@ -438,12 +436,20 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName,
+          true /* dev */,
+          m_devSettings->useFastRefresh,
           m_devSettings->inlineSourceMap);
 
       if (!success) {
+        m_devManager->UpdateBundleStatus(false, -1);
         m_devSettings->errorCallback(jsBundleString);
         return;
       }
+
+      int64_t currentTimeInMilliSeconds =
+          std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono ::system_clock::now().time_since_epoch())
+              .count();
+      m_devManager->UpdateBundleStatus(true, currentTimeInMilliSeconds);
 
       auto bundleUrl = DevServerHelper::get_BundleUrl(
           m_devSettings->sourceBundleHost,
@@ -478,7 +484,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 #else
       std::string bundlePath = (fs::path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).string();
 
-      auto bundleString = std::make_unique<::react::uwp::StorageFileBigString>(bundlePath);
+      auto bundleString = std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
       m_innerInstance->loadScriptFromString(std::move(bundleString), jsBundleRelativePath, synchronously);
 #endif
     }
@@ -486,28 +492,34 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
   } catch (const facebook::react::ChakraJSException &e) {
     m_devSettings->errorCallback(std::string{e.what()} + "\r\n" + e.getStack());
 #endif
-  } catch (std::exception &e) {
+  } catch (const std::exception &e) {
     m_devSettings->errorCallback(e.what());
+  } catch (const winrt::hresult_error &hrerr) {
+    std::stringstream ss;
+    ss << "[" << std::hex << std::showbase << std::setw(8) << static_cast<uint32_t>(hrerr.code()) << "] "
+       << winrt::to_string(hrerr.message());
+
+    m_devSettings->errorCallback(std::move(ss.str()));
   }
 }
 
 InstanceImpl::~InstanceImpl() {
+  m_devManager->StopInspector();
   m_nativeQueue->quitSynchronous();
 }
 
 std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules(
     std::shared_ptr<MessageQueueThread> nativeQueue) {
   std::vector<std::unique_ptr<NativeModule>> modules;
-// TODO: This is not included for UWP due to difficulties getting it working.
-// For now, we still use the old module
-//  written specifically for UWP. That one gets added later.
-#if (defined(_MSC_VER) && !defined(WINRT))
+
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       "WebSocketModule",
-      []() -> std::unique_ptr<xplat::module::CxxModule> { return std::make_unique<WebSocketModule>(); },
+      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> {
+        return Microsoft::React::CreateWebSocketModule();
+      },
       nativeQueue));
-#endif
+
 // TODO: This is not included for UWP because we have a different module which
 // is added later. However, this one is designed
 //  so that we can base a UWP version on it. We need to do that but is not high
@@ -529,7 +541,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
             m_devSettings->debugBundlePath,
             m_devSettings->platformName,
             true /*dev*/,
-            false /*hot*/,
+            m_devSettings->useFastRefresh,
             m_devSettings->inlineSourceMap)
       : std::string();
   modules.push_back(std::make_unique<CxxNativeModule>(

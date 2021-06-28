@@ -49,7 +49,7 @@ bool RawTextViewManager::UpdateProperty(
     return true;
 
   if (propertyName == "text") {
-    run.Text(react::uwp::asHstring(propertyValue));
+    run.Text(asHstring(propertyValue));
     static_cast<RawTextShadowNode *>(nodeToUpdate)->originalText = winrt::hstring{};
     NotifyAncestorsTextChanged(nodeToUpdate);
   } else {
@@ -88,6 +88,9 @@ void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate
         }
 
         (static_cast<TextViewManager *>(viewManager))->OnDescendantTextPropertyChanged(parent);
+
+        // We have reached the parent TextBlock, so there're no more parent <Text> elements in this tree.
+        break;
       } else if (!std::wcscmp(nodeType, L"RCTVirtualText") && textTransform == TextTransform::Undefined) {
         textTransform = static_cast<VirtualTextShadowNode *>(parent)->textTransform;
       }

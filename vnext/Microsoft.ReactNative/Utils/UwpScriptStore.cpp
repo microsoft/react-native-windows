@@ -12,7 +12,7 @@ using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Storage;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 UwpScriptStore::UwpScriptStore() {}
 
@@ -53,4 +53,4 @@ std::future<facebook::jsi::ScriptVersion_t> UwpScriptStore::getScriptVersionAsyn
   co_return GetFileVersion(file.Path().c_str());
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

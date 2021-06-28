@@ -85,14 +85,6 @@ void ReactApplication::UseDeveloperSupport(bool value) noexcept {
   InstanceSettings().UseDeveloperSupport(value);
 }
 
-hstring ReactApplication::JavaScriptMainModuleName() noexcept {
-  return InstanceSettings().JavaScriptMainModuleName();
-}
-
-void ReactApplication::JavaScriptMainModuleName(hstring const &value) noexcept {
-  InstanceSettings().JavaScriptMainModuleName(value);
-}
-
 hstring ReactApplication::JavaScriptBundleFile() noexcept {
   return InstanceSettings().JavaScriptBundleFile();
 }
@@ -104,7 +96,7 @@ void ReactApplication::JavaScriptBundleFile(hstring const &value) noexcept {
 void ReactApplication::OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
   if (e.Kind() == Windows::ApplicationModel::Activation::ActivationKind::Protocol) {
     auto protocolActivatedEventArgs{e.as<Windows::ApplicationModel::Activation::ProtocolActivatedEventArgs>()};
-    react::uwp::LinkingManagerModule::OpenUri(protocolActivatedEventArgs.Uri());
+    ::Microsoft::ReactNative::LinkingManagerModule::OpenUri(protocolActivatedEventArgs.Uri());
   }
   this->OnCreate(e);
 }

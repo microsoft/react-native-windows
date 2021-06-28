@@ -22,7 +22,8 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   struct HighlightData {
     std::vector<HighlightData> data;
     size_t spanIdx = 0;
-    std::optional<winrt::Windows::UI::Color> color;
+    std::optional<winrt::Windows::UI::Color> backgroundColor;
+    std::optional<winrt::Windows::UI::Color> foregroundColor;
   };
 
   HighlightData m_highlightData;
