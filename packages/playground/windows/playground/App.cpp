@@ -22,7 +22,9 @@ using namespace playground::implementation;
 /// </summary>
 App::App() {
   InitializeComponent();
+#ifndef USE_WINUI3
   Suspending({this, &App::OnSuspending});
+#endif
   RegisterAutolinkedNativeModulePackages(PackageProviders()); // Includes any autolinked modules
 
 #if defined _DEBUG && !defined DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION
