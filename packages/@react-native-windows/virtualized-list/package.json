@@ -10,6 +10,7 @@
   "description": "React Native for Windows fork of VirtualizedList",
   "main": "./src/VirtualizedList.js",
   "scripts": {
+    "flow-check": "flow check",
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint"
   },
