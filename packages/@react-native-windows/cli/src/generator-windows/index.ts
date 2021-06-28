@@ -361,6 +361,14 @@ export async function copyProjectTemplateAndReplace(
                 newProjectName + '.csproj',
               ),
             },
+            {
+              from: path.join(srcPath, projDir, 'MyApp (Package).wapproj'),
+              to: path.join(
+                windowsDir,
+                `${newProjectName} (Package)`,
+                newProjectName + ' (Package).wapproj',
+              ),
+            },
           ]
         : [
             // cs lib mappings
