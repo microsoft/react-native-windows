@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32-tester",
   "entries": [
     {
+      "date": "Mon, 28 Jun 2021 15:06:09 GMT",
+      "tag": "@office-iss/react-native-win32-tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @office-iss/react-native-win32 to v0.65.0-preview.2",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "02494fe87b2fd0b70d3d9e5c163f8b44d6c9fe10",
+            "package": "@office-iss/react-native-win32-tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 May 2021 15:23:18 GMT",
       "tag": "@office-iss/react-native-win32-tester_v0.0.1",
       "version": "0.0.1",
