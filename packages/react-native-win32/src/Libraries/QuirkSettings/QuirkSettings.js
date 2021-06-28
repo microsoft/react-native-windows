@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  *
  * @format
- * @flow strict
+ * @flow strict-local
  */
 
 import type {Quirks} from './Quirks';
