@@ -397,6 +397,10 @@
     },
     {
       "type": "platform",
+      "file": "src/Libraries/Lists/VirtualizedList.windows.js"
+    },
+    {
+      "type": "platform",
       "file": "src/Libraries/Network/RCTNetworking.windows.js"
     },
     {

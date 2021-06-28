@@ -288,6 +288,10 @@
       "baseHash": "b11d03daa2e3f828a350667f543b2cda4fa65dbf"
     },
     {
+      "type": "platform",
+      "file": "src/Libraries/Lists/VirtualizedList.win32.js"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/LogBox/UI/LogBoxInspectorHeader.win32.js",
       "baseFile": "Libraries/LogBox/UI/LogBoxInspectorHeader.js",
