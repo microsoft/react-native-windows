@@ -8,17 +8,17 @@
  * @format
  */
 
-const Batchinator = require('react-native/Libaries/Interaction/Batchinator');
+const Batchinator = require('react-native/Libraries/Interaction/Batchinator');
 const FillRateHelper = require('./FillRateHelper');
-const ReactNative = require('react-native/Libaries/Renderer/shims/ReactNative');
-const RefreshControl = require('react-native/Libaries/Components/RefreshControl/RefreshControl');
-const ScrollView = require('react-native/Libaries/Components/ScrollView/ScrollView');
-const StyleSheet = require('react-native/Libaries/StyleSheet/StyleSheet');
-const View = require('react-native/Libaries/Components/View/View');
+const ReactNative = require('react-native/Libraries/Renderer/shims/ReactNative');
+const RefreshControl = require('react-native/Libraries/Components/RefreshControl/RefreshControl');
+const ScrollView = require('react-native/Libraries/Components/ScrollView/ScrollView');
+const StyleSheet = require('react-native/Libraries/StyleSheet/StyleSheet');
+const View = require('react-native/Libraries/Components/View/View');
 const ViewabilityHelper = require('./ViewabilityHelper');
 
-const flattenStyle = require('react-native/Libaries/StyleSheet/flattenStyle');
-const infoLog = require('react-native/Libaries/Utilities/infoLog');
+const flattenStyle = require('react-native/Libraries/StyleSheet/flattenStyle');
+const infoLog = require('react-native/Libraries/Utilities/infoLog');
 const invariant = require('invariant');
 
 import {
@@ -27,8 +27,8 @@ import {
 } from './VirtualizeUtils';
 
 import * as React from 'react';
-import type {ScrollResponderType} from 'react-native/Libaries/Components/ScrollView/ScrollView';
-import type {ViewStyleProp} from 'react-native/Libaries/StyleSheet/StyleSheet';
+import type {ScrollResponderType} from 'react-native/Libraries/Components/ScrollView/ScrollView';
+import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
 import type {
   ViewabilityConfig,
   ViewToken,
