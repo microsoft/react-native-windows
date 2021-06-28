@@ -7,11 +7,9 @@
 const path = require('path');
 const exclusionList = require('metro-config/src/defaults/exclusionList');
 const rnwPath = path.resolve(__dirname, '../../vnext');
-const virtualizedListPath = fs.realpathSync(
-  path.resolve(
-    require.resolve('@react-native-windows/virtualized-list/package.json'),
-    '..',
-  ),
+const virtualizedListPath = path.resolve(
+  require.resolve('@react-native-windows/virtualized-list/package.json'),
+  '..',
 );
 
 module.exports = {

@@ -22,6 +22,7 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.8.4",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.0",
     "@rnw-scripts/babel-node-config": "2.0.1",
     "@rnw-scripts/eslint-config": "1.1.7",
     "@rnw-scripts/jest-out-of-tree-resolver": "^1.0.0",
