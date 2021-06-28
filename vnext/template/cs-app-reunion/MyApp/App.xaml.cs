@@ -19,7 +19,7 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace MyApp
+namespace {{ namespace }}
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -62,7 +62,7 @@ namespace MyApp
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new MainWindow();
-            m_window.Title = "React Native for Windows - Project Reunion";
+            m_window.Title = "React Native for Windows - Windows App SDK";
 
             m_window.Activate();
         }
