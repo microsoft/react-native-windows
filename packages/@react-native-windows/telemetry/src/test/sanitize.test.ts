@@ -230,7 +230,8 @@ function a(s: string) {
   b(s);
 }
 
-test('thrown exception a->b, hello world', done => {
+// #7903: This test assumes exact structure of stack trace, which can be flaky or implementation dependent
+test.skip('thrown exception a->b, hello world', () => {
   let pass = false;
   Telemetry.client!.addTelemetryProcessor((envelope, _) => {
     if (envelope.data.baseType === 'ExceptionData') {
@@ -264,7 +265,6 @@ test('thrown exception a->b, hello world', done => {
   expect(pass).toBeTruthy();
   Telemetry.client!.clearTelemetryProcessors();
   Telemetry.client!.addTelemetryProcessor(sanitizeEnvelope);
-  done();
 });
 
 test('throw exception with error code', done => {
@@ -285,7 +285,8 @@ test('throw exception with error code', done => {
   done();
 });
 
-test('thrown exception a->b, hello path', done => {
+// #7903: This test assumes exact structure of stack trace, which can be flaky or implementation dependent
+test.skip('thrown exception a->b, hello path', done => {
   let pass = false;
   Telemetry.client!.addTelemetryProcessor((envelope, _) => {
     if (envelope.data.baseType === 'ExceptionData') {
