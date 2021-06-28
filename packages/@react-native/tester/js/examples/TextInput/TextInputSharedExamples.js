@@ -470,7 +470,6 @@ module.exports = ([
         <TextInput
           autoFocus={true}
           style={styles.default}
-          keyDownEvents={[{code: 'KeyC'}, {code: 'KeyD', handledEventPhase: 1}]}
           accessibilityLabel="I am the accessibility label for text input"
         />
       );

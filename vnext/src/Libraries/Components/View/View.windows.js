@@ -32,7 +32,7 @@ const View: React.AbstractComponent<
   React.ElementRef<typeof ViewNativeComponent>,
 > = React.forwardRef((props: ViewProps, forwardedRef) => {
   const _keyDown = (event: KeyEvent) => {
-    if (props.keyDownEvents && !event.isPropagationStopped) {
+    if (props.keyDownEvents && event.isPropagationStopped() !== true) {
       for (const el of props.keyDownEvents) {
         if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
           event.stopPropagation();
@@ -43,7 +43,7 @@ const View: React.AbstractComponent<
   };
 
   const _keyUp = (event: KeyEvent) => {
-    if (props.keyUpEvents && !event.isPropagationStopped) {
+    if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       for (const el of props.keyUpEvents) {
         if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
           event.stopPropagation();
@@ -54,7 +54,7 @@ const View: React.AbstractComponent<
   };
 
   const _keyDownCapture = (event: KeyEvent) => {
-    if (props.keyDownEvents && !event.isPropagationStopped) {
+    if (props.keyDownEvents && event.isPropagationStopped() !== true) {
       for (const el of props.keyDownEvents) {
         if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
           event.stopPropagation();
@@ -65,7 +65,7 @@ const View: React.AbstractComponent<
   };
 
   const _keyUpCapture = (event: KeyEvent) => {
-    if (props.keyUpEvents && !event.isPropagationStopped) {
+    if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       for (const el of props.keyUpEvents) {
         if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
           event.stopPropagation();

@@ -646,7 +646,7 @@ exports.examples = [
     description: ('You can intercept routed KeyDown/KeyUp events by specifying the onKeyDownCapture/onKeyUpCapture callbacks.' +
       " In the example below, a <Pressable> is wrapper in a <View>, and each specifies onKeyDown and onKeyDownCapture callbacks. Set focus to the 'Press me' element by tabbing into it, and start pressing letters on the keyboard to observe the event log below." +
       " Additionally, because the keyDownEvents prop is specified - keyDownEvents={[{code: 'KeyW', handledEventPhase: 3}, {code: 'KeyE', handledEventPhase: 1}]} - " +
-      'for these keys the event routing will be interrupted at the phase specified (3 - bubbling, 1 - capturing) to match processing on the native side.': string),
+      'for these keys the event routing will be interrupted (by a call to event.stopPropagation()) at the phase specified (3 - bubbling, 1 - capturing) to match processing on the native side.': string),
     render: function(): React.Node {
       return <PressWithKeyCapture />;
     },
