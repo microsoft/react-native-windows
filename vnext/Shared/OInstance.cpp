@@ -425,6 +425,23 @@ InstanceImpl::InstanceImpl(
           m_turboModuleRegistry,
           m_innerInstance->getJSCallInvoker());
     } else {
+#if defined(USE_V8)
+      std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
+
+      char tempPath[MAX_PATH];
+      if (GetTempPathA(MAX_PATH, tempPath)) {
+        preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
+      }
+
+      m_devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+          m_devSettings, m_jsThread, std::move(preparedScriptStore));
+
+      jsef = std::make_shared<OJSIExecutorFactory>(
+          m_devSettings->jsiRuntimeHolder,
+          m_devSettings->loggingCallback,
+          m_turboModuleRegistry,
+          m_innerInstance->getJSCallInvoker());
+#else
       // We use the older non-JSI ChakraExecutor pipeline as a fallback as of
       // now. This will go away once we completely move to JSI flow.
       ChakraInstanceArgs instanceArgs;
@@ -461,6 +478,7 @@ InstanceImpl::InstanceImpl(
           : CreateMemoryTracker(std::shared_ptr<MessageQueueThread>{m_nativeQueue});
 
       jsef = std::make_shared<ChakraExecutorFactory>(std::move(instanceArgs));
+#endif
     }
   }
 
