@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 07 Jun 2021 18:47:25 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Jun 2021 15:08:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.12
+
+Mon, 28 Jun 2021 15:08:27 GMT
+
+### Patches
+
+- [0.64]Fix XAML Visibility for `display:none` (agnel@microsoft.com)
+- V8 Package Update (tudor.mihai@microsoft.com)
+- [0.64] More cases of *Undefined* are popping up in MsBuild (dannyvv@microsoft.com)
+- Have script store return nullptr on facebook::jsi::JSINativeException (#8068) (julio.rocha@microsoft.com)
 
 ## 0.64.11
 
