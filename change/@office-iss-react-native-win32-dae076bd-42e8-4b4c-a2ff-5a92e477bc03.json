@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adding AccessibilityControls to ViewWin32 config",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "safreibe@microsoft.com",
+  "dependentChangeType": "patch"
+}
