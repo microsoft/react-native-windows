@@ -31,7 +31,7 @@
   </ItemGroup>
   <PropertyGroup>
     <WapProjPath Condition="'$(WapProjPath)'==''">$(MSBuildExtensionsPath)\Microsoft\DesktopBridge\</WapProjPath>
-    <PathToXAMLWinRTImplementations>MyApp\</PathToXAMLWinRTImplementations>
+    <PathToXAMLWinRTImplementations>{{ name }}\</PathToXAMLWinRTImplementations>
     <AssetTargetFallback>net5.0-windows$(TargetPlatformVersion);$(AssetTargetFallback)</AssetTargetFallback>
   </PropertyGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.props" />
@@ -41,7 +41,7 @@
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
     <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
-    <EntryPointProjectUniqueName>..\MyApp\MyApp.csproj</EntryPointProjectUniqueName>
+    <EntryPointProjectUniqueName>..\{{ name }}\{{ name }}.csproj</EntryPointProjectUniqueName>
   </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -58,7 +58,7 @@
     <Content Include="Images\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MyApp\MyApp.csproj">
+    <ProjectReference Include="..\{{ name }}\{{ name }}.csproj">
       <SkipGetTargetFrameworkProperties>True</SkipGetTargetFrameworkProperties>
       <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
     </ProjectReference>

@@ -7,13 +7,13 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="70813ecf-e84b-4843-9ecd-08d49ad36a49"
-    Publisher="CN=asklar"
+    Name="{{ packageGuid }}"
+    Publisher="CN={{ currentUser }}"
     Version="1.0.0.0" />
 
   <Properties>
-    <DisplayName>MyApp (Package)</DisplayName>
-    <PublisherDisplayName>asklar</PublisherDisplayName>
+    <DisplayName>{{ name }} (Package)</DisplayName>
+    <PublisherDisplayName>{{ currentUser }}</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
@@ -31,8 +31,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="MyApp (Package)"
-        Description="MyApp (Package)"
+        DisplayName="{{ name }} (Package)"
+        Description="{{ name }} (Package)"
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">
