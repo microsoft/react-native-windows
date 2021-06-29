@@ -123,13 +123,14 @@ jobs:
             additionalInitArguments:
             additionalRunArguments: --no-autolink --no-deploy
 
-          X86DebugCppWinUI3:
-            language: cpp
-            configuration: Debug
-            platform: x86
-            projectType: app
-            additionalInitArguments: --useWinUI3 true
-            additionalRunArguments:
+          # #8132 Support for C++ Reunion apps
+          # X86DebugCppWinUI3:
+          #   language: cpp
+          #   configuration: Debug
+          #   platform: x86
+          #   projectType: app
+          #   additionalInitArguments: --useWinUI3 true
+          #   additionalRunArguments:
           X86DebugCsWinUI3:
             language: cs
             configuration: Debug
