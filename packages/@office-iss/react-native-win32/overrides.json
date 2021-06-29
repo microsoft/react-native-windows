@@ -380,6 +380,22 @@
       "file": "src/Libraries/PersonaCoin/PersonaCoinTypes.ts"
     },
     {
+      "type": "platform",
+      "file": "src/Libraries/QuirkSettings/CachingNativeQuirkSettings.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/QuirkSettings/NativeQuirkSettings.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/QuirkSettings/Quirks.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/QuirkSettings/QuirkSettings.js"
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/Settings/Settings.win32.js",
       "baseFile": "Libraries/Settings/Settings.android.js",

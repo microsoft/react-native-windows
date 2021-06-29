@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 07 Jun 2021 18:28:32 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Jun 2021 15:06:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.65.0-preview.3
+
+Mon, 28 Jun 2021 15:06:09 GMT
+
+### Changes
+
+- I18n.AllowRTL should default to true (30809111+acoates-ms@users.noreply.github.com)
+- Better reporting of failures to load the bundle file (30809111+acoates-ms@users.noreply.github.com)
+- Fix deadlock when rapidly reloading instance (30809111+acoates-ms@users.noreply.github.com)
+- [0.65] More cases of *Undefined* are popping up in MsBuild (dannyvv@microsoft.com)
+- TurboModules might be kept alive by RNH when instance is shutdown (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash when adding a ReactRootView while reloading a ReactHost (30809111+acoates-ms@users.noreply.github.com)
+- Have script store return nullptr on facebook::jsi::JSINativeException (#8068) (julio.rocha@microsoft.com)
+- Remove JavaScriptMainModuleName and DebugHost (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.65.0-preview.2
 
