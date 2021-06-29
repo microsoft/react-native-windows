@@ -4,6 +4,9 @@
     "src/**"
   ],
   "baseVersion": "0.64.0",
+  "excludePatterns": [
+    "src/Libraries/Lists/__tests__/**"
+  ],
   "overrides": [
     {
       "type": "derived",
