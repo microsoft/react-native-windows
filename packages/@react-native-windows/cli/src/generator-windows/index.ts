@@ -374,15 +374,18 @@ export async function copyProjectTemplateAndReplace(
             },
           ];
 
-    const realCsMappings = options.useWinUI3 ? csMappings.concat([
-      {
-      from: path.join(srcPath, projDir, 'MyApp (Package).wapproj'),
-      to: path.join(
-        windowsDir,
-        `${newProjectName} (Package)`,
-        newProjectName + ' (Package).wapproj',
-      ),
-      }]) : csMappings;
+    const realCsMappings = options.useWinUI3
+      ? csMappings.concat([
+          {
+            from: path.join(srcPath, projDir, 'MyApp (Package).wapproj'),
+            to: path.join(
+              windowsDir,
+              `${newProjectName} (Package)`,
+              newProjectName + ' (Package).wapproj',
+            ),
+          },
+        ])
+      : csMappings;
     for (const mapping of realCsMappings) {
       await copyAndReplaceWithChangedCallback(
         mapping.from,
