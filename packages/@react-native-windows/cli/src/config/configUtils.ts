@@ -158,7 +158,9 @@ export function findDependencyProjectFiles(winFolder: string): string[] {
 
 type ReactNativeProjectType = 'unknown' | 'App-Reunion';
 
-function getReactNativeProjectType(value: string | null) {
+function getReactNativeProjectType(
+  value: string | null,
+): ReactNativeProjectType {
   switch (value) {
     case 'App-Reunion':
       return value;
