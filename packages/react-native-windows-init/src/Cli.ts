@@ -13,8 +13,7 @@ import validUrl from 'valid-url';
 import prompts from 'prompts';
 import findUp from 'find-up';
 import chalk from 'chalk';
-// @ts-ignore
-import Registry from 'npm-registry';
+import npmFetch from 'npm-registry-fetch';
 
 import {
   Telemetry,
@@ -38,7 +37,6 @@ const npmConfReg = execSync('npm config get registry')
 const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   ? npmConfReg
   : 'http://registry.npmjs.org';
-const npm = new Registry({registry: NPM_REGISTRY_URL});
 
 const argv = yargs
   .version(false)
@@ -219,13 +217,12 @@ function getLatestMatchingVersion(
       // Ideally we'd be able to just use npm.packages.range(pkg, versionSemVer) here,
       // but alas it fails to give us the right result for react-native-windows@^0.60.0-0
       // as it fails to return pre-release versions
-      npm.packages.releases(
-        pkg,
-        (err: any, details: {[key: string]: Record<string, any>} | null) => {
-          if (err) {
-            reject(err);
-          } else if (details) {
-            const versions = Object.keys(details);
+      npmFetch.json(pkg, {registry: NPM_REGISTRY_URL}).then(
+        (response: Record<string, unknown>) => {
+          try {
+            const versions = Object.keys(
+              response.versions as Record<string, unknown>,
+            );
             if (versions.length > 0) {
               const candidates = versions
                 .filter(v => semver.satisfies(v, versionSemVer))
@@ -235,6 +232,8 @@ function getLatestMatchingVersion(
                 return;
               }
             }
+          } catch (e) {
+            reject(e);
           }
           reject(
             new CodedError(
@@ -242,6 +241,9 @@ function getLatestMatchingVersion(
               `No matching version of ${pkg}@${versionSemVer} found`,
             ),
           );
+        },
+        (err: any) => {
+          reject(err);
         },
       );
     } else {
