@@ -190,7 +190,7 @@ jobs:
     - job: CliInitNuGet
       variables:
         - template: ../variables/vs2019.yml
-      displayName: Verify Cli
+      displayName: Verify Cli (NuGet)
       dependsOn:
         - UniversalBuild
       strategy:
@@ -230,7 +230,7 @@ jobs:
     - job: CliInitReunion
       variables:
         - template: ../variables/vs2019.yml
-      displayName: Verify Cli
+      displayName: Verify Cli (Reunion)
       dependsOn:
         - Reunion
       strategy:
