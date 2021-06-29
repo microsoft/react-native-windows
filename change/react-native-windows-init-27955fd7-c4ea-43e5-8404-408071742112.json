@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Replace npm-registry with npm-registry-fetch",
+  "packageName": "react-native-windows-init",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
