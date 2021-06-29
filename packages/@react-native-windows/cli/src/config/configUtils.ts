@@ -158,7 +158,7 @@ export function findDependencyProjectFiles(winFolder: string): string[] {
 
 type ReactNativeProjectType = 'unknown' | 'App-Reunion';
 
-function getReactNativeProjectType(value : string?) {
+function getReactNativeProjectType(value: string | null) {
   switch (value) {
     case 'App-Reunion':
       return value;
@@ -176,10 +176,9 @@ function getReactNativeProjectType(value : string?) {
 function isRnwAppProject(filePath: string): boolean {
   const projectContents = readProjectFile(filePath);
 
-  const rnProjectType = getReactNativeProjectType(tryFindPropertyValue(
-    projectContents,
-    'ReactNativeProjectType',
-  ));
+  const rnProjectType = getReactNativeProjectType(
+    tryFindPropertyValue(projectContents, 'ReactNativeProjectType'),
+  );
 
   if (rnProjectType !== 'unknown') {
     return true;
