@@ -1,2 +1,2 @@
 const {createResolver} = require('@rnw-scripts/jest-out-of-tree-resolver');
-module.exports = createResolver('react-native-windows');
+module.exports = createResolver('@office-iss/react-native-win32');

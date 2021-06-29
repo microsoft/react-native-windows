@@ -16,8 +16,8 @@ module.exports = {
     'src',
   ],
   haste: {
-    defaultPlatform: 'windows',
-    platforms: ['windows']
+    defaultPlatform: 'win32',
+    platforms: ['win32']
   },
   unmockedModulePathPatterns: [
     'react',
