@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update 0.65-stable to WinUI 2.6",
+  "packageName": "react-native-windows",
+  "email": "34109996+chiaramooney@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
