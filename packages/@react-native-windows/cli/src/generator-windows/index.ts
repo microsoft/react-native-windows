@@ -213,6 +213,25 @@ export async function copyProjectTemplateAndReplace(
     },
   ];
 
+  if (options.useWinUI3) {
+    csNugetPackages.push({
+      id: 'Microsot.ReactNative.ProjectReunion',
+      version: nugetVersion,
+    });
+
+    const reunionVersion = '0.8.0';
+    for (const pkg of [
+      'Microsoft.ProjectReunion',
+      'Microsoft.ProjectReunion.Foundation',
+      'Microsoft.ProjectReunion.WinUI',
+    ]) {
+      csNugetPackages.push({
+        id: pkg,
+        version: reunionVersion,
+      });
+    }
+  }
+
   if (options.experimentalNuGetDependency) {
     csNugetPackages.push({
       id: 'Microsoft.ReactNative.Managed',
