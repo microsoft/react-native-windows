@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 29 Jun 2021 05:06:48 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.97",
+      "version": "0.0.0-canary.97",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow native module to set JS-side QuirkSettings",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e7e24109a18444696f51c163ec6ac86413299a18",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Jun 2021 05:07:57 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.96",
       "version": "0.0.0-canary.96",

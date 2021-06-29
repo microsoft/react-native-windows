@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "add local nuspec for reunion",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

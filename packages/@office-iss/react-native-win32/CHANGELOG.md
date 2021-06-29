@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 17 Jun 2021 05:07:57 GMT and should not be manually modified.
+This log was last generated on Tue, 29 Jun 2021 05:06:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.97
+
+Tue, 29 Jun 2021 05:06:48 GMT
+
+### Changes
+
+- Allow native module to set JS-side QuirkSettings (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.96
 

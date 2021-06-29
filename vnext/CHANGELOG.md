@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 27 Jun 2021 05:08:11 GMT and should not be manually modified.
+This log was last generated on Tue, 29 Jun 2021 05:06:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.334
+
+Tue, 29 Jun 2021 05:06:48 GMT
+
+### Changes
+
+- add local nuspec for reunion (asklar@microsoft.com)
+- Use in-process WS server for RNTesterIntegrationtests (julio.rocha@microsoft.com)
+- Update MUX to 2.6.0 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.333
 
