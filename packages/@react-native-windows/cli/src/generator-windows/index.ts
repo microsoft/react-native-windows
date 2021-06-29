@@ -361,14 +361,6 @@ export async function copyProjectTemplateAndReplace(
                 newProjectName + '.csproj',
               ),
             },
-            {
-              from: path.join(srcPath, projDir, 'MyApp (Package).wapproj'),
-              to: path.join(
-                windowsDir,
-                `${newProjectName} (Package)`,
-                newProjectName + ' (Package).wapproj',
-              ),
-            },
           ]
         : [
             // cs lib mappings
@@ -382,7 +374,16 @@ export async function copyProjectTemplateAndReplace(
             },
           ];
 
-    for (const mapping of csMappings) {
+    const realCsMappings = options.useWinUI3 ? csMappings.concat([
+      {
+      from: path.join(srcPath, projDir, 'MyApp (Package).wapproj'),
+      to: path.join(
+        windowsDir,
+        `${newProjectName} (Package)`,
+        newProjectName + ' (Package).wapproj',
+      ),
+      }]) : csMappings;
+    for (const mapping of realCsMappings) {
       await copyAndReplaceWithChangedCallback(
         mapping.from,
         destPath,
