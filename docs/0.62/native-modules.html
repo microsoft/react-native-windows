@@ -302,7 +302,7 @@ AppRegistry<span class="token punctuation">.</span><span class="token function">
         <span class="token punctuation">}</span>
 
         <span class="token function">REACT_EVENT</span><span class="token punctuation">(</span>AddEvent<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        std<span class="token operator">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span><span class="token operator">></span> AddEvent<span class="token punctuation">;</span>
+        std<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span><span class="token operator">></span> AddEvent<span class="token punctuation">;</span>
     <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
@@ -337,9 +337,9 @@ AppRegistry<span class="token punctuation">.</span><span class="token function">
 
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"ReactPackageProvider.g.h"</span></span>
 
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> winrt<span class="token operator">::</span>Microsoft<span class="token operator">::</span>ReactNative<span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span>ReactNative<span class="token punctuation">;</span>
 
-<span class="token keyword">namespace</span> winrt<span class="token operator">::</span>NativeModuleSample<span class="token operator">::</span>implementation
+<span class="token keyword">namespace</span> winrt<span class="token double-colon punctuation">::</span>NativeModuleSample<span class="token double-colon punctuation">::</span>implementation
 <span class="token punctuation">{</span>
     <span class="token keyword">struct</span> <span class="token class-name">ReactPackageProvider</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token class-name">ReactPackageProviderT</span><span class="token operator">&lt;</span><span class="token class-name">ReactPackageProvider</span><span class="token operator">></span></span>
     <span class="token punctuation">{</span>
@@ -349,9 +349,9 @@ AppRegistry<span class="token punctuation">.</span><span class="token function">
     <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">namespace</span> winrt<span class="token operator">::</span>NativeModuleSample<span class="token operator">::</span>factory_implementation
+<span class="token keyword">namespace</span> winrt<span class="token double-colon punctuation">::</span>NativeModuleSample<span class="token double-colon punctuation">::</span>factory_implementation
 <span class="token punctuation">{</span>
-    <span class="token keyword">struct</span> <span class="token class-name">ReactPackageProvider</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token class-name">ReactPackageProviderT</span><span class="token operator">&lt;</span><span class="token class-name">ReactPackageProvider</span><span class="token punctuation">,</span> implementation<span class="token operator">::</span><span class="token class-name">ReactPackageProvider</span><span class="token operator">></span></span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">ReactPackageProvider</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token class-name">ReactPackageProviderT</span><span class="token operator">&lt;</span><span class="token class-name">ReactPackageProvider</span><span class="token punctuation">,</span> implementation<span class="token double-colon punctuation">::</span><span class="token class-name">ReactPackageProvider</span><span class="token operator">></span></span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
 <p><em>ReactPackageProvider.cpp</em></p>
@@ -365,9 +365,9 @@ AppRegistry<span class="token punctuation">.</span><span class="token function">
 <span class="token comment">// order for the AddAttributedModules call below to find them.</span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"FancyMath.h"</span></span>
 
-<span class="token keyword">namespace</span> winrt<span class="token operator">::</span>NativeModuleSample<span class="token operator">::</span>implementation
+<span class="token keyword">namespace</span> winrt<span class="token double-colon punctuation">::</span>NativeModuleSample<span class="token double-colon punctuation">::</span>implementation
 <span class="token punctuation">{</span>
-    <span class="token keyword">void</span> <span class="token class-name">ReactPackageProvider</span><span class="token operator">::</span><span class="token function">CreatePackage</span><span class="token punctuation">(</span>IReactPackageBuilder <span class="token keyword">const</span><span class="token operator">&amp;</span> packageBuilder<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+    <span class="token keyword">void</span> <span class="token class-name">ReactPackageProvider</span><span class="token double-colon punctuation">::</span><span class="token function">CreatePackage</span><span class="token punctuation">(</span>IReactPackageBuilder <span class="token keyword">const</span><span class="token operator">&amp;</span> packageBuilder<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
     <span class="token punctuation">{</span>
         <span class="token function">AddAttributedModules</span><span class="token punctuation">(</span>packageBuilder<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>

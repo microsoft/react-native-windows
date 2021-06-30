@@ -305,7 +305,7 @@ AppRegistry<span class="token punctuation">.</span><span class="token function">
         <span class="token punctuation">}</span>
 
         <span class="token function">REACT_EVENT</span><span class="token punctuation">(</span>AddEvent<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        std<span class="token operator">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span><span class="token operator">></span> AddEvent<span class="token punctuation">;</span>
+        std<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span><span class="token operator">></span> AddEvent<span class="token punctuation">;</span>
     <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
@@ -326,27 +326,27 @@ AppRegistry<span class="token punctuation">.</span><span class="token function">
 <p>See <a href="/react-native-windows/docs/next/native-modules-async">Using Asynchronous Windows APIs</a>.</p>
 <p>Here is an example of an <code>async</code> method that returns a string:</p>
 <pre><code class="hljs css language-cpp">    <span class="token function">REACT_METHOD</span><span class="token punctuation">(</span>GetString<span class="token punctuation">,</span> L<span class="token string">"getString"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">void</span> <span class="token function">GetString</span><span class="token punctuation">(</span>React<span class="token operator">::</span>ReactPromise<span class="token operator">&lt;</span>std<span class="token operator">::</span>string<span class="token operator">></span><span class="token operator">&amp;&amp;</span> result<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+    <span class="token keyword">void</span> <span class="token function">GetString</span><span class="token punctuation">(</span>React<span class="token double-colon punctuation">::</span>ReactPromise<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token operator">></span><span class="token operator">&amp;&amp;</span> result<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
     <span class="token punctuation">{</span>
       <span class="token keyword">if</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         result<span class="token punctuation">.</span><span class="token function">Reject</span><span class="token punctuation">(</span><span class="token string">"Failure"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-        std<span class="token operator">::</span>string text <span class="token operator">=</span> <span class="token function">DoSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        std<span class="token double-colon punctuation">::</span>string text <span class="token operator">=</span> <span class="token function">DoSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         result<span class="token punctuation">.</span><span class="token function">Resolve</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 </code></pre>
 <p>This can be also tied in with C++/WinRT event handlers or <code>IAsyncOperation&lt;T&gt;</code> like so:</p>
 <pre><code class="hljs css language-cpp">    <span class="token function">REACT_METHOD</span><span class="token punctuation">(</span>GetString<span class="token punctuation">,</span> L<span class="token string">"getString"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">void</span> <span class="token function">GetString</span><span class="token punctuation">(</span>React<span class="token operator">::</span>ReactPromise<span class="token operator">&lt;</span>std<span class="token operator">::</span>string<span class="token operator">></span><span class="token operator">&amp;&amp;</span> result<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+    <span class="token keyword">void</span> <span class="token function">GetString</span><span class="token punctuation">(</span>React<span class="token double-colon punctuation">::</span>ReactPromise<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token operator">></span><span class="token operator">&amp;&amp;</span> result<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
     <span class="token punctuation">{</span>
       <span class="token keyword">if</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         result<span class="token punctuation">.</span><span class="token function">Reject</span><span class="token punctuation">(</span><span class="token string">"Failure"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
         something<span class="token punctuation">.</span><span class="token function">Completed</span><span class="token punctuation">(</span><span class="token punctuation">[</span>result<span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">auto</span><span class="token operator">&amp;</span> operation<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">auto</span><span class="token operator">&amp;</span> status<span class="token punctuation">)</span> <span class="token punctuation">{</span>
           <span class="token comment">// do error checking, e.g. status should be Completed</span>
-          winrt<span class="token operator">::</span>hstring result<span class="token punctuation">{</span>operation<span class="token punctuation">.</span><span class="token function">GetResults</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-          result<span class="token punctuation">.</span><span class="token function">Resolve</span><span class="token punctuation">(</span>winrt<span class="token operator">::</span><span class="token function">to_string</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          winrt<span class="token double-colon punctuation">::</span>hstring result<span class="token punctuation">{</span>operation<span class="token punctuation">.</span><span class="token function">GetResults</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+          result<span class="token punctuation">.</span><span class="token function">Resolve</span><span class="token punctuation">(</span>winrt<span class="token double-colon punctuation">::</span><span class="token function">to_string</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
@@ -379,9 +379,9 @@ See: <a href="https://github.com/facebook/react-native/blob/e27d656ef370958c864b
 
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"ReactPackageProvider.g.h"</span></span>
 
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> winrt<span class="token operator">::</span>Microsoft<span class="token operator">::</span>ReactNative<span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span>ReactNative<span class="token punctuation">;</span>
 
-<span class="token keyword">namespace</span> winrt<span class="token operator">::</span>NativeModuleSample<span class="token operator">::</span>implementation
+<span class="token keyword">namespace</span> winrt<span class="token double-colon punctuation">::</span>NativeModuleSample<span class="token double-colon punctuation">::</span>implementation
 <span class="token punctuation">{</span>
     <span class="token keyword">struct</span> <span class="token class-name">ReactPackageProvider</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token class-name">ReactPackageProviderT</span><span class="token operator">&lt;</span><span class="token class-name">ReactPackageProvider</span><span class="token operator">></span></span>
     <span class="token punctuation">{</span>
@@ -391,9 +391,9 @@ See: <a href="https://github.com/facebook/react-native/blob/e27d656ef370958c864b
     <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">namespace</span> winrt<span class="token operator">::</span>NativeModuleSample<span class="token operator">::</span>factory_implementation
+<span class="token keyword">namespace</span> winrt<span class="token double-colon punctuation">::</span>NativeModuleSample<span class="token double-colon punctuation">::</span>factory_implementation
 <span class="token punctuation">{</span>
-    <span class="token keyword">struct</span> <span class="token class-name">ReactPackageProvider</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token class-name">ReactPackageProviderT</span><span class="token operator">&lt;</span><span class="token class-name">ReactPackageProvider</span><span class="token punctuation">,</span> implementation<span class="token operator">::</span><span class="token class-name">ReactPackageProvider</span><span class="token operator">></span></span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">ReactPackageProvider</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token class-name">ReactPackageProviderT</span><span class="token operator">&lt;</span><span class="token class-name">ReactPackageProvider</span><span class="token punctuation">,</span> implementation<span class="token double-colon punctuation">::</span><span class="token class-name">ReactPackageProvider</span><span class="token operator">></span></span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre>
 <p><code>ReactPackageProvider.cpp</code>:</p>
@@ -407,9 +407,9 @@ See: <a href="https://github.com/facebook/react-native/blob/e27d656ef370958c864b
 <span class="token comment">// order for the AddAttributedModules call below to find them.</span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"FancyMath.h"</span></span>
 
-<span class="token keyword">namespace</span> winrt<span class="token operator">::</span>NativeModuleSample<span class="token operator">::</span>implementation
+<span class="token keyword">namespace</span> winrt<span class="token double-colon punctuation">::</span>NativeModuleSample<span class="token double-colon punctuation">::</span>implementation
 <span class="token punctuation">{</span>
-    <span class="token keyword">void</span> <span class="token class-name">ReactPackageProvider</span><span class="token operator">::</span><span class="token function">CreatePackage</span><span class="token punctuation">(</span>IReactPackageBuilder <span class="token keyword">const</span><span class="token operator">&amp;</span> packageBuilder<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+    <span class="token keyword">void</span> <span class="token class-name">ReactPackageProvider</span><span class="token double-colon punctuation">::</span><span class="token function">CreatePackage</span><span class="token punctuation">(</span>IReactPackageBuilder <span class="token keyword">const</span><span class="token operator">&amp;</span> packageBuilder<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
     <span class="token punctuation">{</span>
         <span class="token function">AddAttributedModules</span><span class="token punctuation">(</span>packageBuilder<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
