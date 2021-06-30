@@ -53,7 +53,8 @@ export class DisplayNoneExample extends React.Component<{}> {
 
 export const displayName = (_undefined?: string) => {};
 export const title = 'Display:none Style';
-export const description = 'Tests that "display: none" is propagated to native';
+export const description =
+  'Style prop which will collapse the element in XAML tree.';
 export const examples = [
   {
     render: function(): JSX.Element {
