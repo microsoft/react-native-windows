@@ -69,4 +69,25 @@ void FixProofingMenuCrashForXamlIsland(xaml::Controls::Primitives::FlyoutBase co
   });
 }
 
+void FixMenuThemeForXamlIsland(xaml::Controls::Primitives::FlyoutBase const &flyout) {
+  flyout.Opening([](winrt::IInspectable const &sender, auto &&) {
+    const auto &flyout = sender.as<winrt::Microsoft::UI::Xaml::Controls::TextCommandBarFlyout>();
+    auto theme = xaml::ElementTheme::Default;
+    if (const auto targetElement = flyout.Target().try_as<xaml::UIElement>()) {
+      if (const auto content = targetElement.XamlRoot().Content().try_as<xaml::FrameworkElement>()) {
+        theme = content.ActualTheme();
+      }
+    }
+
+    const auto commands = flyout.SecondaryCommands();
+    for (uint32_t i = 0; i < commands.Size(); ++i) {
+      if (const auto &appBarButton = commands.GetAt(i).try_as<xaml::Controls::AppBarButton>()) {
+        // Workaround Xaml Islands bug with dark theme and CommandBarFlyout:
+        // https://github.com/microsoft/microsoft-ui-xaml/issues/5320
+        appBarButton.RequestedTheme(theme);
+      }
+    }
+  });
+}
+
 } // namespace Microsoft::ReactNative
