@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 04 Jun 2021 23:23:19 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Jun 2021 23:23:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.10
+
+Wed, 30 Jun 2021 23:23:14 GMT
+
+### Patches
+
+- Enable List UTs in react-native-win32 (ngerlem@microsoft.com)
+- Allow native module to set JS-side QuirkSettings (ngerlem@microsoft.com)
 
 ## 0.63.9
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 30 Jun 2021 23:23:14 GMT",
+      "tag": "react-native-windows_v0.63.36",
+      "version": "0.63.36",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use V8 by default for desktop (if enabled)",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "374ecf4862164ec25a53903104237abd99bdfd71",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Jun 2021 22:30:55 GMT",
       "tag": "react-native-windows_v0.63.35",
       "version": "0.63.35",
