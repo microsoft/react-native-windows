@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 29 Jun 2021 05:06:48 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Jun 2021 05:07:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.335
+
+Wed, 30 Jun 2021 05:07:31 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-out-of-tree-resolver to v1.0.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.1 (ngerlem@microsoft.com)
+
+### Changes
+
+- Enable List UTs in react-native-win32 (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.334
 

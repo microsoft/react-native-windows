@@ -2,6 +2,47 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Wed, 30 Jun 2021 05:07:31 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-resolver to v1.0.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "21c441263b3ddc3acf57916a611d6a04e6f9d75c",
+            "package": "e2e-test-app"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.335",
+            "author": "ngerlem@microsoft.com",
+            "commit": "21c441263b3ddc3acf57916a611d6a04e6f9d75c",
+            "package": "e2e-test-app"
+          },
+          {
+            "comment": "Bump node-rnw-rpc to v1.0.11-12",
+            "author": "ngerlem@microsoft.com",
+            "commit": "21c441263b3ddc3acf57916a611d6a04e6f9d75c",
+            "package": "e2e-test-app"
+          },
+          {
+            "comment": "Bump jest-environment-winappdriver to v2.0.1-8",
+            "author": "ngerlem@microsoft.com",
+            "commit": "21c441263b3ddc3acf57916a611d6a04e6f9d75c",
+            "package": "e2e-test-app"
+          },
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "21c441263b3ddc3acf57916a611d6a04e6f9d75c",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Jun 2021 05:06:48 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",

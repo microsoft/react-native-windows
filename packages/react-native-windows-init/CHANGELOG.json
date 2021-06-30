@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Wed, 30 Jun 2021 05:07:31 GMT",
+      "tag": "react-native-windows-init_v1.1.60",
+      "version": "1.1.60",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Replace npm-registry with npm-registry-fetch",
+            "author": "jthysell@microsoft.com",
+            "commit": "78075e905330f9580e0d187c42395e9dd200ed52",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Jun 2021 05:06:48 GMT",
       "tag": "react-native-windows-init_v1.1.59",
       "version": "1.1.59",
