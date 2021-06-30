@@ -3,6 +3,9 @@
     ".flowconfig",
     "src/**"
   ],
+  "excludePatterns": [
+    "src/Libraries/Lists/__tests__/**"
+  ],
   "overrides": [
     {
       "type": "derived",
