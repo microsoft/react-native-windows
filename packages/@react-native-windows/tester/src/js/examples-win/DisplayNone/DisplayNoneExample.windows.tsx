@@ -28,12 +28,13 @@ export class DisplayNoneExample extends React.Component<{}> {
                 testID="toggle-display:none"
               />
             </View>
-            <View style={{display: this.state.displayNone ? 'none' : 'flex'}}>
+            <View
+              testID="textbox-container"
+              style={{display: this.state.displayNone ? 'none' : 'flex'}}>
               <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1}}
                 onChangeText={text => this._handleChangeText(text)}
                 value={this.state.textState}
-                testID="example-textbox"
               />
             </View>
           </View>
