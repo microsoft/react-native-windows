@@ -427,7 +427,6 @@ class Button extends React.Component<
           testID={testID}
           disabled={disabled}
           onPress={onPress}
-          tabIndex={tabIndex}
           touchSoundDisabled={touchSoundDisabled}>
           <View style={buttonStyles}>
             <Text style={textStyles} disabled={disabled}>
