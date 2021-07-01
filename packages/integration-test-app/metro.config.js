@@ -26,6 +26,7 @@ module.exports = {
     path.resolve(__dirname, '../..', 'node_modules'),
     // Include react-native-windows
     rnwPath,
+    // Add virtualized-list dependency, whose unsymlinked representation is not in node_modules, only in our repo
     virtualizedListPath,
   ],
 

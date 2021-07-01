@@ -45,6 +45,7 @@ module.exports = {
   watchFolders: [
     // Include hoisted modules
     path.resolve(__dirname, '../node_modules'),
+    // Add virtualized-list dependency, whose unsymlinked representation is not in node_modules, only in our repo
     virtualizedListPath,
   ],
 

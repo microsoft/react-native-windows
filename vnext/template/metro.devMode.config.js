@@ -26,6 +26,7 @@ module.exports = {
     extraNodeModules: {
       // Redirect react-native-windows to avoid symlink (metro doesn't like symlinks)
       'react-native-windows': rnwPath,
+      // Add virtualized-list dependency, whose unsymlinked representation is not in node_modules, only in our repo
       '@react-native-windows/virtualized-list': virtualizedListPath,
     },
     blockList: exclusionList([
