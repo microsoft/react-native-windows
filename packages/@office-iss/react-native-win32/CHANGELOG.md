@@ -1,8 +1,31 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 17 Jun 2021 05:07:57 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Jun 2021 05:07:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.98
+
+Wed, 30 Jun 2021 05:07:31 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-out-of-tree-resolver to v1.0.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.1 (ngerlem@microsoft.com)
+
+### Changes
+
+- Adding AccessibilityControls to ViewWin32 config (safreibe@microsoft.com)
+- Bump rex-win32 to latest (ngerlem@microsoft.com)
+- Enable List UTs in react-native-win32 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.97
+
+Tue, 29 Jun 2021 05:06:48 GMT
+
+### Changes
+
+- Allow native module to set JS-side QuirkSettings (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.96
 

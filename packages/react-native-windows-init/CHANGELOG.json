@@ -2,6 +2,36 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Wed, 30 Jun 2021 05:07:31 GMT",
+      "tag": "react-native-windows-init_v1.1.60",
+      "version": "1.1.60",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Replace npm-registry with npm-registry-fetch",
+            "author": "jthysell@microsoft.com",
+            "commit": "78075e905330f9580e0d187c42395e9dd200ed52",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 29 Jun 2021 05:06:48 GMT",
+      "tag": "react-native-windows-init_v1.1.59",
+      "version": "1.1.59",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.22",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2646cb69f4e031799d04ecd5453aa9d44b48b261",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 27 Jun 2021 05:08:11 GMT",
       "tag": "react-native-windows-init_v1.1.59",
       "version": "1.1.59",

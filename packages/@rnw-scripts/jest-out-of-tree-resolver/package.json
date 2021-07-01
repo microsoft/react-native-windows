@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/jest-out-of-tree-resolver",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "main": "jest-resolver.js",
   "dependencies": {

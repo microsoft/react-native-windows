@@ -2,6 +2,36 @@
   "name": "sample-apps",
   "entries": [
     {
+      "date": "Wed, 30 Jun 2021 05:07:31 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.335",
+            "author": "ngerlem@microsoft.com",
+            "commit": "21c441263b3ddc3acf57916a611d6a04e6f9d75c",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 29 Jun 2021 05:06:48 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.334",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2646cb69f4e031799d04ecd5453aa9d44b48b261",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 27 Jun 2021 05:08:11 GMT",
       "tag": "sample-apps_v0.0.0",
       "version": "0.0.0",
