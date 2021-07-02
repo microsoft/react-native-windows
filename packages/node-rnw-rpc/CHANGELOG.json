@@ -2,6 +2,21 @@
   "name": "node-rnw-rpc",
   "entries": [
     {
+      "date": "Fri, 02 Jul 2021 05:06:31 GMT",
+      "tag": "node-rnw-rpc_v1.0.11-13",
+      "version": "1.0.11-13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.336",
+            "author": "erozell@outlook.com",
+            "commit": "3b7131b3e7e93b466700874addcc6e0172fab388",
+            "package": "node-rnw-rpc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Jun 2021 05:07:31 GMT",
       "tag": "node-rnw-rpc_v1.0.11-12",
       "version": "1.0.11-12",

@@ -2,6 +2,35 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 02 Jul 2021 05:06:31 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.336",
+      "version": "0.0.0-canary.336",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove unnecessary line from GetCompositor",
+            "author": "erozell@outlook.com",
+            "commit": "3b7131b3e7e93b466700874addcc6e0172fab388",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fork VirtualizedList to its own package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "81c98a6f0da42ec1287311b997fe323da5a1b284",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-resolver to v1.0.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "81c98a6f0da42ec1287311b997fe323da5a1b284",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Jun 2021 05:07:31 GMT",
       "tag": "react-native-windows_v0.0.0-canary.335",
       "version": "0.0.0-canary.335",

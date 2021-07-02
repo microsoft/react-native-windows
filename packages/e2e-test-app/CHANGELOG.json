@@ -2,6 +2,29 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Fri, 02 Jul 2021 05:06:31 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.336",
+            "author": "ngerlem@microsoft.com",
+            "commit": "81c98a6f0da42ec1287311b997fe323da5a1b284",
+            "package": "e2e-test-app"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-resolver to v1.0.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "81c98a6f0da42ec1287311b997fe323da5a1b284",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Jun 2021 05:07:31 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",
