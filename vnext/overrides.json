@@ -39,6 +39,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManagerBinding.h",
+      "baseFile": "ReactCommon/react/renderer/uimanager/UIManagerBinding.h",
+      "baseHash": "db707f2820a60006ef33c93fa8655baa5f99e975",
+      "issue": 1
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseHash": "7fb642367afa73af956c2d8f918826c4a859fa89",
