@@ -78,7 +78,7 @@ class Timing : public std::enable_shared_from_this<Timing> {
   TimerQueue m_timerQueue;
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
   winrt::system::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
-  bool m_usingRendering;
+  bool m_usingRendering{false};
 };
 
 class TimingModule : public facebook::xplat::module::CxxModule {
