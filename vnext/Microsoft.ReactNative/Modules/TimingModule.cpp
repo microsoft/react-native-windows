@@ -21,7 +21,6 @@ using namespace facebook::xplat;
 using namespace folly;
 namespace winrt {
 using namespace Windows::Foundation;
-using namespace Windows::System;
 using namespace xaml::Media;
 } // namespace winrt
 using namespace std;
@@ -131,9 +130,9 @@ void Timing::OnTick() {
   }
 }
 
-winrt::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
+winrt::system::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
   if (!m_dispatcherQueueTimer) {
-    winrt::DispatcherQueue queue = winrt::DispatcherQueue::GetForCurrentThread();
+    const auto queue = winrt::system::DispatcherQueue::GetForCurrentThread();
     m_dispatcherQueueTimer = queue.CreateTimer();
     m_dispatcherQueueTimer.Tick([wkThis = std::weak_ptr(this->shared_from_this())](auto &&...) {
       if (auto pThis = wkThis.lock()) {

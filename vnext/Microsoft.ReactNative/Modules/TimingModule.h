@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <CppWinRTIncludes.h>
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/MessageQueueThread.h>
 
@@ -11,7 +12,6 @@
 #include <vector>
 
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.System.h>
 namespace Microsoft::ReactNative {
 
 typedef winrt::Windows::Foundation::DateTime TDateTime;
@@ -68,7 +68,7 @@ class Timing : public std::enable_shared_from_this<Timing> {
  private:
   std::weak_ptr<facebook::react::Instance> getInstance() noexcept;
   void OnTick();
-  winrt::Windows::System::DispatcherQueueTimer EnsureDispatcherTimer();
+  winrt::system::DispatcherQueueTimer EnsureDispatcherTimer();
   void StartRendering();
   void StartDispatcherTimer();
   void StopTicks();
@@ -77,7 +77,7 @@ class Timing : public std::enable_shared_from_this<Timing> {
   TimingModule *m_parent;
   TimerQueue m_timerQueue;
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
-  winrt::Windows::System::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
+  winrt::system::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
   bool m_usingRendering;
 };
 
