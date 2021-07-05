@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Enable List UTs in react-native-win32",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
