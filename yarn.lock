@@ -2228,9 +2228,9 @@
     "@types/node" "*"
 
 "@types/xml-parser@^1.2.29":
-  version "1.2.29"
-  resolved "https://registry.yarnpkg.com/@types/xml-parser/-/xml-parser-1.2.29.tgz#6ba14c2916e52baa4fd8b7cb93b10a7ca55ff9f7"
-  integrity sha512-l5ID65aPDctN/dZYkDgLOEBuoHrD8S9TyfD5soORUtVHKyOs7Wr66iNxAtcmT/tER1GeYqp51jR6l08gmsRcZg==
+  version "1.2.30"
+  resolved "https://registry.yarnpkg.com/@types/xml-parser/-/xml-parser-1.2.30.tgz#16792b77a8dd5514bd0533931259fca17d6d4ad9"
+  integrity sha512-QBCRpkCoGdtUgLzLHcA5E7Dg9fJNdhuZd6IshuPxmf3EbVqrslWVTHOIDEWGx//16FoMElpOXxIR3utIWsPoIA==
 
 "@types/xml2js@^0.4.8":
   version "0.4.8"
