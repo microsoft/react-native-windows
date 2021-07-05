@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 05 Jul 2021 15:07:13 GMT",
+      "tag": "@office-iss/react-native-win32_v0.65.0-preview.3",
+      "version": "0.65.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow native module to set JS-side QuirkSettings",
+            "author": "ngerlem@microsoft.com",
+            "commit": "e8a13b85ff215aca661c55d331e6f720c547a53a",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Enable List UTs in react-native-win32",
+            "author": "ngerlem@microsoft.com",
+            "commit": "a1d8c741dca5b68910446488476e57200dd14aa2",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Jun 2021 15:06:09 GMT",
       "tag": "@office-iss/react-native-win32_v0.65.0-preview.2",
       "version": "0.65.0-preview.2",
