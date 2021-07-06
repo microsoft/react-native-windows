@@ -28,8 +28,6 @@ struct ReactViewOptions : ReactViewOptionsT<ReactViewOptions> {
  private:
   winrt::hstring m_componentName;
   JSValueArgWriter m_initalProps;
-
-  // Mso::React::ReactViewOptions m_viewOptions;
 };
 
 struct ReactCoreInjection : ReactCoreInjectionT<ReactCoreInjection> {
@@ -55,8 +53,6 @@ struct ReactViewHost : public winrt::implements<ReactViewHost, IReactViewHost> {
       Mso::React::IReactViewHost &viewHost,
       const winrt::Microsoft::ReactNative::IReactDispatcher &uiDispatcher);
 
-  // ReactViewOptions Options() noexcept;
-  // ReactNativeHost ReactHost() noexcept;
   /*Windows::Foundation::IAsyncAction */ void ReloadViewInstance() noexcept;
   /*Windows::Foundation::IAsyncAction */ void ReloadViewInstanceWithOptions(
       ReactNative::ReactViewOptions options) noexcept;

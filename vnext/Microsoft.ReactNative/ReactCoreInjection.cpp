@@ -134,8 +134,6 @@ struct ReactViewInstance : public Mso::UnknownObject<Mso::RefCountStrategy::Weak
   winrt::Microsoft::ReactNative::IReactViewInstance m_rootControl;
   winrt::Microsoft::ReactNative::IReactDispatcher m_uiDispatcher;
 
-  // using TAction = Mso::FunctorRef<void(ReactNative::IReactViewInstance&)>;
-
   inline Mso::Future<void> ReactViewInstance::PostInUIQueue(
       winrt::delegate<ReactNative::IReactViewInstance> const &action) noexcept {
     Mso::Promise<void> promise;
@@ -145,9 +143,9 @@ struct ReactViewInstance : public Mso::UnknownObject<Mso::RefCountStrategy::Weak
       if (auto strongThis = weakThis.GetStrongPtr()) {
         action(strongThis->m_rootControl);
         promise.SetValue();
+      } else {
+        promise.TryCancel();
       }
-
-      promise.TryCancel();
     });
     return promise.AsFuture();
   }
