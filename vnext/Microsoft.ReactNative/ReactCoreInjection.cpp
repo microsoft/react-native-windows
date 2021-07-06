@@ -136,8 +136,7 @@ struct ReactViewInstance : public Mso::UnknownObject<Mso::RefCountStrategy::Weak
 
   // using TAction = Mso::FunctorRef<void(ReactNative::IReactViewInstance&)>;
 
-  inline Mso::Future<void> PostInUIQueue(
-      winrt::delegate<ReactNative::IReactViewInstance> const &action) noexcept {
+  inline Mso::Future<void> PostInUIQueue(winrt::delegate<ReactNative::IReactViewInstance> const &action) noexcept {
     Mso::Promise<void> promise;
 
     // ReactViewInstance has shorter lifetime than ReactRootControl. Thus, we capture this WeakPtr.
