@@ -287,9 +287,6 @@ class Button extends React.Component<
       nextFocusRight,
       nextFocusUp,
       testID,
-      accessible,
-      accessibilityActions,
-      onAccessibilityAction,
       tabIndex,
     } = this.props;
     const buttonStyles = [styles.button];
@@ -405,9 +402,6 @@ class Button extends React.Component<
     } else {
       return (
         <Touchable
-          accessible={accessible}
-          accessibilityActions={accessibilityActions}
-          onAccessibilityAction={onAccessibilityAction}
           accessibilityLabel={accessibilityLabel}
           accessibilityRole="button"
           accessibilityState={accessibilityState}
