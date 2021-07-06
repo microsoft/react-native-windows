@@ -58,16 +58,6 @@ DOC_STRING("Settings per each IReactViewHost associated with an IReactHost insta
     "Used to implement a non-XAML platform ReactRootView.")
     interface IReactViewHost
   {
-    //DOC_STRING("Returns a copy of current react view options.")
-//      ReactViewOptions Options {
-      //get;
-    //};
-
-    //DOC_STRING("Returns IReactHost associated with this IReactViewHost.")
-//      ReactNativeHost ReactHost {
-      //get;
-    //};
-
     DOC_STRING("Reloads the IReactViewInstance if it is attached.")
       /*Windows.Foundation.IAsyncAction*/ void ReloadViewInstance();
 
