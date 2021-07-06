@@ -31,113 +31,113 @@ import type {PressEvent} from '../Types/CoreEventTypes';
 
 type ButtonProps = $ReadOnly<{|
   /**
-   Text to display inside the button. On Android the given title will be
+    Text to display inside the button. On Android the given title will be
     converted to the uppercased form.
-  */
+   */
   title: string,
 
   /**
-   Handler to be called when the user taps the button. The first function
+    Handler to be called when the user taps the button. The first function
     argument is an event in form of [PressEvent](pressevent).
-  */
+   */
   onPress: (event?: PressEvent) => mixed,
 
   /**
-   If `true`, doesn't play system sound on touch.
+    If `true`, doesn't play system sound on touch.
 
     @platform android
 
     @default false
-  */
+   */
   touchSoundDisabled?: ?boolean,
 
   /**
-   Color of the text (iOS), or background color of the button (Android).
+    Color of the text (iOS), or background color of the button (Android).
 
     @default {@platform android} '#2196F3'
     @default {@platform ios} '#007AFF'
-  */
+   */
   color?: ?ColorValue,
 
   /**
-   TV preferred focus.
+    TV preferred focus.
 
     @platform tv
 
     @default false
-  */
+   */
   hasTVPreferredFocus?: ?boolean,
 
   /**
-   Designates the next view to receive focus when the user navigates down. See
+    Designates the next view to receive focus when the user navigates down. See
     the [Android documentation][android:nextFocusDown].
 
     [android:nextFocusDown]:
     https://developer.android.com/reference/android/view/View.html#attr_android:nextFocusDown
 
     @platform android, tv
-  */
+   */
   nextFocusDown?: ?number,
 
   /**
-   Designates the next view to receive focus when the user navigates forward.
+    Designates the next view to receive focus when the user navigates forward.
     See the [Android documentation][android:nextFocusForward].
 
     [android:nextFocusForward]:
     https://developer.android.com/reference/android/view/View.html#attr_android:nextFocusForward
 
     @platform android, tv
-  */
+   */
   nextFocusForward?: ?number,
 
   /**
-   Designates the next view to receive focus when the user navigates left. See
+    Designates the next view to receive focus when the user navigates left. See
     the [Android documentation][android:nextFocusLeft].
 
     [android:nextFocusLeft]:
     https://developer.android.com/reference/android/view/View.html#attr_android:nextFocusLeft
 
     @platform android, tv
-  */
+   */
   nextFocusLeft?: ?number,
 
   /**
-   Designates the next view to receive focus when the user navigates right. See
+    Designates the next view to receive focus when the user navigates right. See
     the [Android documentation][android:nextFocusRight].
 
     [android:nextFocusRight]:
     https://developer.android.com/reference/android/view/View.html#attr_android:nextFocusRight
 
     @platform android, tv
-  */
+   */
   nextFocusRight?: ?number,
 
   /**
-   Designates the next view to receive focus when the user navigates up. See
+    Designates the next view to receive focus when the user navigates up. See
     the [Android documentation][android:nextFocusUp].
 
     [android:nextFocusUp]:
     https://developer.android.com/reference/android/view/View.html#attr_android:nextFocusUp
 
     @platform android, tv
-  */
+   */
   nextFocusUp?: ?number,
 
   /**
-   Text to display for blindness accessibility features.
-  */
+    Text to display for blindness accessibility features.
+   */
   accessibilityLabel?: ?string,
 
   /**
-   If `true`, disable all interactions for this component.
+    If `true`, disable all interactions for this component.
 
     @default false
-  */
+   */
   disabled?: ?boolean,
 
   /**
-   Used to locate this view in end-to-end tests.
-  */
+    Used to locate this view in end-to-end tests.
+   */
   testID?: ?string,
 
   /**
@@ -150,14 +150,14 @@ type ButtonProps = $ReadOnly<{|
 
   // [Windows
   /**
-   Set the order in which elements receive focus when the user navigates through them by pressing Tab.
-  */
+    Set the order in which elements receive focus when the user navigates through them by pressing Tab.
+   */
   tabIndex?: ?number,
   // Windows]
 |}>;
 
 /**
- A basic button component that should render nicely on any platform. Supports a
+  A basic button component that should render nicely on any platform. Supports a
   minimal level of customization.
 
   If this button doesn't look right for your app, you can build your own button
@@ -265,7 +265,7 @@ type ButtonProps = $ReadOnly<{|
 
   export default App;
   ```
-*/
+ */
 
 class Button extends React.Component<
   ButtonProps,
