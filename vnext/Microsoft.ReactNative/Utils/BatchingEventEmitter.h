@@ -51,8 +51,11 @@ struct BatchingEventEmitter : public std::enable_shared_from_this<BatchingEventE
       const JSValueArgWriter &params) noexcept;
 
  private:
-  size_t GetCoalescingEventKey(winrt::hstring eventEmitterName, winrt::hstring emitterMethod, winrt::hstring eventName);
-  void AddOrCoalesceEvent(implementation::BatchedEvent event);
+  size_t GetCoalescingEventKey(
+      const winrt::hstring &eventEmitterName,
+      const winrt::hstring &emitterMethod,
+      const winrt::hstring &eventName);
+  void AddOrCoalesceEvent(implementation::BatchedEvent &&event);
   void RegisterFrameCallback() noexcept;
   void OnFrameUI() noexcept;
   void OnFrameJS() noexcept;
