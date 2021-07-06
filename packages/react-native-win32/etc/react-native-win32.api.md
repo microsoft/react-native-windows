@@ -56,6 +56,7 @@ export type BasePropsWin32 = {
     accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
     accessibilityDescribedBy?: React_2.RefObject<any>;
     accessibilityLabeledBy?: React_2.RefObject<any>;
+    accessibilityControls?: React_2.RefObject<any>;
 };
 
 // Warning: (ae-forgotten-export) The symbol "IButtonWin32State" needs to be exported by the entry point typings-index.d.ts
