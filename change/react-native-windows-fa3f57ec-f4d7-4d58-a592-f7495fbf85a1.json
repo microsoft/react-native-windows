@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[0.65] update folly",
+  "packageName": "react-native-windows",
+  "email": "agnel@microsoft.com",
+  "dependentChangeType": "patch"
+}
