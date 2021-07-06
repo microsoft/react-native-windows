@@ -1,0 +1,108 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "IReactContext.idl";
+import "ReactNativeHost.idl";
+import "IJSValueReader.idl";
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative
+{
+  [experimental]
+  [webhosthidden]
+  DOC_STRING(
+    "Used to inject platform specific implementations to create react-native targets targeting non-XAML platforms.")
+  interface IReactCoreInjection
+  {
+    DOC_STRING("Called when the UI batch is completed")
+    void OnBatchComplete(IReactPropertyBag properties);
+  }
+
+[experimental]
+[default_interface]
+[webhosthidden]
+DOC_STRING("Settings per each IReactViewHost associated with an IReactHost instance.")
+  runtimeclass ReactViewOptions {
+    DOC_STRING("Creates a new instance of @ReactViewOptions")
+    ReactViewOptions();
+
+    DOC_STRING("Name of a component registered in JavaScript via AppRegistry.registerComponent('ModuleName', () => ModuleName);")
+    String ComponentName;
+
+    DOC_STRING("Set of initial component properties. It is a JSON string.")
+      JSValueArgWriter InitialProps {
+      get; set;
+    };
+  };
+
+  [experimental]
+  [webhosthidden]
+  DOC_STRING(
+    "Used to implement a non-XAML platform ReactRootView.")
+    interface IReactViewInstance
+  {
+    DOC_STRING("Initialize ReactRootView with the reactInstance and view-specific settings")
+      void InitRootView(IReactContext context, ReactViewOptions viewOptions);
+
+    DOC_STRING("Update ReactRootView with changes in ReactInstance")
+      void UpdateRootView();
+
+    DOC_STRING("Uninitialize ReactRootView and destroy UI tree")
+      void UninitRootView();
+  }
+
+  [experimental]
+  [webhosthidden]
+  DOC_STRING(
+    "Used to implement a non-XAML platform ReactRootView.")
+    interface IReactViewHost
+  {
+    //DOC_STRING("Returns a copy of current react view options.")
+//      ReactViewOptions Options {
+      //get;
+    //};
+
+    //DOC_STRING("Returns IReactHost associated with this IReactViewHost.")
+//      ReactNativeHost ReactHost {
+      //get;
+    //};
+
+    DOC_STRING("Reloads the IReactViewInstance if it is attached.")
+      /*Windows.Foundation.IAsyncAction*/ void ReloadViewInstance();
+
+    DOC_STRING("Reloads IReactViewInstance if it is attached with a new set of options.")
+      /*Windows.Foundation.IAsyncAction*/ void ReloadViewInstanceWithOptions(ReactViewOptions options);
+
+    DOC_STRING("Unloads the attached IReactViewInstance.")
+      /*Windows.Foundation.IAsyncAction*/ void UnloadViewInstance();
+
+    DOC_STRING("Attaches IReactViewInstance to the IReactViewHost.")
+      /*Windows.Foundation.IAsyncAction*/ void AttachViewInstance(IReactViewInstance viewInstance);
+
+    DOC_STRING("Detaches IReactViewInstance from the IReactViewHost.")
+      /*Windows.Foundation.IAsyncAction*/ void DetachViewInstance();
+  }
+
+  [experimental]
+  [default_interface]
+  [webhosthidden]
+  DOC_STRING(
+    "Used to inject platform specific implementations to create react-native targets targeting non-XAML platforms.")
+  runtimeclass ReactCoreInjection
+  {
+    DOC_STRING(
+      "Sets the @IReactCoreInjection for the instance. "
+      "This must be manually provided to the @ReactInstanceSettings object when using non-XAML ui platforms")
+    static void SetReactCoreInjection(IReactPropertyBag properties, IReactCoreInjection xamlRoot);
+
+    DOC_STRING(
+      "Custom ReactViewInstances use this to create a host to connect to.")
+    static IReactViewHost MakeViewHost(ReactNativeHost host, ReactViewOptions viewOptions);
+
+    DOC_STRING("Post something to the main UI dispatcher using the batching queue")
+    static void PostToUIBatchingQueue(IReactContext context, ReactDispatcherCallback callback);
+  }
+
+
+} // namespace Microsoft.ReactNative
