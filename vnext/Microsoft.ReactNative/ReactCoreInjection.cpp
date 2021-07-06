@@ -136,7 +136,7 @@ struct ReactViewInstance : public Mso::UnknownObject<Mso::RefCountStrategy::Weak
 
   // using TAction = Mso::FunctorRef<void(ReactNative::IReactViewInstance&)>;
 
-  inline Mso::Future<void> ReactViewInstance::PostInUIQueue(
+  inline Mso::Future<void> PostInUIQueue(
       winrt::delegate<ReactNative::IReactViewInstance> const &action) noexcept {
     Mso::Promise<void> promise;
 
