@@ -5,40 +5,39 @@
 #include "ReactCoreInjection.h"
 #include "ReactCoreInjection.g.cpp"
 #include "ReactViewOptions.g.cpp"
-#include "ReactInstanceWin.h"
-#include "ReactContext.h"
 #include "IReactContext.h"
+#include "ReactContext.h"
+#include "ReactInstanceWin.h"
 
-#include "ReactNativeHost.h"
 #include "DynamicWriter.h"
+#include "ReactNativeHost.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-  ReactViewOptions::ReactViewOptions() noexcept {}
+ReactViewOptions::ReactViewOptions() noexcept {}
 
-  winrt::hstring ReactViewOptions::ComponentName() noexcept {
-    return m_componentName;
-  }
+winrt::hstring ReactViewOptions::ComponentName() noexcept {
+  return m_componentName;
+}
 
-  void ReactViewOptions::ComponentName(winrt::hstring value) noexcept {
-    m_componentName = value;
-      }
+void ReactViewOptions::ComponentName(winrt::hstring value) noexcept {
+  m_componentName = value;
+}
 
-  ReactNative::JSValueArgWriter ReactViewOptions::InitialProps() noexcept {
-    return m_initalProps;
-  }
+ReactNative::JSValueArgWriter ReactViewOptions::InitialProps() noexcept {
+  return m_initalProps;
+}
 
-  void ReactViewOptions::InitialProps(ReactNative::JSValueArgWriter value) noexcept {
-    m_initalProps = value;
-  }
+void ReactViewOptions::InitialProps(ReactNative::JSValueArgWriter value) noexcept {
+  m_initalProps = value;
+}
 
-  Mso::React::ReactViewOptions ReactViewOptions::CreateViewOptions() noexcept {
-    Mso::React::ReactViewOptions viewOptions;
-    viewOptions.ComponentName = winrt::to_string(m_componentName);
-    viewOptions.InitialProps = DynamicWriter::ToDynamic(m_initalProps);
-    return std::move(viewOptions);
-  }
-
+Mso::React::ReactViewOptions ReactViewOptions::CreateViewOptions() noexcept {
+  Mso::React::ReactViewOptions viewOptions;
+  viewOptions.ComponentName = winrt::to_string(m_componentName);
+  viewOptions.InitialProps = DynamicWriter::ToDynamic(m_initalProps);
+  return std::move(viewOptions);
+}
 
 ReactCoreInjection::ReactCoreInjection() noexcept {}
 
@@ -49,11 +48,10 @@ ReactCoreInjection::ReactCoreInjection() noexcept {}
 
 /*static*/ ReactPropertyId<
     winrt::Microsoft::ReactNative::ReactNonAbiValue<std::function<void(ReactNative::ReactDispatcherCallback const &)>>>
-    ReactCoreInjection::PostToUIBatchingQueueProperty() noexcept {
+ReactCoreInjection::PostToUIBatchingQueueProperty() noexcept {
   static ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<
       std::function<void(ReactNative::ReactDispatcherCallback const &)>>>
-      prop{
-      L"ReactNative.Injection", L"PostToUIBatchingQueue"};
+      prop{L"ReactNative.Injection", L"PostToUIBatchingQueue"};
   return prop;
 }
 
@@ -63,16 +61,21 @@ ReactCoreInjection::ReactCoreInjection() noexcept {}
   ReactNative::ReactPropertyBag(properties).Set(ReactCoreInjectionProperty(), reactCoreInjection);
 }
 
-/*static*/ ReactNative::IReactViewHost ReactCoreInjection::MakeViewHost(ReactNative::ReactNativeHost host, ReactNative::ReactViewOptions viewOptions) noexcept {
+/*static*/ ReactNative::IReactViewHost ReactCoreInjection::MakeViewHost(
+    ReactNative::ReactNativeHost host,
+    ReactNative::ReactViewOptions viewOptions) noexcept {
   auto rnhost = host.as<ReactNativeHost>()->ReactHost();
-  auto uiDispatcher = host.InstanceSettings().Properties().Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty()).as<winrt::Microsoft::ReactNative::IReactDispatcher>();
+  auto uiDispatcher = host.InstanceSettings()
+                          .Properties()
+                          .Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
+                          .as<winrt::Microsoft::ReactNative::IReactDispatcher>();
   auto viewHost = rnhost->MakeViewHost(viewOptions.as<ReactViewOptions>()->CreateViewOptions());
   return winrt::make<ReactViewHost>(*viewHost, uiDispatcher);
 }
 
 /*static*/ void ReactCoreInjection::PostToUIBatchingQueue(
-  ReactNative::IReactContext context,
-  ReactNative::ReactDispatcherCallback callback) noexcept {
+    ReactNative::IReactContext context,
+    ReactNative::ReactDispatcherCallback callback) noexcept {
   auto postFn = *ReactNative::ReactPropertyBag(context.Properties()).Get(PostToUIBatchingQueueProperty());
   postFn(callback);
 }
@@ -82,8 +85,8 @@ ReactViewHost::ReactViewHost(
     const winrt::Microsoft::ReactNative::IReactDispatcher &uiDispatcher)
     : m_viewHost(&viewHost), m_uiDispatcher(uiDispatcher) {}
 
-//ReactViewOptions ReactViewHost::Options() noexcept;
-//ReactNative::ReactNativeHost ReactViewHost::ReactHost() noexcept {}
+// ReactViewOptions ReactViewHost::Options() noexcept;
+// ReactNative::ReactNativeHost ReactViewHost::ReactHost() noexcept {}
 void ReactViewHost::ReloadViewInstance() noexcept {
   m_viewHost->ReloadViewInstance();
 }
@@ -99,18 +102,16 @@ void ReactViewHost::UnloadViewInstance() noexcept {
 //! This class ensures that we access ReactRootView from UI thread.
 struct ReactViewInstance : public Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, Mso::React::IReactViewInstance> {
   ReactViewInstance(
-      const ReactNative::IReactViewInstance& rootControl,
+      const ReactNative::IReactViewInstance &rootControl,
       const winrt::Microsoft::ReactNative::IReactDispatcher &uiDispatcher) noexcept
       : m_rootControl{rootControl}, m_uiDispatcher{uiDispatcher} {}
 
   Mso::Future<void> InitRootView(
-    Mso::CntPtr<Mso::React::IReactInstance>&& reactInstance,
-    Mso::React::ReactViewOptions&& viewOptions) noexcept override {
-
-    return PostInUIQueue([reactInstance{ std::move(reactInstance) },
-      viewOptions{ std::move(viewOptions) }](ReactNative::IReactViewInstance rootControl) mutable noexcept {
-
-      auto pinstanceWin = static_cast<Mso::React::ReactInstanceWin*>(reactInstance.Get());
+      Mso::CntPtr<Mso::React::IReactInstance> &&reactInstance,
+      Mso::React::ReactViewOptions &&viewOptions) noexcept override {
+    return PostInUIQueue([reactInstance{std::move(reactInstance)}, viewOptions{std::move(viewOptions)}](
+                             ReactNative::IReactViewInstance rootControl) mutable noexcept {
+      auto pinstanceWin = static_cast<Mso::React::ReactInstanceWin *>(reactInstance.Get());
       Mso::CntPtr<Mso::React::IReactContext> context = &(pinstanceWin->GetReactContext());
 
       ReactNative::ReactViewOptions options;
@@ -121,28 +122,29 @@ struct ReactViewInstance : public Mso::UnknownObject<Mso::RefCountStrategy::Weak
     });
   }
   Mso::Future<void> UpdateRootView() noexcept override {
-    return PostInUIQueue([](ReactNative::IReactViewInstance rootControl) mutable noexcept { rootControl.UpdateRootView(); });
+    return PostInUIQueue(
+        [](ReactNative::IReactViewInstance rootControl) mutable noexcept { rootControl.UpdateRootView(); });
   }
   Mso::Future<void> UninitRootView() noexcept override {
-    return PostInUIQueue([](ReactNative::IReactViewInstance rootControl) mutable noexcept { rootControl.UninitRootView(); });
+    return PostInUIQueue(
+        [](ReactNative::IReactViewInstance rootControl) mutable noexcept { rootControl.UninitRootView(); });
   }
 
-private:
- winrt::Microsoft::ReactNative::IReactViewInstance m_rootControl;
- winrt::Microsoft::ReactNative::IReactDispatcher m_uiDispatcher;
+ private:
+  winrt::Microsoft::ReactNative::IReactViewInstance m_rootControl;
+  winrt::Microsoft::ReactNative::IReactDispatcher m_uiDispatcher;
 
-  //using TAction = Mso::FunctorRef<void(ReactNative::IReactViewInstance&)>;
+  // using TAction = Mso::FunctorRef<void(ReactNative::IReactViewInstance&)>;
 
   inline Mso::Future<void> ReactViewInstance::PostInUIQueue(
-     winrt::delegate<ReactNative::IReactViewInstance> const& action) noexcept {
+      winrt::delegate<ReactNative::IReactViewInstance> const &action) noexcept {
     Mso::Promise<void> promise;
 
     // ReactViewInstance has shorter lifetime than ReactRootControl. Thus, we capture this WeakPtr.
-    m_uiDispatcher.Post(
-        [weakThis = Mso::WeakPtr{this}, promise, action{std::move(action)}]() mutable noexcept {
+    m_uiDispatcher.Post([weakThis = Mso::WeakPtr{this}, promise, action{std::move(action)}]() mutable noexcept {
       if (auto strongThis = weakThis.GetStrongPtr()) {
-          action(strongThis->m_rootControl);
-          promise.SetValue();
+        action(strongThis->m_rootControl);
+        promise.SetValue();
       }
 
       promise.TryCancel();
@@ -152,12 +154,9 @@ private:
 };
 
 void ReactViewHost::AttachViewInstance(ReactNative::IReactViewInstance viewInstance) noexcept {
-
   m_viewHost->AttachViewInstance(*Mso::Make<ReactViewInstance>(viewInstance, m_uiDispatcher));
 }
 
-void ReactViewHost::DetachViewInstance() noexcept {
-}
-
+void ReactViewHost::DetachViewInstance() noexcept {}
 
 } // namespace winrt::Microsoft::ReactNative::implementation
