@@ -7912,9 +7912,9 @@ metro-react-native-babel-transformer@0.66.0, metro-react-native-babel-transforme
     nullthrows "^1.1.1"
 
 metro-resolver@0.66.0, metro-resolver@^0.66.0:
-  version "0.66.0"
-  resolved "https://registry.yarnpkg.com/metro-resolver/-/metro-resolver-0.66.0.tgz#068c1bb98cd80c239f051e7b0f43f00e763b889d"
-  integrity sha512-JUbkmznwgMSb5ViFpvau5sPD7uuZekToVsitrDLTAeMPruvjxjae2+XSIai9NmcGSprfvqyGYURlz0qXu1YnJQ==
+  version "0.66.1"
+  resolved "https://registry.yarnpkg.com/metro-resolver/-/metro-resolver-0.66.1.tgz#1b10118964008464a98d5e3932e8f37d66955ac0"
+  integrity sha512-3hZSxLqDRJXn7ci3dylrzKiLzT05RIBpn0K9wRyTf6SD4y5XHZ7L0y5+BRxKJegjny2C5SYsarclCg/+14RsjA==
   dependencies:
     absolute-path "^0.0.0"
 
