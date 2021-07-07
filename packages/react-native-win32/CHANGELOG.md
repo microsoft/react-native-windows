@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 30 Jun 2021 23:23:14 GMT and should not be manually modified.
+This log was last generated on Wed, 07 Jul 2021 18:01:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.11
+
+Wed, 07 Jul 2021 18:01:29 GMT
+
+### Patches
+
+- Backporting AccessibilityControls prop to 0.63 (safreibe@microsoft.com)
 
 ## 0.63.10
 

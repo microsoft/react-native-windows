@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 07 Jul 2021 18:01:29 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.11",
+      "version": "0.63.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Backporting AccessibilityControls prop to 0.63",
+            "author": "safreibe@microsoft.com",
+            "commit": "36dac3decae19e9cbb3acfddbab0b1427aa6587a",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Jun 2021 23:23:14 GMT",
       "tag": "@office-iss/react-native-win32_v0.63.10",
       "version": "0.63.10",
