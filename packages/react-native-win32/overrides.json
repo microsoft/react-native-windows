@@ -4,6 +4,9 @@
     "src/**"
   ],
   "baseVersion": "0.64.0",
+  "excludePatterns": [
+    "src/Libraries/Lists/__tests__/**"
+  ],
   "overrides": [
     {
       "type": "derived",
@@ -338,6 +341,22 @@
     {
       "type": "platform",
       "file": "src/Libraries/PersonaCoin/PersonaCoinTypes.ts"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/QuirkSettings/CachingNativeQuirkSettings.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/QuirkSettings/NativeQuirkSettings.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/QuirkSettings/Quirks.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/QuirkSettings/QuirkSettings.js"
     },
     {
       "type": "derived",
