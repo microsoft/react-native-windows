@@ -4,6 +4,8 @@
   <!-- This import will noop when customer code is built. This import is here to help building the bits in the react-native-windows repository. -->
   <Import Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../')))" Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 
+  <Import Project="$(MSBuildProjectExtensionsPath)$(MSBuildProjectFile).*.targets" />
+
   <!-- For build debugging purposes. -->
   <Target Name="Vars">
     <Message Text="General" />
@@ -60,5 +62,21 @@
     <Message Text="JS Engine" />
     <Message Text="=> V8AppPlatform [$(V8AppPlatform)]" />
     <Message Text="=> V8Package     [$(V8Package)]" />
+
+    <Message Text="%0A" />
+    <Message Text="NuGet" />
+    <Message Text="=> IncludeFrameworkReferencesFromNuGet [$(IncludeFrameworkReferencesFromNuGet)]" />
+    <Message Text="=> NuGetPackagesDirectory              [$(NuGetPackagesDirectory)]" />
+    <Message Text="=> NuGetRuntimeIdentifier              [$(NuGetRuntimeIdentifier)]" />
+    <Message Text="=> ProjectLockFile                     [$(ProjectLockFile)]" />
+    <Message Text="=> IntermediateOutputPath              [$(IntermediateOutputPath)]" />
+    <Message Text="=> NuGetTargetMoniker                  [$(NuGetTargetMoniker)]" />
+    <Message Text="=> TargetFramework                     [$(TargetFramework)]" />
+    <Message Text="=> TargetFrameworks                    [$(TargetFrameworks)]" />
+    <Message Text="=> TargetFrameworkIdentifier           [$(TargetFrameworkIdentifier)]" />
+    <Message Text="=> BaseNuGetRuntimeIdentifier          [$(BaseNuGetRuntimeIdentifier)]" />
+    <Message Text="=> NuGetRuntimeIdentifier              [$(NuGetRuntimeIdentifier)]" />
+    <Message Text="=> TargetPlatformIdentifier            [$(TargetPlatformIdentifier)]" />
+    <Message Text="=> MSBuildProjectExtensionsPath        [$(MSBuildProjectExtensionsPath)]" />
   </Target>
 </Project>
