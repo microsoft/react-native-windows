@@ -396,6 +396,12 @@
       "file": "src/Libraries/QuirkSettings/QuirkSettings.js"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/ReactNative/PaperUIManager.win32.js",
+      "baseFile": "Libraries/ReactNative/PaperUIManager.js",
+      "baseHash": "1a47d1e4a1026573cabdda0fa6374ca64bd41b81"
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/Settings/Settings.win32.js",
       "baseFile": "Libraries/Settings/Settings.android.js",
