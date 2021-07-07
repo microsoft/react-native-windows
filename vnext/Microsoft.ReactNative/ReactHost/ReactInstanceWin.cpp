@@ -140,9 +140,9 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
               instance->m_batchingUIThread->runOnQueue([wkInstance]() {
                 if (auto instance = wkInstance.GetStrongPtr()) {
                   auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
-                  if (auto coreInjection = propBag.Get(winrt::Microsoft::ReactNative::implementation::
-                                                           ReactCoreInjection::ReactCoreInjectionProperty())) {
-                    coreInjection.OnBatchComplete(instance->m_reactContext->Properties());
+                  if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
+                                                      UIBatchCompleteCallbackProperty())) {
+                    (*callback)(instance->m_reactContext->Properties());
                   }
 #ifndef CORE_ABI
                   if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
@@ -165,9 +165,9 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
           instance->m_batchingUIThread->runOnQueue([wkInstance = m_wkInstance]() {
             if (auto instance = wkInstance.GetStrongPtr()) {
               auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
-              if (auto coreInjection = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
-                                                       ReactCoreInjectionProperty())) {
-                coreInjection.OnBatchComplete(instance->m_reactContext->Properties());
+              if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
+                                                  UIBatchCompleteCallbackProperty())) {
+                (*callback)(instance->m_reactContext->Properties());
               }
 #ifndef CORE_ABI
               if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {

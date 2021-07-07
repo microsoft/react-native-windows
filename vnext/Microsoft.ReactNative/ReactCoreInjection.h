@@ -32,13 +32,13 @@ struct ReactViewOptions : ReactViewOptionsT<ReactViewOptions> {
 
 struct ReactCoreInjection : ReactCoreInjectionT<ReactCoreInjection> {
   ReactCoreInjection() noexcept;
-  static ReactPropertyId<IReactCoreInjection> ReactCoreInjectionProperty() noexcept;
+  static ReactPropertyId<UIBatchCompleteCallback> UIBatchCompleteCallbackProperty() noexcept;
   static ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<
       std::function<void(ReactNative::ReactDispatcherCallback const &)>>>
   PostToUIBatchingQueueProperty() noexcept;
-  static void SetReactCoreInjection(
+  static void SetUIBatchCompleteCallback(
       IReactPropertyBag const &properties,
-      IReactCoreInjection const &reactCoreInjection) noexcept;
+      UIBatchCompleteCallback const &callback) noexcept;
 
   static IReactViewHost MakeViewHost(
       ReactNative::ReactNativeHost host,

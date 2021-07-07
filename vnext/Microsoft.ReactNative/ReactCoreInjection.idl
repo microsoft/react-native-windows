@@ -9,15 +9,6 @@ import "IJSValueReader.idl";
 
 namespace Microsoft.ReactNative
 {
-  [experimental]
-  [webhosthidden]
-  DOC_STRING(
-    "Used to inject platform specific implementations to create react-native targets targeting non-XAML platforms.")
-  interface IReactCoreInjection
-  {
-    DOC_STRING("Called when the UI batch is completed")
-    void OnBatchComplete(IReactPropertyBag properties);
-  }
 
 [experimental]
 [default_interface]
@@ -75,16 +66,19 @@ DOC_STRING("Settings per each IReactViewHost associated with an IReactHost insta
   }
 
   [experimental]
+  [webhosthidden]
+  DOC_STRING("The delegate is called when a UI batch is completed.")
+  delegate void UIBatchCompleteCallback(IReactPropertyBag properties);
+
+  [experimental]
   [default_interface]
   [webhosthidden]
   DOC_STRING(
     "Used to inject platform specific implementations to create react-native targets targeting non-XAML platforms.")
   runtimeclass ReactCoreInjection
   {
-    DOC_STRING(
-      "Sets the @IReactCoreInjection for the instance. "
-      "This must be manually provided to the @ReactInstanceSettings object when using non-XAML ui platforms")
-    static void SetReactCoreInjection(IReactPropertyBag properties, IReactCoreInjection xamlRoot);
+    DOC_STRING("Sets the Callback to call when a UI batch is completed. ")
+    static void SetUIBatchCompleteCallback(IReactPropertyBag properties, UIBatchCompleteCallback xamlRoot);
 
     DOC_STRING(
       "Custom ReactViewInstances use this to create a host to connect to.")
