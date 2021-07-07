@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add hooks to allow instance to be usable with pluggable UI platform",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
