@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.64.2",
+  "version": "0.64.3",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
@@ -16,6 +16,7 @@
     "run-win32-devmain": "npx @office-iss/rex-win32@0.62.12-devmain.13422.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --useDevMain",
     "run-win32": "npx @office-iss/rex-win32@0.62.12-devmain.13422.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev",
     "start": "react-native start --projectRoot ../react-native-win32-tester",
+    "test": "jest",
     "validate-overrides": "react-native-platform-override validate"
   },
   "dependencies": {
@@ -57,6 +58,8 @@
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "0.1.6",
+    "@rnw-scripts/jest-out-of-tree-resolver": "^1.0.0",
+    "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.0.0",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
     "@types/node": "^12.11.2",
