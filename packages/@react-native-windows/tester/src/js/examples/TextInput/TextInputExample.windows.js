@@ -18,7 +18,7 @@ const {
   View,
   StyleSheet,
   Slider,
-  Switch
+  Switch,
 } = require('react-native');
 const {useState} = React;
 
@@ -169,12 +169,13 @@ function PropagationSample() {
   }
   return (
     <>
-      <View focusable
-        style={styles.row} 
-        // keyDownEvents={[
-        //   {code: 'KeyW', handledEventPhase: 3},
-        //   {code: 'KeyE', handledEventPhase: 1},
-        // ]}
+      <View
+        focusable
+        style={styles.row}
+        keyDownEvents={[
+          {code: 'KeyW', handledEventPhase: 3},
+          {code: 'KeyE', handledEventPhase: 1},
+        ]}
         onKeyDown={event => logEvent('outer keyDown ' + event.nativeEvent.code)}
         onKeyDownCapture={event =>
           logEvent('outer keyDownCapture ' + event.nativeEvent.code)
@@ -183,8 +184,12 @@ function PropagationSample() {
         <TextInput
           placeholder="Click inside the box to observe events being fired."
           style={[styles.singleLineWithHeightTextInput]}
-          onKeyDown={event => logEvent('textinput keyDown ' + event.nativeEvent.code)}
-          onKeyUp={event => logEvent('textinput keyUp ' + event.nativeEvent.code)}
+          onKeyDown={event =>
+            logEvent('textinput keyDown ' + event.nativeEvent.code)
+          }
+          onKeyUp={event =>
+            logEvent('textinput keyUp ' + event.nativeEvent.code)
+          }
           keyDownEvents={[
             {code: 'KeyW', handledEventPhase: 3},
             {code: 'KeyE', handledEventPhase: 1},
@@ -534,7 +539,7 @@ exports.examples = ([
   {
     title: 'Stop propagation sample',
     render: function(): React.Node {
-      return <PropagationSample/>; 
+      return <PropagationSample />;
     },
   },
   // Windows]

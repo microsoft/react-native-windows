@@ -48,6 +48,7 @@ let RCTMultilineTextInputView;
 let RCTMultilineTextInputNativeCommands;
 let WindowsTextInput; // [Windows]
 let WindowsTextInputCommands; // [Windows]
+import type {KeyEvent} from '../../Types/CoreEventTypes'; // [Windows]
 
 // [Windows
 if (Platform.OS === 'android') {
@@ -1142,11 +1143,14 @@ function InternalTextInput(props: Props): React.Node {
   // TextInput handles onBlur and onFocus events
   // so omitting onBlur and onFocus pressability handlers here.
   const {onBlur, onFocus, ...eventHandlers} = usePressability(config) || {};
-  const eventPhase = Object.freeze({Capturing:1, Bubbling:3});
+  const eventPhase = Object.freeze({Capturing: 1, Bubbling: 3});
   const _keyDown = (event: KeyEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
       for (const el of props.keyDownEvents) {
-        if (event.nativeEvent.code == el.code && el.handledEventPhase == eventPhase.Bubbling) {
+        if (
+          event.nativeEvent.code == el.code &&
+          el.handledEventPhase == eventPhase.Bubbling
+        ) {
           event.stopPropagation();
         }
       }
