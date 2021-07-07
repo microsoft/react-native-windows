@@ -41,8 +41,8 @@ Mso::React::ReactViewOptions ReactViewOptions::CreateViewOptions() noexcept {
 
 ReactCoreInjection::ReactCoreInjection() noexcept {}
 
-/*static*/ ReactPropertyId<IReactCoreInjection> ReactCoreInjection::ReactCoreInjectionProperty() noexcept {
-  static ReactPropertyId<IReactCoreInjection> prop{L"ReactNative.Injection", L"Injection"};
+/*static*/ ReactPropertyId<UIBatchCompleteCallback> ReactCoreInjection::UIBatchCompleteCallbackProperty() noexcept {
+  static ReactPropertyId<UIBatchCompleteCallback> prop{L"ReactNative.Injection", L"UIBatchCompleteCallback"};
   return prop;
 }
 
@@ -55,10 +55,10 @@ ReactCoreInjection::PostToUIBatchingQueueProperty() noexcept {
   return prop;
 }
 
-/*static*/ void ReactCoreInjection::SetReactCoreInjection(
+/*static*/ void ReactCoreInjection::SetUIBatchCompleteCallback(
     IReactPropertyBag const &properties,
-    IReactCoreInjection const &reactCoreInjection) noexcept {
-  ReactNative::ReactPropertyBag(properties).Set(ReactCoreInjectionProperty(), reactCoreInjection);
+    UIBatchCompleteCallback const &callback) noexcept {
+  ReactNative::ReactPropertyBag(properties).Set(UIBatchCompleteCallbackProperty(), callback);
 }
 
 /*static*/ ReactNative::IReactViewHost ReactCoreInjection::MakeViewHost(
