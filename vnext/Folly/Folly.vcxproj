@@ -6,21 +6,9 @@
     <ProjectName>Folly</ProjectName>
     <RootNamespace>Folly</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <!-- https://docs.microsoft.com/en-us/cpp/build/reference/vcxproj-file-structure?view=msvc-160 -->
       <ApplicationType>Windows Store</ApplicationType>
-    <!--
       <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
       <AppContainerApplication>true</AppContainerApplication>
-    -->
-    <!-- https://docs.microsoft.com/en-us/dotnet/standard/frameworks -->
-    <!--
-      <NuGetTargetMoniker>UAP,Version=v10.0</NuGetTargetMoniker>
-      -->
-      <CopyNuGetImplementations>false</CopyNuGetImplementations>
-      <TargetFrameworks>uap10.0</TargetFrameworks>
-      <TargetFramework>uap10.0</TargetFramework>
-    <!-- https://docs.microsoft.com/en-us/samples/microsoft/windows-iotcore-samples/custom-device-accessor/ -->
-    <!-- <_NoWinAPIFamilyAPP>true</_NoWinAPIFamilyAPP> -->
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
@@ -337,9 +325,6 @@
   </Target>
   <ItemGroup>
     <ProjectReference Include="..\Fmt\Fmt.vcxproj" Project="{14b93DC8-FD93-4A6D-81CB-8BC96644501C}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectCapability Include="PackageReferences" />
   </ItemGroup>
 
 </Project>

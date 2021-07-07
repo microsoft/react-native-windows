@@ -16,6 +16,11 @@
     <EnableWinRtLeanAndMean Condition="'$(EnableWinRtLeanAndMean)' == ''">true</EnableWinRtLeanAndMean>
   </PropertyGroup>
 
+  <!-- <Import Project="$(MSBuildProjectExtensionsPath)$(MSBuildProjectFile).*.props" /> -->
+  <PropertyGroup Label="NuGet">
+    <ResolveNuGetPackages>false</ResolveNuGetPackages>
+  </PropertyGroup>
+
   <PropertyGroup Label="Desktop">
     <!-- See https://docs.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt -->
     <WinVer>_WIN32_WINNT_WIN8</WinVer>
@@ -125,8 +130,8 @@
     </Link>
   </ItemDefinitionGroup>
 
-  <!-- <ItemGroup>
+  <ItemGroup>
     <ProjectCapability Include="PackageReferences" />
-  </ItemGroup> -->
+  </ItemGroup>
 
 </Project>

@@ -59,6 +59,4 @@
     <FmtDir>$([MSBuild]::NormalizeDirectory($(FmtDir)))</FmtDir>
   </PropertyGroup>
 
-  <Import Project="$(MSBuildProjectExtensionsPath)$(MSBuildProjectFile).*.props" />
-
 </Project>
