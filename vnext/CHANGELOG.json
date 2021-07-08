@@ -2,6 +2,35 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 07 Jul 2021 05:06:28 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.337",
+      "version": "0.0.0-canary.337",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update Button Styling for 2.6",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "de57f7410efa57570db71f16cb6e5b7911ee3425",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "folly update",
+            "author": "agnel@microsoft.com",
+            "commit": "230c15749961cdb0c7ccbb14e4d1f188002b36e8",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add new VirtualizedList Tests from RN Core PR",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ec31e5ce8ef24e189c1fce3645da3273223e3850",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 02 Jul 2021 05:06:31 GMT",
       "tag": "react-native-windows_v0.0.0-canary.336",
       "version": "0.0.0-canary.336",

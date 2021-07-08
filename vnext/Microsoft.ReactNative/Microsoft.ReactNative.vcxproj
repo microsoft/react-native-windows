@@ -276,6 +276,10 @@
     <ClInclude Include="ReactHost\ReactInstanceWin.h" />
     <ClInclude Include="ReactHost\ReactNativeHeaders.h" />
     <ClInclude Include="ReactHost\React_Win.h" />
+    <ClInclude Include="ReactCoreInjection.h">
+      <DependentUpon>ReactCoreInjection.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ReactInstanceSettings.h">
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -583,6 +587,10 @@
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
     <ClCompile Include="ReactHost\ReactHost.cpp" />
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />
+    <ClCompile Include="ReactCoreInjection.cpp">
+      <DependentUpon>ReactCoreInjection.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="ReactInstanceSettings.cpp">
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -694,6 +702,9 @@
     <Midl Include="JsiApi.idl" />
     <Midl Include="ReactApplication.idl" />
     <Midl Include="IReactContext.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="ReactCoreInjection.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactInstanceSettings.idl">

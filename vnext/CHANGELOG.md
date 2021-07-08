@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 02 Jul 2021 05:06:31 GMT and should not be manually modified.
+This log was last generated on Wed, 07 Jul 2021 05:06:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.337
+
+Wed, 07 Jul 2021 05:06:28 GMT
+
+### Changes
+
+- Update Button Styling for 2.6 (34109996+chiaramooney@users.noreply.github.com)
+- folly update (agnel@microsoft.com)
 
 ## 0.0.0-canary.336
 

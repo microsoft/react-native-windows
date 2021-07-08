@@ -129,6 +129,7 @@
     <Midl Include="ABI\NativeLogging.idl" />
     <Midl Include="ABI\NativeTracing.idl" />
     <Midl Include="ABI\TestController.idl" />
+    <Midl Include="..\Microsoft.ReactNative\ReactCoreInjection.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactNativeHost.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactPackageProvider.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl" />
@@ -144,6 +145,7 @@
     <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl" />
     <Midl Include="..\Microsoft.ReactNative\JsiApi.idl" />
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
+    <Midl Include="..\Microsoft.ReactNative\QuirkSettings.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp">
@@ -199,12 +201,16 @@
     <ClCompile Include="..\Microsoft.ReactNative\JsiWriter.cpp">
       <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\NativeModulesProvider.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSCallInvokerScheduler.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactContext.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactErrorProvider.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactInstanceWin.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactNativeHost.cpp">
       <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
@@ -212,10 +218,18 @@
     <ClCompile Include="..\Microsoft.ReactNative\ReactPackageBuilder.cpp">
       <DependentUpon>..\Microsoft.ReactNative\IReactPackageBuilder.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\ReactCoreInjection.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\ReactCoreInjection.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\RedBox.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\RedBoxHandler.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
+        <ClCompile Include="..\Microsoft.ReactNative\QuirkSettings.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\QuirkSettings.idl</DependentUpon>
+    </ClCompile>
+
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="JSI\ChakraJsiRuntime_core.cpp" />
     <ClCompile Include="ShadowNode.cpp" />
