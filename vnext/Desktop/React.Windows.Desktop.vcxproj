@@ -333,7 +333,7 @@
     <PackageReference Include="Microsoft.ChakraCore.vc140" Version="1.11.24" />
     <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210312.4" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210708.4" />
     <PackageReference Include="ReactWindows.ChakraCore.ARM64" Version="1.11.20" Condition="'$(Platform)'=='ARM64'" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
     <PackageReference Include="ReactNative.V8JSI.Windows" Version="0.64.17" />
