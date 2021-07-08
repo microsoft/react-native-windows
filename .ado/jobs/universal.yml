@@ -132,8 +132,8 @@
                   inputs:
                     solution: vnext/Microsoft.ReactNative.sln
                     msbuildArchitecture: x64
-                    platform: $(BuildPlatform)
-                    configuration: $(BuildConfiguration)
+                    platform: ${{ matrix.BuildPlatform }}
+                    configuration: ${{ matrix.BuildConfiguration }}
                     msbuildArguments: /t:Restore
 
                 - task: DownloadPipelineArtifact@1
