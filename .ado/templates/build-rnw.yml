@@ -36,8 +36,8 @@ steps:
     inputs:
       solution: ${{parameters.project}}
       msbuildArchitecture: x64
-      platform: $(BuildPlatform)
-      configuration: $(BuildConfiguration)
+      platform: ${{ parameters.buildPlatform }}
+      configuration: ${{ parameters.buildConfiguration }}
       msbuildArguments: /t:Restore
 
   - task: VSBuild@1
