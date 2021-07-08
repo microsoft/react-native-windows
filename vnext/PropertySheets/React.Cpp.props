@@ -16,7 +16,6 @@
     <EnableWinRtLeanAndMean Condition="'$(EnableWinRtLeanAndMean)' == ''">true</EnableWinRtLeanAndMean>
   </PropertyGroup>
 
-  <!-- <Import Project="$(MSBuildProjectExtensionsPath)$(MSBuildProjectFile).*.props" /> -->
   <PropertyGroup Label="NuGet">
     <ResolveNuGetPackages>false</ResolveNuGetPackages>
   </PropertyGroup>
