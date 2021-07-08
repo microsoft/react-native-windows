@@ -145,6 +145,7 @@ jobs:
             projectType: app
             additionalInitArguments: --useHermes
             additionalRunArguments:
+          # #7225 ReactNative.Hermes.Windows is not yet seen as compatible for usage in C# projects
           # Arm64ReleaseCsHermes:
           #   language: cs
           #   configuration: Release
