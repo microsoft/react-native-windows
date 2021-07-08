@@ -161,7 +161,6 @@
   <ItemGroup>
     <Manifest Include="Application.manifest" />
     <None Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.js" />
-    <None Include="packages.config" />
     <JsBundleEntry Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.js" />
   </ItemGroup>
   <ItemGroup>

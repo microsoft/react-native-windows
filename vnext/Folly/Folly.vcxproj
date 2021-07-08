@@ -268,11 +268,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-  </Target>
   <Target Name="DownloadFolly" BeforeTargets="PrepareForBuild">
     <Message Importance="High" Text="Downloading folly..." Condition="!Exists('$(FollyDir)..\.follyzip\folly-$(FollyVersion).zip')" />
     <DownloadFile Condition="!Exists('$(FollyDir)..\.follyzip\folly-$(FollyVersion).zip')"
@@ -323,5 +318,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Fmt\Fmt.vcxproj" Project="{14b93DC8-FD93-4A6D-81CB-8BC96644501C}" />
   </ItemGroup>
-
 </Project>
