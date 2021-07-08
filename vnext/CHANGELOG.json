@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 08 Jul 2021 05:05:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.338",
+      "version": "0.0.0-canary.338",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add hooks to allow instance to be usable with pluggable UI platform",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "65320550fab613a2e65a3f29b00a40ca597ec89d",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Jul 2021 05:06:28 GMT",
       "tag": "react-native-windows_v0.0.0-canary.337",
       "version": "0.0.0-canary.337",
