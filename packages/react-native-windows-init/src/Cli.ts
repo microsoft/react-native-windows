@@ -427,14 +427,6 @@ function isProjectUsingYarn(cwd: string): boolean {
       );
     }
 
-    if (argv.useHermes && argv.experimentalNuGetDependency) {
-      throw new CodedError(
-        'IncompatibleOptions',
-        "Error: Incompatible options specified. Options '--useHermes' and '--experimentalNuGetDependency' are incompatible",
-        {detail: 'useHermes and experimentalNuGetDependency'},
-      );
-    }
-
     if (!useDevMode) {
       if (!version) {
         const rnVersion = getReactNativeVersion();
