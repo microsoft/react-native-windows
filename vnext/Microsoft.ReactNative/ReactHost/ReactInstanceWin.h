@@ -65,7 +65,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   winrt::Microsoft::ReactNative::JsiRuntime JsiRuntime() noexcept;
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() noexcept;
   bool IsLoaded() const noexcept;
-#ifndef CORE_ABI
 
   bool UseWebDebugger() const noexcept;
   bool UseFastRefresh() const noexcept;
@@ -78,7 +77,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   uint16_t SourceBundlePort() const noexcept;
   std::string JavaScriptBundleFile() const noexcept;
   bool UseDeveloperSupport() const noexcept;
-#endif
 
  private:
   friend MakePolicy;
@@ -99,7 +97,9 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   void InitJSMessageThread() noexcept;
   void InitNativeMessageThread() noexcept;
   void InitUIMessageThread() noexcept;
+#ifndef CORE_ABI
   void InitUIManager() noexcept;
+#endif
   std::string GetBytecodeFileName() noexcept;
   std::function<void()> GetLiveReloadCallback() noexcept;
   std::function<void(std::string)> GetErrorCallback() noexcept;
