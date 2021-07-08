@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 07 Jul 2021 05:06:28 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.99",
+      "version": "0.0.0-canary.99",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add new VirtualizedList Tests from RN Core PR",
+            "author": "ngerlem@microsoft.com",
+            "commit": "ec31e5ce8ef24e189c1fce3645da3273223e3850",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 02 Jul 2021 05:06:31 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.99",
       "version": "0.0.0-canary.99",

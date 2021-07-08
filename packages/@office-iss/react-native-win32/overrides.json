@@ -315,7 +315,7 @@
       "baseHash": "f23a66cfc475ee1e2eda1065e56e05e547b7030e"
     },
     {
-      "type": "copy",
+      "type": "derived",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseHash": "fd25fc611f8da21b93e7f8750d8f2fc8273a4a52"
@@ -391,6 +391,12 @@
     {
       "type": "platform",
       "file": "src/Libraries/QuirkSettings/QuirkSettings.js"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/ReactNative/PaperUIManager.win32.js",
+      "baseFile": "Libraries/ReactNative/PaperUIManager.js",
+      "baseHash": "1a47d1e4a1026573cabdda0fa6374ca64bd41b81"
     },
     {
       "type": "derived",
