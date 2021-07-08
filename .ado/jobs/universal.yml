@@ -127,16 +127,15 @@
                     
                 - template: ../templates/prepare-env.yml
 
-                - task: NuGetCommand@2
-                  displayName: NuGet restore
+                - task: MSBuild@1
+                  displayName: Restore NuGet packages
                   inputs:
-                    command: restore
-                    restoreSolution: vnext/Microsoft.ReactNative.sln
-                    feedsToUse: config
-                    nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
-                    restoreDirectory: packages/
-                    verbosityRestore: Detailed # Options: quiet, normal, detailed
-                    
+                    solution: vnext/Microsoft.ReactNative.sln
+                    msbuildArchitecture: x64
+                    platform: $(BuildPlatform)
+                    configuration: $(BuildConfiguration)
+                    msbuildArguments: /t:Restore
+
                 - task: DownloadPipelineArtifact@1
                   displayName: "Download binaries for testing"
                   inputs:
