@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adds timestamp to onKeyUp/Down events",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

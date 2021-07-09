@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 09 Jul 2021 05:06:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.339",
+      "version": "0.0.0-canary.339",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Match native View.keyDownEvents behavior in JS.",
+            "author": "igklemen@microsoft.com",
+            "commit": "bc60ec2e253ae24960424399402bdccb16c591e5",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Adds timestamp to onKeyUp/Down events",
+            "author": "erozell@outlook.com",
+            "commit": "1d99aa7aac653dd43eefb2a361208973cd01ecec",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Jul 2021 05:05:44 GMT",
       "tag": "react-native-windows_v0.0.0-canary.338",
       "version": "0.0.0-canary.338",

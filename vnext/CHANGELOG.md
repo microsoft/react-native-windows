@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 08 Jul 2021 05:05:44 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jul 2021 05:06:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.339
+
+Fri, 09 Jul 2021 05:06:27 GMT
+
+### Changes
+
+- Match native View.keyDownEvents behavior in JS. (igklemen@microsoft.com)
+- Adds timestamp to onKeyUp/Down events (erozell@outlook.com)
 
 ## 0.0.0-canary.338
 
