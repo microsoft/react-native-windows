@@ -2,6 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
+    <UseHermes Condition="'$(Platform)' != 'Win32'">true</UseHermes>
     <UseHermes Condition="'$(UseHermes)' == ''">false</UseHermes>
     <HermesVersion Condition="'$(HermesVersion)' == ''">0.8.0-ms.0</HermesVersion>   
     <HermesPackage Condition="'$(HermesPackage)' == '' And Exists('$(PkgReactNative_Hermes_Windows)')">$(PkgReactNative_Hermes_Windows)</HermesPackage>
