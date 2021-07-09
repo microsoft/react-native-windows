@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Match native View.keyDownEvents behavior in JS.",
+  "packageName": "react-native-windows",
+  "email": "igklemen@microsoft.com",
+  "dependentChangeType": "patch"
+}
