@@ -1,8 +1,41 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Tue, 22 Jun 2021 05:07:16 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Jun 2021 05:07:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.60
+
+Wed, 30 Jun 2021 05:07:31 GMT
+
+### Patches
+
+- Replace npm-registry with npm-registry-fetch (jthysell@microsoft.com)
+
+## 1.1.59
+
+Sun, 27 Jun 2021 05:08:11 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.80 (4123478+tido64@users.noreply.github.com)
+
+## 1.1.59
+
+Sat, 26 Jun 2021 05:06:48 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.22 (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.79 (julio.rocha@microsoft.com)
+
+## 1.1.59
+
+Fri, 25 Jun 2021 05:09:48 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.78 (jthysell@microsoft.com)
 
 ## 1.1.59
 
