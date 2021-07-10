@@ -2,9 +2,9 @@
     - name: buildEnvironment
       type: string
       default : PullRequest
-      values: 
-      - PullRequest 
-      - Continuous 
+      values:
+      - PullRequest
+      - Continuous
     - name: buildMatrix
       type: object
       default:
@@ -99,7 +99,7 @@
                       Microsoft.ReactNative\**
                       Microsoft.ReactNative.Managed\**
                       Microsoft.ReactNative.Managed.CodeGen\**
-                
+
                 - template: ../templates/component-governance.yml
 
             - job: UniversalTest${{ matrix.Name }}
@@ -124,7 +124,7 @@
                     targetType: filePath
                     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
-                    
+
                 - template: ../templates/prepare-env.yml
 
                 - task: MSBuild@1
@@ -135,6 +135,15 @@
                     platform: ${{ matrix.BuildPlatform }}
                     configuration: ${{ matrix.BuildConfiguration }}
                     msbuildArguments: /t:Restore
+
+                - pwsh: |
+                    echo 'checking MSTest packages after restore'
+                    echo "USR: ${env:USERNAME}"
+                    echo 'Checking C:\Users\AzDevOps\.nuget\packages\mstest.*'
+                    Get-ChildItem -Name -Recurse C:\Users\AzDevOps\.nuget\packages\mstest.*
+                    echo 'Checked C:\Users\AzDevOps\.nuget\packages\mstest.*'
+                    echo "GPF: $(nuget config GlobalPackagesFolder)"
+                  displayName: TODO - Delete
 
                 - task: DownloadPipelineArtifact@1
                   displayName: "Download binaries for testing"
@@ -215,7 +224,7 @@
       displayName: Universal Build 🏗
       variables:
         - template: ../variables/vs2019.yml
-      dependsOn: 
+      dependsOn:
         - ${{ each config in parameters.buildMatrix }}:
           - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
             - ${{ each matrix in config.Matrix }}:
