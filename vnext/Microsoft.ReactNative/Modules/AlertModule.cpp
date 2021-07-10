@@ -36,7 +36,7 @@ void Alert::ProcessPendingAlertRequests() noexcept {
       dialog.SecondaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNegative));
       dialog.CloseButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNeutral));
 
-      if (react::uwp::Is19H1OrHigher()) {
+      if (Is19H1OrHigher()) {
         // XamlRoot added in 19H1
         if (const auto xamlRoot = React::XamlUIService::GetXamlRoot(strongThis->m_context.Properties().Handle())) {
           dialog.XamlRoot(xamlRoot);
