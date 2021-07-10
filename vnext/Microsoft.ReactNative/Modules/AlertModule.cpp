@@ -16,6 +16,16 @@
 namespace Microsoft::ReactNative {
 
 void Alert::showAlert(ShowAlertArgs const &args, std::function<void(std::string)> result) noexcept {
+  pendingAlerts.push({args, result});
+  if (pendingAlerts.size() == 1) {
+    ProcessPendingAlertRequests();
+  }
+}
+
+void Alert::ProcessPendingAlertRequests() noexcept {
+  if (pendingAlerts.empty())
+    return;
+  const auto &[args, result] = pendingAlerts.front();
   auto jsDispatcher = m_context.JSDispatcher();
   m_context.UIDispatcher().Post([weakThis = weak_from_this(), jsDispatcher, result, args] {
     if (auto strongThis = weakThis.lock()) {
@@ -26,7 +36,7 @@ void Alert::showAlert(ShowAlertArgs const &args, std::function<void(std::string)
       dialog.SecondaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNegative));
       dialog.CloseButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNeutral));
 
-      if (Is19H1OrHigher()) {
+      if (react::uwp::Is19H1OrHigher()) {
         // XamlRoot added in 19H1
         if (const auto xamlRoot = React::XamlUIService::GetXamlRoot(strongThis->m_context.Properties().Handle())) {
           dialog.XamlRoot(xamlRoot);
@@ -56,7 +66,7 @@ void Alert::showAlert(ShowAlertArgs const &args, std::function<void(std::string)
 
       auto asyncOp = dialog.ShowAsync();
       asyncOp.Completed(
-          [jsDispatcher, result](
+          [jsDispatcher, result, strongThis](
               const winrt::IAsyncOperation<xaml::Controls::ContentDialogResult> &asyncOp, winrt::AsyncStatus status) {
             switch (asyncOp.GetResults()) {
               case xaml::Controls::ContentDialogResult::Primary:
@@ -71,6 +81,8 @@ void Alert::showAlert(ShowAlertArgs const &args, std::function<void(std::string)
               default:
                 break;
             }
+            strongThis->pendingAlerts.pop();
+            strongThis->ProcessPendingAlertRequests();
           });
     }
   });
