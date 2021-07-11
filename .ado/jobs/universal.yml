@@ -133,6 +133,14 @@
 
                 - template: ../templates/prepare-env.yml
 
+                # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
+                # Keep NuGet cache independent from the user directory.
+                - task: NuGetCommand@2
+                  inputs:
+                    command: Custom
+                    #nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.Config
+                    arguments: config -Set globalPackagesFolder=D:\NugetPackages -ConfigFile $(Build.SourcesDirectory)/vnext/NuGet.Config
+
                 - pwsh: |
                     Get-Item Env:\
                   displayName: TODO - DELETE BEFORE MERGING
