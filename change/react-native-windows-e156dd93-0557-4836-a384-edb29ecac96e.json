@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update Loading bundle UI, add ProgressRing",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
