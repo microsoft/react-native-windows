@@ -73,24 +73,6 @@
                   clean: false
                   submodules: false
 
-                #TODO: DELETE BEFORE MERGING
-                # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
-                # Keep NuGet cache independent from the user directory.
-                - task: NuGetToolInstaller@0
-                  inputs:
-                    versionSpec: ">=5.8.0"
-                - task: NuGetCommand@2
-                  displayName: Set fixed NuGet cache
-                  inputs:
-                    command: custom
-                    nugetConfigPath: $(Build.SourcesDirectory)/NuGet.Config
-                    arguments: config -Set globalPackagesFolder=D:\NugetPackages
-                - powershell: |
-                    Get-Item Env:\
-                    Get-Content $(Build.SourcesDirectory)/NuGet.Config -ErrorAction Continue
-                    echo "$(nuget.exe config globalPackagesFolder)"
-                  displayName: TODO - DELETE BEFORE MERGING
-
                 - template: ../templates/apply-published-version-vars.yml
 
                 - template: ../templates/build-rnw.yml
@@ -151,8 +133,8 @@
                   displayName: Set fixed NuGet cache
                   inputs:
                     command: custom
-                    #nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.Config
-                    arguments: config -Set globalPackagesFolder=D:\NugetPackages -ConfigFile $(Build.SourcesDirectory)/NuGet.Config
+                    nugetConfigPath: $(Build.SourcesDirectory)/NuGet.Config
+                    arguments: config -Set globalPackagesFolder=D:\NugetPackages
 
                 - pwsh: |
                     Get-Item Env:\
@@ -187,7 +169,8 @@
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (Native)
-                  timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+                  #TODO: REVERT BEFORE MERGE
+                  timeoutInMinutes: 10 # Set smaller timeout , due to hangs
                   inputs:
                     testSelector: testAssemblies
                     testAssemblyVer2: |
