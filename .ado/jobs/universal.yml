@@ -137,7 +137,7 @@
                 # Keep NuGet cache independent from the user directory.
                 - task: NuGetCommand@2
                   inputs:
-                    command: Custom
+                    command: custom
                     #nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.Config
                     arguments: config -Set globalPackagesFolder=D:\NugetPackages -ConfigFile $(Build.SourcesDirectory)/vnext/NuGet.Config
 
