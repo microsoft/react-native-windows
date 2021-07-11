@@ -82,7 +82,7 @@
                     command: custom
                     nugetConfigPath: $(Build.SourcesDirectory)/NuGet.Config
                     arguments: config -Set globalPackagesFolder=D:\NugetPackages
-                - pwsh: |
+                - powershell: |
                     Get-Item Env:\
                     Get-Content $(Build.SourcesDirectory)/NuGet.Config -ErrorAction Continue
                     echo "$(nuget.exe config globalPackagesFolder)"
