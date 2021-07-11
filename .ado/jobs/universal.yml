@@ -127,15 +127,6 @@
 
                 - template: ../templates/prepare-env.yml
 
-                - task: MSBuild@1
-                  displayName: Restore NuGet packages
-                  inputs:
-                    solution: vnext/Microsoft.ReactNative.sln
-                    msbuildArchitecture: x64
-                    platform: ${{ matrix.BuildPlatform }}
-                    configuration: ${{ matrix.BuildConfiguration }}
-                    msbuildArguments: /t:Restore
-
                 - pwsh: |
                     echo 'checking MSTest packages after restore'
                     echo "USR: ${env:USERNAME}"
@@ -144,7 +135,23 @@
                     echo 'Checked C:\Users\AzDevOps\.nuget\packages\mstest.*'
                     echo "GPF: $(nuget config GlobalPackagesFolder)"
                     Get-Item Env:\
-                  displayName: TODO - Delete
+                  displayName: Set NuGet globalPackagesFolder
+
+                # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
+                # Keep NuGet cache independent from the user directory.
+                - task: NuGetCommand@2
+                  inputs:
+                    command: custom
+                    arguments: config -Set globalPackagesFolder=D:\NugetPackages
+
+                - task: MSBuild@1
+                  displayName: Restore NuGet packages
+                  inputs:
+                    solution: vnext/Microsoft.ReactNative.sln
+                    msbuildArchitecture: x64
+                    platform: ${{ matrix.BuildPlatform }}
+                    configuration: ${{ matrix.BuildConfiguration }}
+                    msbuildArguments: /t:Restore
 
                 - task: DownloadPipelineArtifact@1
                   displayName: "Download binaries for testing"
