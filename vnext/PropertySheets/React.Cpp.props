@@ -129,8 +129,4 @@
     </Link>
   </ItemDefinitionGroup>
 
-  <ItemGroup>
-    <ProjectCapability Include="PackageReferences" />
-  </ItemGroup>
-
 </Project>
