@@ -73,6 +73,21 @@
                   clean: false
                   submodules: false
 
+                #TODO: DELETE BEFORE MERGING
+                # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
+                # Keep NuGet cache independent from the user directory.
+                - task: NuGetCommand@2
+                  displayName: Set fixed NuGet cache
+                  inputs:
+                    command: custom
+                    nugetConfigPath: $(Build.SourcesDirectory)/NuGet.Config
+                    arguments: config -Set globalPackagesFolder=D:\NugetPackages
+                - pwsh: |
+                    Get-Item Env:\
+                    Get-Content $(Build.SourcesDirectory)/NuGet.Config -ErrorAction Continue
+                    echo "$(nuget.exe config globalPackagesFolder)"
+                  displayName: TODO - DELETE BEFORE MERGING
+
                 - template: ../templates/apply-published-version-vars.yml
 
                 - template: ../templates/build-rnw.yml
@@ -130,15 +145,15 @@
                 # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
                 # Keep NuGet cache independent from the user directory.
                 - task: NuGetCommand@2
+                  displayName: Set fixed NuGet cache
                   inputs:
                     command: custom
                     #nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.Config
-                    arguments: config -Set globalPackagesFolder=D:\NugetPackages -ConfigFile $(Build.SourcesDirectory)/vnext/NuGet.Config
+                    arguments: config -Set globalPackagesFolder=D:\NugetPackages -ConfigFile $(Build.SourcesDirectory)/NuGet.Config
 
                 - pwsh: |
                     Get-Item Env:\
-                    ls $(Build.SourcesDirectory)/vnext/NuGet.Config -ErrorAction Continue
-                    Get-Content $(Build.SourcesDirectory)/vnext/NuGet.Config -ErrorAction Continue
+                    Get-Content $(Build.SourcesDirectory)/NuGet.Config -ErrorAction Continue
                     echo "$(nuget.exe config globalPackagesFolder)"
                   displayName: TODO - DELETE BEFORE MERGING
 
