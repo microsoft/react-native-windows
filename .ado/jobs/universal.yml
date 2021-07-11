@@ -76,6 +76,9 @@
                 #TODO: DELETE BEFORE MERGING
                 # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
                 # Keep NuGet cache independent from the user directory.
+                - task: NuGetToolInstaller@0
+                  inputs:
+                    versionSpec: ">=5.8.0"
                 - task: NuGetCommand@2
                   displayName: Set fixed NuGet cache
                   inputs:
