@@ -116,6 +116,7 @@
 
     <Message Text="%0A" />
     <Message Text="NuGet" />
+    <Message Text="=> AssetTargetFallback                 [$(AssetTargetFallback)]" />
     <Message Text="=> IncludeFrameworkReferencesFromNuGet [$(IncludeFrameworkReferencesFromNuGet)]" />
     <Message Text="=> NuGetPackageRoot                    [$(NuGetPackageRoot)]" />
     <Message Text="=> NuGetPackagesDirectory              [$(NuGetPackagesDirectory)]" />
