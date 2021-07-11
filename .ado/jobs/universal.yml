@@ -140,7 +140,7 @@
                     echo 'checking MSTest packages after restore'
                     echo "USR: ${env:USERNAME}"
                     echo 'Checking C:\Users\AzDevOps\.nuget\packages\mstest.*'
-                    Get-ChildItem -Name -Recurse C:\Users\AzDevOps\.nuget\packages\mstest.*
+                    Get-ChildItem -Name -Recurse C:\Users\AzDevOps\.nuget\packages\mstest.* -ErrorAction Continue
                     echo 'Checked C:\Users\AzDevOps\.nuget\packages\mstest.*'
                     echo "GPF: $(nuget config GlobalPackagesFolder)"
                   displayName: TODO - Delete
