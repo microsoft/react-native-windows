@@ -105,12 +105,6 @@
             - job: UniversalTest${{ matrix.Name }}
               variables:
                 - template: ../variables/vs2019.yml
-
-                # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
-                # Keep NuGet cache independent from the user directory.
-                - name: NUGET_PACKAGES
-                  value: D:\NugetPackages
-
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
                 - UniversalBuild${{ matrix.Name }}
@@ -143,6 +137,9 @@
 
                 - pwsh: |
                     Get-Item Env:\
+                    ls $(Build.SourcesDirectory)/vnext/NuGet.Config -ErrorAction Continue
+                    Get-Content $(Build.SourcesDirectory)/vnext/NuGet.Config -ErrorAction Continue
+                    echo "$(nuget.exe config globalPackagesFolder)"
                   displayName: TODO - DELETE BEFORE MERGING
 
                 - task: MSBuild@1
