@@ -6,9 +6,9 @@
     <ProjectName>Folly</ProjectName>
     <RootNamespace>Folly</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
-      <ApplicationType>Windows Store</ApplicationType>
-      <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-      <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <AppContainerApplication>true</AppContainerApplication>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />

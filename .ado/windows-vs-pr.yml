@@ -10,6 +10,7 @@ pr:
 variables:
   - template: variables/msbuild.yml
   - group: platform-override-zero-permission-token
+  #TODO: DELETE BEFORE MERGING
   - name: system.debug
     value: true
 
