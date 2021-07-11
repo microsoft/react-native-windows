@@ -254,7 +254,7 @@ void ReactRootView::EnsureLoadingUI() noexcept {
     // Create Grid & TextBlock to hold text
     if (m_waitingTextBlock == nullptr) {
       m_waitingTextBlock = winrt::TextBlock();
-      
+
       m_greenBoxGrid = winrt::Grid{};
       auto c = xaml::Controls::ColumnDefinition{};
       m_greenBoxGrid.ColumnDefinitions().Append(c);
