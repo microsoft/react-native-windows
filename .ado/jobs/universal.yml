@@ -78,16 +78,6 @@
                   clean: false
                   submodules: false
 
-                #TODO: DELETE BEFORE MERGING
-                # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
-                - task: NuGetToolInstaller@0
-                  inputs:
-                    versionSpec: ">=5.8.0"
-                - powershell: |
-                    Get-Item Env:\
-                    Get-Content $(Build.SourcesDirectory)/NuGet.Config -ErrorAction Continue
-                    echo "$(nuget.exe config globalPackagesFolder)"
-                  displayName: TODO - DELETE BEFORE MERGING
                 - template: ../templates/apply-published-version-vars.yml
 
                 - template: ../templates/build-rnw.yml
@@ -147,21 +137,6 @@
                     arguments: -NoPrompt -Tags buildLab
 
                 - template: ../templates/prepare-env.yml
-
-                # # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
-                # # Keep NuGet cache independent from the user directory.
-                # - task: NuGetCommand@2
-                #   displayName: Set fixed NuGet cache
-                #   inputs:
-                #     command: custom
-                #     nugetConfigPath: $(Build.SourcesDirectory)/NuGet.Config
-                #     arguments: config -Set globalPackagesFolder=D:\NugetPackages
-
-                - pwsh: |
-                    Get-Item Env:\
-                    Get-Content $(Build.SourcesDirectory)/NuGet.Config -ErrorAction Continue
-                    echo "$(nuget.exe config globalPackagesFolder)"
-                  displayName: TODO - DELETE BEFORE MERGING
 
                 - task: MSBuild@1
                   displayName: Restore NuGet packages
