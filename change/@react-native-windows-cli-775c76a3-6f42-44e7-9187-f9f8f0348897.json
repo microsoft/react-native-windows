@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Consuming new UWP friendly Hermes package",
-  "packageName": "@react-native-windows/cli",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}
