@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Support running UIManager as a TurboModule",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

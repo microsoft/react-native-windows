@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 12 Jul 2021 15:18:32 GMT",
+      "tag": "@react-native-windows/cli_v0.65.0-preview.2",
+      "version": "0.65.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Consuming new UWP friendly Hermes package",
+            "author": "email not defined",
+            "commit": "d833a0c14b65507afb35bca679fded28d06a9735",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 May 2021 15:23:18 GMT",
       "tag": "@react-native-windows/cli_v0.65.0-preview.1",
       "version": "0.65.0-preview.1",

@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 12 Jul 2021 15:18:32 GMT",
+      "tag": "react-native-windows_v0.65.0-preview.5",
+      "version": "0.65.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Consuming new UWP friendly Hermes package",
+            "author": "email not defined",
+            "commit": "d833a0c14b65507afb35bca679fded28d06a9735",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add hooks to allow instance to be usable with pluggable UI platform",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "f09f1bfd93ded669f224f4e3aac2d5dbc6838bd5",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Backport WinUI2.6 Button Changes",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "35113faee36358e8567f82a20bc6300595668660",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Jul 2021 15:07:13 GMT",
       "tag": "react-native-windows_v0.65.0-preview.4",
       "version": "0.65.0-preview.4",

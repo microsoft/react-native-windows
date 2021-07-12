@@ -1,8 +1,16 @@
 # Change Log - node-rnw-rpc
 
-This log was last generated on Mon, 05 Jul 2021 15:07:13 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Jul 2021 15:18:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.7-0
+
+Mon, 12 Jul 2021 15:18:32 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.65.0-preview.5 (email not defined)
 
 ## 1.0.7-0
 
