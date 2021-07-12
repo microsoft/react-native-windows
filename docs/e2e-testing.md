@@ -29,7 +29,7 @@ module.exports = {
 
 > C:\repo\react-native-windows> `cd packages\e2e-test-app`
 >
-> C:\repo\react-native-windows\packages\e2e-test-app> `yarn windows --no-launch --deploy-from-layout --msbuildprops AppxPackageSigningEnabled=False`
+> C:\repo\react-native-windows\packages\e2e-test-app> `yarn windows --no-launch`
 
 **Running all tests**
 
