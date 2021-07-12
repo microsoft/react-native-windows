@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
-  <!-- {{#cppNugetPackages}}
-  {{#propsTopOfFile}}
-  <Import Project="$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props" Condition="Exists('$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props')" />
-  {{/propsTopOfFile}}
-  {{/cppNugetPackages}} -->
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -68,11 +63,6 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <!-- {{#cppNugetPackages}}
-  {{#propsMiddleOfFile}}
-  <Import Project="$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props" Condition="Exists('$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props')" />
-  {{/propsMiddleOfFile}}
-  {{/cppNugetPackages}} -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings"></ImportGroup>
   <ImportGroup Label="PropertySheets">
@@ -133,7 +123,6 @@
     <Midl Include="ReactPackageProvider.idl" />
   </ItemGroup>
   <ItemGroup>
-    <!-- <None Include="packages.config" /> -->
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
@@ -153,26 +142,4 @@
     <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.props')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.props'))" />
     <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.targets'))" />
   </Target>
-  <!-- <ImportGroup Label="ExtensionTargets">
-    {{#cppNugetPackages}}
-    {{#hasTargets}}
-    <Import Project="$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets" Condition="Exists('$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets')" />
-    {{/hasTargets}}
-    {{/cppNugetPackages}}
-    <Import Project="$(SolutionDir)\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets" Condition="Exists('$(SolutionDir)\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" />
-  </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    {{#cppNugetPackages}}
-    {{#hasProps}}
-    <Error Condition="!Exists('$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props'))" />
-    {{/hasProps}}
-    {{#hasTargets}}
-    <Error Condition="!Exists('$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets'))" />
-    {{/hasTargets}}
-    {{/cppNugetPackages}}
-    <Error Condition="!Exists('$(SolutionDir)\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets'))" />
-  </Target> -->
 </Project>
