@@ -141,7 +141,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="NodeRpc.def" />
-    <None Include="packages.config" />
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>

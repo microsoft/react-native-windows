@@ -439,10 +439,6 @@ export async function copyProjectTemplateAndReplace(
                 newProjectName + '.vcxproj.filters',
               ),
             },
-            {
-              from: path.join(srcPath, projDir, 'packages.config'),
-              to: path.join(windowsDir, newProjectName, 'packages.config'),
-            },
           ]
         : [
             // cpp lib mappings
@@ -469,10 +465,6 @@ export async function copyProjectTemplateAndReplace(
                 newProjectName,
                 newProjectName + '.def',
               ),
-            },
-            {
-              from: path.join(srcPath, projDir, 'packages.config'),
-              to: path.join(windowsDir, newProjectName, 'packages.config'),
             },
           ];
 

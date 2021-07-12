@@ -136,7 +136,6 @@
     <Midl Include="ReactPackageProvider.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="SampleLibraryCpp.def" />
   </ItemGroup>
   <ItemGroup>
