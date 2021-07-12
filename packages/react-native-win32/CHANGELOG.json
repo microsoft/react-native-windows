@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 12 Jul 2021 15:18:53 GMT",
+      "tag": "@office-iss/react-native-win32_v0.64.4",
+      "version": "0.64.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Support running UIManager as a TurboModule",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "b6b1ed2819d5ab8aee623c31cc96040a8ff1909b",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Backporting AccessibilityControls prop to 0.64",
+            "author": "safreibe@microsoft.com",
+            "commit": "74f3883dbaf459224e6349a352de47dc746a56cc",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Jul 2021 15:06:52 GMT",
       "tag": "@office-iss/react-native-win32_v0.64.3",
       "version": "0.64.3",
