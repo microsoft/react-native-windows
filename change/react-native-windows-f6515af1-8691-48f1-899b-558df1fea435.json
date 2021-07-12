@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Batch calls to alert() instead of crashing",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
