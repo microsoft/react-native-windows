@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
-  {{#cppNugetPackages}}
+  <!-- {{#cppNugetPackages}}
   {{#propsTopOfFile}}
   <Import Project="$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props" Condition="Exists('$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props')" />
   {{/propsTopOfFile}}
-  {{/cppNugetPackages}}
+  {{/cppNugetPackages}} -->
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -68,11 +68,11 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  {{#cppNugetPackages}}
+  <!-- {{#cppNugetPackages}}
   {{#propsMiddleOfFile}}
   <Import Project="$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props" Condition="Exists('$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.props')" />
   {{/propsMiddleOfFile}}
-  {{/cppNugetPackages}}
+  {{/cppNugetPackages}} -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings"></ImportGroup>
   <ImportGroup Label="PropertySheets">
@@ -83,9 +83,8 @@
   </ImportGroup>
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\external\Microsoft.ReactNative.Uwp.CppLib.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.props')" />
-    <Import Project="$(SolutionDir)\packages\$(WinUIPackageProps)" Condition="'$(WinUIPackageProps)'!='' And Exists('$(SolutionDir)\packages\$(WinUIPackageProps)')" />
+    <!-- <Import Project="$(SolutionDir)\packages\$(WinUIPackageProps)" Condition="'$(WinUIPackageProps)'!='' And Exists('$(SolutionDir)\packages\$(WinUIPackageProps)')" /> -->
   </ImportGroup>
-
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>
     <ClCompile>
@@ -134,8 +133,14 @@
     <Midl Include="ReactPackageProvider.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <!-- <None Include="packages.config" /> -->
     <None Include="PropertySheet.props" />
+  </ItemGroup>
+  <ItemGroup>
+    {{#cppNugetPackages}}
+    <PackageReference Include="{{ id }}" Version="{{ version }}" />
+    {{/cppNugetPackages}}
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ReactNativeWindowsTargets">
@@ -148,7 +153,7 @@
     <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.props')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.props'))" />
     <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.targets'))" />
   </Target>
-  <ImportGroup Label="ExtensionTargets">
+  <!-- <ImportGroup Label="ExtensionTargets">
     {{#cppNugetPackages}}
     {{#hasTargets}}
     <Import Project="$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets" Condition="Exists('$(SolutionDir)\packages\{{ id }}.{{ version }}\build\native\{{ id }}.targets')" />
@@ -169,5 +174,5 @@
     {{/hasTargets}}
     {{/cppNugetPackages}}
     <Error Condition="!Exists('$(SolutionDir)\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets'))" />
-  </Target>
+  </Target> -->
 </Project>
