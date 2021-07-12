@@ -136,6 +136,7 @@ jobs:
         parameters:
           artifactName: ReactWindows
           contents: |
+            React.Windows.Desktop\**
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
       
