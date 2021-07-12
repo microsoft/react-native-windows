@@ -165,8 +165,7 @@
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (Native)
-                  #TODO: REVERT BEFORE MERGE
-                  timeoutInMinutes: 10 # Set smaller timeout , due to hangs
+                  timeoutInMinutes: 5 # Set smaller timeout , due to hangs
                   inputs:
                     testSelector: testAssemblies
                     testAssemblyVer2: |
