@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Use DispatcherTimer unless animation frame needed",
+  "comment": "Set ToolsVersion to Current",
   "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
+  "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"
 }

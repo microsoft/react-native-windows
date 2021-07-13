@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Set ToolsVersion to Current",
+  "packageName": "node-rnw-rpc",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
