@@ -5858,7 +5858,7 @@ growly@^1.3.0:
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
 
-handlebars@^4.7.6:
+handlebars@^4.7.7:
   version "4.7.7"
   resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.7.7.tgz#9ce33416aad02dbd6c8fafa8240d5d98004945a1"
   integrity sha512-aAcXm5OAfE/8IXkcZvCepKU3VzW1/39Fb5ZuqMtgI/hT8X2YgoMvBY5dLhq/cpOvw7Lk1nK/UF71aLG/ZnVYRA==
@@ -7240,14 +7240,14 @@ just-debounce@^1.0.0:
   resolved "https://registry.yarnpkg.com/just-debounce/-/just-debounce-1.1.0.tgz#2f81a3ad4121a76bc7cb45dbf704c0d76a8e5ddf"
   integrity sha512-qpcRocdkUmf+UTNBYx5w6dexX5J31AKK1OmPwH630a83DdVVUIngk55RSAiIGpQyoH0dlr872VHfPjnQnK1qDQ==
 
-"just-scripts-utils@>=1.1.2 <2.0.0":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/just-scripts-utils/-/just-scripts-utils-1.1.2.tgz#288c329b207f380b4b5a2223910e4e6c2bf6bfa7"
-  integrity sha512-IH0Qo2dg6dcvG/owVF5x0+TgWezCx7nrKsIQ80n8VdlowZAXMLlR6o8XT0b7rtoBvkbQUnUbNGQAB6EBhlpxHw==
+"just-scripts-utils@>=1.1.3 <2.0.0":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/just-scripts-utils/-/just-scripts-utils-1.1.3.tgz#1eea53eb84720c0c873c6b1254587bf6f38a57ad"
+  integrity sha512-aUt8BMEWXIo3MTahoa78I/gERfqGVvVbkC4yO67F+pDgqCij7u5xCxJ42CaErGZsPOOySOZnKm200HiX7Ib2cw==
   dependencies:
     fs-extra "^8.0.0"
     glob "^7.1.3"
-    handlebars "^4.7.6"
+    handlebars "^4.7.7"
     jju "^1.4.0"
     just-task-logger ">=1.1.1 <2.0.0"
     marked "^2.0.0"
@@ -7257,16 +7257,16 @@ just-debounce@^1.0.0:
     yargs "^16.2.0"
 
 just-scripts@^1.3.2, just-scripts@^1.3.3:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/just-scripts/-/just-scripts-1.5.4.tgz#219066075ea39e63d53c14f9ce3b2733b373f15b"
-  integrity sha512-RG5ebKLQsP3hGErqw/ZSmbR6vKX+M50vpxeO7UvpT0J2Dkd5wvEzHKmKJCxNzfQG+b4qKddtEvdsqWpPW0tEGw==
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/just-scripts/-/just-scripts-1.5.5.tgz#bf615b8e7f9fc2ffea7f762fec7d841dd0aa9127"
+  integrity sha512-biW4kbXFenuSXuqFwzsImMxvaVdybLK2JXwYICbsToz+lk0/0JKTrJuXkkUxgDF21L2DTIAcucAvhtnF82LP+g==
   dependencies:
     "@types/node" "^10.12.18"
     chalk "^4.0.0"
     diff-match-patch "1.0.5"
     fs-extra "^8.0.0"
     glob "^7.1.3"
-    just-scripts-utils ">=1.1.2 <2.0.0"
+    just-scripts-utils ">=1.1.3 <2.0.0"
     just-task ">=1.4.1 <2.0.0"
     prompts "^2.4.0"
     run-parallel-limit "^1.0.6"
