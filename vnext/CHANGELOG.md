@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Jul 2021 05:05:31 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Jul 2021 05:06:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.341
+
+Tue, 13 Jul 2021 05:06:16 GMT
+
+### Changes
+
+- Use DispatcherTimer unless animation frame needed (erozell@outlook.com)
+- DisconnectFromView can be called on an view that has no connected tag. Also fix exceptions to be thrown by value as the rest of the code expects them to be (asklar@microsoft.com)
+- Update Loading bundle UI, add ProgressRing (asklar@microsoft.com)
+-  Consuming C# friendly hermes nuget package (email not defined)
 
 ## 0.0.0-canary.340
 
