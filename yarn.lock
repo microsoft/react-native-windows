@@ -7257,9 +7257,9 @@ just-debounce@^1.0.0:
     yargs "^16.2.0"
 
 just-scripts@^1.3.2, just-scripts@^1.3.3:
-  version "1.5.5"
-  resolved "https://registry.yarnpkg.com/just-scripts/-/just-scripts-1.5.5.tgz#bf615b8e7f9fc2ffea7f762fec7d841dd0aa9127"
-  integrity sha512-biW4kbXFenuSXuqFwzsImMxvaVdybLK2JXwYICbsToz+lk0/0JKTrJuXkkUxgDF21L2DTIAcucAvhtnF82LP+g==
+  version "1.5.6"
+  resolved "https://registry.yarnpkg.com/just-scripts/-/just-scripts-1.5.6.tgz#fb3110e512770423b69a7ce1bb3392286cea0dd9"
+  integrity sha512-BxPCdZnE9wcju20l5uKuAjoPbJzoKeEwsiaRkFznxAy/AFyUZgRmr7tFqo8l7oujf5xE2dYhP3tD3PnLiBEdTw==
   dependencies:
     "@types/node" "^10.12.18"
     chalk "^4.0.0"
@@ -7270,6 +7270,7 @@ just-scripts@^1.3.2, just-scripts@^1.3.3:
     just-task ">=1.4.1 <2.0.0"
     prompts "^2.4.0"
     run-parallel-limit "^1.0.6"
+    semver "^7.0.0"
     supports-color "^8.1.0"
     webpack-merge "^5.7.3"
 
