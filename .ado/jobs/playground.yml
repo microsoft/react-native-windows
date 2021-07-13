@@ -2,9 +2,9 @@ parameters:
   - name: buildEnvironment
     type: string
     default : PullRequest
-    values: 
-     - PullRequest 
-     - Continuous 
+    values:
+     - PullRequest
+     - Continuous
 
 jobs:
   - job: Playground
@@ -71,7 +71,9 @@ jobs:
           msbuildArchitecture: x64
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
-          msbuildArguments: /t:Restore
+          msbuildArguments:
+            /t:Restore
+            $(BuildWinUI3Properties)
 
       - template: ../templates/setup-certificate.yml
         parameters:
