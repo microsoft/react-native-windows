@@ -236,7 +236,7 @@ export async function copyProjectTemplateAndReplace(
   const cppNugetPackages: CppNugetPackage[] = [
     {
       id: 'Microsoft.Windows.CppWinRT',
-      version: '2.0.210312.4',
+      version: '2.0.210708.4',
       propsTopOfFile: true,
       hasProps: true,
       hasTargets: true,
