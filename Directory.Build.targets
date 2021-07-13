@@ -111,8 +111,18 @@
 
     <Message Text="%0A" />
     <Message Text="JS Engine" />
-    <Message Text="=> V8AppPlatform [$(V8AppPlatform)]" />
+    <Message Text="=> PkgReactNative_Hermes_Windows        [$(PkgReactNative_Hermes_Windows)]" />
+    <Message Text="=> EnableHermesInspectorInReleaseFlavor [$(EnableHermesInspectorInReleaseFlavor)]" />
+    <Message Text="=> UseHermes     [$(UseHermes)]" />
+    <Message Text="=> UseFabric     [$(UseFabric)]" />
+    <Message Text="=> HermesVersion [$(HermesVersion)]" />
+    <Message Text="=> HermesPackage [$(HermesPackage)]" />
+    <Message Text="=> HermesArch    [$(HermesArch)]" />
+    <Message Text="=> UseFabric     [$(UseFabric)]" />
+    <Message Text="=> UseV8         [$(UseV8)]" />
     <Message Text="=> V8Package     [$(V8Package)]" />
+    <Message Text="=> V8Version     [$(V8Version)]" />
+    <Message Text="=> V8AppPlatform [$(V8AppPlatform)]" />
 
     <Message Text="%0A" />
     <Message Text="NuGet" />
@@ -131,6 +141,16 @@
     <Message Text="=> NuGetRuntimeIdentifier              [$(NuGetRuntimeIdentifier)]" />
     <Message Text="=> TargetPlatformIdentifier            [$(TargetPlatformIdentifier)]" />
     <Message Text="=> MSBuildProjectExtensionsPath        [$(MSBuildProjectExtensionsPath)]" />
+
+    <Message Text="%0A" />
+    <Message Text="WinUI" />
+    <Message Text="=> WinUI3Version       [$(WinUI3Version)]" />
+    <Message Text="=> WinUI2xVersion      [$(WinUI2xVersion)]" />
+    <Message Text="=> WinUIPackageName    [$(WinUIPackageName)]" />
+    <Message Text="=> WinUIPackageVersion [$(WinUIPackageVersion)]" />
+    <Message Text="=> WinUIPackageProps   [$(WinUIPackageProps)]" />
+    <Message Text="=> IsWinUIAlpha        [$(IsWinUIAlpha)]" />
+
   </Target>
 
 </Project>
