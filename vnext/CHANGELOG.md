@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 13 Jul 2021 05:06:16 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Jul 2021 06:00:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.342
+
+Wed, 14 Jul 2021 06:00:50 GMT
+
+### Changes
+
+- Set ToolsVersion to Current (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.341
 

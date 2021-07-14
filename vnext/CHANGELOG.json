@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 14 Jul 2021 06:00:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.342",
+      "version": "0.0.0-canary.342",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set ToolsVersion to Current",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "5bb8b1d591e54a03efd10343200f4aba5a2a2441",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jul 2021 05:06:16 GMT",
       "tag": "react-native-windows_v0.0.0-canary.341",
       "version": "0.0.0-canary.341",

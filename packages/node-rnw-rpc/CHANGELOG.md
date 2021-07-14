@@ -1,8 +1,16 @@
 # Change Log - node-rnw-rpc
 
-This log was last generated on Tue, 13 Jul 2021 05:06:16 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Jul 2021 06:00:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.11-19
+
+Wed, 14 Jul 2021 06:00:50 GMT
+
+### Changes
+
+- Set ToolsVersion to Current (julio.rocha@microsoft.com)
 
 ## 1.0.11-18
 
