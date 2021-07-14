@@ -2,6 +2,35 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Wed, 14 Jul 2021 06:00:50 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump node-rnw-rpc to v1.0.11-19",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "5bb8b1d591e54a03efd10343200f4aba5a2a2441",
+            "package": "e2e-test-app"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.342",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "5bb8b1d591e54a03efd10343200f4aba5a2a2441",
+            "package": "e2e-test-app"
+          },
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "5bb8b1d591e54a03efd10343200f4aba5a2a2441",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jul 2021 05:06:16 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",
