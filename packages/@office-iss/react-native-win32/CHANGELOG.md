@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 05 Jul 2021 15:07:13 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Jul 2021 15:18:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.65.0-preview.4
+
+Mon, 12 Jul 2021 15:18:32 GMT
+
+### Changes
+
+- Support running UIManager as a TurboModule (30809111+acoates-ms@users.noreply.github.com)
+- Backporting AccessibilityControls prop on ViewWin32 to 0.65 (safreibe@microsoft.com)
 
 ## 0.65.0-preview.3
 

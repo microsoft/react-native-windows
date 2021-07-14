@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Mon, 31 May 2021 15:23:18 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Jul 2021 15:18:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.55
+
+Mon, 12 Jul 2021 15:18:32 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.65.0-preview.2 (email not defined)
 
 ## 1.1.55
 

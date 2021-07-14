@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Backporting AccessibilityControls prop on ViewWin32 to 0.65",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "safreibe@microsoft.com",
-  "dependentChangeType": "patch"
-}

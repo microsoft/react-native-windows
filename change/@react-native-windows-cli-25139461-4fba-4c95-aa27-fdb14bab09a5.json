@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Consuming new UWP friendly Hermes package",
+  "comment": "Revert Pre-RC CLI Workaround",
   "packageName": "@react-native-windows/cli",
-  "email": "email not defined",
+  "email": "ngerlem@microsoft.com",
   "dependentChangeType": "patch"
 }
