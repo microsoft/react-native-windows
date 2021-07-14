@@ -148,7 +148,6 @@
     <Message Text="=> WinUI2xVersion      [$(WinUI2xVersion)]" />
     <Message Text="=> WinUIPackageName    [$(WinUIPackageName)]" />
     <Message Text="=> WinUIPackageVersion [$(WinUIPackageVersion)]" />
-    <Message Text="=> WinUIPackageProps   [$(WinUIPackageProps)]" />
     <Message Text="=> IsWinUIAlpha        [$(IsWinUIAlpha)]" />
 
   </Target>

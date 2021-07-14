@@ -73,8 +73,6 @@
   </ImportGroup>
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\external\Microsoft.ReactNative.Uwp.CppLib.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.props')" />
-    <!-- TODO -->
-    <!-- <Import Project="$(SolutionDir)\packages\$(WinUIPackageProps)" Condition="'$(WinUIPackageProps)'!='' And Exists('$(SolutionDir)\packages\$(WinUIPackageProps)')" /> -->
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>

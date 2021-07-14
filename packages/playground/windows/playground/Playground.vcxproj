@@ -74,8 +74,6 @@
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props" />
   </ImportGroup>
-  <!-- TODO: Review before merging -->
-  <!-- <Import Project="..\packages\$(WinUIPackageProps)" Condition="'$(WinUIPackageProps)'!='' And Exists('..\packages\$(WinUIPackageProps)')" /> -->
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>
     <ClCompile>
