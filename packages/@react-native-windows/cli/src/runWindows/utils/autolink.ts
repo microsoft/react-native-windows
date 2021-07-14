@@ -14,13 +14,14 @@ import path from 'path';
 import chalk from 'chalk';
 import {performance} from 'perf_hooks';
 
-import {newSpinner} from './commandWithProgress';
+import {newSpinner, setExitProcessWithError} from './commandWithProgress';
 import * as vstools from './vstools';
 import * as generatorCommon from '../../generator-common';
 import * as configUtils from '../../config/configUtils';
 
 import {
   Command,
+  CommandOption,
   Config,
   Dependency,
   ProjectConfig,
@@ -30,7 +31,12 @@ import {
   ProjectDependency,
 } from '../../config/dependencyConfig';
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
-import {CodedError} from '@react-native-windows/telemetry';
+import {Telemetry, CodedError} from '@react-native-windows/telemetry';
+import {
+  getDefaultOptions,
+  startTelemetrySession,
+  endTelemetrySession,
+} from './telemetryHelpers';
 import {XMLSerializer} from 'xmldom';
 import {Ora} from 'ora';
 const formatter = require('xml-formatter');
@@ -866,12 +872,68 @@ function verboseMessage(message: any, verbose: boolean) {
 }
 
 /**
+ * Sanitizes the given option for telemetery.
+ * @param key The key of the option.
+ * @param value The unsanitized value of the option.
+ * @returns The sanitized value of the option.
+ */
+function optionSanitizer(key: string, value: any): any {
+  switch (key) {
+    case 'sln':
+    case 'proj':
+      return value === undefined ? false : true;
+    default:
+      return value === undefined ? false : value;
+  }
+}
+
+/**
+ * Get the extra props to add to the `autolink-windows` telemetry event.
+ * @returns The extra props.
+ */
+async function getExtraProps(): Promise<Record<string, any>> {
+  const extraProps: Record<string, any> = {};
+  return extraProps;
+}
+
+/**
+ * The function run when calling `react-native autolink-windows`.
+ * @param args Unprocessed args passed from react-native CLI.
+ * @param config Config passed from react-native CLI.
+ * @param options Options passed from react-native CLI.
+ */
+async function autolinkWindows(
+  args: string[],
+  config: Config,
+  options: AutoLinkOptions,
+) {
+  await startTelemetrySession(
+    'autolink-windows',
+    config,
+    options,
+    getDefaultOptions(config, autolinkOptions),
+    optionSanitizer,
+  );
+
+  let autolinkWindowsError: Error | undefined;
+  try {
+    await autolinkWindowsInternal(args, config, options);
+  } catch (error) {
+    Telemetry.trackException(error);
+    autolinkWindowsError = error;
+  }
+
+  await endTelemetrySession(autolinkWindowsError, getExtraProps);
+  setExitProcessWithError(options.logging, autolinkWindowsError);
+}
+
+/**
  * Performs auto-linking for RNW native modules and apps.
  * @param args Unprocessed args passed from react-native CLI.
  * @param config Config passed from react-native CLI.
  * @param options Options passed from react-native CLI.
  */
-async function updateAutoLink(
+export async function autolinkWindowsInternal(
   args: string[],
   config: Config,
   options: AutoLinkOptions,
@@ -933,39 +995,48 @@ async function updateAutoLink(
   }
 }
 
-interface AutoLinkOptions {
+export interface AutoLinkOptions {
   logging: boolean;
   check: boolean;
   sln?: string;
   proj?: string;
+  telemetry?: boolean;
 }
 
+export const autolinkOptions: CommandOption[] = [
+  {
+    name: '--logging',
+    description: 'Verbose output logging',
+  },
+  {
+    name: '--check',
+    description: 'Only check whether any autolinked files need to change',
+  },
+  {
+    name: '--sln [string]',
+    description:
+      "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
+    default: undefined,
+  },
+  {
+    name: '--proj [string]',
+    description:
+      "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
+    default: undefined,
+  },
+  {
+    name: '--no-telemetry',
+    description:
+      'Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
+  },
+];
+
+/**
+ * Performs auto-linking for RNW native modules and apps.
+ */
 export const autoLinkCommand: Command = {
   name: 'autolink-windows',
   description: 'performs autolinking',
-  func: updateAutoLink,
-  options: [
-    {
-      name: '--logging',
-      description: 'Verbose output logging',
-      default: false,
-    },
-    {
-      name: '--check',
-      description: 'Only check whether any autolinked files need to change',
-      default: false,
-    },
-    {
-      name: '--sln [string]',
-      description:
-        "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
-      default: undefined,
-    },
-    {
-      name: '--proj [string]',
-      description:
-        "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
-      default: undefined,
-    },
-  ],
+  func: autolinkWindows,
+  options: autolinkOptions,
 };
