@@ -144,6 +144,7 @@
 
     <Message Text="%0A" />
     <Message Text="WinUI" />
+    <Message Text="=> UseWinUI3           [$(UseWinUI3)]" />
     <Message Text="=> WinUI3Version       [$(WinUI3Version)]" />
     <Message Text="=> WinUI2xVersion      [$(WinUI2xVersion)]" />
     <Message Text="=> WinUIPackageName    [$(WinUIPackageName)]" />

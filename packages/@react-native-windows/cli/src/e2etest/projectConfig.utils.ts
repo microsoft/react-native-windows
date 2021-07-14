@@ -31,20 +31,14 @@ export async function ensureWinUI3Project(folder: string) {
       {
         id: 'Microsoft.ReactNative.Cxx',
         version: '1.0.0',
-        hasProps: false,
-        hasTargets: true,
       },
       {
         id: 'Microsoft.UI.Xaml',
         version: '2.3.4.5',
-        hasProps: false,
-        hasTargets: false,
       },
       {
         id: 'Microsoft.WinUI',
         version: '3.2.1.0',
-        hasProps: false,
-        hasTargets: false,
       },
     ],
   };
