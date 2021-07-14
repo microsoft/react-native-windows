@@ -1,6 +1,7 @@
 variables:
   VmImage: windows-2019
   AgentPool.Medium: rnw-pool-4
+  AgentPool.Interactive: rnw-pool-4-ui
   AgentPool.Large: windevbuildagents
   MSBuildVersion: 16.0
   BaseIntDir: $(Agent.HomeDirectory)\BaseIntDir # redirect to C:
