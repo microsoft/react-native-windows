@@ -1,8 +1,36 @@
 # Change Log - integration-test-app
 
-This log was last generated on Fri, 09 Jul 2021 05:06:27 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Jul 2021 06:00:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Wed, 14 Jul 2021 06:00:50 GMT
+
+### Patches
+
+- Bump node-rnw-rpc to v1.0.11-19 (julio.rocha@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.342 (julio.rocha@microsoft.com)
+
+## 0.0.0
+
+Tue, 13 Jul 2021 05:06:16 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.341 (erozell@outlook.com)
+
+## 0.0.0
+
+Mon, 12 Jul 2021 05:05:31 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.340 (asklar@microsoft.com)
 
 ## 0.0.0
 
