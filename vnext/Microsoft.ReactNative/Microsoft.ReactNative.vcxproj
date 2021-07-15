@@ -20,6 +20,16 @@
     <CppWinRTLibs>true</CppWinRTLibs>
     <BuildMSRNCxxReactCommon>false</BuildMSRNCxxReactCommon>
   </PropertyGroup>
+  <PropertyGroup Label="NuGet">
+    <!--
+      Avoid Visual Studio error message:
+      "The project '$(MSBuildProjectName)' ran into a problem during the last operation: The value of the
+      'TargetFrameworkMoniker' and 'NuGetTargetMoniker' properties in the '$(Configuration)|$(Platform)' configuration are both
+      empty. This configuration will not contribute to NuGet restore, which may result in restore and build errors. You may
+      need to reload the solution after fixing the problem."
+    -->
+    <TargetFrameworkMoniker>UAP,Version=v10.0.17134</TargetFrameworkMoniker>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />

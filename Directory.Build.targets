@@ -82,6 +82,7 @@
     <Message Text="=> LastBuildState          [$(LastBuildState)]" />
     <Message Text="=> GeneratedFilesDir       [$(GeneratedFilesDir)]" />
     <Message Text="=> WinVer                  [$(WinVer)]" />
+    <Message Text="=> TargetFrameworkMoniker  [$(TargetFrameworkMoniker)]" />
 
     <Message Text="%0A" />
     <Message Text="Microsoft.CppBuild.targets/MakeDirsForCl" />
