@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Disable 'unreachable code' warning for RethrowJsiError usage.",
+  "packageName": "react-native-windows",
+  "email": "aschultz@microsoft.com",
+  "dependentChangeType": "patch"
+}
