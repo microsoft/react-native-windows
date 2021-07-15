@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 02 Jul 2021 05:06:31 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Jul 2021 05:05:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.100
+
+Thu, 08 Jul 2021 05:05:44 GMT
+
+### Changes
+
+- Support running UIManager as a TurboModule (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.99
 
