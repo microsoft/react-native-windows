@@ -8,6 +8,9 @@
 
 using namespace facebook::jsi;
 
+#pragma warning(push)
+#pragma warning(disable : 4702) // `RethrowJsiError(); throw;` triggers 'unreachable code' warnings in Release builds
+
 namespace winrt::Microsoft::ReactNative {
 
 // The macro to simplify recording JSI exceptions.
@@ -1000,3 +1003,5 @@ JsiAbiRuntime::PropNameIDRef::operator facebook::jsi::PropNameID const &() const
 }
 
 } // namespace winrt::Microsoft::ReactNative
+
+#pragma warning(pop)
