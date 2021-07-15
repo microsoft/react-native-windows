@@ -1103,7 +1103,7 @@
     "@babel/parser" "^7.14.5"
     "@babel/types" "^7.14.5"
 
-"@babel/traverse@^7.0.0", "@babel/traverse@^7.1.0", "@babel/traverse@^7.11.5", "@babel/traverse@^7.12.5", "@babel/traverse@^7.13.0", "@babel/traverse@^7.14.5", "@babel/traverse@^7.7.0", "@babel/traverse@^7.7.4":
+"@babel/traverse@^7.0.0", "@babel/traverse@^7.1.0", "@babel/traverse@^7.11.5", "@babel/traverse@^7.12.5", "@babel/traverse@^7.13.0", "@babel/traverse@^7.14.0", "@babel/traverse@^7.14.5", "@babel/traverse@^7.7.0", "@babel/traverse@^7.7.4":
   version "7.14.7"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.14.7.tgz#64007c9774cfdc3abd23b0780bc18a3ce3631753"
   integrity sha512-9vDr5NzHu27wgwejuKL7kIOm4bwEtaPQ4Z6cpCmjSuaRqpH/7xc4qcGEscwMqlkwgcXl6MvqoAjZkQ24uSdIZQ==
@@ -7971,7 +7971,7 @@ metro-symbolicate@0.66.0:
     through2 "^2.0.1"
     vlq "^1.0.0"
 
-metro-transform-plugins@0.66.0, metro-transform-plugins@^0.66.0:
+metro-transform-plugins@0.66.0:
   version "0.66.0"
   resolved "https://registry.yarnpkg.com/metro-transform-plugins/-/metro-transform-plugins-0.66.0.tgz#d40cb1a88110b0033b5a870c497ce56a38ec5b1f"
   integrity sha512-0jF27jozp4IYuzliM2R7NaXqbPXleiHQWVczECkHg3UjDroCKneCkkgeSeirVZ1TkBqu7KSLMiWdL2OOT+vVxQ==
@@ -7980,6 +7980,17 @@ metro-transform-plugins@0.66.0, metro-transform-plugins@^0.66.0:
     "@babel/generator" "^7.5.0"
     "@babel/template" "^7.0.0"
     "@babel/traverse" "^7.0.0"
+    nullthrows "^1.1.1"
+
+metro-transform-plugins@^0.66.0:
+  version "0.66.1"
+  resolved "https://registry.yarnpkg.com/metro-transform-plugins/-/metro-transform-plugins-0.66.1.tgz#b8ebc30bacc066b959f7546fce3d74a752e35cd8"
+  integrity sha512-Cx1FBoAuC/UzReEe37KNWEKO25u6gk7q6Ev/37VzY7OLEqCqklZapHTABpBKkvS4triKKeBY/FWqK7R3GFQ2uQ==
+  dependencies:
+    "@babel/core" "^7.14.0"
+    "@babel/generator" "^7.14.0"
+    "@babel/template" "^7.0.0"
+    "@babel/traverse" "^7.14.0"
     nullthrows "^1.1.1"
 
 metro-transform-worker@0.66.0:
