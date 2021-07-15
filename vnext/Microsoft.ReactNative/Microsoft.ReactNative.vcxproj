@@ -307,6 +307,7 @@
     <ClInclude Include="Utils\UwpPreparedScriptStore.h" />
     <ClInclude Include="Utils\UwpScriptStore.h" />
     <ClInclude Include="Utils\ValueUtils.h" />
+    <ClInclude Include="Utils\XamlIslandUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\ControlViewManager.h" />
     <ClInclude Include="Views\DatePickerViewManager.h" />

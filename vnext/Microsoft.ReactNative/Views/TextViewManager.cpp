@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include "TextViewManager.h"
-#include "Utils/Helpers.h"
+#include "Utils/XamlIslandUtils.h"
 
 #include <Views/RawTextViewManager.h>
 #include <Views/ShadowNodeBase.h>
@@ -12,7 +12,6 @@
 
 #include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Automation.h>
-#include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <Utils/PropertyUtils.h>
@@ -220,13 +219,8 @@ bool TextViewManager::UpdateProperty(
       // window the flyout is shown on takes ownership of the flyout and attempts
       // to show the flyout on other windows cause the first window to get focus.
       // https://github.com/microsoft/microsoft-ui-xaml/issues/5341
-      if (selectable && IsXamlIsland() &&
-          winrt::Windows::Foundation::Metadata::ApiInformation::IsApiContractPresent(
-              L"Windows.Foundation.UniversalApiContract", 7)) {
-        xaml::Controls::TextCommandBarFlyout flyout;
-        flyout.Placement(xaml::Controls::Primitives::FlyoutPlacementMode::BottomEdgeAlignedLeft);
-        textBlock.ContextFlyout(flyout);
-        textBlock.SelectionFlyout(flyout);
+      if (selectable) {
+        FixTextFlyoutForXamlIsland(textBlock);
       }
     } else if (propertyValue.IsNull()) {
       textBlock.ClearValue(xaml::Controls::TextBlock::IsTextSelectionEnabledProperty());
