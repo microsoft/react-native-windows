@@ -215,12 +215,8 @@ bool TextViewManager::UpdateProperty(
     if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
       const auto selectable = propertyValue.AsBoolean();
       textBlock.IsTextSelectionEnabled(selectable);
-      // This works around a XAML Islands bug where the XamlRoot of the first
-      // window the flyout is shown on takes ownership of the flyout and attempts
-      // to show the flyout on other windows cause the first window to get focus.
-      // https://github.com/microsoft/microsoft-ui-xaml/issues/5341
       if (selectable) {
-        FixTextFlyoutForXamlIsland(textBlock);
+        EnsureUniqueTextFlyoutForXamlIsland(textBlock);
       }
     } else if (propertyValue.IsNull()) {
       textBlock.ClearValue(xaml::Controls::TextBlock::IsTextSelectionEnabledProperty());

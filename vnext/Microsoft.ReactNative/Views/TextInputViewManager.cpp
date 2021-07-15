@@ -805,7 +805,7 @@ ShadowNode *TextInputViewManager::createShadow() const {
 
 XamlView TextInputViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   xaml::Controls::TextBox textBox;
-  FixTextFlyoutForXamlIsland(textBox);
+  EnsureUniqueTextFlyoutForXamlIsland(textBox);
   return textBox;
 }
 
