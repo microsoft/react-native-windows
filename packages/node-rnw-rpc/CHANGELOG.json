@@ -2,6 +2,29 @@
   "name": "node-rnw-rpc",
   "entries": [
     {
+      "date": "Fri, 16 Jul 2021 05:07:06 GMT",
+      "tag": "node-rnw-rpc_v1.0.11",
+      "version": "1.0.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Integrate June 9 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c0db5f75f70e4cb2876442279a9dafea3f341e1b",
+            "package": "node-rnw-rpc"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.343",
+            "author": "email not defined",
+            "commit": "69486c0001ddd7a653dc4a600099fa2c5e0cb1fb",
+            "package": "node-rnw-rpc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Jul 2021 06:00:50 GMT",
       "tag": "node-rnw-rpc_v1.0.11-19",
       "version": "1.0.11-19",

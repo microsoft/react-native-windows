@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 16 Jul 2021 05:07:06 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.343",
+      "version": "0.0.0-canary.343",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Including hermes by default in binary distributions",
+            "author": "email not defined",
+            "commit": "69486c0001ddd7a653dc4a600099fa2c5e0cb1fb",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Disable 'unreachable code' warning for RethrowJsiError usage.",
+            "author": "aschultz@microsoft.com",
+            "commit": "0f90f13dd3da3b01ba0c3d4e8b077638cd0bb341",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate June 9 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c0db5f75f70e4cb2876442279a9dafea3f341e1b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Jul 2021 06:00:50 GMT",
       "tag": "react-native-windows_v0.0.0-canary.342",
       "version": "0.0.0-canary.342",

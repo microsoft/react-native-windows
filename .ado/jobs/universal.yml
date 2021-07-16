@@ -119,8 +119,8 @@
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
                 - UniversalBuild${{ matrix.Name }}
-              pool:
-                vmImage: $(VmImage)
+              
+              pool: $(AgentPool.Interactive)
               timeoutInMinutes: 60
               cancelTimeoutInMinutes: 5
 
