@@ -34,7 +34,7 @@ steps:
       versionSpec: '14.x'
 
   - task: CmdLine@2
-    displayName: Installing Yarm
+    displayName: Installing Yarn
     inputs:
       script: npm install -g yarn
 
