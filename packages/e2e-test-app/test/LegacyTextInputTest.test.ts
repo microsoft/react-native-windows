@@ -78,10 +78,10 @@ describe('LegacyTextInputTest', () => {
   test('TextInput onChange before onSelectionChange', async () => {
     const textInput = await textInputField();
     await textInput.setValue('a');
-    await assertLogContainsInOrder(
+    await assertLogContainsInOrder([
       'onChange text: a',
       'onSelectionChange range: 1,1',
-    );
+    ]);
   });
 });
 
@@ -111,7 +111,7 @@ async function assertLogContains(text: string) {
   );
 }
 
-async function assertLogContainsInOrder(...expectedLines: string[]) {
+async function assertLogContainsInOrder(expectedLines: string[]) {
   const textLogComponent = await $('~textinput-log');
 
   await browser.waitUntil(

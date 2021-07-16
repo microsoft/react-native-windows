@@ -145,7 +145,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>winsqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>chakra.dll;winsqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <ModuleDefinitionFile>Microsoft.ReactNative.def</ModuleDefinitionFile>
@@ -454,7 +454,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\LeakChecker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\WeakFamilyRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\Differentiator.cpp" DisableSpecificWarnings="4018;4389;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\DifferentiatorFlatteningClassic.cpp" DisableSpecificWarnings="4018;4389;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingCoordinator.cpp" DisableSpecificWarnings="4459;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\MountingTransaction.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowTree.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)" />
@@ -786,7 +785,7 @@
     <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210708.4" />
-    <PackageReference Include="ReactNative.Hermes.Windows" Version="0.8.0-ms.0" Condition="'$(UseHermes)' == 'true'" />
+    <PackageReference Include="ReactNative.Hermes.Windows" Version="0.8.0-ms.0" Condition="'$(IncludeHermes)' == 'true'" />
     <PackageReference Include="ReactNative.V8Jsi.Windows.UWP" Version="0.64.17" Condition="'$(UseV8)' == 'true'" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
   </ItemGroup>
