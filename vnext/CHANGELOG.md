@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 14 Jul 2021 06:00:50 GMT and should not be manually modified.
+This log was last generated on Fri, 16 Jul 2021 05:07:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.343
+
+Fri, 16 Jul 2021 05:07:06 GMT
+
+### Changes
+
+- Including hermes by default in binary distributions (email not defined)
+- Disable 'unreachable code' warning for RethrowJsiError usage. (aschultz@microsoft.com)
+- Integrate June 9 Nightly RN Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.342
 

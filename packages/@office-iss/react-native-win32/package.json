@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-canary.100",
+  "version": "0.0.0-canary.101",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@jest/create-cache-key-function": "^27.0.1",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.1",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.2",
     "@react-native-community/cli": "^6.0.0-rc.0",
     "@react-native-community/cli-platform-android": "^6.0.0-rc.0",
     "@react-native-community/cli-platform-ios": "^6.0.0-rc.0",
