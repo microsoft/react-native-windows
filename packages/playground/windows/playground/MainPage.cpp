@@ -35,6 +35,7 @@ MainPage::MainPage() {
   x_engineV8().IsEnabled(true);
 
   x_JsEngine().SelectedIndex(1);
+  x_Theme().SelectedIndex(0);
 }
 
 void MainPage::OnUnloadClick(
@@ -104,9 +105,13 @@ void MainPage::OnLoadClick(
               }
               strongThis->x_DebuggerPort().Text(winrt::to_hstring(context.SettingsSnapshot().DebuggerPort()));
               if (context.SettingsSnapshot().UseWebDebugger()) {
-                strongThis->RequestedTheme(xaml::ElementTheme::Light);
-              } else {
-                strongThis->RequestedTheme(xaml::ElementTheme::Default);
+                xaml::Window::Current().Content().as<xaml::FrameworkElement>().RequestedTheme(
+                    xaml::ElementTheme::Light);
+                strongThis->x_themeLight().IsSelected(true);
+              } else if (strongThis->RequestedTheme() == xaml::ElementTheme::Light) {
+                xaml::Window::Current().Content().as<xaml::FrameworkElement>().RequestedTheme(
+                    xaml::ElementTheme::Default);
+                strongThis->x_themeDefault().IsSelected(true);
               }
             }
           });
@@ -165,6 +170,18 @@ void winrt::playground::implementation::MainPage::x_UseWebDebuggerCheckBox_Unche
   if (x_BreakOnFirstLineCheckBox()) {
     x_BreakOnFirstLineCheckBox().IsEnabled(true);
   }
+}
+
+void winrt::playground::implementation::MainPage::x_Theme_SelectionChanged(
+    winrt::Windows::Foundation::IInspectable const &sender,
+    winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const &e) {
+  auto theme = ElementTheme::Default;
+  if (x_Theme().SelectedItem() == x_themeLight()) {
+    theme = ElementTheme::Light;
+  } else if (x_Theme().SelectedItem() == x_themeDark()) {
+    theme = ElementTheme::Dark;
+  }
+  xaml::Window::Current().Content().as<xaml::FrameworkElement>().RequestedTheme(theme);
 }
 
 void MainPage::OnNavigatedTo(xaml::Navigation::NavigationEventArgs const &e) {
