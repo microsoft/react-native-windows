@@ -166,4 +166,5 @@
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210708.4" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="TestBundle.targets" />
 </Project>
