@@ -11,6 +11,9 @@
     <ReactNativePackageDir>$(MSBuildThisFileDirectory)\node_modules\react-native\</ReactNativePackageDir>
     <RootIntDir>$(ReactNativeWindowsDir)\build</RootIntDir>
     <RootOutDir>$(ReactNativeWindowsDir)\target</RootOutDir>
+  </PropertyGroup>
+
+  <PropertyGroup Label="NuGet">
     <MSBuildProjectExtensionsPath>$(RootIntDir)\ProjectExtensions\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>
   </PropertyGroup>
 
