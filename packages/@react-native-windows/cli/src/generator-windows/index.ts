@@ -387,6 +387,11 @@ export async function copyProjectTemplateAndReplace(
             },
           ];
 
+    csMappings.push({
+      from: path.join(srcPath, projDir, 'Directory.Build.props'),
+      to: path.join(windowsDir, 'Directory.Build.props'),
+    });
+
     for (const mapping of csMappings) {
       await copyAndReplaceWithChangedCallback(
         mapping.from,
