@@ -36,6 +36,7 @@ namespace Microsoft.ReactNative
     Tab,
     TabList,
     Timer,
+    ToggleButton, 
     ToolBar,
     List, // RNW extension
     ListItem, // RNW extension
