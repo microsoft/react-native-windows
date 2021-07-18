@@ -50,7 +50,7 @@ winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore
     case winrt::Microsoft::ReactNative::AccessibilityRoles::Button:
     case winrt::Microsoft::ReactNative::AccessibilityRoles::ImageButton:
     case winrt::Microsoft::ReactNative::AccessibilityRoles::Switch:
-    case winrt::Microsoft::ReactNative::AccessibilityRoles::ToggleButton
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ToggleButton:
       return winrt::AutomationControlType::Button;
     case winrt::Microsoft::ReactNative::AccessibilityRoles::Link:
       return winrt::AutomationControlType::Hyperlink;
