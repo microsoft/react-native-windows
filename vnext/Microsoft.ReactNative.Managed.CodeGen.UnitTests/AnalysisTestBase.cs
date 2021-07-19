@@ -81,7 +81,7 @@ public class TestClass
             // I could not find a way for the dotnet core project to NOT be "Any CPU" and then produce x64 binaries
             // in that configuration. I tried all the usual tricks for the netcore project to match the universal
             // multi platform support.
-            references.Add($@"{targetRoot}\X64\{configuration}\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll");
+            references.Add($@"{targetRoot}\X64\{configuration}\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll");
             references.Add($@"{targetRoot}\X64\{configuration}\Microsoft.ReactNative\Microsoft.ReactNative.winmd");
 
             // Add the windows 10 sdk assemblies for UWP. We have a compile time safeguard in place to
