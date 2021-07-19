@@ -2,9 +2,9 @@ parameters:
   - name: buildEnvironment
     type: string
     default : PullRequest
-    values: 
-     - PullRequest 
-     - Continuous 
+    values:
+     - PullRequest
+     - Continuous
 
 jobs:
   - job: Playground
@@ -91,7 +91,6 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             $(BuildWinUI3Properties)
-            /p:BaseIntDir=$(BaseIntDir)
             /p:AppxPackageSigningEnabled=false
         condition: eq('${{ parameters.BuildEnvironment }}', 'PullRequest')
 
@@ -110,7 +109,6 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             $(BuildWinUI3Properties)
-            /p:BaseIntDir=$(BaseIntDir)
             /p:PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
         condition: eq('${{ parameters.BuildEnvironment }}', 'Continuous')
 
