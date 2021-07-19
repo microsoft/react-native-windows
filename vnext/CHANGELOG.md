@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Jul 2021 15:18:53 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Jul 2021 15:05:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.14
+
+Mon, 19 Jul 2021 15:05:56 GMT
+
+### Patches
+
+- DisconnectFromView can be called on an view that has no connected tag. Also fix exceptions to be thrown by value as the rest of the code expects them to be (asklar@microsoft.com)
+- Batch calls to alert() instead of crashing (asklar@microsoft.com)
 
 ## 0.64.13
 

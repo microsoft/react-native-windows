@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Jul 2021 15:05:56 GMT",
+      "tag": "react-native-windows_v0.64.14",
+      "version": "0.64.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "DisconnectFromView can be called on an view that has no connected tag. Also fix exceptions to be thrown by value as the rest of the code expects them to be",
+            "author": "asklar@microsoft.com",
+            "commit": "5a03cd6161a36366b514f1f7a28852ee70bad58b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Batch calls to alert() instead of crashing",
+            "author": "asklar@microsoft.com",
+            "commit": "276d60867d558e873dede9d831878f67252ed395",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Jul 2021 15:18:53 GMT",
       "tag": "react-native-windows_v0.64.13",
       "version": "0.64.13",

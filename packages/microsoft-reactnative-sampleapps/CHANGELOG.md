@@ -1,8 +1,16 @@
 # Change Log - microsoft-reactnative-sampleapps
 
-This log was last generated on Mon, 12 Jul 2021 15:18:53 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Jul 2021 15:05:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.54
+
+Mon, 19 Jul 2021 15:05:56 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.64.14 (asklar@microsoft.com)
 
 ## 0.0.54
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "DisconnectFromView can be called on an view that has no connected tag. Also fix exceptions to be thrown by value as the rest of the code expects them to be",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
