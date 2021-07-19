@@ -120,7 +120,7 @@
               dependsOn:
                 - UniversalBuild${{ matrix.Name }}
               
-              pool: $(AgentPool.Interactive)
+              pool: $(AgentPool.Medium)
               timeoutInMinutes: 60
               cancelTimeoutInMinutes: 5
 
@@ -153,14 +153,6 @@
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
 
-                # The WinDevBuild Agents run on the c-drive and the hosted agents run on the d-drive.
-                # Some of the output files have the c-drive expanded in the outputs, which results in file not found errors when running tests
-                # This script fixes those files to point to the d-drive of the hosted agents.
-                # We unfortunately can't run the tests on the WinDev  build pool because it lacks UI support
-                - powershell: |
-                    Get-ChildItem *.appxrecipe -recurse | ForEach { (Get-Content -Path $_) -replace "c:\\a\\1\\s", "$(System.DefaultWorkingDirectory)" | Set-Content -Path $_ }
-                  displayName: Fix Paths in appx files to deal with different enlistments between agent types.
-
                 - template: ../templates/discover-google-test-adapter.yml
 
                 - task: VSTest@2
@@ -191,7 +183,7 @@
                   inputs:
                     testSelector: testAssemblies
                     testAssemblyVer2: |
-                      Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
+                      Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
                     searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     runTestsInIsolation: true
                     platform: ${{ matrix.BuildPlatform }}

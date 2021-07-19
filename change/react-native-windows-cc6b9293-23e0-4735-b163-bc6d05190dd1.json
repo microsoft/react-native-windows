@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix long path issues for managed projects",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}

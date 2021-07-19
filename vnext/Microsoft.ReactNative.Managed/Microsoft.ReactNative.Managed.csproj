@@ -11,6 +11,7 @@
     <RootNamespace>Microsoft.ReactNative.Managed</RootNamespace>
     <AssemblyName>Microsoft.ReactNative.Managed</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
+    <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
