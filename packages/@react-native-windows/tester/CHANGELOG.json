@@ -2,6 +2,21 @@
   "name": "@react-native-windows/tester",
   "entries": [
     {
+      "date": "Mon, 19 Jul 2021 15:09:37 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.65.0-preview.6",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0997fa6f6a6edca5f20e7924e0cc5a3067b02c6e",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Jul 2021 15:18:32 GMT",
       "tag": "@react-native-windows/tester_v0.0.1",
       "version": "0.0.1",

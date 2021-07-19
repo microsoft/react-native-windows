@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 19 Jul 2021 15:09:37 GMT",
+      "tag": "@react-native-windows/cli_v0.65.0-preview.3",
+      "version": "0.65.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Revert Pre-RC CLI Workaround",
+            "author": "ngerlem@microsoft.com",
+            "commit": "54bc90509fa4e0f801a629f67035585b165394b5",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Jul 2021 15:18:32 GMT",
       "tag": "@react-native-windows/cli_v0.65.0-preview.2",
       "version": "0.65.0-preview.2",
