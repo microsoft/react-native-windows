@@ -49,9 +49,8 @@ winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore
   switch (accessibilityRole) {
     case winrt::Microsoft::ReactNative::AccessibilityRoles::Button:
     case winrt::Microsoft::ReactNative::AccessibilityRoles::ImageButton:
-    case winrt::Microsoft::ReactNative::AccessibilityRoles::Switch: // Both ToggleSwitch and
-                                                                    // ToggleButton return
-                                                                    // "Button"
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Switch:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ToggleButton:
       return winrt::AutomationControlType::Button;
     case winrt::Microsoft::ReactNative::AccessibilityRoles::Link:
       return winrt::AutomationControlType::Hyperlink;
@@ -121,7 +120,8 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
       patternInterface == winrt::PatternInterface::Toggle &&
       (accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::CheckBox ||
        accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Switch ||
-       accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Radio) &&
+       accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Radio ||
+       accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::ToggleButton) &&
       (HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Checked) ||
        HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Unchecked))) {
     return *this;
