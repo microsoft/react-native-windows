@@ -359,7 +359,7 @@ Since the <code>FileOpenPicker</code> API requires running on the UI thread, we 
   <span class="token punctuation">}</span>
 </code></pre>
 <blockquote>
-<p><strong>Note:</strong> <code>UIDispatcher</code> is available via the <code>ReactContext</code>, which we can inject through a method marked as <a href="/react-native-windows/docs/next/native-modules-advanced#c-native-modules-with-initializer-and-as-a-way-to-access-reactcontext"><code>REACT_METHOD</code></a></p>
+<p><strong>Note:</strong> <code>UIDispatcher</code> is available via the <code>ReactContext</code>, which we can inject through a method marked as <a href="/react-native-windows/docs/next/native-modules-advanced#c-native-modules-with-initializer-and-as-a-way-to-access-reactcontext"><code>REACT_INIT</code></a></p>
 <pre><code class="hljs css language-cpp"> <span class="token function">REACT_INIT</span><span class="token punctuation">(</span>Initialize<span class="token punctuation">)</span><span class="token punctuation">;</span>
  <span class="token keyword">void</span> <span class="token function">Initialize</span><span class="token punctuation">(</span><span class="token keyword">const</span> winrt<span class="token double-colon punctuation">::</span>Microsoft<span class="token double-colon punctuation">::</span>ReactNative<span class="token double-colon punctuation">::</span>ReactContext<span class="token operator">&amp;</span> reactContext<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
  <span class="token punctuation">{</span>
