@@ -7983,9 +7983,9 @@ metro-transform-plugins@0.66.0:
     nullthrows "^1.1.1"
 
 metro-transform-plugins@^0.66.0:
-  version "0.66.1"
-  resolved "https://registry.yarnpkg.com/metro-transform-plugins/-/metro-transform-plugins-0.66.1.tgz#b8ebc30bacc066b959f7546fce3d74a752e35cd8"
-  integrity sha512-Cx1FBoAuC/UzReEe37KNWEKO25u6gk7q6Ev/37VzY7OLEqCqklZapHTABpBKkvS4triKKeBY/FWqK7R3GFQ2uQ==
+  version "0.66.2"
+  resolved "https://registry.yarnpkg.com/metro-transform-plugins/-/metro-transform-plugins-0.66.2.tgz#39dd044a23b1343e4f2d2ec34d08128cdf255ed4"
+  integrity sha512-KTvqplh0ut7oDKovvDG6yzXM02R6X+9b2oVG+qYq8Zd3aCGTi51ASx4ThCNkAHyEvCuJdYg9fxXTL+j+wvhB5w==
   dependencies:
     "@babel/core" "^7.14.0"
     "@babel/generator" "^7.14.0"
