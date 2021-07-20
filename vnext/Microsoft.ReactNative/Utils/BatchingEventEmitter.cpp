@@ -60,7 +60,7 @@ void BatchingEventEmitter::DispatchCoalescingEvent(
       L"receiveEvent",
       std::move(eventName),
       tag,
-      [tag, eventName = std::move(eventName), &eventDataWriter](const IJSValueWriter &paramsWriter) {
+      [tag, eventName, &eventDataWriter](const IJSValueWriter &paramsWriter) {
         paramsWriter.WriteArrayBegin();
         WriteValue(paramsWriter, tag);
         WriteValue(paramsWriter, std::move(eventName));
