@@ -34,4 +34,14 @@ inline void EnsureUniqueTextFlyoutForXamlIsland(T const &textView) {
   }
 }
 
+template <typename T>
+inline void ClearUniqueTextFlyoutForXamlIsland(T const &textView) {
+  textView.ClearValue(xaml::UIElement::ContextFlyoutProperty());
+  if (textView.try_as<xaml::Controls::TextBlock>()) {
+    textView.ClearValue(xaml::Controls::TextBlock::SelectionFlyoutProperty());
+  } else if (textView.try_as<xaml::Controls::TextBox>()) {
+    textView.ClearValue(xaml::Controls::TextBox::SelectionFlyoutProperty());
+  }
+}
+
 } // namespace Microsoft::ReactNative

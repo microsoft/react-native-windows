@@ -220,6 +220,7 @@ bool TextViewManager::UpdateProperty(
       }
     } else if (propertyValue.IsNull()) {
       textBlock.ClearValue(xaml::Controls::TextBlock::IsTextSelectionEnabledProperty());
+      ClearUniqueTextFlyoutForXamlIsland(textBlock);
     }
   } else if (propertyName == "allowFontScaling") {
     if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
