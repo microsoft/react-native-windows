@@ -31,7 +31,7 @@ struct MainPage : MainPageT<MainPage> {
       winrt::Windows::Foundation::IInspectable const &e);
   void x_Theme_SelectionChanged(
       winrt::Windows::Foundation::IInspectable const &sender,
-      winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const &e);
+      xaml::Controls::SelectionChangedEventArgs const &e);
   void OnNavigatedTo(xaml::Navigation::NavigationEventArgs const &e);
 };
 

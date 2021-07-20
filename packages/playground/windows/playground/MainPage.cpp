@@ -87,36 +87,35 @@ void MainPage::OnLoadClick(
     }
   }
 
-  host.InstanceSettings().InstanceCreated(
-      [wkThis = get_weak()](auto sender, winrt::Microsoft::ReactNative::InstanceCreatedEventArgs args) {
+  host.InstanceSettings().InstanceCreated([wkThis = get_weak()](
+                                              auto sender,
+                                              winrt::Microsoft::ReactNative::InstanceCreatedEventArgs args) {
+    if (auto strongThis = wkThis.get()) {
+      args.Context().UIDispatcher().Post([wkThis, context = args.Context()]() {
         if (auto strongThis = wkThis.get()) {
-          args.Context().UIDispatcher().Post([wkThis, context = args.Context()]() {
-            if (auto strongThis = wkThis.get()) {
-              strongThis->x_UseWebDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseWebDebugger());
-              strongThis->x_UseFastRefreshCheckBox().IsChecked(context.SettingsSnapshot().UseFastRefresh());
-              strongThis->x_UseDirectDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseDirectDebugger());
-              strongThis->x_BreakOnFirstLineCheckBox().IsChecked(context.SettingsSnapshot().DebuggerBreakOnNextLine());
-              auto debugBundlePath = context.SettingsSnapshot().DebugBundlePath();
-              for (auto item : strongThis->x_entryPointCombo().Items()) {
-                if (winrt::unbox_value<winrt::hstring>(item.as<ComboBoxItem>().Content()) == debugBundlePath) {
-                  strongThis->x_entryPointCombo().SelectedItem(item);
-                  break;
-                }
-              }
-              strongThis->x_DebuggerPort().Text(winrt::to_hstring(context.SettingsSnapshot().DebuggerPort()));
-              if (context.SettingsSnapshot().UseWebDebugger()) {
-                xaml::Window::Current().Content().as<xaml::FrameworkElement>().RequestedTheme(
-                    xaml::ElementTheme::Light);
-                strongThis->x_themeLight().IsSelected(true);
-              } else if (strongThis->RequestedTheme() == xaml::ElementTheme::Light) {
-                xaml::Window::Current().Content().as<xaml::FrameworkElement>().RequestedTheme(
-                    xaml::ElementTheme::Default);
-                strongThis->x_themeDefault().IsSelected(true);
-              }
+          strongThis->x_UseWebDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseWebDebugger());
+          strongThis->x_UseFastRefreshCheckBox().IsChecked(context.SettingsSnapshot().UseFastRefresh());
+          strongThis->x_UseDirectDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseDirectDebugger());
+          strongThis->x_BreakOnFirstLineCheckBox().IsChecked(context.SettingsSnapshot().DebuggerBreakOnNextLine());
+          auto debugBundlePath = context.SettingsSnapshot().DebugBundlePath();
+          for (auto item : strongThis->x_entryPointCombo().Items()) {
+            if (winrt::unbox_value<winrt::hstring>(item.as<ComboBoxItem>().Content()) == debugBundlePath) {
+              strongThis->x_entryPointCombo().SelectedItem(item);
+              break;
             }
-          });
+          }
+          strongThis->x_DebuggerPort().Text(winrt::to_hstring(context.SettingsSnapshot().DebuggerPort()));
+          if (context.SettingsSnapshot().UseWebDebugger()) {
+            xaml::Window::Current().Content().as<xaml::FrameworkElement>().RequestedTheme(xaml::ElementTheme::Light);
+            strongThis->x_themeLight().IsSelected(true);
+          } else if (strongThis->RequestedTheme() == xaml::ElementTheme::Light) {
+            xaml::Window::Current().Content().as<xaml::FrameworkElement>().RequestedTheme(xaml::ElementTheme::Default);
+            strongThis->x_themeDefault().IsSelected(true);
+          }
         }
       });
+    }
+  });
   // Nudge the ReactNativeHost to create the instance and wrapping context
   host.ReloadInstance();
 }
@@ -174,7 +173,7 @@ void winrt::playground::implementation::MainPage::x_UseWebDebuggerCheckBox_Unche
 
 void winrt::playground::implementation::MainPage::x_Theme_SelectionChanged(
     winrt::Windows::Foundation::IInspectable const &sender,
-    winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const &e) {
+    xaml::Controls::SelectionChangedEventArgs const &e) {
   auto theme = ElementTheme::Default;
   if (x_Theme().SelectedItem() == x_themeLight()) {
     theme = ElementTheme::Light;
