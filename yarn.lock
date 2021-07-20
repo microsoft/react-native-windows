@@ -141,11 +141,11 @@
     source-map "^0.5.0"
 
 "@babel/generator@^7.14.0", "@babel/generator@^7.14.5":
-  version "7.14.5"
-  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.14.5.tgz#848d7b9f031caca9d0cd0af01b063f226f52d785"
-  integrity sha512-y3rlP+/G25OIX3mYKKIOlQRcqj7YgrvHxOLbVmyLJ9bPmi5ttvUmpydVjcFjZphOktWuA7ovbx91ECloWTfjIA==
+  version "7.14.8"
+  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.14.8.tgz#bf86fd6af96cf3b74395a8ca409515f89423e070"
+  integrity sha512-cYDUpvIzhBVnMzRoY1fkSEhK/HmwEVwlyULYgn/tMQYd6Obag3ylCjONle3gdErfXBW61SVTlR9QR7uWlgeIkg==
   dependencies:
-    "@babel/types" "^7.14.5"
+    "@babel/types" "^7.14.8"
     jsesc "^2.5.1"
     source-map "^0.5.0"
 
@@ -8018,14 +8018,7 @@ metro-react-native-babel-transformer@0.66.0, metro-react-native-babel-transforme
     metro-source-map "0.66.0"
     nullthrows "^1.1.1"
 
-metro-resolver@0.66.2:
-  version "0.66.2"
-  resolved "https://registry.yarnpkg.com/metro-resolver/-/metro-resolver-0.66.2.tgz#f743ddbe7a12dd137d1f7a555732cafcaea421f8"
-  integrity sha512-pXQAJR/xauRf4kWFj2/hN5a77B4jLl0Fom5I3PHp6Arw/KxSBp0cnguXpGLwNQ6zQC0nxKCoYGL9gQpzMnN7Hw==
-  dependencies:
-    absolute-path "^0.0.0"
-
-metro-resolver@^0.66.0:
+metro-resolver@0.66.2, metro-resolver@^0.66.0:
   version "0.66.2"
   resolved "https://registry.yarnpkg.com/metro-resolver/-/metro-resolver-0.66.2.tgz#f743ddbe7a12dd137d1f7a555732cafcaea421f8"
   integrity sha512-pXQAJR/xauRf4kWFj2/hN5a77B4jLl0Fom5I3PHp6Arw/KxSBp0cnguXpGLwNQ6zQC0nxKCoYGL9gQpzMnN7Hw==
@@ -8094,18 +8087,7 @@ metro-symbolicate@0.66.2:
     through2 "^2.0.1"
     vlq "^1.0.0"
 
-metro-transform-plugins@0.66.2:
-  version "0.66.2"
-  resolved "https://registry.yarnpkg.com/metro-transform-plugins/-/metro-transform-plugins-0.66.2.tgz#39dd044a23b1343e4f2d2ec34d08128cdf255ed4"
-  integrity sha512-KTvqplh0ut7oDKovvDG6yzXM02R6X+9b2oVG+qYq8Zd3aCGTi51ASx4ThCNkAHyEvCuJdYg9fxXTL+j+wvhB5w==
-  dependencies:
-    "@babel/core" "^7.14.0"
-    "@babel/generator" "^7.14.0"
-    "@babel/template" "^7.0.0"
-    "@babel/traverse" "^7.14.0"
-    nullthrows "^1.1.1"
-
-metro-transform-plugins@^0.66.0:
+metro-transform-plugins@0.66.2, metro-transform-plugins@^0.66.0:
   version "0.66.2"
   resolved "https://registry.yarnpkg.com/metro-transform-plugins/-/metro-transform-plugins-0.66.2.tgz#39dd044a23b1343e4f2d2ec34d08128cdf255ed4"
   integrity sha512-KTvqplh0ut7oDKovvDG6yzXM02R6X+9b2oVG+qYq8Zd3aCGTi51ASx4ThCNkAHyEvCuJdYg9fxXTL+j+wvhB5w==
