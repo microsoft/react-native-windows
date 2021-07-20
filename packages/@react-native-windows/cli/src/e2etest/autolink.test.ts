@@ -10,7 +10,7 @@ test('autolink with no windows project', () => {
       new AutolinkTest({}, {}, {check: true, logging: false});
     }).toThrowError();
   });
-  
+
   test('autolink with incomplete windows project', () => {
     expect(() => {
       const autolink = new AutolinkTest(
@@ -21,7 +21,7 @@ test('autolink with no windows project', () => {
       autolink.validateRequiredAppProperties();
     }).toThrowError();
   });
-  
+
   class AutolinkTest extends AutolinkWindows {
     public getWindowsProjectConfig() {
       return this.windowsAppConfig;
@@ -40,7 +40,7 @@ test('autolink with no windows project', () => {
     }
 }
 
-  
+
   test('autolink fixup sln', () => {
     const autolink = new AutolinkTest(
       {windows: {folder: __dirname, sourceDir: '.'}},
@@ -57,7 +57,7 @@ test('autolink with no windows project', () => {
       autolink.validateRequiredAppProperties();
     }).toThrow();
   });
-  
+
   test('autolink fixup proj', async done => {
     const autolink = new AutolinkTest(
       {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
@@ -70,21 +70,21 @@ test('autolink with no windows project', () => {
     );
     expect(autolink.getWindowsProjectConfig().solutionFile).toEqual('foo.sln');
     expect(autolink.getWindowsProjectConfig().project).toBeUndefined();
-  
+
     const folder = path.resolve('src/e2etest/projects/', 'WithWinUI3');
     await ensureWinUI3Project(folder);
     expect(() => {
       autolink.validateRequiredProjectProperties();
     }).toThrow();
     autolink.fixUpForProjOption();
-  
+
     const projectConfig = autolink.getWindowsProjectConfig().project;
     expect(projectConfig).not.toBeUndefined();
     expect(projectConfig.projectName).toEqual('WithWinUI3');
     autolink.validateRequiredProjectProperties();
     done();
   });
-  
+
   test('empty cpp autolink dependencies', () => {
     const autolink = new AutolinkTest(
       {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
@@ -101,7 +101,7 @@ test('autolink with no windows project', () => {
       '\n    UNREFERENCED_PARAMETER(packageProviders);',
     );
   });
-  
+
   test('one invalid cpp autolink dependency', () => {
     const autolink = new AutolinkTest(
       {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
@@ -129,7 +129,7 @@ test('autolink with no windows project', () => {
       '\n    UNREFERENCED_PARAMETER(packageProviders);',
     );
   });
-  
+
   test('one invalid cs autolink dependency', () => {
     const autolink = new AutolinkTest(
       {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
@@ -156,7 +156,7 @@ test('autolink with no windows project', () => {
     expect(replacements.csUsingNamespaces).toEqual('');
     expect(replacements.csReactPackageProviders).toEqual('');
   });
-  
+
   test('one valid cpp autolink dependency', () => {
     const autolink = new AutolinkTest(
       {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
@@ -195,7 +195,7 @@ test('autolink with no windows project', () => {
       'packageProviders.Append(winrt::FamousAnimalCartoons())',
     );
   });
-  
+
   test('one valid cs autolink dependency', () => {
     const autolink = new AutolinkTest(
       {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
@@ -235,107 +235,7 @@ test('autolink with no windows project', () => {
       'packageProviders.Add(new FamousAnimalCartoons())',
     );
   });
-  
-  test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async done => {
-    const folder = path.resolve('src/e2etest/projects/WithWinUI3');
-    const rnc = require(path.join(folder, 'react-native.config.js'));
-  
-    const config = projectConfigWindows(folder, rnc.project.windows)!;
-  
-    const al = new AutolinkTest(
-      {windows: config},
-      {},
-      {
-        check: false,
-        logging: false,
-      },
-    );
-    al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>`;
-  
-    const exd = await al.ensureXAMLDialect();
-    expect(exd).toBeTruthy();
-  
-    const expectedExperimentalFeatures = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>';
-    expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
 
-    done();
-  });
-
-  test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=true in ExperimentalFeatures.props', async done => {
-    const folder = path.resolve('src/e2etest/projects/WithWinUI3');
-    const rnc = require(path.join(folder, 'react-native.config.js'));
-  
-    const config = projectConfigWindows(folder, rnc.project.windows)!;
-    config.useWinUI3 = false;
-    const al = new AutolinkTest(
-      {windows: config},
-      {},
-      {
-        check: false,
-        logging: false,
-      },
-    );
-    al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>`;
-
-    const exd = await al.ensureXAMLDialect();
-    expect(exd).toBeTruthy();
-  
-    const expectedExperimentalFeatures = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
-    expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
-
-    done();
-  });
-
-  test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=true in ExperimentalFeatures.props', async done => {
-    const folder = path.resolve('src/e2etest/projects/WithWinUI3');
-    const rnc = require(path.join(folder, 'react-native.config.js'));
-  
-    const config = projectConfigWindows(folder, rnc.project.windows)!;
-    delete config.useWinUI3;
-    const al = new AutolinkTest(
-      {windows: config},
-      {},
-      {
-        check: false,
-        logging: false,
-      },
-    );
-    al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>`;
-  
-    const exd = await al.ensureXAMLDialect();
-    expect(exd).toBeTruthy();
-  
-    const expectedExperimentalFeatures = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>';
-    expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
-
-    done();
-  });
-  
-  test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async done => {
-    const folder = path.resolve('src/e2etest/projects/WithWinUI3');
-    const rnc = require(path.join(folder, 'react-native.config.js'));
-  
-    const config = projectConfigWindows(folder, rnc.project.windows)!;
-    delete config.useWinUI3;
-    const al = new AutolinkTest(
-      {windows: config},
-      {},
-      {
-        check: false,
-        logging: false,
-      },
-    );
-    al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>`;
-  
-    const exd = await al.ensureXAMLDialect();
-    expect(exd).toBeTruthy();
-  
-    const expectedExperimentalFeatures = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
-    expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
-
-    done();
-  });
-  
   test('Indirect autolink dependency', () => {
     const autolink = new AutolinkTest(
       {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
