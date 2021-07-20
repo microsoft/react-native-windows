@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "\"0.65\" -> \"Future Version\" in deprecation warnings",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
