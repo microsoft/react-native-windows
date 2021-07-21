@@ -385,23 +385,19 @@ export function startServerInNewWindow(
   verbose: boolean,
 ): Promise<void> {
   return new Promise(resolve => {
-    if (options.packager) {
-      http
-        .get('http://localhost:8081/status', res => {
-          if (res.statusCode === 200) {
-            newSuccess('React-Native Server already started');
-          } else {
-            newError('React-Native Server not responding');
-          }
-          resolve();
-        })
-        .on('error', () => {
-          launchServer(options, verbose);
-          resolve();
-        });
-    } else {
-      resolve();
-    }
+    http
+      .get('http://localhost:8081/status', res => {
+        if (res.statusCode === 200) {
+          newSuccess('React-Native Server already started');
+        } else {
+          newError('React-Native Server not responding');
+        }
+        resolve();
+      })
+      .on('error', () => {
+        launchServer(options, verbose);
+        resolve();
+      });
   });
 }
 

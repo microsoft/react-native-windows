@@ -316,7 +316,9 @@ async function runWindowsInternal(
     newInfo('Build step is skipped');
   }
 
-  await deploy.startServerInNewWindow(options, verbose);
+  if (shouldLaunchPackager(options)) {
+    await deploy.startServerInNewWindow(options, verbose);
+  }
 
   if (options.deploy) {
     runWindowsPhase = 'FindSolution';
@@ -341,6 +343,13 @@ async function runWindowsInternal(
   } else {
     newInfo('Deploy step is skipped');
   }
+}
+
+function shouldLaunchPackager(options: RunWindowsOptions): boolean {
+  return (
+    options.packager === true ||
+    (options.packager === undefined && options.release !== true)
+  );
 }
 
 /*
