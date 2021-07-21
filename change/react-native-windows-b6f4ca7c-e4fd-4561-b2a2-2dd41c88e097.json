@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Disable warning for false positives of [experimental] warning in MIDL",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
