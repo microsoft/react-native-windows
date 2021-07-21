@@ -120,6 +120,17 @@
     </ClCompile>
   </ItemDefinitionGroup>
 
+  <ItemDefinitionGroup>
+    <Midl>
+      <!-- 
+        There is an issue with MIDL where the generated type IFoo from a runtimeclass Foo does not copy the [experimental] attribute and then warns about:
+        \vnext\Microsoft.ReactNative\QuirkSettings.idl(18): warning MIDL5135: [msg]a type that is not marked [experimental] cannot reference a type that is marked [experimental] [context]: Microsoft.ReactNative.IQuirkSettings refers to type Microsoft.ReactNative.QuirkSettings [ RuntimeClass ' 
+       Microsoft.ReactNative.QuirkSettings'  ] [\vnext\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj]
+       -->
+      <AdditionalOptions>/no_warn:5135</AdditionalOptions>
+    </Midl>
+  </ItemDefinitionGroup>
+
   <ItemDefinitionGroup Condition="'$(ConfigurationType)' == 'Application' OR '$(ConfigurationType)' == 'DynamicLibrary'">
     <Link>
       <SubSystem>Console</SubSystem>
