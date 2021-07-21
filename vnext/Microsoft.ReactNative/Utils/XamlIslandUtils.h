@@ -25,8 +25,10 @@ inline void EnsureUniqueTextFlyoutForXamlIsland(T const &textView) {
     // This works around a XAML Islands bug where the Proofing sub-menu for
     // TextBox causes a crash while animating to open / close before 21H1.
     // https://github.com/microsoft/microsoft-ui-xaml/issues/3529
-    if (!Is21H1OrHigher() && textView.try_as<xaml::Controls::TextBox>()) {
-      FixProofingMenuCrashForXamlIsland(flyout);
+    if constexpr (std::is_same_v<T, xaml::Controls::TextBox>) {
+      if (!Is21H1OrHigher()) {
+        FixProofingMenuCrashForXamlIsland(flyout);
+      }
     }
 
     textView.ContextFlyout(flyout);
@@ -34,14 +36,9 @@ inline void EnsureUniqueTextFlyoutForXamlIsland(T const &textView) {
   }
 }
 
-template <typename T>
-inline void ClearUniqueTextFlyoutForXamlIsland(T const &textView) {
-  textView.ClearValue(xaml::UIElement::ContextFlyoutProperty());
-  if (textView.try_as<xaml::Controls::TextBlock>()) {
-    textView.ClearValue(xaml::Controls::TextBlock::SelectionFlyoutProperty());
-  } else if (textView.try_as<xaml::Controls::TextBox>()) {
-    textView.ClearValue(xaml::Controls::TextBox::SelectionFlyoutProperty());
-  }
+inline void ClearUniqueTextFlyoutForXamlIsland(xaml::Controls::TextBlock const &textBlock) {
+  textBlock.ClearValue(xaml::UIElement::ContextFlyoutProperty());
+  textBlock.ClearValue(xaml::Controls::TextBlock::SelectionFlyoutProperty());
 }
 
 } // namespace Microsoft::ReactNative
