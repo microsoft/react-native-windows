@@ -80,14 +80,33 @@ struct InspectorProtocol {
   }
 
   static folly::dynamic constructGetPagesResponsePayloadForPackager(
-      const std::vector<facebook::react::InspectorPage> &pages,
+      const std::vector<facebook::react::InspectorPage2> &pages,
       InspectorPackagerConnection::BundleStatus bundleStatus) {
     folly::dynamic payload = folly::dynamic::array;
-    for (const facebook::react::InspectorPage &page : pages) {
+    for (const facebook::react::InspectorPage2 &page : pages) {
       folly::dynamic pageDyn = folly::dynamic::object;
       pageDyn["id"] = page.id;
-      pageDyn["title"] = page.title;
-      pageDyn["vm"] = page.vm;
+      pageDyn["title"] = std::string(page.title->c_str());
+      pageDyn["vm"] = std::string(page.vm->c_str());
+
+      pageDyn["isLastBundleDownloadSuccess"] = bundleStatus.m_isLastDownloadSucess;
+      pageDyn["bundleUpdateTimestamp"] = bundleStatus.m_updateTimestamp;
+
+      payload.push_back(pageDyn);
+    }
+    return payload;
+  }
+
+  static folly::dynamic constructGetPagesResponsePayloadForPackager(
+      std::unique_ptr<facebook::react::IInspectorPages> pages,
+      InspectorPackagerConnection::BundleStatus bundleStatus) {
+    folly::dynamic payload = folly::dynamic::array;
+    for (int p = 0; p < pages->size(); p++) {
+      const facebook::react::InspectorPage2 page = pages->getPage(p);
+      folly::dynamic pageDyn = folly::dynamic::object;
+      pageDyn["id"] = page.id;
+      pageDyn["title"] = page.title->c_str();
+      pageDyn["vm"] = page.vm->c_str();
 
       pageDyn["isLastBundleDownloadSuccess"] = bundleStatus.m_isLastDownloadSucess;
       pageDyn["bundleUpdateTimestamp"] = bundleStatus.m_updateTimestamp;
@@ -125,6 +144,28 @@ void RemoteConnection::onMessage(std::string message) {
 }
 
 void RemoteConnection::onDisconnect() {
+  folly::dynamic response = InspectorProtocol::constructResponseForPackager(
+      InspectorProtocol::EventType::Disconnect,
+      InspectorProtocol::constructVMResponsePayloadOnDisconnectForPackager(m_pageId));
+
+  std::string responsestr = folly::toJson(response);
+  m_packagerConnection.sendMessageToPackager(std::move(responsestr));
+}
+
+
+RemoteConnection2::RemoteConnection2(int64_t pageId, const InspectorPackagerConnection &packagerConnection)
+    : m_packagerConnection(packagerConnection), m_pageId(pageId) {}
+
+void RemoteConnection2::onMessage(std::unique_ptr<facebook::react::IHermesString> message) {
+  std::string msg(message->c_str());
+  folly::dynamic response = InspectorProtocol::constructResponseForPackager(
+      InspectorProtocol::EventType::WrappedEvent,
+          InspectorProtocol::constructVMResponsePayloadForPackager(m_pageId, std::move(msg)));
+  std::string responsestr = folly::toJson(response);
+  m_packagerConnection.sendMessageToPackager(std::move(responsestr));
+}
+
+void RemoteConnection2::onDisconnect() {
   folly::dynamic response = InspectorProtocol::constructResponseForPackager(
       InspectorProtocol::EventType::Disconnect,
       InspectorProtocol::constructVMResponsePayloadOnDisconnectForPackager(m_pageId));
@@ -182,11 +223,11 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
     InspectorProtocol::EventType eventType = InspectorProtocol::getEventType(messageDyn);
     switch (eventType) {
       case InspectorProtocol::EventType::GetPages: {
-        std::vector<facebook::react::InspectorPage> inspetorPages = facebook::react::getInspectorInstance().getPages();
+        std::unique_ptr<facebook::react::IInspectorPages> inspectorPages = facebook::react::getInspectorPages();
         folly::dynamic response = InspectorProtocol::constructResponseForPackager(
             InspectorProtocol::EventType::GetPages,
             InspectorProtocol::constructGetPagesResponsePayloadForPackager(
-                inspetorPages, self->m_bundleStatusProvider->getBundleStatus()));
+                std::move(inspectorPages), self->m_bundleStatusProvider->getBundleStatus()));
 
         std::string responsestr = folly::toJson(response);
         self->sendMessageToPackager(std::move(responsestr));
@@ -212,8 +253,8 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
           break;
         }
 
-        self->m_localConnections[pageId] = facebook::react::getInspectorInstance().connect(
-            static_cast<int>(pageId), std::make_unique<RemoteConnection>(pageId, *self));
+        self->m_localConnections[pageId] = facebook::react::connectInspectorPage(
+            static_cast<int>(pageId), std::make_unique<RemoteConnection2>(pageId, *self));
       } break;
 
       case InspectorProtocol::EventType::Disconnect: {

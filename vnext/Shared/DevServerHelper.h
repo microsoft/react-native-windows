@@ -33,7 +33,9 @@ class DevServerHelper {
       const std::string &platform,
       bool dev,
       bool hot,
-      bool inlineSourceMap) {
+      bool inlineSourceMap,
+      const uint32_t hermesBytecodeVersion
+    ) {
     return string_format(
         BundleUrlFormat,
         GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str(),
@@ -41,7 +43,9 @@ class DevServerHelper {
         platform.c_str(),
         dev ? "true" : "false",
         hot ? "true" : "false",
-        inlineSourceMap ? "true" : "false");
+        inlineSourceMap ? "true" : "false",
+        hermesBytecodeVersion
+      );
   }
 
   static std::string get_OnChangeEndpointUrl(const std::string &sourceBundleHost, const uint16_t sourceBundlePort) {
@@ -83,7 +87,7 @@ class DevServerHelper {
   }
 
   static constexpr const char DeviceLocalHostFormat[] = "%s:%d";
-  static constexpr const char BundleUrlFormat[] = "http://%s/%s.bundle?platform=%s&dev=%s&hot=%s&inlineSourceMap=%s";
+  static constexpr const char BundleUrlFormat[] = "http://%s/%s.bundle?platform=%s&dev=%s&hot=%s&inlineSourceMap=%s&runtimeBytecodeVersion=%d";
   static constexpr const char SourceMapUrlFormat[] = "http://%s/%s.map?platform=%s&dev=%s&hot=%s";
   static constexpr const char LaunchDevToolsCommandUrlFormat[] = "http://%s/launch-js-devtools";
   static constexpr const char OnChangeEndpointUrlFormat[] = "http://%s/onchange";

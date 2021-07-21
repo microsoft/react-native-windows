@@ -13,7 +13,6 @@
     <HermesPackage Condition="'$(HermesPackage)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HermesVersion)</HermesPackage>
     <!-- TODO: Can we automatically distinguish between uwp and win32 here? -->
     <HermesArch Condition="'$(HermesArch)' == ''">uwp</HermesArch>
-    <EnableHermesInspectorInReleaseFlavor Condition="'$(EnableHermesInspectorInReleaseFlavor)' == ''">false</EnableHermesInspectorInReleaseFlavor>
 
     <UseV8 Condition="'$(UseV8)' == ''">false</UseV8>
     <V8Version Condition="'$(V8Version)' == ''">0.64.17</V8Version>
