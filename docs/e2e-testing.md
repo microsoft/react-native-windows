@@ -35,16 +35,11 @@ module.exports = {
 
 > C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest`
 
-or
-
-> C:\repo\react-native-windows\packages\e2e-test-app\test> `yarn e2etest`
-
 
 **Running a specific test**
 
-> C:\repo\react-native-windows\packages\e2e-test-app\test> `yarn e2etest .\visitAllPages.test.ts`
-
-⚠ This command will only work from the `test` directory ([#7272](https://github.com/microsoft/react-native-windows/issues/7272))
+⚠ Only the test filename (without the rest of the path) should be included.
+> C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest visitAllPages.test.ts`
 
 ## Debugging E2E Tests in CI
 ### Increasing verbosity

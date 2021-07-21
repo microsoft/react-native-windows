@@ -68,8 +68,8 @@ namespace Microsoft.ReactNative
   DOC_STRING("Helper methods for the property bag implementation.")
   static runtimeclass ReactPropertyBagHelper
   {
-    [deprecated("Do not use. It will be removed in version 0.65.", deprecate, 1)]
-    DOC_STRING("Deprecated. Do not use. It will be removed in version 0.65.")
+    [deprecated("Do not use. It will be removed in a future version.", deprecate, 1)]
+    DOC_STRING("Deprecated. Do not use. It will be removed in a future version.")
     static IReactPropertyNamespace GlobalNamespace { get; };
 
     DOC_STRING(
@@ -79,7 +79,7 @@ namespace Microsoft.ReactNative
 
     DOC_STRING(
       "Gets atomic @IReactPropertyName for the namespace `ns` and the `localName`.\n"
-      "**Note that passing `null` as `ns` is reserved for local values in version 0.65. "
+      "**Note that passing `null` as `ns` is reserved for local values since 0.65. "
       "In previous versions it was the same as passing @.GlobalNamespace.**")
     static IReactPropertyName GetName(IReactPropertyNamespace ns, String localName);
 
