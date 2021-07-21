@@ -46,6 +46,7 @@
 #include "HermesRuntimeHolder.h"
 #endif
 #if defined(USE_V8)
+#include <JSI/NapiJsiV8RuntimeHolder.h>
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
 #endif
@@ -137,6 +138,9 @@ std::string GetJSBundleFilePath(const std::string &jsBundleBasePath, const std::
 } // namespace
 
 using namespace facebook;
+using namespace Microsoft::JSI;
+
+using std::make_shared;
 
 namespace facebook {
 namespace react {
@@ -381,6 +385,25 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder =
               std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
           break;
+        case JSIEngineOverride::V8Napi: {
+#if defined(USE_V8)
+          std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
+          std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
+
+          char tempPath[MAX_PATH];
+          if (GetTempPathA(MAX_PATH, tempPath)) {
+            preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
+          }
+
+          m_devSettings->jsiRuntimeHolder = make_shared<NapiJsiV8RuntimeHolder>(
+              m_devSettings, m_jsThread, std::move(scriptStore), std::move(preparedScriptStore));
+
+          break;
+#else
+          assert(false); // V8 is not available in this build, fallthrough
+          [[fallthrough]];
+#endif
+        }
         case JSIEngineOverride::ChakraCore:
         default: // TODO: Add other engines once supported
           m_devSettings->jsiRuntimeHolder =
