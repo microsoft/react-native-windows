@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Do not start packager for run-windows release builds",
+  "packageName": "@react-native-windows/cli",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}

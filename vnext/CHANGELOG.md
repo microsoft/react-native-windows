@@ -1,8 +1,25 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 17 Jul 2021 05:08:12 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Jul 2021 05:06:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.346
+
+Wed, 21 Jul 2021 05:06:26 GMT
+
+### Changes
+
+- "0.65" -> "Future Version" in deprecation warnings (ngerlem@microsoft.com)
+
+## 0.0.0-canary.345
+
+Tue, 20 Jul 2021 05:04:42 GMT
+
+### Changes
+
+- add togglebutton accessibilityRole (agnel@microsoft.com)
+- Fix long path issues for managed projects (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.344
 
