@@ -446,7 +446,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       // errors before attempting to load the actual script.
 
       uint32_t hermesBytecodeVersion = 0;
-#if defined(INCLUDE_HERMES)
+#if defined(USE_HERMES) && defined(ENABLE_HBCBUNDLES)
       hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
 #endif
 
@@ -577,7 +577,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
 #endif
 
   uint32_t hermesBytecodeVersion = 0;
-#if defined(INCLUDE_HERMES)
+#if defined(USE_HERMES) && defined(ENABLE_HBCBUNDLES)
   hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
 #endif
 
