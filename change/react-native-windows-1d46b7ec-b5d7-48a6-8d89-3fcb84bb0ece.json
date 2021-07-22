@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Suppress warnings of unused variables in FaceBook code",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
