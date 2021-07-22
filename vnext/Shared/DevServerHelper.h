@@ -38,9 +38,7 @@ class DevServerHelper {
       bool dev,
       bool hot,
       bool inlineSourceMap,
-      const uint32_t hermesBytecodeVersion
-    ) {
-
+      const uint32_t hermesBytecodeVersion) {
     std::string hermesBytecodeVersionQuery;
     if (hermesBytecodeVersion > 0) {
       static constexpr const char HermesBytecodeVersionQueryFormat[] = "&runtimeBytecodeVersion=%d";
@@ -55,8 +53,7 @@ class DevServerHelper {
         dev ? "true" : "false",
         hot ? "true" : "false",
         inlineSourceMap ? "true" : "false",
-        hermesBytecodeVersionQuery.c_str()
-      );
+        hermesBytecodeVersionQuery.c_str());
   }
 
   static std::string get_OnChangeEndpointUrl(const std::string &sourceBundleHost, const uint16_t sourceBundlePort) {

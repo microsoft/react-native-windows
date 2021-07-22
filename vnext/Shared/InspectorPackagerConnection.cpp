@@ -152,7 +152,6 @@ void RemoteConnection::onDisconnect() {
   m_packagerConnection.sendMessageToPackager(std::move(responsestr));
 }
 
-
 RemoteConnection2::RemoteConnection2(int64_t pageId, const InspectorPackagerConnection &packagerConnection)
     : m_packagerConnection(packagerConnection), m_pageId(pageId) {}
 
@@ -160,7 +159,7 @@ void RemoteConnection2::onMessage(std::unique_ptr<facebook::react::IHermesString
   std::string msg(message->c_str());
   folly::dynamic response = InspectorProtocol::constructResponseForPackager(
       InspectorProtocol::EventType::WrappedEvent,
-          InspectorProtocol::constructVMResponsePayloadForPackager(m_pageId, std::move(msg)));
+      InspectorProtocol::constructVMResponsePayloadForPackager(m_pageId, std::move(msg)));
   std::string responsestr = folly::toJson(response);
   m_packagerConnection.sendMessageToPackager(std::move(responsestr));
 }
@@ -215,59 +214,59 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
   m_packagerWebSocketConnection->SetOnConnect(
       []() { facebook::react::tracing::log("Inspector: Websocket connection succeeded."); });
 
-  m_packagerWebSocketConnection->SetOnMessage([self = shared_from_this()](
-                                                  size_t /*length*/, const std::string &message, bool isBinary) {
-    assert(!isBinary && "We don't expect any binary messages !");
-    folly::dynamic messageDyn = folly::parseJson(message);
+  m_packagerWebSocketConnection->SetOnMessage(
+      [self = shared_from_this()](size_t /*length*/, const std::string &message, bool isBinary) {
+        assert(!isBinary && "We don't expect any binary messages !");
+        folly::dynamic messageDyn = folly::parseJson(message);
 
-    InspectorProtocol::EventType eventType = InspectorProtocol::getEventType(messageDyn);
-    switch (eventType) {
-      case InspectorProtocol::EventType::GetPages: {
-        std::unique_ptr<facebook::react::IInspectorPages> inspectorPages = facebook::react::getInspectorPages();
-        folly::dynamic response = InspectorProtocol::constructResponseForPackager(
-            InspectorProtocol::EventType::GetPages,
-            InspectorProtocol::constructGetPagesResponsePayloadForPackager(
-                std::move(inspectorPages), self->m_bundleStatusProvider->getBundleStatus()));
+        InspectorProtocol::EventType eventType = InspectorProtocol::getEventType(messageDyn);
+        switch (eventType) {
+          case InspectorProtocol::EventType::GetPages: {
+            std::unique_ptr<facebook::react::IInspectorPages> inspectorPages = facebook::react::getInspectorPages();
+            folly::dynamic response = InspectorProtocol::constructResponseForPackager(
+                InspectorProtocol::EventType::GetPages,
+                InspectorProtocol::constructGetPagesResponsePayloadForPackager(
+                    std::move(inspectorPages), self->m_bundleStatusProvider->getBundleStatus()));
 
-        std::string responsestr = folly::toJson(response);
-        self->sendMessageToPackager(std::move(responsestr));
-      } break;
+            std::string responsestr = folly::toJson(response);
+            self->sendMessageToPackager(std::move(responsestr));
+          } break;
 
-      case InspectorProtocol::EventType::WrappedEvent: {
-        folly::dynamic payload = messageDyn[InspectorProtocol::Message_PAYLOAD];
-        int64_t pageId = payload[InspectorProtocol::Message_PAGEID].asInt();
+          case InspectorProtocol::EventType::WrappedEvent: {
+            folly::dynamic payload = messageDyn[InspectorProtocol::Message_PAYLOAD];
+            int64_t pageId = payload[InspectorProtocol::Message_PAGEID].asInt();
 
-        if (self->m_localConnections.find(pageId) == self->m_localConnections.end()) {
-          break;
+            if (self->m_localConnections.find(pageId) == self->m_localConnections.end()) {
+              break;
+            }
+
+            std::string wrappedEvent = payload[InspectorProtocol::Message_eventName_wrappedEvent].getString();
+            self->sendMessageToVM(pageId, std::move(wrappedEvent));
+          } break;
+
+          case InspectorProtocol::EventType::Connect: {
+            folly::dynamic payload = messageDyn[InspectorProtocol::Message_PAYLOAD];
+            int64_t pageId = payload[InspectorProtocol::Message_PAGEID].asInt();
+
+            if (self->m_localConnections.find(pageId) != self->m_localConnections.end()) {
+              break;
+            }
+
+            self->m_localConnections[pageId] = facebook::react::connectInspectorPage(
+                static_cast<int>(pageId), std::make_unique<RemoteConnection2>(pageId, *self));
+          } break;
+
+          case InspectorProtocol::EventType::Disconnect: {
+            folly::dynamic payload = messageDyn[InspectorProtocol::Message_PAYLOAD];
+            int64_t pageId = payload[InspectorProtocol::Message_PAGEID].asInt();
+            if (self->m_localConnections.find(pageId) != self->m_localConnections.end()) {
+              self->m_localConnections[pageId]->disconnect();
+              self->m_localConnections.erase(pageId);
+            }
+
+          } break;
         }
-
-        std::string wrappedEvent = payload[InspectorProtocol::Message_eventName_wrappedEvent].getString();
-        self->sendMessageToVM(pageId, std::move(wrappedEvent));
-      } break;
-
-      case InspectorProtocol::EventType::Connect: {
-        folly::dynamic payload = messageDyn[InspectorProtocol::Message_PAYLOAD];
-        int64_t pageId = payload[InspectorProtocol::Message_PAGEID].asInt();
-
-        if (self->m_localConnections.find(pageId) != self->m_localConnections.end()) {
-          break;
-        }
-
-        self->m_localConnections[pageId] = facebook::react::connectInspectorPage(
-            static_cast<int>(pageId), std::make_unique<RemoteConnection2>(pageId, *self));
-      } break;
-
-      case InspectorProtocol::EventType::Disconnect: {
-        folly::dynamic payload = messageDyn[InspectorProtocol::Message_PAYLOAD];
-        int64_t pageId = payload[InspectorProtocol::Message_PAGEID].asInt();
-        if (self->m_localConnections.find(pageId) != self->m_localConnections.end()) {
-          self->m_localConnections[pageId]->disconnect();
-          self->m_localConnections.erase(pageId);
-        }
-
-      } break;
-    }
-  });
+      });
 
   Microsoft::React::IWebSocketResource::Protocols protocols;
   Microsoft::React::IWebSocketResource::Options options;

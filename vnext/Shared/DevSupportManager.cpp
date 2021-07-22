@@ -283,7 +283,6 @@ std::pair<std::string, bool> GetJavaScriptFromServer(
     bool hot,
     bool inlineSourceMap,
     const uint32_t hermesBytecodeVersion) {
-
   auto bundleUrl = facebook::react::DevServerHelper::get_BundleUrl(
       sourceBundleHost, sourceBundlePort, jsBundleName, platform, dev, hot, inlineSourceMap, hermesBytecodeVersion);
   try {

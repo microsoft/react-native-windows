@@ -8,10 +8,10 @@
 #include <cxxreact/Instance.h>
 #include <cxxreact/JSBigString.h>
 #include <cxxreact/JSExecutor.h>
-#include <cxxreact/ReactMarker.h>
 #include <cxxreact/JsBundleType.h>
-#include <folly/json.h>
+#include <cxxreact/ReactMarker.h>
 #include <folly/Bits.h>
+#include <folly/json.h>
 #include <jsi/jsi.h>
 #include <jsiexecutor/jsireact/JSIExecutor.h>
 #include <filesystem>
@@ -45,8 +45,8 @@
 #include "PackagerConnection.h"
 
 #if defined(INCLUDE_HERMES)
-#include "HermesRuntimeHolder.h"
 #include <hermes/BytecodeVersion.h>
+#include "HermesRuntimeHolder.h"
 #endif
 #if defined(USE_V8)
 #include "BaseScriptStoreImpl.h"
@@ -427,10 +427,11 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
   loadBundleInternal(std::move(jsBundleRelativePath), /*synchronously:*/ true);
 }
 
-// Note: Based on https://github.com/facebook/react-native/blob/24d91268b64c7abbd4b26547ffcc663dc90ec5e7/ReactCommon/cxxreact/Instance.cpp#L112
-bool isHBCBundle(const std::string& bundle) {
+// Note: Based on
+// https://github.com/facebook/react-native/blob/24d91268b64c7abbd4b26547ffcc663dc90ec5e7/ReactCommon/cxxreact/Instance.cpp#L112
+bool isHBCBundle(const std::string &bundle) {
   static uint32_t constexpr HBCBundleMagicNumber = 0xffe7c3c3;
-  BundleHeader *header = reinterpret_cast<BundleHeader *>(const_cast<char*>(bundle.c_str()));
+  BundleHeader *header = reinterpret_cast<BundleHeader *>(const_cast<char *>(bundle.c_str()));
   if (HBCBundleMagicNumber == folly::Endian::little(header->magic)) {
     return true;
   } else {
@@ -479,11 +480,11 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           /*dev*/ true,
           /*hot*/ false,
           m_devSettings->inlineSourceMap,
-          hermesBytecodeVersion
-        );
+          hermesBytecodeVersion);
 
       // This code is based on the HBC Bundle integration on Android
-      // Ref: https://github.com/facebook/react-native/blob/24d91268b64c7abbd4b26547ffcc663dc90ec5e7/ReactAndroid/src/main/jni/react/jni/CatalystInstanceImpl.cpp#L231
+      // Ref:
+      // https://github.com/facebook/react-native/blob/24d91268b64c7abbd4b26547ffcc663dc90ec5e7/ReactAndroid/src/main/jni/react/jni/CatalystInstanceImpl.cpp#L231
       if (isHBCBundle(jsBundleString.c_str())) {
         auto script = std::make_unique<JSBigStdString>(jsBundleString, false);
         const char *buffer = script->c_str();
@@ -500,9 +501,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 
           offset += ((moduleLength + 3) & ~3) + 4;
         }
-      }
-      else 
-      {
+      } else {
         // Remote debug executor loads script from a Uri, rather than taking the actual bundle string
         m_innerInstance->loadScriptFromString(
             std::make_unique<const JSBigStdString>(m_devSettings->useWebDebugger ? bundleUrl : jsBundleString),

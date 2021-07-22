@@ -3,9 +3,9 @@
 
 #pragma once
 
+#include <InspectorProxy.h>
 #include <WinRTWebSocketResource.h>
 #include <jsinspector/InspectorInterfaces.h>
-#include <InspectorProxy.h>
 
 namespace Microsoft::ReactNative {
 

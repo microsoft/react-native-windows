@@ -26,26 +26,30 @@ namespace {
 
 #ifndef NDEBUG
 /*
-* Note: Hermes API uses STL containers (string, vector etc.) which don't have stable ABI.
-* 
-* To consume Hermes in RNW, the safest approach is to match the build flags in RNW and Hermes build pipelines. It implies the debug flavor of RNW will need to consume
-* debug flavoured Hermes. It works, but the Javascript interpretation by debug flavored Hermes in intolerably slow. We tried to make hermes debug binaries run faster
-* following the popular techniques such as disabling iterator debugging, but the performance improvements were not sufficient. 
-*
-* It is imperative that we use the release binaries of Hermes on Debug builds of RNW. Our long term plan is to implement ABI-stable NAPI (https://nodejs.org/api/n-api.html) over Hermes VM.
-* But, until we have a stable NAPI-Hermes interface implementation, we are resorting to a pragmatic solution. Even though the solution is fragile, we want to push it because
-* (1) Hermes direct debugging adds huge value to the developer workflow .
-* (2) The code is debug only, hence don't run on user machines.
-* (3) In case the developer runs into issues, there is a fallback.
-*
-* Solution:
-* We are building a debug friendlier release binary of hermes with checked iterators turned on (Essentially setting _ITERATOR_DEBUG_LEVEL to '1' instead of the
-* default value of '0'). Note that release builds can't be built with full iterator debugging (_ITERATOR_DEBUG_LEVEL to '2').
-* Our observation is that containers created with debug-flavored STL code (full iterator debugging enabled) can safely be consumed from STL code
-* with checked iterators enabled. but not vice-versa. i.e. The hermes binary built with checked iterators can consume STL containers created by debug flavored RNW, but not vice versa.
-* Luckily, there is only a small number of APIs in JSI which require transferring STL containers from hermes to host. We added a small patch to hermes which enabled us to wrap
-* thos STL containers for safe access through this runtime proxy. 
-*/
+ * Note: Hermes API uses STL containers (string, vector etc.) which don't have stable ABI.
+ *
+ * To consume Hermes in RNW, the safest approach is to match the build flags in RNW and Hermes build pipelines. It
+ * implies the debug flavor of RNW will need to consume debug flavoured Hermes. It works, but the Javascript
+ * interpretation by debug flavored Hermes in intolerably slow. We tried to make hermes debug binaries run faster
+ * following the popular techniques such as disabling iterator debugging, but the performance improvements were not
+ * sufficient.
+ *
+ * It is imperative that we use the release binaries of Hermes on Debug builds of RNW. Our long term plan is to
+ * implement ABI-stable NAPI (https://nodejs.org/api/n-api.html) over Hermes VM. But, until we have a stable NAPI-Hermes
+ * interface implementation, we are resorting to a pragmatic solution. Even though the solution is fragile, we want to
+ * push it because (1) Hermes direct debugging adds huge value to the developer workflow . (2) The code is debug only,
+ * hence don't run on user machines. (3) In case the developer runs into issues, there is a fallback.
+ *
+ * Solution:
+ * We are building a debug friendlier release binary of hermes with checked iterators turned on (Essentially setting
+ * _ITERATOR_DEBUG_LEVEL to '1' instead of the default value of '0'). Note that release builds can't be built with full
+ * iterator debugging (_ITERATOR_DEBUG_LEVEL to '2'). Our observation is that containers created with debug-flavored STL
+ * code (full iterator debugging enabled) can safely be consumed from STL code with checked iterators enabled. but not
+ * vice-versa. i.e. The hermes binary built with checked iterators can consume STL containers created by debug flavored
+ * RNW, but not vice versa. Luckily, there is only a small number of APIs in JSI which require transferring STL
+ * containers from hermes to host. We added a small patch to hermes which enabled us to wrap thos STL containers for
+ * safe access through this runtime proxy.
+ */
 struct RuntimeProxy : public RuntimeDecorator<facebook::hermes::HermesRuntime, Runtime> {
  public:
   RuntimeProxy(facebook::hermes::HermesRuntime &plain) : RuntimeDecorator(plain) {}
