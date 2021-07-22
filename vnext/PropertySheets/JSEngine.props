@@ -2,6 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
+
   <PropertyGroup>
     <JsEnginePropsDefined>true</JsEnginePropsDefined>
     <!-- Enabling this will (1) Include hermes glues in the Microsoft.ReactNative binaries AND (2) Make hermes the default engine -->
