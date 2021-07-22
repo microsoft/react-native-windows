@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 22 Jul 2021 05:05:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.347",
+      "version": "0.0.0-canary.347",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove AppTheme Shim",
+            "author": "ngerlem@microsoft.com",
+            "commit": "101e84d011dcb9ee6a43637d02322d97d74215d6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Jul 2021 05:06:26 GMT",
       "tag": "react-native-windows_v0.0.0-canary.346",
       "version": "0.0.0-canary.346",
