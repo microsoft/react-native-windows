@@ -34,8 +34,24 @@ NapiJsiV8RuntimeHolder::NapiJsiV8RuntimeHolder(
 void NapiJsiV8RuntimeHolder::InitRuntime() noexcept
 {
   napi_env env{};
-  napi_ext_create_env(napi_ext_env_attribute_enable_gc_api, &env);
-  m_runtime = napijsi::MakeNapiJsiRuntime(env);
+  napi_ext_env_settings settings{};
+  settings.this_size = sizeof(napi_ext_env_settings);
+  settings.flags.enable_gc_api = true;
+  if (m_debuggerPort > 0)
+    settings.inspector_port = m_debuggerPort;
+
+  settings.flags.enable_inspector = m_useDirectDebugger;
+  settings.flags.wait_for_debugger = m_debuggerBreakOnNextLine;
+  //TODO: debuggerRuntimeName?
+
+  //TODO
+  settings.foreground_scheduler = nullptr;
+  //TODO: scriptStore
+
+  napi_ext_create_env(&settings, &env);
+  m_runtime = MakeNapiJsiRuntime(env);
+
+  m_ownThreadId = std::this_thread::get_id();
 }
 
 #pragma region facebook::jsi::RuntimeHolderLazyInit
