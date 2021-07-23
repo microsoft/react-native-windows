@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix warning of double-importing ExperimentalFeatures.props",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

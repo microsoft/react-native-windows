@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 23 Jul 2021 05:08:40 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.348",
+      "version": "0.0.0-canary.348",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix warning of double-importing ExperimentalFeatures.props",
+            "author": "dannyvv@microsoft.com",
+            "commit": "dad3069b784fe3f1c866fd90e66eec86b2037b46",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Suppress warnings of unused variables in FaceBook code",
+            "author": "dannyvv@microsoft.com",
+            "commit": "37464d172ece7790fd4e436e89c8b3d1d45c26b0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Coalesce RN View onLayout events",
+            "author": "erozell@outlook.com",
+            "commit": "ceb4a66113eac76f8f54c50471a17c0174221081",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jul 2021 05:05:25 GMT",
       "tag": "react-native-windows_v0.0.0-canary.347",
       "version": "0.0.0-canary.347",

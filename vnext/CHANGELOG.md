@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 22 Jul 2021 05:05:25 GMT and should not be manually modified.
+This log was last generated on Fri, 23 Jul 2021 05:08:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.348
+
+Fri, 23 Jul 2021 05:08:40 GMT
+
+### Changes
+
+- Fix warning of double-importing ExperimentalFeatures.props (dannyvv@microsoft.com)
+- Suppress warnings of unused variables in FaceBook code (dannyvv@microsoft.com)
+- Coalesce RN View onLayout events (erozell@outlook.com)
 
 ## 0.0.0-canary.347
 
