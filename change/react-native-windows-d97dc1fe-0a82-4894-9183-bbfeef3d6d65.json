@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Coalesce RN View onLayout events",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
