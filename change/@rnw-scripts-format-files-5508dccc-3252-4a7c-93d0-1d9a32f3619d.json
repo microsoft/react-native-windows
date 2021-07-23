@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Set executable bit so the script can be executed on non-Windows file systems",
-  "packageName": "@rnw-scripts/format-files",
-  "email": "4123478+tido64@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
