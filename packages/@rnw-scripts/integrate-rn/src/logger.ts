@@ -5,7 +5,7 @@
  * @format
  */
 
-import * as ora from 'ora';
+import ora from 'ora';
 
 export type Logger = {
   newTask: (taskName: string) => void;

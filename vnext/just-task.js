@@ -30,7 +30,14 @@ task(
   'codegen',
   series(cleanTask({paths: ['./codegen']}), () => {
     execSync(
-      'npx --no-install @react-native-windows/codegen --files Libraries/**/Native*.js --namespace Microsoft::ReactNativeSpecs',
+      'npx --no-install @react-native-windows/codegen --files Libraries/**/*Native*.js --namespace Microsoft::ReactNativeSpecs --libraryName rnwcore',
+    );
+    execSync(
+      'npx --no-install @react-native-windows/codegen --files Libraries/**/*NativeComponent.js --namespace Microsoft::ReactNativeSpecs --libraryName rnwcore',
+    );
+    fs.writeFileSync(
+      'codegen/.clang-format',
+      'DisableFormat: true\nSortIncludes: false',
     );
   }),
 );
@@ -46,17 +53,7 @@ task('copyReadmeAndLicenseFromRoot', () => {
   );
 });
 
-task(
-  'compileTsPlatformOverrides',
-  tscTask({
-    pretty: true,
-    ...(argv().production && {
-      inlineSources: true,
-    }),
-    target: 'es5',
-    module: 'commonjs',
-  }),
-);
+task('compileTsPlatformOverrides', tscTask());
 
 task(
   'build',

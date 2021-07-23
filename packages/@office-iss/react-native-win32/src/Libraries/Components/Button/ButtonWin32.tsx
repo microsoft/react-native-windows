@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react'
 import RN = require('react-native');
 import { ViewWin32 } from '../View/ViewWin32';
 import { IViewWin32Props } from '../View/ViewWin32.Props';

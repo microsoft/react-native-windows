@@ -17,6 +17,10 @@
 // then), this could go away (or cppwinrt API could add nothrow accessors)
 //
 
+#pragma once
+#ifndef SHARED_UTILS_CPPWINRTLESSEXCEPTIONS_H_
+#define SHARED_UTILS_CPPWINRTLESSEXCEPTIONS_H_
+
 #include <winrt/base.h>
 
 // #define DEFAULT_CPPWINRT_EXCEPTIONS
@@ -53,4 +57,6 @@ struct lessthrow_await_adapter {
     return;
   }
 };
-#endif
+
+#endif // DEFAULT_CPPWINRT_EXCEPTIONS
+#endif // SHARED_UTILS_CPPWINRTLESSEXCEPTIONS_H_

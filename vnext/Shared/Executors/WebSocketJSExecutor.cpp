@@ -19,14 +19,14 @@
 
 // Hx/OFFICEDEV: Ignore warnings
 #pragma warning(push)
-#pragma warning(disable : 4100 4101 4244 4290 4456)
+#pragma warning(disable : 4100 4101 4290 4456)
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
 #pragma optimize("", off)
 #endif
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 WebSocketJSExecutor::WebSocketJSExecutor(
     std::shared_ptr<facebook::react::ExecutorDelegate> delegate,
@@ -277,7 +277,7 @@ void WebSocketJSExecutor::OnMessageReceived(const std::string &msg) {
   folly::dynamic parsed = folly::parseJson(msg);
   auto it_parsed = parsed.find("replyID");
   if (it_parsed != parsed.items().end()) {
-    int replyId = it_parsed->second.asInt();
+    int replyId = static_cast<int>(it_parsed->second.asInt());
 
     std::lock_guard<std::mutex> lock(m_lockPromises);
     auto it_promise = m_promises.find(replyId);
@@ -296,6 +296,6 @@ void WebSocketJSExecutor::OnMessageReceived(const std::string &msg) {
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative
 
 #pragma warning(pop)

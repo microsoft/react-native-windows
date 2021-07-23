@@ -6,6 +6,12 @@
 #include <Views/ShadowNodeBase.h>
 #include "TouchEventHandler.h"
 
+#ifdef USE_FABRIC
+#include <Fabric/FabricUIManagerModule.h>
+#include <Fabric/ViewComponentView.h>
+#include <react/renderer/components/view/TouchEventEmitter.h>
+#endif
+
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
 #include <UI.Xaml.Controls.h>
@@ -28,8 +34,12 @@ namespace Microsoft::ReactNative {
 
 std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag);
 
-TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context)
-    : m_xamlView(nullptr), m_context(&context) {}
+TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context, bool fabric)
+    : m_xamlView(nullptr),
+      m_context(&context),
+      m_fabric(fabric),
+      m_batchingEventEmitter{
+          std::make_shared<winrt::Microsoft::ReactNative::BatchingEventEmitter>(Mso::CntPtr(&context))} {}
 
 TouchEventHandler::~TouchEventHandler() {
   RemoveTouchHandlers();
@@ -62,6 +72,10 @@ void TouchEventHandler::RemoveTouchHandlers() {
   m_captureLostRevoker.revoke();
   m_exitedRevoker.revoke();
   m_movedRevoker.revoke();
+}
+
+winrt::Microsoft::ReactNative::BatchingEventEmitter &TouchEventHandler::BatchingEmitter() noexcept {
+  return *m_batchingEventEmitter;
 }
 
 void TouchEventHandler::OnPointerPressed(
@@ -299,7 +313,10 @@ void TouchEventHandler::UpdatePointersInViews(
 
         ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(existingTag));
         if (node != nullptr && node->m_onMouseLeaveRegistered)
-          m_context->DispatchEvent(existingTag, "topMouseLeave", GetPointerJson(pointer, existingTag));
+          BatchingEmitter().DispatchEvent(
+              existingTag,
+              L"topMouseLeave",
+              winrt::Microsoft::ReactNative::MakeJSValueWriter(GetPointerJson(pointer, existingTag)));
       }
     }
 
@@ -312,49 +329,169 @@ void TouchEventHandler::UpdatePointersInViews(
 
       ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(newTag));
       if (node != nullptr && node->m_onMouseEnterRegistered)
-        m_context->DispatchEvent(newTag, "topMouseEnter", GetPointerJson(pointer, newTag));
+        BatchingEmitter().DispatchEvent(
+            newTag,
+            L"topMouseEnter",
+            winrt::Microsoft::ReactNative::MakeJSValueWriter(GetPointerJson(pointer, newTag)));
     }
 
     m_pointersInViews[pointerId] = {std::move(newViewsSet), std::move(newViews)};
   }
 }
 
-folly::dynamic TouchEventHandler::GetPointerJson(const ReactPointer &pointer, int64_t target) {
-  folly::dynamic json =
-      folly::dynamic::object()("target", target)("identifier", pointer.identifier)("pageX", pointer.positionRoot.X)(
-          "pageY", pointer.positionRoot.Y)("locationX", pointer.positionView.X)("locationY", pointer.positionView.Y)(
-          "timestamp", pointer.timestamp)("pointerType", GetPointerDeviceTypeName(pointer.deviceType))(
-          "force", pointer.pressure)("isLeftButton", pointer.isLeftButton)("isRightButton", pointer.isRightButton)(
-          "isMiddleButton", pointer.isMiddleButton)("isBarrelButtonPressed", pointer.isBarrelButton)(
-          "isHorizontalScrollWheel", pointer.isHorizontalScrollWheel)("isEraser", pointer.isEraser)(
-          "shiftKey", pointer.shiftKey)("ctrlKey", pointer.ctrlKey)("altKey", pointer.altKey);
-  return json;
+winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const ReactPointer &pointer, int64_t target) {
+  return winrt::Microsoft::ReactNative::JSValueObject{
+      {"target", target},
+      {"identifier", pointer.identifier},
+      {"pageX", pointer.positionRoot.X},
+      {"pageY", pointer.positionRoot.Y},
+      {"locationX", pointer.positionView.X},
+      {"locationY", pointer.positionView.Y},
+      {"timestamp", pointer.timestamp},
+      {
+          "pointerType",
+          GetPointerDeviceTypeName(pointer.deviceType),
+      },
+      {"force", pointer.pressure},
+      {"isLeftButton", pointer.isLeftButton},
+      {"isRightButton", pointer.isRightButton},
+      {"isMiddleButton", pointer.isMiddleButton},
+      {"isBarrelButtonPressed", pointer.isBarrelButton},
+      {"isHorizontalScrollWheel", pointer.isHorizontalScrollWheel},
+      {"isEraser", pointer.isEraser},
+      {"shiftKey", pointer.shiftKey},
+      {"ctrlKey", pointer.ctrlKey},
+      {"altKey", pointer.altKey}};
 }
 
+#ifdef USE_FABRIC
+// This work should probably be delegated to the ComponentViews
+facebook::react::SharedEventEmitter EventEmitterForElement(
+    std::shared_ptr<FabricUIManager> &uimanager,
+    facebook::react::Tag tag) noexcept {
+  auto &registry = uimanager->GetViewRegistry();
+
+  auto descriptor = registry.componentViewDescriptorWithTag(tag);
+  auto view = std::static_pointer_cast<BaseComponentView const>(descriptor.view);
+  auto emitter = view->GetEventEmitter();
+  if (emitter)
+    return emitter;
+
+  auto element = view->Element();
+  while (auto parent = element.Parent()) {
+    if (element = parent.try_as<xaml::FrameworkElement>()) {
+      auto boxedTag = element.Tag();
+      if (boxedTag) {
+        if (tag = winrt::unbox_value<facebook::react::Tag>(element.Tag()))
+          return EventEmitterForElement(uimanager, tag);
+      }
+    }
+  }
+  return nullptr;
+}
+
+facebook::react::Touch TouchEventHandler::TouchForPointer(const ReactPointer &pointer) noexcept {
+  facebook::react::Touch t;
+  t.force = pointer.pressure;
+  t.identifier = static_cast<int>(pointer.identifier);
+  t.pagePoint.x = pointer.positionRoot.X; // TODO: This should be relative to the rootview, not the XAML tree
+  t.pagePoint.y = pointer.positionRoot.Y; // TODO: This should be relative to the rootview, not the XAML tree
+  t.screenPoint.x = pointer.positionRoot.X;
+  t.screenPoint.y = pointer.positionRoot.Y;
+  t.offsetPoint.x = pointer.positionView.X;
+  t.offsetPoint.y = pointer.positionView.Y;
+  t.target = static_cast<facebook::react::Tag>(pointer.target);
+  t.timestamp = static_cast<facebook::react::Float>(pointer.timestamp);
+  return t;
+}
+#endif
+
 void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex) {
-  folly::dynamic changedIndices = folly::dynamic::array();
+  winrt::Microsoft::ReactNative::JSValueArray changedIndices;
   changedIndices.push_back(pointerIndex);
 
-  auto touches = folly::dynamic::array();
-  for (const auto &pointer : m_pointers) {
-    folly::dynamic touch = GetPointerJson(pointer, pointer.target);
-    touches.push_back(touch);
+#ifdef USE_FABRIC
+  std::shared_ptr<FabricUIManager> fabricuiManager;
+  if (m_fabric &&
+      !!(fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties())))) {
+    std::unordered_set<facebook::react::SharedTouchEventEmitter> uniqueEventEmitters = {};
+    std::vector<facebook::react::SharedTouchEventEmitter> emittersForIndex;
+
+    facebook::react::TouchEvent te;
+
+    size_t index = 0;
+    for (const auto &pointer : m_pointers) {
+      te.touches.insert(TouchForPointer(pointer));
+      if (pointerIndex == index++)
+        te.changedTouches.insert(TouchForPointer(pointer));
+
+      auto emitter = std::static_pointer_cast<facebook::react::TouchEventEmitter>(
+          std::const_pointer_cast<facebook::react::EventEmitter>(
+              EventEmitterForElement(fabricuiManager, static_cast<facebook::react::Tag>(pointer.target))));
+      emittersForIndex.push_back(emitter);
+      if (emitter)
+        uniqueEventEmitters.insert(emitter);
+    }
+
+    for (const auto emitter : uniqueEventEmitters) {
+      te.targetTouches.clear();
+      index = 0;
+      for (const auto &pointer : m_pointers) {
+        auto pointerEmitter = emittersForIndex[index++];
+        if (emitter == pointerEmitter)
+          te.targetTouches.insert(TouchForPointer(pointer));
+      }
+
+      switch (eventType) {
+        case TouchEventType::Start:
+          emitter->onTouchStart(te);
+          break;
+        case TouchEventType::Move:
+          emitter->onTouchMove(te);
+          break;
+        case TouchEventType::End:
+          emitter->onTouchEnd(te);
+          break;
+        case TouchEventType::Cancel:
+          emitter->onTouchCancel(te);
+          break;
+      }
+    }
+  } else
+#endif // USE_FABRIC
+  {
+    winrt::Microsoft::ReactNative::JSValueArray touches;
+    for (const auto &pointer : m_pointers) {
+      touches.push_back(GetPointerJson(pointer, pointer.target));
+    }
+
+    // Package up parameters and invoke the JS event emitter
+    const wchar_t *eventName = GetTouchEventTypeName(eventType);
+    if (eventName == nullptr)
+      return;
+
+    const auto paramsWriter = MakeJSValueArgWriter(eventName, std::move(touches), std::move(changedIndices));
+    if (eventType == TouchEventType::Move || eventType == TouchEventType::PointerMove) {
+      BatchingEmitter().EmitCoalescingJSEvent(
+          L"RCTEventEmitter",
+          L"receiveTouches",
+          std::move(eventName),
+          m_pointers[pointerIndex].pointerId,
+          paramsWriter);
+    } else {
+      BatchingEmitter().EmitJSEvent(L"RCTEventEmitter", L"receiveTouches", paramsWriter);
+    }
   }
-
-  // Package up parameters and invoke the JS event emitter
-  const char *eventName = GetTouchEventTypeName(eventType);
-  if (eventName == nullptr)
-    return;
-  folly::dynamic params = folly::dynamic::array(eventName, std::move(touches), std::move(changedIndices));
-
-  m_context->CallJSFunction("RCTEventEmitter", "receiveTouches", std::move(params));
 }
 
 bool TouchEventHandler::DispatchBackEvent() {
   if (m_context->State() != Mso::React::ReactInstanceState::Loaded)
     return false;
 
-  m_context->CallJSFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
+  BatchingEmitter().EmitJSEvent(
+      L"RCTDeviceEventEmitter", L"emit", winrt::Microsoft::ReactNative::MakeJSValueArgWriter(L"hardwardBackPress"));
+
   return true;
 }
 
@@ -377,20 +514,20 @@ const char *TouchEventHandler::GetPointerDeviceTypeName(
   return deviceTypeName;
 }
 
-const char *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType) noexcept {
-  const char *eventName = nullptr;
+const wchar_t *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType) noexcept {
+  const wchar_t *eventName = nullptr;
   switch (eventType) {
     case TouchEventType::Start:
-      eventName = "topTouchStart";
+      eventName = L"topTouchStart";
       break;
     case TouchEventType::End:
-      eventName = "topTouchEnd";
+      eventName = L"topTouchEnd";
       break;
     case TouchEventType::Move:
-      eventName = "topTouchMove";
+      eventName = L"topTouchMove";
       break;
     case TouchEventType::Cancel:
-      eventName = "topTouchCancel";
+      eventName = L"topTouchCancel";
       break;
     default:
       assert(false);
@@ -411,29 +548,29 @@ bool TouchEventHandler::TagFromOriginalSource(
   winrt::IPropertyValue tag(nullptr);
 
   while (sourceElement) {
-    if (auto fe = sourceElement.try_as<xaml::FrameworkElement>()) {
-      tag = fe.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
-      if (tag) {
-        // If a TextBlock was the UIElement event source, perform a more accurate hit test,
-        // searching for the tag of the nested Run/Span XAML elements that the user actually clicked.
-        // This is to support nested <Text> elements in React.
-        // Nested React <Text> elements get translated into nested XAML <Span> elements,
-        // while the content of the <Text> becomes a list of XAML <Run> elements.
-        // However, we should report the Text element as the target, not the contexts of the text.
-        if (const auto textBlock = sourceElement.try_as<xaml::Controls::TextBlock>()) {
-          const auto pointerPos = args.GetCurrentPoint(textBlock).RawPosition();
-          const auto inlines = textBlock.Inlines().GetView();
+    auto tagValue = sourceElement.ReadLocalValue(xaml::FrameworkElement::TagProperty());
+    if (tagValue != xaml::DependencyProperty::UnsetValue()) {
+      tag = tagValue.try_as<winrt::IPropertyValue>();
+      // If a TextBlock was the UIElement event source, perform a more accurate hit test,
+      // searching for the tag of the nested Run/Span XAML elements that the user actually clicked.
+      // This is to support nested <Text> elements in React.
+      // Nested React <Text> elements get translated into nested XAML <Span> elements,
+      // while the content of the <Text> becomes a list of XAML <Run> elements.
+      // However, we should report the Text element as the target, not the contexts of the text.
+      if (const auto textBlock = sourceElement.try_as<xaml::Controls::TextBlock>()) {
+        const auto pointerPos = args.GetCurrentPoint(textBlock).RawPosition();
+        const auto inlines = textBlock.Inlines().GetView();
 
-          bool isHit = false;
-          const auto finerTag = TestHit(inlines, pointerPos, isHit);
-          if (finerTag) {
-            tag = finerTag;
-          }
+        bool isHit = false;
+        const auto finerTag = TestHit(inlines, pointerPos, isHit);
+        if (finerTag) {
+          tag = finerTag;
         }
-
-        break;
       }
+
+      break;
     }
+
     sourceElement = winrt::VisualTreeHelper::GetParent(sourceElement).try_as<xaml::UIElement>();
   }
 
@@ -463,11 +600,9 @@ winrt::IPropertyValue TouchEventHandler::TestHit(
         return resTag;
 
       if (isHit) {
-        if (auto fe = el.try_as<xaml::FrameworkElement>()) {
-          tag = fe.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
-          if (tag) {
-            return tag;
-          }
+        tag = el.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+        if (tag) {
+          return tag;
         }
       }
     } else if (const auto run = el.try_as<xaml::Documents::Run>()) {

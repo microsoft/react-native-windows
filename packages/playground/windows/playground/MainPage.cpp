@@ -35,6 +35,13 @@ MainPage::MainPage() {
   x_engineV8().IsEnabled(true);
 
   x_JsEngine().SelectedIndex(1);
+  x_Theme().SelectedIndex(0);
+}
+
+void MainPage::OnUnloadClick(
+    Windows::Foundation::IInspectable const & /*sender*/,
+    xaml::RoutedEventArgs const & /*args*/) {
+  Host().UnloadInstance();
 }
 
 void MainPage::OnLoadClick(
@@ -59,6 +66,7 @@ void MainPage::OnLoadClick(
     mainComponentName = unbox_value<hstring>(item);
   }
   ReactRootView().ComponentName(mainComponentName);
+  ReactRootView().ExperimentalUseFabric(x_UseFabric().IsChecked().GetBoolean());
   ReactRootView().ReactNativeHost(host);
 
   host.InstanceSettings().UseDeveloperSupport(true);
@@ -70,35 +78,44 @@ void MainPage::OnLoadClick(
   host.InstanceSettings().JSIEngineOverride(
       static_cast<Microsoft::ReactNative::JSIEngine>(x_JsEngine().SelectedIndex()));
   if (!m_bundlerHostname.empty()) {
-    host.InstanceSettings().DebugHost(m_bundlerHostname);
+    std::wstring dhost(m_bundlerHostname);
+    auto colonPos = dhost.find(L':');
+    if (colonPos != std::wstring::npos) {
+      host.InstanceSettings().SourceBundleHost(hstring(dhost.substr(0, colonPos)));
+      dhost.erase(0, colonPos + 1);
+      host.InstanceSettings().SourceBundlePort(static_cast<uint16_t>(std::stoi(dhost)));
+    }
   }
 
-  host.InstanceSettings().InstanceCreated(
-      [wkThis = get_weak()](auto sender, winrt::Microsoft::ReactNative::InstanceCreatedEventArgs args) {
+  host.InstanceSettings().InstanceCreated([wkThis = get_weak()](
+                                              auto sender,
+                                              winrt::Microsoft::ReactNative::InstanceCreatedEventArgs args) {
+    if (auto strongThis = wkThis.get()) {
+      args.Context().UIDispatcher().Post([wkThis, context = args.Context()]() {
         if (auto strongThis = wkThis.get()) {
-          args.Context().UIDispatcher().Post([wkThis, context = args.Context()]() {
-            if (auto strongThis = wkThis.get()) {
-              strongThis->x_UseWebDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseWebDebugger());
-              strongThis->x_UseFastRefreshCheckBox().IsChecked(context.SettingsSnapshot().UseFastRefresh());
-              strongThis->x_UseDirectDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseDirectDebugger());
-              strongThis->x_BreakOnFirstLineCheckBox().IsChecked(context.SettingsSnapshot().DebuggerBreakOnNextLine());
-              auto debugBundlePath = context.SettingsSnapshot().DebugBundlePath();
-              for (auto item : strongThis->x_entryPointCombo().Items()) {
-                if (winrt::unbox_value<winrt::hstring>(item.as<ComboBoxItem>().Content()) == debugBundlePath) {
-                  strongThis->x_entryPointCombo().SelectedItem(item);
-                  break;
-                }
-              }
-              strongThis->x_DebuggerPort().Text(winrt::to_hstring(context.SettingsSnapshot().DebuggerPort()));
-              if (context.SettingsSnapshot().UseWebDebugger()) {
-                strongThis->RequestedTheme(xaml::ElementTheme::Light);
-              } else {
-                strongThis->RequestedTheme(xaml::ElementTheme::Default);
-              }
+          strongThis->x_UseWebDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseWebDebugger());
+          strongThis->x_UseFastRefreshCheckBox().IsChecked(context.SettingsSnapshot().UseFastRefresh());
+          strongThis->x_UseDirectDebuggerCheckBox().IsChecked(context.SettingsSnapshot().UseDirectDebugger());
+          strongThis->x_BreakOnFirstLineCheckBox().IsChecked(context.SettingsSnapshot().DebuggerBreakOnNextLine());
+          auto debugBundlePath = context.SettingsSnapshot().DebugBundlePath();
+          for (auto item : strongThis->x_entryPointCombo().Items()) {
+            if (winrt::unbox_value<winrt::hstring>(item.as<ComboBoxItem>().Content()) == debugBundlePath) {
+              strongThis->x_entryPointCombo().SelectedItem(item);
+              break;
             }
-          });
+          }
+          strongThis->x_DebuggerPort().Text(winrt::to_hstring(context.SettingsSnapshot().DebuggerPort()));
+          if (context.SettingsSnapshot().UseWebDebugger()) {
+            xaml::Window::Current().Content().as<xaml::FrameworkElement>().RequestedTheme(xaml::ElementTheme::Light);
+            strongThis->x_themeLight().IsSelected(true);
+          } else if (strongThis->RequestedTheme() == xaml::ElementTheme::Light) {
+            xaml::Window::Current().Content().as<xaml::FrameworkElement>().RequestedTheme(xaml::ElementTheme::Default);
+            strongThis->x_themeDefault().IsSelected(true);
+          }
         }
       });
+    }
+  });
   // Nudge the ReactNativeHost to create the instance and wrapping context
   host.ReloadInstance();
 }
@@ -152,6 +169,18 @@ void winrt::playground::implementation::MainPage::x_UseWebDebuggerCheckBox_Unche
   if (x_BreakOnFirstLineCheckBox()) {
     x_BreakOnFirstLineCheckBox().IsEnabled(true);
   }
+}
+
+void winrt::playground::implementation::MainPage::x_Theme_SelectionChanged(
+    winrt::Windows::Foundation::IInspectable const &sender,
+    xaml::Controls::SelectionChangedEventArgs const &e) {
+  auto theme = ElementTheme::Default;
+  if (x_Theme().SelectedItem() == x_themeLight()) {
+    theme = ElementTheme::Light;
+  } else if (x_Theme().SelectedItem() == x_themeDark()) {
+    theme = ElementTheme::Dark;
+  }
+  xaml::Window::Current().Content().as<xaml::FrameworkElement>().RequestedTheme(theme);
 }
 
 void MainPage::OnNavigatedTo(xaml::Navigation::NavigationEventArgs const &e) {

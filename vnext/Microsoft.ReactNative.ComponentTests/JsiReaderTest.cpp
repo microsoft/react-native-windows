@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <JSI/ChakraRuntime.h>
+#include <JSI/ChakraRuntimeArgs.h>
+#include <JSI/ChakraRuntimeFactory.h>
 #include <JsiReader.h>
 #include <JsiWriter.h>
 #include "CommonReaderTest.h"
@@ -10,15 +11,15 @@
 namespace winrt::Microsoft::ReactNative {
 
 TEST_CLASS (JsiReaderTest) {
-  ::Microsoft::JSI::ChakraRuntime m_runtime;
+  std::unique_ptr<::facebook::jsi::Runtime> m_runtime;
 
-  JsiReaderTest() : m_runtime({}) {}
+  JsiReaderTest() : m_runtime(::Microsoft::JSI::makeChakraRuntime(::Microsoft::JSI::ChakraRuntimeArgs{})) {}
 
   template <typename TCase>
   void RunReaderTest() {
-    IJSValueWriter writer = winrt::make<JsiWriter>(m_runtime);
+    IJSValueWriter writer = winrt::make<JsiWriter>(*m_runtime);
     TCase::Write(writer);
-    IJSValueReader reader = winrt::make<JsiReader>(m_runtime, writer.as<JsiWriter>()->MoveResult());
+    IJSValueReader reader = winrt::make<JsiReader>(*m_runtime, writer.as<JsiWriter>()->MoveResult());
     TCase::Read(reader);
   }
 

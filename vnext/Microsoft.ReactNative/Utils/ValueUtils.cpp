@@ -3,8 +3,11 @@
 
 #include "pch.h"
 
+#include <CppWinRTIncludes.h>
 #include <UI.Xaml.Markup.h>
+#include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
+#include <winrt/Windows.UI.ViewManagement.h>
 #include "Unicode.h"
 
 #include <JSValue.h>
@@ -21,7 +24,7 @@ using namespace xaml::Input;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 inline BYTE GetAFromArgb(DWORD v) {
   return ((BYTE)((v & 0xFF000000) >> 24));
@@ -44,49 +47,105 @@ struct ColorComp {
   }
 };
 
-xaml::Media::Brush BrushFromColorObject(winrt::hstring resourceName) {
-  thread_local static std::map<winrt::hstring, winrt::weak_ref<xaml::Media::SolidColorBrush>> accentColorMap = {
-      {L"SystemAccentColor", {nullptr}},
-      {L"SystemAccentColorLight1", {nullptr}},
-      {L"SystemAccentColorLight2", {nullptr}},
-      {L"SystemAccentColorLight3", {nullptr}},
-      {L"SystemAccentColorDark1", {nullptr}},
-      {L"SystemAccentColorDark2", {nullptr}},
-      {L"SystemAccentColorDark3", {nullptr}},
-      {L"SystemListAccentLowColor", {nullptr}},
-      {L"SystemListAccentMediumColor", {nullptr}},
-      {L"SystemListAccentHighColor", {nullptr}}};
+xaml::Media::Brush BrushFromTheme(winrt::hstring resourceName) {
+  winrt::hstring xamlString =
+      L"<ResourceDictionary"
+      L"    xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
+      L"    xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
+      L"  <SolidColorBrush"
+      L"      x:Key='" +
+      resourceName +
+      L"'"
+      L"      Color='{ThemeResource " +
+      resourceName +
+      "}' />"
+      L"</ResourceDictionary>";
 
-  if (accentColorMap.find(resourceName) != accentColorMap.end()) {
-    if (auto brush = accentColorMap.at(resourceName).get()) {
-      return brush;
-    }
+  auto dictionary{winrt::unbox_value<winrt::ResourceDictionary>(winrt::Markup::XamlReader::Load(xamlString))};
 
-    winrt::hstring xamlString =
-        L"<ResourceDictionary"
-        L"    xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
-        L"    xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
-        L"  <SolidColorBrush"
-        L"      x:Key='" +
-        resourceName +
-        L"'"
-        L"      Color='{ThemeResource " +
-        resourceName +
-        "}' />"
-        L"</ResourceDictionary>";
+  auto brush{winrt::unbox_value<xaml::Media::SolidColorBrush>(dictionary.Lookup(winrt::box_value(resourceName)))};
+  return brush;
+}
 
-    auto dictionary{winrt::unbox_value<winrt::ResourceDictionary>(winrt::Markup::XamlReader::Load(xamlString))};
+struct BrushCache {
+  std::map<winrt::hstring, xaml::Media::Brush> m_map;
+  winrt::Windows::UI::ViewManagement::UISettings m_uiSettings{nullptr};
+  BrushCache() {
+    m_map = {
+        {L"SystemAccentColor", {nullptr}},
+        {L"SystemAccentColorLight1", {nullptr}},
+        {L"SystemAccentColorLight2", {nullptr}},
+        {L"SystemAccentColorLight3", {nullptr}},
+        {L"SystemAccentColorDark1", {nullptr}},
+        {L"SystemAccentColorDark2", {nullptr}},
+        {L"SystemAccentColorDark3", {nullptr}},
+        {L"SystemListAccentLowColor", {nullptr}},
+        {L"SystemListAccentMediumColor", {nullptr}},
+        {L"SystemListAccentHighColor", {nullptr}}};
 
-    auto brush{winrt::unbox_value<xaml::Media::SolidColorBrush>(dictionary.Lookup(winrt::box_value(resourceName)))};
-
-    accentColorMap[resourceName] = winrt::make_weak(brush);
-
-    return brush;
+    m_uiSettings = winrt::Windows::UI::ViewManagement::UISettings();
+    auto dq = winrt::system::DispatcherQueue::GetForCurrentThread();
+    m_uiSettings.ColorValuesChanged([this, dq](auto &&sender, auto &&args) {
+      dq.TryEnqueue([this]() {
+        for (auto &entry : m_map) {
+          winrt::IInspectable resource{winrt::Application::Current().Resources().Lookup(winrt::box_value(entry.first))};
+          if (auto oldSCBrush = entry.second.try_as<xaml::Media::SolidColorBrush>()) {
+            if (auto newSCBrush = resource.try_as<xaml::Media::SolidColorBrush>()) {
+              oldSCBrush.Color(newSCBrush.Color());
+            }
+          }
+          // Similar logic can be applied to copy Acrylic or Reveal brushes
+          /*
+          else if (auto oldAcBrush = entry.second.try_as<xaml::Media::AcrylicBrush>()) {
+            if (auto newAcBrush = resource.try_as<xaml::Media::AcrylicBrush>()) {
+              // ...
+            }
+          }
+          */
+        }
+      });
+    });
   }
 
-  winrt::IInspectable resource{winrt::Application::Current().Resources().Lookup(winrt::box_value(resourceName))};
+  xaml::Media::Brush BrushFromResourceName(winrt::hstring resourceName) {
+    if (m_map.find(resourceName) != m_map.end()) {
+      if (auto brush = m_map.at(resourceName)) {
+        return brush;
+      }
 
-  return winrt::unbox_value<winrt::Brush>(resource);
+      auto brush = BrushFromTheme(resourceName);
+      return RegisterBrush(resourceName, brush);
+    }
+
+    winrt::IInspectable resource{winrt::Application::Current().Resources().Lookup(winrt::box_value(resourceName))};
+
+    if (auto brush = resource.try_as<xaml::Media::Brush>()) {
+      return RegisterBrush(resourceName, brush);
+    } else if (auto color = resource.try_as<winrt::Windows::UI::Color>()) {
+      auto brush = xaml::Media::SolidColorBrush(color.value());
+      return RegisterBrush(resourceName, brush);
+    }
+
+    assert(false && "Resource is not a Color or Brush");
+    return nullptr;
+  }
+
+  xaml::Media::Brush RegisterBrush(winrt::hstring resourceName, const xaml::Media::Brush &brush) {
+    if (auto scb = brush.try_as<xaml::Media::SolidColorBrush>()) {
+      auto scb2 = xaml::Media::SolidColorBrush{scb.Color()};
+      m_map.emplace(resourceName, scb2);
+      return scb2;
+    } else {
+      m_map.emplace(resourceName, brush);
+      return brush;
+    }
+  }
+};
+
+xaml::Media::Brush BrushFromColorObject(winrt::hstring resourceName) {
+  thread_local static BrushCache accentColorMap;
+
+  return accentColorMap.BrushFromResourceName(resourceName);
 }
 
 xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d) {
@@ -97,7 +156,7 @@ xaml::Media::Brush BrushFromColorObject(const winrt::Microsoft::ReactNative::JSV
   return BrushFromColorObject(winrt::to_hstring(v["windowsbrush"].AsString()));
 }
 
-winrt::Color ColorFromNumber(DWORD argb) {
+winrt::Color ColorFromNumber(DWORD argb) noexcept {
   return winrt::ColorHelper::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
 }
 
@@ -258,4 +317,4 @@ winrt::Uri UriTryCreate(winrt::param::hstring const &uri) {
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

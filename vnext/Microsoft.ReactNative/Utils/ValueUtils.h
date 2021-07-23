@@ -8,6 +8,8 @@
 #include <Shared/ReactWindowsAPI.h>
 #include "CppWinRTIncludes.h"
 
+#include <react/renderer/graphics/Color.h>
+
 namespace folly {
 struct dynamic;
 }
@@ -16,8 +18,9 @@ namespace winrt::Microsoft::ReactNative {
 struct JSValue;
 }
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
+xaml::Media::Brush BrushFromColorObject(winrt::hstring resourceName);
 xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d);
 xaml::Media::Brush BrushFromColorObject(const winrt::Microsoft::ReactNative::JSValue &v);
 xaml::Media::SolidColorBrush SolidBrushFromColor(winrt::Windows::UI::Color color);
@@ -56,4 +59,5 @@ TimeSpanFromMs(double ms);
 
 winrt::Uri UriTryCreate(winrt::param::hstring const &uri);
 
-} // namespace react::uwp
+winrt::Windows::UI::Color ColorFromNumber(DWORD argb) noexcept;
+} // namespace Microsoft::ReactNative

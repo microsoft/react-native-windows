@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <CppWinRTIncludes.h>
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/MessageQueueThread.h>
 
@@ -11,7 +12,7 @@
 #include <vector>
 
 #include <winrt/Windows.Foundation.h>
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 typedef winrt::Windows::Foundation::DateTime TDateTime;
 typedef winrt::Windows::Foundation::TimeSpan TTimeSpan;
@@ -66,12 +67,18 @@ class Timing : public std::enable_shared_from_this<Timing> {
 
  private:
   std::weak_ptr<facebook::react::Instance> getInstance() noexcept;
-  void OnRendering();
+  void OnTick();
+  winrt::system::DispatcherQueueTimer EnsureDispatcherTimer();
+  void StartRendering();
+  void StartDispatcherTimer();
+  void StopTicks();
 
  private:
   TimingModule *m_parent;
   TimerQueue m_timerQueue;
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
+  winrt::system::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
+  bool m_usingRendering{false};
 };
 
 class TimingModule : public facebook::xplat::module::CxxModule {
@@ -88,4 +95,4 @@ class TimingModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<Timing> m_timing;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

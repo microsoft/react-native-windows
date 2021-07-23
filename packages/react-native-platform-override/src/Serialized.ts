@@ -5,8 +5,8 @@
  * @format
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'fs';
+import path from 'path';
 import * as t from 'io-ts';
 
 import {ThrowReporter} from 'io-ts/lib/ThrowReporter';

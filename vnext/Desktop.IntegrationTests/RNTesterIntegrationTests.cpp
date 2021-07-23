@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
+
 #include <RuntimeOptions.h>
+#include <Test/WebSocketServer.h>
 #include "TestRunner.h"
 
 using namespace Microsoft::React::Test;
@@ -28,7 +30,6 @@ TEST_MODULE_INITIALIZE(InitModule) {
   Microsoft::React::SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
 }
 
-// None of these tests are runnable
 TEST_CLASS (RNTesterIntegrationTests) {
   TestRunner m_runner;
 
@@ -180,9 +181,13 @@ TEST_CLASS (RNTesterIntegrationTests) {
 
   // ISS:3219193 - Fix intermittent errors, then re-enable.
   BEGIN_TEST_METHOD_ATTRIBUTE(WebSocket)
-  TEST_OWNER(L"Unstable")
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(WebSocket) {
+    // Should behave the same as IntegrationTests/websocket_integration_test_server.js
+    auto server = std::make_shared<WebSocketServer>(5555, false /*useTLS*/);
+    server->SetMessageFactory([](std::string &&message) -> std::string { return message + "_response"; });
+    server->Start();
+
     TestComponent("WebSocketTest");
   }
 

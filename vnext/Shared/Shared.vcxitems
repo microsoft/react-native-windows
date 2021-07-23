@@ -27,11 +27,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.cpp">
-      <ExcludedFromBuild Condition="'$(UseHermes)' != 'true'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(IncludeHermes)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.cpp">
+      <ExcludedFromBuild Condition="'$(IncludeHermes)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSBigAbiString.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraJsiRuntime_edgemode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)LayoutAnimation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp" />
@@ -50,6 +54,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RuntimeOptions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.cpp" />
@@ -70,6 +75,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraCoreRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeFactory.h" />
@@ -88,6 +94,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DevSettings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IDevSupportManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IHttpResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)InstanceManager.h" />
@@ -117,6 +124,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracing.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)tracing\fbsystrace.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)tracing\tracing.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleRegistry.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h" />

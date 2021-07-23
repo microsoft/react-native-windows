@@ -123,7 +123,7 @@ struct ConfigureBundlerDlg : winrt::implements<ConfigureBundlerDlg, winrt::IInsp
 
       m_flyout = xaml::Controls::Flyout{};
       m_flyout.Content(configureUI);
-      if (react::uwp::Is19H1OrHigher()) {
+      if (Is19H1OrHigher()) {
         // ShouldConstrainToRootBounds added in 19H1
         m_flyout.ShouldConstrainToRootBounds(false);
       }

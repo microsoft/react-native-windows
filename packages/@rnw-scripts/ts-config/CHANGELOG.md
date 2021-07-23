@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/ts-config
 
-This log was last generated on Sat, 11 Jul 2020 05:09:38 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Jun 2021 05:09:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.0
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Major changes
+
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
 
 ## 0.1.0
 

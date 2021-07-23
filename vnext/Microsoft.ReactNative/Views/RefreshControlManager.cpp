@@ -37,8 +37,8 @@ void RefreshControlShadowNode::createView(const winrt::Microsoft::ReactNative::J
     m_refreshRequestedRevoker =
         refreshContainer.RefreshRequested(winrt::auto_revoke, [this](auto &&, winrt::RefreshRequestedEventArgs args) {
           m_refreshDeferral = args.GetDeferral();
-          folly::dynamic eventData = folly::dynamic::object();
-          GetViewManager()->DispatchEvent(m_tag, "topOnRefresh", std::move(eventData));
+          winrt::Microsoft::ReactNative::JSValueObject eventData{};
+          GetViewManager()->DispatchEvent(m_tag, L"topOnRefresh", MakeJSValueWriter(std::move(eventData)));
         });
   }
 }
@@ -82,7 +82,7 @@ const wchar_t *RefreshControlViewManager::GetName() const {
 XamlView RefreshControlViewManager::CreateViewCore(
     int64_t /*tag*/,
     const winrt::Microsoft::ReactNative::JSValueObject &) {
-  if (react::uwp::IsRS4OrHigher()) {
+  if (IsRS4OrHigher()) {
     // refreshContainer is supported >= RS4
     return winrt::RefreshContainer();
   } else {

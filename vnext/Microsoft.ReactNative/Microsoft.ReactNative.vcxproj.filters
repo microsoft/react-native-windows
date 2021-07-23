@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
   </ItemGroup>
@@ -158,9 +158,6 @@
     <ClCompile Include="Modules\TimingModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\WebSocketModuleUwp.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Views\Image\ImageViewManager.cpp">
       <Filter>Views\Image</Filter>
     </ClCompile>
@@ -309,9 +306,6 @@
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="Views\PaperShadowNode.cpp" />
     <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
-    <ClCompile Include="JSI\ChakraJsiRuntime_edgemode.cpp">
-      <Filter>JSI</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\BatchingEventEmitter.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -499,9 +493,6 @@
     <ClInclude Include="Modules\TimingModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\WebSocketModuleUwp.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Views\Image\ImageViewManager.h">
       <Filter>Views\Image</Filter>
     </ClInclude>
@@ -677,6 +668,12 @@
     </ClInclude>
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h">
       <Filter>ReactHost</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\TextTransform.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

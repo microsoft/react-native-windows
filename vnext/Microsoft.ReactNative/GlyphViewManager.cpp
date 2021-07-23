@@ -59,8 +59,8 @@ void GlyphShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObj
     const auto &propertyValue = pair.second;
 
     if (propertyName == "color") {
-      if (react::uwp::IsValidColorValue(propertyValue))
-        glyphs.Fill(react::uwp::BrushFrom(propertyValue));
+      if (IsValidColorValue(propertyValue))
+        glyphs.Fill(BrushFrom(propertyValue));
 #ifdef DEBUG
       else if (propertyValue.IsNull()) {
         // Log error, must have a color
@@ -69,12 +69,12 @@ void GlyphShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObj
 #endif
     } else if (propertyName == "fontUri") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
-        auto uri = winrt::Uri(react::uwp::asHstring(propertyValue));
+        auto uri = winrt::Uri(asHstring(propertyValue));
         glyphs.FontUri(uri);
       }
     } else if (propertyName == "glyph") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
-        glyphs.Indices(react::uwp::asHstring(propertyValue));
+        glyphs.Indices(asHstring(propertyValue));
       }
     } else if (propertyName == "colorEnabled") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)

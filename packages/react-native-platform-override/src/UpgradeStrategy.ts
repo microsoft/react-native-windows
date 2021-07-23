@@ -5,8 +5,8 @@
  * @format
  */
 
-import * as _ from 'lodash';
-import * as path from 'path';
+import _ from 'lodash';
+import path from 'path';
 import {WritableFileRepository, bindVersion} from './FileRepository';
 import GitReactFileRepository from './GitReactFileRepository';
 import {hashFileOrDirectory} from './Hash';

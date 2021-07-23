@@ -76,6 +76,7 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   JsiValueRef EvaluateJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl);
   ReactNative::JsiPreparedJavaScript PrepareJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl);
   JsiValueRef EvaluatePreparedJavaScript(ReactNative::JsiPreparedJavaScript const &js);
+  bool DrainMicrotasks(int32_t maxMicrotasksHint);
   JsiObjectRef Global();
   hstring Description();
   bool IsInspectable();

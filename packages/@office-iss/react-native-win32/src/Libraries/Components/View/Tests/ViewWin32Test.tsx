@@ -1,5 +1,5 @@
 'use strict';
-import * as React from 'react';
+import React from 'react'
 import { StyleSheet, Text, TouchableHighlight } from 'react-native';
 import { ViewWin32 } from '../ViewWin32';
 import { Cursor, IKeyboardEvent, IHandledKeyboardEvent } from '../ViewWin32.Props';

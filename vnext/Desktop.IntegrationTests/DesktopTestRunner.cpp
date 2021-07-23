@@ -7,6 +7,7 @@
 #include <IUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/WebSocketModule.h>
+#include <RuntimeOptions.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <cxxreact/Instance.h>
 #include "ChakraRuntimeHolder.h"
@@ -40,10 +41,8 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
     string &&jsBundleFile,
     vector<tuple<string, CxxModule::Provider>> &&cxxModules,
     shared_ptr<DevSettings> devSettings) noexcept {
-  auto nativeQueue = react::uwp::MakeJSQueueThread();
-  auto jsQueue = react::uwp::MakeJSQueueThread();
-
-  devSettings->jsiRuntimeHolder = std::make_shared<ChakraRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
+  auto nativeQueue = Microsoft::ReactNative::MakeJSQueueThread();
+  auto jsQueue = Microsoft::ReactNative::MakeJSQueueThread();
 
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
       {"AsyncLocalStorage",
@@ -89,6 +88,9 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
 
   // Update settings.
   devSettings->platformName = "windows";
+
+  // Set to JSIEngineOverride::Chakra when testing the Chakra.dll JSI runtime.
+  devSettings->jsiEngineOverride = JSIEngineOverride::ChakraCore;
 
   auto instanceWrapper = CreateReactInstance(
       std::make_shared<facebook::react::Instance>(),

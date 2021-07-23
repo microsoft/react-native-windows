@@ -25,6 +25,7 @@ import type {ImageStyleProp} from '../StyleSheet/StyleSheet';
 import NativeImageLoaderWin32 from './NativeImageLoaderWin32'; // [Win32] Replace iOS
 
 import ImageViewNativeComponent from './ImageViewNativeComponent';
+import type {RootTag} from 'react-native/Libraries/Types/RootTagTypes';
 
 function getSize(
   uri: string,
@@ -81,13 +82,15 @@ function getSizeWithHeaders(
 function prefetchWithMetadata(
   url: string,
   queryRootName: string,
-  rootTag?: ?number,
+  rootTag?: ?RootTag,
 ): any {
   if (NativeImageLoaderWin32.prefetchImageWithMetadata) {
     // number params like rootTag cannot be nullable before TurboModules is available
     return NativeImageLoaderWin32.prefetchImageWithMetadata(
       url,
       queryRootName,
+      // NOTE: RootTag type
+      // $FlowFixMe[incompatible-call] RootTag: number is incompatible with RootTag
       rootTag ? rootTag : 0,
     );
   } else {
@@ -132,12 +135,10 @@ let Image = (props: ImagePropsType, forwardedRef) => {
   let sources;
   let style: ImageStyleProp;
   if (Array.isArray(source)) {
-    // $FlowFixMe flattenStyle is not strong enough
     style = flattenStyle([styles.base, props.style]) || {};
     sources = source;
   } else {
     const {width, height, uri} = source;
-    // $FlowFixMe flattenStyle is not strong enough
     style = flattenStyle([{width, height}, styles.base, props.style]) || {};
     sources = [source];
 
@@ -209,9 +210,9 @@ Image.displayName = 'Image';
  *
  * See https://reactnative.dev/docs/image.html#getsize
  */
-/* $FlowFixMe(>=0.89.0 site=react_native_ios_fb) This comment suppresses an
- * error found when Flow v0.89 was deployed. To see the error, delete this
- * comment and run Flow. */
+/* $FlowFixMe[prop-missing] (>=0.89.0 site=react_native_ios_fb) This comment
+ * suppresses an error found when Flow v0.89 was deployed. To see the error,
+ * delete this comment and run Flow. */
 Image.getSize = getSize;
 
 /**
@@ -220,9 +221,9 @@ Image.getSize = getSize;
  *
  * See https://reactnative.dev/docs/image.html#getsizewithheaders
  */
-/* $FlowFixMe(>=0.89.0 site=react_native_ios_fb) This comment suppresses an
- * error found when Flow v0.89 was deployed. To see the error, delete this
- * comment and run Flow. */
+/* $FlowFixMe[prop-missing] (>=0.89.0 site=react_native_ios_fb) This comment
+ * suppresses an error found when Flow v0.89 was deployed. To see the error,
+ * delete this comment and run Flow. */
 Image.getSizeWithHeaders = getSizeWithHeaders;
 
 /**
@@ -231,9 +232,9 @@ Image.getSizeWithHeaders = getSizeWithHeaders;
  *
  * See https://reactnative.dev/docs/image.html#prefetch
  */
-/* $FlowFixMe(>=0.89.0 site=react_native_ios_fb) This comment suppresses an
- * error found when Flow v0.89 was deployed. To see the error, delete this
- * comment and run Flow. */
+/* $FlowFixMe[prop-missing] (>=0.89.0 site=react_native_ios_fb) This comment
+ * suppresses an error found when Flow v0.89 was deployed. To see the error,
+ * delete this comment and run Flow. */
 Image.prefetch = prefetch;
 
 /**
@@ -242,9 +243,9 @@ Image.prefetch = prefetch;
  *
  * See https://reactnative.dev/docs/image.html#prefetch
  */
-/* $FlowFixMe(>=0.89.0 site=react_native_ios_fb) This comment suppresses an
- * error found when Flow v0.89 was deployed. To see the error, delete this
- * comment and run Flow. */
+/* $FlowFixMe[prop-missing] (>=0.89.0 site=react_native_ios_fb) This comment
+ * suppresses an error found when Flow v0.89 was deployed. To see the error,
+ * delete this comment and run Flow. */
 Image.prefetchWithMetadata = prefetchWithMetadata;
 
 /**
@@ -252,9 +253,9 @@ Image.prefetchWithMetadata = prefetchWithMetadata;
  *
  *  See https://reactnative.dev/docs/image.html#querycache
  */
-/* $FlowFixMe(>=0.89.0 site=react_native_ios_fb) This comment suppresses an
- * error found when Flow v0.89 was deployed. To see the error, delete this
- * comment and run Flow. */
+/* $FlowFixMe[prop-missing] (>=0.89.0 site=react_native_ios_fb) This comment
+ * suppresses an error found when Flow v0.89 was deployed. To see the error,
+ * delete this comment and run Flow. */
 Image.queryCache = queryCache;
 
 /**
@@ -262,14 +263,11 @@ Image.queryCache = queryCache;
  *
  * See https://reactnative.dev/docs/image.html#resolveassetsource
  */
-/* $FlowFixMe(>=0.89.0 site=react_native_ios_fb) This comment suppresses an
- * error found when Flow v0.89 was deployed. To see the error, delete this
- * comment and run Flow. */
+/* $FlowFixMe[prop-missing] (>=0.89.0 site=react_native_ios_fb) This comment
+ * suppresses an error found when Flow v0.89 was deployed. To see the error,
+ * delete this comment and run Flow. */
 Image.resolveAssetSource = resolveAssetSource;
 
-/* $FlowFixMe(>=0.89.0 site=react_native_ios_fb) This comment suppresses an
- * error found when Flow v0.89 was deployed. To see the error, delete this
- * comment and run Flow. */
 Image.propTypes = DeprecatedImagePropType;
 
 const styles = StyleSheet.create({

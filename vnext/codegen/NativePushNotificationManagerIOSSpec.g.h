@@ -30,8 +30,9 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
       Method<void() noexcept>{12, L"removeAllDeliveredNotifications"},
       Method<void(React::JSValueArray) noexcept>{13, L"removeDeliveredNotifications"},
       Method<void(Callback<React::JSValue>) noexcept>{14, L"getDeliveredNotifications"},
-      Method<void(std::string) noexcept>{15, L"addListener"},
-      Method<void(double) noexcept>{16, L"removeListeners"},
+      Method<void(Callback<React::JSValue>) noexcept>{15, L"getAuthorizationStatus"},
+      Method<void(std::string) noexcept>{16, L"addListener"},
+      Method<void(double) noexcept>{17, L"removeListeners"},
   };
 
   template <class TModule>
@@ -115,11 +116,16 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
           "    REACT_METHOD(getDeliveredNotifications) static void getDeliveredNotifications(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           15,
+          "getAuthorizationStatus",
+          "    REACT_METHOD(getAuthorizationStatus) void getAuthorizationStatus(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getAuthorizationStatus) static void getAuthorizationStatus(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          16,
           "addListener",
           "    REACT_METHOD(addListener) void addListener(std::string eventType) noexcept { /* implementation */ }}\n"
           "    REACT_METHOD(addListener) static void addListener(std::string eventType) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          16,
+          17,
           "removeListeners",
           "    REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }}\n"
           "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }}\n");

@@ -26,7 +26,7 @@
 #include <Modules/PaperUIManagerModule.h>
 #include <Windows.Foundation.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 void NativeAnimatedNodeManager::CreateAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -406,4 +406,4 @@ TrackingAnimatedNode *NativeAnimatedNodeManager::GetTrackingAnimatedNode(int64_t
 void NativeAnimatedNodeManager::RemoveActiveAnimation(int64_t tag) {
   m_activeAnimations.erase(tag);
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

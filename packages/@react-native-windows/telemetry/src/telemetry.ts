@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as path from 'path';
+import path from 'path';
 import {randomBytes} from 'crypto';
 import * as appInsights from 'applicationinsights';
 import {execSync} from 'child_process';

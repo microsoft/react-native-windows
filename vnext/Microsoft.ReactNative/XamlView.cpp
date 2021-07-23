@@ -42,10 +42,9 @@ void SetCompositor(const comp::Compositor &compositor) {
 }
 
 comp::Compositor GetCompositor() {
-  if (!react::uwp::IsXamlIsland()) {
+  if (!IsXamlIsland()) {
     return xaml::Window::Current().Compositor();
   }
-  comp::Compositor compositor;
 #ifndef USE_WINUI3
   assert(tlsCompositor != nullptr);
   return tlsCompositor;

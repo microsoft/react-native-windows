@@ -65,12 +65,13 @@ struct ReactContext {
     m_handle.EmitJSEvent(eventEmitterName, eventName, MakeJSValueWriter(std::forward<TArgs>(args)...));
   }
 
-#if !defined(CORE_ABI) && !defined(__APPLE__)
+#if !defined(CORE_ABI) && !defined(__APPLE__) && !defined(CXXUNITTESTS)
   // Dispatch eventName event to the view.
   // args are either function arguments or a single lambda with 'IJSValueWriter const&' argument.
   template <class... TArgs>
   void DispatchEvent(xaml::FrameworkElement const &view, std::wstring_view eventName, TArgs &&... args) const noexcept {
-    m_handle.DispatchEvent(view, eventName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
+    XamlUIService::FromContext(m_handle).DispatchEvent(
+        view, eventName, MakeJSValueWriter(std::forward<TArgs>(args)...));
   }
 #endif
 

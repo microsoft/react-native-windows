@@ -5,16 +5,15 @@
  * @format
  */
 
-import * as yargs from 'yargs';
-import * as fs from 'fs';
-import * as semver from 'semver';
-import {exec, execSync} from 'child_process';
-import * as validUrl from 'valid-url';
-import * as prompts from 'prompts';
-import * as findUp from 'find-up';
-import * as chalk from 'chalk';
-// @ts-ignore
-import * as Registry from 'npm-registry';
+import yargs from 'yargs';
+import fs from 'fs';
+import semver from 'semver';
+import {execSync} from 'child_process';
+import validUrl from 'valid-url';
+import prompts from 'prompts';
+import findUp from 'find-up';
+import chalk from 'chalk';
+import npmFetch from 'npm-registry-fetch';
 
 import {
   Telemetry,
@@ -38,7 +37,6 @@ const npmConfReg = execSync('npm config get registry')
 const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   ? npmConfReg
   : 'http://registry.npmjs.org';
-const npm = new Registry({registry: NPM_REGISTRY_URL});
 
 const argv = yargs
   .version(false)
@@ -91,7 +89,7 @@ const argv = yargs
     useHermes: {
       type: 'boolean',
       describe:
-        'Use Hermes instead of Chakra as the JS engine (supported on 0.64+)',
+        '[Experimental] Use Hermes instead of Chakra as the JS engine (supported on 0.64+ for C++ projects)',
       default: false,
     },
     useWinUI3: {
@@ -210,79 +208,39 @@ function getMatchingReactNativeSemVerForReactNativeWindowsVersion(
   return 'unknown';
 }
 
-function getLatestMatchingVersion(
+async function getLatestMatchingVersion(
   pkg: string,
   versionSemVer: string,
 ): Promise<string> {
-  return new Promise((resolve, reject) => {
-    if (semver.validRange(versionSemVer)) {
-      // Ideally we'd be able to just use npm.packages.range(pkg, versionSemVer) here,
-      // but alas it fails to give us the right result for react-native-windows@^0.60.0-0
-      // as it fails to return pre-release versions
-      npm.packages.releases(
-        pkg,
-        (err: any, details: {[key: string]: Record<string, any>} | null) => {
-          if (err) {
-            reject(err);
-          } else if (details) {
-            const versions = Object.keys(details);
-            if (versions.length > 0) {
-              const candidates = versions
-                .filter(v => semver.satisfies(v, versionSemVer))
-                .sort(semver.rcompare);
-              if (candidates.length > 0) {
-                resolve(candidates[0]);
-                return;
-              }
-            }
-          }
-          reject(
-            new CodedError(
-              'NoMatchingPackageVersion',
-              `No matching version of ${pkg}@${versionSemVer} found`,
-            ),
-          );
-        },
-      );
-    } else {
-      try {
-        exec(
-          `npm info ${pkg}@${versionSemVer} version --json`,
-          (err, stdout, _stderr) => {
-            try {
-              if (!err) {
-                let candidates = JSON.parse(stdout);
-                if (typeof candidates === 'string') {
-                  resolve(candidates);
-                  return;
-                }
-                candidates = candidates.sort(semver.rcompare);
-                if (candidates && candidates.length > 0) {
-                  resolve(candidates[0]);
-                  return;
-                }
-              }
-              reject(
-                new CodedError(
-                  'NoMatchingPackageVersion',
-                  `No matching version of ${pkg}@${versionSemVer} found`,
-                ),
-              );
-            } catch (e) {
-              reject(e);
-            }
-          },
-        );
-      } catch (err) {
-        reject(
-          new CodedError(
-            'NoMatchingPackageVersion',
-            `No matching version of ${pkg}@${versionSemVer} found`,
-          ),
-        );
+  const npmResponse = await npmFetch.json(pkg, {registry: NPM_REGISTRY_URL});
+
+  // Check if versionSemVer is a tag (i.e. 'canary', 'latest', 'preview', etc.)
+  if ('dist-tags' in npmResponse) {
+    const distTags = npmResponse['dist-tags'] as Record<string, string>;
+    if (versionSemVer in distTags) {
+      return distTags[versionSemVer];
+    }
+  }
+
+  // Check if versionSemVer is a semver version (i.e. '^0.60.0-0', '0.63.1', etc.)
+  if ('versions' in npmResponse) {
+    const versions = Object.keys(
+      npmResponse.versions as Record<string, unknown>,
+    );
+    if (versions.length > 0) {
+      const candidates = versions
+        .filter(v => semver.satisfies(v, versionSemVer))
+        .sort(semver.rcompare);
+      if (candidates.length > 0) {
+        return candidates[0];
       }
     }
-  });
+  }
+
+  throw new CodedError(
+    'NoMatchingPackageVersion',
+    `No matching version of ${pkg}@${versionSemVer} found`,
+  );
 }
 
 async function getLatestRNWVersion(): Promise<string> {
@@ -424,14 +382,6 @@ function isProjectUsingYarn(cwd: string): boolean {
         'IncompatibleOptions',
         "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNuGetDependency' are incompatible",
         {detail: 'useWinUI3 and experimentalNuGetDependency'},
-      );
-    }
-
-    if (argv.useHermes && argv.experimentalNuGetDependency) {
-      throw new CodedError(
-        'IncompatibleOptions',
-        "Error: Incompatible options specified. Options '--useHermes' and '--experimentalNuGetDependency' are incompatible",
-        {detail: 'useHermes and experimentalNuGetDependency'},
       );
     }
 

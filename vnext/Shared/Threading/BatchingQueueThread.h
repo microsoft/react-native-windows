@@ -3,10 +3,32 @@
 
 #pragma once
 
+#include <ReactCommon/CallInvoker.h>
 #include <Shared/BatchingMessageQueueThread.h>
 #include <thread>
 
-namespace react::uwp {
+namespace facebook::react {
+class Instance;
+}
+
+namespace Microsoft::ReactNative {
+
+struct BatchingQueueCallInvoker : facebook::react::CallInvoker {
+  BatchingQueueCallInvoker(std::shared_ptr<facebook::react::MessageQueueThread> const &queueThread);
+
+  void invokeAsync(std::function<void()> &&func) noexcept override;
+  void EnsureQueue() noexcept;
+  void onBatchComplete() noexcept;
+  void quitSynchronous() noexcept;
+  void PostBatch() noexcept;
+  void invokeSync(std::function<void()> &&func) noexcept override;
+
+ private:
+  std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
+
+  using WorkItemQueue = std::vector<std::function<void()>>;
+  std::shared_ptr<WorkItemQueue> m_taskQueue;
+};
 
 // Executes the function on the provided UI Dispatcher
 struct BatchingQueueThread final : facebook::react::BatchingMessageQueueThread {
@@ -15,6 +37,8 @@ struct BatchingQueueThread final : facebook::react::BatchingMessageQueueThread {
 
   BatchingQueueThread() = delete;
   BatchingQueueThread(const BatchingQueueThread &other) = delete;
+
+  void decoratedNativeCallInvokerReady(std::weak_ptr<facebook::react::Instance> wkInstance) noexcept override;
 
  public: // facebook::react::MessageQueueThread
   void runOnQueue(std::function<void()> &&func) noexcept override;
@@ -25,20 +49,11 @@ struct BatchingQueueThread final : facebook::react::BatchingMessageQueueThread {
   void onBatchComplete() noexcept override;
 
  private:
-  void EnsureQueue() noexcept;
-  void ThreadCheck() noexcept;
-  void PostBatch() noexcept;
-
- private:
-  std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
-
-  using WorkItemQueue = std::vector<std::function<void()>>;
-  std::shared_ptr<WorkItemQueue> m_taskQueue;
   std::mutex m_mutex;
-
-#if DEBUG
-  std::thread::id m_expectedThreadId{};
-#endif
+  std::mutex m_mutexQuitting;
+  bool m_quitting{false};
+  std::shared_ptr<facebook::react::CallInvoker> m_callInvoker;
+  std::shared_ptr<BatchingQueueCallInvoker> m_batchingQueueCallInvoker;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

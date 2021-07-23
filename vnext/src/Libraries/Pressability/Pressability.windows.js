@@ -19,6 +19,8 @@ import type {
   MouseEvent,
   KeyEvent, // [Windows]
 } from '../Types/CoreEventTypes';
+import PressabilityPerformanceEventEmitter from './PressabilityPerformanceEventEmitter.js';
+import {type PressabilityTouchSignal as TouchSignal} from './PressabilityTypes.js';
 import Platform from '../Utilities/Platform';
 import UIManager from '../ReactNative/UIManager';
 import type {HostComponent} from '../Renderer/shims/ReactNativeTypes';
@@ -91,6 +93,16 @@ export type PressabilityConfig = $ReadOnly<{|
    * Called after the element is focused.
    */
   onFocus?: ?(event: FocusEvent) => mixed,
+
+  /*
+   * Called after a key down event is detected.
+   */
+  onKeyDown?: ?(event: KeyEvent) => mixed,
+
+  /*
+   * Called after a key up event is detected.
+   */
+  onKeyUp?: ?(event: KeyEvent) => mixed,
 
   /**
    * Called when the hover is activated to provide visual feedback.
@@ -194,15 +206,6 @@ type TouchState =
   | 'RESPONDER_ACTIVE_LONG_PRESS_IN'
   | 'RESPONDER_ACTIVE_LONG_PRESS_OUT'
   | 'ERROR';
-
-type TouchSignal =
-  | 'DELAY'
-  | 'RESPONDER_GRANT'
-  | 'RESPONDER_RELEASE'
-  | 'RESPONDER_TERMINATED'
-  | 'ENTER_PRESS_RECT'
-  | 'LEAVE_PRESS_RECT'
-  | 'LONG_PRESS_DETECTED';
 
 const Transitions = Object.freeze({
   NOT_RESPONDER: {
@@ -639,13 +642,16 @@ export default class Pressability {
     // [Windows
     const keyboardEventHandlers = {
       onKeyUp: (event: KeyEvent): void => {
+        const {onKeyUp} = this._config;
+        onKeyUp && onKeyUp(event);
+
         if (
-          event.nativeEvent.code === 'Space' ||
-          event.nativeEvent.code === 'Enter' ||
-          event.nativeEvent.code === 'GamepadA'
+          (event.nativeEvent.code === 'Space' ||
+            event.nativeEvent.code === 'Enter' ||
+            event.nativeEvent.code === 'GamepadA') &&
+          event.defaultPrevented != true
         ) {
           const {onPressOut, onPress} = this._config;
-
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPressOut && onPressOut(event);
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
@@ -653,13 +659,16 @@ export default class Pressability {
         }
       },
       onKeyDown: (event: KeyEvent): void => {
+        const {onKeyDown} = this._config;
+        onKeyDown && onKeyDown(event);
+
         if (
-          event.nativeEvent.code === 'Space' ||
-          event.nativeEvent.code === 'Enter' ||
-          event.nativeEvent.code === 'GamepadA'
+          (event.nativeEvent.code === 'Space' ||
+            event.nativeEvent.code === 'Enter' ||
+            event.nativeEvent.code === 'GamepadA') &&
+          event.defaultPrevented != true
         ) {
           const {onPressIn} = this._config;
-
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPressIn && onPressIn(event);
         }
@@ -695,6 +704,19 @@ export default class Pressability {
         : '<<host component>>',
     );
     if (prevState !== nextState) {
+      // Especially on iOS, not all events have timestamps associated.
+      // For telemetry purposes, this doesn't matter too much, as long as *some* do.
+      // Since the native timestamp is integral for logging telemetry, just skip
+      // events if they don't have a timestamp attached.
+      if (event.nativeEvent.timestamp != null) {
+        PressabilityPerformanceEventEmitter.emitEvent(() => {
+          return {
+            signal,
+            touchDelayMs: Date.now() - event.nativeEvent.timestamp,
+          };
+        });
+      }
+
       this._performTransitionSideEffects(prevState, nextState, signal, event);
       this._touchState = nextState;
     }

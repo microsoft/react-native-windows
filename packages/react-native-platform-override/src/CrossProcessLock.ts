@@ -5,8 +5,8 @@
  * @format
  */
 
-import * as net from 'net';
-import * as path from 'path';
+import net from 'net';
+import path from 'path';
 import {platform, tmpdir} from 'os';
 
 /**

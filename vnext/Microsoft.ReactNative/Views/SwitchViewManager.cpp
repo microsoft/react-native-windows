@@ -65,8 +65,8 @@ void SwitchShadowNode::UpdateThumbColor() {
   if (toggleSwitch == nullptr)
     return;
 
-  const auto thumbBrush = react::uwp::IsValidColorValue(m_thumbColor) ? react::uwp::BrushFrom(m_thumbColor) : nullptr;
-  react::uwp::UpdateToggleSwitchThumbResourceBrushes(toggleSwitch, thumbBrush);
+  const auto thumbBrush = IsValidColorValue(m_thumbColor) ? BrushFrom(m_thumbColor) : nullptr;
+  UpdateToggleSwitchThumbResourceBrushes(toggleSwitch, thumbBrush);
 }
 
 void SwitchShadowNode::UpdateTrackColor() {
@@ -74,11 +74,9 @@ void SwitchShadowNode::UpdateTrackColor() {
   if (toggleSwitch == nullptr)
     return;
 
-  const auto onTrackBrush =
-      react::uwp::IsValidColorValue(m_onTrackColor) ? react::uwp::BrushFrom(m_onTrackColor) : nullptr;
-  const auto offTrackBrush =
-      react::uwp::IsValidColorValue(m_offTrackColor) ? react::uwp::BrushFrom(m_offTrackColor) : nullptr;
-  react::uwp::UpdateToggleSwitchTrackResourceBrushes(toggleSwitch, onTrackBrush, offTrackBrush);
+  const auto onTrackBrush = IsValidColorValue(m_onTrackColor) ? BrushFrom(m_onTrackColor) : nullptr;
+  const auto offTrackBrush = IsValidColorValue(m_offTrackColor) ? BrushFrom(m_offTrackColor) : nullptr;
+  UpdateToggleSwitchTrackResourceBrushes(toggleSwitch, onTrackBrush, offTrackBrush);
 }
 
 void SwitchShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {

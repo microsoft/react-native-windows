@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\tests\RecoverableErrorTest.cpp">
@@ -92,7 +92,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\tests\StateReconciliationTest.cpp">
       <Filter>react\renderer\mounting\tests</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\tests\TransactionTelemetryTest.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\tests\TransactionTelemetryTest.cpp">
       <Filter>react\renderer\mounting\tests</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\templateprocessor\tests\UITemplateProcessorTest.cpp">

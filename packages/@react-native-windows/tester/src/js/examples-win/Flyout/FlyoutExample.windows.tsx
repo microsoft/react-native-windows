@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {Button, Switch, Text, TextInput, View} from 'react-native';
 import {Flyout, Picker, Popup, Placement} from 'react-native-windows';
 

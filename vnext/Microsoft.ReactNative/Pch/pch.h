@@ -11,10 +11,6 @@
 #define WINRT_LEAN_AND_MEAN
 #endif
 
-#ifndef NOGDI
-#define NOGDI
-#endif
-
 #undef WINAPI_FAMILY
 #define WINAPI_FAMILY WINAPI_FAMILY_DESKTOP_APP
 
@@ -35,6 +31,9 @@
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
 #include <UI.Xaml.Shapes.h>
+
+#include <Utils/CppWinrtLessExceptions.h>
+
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <winrt/Windows.Foundation.Metadata.h>
@@ -45,6 +44,7 @@
 #include <winrt/Windows.UI.ViewManagement.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include <winrt/Windows.Web.Http.Filters.h>
+#include <winrt/Windows.Web.Http.Headers.h>
 
 #include "Base/CxxReactIncludes.h"
 

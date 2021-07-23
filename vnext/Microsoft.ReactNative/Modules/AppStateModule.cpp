@@ -17,7 +17,9 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
   // We need to register for notifications from the XAML thread.
   if (auto dispatcher = reactContext.UIDispatcher()) {
     dispatcher.Post([this]() {
-      if (auto currentApp = xaml::TryGetCurrentApplication()) {
+      auto currentApp = xaml::TryGetCurrentApplication();
+
+      if (!IsWinUI3Island() && currentApp != nullptr) {
         m_enteredBackgroundRevoker = currentApp.EnteredBackground(
             winrt::auto_revoke,
             [weakThis = weak_from_this()](
@@ -38,7 +40,7 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
               }
             });
       } else {
-        assert(react::uwp::IsXamlIsland());
+        assert(IsXamlIsland());
       }
     });
   }

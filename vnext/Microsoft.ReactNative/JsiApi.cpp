@@ -494,6 +494,12 @@ JsiValueRef JsiRuntime::EvaluatePreparedJavaScript(ReactNative::JsiPreparedJavaS
   throw;
 }
 
+bool JsiRuntime::DrainMicrotasks(int32_t maxMicrotasksHint) try {
+  return m_runtimeAccessor->drainMicrotasks(maxMicrotasksHint);
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
 JsiObjectRef JsiRuntime::Global() try {
   return PointerAccessor::MakeJsiObjectData(m_runtimeAccessor->global());
 } catch (JSI_SET_ERROR) {

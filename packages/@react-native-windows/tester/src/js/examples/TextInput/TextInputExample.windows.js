@@ -20,6 +20,7 @@ const {
   Slider,
   Switch,
 } = require('react-native');
+const {useState} = React;
 
 const TextInputSharedExamples = require('./TextInputSharedExamples');
 
@@ -154,6 +155,54 @@ class PressInOutEvents extends React.Component<
       </View>
     );
   }
+}
+
+function PropagationSample() {
+  const [eventLog, setEventLog] = useState([]);
+
+  function logEvent(eventName) {
+    const limit = 6;
+    setEventLog(current => {
+      return [eventName].concat(current.slice(0, limit - 1));
+    });
+    console.log(eventName);
+  }
+  return (
+    <>
+      <View
+        focusable
+        style={styles.row}
+        keyDownEvents={[
+          {code: 'KeyW', handledEventPhase: 3},
+          {code: 'KeyE', handledEventPhase: 1},
+        ]}
+        onKeyDown={event => logEvent('outer keyDown ' + event.nativeEvent.code)}
+        onKeyDownCapture={event =>
+          logEvent('outer keyDownCapture ' + event.nativeEvent.code)
+        }>
+        <Text>some text to focus on</Text>
+        <TextInput
+          placeholder="Click inside the box to observe events being fired."
+          style={[styles.singleLineWithHeightTextInput]}
+          onKeyDown={event =>
+            logEvent('textinput keyDown ' + event.nativeEvent.code)
+          }
+          onKeyUp={event =>
+            logEvent('textinput keyUp ' + event.nativeEvent.code)
+          }
+          keyDownEvents={[
+            {code: 'KeyW', handledEventPhase: 3},
+            {code: 'KeyE', handledEventPhase: 1},
+          ]}
+        />
+      </View>
+      <View style={styles.eventLogBox}>
+        {eventLog.map((e, ii) => (
+          <Text key={ii}>{e}</Text>
+        ))}
+      </View>
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -455,4 +504,43 @@ exports.examples = ([
       return <PressInOutEvents />;
     },
   },
+  // [Windows
+  {
+    title: 'Clear text on submit',
+    render: function(): React.Node {
+      return (
+        <View>
+          <Text>Default submit key (Enter):</Text>
+          <TextInput clearTextOnSubmit style={styles.singleLine} />
+          <Text>Custom submit key event (Shift + Enter), single-line:</Text>
+          <TextInput
+            clearTextOnSubmit
+            style={styles.singleLine}
+            submitKeyEvents={[{code: 'Enter', shiftKey: true}]}
+          />
+          <Text>Custom submit key event (Shift + Enter), multi-line:</Text>
+          <TextInput
+            multiline
+            clearTextOnSubmit
+            style={styles.multiline}
+            submitKeyEvents={[{code: 'Enter', shiftKey: true}]}
+          />
+          <Text>Submit with Enter key, return key with Shift + Enter</Text>
+          <TextInput
+            multiline
+            clearTextOnSubmit
+            style={styles.multiline}
+            submitKeyEvents={[{code: 'Enter'}]}
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Stop propagation sample',
+    render: function(): React.Node {
+      return <PropagationSample />;
+    },
+  },
+  // Windows]
 ]: Array<RNTesterExampleModuleItem>);

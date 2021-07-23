@@ -8,25 +8,31 @@
  * @format
  */
 
-const DeprecatedTextInputPropTypes = require('../../DeprecatedPropTypes/DeprecatedTextInputPropTypes');
-const Platform = require('../../Utilities/Platform');
-const React = require('react');
-const StyleSheet = require('../../StyleSheet/StyleSheet');
-const Text = require('../../Text/Text');
-const TextAncestor = require('../../Text/TextAncestor');
-const TextInputState = require('./TextInputState');
+import * as React from 'react';
 
-const invariant = require('invariant');
-const nullthrows = require('nullthrows');
-const setAndForwardRef = require('../../Utilities/setAndForwardRef');
+import DeprecatedTextInputPropTypes from '../../DeprecatedPropTypes/DeprecatedTextInputPropTypes';
+
+import Platform from '../../Utilities/Platform';
+import StyleSheet, {
+  type TextStyleProp,
+  type ViewStyleProp,
+  type ColorValue,
+} from '../../StyleSheet/StyleSheet';
+import Text from '../../Text/Text';
+import TextAncestor from '../../Text/TextAncestor';
+import TextInputState from './TextInputState';
+import invariant from 'invariant';
+import nullthrows from 'nullthrows';
+import setAndForwardRef from '../../Utilities/setAndForwardRef';
 
 import usePressability from '../../Pressability/usePressability';
 
-import type {TextStyleProp, ViewStyleProp} from '../../StyleSheet/StyleSheet';
-import type {ColorValue} from '../../StyleSheet/StyleSheet';
 import type {ViewProps} from '../View/ViewPropTypes';
-import type {SyntheticEvent, ScrollEvent} from '../../Types/CoreEventTypes';
-import type {PressEvent} from '../../Types/CoreEventTypes';
+import type {
+  SyntheticEvent,
+  ScrollEvent,
+  PressEvent,
+} from '../../Types/CoreEventTypes';
 import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
 import type {TextInputNativeCommands} from './TextInputNativeCommands';
 
@@ -42,6 +48,7 @@ let RCTMultilineTextInputView;
 let RCTMultilineTextInputNativeCommands;
 let WindowsTextInput; // [Windows]
 let WindowsTextInputCommands; // [Windows]
+import type {KeyEvent} from '../../Types/CoreEventTypes'; // [Windows]
 
 // [Windows
 if (Platform.OS === 'android') {
@@ -421,10 +428,37 @@ type AndroidProps = $ReadOnly<{|
   underlineColorAndroid?: ?ColorValue,
 |}>;
 
+// [Windows
+
+type SubmitKeyEvent = $ReadOnly<{|
+  altKey?: ?boolean,
+  ctrlKey?: ?boolean,
+  metaKey?: ?boolean,
+  shiftKey?: ?boolean,
+  code: string,
+|}>;
+
+type WindowsProps = $ReadOnly<{|
+  /**
+   * If `true`, clears the text field synchronously before `onSubmitEditing` is emitted.
+   * @platform windows
+   */
+  clearTextOnSubmit?: ?boolean,
+
+  /**
+   * Configures keys that can be used to submit editing for the TextInput.
+   * @platform windows
+   */
+  submitKeyEvents?: ?$ReadOnlyArray<SubmitKeyEvent>,
+|}>;
+
+// Windows]
+
 export type Props = $ReadOnly<{|
   ...$Diff<ViewProps, $ReadOnly<{|style: ?ViewStyleProp|}>>,
   ...IOSProps,
   ...AndroidProps,
+  ...WindowsProps, // [Windows]
 
   /**
    * Can tell `TextInput` to automatically capitalize certain characters.
@@ -1109,6 +1143,53 @@ function InternalTextInput(props: Props): React.Node {
   // TextInput handles onBlur and onFocus events
   // so omitting onBlur and onFocus pressability handlers here.
   const {onBlur, onFocus, ...eventHandlers} = usePressability(config) || {};
+  const eventPhase = Object.freeze({Capturing: 1, Bubbling: 3});
+  const _keyDown = (event: KeyEvent) => {
+    if (props.keyDownEvents && event.isPropagationStopped() !== true) {
+      for (const el of props.keyDownEvents) {
+        if (
+          event.nativeEvent.code == el.code &&
+          el.handledEventPhase == eventPhase.Bubbling
+        ) {
+          event.stopPropagation();
+        }
+      }
+    }
+    props.onKeyDown && props.onKeyDown(event);
+  };
+
+  const _keyUp = (event: KeyEvent) => {
+    if (props.keyUpEvents && event.isPropagationStopped() !== true) {
+      for (const el of props.keyUpEvents) {
+        if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
+          event.stopPropagation();
+        }
+      }
+    }
+    props.onKeyUp && props.onKeyUp(event);
+  };
+
+  const _keyDownCapture = (event: KeyEvent) => {
+    if (props.keyDownEvents && event.isPropagationStopped() !== true) {
+      for (const el of props.keyDownEvents) {
+        if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+          event.stopPropagation();
+        }
+      }
+    }
+    props.onKeyDownCapture && props.onKeyDownCapture(event);
+  };
+
+  const _keyUpCapture = (event: KeyEvent) => {
+    if (props.keyUpEvents && event.isPropagationStopped() !== true) {
+      for (const el of props.keyUpEvents) {
+        if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+          event.stopPropagation();
+        }
+      }
+    }
+    props.onKeyUpCapture && props.onKeyUpCapture(event);
+  };
 
   if (Platform.OS === 'ios') {
     const RCTTextInputView =
@@ -1158,8 +1239,14 @@ function InternalTextInput(props: Props): React.Node {
     }
 
     textInput = (
-      /* $FlowFixMe the types for AndroidTextInput don't match up exactly with
-        the props for TextInput. This will need to get fixed */
+      /* $FlowFixMe[prop-missing] the types for AndroidTextInput don't match up
+       * exactly with the props for TextInput. This will need to get fixed */
+      /* $FlowFixMe[incompatible-type] the types for AndroidTextInput don't
+       * match up exactly with the props for TextInput. This will need to get
+       * fixed */
+      /* $FlowFixMe[incompatible-type-arg] the types for AndroidTextInput don't
+       * match up exactly with the props for TextInput. This will need to get
+       * fixed */
       <AndroidTextInput
         ref={_setNativeRef}
         {...props}
@@ -1175,8 +1262,12 @@ function InternalTextInput(props: Props): React.Node {
         onBlur={_onBlur}
         onChange={_onChange}
         onFocus={_onFocus}
-        /* $FlowFixMe the types for AndroidTextInput don't match up exactly
-         * with the props for TextInput. This will need to get fixed */
+        /* $FlowFixMe[prop-missing] the types for AndroidTextInput don't match
+         * up exactly with the props for TextInput. This will need to get fixed
+         */
+        /* $FlowFixMe[incompatible-type-arg] the types for AndroidTextInput
+         * don't match up exactly with the props for TextInput. This will need
+         * to get fixed */
         onScroll={_onScroll}
         onSelectionChange={_onSelectionChange}
         selection={selection}
@@ -1192,6 +1283,7 @@ function InternalTextInput(props: Props): React.Node {
         ref={_setNativeRef}
         {...props}
         dataDetectorTypes={props.dataDetectorTypes}
+        mostRecentEventCount={mostRecentEventCount}
         onBlur={_onBlur}
         onChange={_onChange}
         onContentSizeChange={props.onContentSizeChange}
@@ -1201,6 +1293,10 @@ function InternalTextInput(props: Props): React.Node {
         onSelectionChangeShouldSetResponder={emptyFunctionThatReturnsTrue}
         selection={selection}
         text={text}
+        onKeyDown={_keyDown}
+        onKeyDownCapture={_keyDownCapture}
+        onKeyUp={_keyUp}
+        onKeyUpCapture={_keyUpCapture}
       />
     );
   } // Windows]
@@ -1235,10 +1331,9 @@ const ExportedForwardRef: React.AbstractComponent<
 });
 
 // TODO: Deprecate this
-// $FlowFixMe
 ExportedForwardRef.propTypes = DeprecatedTextInputPropTypes;
 
-// $FlowFixMe
+// $FlowFixMe[prop-missing]
 ExportedForwardRef.State = {
   currentlyFocusedInput: TextInputState.currentlyFocusedInput,
 

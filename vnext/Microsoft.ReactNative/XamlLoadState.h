@@ -3,7 +3,7 @@
 
 #pragma once
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 /// <summary>
 /// Implements a guard to ensure that only one XAML dll gets loaded in the current process.
 /// This is important because different XAML dlls are not inter-operable.
@@ -41,4 +41,4 @@ struct XamlLoadState {
 
   static XamlVersion GetXamlVersion(const std::wstring &path) noexcept;
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

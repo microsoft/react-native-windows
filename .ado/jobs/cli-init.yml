@@ -19,36 +19,6 @@ jobs:
         matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
           # Start Continuous only
           ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-            # Arm32 is broken at the moment as we don't have hermes.lib for arm32.
-            # ArmDebugCpp:
-            #   language: cpp
-            #   configuration: Debug
-            #   platform: arm
-            #   projectType: app
-            #   additionalInitArguments:
-            #   additionalRunArguments: --no-deploy # We don't have Arm agents
-            ArmDebugCs:
-              language: cs
-              configuration: Debug
-              platform: arm
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments: --no-deploy # We don't have Arm agents
-            # Arm32 is broken at the moment as we don't have hermes.lib for arm32.
-            # ArmReleaseCpp:
-            #   language: cpp
-            #   configuration: Release
-            #   platform: arm
-            #   projectType: app
-            #   additionalInitArguments:
-            #   additionalRunArguments: --no-deploy # We don't have Arm agents
-            ArmReleaseCs:
-              language: cs
-              configuration: Release
-              platform: arm
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments: --no-deploy # We don't have Arm agents
             Arm64DebugCpp:
               language: cpp
               configuration: Debug
@@ -167,7 +137,6 @@ jobs:
             projectType: app
             additionalInitArguments: --useWinUI3 true
             additionalRunArguments:
-
           X86DebugCppHermes:
             language: cpp
             configuration: Debug
@@ -175,11 +144,17 @@ jobs:
             projectType: app
             additionalInitArguments: --useHermes
             additionalRunArguments:
-          # #7225 ReactNative.Hermes.Windows is not yet seen as compatible for usage in C# projects
-          # Arm64ReleaseCsHermes:
+          X64ReleaseCsHermes:
+            language: cs
+            configuration: Release
+            platform: x64
+            projectType: app
+            additionalInitArguments: --useHermes
+            additionalRunArguments:
+          # ARM64ReleaseCsHermes:
           #   language: cs
           #   configuration: Release
-          #   platform: ARM64
+          #   platform: arm64
           #   projectType: app
           #   additionalInitArguments: --useHermes
           #   additionalRunArguments:

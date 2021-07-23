@@ -121,6 +121,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       vm->GetConstants(writer);
       writer.WriteObjectEnd();
     }
+    constants.Add(L"AccessibilityEventTypes", accessibilityEventTypes);
   }
 
   void createView(int64_t reactTag, std::string viewName, int64_t rootTag, React::JSValueObject &&props) noexcept {
@@ -323,8 +324,12 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   }
 
   void sendAccessibilityEvent(int64_t reactTag, double eventType) noexcept {
-    assert(false);
-    // TODO
+    auto type = int(eventType);
+    if (type == accessibilityEventTypes["typeViewFocused"]) {
+      focus(reactTag);
+    } else {
+      assert(false);
+    }
   }
 
   void showPopupMenu(
@@ -499,6 +504,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   std::vector<std::unique_ptr<IViewManager>> m_viewManagers;
   ShadowNodeRegistry m_nodeRegistry;
   std::shared_ptr<NativeUIManager> m_nativeUIManager;
+  const React::JSValueObject accessibilityEventTypes = React::JSValueObject{{"typeViewFocused", 8}};
 };
 
 UIManager::UIManager() : m_module(std::make_shared<UIManagerModule>()) {}

@@ -5,7 +5,7 @@
 #include <UI.Xaml.Media.h>
 #include "CppWinRTIncludes.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 // Helper per-UI-thread singleton class to cache brushes used as defaults.
 class DefaultBrushStore {
@@ -47,4 +47,4 @@ void UpdateToggleSwitchTrackResourceBrushes(
     const xaml::Media::Brush onTrackBrush,
     const xaml::Media::Brush offTrackBrush);
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

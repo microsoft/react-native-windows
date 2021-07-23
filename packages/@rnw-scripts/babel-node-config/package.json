@@ -1,10 +1,10 @@
 {
   "name": "@rnw-scripts/babel-node-config",
-  "version": "1.0.2",
+  "version": "2.0.1",
   "license": "MIT",
   "main": "babel.config.js",
   "devDependencies": {
-    "@babel/core": "^7.8.4",
+    "@babel/core": "^7.14.0",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@types/node": "^14.14.22",

@@ -5,8 +5,8 @@
  * @format
  */
 
-import * as path from 'path';
-import * as upath from 'upath';
+import path from 'path';
+import upath from 'upath';
 
 /**
  * Convert a path to use Unix-style slashes

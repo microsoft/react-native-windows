@@ -5,6 +5,7 @@
 
 #include "TextViewManager.h"
 
+#include <Views/RawTextViewManager.h>
 #include <Views/ShadowNodeBase.h>
 #include <Views/VirtualTextViewManager.h>
 
@@ -31,7 +32,9 @@ class TextShadowNode final : public ShadowNodeBase {
  private:
   ShadowNode *m_firstChildNode;
 
-  std::optional<winrt::Windows::UI::Color> m_ColorValue = std::nullopt;
+  std::optional<winrt::Windows::UI::Color> m_backgroundColor = std::nullopt;
+  std::optional<winrt::Windows::UI::Color> m_foregroundColor = std::nullopt;
+
   int32_t m_prevCursorEnd = 0;
 
  public:
@@ -43,20 +46,20 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   void AddView(ShadowNode &child, int64_t index) override {
+    auto &childNode = static_cast<ShadowNodeBase &>(child);
+    VirtualTextShadowNode::ApplyTextTransform(
+        childNode, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
+
     if (index == 0) {
-      auto run = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Run>();
+      auto run = childNode.GetView().try_as<winrt::Run>();
       if (run != nullptr) {
         m_firstChildNode = &child;
         auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
-        std::wstring text(run.Text().c_str());
-        transformableText.originalText = text;
-        text = transformableText.TransformText();
-        textBlock.Text(winrt::hstring(text));
+        textBlock.Text(run.Text());
 
-        if (m_ColorValue) {
-          AddHighlighter(m_ColorValue.value(), text.size());
+        if (m_backgroundColor) {
+          AddHighlighter(m_backgroundColor.value(), m_foregroundColor, textBlock.Text().size());
         }
-
         m_prevCursorEnd += textBlock.Text().size();
 
         return;
@@ -71,40 +74,53 @@ class TextShadowNode final : public ShadowNodeBase {
     Super::AddView(child, index);
 
     if (auto run = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Run>()) {
-      if (m_ColorValue) {
-        AddHighlighter(m_ColorValue.value(), run.Text().size());
+      if (m_backgroundColor) {
+        AddHighlighter(m_backgroundColor.value(), m_foregroundColor, run.Text().size());
       }
-
       m_prevCursorEnd += run.Text().size();
     } else if (auto span = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Span>()) {
-      AddNestedTextHighlighter(m_ColorValue, span, static_cast<VirtualTextShadowNode &>(child).m_highlightData);
+      AddNestedTextHighlighter(
+          m_backgroundColor, m_foregroundColor, span, static_cast<VirtualTextShadowNode &>(child).m_highlightData);
     }
   }
 
   void AddNestedTextHighlighter(
-      const std::optional<winrt::Windows::UI::Color> &parentColor,
+      const std::optional<winrt::Windows::UI::Color> &parentBackColor,
+      const std::optional<winrt::Windows::UI::Color> &parentForeColor,
       winrt::Span &span,
       VirtualTextShadowNode::HighlightData highData) {
-    if (!highData.color && parentColor) {
-      highData.color = parentColor;
+    if (!highData.backgroundColor && parentBackColor) {
+      highData.backgroundColor = parentBackColor;
+    }
+
+    if (!highData.foregroundColor && parentForeColor) {
+      highData.foregroundColor = parentForeColor;
     }
 
     for (const auto &el : span.Inlines()) {
       if (auto run = el.try_as<winrt::Run>()) {
-        if (highData.color) {
-          AddHighlighter(highData.color.value(), run.Text().size());
+        if (highData.backgroundColor) {
+          AddHighlighter(highData.backgroundColor.value(), highData.foregroundColor, run.Text().size());
         }
 
         m_prevCursorEnd += run.Text().size();
       } else if (auto spanChild = el.try_as<winrt::Span>()) {
-        AddNestedTextHighlighter(highData.color, spanChild, highData.data[highData.spanIdx++]);
+        AddNestedTextHighlighter(
+            highData.backgroundColor, highData.foregroundColor, spanChild, highData.data[highData.spanIdx++]);
       }
     }
   }
 
-  void AddHighlighter(const winrt::Windows::UI::Color &color, size_t runSize) {
+  void AddHighlighter(
+      const winrt::Windows::UI::Color &backgroundColor,
+      const std::optional<winrt::Windows::UI::Color> &foregroundColor,
+      size_t runSize) {
     auto newHigh = winrt::TextHighlighter{};
-    newHigh.Background(react::uwp::SolidBrushFromColor(color));
+    newHigh.Background(SolidBrushFromColor(backgroundColor));
+
+    if (foregroundColor) {
+      newHigh.Foreground(SolidBrushFromColor(foregroundColor.value()));
+    }
 
     winrt::TextRange newRange{m_prevCursorEnd, static_cast<int32_t>(runSize)};
     newHigh.Ranges().Append(newRange);
@@ -124,7 +140,7 @@ class TextShadowNode final : public ShadowNodeBase {
     Super::RemoveChildAt(indexToRemove);
   }
 
-  TransformableText transformableText{};
+  TextTransform textTransform{TextTransform::Undefined};
 };
 
 TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -152,11 +168,13 @@ bool TextViewManager::UpdateProperty(
     return true;
 
   if (TryUpdateForeground(textBlock, propertyName, propertyValue)) {
+    static_cast<TextShadowNode *>(nodeToUpdate)->m_foregroundColor = ColorFrom(propertyValue);
   } else if (TryUpdateFontProperties(textBlock, propertyName, propertyValue)) {
   } else if (propertyName == "textTransform") {
     auto textNode = static_cast<TextShadowNode *>(nodeToUpdate);
-    auto textTransform = TransformableText::GetTextTransform(propertyValue);
-    textNode->transformableText.textTransform = textTransform;
+    textNode->textTransform = TransformableText::GetTextTransform(propertyValue);
+    VirtualTextShadowNode::ApplyTextTransform(
+        *textNode, textNode->textTransform, /* forceUpdate = */ true, /* isRoot = */ true);
   } else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {
@@ -185,10 +203,13 @@ bool TextViewManager::UpdateProperty(
     }
   } else if (propertyName == "lineHeight") {
     if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
       textBlock.LineHeight(propertyValue.AsInt32());
-    else if (propertyValue.IsNull())
+      textBlock.LineStackingStrategy(xaml::LineStackingStrategy::BlockLineHeight);
+    } else if (propertyValue.IsNull()) {
       textBlock.ClearValue(xaml::Controls::TextBlock::LineHeightProperty());
+      textBlock.ClearValue(xaml::Controls::TextBlock::LineStackingStrategyProperty());
+    }
   } else if (propertyName == "selectable") {
     if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
       textBlock.IsTextSelectionEnabled(propertyValue.AsBoolean());
@@ -201,17 +222,18 @@ bool TextViewManager::UpdateProperty(
       textBlock.ClearValue(xaml::Controls::TextBlock::IsTextScaleFactorEnabledProperty());
     }
   } else if (propertyName == "selectionColor") {
-    if (react::uwp::IsValidColorValue(propertyValue)) {
-      textBlock.SelectionHighlightColor(react::uwp::SolidColorBrushFrom(propertyValue));
+    if (IsValidColorValue(propertyValue)) {
+      textBlock.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
     } else
       textBlock.ClearValue(xaml::Controls::TextBlock::SelectionHighlightColorProperty());
   } else if (propertyName == "backgroundColor") {
-    if (react::uwp::IsValidColorValue(propertyValue)) {
-      static_cast<TextShadowNode *>(nodeToUpdate)->m_ColorValue = react::uwp::ColorFrom(propertyValue);
+    if (IsValidColorValue(propertyValue)) {
+      static_cast<TextShadowNode *>(nodeToUpdate)->m_backgroundColor = ColorFrom(propertyValue);
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
+
   return true;
 }
 
@@ -258,6 +280,14 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node) {
       }
     }
   }
+}
+
+TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
+  if (!std::wcscmp(node->GetViewManager()->GetName(), GetName())) {
+    return static_cast<TextShadowNode *>(node)->textTransform;
+  }
+
+  return TextTransform::Undefined;
 }
 
 } // namespace Microsoft::ReactNative

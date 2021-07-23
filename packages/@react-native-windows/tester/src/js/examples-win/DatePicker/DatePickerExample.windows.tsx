@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {Text, View} from 'react-native';
 import {DatePicker, DayOfWeek, Picker} from 'react-native-windows';
 

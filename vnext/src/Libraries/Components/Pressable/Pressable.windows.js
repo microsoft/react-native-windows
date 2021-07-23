@@ -28,8 +28,10 @@ import type {
   PressEvent,
   // [Windows
   BlurEvent,
-  FocusEvent, // Windows]
+  FocusEvent,
+  KeyEvent, // Windows]
 } from '../../Types/CoreEventTypes';
+import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
 import View from '../View/View';
 import TextInputState from '../TextInput/TextInputState';
 
@@ -126,6 +128,36 @@ type Props = $ReadOnly<{|
    */
   onFocus?: ?(event: FocusEvent) => mixed,
 
+  /*
+   * Called after a key down event is detected.
+   */
+  onKeyDown?: ?(event: KeyEvent) => mixed,
+
+  /*
+   * Called after a key up event is detected.
+   */
+  onKeyUp?: ?(event: KeyEvent) => mixed,
+
+  /*
+   * List of keys handled only by JS.
+   */
+  keyDownEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
+
+  /*
+   * List of keys to be handled only by JS.
+   */
+  keyUpEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
+
+  /*
+   * Called in the tunneling phase after a key up event is detected.
+   */
+  onKeyDownCapture?: ?(event: KeyEvent) => void,
+
+  /*
+   * Called in the tunneling phase after a key up event is detected.
+   */
+  onKeyUpCapture?: ?(event: KeyEvent) => void,
+
   /**
    * Either view styles or a function that receives a boolean reflecting whether
    * the component is currently pressed and returns view styles.
@@ -179,6 +211,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
     // [Windows
     onBlur,
     onFocus,
+    onKeyDown,
+    onKeyUp,
     // Windows]
     pressRetentionOffset,
     style,
@@ -259,6 +293,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
       // [Windows
       onBlur,
       onFocus,
+      onKeyDown,
+      onKeyUp,
       // Windows]
     }),
     [
@@ -275,6 +311,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
       // [Windows
       onBlur,
       onFocus,
+      onKeyDown,
+      onKeyUp,
       // Windows]
       pressRetentionOffset,
       setPressed,

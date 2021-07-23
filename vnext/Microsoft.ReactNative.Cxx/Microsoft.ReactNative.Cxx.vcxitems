@@ -37,6 +37,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DesktopWindowBridge.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleProvider.h" />
     <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\CallInvoker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XamlUtils.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.h" />
@@ -67,7 +68,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Input.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Popups.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Text.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)XamlHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.Peers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Controls.Primitives.h" />
@@ -98,27 +98,22 @@
       Make sure all FB code uses the same flags to improve build parallelism.
       This is because msbuild has to invoke different cl.exe invocations for each
       set of flags and msbuild inside a project is single threaded.
-
-      For TurboModule cpp we have to temporarily disable 4267 because that is a security
-      warning and we want to make sure we error out if we ever introduce it in our code
-      bug #6986 tracks fixing FB's
-      To manage perf we disable the warning on the other files that come from FB as well.
     -->
     <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
-      <DisableSpecificWarnings>4100;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.cpp">
-      <DisableSpecificWarnings>4100;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.cpp">
-      <DisableSpecificWarnings>4100;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.cpp">
-      <DisableSpecificWarnings>4100;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

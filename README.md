@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/microsoft/react-native-windows/blob/master/LICENSE">
+  <a href="https://github.com/microsoft/react-native-windows/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="React Native for Windows is released under the MIT license." />
   </a>
   <a href="https://www.npmjs.org/package/react-native-windows">
@@ -16,7 +16,7 @@
   </a>
 </p>
 
-![Hero Image with Logo](https://github.com/microsoft/react-native-windows/raw/master/.github/hero2.png)
+![Hero Image with Logo](https://github.com/microsoft/react-native-windows/raw/main/.github/hero2.png)
 
 > See the official [React Native website](https://reactnative.dev/) for an introduction to React Native.
 
@@ -54,9 +54,9 @@ Search the [existing issues](https://github.com/microsoft/react-native-windows/i
 - Ensure the [appropriate template](https://github.com/microsoft/react-native-windows/issues/new/choose) is used when filing your issue(s).
 
 ## Contributing
-See [Contributing guidelines](https://github.com/microsoft/react-native-windows/blob/master/docs/contributing.md) for how to setup your fork of the repo and start a PR to contribute to React Native for Windows.
+See [Contributing guidelines](https://github.com/microsoft/react-native-windows/blob/main/docs/contributing.md) for how to setup your fork of the repo and start a PR to contribute to React Native for Windows.
 
-[Good First Task](https://github.com/microsoft/react-native-windows/labels/Good%20First%20Task) and [help wanted](https://github.com/microsoft/react-native-windows/labels/help%20wanted) are great starting points for PRs.
+[good first issue](https://github.com/microsoft/react-native-windows/labels/good%20first%20issue) and [help wanted](https://github.com/microsoft/react-native-windows/labels/help%20wanted) are great starting points for PRs.
 
 ## Documentation
 [React Native already has great documentation](https://reactnative.dev/docs/getting-started) and we're working to ensure the React Native Windows is part of that documentation story.

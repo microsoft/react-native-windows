@@ -9,9 +9,9 @@
 // guarantee correct types
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
-import * as fs from 'fs';
-import * as path from 'path';
-import * as chalk from 'chalk';
+import fs from 'fs';
+import path from 'path';
+import chalk from 'chalk';
 import {performance} from 'perf_hooks';
 
 import {newSpinner} from './commandWithProgress';
@@ -425,6 +425,16 @@ export class AutolinkWindows {
             'projects' in windowsDependency &&
             Array.isArray(windowsDependency.projects)
           ) {
+            if (
+              windowsDependency.projects.length === 0 &&
+              dependencyName.includes('react-native')
+            ) {
+              // the dependency is probably a react native module, but we didn't find a module project
+              throw new CodedError(
+                'Autolinking',
+                `Found a Windows solution for ${dependencyName} but no React Native for Windows native module projects`,
+              );
+            }
             windowsDependency.projects.forEach(project => {
               const itemsToCheck: Array<keyof ProjectDependency> = [
                 'projectFile',

@@ -45,7 +45,7 @@ void AccessibilityInfo::announceForAccessibility(std::string announcement) noexc
     // So we need to find something to raise the notification event from.
     xaml::UIElement element{nullptr};
 
-    if (react::uwp::IsXamlIsland()) {
+    if (IsXamlIsland()) {
       if (auto accessibleRoot =
               winrt::Microsoft::ReactNative::XamlUIService::GetAccessibleRoot(context.Properties().Handle())) {
         element = accessibleRoot;
@@ -69,6 +69,12 @@ void AccessibilityInfo::announceForAccessibility(std::string announcement) noexc
         hstr,
         hstr);
   });
+}
+
+void AccessibilityInfo::getRecommendedTimeoutMillis(
+    double mSec,
+    std::function<void(React::JSValue const &)> const &onSuccess) noexcept {
+  onSuccess(mSec);
 }
 
 } // namespace Microsoft::ReactNative

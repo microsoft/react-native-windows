@@ -118,7 +118,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
     xaml::FrameworkElement root{nullptr};
 
-    if (react::uwp::Is19H1OrHigher()) {
+    if (Microsoft::ReactNative::Is19H1OrHigher()) {
       // XamlRoot added in 19H1
       if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
         if (auto xamlRoot =
@@ -130,25 +130,28 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     }
 
     if (!root) {
-      auto window = xaml::Window::Current();
-      root = window.Content().as<xaml::FrameworkElement>();
+      if (auto window = xaml::Window::Current()) {
+        root = window.Content().as<xaml::FrameworkElement>();
+      }
     }
 
-    m_redboxContent.MaxHeight(root.ActualHeight());
-    m_redboxContent.Height(root.ActualHeight());
-    m_redboxContent.MaxWidth(root.ActualWidth());
-    m_redboxContent.Width(root.ActualWidth());
+    if (root) {
+      m_redboxContent.MaxHeight(root.ActualHeight());
+      m_redboxContent.Height(root.ActualHeight());
+      m_redboxContent.MaxWidth(root.ActualWidth());
+      m_redboxContent.Width(root.ActualWidth());
 
-    m_sizeChangedRevoker = root.SizeChanged(
-        winrt::auto_revoke,
-        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::SizeChangedEventArgs const &args) {
-          if (auto strongThis = wkThis.lock()) {
-            strongThis->m_redboxContent.MaxHeight(args.NewSize().Height);
-            strongThis->m_redboxContent.Height(args.NewSize().Height);
-            strongThis->m_redboxContent.MaxWidth(args.NewSize().Width);
-            strongThis->m_redboxContent.Width(args.NewSize().Width);
-          }
-        });
+      m_sizeChangedRevoker = root.SizeChanged(
+          winrt::auto_revoke,
+          [wkThis = weak_from_this()](auto const & /*sender*/, xaml::SizeChangedEventArgs const &args) {
+            if (auto strongThis = wkThis.lock()) {
+              strongThis->m_redboxContent.MaxHeight(args.NewSize().Height);
+              strongThis->m_redboxContent.Height(args.NewSize().Height);
+              strongThis->m_redboxContent.MaxWidth(args.NewSize().Width);
+              strongThis->m_redboxContent.Width(args.NewSize().Width);
+            }
+          });
+    }
 
     m_tokenClosed = m_popup.Closed(
         [wkThis = std::weak_ptr(shared_from_this())](auto const & /*sender*/, IInspectable const & /*args*/) noexcept {
@@ -244,8 +247,12 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
     m_stackPanel.Children().Clear();
     m_stackPanel.Children().Append(webView);
-
+#ifdef USE_WINUI3
+    webView.EnsureCoreWebView2Async().Completed(
+        [content, webView](auto &&sender, auto &&args) { webView.NavigateToString(content); });
+#else
     webView.NavigateToString(content);
+#endif
   }
 
   void UpdateErrorMessageUI() noexcept {
@@ -566,12 +573,14 @@ std::shared_ptr<IRedBoxHandler> CreateRedBoxHandler(
   return std::make_shared<RedBoxHandler>(redBoxHandler);
 }
 
-#ifndef CORE_ABI
 std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(
     Mso::WeakPtr<IReactHost> &&weakReactHost,
     Mso::DispatchQueue &&uiQueue) noexcept {
+#ifndef CORE_ABI
   return std::make_shared<DefaultRedBoxHandler>(std::move(weakReactHost), std::move(uiQueue));
-}
+#else
+  return nullptr;
 #endif
+}
 
 } // namespace Mso::React

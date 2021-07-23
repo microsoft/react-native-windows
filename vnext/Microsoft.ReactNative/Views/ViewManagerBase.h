@@ -9,6 +9,7 @@
 #include <XamlView.h>
 #include <folly/dynamic.h>
 #include <yoga/yoga.h>
+#include "Utils/BatchingEventEmitter.h"
 
 namespace Microsoft::ReactNative {
 
@@ -81,8 +82,11 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
   const Mso::React::IReactContext &GetReactContext() const {
     return *m_context;
   }
-  std::shared_ptr<react::uwp::ExpressionAnimationStore> GetExpressionAnimationStore() noexcept;
-  void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept;
+  std::shared_ptr<ExpressionAnimationStore> GetExpressionAnimationStore() noexcept;
+  void DispatchEvent(
+      int64_t viewTag,
+      winrt::hstring &&eventName,
+      const winrt::Microsoft::ReactNative::JSValueArgWriter &eventDataWriter) const noexcept;
 
   virtual void TransferProperties(const XamlView &oldView, const XamlView &newView);
 
@@ -101,6 +105,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
 
  protected:
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
+  std::shared_ptr<winrt::Microsoft::ReactNative::BatchingEventEmitter> m_batchingEventEmitter;
 };
 #pragma warning(pop)
 
