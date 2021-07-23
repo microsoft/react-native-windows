@@ -2,6 +2,84 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 23 Jul 2021 05:08:40 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.348",
+      "version": "0.0.0-canary.348",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix warning of double-importing ExperimentalFeatures.props",
+            "author": "dannyvv@microsoft.com",
+            "commit": "dad3069b784fe3f1c866fd90e66eec86b2037b46",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Suppress warnings of unused variables in FaceBook code",
+            "author": "dannyvv@microsoft.com",
+            "commit": "37464d172ece7790fd4e436e89c8b3d1d45c26b0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Coalesce RN View onLayout events",
+            "author": "erozell@outlook.com",
+            "commit": "ceb4a66113eac76f8f54c50471a17c0174221081",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Jul 2021 05:05:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.347",
+      "version": "0.0.0-canary.347",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove AppTheme Shim",
+            "author": "ngerlem@microsoft.com",
+            "commit": "101e84d011dcb9ee6a43637d02322d97d74215d6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Jul 2021 05:06:26 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.346",
+      "version": "0.0.0-canary.346",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "\"0.65\" -> \"Future Version\" in deprecation warnings",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cb8edc35596f9e487c1918d2e0431c3f7db172fd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 20 Jul 2021 05:04:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.345",
+      "version": "0.0.0-canary.345",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add togglebutton accessibilityRole",
+            "author": "agnel@microsoft.com",
+            "commit": "537f6d7ac9154ea1bd4bf767075d7abe3a4f17e0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix long path issues for managed projects",
+            "author": "dannyvv@microsoft.com",
+            "commit": "34039b97e63e49dde72d011b4bb9166c7409521a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 17 Jul 2021 05:08:12 GMT",
       "tag": "react-native-windows_v0.0.0-canary.344",
       "version": "0.0.0-canary.344",

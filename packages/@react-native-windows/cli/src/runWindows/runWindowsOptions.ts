@@ -41,7 +41,7 @@ export interface RunWindowsOptions {
   target?: string;
   remoteDebugging?: string;
   logging: boolean;
-  packager: boolean;
+  packager?: boolean;
   bundle: boolean;
   launch: boolean;
   autolink: boolean;
@@ -102,7 +102,6 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--no-packager',
     description: 'Do not launch packager while building',
-    default: false,
   },
   {
     name: '--bundle',

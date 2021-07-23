@@ -138,7 +138,7 @@ namespace Microsoft.ReactNative
     // Deprecated
     [deprecated(
       "This property has been replaced by @.UseDeveloperSupport. "
-      "In version 0.63 both properties will do the same thing. It will be removed in version 0.65.", deprecate, 1)]
+      "In version 0.63 both properties will do the same thing. It will be removed in a future version.", deprecate, 1)]
     DOC_STRING(
       "This controls whether various developer experience features are available for this instance. "
       "In particular the developer menu, and the default `RedBox` experience.")

@@ -138,12 +138,12 @@ namespace Microsoft.ReactNative
       "Gets the JavaScript runtime for the running React instance.\n"
       "It can be null if Web debugging is used.\n"
       "**Note: do not use this property directly. "
-      "It is an experimental property that may be removed or changed in version 0.65.")
+      "It is an experimental property that may be removed or changed in a future version.")
     Object JSRuntime { get; };
 
 #ifndef CORE_ABI
     [deprecated("Use @XamlUIService.DispatchEvent instead", deprecate, 1)]
-    DOC_STRING("Deprecated property. Use @XamlUIService.DispatchEvent instead. It will be removed in version 0.65.")
+    DOC_STRING("Deprecated property. Use @XamlUIService.DispatchEvent instead. It will be removed in a future version.")
     void DispatchEvent(XAML_NAMESPACE.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
 #endif
 

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 22 Jul 2021 05:05:25 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.82",
+      "version": "0.0.0-canary.82",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Do not start packager for run-windows release builds",
+            "author": "ngerlem@microsoft.com",
+            "commit": "1dc68b4b9c9fa0c8730ce49c43f6a96d71c27f3f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jul 2021 05:06:16 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.81",
       "version": "0.0.0-canary.81",
