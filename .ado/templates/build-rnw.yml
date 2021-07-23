@@ -13,6 +13,7 @@ parameters:
   buildConfiguration: Debug
   msbuildArguments: ''
   multicoreBuild: false
+  warnAsError: true
 
   # Visual Studio Installer
   vsComponents: ''
@@ -23,6 +24,11 @@ steps:
   - powershell: |
       Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.buildPlatform }}\${{ parameters.buildConfiguration }}\BuildLogs"
     displayName: Set Log directory
+
+  - powershell: |
+      Write-Host "##vso[task.setvariable variable=MsBuildWarnAsErrorArgument]/warnaserror"
+    condition: ${{parameters.warnAsError}}
+    displayName: Enable WarnAsError
 
   - template: prepare-env.yml
     parameters:
@@ -68,6 +74,7 @@ steps:
         /flp1:errorsonly;logfile=$(BuildLogDirectory)\MsBuild.err
         /flp2:warningsonly;logfile=$(BuildLogDirectory)\MsBuild.wrn
         /flp3:verbosity=diagnostic;logfile=$(BuildLogDirectory)\MsBuild.log
+        $(MsBuildWarnAsErrorArgument)
         ${{parameters.msbuildArguments}}
 
   - template: upload-build-logs.yml
