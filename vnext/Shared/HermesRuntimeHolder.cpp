@@ -141,7 +141,7 @@ void HermesRuntimeHolder::initRuntime() noexcept {
   m_hermesRuntime = std::move(hermesRuntime);
   m_runtime = std::make_shared<RuntimeProxy>(*m_hermesRuntime.get());
 #else
-  m_runtime = m_hermesRuntime;
+  m_runtime = std::move(hermesRuntime);
 #endif
 
   m_own_thread_id = std::this_thread::get_id();
