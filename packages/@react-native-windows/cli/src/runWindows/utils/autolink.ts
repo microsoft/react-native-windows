@@ -677,7 +677,7 @@ export class AutolinkWindows {
   }
 
   public async ensureXAMLDialect() {
-    let changesNeeded = false;
+    let changesNeeded = true;
     const useWinUI3FromConfig = this.getWindowsConfig().useWinUI3;
     const experimentalFeatures = this.getExperimentalFeaturesPropsXml();
     if (experimentalFeatures) {
@@ -688,7 +688,7 @@ export class AutolinkWindows {
           'UseWinUI3',
         );
         const newValue = useWinUI3FromConfig ? 'true' : 'false';
-        changesNeeded = node.item(0)?.textContent !== newValue;
+        changesNeeded = node.item(0)?.textContent !== newValue && changesNeeded;
         if (!this.options.check && changesNeeded) {
           node.item(0)!.textContent = newValue;
           const experimentalFeaturesOutput = new XMLSerializer().serializeToString(
