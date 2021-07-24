@@ -2,6 +2,41 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 24 Jul 2021 05:05:52 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.102",
+      "version": "0.0.0-canary.102",
+      "comments": {
+        "none": [
+          {
+            "comment": "Yarn sets the executable bit on all scripts when installing on a *nix file system. Checking in these changes as they just tell the OS that they are executable, and one would otherwise have to reset them every time. Note that only the meta data is changed. The content of 'bin.js' is untouched.",
+            "author": "4123478+tido64@users.noreply.github.com",
+            "commit": "a311022ebc0c1d8070d7e54312197f486c470d33",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Bump react-native-platform-override to v1.4.17",
+            "author": "4123478+tido64@users.noreply.github.com",
+            "commit": "a311022ebc0c1d8070d7e54312197f486c470d33",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.2",
+            "author": "4123478+tido64@users.noreply.github.com",
+            "commit": "a311022ebc0c1d8070d7e54312197f486c470d33",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Remove use strict from PlatformColorValueTypesWin32.d.ts",
+            "author": "ppatboyd@outlook.com",
+            "commit": "8276d73437ae05a760365aa29eb92d99c507aa7c",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 16 Jul 2021 05:07:06 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.101",
       "version": "0.0.0-canary.101",

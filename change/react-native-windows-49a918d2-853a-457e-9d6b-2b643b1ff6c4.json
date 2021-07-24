@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Enable WarnAsError for universal and desktop builds in PR and CI",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "none"
-}
