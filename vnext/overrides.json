@@ -152,10 +152,6 @@
       "baseHash": "a9a4a6c92de922a11f8b81642b1bf1270d0b7b96"
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Components/DatePicker/DatePickerProps.ts"
-    },
-    {
       "type": "derived",
       "file": "src/Libraries/Components/DatePickerAndroid/DatePickerAndroid.windows.js",
       "baseFile": "Libraries/Components/DatePickerAndroid/DatePickerAndroid.ios.js",
