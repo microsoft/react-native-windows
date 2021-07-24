@@ -2,6 +2,21 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Sat, 24 Jul 2021 05:05:52 GMT",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.20",
+      "version": "0.0.0-canary.20",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.23",
+            "author": "4123478+tido64@users.noreply.github.com",
+            "commit": "a311022ebc0c1d8070d7e54312197f486c470d33",
+            "package": "@react-native-windows/package-utils"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Jun 2021 05:08:55 GMT",
       "tag": "@react-native-windows/package-utils_v0.0.0-canary.20",
       "version": "0.0.0-canary.20",

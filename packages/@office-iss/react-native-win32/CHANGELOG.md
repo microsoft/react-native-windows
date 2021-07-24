@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 16 Jul 2021 05:07:06 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Jul 2021 05:05:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.102
+
+Sat, 24 Jul 2021 05:05:52 GMT
+
+### Changes
+
+- Remove use strict from PlatformColorValueTypesWin32.d.ts (ppatboyd@outlook.com)
 
 ## 0.0.0-canary.101
 

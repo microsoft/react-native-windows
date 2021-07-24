@@ -2,6 +2,21 @@
   "name": "@react-native-windows/virtualized-list",
   "entries": [
     {
+      "date": "Sat, 24 Jul 2021 05:05:52 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.2",
+      "version": "0.0.0-canary.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.17",
+            "author": "4123478+tido64@users.noreply.github.com",
+            "commit": "a311022ebc0c1d8070d7e54312197f486c470d33",
+            "package": "@react-native-windows/virtualized-list"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 16 Jul 2021 05:07:06 GMT",
       "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.2",
       "version": "0.0.0-canary.2",

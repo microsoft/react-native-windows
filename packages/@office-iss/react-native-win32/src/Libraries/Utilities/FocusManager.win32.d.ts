@@ -5,8 +5,6 @@
  * @format
  */
 
-'use strict';
-
 import React from 'react';
 
 export declare class FocusManager {
