@@ -4,6 +4,7 @@
 #pragma once
 #ifndef MSO_MOTIFCPP_MOTIFCPPTESTBASE_H
 #define MSO_MOTIFCPP_MOTIFCPPTESTBASE_H
+#ifdef MSO_MOTIFCPP
 
 typedef wchar_t WCHAR;
 
@@ -24,4 +25,5 @@ class MotifCppTestBase {
   virtual void Teardown() {}
 };
 
+#endif // MSO_MOTIFCPP
 #endif // MSO_MOTIFCPP_MOTIFCPPTESTBASE_H

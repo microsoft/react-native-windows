@@ -31,6 +31,12 @@ const ComponentExamples: Array<RNTesterExample> = [
     category: 'ListView',
   },
   {
+    // shows up as <FlatList> - MultiColumn
+    key: 'MultiColumnExample',
+    category: 'ListView',
+    module: require('../examples/MultiColumn/MultiColumnExample'),
+  },
+  {
     key: 'FlatList-onViewableItemsChanged',
     module: require('../examples/FlatList/FlatList-onViewableItemsChanged'),
     category: 'ListView',
@@ -70,11 +76,6 @@ const ComponentExamples: Array<RNTesterExample> = [
   //   category: 'UI',
   //   module: require('../examples/Modal/ModalExample'),
   // },
-  {
-    key: 'MultiColumnExample',
-    category: 'ListView',
-    module: require('../examples/MultiColumn/MultiColumnExample'),
-  },
   {
     key: 'NewAppScreenExample',
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
@@ -140,6 +141,11 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/SectionList/SectionListExample'),
   },
   {
+    key: 'SwipeableCardExample',
+    category: 'UI',
+    module: require('../examples/SwipeableCardExample/SwipeableCardExample'),
+  },
+  {
     key: 'SwitchExample',
     category: 'UI',
     module: require('../examples/Switch/SwitchExample'),
@@ -189,10 +195,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'LegacyImageTest',
     module: require('../examples-win/LegacyTests/ImageTestPage'),
   },
-  {
-    key: 'LegacyTextBackgroundColorTest',
-    module: require('../examples-win/LegacyTests/TextBackgroundColorTestPage'),
-  },
 ];
 
 const APIExamples: Array<RNTesterExample> = [
@@ -229,12 +231,12 @@ const APIExamples: Array<RNTesterExample> = [
   {
     key: 'AnimatedExample',
     category: 'UI',
-    module: require('../examples/Animated/AnimatedExample'),
+    module: require('../examples/Animated/AnimatedExample').default,
   },
   {
     key: 'Animation - GratuitousAnimation',
     category: 'UI',
-    module: require('../examples/Animated/AnimatedGratuitousApp/AnExApp'),
+    module: require('../examples/AnimatedGratuitousApp/AnExApp'),
   },
   {
     key: 'AppearanceExample',

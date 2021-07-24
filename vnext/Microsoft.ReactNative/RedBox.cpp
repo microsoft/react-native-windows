@@ -118,7 +118,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
     xaml::FrameworkElement root{nullptr};
 
-    if (react::uwp::Is19H1OrHigher()) {
+    if (Microsoft::ReactNative::Is19H1OrHigher()) {
       // XamlRoot added in 19H1
       if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
         if (auto xamlRoot =
@@ -573,12 +573,14 @@ std::shared_ptr<IRedBoxHandler> CreateRedBoxHandler(
   return std::make_shared<RedBoxHandler>(redBoxHandler);
 }
 
-#ifndef CORE_ABI
 std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(
     Mso::WeakPtr<IReactHost> &&weakReactHost,
     Mso::DispatchQueue &&uiQueue) noexcept {
+#ifndef CORE_ABI
   return std::make_shared<DefaultRedBoxHandler>(std::move(weakReactHost), std::move(uiQueue));
-}
+#else
+  return nullptr;
 #endif
+}
 
 } // namespace Mso::React

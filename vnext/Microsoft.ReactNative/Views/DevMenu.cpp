@@ -53,7 +53,7 @@ void DevMenuManager::Init() noexcept {
     if (auto strongThis = weakThis.lock()) {
       auto context = strongThis->m_context;
 
-      if (react::uwp::Is19H1OrHigher()) {
+      if (Is19H1OrHigher()) {
         // XamlRoot added in 19H1
         if (auto xamlRoot = React::XamlUIService::GetXamlRoot(strongThis->m_context->Properties())) {
           if (auto rootContent = xamlRoot.Content()) {
@@ -206,7 +206,7 @@ void DevMenuManager::CreateAndShowUI() noexcept {
 
   m_flyout = xaml::Controls::Flyout{};
   m_flyout.Content(devMenu);
-  if (react::uwp::Is19H1OrHigher()) {
+  if (Is19H1OrHigher()) {
     // ShouldConstrainToRootBounds added in 19H1
     m_flyout.ShouldConstrainToRootBounds(false);
   }

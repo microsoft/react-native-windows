@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {Text, Picker, TouchableHighlight, View, ViewStyle} from 'react-native';
 
 class TabStopExample extends React.Component {

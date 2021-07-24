@@ -17,6 +17,10 @@ parameters:
   displayName: Skip Codesigning for Stable Branch
   type: boolean
   default: false
+- name: stopOnNoCI
+  displayName: Stop if latest commit is ***NO_CI***
+  type: boolean
+  default: true
 
 variables:
   - template: variables/msbuild.yml
@@ -37,18 +41,6 @@ variables:
   - name: ArtifactServices.Symbol.PAT
     value: $(pat-symbols-publish-microsoft)
 
-schedules:
-- cron: "0 15 * * Mon" # 3PM Monday UTC (8AM Monday PST)
-  displayName: Weekly stable publish build
-  branches:
-    include:
-    - refs/heads/0.64-stable
-- cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
-  displayName: Nightly canary publish build
-  branches:
-    include:
-    - master
-
 trigger: none
 pr: none
 
@@ -68,6 +60,11 @@ jobs:
 
       - template: templates/prepare-env.yml
 
+      - powershell: |
+          Write-Error "Stopping because commit message contains ***NO_CI***."
+        displayName: Stop pipeline if latest commit message contains ***NO_CI***
+        condition: and(${{ parameters.stopOnNoCI }}, contains(variables['Build.SourceVersionMessage'], '***NO_CI***'))
+
       - script: |
           echo ##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish
         displayName: Enable No-Publish
@@ -82,12 +79,12 @@ jobs:
         displayName: yarn build
 
       - script: npx --no-install beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags
-        displayName: Beachball Publish (Master Branch)
-        condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
+        displayName: Beachball Publish (Main Branch)
+        condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'main'))
 
       - script: npx --no-install beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public
         displayName: Beachball Publish (Stable Branch)
-        condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
+        condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'main'))
 
       # Beachball reverts to local state after publish, but we want the updates it added
       - script: git pull origin ${{ variables['Build.SourceBranchName'] }}
@@ -95,7 +92,7 @@ jobs:
 
       - script: npx --ignore-existing @rnw-scripts/create-github-releases --yes --authToken $(githubAuthToken)
         displayName: Create GitHub Releases for New Tags (Stable Branch)
-        condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ ne(variables['Build.SourceBranchName'], 'master') }} )
+        condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ ne(variables['Build.SourceBranchName'], 'main') }} )
 
       - template: templates/set-version-vars.yml
         parameters:
@@ -105,7 +102,7 @@ jobs:
 
   - job: DeployBotCoordinator
     displayName: Deploy @rnw-bots/coordinator
-    condition: eq(variables['Build.SourceBranchName'], 'master')
+    condition: eq(variables['Build.SourceBranchName'], 'main')
     dependsOn: RnwNpmPublish
     pool:
       vmImage: $(VmImage)
@@ -194,26 +191,11 @@ jobs:
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
           contents: |
+            React.Windows.Desktop\**
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
-
-      - script: |
-          echo ##vso[task.setvariable variable=EnableCodesign]true
-        displayName: Set EnableCodesign
-        condition: or(eq(variables['EnableCodesign'], 'true'), and(endsWith(variables['Build.SourceBranchName'], '-stable'), not(${{ parameters.skipStableCodesign }})))
-
-      - script: |
-          echo ##vso[task.setvariable variable=FailCGOnAlert]true
-        displayName: Set FailCGOnAlert
-        condition: or(eq(variables['FailCGOnAlert'], 'true'), eq(variables['EnableCodesign'], 'true'))
-
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: 'Component Governance Detection'
-        inputs:
-          alertWarningLevel: Medium
-          scanType: 'Register'
-          # Uncomment this once we have codesigning for Desktop working
-          # failOnAlert: $(FailCGOnAlert) # Alerts must fail the run to prevent codesigning
+      
+      - template: templates/component-governance.yml
 
   - job: RnwNativeBuildUniversal
     displayName: Build Universal
@@ -226,9 +208,6 @@ jobs:
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: arm
         Arm64Debug:
           BuildConfiguration: Debug
           BuildPlatform: arm64
@@ -239,9 +218,6 @@ jobs:
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
-        ArmRelease:
-          BuildConfiguration: Release
-          BuildPlatform: arm
         Arm64Release:
           BuildConfiguration: Release
           BuildPlatform: arm64
@@ -267,23 +243,55 @@ jobs:
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
             Microsoft.ReactNative.Managed.CodeGen\**
+      
+      - template: templates/component-governance.yml
 
-      - script: |
-          echo ##vso[task.setvariable variable=EnableCodesign]true
-        displayName: Set EnableCodesign
-        condition: or(eq(variables['EnableCodesign'], 'true'), and(endsWith(variables['Build.SourceBranchName'], '-stable'), not(${{ parameters.skipStableCodesign }})))
-
-      - script: |
-          echo ##vso[task.setvariable variable=FailCGOnAlert]true
-        displayName: Set FailCGOnAlert
-        condition: or(eq(variables['FailCGOnAlert'], 'true'), eq(variables['EnableCodesign'], 'true'))
-
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: 'Component Governance Detection'
+      # Make symbols available through http://symweb.
+      - task: PublishSymbols@2
+        displayName: Publish symbols
         inputs:
-          alertWarningLevel: Medium
-          scanType: 'Register'
-          failOnAlert: $(FailCGOnAlert) # Alerts must fail the run to prevent codesigning
+          SearchPattern: vnext/target/**/*.pdb
+          SymbolServerType: TeamServices
+
+  - job: RnwNativeBuildReunion
+    displayName: Build Reunion
+    dependsOn: RnwNpmPublish
+    strategy:
+      matrix:
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+
+    pool:
+      vmImage: $(VmImage)
+
+    steps:
+      - template: templates/apply-published-version-vars.yml
+
+      - template: templates/build-rnw.yml
+        parameters:
+          project: vnext/Microsoft.ReactNative.ProjectReunion.sln
+          buildPlatform: $(BuildPlatform)
+          buildConfiguration: $(BuildConfiguration)
+          msbuildArguments: /p:UseWinUI3=true
+
+      - task: CopyFiles@2
+        displayName: Copy NuGet artifacts
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          targetFolder: $(Build.StagingDirectory)/reunion/$(BuildPlatform)/$(BuildConfiguration)
+          contents: |
+            Microsoft.ReactNative\**
+            Microsoft.ReactNative.ProjectReunion\**
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: ReactWindows"
+        inputs:
+          artifactName: ReactWindows
+          pathToPublish: $(Build.StagingDirectory)
+          parallel: true
+      
+      - template: templates/component-governance.yml
 
       # Make symbols available through http://symweb.
       - task: PublishSymbols@2
@@ -297,6 +305,7 @@ jobs:
       - RnwNpmPublish
       - RnwNativeBuildDesktop
       - RnwNativeBuildUniversal
+      - RnwNativeBuildReunion
     displayName: Sign Binaries and Publish NuGet
     pool:
       vmImage: $(VmImage)
@@ -315,6 +324,7 @@ jobs:
         parameters:
           publishCommitId: $(publishCommitId)
           npmVersion: $(npmVersion)
+          packMicrosoftReactNativeProjectReunion: true
           ${{ if or(eq(variables['EnableCodesign'], 'true'), and(endsWith(variables['Build.SourceBranchName'], '-stable'), not(parameters.skipStableCodesign))) }}: # Sign on stable release builds
             signMicrosoft: true
 

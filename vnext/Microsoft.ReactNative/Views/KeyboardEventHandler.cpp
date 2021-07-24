@@ -20,8 +20,7 @@ static constexpr auto EVENT_PHASE = "handledEventPhase";
 static constexpr auto KEY = "key";
 static constexpr auto TARGET = "target";
 static constexpr auto CODE = "code";
-
-using namespace react::uwp;
+static constexpr auto TIMESTAMP = "timestamp";
 
 template <>
 struct json_type_traits<Microsoft::ReactNative::HandledKeyboardEvent> {
@@ -43,7 +42,8 @@ struct json_type_traits<Microsoft::ReactNative::HandledKeyboardEvent> {
       else if (propertyName == CODE)
         event.code = propertyValue.AsString();
       else if (propertyName == EVENT_PHASE)
-        event.handledEventPhase = asEnum<Microsoft::ReactNative::HandledEventPhase>(propertyValue);
+        event.handledEventPhase =
+            Microsoft::ReactNative::asEnum<Microsoft::ReactNative::HandledEventPhase>(propertyValue);
     }
 
     return event;
@@ -56,9 +56,9 @@ std::vector<HandledKeyboardEvent> KeyboardHelper::FromJS(winrt::Microsoft::React
   return json_type_traits<std::vector<HandledKeyboardEvent>>::parseJson(obj);
 }
 
-static folly::dynamic ToEventData(ReactKeyboardEvent event) {
+static folly::dynamic ToEventData(ReactKeyboardEvent event, double timestamp) {
   return folly::dynamic::object(TARGET, event.target)(ALT_KEY, event.altKey)(CTRL_KEY, event.ctrlKey)(KEY, event.key)(
-      META_KEY, event.metaKey)(SHIFT_KEY, event.shiftKey)(CODE, event.code);
+      META_KEY, event.metaKey)(SHIFT_KEY, event.shiftKey)(CODE, event.code)(TIMESTAMP, timestamp);
 }
 
 KeyboardEventBaseHandler::KeyboardEventBaseHandler(KeyboardEventCallback &&keyDown, KeyboardEventCallback &&keyUp)
@@ -211,6 +211,8 @@ void UpdateModifiedKeyStatusTo(T &event) {
 void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(
     std::string &&eventName,
     xaml::Input::KeyRoutedEventArgs const &args) {
+  const auto timestamp =
+      std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now().time_since_epoch()).count();
   if (auto source = args.OriginalSource().try_as<xaml::FrameworkElement>()) {
     auto reactId = getViewId(*m_context, source);
     if (reactId.isValid) {
@@ -220,7 +222,7 @@ void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(
       event.key = KeyboardHelper::FromVirtualKey(args.Key(), event.shiftKey, event.capLocked);
       event.code = KeyboardHelper::CodeFromVirtualKey(args.OriginalKey());
 
-      m_context->DispatchEvent(event.target, std::move(eventName), ToEventData(event));
+      m_context->DispatchEvent(event.target, std::move(eventName), ToEventData(event, timestamp));
     }
   }
 }
@@ -369,7 +371,6 @@ static const std::vector<std::pair<int, std::string>> g_virtualKeyToCode{
     {to_underlying(winrt::Windows::System::VirtualKey::Back), "Backspace"},
     {219, "BracketLeft"},
     {221, "BracketRight"},
-    {192, "BracketLeft"},
     {188, "Comma"},
     {187, "Equal"},
     //{to_underlying(winrt::Windows::System::None), "IntlBackslash"},

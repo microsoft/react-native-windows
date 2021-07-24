@@ -9,7 +9,7 @@
 #include <cxxreact/MessageQueueThread.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class AppTheme : public std::enable_shared_from_this<AppTheme> {
  public:
@@ -53,4 +53,4 @@ class AppThemeModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<AppTheme> m_appTheme;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

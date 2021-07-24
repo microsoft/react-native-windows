@@ -84,6 +84,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
       std::string sourceURL) override;
   facebook::jsi::Value evaluatePreparedJavaScript(
       const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &js) override;
+  bool drainMicrotasks(int maxMicrotasksHint = -1) override;
   facebook::jsi::Object global() override;
   std::string description() override;
   bool isInspectable() override;
@@ -286,6 +287,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
 
  private:
   JsiRuntime m_runtime;
+  bool m_pendingJSError{false};
 };
 
 } // namespace winrt::Microsoft::ReactNative

@@ -6,7 +6,7 @@
 #include <UI.Composition.h>
 #include "AnimationDriver.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 AnimationDriver::AnimationDriver(
     int64_t id,
@@ -90,4 +90,4 @@ ValueAnimatedNode *AnimationDriver::GetAnimatedValue() {
   }
   return nullptr;
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

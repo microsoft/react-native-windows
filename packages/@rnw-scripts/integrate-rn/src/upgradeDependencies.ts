@@ -5,9 +5,9 @@
  * @format
  */
 
-import * as _ from 'lodash';
-import * as path from 'path';
-import * as semver from 'semver';
+import _ from 'lodash';
+import path from 'path';
+import semver from 'semver';
 import {
   enumerateRepoPackages,
   findPackage,
@@ -364,15 +364,16 @@ function ensureValidReactNativePeerDep(
   }
 
   // If we have a range, such as in our stable branches, only bump if needed,
-  // as changing the peer depenedncy is a breaking change.
+  // as changing the peer depenedncy is a breaking change. Any prerelease may
+  // be breaking.
+  const peerDep = pkg.peerDependencies['react-native'];
+
   if (
     // Semver satisfaction logic for * is too strict, so we need to special
     // case it https://github.com/npm/node-semver/issues/130
-    pkg.peerDependencies['react-native'] === '*' ||
-    semver.satisfies(
-      newReactNativeVersion,
-      pkg.peerDependencies['react-native'],
-    )
+    peerDep === '*' ||
+    (semver.prerelease(semver.minVersion(peerDep)!) === null &&
+      semver.satisfies(newReactNativeVersion, peerDep))
   ) {
     return;
   }

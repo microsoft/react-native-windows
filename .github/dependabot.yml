@@ -1,0 +1,14 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "05:00"
+    timezone: "America/Los_Angeles"
+  labels:
+  - dependencies
+  versioning-strategy: lockfile-only
+  commit-message:
+    prefix: 📦
+  open-pull-requests-limit: 10

@@ -39,6 +39,11 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       const facebook::react::LayoutConstraints &layoutConstraints,
       const facebook::react::LayoutContext &layoutContext) const noexcept;
 
+  facebook::react::Size measureSurface(
+      facebook::react::SurfaceId surfaceId,
+      const facebook::react::LayoutConstraints &layoutConstraints,
+      const facebook::react::LayoutContext &layoutContext) const noexcept;
+
   const ComponentViewRegistry &GetViewRegistry() const noexcept;
 
  private:

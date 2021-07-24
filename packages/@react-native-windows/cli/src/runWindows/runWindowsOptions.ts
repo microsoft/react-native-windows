@@ -6,14 +6,14 @@
 
 import {CommandOption} from '@react-native-community/cli-types';
 
-export type BuildArch = 'x86' | 'x64' | 'ARM' | 'ARM64';
+export type BuildArch = 'x86' | 'x64' | 'ARM64';
 export type BuildConfig = 'Debug' | 'DebugBundle' | 'Release' | 'ReleaseBundle';
 
 /**
  *  * Options are the following:
  *    release: Boolean - Specifies release build
  *    root: String - The root of the application
- *    arch: String - The build architecture (x86, x64, ARM, Any CPU)
+ *    arch: String - The build architecture (ARM64, x86, x64)
  *    singleproc: Boolean - opt out of multi-proc builds
  *    emulator: Boolean - Deploy to the emulator
  *    device: Boolean - Deploy to a device
@@ -25,6 +25,7 @@ export type BuildConfig = 'Debug' | 'DebugBundle' | 'Release' | 'ReleaseBundle';
  *    no-launch: Boolean - Do not launch the app after deployment
  *    no-build: Boolean - Do not build the solution
  *    no-deploy: Boolean - Do not deploy the app
+ *    deploy-from-layout: Force deploy from layout, even in release builds
  *    sln: String - Solution file to build
  *    msbuildprops: String - Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2
  *    direct-debugging: Number - Enable direct debugging on specified port
@@ -40,12 +41,13 @@ export interface RunWindowsOptions {
   target?: string;
   remoteDebugging?: string;
   logging: boolean;
-  packager: boolean;
+  packager?: boolean;
   bundle: boolean;
   launch: boolean;
   autolink: boolean;
   build: boolean;
   deploy: boolean;
+  deployFromLayout?: boolean;
   sln?: string;
   proj?: string;
   msbuildprops?: string;
@@ -68,7 +70,7 @@ export const runWindowsOptions: CommandOption[] = [
   },
   {
     name: '--arch [string]',
-    description: 'The build architecture (ARM, ARM64, x86, x64)',
+    description: 'The build architecture (ARM64, x86, x64)',
     default: 'x86',
     parse: parseBuildArch,
   },
@@ -100,7 +102,6 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--no-packager',
     description: 'Do not launch packager while building',
-    default: false,
   },
   {
     name: '--bundle',
@@ -126,6 +127,11 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--no-deploy',
     description: 'Do not deploy the app',
+    default: false,
+  },
+  {
+    name: '--deploy-from-layout',
+    description: 'Force deploy from layout, even in release builds',
     default: false,
   },
   {
@@ -168,7 +174,7 @@ export const runWindowsOptions: CommandOption[] = [
 ];
 
 function parseBuildArch(arg: string): BuildArch {
-  const supportedArches: BuildArch[] = ['x86', 'x64', 'ARM64', 'ARM'];
+  const supportedArches: BuildArch[] = ['x86', 'x64', 'ARM64'];
   for (const supported of supportedArches) {
     if (arg.toLowerCase() === supported.toLowerCase()) {
       return supported;

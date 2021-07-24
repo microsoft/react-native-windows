@@ -7,6 +7,7 @@ struct MainPage : MainPageT<MainPage> {
   MainPage();
 
   void OnLoadClick(Windows::Foundation::IInspectable const & /*sender*/, xaml::RoutedEventArgs const & /*args*/);
+  void OnUnloadClick(Windows::Foundation::IInspectable const & /*sender*/, xaml::RoutedEventArgs const & /*args*/);
 
  private:
   Microsoft::ReactNative::ReactNativeHost Host() noexcept;
@@ -28,6 +29,9 @@ struct MainPage : MainPageT<MainPage> {
   void x_UseWebDebuggerCheckBox_Unchecked(
       winrt::Windows::Foundation::IInspectable const &sender,
       winrt::Windows::Foundation::IInspectable const &e);
+  void x_Theme_SelectionChanged(
+      winrt::Windows::Foundation::IInspectable const &sender,
+      xaml::Controls::SelectionChangedEventArgs const &e);
   void OnNavigatedTo(xaml::Navigation::NavigationEventArgs const &e);
 };
 

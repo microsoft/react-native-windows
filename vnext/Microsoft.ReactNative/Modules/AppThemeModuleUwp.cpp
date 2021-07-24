@@ -27,7 +27,7 @@ using namespace Windows::UI::ViewManagement;
 
 using namespace winrt::Microsoft::ReactNative;
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 //
 // AppTheme
@@ -41,7 +41,7 @@ AppTheme::AppTheme(
     m_isHighContrast = getIsHighContrast();
     m_highContrastColors = getHighContrastColors();
 
-    if (react::uwp::IsWinUI3Island()) {
+    if (IsWinUI3Island()) {
       m_wmSubscription = SubscribeToWindowMessage(
           ReactNotificationService(m_context->Notifications()), WM_THEMECHANGED, [this](const auto &, const auto &) {
             NotifyHighContrastChanged();
@@ -106,4 +106,4 @@ auto AppThemeModule::getMethods() -> std::vector<facebook::xplat::module::CxxMod
   return {};
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

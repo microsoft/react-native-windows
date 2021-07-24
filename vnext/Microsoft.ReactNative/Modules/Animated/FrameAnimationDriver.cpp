@@ -6,7 +6,7 @@
 #include "FrameAnimationDriver.h"
 #include "Utils/Helpers.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 FrameAnimationDriver::FrameAnimationDriver(
     int64_t id,
     int64_t animatedValueTag,
@@ -26,8 +26,7 @@ std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> FrameAnimat
     const auto compositor = Microsoft::ReactNative::GetCompositor();
     return std::make_tuple(
         compositor.CreateScopedBatch(
-            react::uwp::IsRS5OrHigher() ? comp::CompositionBatchTypes::AllAnimations
-                                        : comp::CompositionBatchTypes::Animation),
+            IsRS5OrHigher() ? comp::CompositionBatchTypes::AllAnimations : comp::CompositionBatchTypes::Animation),
         compositor.CreateScalarKeyFrameAnimation());
   }();
 
@@ -58,4 +57,4 @@ double FrameAnimationDriver::ToValue() {
   return m_toValue;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

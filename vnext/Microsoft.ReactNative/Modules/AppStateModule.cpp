@@ -19,7 +19,7 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
     dispatcher.Post([this]() {
       auto currentApp = xaml::TryGetCurrentApplication();
 
-      if (!react::uwp::IsWinUI3Island() && currentApp != nullptr) {
+      if (!IsWinUI3Island() && currentApp != nullptr) {
         m_enteredBackgroundRevoker = currentApp.EnteredBackground(
             winrt::auto_revoke,
             [weakThis = weak_from_this()](
@@ -40,7 +40,7 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
               }
             });
       } else {
-        assert(react::uwp::IsXamlIsland());
+        assert(IsXamlIsland());
       }
     });
   }

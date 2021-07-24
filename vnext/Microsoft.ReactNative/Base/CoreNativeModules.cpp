@@ -21,7 +21,7 @@
 // Shared
 #include <CreateModules.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 namespace {
 
@@ -45,15 +45,10 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::MessageQueueThread> &batchingUIMessageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread>
         &jsMessageQueue, // JS engine thread (what we use for external modules)
-    std::shared_ptr<react::uwp::AppTheme> &&appTheme,
+    std::shared_ptr<AppTheme> &&appTheme,
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept {
   std::vector<facebook::react::NativeModuleDescription> modules;
-
-  modules.emplace_back(
-      "WebSocketModule",
-      [context]() { return Microsoft::React::CreateWebSocketModule(Mso::CntPtr<Mso::React::IReactContext>(context)); },
-      jsMessageQueue);
 
   modules.emplace_back(
       Microsoft::React::NetworkingModule::Name,
@@ -74,10 +69,8 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       batchingUIMessageQueue);
 
   modules.emplace_back(
-      react::uwp::AppThemeModule::Name,
-      [appTheme = std::move(appTheme)]() mutable {
-        return std::make_unique<react::uwp::AppThemeModule>(std::move(appTheme));
-      },
+      AppThemeModule::Name,
+      [appTheme = std::move(appTheme)]() mutable { return std::make_unique<AppThemeModule>(std::move(appTheme)); },
       batchingUIMessageQueue);
 
   modules.emplace_back(
@@ -108,4 +101,4 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
   return modules;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

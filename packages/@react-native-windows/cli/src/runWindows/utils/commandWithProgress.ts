@@ -5,9 +5,9 @@
  */
 
 import {spawn, SpawnOptions} from 'child_process';
-import * as ora from 'ora';
-import * as spinners from 'cli-spinners';
-import * as chalk from 'chalk';
+import ora from 'ora';
+import spinners from 'cli-spinners';
+import chalk from 'chalk';
 import {CodedError, CodedErrorType} from '@react-native-windows/telemetry';
 
 function setSpinnerText(spinner: ora.Ora, prefix: string, text: string) {

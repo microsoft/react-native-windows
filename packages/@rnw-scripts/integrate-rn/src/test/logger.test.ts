@@ -6,7 +6,7 @@
  */
 
 import {PassThrough} from 'stream';
-import {MarkdownLogger, ConsoleLogger} from '../Logger';
+import {MarkdownLogger, ConsoleLogger} from '../logger';
 
 let outStream: NodeJS.WritableStream;
 let loggerOuptput: string;

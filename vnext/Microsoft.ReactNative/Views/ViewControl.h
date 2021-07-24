@@ -7,7 +7,7 @@
 
 #include "ViewControl.g.h"
 
-namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 //
 // ViewControl is a ContentControl that ViewViewManager uses to wrap a ViewPanel
@@ -22,11 +22,11 @@ struct ViewControl : ViewControlT<ViewControl> {
 
   xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
 
-  winrt::PROJECT_ROOT_NAMESPACE::ViewPanel GetPanel() const;
+  winrt::Microsoft::ReactNative::ViewPanel GetPanel() const;
 };
 
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
+} // namespace winrt::Microsoft::ReactNative::implementation
 
-namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation {
+namespace winrt::Microsoft::ReactNative::factory_implementation {
 struct ViewControl : ViewControlT<ViewControl, implementation::ViewControl> {};
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation
+} // namespace winrt::Microsoft::ReactNative::factory_implementation

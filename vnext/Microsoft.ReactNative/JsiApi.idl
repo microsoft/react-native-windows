@@ -18,7 +18,7 @@ namespace Microsoft.ReactNative
   [experimental]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -37,7 +37,7 @@ namespace Microsoft.ReactNative
   [experimental, webhosthidden]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -54,7 +54,7 @@ namespace Microsoft.ReactNative
   [experimental]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -72,7 +72,7 @@ namespace Microsoft.ReactNative
   [experimental, webhosthidden]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -85,7 +85,7 @@ namespace Microsoft.ReactNative
   [experimental]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -97,7 +97,7 @@ namespace Microsoft.ReactNative
   [experimental]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -109,7 +109,7 @@ namespace Microsoft.ReactNative
   [experimental]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -121,7 +121,7 @@ namespace Microsoft.ReactNative
   [experimental]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -133,7 +133,7 @@ namespace Microsoft.ReactNative
   [experimental]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -145,7 +145,7 @@ namespace Microsoft.ReactNative
   [experimental]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -157,7 +157,7 @@ namespace Microsoft.ReactNative
   [experimental, default_interface]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -168,7 +168,7 @@ namespace Microsoft.ReactNative
   [experimental]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -177,7 +177,7 @@ namespace Microsoft.ReactNative
   [experimental, webhosthidden]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -191,7 +191,7 @@ namespace Microsoft.ReactNative
   [experimental]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -204,7 +204,7 @@ namespace Microsoft.ReactNative
   [experimental, webhosthidden, default_interface]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -220,7 +220,7 @@ namespace Microsoft.ReactNative
   [experimental, webhosthidden, default_interface]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
-    "It may be removed or changed in 0.65. Instead, use the JSI API that uses this API internally.\n"
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
     "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
     "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
     "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
@@ -232,6 +232,7 @@ namespace Microsoft.ReactNative
     JsiValueRef EvaluateJavaScript(IJsiByteBuffer buffer, String sourceUrl);
     JsiPreparedJavaScript PrepareJavaScript(IJsiByteBuffer buffer, String sourceUrl);
     JsiValueRef EvaluatePreparedJavaScript(JsiPreparedJavaScript js);
+    Boolean DrainMicrotasks(Int32 maxMicrotasksHint);
     JsiObjectRef Global { get; };
     String Description { get; };
     Boolean IsInspectable { get; };

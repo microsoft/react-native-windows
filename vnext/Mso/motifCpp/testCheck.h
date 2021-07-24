@@ -4,6 +4,7 @@
 #pragma once
 #ifndef MSO_MOTIFCPP_TESTCHECK_H
 #define MSO_MOTIFCPP_TESTCHECK_H
+#ifdef MSO_MOTIFCPP
 
 //=============================================================================
 // Test macros for better error reporting.
@@ -129,4 +130,5 @@
 	//	StartTrackingMemoryAllocations(); \
 	//});
 
+#endif // MSO_MOTIFCPP
 #endif // MSO_MOTIFCPP_TESTCHECK_H

@@ -16,7 +16,7 @@
 #include "TransformAnimatedNode.h"
 #include "ValueAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 /// <summary>
 /// This is the main class that coordinates how native animated JS
 /// implementation drives UI changes.
@@ -106,4 +106,4 @@ class NativeAnimatedNodeManager {
   static constexpr std::string_view s_framesName{"frames"};
   static constexpr std::string_view s_dynamicToValuesName{"dynamicToValues"};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

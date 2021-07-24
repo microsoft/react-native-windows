@@ -34,8 +34,12 @@ namespace Microsoft::ReactNative {
 
 std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag);
 
-TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context)
-    : m_xamlView(nullptr), m_context(&context) {}
+TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context, bool fabric)
+    : m_xamlView(nullptr),
+      m_context(&context),
+      m_fabric(fabric),
+      m_batchingEventEmitter{
+          std::make_shared<winrt::Microsoft::ReactNative::BatchingEventEmitter>(Mso::CntPtr(&context))} {}
 
 TouchEventHandler::~TouchEventHandler() {
   RemoveTouchHandlers();
@@ -68,6 +72,10 @@ void TouchEventHandler::RemoveTouchHandlers() {
   m_captureLostRevoker.revoke();
   m_exitedRevoker.revoke();
   m_movedRevoker.revoke();
+}
+
+winrt::Microsoft::ReactNative::BatchingEventEmitter &TouchEventHandler::BatchingEmitter() noexcept {
+  return *m_batchingEventEmitter;
 }
 
 void TouchEventHandler::OnPointerPressed(
@@ -305,7 +313,10 @@ void TouchEventHandler::UpdatePointersInViews(
 
         ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(existingTag));
         if (node != nullptr && node->m_onMouseLeaveRegistered)
-          m_context->DispatchEvent(existingTag, "topMouseLeave", GetPointerJson(pointer, existingTag));
+          BatchingEmitter().DispatchEvent(
+              existingTag,
+              L"topMouseLeave",
+              winrt::Microsoft::ReactNative::MakeJSValueWriter(GetPointerJson(pointer, existingTag)));
       }
     }
 
@@ -318,23 +329,39 @@ void TouchEventHandler::UpdatePointersInViews(
 
       ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(newTag));
       if (node != nullptr && node->m_onMouseEnterRegistered)
-        m_context->DispatchEvent(newTag, "topMouseEnter", GetPointerJson(pointer, newTag));
+        BatchingEmitter().DispatchEvent(
+            newTag,
+            L"topMouseEnter",
+            winrt::Microsoft::ReactNative::MakeJSValueWriter(GetPointerJson(pointer, newTag)));
     }
 
     m_pointersInViews[pointerId] = {std::move(newViewsSet), std::move(newViews)};
   }
 }
 
-folly::dynamic TouchEventHandler::GetPointerJson(const ReactPointer &pointer, int64_t target) {
-  folly::dynamic json =
-      folly::dynamic::object()("target", target)("identifier", pointer.identifier)("pageX", pointer.positionRoot.X)(
-          "pageY", pointer.positionRoot.Y)("locationX", pointer.positionView.X)("locationY", pointer.positionView.Y)(
-          "timestamp", pointer.timestamp)("pointerType", GetPointerDeviceTypeName(pointer.deviceType))(
-          "force", pointer.pressure)("isLeftButton", pointer.isLeftButton)("isRightButton", pointer.isRightButton)(
-          "isMiddleButton", pointer.isMiddleButton)("isBarrelButtonPressed", pointer.isBarrelButton)(
-          "isHorizontalScrollWheel", pointer.isHorizontalScrollWheel)("isEraser", pointer.isEraser)(
-          "shiftKey", pointer.shiftKey)("ctrlKey", pointer.ctrlKey)("altKey", pointer.altKey);
-  return json;
+winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const ReactPointer &pointer, int64_t target) {
+  return winrt::Microsoft::ReactNative::JSValueObject{
+      {"target", target},
+      {"identifier", pointer.identifier},
+      {"pageX", pointer.positionRoot.X},
+      {"pageY", pointer.positionRoot.Y},
+      {"locationX", pointer.positionView.X},
+      {"locationY", pointer.positionView.Y},
+      {"timestamp", pointer.timestamp},
+      {
+          "pointerType",
+          GetPointerDeviceTypeName(pointer.deviceType),
+      },
+      {"force", pointer.pressure},
+      {"isLeftButton", pointer.isLeftButton},
+      {"isRightButton", pointer.isRightButton},
+      {"isMiddleButton", pointer.isMiddleButton},
+      {"isBarrelButtonPressed", pointer.isBarrelButton},
+      {"isHorizontalScrollWheel", pointer.isHorizontalScrollWheel},
+      {"isEraser", pointer.isEraser},
+      {"shiftKey", pointer.shiftKey},
+      {"ctrlKey", pointer.ctrlKey},
+      {"altKey", pointer.altKey}};
 }
 
 #ifdef USE_FABRIC
@@ -380,12 +407,14 @@ facebook::react::Touch TouchEventHandler::TouchForPointer(const ReactPointer &po
 #endif
 
 void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex) {
-  folly::dynamic changedIndices = folly::dynamic::array();
+  winrt::Microsoft::ReactNative::JSValueArray changedIndices;
   changedIndices.push_back(pointerIndex);
 
 #ifdef USE_FABRIC
-  if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+  std::shared_ptr<FabricUIManager> fabricuiManager;
+  if (m_fabric &&
+      !!(fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties())))) {
     std::unordered_set<facebook::react::SharedTouchEventEmitter> uniqueEventEmitters = {};
     std::vector<facebook::react::SharedTouchEventEmitter> emittersForIndex;
 
@@ -432,19 +461,27 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
   } else
 #endif // USE_FABRIC
   {
-    auto touches = folly::dynamic::array();
+    winrt::Microsoft::ReactNative::JSValueArray touches;
     for (const auto &pointer : m_pointers) {
-      folly::dynamic touch = GetPointerJson(pointer, pointer.target);
-      touches.push_back(touch);
+      touches.push_back(GetPointerJson(pointer, pointer.target));
     }
 
     // Package up parameters and invoke the JS event emitter
-    const char *eventName = GetTouchEventTypeName(eventType);
+    const wchar_t *eventName = GetTouchEventTypeName(eventType);
     if (eventName == nullptr)
       return;
-    folly::dynamic params = folly::dynamic::array(eventName, std::move(touches), std::move(changedIndices));
 
-    m_context->CallJSFunction("RCTEventEmitter", "receiveTouches", std::move(params));
+    const auto paramsWriter = MakeJSValueArgWriter(eventName, std::move(touches), std::move(changedIndices));
+    if (eventType == TouchEventType::Move || eventType == TouchEventType::PointerMove) {
+      BatchingEmitter().EmitCoalescingJSEvent(
+          L"RCTEventEmitter",
+          L"receiveTouches",
+          std::move(eventName),
+          m_pointers[pointerIndex].pointerId,
+          paramsWriter);
+    } else {
+      BatchingEmitter().EmitJSEvent(L"RCTEventEmitter", L"receiveTouches", paramsWriter);
+    }
   }
 }
 
@@ -452,7 +489,9 @@ bool TouchEventHandler::DispatchBackEvent() {
   if (m_context->State() != Mso::React::ReactInstanceState::Loaded)
     return false;
 
-  m_context->CallJSFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
+  BatchingEmitter().EmitJSEvent(
+      L"RCTDeviceEventEmitter", L"emit", winrt::Microsoft::ReactNative::MakeJSValueArgWriter(L"hardwardBackPress"));
+
   return true;
 }
 
@@ -475,20 +514,20 @@ const char *TouchEventHandler::GetPointerDeviceTypeName(
   return deviceTypeName;
 }
 
-const char *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType) noexcept {
-  const char *eventName = nullptr;
+const wchar_t *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType) noexcept {
+  const wchar_t *eventName = nullptr;
   switch (eventType) {
     case TouchEventType::Start:
-      eventName = "topTouchStart";
+      eventName = L"topTouchStart";
       break;
     case TouchEventType::End:
-      eventName = "topTouchEnd";
+      eventName = L"topTouchEnd";
       break;
     case TouchEventType::Move:
-      eventName = "topTouchMove";
+      eventName = L"topTouchMove";
       break;
     case TouchEventType::Cancel:
-      eventName = "topTouchCancel";
+      eventName = L"topTouchCancel";
       break;
     default:
       assert(false);

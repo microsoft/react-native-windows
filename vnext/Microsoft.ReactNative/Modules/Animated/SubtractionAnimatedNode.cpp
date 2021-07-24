@@ -6,7 +6,7 @@
 #include "NativeAnimatedNodeManager.h"
 #include "SubtractionAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 SubtractionAnimatedNode::SubtractionAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -37,4 +37,4 @@ SubtractionAnimatedNode::SubtractionAnimatedNode(
     return anim;
   }());
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

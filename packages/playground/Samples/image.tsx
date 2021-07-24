@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  * @format
  */
-import * as React from 'react';
+import React from 'react';
 import {Picker} from 'react-native-windows';
 import {AppRegistry, Image, View, Text, Switch, StyleSheet} from 'react-native';
 

@@ -52,7 +52,7 @@
 /// from JS and the main class that coordinates all the action:
 /// <see cref="NativeAnimatedNodeManager"/>.
 /// </remarks>
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
  public:
   NativeAnimatedModule(Mso::CntPtr<Mso::React::IReactContext> &&context);
@@ -95,4 +95,4 @@ class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
   std::shared_ptr<NativeAnimatedNodeManager> m_nodesManager{};
   Mso::CntPtr<Mso::React::IReactContext> m_context;
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

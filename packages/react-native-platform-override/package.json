@@ -1,6 +1,6 @@
 {
   "name": "react-native-platform-override",
-  "version": "1.4.13",
+  "version": "1.4.17",
   "description": "react-native-platform-override offers CLI tools to manage Javascript overrides in out-of-tree React Native platforms",
   "license": "MIT",
   "main": "./lib-commonjs/Api.js",
@@ -22,7 +22,7 @@
     "react-native-platform-override": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/package-utils": "^0.0.0-canary.16",
+    "@react-native-windows/package-utils": "^0.0.0-canary.20",
     "async": "^3.2.0",
     "chalk": "^4.1.0",
     "fp-ts": "^2.5.0",
@@ -40,14 +40,14 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
+    "@babel/core": "^7.14.0",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
-    "@react-native-windows/package-utils": "0.0.0-canary.16",
-    "@rnw-scripts/eslint-config": "1.1.6",
-    "@rnw-scripts/jest-unittest-config": "1.2.0",
-    "@rnw-scripts/just-task": "2.1.0",
-    "@rnw-scripts/ts-config": "1.1.0",
+    "@react-native-windows/package-utils": "0.0.0-canary.20",
+    "@rnw-scripts/eslint-config": "1.1.7",
+    "@rnw-scripts/jest-unittest-config": "1.2.3",
+    "@rnw-scripts/just-task": "2.2.0",
+    "@rnw-scripts/ts-config": "2.0.0",
     "@types/async": "^3.2.5",
     "@types/chalk": "^2.2.0",
     "@types/diff-match-patch": "^1.0.32",
@@ -64,11 +64,14 @@
     "babel-jest": "^26.3.0",
     "diff-match-patch": "^1.0.4",
     "eslint": "7.12.0",
-    "jest": "^26.5.2",
+    "jest": "^26.6.3",
     "just-scripts": "^1.3.3",
     "minimatch": "^3.0.4",
     "prettier": "1.19.1",
     "typescript": "^3.8.3"
+  },
+  "peerDependencies": {
+    "react-native": "*"
   },
   "engines": {
     "node": ">=12.0.0"

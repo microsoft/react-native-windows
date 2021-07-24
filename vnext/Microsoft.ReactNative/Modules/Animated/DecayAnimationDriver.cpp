@@ -6,7 +6,7 @@
 #include <math.h>
 #include "DecayAnimationDriver.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 DecayAnimationDriver::DecayAnimationDriver(
     int64_t id,
     int64_t animatedValueTag,
@@ -43,4 +43,4 @@ double DecayAnimationDriver::ToValue() {
   return m_startValue + m_velocity / (1 - m_deceleration);
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

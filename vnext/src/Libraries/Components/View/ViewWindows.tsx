@@ -5,7 +5,7 @@
  */
 
 import {IViewWindowsProps} from './ViewWindowsProps';
-import * as React from 'react';
+import React from 'react';
 import {View} from 'react-native';
 
 type ViewWindowsType = React.ForwardRefExoticComponent<

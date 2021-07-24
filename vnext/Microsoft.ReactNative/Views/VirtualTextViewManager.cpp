@@ -106,6 +106,7 @@ bool VirtualTextViewManager::UpdateProperty(
   // FUTURE: In the future cppwinrt will generate code where static methods on
   // base types can be called.  For now we specify the base type explicitly
   if (TryUpdateForeground<winrt::TextElement>(span, propertyName, propertyValue)) {
+    static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.foregroundColor = ColorFrom(propertyValue);
   } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (TryUpdateTextDecorationLine<winrt::TextElement>(span, propertyName, propertyValue)) {
@@ -115,12 +116,13 @@ bool VirtualTextViewManager::UpdateProperty(
     VirtualTextShadowNode::ApplyTextTransform(
         *node, node->textTransform, /* forceUpdate = */ true, /* isRoot = */ true);
   } else if (propertyName == "backgroundColor") {
-    if (react::uwp::IsValidColorValue(propertyValue)) {
-      static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.color = react::uwp::ColorFrom(propertyValue);
+    if (IsValidColorValue(propertyValue)) {
+      static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.backgroundColor = ColorFrom(propertyValue);
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
+
   return true;
 }
 

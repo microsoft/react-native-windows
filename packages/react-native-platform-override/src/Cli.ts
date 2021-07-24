@@ -7,10 +7,10 @@
 
 import * as Api from './Api';
 
-import * as chalk from 'chalk';
-import * as ora from 'ora';
-import * as path from 'path';
-import * as yargs from 'yargs';
+import chalk from 'chalk';
+import ora from 'ora';
+import path from 'path';
+import yargs from 'yargs';
 
 import {findAllManifests, findManifest} from './FileSearch';
 import {overrideFromDetails, promptForOverrideDetails} from './OverridePrompt';

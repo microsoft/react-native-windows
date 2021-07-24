@@ -12,7 +12,7 @@
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 PropsAnimatedNode::PropsAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -41,7 +41,7 @@ PropsAnimatedNode::PropsAnimatedNode(
 
 void PropsAnimatedNode::ConnectToView(int64_t viewTag) {
   if (m_connectedViewTag != s_connectedViewTagUnset) {
-    throw new std::invalid_argument(
+    throw std::invalid_argument(
         "Animated node " + std::to_string(m_tag) + " has already been attached to a view already exists.");
     return;
   }
@@ -50,8 +50,10 @@ void PropsAnimatedNode::ConnectToView(int64_t viewTag) {
 }
 
 void PropsAnimatedNode::DisconnectFromView(int64_t viewTag) {
-  if (m_connectedViewTag != viewTag) {
-    throw new std::invalid_argument(
+  if (m_connectedViewTag == s_connectedViewTagUnset) {
+    return;
+  } else if (m_connectedViewTag != viewTag) {
+    throw std::invalid_argument(
         "Attempting to disconnect view that has not been connected with the given animated node.");
     return;
   }
@@ -89,7 +91,10 @@ void PropsAnimatedNode::UpdateView() {
           MakeAnimation(styleEntry.second, styleEntry.first);
         }
       } else if (const auto &valueNode = manager->GetValueAnimatedNode(entry.second)) {
-        MakeAnimation(entry.second, StringToFacadeType(entry.first));
+        const auto &facade = StringToFacadeType(entry.first);
+        if (facade != FacadeType::None) {
+          MakeAnimation(entry.second, facade);
+        }
       }
     }
   }
@@ -279,4 +284,4 @@ xaml::UIElement PropsAnimatedNode::GetUIElement() {
   }
   return nullptr;
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

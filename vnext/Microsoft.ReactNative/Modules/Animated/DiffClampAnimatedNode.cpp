@@ -6,7 +6,7 @@
 #include "DiffClampAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 DiffClampAnimatedNode::DiffClampAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -27,4 +27,4 @@ DiffClampAnimatedNode::DiffClampAnimatedNode(
     return anim;
   }());
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

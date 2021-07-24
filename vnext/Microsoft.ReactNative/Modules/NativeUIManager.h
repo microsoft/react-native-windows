@@ -11,12 +11,13 @@
 #include <yoga/yoga.h>
 
 #include <ReactHost/React.h>
+#include <ReactRootView.h>
 #include <nativemodules.h>
 #include <map>
 #include <memory>
 #include <vector>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 struct IXamlReactControl;
 }
 
@@ -98,7 +99,7 @@ class NativeUIManager final : public INativeUIManager {
   void UpdateExtraLayout(int64_t tag);
   YGNodeRef GetYogaNode(int64_t tag) const;
 
-  std::weak_ptr<::react::uwp::IXamlReactControl> GetParentXamlReactControl(int64_t tag) const;
+  winrt::weak_ref<winrt::Microsoft::ReactNative::ReactRootView> GetParentXamlReactControl(int64_t tag) const;
 
  private:
   INativeUIManagerHost *m_host = nullptr;
@@ -112,7 +113,7 @@ class NativeUIManager final : public INativeUIManager {
   std::vector<std::function<void()>> m_batchCompletedCallbacks;
   std::vector<int64_t> m_extraLayoutNodes;
 
-  std::map<int64_t, std::weak_ptr<::react::uwp::IXamlReactControl>> m_tagsToXamlReactControl;
+  std::map<int64_t, winrt::weak_ref<winrt::Microsoft::ReactNative::ReactRootView>> m_tagsToXamlReactControl;
 };
 
 } // namespace Microsoft::ReactNative

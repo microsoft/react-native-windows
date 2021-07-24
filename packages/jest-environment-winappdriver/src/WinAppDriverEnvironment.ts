@@ -6,7 +6,7 @@
  */
 
 import {spawn, ChildProcess} from 'child_process';
-import * as fs from 'fs';
+import fs from 'fs';
 
 import NodeEnvironment = require('jest-environment-node');
 

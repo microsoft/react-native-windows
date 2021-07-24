@@ -6,7 +6,7 @@
  */
 
 import {Server, Socket} from 'net';
-import * as jsonrpc from 'jsonrpc-lite';
+import jsonrpc from 'jsonrpc-lite';
 import {RpcStatusType} from 'jsonrpc-lite';
 
 let incrementingId = 0;

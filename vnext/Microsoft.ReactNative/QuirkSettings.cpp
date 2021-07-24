@@ -25,13 +25,6 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MatchAndroidAndIOSStretchBe
   properties.Set(MatchAndroidAndIOSStretchBehaviorProperty(), value);
 }
 
-winrt::Microsoft::ReactNative::ReactPropertyId<bool> UseLegacyWebSocketModuleProperty() noexcept {
-  winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
-      L"ReactNative.QuirkSettings", L"UseLegacyWebSocketModule"};
-
-  return propId;
-}
-
 winrt::Microsoft::ReactNative::ReactPropertyId<bool> AcceptSelfSignedCertsProperty() noexcept {
   winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
       L"ReactNative.QuirkSettings", L"Networking.AcceptSelfSigned"};
@@ -47,22 +40,10 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> AcceptSelfSignedCertsProper
   SetMatchAndroidAndIOSStretchBehavior(ReactPropertyBag(settings.Properties()), value);
 }
 
-/*static*/ void QuirkSettings::SetUseLegacyWebSocketModule(
-    winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
-    bool value) noexcept {
-  ReactPropertyBag(settings.Properties()).Set(UseLegacyWebSocketModuleProperty(), value);
-}
-
 /*static*/ void QuirkSettings::SetAcceptSelfSigned(
     winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
     bool value) noexcept {
   ReactPropertyBag(settings.Properties()).Set(AcceptSelfSignedCertsProperty(), value);
-}
-
-/*static*/ void QuirkSettings::SetEnableFabric(
-    winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
-    bool value) noexcept {
-  Mso::React::ReactOptions::SetEnableFabric(settings.Properties(), value);
 }
 
 #pragma endregion IDL interface
@@ -71,16 +52,8 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> AcceptSelfSignedCertsProper
   return properties.Get(MatchAndroidAndIOSStretchBehaviorProperty()).value_or(true);
 }
 
-/*static*/ bool QuirkSettings::GetUseLegacyWebSocketModule(ReactPropertyBag properties) noexcept {
-  return properties.Get(UseLegacyWebSocketModuleProperty()).value_or(false);
-}
-
 /*static*/ bool QuirkSettings::GetAcceptSelfSigned(ReactPropertyBag properties) noexcept {
   return properties.Get(AcceptSelfSignedCertsProperty()).value_or(false);
-}
-
-/*static*/ bool QuirkSettings::GetEnableFabric(ReactPropertyBag properties) noexcept {
-  return Mso::React::ReactOptions::EnableFabric(properties.Handle());
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

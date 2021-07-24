@@ -5,7 +5,7 @@
  * @format
  */
 
-import * as fs from 'fs';
+import fs from 'fs';
 import {hashContent} from '../Hash';
 
 (async function() {

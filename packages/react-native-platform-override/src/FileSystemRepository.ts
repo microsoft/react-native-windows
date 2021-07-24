@@ -5,9 +5,9 @@
  * @format
  */
 
-import * as fs from 'fs';
-import * as globby from 'globby';
-import * as path from 'path';
+import fs from 'fs';
+import globby from 'globby';
+import path from 'path';
 
 import {WritableFileRepository} from './FileRepository';
 

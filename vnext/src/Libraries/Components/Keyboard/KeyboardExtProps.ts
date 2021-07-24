@@ -6,7 +6,7 @@
 
 'use strict';
 
-import * as RN from 'react-native';
+import RN from 'react-native';
 
 // Enum already part of public API
 // eslint-disable-next-line no-restricted-syntax

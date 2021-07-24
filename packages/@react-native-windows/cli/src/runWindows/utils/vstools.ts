@@ -4,9 +4,9 @@
  * @format
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
-import * as chalk from 'chalk';
+import fs from 'fs';
+import path from 'path';
+import chalk from 'chalk';
 import {Project} from '../../config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
 
