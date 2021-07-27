@@ -274,6 +274,7 @@ jobs:
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
           msbuildArguments: /p:UseWinUI3=true
+          warnAsError: false # Disable warn as error until we fix #8312
 
       - task: CopyFiles@2
         displayName: Copy NuGet artifacts

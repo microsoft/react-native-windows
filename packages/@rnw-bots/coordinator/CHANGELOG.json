@@ -2,6 +2,21 @@
   "name": "@rnw-bots/coordinator",
   "entries": [
     {
+      "date": "Sat, 24 Jul 2021 05:05:52 GMT",
+      "tag": "@rnw-bots/coordinator_v1.0.9",
+      "version": "1.0.9",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.2.0",
+            "author": "4123478+tido64@users.noreply.github.com",
+            "commit": "a311022ebc0c1d8070d7e54312197f486c470d33",
+            "package": "@rnw-bots/coordinator"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Jun 2021 05:08:55 GMT",
       "tag": "@rnw-bots/coordinator_v1.0.9",
       "version": "1.0.9",

@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 25 Jul 2021 05:09:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.349",
+      "version": "0.0.0-canary.349",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove DatePicker and PickerWindows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5ca4638a2c84d0729cf25ca7862f6f8de23d685f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 24 Jul 2021 05:05:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.348",
+      "version": "0.0.0-canary.348",
+      "comments": {
+        "none": [
+          {
+            "comment": "Enable WarnAsError for universal and desktop builds in PR and CI",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b45df9feaff7617be858698ba16176551f8985c5",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Proposal to support props for scroll anchoring",
+            "author": "erozell@outlook.com",
+            "commit": "9c66886463f985ea30c28d7c80fa6728b13347c3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Replace @rnw-scripts/jest-out-of-tree-resolver with @rnx-kit/jest-resolver",
+            "author": "4123478+tido64@users.noreply.github.com",
+            "commit": "a311022ebc0c1d8070d7e54312197f486c470d33",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Jul 2021 05:08:40 GMT",
       "tag": "react-native-windows_v0.0.0-canary.348",
       "version": "0.0.0-canary.348",
