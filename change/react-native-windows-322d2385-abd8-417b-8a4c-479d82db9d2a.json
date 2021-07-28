@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Prototype of exposing hooks for core view manager providers",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
