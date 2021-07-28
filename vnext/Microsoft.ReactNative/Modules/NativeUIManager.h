@@ -89,9 +89,8 @@ class NativeUIManager final : public INativeUIManager {
   xaml::XamlRoot tryGetXamlRoot();
 
   // For unparented node like Flyout, XamlRoot should be set to handle
-  // XamlIsland/AppWindow scenarios. Since it doesn't have parent, and all nodes
-  // in the tree should have the same XamlRoot, this function iterates all roots
-  // and try to get a valid XamlRoot.
+  // XamlIsland/AppWindow scenarios. This function retrieves the XamlRoot for a
+  // specific root tag.
   xaml::XamlRoot tryGetXamlRoot(int64_t rootTag);
 
   // Searches itself and its parent to get a valid XamlView.

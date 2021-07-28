@@ -130,7 +130,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     auto node = viewManager->createShadow();
     node->m_className = std::move(viewName);
     node->m_tag = reactTag;
-    node->m_rootTag = reactTag;
+    node->m_rootTag = rootTag;
     node->m_viewManager = viewManager;
 
     node->createView(props);
