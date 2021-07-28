@@ -9,9 +9,9 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 
 import * as Serialized from './Serialized';
-import * as _ from 'lodash';
-import * as fs from 'fs';
-import * as path from 'path';
+import _ from 'lodash';
+import fs from 'fs';
+import path from 'path';
 
 import OverrideFactory, {OverrideFactoryImpl} from './OverrideFactory';
 import {

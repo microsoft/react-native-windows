@@ -7,7 +7,7 @@
 // This is a port of TextExample.android.js
 // Image inline in Text removed
 
-import * as React from 'react';
+import React from 'react';
 import {
   /*Image,*/ StyleSheet,
   Text,

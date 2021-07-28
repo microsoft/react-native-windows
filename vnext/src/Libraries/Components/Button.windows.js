@@ -22,7 +22,11 @@ import {PlatformColor} from '../StyleSheet/PlatformColorValueTypes';
 import View from './View/View';
 import invariant from 'invariant';
 
-import type {AccessibilityState} from './View/ViewAccessibility';
+import type {
+  AccessibilityState,
+  AccessibilityActionEvent,
+  AccessibilityActionInfo,
+} from './View/ViewAccessibility';
 import type {PressEvent} from '../Types/CoreEventTypes';
 
 type ButtonProps = $ReadOnly<{|
@@ -139,6 +143,9 @@ type ButtonProps = $ReadOnly<{|
   /**
    * Accessibility props.
    */
+  accessible?: ?boolean,
+  accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
+  onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
   accessibilityState?: ?AccessibilityState,
 
   // [Windows
@@ -260,12 +267,16 @@ type ButtonProps = $ReadOnly<{|
   ```
  */
 
-class Button extends React.Component<ButtonProps, {hover: boolean}> {
+class Button extends React.Component<
+  ButtonProps,
+  {hover: boolean, pressed: boolean},
+> {
   // [Windows
   constructor(props: Object) {
     super(props);
     this.state = {
       hover: false,
+      pressed: false,
     };
   }
   // Windows]
@@ -283,6 +294,9 @@ class Button extends React.Component<ButtonProps, {hover: boolean}> {
       nextFocusRight,
       nextFocusUp,
       testID,
+      accessible,
+      accessibilityActions,
+      onAccessibilityAction,
       tabIndex,
     } = this.props;
     const buttonStyles = [styles.button];
@@ -339,14 +353,29 @@ class Button extends React.Component<ButtonProps, {hover: boolean}> {
           tabIndex={tabIndex}
           touchSoundDisabled={touchSoundDisabled}
           underlayColor={PlatformColor('ButtonBackgroundPressed')}
+          onShowUnderlay={() => {
+            this.setState({pressed: true});
+          }}
+          onHideUnderlay={() => {
+            this.setState({pressed: false});
+          }}
           style={
-            this.state.hover
+            this.state.pressed
+              ? [
+                  buttonStyles,
+                  {
+                    borderColor: PlatformColor('ButtonBorderBrushPressed'),
+                    borderBottomWidth: 1,
+                  },
+                ]
+              : this.state.hover
               ? [
                   buttonStyles,
                   {
                     backgroundColor: PlatformColor(
                       'ButtonBackgroundPointerOver',
                     ),
+                    borderColor: PlatformColor('ButtonBorderBrushPointerOver'),
                   },
                 ]
               : buttonStyles
@@ -357,7 +386,25 @@ class Button extends React.Component<ButtonProps, {hover: boolean}> {
           onMouseLeave={() => {
             if (!disabled) this.setState({hover: false});
           }}>
-          <Text style={textStyles} disabled={disabled}>
+          <Text
+            style={
+              this.state.pressed
+                ? [
+                    textStyles,
+                    {
+                      color: PlatformColor('ButtonForegroundPressed'),
+                    },
+                  ]
+                : this.state.hover
+                ? [
+                    textStyles,
+                    {
+                      color: PlatformColor('ButtonForegroundPointerOver'),
+                    },
+                  ]
+                : textStyles
+            }
+            disabled={disabled}>
             {formattedTitle}
           </Text>
         </Touchable>
@@ -365,6 +412,9 @@ class Button extends React.Component<ButtonProps, {hover: boolean}> {
     } else {
       return (
         <Touchable
+          accessible={accessible}
+          accessibilityActions={accessibilityActions}
+          onAccessibilityAction={onAccessibilityAction}
           accessibilityLabel={accessibilityLabel}
           accessibilityRole="button"
           accessibilityState={accessibilityState}
@@ -377,7 +427,6 @@ class Button extends React.Component<ButtonProps, {hover: boolean}> {
           testID={testID}
           disabled={disabled}
           onPress={onPress}
-          tabIndex={tabIndex}
           touchSoundDisabled={touchSoundDisabled}>
           <View style={buttonStyles}>
             <Text style={textStyles} disabled={disabled}>
@@ -404,6 +453,9 @@ const styles = StyleSheet.create({
     windows: {
       backgroundColor: PlatformColor('ButtonBackground'),
       borderRadius: 3,
+      borderColor: PlatformColor('ButtonBorderBrush'),
+      borderWidth: 1,
+      borderBottomWidth: 1.5,
     },
     // Windows]
   }),
@@ -437,6 +489,7 @@ const styles = StyleSheet.create({
     },
     windows: {
       backgroundColor: PlatformColor('ButtonBackgroundDisabled'),
+      borderColor: PlatformColor('ButtonBorderBrushDisabled'),
     },
   }),
   textDisabled: Platform.select({

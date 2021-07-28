@@ -144,6 +144,7 @@ class ModalHostViewProps final : public ViewProps {
   bool transparent{false};
   bool statusBarTranslucent{false};
   bool hardwareAccelerated{false};
+  bool visible{false};
   bool animated{false};
   ModalHostViewSupportedOrientationsMask supportedOrientations{static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)};
   int identifier{0};

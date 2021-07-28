@@ -8,9 +8,9 @@
 import * as FileRepository from '../FileRepository';
 import * as Serialized from '../Serialized';
 
-import * as ora from 'ora';
-import * as path from 'path';
-import * as yargs from 'yargs';
+import ora from 'ora';
+import path from 'path';
+import yargs from 'yargs';
 
 import FileSystemRepository from '../FileSystemRepository';
 import GitReactFileRepository from '../GitReactFileRepository';

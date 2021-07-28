@@ -153,7 +153,8 @@ module.exports = {
     return require('./Libraries/Components/TextInput/InputAccessoryView');
   },
   get KeyboardAvoidingView(): KeyboardAvoidingView {
-    return require('./Libraries/Components/Keyboard/KeyboardAvoidingView');
+    return require('./Libraries/Components/Keyboard/KeyboardAvoidingView')
+      .default;
   },
   get MaskedViewIOS(): MaskedViewIOS {
     warnOnce(
@@ -244,7 +245,7 @@ module.exports = {
     return require('./Libraries/Components/StatusBar/StatusBar');
   },
   get Switch(): Switch {
-    return require('./Libraries/Components/Switch/Switch');
+    return require('./Libraries/Components/Switch/Switch').default;
   },
   get Text(): Text {
     return require('./Libraries/Text/Text');
@@ -511,14 +512,12 @@ module.exports = {
 
   // Additional windows exports (Typescript components exported as flow any)
   get DatePicker(): any {
-    warnOnce(
-      'datepicker-moved',
-      'DatePicker has been extracted from react-native-windows and will be removed in a future release. ' +
+    invariant(
+      false,
+      'DatePicker has been extracted and removed from react-native-windows. ' +
         "It can now be installed and imported as DateTimePicker from '@react-native-community/datetimepicker'. " +
         'See https://github.com/react-native-datetimepicker/datetimepicker',
     );
-    return (require('./Libraries/Components/DatePicker/DatePicker'): any)
-      .DatePicker;
   },
   get Flyout(): any {
     return require('./Libraries/Components/Flyout/Flyout').Flyout;
@@ -527,13 +526,12 @@ module.exports = {
     return require('./Libraries/Components/Glyph/Glyph').Glyph;
   },
   get PickerWindows(): any {
-    warnOnce(
-      'picker-windows-moved',
-      'PickerWindows has been extracted from react-native-windows and will be removed in a future release. ' +
+    invariant(
+      false,
+      'PickerWindows has been extracted and removed from react-native-windows. ' +
         "It can now be installed and imported as Picker from '@react-native-picker/picker'. " +
         'See https://github.com/react-native-picker/picker',
     );
-    return require('./Libraries/Components/Picker/PickerWindows').Picker;
   },
   get Popup(): any {
     return require('./Libraries/Components/Popup/Popup').Popup;
@@ -543,8 +541,12 @@ module.exports = {
       .supportKeyboard;
   },
   get DayOfWeek(): any {
-    return require('./Libraries/Components/DatePicker/DatePickerProps')
-      .DayOfWeek;
+    invariant(
+      false,
+      'DatePicker has been extracted and removed from react-native-windows. ' +
+        "It can now be installed and imported as DateTimePicker from '@react-native-community/datetimepicker'. " +
+        'See https://github.com/react-native-datetimepicker/datetimepicker',
+    );
   },
   get EventPhase(): any {
     return require('./Libraries/Components/Keyboard/KeyboardExtProps')

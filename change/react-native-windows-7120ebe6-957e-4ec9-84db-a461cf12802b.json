@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adds event coalescing to TouchEventHandler",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

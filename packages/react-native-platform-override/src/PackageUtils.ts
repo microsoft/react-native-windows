@@ -5,7 +5,7 @@
  * @format
  */
 
-import * as fs from 'fs';
+import fs from 'fs';
 import {findThisPackage} from './FileSearch';
 
 let npmPackage: any = null;

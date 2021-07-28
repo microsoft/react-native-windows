@@ -40,6 +40,7 @@ module.exports = {
   DeprecatedAccessibilityRoles: [
     'none',
     'button',
+    'togglebutton',
     'link',
     'search',
     'image',

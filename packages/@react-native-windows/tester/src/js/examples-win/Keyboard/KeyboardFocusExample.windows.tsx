@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -13,10 +13,10 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Picker,
 } from 'react-native';
 import {
   IKeyboardEvent,
-  Picker,
   supportKeyboard,
   ViewWindows,
 } from 'react-native-windows';

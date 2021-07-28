@@ -8,6 +8,9 @@
 
 using namespace facebook::jsi;
 
+#pragma warning(push)
+#pragma warning(disable : 4702) // `RethrowJsiError(); throw;` triggers 'unreachable code' warnings in Release builds
+
 namespace winrt::Microsoft::ReactNative {
 
 // The macro to simplify recording JSI exceptions.
@@ -634,9 +637,23 @@ bool JsiAbiRuntime::instanceOf(const Object &o, const Function &f) try {
   throw;
 }
 
+template <typename T>
+struct AutoRestore {
+  AutoRestore(T *var, T value) : m_var{var}, m_value{std::exchange(*var, value)} {}
+
+  ~AutoRestore() {
+    *m_var = m_value;
+  }
+
+ private:
+  T *m_var;
+  T m_value;
+};
+
 void JsiAbiRuntime::RethrowJsiError() const {
   auto jsiError = m_runtime.GetAndClearError();
-  if (jsiError.ErrorType() == JsiErrorType::JSError) {
+  if (!m_pendingJSError && jsiError.ErrorType() == JsiErrorType::JSError) {
+    AutoRestore<bool> setValue{const_cast<bool *>(&m_pendingJSError), true};
     throw AbiJSError{*const_cast<JsiAbiRuntime *>(this), std::move(jsiError)};
   } else {
     throw AbiJSINativeException{std::move(jsiError)};
@@ -986,3 +1003,5 @@ JsiAbiRuntime::PropNameIDRef::operator facebook::jsi::PropNameID const &() const
 }
 
 } // namespace winrt::Microsoft::ReactNative
+
+#pragma warning(pop)

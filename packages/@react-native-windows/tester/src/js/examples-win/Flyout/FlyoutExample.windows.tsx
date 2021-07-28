@@ -4,9 +4,9 @@
  * @format
  */
 
-import * as React from 'react';
-import {Button, Switch, Text, TextInput, View} from 'react-native';
-import {Flyout, Picker, Popup, Placement} from 'react-native-windows';
+import React from 'react';
+import {Button, Picker, Switch, Text, TextInput, View} from 'react-native';
+import {Flyout, Popup, Placement} from 'react-native-windows';
 
 interface IFlyoutExampleState {
   isFlyoutVisible: boolean;

@@ -6,8 +6,8 @@
  */
 
 import * as Api from '../Api';
-import * as path from 'path';
 import {normalizePath} from '../PathUtils';
+import path from 'path';
 import {usingRepository} from './Resource';
 
 const SAMPLE_REPO_VERSION = '0.0.0-56cf99a96';

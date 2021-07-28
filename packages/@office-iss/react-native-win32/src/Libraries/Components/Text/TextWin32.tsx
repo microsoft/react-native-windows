@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react'
 import RN = require('react-native');
 import { ITextWin32Props } from './TextWin32.Props';
 import { UseFrom } from '../View/ViewWin32.Props';

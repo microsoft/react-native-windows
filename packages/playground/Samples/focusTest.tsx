@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {AppRegistry, StyleSheet, Text, TextInput, View} from 'react-native';
 
 export default class Bootstrap extends React.Component<{}, {text: string}> {

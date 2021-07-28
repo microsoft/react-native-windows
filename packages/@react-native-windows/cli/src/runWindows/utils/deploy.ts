@@ -5,11 +5,11 @@
  */
 
 import {spawn, execSync, SpawnOptions} from 'child_process';
-import * as fs from 'fs';
-import * as http from 'http';
-import * as path from 'path';
-import * as glob from 'glob';
-import * as parse from 'xml-parser';
+import fs from 'fs';
+import http from 'http';
+import path from 'path';
+import glob from 'glob';
+import parse from 'xml-parser';
 import WinAppDeployTool from './winappdeploytool';
 import {
   newInfo,
@@ -385,23 +385,19 @@ export function startServerInNewWindow(
   verbose: boolean,
 ): Promise<void> {
   return new Promise(resolve => {
-    if (options.packager) {
-      http
-        .get('http://localhost:8081/status', res => {
-          if (res.statusCode === 200) {
-            newSuccess('React-Native Server already started');
-          } else {
-            newError('React-Native Server not responding');
-          }
-          resolve();
-        })
-        .on('error', () => {
-          launchServer(options, verbose);
-          resolve();
-        });
-    } else {
-      resolve();
-    }
+    http
+      .get('http://localhost:8081/status', res => {
+        if (res.statusCode === 200) {
+          newSuccess('React-Native Server already started');
+        } else {
+          newError('React-Native Server not responding');
+        }
+        resolve();
+      })
+      .on('error', () => {
+        launchServer(options, verbose);
+        resolve();
+      });
   });
 }
 

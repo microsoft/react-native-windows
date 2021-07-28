@@ -11,6 +11,7 @@ parameters:
   packMicrosoftReactNativeCxx: true
   packMicrosoftReactNativeManaged: true
   packMicrosoftReactNativeManagedCodeGen: true
+  packMicrosoftReactNativeProjectReunion: false
   signMicrosoft: false
 
 steps:
@@ -20,7 +21,7 @@ steps:
       artifact: ReactWindows
       path: $(System.DefaultWorkingDirectory)/ReactWindows
 
-  - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true)) }}:
+  - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true), eq(parameters.packMicrosoftReactNativeProjectReunion, false)) }}:
     - powershell: |
         (Get-Content -Path $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets
       displayName: Patch version check file with version ${{parameters.npmVersion}}
@@ -55,12 +56,12 @@ steps:
   - ${{ if eq(parameters.packMicrosoftReactNativeManaged, true) }}:
     # Since we custom patch the nuget packages for PR valdation
     - powershell: |
-        If (Test-Path -Path $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref.anycpu\Microsoft.ReactNative.Managed.dll) {
+        If (Test-Path -Path $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\ref.anycpu\Microsoft.ReactNative.Managed.dll) {
           Write-Host Skipping copy of ref to ref.anycpu because it already exists and is already msil
         } else {
           Write-Host Copying ref to ref.anycpu because it does not yet exist
-          mkdir $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref.anycpu
-          Copy-Item $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref\Microsoft.ReactNative.Managed.dll -Destination $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\ref.anycpu
+          mkdir $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\ref.anycpu
+          Copy-Item $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\ref\Microsoft.ReactNative.Managed.dll -Destination $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\ref.anycpu
         }
       displayName: Copy the x64/release ref assembly to anycpu folder
     - template: prep-and-pack-single.yml
@@ -81,3 +82,14 @@ steps:
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}
+
+  - ${{ if eq(parameters.packMicrosoftReactNativeProjectReunion, true) }}:
+    - template: prep-and-pack-single.yml
+      parameters:
+        packageId: Microsoft.ReactNative.ProjectReunion
+        packageVersion: ${{parameters.npmVersion}}
+        slices: ''
+        buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
+        codesignBinaries: ${{ parameters.signMicrosoft }}
+        codesignNuget: ${{ parameters.signMicrosoft }}
+

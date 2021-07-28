@@ -21,11 +21,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/Button/ButtonExample'),
   },
   {
-    key: 'DatePickerExample',
-    category: 'UI',
-    module: require('../examples-win/DatePicker/DatePickerExample'),
-  },
-  {
     key: 'FlatListExample',
     category: 'ListView',
     module: require('../examples/FlatList/FlatListExample'),
@@ -34,6 +29,12 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'FlatList-withSeparators',
     module: require('../examples/FlatList/FlatList-withSeparators'),
     category: 'ListView',
+  },
+  {
+    // shows up as <FlatList> - MultiColumn
+    key: 'MultiColumnExample',
+    category: 'ListView',
+    module: require('../examples/MultiColumn/MultiColumnExample'),
   },
   {
     key: 'FlatList-onViewableItemsChanged',
@@ -76,18 +77,8 @@ const ComponentExamples: Array<RNTesterExample> = [
   //   module: require('../examples/Modal/ModalExample'),
   // },
   {
-    key: 'MultiColumnExample',
-    category: 'ListView',
-    module: require('../examples/MultiColumn/MultiColumnExample'),
-  },
-  {
     key: 'NewAppScreenExample',
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
-  },
-  {
-    key: 'PickerWindowsExample',
-    category: 'UI',
-    module: require('../examples-win/Picker/PickerWindowsExample'),
   },
   {
     key: 'PressableExample',
@@ -148,6 +139,11 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'SectionListExample',
     category: 'ListView',
     module: require('../examples/SectionList/SectionListExample'),
+  },
+  {
+    key: 'SwipeableCardExample',
+    category: 'UI',
+    module: require('../examples/SwipeableCardExample/SwipeableCardExample'),
   },
   {
     key: 'SwitchExample',
@@ -235,12 +231,12 @@ const APIExamples: Array<RNTesterExample> = [
   {
     key: 'AnimatedExample',
     category: 'UI',
-    module: require('../examples/Animated/AnimatedExample'),
+    module: require('../examples/Animated/AnimatedExample').default,
   },
   {
     key: 'Animation - GratuitousAnimation',
     category: 'UI',
-    module: require('../examples/Animated/AnimatedGratuitousApp/AnExApp'),
+    module: require('../examples/AnimatedGratuitousApp/AnExApp'),
   },
   {
     key: 'AppearanceExample',

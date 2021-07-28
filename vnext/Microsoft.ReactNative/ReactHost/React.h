@@ -86,8 +86,9 @@ struct IReactInstance : IUnknown {
 
   virtual void AttachMeasuredRootView(
       facebook::react::IReactRootView *rootView,
-      folly::dynamic &&initialProps) noexcept = 0;
-  virtual void DetachRootView(facebook::react::IReactRootView *rootView) noexcept = 0;
+      folly::dynamic &&initialProps,
+      bool useFabric) noexcept = 0;
+  virtual void DetachRootView(facebook::react::IReactRootView *rootView, bool useFabric) noexcept = 0;
 };
 
 MSO_GUID(IReactSettingsSnapshot, "6652bb2e-4c5e-49f7-b642-e817b0fef4de")
@@ -112,12 +113,10 @@ struct IReactContext : IUnknown {
   virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) const noexcept = 0;
   virtual void DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept = 0;
   virtual winrt::Microsoft::ReactNative::JsiRuntime JsiRuntime() const noexcept = 0;
-#ifndef CORE_ABI
   virtual ReactInstanceState State() const noexcept = 0;
   virtual bool IsLoaded() const noexcept = 0;
   virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept = 0;
   virtual IReactSettingsSnapshot const &SettingsSnapshot() const noexcept = 0;
-#endif
 };
 
 //! Settings per each IReactViewHost associated with an IReactHost instance.
@@ -127,6 +126,9 @@ struct ReactViewOptions {
 
   //! Set of initial component properties. It is a JSON string.
   folly::dynamic InitialProps;
+
+  //! Use Fabric for this ReactView
+  bool UseFabric{false};
 };
 
 struct ReactDevOptions {
@@ -135,9 +137,6 @@ struct ReactDevOptions {
 
   //! For direct debugging, specifies a name to associate with the JavaScript runtime instance.
   std::string DebuggerRuntimeName;
-
-  //! URL used for debugging
-  std::string DebugHost;
 
   //! When using web debugging and/or live reload, the source is obtained from the packager.
   //! The source url for the bundle is "http://{HOST}:{PORT}/{NAME}{EXTENSION}?platform=..."
@@ -282,12 +281,6 @@ struct ReactOptions {
       winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
       bool value) noexcept;
   static bool UseWebDebugger(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
-
-  //! Should the instance enable the Fabric UI architecture
-  void SetEnableFabric(bool enabled) noexcept;
-  bool EnableFabric() const noexcept;
-  static void SetEnableFabric(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties, bool value) noexcept;
-  static bool EnableFabric(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
 
   //! For direct debugging, whether to break on the next line of JavaScript that is executed.
   void SetDebuggerBreakOnNextLine(bool enable) noexcept;

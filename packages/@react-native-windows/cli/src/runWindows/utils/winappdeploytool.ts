@@ -4,8 +4,8 @@
  * @format
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'fs';
+import path from 'path';
 import {execSync} from 'child_process';
 import {newSpinner, commandWithProgress, newWarn} from './commandWithProgress';
 import {CodedError} from '@react-native-windows/telemetry';

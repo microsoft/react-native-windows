@@ -52,9 +52,11 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   const ReactOptions &Options() const noexcept override;
   ReactInstanceState State() const noexcept override;
   Mso::React::IReactContext &GetReactContext() const noexcept override;
-  void AttachMeasuredRootView(facebook::react::IReactRootView *rootView, folly::dynamic &&initialProps) noexcept
-      override;
-  void DetachRootView(facebook::react::IReactRootView *rootView) noexcept override;
+  void AttachMeasuredRootView(
+      facebook::react::IReactRootView *rootView,
+      folly::dynamic &&initialProps,
+      bool useFabric) noexcept override;
+  void DetachRootView(facebook::react::IReactRootView *rootView, bool useFabric) noexcept override;
 
  public: // IReactInstanceInternal
   Mso::Future<void> Destroy() noexcept override;
@@ -65,7 +67,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   winrt::Microsoft::ReactNative::JsiRuntime JsiRuntime() noexcept;
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() noexcept;
   bool IsLoaded() const noexcept;
-#ifndef CORE_ABI
 
   bool UseWebDebugger() const noexcept;
   bool UseFastRefresh() const noexcept;
@@ -78,7 +79,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   uint16_t SourceBundlePort() const noexcept;
   std::string JavaScriptBundleFile() const noexcept;
   bool UseDeveloperSupport() const noexcept;
-#endif
 
  private:
   friend MakePolicy;
@@ -99,7 +99,9 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   void InitJSMessageThread() noexcept;
   void InitNativeMessageThread() noexcept;
   void InitUIMessageThread() noexcept;
+#ifndef CORE_ABI
   void InitUIManager() noexcept;
+#endif
   std::string GetBytecodeFileName() noexcept;
   std::function<void()> GetLiveReloadCallback() noexcept;
   std::function<void(std::string)> GetErrorCallback() noexcept;

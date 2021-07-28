@@ -1,8 +1,277 @@
 # Change Log - jest-environment-winappdriver
 
-This log was last generated on Tue, 25 May 2021 19:36:43 GMT and should not be manually modified.
+This log was last generated on Sun, 25 Jul 2021 05:09:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.2-6
+
+Sun, 25 Jul 2021 05:09:20 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.12-5 (ngerlem@microsoft.com)
+
+## 2.0.2-5
+
+Fri, 23 Jul 2021 05:08:40 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.12-4 (dannyvv@microsoft.com)
+
+## 2.0.2-4
+
+Thu, 22 Jul 2021 05:05:25 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.12-3 (ngerlem@microsoft.com)
+
+## 2.0.2-3
+
+Wed, 21 Jul 2021 05:06:26 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.12-2 (ngerlem@microsoft.com)
+
+## 2.0.2-2
+
+Tue, 20 Jul 2021 05:04:42 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.12-1 (agnel@microsoft.com)
+
+## 2.0.2-1
+
+Sat, 17 Jul 2021 05:08:12 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.12-0 (asklar@microsoft.com)
+
+## 2.0.2-0
+
+Fri, 16 Jul 2021 05:07:06 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11 (email not defined)
+
+## 2.0.1
+
+Wed, 14 Jul 2021 06:00:50 GMT
+
+### Patches
+
+- Bump node-rnw-rpc to v1.0.11-19 (julio.rocha@microsoft.com)
+
+## 2.0.1-14
+
+Tue, 13 Jul 2021 05:06:16 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-18 (erozell@outlook.com)
+
+## 2.0.1-13
+
+Mon, 12 Jul 2021 05:05:31 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-17 (asklar@microsoft.com)
+
+## 2.0.1-12
+
+Fri, 09 Jul 2021 05:06:27 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-16 (igklemen@microsoft.com)
+
+## 2.0.1-11
+
+Thu, 08 Jul 2021 05:05:44 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-15 (30809111+acoates-ms@users.noreply.github.com)
+
+## 2.0.1-10
+
+Wed, 07 Jul 2021 05:06:28 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-14 (34109996+chiaramooney@users.noreply.github.com)
+
+## 2.0.1-9
+
+Fri, 02 Jul 2021 05:06:31 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-13 (erozell@outlook.com)
+
+## 2.0.1-8
+
+Wed, 30 Jun 2021 05:07:31 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-12 (ngerlem@microsoft.com)
+
+## 2.0.1-7
+
+Tue, 29 Jun 2021 05:06:48 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-11 (ngerlem@microsoft.com)
+
+## 2.0.1-6
+
+Sun, 27 Jun 2021 05:08:11 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-10 (matteo.pagani@microsoft.com)
+
+## 2.0.1-5
+
+Sat, 26 Jun 2021 05:06:48 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-9 (julio.rocha@microsoft.com)
+
+## 2.0.1-4
+
+Fri, 25 Jun 2021 05:09:48 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-8 (ngerlem@microsoft.com)
+
+## 2.0.1-3
+
+Thu, 24 Jun 2021 05:08:43 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-7 (asklar@microsoft.com)
+
+## 2.0.1-2
+
+Wed, 23 Jun 2021 00:22:52 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-6 (asklar@microsoft.com)
+
+## 2.0.1-1
+
+Tue, 22 Jun 2021 05:07:16 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-5 (julio.rocha@microsoft.com)
+
+## 2.0.1-0
+
+Fri, 18 Jun 2021 05:06:48 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-4 (Bartosz.Klonowski@callstack.com)
+
+## 2.0.0
+
+Thu, 17 Jun 2021 05:07:57 GMT
+
+### Major changes
+
+- Bump node-rnw-rpc to v1.0.11-3 (34109996+chiaramooney@users.noreply.github.com)
+
+## 1.1.10-2
+
+Wed, 16 Jun 2021 05:08:34 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-2 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.1.10-1
+
+Tue, 15 Jun 2021 05:06:39 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-1 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.1.10-0
+
+Sat, 12 Jun 2021 05:06:29 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.11-0 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.1.9
+
+Fri, 11 Jun 2021 05:08:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.2.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.10 (dannyvv@microsoft.com)
+
+## 1.1.9-0
+
+Thu, 10 Jun 2021 05:10:10 GMT
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.10-0 (vmorozov@microsoft.com)
+
+## 1.1.8
+
+Wed, 09 Jun 2021 05:10:07 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.3 (igklemen@microsoft.com)
+
+### Changes
+
+- Bump node-rnw-rpc to v1.0.9 (igklemen@microsoft.com)
+
+## 1.1.8-0
+
+Sat, 05 Jun 2021 05:09:53 GMT
+
+### Changes
+
+- Update Pipeline (34109996+chiaramooney@users.noreply.github.com)
+
+## 1.1.7
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Check for missing dependencies during lint (ngerlem@microsoft.com)
+
+### Changes
+
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
+- Bump node-rnw-rpc to v1.0.7 (ngerlem@microsoft.com)
 
 ## 1.1.7-1
 

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adding accessibilityControls property on ViewWin32. Needed for the Live Persona Picker",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "safreibe@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react'
 import { PickerItemProps, PickerProps, requireNativeComponent } from 'react-native';
 
 const RCTPickerItem = requireNativeComponent('RCTPickerItem');

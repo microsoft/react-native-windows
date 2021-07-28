@@ -1,8 +1,45 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Fri, 21 May 2021 05:17:18 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Jun 2021 05:08:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.3
+
+Fri, 11 Jun 2021 05:08:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.2.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.23 (ngerlem@microsoft.com)
+
+## 1.1.2
+
+Wed, 09 Jun 2021 05:10:07 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.3 (igklemen@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.22 (igklemen@microsoft.com)
+
+## 1.1.1
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
+- Fix GitHub Release Generation for Previews (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.21 (ngerlem@microsoft.com)
 
 ## 1.1.0
 

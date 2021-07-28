@@ -5,8 +5,8 @@
  * @format
  */
 
-import * as crypto from 'crypto';
-import * as path from 'path';
+import crypto from 'crypto';
+import path from 'path';
 import {normalizePath, unixPath} from './PathUtils';
 import FileRepository from './FileRepository';
 import isUtf8 from 'isutf8';

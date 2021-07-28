@@ -9,14 +9,14 @@
  * @ts-check
  */
 
-import * as _ from 'lodash';
-import * as chalk from 'chalk';
-import * as fs from 'fs';
-import * as path from 'path';
-import * as semver from 'semver';
-import * as simplegit from 'simple-git/promise';
-import * as util from 'util';
-import * as yargs from 'yargs';
+import _ from 'lodash';
+import chalk from 'chalk';
+import fs from 'fs';
+import path from 'path';
+import semver from 'semver';
+import simplegit from 'simple-git/promise';
+import util from 'util';
+import yargs from 'yargs';
 
 import {Octokit} from '@octokit/rest';
 import findRepoRoot from '@react-native-windows/find-repo-root';
@@ -267,7 +267,7 @@ function mostRecentMajorRelease(
     releaseSemver.prerelease[0] === 'preview'
   ) {
     firstVersion = semver.parse(
-      `${releaseSemver.major}.${releaseSemver.minor}.${releaseSemver.patch}.${releaseSemver.prerelease[0]}.1`,
+      `${releaseSemver.major}.${releaseSemver.minor}.${releaseSemver.patch}-${releaseSemver.prerelease[0]}.1`,
     )!;
   } else {
     return null;

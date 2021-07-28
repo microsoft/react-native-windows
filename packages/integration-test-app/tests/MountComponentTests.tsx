@@ -5,8 +5,8 @@
  * @format
  */
 
-import * as React from 'react';
-import * as RN from 'react-native';
+import React from 'react';
+import RN from 'react-native';
 import {useEffect, useRef} from 'react';
 import {assert} from 'chai';
 import {componentTest, TestComponentType} from './lib/TestDefinition';

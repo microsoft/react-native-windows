@@ -42,7 +42,7 @@
 #include <WebSocketJSExecutorFactory.h>
 #include "PackagerConnection.h"
 
-#if defined(USE_HERMES)
+#if defined(INCLUDE_HERMES)
 #include "HermesRuntimeHolder.h"
 #endif
 #if defined(USE_V8)
@@ -142,11 +142,6 @@ namespace facebook {
 namespace react {
 
 namespace {
-void runtimeInstaller([[maybe_unused]] jsi::Runtime &runtime) {
-#ifdef ENABLE_JS_SYSTRACE_TO_ETW
-  facebook::react::tracing::initializeJSHooks(runtime);
-#endif
-}
 
 class OJSIExecutorFactory : public JSExecutorFactory {
  public:
@@ -179,24 +174,34 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     }
 
     return std::make_unique<JSIExecutor>(
-        runtimeHolder_->getRuntime(), std::move(delegate), JSIExecutor::defaultTimeoutInvoker, runtimeInstaller);
+        runtimeHolder_->getRuntime(),
+        std::move(delegate),
+        JSIExecutor::defaultTimeoutInvoker,
+        [isProfiling = isProfilingEnabled_]([[maybe_unused]] jsi::Runtime &runtime) {
+#ifdef ENABLE_JS_SYSTRACE_TO_ETW
+          facebook::react::tracing::initializeJSHooks(runtime, isProfiling);
+#endif
+        });
   }
 
   OJSIExecutorFactory(
       std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+      bool isProfilingEnabled,
       std::shared_ptr<CallInvoker> jsCallInvoker) noexcept
       : runtimeHolder_{std::move(runtimeHolder)},
         loggingHook_{std::move(loggingHook)},
         turboModuleRegistry_{std::move(turboModuleRegistry)},
-        jsCallInvoker_{std::move(jsCallInvoker)} {}
+        jsCallInvoker_{std::move(jsCallInvoker)},
+        isProfilingEnabled_{isProfilingEnabled} {}
 
  private:
   std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
   std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
   std::shared_ptr<CallInvoker> jsCallInvoker_;
   NativeLoggingHook loggingHook_;
+  bool isProfilingEnabled_;
 };
 
 } // namespace
@@ -338,12 +343,13 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder,
           m_devSettings->loggingCallback,
           m_turboModuleRegistry,
+          !m_devSettings->useFastRefresh,
           m_innerInstance->getJSCallInvoker());
     } else {
       assert(m_devSettings->jsiEngineOverride != JSIEngineOverride::Default);
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
-#if defined(USE_HERMES)
+#if defined(INCLUDE_HERMES)
           m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>(m_devSettings, m_jsThread);
           m_devSettings->inlineSourceMap = false;
           break;
@@ -385,6 +391,7 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder,
           m_devSettings->loggingCallback,
           m_turboModuleRegistry,
+          !m_devSettings->useFastRefresh,
           m_innerInstance->getJSCallInvoker());
     }
   }
@@ -429,6 +436,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName,
+          true /* dev */,
+          m_devSettings->useFastRefresh,
           m_devSettings->inlineSourceMap);
 
       if (!success) {
@@ -483,8 +492,14 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
   } catch (const facebook::react::ChakraJSException &e) {
     m_devSettings->errorCallback(std::string{e.what()} + "\r\n" + e.getStack());
 #endif
-  } catch (std::exception &e) {
+  } catch (const std::exception &e) {
     m_devSettings->errorCallback(e.what());
+  } catch (const winrt::hresult_error &hrerr) {
+    std::stringstream ss;
+    ss << "[" << std::hex << std::showbase << std::setw(8) << static_cast<uint32_t>(hrerr.code()) << "] "
+       << winrt::to_string(hrerr.message());
+
+    m_devSettings->errorCallback(std::move(ss.str()));
   }
 }
 
@@ -526,7 +541,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
             m_devSettings->debugBundlePath,
             m_devSettings->platformName,
             true /*dev*/,
-            false /*hot*/,
+            m_devSettings->useFastRefresh,
             m_devSettings->inlineSourceMap)
       : std::string();
   modules.push_back(std::make_unique<CxxNativeModule>(

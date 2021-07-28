@@ -1,8 +1,33 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Fri, 21 May 2021 05:17:18 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Jun 2021 05:08:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.6
+
+Fri, 11 Jun 2021 05:08:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.2.0 (ngerlem@microsoft.com)
+
+## 0.1.5
+
+Wed, 09 Jun 2021 05:10:07 GMT
+
+### Patches
+
+- Integrate May 19th (igklemen@microsoft.com)
+
+## 0.1.4
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Check for missing dependencies during lint (ngerlem@microsoft.com)
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
 
 ## 0.1.3
 
