@@ -33,6 +33,13 @@ void ReactPackageBuilder::AddViewManager(
     ReactViewManagerProvider const &viewManagerProvider) noexcept {
   m_viewManagersProvider->AddViewManagerProvider(viewManagerName, viewManagerProvider);
 }
+
+void ReactPackageBuilder::AddViewManager(
+    hstring const &viewManagerName,
+    std::function<std::unique_ptr<::Microsoft::ReactNative::IViewManager>(
+        Mso::CntPtr<Mso::React::IReactContext> const &)> const &viewManagerProvider) noexcept {
+  m_viewManagersProvider->AddViewManagerProvider(viewManagerName, viewManagerProvider);
+}
 #endif
 
 void ReactPackageBuilder::AddTurboModule(

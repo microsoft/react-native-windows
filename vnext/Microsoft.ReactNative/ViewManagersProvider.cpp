@@ -20,7 +20,7 @@ std::vector<std::unique_ptr<::Microsoft::ReactNative::IViewManager>> ViewManager
   for (auto &entry : m_viewManagerProviders) {
     auto viewManagerProvider = entry.second;
 
-    auto viewManager = std::make_unique<ABIViewManager>(reactContext, viewManagerProvider());
+    auto viewManager = viewManagerProvider(reactContext);
 
     viewManagers.emplace_back(std::move(viewManager));
   }
@@ -33,6 +33,16 @@ ViewManagersProvider::ViewManagersProvider() noexcept {}
 void ViewManagersProvider::AddViewManagerProvider(
     winrt::hstring const &viewManagerName,
     ReactViewManagerProvider const &viewManagerProvider) noexcept {
+  m_viewManagerProviders.emplace(
+      to_string(viewManagerName), [viewManagerProvider](Mso::CntPtr<Mso::React::IReactContext> const &reactContext) {
+        return std::make_unique<ABIViewManager>(reactContext, viewManagerProvider());
+      });
+}
+
+void ViewManagersProvider::AddViewManagerProvider(
+    winrt::hstring const &viewManagerName,
+    std::function<std::unique_ptr<::Microsoft::ReactNative::IViewManager>(
+        Mso::CntPtr<Mso::React::IReactContext> const &)> const &viewManagerProvider) noexcept {
   m_viewManagerProviders.emplace(to_string(viewManagerName), viewManagerProvider);
 }
 

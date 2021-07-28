@@ -20,8 +20,16 @@ class ViewManagersProvider final : public Mso::React::ViewManagerProvider2 {
   void AddViewManagerProvider(
       winrt::hstring const &viewManagerName,
       ReactViewManagerProvider const &viewManagerProvider) noexcept;
+  void AddViewManagerProvider(
+      winrt::hstring const &viewManagerName,
+      std::function<std::unique_ptr<::Microsoft::ReactNative::IViewManager>(
+          Mso::CntPtr<Mso::React::IReactContext> const &)> const &viewManagerProvider) noexcept;
 
  private:
-  std::unordered_map<std::string, ReactViewManagerProvider> m_viewManagerProviders;
+  std::unordered_map<
+      std::string,
+      std::function<std::unique_ptr<::Microsoft::ReactNative::IViewManager>(
+          Mso::CntPtr<Mso::React::IReactContext> const &)>>
+      m_viewManagerProviders;
 };
 } // namespace winrt::Microsoft::ReactNative

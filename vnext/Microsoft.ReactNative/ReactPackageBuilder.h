@@ -24,6 +24,10 @@ struct ReactPackageBuilder
   void AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
 #ifndef CORE_ABI
   void AddViewManager(hstring const &viewManagerName, ReactViewManagerProvider const &viewManagerProvider) noexcept;
+  void AddViewManager(
+      hstring const &viewManagerName,
+      std::function<std::unique_ptr<::Microsoft::ReactNative::IViewManager>(
+          Mso::CntPtr<Mso::React::IReactContext> const &)> const &viewManagerProvider) noexcept;
 #endif
   void AddTurboModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
 
