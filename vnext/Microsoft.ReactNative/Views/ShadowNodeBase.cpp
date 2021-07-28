@@ -32,7 +32,7 @@ void ShadowNodeBase::updateProperties(winrt::Microsoft::ReactNative::JSValueObje
 }
 
 void ShadowNodeBase::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
-  m_view = GetViewManager()->CreateView(this->m_tag, props);
+  m_view = GetViewManager()->CreateView(this->m_tag, this->m_rootTag, props);
 
   if (g_HasActualSizeProperty == TriBit::Undefined) {
     if (auto uielement = m_view.try_as<xaml::UIElement>()) {

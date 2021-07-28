@@ -193,8 +193,8 @@ void ViewManagerBase::GetExportedCustomDirectEventTypeConstants(
   }
 }
 
-XamlView ViewManagerBase::CreateView(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props) {
-  XamlView view = CreateViewCore(tag, props);
+XamlView ViewManagerBase::CreateView(int64_t tag, int64_t rootTag, const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  XamlView view = CreateViewCore(tag, rootTag, props);
 
   OnViewCreated(view);
   // Set the tag if the element type supports it
@@ -250,6 +250,13 @@ void ViewManagerBase::UpdateProperties(
   }
 
   OnPropertiesUpdated(nodeToUpdate);
+}
+
+XamlView ViewManagerBase::CreateViewCore(
+  int64_t tag,
+  int64_t rootTag,
+  const winrt::Microsoft::ReactNative::JSValueObject& props) {
+  return CreateViewCore(tag, props);
 }
 
 bool ViewManagerBase::UpdateProperty(

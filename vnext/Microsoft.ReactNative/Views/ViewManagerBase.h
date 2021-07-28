@@ -39,7 +39,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
   ViewManagerBase(const Mso::React::IReactContext &context);
   virtual ~ViewManagerBase() {}
 
-  virtual XamlView CreateView(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props);
+  virtual XamlView CreateView(int64_t tag, int64_t rootTag, const winrt::Microsoft::ReactNative::JSValueObject &props);
 
   void GetExportedViewConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
   void GetCommands(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
@@ -92,6 +92,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
 
  protected:
   virtual XamlView CreateViewCore(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props) = 0;
+  virtual XamlView CreateViewCore(int64_t tag, int64_t rootTag, const winrt::Microsoft::ReactNative::JSValueObject &props);
   virtual void OnViewCreated(XamlView view) {}
   virtual bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,
