@@ -432,9 +432,8 @@ InstanceImpl::InstanceImpl(
             preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
           }
 
-          //TODO!
-          //m_devSettings->jsiRuntimeHolder = make_shared<NapiJsiV8RuntimeHolder>(
-          //    m_devSettings, m_jsThread, std::move(scriptStore), std::move(preparedScriptStore));
+          m_devSettings->jsiRuntimeHolder = make_shared<NapiJsiV8RuntimeHolder>(
+              m_devSettings, m_jsThread, std::move(scriptStore), std::move(preparedScriptStore));
 
           break;
 #else
