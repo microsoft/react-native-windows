@@ -119,6 +119,18 @@ bool VirtualTextViewManager::UpdateProperty(
     if (IsValidColorValue(propertyValue)) {
       static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.backgroundColor = ColorFrom(propertyValue);
     }
+  } else if (propertyName == "accessibilityRole") {
+    const auto wasHyperlink = !!span.try_as<winrt::Hyperlink>();
+    auto isHyperlink = propertyValue.Type() == React::JSValueType::String &&
+        (propertyValue.AsString() == "link" || propertyValue.AsString() == "button");
+    if (isHyperlink && !wasHyperlink) {
+      winrt::Hyperlink hyperlink;
+      // Underline should be handled by base class using 'textDecorationLine' prop
+      hyperlink.UnderlineStyle(winrt::UnderlineStyle::None);
+      nodeToUpdate->ReparentView(hyperlink);
+    } else if (!isHyperlink && wasHyperlink) {
+      nodeToUpdate->ReparentView(winrt::Span{});
+    }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
@@ -140,6 +152,38 @@ void VirtualTextViewManager::RemoveAllChildren(const XamlView &parent) {
 void VirtualTextViewManager::RemoveChildAt(const XamlView &parent, int64_t index) {
   auto span(parent.as<winrt::Span>());
   return span.Inlines().RemoveAt(static_cast<uint32_t>(index));
+}
+
+void VirtualTextViewManager::ReplaceChild(const XamlView &parent, const XamlView &oldChild, const XamlView &newChild) {
+  const auto span{parent.as<winrt::Span>()};
+  const auto oldInline{oldChild.as<winrt::Inline>()};
+  const auto newInline{newChild.as<winrt::Inline>()};
+  uint32_t index;
+  if (span.Inlines().IndexOf(oldInline, index)) {
+    span.Inlines().RemoveAt(index);
+    span.Inlines().InsertAt(index, newInline);
+  }
+}
+
+void VirtualTextViewManager::TransferProperties(const XamlView& oldChild, const XamlView& newChild) {
+  const auto oldSpan = oldChild.as<xaml::Documents::Span>();
+  const auto newSpan = newChild.as<xaml::Documents::Span>();
+
+  // Move child inlines
+  while (oldSpan.Inlines().Size() > 0) {
+    const auto child = oldSpan.Inlines().GetAt(0);
+    oldSpan.Inlines().RemoveAt(0);
+    newSpan.Inlines().Append(child);
+  }
+
+  // Keep in sync with props added to 'UpdateProperty'
+  newSpan.Foreground(oldSpan.Foreground());
+  newSpan.FontSize(oldSpan.FontSize());
+  newSpan.FontFamily(oldSpan.FontFamily());
+  newSpan.FontWeight(oldSpan.FontWeight());
+  newSpan.FontStyle(oldSpan.FontStyle());
+  newSpan.CharacterSpacing(oldSpan.CharacterSpacing());
+  newSpan.TextDecorations(oldSpan.TextDecorations());
 }
 
 bool VirtualTextViewManager::RequiresYogaNode() const {

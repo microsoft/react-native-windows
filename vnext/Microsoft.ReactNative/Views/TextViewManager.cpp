@@ -270,6 +270,17 @@ void TextViewManager::RemoveChildAt(const XamlView &parent, int64_t index) {
   return textBlock.Inlines().RemoveAt(static_cast<uint32_t>(index));
 }
 
+void TextViewManager::ReplaceChild(const XamlView &parent, const XamlView &oldChild, const XamlView &newChild) {
+  const auto textBlock{parent.as<xaml::Controls::TextBlock>()};
+  const auto oldInline{oldChild.as<xaml::Documents::Inline>()};
+  const auto newInline{newChild.as<xaml::Documents::Inline>()};
+  uint32_t index;
+  if (textBlock.Inlines().IndexOf(oldInline, index)) {
+    textBlock.Inlines().RemoveAt(index);
+    textBlock.Inlines().InsertAt(index, newInline);
+  }
+}
+
 YGMeasureFunc TextViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
 }

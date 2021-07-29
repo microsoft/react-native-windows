@@ -21,6 +21,7 @@ class TextViewManager : public FrameworkElementViewManager {
   void AddView(const XamlView &parent, const XamlView &child, int64_t index) override;
   void RemoveAllChildren(const XamlView &parent) override;
   void RemoveChildAt(const XamlView &parent, int64_t index) override;
+  void ReplaceChild(const XamlView &parent, const XamlView &oldChild, const XamlView &newChild) override;
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
