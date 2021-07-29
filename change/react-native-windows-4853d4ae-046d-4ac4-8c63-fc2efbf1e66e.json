@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use Hyperlink for pressable virtual text",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
