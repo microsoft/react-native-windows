@@ -83,7 +83,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   devSettings->platformName = "windesktop";
 
   // Set to JSIEngineOverride::Chakra when testing the Chakra.dll JSI runtime.
-  devSettings->jsiEngineOverride = JSIEngineOverride::ChakraCore;
+  devSettings->jsiEngineOverride = JSIEngineOverride::V8Napi;
 
   auto instanceWrapper = CreateReactInstance(
       "",
