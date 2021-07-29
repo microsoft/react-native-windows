@@ -11,9 +11,9 @@
 #include <memory>
 #include <thread>
 
+#include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.XamlTypeInfo.h>
-#include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
 
 #pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
@@ -369,7 +369,6 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 
   winrt::Windows::UI::Xaml::Hosting::WindowsXamlManager::InitializeForCurrentThread();
 
-  
   xapp.Resources().MergedDictionaries().Append(winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources());
 
   hosting::DesktopWindowXamlSource desktopXamlSource;
@@ -403,7 +402,6 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 
   HACCEL hAccelTable = LoadAccelerators(WindowData::s_instance, MAKEINTRESOURCE(IDC_PLAYGROUND_WIN32));
 
-  
   MSG msg = {};
   while (GetMessage(&msg, nullptr, 0, 0)) {
     auto xamlSourceNative2 = desktopXamlSource.as<IDesktopWindowXamlSourceNative2>();
