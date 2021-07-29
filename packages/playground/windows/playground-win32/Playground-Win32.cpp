@@ -11,6 +11,10 @@
 #include <memory>
 #include <thread>
 
+#include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
+#include <winrt/Microsoft.UI.Xaml.Controls.h>
+#include <winrt/Microsoft.UI.Xaml.XamlTypeInfo.h>
+
 #pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
 
@@ -358,6 +362,14 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 #endif
 
   winrt::init_apartment(winrt::apartment_type::single_threaded);
+
+  auto winuiIXMP = winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider();
+
+  auto xapp = winrt::Microsoft::Toolkit::Win32::UI::XamlHost::XamlApplication({winuiIXMP});
+
+  winrt::Windows::UI::Xaml::Hosting::WindowsXamlManager::InitializeForCurrentThread();
+
+  xapp.Resources().MergedDictionaries().Append(winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources());
 
   hosting::DesktopWindowXamlSource desktopXamlSource;
   auto windowData = std::make_unique<WindowData>(desktopXamlSource);
