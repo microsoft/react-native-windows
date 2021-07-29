@@ -50,6 +50,7 @@
 #include "HermesRuntimeHolder.h"
 #endif
 #if defined(USE_V8)
+#include <NapiJsiV8RuntimeHolder.h>
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
 #endif
@@ -151,6 +152,9 @@ std::string GetJSBundleFilePath(const std::string &jsBundleBasePath, const std::
 } // namespace
 
 using namespace facebook;
+using namespace Microsoft::JSI;
+
+using std::make_shared;
 
 namespace facebook {
 namespace react {
@@ -428,6 +432,7 @@ InstanceImpl::InstanceImpl(
             preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
           }
 
+          //TODO!
           //m_devSettings->jsiRuntimeHolder = make_shared<NapiJsiV8RuntimeHolder>(
           //    m_devSettings, m_jsThread, std::move(scriptStore), std::move(preparedScriptStore));
 

@@ -4,8 +4,8 @@
 #pragma once
 
 #include <DevSettings.h>
-#include <RuntimeHolder.h>
-#include <ScriptStore.h>
+#include <JSI/Shared/RuntimeHolder.h>
+#include <JSI/Shared/ScriptStore.h>
 
 namespace Microsoft::JSI {
 
