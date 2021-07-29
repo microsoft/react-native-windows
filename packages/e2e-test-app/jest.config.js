@@ -10,6 +10,8 @@
 // https://jestjs.io/docs/en/configuration.html
 
 module.exports = {
+  preset: '@rnx-kit/jest-preset',
+
   // A list of paths to directories that Jest should use to search for files in
   roots: ['<rootDir>/test/'],
 
@@ -21,15 +23,6 @@ module.exports = {
 
   // Default timeout of a test in milliseconds
   testTimeout: 70000,
-
-  // This option allows the use of a custom resolver
-  resolver: '@rnx-kit/jest-resolver',
-
-  // This will be used to configure the behavior of jest-haste-map, Jest's internal file crawler/cache system
-  haste: {
-    defaultPlatform: 'windows',
-    platforms: ['windows'],
-  },
 
   // A map from regular expressions to paths to transformers
   transform: {
