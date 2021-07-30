@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 25 Jul 2021 05:09:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.349",
+      "version": "0.0.0-canary.349",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove DatePicker and PickerWindows",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5ca4638a2c84d0729cf25ca7862f6f8de23d685f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Jul 2021 05:05:52 GMT",
       "tag": "react-native-windows_v0.0.0-canary.348",
       "version": "0.0.0-canary.348",
