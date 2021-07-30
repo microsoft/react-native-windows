@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds `isPlaying` prop to Image",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
