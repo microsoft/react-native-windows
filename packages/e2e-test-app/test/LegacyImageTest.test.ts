@@ -37,6 +37,18 @@ describe('LegacyImageTest', () => {
     const dump = await dumpVisualTree('image-container');
     expect(dump).toMatchSnapshot();
   });
+
+  test('AnimatedImageTestNotPlaying', async () => {
+    const dump = await dumpVisualTree('animated-image-container');
+    expect(dump).toMatchSnapshot();
+  });
+
+  test('AnimatedImageTestPlaying', async () => {
+    await toggleAnimation();
+    const dump = await dumpVisualTree('animated-image-container');
+    expect(dump).toMatchSnapshot();
+  });
+
 });
 
 async function toggleImageBorder() {
@@ -47,4 +59,9 @@ async function toggleImageBorder() {
 async function toggleRTLMode() {
   const rtlToggleButton = await $('~set-rtl-button');
   await rtlToggleButton.click();
+}
+
+async function toggleAnimation() {
+  const toggleAnimationButton = await $('~toggle-animation');
+  await toggleAnimationButton.click();
 }

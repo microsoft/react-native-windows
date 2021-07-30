@@ -112,6 +112,19 @@ void ReactImage::TintColor(winrt::Color value) {
   }
 }
 
+void ReactImage::IsPlaying(bool isPlaying) {
+  m_isPlaying = isPlaying;
+  if (const auto brush{Background().try_as<winrt::ImageBrush>()}) {
+    if (const auto bitmapImage{brush.ImageSource().try_as<winrt::BitmapImage>()}) {
+      if (isPlaying) {
+        bitmapImage.Play();
+      } else {
+        bitmapImage.Stop();
+      }
+    }
+  }
+}
+
 winrt::Stretch ReactImage::ResizeModeToStretch(facebook::react::ImageResizeMode value) {
   switch (value) {
     case facebook::react::ImageResizeMode::Cover:
@@ -346,6 +359,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
 
         if (!bitmapImage) {
           bitmapImage = winrt::BitmapImage{};
+          bitmapImage.AutoPlay(m_isPlaying);
 
           strong_this->m_bitmapImageOpened = bitmapImage.ImageOpened(
               winrt::auto_revoke, [imageBrush, weak_this, fireLoadEndEvent](const auto &, const auto &) {

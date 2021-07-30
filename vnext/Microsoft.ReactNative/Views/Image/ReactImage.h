@@ -65,6 +65,11 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   }
   void TintColor(winrt::Windows::UI::Color value);
 
+  bool IsPlaying() {
+    return m_isPlaying;
+  }
+  void IsPlaying(bool isPlaying);
+
  private:
   xaml::Media::Stretch ResizeModeToStretch(facebook::react::ImageResizeMode value);
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
@@ -77,6 +82,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   ReactImageSource m_imageSource;
   facebook::react::ImageResizeMode m_resizeMode{facebook::react::ImageResizeMode::Contain};
   winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};
+  bool m_isPlaying{true};
 
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
   xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;

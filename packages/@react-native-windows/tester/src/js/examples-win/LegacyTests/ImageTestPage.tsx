@@ -94,6 +94,25 @@ export function ImageTestPage() {
   );
 }
 
+export function AnimatedImageExample() {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  return (
+    <View testID="animated-image-container">
+      <Image
+        // @ts-ignore: TODO: add to react-native.d.ts after added to core
+        isPlaying={isPlaying}
+        source={require('../../assets/tumblr_mfqekpMktw1rn90umo1_500.gif')}
+      />
+      <Button
+        title={!isPlaying ? 'Start Animation' : 'Stop Animation'}
+        onPress={() => setIsPlaying(!isPlaying)}
+        testID="toggle-animation"
+      />
+    </View>
+  );
+}
+
 export const displayName = (_undefined?: string) => {};
 export const title = 'LegacyImageTest';
 export const description = 'Legacy e2e test for Image';
@@ -101,6 +120,11 @@ export const examples = [
   {
     render: function(): JSX.Element {
       return <ImageTestPage />;
+    },
+  },
+  {
+    render: function(): JSX.Element {
+      return <AnimatedImageExample />;
     },
   },
 ];
