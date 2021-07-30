@@ -16,6 +16,16 @@ using std::unique_ptr;
 
 namespace Microsoft::JSI {
 
+// See napi_ext_schedule_task_callback definition.
+void ScheduleTaskCallback(
+  napi_env env,
+  napi_ext_task_callback taskCb,
+  void *taskData,
+  uint32_t delayMs,
+  napi_finalize finalizeCb,
+  void *finalizeint) {
+}
+
 NapiJsiV8RuntimeHolder::NapiJsiV8RuntimeHolder(
     shared_ptr<DevSettings> devSettings,
     shared_ptr<MessageQueueThread> jsQueue,
@@ -42,7 +52,7 @@ void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
   // TODO: debuggerRuntimeName?
 
   // TODO
-  settings.foreground_scheduler = nullptr;
+  settings.foreground_scheduler = &ScheduleTaskCallback;
   // TODO: scriptStore
 
   napi_ext_create_env(&settings, &env);
