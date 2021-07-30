@@ -48,7 +48,6 @@ describe('LegacyImageTest', () => {
     const dump = await dumpVisualTree('animated-image-container');
     expect(dump).toMatchSnapshot();
   });
-
 });
 
 async function toggleImageBorder() {
