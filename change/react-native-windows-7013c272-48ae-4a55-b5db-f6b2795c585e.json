@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "`@rnx-kit/jest-preset` has a simpler implementation of the path filter in `@rnx-kit/jest-resolver` (and `@rnw-scripts/jest-out-of-tree-resolver` before that), using the `moduleNameMapper` option to redirect `react-native` to `react-native-windows` instead. Like its predecessors, it can also detect that it's being used inside an out-of-tree platform package and configure `jest-haste-map` to pick up the appropriate file extensions.",
-  "packageName": "react-native-windows",
-  "email": "4123478+tido64@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

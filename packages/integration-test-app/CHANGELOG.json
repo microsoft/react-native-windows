@@ -2,6 +2,21 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Sat, 31 Jul 2021 05:06:20 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.349",
+            "author": "4123478+tido64@users.noreply.github.com",
+            "commit": "414821548762f96b2ce118ef4e757c3e66518bf0",
+            "package": "integration-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 25 Jul 2021 05:09:20 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",
