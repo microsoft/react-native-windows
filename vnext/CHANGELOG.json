@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 31 Jul 2021 05:06:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.349",
+      "version": "0.0.0-canary.349",
+      "comments": {
+        "none": [
+          {
+            "comment": "`@rnx-kit/jest-preset` has a simpler implementation of the path filter in `@rnx-kit/jest-resolver` (and `@rnw-scripts/jest-out-of-tree-resolver` before that), using the `moduleNameMapper` option to redirect `react-native` to `react-native-windows` instead. Like its predecessors, it can also detect that it's being used inside an out-of-tree platform package and configure `jest-haste-map` to pick up the appropriate file extensions.",
+            "author": "4123478+tido64@users.noreply.github.com",
+            "commit": "414821548762f96b2ce118ef4e757c3e66518bf0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 25 Jul 2021 05:09:20 GMT",
       "tag": "react-native-windows_v0.0.0-canary.349",
       "version": "0.0.0-canary.349",
