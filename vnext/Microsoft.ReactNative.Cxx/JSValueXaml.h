@@ -22,18 +22,18 @@ inline void ReadValue(JSValue const &jsValue, Windows::UI::Color &value) noexcep
 inline void ReadValue(JSValue const &jsValue, xaml::Thickness &value) noexcept {
   if (auto array = jsValue.TryGetArray()) {
     if (array->size() == 4) {
-      value = ThicknessHelper::FromLengths(
+      value = xaml::ThicknessHelper::FromLengths(
           (*array)[0].AsDouble(), (*array)[1].AsDouble(), (*array)[2].AsDouble(), (*array)[3].AsDouble());
       return;
     }
   } else if (auto number = jsValue.TryGetDouble()) {
-    value = ThicknessHelper::FromUniformLength(*number);
+    value = xaml::ThicknessHelper::FromUniformLength(*number);
   } else if (auto numberInt = jsValue.TryGetInt64()) {
     const auto valueDbl = static_cast<double>(*numberInt);
-    value = ThicknessHelper::FromUniformLength(valueDbl);
+    value = xaml::ThicknessHelper::FromUniformLength(valueDbl);
   } else {
     const auto &obj = jsValue.AsObject();
-    value = ThicknessHelper::FromLengths(
+    value = xaml::ThicknessHelper::FromLengths(
         obj["left"].AsDouble(), obj["top"].AsDouble(), obj["right"].AsDouble(), obj["bottom"].AsDouble());
     return;
   }
@@ -42,18 +42,18 @@ inline void ReadValue(JSValue const &jsValue, xaml::Thickness &value) noexcept {
 inline void ReadValue(JSValue const &jsValue, xaml::CornerRadius &value) noexcept {
   if (auto array = jsValue.TryGetArray()) {
     if (array->size() == 4) {
-      value = CornerRadiusHelper::FromRadii(
+      value = xaml::CornerRadiusHelper::FromRadii(
           (*array)[0].AsDouble(), (*array)[1].AsDouble(), (*array)[2].AsDouble(), (*array)[3].AsDouble());
       return;
     }
   } else if (auto number = jsValue.TryGetDouble()) {
-    value = CornerRadiusHelper::FromUniformRadius(*number);
+    value = xaml::CornerRadiusHelper::FromUniformRadius(*number);
   } else if (auto numberInt = jsValue.TryGetInt64()) {
     const auto valueDbl = static_cast<double>(*numberInt);
-    value = CornerRadiusHelper::FromUniformRadius(valueDbl);
+    value = xaml::CornerRadiusHelper::FromUniformRadius(valueDbl);
   } else {
     const auto &obj = jsValue.AsObject();
-    value = CornerRadiusHelper::FromRadii(
+    value = xaml::CornerRadiusHelper::FromRadii(
         obj["topLeft"].AsDouble(),
         obj["topRight"].AsDouble(),
         obj["bottomRight"].AsDouble(),
