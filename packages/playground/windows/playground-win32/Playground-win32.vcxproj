@@ -174,14 +174,14 @@
     <!--
       WARNING - DO NOT MAKE THE VERSION OF MICROSOFT.UI.XAML BE ANYTHING BUT PRERELEASE.
       Playground-Win32 is an unpackaged win32 app, and needs to use Microsoft.UI.Xaml from a prerelease,
-      to be able to carry WinUI in-app instead of using the Framework Package 
+      to be able to carry WinUI in-app instead of using the Framework Package
     -->
     <!-- <PackageReference Include="Microsoft.UI.Xaml" Version="2.6.1-prerelease.210709001" /> -->
     <PackageReference Include="$(WinUIPackageName)" Version="2.6.1-prerelease.210709001" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210708.4" />
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.2-rc" />
     <PackageReference Include="ReactNative.Hermes.Windows" Version="0.8.0-ms.0" />
-    <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" />
+    <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Target Name="EnsureReactNativeWindowsTargets" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
