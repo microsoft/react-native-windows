@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 25 Jul 2021 05:09:20 GMT and should not be manually modified.
+This log was last generated on Sun, 01 Aug 2021 05:08:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.350
+
+Sun, 01 Aug 2021 05:08:39 GMT
+
+### Changes
+
+- Fix issue using react-native-debugger with react-native-windows (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.349
 
