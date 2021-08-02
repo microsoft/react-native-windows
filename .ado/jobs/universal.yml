@@ -83,6 +83,14 @@
                     multicoreBuild: true
                     msbuildArguments: /p:RNW_FASTBUILD=${{ matrix.FastBuild }}
 
+                - task: PowerShell@2
+                  displayName: "Binskim Analysis"
+                  condition: and(succeeded(), eq('${{ matrix.BuildConfiguration }}', 'Release'), eq('${{ matrix.FastBuild }}', 'false'), ne('${{ matrix.BuildPlatform }}', 'ARM64'))
+                  inputs:
+                      targetType: script
+                      script: .\binskim analyze $(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative\Microsoft.ReactNative.dll
+                      workingDirectory: $(Build.SourcesDirectory)\vnext\packages\Microsoft.CodeAnalysis.BinSkim.1.9.0-prerelease1\tools\netcoreapp3.1\win-x64
+
                 - task: PublishPipelineArtifact@1
                   displayName: "Publish binaries for testing"
                   inputs:
