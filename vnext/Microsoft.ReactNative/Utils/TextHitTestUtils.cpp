@@ -6,6 +6,7 @@
 #include "TextHitTestUtils.h"
 
 #include <UI.Xaml.Documents.h>
+#include <math.h>
 
 namespace Microsoft::ReactNative {
 
@@ -15,6 +16,21 @@ struct BidirectionalTextBoundary {
   winrt::Rect ltrRect;
   winrt::Rect rtlRect;
 };
+
+/*
+ * Checks if two text pointers are on the same line.
+ */
+static bool IsSameLine(const winrt::Rect& x, const winrt::Rect &y) {
+  return std::abs(x.Y - y.Y) <= std::numeric_limits<float>().epsilon();
+}
+
+/*
+ * Checks if a text pointer is zero width relative to the next character.
+ */
+static bool IsZeroWidth(const winrt::Rect& x, const winrt::Rect& y) {
+  return std::abs(x.X - y.X) <= std::numeric_limits<float>().epsilon();
+}
+
 
 /**
  * Finds the character closest to X = 0 for the first line. I.e., the
@@ -39,7 +55,7 @@ static BidirectionalTextBoundary FindStartRTLBoundary(
     textPointer = textPointer.GetPositionAtOffset(relativeOffset, xaml::Documents::LogicalDirection::Forward);
     const auto rect = textPointer.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
     // If median character is on different line, boundary is before median
-    if (rect.Y != target.Y) {
+    if (!IsSameLine(rect, target)) {
       R = m - 1;
     } else {
       const auto prevPointer = textPointer.GetPositionAtOffset(-1, xaml::Documents::LogicalDirection::Forward);
@@ -102,7 +118,7 @@ static BidirectionalTextBoundary FindEndRTLBoundary(
     textPointer = textPointer.GetPositionAtOffset(relativeOffset, xaml::Documents::LogicalDirection::Forward);
     const auto rect = textPointer.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
     // If median character is on different line, boundary is after median
-    if (rect.Y != target.Y) {
+    if (!IsSameLine(rect, target)) {
       L = m + 1;
     } else if (m < R) {
       const auto nextPointer = textPointer.GetPositionAtOffset(1, xaml::Documents::LogicalDirection::Forward);
@@ -152,9 +168,9 @@ static bool IsRTL(const xaml::Documents::TextPointer &textPointer, const winrt::
   auto currentPointer = textPointer.GetPositionAtOffset(direction, xaml::Documents::LogicalDirection::Forward);
   while (currentPointer != nullptr) {
     const auto currentRect = currentPointer.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
-    if (currentRect.Y != rect.Y) {
+    if (!IsSameLine(currentRect, rect)) {
       return false;
-    } else if (currentRect.X != rect.X) {
+    } else if (!IsZeroWidth(currentRect, rect)) {
       return direction > 0 ? currentRect.X < rect.X : currentRect.X > rect.X;
     }
 
@@ -172,7 +188,7 @@ GetBoundaryCharacter(const xaml::Documents::TextPointer &textPointer, const winr
   const auto nextPosition = textPointer.GetPositionAtOffset(direction, xaml::Documents::LogicalDirection::Forward);
   if (nextPosition) {
     const auto nextRect = nextPosition.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
-    if (nextRect.Y == rect.Y) {
+    if (IsSameLine(nextRect, rect)) {
       return nextRect;
     }
   }
@@ -197,7 +213,7 @@ bool TextHitTestUtils::HitTest(const xaml::Documents::Run &run, const winrt::Poi
   const auto endBottom = endRect.Y + endRect.Height;
 
   // Check if we have a single line of unidirectional text
-  const auto isSingleLine = startRect.Y == endRect.Y;
+  const auto isSingleLine = IsSameLine(startRect, endRect);
   const auto isStartRTL = IsRTL(start, startRect, 1);
   const auto isEndRTL = IsRTL(end, endRect, -1);
   const auto isUnidirectional = (!isStartRTL && !isEndRTL) || (isSingleLine && endRect.X < startRect.X);
