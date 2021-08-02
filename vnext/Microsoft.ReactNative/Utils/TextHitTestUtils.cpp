@@ -20,17 +20,16 @@ struct BidirectionalTextBoundary {
 /*
  * Checks if two text pointers are on the same line.
  */
-static bool IsSameLine(const winrt::Rect& x, const winrt::Rect &y) {
+static bool IsSameLine(const winrt::Rect &x, const winrt::Rect &y) {
   return std::abs(x.Y - y.Y) <= std::numeric_limits<float>().epsilon();
 }
 
 /*
  * Checks if a text pointer is zero width relative to the next character.
  */
-static bool IsZeroWidth(const winrt::Rect& x, const winrt::Rect& y) {
+static bool IsZeroWidth(const winrt::Rect &x, const winrt::Rect &y) {
   return std::abs(x.X - y.X) <= std::numeric_limits<float>().epsilon();
 }
-
 
 /**
  * Finds the character closest to X = 0 for the first line. I.e., the
