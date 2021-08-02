@@ -118,8 +118,10 @@ void ReactImage::IsPlaying(bool isPlaying) {
     if (const auto bitmapImage{brush.ImageSource().try_as<winrt::BitmapImage>()}) {
       if (isPlaying) {
         bitmapImage.Play();
+        bitmapImage.ClearValue(winrt::BitmapImage::AutoPlayProperty());
       } else {
         bitmapImage.Stop();
+        bitmapImage.AutoPlay(false);
       }
     }
   }
@@ -359,7 +361,9 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
 
         if (!bitmapImage) {
           bitmapImage = winrt::BitmapImage{};
-          bitmapImage.AutoPlay(m_isPlaying);
+          if (!m_isPlaying) {
+            bitmapImage.AutoPlay(false);
+          }
 
           strong_this->m_bitmapImageOpened = bitmapImage.ImageOpened(
               winrt::auto_revoke, [imageBrush, weak_this, fireLoadEndEvent](const auto &, const auto &) {
