@@ -113,15 +113,17 @@ void ReactImage::TintColor(winrt::Color value) {
 }
 
 void ReactImage::IsPlaying(bool isPlaying) {
-  m_isPlaying = isPlaying;
-  if (const auto brush{Background().try_as<winrt::ImageBrush>()}) {
-    if (const auto bitmapImage{brush.ImageSource().try_as<winrt::BitmapImage>()}) {
-      if (isPlaying) {
-        bitmapImage.Play();
-        bitmapImage.ClearValue(winrt::BitmapImage::AutoPlayProperty());
-      } else {
-        bitmapImage.Stop();
-        bitmapImage.AutoPlay(false);
+  if (m_isPlaying != isPlaying) {
+    m_isPlaying = isPlaying;
+    if (const auto brush{Background().try_as<winrt::ImageBrush>()}) {
+      if (const auto bitmapImage{brush.ImageSource().try_as<winrt::BitmapImage>()}) {
+        if (isPlaying) {
+          bitmapImage.Play();
+          bitmapImage.ClearValue(winrt::BitmapImage::AutoPlayProperty());
+        } else {
+          bitmapImage.Stop();
+          bitmapImage.AutoPlay(false);
+        }
       }
     }
   }
