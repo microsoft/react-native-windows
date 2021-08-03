@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'flex-start',
   },
-})
+});
 
 export class PressableTextTests extends React.Component<
   {},
@@ -90,17 +90,13 @@ export class PressableTextTests extends React.Component<
             أحب اللغة العربية
           </Text>
         </Text>
-        <Text
-          style={{direction: 'rtl'}}
-          testID="rtl-rtl-flow-text">
+        <Text style={{direction: 'rtl'}} testID="rtl-rtl-flow-text">
           RTL text in RTL flow direction:{' '}
           <Text onPress={increment} style={pressableStyle}>
             أحب اللغة العربية
           </Text>
         </Text>
-        <Text
-          style={{direction: 'rtl'}}
-          testID="ltr-rtl-flow-text">
+        <Text style={{direction: 'rtl'}} testID="ltr-rtl-flow-text">
           LTR text in RTL flow direction:{' '}
           <Text onPress={increment} style={pressableStyle}>
             Click here
