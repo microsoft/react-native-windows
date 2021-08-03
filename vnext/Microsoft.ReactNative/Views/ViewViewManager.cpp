@@ -230,6 +230,7 @@ class ViewShadowNode : public ShadowNodeBase {
 
   bool m_enableFocusRing = true;
   bool m_onClick = false;
+  bool m_isFocusable = false;
   int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
 
   xaml::Controls::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
