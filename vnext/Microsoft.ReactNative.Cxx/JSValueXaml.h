@@ -10,7 +10,6 @@
 namespace winrt::Microsoft::ReactNative {
 
 #ifndef CXXUNITTESTS
-
 inline void ReadValue(JSValue const &jsValue, xaml::Media::Brush &value) noexcept {
   value = XamlHelper::BrushFrom([&jsValue](IJSValueWriter const &writer) noexcept { jsValue.WriteTo(writer); });
 }
@@ -18,6 +17,7 @@ inline void ReadValue(JSValue const &jsValue, xaml::Media::Brush &value) noexcep
 inline void ReadValue(JSValue const &jsValue, Windows::UI::Color &value) noexcept {
   value = XamlHelper::ColorFrom([&jsValue](IJSValueWriter const &writer) noexcept { jsValue.WriteTo(writer); });
 }
+#endif
 
 inline void ReadValue(JSValue const &jsValue, xaml::Thickness &value) noexcept {
   if (auto array = jsValue.TryGetArray()) {
@@ -65,8 +65,6 @@ inline void ReadValue(JSValue const &jsValue, xaml::CornerRadius &value) noexcep
 inline void ReadValue(JSValue const &jsValue, winrt::Windows::Foundation::Uri &value) noexcept {
   value = Uri{winrt::to_hstring(jsValue.AsString())};
 }
-
-#endif
 
 } // namespace winrt::Microsoft::ReactNative
 
