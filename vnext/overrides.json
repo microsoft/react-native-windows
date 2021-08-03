@@ -8,13 +8,13 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-386dbd943",
+  "baseVersion": "0.0.0-c974cbff0",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a5b0a0d2669d5d35a548c3990577a2e9c5d861b4"
+      "baseHash": "f0b19caa58219756e581784b8f4a33607d309567"
     },
     {
       "type": "patch",
@@ -55,7 +55,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "73733ea2ee0afadd1d153c05030374f2bc492624",
+      "baseHash": "701ce94e2deb880a727d35280623d0ccb5010aa8",
       "issue": 4054
     },
     {
@@ -83,7 +83,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "c7e80678448dd6d518b6ed47594775207b285610"
+      "baseHash": "1bef57931e96344fa3b9b2e67ea70f6d6647cd31"
     },
     {
       "type": "platform",
@@ -197,6 +197,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Picker/Picker.windows.js",
       "baseFile": "Libraries/Components/Picker/Picker.js",
+      "baseVersion": "0.0.0-386dbd943",
       "baseHash": "900e5f4d60baba03691b5c8601e4d960f9cb34d9",
       "issue": 4611
     },
@@ -204,12 +205,14 @@
       "type": "derived",
       "file": "src/Libraries/Components/Picker/PickerAndroid.windows.js",
       "baseFile": "Libraries/Components/Picker/PickerAndroid.ios.js",
+      "baseVersion": "0.0.0-386dbd943",
       "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Components/Picker/PickerIOS.windows.js",
       "baseFile": "Libraries/Components/Picker/PickerIOS.android.js",
+      "baseVersion": "0.0.0-386dbd943",
       "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6"
     },
     {
@@ -220,6 +223,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/Picker/PickerWindows.tsx",
       "baseFile": "Libraries/Components/Picker/PickerIOS.ios.js",
+      "baseVersion": "0.0.0-386dbd943",
       "baseHash": "b4d55736a8e395c5418c2de2dcded7bb77799997",
       "issue": 4611
     },
@@ -299,7 +303,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "f46b26885fc37d6f8c5aa9d298ffd6828efc0921"
+      "baseHash": "229951b3db97dff217d0ad3ff7066b23ae0354e3"
     },
     {
       "type": "patch",
@@ -349,6 +353,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
+      "baseVersion": "0.0.0-386dbd943",
       "baseHash": "c20b0134e74a8e8d69d0b2694b4296fe2bf69d3f",
       "issue": 4590
     },
