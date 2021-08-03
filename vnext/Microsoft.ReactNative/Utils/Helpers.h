@@ -22,7 +22,7 @@ inline typename T asEnum(winrt::Microsoft::ReactNative::JSValue const &obj) {
   return static_cast<T>(obj.AsInt64());
 }
 
-ReactId getViewId(const Mso::React::IReactContext &context, xaml::FrameworkElement const &fe);
+ReactId getViewId(const Mso::React::IReactContext &context, XamlView const &fe);
 std::int32_t CountOpenPopups();
 
 bool IsRS3OrHigher();

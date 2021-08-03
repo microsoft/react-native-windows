@@ -450,6 +450,12 @@
       "baseHash": "4437d86c40009c937c279b9ce9e924ebfa46ddd6"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Text/TextNativeComponent.windows.js",
+      "baseFile": "Libraries/Text/TextNativeComponent.js",
+      "baseHash": "93377ff5089d981e56094329b6f6893b3124be12"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.windows.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",

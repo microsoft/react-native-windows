@@ -9,13 +9,21 @@ namespace Microsoft::ReactNative {
 
 using XamlView = xaml::DependencyObject;
 
+inline int64_t GetTag(winrt::IPropertyValue value) {
+  assert(value);
+  return value.GetInt64();
+}
+
+inline winrt::IPropertyValue GetTagAsPropertyValue(XamlView view) {
+  assert(view);
+  return view.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+}
+
 inline int64_t GetTag(XamlView view) {
-  auto tagValue = view.ReadLocalValue(xaml::FrameworkElement::TagProperty());
-  if (tagValue != xaml::DependencyProperty::UnsetValue()) {
-    return tagValue.as<winrt::IPropertyValue>().GetInt64();
-  } else {
-    return -1;
+  if (const auto value = GetTagAsPropertyValue(view)) {
+    return GetTag(value);
   }
+  return -1;
 }
 
 inline void SetTag(XamlView view, int64_t tag) {
@@ -29,16 +37,6 @@ inline void SetTag(XamlView view, winrt::IInspectable tag) {
 inline bool IsValidTag(winrt::IPropertyValue value) {
   assert(value);
   return (value.Type() == winrt::PropertyType::Int64);
-}
-
-inline int64_t GetTag(winrt::IPropertyValue value) {
-  assert(value);
-  return value.GetInt64();
-}
-
-inline winrt::IPropertyValue GetTagAsPropertyValue(xaml::FrameworkElement fe) {
-  assert(fe);
-  return fe.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
 }
 
 xaml::XamlRoot TryGetXamlRoot(const XamlView &view);

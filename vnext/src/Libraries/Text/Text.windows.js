@@ -98,6 +98,10 @@ const Text: React.AbstractComponent<
       eventHandlers == null
         ? null
         : {
+            // [Windows
+            onKeyDown: eventHandlers.onKeyDown,
+            onKeyUp: eventHandlers.onKeyUp,
+            // Windows]
             onResponderGrant(event) {
               eventHandlers.onResponderGrant(event);
               if (onResponderGrant != null) {

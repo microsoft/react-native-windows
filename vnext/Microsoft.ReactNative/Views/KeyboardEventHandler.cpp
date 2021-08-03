@@ -213,7 +213,7 @@ void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(
     xaml::Input::KeyRoutedEventArgs const &args) {
   const auto timestamp =
       std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now().time_since_epoch()).count();
-  if (auto source = args.OriginalSource().try_as<xaml::FrameworkElement>()) {
+  if (auto source = args.OriginalSource().try_as<XamlView>()) {
     auto reactId = getViewId(*m_context, source);
     if (reactId.isValid) {
       ReactKeyboardEvent event;

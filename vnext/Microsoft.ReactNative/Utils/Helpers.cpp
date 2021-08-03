@@ -30,10 +30,10 @@ namespace Microsoft::ReactNative {
 // </NavigationView>
 // Instead of deduce view id directly from FrameworkElement.Tag, this do
 // additional check by uimanager.
-ReactId getViewId(const Mso::React::IReactContext &context, xaml::FrameworkElement const &fe) {
+ReactId getViewId(const Mso::React::IReactContext &context, XamlView const &view) {
   ReactId reactId;
   if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(context).lock()) {
-    if (auto peer = uiManager->reactPeerOrContainerFrom(fe)) {
+    if (auto peer = uiManager->reactPeerOrContainerFrom(view)) {
       reactId.isValid = true;
       reactId.tag = Microsoft::ReactNative::GetTag(peer);
     }
