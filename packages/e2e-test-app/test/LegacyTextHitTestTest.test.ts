@@ -117,7 +117,10 @@ async function clearState() {
   await clearButton.click();
 }
 
-async function clickAt(name: string, {pctX, pctY = 0.5}: {pctX: number; pctY?: number}) {
+async function clickAt(
+  name: string,
+  {pctX, pctY = 0.5}: {pctX: number; pctY?: number},
+) {
   const target = await $(`~${name}`);
   const {width, height} = await target.getSize();
 
@@ -128,7 +131,7 @@ async function clickAt(name: string, {pctX, pctY = 0.5}: {pctX: number; pctY?: n
   // click, and subtracts the center point so the declared offsets are absolute
   // relative to the origin of the target (i.e., top-left corner).
   await target.click({
-    x: Math.round((pctX * width) - (width / 2)),
-    y: Math.round((pctY * height) - (height / 2)),
+    x: Math.round(pctX * width - width / 2),
+    y: Math.round(pctY * height - height / 2),
   });
 }
