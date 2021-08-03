@@ -109,7 +109,12 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
     try {
       const location = path.join(outputDir, fileName);
       fs.mkdirSync(path.dirname(location), {recursive: true});
-      fs.writeFileSync(location, contents);
+      const thisMap = new Map<string, string>();
+      thisMap.set(contents, fileName);
+      // Don't update the files if there are no changes as this breaks incremental builds
+      if (checkFilesForChanges(thisMap, outputDir)) {
+        fs.writeFileSync(location, contents);
+      }
     } catch (error) {
       success = false;
       console.error(`Failed to write ${fileName} to ${outputDir}`, error);
