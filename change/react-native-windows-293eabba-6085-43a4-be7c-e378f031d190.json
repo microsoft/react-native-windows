@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Work around XAML Islands issue with TextCommandBarFlyout",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
