@@ -362,6 +362,9 @@ void ReactRootView::AttachBackHandlers() noexcept {
   if (::Microsoft::ReactNative::IsXamlIsland())
     return;
 
+  if (!React::implementation::QuirkSettings::GetEnableBackHandler(m_context.Properties()))
+    return;
+
   auto weakThis = this->get_weak();
   m_backRequestedRevoker = winrt::Windows::UI::Core::SystemNavigationManager::GetForCurrentView().BackRequested(
       winrt::auto_revoke,
