@@ -109,10 +109,6 @@ class ViewShadowNode : public ShadowNodeBase {
       GetControl().IsTabStop(m_isFocusable);
   }
 
-  bool IsHitTestBrushRequired() const {
-    return IsRegisteredForMouseEvents();
-  }
-
   void AddView(ShadowNode &child, int64_t index) override {
     const auto &view = static_cast<ShadowNodeBase &>(child).GetView();
     if (view.try_as<xaml::UIElement>() == nullptr) {
