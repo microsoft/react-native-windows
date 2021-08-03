@@ -3,11 +3,11 @@
 
 #include "pch.h"
 #include "JSValueReader.h"
+#include <CppWinRTIncludes.h>
 #include <variant>
 #include "JSValueWriter.h"
-#include "JsonJSValueReader.h"
-#include <CppWinRTIncludes.h>
 #include "JSValueXaml.h"
+#include "JsonJSValueReader.h"
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -482,7 +482,6 @@ TEST_CLASS (JSValueReaderTest) {
   }
 
   TEST_METHOD(TestReadValueXamlTypes) {
-
     const wchar_t *json =
         LR"JSON({
       "Thickness1": 2,
@@ -523,7 +522,7 @@ TEST_CLASS (JSValueReaderTest) {
         auto uri = jsValue.To<Uri>();
         TestCheck(uri.RawUri() == L"https://bing.com");
       }
-    }    
+    }
   }
 };
 
