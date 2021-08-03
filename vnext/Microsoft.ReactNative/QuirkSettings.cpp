@@ -33,8 +33,7 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> AcceptSelfSignedCertsProper
 }
 
 winrt::Microsoft::ReactNative::ReactPropertyId<bool> EnableBackHandlerProperty() noexcept {
-  winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
-      L"ReactNative.QuirkSettings", L"EnableBackHandler"};
+  winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{L"ReactNative.QuirkSettings", L"EnableBackHandler"};
 
   return propId;
 }
