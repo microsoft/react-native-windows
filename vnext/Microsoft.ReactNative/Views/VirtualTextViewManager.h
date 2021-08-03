@@ -27,6 +27,7 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   };
 
   HighlightData m_highlightData;
+  std::optional<int32_t> m_tabIndex;
 };
 
 class VirtualTextViewManager : public ViewManagerBase {
@@ -47,7 +48,6 @@ class VirtualTextViewManager : public ViewManagerBase {
   void TransferProperties(const XamlView &oldChild, const XamlView &newChild) override;
 
   bool RequiresYogaNode() const override;
-
 
  protected:
   bool UpdateProperty(

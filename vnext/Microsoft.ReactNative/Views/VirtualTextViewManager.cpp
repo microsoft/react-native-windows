@@ -119,17 +119,35 @@ bool VirtualTextViewManager::UpdateProperty(
     if (IsValidColorValue(propertyValue)) {
       static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.backgroundColor = ColorFrom(propertyValue);
     }
-  } else if (propertyName == "accessibilityRole") {
+  } else if (propertyName == "focusable") {
     const auto wasHyperlink = !!span.try_as<winrt::Hyperlink>();
-    auto isHyperlink = propertyValue.Type() == React::JSValueType::String &&
-        (propertyValue.AsString() == "link" || propertyValue.AsString() == "button");
+    auto isHyperlink = propertyValue.Type() == React::JSValueType::Boolean && propertyValue.AsBoolean();
     if (isHyperlink && !wasHyperlink) {
       winrt::Hyperlink hyperlink;
       // Underline should be handled by base class using 'textDecorationLine' prop
       hyperlink.UnderlineStyle(winrt::UnderlineStyle::None);
+      const auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
+      if (node->m_tabIndex.has_value()) {
+        hyperlink.TabIndex(node->m_tabIndex.value());
+      }
       nodeToUpdate->ReparentView(hyperlink);
     } else if (!isHyperlink && wasHyperlink) {
       nodeToUpdate->ReparentView(winrt::Span{});
+    }
+  } else if (propertyName == "tabIndex") {
+    const auto hyperlink = span.try_as<winrt::Hyperlink>();
+    if (propertyValue.Type() == React::JSValueType::Int64) {
+      auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
+      node->m_tabIndex = propertyValue.AsInt32();
+      if (hyperlink) {
+        hyperlink.TabIndex(node->m_tabIndex.value());
+      }
+    } else if (propertyValue.IsNull()) {
+      auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
+      node->m_tabIndex = std::nullopt;
+      if (hyperlink) {
+        hyperlink.ClearValue(winrt::Hyperlink::TabIndexProperty());
+      }
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
@@ -165,7 +183,7 @@ void VirtualTextViewManager::ReplaceChild(const XamlView &parent, const XamlView
   }
 }
 
-void VirtualTextViewManager::TransferProperties(const XamlView& oldChild, const XamlView& newChild) {
+void VirtualTextViewManager::TransferProperties(const XamlView &oldChild, const XamlView &newChild) {
   const auto oldSpan = oldChild.as<xaml::Documents::Span>();
   const auto newSpan = newChild.as<xaml::Documents::Span>();
 
