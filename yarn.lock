@@ -1821,9 +1821,9 @@
   integrity sha1-QPjBwsN7qr5XoMlE7bkxDcHsZkI=
 
 "@rnx-kit/jest-preset@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.0.tgz#e1863a3962e703ec31ea425e50fd8ce1242f4bae"
-  integrity sha512-6d3B7c1eHCoJ2npolnJwcKhM5lgDL7Ipx3ui8H3iTA2++D0FV7XmC7Vp+okK4ZH3H1Y7+HZvXmSM7Rw5pK668g==
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.1.tgz#b45863659ce4f6c75d3c0d5ed5b5b784d3b7caa2"
+  integrity sha512-WHGlsBZOZv1nOw5SchVz+rAzOsJ2xu6DNonowxQvDFG8bMEc45vc3dtM5dsnxk20v54yeiRmhX838/xiu0fF3w==
   dependencies:
     "@babel/preset-env" "^7.0.0"
     "@babel/preset-typescript" "^7.0.0"
