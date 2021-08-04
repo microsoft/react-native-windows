@@ -136,7 +136,7 @@
               <RowDefinition/>
             </Grid.RowDefinitions>
             <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE773;'/>
-            <TextBlock Grid.Column='1' Grid.Row='0' x:Name='SamplingProfilerText'>Start Sampling Profiler</TextBlock>
+            <TextBlock Grid.Column='1' Grid.Row='0' x:Name='SamplingProfilerText'>Hermes Sampling Profiler</TextBlock>
             <TextBlock Grid.Column='1' Grid.Row='1' x:Name='SamplingProfilerDescText' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>Will start sampling immediately. Click again to stop</TextBlock>
           </Grid>
         </Button>

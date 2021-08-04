@@ -5,8 +5,8 @@
 
 #include <chrono>
 
-#include <winrt/Windows.Storage.h>
 #include <hermes/hermes.h>
+#include <winrt/Windows.Storage.h>
 #include "Unicode.h"
 
 #include "HermesSamplingProfiler.h"
@@ -16,7 +16,8 @@ namespace Microsoft::ReactNative {
 namespace {
 std::future<std::string> getTraceFilePath() {
   auto hermesFolder = (co_await winrt::Windows::Storage::ApplicationData::Current().LocalFolder().CreateFolderAsync(
-      L"Hermes", winrt::Windows::Storage::CreationCollisionOption::OpenIfExists)).Path();
+                           L"Hermes", winrt::Windows::Storage::CreationCollisionOption::OpenIfExists))
+                          .Path();
   auto now = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch())
                  .count();
   std::ostringstream os;

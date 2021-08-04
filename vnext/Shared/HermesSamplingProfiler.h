@@ -13,6 +13,7 @@ class HermesSamplingProfiler final {
   static std::future<std::string> Stop();
   static std::string GetLastTraceFilePath();
   static bool IsStarted();
+
  private:
   static bool s_isStarted;
   static std::string s_lastTraceFilePath;

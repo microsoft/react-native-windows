@@ -14,9 +14,12 @@
 #include "Views/KeyboardEventHandler.h"
 #include "winrt/Windows.UI.Core.h"
 #include "winrt/Windows.UI.Xaml.Interop.h"
+
+#if defined(USE_HERMES)
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include "HermesSamplingProfiler.h"
 #include "Unicode.h"
+#endif
 
 using namespace winrt::Windows::ApplicationModel;
 
@@ -111,6 +114,7 @@ void DevMenuManager::CreateAndShowUI() noexcept {
       Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ? L"Disable Fast Refresh"
                                                                         : L"Enable Fast Refresh");
 
+#if defined(USE_HERMES)
   devMenu.SamplingProfilerText().Text(
       !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"Start Hermes sampling profiler"
                                                                    : L"Stop Hermes sampling profiler");
@@ -123,11 +127,13 @@ void DevMenuManager::CreateAndShowUI() noexcept {
 
   auto lastTraceFilePath = Microsoft::ReactNative::HermesSamplingProfiler::GetLastTraceFilePath();
   if (!lastTraceFilePath.empty()) {
-    os << std::endl << "Samples from last invocation are stored at " << lastTraceFilePath.c_str() << "  (path copied to clipboard).";
-    os << std::endl << "Navigate to \"chrome:\\tracing\" and load the trace file.";
+    os << std::endl
+       << "Samples from last invocation are stored at " << lastTraceFilePath.c_str() << "  (path copied to clipboard).";
+    os << std::endl << "Navigate to \"edge:\\tracing\" and load the trace file.";
   }
 
-  devMenu.SamplingProfilerDescText().Text(Microsoft::Common::Unicode::Utf8ToUtf16(os.str()).c_str());
+  devMenu.SamplingProfilerDescText().Text(winrt::to_hstring(os.str()));
+#endif
 
   devMenu.DirectDebugText().Text(
       Mso::React::ReactOptions::UseDirectDebugger(m_context->Properties()) ? L"Disable Direct Debugging"
@@ -196,16 +202,16 @@ void DevMenuManager::CreateAndShowUI() noexcept {
         }
       });
 
-
-  m_SamplingProfilerRevoker = devMenu.SamplingProfiler().Click(
+#if defined(USE_HERMES)
+  m_samplingProfilerRevoker = devMenu.SamplingProfiler().Click(
       winrt::auto_revoke,
       [wkThis = weak_from_this()](
           auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept -> winrt::fire_and_forget {
         if (auto strongThis = wkThis.lock()) {
           strongThis->Hide();
-          if (!Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {           
+          if (!Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
             Microsoft::ReactNative::HermesSamplingProfiler::Start();
-          }  else {
+          } else {
             auto traceFilePath = co_await Microsoft::ReactNative::HermesSamplingProfiler::Stop();
             auto uiDispatcher =
                 React::implementation::ReactDispatcher::GetUIDispatcher(strongThis->m_context->Properties());
@@ -213,10 +219,13 @@ void DevMenuManager::CreateAndShowUI() noexcept {
               DataTransfer::DataPackage data;
               data.SetText(Microsoft::Common::Unicode::Utf8ToUtf16(traceFilePath));
               DataTransfer::Clipboard::SetContentWithOptions(data, nullptr);
-              });
+            });
           }
         }
       });
+#else
+  devMenu.SamplingProfiler().Visibility(winrt::Windows::UI::Xaml::Visibility::Collapsed);
+#endif
 
   m_toggleInspectorRevoker = devMenu.Inspector().Click(
       winrt::auto_revoke,
