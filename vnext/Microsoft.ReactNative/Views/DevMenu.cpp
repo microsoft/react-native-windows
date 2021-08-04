@@ -14,6 +14,11 @@
 #include "Views/KeyboardEventHandler.h"
 #include "winrt/Windows.UI.Core.h"
 #include "winrt/Windows.UI.Xaml.Interop.h"
+#include <winrt/Windows.ApplicationModel.DataTransfer.h>
+#include "HermesSamplingProfiler.h"
+#include "Unicode.h"
+
+using namespace winrt::Windows::ApplicationModel;
 
 namespace Microsoft::ReactNative {
 
@@ -106,6 +111,24 @@ void DevMenuManager::CreateAndShowUI() noexcept {
       Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ? L"Disable Fast Refresh"
                                                                         : L"Enable Fast Refresh");
 
+  devMenu.SamplingProfilerText().Text(
+      !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"Start Hermes sampling profiler"
+                                                                   : L"Stop Hermes sampling profiler");
+  std::ostringstream os;
+  if (Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
+    os << "Sampling profiler running..";
+  } else {
+    os << "Click to start.";
+  }
+
+  auto lastTraceFilePath = Microsoft::ReactNative::HermesSamplingProfiler::GetLastTraceFilePath();
+  if (!lastTraceFilePath.empty()) {
+    os << std::endl << "Samples from last invocation are stored at " << lastTraceFilePath.c_str() << "  (path copied to clipboard).";
+    os << std::endl << "Navigate to \"chrome:\\tracing\" and load the trace file.";
+  }
+
+  devMenu.SamplingProfilerDescText().Text(Microsoft::Common::Unicode::Utf8ToUtf16(os.str()).c_str());
+
   devMenu.DirectDebugText().Text(
       Mso::React::ReactOptions::UseDirectDebugger(m_context->Properties()) ? L"Disable Direct Debugging"
                                                                            : L"Enable Direct Debugging");
@@ -170,6 +193,28 @@ void DevMenuManager::CreateAndShowUI() noexcept {
               strongThis->m_context->Properties(),
               !Mso::React::ReactOptions::UseFastRefresh(strongThis->m_context->Properties()));
           DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
+        }
+      });
+
+
+  m_SamplingProfilerRevoker = devMenu.SamplingProfiler().Click(
+      winrt::auto_revoke,
+      [wkThis = weak_from_this()](
+          auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept -> winrt::fire_and_forget {
+        if (auto strongThis = wkThis.lock()) {
+          strongThis->Hide();
+          if (!Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {           
+            Microsoft::ReactNative::HermesSamplingProfiler::Start();
+          }  else {
+            auto traceFilePath = co_await Microsoft::ReactNative::HermesSamplingProfiler::Stop();
+            auto uiDispatcher =
+                React::implementation::ReactDispatcher::GetUIDispatcher(strongThis->m_context->Properties());
+            uiDispatcher.Post([traceFilePath]() {
+              DataTransfer::DataPackage data;
+              data.SetText(Microsoft::Common::Unicode::Utf8ToUtf16(traceFilePath));
+              DataTransfer::Clipboard::SetContentWithOptions(data, nullptr);
+              });
+          }
         }
       });
 
