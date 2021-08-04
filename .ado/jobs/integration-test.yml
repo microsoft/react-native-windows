@@ -10,7 +10,7 @@ parameters:
     default:
       - BuildEnvironment: PullRequest
         Matrix:
-          - Name: X64Debug
+          - Name: X64WebDebug
             BuildPlatform: x64
             BuildConfiguration: Debug
             DeployOptions:
@@ -27,7 +27,7 @@ parameters:
             BuildConfiguration: Debug
             DeployOptions: --no-deploy # We don't have Arm agents
             UseHermes: false
-          - Name: X64Debug
+          - Name: X64WebDebug
             BuildPlatform: x64
             BuildConfiguration: Debug
             DeployOptions:
@@ -37,11 +37,16 @@ parameters:
             BuildConfiguration: Release
             DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
             UseHermes: true
-          - Name: X86Debug
+          - Name: X86WebDebug
             BuildPlatform: x86
             BuildConfiguration: Debug
             DeployOptions:
             UseHermes: false
+          - Name: X86ReleaseHermes
+            BuildPlatform: x86
+            BuildConfiguration: Release
+            DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
+            UseHermes: true
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
@@ -69,13 +74,11 @@ jobs:
             - script: .ado\scripts\SetupLocalDumps.cmd integrationtest
               displayName: Set LocalDumps
 
-            - ${{ if eq(matrix.UseHermes, 'true') }}:
-              - powershell: |
-                  [xml] $experimentalFeatures = Get-Content .\ExperimentalFeatures.props
-                  $experimentalFeatures.Project.PropertyGroup.UseHermes = 'true'
-                  $experimentalFeatures.Save("$pwd\ExperimentalFeatures.props")
-                displayName: Enable Hermes
-                workingDirectory: packages/integration-test-app/windows
+            - template: ../templates/set-experimental-feature.yml
+              parameters:
+                package: packages/integration-test-app
+                feature: UseHermes
+                value: ${{ matrix.UseHermes }}
 
             - ${{ if eq(matrix.BuildConfiguration, 'Debug') }}:
               # The build is more likely to crash after we've started other bits that
