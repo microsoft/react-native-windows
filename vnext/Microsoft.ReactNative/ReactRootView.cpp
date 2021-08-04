@@ -363,7 +363,7 @@ void ReactRootView::AttachBackHandlers() noexcept {
   if (::Microsoft::ReactNative::IsXamlIsland())
     return;
 
-  if (!React::implementation::QuirkSettings::GetEnableBackHandler(
+  if (!winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableBackHandler(
           winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties())))
     return;
 
