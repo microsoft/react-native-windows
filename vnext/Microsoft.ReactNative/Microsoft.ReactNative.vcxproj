@@ -89,7 +89,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalOptions>/await %(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AdditionalOptions>/await %(AdditionalOptions) /bigobj /ZH:SHA_256</AdditionalOptions>
       <AdditionalIncludeDirectories>
         $(FmtDir)\include;
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
@@ -301,6 +301,7 @@
     <ClInclude Include="Utils\UwpPreparedScriptStore.h" />
     <ClInclude Include="Utils\UwpScriptStore.h" />
     <ClInclude Include="Utils\ValueUtils.h" />
+    <ClInclude Include="Utils\XamlIslandUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\ControlViewManager.h" />
     <ClInclude Include="Views\DevMenu.h" />
@@ -605,6 +606,7 @@
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" />
     <ClCompile Include="Utils\UwpScriptStore.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
+    <ClCompile Include="Utils\XamlIslandUtils.cpp" />
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
     <ClCompile Include="Views\ConfigureBundlerDlg.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />

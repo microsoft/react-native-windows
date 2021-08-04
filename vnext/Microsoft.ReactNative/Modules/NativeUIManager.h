@@ -88,6 +88,11 @@ class NativeUIManager final : public INativeUIManager {
   // and try to get a valid XamlRoot.
   xaml::XamlRoot tryGetXamlRoot();
 
+  // For unparented node like Flyout, XamlRoot should be set to handle
+  // XamlIsland/AppWindow scenarios. This function retrieves the XamlRoot for a
+  // specific root tag.
+  xaml::XamlRoot tryGetXamlRoot(int64_t rootTag);
+
   // Searches itself and its parent to get a valid XamlView.
   // Like Mouse/Keyboard, the event source may not have matched XamlView.
   XamlView reactPeerOrContainerFrom(xaml::FrameworkElement fe);

@@ -101,9 +101,19 @@ winrt::XamlRoot NativeUIManager::tryGetXamlRoot() {
     for (auto const tag : m_host->GetAllRootTags()) {
       if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag))) {
         if (auto uiElement10 = shadowNode->GetView().try_as<xaml::IUIElement10>()) {
-          if (auto xamlRoot = uiElement10.XamlRoot())
-            return xamlRoot;
+          return uiElement10.XamlRoot();
         }
+      }
+    }
+  }
+  return nullptr;
+}
+
+winrt::XamlRoot NativeUIManager::tryGetXamlRoot(int64_t rootTag) {
+  if (m_host) {
+    if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(rootTag))) {
+      if (auto uiElement10 = shadowNode->GetView().try_as<xaml::IUIElement10>()) {
+        return uiElement10.XamlRoot();
       }
     }
   }
