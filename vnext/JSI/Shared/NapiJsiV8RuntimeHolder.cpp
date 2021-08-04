@@ -4,9 +4,7 @@
 #include "NapiJsiV8RuntimeHolder.h"
 
 // V8-JSI
-#include <NapiJsiRuntime.h>
-
-// Standard Library
+#include <V8JsiRuntime.h>
 
 using namespace facebook::jsi;
 using namespace facebook::react;
@@ -17,13 +15,25 @@ using std::unique_ptr;
 namespace Microsoft::JSI {
 
 // See napi_ext_schedule_task_callback definition.
-void ScheduleTaskCallback(
-  napi_env env,
-  napi_ext_task_callback taskCb,
-  void *taskData,
-  uint32_t delayMs,
-  napi_finalize finalizeCb,
-  void *finalizeint) {
+/*static*/ void NapiJsiV8RuntimeHolder::ScheduleTaskCallback(
+    napi_env env,
+    napi_ext_task_callback taskCb,
+    void *taskData,
+    uint32_t delayMs,
+    napi_finalize finalizeCb,
+    void *finalizeint) {
+
+  NapiJsiV8RuntimeHolder *holder;
+  auto result = napi_get_instance_data(env, (void **)&holder);
+  if (result != napi_status::napi_ok) {
+    //TODO: Signal error
+    return;
+  }
+
+  //TODO: ABI-safe?
+  auto sharedTask = shared_ptr<v8runtime::JSITask>(static_cast<v8runtime::JSITask *>(taskData));
+  holder->m_jsQueue->runOnQueue([sharedTask = std::move(sharedTask)]() { sharedTask->run();
+  });
 }
 
 NapiJsiV8RuntimeHolder::NapiJsiV8RuntimeHolder(
@@ -51,13 +61,14 @@ void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
   settings.flags.wait_for_debugger = m_debuggerBreakOnNextLine;
   // TODO: debuggerRuntimeName?
 
-  // TODO
-  settings.foreground_scheduler = &ScheduleTaskCallback;
-  // TODO: scriptStore
+  settings.foreground_scheduler = &NapiJsiV8RuntimeHolder::ScheduleTaskCallback;
+  // TODO: scriptStore?
 
   napi_ext_create_env(&settings, &env);
-  m_runtime = MakeNapiJsiRuntime(env);
+  // Associate environment to holder.
+  napi_set_instance_data(env, this, nullptr, nullptr); // TODO: Finalize
 
+  m_runtime = MakeNapiJsiRuntime(env);
   m_ownThreadId = std::this_thread::get_id();
 }
 

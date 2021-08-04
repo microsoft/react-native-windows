@@ -4,6 +4,7 @@
 #pragma once
 
 #include <DevSettings.h>
+#include <NapiJsiRuntime.h>
 #include "RuntimeHolder.h"
 #include "ScriptStore.h"
 
@@ -20,7 +21,15 @@ class NapiJsiV8RuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
       std::unique_ptr<facebook::jsi::PreparedScriptStore> &&preparedScriptStore) noexcept;
 
  private:
-  void InitRuntime() noexcept;
+  static void ScheduleTaskCallback(
+      napi_env env,
+      napi_ext_task_callback taskCb,
+      void *taskData,
+      uint32_t delayMs,
+      napi_finalize finalizeCb,
+      void *finalizeint);
+
+   void InitRuntime() noexcept;
 
   std::shared_ptr<facebook::jsi::Runtime> m_runtime;
   std::shared_ptr<facebook::react::MessageQueueThread> m_jsQueue;
