@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 03 Aug 2021 05:10:45 GMT and should not be manually modified.
+This log was last generated on Wed, 04 Aug 2021 05:05:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.352
+
+Wed, 04 Aug 2021 05:05:41 GMT
+
+### Changes
+
+- add binskim analysis to CI (agnel@microsoft.com)
+- Add some jsvalue reader helpers for more xaml types (asklar@microsoft.com)
+- Add root tag to CreateView in ViewManagerBase (erozell@outlook.com)
+- Add cxx unit test for xaml types (asklar@microsoft.com)
 
 ## 0.0.0-canary.351
 

@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 04 Aug 2021 05:05:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.352",
+      "version": "0.0.0-canary.352",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add binskim analysis to CI",
+            "author": "agnel@microsoft.com",
+            "commit": "d62e9d87e4f9f8d454f00c3a61a8e78fefbf1c2f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add some jsvalue reader helpers for more xaml types",
+            "author": "asklar@microsoft.com",
+            "commit": "d9c322c43f6f960974f3266d20016e53808eed54",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add root tag to CreateView in ViewManagerBase",
+            "author": "erozell@outlook.com",
+            "commit": "8c3f1eb7ce6449f0a3f3da935372b1383b11975e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add cxx unit test for xaml types",
+            "author": "asklar@microsoft.com",
+            "commit": "992fc052ef0ab081ceec8fff102a33cca94c0450",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Aug 2021 05:10:45 GMT",
       "tag": "react-native-windows_v0.0.0-canary.351",
       "version": "0.0.0-canary.351",
