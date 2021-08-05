@@ -19,7 +19,11 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
 
   static void ApplyTextTransform(ShadowNodeBase &node, TextTransform transform, bool forceUpdate, bool isRoot);
 
-  void AddHyperlinkClickHandler(const xaml::Documents::Hyperlink &hyperlink);
+  void DispatchEvent(std::string &&eventName, folly::dynamic &&eventData);
+
+  void RegisterHyperlinkEvents(const xaml::Documents::Hyperlink &hyperlink);
+
+  void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) override;
 
   struct HighlightData {
     std::vector<HighlightData> data;

@@ -87,7 +87,11 @@ void VirtualTextShadowNode::ApplyTextTransform(
   }
 }
 
-void VirtualTextShadowNode::AddHyperlinkClickHandler(const winrt::Hyperlink &hyperlink) {
+void VirtualTextShadowNode::DispatchEvent(std::string &&eventName, folly::dynamic &&eventData) {
+  GetViewManager()->GetReactContext().DispatchEvent(m_tag, std::move(eventName), std::move(eventData));
+}
+
+void VirtualTextShadowNode::RegisterHyperlinkEvents(const winrt::Hyperlink &hyperlink) {
   hyperlink.Click([=](auto &&...) {
     // TODO: How can we limit this to fire exclusively when an accessibility
     // invoke action is triggered? Does View suffer the same limitation where
@@ -95,10 +99,31 @@ void VirtualTextShadowNode::AddHyperlinkClickHandler(const winrt::Hyperlink &hyp
     // events and the `onClick` / `onAccessibilityTap` events?
     if (UiaClientsAreListening()) {
       const auto eventName = m_onClick ? "topClick" : "topAccessibilityTap";
-      GetViewManager()->GetReactContext().DispatchEvent(
-          m_tag, std::move(eventName), folly::dynamic::object("target", m_tag));
+      DispatchEvent(std::move(eventName), folly::dynamic::object("target", m_tag));
     }
   });
+
+  hyperlink.GotFocus([=](auto &&...) {
+    DispatchEvent("topFocus", folly::dynamic::object("target", m_tag));    
+  });
+
+  hyperlink.LostFocus([=](auto &&...) {
+    DispatchEvent("topBlur", folly::dynamic::object("target", m_tag));
+  });
+}
+
+void VirtualTextShadowNode::dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
+  if (commandId == "focus") {
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+      uiManager->focus(m_tag);
+    }
+  } else if (commandId == "blur") {
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+      uiManager->blur(m_tag);
+    }
+  } else {
+    Super::dispatchCommand(commandId, std::move(commandArgs));
+  }
 }
 
 VirtualTextViewManager::VirtualTextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -150,7 +175,7 @@ bool VirtualTextViewManager::UpdateProperty(
         hyperlink.TabIndex(node->m_tabIndex.value());
       }
       nodeToUpdate->ReparentView(hyperlink);
-      node->AddHyperlinkClickHandler(hyperlink);
+      node->RegisterHyperlinkEvents(hyperlink);
     } else if (!isHyperlink && wasHyperlink) {
       nodeToUpdate->ReparentView(winrt::Span{});
     }

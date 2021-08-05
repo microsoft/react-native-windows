@@ -63,6 +63,16 @@ export const NativeText: HostComponent<NativeTextProps> = (createReactNativeComp
       },
       // Windows]
     },
+    // [Windows
+    bubblingEventTypes: {
+      topFocus: {
+        registrationName: 'onFocus',
+      },
+      topBlur: {
+        registrationName: 'onBlur',
+      },
+    },
+    // Windows]
     uiViewClassName: 'RCTText',
   }),
 ): any);
