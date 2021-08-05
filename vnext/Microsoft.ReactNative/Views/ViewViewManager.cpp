@@ -356,7 +356,7 @@ bool ViewViewManager::UpdateProperty(
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
   auto *pViewShadowNode = static_cast<ViewShadowNode *>(nodeToUpdate);
-  bool shouldBeControl = pViewShadowNode->IsControl();
+  bool shouldBeControl = pViewShadowNode->IsFocusable();
   bool finalizeBorderRadius{false};
 
   auto pPanel = pViewShadowNode->GetViewPanel();
@@ -381,7 +381,7 @@ bool ViewViewManager::UpdateProperty(
       }
     } else if (propertyName == "focusable" || propertyName == "acceptsKeyboardFocus") {
       if (propertyValue.isBool())
-        shouldBeControl = propertyValue.getBool();
+        pViewShadowNode->IsFocusable(propertyValue.getBool());
     } else if (propertyName == "enableFocusRing") {
       if (propertyValue.isBool())
         pViewShadowNode->EnableFocusRing(propertyValue.getBool());
