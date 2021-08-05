@@ -11,8 +11,6 @@
 #include <Modules/PaperUIManagerModule.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
-#include <uiautomationcore.h>
-#include <uiautomationcoreapi.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/TransformableText.h>
 #include <Utils/ValueUtils.h>
@@ -87,20 +85,6 @@ void VirtualTextShadowNode::ApplyTextTransform(
   }
 }
 
-void VirtualTextShadowNode::AddHyperlinkClickHandler(const winrt::Hyperlink &hyperlink) {
-  hyperlink.Click([=](auto &&...) {
-    // TODO: How can we limit this to fire exclusively when an accessibility
-    // invoke action is triggered? Does View suffer the same limitation where
-    // a double tap for accessibility invoke will fire both the `onTouch*`
-    // events and the `onClick` / `onAccessibilityTap` events?
-    if (UiaClientsAreListening()) {
-      const auto eventName = m_onClick ? "topClick" : "topAccessibilityTap";
-      GetViewManager()->GetReactContext().DispatchEvent(
-          m_tag, std::move(eventName), folly::dynamic::object("target", m_tag));
-    }
-  });
-}
-
 VirtualTextViewManager::VirtualTextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const wchar_t *VirtualTextViewManager::GetName() const {
@@ -146,11 +130,14 @@ bool VirtualTextViewManager::UpdateProperty(
       // Underline should be handled by base class using 'textDecorationLine' prop
       hyperlink.UnderlineStyle(winrt::UnderlineStyle::None);
       const auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
+      hyperlink.Click([this, tag = node->m_tag, onClick = node->m_onClick](auto &&, auto &&) {
+        const auto eventName = onClick ? L"topClick" : L"topAccessibilityTap";
+        DispatchEvent(tag, eventName, folly::dynamic::object("tag", tag));
+      });
       if (node->m_tabIndex.has_value()) {
         hyperlink.TabIndex(node->m_tabIndex.value());
       }
       nodeToUpdate->ReparentView(hyperlink);
-      node->AddHyperlinkClickHandler(hyperlink);
     } else if (!isHyperlink && wasHyperlink) {
       nodeToUpdate->ReparentView(winrt::Span{});
     }

@@ -99,6 +99,7 @@ const Text: React.AbstractComponent<
         ? null
         : {
             // [Windows
+            onClick: eventHandlers.onClick,
             onKeyDown: eventHandlers.onKeyDown,
             onKeyUp: eventHandlers.onKeyUp,
             // Windows]
@@ -161,7 +162,7 @@ const Text: React.AbstractComponent<
     return (
       <NativeVirtualText
         {...restProps}
-        {...eventHandlersForText}
+        {...{...eventHandlersForText}}
         isHighlighted={isHighlighted}
         selectionColor={selectionColor}
         style={style}
@@ -229,7 +230,7 @@ const Text: React.AbstractComponent<
         <TextAncestor.Provider value={true}>
           <NativeText
             {...restProps}
-            {...eventHandlersForText}
+            {...{...eventHandlersForText}}
             accessible={accessible !== false}
             allowFontScaling={allowFontScaling !== false}
             ellipsizeMode={ellipsizeMode ?? 'tail'}

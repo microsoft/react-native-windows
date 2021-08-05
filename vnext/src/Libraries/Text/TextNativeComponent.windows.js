@@ -45,6 +45,7 @@ export const NativeText: HostComponent<NativeTextProps> = (createReactNativeComp
       android_hyphenationFrequency: true,
       focusable: true, // [Windows]
       tabIndex: true, // [Windows]
+      onClick: true, // [Windows]
     },
     directEventTypes: {
       topTextLayout: {
@@ -53,6 +54,14 @@ export const NativeText: HostComponent<NativeTextProps> = (createReactNativeComp
       topInlineViewLayout: {
         registrationName: 'onInlineViewLayout',
       },
+      // [Windows
+      topClick: {
+        registrationName: 'onClick',
+      },
+      topAccessibilityTap: {
+        registrationName: 'onAccessibilityTap',
+      },
+      // Windows]
     },
     uiViewClassName: 'RCTText',
   }),
@@ -69,6 +78,7 @@ export const NativeVirtualText: HostComponent<NativeTextProps> =
           maxFontSizeMultiplier: true,
           focusable: true, // [Windows]
           tabIndex: true, // [Windows]
+          onClick: true, // [Windows]
         },
         uiViewClassName: 'RCTVirtualText',
       })): any);

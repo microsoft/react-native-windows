@@ -19,6 +19,8 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
 
   static void ApplyTextTransform(ShadowNodeBase &node, TextTransform transform, bool forceUpdate, bool isRoot);
 
+  void AddHyperlinkClickHandler(const xaml::Documents::Hyperlink &hyperlink);
+
   struct HighlightData {
     std::vector<HighlightData> data;
     size_t spanIdx = 0;
@@ -28,6 +30,7 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
 
   HighlightData m_highlightData;
   std::optional<int32_t> m_tabIndex;
+  bool m_onClick;
 };
 
 class VirtualTextViewManager : public ViewManagerBase {
