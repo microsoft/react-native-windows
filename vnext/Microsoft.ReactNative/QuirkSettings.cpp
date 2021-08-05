@@ -32,6 +32,12 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> AcceptSelfSignedCertsProper
   return propId;
 }
 
+winrt::Microsoft::ReactNative::ReactPropertyId<bool> EnableBackHandlerProperty() noexcept {
+  winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{L"ReactNative.QuirkSettings", L"EnableBackHandler"};
+
+  return propId;
+}
+
 #pragma region IDL interface
 
 /*static*/ void QuirkSettings::SetMatchAndroidAndIOSStretchBehavior(
@@ -46,6 +52,12 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> AcceptSelfSignedCertsProper
   ReactPropertyBag(settings.Properties()).Set(AcceptSelfSignedCertsProperty(), value);
 }
 
+/*static*/ void QuirkSettings::SetEnableBackHandler(
+    winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+    bool value) noexcept {
+  ReactPropertyBag(settings.Properties()).Set(EnableBackHandlerProperty(), value);
+}
+
 #pragma endregion IDL interface
 
 /*static*/ bool QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(ReactPropertyBag properties) noexcept {
@@ -54,6 +66,10 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> AcceptSelfSignedCertsProper
 
 /*static*/ bool QuirkSettings::GetAcceptSelfSigned(ReactPropertyBag properties) noexcept {
   return properties.Get(AcceptSelfSignedCertsProperty()).value_or(false);
+}
+
+/*static*/ bool QuirkSettings::GetEnableBackHandler(ReactPropertyBag properties) noexcept {
+  return properties.Get(EnableBackHandlerProperty()).value_or(true);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

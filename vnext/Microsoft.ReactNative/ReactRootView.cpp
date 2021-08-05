@@ -4,6 +4,7 @@
 #include "ReactRootView.h"
 #include "ReactRootView.g.cpp"
 
+#include <QuirkSettings.h>
 #include <ReactHost/MsoUtils.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.Media3D.h>
@@ -360,6 +361,10 @@ void ReactRootView::AttachBackHandlers() noexcept {
    * crash with XamlIslands so we can't just bail if that call fails.
    */
   if (::Microsoft::ReactNative::IsXamlIsland())
+    return;
+
+  if (!winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableBackHandler(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties())))
     return;
 
   auto weakThis = this->get_weak();

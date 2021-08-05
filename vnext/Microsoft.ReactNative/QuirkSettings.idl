@@ -26,5 +26,12 @@ namespace Microsoft.ReactNative
 
     DOC_STRING("Runtime setting allowing Networking (HTTP, WebSocket) connections to skip certificate validation.")
     static void SetAcceptSelfSigned(ReactInstanceSettings settings, Boolean value);
+
+    DOC_STRING(
+      "Runtime setting that can be used to skip the default back handler logic.  "
+      "If you have an application that wants to handle back bahavior in native code "
+      "instead of JavaScript, setting this to false will prevent the native module "
+      "from handling the events. Default: true")
+    static void SetEnableBackHandler(ReactInstanceSettings settings, Boolean value);
   }
 } // namespace Microsoft.ReactNative
