@@ -217,14 +217,14 @@ void DevMenuManager::CreateAndShowUI() noexcept {
                 React::implementation::ReactDispatcher::GetUIDispatcher(strongThis->m_context->Properties());
             uiDispatcher.Post([traceFilePath]() {
               DataTransfer::DataPackage data;
-              data.SetText(Microsoft::Common::Unicode::Utf8ToUtf16(traceFilePath));
+              data.SetText(winrt::to_hstring(traceFilePath));
               DataTransfer::Clipboard::SetContentWithOptions(data, nullptr);
             });
           }
         }
       });
 #else
-  devMenu.SamplingProfiler().Visibility(winrt::Windows::UI::Xaml::Visibility::Collapsed);
+  devMenu.SamplingProfiler().Visibility(xaml::Visibility::Collapsed);
 #endif
 
   m_toggleInspectorRevoker = devMenu.Inspector().Click(
