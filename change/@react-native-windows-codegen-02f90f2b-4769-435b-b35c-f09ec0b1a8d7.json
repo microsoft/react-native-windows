@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Do not write codegen files if the contents have not changed, as this breaks incremental builds",
-  "packageName": "@react-native-windows/codegen",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

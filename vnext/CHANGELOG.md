@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 04 Aug 2021 05:05:41 GMT and should not be manually modified.
+This log was last generated on Thu, 05 Aug 2021 05:07:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.353
+
+Thu, 05 Aug 2021 05:07:20 GMT
+
+### Changes
+
+- Do not write codegen files if the contents have not changed, as this breaks incremental builds (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.352
 
