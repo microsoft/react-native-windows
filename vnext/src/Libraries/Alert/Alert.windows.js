@@ -18,7 +18,6 @@ export type Buttons = Array<{
   text?: string,
   onPress?: ?Function,
   style?: AlertButtonStyle,
-  default?: boolean,
   ...
 }>;
 
@@ -39,7 +38,7 @@ class Alert {
     // The text 'OK' should be probably localized. iOS Alert does that in native.
     const validButtons: Buttons = buttons
       ? buttons.slice(0, 3)
-      : [{text: 'OK', default: true}];
+      : [{text: 'OK', style: 'default'}];
     const buttonPositive = validButtons.pop();
     const buttonNegative = validButtons.pop();
     const buttonNeutral = validButtons.pop();
@@ -50,7 +49,7 @@ class Alert {
       buttonNeutral,
       buttonNegative,
       buttonPositive,
-    ].findIndex(b => b != null && b.default);
+    ].findIndex(b => b != null && b.style === 'default');
 
     // XAML has an enum to specify the default button, which is:
     //   None = 0, Primary = 1, Secondary = 2, Close = 3
