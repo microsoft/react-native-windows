@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Logs exception from IReactDispatcher callback",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
