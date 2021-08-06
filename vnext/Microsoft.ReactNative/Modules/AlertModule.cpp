@@ -38,6 +38,10 @@ void Alert::ProcessPendingAlertRequests() noexcept {
   dialog.PrimaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonPositive));
   dialog.SecondaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNegative));
   dialog.CloseButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNeutral));
+  dialog.DefaultButton(
+      !args.buttonPositive.empty() ? xaml::Controls::ContentDialogButton::Primary
+                                   : !args.buttonNegative.empty() ? xaml::Controls::ContentDialogButton::Secondary
+                                                                  : xaml::Controls::ContentDialogButton::Close);
 
   if (Is19H1OrHigher()) {
     // XamlRoot added in 19H1
