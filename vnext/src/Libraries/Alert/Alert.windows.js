@@ -18,7 +18,7 @@ export type Buttons = Array<{
   text?: string,
   onPress?: ?Function,
   style?: AlertButtonStyle,
-  isDefault?: boolean,
+  default?: boolean,
   ...
 }>;
 
@@ -39,18 +39,18 @@ class Alert {
     // The text 'OK' should be probably localized. iOS Alert does that in native.
     const validButtons: Buttons = buttons
       ? buttons.slice(0, 3)
-      : [{text: 'OK'}];
+      : [{text: 'OK', default: true}];
     const buttonPositive = validButtons.pop();
     const buttonNegative = validButtons.pop();
     const buttonNeutral = validButtons.pop();
 
-    // Find the first button where isDefault is set to true
+    // Find the first button where 'default' is set to true
     // in order of declared buttons.
     const defaultIndex = [
       buttonNeutral,
       buttonNegative,
       buttonPositive,
-    ].findIndex(b => b != null && b.isDefault);
+    ].findIndex(b => b != null && b.default);
 
     // XAML has an enum to specify the default button, which is:
     //   None = 0, Primary = 1, Secondary = 2, Close = 3
