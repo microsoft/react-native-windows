@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add QuirkSettings::SetEnableBackHandler to opt out of the backhandler behaviors",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
