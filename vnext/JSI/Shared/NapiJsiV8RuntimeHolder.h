@@ -27,7 +27,7 @@ class NapiJsiV8RuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
       void *taskData,
       uint32_t delayMs,
       napi_finalize finalizeCb,
-      void *finalizeint);
+      void *finalizeHint);
 
    void InitRuntime() noexcept;
 
