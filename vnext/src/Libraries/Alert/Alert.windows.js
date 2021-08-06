@@ -18,6 +18,7 @@ export type Buttons = Array<{
   text?: string,
   onPress?: ?Function,
   style?: AlertButtonStyle,
+  isDefault?: boolean,
   ...
 }>;
 
@@ -43,6 +44,20 @@ class Alert {
     const buttonNegative = validButtons.pop();
     const buttonNeutral = validButtons.pop();
 
+    // Find the first button where isDefault is set to true
+    // in order of declared buttons.
+    const defaultIndex = [
+      buttonNeutral,
+      buttonNegative,
+      buttonPositive,
+    ].findIndex(b => b != null && b.isDefault);
+
+    // XAML has an enum to specify the default button, which is:
+    //   None = 0, Primary = 1, Secondary = 2, Close = 3
+    // If no default button is found, specify 0 for None, otherwise
+    // convert the index to its corresponding XAML enum value.
+    const defaultButton = defaultIndex >= 0 ? 3 - defaultIndex : 0;
+
     let args = {
       title: title || '',
       message: message || '',
@@ -50,6 +65,7 @@ class Alert {
       buttonNeutral: buttonNeutral ? buttonNeutral.text : '',
       buttonNegative: buttonNegative ? buttonNegative.text : '',
       buttonPositive: buttonPositive ? buttonPositive.text : '',
+      defaultButton,
     };
 
     AlertNative.showAlert(args, (actionResult: string) => {
