@@ -14,7 +14,7 @@
 namespace Microsoft::ReactNative {
 
 namespace {
-std::future<std::string> getTraceFilePath() {
+std::future<std::string> getTraceFilePath() noexcept {
   auto hermesFolder = (co_await winrt::Windows::Storage::ApplicationData::Current().LocalFolder().CreateFolderAsync(
                            L"Hermes", winrt::Windows::Storage::CreationCollisionOption::OpenIfExists))
                           .Path();
@@ -30,17 +30,17 @@ std::future<std::string> getTraceFilePath() {
 bool HermesSamplingProfiler::s_isStarted = false;
 std::string HermesSamplingProfiler::s_lastTraceFilePath;
 
-std::string HermesSamplingProfiler::GetLastTraceFilePath() {
+std::string HermesSamplingProfiler::GetLastTraceFilePath() noexcept {
   return s_lastTraceFilePath;
 }
 
-winrt::fire_and_forget HermesSamplingProfiler::Start() {
+winrt::fire_and_forget HermesSamplingProfiler::Start() noexcept {
   s_isStarted = true;
   facebook::hermes::HermesRuntime::enableSamplingProfiler();
   co_return;
 }
 
-std::future<std::string> HermesSamplingProfiler::Stop() {
+std::future<std::string> HermesSamplingProfiler::Stop() noexcept {
   s_isStarted = false;
   facebook::hermes::HermesRuntime::disableSamplingProfiler();
   s_lastTraceFilePath = co_await getTraceFilePath();
@@ -48,7 +48,7 @@ std::future<std::string> HermesSamplingProfiler::Stop() {
   co_return s_lastTraceFilePath;
 }
 
-bool HermesSamplingProfiler::IsStarted() {
+bool HermesSamplingProfiler::IsStarted() noexcept {
   return s_isStarted;
 }
 

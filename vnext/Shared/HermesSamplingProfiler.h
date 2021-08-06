@@ -9,10 +9,10 @@ namespace Microsoft::ReactNative {
 
 class HermesSamplingProfiler final {
  public:
-  static winrt::fire_and_forget Start();
-  static std::future<std::string> Stop();
-  static std::string GetLastTraceFilePath();
-  static bool IsStarted();
+  static winrt::fire_and_forget Start() noexcept;
+  static std::future<std::string> Stop() noexcept;
+  static std::string GetLastTraceFilePath() noexcept;
+  static bool IsStarted() noexcept;
 
  private:
   static bool s_isStarted;

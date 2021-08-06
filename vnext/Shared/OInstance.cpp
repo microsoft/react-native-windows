@@ -431,7 +431,10 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
 // https://github.com/facebook/react-native/blob/24d91268b64c7abbd4b26547ffcc663dc90ec5e7/ReactCommon/cxxreact/Instance.cpp#L112
 bool isHBCBundle(const std::string &bundle) {
   static uint32_t constexpr HBCBundleMagicNumber = 0xffe7c3c3;
-  BundleHeader *header = reinterpret_cast<BundleHeader *>(const_cast<char *>(bundle.c_str()));
+
+  // Note:: Directly access the pointer to avoid copy/length-check. It matters as this string contains the bundle which can be potentially huge.
+  // https://herbsutter.com/2008/04/07/cringe-not-vectors-are-guaranteed-to-be-contiguous/#comment-483
+  BundleHeader *header = reinterpret_cast<BundleHeader *>(const_cast<char *>(&bundle[0]));
   if (HBCBundleMagicNumber == folly::Endian::little(header->magic)) {
     return true;
   } else {
@@ -447,7 +450,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       // errors before attempting to load the actual script.
 
       uint32_t hermesBytecodeVersion = 0;
-#if defined(USE_HERMES) && defined(ENABLE_HBCBUNDLES)
+#if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
       hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
 #endif
 
@@ -485,7 +488,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       // This code is based on the HBC Bundle integration on Android
       // Ref:
       // https://github.com/facebook/react-native/blob/24d91268b64c7abbd4b26547ffcc663dc90ec5e7/ReactAndroid/src/main/jni/react/jni/CatalystInstanceImpl.cpp#L231
-      if (isHBCBundle(jsBundleString.c_str())) {
+      if (isHBCBundle(jsBundleString)) {
         auto script = std::make_unique<JSBigStdString>(jsBundleString, false);
         const char *buffer = script->c_str();
         uint32_t bufferLength = (uint32_t)script->size();
@@ -576,7 +579,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
 #endif
 
   uint32_t hermesBytecodeVersion = 0;
-#if defined(USE_HERMES) && defined(ENABLE_HBCBUNDLES)
+#if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
   hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
 #endif
 

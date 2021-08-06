@@ -16,7 +16,7 @@
     <HermesArch Condition="'$(HermesArch)' == ''">uwp</HermesArch>
     <EnableHermesInspectorInReleaseFlavor Condition="'$(EnableHermesInspectorInReleaseFlavor)' == ''">false</EnableHermesInspectorInReleaseFlavor>
     <!-- Use Hermes bytecode bundles provided by metro hermes compiler when available -->
-    <EnableHBCBundles Condition="'$(EnableHBCBundles)' == ''">false</EnableHBCBundles>
+    <EnableDevServerHBCBundles Condition="'$(EnableDevServerHBCBundles)' == ''">false</EnableDevServerHBCBundles>
 
     <UseV8 Condition="'$(UseV8)' == ''">false</UseV8>
     <V8Version Condition="'$(V8Version)' == ''">0.64.17</V8Version>

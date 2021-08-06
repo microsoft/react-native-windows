@@ -57,6 +57,10 @@ hstring ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {
   return winrt::to_hstring(m_settings->JavaScriptBundleFile());
 }
 
+uint32_t ReactSettingsSnapshot::JsiEngine() const noexcept {
+  return m_settings->JsiEngine();
+}
+
 Mso::React::IReactSettingsSnapshot const &ReactSettingsSnapshot::GetInner() const noexcept {
   return *m_settings;
 }

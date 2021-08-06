@@ -25,5 +25,7 @@ namespace Microsoft.ReactNative
       XAML_NAMESPACE.Controls.TextBlock BreakOnNextLineText { get; };
       XAML_NAMESPACE.Controls.TextBlock SamplingProfilerText { get; };
       XAML_NAMESPACE.Controls.TextBlock SamplingProfilerDescText { get; };
+
+      XAML_NAMESPACE.Controls.FontIcon SamplingProfilerIcon { get; };
     }
 }

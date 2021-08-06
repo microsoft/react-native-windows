@@ -34,7 +34,7 @@ std::pair<std::string, bool> GetJavaScriptFromServer(
     bool dev,
     bool hot,
     bool inlineSourceMap,
-    const uint32_t hermesBytecodeVersion);
+    uint32_t hermesBytecodeVersion);
 
 class DevSupportManager final : public facebook::react::IDevSupportManager {
  public:
