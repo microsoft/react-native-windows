@@ -140,7 +140,7 @@ bool ImageViewManager::UpdateProperty(
     if (isValidColorValue || propertyValue.IsNull()) {
       auto reactImage{grid.as<ReactImage>()};
       const auto color = isValidColorValue ? ColorFrom(propertyValue) : winrt::Colors::Transparent();
-      reactImage->TintColor(ColorFrom(propertyValue));
+      reactImage->TintColor(color);
     }
   } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
     finalizeBorderRadius = true;
