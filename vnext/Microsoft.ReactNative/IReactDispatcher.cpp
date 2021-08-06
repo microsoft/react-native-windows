@@ -5,6 +5,8 @@
 #include "IReactDispatcher.h"
 #include "ReactDispatcherHelper.g.cpp"
 
+#include <glog/logging.h>
+
 using namespace winrt;
 using namespace Windows::Foundation;
 
@@ -17,7 +19,16 @@ bool ReactDispatcher::HasThreadAccess() noexcept {
 }
 
 void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
-  return m_queue.Post([callback]() noexcept { callback(); });
+  return m_queue.Post([callback]() noexcept {
+    try {
+      callback();
+    } catch (winrt::hresult_error const &error) {
+      std::stringstream errorCode;
+      errorCode << "0x" << std::hex << error.code();
+      LOG(ERROR) << "HRESULT " << errorCode.str() << ": " << winrt::to_string(error.message());
+      throw;
+    }
+  });
 }
 
 /*static*/ IReactDispatcher ReactDispatcher::CreateSerialDispatcher() noexcept {
