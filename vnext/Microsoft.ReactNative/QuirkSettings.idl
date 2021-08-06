@@ -7,6 +7,12 @@ import "ReactInstanceSettings.idl";
 
 namespace Microsoft.ReactNative
 {
+
+  enum BackNavigationHandlerKind {
+    JavaScript = 0,
+    Native = 1
+  };
+
   [webhosthidden]
   [default_interface]
   [experimental]
@@ -28,10 +34,10 @@ namespace Microsoft.ReactNative
     static void SetAcceptSelfSigned(ReactInstanceSettings settings, Boolean value);
 
     DOC_STRING(
-      "Runtime setting that can be used to skip the default back handler logic.  "
-      "If you have an application that wants to handle back bahavior in native code "
-      "instead of JavaScript, setting this to false will prevent the native module "
-      "from handling the events. Default: true")
-    static void SetEnableBackHandler(ReactInstanceSettings settings, Boolean value);
+      "By default `react-native-windows` will handle various back events and forward them to JavaScript. "
+      "Setting this to `BackNavigationHandlerKind.Native` prevents `react-native-windows` from handling "
+      "these events.  This will allow applications to handle back navigation in native code, but will prevent "
+      "the BackHandler native module from receiving events.")
+    static void SetBackHandlerKind(ReactInstanceSettings settings, BackNavigationHandlerKind kind);
   }
 } // namespace Microsoft.ReactNative

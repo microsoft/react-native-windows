@@ -21,7 +21,8 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
   static bool GetMatchAndroidAndIOSStretchBehavior(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
   static bool GetAcceptSelfSigned(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
-  static bool GetEnableBackHandler(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+  static winrt::Microsoft::ReactNative::BackNavigationHandlerKind GetBackHandlerKind(
+      winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
   static bool GetEnableFabric(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
@@ -31,7 +32,9 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
       bool value) noexcept;
 
   static void SetAcceptSelfSigned(winrt::Microsoft::ReactNative::ReactInstanceSettings settings, bool value) noexcept;
-  static void SetEnableBackHandler(winrt::Microsoft::ReactNative::ReactInstanceSettings settings, bool value) noexcept;
+  static void SetBackHandlerKind(
+      winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+      winrt::Microsoft::ReactNative::BackNavigationHandlerKind kind) noexcept;
 #pragma endregion Public API - part of IDL interface
 };
 
