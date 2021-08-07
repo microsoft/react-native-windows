@@ -433,7 +433,7 @@ void ReactInstanceWin::Initialize() noexcept {
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
-      switch (m_options.GetJsiEngine()) {
+      switch (m_options.JsiEngine()) {
         case JSIEngine::Hermes:
 #if defined(INCLUDE_HERMES)
           devSettings->jsiRuntimeHolder =
@@ -1039,8 +1039,8 @@ uint16_t ReactInstanceWin::SourceBundlePort() const noexcept {
                                                       : facebook::react::DevServerHelper::DefaultPackagerPort;
 }
 
-uint32_t ReactInstanceWin::JsiEngine() const noexcept {
-  return static_cast<uint32_t>(m_options.GetJsiEngine());
+JSIEngine ReactInstanceWin::JsiEngine() const noexcept {
+  return m_options.JsiEngine();
 }
 
 std::string ReactInstanceWin::JavaScriptBundleFile() const noexcept {

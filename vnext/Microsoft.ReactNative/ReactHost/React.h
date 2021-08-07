@@ -104,7 +104,7 @@ struct IReactSettingsSnapshot : IUnknown {
   virtual uint16_t SourceBundlePort() const noexcept = 0;
   virtual std::string JavaScriptBundleFile() const noexcept = 0;
   virtual bool UseDeveloperSupport() const noexcept = 0;
-  virtual uint32_t JsiEngine() const noexcept = 0;
+  virtual JSIEngine JsiEngine() const noexcept = 0;
 };
 
 MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
@@ -265,9 +265,9 @@ struct ReactOptions {
       bool value) noexcept;
   static bool UseFastRefresh(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
 
-  JSIEngine GetJsiEngine() const noexcept;
+  JSIEngine JsiEngine() const noexcept;
   void SetJsiEngine(JSIEngine value) noexcept;
-  static JSIEngine GetJsiEngine(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
+  static JSIEngine JsiEngine(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
   static void SetJsiEngine(
       winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
       JSIEngine value) noexcept;

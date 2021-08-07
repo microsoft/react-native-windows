@@ -113,30 +113,29 @@ void DevMenuManager::CreateAndShowUI() noexcept {
       Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ? L"Disable Fast Refresh"
                                                                         : L"Enable Fast Refresh");
 
-  if (Mso::React::ReactOptions::GetJsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
-      devMenu.SamplingProfilerText().Text(
-          !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"Start Hermes sampling profiler"
-                                                                       : L"Stop Hermes sampling profiler");
-      devMenu.SamplingProfilerIcon().Glyph(
-          !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? winrt::to_hstring("\uE1E5")
-                                                                       : winrt::to_hstring("\uE15B"));
+  if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
+    devMenu.SamplingProfilerText().Text(
+        !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"Start Hermes sampling profiler"
+                                                                     : L"Stop and copy trace path to clipboard");
+    devMenu.SamplingProfilerIcon().Glyph(
+        !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"\ue1e5" : L"\ue15b");
 
-      std::ostringstream os;
-      if (Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
-        os << "Sampling profiler running..";
-      } else {
-        os << "Click to start.";
-      }
+    std::ostringstream os;
+    if (Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
+      os << "Hermes Sampling profiler is running.. !";
+    } else {
+      os << "Click to start.";
+    }
 
-      auto lastTraceFilePath = Microsoft::ReactNative::HermesSamplingProfiler::GetLastTraceFilePath();
-      if (!lastTraceFilePath.empty()) {
-        os << std::endl
-           << "Samples from last invocation are stored at " << lastTraceFilePath.c_str()
-           << "  (path copied to clipboard).";
-        os << std::endl << "Navigate to \"edge:\\tracing\" and load the trace file.";
-      }
+    auto lastTraceFilePath = Microsoft::ReactNative::HermesSamplingProfiler::GetLastTraceFilePath();
+    if (!lastTraceFilePath.empty()) {
+      os << std::endl
+         << "Samples from last invocation are stored at " << lastTraceFilePath.c_str()
+         << "  (path copied to clipboard).";
+      os << std::endl << "Navigate to \"edge:\\tracing\" and load the trace file.";
+    }
 
-      devMenu.SamplingProfilerDescText().Text(winrt::to_hstring(os.str()));
+    devMenu.SamplingProfilerDescText().Text(winrt::to_hstring(os.str()));
   }
 
   devMenu.DirectDebugText().Text(
@@ -206,29 +205,29 @@ void DevMenuManager::CreateAndShowUI() noexcept {
         }
       });
 
-  if (Mso::React::ReactOptions::GetJsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
+  if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
     m_samplingProfilerRevoker = devMenu.SamplingProfiler().Click(
         winrt::auto_revoke,
         [wkThis = weak_from_this()](
             auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept -> winrt::fire_and_forget {
-            if (auto strongThis = wkThis.lock()) {
-              strongThis->Hide();
-              if (!Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
-                Microsoft::ReactNative::HermesSamplingProfiler::Start();
-              } else {
-                auto traceFilePath = co_await Microsoft::ReactNative::HermesSamplingProfiler::Stop();
-                auto uiDispatcher =
-                    React::implementation::ReactDispatcher::GetUIDispatcher(strongThis->m_context->Properties());
-                uiDispatcher.Post([traceFilePath]() {
-                  DataTransfer::DataPackage data;
-                  data.SetText(winrt::to_hstring(traceFilePath));
-                  DataTransfer::Clipboard::SetContentWithOptions(data, nullptr);
-                });
-              }
+          if (auto strongThis = wkThis.lock()) {
+            strongThis->Hide();
+            if (!Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
+              Microsoft::ReactNative::HermesSamplingProfiler::Start();
+            } else {
+              auto traceFilePath = co_await Microsoft::ReactNative::HermesSamplingProfiler::Stop();
+              auto uiDispatcher =
+                  React::implementation::ReactDispatcher::GetUIDispatcher(strongThis->m_context->Properties());
+              uiDispatcher.Post([traceFilePath]() {
+                DataTransfer::DataPackage data;
+                data.SetText(winrt::to_hstring(traceFilePath));
+                DataTransfer::Clipboard::SetContentWithOptions(data, nullptr);
+              });
             }
-          });
+          }
+        });
   } else {
-      devMenu.SamplingProfiler().Visibility(xaml::Visibility::Collapsed);
+    devMenu.SamplingProfiler().Visibility(xaml::Visibility::Collapsed);
   }
 
   m_toggleInspectorRevoker = devMenu.Inspector().Click(

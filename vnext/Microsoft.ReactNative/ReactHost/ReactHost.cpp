@@ -111,17 +111,16 @@ bool ReactOptions::UseDeveloperSupport() const noexcept {
   return winrt::unbox_value_or<bool>(properties.Get(UseDeveloperSupportProperty()), false);
 }
 
-/*static*/ JSIEngine ReactOptions::GetJsiEngine(
+/*static*/ JSIEngine ReactOptions::JsiEngine(
     winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
   return (Mso::React::JSIEngine)winrt::unbox_value_or<uint32_t>(properties.Get(JSIEngineProperty()), 0);
 }
 
-JSIEngine ReactOptions::GetJsiEngine() const noexcept {
-  return static_cast<JSIEngine>(GetJsiEngine(Properties));
+JSIEngine ReactOptions::JsiEngine() const noexcept {
+  return static_cast<JSIEngine>(JsiEngine(Properties));
 }
 
-void ReactOptions::SetJsiEngine(
-    JSIEngine value) noexcept {
+void ReactOptions::SetJsiEngine(JSIEngine value) noexcept {
   Properties.Set(JSIEngineProperty(), winrt::box_value(static_cast<uint32_t>(value)));
 }
 /*static*/ void ReactOptions::SetJsiEngine(
@@ -129,7 +128,6 @@ void ReactOptions::SetJsiEngine(
     JSIEngine value) noexcept {
   properties.Set(JSIEngineProperty(), winrt::box_value(static_cast<uint32_t>(value)));
 }
-
 
 /*static*/ void ReactOptions::SetUseFastRefresh(
     winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,

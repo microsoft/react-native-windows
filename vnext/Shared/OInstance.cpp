@@ -46,6 +46,7 @@
 
 #if defined(INCLUDE_HERMES)
 #include <hermes/BytecodeVersion.h>
+#include <safeint.h>
 #include "HermesRuntimeHolder.h"
 #endif
 #if defined(USE_V8)
@@ -432,7 +433,8 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
 bool isHBCBundle(const std::string &bundle) {
   static uint32_t constexpr HBCBundleMagicNumber = 0xffe7c3c3;
 
-  // Note:: Directly access the pointer to avoid copy/length-check. It matters as this string contains the bundle which can be potentially huge.
+  // Note:: Directly access the pointer to avoid copy/length-check. It matters as this string contains the bundle which
+  // can be potentially huge.
   // https://herbsutter.com/2008/04/07/cringe-not-vectors-are-guaranteed-to-be-contiguous/#comment-483
   BundleHeader *header = reinterpret_cast<BundleHeader *>(const_cast<char *>(&bundle[0]));
   if (HBCBundleMagicNumber == folly::Endian::little(header->magic)) {
@@ -492,18 +494,41 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
         auto script = std::make_unique<JSBigStdString>(jsBundleString, false);
         const char *buffer = script->c_str();
         uint32_t bufferLength = (uint32_t)script->size();
+
+        // Please refer the code here for details on the file format:
+        // https://github.com/facebook/metro/blob/b1bacf52070be62872d6bd3420f37a4405ed34e6/packages/metro/src/lib/bundleToBytecode.js#L29
+        // Essentially, there is an 8 byte long file header with 4 bytes of a magic number followed by 4 bytes to encode
+        // the number of modules.The module buffers follows, each one starts with 4 byte header which encodes module
+        // length.A properly formatted HBCB should have at least 8 bytes..
         uint32_t offset = 8;
+#define __SAFEADD__(s1, s2, t)             \
+  if (!msl::utilities::SafeAdd(s1, s2, t)) \
+    break;
         while (offset < bufferLength) {
-          uint32_t segment = offset + 4;
-          uint32_t moduleLength = bufferLength < segment ? 0 : *(((uint32_t *)buffer) + offset / 4);
+          uint32_t segment;
+          __SAFEADD__(offset, 4, segment)
+          uint32_t moduleLength = (bufferLength < segment) ? 0 : *(((uint32_t *)buffer) + offset / 4);
+
+          // Early break if the module length is computed as 0.. as the segment start may be overflowing the buffer.
+          if (moduleLength == 0)
+            break;
+
+          uint32_t segmentEnd;
+          __SAFEADD__(moduleLength, segment, segmentEnd)
+          // Early break if the segment overflows beyond the buffer. This is unlikely for a properly formatted
+          // HBCB though.
+          if (segmentEnd > bufferLength)
+            break;
 
           m_innerInstance->loadScriptFromString(
-              std::make_unique<const JSBigStdString>(std::string(buffer + segment, buffer + moduleLength + segment)),
+              std::make_unique<const JSBigStdString>(std::string(buffer + segment, buffer + segmentEnd)),
               bundleUrl,
               false);
 
+          // Aligned at 4 byte boundary.
           offset += ((moduleLength + 3) & ~3) + 4;
         }
+#undef __SAFEADD__
       } else {
         // Remote debug executor loads script from a Uri, rather than taking the actual bundle string
         m_innerInstance->loadScriptFromString(

@@ -91,13 +91,6 @@ namespace Microsoft.ReactNative
       "The `.bundle` extension will be appended to the end, when looking for the bundle file.")
     String JavaScriptBundleFile { get; };
 
-    DOC_STRING(
-        "A read-only snapshot of the @ReactInstanceSettings.JsiEngineOverride property value "
-        "at the time when the React instance was created.\n"
-        "")
-    UInt32 JsiEngine {
-      get;
-    };
   }
 
   [webhosthidden]

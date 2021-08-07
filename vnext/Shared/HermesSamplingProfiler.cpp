@@ -35,16 +35,22 @@ std::string HermesSamplingProfiler::GetLastTraceFilePath() noexcept {
 }
 
 winrt::fire_and_forget HermesSamplingProfiler::Start() noexcept {
-  s_isStarted = true;
-  facebook::hermes::HermesRuntime::enableSamplingProfiler();
+  if (!s_isStarted) {
+    s_isStarted = true;
+    co_await winrt::resume_background();
+    facebook::hermes::HermesRuntime::enableSamplingProfiler();
+  }
   co_return;
 }
 
 std::future<std::string> HermesSamplingProfiler::Stop() noexcept {
-  s_isStarted = false;
-  facebook::hermes::HermesRuntime::disableSamplingProfiler();
-  s_lastTraceFilePath = co_await getTraceFilePath();
-  facebook::hermes::HermesRuntime::dumpSampledTraceToFile(s_lastTraceFilePath);
+  if (s_isStarted) {
+    s_isStarted = false;
+    co_await winrt::resume_background();
+    facebook::hermes::HermesRuntime::disableSamplingProfiler();
+    s_lastTraceFilePath = co_await getTraceFilePath();
+    facebook::hermes::HermesRuntime::dumpSampledTraceToFile(s_lastTraceFilePath);
+  }
   co_return s_lastTraceFilePath;
 }
 
