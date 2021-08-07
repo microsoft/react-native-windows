@@ -54,7 +54,7 @@ EnableBackHandlerKindProperty() noexcept {
   ReactPropertyBag(settings.Properties()).Set(AcceptSelfSignedCertsProperty(), value);
 }
 
-/*static*/ void SetBackHandlerKind(
+/*static*/ void QuirkSettings::SetBackHandlerKind(
     winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
     winrt::Microsoft::ReactNative::BackNavigationHandlerKind kind) noexcept {
   ReactPropertyBag(settings.Properties()).Set(EnableBackHandlerKindProperty(), kind);
