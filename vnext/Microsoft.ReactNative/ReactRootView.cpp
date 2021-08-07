@@ -364,8 +364,8 @@ void ReactRootView::AttachBackHandlers() noexcept {
     return;
 
   if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetBackHandlerKind(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()) !=
-              winrt::Microsoft::ReactNative::BackNavigationHandlerKind::JavaScript))
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties())) !=
+              winrt::Microsoft::ReactNative::BackNavigationHandlerKind::JavaScript)
     return;
 
   auto weakThis = this->get_weak();
