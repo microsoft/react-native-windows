@@ -4,10 +4,17 @@
 #include "pch.h"
 
 #include <chrono>
+#include <future>
 
 #include <hermes/hermes.h>
-#include <winrt/Windows.Storage.h>
 #include "Unicode.h"
+
+#ifdef WINRT
+#include <winrt/Windows.Storage.h>
+#else
+#include <ShlObj.h>
+#include <Shlwapi.h>
+#endif
 
 #include "HermesSamplingProfiler.h"
 
@@ -15,14 +22,24 @@ namespace Microsoft::ReactNative {
 
 namespace {
 std::future<std::string> getTraceFilePath() noexcept {
+  std::ostringstream os;
+#ifdef WINRT
   auto hermesFolder = (co_await winrt::Windows::Storage::ApplicationData::Current().LocalFolder().CreateFolderAsync(
                            L"Hermes", winrt::Windows::Storage::CreationCollisionOption::OpenIfExists))
                           .Path();
+  os << Microsoft::Common::Unicode::Utf16ToUtf8(hermesFolder.c_str(), hermesFolder.size());
+#else
+  WCHAR wzAppData[MAX_PATH];
+  if (SHGetFolderPathW(nullptr, CSIDL_LOCAL_APPDATA, nullptr, SHGFP_TYPE_CURRENT, wzAppData) != S_OK)
+    std::abort(); // We don't expect this to happen ever ..
+
+  std::string appData = Microsoft::Common::Unicode::Utf16ToUtf8(wzAppData, wcsnlen_s(wzAppData, MAX_PATH));
+  os << appData << "\\react-native\\Hermes";
+#endif
   auto now = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch())
                  .count();
-  std::ostringstream os;
-  os << Microsoft::Common::Unicode::Utf16ToUtf8(hermesFolder.c_str(), hermesFolder.size()) << "\\cpu_" << +now
-     << ".cpuprofile";
+
+  os << "\\cpu_" << now << ".cpuprofile";
   co_return os.str();
 }
 } // namespace
@@ -35,15 +52,18 @@ std::string HermesSamplingProfiler::GetLastTraceFilePath() noexcept {
 }
 
 winrt::fire_and_forget HermesSamplingProfiler::Start() noexcept {
+#ifdef INCLUDE_HERMES
   if (!s_isStarted) {
     s_isStarted = true;
     co_await winrt::resume_background();
     facebook::hermes::HermesRuntime::enableSamplingProfiler();
   }
+#endif
   co_return;
 }
 
 std::future<std::string> HermesSamplingProfiler::Stop() noexcept {
+#ifdef INCLUDE_HERMES
   if (s_isStarted) {
     s_isStarted = false;
     co_await winrt::resume_background();
@@ -51,6 +71,7 @@ std::future<std::string> HermesSamplingProfiler::Stop() noexcept {
     s_lastTraceFilePath = co_await getTraceFilePath();
     facebook::hermes::HermesRuntime::dumpSampledTraceToFile(s_lastTraceFilePath);
   }
+#endif
   co_return s_lastTraceFilePath;
 }
 

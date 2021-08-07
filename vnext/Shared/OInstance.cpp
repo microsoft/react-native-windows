@@ -42,11 +42,11 @@
 #include <RuntimeOptions.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
+#include <safeint.h>
 #include "PackagerConnection.h"
 
 #if defined(INCLUDE_HERMES)
 #include <hermes/BytecodeVersion.h>
-#include <safeint.h>
 #include "HermesRuntimeHolder.h"
 #endif
 #if defined(USE_V8)

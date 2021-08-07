@@ -15,10 +15,8 @@
 #include "winrt/Windows.UI.Core.h"
 #include "winrt/Windows.UI.Xaml.Interop.h"
 
-#if defined(USE_HERMES)
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include "HermesSamplingProfiler.h"
-#endif
 
 using namespace winrt::Windows::ApplicationModel;
 
