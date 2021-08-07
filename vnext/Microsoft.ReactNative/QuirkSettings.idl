@@ -35,7 +35,7 @@ namespace Microsoft.ReactNative
 
     DOC_STRING(
       "By default `react-native-windows` will handle various back events and forward them to JavaScript. "
-      "Setting this to `BackNavigationHandlerKind.Native` prevents `react-native-windows` from handling "
+      "Setting this to @BackNavigationHandlerKind.Native prevents `react-native-windows` from handling "
       "these events, including forwarding to JavaScript.  This will allow applications to handle back "
       "navigation in native code, but will prevent the `BackHandler` native module from receiving events.")
     static void SetBackHandlerKind(ReactInstanceSettings settings, BackNavigationHandlerKind kind);
