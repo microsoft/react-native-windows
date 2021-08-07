@@ -45,25 +45,30 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   void OnLoadEnd(winrt::event_token const &token) noexcept;
 
   // Public Properties
-  const ReactImageSource &Source() {
+  const ReactImageSource &Source() const noexcept {
     return m_imageSource;
   }
   void Source(ReactImageSource source);
 
-  facebook::react::ImageResizeMode ResizeMode() {
+  facebook::react::ImageResizeMode ResizeMode() const noexcept {
     return m_resizeMode;
   }
   void ResizeMode(facebook::react::ImageResizeMode value);
 
-  float BlurRadius() {
+  float BlurRadius() const noexcept {
     return m_blurRadius;
   }
   void BlurRadius(float value);
 
-  winrt::Windows::UI::Color TintColor() {
+  winrt::Windows::UI::Color TintColor() const noexcept {
     return m_tintColor;
   }
   void TintColor(winrt::Windows::UI::Color value);
+
+  bool IsPlaying() const noexcept {
+    return m_isPlaying;
+  }
+  void IsPlaying(bool isPlaying);
 
  private:
   xaml::Media::Stretch ResizeModeToStretch(facebook::react::ImageResizeMode value);
@@ -77,6 +82,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   ReactImageSource m_imageSource;
   facebook::react::ImageResizeMode m_resizeMode{facebook::react::ImageResizeMode::Contain};
   winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};
+  bool m_isPlaying{true};
 
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
   xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;

@@ -138,6 +138,13 @@ bool ImageViewManager::UpdateProperty(
   } else if (propertyName == "tintColor" && IsValidColorValue(propertyValue)) {
     auto reactImage{grid.as<ReactImage>()};
     reactImage->TintColor(ColorFrom(propertyValue));
+  } else if (propertyName == "isPlaying") {
+    auto reactImage{grid.as<ReactImage>()};
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+      reactImage->IsPlaying(propertyValue.AsBoolean());
+    } else if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Null) {
+      reactImage->IsPlaying(true);
+    }
   } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
     finalizeBorderRadius = true;
   } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {
@@ -210,5 +217,7 @@ void ImageViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVa
   writer.WriteString(L"string");
   writer.WritePropertyName(L"blurRadius");
   writer.WriteString(L"number");
+  writer.WritePropertyName(L"isPlaying");
+  writer.WriteString(L"boolean");
 }
 } // namespace Microsoft::ReactNative
