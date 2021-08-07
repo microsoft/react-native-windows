@@ -1,0 +1,50 @@
+{
+    "imageType": "Managed",
+    "baseImage": "/MicrosoftWindowsServer/WindowsServer/2019-Datacenter/latest",
+    "artifacts": [
+        {
+            "Name": "windows-EnableDeveloperMode"
+        },
+        {
+            "Name": "windows-enable-long-paths"
+        },
+        {
+            "Name": "windows-gitinstall"
+        },
+        {
+            "Name": "windows-AzPipeline-ImageHelpers"
+        },
+        {
+            "Name": "windows-AzPipeline-InitializeVM"
+        },
+        {
+            "Name": "windows-AzPipeline-Install-VS",
+            "Parameters": {
+                "ToolSetFileName": "2019-default.json"
+            }
+        },
+        {
+            "Name": "windows-AzPipeline-NodeLts"
+        },
+        {
+            "Name": "windows-chrome"
+        },
+        {
+            "Name": "windows-AzPipeline-WinAppDriver"
+        },
+        {
+            "Name": "windows-dotnetcore-sdk",
+            "Parameters": {
+                "DotNetCoreVersion": "3.1.401"
+            }
+        }
+    ],
+    "publishingProfile": {
+        "targetRegions": [
+            {
+                "name": "westus2",
+                "replicas": 1
+            }
+        ]
+    }
+}
