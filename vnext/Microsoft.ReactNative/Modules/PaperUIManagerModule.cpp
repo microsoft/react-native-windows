@@ -168,7 +168,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       React::JSValueArray &&point,
       std::function<void(double nativeViewTag, double left, double top, double width, double height)>
           &&callback) noexcept {
-    if (auto node = m_nodeRegistry->findNode(reactTag)) {
+    if (auto node = m_nodeRegistry.findNode(reactTag)) {
       float x = static_cast<float>(point[0]);
       float y = static_cast<float>(point[1]);
       m_nativeUIManager->findSubviewIn(*node, x, y, std::move(callback));
