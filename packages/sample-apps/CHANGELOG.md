@@ -1,8 +1,16 @@
 # Change Log - sample-apps
 
-This log was last generated on Fri, 06 Aug 2021 05:09:11 GMT and should not be manually modified.
+This log was last generated on Sat, 07 Aug 2021 05:06:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Sat, 07 Aug 2021 05:06:10 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.355 (erozell@outlook.com)
 
 ## 0.0.0
 

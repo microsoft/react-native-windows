@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Sets the default button for the ContentDialog",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

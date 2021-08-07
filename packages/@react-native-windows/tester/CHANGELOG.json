@@ -2,6 +2,21 @@
   "name": "@react-native-windows/tester",
   "entries": [
     {
+      "date": "Sat, 07 Aug 2021 05:06:10 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.355",
+            "author": "erozell@outlook.com",
+            "commit": "0a1bd7e738ccbc4f74a9376b9376486432ee8ea7",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Aug 2021 05:09:11 GMT",
       "tag": "@react-native-windows/tester_v0.0.1",
       "version": "0.0.1",

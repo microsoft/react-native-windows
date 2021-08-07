@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 07 Aug 2021 05:06:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.355",
+      "version": "0.0.0-canary.355",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Sets the default button for the ContentDialog",
+            "author": "erozell@outlook.com",
+            "commit": "0a1bd7e738ccbc4f74a9376b9376486432ee8ea7",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Aug 2021 05:09:11 GMT",
       "tag": "react-native-windows_v0.0.0-canary.354",
       "version": "0.0.0-canary.354",
