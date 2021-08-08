@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 08 Aug 2021 05:06:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.356",
+      "version": "0.0.0-canary.356",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Clear tintColor when prop set to null",
+            "author": "erozell@outlook.com",
+            "commit": "c212589106dd6fa799794b9e0a90003f5ac27374",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Aug 2021 05:06:10 GMT",
       "tag": "react-native-windows_v0.0.0-canary.355",
       "version": "0.0.0-canary.355",

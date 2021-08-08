@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Clear tintColor when prop set to null",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
