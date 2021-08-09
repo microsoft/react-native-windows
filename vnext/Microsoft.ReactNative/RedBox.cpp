@@ -19,6 +19,7 @@
 #include <UI.Xaml.Documents.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Markup.h>
+#include <UI.Xaml.Media.h>
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.System.h>

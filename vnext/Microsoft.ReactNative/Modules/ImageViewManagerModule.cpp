@@ -13,6 +13,7 @@
 #include <UI.Xaml.Media.Imaging.h>
 #include <Views/Image/ReactImage.h>
 #include <cxxreact/JsArgumentHelpers.h>
+#include <winrt/Windows.Storage.Streams.h>
 #include "Unicode.h"
 
 namespace winrt {
