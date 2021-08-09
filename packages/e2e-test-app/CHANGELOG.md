@@ -1,8 +1,16 @@
 # Change Log - e2e-test-app
 
-This log was last generated on Mon, 26 Jul 2021 15:06:39 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Aug 2021 15:10:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Mon, 09 Aug 2021 15:10:42 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.65.0-preview.8 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0
 
