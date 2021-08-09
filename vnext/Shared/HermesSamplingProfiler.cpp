@@ -6,12 +6,12 @@
 #include <chrono>
 #include <future>
 
-#include <hermes/hermes.h>
-#include "Unicode.h"
-#include <appmodel.h>
-#include <winrt/Windows.Storage.h>
 #include <ShlObj.h>
 #include <Shlwapi.h>
+#include <appmodel.h>
+#include <hermes/hermes.h>
+#include <winrt/Windows.Storage.h>
+#include "Unicode.h"
 
 #include "HermesSamplingProfiler.h"
 
@@ -34,7 +34,7 @@ std::future<std::string> getTraceFilePath() noexcept {
     std::string appData = winrt::to_string(wzAppData);
     os << appData << "\\react-native\\Hermes";
   }
-  
+
   auto now = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch())
                  .count();
 
