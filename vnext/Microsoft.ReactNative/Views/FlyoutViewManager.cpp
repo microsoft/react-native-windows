@@ -193,12 +193,14 @@ void FlyoutShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
 
   m_flyoutClosedRevoker = m_flyout.Closed(winrt::auto_revoke, [=](auto &&, auto &&) {
     if (!m_updating) {
-      if (m_targetElement != nullptr) {
+      if (m_targetTag > 0) {
         // When the flyout closes, attempt to move focus to
         // its anchor element to prevent cases where focus can land on
         // an outer flyout content and therefore trigger a unexpected flyout
         // dismissal
-        xaml::Input::FocusManager::TryFocusAsync(m_targetElement, winrt::FocusState::Programmatic);
+        if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+          uiManager->focus(m_targetTag);
+        }
       }
 
       OnFlyoutClosed(GetViewManager()->GetReactContext(), m_tag, false);

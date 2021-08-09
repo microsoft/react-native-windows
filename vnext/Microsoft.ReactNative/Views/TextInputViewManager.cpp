@@ -312,7 +312,9 @@ void TextInputShadowNode::registerEvents() {
 
   m_controlLoadedRevoker = control.Loaded(winrt::auto_revoke, [=](auto &&, auto &&) {
     if (m_autoFocus) {
-      control.Focus(xaml::FocusState::Keyboard);
+      if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+        uiManager->focus(m_tag);
+      }
     }
 
     auto contentElement = control.GetTemplateChild(L"ContentElement");

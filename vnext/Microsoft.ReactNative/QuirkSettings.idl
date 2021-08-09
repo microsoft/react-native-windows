@@ -53,5 +53,11 @@ namespace Microsoft.ReactNative
       "`inactive` tracks the [Window.Activated Event](https://docs.microsoft.com/uwp/api/windows.ui.core.corewindow.activated) when the window is deactivated.")
     DOC_DEFAULT("false")
     static void SetMapWindowDeactivatedToAppStateInactive(ReactInstanceSettings settings, Boolean value);
+
+    DOC_STRING(
+        "When running multiple windows from a single UI thread, focusing a native view causes the parent "
+        "window of that view to get focus as well. Set this setting to true to prevent focus of a blurred "
+        "window when a view in that window is programmatically focused.")
+    static void SetSuppressWindowFocusOnViewFocus(ReactInstanceSettings settings, Boolean value);
   }
 } // namespace Microsoft.ReactNative
