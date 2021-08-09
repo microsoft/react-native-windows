@@ -27,7 +27,7 @@ std::future<std::string> getTraceFilePath() noexcept {
                           .Path();
   os << winrt::to_string(hermesFolder);
 #else
-  WCHAR wzAppData[MAX_PATH];
+  wchar_t wzAppData[MAX_PATH]{};
   if (SHGetFolderPathW(nullptr, CSIDL_LOCAL_APPDATA, nullptr, SHGFP_TYPE_CURRENT, wzAppData) != S_OK)
     std::abort(); // We don't expect this to happen ever ..
 
