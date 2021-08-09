@@ -40,6 +40,13 @@ EnableBackHandlerKindProperty() noexcept {
   return propId;
 }
 
+winrt::Microsoft::ReactNative::ReactPropertyId<bool> SuppressWindowFocusOnViewFocusProperty() noexcept {
+  winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
+      L"ReactNative.QuirkSettings", L"SuppressWindowFocusOnViewFocus"};
+
+  return propId;
+}
+
 #pragma region IDL interface
 
 /*static*/ void QuirkSettings::SetMatchAndroidAndIOSStretchBehavior(
@@ -60,6 +67,12 @@ EnableBackHandlerKindProperty() noexcept {
   ReactPropertyBag(settings.Properties()).Set(EnableBackHandlerKindProperty(), kind);
 }
 
+/*static*/ void QuirkSettings::SetSuppressWindowFocusOnViewFocus(
+    winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+    bool value) noexcept {
+  ReactPropertyBag(settings.Properties()).Set(SuppressWindowFocusOnViewFocusProperty(), value);
+}
+
 #pragma endregion IDL interface
 
 /*static*/ bool QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(ReactPropertyBag properties) noexcept {
@@ -74,6 +87,10 @@ EnableBackHandlerKindProperty() noexcept {
     ReactPropertyBag properties) noexcept {
   return properties.Get(EnableBackHandlerKindProperty())
       .value_or(winrt::Microsoft::ReactNative::BackNavigationHandlerKind::JavaScript);
+}
+
+/*static*/ bool QuirkSettings::GetSuppressWindowFocusOnViewFocus(ReactPropertyBag properties) noexcept {
+  return properties.Get(SuppressWindowFocusOnViewFocusProperty()).value_or(false);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
