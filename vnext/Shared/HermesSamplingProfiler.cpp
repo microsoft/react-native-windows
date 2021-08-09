@@ -3,15 +3,16 @@
 
 #include "pch.h"
 
+#include <hermes/hermes.h>
 #include <chrono>
 #include <future>
 
+#ifdef WINRT
+#include <winrt/Windows.Storage.h>
+#else
 #include <ShlObj.h>
 #include <Shlwapi.h>
-#include <appmodel.h>
-#include <hermes/hermes.h>
-#include <winrt/Windows.Storage.h>
-#include "Unicode.h"
+#endif
 
 #include "HermesSamplingProfiler.h"
 
@@ -20,21 +21,19 @@ namespace Microsoft::ReactNative {
 namespace {
 std::future<std::string> getTraceFilePath() noexcept {
   std::ostringstream os;
-  uint32_t length{0};
-  if (GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE) {
-    auto hermesFolder = (co_await winrt::Windows::Storage::ApplicationData::Current().LocalFolder().CreateFolderAsync(
-                             L"Hermes", winrt::Windows::Storage::CreationCollisionOption::OpenIfExists))
-                            .Path();
-    os << winrt::to_string(hermesFolder);
-  } else {
-    WCHAR wzAppData[MAX_PATH];
-    if (SHGetFolderPathW(nullptr, CSIDL_LOCAL_APPDATA, nullptr, SHGFP_TYPE_CURRENT, wzAppData) != S_OK)
-      std::abort(); // We don't expect this to happen ever ..
+#ifdef WINRT
+  auto hermesFolder = (co_await winrt::Windows::Storage::ApplicationData::Current().LocalFolder().CreateFolderAsync(
+                           L"Hermes", winrt::Windows::Storage::CreationCollisionOption::OpenIfExists))
+                          .Path();
+  os << winrt::to_string(hermesFolder);
+#else
+  WCHAR wzAppData[MAX_PATH];
+  if (SHGetFolderPathW(nullptr, CSIDL_LOCAL_APPDATA, nullptr, SHGFP_TYPE_CURRENT, wzAppData) != S_OK)
+    std::abort(); // We don't expect this to happen ever ..
 
-    std::string appData = winrt::to_string(wzAppData);
-    os << appData << "\\react-native\\Hermes";
-  }
-
+  std::string appData = winrt::to_string(wzAppData);
+  os << appData << "\\react-native\\Hermes";
+#endif
   auto now = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch())
                  .count();
 
