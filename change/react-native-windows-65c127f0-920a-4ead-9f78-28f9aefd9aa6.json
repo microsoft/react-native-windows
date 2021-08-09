@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Skip user agent HTTP header validation",
+  "comment": "Skip user agent HTTP header validation.",
   "packageName": "react-native-windows",
   "email": "erozell@outlook.com",
   "dependentChangeType": "patch"
