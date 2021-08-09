@@ -436,7 +436,7 @@ bool isHBCBundle(const std::string &bundle) {
   // Note:: Directly access the pointer to avoid copy/length-check. It matters as this string contains the bundle which
   // can be potentially huge.
   // https://herbsutter.com/2008/04/07/cringe-not-vectors-are-guaranteed-to-be-contiguous/#comment-483
-  BundleHeader *header = reinterpret_cast<BundleHeader *>(const_cast<char *>(&bundle[0]));
+  auto header = reinterpret_cast<const BundleHeader *>(&bundle[0]);
   if (HBCBundleMagicNumber == folly::Endian::little(header->magic)) {
     return true;
   } else {
