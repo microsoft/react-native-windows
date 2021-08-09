@@ -57,6 +57,18 @@ void App::OnLaunched(activation::LaunchActivatedEventArgs const& e)
 }
 
 /// <summary>
+/// Invoked when the application is activated by some means other than normal launching.
+/// </summary>
+void App::OnActivated(Activation::IActivatedEventArgs const& e) {
+    auto preActivationContent = Window::Current().Content();
+    super::OnActivated(e);
+    if (!preActivationContent && Window::Current()) {
+        Frame rootFrame = Window::Current().Content().as<Frame>();
+        rootFrame.Navigate(xaml_typename<{{ namespaceCpp }}::MainPage>(), nullptr);
+    }
+}
+
+/// <summary>
 /// Invoked when application execution is being suspended.  Application state is saved
 /// without knowing whether the application will be terminated or resumed with the contents
 /// of memory still intact.
