@@ -363,8 +363,9 @@ void ReactRootView::AttachBackHandlers() noexcept {
   if (::Microsoft::ReactNative::IsXamlIsland())
     return;
 
-  if (!winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableBackHandler(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties())))
+  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetBackHandlerKind(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties())) !=
+      winrt::Microsoft::ReactNative::BackNavigationHandlerKind::JavaScript)
     return;
 
   auto weakThis = this->get_weak();

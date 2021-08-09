@@ -32,8 +32,10 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> AcceptSelfSignedCertsProper
   return propId;
 }
 
-winrt::Microsoft::ReactNative::ReactPropertyId<bool> EnableBackHandlerProperty() noexcept {
-  winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{L"ReactNative.QuirkSettings", L"EnableBackHandler"};
+winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Microsoft::ReactNative::BackNavigationHandlerKind>
+EnableBackHandlerKindProperty() noexcept {
+  winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Microsoft::ReactNative::BackNavigationHandlerKind> propId{
+      L"ReactNative.QuirkSettings", L"EnableBackHandler"};
 
   return propId;
 }
@@ -52,10 +54,10 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> EnableBackHandlerProperty()
   ReactPropertyBag(settings.Properties()).Set(AcceptSelfSignedCertsProperty(), value);
 }
 
-/*static*/ void QuirkSettings::SetEnableBackHandler(
+/*static*/ void QuirkSettings::SetBackHandlerKind(
     winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
-    bool value) noexcept {
-  ReactPropertyBag(settings.Properties()).Set(EnableBackHandlerProperty(), value);
+    winrt::Microsoft::ReactNative::BackNavigationHandlerKind kind) noexcept {
+  ReactPropertyBag(settings.Properties()).Set(EnableBackHandlerKindProperty(), kind);
 }
 
 #pragma endregion IDL interface
@@ -68,8 +70,10 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> EnableBackHandlerProperty()
   return properties.Get(AcceptSelfSignedCertsProperty()).value_or(false);
 }
 
-/*static*/ bool QuirkSettings::GetEnableBackHandler(ReactPropertyBag properties) noexcept {
-  return properties.Get(EnableBackHandlerProperty()).value_or(true);
+/*static*/ winrt::Microsoft::ReactNative::BackNavigationHandlerKind QuirkSettings::GetBackHandlerKind(
+    ReactPropertyBag properties) noexcept {
+  return properties.Get(EnableBackHandlerKindProperty())
+      .value_or(winrt::Microsoft::ReactNative::BackNavigationHandlerKind::JavaScript);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
