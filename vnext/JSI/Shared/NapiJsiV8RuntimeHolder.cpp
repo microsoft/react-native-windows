@@ -3,9 +3,6 @@
 
 #include "NapiJsiV8RuntimeHolder.h"
 
-// V8-JSI
-#include <V8JsiRuntime.h>
-
 using namespace facebook::jsi;
 using namespace facebook::react;
 
@@ -14,26 +11,57 @@ using std::unique_ptr;
 
 namespace Microsoft::JSI {
 
+struct NapiTask {
+  NapiTask(
+      napi_env env,
+      napi_ext_task_callback taskCallback,
+      void *taskData,
+      napi_finalize finalizeCallback,
+      void *finalizeHint) noexcept
+      : m_env{env},
+        m_taskCallback{taskCallback},
+        m_taskData{taskData},
+        m_finalizeCallback{finalizeCallback},
+        m_finalizeHint{finalizeHint} {}
+
+  NapiTask(const NapiTask &) = delete;
+  NapiTask &operator=(const NapiTask &) = delete;
+
+  ~NapiTask() {
+    if (m_finalizeCallback) {
+      m_finalizeCallback(m_env, m_taskCallback, m_finalizeHint);
+    }
+  }
+
+  void operator()() noexcept {
+    m_taskCallback(m_env, m_taskData);
+  }
+
+ private:
+  napi_env m_env;
+  napi_ext_task_callback m_taskCallback;
+  void *m_taskData;
+  napi_finalize m_finalizeCallback;
+  void *m_finalizeHint;
+};
+
 // See napi_ext_schedule_task_callback definition.
 /*static*/ void NapiJsiV8RuntimeHolder::ScheduleTaskCallback(
     napi_env env,
-    napi_ext_task_callback taskCb,
+    napi_ext_task_callback taskCallback,
     void *taskData,
-    uint32_t delayMs,
-    napi_finalize finalizeCb,
-    void *finalizeint) {
-
+    uint32_t /*delayInMsec*/,
+    napi_finalize finalizeCallback,
+    void *finalizeHint) {
   NapiJsiV8RuntimeHolder *holder;
   auto result = napi_get_instance_data(env, (void **)&holder);
   if (result != napi_status::napi_ok) {
-    //TODO: Signal error
+    // TODO: Signal error
     return;
   }
 
-  //TODO: ABI-safe?
-  auto sharedTask = shared_ptr<v8runtime::JSITask>(static_cast<v8runtime::JSITask *>(taskData));
-  holder->m_jsQueue->runOnQueue([sharedTask = std::move(sharedTask)]() { sharedTask->run();
-  });
+  auto task = std::make_shared<NapiTask>(env, taskCallback, taskData, finalizeCallback, finalizeHint);
+  holder->m_jsQueue->runOnQueue([task = std::move(task)]() { task->operator()(); });
 }
 
 NapiJsiV8RuntimeHolder::NapiJsiV8RuntimeHolder(
