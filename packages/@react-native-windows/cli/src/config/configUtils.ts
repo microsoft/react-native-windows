@@ -412,3 +412,24 @@ export function getProjectNamespace(projectContents: Node): string | null {
 export function getProjectGuid(projectContents: Node): string | null {
   return tryFindPropertyValue(projectContents, 'ProjectGuid');
 }
+
+export function getExperimentalFeatures(
+  solutionDir: string,
+): Record<string, string> | null {
+  const propsFile = path.join(solutionDir, 'ExperimentalFeatures.props');
+  if (fs.existsSync(propsFile)) {
+    const result: Record<string, any> = {};
+    const propsContents = readProjectFile(propsFile);
+    const nodes = msbuildSelect(
+      `//msbuild:PropertyGroup/msbuild:*`,
+      propsContents,
+    );
+    for (const node of nodes) {
+      const propertyNode = node as Node;
+      result[propertyNode.nodeName] = propertyNode.textContent;
+    }
+    return result;
+  }
+
+  return null;
+}

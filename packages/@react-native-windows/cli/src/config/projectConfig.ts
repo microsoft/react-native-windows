@@ -39,6 +39,7 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
     projectLang: string, // (auto) Language of the project, cpp or cs, determined from projectFile
     projectGuid: string, // (auto) Project identifier, determined from projectFile
   },
+  experimentalFeatures: Record<String, string> // (auto) Properties extracted from ExperimentalFeatures.props
 }
 
 Example react-native.config.js for a 'MyApp':
@@ -71,6 +72,7 @@ export interface WindowsProjectConfig {
   solutionFile: string;
   project: Project;
   useWinUI3?: boolean;
+  experimentalFeatures?: Record<string, string>;
 }
 
 type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
@@ -195,6 +197,13 @@ export function projectConfigWindows(
       sourceDir,
       path.join(sourceDir, result.solutionFile),
     );
+
+    const experimentalFeatures = configUtils.getExperimentalFeatures(
+      path.dirname(path.join(sourceDir, result.solutionFile)),
+    );
+    if (experimentalFeatures) {
+      result.experimentalFeatures = experimentalFeatures;
+    }
   }
 
   if (validProject) {
