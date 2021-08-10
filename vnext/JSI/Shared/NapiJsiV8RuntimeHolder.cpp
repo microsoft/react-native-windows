@@ -56,8 +56,7 @@ struct NapiTask {
   NapiJsiV8RuntimeHolder *holder;
   auto result = napi_get_instance_data(env, (void **)&holder);
   if (result != napi_status::napi_ok) {
-    // TODO: Signal error
-    return;
+    std::terminate();
   }
 
   auto task = std::make_shared<NapiTask>(env, taskCallback, taskData, finalizeCallback, finalizeHint);

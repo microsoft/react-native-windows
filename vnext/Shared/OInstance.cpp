@@ -375,6 +375,7 @@ InstanceImpl::InstanceImpl(
       Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*m_devSettings);
     }
 
+    //TODO: REVERT BEFORE MERGING.
     m_devSettings->jsiEngineOverride = JSIEngineOverride::V8Napi;
 
     // If the consumer gives us a JSI runtime, then  use it.
