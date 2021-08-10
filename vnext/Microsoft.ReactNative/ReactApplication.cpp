@@ -96,7 +96,7 @@ void ReactApplication::JavaScriptBundleFile(hstring const &value) noexcept {
 void ReactApplication::OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
   if (e.Kind() == Windows::ApplicationModel::Activation::ActivationKind::Protocol) {
     auto protocolActivatedEventArgs{e.as<Windows::ApplicationModel::Activation::ProtocolActivatedEventArgs>()};
-    ::Microsoft::ReactNative::LinkingManagerModule::OpenUri(protocolActivatedEventArgs.Uri());
+    ::Microsoft::ReactNative::LinkingManager::OpenUri(protocolActivatedEventArgs.Uri());
   }
   this->OnCreate(e);
 }

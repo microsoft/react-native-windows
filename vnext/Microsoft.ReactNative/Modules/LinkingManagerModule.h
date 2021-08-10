@@ -3,29 +3,37 @@
 
 #pragma once
 
-#include <cxxreact/CxxModule.h>
-#include <folly/dynamic.h>
+#include <NativeModules.h>
 
 namespace Microsoft::ReactNative {
 
-struct LinkingManagerModule final : facebook::xplat::module::CxxModule {
-  LinkingManagerModule() noexcept;
-  ~LinkingManagerModule() noexcept override;
+REACT_MODULE(LinkingManager)
+struct LinkingManager {
+  LinkingManager() noexcept;
+  ~LinkingManager() noexcept;
 
-  static void OpenUri(winrt::Windows::Foundation::Uri const &uri) noexcept;
-  void HandleOpenUri(winrt::hstring const &uri) noexcept;
+  REACT_INIT(Initialize)
+  void Initialize(React::ReactContext const &reactContext) noexcept;
 
- public: // CxxModule
-  std::string getName() override;
-  std::map<std::string, folly::dynamic> getConstants() override;
-  std::vector<Method> getMethods() override;
+  REACT_METHOD(openURL)
+  void openURL(std::string const &url, React::ReactPromise<React::JSValue> result) noexcept;
 
-  static const char *name;
+  REACT_METHOD(canOpenURL)
+  void canOpenURL(std::string const &url, React::ReactPromise<React::JSValue> result) noexcept;
+
+  REACT_METHOD(getInitialURL)
+  void getInitialURL(React::ReactPromise<React::JSValue> result) noexcept;
+
+  REACT_METHOD(openSettings) void openSettings(React::ReactPromise<React::JSValue> result) noexcept;
+  REACT_METHOD(addListener) void addListener(std::string &&eventName) noexcept;
+  REACT_METHOD(removeListeners) void removeListeners(double count) noexcept;
+
+  static void OpenUri(winrt::Windows::Foundation::Uri const &uri);
 
  private:
-  static std::mutex s_mutex;
-  static winrt::Windows::Foundation::Uri s_initialUri;
-  static std::vector<LinkingManagerModule *> s_linkingModules;
+  React::ReactContext m_context;
+
+  void HandleOpenUri(winrt::hstring const &uri) const noexcept;
 };
 
 } // namespace Microsoft::ReactNative

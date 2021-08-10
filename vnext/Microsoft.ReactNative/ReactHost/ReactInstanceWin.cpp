@@ -23,6 +23,7 @@
 #include "../../codegen/NativeDevSettingsSpec.g.h"
 #include "../../codegen/NativeDeviceInfoSpec.g.h"
 #include "../../codegen/NativeI18nManagerSpec.g.h"
+#include "../../codegen/NativeLinkingManagerSpec.g.h"
 #include "../../codegen/NativeLogBoxSpec.g.h"
 #include "../../codegen/NativeUIManagerSpec.g.h"
 #include "NativeModules.h"
@@ -55,6 +56,7 @@
 #ifndef CORE_ABI
 #include "Modules/DeviceInfoModule.h"
 #include "Modules/I18nManagerModule.h"
+#include "Modules/LinkingManagerModule.h"
 #include "Modules/LogBoxModule.h"
 #include "Modules/NativeUIManager.h"
 #include "Modules/PaperUIManagerModule.h"
@@ -301,6 +303,12 @@ void ReactInstanceWin::LoadModules(
       L"AppState",
       winrt::Microsoft::ReactNative::
           MakeTurboModuleProvider<::Microsoft::ReactNative::AppState, ::Microsoft::ReactNativeSpecs::AppStateSpec>());
+
+  registerTurboModule(
+      L"LinkingManager",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::LinkingManager,
+          ::Microsoft::ReactNativeSpecs::LinkingManagerSpec>());
 
   registerTurboModule(
       L"LogBox",
