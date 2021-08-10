@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes various issues related to clang compile",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

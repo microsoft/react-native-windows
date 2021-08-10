@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 08 Aug 2021 05:06:42 GMT and should not be manually modified.
+This log was last generated on Tue, 10 Aug 2021 05:11:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.357
+
+Tue, 10 Aug 2021 05:11:09 GMT
+
+### Changes
+
+- Fixes various issues related to clang compile (erozell@outlook.com)
+- Bump to Hermes 0.8.1, Debug performance, HBC bundle, CPU Sampling profiler (email not defined)
+- Rename API for changing BackHandler behavior (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.356
 
