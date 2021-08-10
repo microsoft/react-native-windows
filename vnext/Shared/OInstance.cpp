@@ -375,6 +375,8 @@ InstanceImpl::InstanceImpl(
       Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*m_devSettings);
     }
 
+    m_devSettings->jsiEngineOverride = JSIEngineOverride::V8Napi;
+
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
