@@ -7,6 +7,7 @@
 #include "winrt/Microsoft.ReactNative.h"
 
 #include "IReactDispatcher.h"
+#include "LinkingHelper.h"
 #include "Modules/LinkingManagerModule.h"
 #include "ReactNativeHost.h"
 
@@ -96,10 +97,12 @@ void ReactApplication::JavaScriptBundleFile(hstring const &value) noexcept {
 void ReactApplication::OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
   if (e.Kind() == Windows::ApplicationModel::Activation::ActivationKind::Protocol) {
     auto protocolActivatedEventArgs{e.as<Windows::ApplicationModel::Activation::ProtocolActivatedEventArgs>()};
-    if (InstanceSettings().InitialUrl().empty()) {
-      InstanceSettings().InitialUrl(protocolActivatedEventArgs.Uri().AbsoluteUri());
+    const auto uri = protocolActivatedEventArgs.Uri();
+    const auto properties = InstanceSettings().Properties();
+    if (LinkingHelper::InitialUrl(properties).empty()) {
+      LinkingHelper::SetInitialUrl(properties, uri.AbsoluteUri());
     }
-    ::Microsoft::ReactNative::LinkingManager::OpenUri(protocolActivatedEventArgs.Uri());
+    ::Microsoft::ReactNative::LinkingManager::OpenUri(uri);
   }
   this->OnCreate(e);
 }

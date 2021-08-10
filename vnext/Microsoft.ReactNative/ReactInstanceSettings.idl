@@ -89,10 +89,6 @@ namespace Microsoft.ReactNative
     String JavaScriptBundleFile { get; set; };
 
     DOC_STRING(
-        "The URL that is provided by the Linking.getInitialURL() call.")
-    String InitialUrl { get; set; };
-
-    DOC_STRING(
       "Controls whether the instance JavaScript runs in a remote environment such as within a browser.\n"
       "By default, this is using a browser navigated to http://localhost:8081/debugger-ui served by Metro/Haul.\n"
       "Debugging will start as soon as the react native instance is loaded.")

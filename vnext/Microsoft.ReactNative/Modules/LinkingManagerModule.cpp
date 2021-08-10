@@ -5,8 +5,8 @@
 
 #include <winrt/Windows.System.h>
 #include "JSValueWriter.h"
+#include "LinkingHelper.h"
 #include "LinkingManagerModule.h"
-#include "ReactHost/React.h"
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
@@ -75,7 +75,7 @@ void LinkingManager::canOpenURL(std::string const &url, React::ReactPromise<Reac
 }
 
 void LinkingManager::getInitialURL(React::ReactPromise<React::JSValue> result) noexcept {
-  const auto initialUrl = Mso::React::ReactOptions::InitialUrl(m_context.Properties().Handle());
+  const auto initialUrl = React::LinkingHelper::InitialUrl(m_context.Properties().Handle());
   if (!initialUrl.empty()) {
     result.Resolve({winrt::to_string(initialUrl)});
   } else {

@@ -305,14 +305,6 @@ struct ReactOptions {
       bool value) noexcept;
   static bool UseDirectDebugger(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
 
-  //! "The URL that is provided by the Linking.getInitialURL() call."
-  void SetInitialUrl(winrt::hstring const &url) noexcept;
-  winrt::hstring InitialUrl() const noexcept;
-  static void SetInitialUrl(
-      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
-      winrt::hstring const &url) noexcept;
-  static winrt::hstring InitialUrl(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
-
   //! Adds registered JS bundle to JSBundles.
   LIBLET_PUBLICAPI ReactOptions &AddRegisteredJSBundle(std::string_view jsBundleId) noexcept;
 

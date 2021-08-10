@@ -63,9 +63,6 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   hstring JavaScriptBundleFile() noexcept;
   void JavaScriptBundleFile(hstring const &value) noexcept;
 
-  hstring InitialUrl() noexcept;
-  void InitialUrl(hstring const &value) noexcept;
-
   //! Should the instance run in a remote environment such as within a browser
   //! By default, this is using a browser navigated to  http://localhost:8081/debugger-ui served
   //! by Metro/Haul. Debugging will start as soon as the React Native instance is loaded.
