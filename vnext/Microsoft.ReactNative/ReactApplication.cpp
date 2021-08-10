@@ -56,6 +56,7 @@ ReactNative::ReactInstanceSettings ReactApplication::InstanceSettings() noexcept
   if (!m_instanceSettings) {
     m_instanceSettings = make<ReactInstanceSettings>();
     ReactDispatcher::SetUIThreadDispatcher(m_instanceSettings.Properties());
+    LinkingHelper::SetInitialUrl(m_instanceSettings.Properties(), L"https://example.com");
   }
 
   return m_instanceSettings;

@@ -108,8 +108,7 @@ void LinkingManager::removeListeners(double count) noexcept {
 }
 
 void LinkingManager::HandleOpenUri(winrt::hstring const &uri) const noexcept {
-  m_context.CallJSFunction(
-      L"RCTDeviceEventEmitter", L"emit", L"url", React::JSValueObject{{"url", to_string(uri)}});
+  m_context.CallJSFunction(L"RCTDeviceEventEmitter", L"emit", L"url", React::JSValueObject{{"url", to_string(uri)}});
 }
 
 } // namespace Microsoft::ReactNative

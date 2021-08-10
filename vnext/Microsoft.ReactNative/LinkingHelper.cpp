@@ -5,9 +5,7 @@ namespace winrt::Microsoft::ReactNative {
 
 static IReactPropertyName InitialUrlProperty() {
   static IReactPropertyName propName =
-      ReactPropertyBagHelper::GetName(
-          ReactPropertyBagHelper::GetNamespace(L"ReactNative.Linking"),
-          L"InitialUrl");
+      ReactPropertyBagHelper::GetName(ReactPropertyBagHelper::GetNamespace(L"ReactNative.Linking"), L"InitialUrl");
   return propName;
 }
 
