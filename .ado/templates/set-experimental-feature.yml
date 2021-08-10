@@ -1,0 +1,15 @@
+parameters:
+- name: package
+  type: string
+- name: feature
+  type: string
+- name: value
+  type: string
+
+steps:
+  - powershell: |
+      [xml] $experimentalFeatures = Get-Content .\ExperimentalFeatures.props
+      $experimentalFeatures.Project.PropertyGroup.${{ parameters.feature }} = '${{ parameters.value }}'
+      $experimentalFeatures.Save("$pwd\ExperimentalFeatures.props")
+    displayName: Set "${{ parameters.feature }}" to "${{ parameters.value }}"
+    workingDirectory: ${{ parameters.package }}/windows

@@ -1,8 +1,51 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 03 Aug 2021 05:10:45 GMT and should not be manually modified.
+This log was last generated on Sun, 08 Aug 2021 05:06:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.356
+
+Sun, 08 Aug 2021 05:06:42 GMT
+
+### Changes
+
+- Clear tintColor when prop set to null (erozell@outlook.com)
+
+## 0.0.0-canary.355
+
+Sat, 07 Aug 2021 05:06:10 GMT
+
+### Changes
+
+- Sets the default button for the ContentDialog (erozell@outlook.com)
+
+## 0.0.0-canary.354
+
+Fri, 06 Aug 2021 05:09:11 GMT
+
+### Changes
+
+- Add QuirkSettings::SetEnableBackHandler to opt out of the backhandler behaviors (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.353
+
+Thu, 05 Aug 2021 05:07:20 GMT
+
+### Changes
+
+- Do not write codegen files if the contents have not changed, as this breaks incremental builds (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.352
+
+Wed, 04 Aug 2021 05:05:41 GMT
+
+### Changes
+
+- add binskim analysis to CI (agnel@microsoft.com)
+- Add some jsvalue reader helpers for more xaml types (asklar@microsoft.com)
+- Add root tag to CreateView in ViewManagerBase (erozell@outlook.com)
+- Add cxx unit test for xaml types (asklar@microsoft.com)
 
 ## 0.0.0-canary.351
 

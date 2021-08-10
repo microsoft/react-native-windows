@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Add cxx unit test for xaml types",
+  "comment": "Fixes various issues related to clang compile",
   "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
+  "email": "erozell@outlook.com",
   "dependentChangeType": "patch"
 }

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add root tag to CreateView in ViewManagerBase",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

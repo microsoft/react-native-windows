@@ -79,20 +79,42 @@ const GENERATORS = {
 };
 */
 
+function normalizeFileMap(
+  map: Map<string, string>,
+  outputDir: string,
+  outMap: Map<string, string>,
+): void {
+  for (const [fileName, contents] of map) {
+    const location = path.join(outputDir, fileName);
+    outMap.set(path.normalize(location), contents);
+  }
+}
+
 function checkFilesForChanges(
   map: Map<string, string>,
   outputDir: string,
 ): boolean {
   let hasChanges = false;
 
-  for (const [contents, fileName] of map) {
-    const location = path.join(outputDir, fileName);
-    if (!fs.existsSync(location)) {
+  const allExistingFiles = globby
+    .sync(`${outputDir}/**`)
+    .map(_ => path.normalize(_))
+    .sort();
+  const allGeneratedFiles = [...map.keys()].map(_ => path.normalize(_)).sort();
+
+  if (
+    allExistingFiles.length !== allGeneratedFiles.length ||
+    !allExistingFiles.every((val, index) => val === allGeneratedFiles[index])
+  )
+    return true;
+
+  for (const [fileName, contents] of map) {
+    if (!fs.existsSync(fileName)) {
       hasChanges = true;
       continue;
     }
 
-    const currentContents = fs.readFileSync(location, 'utf8');
+    const currentContents = fs.readFileSync(fileName, 'utf8');
     if (currentContents !== contents) {
       console.error(`- ${fileName} has changed`);
       hasChanges = true;
@@ -105,16 +127,33 @@ function checkFilesForChanges(
 
 function writeMapToFiles(map: Map<string, string>, outputDir: string) {
   let success = true;
-  map.forEach((contents: string, fileName: string) => {
-    try {
-      const location = path.join(outputDir, fileName);
-      fs.mkdirSync(path.dirname(location), {recursive: true});
-      fs.writeFileSync(location, contents);
-    } catch (error) {
-      success = false;
-      console.error(`Failed to write ${fileName} to ${outputDir}`, error);
+
+  // This ensures that we delete any generated files from modules that have been deleted
+  const allExistingFiles = globby.sync(`${outputDir}/**`);
+  allExistingFiles.forEach(existingFile => {
+    if (!map.has(path.normalize(existingFile))) {
+      fs.unlinkSync(existingFile);
     }
   });
+
+  for (const [fileName, contents] of map) {
+    try {
+      fs.mkdirSync(path.dirname(fileName), {recursive: true});
+
+      if (fs.existsSync(fileName)) {
+        const currentContents = fs.readFileSync(fileName, 'utf8');
+        // Don't update the files if there are no changes as this breaks incremental builds
+        if (currentContents === contents) {
+          continue;
+        }
+      }
+
+      fs.writeFileSync(fileName, contents);
+    } catch (error) {
+      success = false;
+      console.error(`Failed to write ${fileName} to ${fileName}`, error);
+    }
+  }
 
   return success;
 }
@@ -152,15 +191,12 @@ function generate(
     libraryName,
   );
 
-  const generatedModuleFiles = [];
-  const generatedComponentFiles = [];
-  /*
-  for (const name of generators) {
-    for (const generator of GENERATORS[name]) {
-      generatedFiles.push(...generator(libraryName, schema, moduleSpecName));
-    }
-  }
-*/
+  const generatedFiles = new Map<string, string>();
+
+  generatedFiles.set(
+    path.join(outputDirectory, '.clang-format'),
+    'DisableFormat: true\nSortIncludes: false',
+  );
 
   const generateNM2 = createNM2Generator({namespace: argv.namespace});
   const generatorPropsH = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsH')
@@ -176,37 +212,34 @@ function generate(
   const generatorEventEmitterH = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateEventEmitterH')
     .generate;
 
-  generatedModuleFiles.push(
-    ...generateNM2(libraryName, schema, moduleSpecName),
+  normalizeFileMap(
+    generateNM2(libraryName, schema, moduleSpecName),
+    outputDirectory,
+    generatedFiles,
   );
 
-  generatedComponentFiles.push(
-    ...generatorPropsH(libraryName, schema, moduleSpecName),
-    ...generatorPropsCPP(libraryName, schema, moduleSpecName),
-    ...generatorShadowNodeH(libraryName, schema, moduleSpecName),
-    ...generatorShadowNodeCPP(libraryName, schema, moduleSpecName),
-    ...generatorComponentDescriptorH(libraryName, schema, moduleSpecName),
-    ...generatorEventEmitterH(libraryName, schema, moduleSpecName),
-  );
+  const componentGenerators = [
+    generatorPropsH,
+    generatorPropsCPP,
+    generatorShadowNodeH,
+    generatorShadowNodeCPP,
+    generatorComponentDescriptorH,
+    generatorEventEmitterH,
+  ];
 
-  const moduleFilesToUpdate = new Map<string, string>([
-    ...generatedModuleFiles,
-  ]);
-  const componentFilesToUpdate = new Map<string, string>([
-    ...generatedComponentFiles,
-  ]);
+  componentGenerators.forEach(generator => {
+    normalizeFileMap(
+      generator(libraryName, schema, moduleSpecName),
+      componentOutputdir,
+      generatedFiles,
+    );
+  });
 
   if (test === true) {
-    return (
-      checkFilesForChanges(moduleFilesToUpdate, outputDirectory) &&
-      checkFilesForChanges(componentFilesToUpdate, componentOutputdir)
-    );
+    return checkFilesForChanges(generatedFiles, outputDirectory);
   }
 
-  return (
-    writeMapToFiles(moduleFilesToUpdate, outputDirectory) &&
-    writeMapToFiles(componentFilesToUpdate, componentOutputdir)
-  );
+  return writeMapToFiles(generatedFiles, outputDirectory);
 }
 
 if ((argv.file && argv.files) || (!argv.file && !argv.files)) {
