@@ -427,7 +427,6 @@ InstanceImpl::InstanceImpl(
           break;
         case JSIEngineOverride::V8Napi: {
 #if defined(USE_V8)
-          std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
           char tempPath[MAX_PATH];
@@ -436,7 +435,7 @@ InstanceImpl::InstanceImpl(
           }
 
           m_devSettings->jsiRuntimeHolder = make_shared<NapiJsiV8RuntimeHolder>(
-              m_devSettings, m_jsThread, std::move(scriptStore), std::move(preparedScriptStore));
+              m_devSettings, m_jsThread, nullptr /*scriptStore*/, std::move(preparedScriptStore));
 
           break;
 #else
