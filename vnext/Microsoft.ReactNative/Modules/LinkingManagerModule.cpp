@@ -6,6 +6,7 @@
 #include <winrt/Windows.System.h>
 #include "JSValueWriter.h"
 #include "LinkingManagerModule.h"
+#include "ReactHost/React.h"
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
@@ -22,8 +23,7 @@ namespace Microsoft::ReactNative {
 // LinkingManagerModule helpers
 //
 
-static fire_and_forget
-openURLAsync(Uri uri, React::ReactPromise<React::JSValue> result) {
+static fire_and_forget openURLAsync(Uri uri, React::ReactPromise<React::JSValue> result) {
   if (co_await Launcher::LaunchUriAsync(uri)) {
     result.Resolve({true});
   } else {
@@ -32,8 +32,7 @@ openURLAsync(Uri uri, React::ReactPromise<React::JSValue> result) {
   }
 }
 
-static fire_and_forget
-canOpenURLAsync(Uri uri, React::ReactPromise<React::JSValue> result) {
+static fire_and_forget canOpenURLAsync(Uri uri, React::ReactPromise<React::JSValue> result) {
   auto status = co_await Launcher::QueryUriSupportAsync(uri, LaunchQuerySupportType::Uri);
   if (status == LaunchQuerySupportStatus::Available) {
     result.Resolve({true});
@@ -42,7 +41,6 @@ canOpenURLAsync(Uri uri, React::ReactPromise<React::JSValue> result) {
   }
 }
 
-static winrt::Windows::Foundation::Uri s_initialUri = nullptr;
 static std::mutex s_mutex;
 static std::vector<LinkingManager *> s_linkingModules;
 
@@ -68,21 +66,18 @@ void LinkingManager::Initialize(React::ReactContext const &reactContext) noexcep
 
 void LinkingManager::openURL(std::string const &url, React::ReactPromise<React::JSValue> result) noexcept {
   Uri uri{winrt::to_hstring(url)};
-  m_context.UIDispatcher().Post([uri, result]() mutable {
-    openURLAsync(uri, result);
-  });
+  m_context.UIDispatcher().Post([uri, result]() mutable { openURLAsync(uri, result); });
 }
 
 void LinkingManager::canOpenURL(std::string const &url, React::ReactPromise<React::JSValue> result) noexcept {
   Uri uri{winrt::to_hstring(url)};
-  m_context.UIDispatcher().Post([uri, result]() mutable {
-    canOpenURLAsync(uri, result);
-  });
+  m_context.UIDispatcher().Post([uri, result]() mutable { canOpenURLAsync(uri, result); });
 }
 
 void LinkingManager::getInitialURL(React::ReactPromise<React::JSValue> result) noexcept {
-  if (s_initialUri) {
-    result.Resolve({winrt::to_string(s_initialUri.AbsoluteUri())});
+  const auto initialUrl = Mso::React::ReactOptions::InitialUrl(m_context.Properties().Handle());
+  if (!initialUrl.empty()) {
+    result.Resolve({winrt::to_string(initialUrl)});
   } else {
     result.Resolve({nullptr});
   }
@@ -101,10 +96,6 @@ void LinkingManager::removeListeners(double count) noexcept {
 }
 
 /*static*/ void LinkingManager::OpenUri(Uri const &uri) {
-  if (!s_initialUri) {
-    s_initialUri = uri;
-  }
-
   std::vector<LinkingManager *> modules;
   {
     std::scoped_lock lock{s_mutex};

@@ -75,6 +75,14 @@ winrt::Microsoft::ReactNative::IReactPropertyName EnableFabricProperty() noexcep
   return propName;
 }
 
+winrt::Microsoft::ReactNative::IReactPropertyName InitialUrlProperty() noexcept {
+  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
+      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.ReactOptions"),
+          L"InitialUrl");
+  return propName;
+}
+
 //=============================================================================================
 // ReactOptions implementation
 //=============================================================================================
@@ -232,6 +240,25 @@ bool ReactOptions::UseDirectDebugger() const noexcept {
 /*static*/ bool ReactOptions::UseDirectDebugger(
     winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
   return winrt::unbox_value_or<bool>(properties.Get(UseDirectDebuggerProperty()), false);
+}
+
+void ReactOptions::SetInitialUrl(winrt::hstring const &url) noexcept {
+  Properties.Set(InitialUrlProperty(), winrt::box_value(url));
+}
+
+winrt::hstring ReactOptions::InitialUrl() const noexcept {
+  return InitialUrl(Properties);
+}
+
+/*static*/ void ReactOptions::SetInitialUrl(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+    winrt::hstring const &url) noexcept {
+  properties.Set(InitialUrlProperty(), winrt::box_value(url));
+}
+
+/*static*/ winrt::hstring ReactOptions::InitialUrl(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
+  return winrt::unbox_value_or<winrt::hstring>(properties.Get(InitialUrlProperty()), {});
 }
 
 //=============================================================================================

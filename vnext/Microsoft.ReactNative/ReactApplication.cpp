@@ -96,6 +96,9 @@ void ReactApplication::JavaScriptBundleFile(hstring const &value) noexcept {
 void ReactApplication::OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
   if (e.Kind() == Windows::ApplicationModel::Activation::ActivationKind::Protocol) {
     auto protocolActivatedEventArgs{e.as<Windows::ApplicationModel::Activation::ProtocolActivatedEventArgs>()};
+    if (InstanceSettings().InitialUrl().empty()) {
+      InstanceSettings().InitialUrl(protocolActivatedEventArgs.Uri().AbsoluteUri());
+    }
     ::Microsoft::ReactNative::LinkingManager::OpenUri(protocolActivatedEventArgs.Uri());
   }
   this->OnCreate(e);
@@ -109,7 +112,6 @@ void ReactApplication::OnLaunched(activation::LaunchActivatedEventArgs const &e_
 #else
       e_;
 #endif // USE_WINUI3
-
   this->OnCreate(e);
 }
 

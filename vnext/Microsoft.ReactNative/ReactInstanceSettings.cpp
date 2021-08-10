@@ -107,6 +107,14 @@ void ReactInstanceSettings::EnableDeveloperMenu(bool value) noexcept {
   UseDeveloperSupport(value);
 }
 
+winrt::hstring ReactInstanceSettings::InitialUrl() noexcept {
+  return Mso::React::ReactOptions::InitialUrl(m_properties);
+}
+
+void ReactInstanceSettings::InitialUrl(hstring const &url) noexcept {
+  Mso::React::ReactOptions::SetInitialUrl(m_properties, url);
+}
+
 IReactPropertyNamespace InstanceSettingsNamespace() noexcept {
   static IReactPropertyNamespace value = ReactPropertyBagHelper::GetNamespace(L"ReactNative.InstanceSettings");
   return value;
