@@ -2,9 +2,9 @@
     - name: buildEnvironment
       type: string
       default : PullRequest
-      values: 
-      - PullRequest 
-      - Continuous 
+      values:
+        - PullRequest
+        - Continuous
     - name: buildMatrix
       type: object
       default:
@@ -109,7 +109,7 @@
                       Microsoft.ReactNative\**
                       Microsoft.ReactNative.Managed\**
                       Microsoft.ReactNative.Managed.CodeGen\**
-                
+
                 - template: ../templates/component-governance.yml
 
             - job: UniversalTest${{ matrix.Name }}
@@ -118,7 +118,7 @@
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
                 - UniversalBuild${{ matrix.Name }}
-              
+
               pool: $(AgentPool.Medium)
               timeoutInMinutes: 60
               cancelTimeoutInMinutes: 5
@@ -134,7 +134,7 @@
                     targetType: filePath
                     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
-                    
+
                 - template: ../templates/prepare-env.yml
 
                 - task: NuGetCommand@2
@@ -146,7 +146,7 @@
                     nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
                     restoreDirectory: packages/
                     verbosityRestore: Detailed # Options: quiet, normal, detailed
-                    
+
                 - task: DownloadPipelineArtifact@1
                   displayName: "Download binaries for testing"
                   inputs:
@@ -218,7 +218,7 @@
       displayName: Universal Build 🏗
       variables:
         - template: ../variables/vs2019.yml
-      dependsOn: 
+      dependsOn:
         - ${{ each config in parameters.buildMatrix }}:
           - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
             - ${{ each matrix in config.Matrix }}:
