@@ -12,6 +12,8 @@ class TextViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
+  enum class PropertyChangeType { Text = 0, BackgroundColor };
+
   TextViewManager(const Mso::React::IReactContext &context);
 
   ShadowNode *createShadow() const override;
@@ -24,7 +26,7 @@ class TextViewManager : public FrameworkElementViewManager {
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
-  void OnDescendantTextPropertyChanged(ShadowNodeBase *node);
+  void OnDescendantTextPropertyChanged(ShadowNodeBase *node, PropertyChangeType propertyChangeType = PropertyChangeType::Text);
 
   TextTransform GetTextTransformValue(ShadowNodeBase *node);
 

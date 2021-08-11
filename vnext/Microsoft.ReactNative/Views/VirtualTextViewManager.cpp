@@ -27,11 +27,18 @@ namespace Microsoft::ReactNative {
 void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
   auto &childNode = static_cast<ShadowNodeBase &>(child);
   ApplyTextTransform(childNode, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
-  if (auto span = childNode.GetView().try_as<xaml::Documents::Span>()) {
-    auto &childVTSN = static_cast<VirtualTextShadowNode &>(child);
-    m_highlightData.data.emplace_back(childVTSN.m_highlightData);
-  }
   Super::AddView(child, index);
+  NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType::Text);
+}
+
+void VirtualTextShadowNode::RemoveChildAt(int64_t indexToRemove) {
+  Super::RemoveChildAt(indexToRemove);
+  NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType::Text);
+}
+
+void VirtualTextShadowNode::removeAllChildren() {
+  Super::removeAllChildren();
+  NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType::Text);
 }
 
 void VirtualTextShadowNode::ApplyTextTransform(
@@ -48,7 +55,7 @@ void VirtualTextShadowNode::ApplyTextTransform(
     const auto nodeType = viewManager->GetName();
 
     // Base case: apply the inherited textTransform to the raw text node
-    if (!std::wcscmp(nodeType, L"RCTRawText")) {
+    if (std::wcscmp(nodeType, L"RCTRawText") == 0) {
       auto &rawTextNode = static_cast<RawTextShadowNode &>(node);
       auto originalText = rawTextNode.originalText;
       auto run = node.GetView().try_as<winrt::Run>();
@@ -61,13 +68,13 @@ void VirtualTextShadowNode::ApplyTextTransform(
 
       run.Text(TransformableText::TransformText(originalText, transform));
 
-      if (!std::wcscmp(originalText.c_str(), run.Text().c_str())) {
+      if (std::wcscmp(originalText.c_str(), run.Text().c_str()) == 0) {
         // If the transformed text is the same as the original, we no longer need a second copy
         rawTextNode.originalText = winrt::hstring{};
       }
     } else {
       // Recursively apply the textTransform to the children of the composite text node
-      if (!std::wcscmp(nodeType, L"RCTVirtualText")) {
+      if (std::wcscmp(nodeType, L"RCTVirtualText") == 0) {
         auto &virtualTextNode = static_cast<VirtualTextShadowNode &>(node);
         // If this is not the root call, we can skip sub-trees with explicit textTransform settings.
         if (!isRoot && virtualTextNode.textTransform != TextTransform::Undefined) {
@@ -81,6 +88,22 @@ void VirtualTextShadowNode::ApplyTextTransform(
           ApplyTextTransform(*childNode, transform, forceUpdate, /* isRoot = */ false);
         }
       }
+    }
+  }
+}
+
+void VirtualTextShadowNode::NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType propertyChangeType) {
+  if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+    auto host = uiManager->getHost();
+    ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(m_parent));
+    while (parent) {
+      auto viewManager = parent->GetViewManager();
+      const auto nodeType = viewManager->GetName();
+      if (std::wcscmp(nodeType, L"RCTText") == 0) {
+        (static_cast<TextViewManager *>(viewManager))->OnDescendantTextPropertyChanged(parent, propertyChangeType);
+        break;
+      }
+      parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parent->GetParent()));
     }
   }
 }
@@ -106,8 +129,7 @@ bool VirtualTextViewManager::UpdateProperty(
   // FUTURE: In the future cppwinrt will generate code where static methods on
   // base types can be called.  For now we specify the base type explicitly
   if (TryUpdateForeground<winrt::TextElement>(span, propertyName, propertyValue)) {
-    static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.foregroundColor = ColorFrom(propertyValue);
-  } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
+    static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_foregroundColor = ColorFrom(propertyValue);
   } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (TryUpdateTextDecorationLine<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (propertyName == "textTransform") {
@@ -116,9 +138,14 @@ bool VirtualTextViewManager::UpdateProperty(
     VirtualTextShadowNode::ApplyTextTransform(
         *node, node->textTransform, /* forceUpdate = */ true, /* isRoot = */ true);
   } else if (propertyName == "backgroundColor") {
-    if (IsValidColorValue(propertyValue)) {
-      static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.backgroundColor = ColorFrom(propertyValue);
+    auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
+    if (propertyValue.IsNull()) {
+      node->m_backgroundColor = std::nullopt;
+    } else {
+      node->m_backgroundColor = ColorFrom(propertyValue);
     }
+
+    node->NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType::BackgroundColor);
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }

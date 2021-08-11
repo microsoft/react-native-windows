@@ -6,6 +6,8 @@
 #include "TextViewManager.h"
 #include "Utils/XamlIslandUtils.h"
 
+#include <Modules/NativeUIManager.h>
+#include <Modules/PaperUIManagerModule.h>
 #include <Views/RawTextViewManager.h>
 #include <Views/ShadowNodeBase.h>
 #include <Views/VirtualTextViewManager.h>
@@ -57,10 +59,6 @@ class TextShadowNode final : public ShadowNodeBase {
         m_firstChildNode = &child;
         auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
         textBlock.Text(run.Text());
-
-        if (m_backgroundColor) {
-          AddHighlighter(m_backgroundColor.value(), m_foregroundColor, textBlock.Text().size());
-        }
         m_prevCursorEnd += textBlock.Text().size();
 
         return;
@@ -73,65 +71,13 @@ class TextShadowNode final : public ShadowNodeBase {
     }
 
     Super::AddView(child, index);
-
-    if (auto run = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Run>()) {
-      if (m_backgroundColor) {
-        AddHighlighter(m_backgroundColor.value(), m_foregroundColor, run.Text().size());
-      }
-      m_prevCursorEnd += run.Text().size();
-    } else if (auto span = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Span>()) {
-      AddNestedTextHighlighter(
-          m_backgroundColor, m_foregroundColor, span, static_cast<VirtualTextShadowNode &>(child).m_highlightData);
-    }
-  }
-
-  void AddNestedTextHighlighter(
-      const std::optional<winrt::Windows::UI::Color> &parentBackColor,
-      const std::optional<winrt::Windows::UI::Color> &parentForeColor,
-      winrt::Span &span,
-      VirtualTextShadowNode::HighlightData highData) {
-    if (!highData.backgroundColor && parentBackColor) {
-      highData.backgroundColor = parentBackColor;
-    }
-
-    if (!highData.foregroundColor && parentForeColor) {
-      highData.foregroundColor = parentForeColor;
-    }
-
-    for (const auto &el : span.Inlines()) {
-      if (auto run = el.try_as<winrt::Run>()) {
-        if (highData.backgroundColor) {
-          AddHighlighter(highData.backgroundColor.value(), highData.foregroundColor, run.Text().size());
-        }
-
-        m_prevCursorEnd += run.Text().size();
-      } else if (auto spanChild = el.try_as<winrt::Span>()) {
-        AddNestedTextHighlighter(
-            highData.backgroundColor, highData.foregroundColor, spanChild, highData.data[highData.spanIdx++]);
-      }
-    }
-  }
-
-  void AddHighlighter(
-      const winrt::Windows::UI::Color &backgroundColor,
-      const std::optional<winrt::Windows::UI::Color> &foregroundColor,
-      size_t runSize) {
-    auto newHigh = winrt::TextHighlighter{};
-    newHigh.Background(SolidBrushFromColor(backgroundColor));
-
-    if (foregroundColor) {
-      newHigh.Foreground(SolidBrushFromColor(foregroundColor.value()));
-    }
-
-    winrt::TextRange newRange{m_prevCursorEnd, static_cast<int32_t>(runSize)};
-    newHigh.Ranges().Append(newRange);
-
-    this->GetView().as<xaml::Controls::TextBlock>().TextHighlighters().Append(newHigh);
+    UpdateTextHighlighters();
   }
 
   void removeAllChildren() override {
     m_firstChildNode = nullptr;
     Super::removeAllChildren();
+    UpdateTextHighlighters();
   }
 
   void RemoveChildAt(int64_t indexToRemove) override {
@@ -139,6 +85,77 @@ class TextShadowNode final : public ShadowNodeBase {
       m_firstChildNode = nullptr;
     }
     Super::RemoveChildAt(indexToRemove);
+    UpdateTextHighlighters();
+  }
+
+  void UpdateTextHighlighters() {
+    const auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
+    textBlock.TextHighlighters().Clear();
+
+    auto nestedIndex = 0;
+    if (const auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+      for (auto childTag : m_children) {
+        if (const auto childNode = uiManager->getHost()->FindShadowNodeForTag(childTag)) {
+          nestedIndex = AddNestedTextHighlighter(
+              m_backgroundColor, static_cast<ShadowNodeBase *>(childNode), nestedIndex);
+        }
+      }
+    }
+
+    if (m_backgroundColor.has_value()) {
+      winrt::TextHighlighter highlighter{};
+      highlighter.Ranges().Append({0, nestedIndex});
+      highlighter.Background(SolidBrushFromColor(m_backgroundColor.value()));
+      if (m_foregroundColor.has_value()) {
+        highlighter.Foreground(SolidBrushFromColor(m_foregroundColor.value()));
+      }
+      GetView().as<xaml::Controls::TextBlock>().TextHighlighters().InsertAt(0, highlighter);
+    }
+  }
+
+  int AddNestedTextHighlighter(
+      const std::optional<winrt::Windows::UI::Color> &backgroundColor,
+      ShadowNodeBase *node,
+      int startIndex) {
+    if (const auto run = node->GetView().try_as<winrt::Run>()) {
+      return startIndex + run.Text().size();
+    } else if (const auto span = node->GetView().try_as<winrt::Span>()) {
+      winrt::TextHighlighter highlighter{nullptr};
+      auto parentBackgroundColor = backgroundColor;
+      if (std::wcscmp(node->GetViewManager()->GetName(), L"RCTVirtualText") == 0) {
+        const auto virtualTextNode = static_cast<VirtualTextShadowNode *>(node);
+        const auto requiresHighlighter = virtualTextNode->m_backgroundColor.has_value() ||
+            (backgroundColor.has_value() && virtualTextNode->m_foregroundColor.has_value());
+        if (requiresHighlighter) {
+          highlighter = {};
+          if (virtualTextNode->m_backgroundColor.has_value()) {
+            parentBackgroundColor = virtualTextNode->m_backgroundColor;
+          }
+          highlighter.Background(SolidBrushFromColor(parentBackgroundColor.value()));
+          if (virtualTextNode->m_foregroundColor.has_value()) {
+            highlighter.Foreground(SolidBrushFromColor(virtualTextNode->m_foregroundColor.value()));
+          }
+        }
+      }
+
+      auto nestedIndex = startIndex;
+      if (const auto uiManager = GetNativeUIManager(node->GetViewManager()->GetReactContext()).lock()) {
+        for (auto childTag : node->m_children) {
+          if (const auto childNode = uiManager->getHost()->FindShadowNodeForTag(childTag)) {
+            nestedIndex = AddNestedTextHighlighter(parentBackgroundColor, static_cast<ShadowNodeBase *>(childNode), nestedIndex);
+          }
+        }
+      }
+
+      if (highlighter) {
+        highlighter.Ranges().Append({startIndex, nestedIndex - startIndex});
+        GetView().as<xaml::Controls::TextBlock>().TextHighlighters().InsertAt(0, highlighter);
+      }
+
+      return nestedIndex;
+    }
+
+    return 0;
   }
 
   TextTransform textTransform{TextTransform::Undefined};
@@ -274,18 +291,28 @@ YGMeasureFunc TextViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
 }
 
-void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node) {
-  if (auto element = node->GetView().try_as<xaml::Controls::TextBlock>()) {
-    // If name is set, it's controlled by accessibilityLabel, and it's already
-    // handled in FrameworkElementViewManager. Here it only handles when name is
-    // not set.
-    if (xaml::Automation::AutomationProperties::GetLiveSetting(element) != winrt::AutomationLiveSetting::Off &&
-        xaml::Automation::AutomationProperties::GetName(element).empty() &&
-        xaml::Automation::AutomationProperties::GetAccessibilityView(element) != winrt::Peers::AccessibilityView::Raw) {
-      if (auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element)) {
-        peer.RaiseAutomationEvent(winrt::AutomationEvents::LiveRegionChanged);
+void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node, PropertyChangeType propertyChangeType) {
+  if (!std::wcscmp(node->GetViewManager()->GetName(), GetName())) {
+    const auto textNode = static_cast<TextShadowNode *>(node);
+
+    if (propertyChangeType == PropertyChangeType::Text) {
+      const auto element = node->GetView().as<xaml::Controls::TextBlock>();
+
+      // If name is set, it's controlled by accessibilityLabel, and it's already
+      // handled in FrameworkElementViewManager. Here it only handles when name is
+      // not set.
+      if (xaml::Automation::AutomationProperties::GetLiveSetting(element) != winrt::AutomationLiveSetting::Off &&
+          xaml::Automation::AutomationProperties::GetName(element).empty() &&
+          xaml::Automation::AutomationProperties::GetAccessibilityView(element) !=
+              winrt::Peers::AccessibilityView::Raw) {
+        if (auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element)) {
+          peer.RaiseAutomationEvent(winrt::AutomationEvents::LiveRegionChanged);
+        }
       }
     }
+
+    // Rebuild highlights
+    textNode->UpdateTextHighlighters();
   }
 }
 
