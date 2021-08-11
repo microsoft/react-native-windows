@@ -96,8 +96,8 @@ class TextShadowNode final : public ShadowNodeBase {
     if (const auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
       for (auto childTag : m_children) {
         if (const auto childNode = uiManager->getHost()->FindShadowNodeForTag(childTag)) {
-          nestedIndex =
-              AddNestedTextHighlighter(m_backgroundColor, static_cast<ShadowNodeBase *>(childNode), nestedIndex);
+          nestedIndex = AddNestedTextHighlighter(
+              m_backgroundColor, m_foregroundColor, static_cast<ShadowNodeBase *>(childNode), nestedIndex);
         }
       }
     }
@@ -115,6 +115,7 @@ class TextShadowNode final : public ShadowNodeBase {
 
   int AddNestedTextHighlighter(
       const std::optional<winrt::Windows::UI::Color> &backgroundColor,
+      const std::optional<winrt::Windows::UI::Color> &foregroundColor,
       ShadowNodeBase *node,
       int startIndex) {
     if (const auto run = node->GetView().try_as<winrt::Run>()) {
@@ -122,6 +123,7 @@ class TextShadowNode final : public ShadowNodeBase {
     } else if (const auto span = node->GetView().try_as<winrt::Span>()) {
       winrt::TextHighlighter highlighter{nullptr};
       auto parentBackgroundColor = backgroundColor;
+      auto parentForegroundColor = foregroundColor;
       if (std::wcscmp(node->GetViewManager()->GetName(), L"RCTVirtualText") == 0) {
         const auto virtualTextNode = static_cast<VirtualTextShadowNode *>(node);
         const auto requiresHighlighter = virtualTextNode->m_backgroundColor.has_value() ||
@@ -131,9 +133,13 @@ class TextShadowNode final : public ShadowNodeBase {
           if (virtualTextNode->m_backgroundColor.has_value()) {
             parentBackgroundColor = virtualTextNode->m_backgroundColor;
           }
-          highlighter.Background(SolidBrushFromColor(parentBackgroundColor.value()));
           if (virtualTextNode->m_foregroundColor.has_value()) {
-            highlighter.Foreground(SolidBrushFromColor(virtualTextNode->m_foregroundColor.value()));
+            parentForegroundColor = virtualTextNode->m_foregroundColor;
+          }
+
+          highlighter.Background(SolidBrushFromColor(parentBackgroundColor.value()));
+          if (parentForegroundColor.has_value()) {
+            highlighter.Foreground(SolidBrushFromColor(parentForegroundColor.value()));
           }
         }
       }
@@ -142,8 +148,8 @@ class TextShadowNode final : public ShadowNodeBase {
       if (const auto uiManager = GetNativeUIManager(node->GetViewManager()->GetReactContext()).lock()) {
         for (auto childTag : node->m_children) {
           if (const auto childNode = uiManager->getHost()->FindShadowNodeForTag(childTag)) {
-            nestedIndex =
-                AddNestedTextHighlighter(parentBackgroundColor, static_cast<ShadowNodeBase *>(childNode), nestedIndex);
+            nestedIndex = AddNestedTextHighlighter(
+                parentBackgroundColor, parentForegroundColor, static_cast<ShadowNodeBase *>(childNode), nestedIndex);
           }
         }
       }
