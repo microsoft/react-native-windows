@@ -33,25 +33,25 @@ steps:
         inlineOperation: |
           [
             {
-                "KeyCode" : "CP-230012",
-                "OperationCode" : "SigntoolSign",
-                "Parameters" : {
-                  "OpusName" : "Microsoft",
-                  "OpusInfo" : "http://www.microsoft.com",
-                  "FileDigest" : "/fd \"SHA256\"",
-                  "PageHash" : "/PH",
-                  "TimeStamp" : "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
-                },
-                "ToolName" : "sign",
-                "ToolVersion" : "1.0"
+              "KeyCode" : "CP-230012",
+              "OperationCode" : "SigntoolSign",
+              "Parameters" : {
+                "OpusName" : "Microsoft",
+                "OpusInfo" : "http://www.microsoft.com",
+                "FileDigest" : "/fd \"SHA256\"",
+                "PageHash" : "/PH",
+                "TimeStamp" : "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
               },
-              {
-                "KeyCode" : "CP-230012",
-                "OperationCode" : "SigntoolVerify",
-                "Parameters" : {},
-                "ToolName" : "sign",
-                "ToolVersion" : "1.0"
-              }
+              "ToolName" : "sign",
+              "ToolVersion" : "1.0"
+            },
+            {
+              "KeyCode" : "CP-230012",
+              "OperationCode" : "SigntoolVerify",
+              "Parameters" : {},
+              "ToolName" : "sign",
+              "ToolVersion" : "1.0"
+            }
           ]
 
   # NuGetCommand@2 workaround: https://developercommunity.visualstudio.com/content/problem/288534/vsts-yaml-build-failure-the-task-name-nugetcommand.html
