@@ -84,6 +84,10 @@ Object {
 
 exports[`projectConfig - WithIndirectDependency (Ignore react-native.config.js) 1`] = `
 Object {
+  "experimentalFeatures": Object {
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
   "folder": StringContaining "WithIndirectDependency",
   "project": Object {
     "projectFile": "Error: Too many app project files found, please specify in react-native.config.",
@@ -95,6 +99,10 @@ Object {
 
 exports[`projectConfig - WithIndirectDependency (Use react-native.config.js) 1`] = `
 Object {
+  "experimentalFeatures": Object {
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
   "folder": StringContaining "WithIndirectDependency",
   "project": Object {
     "projectFile": "WithIndirectDependency\\\\WithIndirectDependency.vcxproj",
@@ -110,6 +118,11 @@ Object {
 
 exports[`projectConfig - WithWinUI3 (Ignore react-native.config.js) 1`] = `
 Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "false",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
   "folder": StringContaining "WithWinUI3",
   "project": Object {
     "projectFile": "WithWinUI3\\\\WithWinUI3.vcxproj",
@@ -124,6 +137,11 @@ Object {
 
 exports[`projectConfig - WithWinUI3 (Use react-native.config.js) 1`] = `
 Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "false",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
   "folder": StringContaining "WithWinUI3",
   "project": Object {
     "projectFile": "WithWinUI3\\\\WithWinUI3.vcxproj",
@@ -173,7 +191,8 @@ exports[`useWinUI3=true in react-native.config.js, useWinUI3=false in Experiment
     <UseWinUI3>true</UseWinUI3>
 
     <!--
-      Changes compilation to assume use of Micorsoft.ReactNative NuGets packages instead of source.
+      Changes compilation to assume use of Microsoft.ReactNative NuGet packages
+      instead of building the framework from source.
       Requires creation of new project.
     -->
     <UseExperimentalNuget>false</UseExperimentalNuget>

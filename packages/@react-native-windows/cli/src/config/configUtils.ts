@@ -415,21 +415,22 @@ export function getProjectGuid(projectContents: Node): string | null {
 
 export function getExperimentalFeatures(
   solutionDir: string,
-): Record<string, string> | null {
+): Record<string, string> | undefined {
   const propsFile = path.join(solutionDir, 'ExperimentalFeatures.props');
-  if (fs.existsSync(propsFile)) {
-    const result: Record<string, any> = {};
-    const propsContents = readProjectFile(propsFile);
-    const nodes = msbuildSelect(
-      `//msbuild:PropertyGroup/msbuild:*`,
-      propsContents,
-    );
-    for (const node of nodes) {
-      const propertyNode = node as Node;
-      result[propertyNode.nodeName] = propertyNode.textContent;
-    }
-    return result;
+
+  if (!fs.existsSync(propsFile)) {
+    return undefined;
   }
 
-  return null;
+  const result: Record<string, any> = {};
+  const propsContents = readProjectFile(propsFile);
+  const nodes = msbuildSelect(
+    `//msbuild:PropertyGroup/msbuild:*`,
+    propsContents,
+  );
+  for (const node of nodes) {
+    const propertyNode = node as Node;
+    result[propertyNode.nodeName] = propertyNode.textContent;
+  }
+  return result;
 }

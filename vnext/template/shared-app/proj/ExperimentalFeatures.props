@@ -25,7 +25,8 @@
     <UseWinUI3>{{useWinUI3}}</UseWinUI3>
 
     <!--
-      Changes compilation to assume use of Micorsoft.ReactNative NuGets packages instead of source.
+      Changes compilation to assume use of Microsoft.ReactNative NuGet packages
+      instead of building the framework from source.
       Requires creation of new project.
     -->
     <UseExperimentalNuget>{{useExperimentalNuget}}</UseExperimentalNuget>

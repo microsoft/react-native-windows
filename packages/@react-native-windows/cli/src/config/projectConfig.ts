@@ -83,6 +83,8 @@ type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
  * @param userConfig A manually specified override config.
  * @return The config if any RNW apps exist.
  */
+// Disabled due to existing high cyclomatic complexity
+// eslint-disable-next-line complexity
 export function projectConfigWindows(
   folder: string,
   userConfig: Partial<WindowsProjectConfig> | null = {},
@@ -198,6 +200,7 @@ export function projectConfigWindows(
       path.join(sourceDir, result.solutionFile),
     );
 
+    // Populating experimental features from ExperimentalFeatures.props
     const experimentalFeatures = configUtils.getExperimentalFeatures(
       path.dirname(path.join(sourceDir, result.solutionFile)),
     );
@@ -219,6 +222,18 @@ export function projectConfigWindows(
     );
     result.project.projectLang = configUtils.getProjectLanguage(projectFile);
     result.project.projectGuid = configUtils.getProjectGuid(projectContents);
+
+    // Since we moved the UseExperimentalNuget property from the project to the
+    // ExperimentalFeatures.props file, we should should double-check the project file
+    // in case it was made with an older template
+    const useExperimentalNuget = configUtils.tryFindPropertyValue(
+      projectContents,
+      'UseExperimentalNuget',
+    );
+    if (useExperimentalNuget) {
+      result.experimentalFeatures = result.experimentalFeatures ?? {};
+      result.experimentalFeatures.UseExperimentalNuget = useExperimentalNuget;
+    }
   }
 
   return result as WindowsProjectConfig;
