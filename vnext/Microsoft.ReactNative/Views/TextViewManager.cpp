@@ -53,6 +53,7 @@ class TextShadowNode final : public ShadowNodeBase {
     VirtualTextShadowNode::ApplyTextTransform(
         childNode, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
 
+    auto addInline = true;
     if (index == 0) {
       auto run = childNode.GetView().try_as<winrt::Run>();
       if (run != nullptr) {
@@ -60,8 +61,7 @@ class TextShadowNode final : public ShadowNodeBase {
         auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
         textBlock.Text(run.Text());
         m_prevCursorEnd += textBlock.Text().size();
-
-        return;
+        addInline = false;
       }
     } else if (index == 1 && m_firstChildNode != nullptr) {
       auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
@@ -70,7 +70,10 @@ class TextShadowNode final : public ShadowNodeBase {
       m_firstChildNode = nullptr;
     }
 
-    Super::AddView(child, index);
+    if (addInline) {
+      Super::AddView(child, index);
+    }
+
     UpdateTextHighlighters();
   }
 
