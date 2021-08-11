@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump to Hermes 0.8.1, Debug performance, HBC bundle, CPU Sampling profiler",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

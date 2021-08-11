@@ -2,10 +2,10 @@ parameters:
   - name: buildEnvironment
     type: string
     default : PullRequest
-    values: 
-     - PullRequest 
-     - Continuous 
-  
+    values:
+      - PullRequest
+      - Continuous
+
 jobs:
   - job: SampleApps
     variables:

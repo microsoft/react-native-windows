@@ -52,7 +52,7 @@ jobs:
             throw "No changes found"
           }
         displayName: Test for changes
-        
+
       - powershell: |
           $reportWithHeader = "${{ parameters.commitTitle}}`n`n" + (Get-Content -Raw $(Agent.TempDirectory)\integration-report.md)
           # Trim to max GitHub PR length
@@ -64,12 +64,12 @@ jobs:
           git add --all
           git commit -F $(Agent.TempDirectory)\commit-message.md
         displayName: Commit changes
-      
+
       - powershell: |
           $commitHash = git log --format=%H -n 1
           Write-Output "##vso[task.setvariable variable=FirstCommit]$commitHash"
         displayName: Save base commit
-        
+
       - powershell: |
           $patchScope = node -e "
           const path = require('path');

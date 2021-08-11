@@ -2,6 +2,36 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Wed, 11 Aug 2021 05:09:13 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.358",
+            "author": "erozell@outlook.com",
+            "commit": "291f7ca01bae2f0b6057be77d5c1af77e06e9732",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Aug 2021 05:11:09 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.357",
+            "author": "erozell@outlook.com",
+            "commit": "37340427eeaec0c87203bfcc714d65c087c32623",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 08 Aug 2021 05:06:42 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",

@@ -133,8 +133,8 @@ jobs:
 
       - template: templates/yarn-install.yml
         parameters:
-         workingDirectory: $(Build.StagingDirectory)\bot-coordinator
-         frozenLockfile: false
+          workingDirectory: $(Build.StagingDirectory)\bot-coordinator
+          frozenLockfile: false
 
       - ${{ if not(parameters.skipBotDeployment) }}:
         - task: AzureFunctionApp@1

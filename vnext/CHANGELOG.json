@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 11 Aug 2021 05:09:13 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.358",
+      "version": "0.0.0-canary.358",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Skip user agent HTTP header validation.",
+            "author": "erozell@outlook.com",
+            "commit": "291f7ca01bae2f0b6057be77d5c1af77e06e9732",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Aug 2021 05:11:09 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.357",
+      "version": "0.0.0-canary.357",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixes various issues related to clang compile",
+            "author": "erozell@outlook.com",
+            "commit": "37340427eeaec0c87203bfcc714d65c087c32623",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump to Hermes 0.8.1, Debug performance, HBC bundle, CPU Sampling profiler",
+            "author": "email not defined",
+            "commit": "9d2a96cb477163f3c550849dd324d3cd5f028a72",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Rename API for changing BackHandler behavior",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "1e2e805aa109ece6e11c577f8fd5b2d72f145069",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 08 Aug 2021 05:06:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.356",
       "version": "0.0.0-canary.356",
