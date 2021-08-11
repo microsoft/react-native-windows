@@ -4,8 +4,8 @@ parameters:
     type: string
     default : PullRequest
     values:
-    - PullRequest
-    - Continuous
+      - PullRequest
+      - Continuous
   - name: buildMatrix
     type: object
     default:
