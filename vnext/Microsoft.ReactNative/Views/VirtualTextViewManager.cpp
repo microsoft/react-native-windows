@@ -129,7 +129,12 @@ bool VirtualTextViewManager::UpdateProperty(
   // FUTURE: In the future cppwinrt will generate code where static methods on
   // base types can be called.  For now we specify the base type explicitly
   if (TryUpdateForeground<winrt::TextElement>(span, propertyName, propertyValue)) {
-    static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_foregroundColor = ColorFrom(propertyValue);
+    auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
+    if (IsValidOptionalColorValue(propertyValue)) {
+      node->m_foregroundColor = OptionalColorFrom(propertyValue);
+      node->NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType::Highlight);
+    }
+  } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (TryUpdateTextDecorationLine<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (propertyName == "textTransform") {
@@ -139,13 +144,10 @@ bool VirtualTextViewManager::UpdateProperty(
         *node, node->textTransform, /* forceUpdate = */ true, /* isRoot = */ true);
   } else if (propertyName == "backgroundColor") {
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
-    if (propertyValue.IsNull()) {
-      node->m_backgroundColor = std::nullopt;
-    } else {
-      node->m_backgroundColor = ColorFrom(propertyValue);
+    if (IsValidOptionalColorValue(propertyValue)) {
+      node->m_backgroundColor = OptionalColorFrom(propertyValue);
+      node->NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType::Highlight);
     }
-
-    node->NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType::BackgroundColor);
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }

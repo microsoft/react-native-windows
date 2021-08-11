@@ -35,8 +35,8 @@ class TextShadowNode final : public ShadowNodeBase {
  private:
   ShadowNode *m_firstChildNode;
 
-  std::optional<winrt::Windows::UI::Color> m_backgroundColor = std::nullopt;
-  std::optional<winrt::Windows::UI::Color> m_foregroundColor = std::nullopt;
+  std::optional<winrt::Windows::UI::Color> m_backgroundColor{};
+  std::optional<winrt::Windows::UI::Color> m_foregroundColor{};
 
   int32_t m_prevCursorEnd = 0;
 
@@ -105,11 +105,11 @@ class TextShadowNode final : public ShadowNodeBase {
       }
     }
 
-    if (m_backgroundColor.has_value()) {
+    if (m_backgroundColor) {
       winrt::TextHighlighter highlighter{};
       highlighter.Ranges().Append({0, nestedIndex});
       highlighter.Background(SolidBrushFromColor(m_backgroundColor.value()));
-      if (m_foregroundColor.has_value()) {
+      if (m_foregroundColor) {
         highlighter.Foreground(SolidBrushFromColor(m_foregroundColor.value()));
       }
       GetView().as<xaml::Controls::TextBlock>().TextHighlighters().InsertAt(0, highlighter);
@@ -129,19 +129,19 @@ class TextShadowNode final : public ShadowNodeBase {
       auto parentForegroundColor = foregroundColor;
       if (std::wcscmp(node->GetViewManager()->GetName(), L"RCTVirtualText") == 0) {
         const auto virtualTextNode = static_cast<VirtualTextShadowNode *>(node);
-        const auto requiresHighlighter = virtualTextNode->m_backgroundColor.has_value() ||
-            (backgroundColor.has_value() && virtualTextNode->m_foregroundColor.has_value());
+        const auto requiresHighlighter =
+            virtualTextNode->m_backgroundColor || (backgroundColor && virtualTextNode->m_foregroundColor);
         if (requiresHighlighter) {
           highlighter = {};
-          if (virtualTextNode->m_backgroundColor.has_value()) {
+          if (virtualTextNode->m_backgroundColor) {
             parentBackgroundColor = virtualTextNode->m_backgroundColor;
           }
-          if (virtualTextNode->m_foregroundColor.has_value()) {
+          if (virtualTextNode->m_foregroundColor) {
             parentForegroundColor = virtualTextNode->m_foregroundColor;
           }
 
           highlighter.Background(SolidBrushFromColor(parentBackgroundColor.value()));
-          if (parentForegroundColor.has_value()) {
+          if (parentForegroundColor) {
             highlighter.Foreground(SolidBrushFromColor(parentForegroundColor.value()));
           }
         }
@@ -196,7 +196,11 @@ bool TextViewManager::UpdateProperty(
     return true;
 
   if (TryUpdateForeground(textBlock, propertyName, propertyValue)) {
-    static_cast<TextShadowNode *>(nodeToUpdate)->m_foregroundColor = ColorFrom(propertyValue);
+    const auto node = static_cast<TextShadowNode *>(nodeToUpdate);
+    if (IsValidOptionalColorValue(propertyValue)) {
+      node->m_foregroundColor = OptionalColorFrom(propertyValue);
+      node->UpdateTextHighlighters();
+    }
   } else if (TryUpdateFontProperties(textBlock, propertyName, propertyValue)) {
   } else if (propertyName == "textTransform") {
     auto textNode = static_cast<TextShadowNode *>(nodeToUpdate);
@@ -261,8 +265,10 @@ bool TextViewManager::UpdateProperty(
     } else
       textBlock.ClearValue(xaml::Controls::TextBlock::SelectionHighlightColorProperty());
   } else if (propertyName == "backgroundColor") {
-    if (IsValidColorValue(propertyValue)) {
-      static_cast<TextShadowNode *>(nodeToUpdate)->m_backgroundColor = ColorFrom(propertyValue);
+    const auto node = static_cast<TextShadowNode *>(nodeToUpdate);
+    if (IsValidOptionalColorValue(propertyValue)) {
+      node->m_backgroundColor = OptionalColorFrom(propertyValue);
+      node->UpdateTextHighlighters();
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
@@ -302,7 +308,7 @@ YGMeasureFunc TextViewManager::GetYogaCustomMeasureFunc() const {
 }
 
 void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node, PropertyChangeType propertyChangeType) {
-  if (!std::wcscmp(node->GetViewManager()->GetName(), GetName())) {
+  if (std::wcscmp(node->GetViewManager()->GetName(), GetName()) == 0) {
     const auto textNode = static_cast<TextShadowNode *>(node);
 
     if (propertyChangeType == PropertyChangeType::Text) {
@@ -327,7 +333,7 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node, Prop
 }
 
 TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
-  if (!std::wcscmp(node->GetViewManager()->GetName(), GetName())) {
+  if (std::wcscmp(node->GetViewManager()->GetName(), GetName()) == 0) {
     return static_cast<TextShadowNode *>(node)->textTransform;
   }
 
