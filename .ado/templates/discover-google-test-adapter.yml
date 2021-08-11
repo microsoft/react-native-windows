@@ -9,4 +9,4 @@ steps:
 
       Write-Debug "Setting Google Test Adapter Path to '$GoogleTestAdapterPath' found in '$vsExtensionPath'"
       Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$GoogleTestAdapterPath"
-      displayName: Set GoogleTestAdapterPath
+    displayName: Set GoogleTestAdapterPath
