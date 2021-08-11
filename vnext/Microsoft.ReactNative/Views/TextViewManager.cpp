@@ -96,8 +96,8 @@ class TextShadowNode final : public ShadowNodeBase {
     if (const auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
       for (auto childTag : m_children) {
         if (const auto childNode = uiManager->getHost()->FindShadowNodeForTag(childTag)) {
-          nestedIndex = AddNestedTextHighlighter(
-              m_backgroundColor, static_cast<ShadowNodeBase *>(childNode), nestedIndex);
+          nestedIndex =
+              AddNestedTextHighlighter(m_backgroundColor, static_cast<ShadowNodeBase *>(childNode), nestedIndex);
         }
       }
     }
@@ -142,7 +142,8 @@ class TextShadowNode final : public ShadowNodeBase {
       if (const auto uiManager = GetNativeUIManager(node->GetViewManager()->GetReactContext()).lock()) {
         for (auto childTag : node->m_children) {
           if (const auto childNode = uiManager->getHost()->FindShadowNodeForTag(childTag)) {
-            nestedIndex = AddNestedTextHighlighter(parentBackgroundColor, static_cast<ShadowNodeBase *>(childNode), nestedIndex);
+            nestedIndex =
+                AddNestedTextHighlighter(parentBackgroundColor, static_cast<ShadowNodeBase *>(childNode), nestedIndex);
           }
         }
       }

@@ -26,7 +26,9 @@ class TextViewManager : public FrameworkElementViewManager {
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
-  void OnDescendantTextPropertyChanged(ShadowNodeBase *node, PropertyChangeType propertyChangeType = PropertyChangeType::Text);
+  void OnDescendantTextPropertyChanged(
+      ShadowNodeBase *node,
+      PropertyChangeType propertyChangeType = PropertyChangeType::Text);
 
   TextTransform GetTextTransformValue(ShadowNodeBase *node);
 
