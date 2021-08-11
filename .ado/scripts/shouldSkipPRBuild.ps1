@@ -42,7 +42,7 @@ if($env:BUILD_REASON -eq "PullRequest")
     $files = $diffOutput.Split([Environment]::NewLine)
 
     Write-Host "Files changed: $files"
-    
+
 
     $shouldSkipBuild = AllChangedFilesAreSkippable($files)
 }

@@ -17,4 +17,3 @@ steps:
   - ${{ if eq(parameters.frozenLockfile, false) }}:
     - script: npx midgard-yarn@1.23.24 --cwd ${{ parameters.workingDirectory }} ${{ parameters.extraArgs }}
       displayName: midgard-yarn (faster yarn install)
-

@@ -133,8 +133,8 @@ jobs:
 
       - template: templates/yarn-install.yml
         parameters:
-         workingDirectory: $(Build.StagingDirectory)\bot-coordinator
-         frozenLockfile: false
+        workingDirectory: $(Build.StagingDirectory)\bot-coordinator
+        frozenLockfile: false
 
       - ${{ if not(parameters.skipBotDeployment) }}:
         - task: AzureFunctionApp@1
@@ -194,7 +194,7 @@ jobs:
             React.Windows.Desktop\**
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
-      
+
       - template: templates/component-governance.yml
 
   - job: RnwNativeBuildUniversal
@@ -243,7 +243,7 @@ jobs:
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
             Microsoft.ReactNative.Managed.CodeGen\**
-      
+
       - template: templates/component-governance.yml
 
       # Make symbols available through http://symweb.
@@ -291,7 +291,7 @@ jobs:
           artifactName: ReactWindows
           pathToPublish: $(Build.StagingDirectory)
           parallel: true
-      
+
       - template: templates/component-governance.yml
 
       # Make symbols available through http://symweb.
