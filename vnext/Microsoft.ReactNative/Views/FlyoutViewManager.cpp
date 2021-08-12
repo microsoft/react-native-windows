@@ -112,6 +112,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   float m_verticalOffset = 0;
   bool m_isFlyoutShowOptionsSupported = false;
   winrt::FlyoutShowOptions m_showOptions = nullptr;
+  bool m_autoFocus = false;
 
   std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
@@ -207,6 +208,17 @@ void FlyoutShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
           if (numOpenPopups > 0) {
             winrt::Numerics::float3 translation{0, 0, (float)16 * numOpenPopups};
             flyoutPresenter.Translation(translation);
+          }
+        }
+
+        if (m_autoFocus) {
+          if (const auto content = m_flyout.Content()) {
+            if (const auto elementToFocus = xaml::Input::FocusManager::FindFirstFocusableElement(content)) {
+              if (const auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+                // NativeUIManager::focus is a no-op if the tag is not found
+                uiManager->focus(GetTag(elementToFocus));
+              }
+            }
           }
         }
 
@@ -327,6 +339,8 @@ void FlyoutShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueOb
       }
 
       m_flyout.LightDismissOverlayMode(overlayMode);
+    } else if (propertyName == "autoFocus") {
+      m_autoFocus = propertyValue.AsBoolean();
     }
   }
 
@@ -452,6 +466,7 @@ void FlyoutViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSV
   React::WriteProperty(writer, L"target", L"number");
   React::WriteProperty(writer, L"verticalOffset", L"number");
   React::WriteProperty(writer, L"isOverlayEnabled", L"boolean");
+  React::WriteProperty(writer, L"autoFocus", L"boolean");
 }
 
 void FlyoutViewManager::GetExportedCustomDirectEventTypeConstants(

@@ -24,6 +24,7 @@ export type Placement =
 export interface IFlyoutProps extends ViewProps {
   horizontalOffset?: number;
   isLightDismissEnabled?: boolean;
+  autoFocus?: boolean;
 
   /**
    * Specifies whether the area outside the flyout is darkened
