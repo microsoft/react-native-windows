@@ -54,9 +54,9 @@ void AnimationDriver::StartAnimation() {
   }
   scopedBatch.End();
 
-  m_scopedBatchCompletedToken = scopedBatch.Completed([&](auto sender, auto) {
-    DoCallback(true);
-    if (auto manager = m_manager.lock()) {
+  m_scopedBatchCompletedToken = scopedBatch.Completed([&, weakManager = m_manager](auto sender, auto) {
+    if (auto manager = weakManager.lock()) {
+      DoCallback(true);
       if (auto const animatedValue = manager->GetValueAnimatedNode(m_animatedValueTag)) {
         animatedValue->RemoveActiveAnimation(m_id);
         animatedValue->FlattenOffset();
