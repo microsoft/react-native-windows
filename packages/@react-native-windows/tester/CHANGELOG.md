@@ -1,8 +1,80 @@
 # Change Log - @react-native-windows/tester
 
-This log was last generated on Sun, 25 Jul 2021 05:09:20 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Aug 2021 05:09:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Wed, 11 Aug 2021 05:09:13 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.358 (erozell@outlook.com)
+
+## 0.0.1
+
+Tue, 10 Aug 2021 05:11:09 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.357 (erozell@outlook.com)
+
+## 0.0.1
+
+Sun, 08 Aug 2021 05:06:42 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.356 (erozell@outlook.com)
+
+## 0.0.1
+
+Sat, 07 Aug 2021 05:06:10 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.355 (erozell@outlook.com)
+
+## 0.0.1
+
+Fri, 06 Aug 2021 05:09:11 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.354 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.1
+
+Thu, 05 Aug 2021 05:07:20 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.353 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.1
+
+Wed, 04 Aug 2021 05:05:41 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.352 (agnel@microsoft.com)
+
+## 0.0.1
+
+Tue, 03 Aug 2021 05:10:45 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.351 (erozell@outlook.com)
+
+## 0.0.1
+
+Sun, 01 Aug 2021 05:08:39 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.350 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.1
 

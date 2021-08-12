@@ -86,6 +86,13 @@ std::string ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {
   return {};
 }
 
+JSIEngine ReactSettingsSnapshot::JsiEngine() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->JsiEngine();
+  }
+  return {};
+}
+
 bool ReactSettingsSnapshot::UseDeveloperSupport() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->UseDeveloperSupport();

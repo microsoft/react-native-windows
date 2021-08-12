@@ -90,6 +90,7 @@ namespace Microsoft.ReactNative
       "The name of the JavaScript bundle file to load. This should be a relative path from @.BundleRootPath. "
       "The `.bundle` extension will be appended to the end, when looking for the bundle file.")
     String JavaScriptBundleFile { get; };
+
   }
 
   [webhosthidden]

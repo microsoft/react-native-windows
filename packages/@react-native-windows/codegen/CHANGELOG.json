@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 05 Aug 2021 05:07:20 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.10",
+      "version": "0.0.0-canary.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Do not write codegen files if the contents have not changed, as this breaks incremental builds",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "3b92733ab97670e6eb2d944f65ff341994e80517",
+            "package": "@react-native-windows/codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Jul 2021 05:05:52 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.9",
       "version": "0.0.0-canary.9",

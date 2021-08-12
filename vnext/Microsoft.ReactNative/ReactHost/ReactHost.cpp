@@ -27,6 +27,14 @@ winrt::Microsoft::ReactNative::IReactPropertyName UseDeveloperSupportProperty() 
   return propName;
 }
 
+winrt::Microsoft::ReactNative::IReactPropertyName JSIEngineProperty() noexcept {
+  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
+      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.ReactOptions"),
+          L"JSIEngine");
+  return propName;
+}
+
 winrt::Microsoft::ReactNative::IReactPropertyName LiveReloadEnabledProperty() noexcept {
   static winrt::Microsoft::ReactNative::IReactPropertyName propName =
       winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
@@ -101,6 +109,24 @@ bool ReactOptions::UseDeveloperSupport() const noexcept {
 /*static*/ bool ReactOptions::UseDeveloperSupport(
     winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
   return winrt::unbox_value_or<bool>(properties.Get(UseDeveloperSupportProperty()), false);
+}
+
+/*static*/ JSIEngine ReactOptions::JsiEngine(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
+  return (Mso::React::JSIEngine)winrt::unbox_value_or<uint32_t>(properties.Get(JSIEngineProperty()), 0);
+}
+
+JSIEngine ReactOptions::JsiEngine() const noexcept {
+  return static_cast<JSIEngine>(JsiEngine(Properties));
+}
+
+void ReactOptions::SetJsiEngine(JSIEngine value) noexcept {
+  Properties.Set(JSIEngineProperty(), winrt::box_value(static_cast<uint32_t>(value)));
+}
+/*static*/ void ReactOptions::SetJsiEngine(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+    JSIEngine value) noexcept {
+  properties.Set(JSIEngineProperty(), winrt::box_value(static_cast<uint32_t>(value)));
 }
 
 /*static*/ void ReactOptions::SetUseFastRefresh(

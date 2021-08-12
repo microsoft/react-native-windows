@@ -32,9 +32,9 @@ parameters:
   - name: buildEnvironment
     type: string
     default: PullRequest
-    values: 
-     - PullRequest 
-     - Continuous 
+    values:
+      - PullRequest
+      - Continuous
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -88,7 +88,7 @@ steps:
         npmVersion: $(npmVersion)
         packDesktop: false
         slices: '("${{ parameters.platform }}.${{ parameters.configuration }}")'
-  
+
   # Work around issue of parameters not getting expanded in conditions properly
   - powershell: |
       Write-Host "##vso[task.setvariable variable=localProjectType]${{ parameters.projectType}}"
@@ -104,14 +104,14 @@ steps:
         npx --no-install react-native init testcli --npm --template react-native@$(reactNativeDevDependency)
       workingDirectory: $(Agent.BuildDirectory)
     condition: and(succeeded(), eq(variables['localProjectType'], 'app'))
-  
+
   - task: CmdLine@2
     displayName: Init new lib project
     inputs:
       script: npx create-react-native-module --package-name "testcli" testcli
       workingDirectory: $(Agent.BuildDirectory)
     condition: and(succeeded(), eq(variables['localProjectType'], 'lib'))
-  
+
   - task: CmdLine@2
     displayName: Update lib project react and react-native dev versions
     inputs:
@@ -238,4 +238,3 @@ steps:
       targetPath: 'verdaccio.log'
       artifact: '$(Agent.JobName).Verdaccio.log-$(System.JobAttempt)'
     condition: failed()
-
