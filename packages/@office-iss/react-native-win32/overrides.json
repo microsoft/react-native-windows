@@ -18,8 +18,7 @@
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseVersion": "0.0.0-386dbd943",
-      "baseHash": "c7e80678448dd6d518b6ed47594775207b285610"
+      "baseHash": "1bef57931e96344fa3b9b2e67ea70f6d6647cd31"
     },
     {
       "type": "patch",
@@ -211,8 +210,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseVersion": "0.0.0-386dbd943",
-      "baseHash": "c20b0134e74a8e8d69d0b2694b4296fe2bf69d3f",
+      "baseHash": "e259481373eaf9acad79087e1fdd3c0e27e25ee5",
       "issue": 4320
     },
     {
@@ -404,8 +402,7 @@
       "type": "patch",
       "file": "src/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "Libraries/StyleSheet/StyleSheet.js",
-      "baseVersion": "0.0.0-386dbd943",
-      "baseHash": "95ed8a2da162e168c7d740640a9d6c0fdb282c84"
+      "baseHash": "afe4fc1e9aa91d08a7a1098e3bbd3b17a73b4a65"
     },
     {
       "type": "derived",

@@ -319,8 +319,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseVersion": "0.0.0-386dbd943",
-      "baseHash": "c20b0134e74a8e8d69d0b2694b4296fe2bf69d3f",
+      "baseHash": "e259481373eaf9acad79087e1fdd3c0e27e25ee5",
       "issue": 4590
     },
     {
