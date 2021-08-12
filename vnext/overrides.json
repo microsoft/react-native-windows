@@ -194,40 +194,6 @@
       "baseHash": "0b409391c852a1001cee74a84414a13c4fe88f8b"
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Components/Picker/Picker.windows.js",
-      "baseFile": "Libraries/Components/Picker/Picker.js",
-      "baseVersion": "0.0.0-386dbd943",
-      "baseHash": "900e5f4d60baba03691b5c8601e4d960f9cb34d9",
-      "issue": 4611
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/Picker/PickerAndroid.windows.js",
-      "baseFile": "Libraries/Components/Picker/PickerAndroid.ios.js",
-      "baseVersion": "0.0.0-386dbd943",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/Picker/PickerIOS.windows.js",
-      "baseFile": "Libraries/Components/Picker/PickerIOS.android.js",
-      "baseVersion": "0.0.0-386dbd943",
-      "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/Components/Picker/PickerProps.ts"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/Picker/PickerWindows.tsx",
-      "baseFile": "Libraries/Components/Picker/PickerIOS.ios.js",
-      "baseVersion": "0.0.0-386dbd943",
-      "baseHash": "b4d55736a8e395c5418c2de2dcded7bb77799997",
-      "issue": 4611
-    },
-    {
       "type": "platform",
       "file": "src/Libraries/Components/Popup/Popup.tsx"
     },

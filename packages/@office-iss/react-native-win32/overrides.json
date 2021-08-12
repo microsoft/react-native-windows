@@ -82,26 +82,6 @@
       "issue": 4378
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Components/Picker/Picker.win32.tsx"
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Components/Picker/PickerAndroid.js",
-      "baseFile": "Libraries/Components/Picker/PickerAndroid.ios.js",
-      "baseVersion": "0.0.0-386dbd943",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
-      "issue": 4378
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Components/Picker/PickerIOS.js",
-      "baseFile": "Libraries/Components/Picker/PickerIOS.android.js",
-      "baseVersion": "0.0.0-386dbd943",
-      "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6",
-      "issue": 4378
-    },
-    {
       "type": "copy",
       "file": "src/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
       "baseFile": "Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.ios.js",
