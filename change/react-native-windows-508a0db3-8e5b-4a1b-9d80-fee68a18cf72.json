@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Enable private agent image",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "none"
-}
