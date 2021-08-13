@@ -18,8 +18,8 @@ bool ReactDispatcher::HasThreadAccess() noexcept {
   return m_queue.HasThreadAccess();
 }
 
-void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
-  return m_queue.Post([callback]() noexcept {
+ReactDispatcherCallback CreateLoggingCallback(ReactDispatcherCallback const &callback) {
+  return [callback]() {
     try {
       callback();
     } catch (winrt::hresult_error const &error) {
@@ -28,7 +28,11 @@ void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
       LOG(ERROR) << "HRESULT " << errorCode.str() << ": " << winrt::to_string(error.message());
       throw;
     }
-  });
+  };
+}
+
+void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
+  return m_queue.Post([callback = CreateLoggingCallback(callback)]() noexcept { callback(); });
 }
 
 /*static*/ IReactDispatcher ReactDispatcher::CreateSerialDispatcher() noexcept {
