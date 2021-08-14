@@ -54,6 +54,11 @@ class TextShadowNode final : public ShadowNodeBase {
     VirtualTextShadowNode::ApplyTextTransform(
         childNode, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
 
+    if (IsVirtualTextShadowNode(&childNode)) {
+      auto &textChildNode = static_cast<VirtualTextShadowNode &>(childNode);
+      m_hasDescendantBackgroundColor |= textChildNode.m_hasDescendantBackgroundColor;
+    }
+
     auto addInline = true;
     if (index == 0) {
       auto run = childNode.GetView().try_as<winrt::Run>();
@@ -97,13 +102,22 @@ class TextShadowNode final : public ShadowNodeBase {
     textBlock.TextHighlighters().Clear();
 
     auto nestedIndex = 0;
-    if (const auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
-      for (auto childTag : m_children) {
-        if (const auto childNode = uiManager->getHost()->FindShadowNodeForTag(childTag)) {
-          nestedIndex = AddNestedTextHighlighter(
-              m_backgroundColor, m_foregroundColor, static_cast<ShadowNodeBase *>(childNode), nestedIndex);
+    if (m_hasDescendantBackgroundColor) {
+      const auto highlighterCount = textBlock.TextHighlighters().Size();
+      if (const auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+        for (auto childTag : m_children) {
+          if (const auto childNode = uiManager->getHost()->FindShadowNodeForTag(childTag)) {
+            nestedIndex = AddNestedTextHighlighter(
+                m_backgroundColor, m_foregroundColor, static_cast<ShadowNodeBase *>(childNode), nestedIndex);
+          }
         }
       }
+
+      if (textBlock.TextHighlighters().Size() == 0) {
+        m_hasDescendantBackgroundColor = false;
+      }
+    } else {
+      nestedIndex = textBlock.Text().size();
     }
 
     if (m_backgroundColor) {
@@ -125,6 +139,7 @@ class TextShadowNode final : public ShadowNodeBase {
     if (const auto run = node->GetView().try_as<winrt::Run>()) {
       return startIndex + run.Text().size();
     } else if (const auto span = node->GetView().try_as<winrt::Span>()) {
+      const auto textBlock = GetView().as<xaml::Controls::TextBlock>();
       winrt::TextHighlighter highlighter{nullptr};
       auto parentBackgroundColor = backgroundColor;
       auto parentForegroundColor = foregroundColor;
@@ -134,13 +149,10 @@ class TextShadowNode final : public ShadowNodeBase {
             virtualTextNode->m_backgroundColor || (backgroundColor && virtualTextNode->m_foregroundColor);
         if (requiresHighlighter) {
           highlighter = {};
-          if (virtualTextNode->m_backgroundColor) {
-            parentBackgroundColor = virtualTextNode->m_backgroundColor;
-          }
-          if (virtualTextNode->m_foregroundColor) {
-            parentForegroundColor = virtualTextNode->m_foregroundColor;
-          }
-
+          parentBackgroundColor =
+              virtualTextNode->m_backgroundColor ? virtualTextNode->m_backgroundColor : parentBackgroundColor;
+          parentForegroundColor =
+              virtualTextNode->m_foregroundColor ? virtualTextNode->m_foregroundColor : parentForegroundColor;
           highlighter.Background(SolidBrushFromColor(parentBackgroundColor.value()));
           if (parentForegroundColor) {
             highlighter.Foreground(SolidBrushFromColor(parentForegroundColor.value()));
@@ -148,6 +160,7 @@ class TextShadowNode final : public ShadowNodeBase {
         }
       }
 
+      const auto initialHighlighterCount = textBlock.TextHighlighters().Size();
       auto nestedIndex = startIndex;
       if (const auto uiManager = GetNativeUIManager(node->GetViewManager()->GetReactContext()).lock()) {
         for (auto childTag : node->m_children) {
@@ -160,7 +173,10 @@ class TextShadowNode final : public ShadowNodeBase {
 
       if (highlighter) {
         highlighter.Ranges().Append({startIndex, nestedIndex - startIndex});
-        GetView().as<xaml::Controls::TextBlock>().TextHighlighters().InsertAt(0, highlighter);
+        textBlock.TextHighlighters().InsertAt(0, highlighter);
+      } else if (IsVirtualTextShadowNode(node) && textBlock.TextHighlighters().Size() == initialHighlighterCount) {
+        const auto virtualTextNode = static_cast<VirtualTextShadowNode *>(node);
+        virtualTextNode->m_hasDescendantBackgroundColor = false;
       }
 
       return nestedIndex;
@@ -170,6 +186,7 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   TextTransform textTransform{TextTransform::Undefined};
+  bool m_hasDescendantBackgroundColor{false};
 };
 
 TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -312,7 +329,7 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node, Prop
   if (IsTextShadowNode(node)) {
     const auto textNode = static_cast<TextShadowNode *>(node);
 
-    if (propertyChangeType == PropertyChangeType::Text) {
+    if ((propertyChangeType & PropertyChangeType::Text) == PropertyChangeType::Text) {
       const auto element = node->GetView().as<xaml::Controls::TextBlock>();
 
       // If name is set, it's controlled by accessibilityLabel, and it's already
@@ -328,7 +345,13 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node, Prop
       }
     }
 
-    // Rebuild highlights
+    // If a property change added a background color to the text tree, update
+    // the flag to signal recursive highlighter updates are required.
+    if ((propertyChangeType & PropertyChangeType::AddBackgroundColor) == PropertyChangeType::AddBackgroundColor) {
+      textNode->m_hasDescendantBackgroundColor = true;
+    }
+
+    // Recalculate text highlighters
     textNode->RecalculateTextHighlighters();
   }
 }

@@ -8,12 +8,18 @@
 
 namespace Microsoft::ReactNative {
 
+enum class PropertyChangeType : std::uint_fast8_t {
+  None = 0,
+  Text = 1 << 0,
+  AddBackgroundColor = 1 << 1,
+};
+
+DEFINE_ENUM_FLAG_OPERATORS(PropertyChangeType);
+
 class TextViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
-  enum class PropertyChangeType { Text = 0, Highlight };
-
   TextViewManager(const Mso::React::IReactContext &context);
 
   ShadowNode *createShadow() const override;

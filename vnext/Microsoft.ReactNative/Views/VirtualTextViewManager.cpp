@@ -28,18 +28,25 @@ namespace Microsoft::ReactNative {
 void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
   auto &childNode = static_cast<ShadowNodeBase &>(child);
   ApplyTextTransform(childNode, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
+  auto propertyChangeType = PropertyChangeType::Text;
+  if (IsVirtualTextShadowNode(&childNode)) {
+    const auto &childTextNode = static_cast<VirtualTextShadowNode &>(childNode);
+    m_hasDescendantBackgroundColor |= childTextNode.m_hasDescendantBackgroundColor;
+    propertyChangeType |=
+        childTextNode.m_backgroundColor ? PropertyChangeType::AddBackgroundColor : PropertyChangeType::None;
+  }
   Super::AddView(child, index);
-  NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType::Text);
+  NotifyAncestorsTextPropertyChanged(propertyChangeType);
 }
 
 void VirtualTextShadowNode::RemoveChildAt(int64_t indexToRemove) {
   Super::RemoveChildAt(indexToRemove);
-  NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType::Text);
+  NotifyAncestorsTextPropertyChanged(PropertyChangeType::Text);
 }
 
 void VirtualTextShadowNode::removeAllChildren() {
   Super::removeAllChildren();
-  NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType::Text);
+  NotifyAncestorsTextPropertyChanged(PropertyChangeType::Text);
 }
 
 void VirtualTextShadowNode::ApplyTextTransform(
@@ -93,7 +100,7 @@ void VirtualTextShadowNode::ApplyTextTransform(
   }
 }
 
-void VirtualTextShadowNode::NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType propertyChangeType) {
+void VirtualTextShadowNode::NotifyAncestorsTextPropertyChanged(PropertyChangeType propertyChangeType) {
   if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
     auto host = uiManager->getHost();
     ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(m_parent));
@@ -103,6 +110,9 @@ void VirtualTextShadowNode::NotifyAncestorsTextPropertyChanged(TextViewManager::
       if (IsTextShadowNode(parent)) {
         (static_cast<TextViewManager *>(viewManager))->OnDescendantTextPropertyChanged(parent, propertyChangeType);
         break;
+      } else if (IsVirtualTextShadowNode(parent)) {
+        auto textParent = static_cast<VirtualTextShadowNode *>(parent);
+        textParent->m_hasDescendantBackgroundColor |= m_hasDescendantBackgroundColor;
       }
       parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parent->GetParent()));
     }
@@ -133,7 +143,9 @@ bool VirtualTextViewManager::UpdateProperty(
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {
       node->m_foregroundColor = OptionalColorFrom(propertyValue);
-      node->NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType::Highlight);
+      const auto propertyChangeType =
+          node->m_foregroundColor ? PropertyChangeType::AddBackgroundColor : PropertyChangeType::None;
+      node->NotifyAncestorsTextPropertyChanged(propertyChangeType);
     }
   } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
@@ -147,7 +159,10 @@ bool VirtualTextViewManager::UpdateProperty(
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {
       node->m_backgroundColor = OptionalColorFrom(propertyValue);
-      node->NotifyAncestorsTextPropertyChanged(TextViewManager::PropertyChangeType::Highlight);
+      node->m_hasDescendantBackgroundColor |= node->m_backgroundColor.has_value();
+      const auto propertyChangeType =
+          node->m_backgroundColor ? PropertyChangeType::AddBackgroundColor : PropertyChangeType::None;
+      node->NotifyAncestorsTextPropertyChanged(propertyChangeType);
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
