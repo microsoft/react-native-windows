@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include "TextViewManager.h"
+#include "Utils/ShadowNodeTypeUtils.h"
 #include "Utils/XamlIslandUtils.h"
 
 #include <Modules/NativeUIManager.h>
@@ -74,13 +75,13 @@ class TextShadowNode final : public ShadowNodeBase {
       Super::AddView(child, index);
     }
 
-    UpdateTextHighlighters();
+    RecalculateTextHighlighters();
   }
 
   void removeAllChildren() override {
     m_firstChildNode = nullptr;
     Super::removeAllChildren();
-    UpdateTextHighlighters();
+    RecalculateTextHighlighters();
   }
 
   void RemoveChildAt(int64_t indexToRemove) override {
@@ -88,10 +89,10 @@ class TextShadowNode final : public ShadowNodeBase {
       m_firstChildNode = nullptr;
     }
     Super::RemoveChildAt(indexToRemove);
-    UpdateTextHighlighters();
+    RecalculateTextHighlighters();
   }
 
-  void UpdateTextHighlighters() {
+  void RecalculateTextHighlighters() {
     const auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
     textBlock.TextHighlighters().Clear();
 
@@ -127,7 +128,7 @@ class TextShadowNode final : public ShadowNodeBase {
       winrt::TextHighlighter highlighter{nullptr};
       auto parentBackgroundColor = backgroundColor;
       auto parentForegroundColor = foregroundColor;
-      if (std::wcscmp(node->GetViewManager()->GetName(), L"RCTVirtualText") == 0) {
+      if (IsVirtualTextShadowNode(node)) {
         const auto virtualTextNode = static_cast<VirtualTextShadowNode *>(node);
         const auto requiresHighlighter =
             virtualTextNode->m_backgroundColor || (backgroundColor && virtualTextNode->m_foregroundColor);
@@ -199,7 +200,7 @@ bool TextViewManager::UpdateProperty(
     const auto node = static_cast<TextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {
       node->m_foregroundColor = OptionalColorFrom(propertyValue);
-      node->UpdateTextHighlighters();
+      node->RecalculateTextHighlighters();
     }
   } else if (TryUpdateFontProperties(textBlock, propertyName, propertyValue)) {
   } else if (propertyName == "textTransform") {
@@ -268,7 +269,7 @@ bool TextViewManager::UpdateProperty(
     const auto node = static_cast<TextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {
       node->m_backgroundColor = OptionalColorFrom(propertyValue);
-      node->UpdateTextHighlighters();
+      node->RecalculateTextHighlighters();
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
@@ -308,7 +309,7 @@ YGMeasureFunc TextViewManager::GetYogaCustomMeasureFunc() const {
 }
 
 void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node, PropertyChangeType propertyChangeType) {
-  if (std::wcscmp(node->GetViewManager()->GetName(), GetName()) == 0) {
+  if (IsTextShadowNode(node)) {
     const auto textNode = static_cast<TextShadowNode *>(node);
 
     if (propertyChangeType == PropertyChangeType::Text) {
@@ -328,12 +329,12 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node, Prop
     }
 
     // Rebuild highlights
-    textNode->UpdateTextHighlighters();
+    textNode->RecalculateTextHighlighters();
   }
 }
 
 TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
-  if (std::wcscmp(node->GetViewManager()->GetName(), GetName()) == 0) {
+  if (IsTextShadowNode(node)) {
     return static_cast<TextShadowNode *>(node)->textTransform;
   }
 

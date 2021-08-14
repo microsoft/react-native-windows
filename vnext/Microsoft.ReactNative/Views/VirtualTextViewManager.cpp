@@ -12,6 +12,7 @@
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <Utils/PropertyUtils.h>
+#include <Utils/ShadowNodeTypeUtils.h>
 #include <Utils/TransformableText.h>
 #include <Utils/ValueUtils.h>
 
@@ -55,7 +56,7 @@ void VirtualTextShadowNode::ApplyTextTransform(
     const auto nodeType = viewManager->GetName();
 
     // Base case: apply the inherited textTransform to the raw text node
-    if (std::wcscmp(nodeType, L"RCTRawText") == 0) {
+    if (IsRawTextShadowNode(&node)) {
       auto &rawTextNode = static_cast<RawTextShadowNode &>(node);
       auto originalText = rawTextNode.originalText;
       auto run = node.GetView().try_as<winrt::Run>();
@@ -74,7 +75,7 @@ void VirtualTextShadowNode::ApplyTextTransform(
       }
     } else {
       // Recursively apply the textTransform to the children of the composite text node
-      if (std::wcscmp(nodeType, L"RCTVirtualText") == 0) {
+      if (IsVirtualTextShadowNode(&node)) {
         auto &virtualTextNode = static_cast<VirtualTextShadowNode &>(node);
         // If this is not the root call, we can skip sub-trees with explicit textTransform settings.
         if (!isRoot && virtualTextNode.textTransform != TextTransform::Undefined) {
@@ -99,7 +100,7 @@ void VirtualTextShadowNode::NotifyAncestorsTextPropertyChanged(TextViewManager::
     while (parent) {
       auto viewManager = parent->GetViewManager();
       const auto nodeType = viewManager->GetName();
-      if (std::wcscmp(nodeType, L"RCTText") == 0) {
+      if (IsTextShadowNode(parent)) {
         (static_cast<TextViewManager *>(viewManager))->OnDescendantTextPropertyChanged(parent, propertyChangeType);
         break;
       }
