@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 14 Aug 2021 05:08:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.359",
+      "version": "0.0.0-canary.359",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Prevent crash in AnimationDriver when RN instance destroyed",
+            "author": "erozell@outlook.com",
+            "commit": "03a57068e7f2382db61b8030f1bdbeebcb1d7ba3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 13 Aug 2021 05:06:35 GMT",
       "tag": "react-native-windows_v0.0.0-canary.358",
       "version": "0.0.0-canary.358",

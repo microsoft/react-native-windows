@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Prevent crash in AnimationDriver when RN instance destroyed",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
