@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 13 Aug 2021 05:06:35 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.358",
+      "version": "0.0.0-canary.358",
+      "comments": {
+        "none": [
+          {
+            "comment": "Enable private agent image",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7cad9763f3828c75a31f741b1ef66d9829d41fdd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Aug 2021 05:09:13 GMT",
       "tag": "react-native-windows_v0.0.0-canary.358",
       "version": "0.0.0-canary.358",
