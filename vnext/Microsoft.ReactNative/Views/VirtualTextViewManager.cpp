@@ -143,6 +143,7 @@ bool VirtualTextViewManager::UpdateProperty(
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {
       node->m_foregroundColor = OptionalColorFrom(propertyValue);
+      node->m_hasDescendantBackgroundColor |= node->m_foregroundColor.has_value();
       const auto propertyChangeType =
           node->m_foregroundColor ? PropertyChangeType::AddBackgroundColor : PropertyChangeType::None;
       node->NotifyAncestorsTextPropertyChanged(propertyChangeType);
