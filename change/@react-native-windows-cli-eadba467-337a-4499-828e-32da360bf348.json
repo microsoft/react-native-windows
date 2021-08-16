@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add experimentalFeatures to projectConfig result",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
