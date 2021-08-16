@@ -82,6 +82,44 @@ Object {
 }
 `;
 
+exports[`projectConfig - WithExperimentalFeaturesProps (Ignore react-native.config.js) 1`] = `
+Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "false",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
+  "folder": StringContaining "WithExperimentalFeaturesProps",
+  "project": Object {
+    "projectFile": "WithExperimentalFeaturesProps\\\\WithExperimentalFeaturesProps.vcxproj",
+    "projectGuid": "{af576cbe-1aea-498d-be37-e9849a5fbf1b}",
+    "projectLang": "cpp",
+    "projectName": "WithExperimentalFeaturesProps",
+  },
+  "solutionFile": "WithExperimentalFeaturesProps.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - WithExperimentalFeaturesProps (Use react-native.config.js) 1`] = `
+Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "false",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
+  "folder": StringContaining "WithExperimentalFeaturesProps",
+  "project": Object {
+    "projectFile": "WithExperimentalFeaturesProps\\\\WithExperimentalFeaturesProps.vcxproj",
+    "projectGuid": "{af576cbe-1aea-498d-be37-e9849a5fbf1b}",
+    "projectLang": "cpp",
+    "projectName": "WithExperimentalFeaturesProps",
+  },
+  "solutionFile": "WithExperimentalFeaturesProps.sln",
+  "sourceDir": "windows",
+}
+`;
+
 exports[`projectConfig - WithIndirectDependency (Ignore react-native.config.js) 1`] = `
 Object {
   "experimentalFeatures": Object {
@@ -113,6 +151,82 @@ Object {
   "solutionFile": "WithIndirectDependency.sln",
   "sourceDir": "windows",
   "useWinUI3": false,
+}
+`;
+
+exports[`projectConfig - WithUseExperimentalNuget (Ignore react-native.config.js) 1`] = `
+Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "true",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
+  "folder": StringContaining "WithUseExperimentalNuget",
+  "project": Object {
+    "projectFile": "WithUseExperimentalNuget\\\\WithUseExperimentalNuget.vcxproj",
+    "projectGuid": "{af576cbe-1aea-498d-be37-e9849a5fbf1b}",
+    "projectLang": "cpp",
+    "projectName": "WithUseExperimentalNuget",
+  },
+  "solutionFile": "WithUseExperimentalNuget.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - WithUseExperimentalNuget (Use react-native.config.js) 1`] = `
+Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "true",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
+  "folder": StringContaining "WithUseExperimentalNuget",
+  "project": Object {
+    "projectFile": "WithUseExperimentalNuget\\\\WithUseExperimentalNuget.vcxproj",
+    "projectGuid": "{af576cbe-1aea-498d-be37-e9849a5fbf1b}",
+    "projectLang": "cpp",
+    "projectName": "WithUseExperimentalNuget",
+  },
+  "solutionFile": "WithUseExperimentalNuget.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - WithUseExperimentalNugetSetInProject (Ignore react-native.config.js) 1`] = `
+Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "true",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
+  "folder": StringContaining "WithUseExperimentalNugetSetInProject",
+  "project": Object {
+    "projectFile": "WithUseExperimentalNugetSetInProject\\\\WithUseExperimentalNugetSetInProject.vcxproj",
+    "projectGuid": "{af576cbe-1aea-498d-be37-e9849a5fbf1b}",
+    "projectLang": "cpp",
+    "projectName": "WithUseExperimentalNugetSetInProject",
+  },
+  "solutionFile": "WithUseExperimentalNugetSetInProject.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - WithUseExperimentalNugetSetInProject (Use react-native.config.js) 1`] = `
+Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "true",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
+  "folder": StringContaining "WithUseExperimentalNugetSetInProject",
+  "project": Object {
+    "projectFile": "WithUseExperimentalNugetSetInProject\\\\WithUseExperimentalNugetSetInProject.vcxproj",
+    "projectGuid": "{af576cbe-1aea-498d-be37-e9849a5fbf1b}",
+    "projectLang": "cpp",
+    "projectName": "WithUseExperimentalNugetSetInProject",
+  },
+  "solutionFile": "WithUseExperimentalNugetSetInProject.sln",
+  "sourceDir": "windows",
 }
 `;
 
