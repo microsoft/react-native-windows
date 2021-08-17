@@ -310,6 +310,12 @@
       "file": "src/Libraries/Components/View/ViewWindowsProps.ts"
     },
     {
+      "type": "copy",
+      "file": "src/Libraries/DeprecatedPropTypes/DeprecatedImagePropType.windows.js",
+      "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedImagePropType.ios.js",
+      "baseHash": "ae3ac9add2e9ac83b7b538f82b57fb3f8fdd9526"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.windows.js",
       "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js",

@@ -207,6 +207,12 @@
       "issue": 5170
     },
     {
+      "type": "copy",
+      "file": "src/Libraries/DeprecatedPropTypes/DeprecatedImagePropType.win32.js",
+      "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedImagePropType.ios.js",
+      "baseHash": "ae3ac9add2e9ac83b7b538f82b57fb3f8fdd9526"
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
