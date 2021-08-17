@@ -19,7 +19,8 @@
 #undef GetCurrentTime
 
 #include <DesktopWindowBridge.h>
-#include <winrt/Microsoft.ReactNative.h>
+
+#include "AutolinkedNativeModules.g.h"
 
 #include <CppWinRTIncludes.h>
 #include <UI.Xaml.Controls.h>
@@ -100,6 +101,8 @@ struct WindowData {
           GetCurrentDirectory(MAX_PATH, workingDir);
 
           auto host = Host();
+          RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any autolinked modules
+
           host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
 
           host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
