@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 11 Aug 2021 05:09:13 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Aug 2021 05:09:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.360
+
+Tue, 17 Aug 2021 05:09:46 GMT
+
+### Changes
+
+- Add experimentalFeatures to projectConfig result (jthysell@microsoft.com)
+
+## 0.0.0-canary.359
+
+Sat, 14 Aug 2021 05:08:23 GMT
+
+### Changes
+
+- Prevent crash in AnimationDriver when RN instance destroyed (erozell@outlook.com)
 
 ## 0.0.0-canary.358
 
