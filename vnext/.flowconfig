@@ -10,7 +10,6 @@
 <PROJECT_ROOT>/index.js
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
-<PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
 <PROJECT_ROOT>/Libraries/Components/Picker/RCTPickerNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js

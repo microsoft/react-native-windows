@@ -100,6 +100,7 @@ struct WindowData {
           GetCurrentDirectory(MAX_PATH, workingDir);
 
           auto host = Host();
+          host.PackageProviders().Append(winrt::ReactNativePicker::ReactPackageProvider());
           host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
 
           host.InstanceSettings().UseWebDebugger(m_useWebDebugger);

@@ -12,7 +12,6 @@
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
     <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <BuildMSRNCxx>false</BuildMSRNCxx>
-    <RunAutolinkCheck>false</RunAutolinkCheck>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
     <AppxPackage>false</AppxPackage>
