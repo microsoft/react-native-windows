@@ -1,0 +1,13 @@
+diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
+index 28a8132..78d0b8e 100644
+--- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
++++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
+@@ -13,7 +13,7 @@
+     <AppContainerApplication>true</AppContainerApplication>
+     <ApplicationType>Windows Store</ApplicationType>
+     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+-    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.18362.0</WindowsTargetPlatformVersion>
++    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
+     <WindowsTargetPlatformMinVersion>10.0.15063.0</WindowsTargetPlatformMinVersion>
+   </PropertyGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
