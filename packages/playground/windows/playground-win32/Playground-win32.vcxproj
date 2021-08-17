@@ -100,15 +100,19 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AutolinkedNativeModules.g.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="Application.manifest" />
+    <None Include="AutolinkedNativeModules.g.props" />
+    <None Include="AutolinkedNativeModules.g.targets" />
     <None Include="packages.config" />
     <None Include="Playground_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AutolinkedNativeModules.g.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
