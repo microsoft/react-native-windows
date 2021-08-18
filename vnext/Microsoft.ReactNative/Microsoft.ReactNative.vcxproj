@@ -146,6 +146,8 @@
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\cppwinrt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <!-- #8430: This is needed to allow modules targeting older SDKs to consume the geneerated WinMD -->
+      <AdditionalOptions>/noattributename</AdditionalOptions>
     </Midl>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
