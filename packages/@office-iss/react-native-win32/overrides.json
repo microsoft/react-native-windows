@@ -6,7 +6,7 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.65.0-rc.2",
+  "baseVersion": "0.65.0",
   "overrides": [
     {
       "type": "derived",
