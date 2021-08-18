@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Implement native inverted behaviors for ScrollView",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
