@@ -12,6 +12,10 @@ SnapPointManagingContentControl::SnapPointManagingContentControl() {
   return winrt::make_self<SnapPointManagingContentControl>();
 }
 
+void SnapPointManagingContentControl::ContentAnchoringEnabled(bool enabled) {
+  m_contentAnchoringEnabled = enabled;
+}
+
 void SnapPointManagingContentControl::SnapToInterval(float interval) {
   if (interval != m_interval) {
     m_interval = interval;
@@ -122,6 +126,10 @@ void SnapPointManagingContentControl::SetHorizontal(bool horizontal) {
       }
     }
   }
+}
+
+void SnapPointManagingContentControl::SetInverted(bool inverted) {
+  m_inverted = inverted;
 }
 
 void SnapPointManagingContentControl::SetWidthBounds(float startWidth, float endWidth) {

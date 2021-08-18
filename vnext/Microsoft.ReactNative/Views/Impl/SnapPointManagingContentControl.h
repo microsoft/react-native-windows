@@ -23,6 +23,7 @@ class SnapPointManagingContentControl
   static winrt::com_ptr<SnapPointManagingContentControl> Create();
 
   // ScrollView Implementation
+  void ContentAnchoringEnabled(bool enabled);
   void SnapToInterval(float interval);
   void SnapToOffsets(const winrt::IVectorView<float> &offsets);
   void SnapToStart(bool snapToStart);
@@ -49,12 +50,21 @@ class SnapPointManagingContentControl
 
   // Helpers
   void SetHorizontal(bool horizontal);
+  void SetInverted(bool inverted);
   void SetHeightBounds(float startHeight, float endHeight);
   void SetWidthBounds(float startWidth, float endWidth);
   void SetViewportSize(float scaledViewportWidth, float scaledviewportHeight);
 
+  bool IsContentAnchoringEnabled() {
+    return m_contentAnchoringEnabled;
+  }
+
   bool IsHorizontal() {
     return m_horizontal;
+  }
+
+  bool IsInverted() {
+    return m_inverted;
   }
 
  private:
@@ -66,7 +76,9 @@ class SnapPointManagingContentControl
   winrt::event<winrt::EventHandler<winrt::IInspectable>> m_horizontalSnapPointsChangedEventSource;
   winrt::event<winrt::EventHandler<winrt::IInspectable>> m_verticalSnapPointsChangedEventSource;
 
+  bool m_contentAnchoringEnabled{false};
   bool m_horizontal{false};
+  bool m_inverted{false};
   float m_startHeight{0};
   float m_startWidth{0};
   float m_endHeight{INFINITY};
