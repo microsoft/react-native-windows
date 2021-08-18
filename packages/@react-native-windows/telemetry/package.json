@@ -38,7 +38,7 @@
     "lib-commonjs"
   ],
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.64-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",
