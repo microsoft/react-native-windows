@@ -359,7 +359,7 @@ jobs:
           verbosityRestore: Detailed # Options: quiet, normal, detailed
         condition: succeeded()
 
-      - template: ../templates/run-windows-with-certificates.yml
+      - template: templates/run-windows-with-certificates.yml
         parameters:
           buildEnvironment: 'PullRequest'
           encodedKey: sampleAppCPPEncodedKey
