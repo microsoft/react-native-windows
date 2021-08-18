@@ -7,6 +7,7 @@
 #include <Views/SIPEventHandler.h>
 #include <Views/ShadowNodeBase.h>
 #include "Impl/ScrollViewUWPImplementation.h"
+#include "Impl/ScrollViewViewChanger.h"
 #include "ScrollViewManager.h"
 
 using namespace winrt::Microsoft::ReactNative;
@@ -34,6 +35,8 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
+  bool IsInverted() const;
+
  private:
   void AddHandlers(const winrt::ScrollViewer &scrollViewer);
   void EmitScrollEvent(
@@ -55,9 +58,12 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   bool m_isScrollingFromInertia = false;
   bool m_isScrolling = false;
   bool m_isHorizontal = false;
+  bool m_isInverted = false;
   bool m_isScrollingEnabled = true;
   bool m_changeViewAfterLoaded = false;
   bool m_dismissKeyboardOnDrag = false;
+
+  ScrollViewViewChanger m_viewChanger;
 
   std::shared_ptr<SIPEventHandler> m_SIPEventHandler;
 
@@ -90,10 +96,7 @@ void ScrollViewShadowNode::dispatchCommand(
     scrollViewer.ChangeView(x, y, nullptr, !animated /*disableAnimation*/);
   } else if (commandId == ScrollViewCommands::ScrollToEnd) {
     bool animated = commandArgs[0].AsBoolean();
-    if (m_isHorizontal)
-      scrollViewer.ChangeView(scrollViewer.ScrollableWidth(), nullptr, nullptr, !animated /*disableAnimation*/);
-    else
-      scrollViewer.ChangeView(nullptr, scrollViewer.ScrollableHeight(), nullptr, !animated /*disableAnimation*/);
+    m_viewChanger.ScrollToEnd(scrollViewer, animated);
   }
 }
 
@@ -112,13 +115,15 @@ void ScrollViewShadowNode::createView(const winrt::Microsoft::ReactNative::JSVal
       });
 
   m_scrollViewerViewChangedRevoker = scrollViewer.ViewChanged(
-      winrt::auto_revoke, [this, scrollViewUWPImplementation](const auto &sender, const auto & /*args*/) {
+      winrt::auto_revoke, [this, scrollViewUWPImplementation](const auto &sender, const auto &args) {
         const auto scrollViewerNotNull{sender.as<winrt::ScrollViewer>()};
         const auto zoomFactor{scrollViewerNotNull.ZoomFactor()};
         if (m_zoomFactor != zoomFactor) {
           m_zoomFactor = zoomFactor;
           scrollViewUWPImplementation.UpdateScrollableSize();
         }
+
+        m_viewChanger.OnViewChanged(scrollViewerNotNull, args);
       });
 
   m_contentSizeChangedRevoker = scrollViewUWPImplementation.ScrollViewerSnapPointManager()->SizeChanged(
@@ -226,11 +231,29 @@ void ScrollViewShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSVal
       if (valid) {
         ScrollViewUWPImplementation(scrollViewer).PagingEnabled(pagingEnabled);
       }
+    } else if (propertyName == "inverted") {
+      const auto [valid, inverted] = getPropertyAndValidity(propertyValue, false);
+      if (valid) {
+        m_isInverted = inverted;
+        m_viewChanger.Inverted(inverted);
+        ScrollViewUWPImplementation(scrollViewer).SetInverted(inverted);
+        if (inverted) {
+          scrollViewer.HorizontalAnchorRatio(1.0);
+          scrollViewer.VerticalAnchorRatio(1.0);
+        } else {
+          scrollViewer.ClearValue(winrt::ScrollViewer::HorizontalAnchorRatioProperty());
+          scrollViewer.ClearValue(winrt::ScrollViewer::VerticalAnchorRatioProperty());
+        }
+      }
     }
   }
 
   Super::updateProperties(props);
   m_updating = false;
+}
+
+bool ScrollViewShadowNode::IsInverted() const {
+  return m_isInverted;
 }
 
 void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) {
@@ -260,6 +283,8 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
               args.NextView().ZoomFactor(),
               CoalesceType::Durable);
         }
+
+        m_viewChanger.OnViewChanging(scrollViewerNotNull, args);
 
         EmitScrollEvent(
             scrollViewerNotNull,
@@ -445,6 +470,7 @@ void ScrollViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSV
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"snapToEnd", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"pagingEnabled", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"keyboardDismissMode", L"string");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"inverted", L"boolean");
 }
 
 ShadowNode *ScrollViewManager::createShadow() const {
@@ -494,6 +520,27 @@ XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microso
   scrollViewer.Content(*snapPointManager);
 
   return scrollViewer;
+}
+
+void ScrollViewManager::SetLayoutProps(
+    ShadowNodeBase &nodeToUpdate,
+    const XamlView &viewToUpdate,
+    float left,
+    float top,
+    float width,
+    float height) {
+  // ScrollViewer selects an anchor during the Arrange phase of layout.
+  // If you do not call InvalidateArrange whenever a new child is added
+  // to the ScrollViewer content, the anchor behavior does not work.
+  //
+  // While this call fires too frequently resulting in unnecessary
+  // calls to invalidate arrange, it is the only sure-fire way to call
+  // InvalidateArrange any time any descendent layout changes.
+  if (static_cast<ScrollViewShadowNode &>(nodeToUpdate).IsInverted()) {
+    viewToUpdate.as<xaml::UIElement>().InvalidateArrange();
+  }
+
+  Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
 }
 
 void ScrollViewManager::AddView(const XamlView &parent, const XamlView &child, [[maybe_unused]] int64_t index) {

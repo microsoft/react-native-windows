@@ -23,6 +23,15 @@ class ScrollViewManager : public ControlViewManager {
 
   ShadowNode *createShadow() const override;
 
+  // Yoga Layout
+  void SetLayoutProps(
+      ShadowNodeBase &nodeToUpdate,
+      const XamlView &viewToUpdate,
+      float left,
+      float top,
+      float width,
+      float height) override;
+
   void AddView(const XamlView &parent, const XamlView &child, int64_t index) override;
   void RemoveAllChildren(const XamlView &parent) override;
   void RemoveChildAt(const XamlView &parent, int64_t index) override;

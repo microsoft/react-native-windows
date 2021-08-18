@@ -176,6 +176,9 @@
     <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp">
       <Filter>Views\Impl</Filter>
     </ClCompile>
+    <ClCompile Include="Views\Impl\ScrollViewViewChanger.cpp">
+      <Filter>Views\Impl</Filter>
+    </ClCompile>
     <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp">
       <Filter>Views\Impl</Filter>
     </ClCompile>
@@ -539,6 +542,9 @@
       <Filter>Views\Image</Filter>
     </ClInclude>
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h">
+      <Filter>Views\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Impl\ScrollViewViewChanger.h">
       <Filter>Views\Impl</Filter>
     </ClInclude>
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h">

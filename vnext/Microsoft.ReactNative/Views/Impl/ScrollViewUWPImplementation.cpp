@@ -15,8 +15,16 @@ ScrollViewUWPImplementation::ScrollViewUWPImplementation(const winrt::ScrollView
   m_scrollViewer = winrt::make_weak(scrollViewer);
 }
 
+void ScrollViewUWPImplementation::ContentAnchoringEnabled(bool enabled) {
+  ScrollViewerSnapPointManager()->ContentAnchoringEnabled(enabled);
+}
+
 void ScrollViewUWPImplementation::SetHorizontal(bool horizontal) {
   ScrollViewerSnapPointManager()->SetHorizontal(horizontal);
+}
+
+void ScrollViewUWPImplementation::SetInverted(bool inverted) {
+  ScrollViewerSnapPointManager()->SetInverted(inverted);
 }
 
 void ScrollViewUWPImplementation::SnapToInterval(float interval) {
