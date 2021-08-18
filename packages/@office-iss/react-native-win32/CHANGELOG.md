@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 24 Jul 2021 05:05:52 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Aug 2021 05:06:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.103
+
+Wed, 18 Aug 2021 05:06:18 GMT
+
+### Changes
+
+- Enable inlineRequires for all projects (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.102
 
