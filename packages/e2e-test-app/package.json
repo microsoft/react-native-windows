@@ -11,6 +11,7 @@
     "e2etest": "jest --color"
   },
   "dependencies": {
+    "@react-native-picker/picker": "1.16.5",
     "@react-native-windows/tester": "0.0.1",
     "node-rnw-rpc": "^1.0.12-16",
     "react": "17.0.2",

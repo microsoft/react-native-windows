@@ -13,13 +13,13 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Picker,
 } from 'react-native';
 import {
   IKeyboardEvent,
   supportKeyboard,
   ViewWindows,
 } from 'react-native-windows';
+import {Picker} from '@react-native-picker/picker';
 
 // TextInput2 is used to verify supportKeyboard + focus
 const TextInput2 = supportKeyboard(TextInput);
@@ -57,7 +57,7 @@ interface IKeyboardFocusComponentState {
   focusMessageWithoutFeedback: string;
 }
 
-const pickerRef = React.createRef<Picker>();
+const pickerRef = React.createRef<Picker<string>>();
 const viewWindowsRef = React.createRef<ViewWindows>();
 const textInputRef = React.createRef<TextInput>();
 const textInputRef2 = React.createRef<any>();
