@@ -24,7 +24,7 @@ const {useState} = React;
 
 const TextInputSharedExamples = require('./TextInputSharedExamples');
 
-import type {RNTesterExampleModuleItem} from '../../types/RNTesterTypes';
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 
 class ToggleDefaultPaddingExample extends React.Component<
   $FlowFixMeProps,
@@ -543,4 +543,4 @@ exports.examples = ([
     },
   },
   // Windows]
-]: Array<RNTesterExampleModuleItem>);
+]: Array<RNTesterModuleExample>);
