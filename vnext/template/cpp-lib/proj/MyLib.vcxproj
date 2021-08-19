@@ -95,6 +95,10 @@
       <PreprocessorDefinitions>_WINRT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
+    <Midl>
+      <!-- This allows applications targetting older Windows SDKs (e.g. RNW 0.64 apps) to consume the library generated WinMD -->
+      <AdditionalOptions>%(AdditionalOptions) /noattributename</AdditionalOptions>
+    </Midl>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>

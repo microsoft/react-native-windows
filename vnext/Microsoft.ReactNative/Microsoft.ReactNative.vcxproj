@@ -146,7 +146,7 @@
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\cppwinrt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <!-- #8430: This is needed to allow modules targeting older SDKs to consume the geneerated WinMD -->
+      <!-- #8430: This is needed to allow modules targeting older SDKs to consume the generated WinMD -->
       <AdditionalOptions>/noattributename</AdditionalOptions>
     </Midl>
   </ItemDefinitionGroup>
