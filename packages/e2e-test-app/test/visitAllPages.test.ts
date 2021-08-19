@@ -12,14 +12,14 @@ type RNTesterExampleModule = {
   description: string;
 };
 
-type RNTesterExample = {
+type RNTesterModuleInfo = {
   key: string;
   module: RNTesterExampleModule;
 };
 
 type RNTesterList = {
-  APIExamples: RNTesterExample[];
-  ComponentExamples: RNTesterExample[];
+  APIs: RNTesterModuleInfo[];
+  Components: RNTesterModuleInfo[];
 };
 
 const testerList: RNTesterList = require('@react-native-windows/tester/js/utils/RNTesterList');
