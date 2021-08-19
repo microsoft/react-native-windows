@@ -8,7 +8,7 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-40a93914c",
+  "baseVersion": "0.0.0-4ad4426da",
   "overrides": [
     {
       "type": "derived",
@@ -36,13 +36,6 @@
       "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.h",
       "baseHash": "6951c3418c9aed3ab5f0378a168289968c02aef0",
       "issue": 7821
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManagerBinding.h",
-      "baseFile": "ReactCommon/react/renderer/uimanager/UIManagerBinding.h",
-      "baseHash": "db707f2820a60006ef33c93fa8655baa5f99e975",
-      "issue": 1
     },
     {
       "type": "patch",
