@@ -10,11 +10,11 @@
     "windows": "react-native run-windows"
   },
   "dependencies": {
-    "@react-native-picker/picker": "^1.16.5",
+    "@react-native-picker/picker": "1.16.5",
     "@react-native-windows/tester": "0.0.1",
     "react": "17.0.2",
     "react-native": "0.0.0-c974cbff0",
-    "react-native-windows": "0.0.0-canary.360"
+    "react-native-windows": "0.0.0-canary.361"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
