@@ -675,6 +675,9 @@
     <ClInclude Include="Utils\TextTransform.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\ShadowNodeTypeUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
