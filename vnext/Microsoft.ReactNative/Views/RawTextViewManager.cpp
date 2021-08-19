@@ -9,6 +9,7 @@
 #include <Views/ShadowNodeBase.h>
 
 #include <INativeUIManager.h>
+#include <Utils/ShadowNodeTypeUtils.h>
 #include <Utils/ValueUtils.h>
 
 #include <Modules/NativeUIManager.h>
@@ -77,8 +78,33 @@ void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate
     ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(nodeToUpdate->GetParent()));
     while (parent) {
       auto viewManager = parent->GetViewManager();
-      if (!std::wcscmp(viewManager->GetName(), L"RCTText")) {
+      const auto nodeType = viewManager->GetName();
+      if (IsTextShadowNode(parent)) {
+        const auto textViewManager = static_cast<TextViewManager *>(viewManager);
+        if (textTransform == TextTransform::Undefined) {
+          textTransform = textViewManager->GetTextTransformValue(parent);
+        }
+
+        VirtualTextShadowNode::ApplyTextTransform(
+            *nodeToUpdate, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
+
+        if (!isNested && parent->m_children.size() == 1) {
+          auto view = parent->GetView();
+          auto textBlock = view.try_as<winrt::TextBlock>();
+          if (textBlock != nullptr) {
+            const auto run = nodeToUpdate->GetView().try_as<winrt::Run>();
+            if (run != nullptr) {
+              textBlock.Text(run.Text());
+            }
+          }
+        }
+
         (static_cast<TextViewManager *>(viewManager))->OnDescendantTextPropertyChanged(parent);
+
+        // We have reached the parent TextBlock, so there're no more parent <Text> elements in this tree.
+        break;
+      } else if (IsVirtualTextShadowNode(parent) && textTransform == TextTransform::Undefined) {
+        textTransform = static_cast<VirtualTextShadowNode *>(parent)->textTransform;
       }
       parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parent->GetParent()));
     }

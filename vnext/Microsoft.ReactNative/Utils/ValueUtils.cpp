@@ -320,4 +320,12 @@ winrt::Uri UriTryCreate(winrt::param::hstring const &uri) {
   }
 }
 
-} // namespace react::uwp
+bool IsValidOptionalColorValue(const winrt::Microsoft::ReactNative::JSValue &v) {
+  return v.Type() == winrt::Microsoft::ReactNative::JSValueType::Null || IsValidColorValue(v);
+}
+
+std::optional<winrt::Color> OptionalColorFrom(const winrt::Microsoft::ReactNative::JSValue &v) {
+  return v.IsNull() ? std::optional<winrt::Color>{} : ColorFrom(v);
+}
+
+} // namespace Microsoft::ReactNative

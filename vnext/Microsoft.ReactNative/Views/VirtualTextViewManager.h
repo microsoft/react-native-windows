@@ -8,6 +8,11 @@
 #include <UI.Xaml.Documents.h>
 #include <Utils/TransformableText.h>
 #include <Views/FrameworkElementViewManager.h>
+<<<<<<< HEAD
+=======
+#include <Views/ShadowNodeBase.h>
+#include <Views/TextViewManager.h>
+>>>>>>> e64bc2936 (Fixes issues with Text backgroundColor (#8408))
 
 namespace Microsoft::ReactNative {
 
@@ -16,15 +21,16 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   TransformableText transformableText{};
 
   void AddView(ShadowNode &child, int64_t index) override;
+  void RemoveChildAt(int64_t indexToRemove) override;
+  void removeAllChildren() override;
 
-  struct HighlightData {
-    std::vector<HighlightData> data;
-    size_t spanIdx = 0;
-    std::optional<winrt::Windows::UI::Color> backgroundColor;
-    std::optional<winrt::Windows::UI::Color> foregroundColor;
-  };
+  void NotifyAncestorsTextPropertyChanged(PropertyChangeType propertyChangeType);
 
-  HighlightData m_highlightData;
+  static void ApplyTextTransform(ShadowNodeBase &node, TextTransform transform, bool forceUpdate, bool isRoot);
+
+  std::optional<winrt::Windows::UI::Color> m_backgroundColor;
+  std::optional<winrt::Windows::UI::Color> m_foregroundColor;
+  bool m_hasDescendantBackgroundColor{false};
 };
 
 class VirtualTextViewManager : public ViewManagerBase {
