@@ -24,8 +24,8 @@ type RNTesterList = {
 
 const testerList: RNTesterList = require('@react-native-windows/tester/js/utils/RNTesterList');
 
-const apiExamples = testerList.APIExamples.map(e => e.module.title);
-const componentExamples = testerList.ComponentExamples.map(e => e.module.title);
+const apiExamples = testerList.APIs.map(e => e.module.title);
+const componentExamples = testerList.Components.map(e => e.module.title);
 
 describe('visitAllPages', () => {
   for (const component of componentExamples) {
