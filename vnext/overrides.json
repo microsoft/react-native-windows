@@ -8,13 +8,13 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-c974cbff0",
+  "baseVersion": "0.0.0-40a93914c",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "f0b19caa58219756e581784b8f4a33607d309567"
+      "baseHash": "651f88c4a4df44b566cc68859b2923ccb4a59070"
     },
     {
       "type": "patch",
@@ -241,7 +241,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "5eb78ac95aeaa6ea8c5128050a2e908759af6aff"
+      "baseHash": "86ac63035e384e3adfcbad3b8bddaf9a5a9c4cef"
     },
     {
       "type": "patch",
@@ -327,6 +327,12 @@
       "baseFile": "Libraries/Image/Image.ios.js",
       "baseHash": "e259481373eaf9acad79087e1fdd3c0e27e25ee5",
       "issue": 4590
+    },
+    {
+      "type": "copy",
+      "file": "src/Libraries/Lists/__tests__/CellRenderMask-test.js",
+      "baseFile": "Libraries/Lists/__tests__/CellRenderMask-test.js",
+      "baseHash": "9b194f61db28366f5fb490b033d940636a9c7bb2"
     },
     {
       "type": "copy",
