@@ -892,9 +892,11 @@ void NativeUIManager::DoLayout() {
   // Process vector of RN controls needing extra layout here.
   const auto extraLayoutNodes = m_extraLayoutNodes;
   for (const int64_t tag : extraLayoutNodes) {
-    ShadowNodeBase &node = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
-    auto element = node.GetView().as<xaml::FrameworkElement>();
-    element.UpdateLayout();
+    ShadowNodeBase *node = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag));
+    if (node) {
+      auto element = node->GetView().as<xaml::FrameworkElement>();
+      element.UpdateLayout();
+    }
   }
   // Values need to be cleared from the vector before next call to DoLayout.
   m_extraLayoutNodes.clear();
