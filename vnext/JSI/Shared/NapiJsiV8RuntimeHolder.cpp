@@ -29,7 +29,7 @@ struct NapiTask {
 
   ~NapiTask() {
     if (m_finalizeCallback) {
-      m_finalizeCallback(m_env, m_taskCallback, m_finalizeHint);
+      m_finalizeCallback(m_env, m_taskData, m_finalizeHint);
     }
   }
 
