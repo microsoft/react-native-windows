@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32-tester
 
-This log was last generated on Wed, 18 Aug 2021 05:06:18 GMT and should not be manually modified.
+This log was last generated on Fri, 20 Aug 2021 05:05:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Fri, 20 Aug 2021 05:05:48 GMT
+
+### Changes
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.104 (ngerlem@microsoft.com)
 
 ## 0.0.1
 
