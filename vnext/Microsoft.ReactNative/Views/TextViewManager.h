@@ -36,7 +36,7 @@ class TextViewManager : public FrameworkElementViewManager {
       ShadowNodeBase *node,
       PropertyChangeType propertyChangeType = PropertyChangeType::Text);
 
-  TextTransform GetTextTransformValue(ShadowNodeBase *node);
+  static TextTransform GetTextTransformValue(ShadowNodeBase *node);
 
  protected:
   bool UpdateProperty(

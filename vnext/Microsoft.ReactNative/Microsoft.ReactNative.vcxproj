@@ -327,6 +327,7 @@
     <ClInclude Include="Views\Image\ReactImageBrush.h" />
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h" />
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
+    <ClInclude Include="Views\Impl\TextVisitor.h" />
     <ClInclude Include="Views\IXamlRootView.h" />
     <ClInclude Include="Views\KeyboardEventHandler.h" />
     <ClInclude Include="Views\PaperShadowNode.h" />
@@ -630,6 +631,7 @@
     <ClCompile Include="Views\Image\ReactImageBrush.cpp" />
     <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp" />
     <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
+    <ClCompile Include="Views\Impl\TextVisitor.cpp" />
     <ClCompile Include="Views\KeyboardEventHandler.cpp" />
     <ClCompile Include="Views\PaperShadowNode.cpp" />
     <ClCompile Include="Views\PopupViewManager.cpp" />

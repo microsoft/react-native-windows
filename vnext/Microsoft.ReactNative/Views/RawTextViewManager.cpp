@@ -7,6 +7,7 @@
 #include "TextViewManager.h"
 #include "VirtualTextViewManager.h"
 
+#include <Views/Impl/TextVisitor.h>
 #include <Views/ShadowNodeBase.h>
 
 #include <INativeUIManager.h>
@@ -74,8 +75,8 @@ void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate
           textTransform = textViewManager->GetTextTransformValue(parent);
         }
 
-        VirtualTextShadowNode::ApplyTextTransform(
-            *nodeToUpdate, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
+        TextTransformVisitor visitor{textTransform};
+        visitor.Visit(nodeToUpdate);
 
         if (!isNested && parent->m_children.size() == 1) {
           auto view = parent->GetView();

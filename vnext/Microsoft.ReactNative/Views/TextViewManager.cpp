@@ -9,6 +9,7 @@
 
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
+#include <Views/Impl/TextVisitor.h>
 #include <Views/RawTextViewManager.h>
 #include <Views/ShadowNodeBase.h>
 #include <Views/VirtualTextViewManager.h>
@@ -51,8 +52,9 @@ class TextShadowNode final : public ShadowNodeBase {
 
   void AddView(ShadowNode &child, int64_t index) override {
     auto &childNode = static_cast<ShadowNodeBase &>(child);
-    VirtualTextShadowNode::ApplyTextTransform(
-        childNode, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
+
+    TextTransformVisitor visitor{textTransform};
+    visitor.Visit(&child);
 
     if (IsVirtualTextShadowNode(&childNode)) {
       auto &textChildNode = static_cast<VirtualTextShadowNode &>(childNode);
@@ -223,8 +225,8 @@ bool TextViewManager::UpdateProperty(
   } else if (propertyName == "textTransform") {
     auto textNode = static_cast<TextShadowNode *>(nodeToUpdate);
     textNode->textTransform = TransformableText::GetTextTransform(propertyValue);
-    VirtualTextShadowNode::ApplyTextTransform(
-        *textNode, textNode->textTransform, /* forceUpdate = */ true, /* isRoot = */ true);
+    TextTransformVisitor visitor;
+    visitor.Visit(nodeToUpdate);
   } else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {
@@ -356,7 +358,7 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node, Prop
   }
 }
 
-TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
+/*static*/ TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
   if (IsTextShadowNode(node)) {
     return static_cast<TextShadowNode *>(node)->textTransform;
   }

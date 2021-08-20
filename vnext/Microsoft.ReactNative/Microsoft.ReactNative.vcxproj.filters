@@ -173,6 +173,9 @@
     <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp">
       <Filter>Views\Impl</Filter>
     </ClCompile>
+    <ClCompile Include="Views\Impl\TextVisitor.cpp">
+      <Filter>Views\Impl</Filter>
+    </ClCompile>
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -506,6 +509,9 @@
       <Filter>Views\Impl</Filter>
     </ClInclude>
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h">
+      <Filter>Views\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Impl\TextVisitor.h">
       <Filter>Views\Impl</Filter>
     </ClInclude>
     <ClInclude Include="Views\ActivityIndicatorViewManager.h">
