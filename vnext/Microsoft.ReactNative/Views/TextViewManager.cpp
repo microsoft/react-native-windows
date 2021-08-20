@@ -197,7 +197,7 @@ class TextShadowNode final : public ShadowNodeBase {
             const auto node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(inlineTag));
             // React Native does not support events targeted to raw text nodes.
             // Get the parent tag instead.
-            if (!std::wcscmp(node->GetViewManager()->GetName(), L"RCTRawText")) {
+            if (IsRawTextShadowNode(node)) {
               inlineTag = node->GetParent();
             }
             return inlineTag;
@@ -397,7 +397,7 @@ void TextViewManager::AddToPressableCount(ShadowNodeBase *node, int pressableCou
 }
 
 int64_t TextViewManager::GetReactTagAtPoint(ShadowNodeBase *node, const winrt::Point &point) {
-  if (!std::wcscmp(node->GetViewManager()->GetName(), L"RCTText")) {
+  if (IsTextShadowNode(node)) {
     const auto textNode = static_cast<TextShadowNode *>(node);
     return textNode->GetReactTagAtPoint(point);
   }

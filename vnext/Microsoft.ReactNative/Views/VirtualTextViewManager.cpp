@@ -62,9 +62,9 @@ void VirtualTextShadowNode::AddToPressableCount(int count) {
     if (m_parent != -1) {
       const auto parentNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(m_parent));
       const auto viewManager = parentNode->GetViewManager();
-      if (!std::wcscmp(viewManager->GetName(), L"RCTText")) {
+      if (IsTextShadowNode(parentNode)) {
         static_cast<TextViewManager *>(viewManager)->AddToPressableCount(parentNode, count);
-      } else if (!std::wcscmp(parentNode->GetViewManager()->GetName(), L"RCTVirtualText")) {
+      } else if (IsVirtualTextShadowNode(parentNode)) {
         static_cast<VirtualTextShadowNode *>(parentNode)->AddToPressableCount(count);
       }
     }
@@ -154,15 +154,13 @@ void VirtualTextShadowNode::NotifyAncestorsTextPropertyChanged(PropertyChangeTyp
 xaml::DependencyObject
 VirtualTextShadowNode::HitTest(const ShadowNodeBase &node, const winrt::Point &point, bool hasPressableParent) {
   const auto viewManager = node.GetViewManager();
-  const auto nodeType = viewManager->GetName();
-  if (!std::wcscmp(nodeType, L"RCTRawText")) {
+  if (IsRawTextShadowNode(&node)) {
     // Check if the point is within the bounds of the Run
     const auto run = node.GetView().as<winrt::Run>();
     return TextHitTestUtils::HitTest(run, point) ? run : nullptr;
   } else {
-    const auto isVirtualText = !std::wcscmp(nodeType, L"RCTVirtualText");
     auto isPressable = hasPressableParent;
-    if (isVirtualText) {
+    if (IsVirtualTextShadowNode(&node)) {
       const auto &virtualTextNode = static_cast<const VirtualTextShadowNode &>(node);
       if (virtualTextNode.m_isPressable) {
         isPressable = true;
