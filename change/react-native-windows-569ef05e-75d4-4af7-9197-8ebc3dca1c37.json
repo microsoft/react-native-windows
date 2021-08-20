@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix crash in KeyboardHelper when provided undefined keyDownEvents prop.",
+  "packageName": "react-native-windows",
+  "email": "aschultz@microsoft.com",
+  "dependentChangeType": "patch"
+}
