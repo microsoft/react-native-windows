@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Consume NAPI V8 JSI Runtime",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
