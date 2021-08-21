@@ -5,6 +5,7 @@
 
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
+#include <UI.Xaml.Documents.h>
 #include <Utils/TextTransform.h>
 #include <Views/ShadowNodeBase.h>
 #include <stack>
@@ -54,6 +55,35 @@ class TextTransformVisitor : public TextVisitor {
   bool Push(TextTransform transform);
   void Pop();
   TextTransform Top();
+};
+
+class TextHighlighterVisitor : public TextVisitor {
+  using Super = TextVisitor;
+  using Color = std::optional<winrt::Windows::UI::Color>;
+
+ public:
+  TextHighlighterVisitor(Color foregroundColor, Color backgroundColor) : Super() {
+    m_foregroundColors.push(foregroundColor);
+    m_backgroundColors.push(backgroundColor);
+  }
+
+  std::vector<winrt::Windows::UI::Xaml::Documents::TextHighlighter> highlighters{};
+
+ protected:
+  void VisitRawText(ShadowNodeBase *node) override;
+
+  void VisitText(ShadowNodeBase *node) override;
+
+  void VisitVirtualText(ShadowNodeBase *node) override;
+
+ private:
+  int m_startIndex{0};
+  std::stack<Color> m_foregroundColors;
+  std::stack<Color> m_backgroundColors;
+
+  void AddTextHighlighter(int startIndex);
+  bool RequiresTextHighlighter(Color foregroundColor, Color backgroundColor);
+  static bool Push(std::stack<Color> &stack, Color color);
 };
 
 }; // namespace Microsoft::ReactNative
