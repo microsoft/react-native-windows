@@ -39,7 +39,3 @@ Follow steps 1-7 from above, and then
 ## Enable debugging/profiling on release builds
 
 We keep the inspector turned off on release builds by default. If you want to debug or profile release builds, set the MSBuild property `EnableHermesInspectorInReleaseFlavor` to `'true'` when building the platform.
-
-## Known Issues
-
-1. CPU Sampling profiler current don't work

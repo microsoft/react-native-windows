@@ -41,7 +41,7 @@ stages:
               buildEnvironment: Continuous
 
           - template: templates/publish-version-vars.yml
-          
+
   - template: stages.yml
     parameters:
       buildEnvironment: PullRequest

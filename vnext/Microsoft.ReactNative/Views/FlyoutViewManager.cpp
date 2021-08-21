@@ -234,7 +234,7 @@ void FlyoutShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
   if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
     if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
-      if (auto xamlRoot = uiManager->tryGetXamlRoot()) {
+      if (auto xamlRoot = uiManager->tryGetXamlRoot(m_rootTag)) {
         flyoutBase6.XamlRoot(xamlRoot);
         m_xamlRootChangedRevoker = xamlRoot.Changed(winrt::auto_revoke, [this](auto &&, auto &&) {
           if (m_isLightDismissEnabled) {

@@ -3,16 +3,16 @@ parameters:
     type: string
     default: PullRequest
     values:
-     - PullRequest
-     - Continuous
+      - PullRequest
+      - Continuous
   - name: encodedKey
     type: string
   - name: buildConfiguration
     type: string
     default: 'Debug'
     values:
-    - Debug
-    - Release
+      - Debug
+      - Release
   - name: buildPlatform
     type: string
   - name: deployOption

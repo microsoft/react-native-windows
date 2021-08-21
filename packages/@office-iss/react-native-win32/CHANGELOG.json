@@ -2,6 +2,63 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 20 Aug 2021 05:05:48 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.104",
+      "version": "0.0.0-canary.104",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 6/30 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9790b70efe66d3ad245aed869c15bfd78c0109dd",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 6/23 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d994cc5b209bca9f21dcbf5cc20f0c62facb72f4",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 7/7 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d9a687407c1e29f9b0447ed33047ea7a558ccff4",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Aug 2021 05:06:18 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.103",
+      "version": "0.0.0-canary.103",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable inlineRequires for all projects",
+            "author": "ngerlem@microsoft.com",
+            "commit": "31384815b719ae02e0a1d0356b122f24f220be87",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 31 Jul 2021 05:06:20 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.102",
+      "version": "0.0.0-canary.102",
+      "comments": {
+        "none": [
+          {
+            "comment": "`@rnx-kit/jest-preset` has a simpler implementation of the path filter in `@rnx-kit/jest-resolver` (and `@rnw-scripts/jest-out-of-tree-resolver` before that), using the `moduleNameMapper` option to redirect `react-native` to `react-native-windows` instead. Like its predecessors, it can also detect that it's being used inside an out-of-tree platform package and configure `jest-haste-map` to pick up the appropriate file extensions.",
+            "author": "4123478+tido64@users.noreply.github.com",
+            "commit": "414821548762f96b2ce118ef4e757c3e66518bf0",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Jul 2021 05:05:52 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.102",
       "version": "0.0.0-canary.102",

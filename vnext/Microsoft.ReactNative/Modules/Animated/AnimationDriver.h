@@ -10,7 +10,7 @@ namespace Microsoft::ReactNative {
 typedef std::function<void(std::vector<folly::dynamic>)> Callback;
 
 class ValueAnimatedNode;
-class AnimationDriver {
+class AnimationDriver : std::enable_shared_from_this<AnimationDriver> {
  public:
   AnimationDriver(
       int64_t id,
@@ -51,9 +51,10 @@ class AnimationDriver {
     return std::vector<double>();
   }
 
+  void DoCallback(bool value);
+
  private:
   Callback m_endCallback{};
-  void DoCallback(bool value);
 #ifdef DEBUG
   int m_debug_callbackAttempts{0};
 #endif // DEBUG

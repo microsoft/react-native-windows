@@ -6,4 +6,8 @@
     <UseFabric>true</UseFabric>
   </PropertyGroup>
 
+  <PropertyGroup Label="Unpackaged playground-win32" Condition="'$(SolutionName)'=='playground-win32'">
+    <WinUI2xVersion>2.6.1-prerelease.210709001</WinUI2xVersion>
+  </PropertyGroup>
+
 </Project>

@@ -53,7 +53,10 @@ struct json_type_traits<Microsoft::ReactNative::HandledKeyboardEvent> {
 namespace Microsoft::ReactNative {
 
 std::vector<HandledKeyboardEvent> KeyboardHelper::FromJS(winrt::Microsoft::ReactNative::JSValue const &obj) {
-  return json_type_traits<std::vector<HandledKeyboardEvent>>::parseJson(obj);
+  if (obj.Type() == winrt::Microsoft::ReactNative::JSValueType::Array) {
+    return json_type_traits<std::vector<HandledKeyboardEvent>>::parseJson(obj);
+  }
+  return std::vector<HandledKeyboardEvent>{};
 }
 
 static folly::dynamic ToEventData(ReactKeyboardEvent event, double timestamp) {

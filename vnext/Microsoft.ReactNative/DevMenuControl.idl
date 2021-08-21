@@ -10,6 +10,8 @@ namespace Microsoft.ReactNative
       XAML_NAMESPACE.Controls.Button ConfigBundler { get; };
       XAML_NAMESPACE.Controls.Button Inspector { get; };
       XAML_NAMESPACE.Controls.Button FastRefresh { get; };
+      XAML_NAMESPACE.Controls.Button SamplingProfiler { get; };
+
       XAML_NAMESPACE.Controls.Button BreakOnNextLine { get; };
       XAML_NAMESPACE.Controls.Button DirectDebug { get; };
       XAML_NAMESPACE.Controls.Button RemoteDebug { get; };
@@ -21,5 +23,9 @@ namespace Microsoft.ReactNative
       XAML_NAMESPACE.Controls.TextBlock DirectDebugText { get; };
       XAML_NAMESPACE.Controls.TextBlock DirectDebugDesc { get; };
       XAML_NAMESPACE.Controls.TextBlock BreakOnNextLineText { get; };
+      XAML_NAMESPACE.Controls.TextBlock SamplingProfilerText { get; };
+      XAML_NAMESPACE.Controls.TextBlock SamplingProfilerDescText { get; };
+
+      XAML_NAMESPACE.Controls.FontIcon SamplingProfilerIcon { get; };
     }
 }

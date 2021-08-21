@@ -79,6 +79,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   uint16_t SourceBundlePort() const noexcept;
   std::string JavaScriptBundleFile() const noexcept;
   bool UseDeveloperSupport() const noexcept;
+  JSIEngine JsiEngine() const noexcept;
 
  private:
   friend MakePolicy;

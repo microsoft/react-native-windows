@@ -217,18 +217,8 @@ Object {
           "Foreground": null,
           "Ranges": Array [
             Object {
-              "Length": 14,
+              "Length": 44,
               "StartIndex": 0,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FF008000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 1,
-              "StartIndex": 14,
             },
           ],
         },
@@ -265,18 +255,8 @@ Object {
           "Foreground": "#FFFFA500",
           "Ranges": Array [
             Object {
-              "Length": 21,
+              "Length": 42,
               "StartIndex": 0,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FF008000",
-          "Foreground": "#FFFFA500",
-          "Ranges": Array [
-            Object {
-              "Length": 1,
-              "StartIndex": 21,
             },
           ],
         },
@@ -369,18 +349,8 @@ Object {
           "Foreground": "#FFFFFFFF",
           "Ranges": Array [
             Object {
-              "Length": 18,
+              "Length": 59,
               "StartIndex": 15,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FF008000",
-          "Foreground": "#FFFFFFFF",
-          "Ranges": Array [
-            Object {
-              "Length": 1,
-              "StartIndex": 33,
             },
           ],
         },
@@ -391,26 +361,6 @@ Object {
             Object {
               "Length": 29,
               "StartIndex": 34,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FF008000",
-          "Foreground": "#FFFFFFFF",
-          "Ranges": Array [
-            Object {
-              "Length": 1,
-              "StartIndex": 63,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FF008000",
-          "Foreground": "#FFFFFFFF",
-          "Ranges": Array [
-            Object {
-              "Length": 10,
-              "StartIndex": 64,
             },
           ],
         },
@@ -465,38 +415,8 @@ Object {
           "Foreground": null,
           "Ranges": Array [
             Object {
-              "Length": 19,
+              "Length": 57,
               "StartIndex": 15,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FF008000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 27,
-              "StartIndex": 34,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FF008000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 1,
-              "StartIndex": 61,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FF008000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 10,
-              "StartIndex": 62,
             },
           ],
         },
@@ -523,78 +443,8 @@ Object {
           "Foreground": null,
           "Ranges": Array [
             Object {
-              "Length": 9,
+              "Length": 83,
               "StartIndex": 0,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FFFF0000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 1,
-              "StartIndex": 9,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FFFF0000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 25,
-              "StartIndex": 10,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FFFF0000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 25,
-              "StartIndex": 35,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FFFF0000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 1,
-              "StartIndex": 60,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FFFF0000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 10,
-              "StartIndex": 61,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FFFF0000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 1,
-              "StartIndex": 71,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FFFF0000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 11,
-              "StartIndex": 72,
             },
           ],
         },
@@ -621,38 +471,18 @@ Object {
           "Foreground": null,
           "Ranges": Array [
             Object {
-              "Length": 9,
+              "Length": 70,
               "StartIndex": 0,
             },
           ],
         },
         Object {
-          "Background": "#FFFF0000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 1,
-              "StartIndex": 9,
-            },
-          ],
-        },
-        Object {
           "Background": "#FF008000",
           "Foreground": null,
           "Ranges": Array [
             Object {
-              "Length": 18,
+              "Length": 48,
               "StartIndex": 10,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FF008000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 1,
-              "StartIndex": 28,
             },
           ],
         },
@@ -663,46 +493,6 @@ Object {
             Object {
               "Length": 18,
               "StartIndex": 29,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FF008000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 1,
-              "StartIndex": 47,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FF008000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 10,
-              "StartIndex": 48,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FFFF0000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 1,
-              "StartIndex": 58,
-            },
-          ],
-        },
-        Object {
-          "Background": "#FFFF0000",
-          "Foreground": null,
-          "Ranges": Array [
-            Object {
-              "Length": 11,
-              "StartIndex": 59,
             },
           ],
         },

@@ -5,6 +5,7 @@
 // vnext/Microsoft.ReactNative.Cxx/README.md
 
 #pragma once
+#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.h>
 #include "JSValueReader.h"
 #include "JSValueWriter.h"
@@ -12,7 +13,6 @@
 #include "ReactContext.h"
 #include "ReactNonAbiValue.h"
 #include "ReactPromise.h"
-#include "winrt/Microsoft.ReactNative.h"
 
 #include <functional>
 #include <type_traits>
