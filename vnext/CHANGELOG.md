@@ -1,8 +1,44 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 11 Aug 2021 05:09:13 GMT and should not be manually modified.
+This log was last generated on Fri, 20 Aug 2021 05:05:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.362
+
+Fri, 20 Aug 2021 05:05:48 GMT
+
+### Changes
+
+- Integrate 6/30 Nightly RN Build (ngerlem@microsoft.com)
+- Exclude WinMD AttributeNameAttribute (ngerlem@microsoft.com)
+- Integrate 6/23 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 7/7 Nightly RN Build (ngerlem@microsoft.com)
+- Fixes issues with Text backgroundColor (erozell@outlook.com)
+
+## 0.0.0-canary.361
+
+Wed, 18 Aug 2021 05:06:18 GMT
+
+### Changes
+
+- Enable inlineRequires for all projects (ngerlem@microsoft.com)
+
+## 0.0.0-canary.360
+
+Tue, 17 Aug 2021 05:09:46 GMT
+
+### Changes
+
+- Add experimentalFeatures to projectConfig result (jthysell@microsoft.com)
+
+## 0.0.0-canary.359
+
+Sat, 14 Aug 2021 05:08:23 GMT
+
+### Changes
+
+- Prevent crash in AnimationDriver when RN instance destroyed (erozell@outlook.com)
 
 ## 0.0.0-canary.358
 

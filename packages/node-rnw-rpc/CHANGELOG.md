@@ -1,8 +1,46 @@
 # Change Log - node-rnw-rpc
 
-This log was last generated on Wed, 11 Aug 2021 05:09:13 GMT and should not be manually modified.
+This log was last generated on Fri, 20 Aug 2021 05:05:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.12
+
+Fri, 20 Aug 2021 05:05:48 GMT
+
+### Patches
+
+- Integrate 7/7 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/30 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/23 Nightly RN Build (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.362 (ngerlem@microsoft.com)
+
+## 1.0.12-17
+
+Wed, 18 Aug 2021 05:06:18 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.361 (ngerlem@microsoft.com)
+
+## 1.0.12-16
+
+Tue, 17 Aug 2021 05:09:46 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.360 (jthysell@microsoft.com)
+
+## 1.0.12-15
+
+Sat, 14 Aug 2021 05:08:23 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.359 (erozell@outlook.com)
 
 ## 1.0.12-14
 

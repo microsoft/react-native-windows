@@ -2,6 +2,66 @@
   "name": "@react-native-windows/tester",
   "entries": [
     {
+      "date": "Fri, 20 Aug 2021 05:05:48 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.362",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9790b70efe66d3ad245aed869c15bfd78c0109dd",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Aug 2021 05:06:18 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.361",
+            "author": "ngerlem@microsoft.com",
+            "commit": "31384815b719ae02e0a1d0356b122f24f220be87",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Aug 2021 05:09:46 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.360",
+            "author": "jthysell@microsoft.com",
+            "commit": "ee2d00806005714827795846179d1026754f48a8",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 14 Aug 2021 05:08:23 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.359",
+            "author": "erozell@outlook.com",
+            "commit": "03a57068e7f2382db61b8030f1bdbeebcb1d7ba3",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 13 Aug 2021 05:06:35 GMT",
       "tag": "@react-native-windows/tester_v0.0.1",
       "version": "0.0.1",

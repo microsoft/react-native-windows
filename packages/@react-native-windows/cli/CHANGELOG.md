@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 22 Jul 2021 05:05:25 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Aug 2021 05:09:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.83
+
+Tue, 17 Aug 2021 05:09:46 GMT
+
+### Changes
+
+- Add experimentalFeatures to projectConfig result (jthysell@microsoft.com)
 
 ## 0.0.0-canary.82
 

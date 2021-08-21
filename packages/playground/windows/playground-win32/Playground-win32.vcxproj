@@ -10,6 +10,7 @@
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
     <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <BuildMSRNCxx>false</BuildMSRNCxx>
+    <!-- https://github.com/microsoft/react-native-windows/issues/8431 -->
     <RunAutolinkCheck>false</RunAutolinkCheck>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
@@ -101,14 +102,18 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AutolinkedNativeModules.g.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="Application.manifest" />
+    <None Include="AutolinkedNativeModules.g.props" />
+    <None Include="AutolinkedNativeModules.g.targets" />
     <None Include="Playground_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AutolinkedNativeModules.g.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -180,7 +185,7 @@
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210708.4" />
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.2-rc" />
-    <PackageReference Include="ReactNative.Hermes.Windows" Version="0.8.0-ms.0" />
+    <PackageReference Include="ReactNative.Hermes.Windows" Version="0.8.1-ms.5" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Target Name="EnsureReactNativeWindowsTargets" BeforeTargets="PrepareForBuild">
