@@ -1,14 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "pch.h"
-
 #include "NapiJsiV8RuntimeHolder.h"
-
-// V8-JSI
-#include <NapiJsiRuntime.h>
-
-// Standard Library
 
 using namespace facebook::jsi;
 using namespace facebook::react;
@@ -18,11 +11,63 @@ using std::unique_ptr;
 
 namespace Microsoft::JSI {
 
+struct NapiTask {
+  NapiTask(
+      napi_env env,
+      napi_ext_task_callback taskCallback,
+      void *taskData,
+      napi_finalize finalizeCallback,
+      void *finalizeHint) noexcept
+      : m_env{env},
+        m_taskCallback{taskCallback},
+        m_taskData{taskData},
+        m_finalizeCallback{finalizeCallback},
+        m_finalizeHint{finalizeHint} {}
+
+  NapiTask(const NapiTask &) = delete;
+  NapiTask &operator=(const NapiTask &) = delete;
+
+  ~NapiTask() {
+    if (m_finalizeCallback) {
+      m_finalizeCallback(m_env, m_taskData, m_finalizeHint);
+    }
+  }
+
+  void operator()() noexcept {
+    m_taskCallback(m_env, m_taskData);
+  }
+
+ private:
+  napi_env m_env;
+  napi_ext_task_callback m_taskCallback;
+  void *m_taskData;
+  napi_finalize m_finalizeCallback;
+  void *m_finalizeHint;
+};
+
+// See napi_ext_schedule_task_callback definition.
+/*static*/ void NapiJsiV8RuntimeHolder::ScheduleTaskCallback(
+    napi_env env,
+    napi_ext_task_callback taskCallback,
+    void *taskData,
+    uint32_t /*delayInMsec*/,
+    napi_finalize finalizeCallback,
+    void *finalizeHint) {
+  NapiJsiV8RuntimeHolder *holder;
+  auto result = napi_get_instance_data(env, (void **)&holder);
+  if (result != napi_status::napi_ok) {
+    std::terminate();
+  }
+
+  auto task = std::make_shared<NapiTask>(env, taskCallback, taskData, finalizeCallback, finalizeHint);
+  holder->m_jsQueue->runOnQueue([task = std::move(task)]() { task->operator()(); });
+}
+
 NapiJsiV8RuntimeHolder::NapiJsiV8RuntimeHolder(
-  shared_ptr<DevSettings> devSettings,
-  shared_ptr<MessageQueueThread> jsQueue,
-  unique_ptr<ScriptStore> && scriptStore,
-  unique_ptr<PreparedScriptStore>&& preparedScritpStore) noexcept
+    shared_ptr<DevSettings> devSettings,
+    shared_ptr<MessageQueueThread> jsQueue,
+    unique_ptr<ScriptStore> &&scriptStore,
+    unique_ptr<PreparedScriptStore> &&preparedScritpStore) noexcept
     : m_useDirectDebugger{devSettings->useDirectDebugger},
       m_debuggerBreakOnNextLine{devSettings->debuggerBreakOnNextLine},
       m_debuggerPort{devSettings->debuggerPort},
@@ -31,8 +76,7 @@ NapiJsiV8RuntimeHolder::NapiJsiV8RuntimeHolder(
       m_scriptStore{std::move(scriptStore)},
       m_preparedScriptStore{std::move(preparedScritpStore)} {}
 
-void NapiJsiV8RuntimeHolder::InitRuntime() noexcept
-{
+void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
   napi_env env{};
   napi_ext_env_settings settings{};
   settings.this_size = sizeof(napi_ext_env_settings);
@@ -42,15 +86,16 @@ void NapiJsiV8RuntimeHolder::InitRuntime() noexcept
 
   settings.flags.enable_inspector = m_useDirectDebugger;
   settings.flags.wait_for_debugger = m_debuggerBreakOnNextLine;
-  //TODO: debuggerRuntimeName?
+  // TODO: debuggerRuntimeName?
 
-  //TODO
-  settings.foreground_scheduler = nullptr;
-  //TODO: scriptStore
+  settings.foreground_scheduler = &NapiJsiV8RuntimeHolder::ScheduleTaskCallback;
+  // TODO: scriptStore?
 
   napi_ext_create_env(&settings, &env);
-  m_runtime = MakeNapiJsiRuntime(env);
+  // Associate environment to holder.
+  napi_set_instance_data(env, this, nullptr, nullptr); // TODO: Finalize
 
+  m_runtime = MakeNapiJsiRuntime(env);
   m_ownThreadId = std::this_thread::get_id();
 }
 
@@ -71,6 +116,5 @@ shared_ptr<Runtime> NapiJsiV8RuntimeHolder::getRuntime() noexcept /*override*/
 }
 
 #pragma endregion facebook::jsi::RuntimeHolderLazyInit
-
 
 } // namespace Microsoft::JSI

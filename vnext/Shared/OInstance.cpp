@@ -413,6 +413,25 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder =
               std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
           break;
+
+        case JSIEngineOverride::V8Napi: {
+#if defined(USE_V8)
+          std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
+
+          char tempPath[MAX_PATH];
+          if (GetTempPathA(MAX_PATH, tempPath)) {
+            preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
+          }
+
+          m_devSettings->jsiRuntimeHolder = make_shared<NapiJsiV8RuntimeHolder>(
+              m_devSettings, m_jsThread, nullptr /*scriptStore*/, std::move(preparedScriptStore));
+
+          break;
+#else
+          assert(false); // V8 is not available in this build, fallthrough
+          [[fallthrough]];
+#endif
+        }
       }
       jsef = std::make_shared<OJSIExecutorFactory>(
           m_devSettings->jsiRuntimeHolder,

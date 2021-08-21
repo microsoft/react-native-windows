@@ -33,7 +33,7 @@ enum class JSIEngineOverride : int32_t {
   V8Lite = 5, // Use the JSIExecutorFactory with V8Lite
   V8Napi = 6, // Use the JSIExecutorFactory with V8 via ABI-safe NAPI
 
-  Last = V8Lite
+  Last = V8Napi
 };
 
 struct DevSettings {

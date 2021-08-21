@@ -3,14 +3,14 @@
 
 #pragma once
 
-#include <JSI/RuntimeHolder.h>
-#include <JSI/ScriptStore.h>
 #include <DevSettings.h>
+#include <NapiJsiRuntime.h>
+#include "RuntimeHolder.h"
+#include "ScriptStore.h"
 
 namespace Microsoft::JSI {
 
-class NapiJsiV8RuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit
-{
+class NapiJsiV8RuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
  public:
   std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept override;
 
@@ -21,6 +21,14 @@ class NapiJsiV8RuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit
       std::unique_ptr<facebook::jsi::PreparedScriptStore> &&preparedScriptStore) noexcept;
 
  private:
+  static void ScheduleTaskCallback(
+      napi_env env,
+      napi_ext_task_callback taskCb,
+      void *taskData,
+      uint32_t delayMs,
+      napi_finalize finalizeCb,
+      void *finalizeHint);
+
   void InitRuntime() noexcept;
 
   std::shared_ptr<facebook::jsi::Runtime> m_runtime;
