@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 21 Aug 2021 05:09:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.363",
+      "version": "0.0.0-canary.363",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix crash in NativeUIManager when handling \"extra layout\" nodes",
+            "author": "aschultz@microsoft.com",
+            "commit": "1894696af7cad08352b633a8918842256620f995",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix crash in KeyboardHelper when provided undefined keyDownEvents prop.",
+            "author": "aschultz@microsoft.com",
+            "commit": "0748834a41d71a5e3f70dfc83d0a005a83b4e8a2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Enable use of 'focusable' prop on ControlViewManager-derived controls",
+            "author": "aschultz@microsoft.com",
+            "commit": "686a7913d1aa203b9cbe70740d4aa932dbd9e34e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Aug 2021 05:05:48 GMT",
       "tag": "react-native-windows_v0.0.0-canary.362",
       "version": "0.0.0-canary.362",

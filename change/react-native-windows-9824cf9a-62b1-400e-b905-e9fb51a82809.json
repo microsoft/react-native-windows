@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enable use of 'focusable' prop on ControlViewManager-derived controls",
-  "packageName": "react-native-windows",
-  "email": "aschultz@microsoft.com",
-  "dependentChangeType": "patch"
-}

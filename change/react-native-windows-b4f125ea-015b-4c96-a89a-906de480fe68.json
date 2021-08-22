@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix crash in NativeUIManager when handling \"extra layout\" nodes",
-  "packageName": "react-native-windows",
-  "email": "aschultz@microsoft.com",
-  "dependentChangeType": "patch"
-}
