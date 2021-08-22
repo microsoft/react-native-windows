@@ -8,13 +8,13 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-4ad4426da",
+  "baseVersion": "0.0.0-ff9c8cdac",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "651f88c4a4df44b566cc68859b2923ccb4a59070"
+      "baseHash": "6b1110a5df0c1d53eb45706690c876a41e7e1ce7"
     },
     {
       "type": "patch",
@@ -286,7 +286,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "094dff18be0d1ae4af56cb826c193cf113c2902e"
+      "baseHash": "2f0914e8109babafd4694f3f13fb29d1eeb227fe"
     },
     {
       "type": "patch",
@@ -312,7 +312,7 @@
       "type": "patch",
       "file": "src/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.windows.js",
       "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js",
-      "baseHash": "4feb9470b41bf6bc9b492c5f6f3ff75f872e4668"
+      "baseHash": "ee2ba1c2a5bbf814c174e041c95d47c77b1fbde1"
     },
     {
       "type": "patch",
