@@ -179,6 +179,7 @@
     <ClInclude Include="Base\CxxReactIncludes.h" />
     <ClInclude Include="Base\FollyIncludes.h" />
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h" />
+    <ClInclude Include="Utils\ShadowNodeTypeUtils.h" />
     <ClInclude Include="Utils\BatchingEventEmitter.h" />
     <ClInclude Include="DevMenuControl.h">
       <DependentUpon>DevMenuControl.xaml</DependentUpon>
