@@ -389,7 +389,7 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder =
               std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
           break;
-        case JSIEngineOverride::V8Napi: {
+        case JSIEngineOverride::V8NodeAapi: {
 #if defined(USE_V8)
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
