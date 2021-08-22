@@ -67,19 +67,19 @@ NapiJsiV8RuntimeHolder::NapiJsiV8RuntimeHolder(
     shared_ptr<DevSettings> devSettings,
     shared_ptr<MessageQueueThread> jsQueue,
     unique_ptr<ScriptStore> &&scriptStore,
-    unique_ptr<PreparedScriptStore> &&preparedScritpStore) noexcept
+    unique_ptr<PreparedScriptStore> &&preparedScriptStore) noexcept
     : m_useDirectDebugger{devSettings->useDirectDebugger},
       m_debuggerBreakOnNextLine{devSettings->debuggerBreakOnNextLine},
       m_debuggerPort{devSettings->debuggerPort},
       m_debuggerRuntimeName{devSettings->debuggerRuntimeName},
-      m_jsQueue{std::move(jsQueue)},
+      m_jsQueue{jsQueue},
       m_scriptStore{std::move(scriptStore)},
-      m_preparedScriptStore{std::move(preparedScritpStore)} {}
+      m_preparedScriptStore{std::move(preparedScriptStore)} {}
 
 void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
   napi_env env{};
   napi_ext_env_settings settings{};
-  settings.this_size = sizeof(napi_ext_env_settings);
+  settings.this_size = sizeof(settings);
   settings.flags.enable_gc_api = true;
   if (m_debuggerPort > 0)
     settings.inspector_port = m_debuggerPort;
