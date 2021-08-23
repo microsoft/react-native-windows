@@ -52,23 +52,23 @@ void TextVisitor::Visit(ShadowNode *node) {
   } else if (IsRawTextShadowNode(baseNode)) {
     VisitRawText(baseNode);
   } else {
-    VisitExtensionText(baseNode);
+    VisitChildren(baseNode);
   }
 }
 
 void TextVisitor::VisitExtensionText(ShadowNodeBase *node) {
-  for (auto childTag : node->m_children) {
-    Visit(m_uiManager->getHost()->FindShadowNodeForTag(childTag));
-  }
+  VisitChildren(node);
 }
 
 void TextVisitor::VisitText(ShadowNodeBase *node) {
-  for (auto childTag : node->m_children) {
-    Visit(m_uiManager->getHost()->FindShadowNodeForTag(childTag));
-  }
+  VisitChildren(node);
 }
 
 void TextVisitor::VisitVirtualText(ShadowNodeBase *node) {
+  VisitChildren(node);
+}
+
+void TextVisitor::VisitChildren(ShadowNodeBase *node) {
   for (auto childTag : node->m_children) {
     Visit(m_uiManager->getHost()->FindShadowNodeForTag(childTag));
   }
@@ -171,18 +171,6 @@ void TextHighlighterVisitor::VisitRawText(ShadowNodeBase *node) {
   m_startIndex += textNode->GetView().as<winrt::Run>().Text().size();
 }
 
-void TextHighlighterVisitor::VisitText(ShadowNodeBase *node) {
-  // Root text colors pushed in constructor
-  const auto foregroundColor = m_foregroundColors.top();
-  const auto backgroundColor = m_backgroundColors.top();
-  const auto needsHighlighter = RequiresTextHighlighter(foregroundColor, backgroundColor);
-  const auto startIndex = m_startIndex;
-  Super::VisitText(node);
-  if (needsHighlighter) {
-    AddTextHighlighter(startIndex);
-  }
-}
-
 void TextHighlighterVisitor::VisitVirtualText(ShadowNodeBase *node) {
   const auto textNode = static_cast<VirtualTextShadowNode *>(node);
   const auto foregroundColor = textNode->m_foregroundColor;
@@ -196,7 +184,14 @@ void TextHighlighterVisitor::VisitVirtualText(ShadowNodeBase *node) {
   Super::VisitVirtualText(node);
 
   if (needsHighlighter) {
-    AddTextHighlighter(startIndex);
+    winrt::TextHighlighter highlighter;
+    highlighter.Background(SolidBrushFromColor(m_backgroundColors.top().value()));
+    const auto inheritedForegroundColor = m_foregroundColors.top();
+    if (inheritedForegroundColor.has_value()) {
+      highlighter.Foreground(SolidBrushFromColor(inheritedForegroundColor.value()));
+    }
+    highlighter.Ranges().Append({startIndex, m_startIndex - startIndex});
+    highlighters.push_back(highlighter);
   } else if (highlighters.size() == initialHighlighterCount) {
     textNode->m_hasDescendantBackgroundColor = false;
   }
@@ -205,17 +200,6 @@ void TextHighlighterVisitor::VisitVirtualText(ShadowNodeBase *node) {
     m_foregroundColors.pop();
   if (pushedBackground)
     m_backgroundColors.pop();
-}
-
-void TextHighlighterVisitor::AddTextHighlighter(int startIndex) {
-  winrt::TextHighlighter highlighter;
-  highlighter.Background(SolidBrushFromColor(m_backgroundColors.top().value()));
-  const auto inheritedForegroundColor = m_foregroundColors.top();
-  if (inheritedForegroundColor.has_value()) {
-    highlighter.Foreground(SolidBrushFromColor(inheritedForegroundColor.value()));
-  }
-  highlighter.Ranges().Append({startIndex, m_startIndex - startIndex});
-  highlighters.push_back(highlighter);
 }
 
 bool TextHighlighterVisitor::RequiresTextHighlighter(Color foregroundColor, Color backgroundColor) {

@@ -25,6 +25,8 @@ class TextVisitor {
 
   virtual void VisitVirtualText(ShadowNodeBase *node);
 
+  virtual void VisitChildren(ShadowNodeBase *node);
+
  private:
   std::shared_ptr<NativeUIManager> m_uiManager;
   std::shared_ptr<NativeUIManager> EnsureNativeUIManager(ShadowNode *node);
@@ -67,12 +69,10 @@ class TextHighlighterVisitor : public TextVisitor {
     m_backgroundColors.push(backgroundColor);
   }
 
-  std::vector<winrt::Windows::UI::Xaml::Documents::TextHighlighter> highlighters{};
+  std::vector<xaml::Documents::TextHighlighter> highlighters{};
 
  protected:
   void VisitRawText(ShadowNodeBase *node) override;
-
-  void VisitText(ShadowNodeBase *node) override;
 
   void VisitVirtualText(ShadowNodeBase *node) override;
 
@@ -81,7 +81,6 @@ class TextHighlighterVisitor : public TextVisitor {
   std::stack<Color> m_foregroundColors;
   std::stack<Color> m_backgroundColors;
 
-  void AddTextHighlighter(int startIndex);
   bool RequiresTextHighlighter(Color foregroundColor, Color backgroundColor);
   static bool Push(std::stack<Color> &stack, Color color);
 };

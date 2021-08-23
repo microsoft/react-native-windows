@@ -114,8 +114,9 @@ class TextShadowNode final : public ShadowNodeBase {
           ++iter;
         }
       }
-    } else if (m_backgroundColor) {
-      // Optimization in case no children have background colors
+    }
+
+    if (m_backgroundColor) {
       winrt::TextHighlighter highlighter{};
       highlighter.Ranges().Append({0, static_cast<int32_t>(textBlock.Text().size())});
       highlighter.Background(SolidBrushFromColor(m_backgroundColor.value()));
