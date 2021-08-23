@@ -4,12 +4,15 @@
 #include "TextPropertyChangedParentVisitor.h"
 #include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Automation.h>
+#include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Documents.h>
 #include <Views/TextViewManager.h>
 #include <Views/VirtualTextViewManager.h>
 
 namespace winrt {
 using namespace xaml::Automation;
 using namespace xaml::Automation::Peers;
+using namespace xaml::Documents;
 } // namespace winrt
 
 namespace Microsoft::ReactNative {
@@ -30,7 +33,7 @@ void TextPropertyChangedParentVisitor::VisitText(ShadowNodeBase *node) {
     // not set.
     if (xaml::Automation::AutomationProperties::GetLiveSetting(element) != winrt::AutomationLiveSetting::Off &&
         xaml::Automation::AutomationProperties::GetName(element).empty() &&
-        xaml::Automation::AutomationProperties::GetAccessibilityView(element) != winrt::Peers::AccessibilityView::Raw) {
+        xaml::Automation::AutomationProperties::GetAccessibilityView(element) != winrt::AccessibilityView::Raw) {
       if (auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element)) {
         peer.RaiseAutomationEvent(winrt::AutomationEvents::LiveRegionChanged);
       }

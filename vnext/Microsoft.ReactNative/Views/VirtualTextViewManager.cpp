@@ -5,11 +5,6 @@
 
 #include "VirtualTextViewManager.h"
 
-#include <Views/RawTextViewManager.h>
-
-#include <Modules/NativeUIManager.h>
-#include <Modules/PaperUIManagerModule.h>
-#include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ShadowNodeTypeUtils.h>

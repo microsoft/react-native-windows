@@ -4,20 +4,12 @@
 #include "pch.h"
 
 #include "RawTextViewManager.h"
-#include "TextViewManager.h"
-#include "VirtualTextViewManager.h"
 
 #include <Views/ShadowNodeBase.h>
 #include <Views/Text/TextVisitors.h>
 
-#include <INativeUIManager.h>
-#include <Utils/ShadowNodeTypeUtils.h>
-#include <Utils/ValueUtils.h>
-
-#include <Modules/NativeUIManager.h>
-#include <Modules/PaperUIManagerModule.h>
-#include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
+#include <Utils/ValueUtils.h>
 #include <winrt/Windows.Foundation.h>
 
 namespace winrt {

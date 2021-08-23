@@ -2,11 +2,16 @@
 // Licensed under the MIT License.
 
 #include "TextTransformVisitor.h"
+#include <UI.Xaml.Documents.h>
 #include <Utils/TransformableText.h>
 #include <Views/RawTextViewManager.h>
 #include <Views/TextViewManager.h>
 #include <Views/VirtualTextViewManager.h>
 #include "TextVisitorScope.h"
+
+namespace winrt {
+using namespace xaml::Documents;
+} // namespace winrt
 
 namespace Microsoft::ReactNative {
 
