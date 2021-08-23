@@ -49,8 +49,7 @@ class TextShadowNode final : public ShadowNodeBase {
 
   void AddView(ShadowNode &child, int64_t index) override {
     auto &childNode = static_cast<ShadowNodeBase &>(child);
-
-    ApplyTextTransformsToChild(&child, textTransform);
+    ApplyTextTransformToChild(&child);
 
     if (IsVirtualTextShadowNode(&childNode)) {
       auto &textChildNode = static_cast<VirtualTextShadowNode &>(childNode);
@@ -107,6 +106,8 @@ class TextShadowNode final : public ShadowNodeBase {
       if (highlighters.size() == 0) {
         m_hasDescendantBackgroundColor = false;
       } else {
+        // We must add the highlighters in reverse order, as highlighters
+        // "deeper" in the text tree should render at the top.
         auto iter = highlighters.rbegin();
         while (iter != highlighters.rend()) {
           textBlock.TextHighlighters().Append(*iter);
@@ -164,7 +165,7 @@ bool TextViewManager::UpdateProperty(
   } else if (propertyName == "textTransform") {
     auto textNode = static_cast<TextShadowNode *>(nodeToUpdate);
     textNode->textTransform = TransformableText::GetTextTransform(propertyValue);
-    UpdateTextTransformsForAllChildren(nodeToUpdate);
+    UpdateTextTransformForChildren(nodeToUpdate);
   } else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {

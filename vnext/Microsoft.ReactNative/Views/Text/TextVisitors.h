@@ -4,6 +4,7 @@
 #pragma once
 
 #include "TextHighlighterVisitor.h"
+#include "TextTransformParentVisitor.h"
 #include "TextTransformVisitor.h"
 
 namespace Microsoft::ReactNative {
@@ -16,13 +17,17 @@ GetNestedTextHighlighters(ShadowNode *node, Color foregroundColor, Color backgro
   return visitor.highlighters;
 }
 
-static inline void ApplyTextTransformsToChild(ShadowNode *node, TextTransform transform) {
-  TextTransformVisitor visitor{transform};
+static inline void ApplyTextTransformToChild(ShadowNode *node) {
+  TextTransformParentVisitor parentVisitor;
+  parentVisitor.Visit(node);
+  TextTransformVisitor visitor{parentVisitor.textTransform, false};
   visitor.Visit(node);
 }
 
-static inline void UpdateTextTransformsForAllChildren(ShadowNode* node) {
-  TextTransformVisitor visitor;
+static inline void UpdateTextTransformForChildren(ShadowNode* node) {
+  TextTransformParentVisitor parentVisitor;
+  parentVisitor.Visit(node);
+  TextTransformVisitor visitor{parentVisitor.textTransform, true};
   visitor.Visit(node);
 }
 

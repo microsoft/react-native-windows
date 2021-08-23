@@ -7,8 +7,8 @@
 #include "TextViewManager.h"
 #include "VirtualTextViewManager.h"
 
-#include <Views/Impl/TextVisitor.h>
 #include <Views/ShadowNodeBase.h>
+#include <Views/Text/TextVisitors.h>
 
 #include <INativeUIManager.h>
 #include <Utils/ShadowNodeTypeUtils.h>
@@ -53,6 +53,7 @@ bool RawTextViewManager::UpdateProperty(
   if (propertyName == "text") {
     run.Text(asHstring(propertyValue));
     static_cast<RawTextShadowNode *>(nodeToUpdate)->originalText = winrt::hstring{};
+    ApplyTextTransformToChild(nodeToUpdate);
     NotifyAncestorsTextChanged(nodeToUpdate);
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
@@ -64,20 +65,12 @@ void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate
   if (auto uiManager = GetNativeUIManager(GetReactContext()).lock()) {
     auto host = uiManager->getHost();
     ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(nodeToUpdate->GetParent()));
-    TextTransform textTransform = TextTransform::Undefined;
     auto isNested = false;
     while (parent) {
       auto viewManager = parent->GetViewManager();
       const auto nodeType = viewManager->GetName();
       if (IsTextShadowNode(parent)) {
         const auto textViewManager = static_cast<TextViewManager *>(viewManager);
-        if (textTransform == TextTransform::Undefined) {
-          textTransform = textViewManager->GetTextTransformValue(parent);
-        }
-
-        TextTransformVisitor visitor{textTransform};
-        visitor.Visit(nodeToUpdate);
-
         if (!isNested && parent->m_children.size() == 1) {
           auto view = parent->GetView();
           auto textBlock = view.try_as<winrt::TextBlock>();
@@ -93,8 +86,6 @@ void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate
 
         // We have reached the parent TextBlock, so there're no more parent <Text> elements in this tree.
         break;
-      } else if (IsVirtualTextShadowNode(parent) && textTransform == TextTransform::Undefined) {
-        textTransform = static_cast<VirtualTextShadowNode *>(parent)->textTransform;
       }
 
       parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parent->GetParent()));

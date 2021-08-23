@@ -312,7 +312,10 @@
     <ClCompile Include="Views\Text\TextHighlighterVisitor.cpp">
       <Filter>Views\Text</Filter>
     </ClCompile>
-    <ClCompile Include="Views\Text\TextRootTraversal.cpp">
+    <ClCompile Include="Views\Text\TextParentVisitor.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Text\TextTransformParentVisitor.cpp">
       <Filter>Views\Text</Filter>
     </ClCompile>
     <ClCompile Include="Views\Text\TextTransformVisitor.cpp">
@@ -687,10 +690,16 @@
     <ClInclude Include="Views\Text\TextHighlighterVisitor.h">
       <Filter>Views\Text</Filter>
     </ClInclude>
-    <ClInclude Include="Views\Text\TextRootTraversal.h">
+    <ClInclude Include="Views\Text\TextParentVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextTransformParentVisitor.h">
       <Filter>Views\Text</Filter>
     </ClInclude>
     <ClInclude Include="Views\Text\TextTransformVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextVisitorScope.h">
       <Filter>Views\Text</Filter>
     </ClInclude>
     <ClInclude Include="Views\Text\TextVisitor.h">

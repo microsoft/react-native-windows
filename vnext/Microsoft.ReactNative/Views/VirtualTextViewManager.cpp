@@ -28,12 +28,8 @@ namespace Microsoft::ReactNative {
 
 void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
   auto &childNode = static_cast<ShadowNodeBase &>(child);
+  ApplyTextTransformToChild(&child);
   auto propertyChangeType = PropertyChangeType::Text;
-
-  // TODO: what if current is undefined, and already attached to root
-  // We must search for the first inherited text transform...
-  ApplyTextTransformsToChild(&child, textTransform);
-
   if (IsVirtualTextShadowNode(&childNode)) {
     const auto &childTextNode = static_cast<VirtualTextShadowNode &>(childNode);
     m_hasDescendantBackgroundColor |= childTextNode.m_hasDescendantBackgroundColor;
@@ -108,7 +104,7 @@ bool VirtualTextViewManager::UpdateProperty(
   } else if (propertyName == "textTransform") {
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     node->textTransform = TransformableText::GetTextTransform(propertyValue);
-    UpdateTextTransformsForAllChildren(nodeToUpdate);
+    UpdateTextTransformForChildren(nodeToUpdate);
   } else if (propertyName == "backgroundColor") {
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {

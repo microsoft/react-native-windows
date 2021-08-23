@@ -18,7 +18,7 @@ void TextVisitor::Visit(ShadowNode *node) {
   } else if (IsRawTextShadowNode(baseNode)) {
     VisitRawText(baseNode);
   } else {
-    VisitChildren(baseNode);
+    VisitExtensionText(baseNode);
   }
 }
 

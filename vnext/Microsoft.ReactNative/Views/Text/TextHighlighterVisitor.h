@@ -4,8 +4,8 @@
 #pragma once
 
 #include <Utils/TextTransform.h>
-#include <Views/Text/TextVisitor.h>
 #include <stack>
+#include "TextVisitor.h"
 
 namespace Microsoft::ReactNative {
 
@@ -32,7 +32,6 @@ class TextHighlighterVisitor : public TextVisitor {
   std::stack<Color> m_backgroundColors;
 
   bool RequiresTextHighlighter(Color foregroundColor, Color backgroundColor);
-  static bool Push(std::stack<Color> &stack, Color color);
 };
 
 } // namespace Microsoft::ReactNative

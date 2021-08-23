@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include <Views/Text/TextVisitor.h>
 #include <Utils/TextTransform.h>
 #include <stack>
+#include "TextVisitor.h"
 
 namespace Microsoft::ReactNative {
 
@@ -13,9 +13,7 @@ class TextTransformVisitor : public TextVisitor {
   using Super = TextVisitor;
 
  public:
-  TextTransformVisitor() : Super(), m_forceUpdate{true} {}
-
-  TextTransformVisitor(TextTransform parentTransform) : Super(), m_forceUpdate{false} {
+  TextTransformVisitor(TextTransform parentTransform, bool forceUpdate) : Super(), m_forceUpdate{forceUpdate} {
     m_textTransforms.push(parentTransform);
   }
 
@@ -31,9 +29,6 @@ class TextTransformVisitor : public TextVisitor {
   bool m_forceUpdate;
 
   bool ShouldApplyTransform(TextTransform transform);
-  bool Push(TextTransform transform);
-  void Pop();
-  TextTransform Top();
 };
 
 } // namespace Microsoft::ReactNative
