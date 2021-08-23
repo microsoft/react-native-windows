@@ -4,6 +4,7 @@
 #pragma once
 
 #include "TextHighlighterVisitor.h"
+#include "TextPropertyChangedParentVisitor.h"
 #include "TextTransformParentVisitor.h"
 #include "TextTransformVisitor.h"
 
@@ -24,10 +25,15 @@ static inline void ApplyTextTransformToChild(ShadowNode *node) {
   visitor.Visit(node);
 }
 
-static inline void UpdateTextTransformForChildren(ShadowNode* node) {
+static inline void UpdateTextTransformForChildren(ShadowNode *node) {
   TextTransformParentVisitor parentVisitor;
   parentVisitor.Visit(node);
   TextTransformVisitor visitor{parentVisitor.textTransform, true};
+  visitor.Visit(node);
+}
+
+static inline void NotifyAncestorsTextPropertyChanged(ShadowNode *node, PropertyChangeType type) {
+  TextPropertyChangedParentVisitor visitor{type};
   visitor.Visit(node);
 }
 

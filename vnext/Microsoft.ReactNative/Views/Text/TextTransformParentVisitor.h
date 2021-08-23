@@ -13,6 +13,7 @@ class TextTransformParentVisitor : public TextParentVisitor {
 
  public:
   TextTransform textTransform;
+
  protected:
   void VisitText(ShadowNodeBase *node) override;
 

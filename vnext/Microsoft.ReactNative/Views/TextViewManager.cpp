@@ -7,12 +7,10 @@
 #include "Utils/ShadowNodeTypeUtils.h"
 #include "Utils/XamlIslandUtils.h"
 
-#include <Views/Text/TextVisitors.h>
 #include <Views/ShadowNodeBase.h>
+#include <Views/Text/TextVisitors.h>
 #include <Views/VirtualTextViewManager.h>
 
-#include <UI.Xaml.Automation.Peers.h>
-#include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <Utils/PropertyUtils.h>
@@ -34,10 +32,9 @@ class TextShadowNode final : public ShadowNodeBase {
  private:
   ShadowNode *m_firstChildNode;
 
+  bool m_hasDescendantTextHighlighter{false};
   std::optional<winrt::Windows::UI::Color> m_backgroundColor{};
   std::optional<winrt::Windows::UI::Color> m_foregroundColor{};
-
-  int32_t m_prevCursorEnd = 0;
 
  public:
   TextShadowNode() {
@@ -53,7 +50,7 @@ class TextShadowNode final : public ShadowNodeBase {
 
     if (IsVirtualTextShadowNode(&childNode)) {
       auto &textChildNode = static_cast<VirtualTextShadowNode &>(childNode);
-      m_hasDescendantBackgroundColor |= textChildNode.m_hasDescendantBackgroundColor;
+      m_hasDescendantTextHighlighter |= textChildNode.hasDescendantTextHighlighter;
     }
 
     auto addInline = true;
@@ -63,7 +60,6 @@ class TextShadowNode final : public ShadowNodeBase {
         m_firstChildNode = &child;
         auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
         textBlock.Text(run.Text());
-        m_prevCursorEnd += textBlock.Text().size();
         addInline = false;
       }
     } else if (index == 1 && m_firstChildNode != nullptr) {
@@ -101,10 +97,10 @@ class TextShadowNode final : public ShadowNodeBase {
     // Since TextShadowNode is not public, we lift some of the recursive
     // algorithm into the shadow node implementation to detect when no
     // descendants have background colors and we can skip recursion.
-    if (m_hasDescendantBackgroundColor) {
+    if (m_hasDescendantTextHighlighter) {
       const auto highlighters = GetNestedTextHighlighters(this, m_foregroundColor, m_backgroundColor);
       if (highlighters.size() == 0) {
-        m_hasDescendantBackgroundColor = false;
+        m_hasDescendantTextHighlighter = false;
       } else {
         // We must add the highlighters in reverse order, as highlighters
         // "deeper" in the text tree should render at the top.
@@ -128,7 +124,6 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   TextTransform textTransform{TextTransform::Undefined};
-  bool m_hasDescendantBackgroundColor{false};
 };
 
 TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -266,33 +261,12 @@ YGMeasureFunc TextViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
 }
 
-void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node, PropertyChangeType propertyChangeType) {
+/*static*/ void TextViewManager::UpdateTextHighlighters(ShadowNodeBase *node, bool highlightAdded) {
   if (IsTextShadowNode(node)) {
     const auto textNode = static_cast<TextShadowNode *>(node);
-
-    if ((propertyChangeType & PropertyChangeType::Text) == PropertyChangeType::Text) {
-      const auto element = node->GetView().as<xaml::Controls::TextBlock>();
-
-      // If name is set, it's controlled by accessibilityLabel, and it's already
-      // handled in FrameworkElementViewManager. Here it only handles when name is
-      // not set.
-      if (xaml::Automation::AutomationProperties::GetLiveSetting(element) != winrt::AutomationLiveSetting::Off &&
-          xaml::Automation::AutomationProperties::GetName(element).empty() &&
-          xaml::Automation::AutomationProperties::GetAccessibilityView(element) !=
-              winrt::Peers::AccessibilityView::Raw) {
-        if (auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element)) {
-          peer.RaiseAutomationEvent(winrt::AutomationEvents::LiveRegionChanged);
-        }
-      }
+    if (highlightAdded) {
+      textNode->m_hasDescendantTextHighlighter = true;
     }
-
-    // If a property change added a background color to the text tree, update
-    // the flag to signal recursive highlighter updates are required.
-    if ((propertyChangeType & PropertyChangeType::AddBackgroundColor) == PropertyChangeType::AddBackgroundColor) {
-      textNode->m_hasDescendantBackgroundColor = true;
-    }
-
-    // Recalculate text highlighters
     textNode->RecalculateTextHighlighters();
   }
 }

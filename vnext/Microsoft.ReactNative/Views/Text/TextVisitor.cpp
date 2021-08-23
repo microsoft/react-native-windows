@@ -34,9 +34,13 @@ void TextVisitor::VisitVirtualText(ShadowNodeBase *node) {
   VisitChildren(node);
 }
 
+ShadowNode *TextVisitor::GetShadowNode(int64_t tag) {
+  return m_uiManager->getHost()->FindShadowNodeForTag(tag);
+}
+
 void TextVisitor::VisitChildren(ShadowNodeBase *node) {
   for (auto childTag : node->m_children) {
-    Visit(m_uiManager->getHost()->FindShadowNodeForTag(childTag));
+    Visit(GetShadowNode(childTag));
   }
 }
 

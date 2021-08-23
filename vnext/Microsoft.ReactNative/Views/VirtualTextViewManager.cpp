@@ -32,41 +32,21 @@ void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
   auto propertyChangeType = PropertyChangeType::Text;
   if (IsVirtualTextShadowNode(&childNode)) {
     const auto &childTextNode = static_cast<VirtualTextShadowNode &>(childNode);
-    m_hasDescendantBackgroundColor |= childTextNode.m_hasDescendantBackgroundColor;
     propertyChangeType |=
-        childTextNode.m_backgroundColor ? PropertyChangeType::AddBackgroundColor : PropertyChangeType::None;
+        childTextNode.hasDescendantTextHighlighter ? PropertyChangeType::AddHighlight : PropertyChangeType::None;
   }
   Super::AddView(child, index);
-  NotifyAncestorsTextPropertyChanged(propertyChangeType);
+  NotifyAncestorsTextPropertyChanged(this, propertyChangeType);
 }
 
 void VirtualTextShadowNode::RemoveChildAt(int64_t indexToRemove) {
   Super::RemoveChildAt(indexToRemove);
-  NotifyAncestorsTextPropertyChanged(PropertyChangeType::Text);
+  NotifyAncestorsTextPropertyChanged(this, PropertyChangeType::Text);
 }
 
 void VirtualTextShadowNode::removeAllChildren() {
   Super::removeAllChildren();
-  NotifyAncestorsTextPropertyChanged(PropertyChangeType::Text);
-}
-
-void VirtualTextShadowNode::NotifyAncestorsTextPropertyChanged(PropertyChangeType propertyChangeType) {
-  if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
-    auto host = uiManager->getHost();
-    ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(m_parent));
-    while (parent) {
-      auto viewManager = parent->GetViewManager();
-      const auto nodeType = viewManager->GetName();
-      if (IsTextShadowNode(parent)) {
-        (static_cast<TextViewManager *>(viewManager))->OnDescendantTextPropertyChanged(parent, propertyChangeType);
-        break;
-      } else if (IsVirtualTextShadowNode(parent)) {
-        auto textParent = static_cast<VirtualTextShadowNode *>(parent);
-        textParent->m_hasDescendantBackgroundColor |= m_hasDescendantBackgroundColor;
-      }
-      parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parent->GetParent()));
-    }
-  }
+  NotifyAncestorsTextPropertyChanged(this, PropertyChangeType::Text);
 }
 
 VirtualTextViewManager::VirtualTextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -92,11 +72,10 @@ bool VirtualTextViewManager::UpdateProperty(
   if (TryUpdateForeground<winrt::TextElement>(span, propertyName, propertyValue)) {
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {
-      node->m_foregroundColor = OptionalColorFrom(propertyValue);
-      node->m_hasDescendantBackgroundColor |= node->m_foregroundColor.has_value();
+      node->foregroundColor = OptionalColorFrom(propertyValue);
       const auto propertyChangeType =
-          node->m_foregroundColor ? PropertyChangeType::AddBackgroundColor : PropertyChangeType::None;
-      node->NotifyAncestorsTextPropertyChanged(propertyChangeType);
+          node->foregroundColor ? PropertyChangeType::AddHighlight : PropertyChangeType::RemoveHighlight;
+      NotifyAncestorsTextPropertyChanged(node, propertyChangeType);
     }
   } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
@@ -108,11 +87,10 @@ bool VirtualTextViewManager::UpdateProperty(
   } else if (propertyName == "backgroundColor") {
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {
-      node->m_backgroundColor = OptionalColorFrom(propertyValue);
-      node->m_hasDescendantBackgroundColor |= node->m_backgroundColor.has_value();
+      node->backgroundColor = OptionalColorFrom(propertyValue);
       const auto propertyChangeType =
-          node->m_backgroundColor ? PropertyChangeType::AddBackgroundColor : PropertyChangeType::None;
-      node->NotifyAncestorsTextPropertyChanged(propertyChangeType);
+          node->backgroundColor ? PropertyChangeType::AddHighlight : PropertyChangeType::RemoveHighlight;
+      NotifyAncestorsTextPropertyChanged(node, propertyChangeType);
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);

@@ -346,6 +346,7 @@
     <ClInclude Include="Views\TextViewManager.h" />
     <ClInclude Include="Views\Text\TextHighlighterVisitor.h" />
     <ClInclude Include="Views\Text\TextParentVisitor.h" />
+    <ClInclude Include="Views\Text\TextPropertyChangedParentVisitor.h" />
     <ClInclude Include="Views\Text\TextTransformParentVisitor.h" />
     <ClInclude Include="Views\Text\TextTransformVisitor.h" />
     <ClInclude Include="Views\Text\TextVisitorScope.h" />
@@ -655,6 +656,7 @@
     <ClCompile Include="Views\TextViewManager.cpp" />
     <ClCompile Include="Views\Text\TextHighlighterVisitor.cpp" />
     <ClCompile Include="Views\Text\TextParentVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextPropertyChangedParentVisitor.cpp" />
     <ClCompile Include="Views\Text\TextTransformParentVisitor.cpp" />
     <ClCompile Include="Views\Text\TextTransformVisitor.cpp" />
     <ClCompile Include="Views\Text\TextVisitor.cpp" />

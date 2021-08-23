@@ -15,7 +15,7 @@ class TextParentVisitor : public TextVisitor {
 
   void VisitRawText(ShadowNodeBase *node) override;
 
-  void VisitText(ShadowNodeBase *node) override {};
+  void VisitText(ShadowNodeBase *node) override{};
 
   void VisitVirtualText(ShadowNodeBase *node) override;
 

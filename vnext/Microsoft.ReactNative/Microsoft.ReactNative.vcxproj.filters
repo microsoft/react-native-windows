@@ -315,6 +315,9 @@
     <ClCompile Include="Views\Text\TextParentVisitor.cpp">
       <Filter>Views\Text</Filter>
     </ClCompile>
+    <ClCompile Include="Views\Text\TextPropertyChangedParentVisitor.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
     <ClCompile Include="Views\Text\TextTransformParentVisitor.cpp">
       <Filter>Views\Text</Filter>
     </ClCompile>
@@ -691,6 +694,9 @@
       <Filter>Views\Text</Filter>
     </ClInclude>
     <ClInclude Include="Views\Text\TextParentVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextPropertyChangedParentVisitor.h">
       <Filter>Views\Text</Filter>
     </ClInclude>
     <ClInclude Include="Views\Text\TextTransformParentVisitor.h">

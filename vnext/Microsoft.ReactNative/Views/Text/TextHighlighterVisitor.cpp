@@ -21,8 +21,8 @@ void TextHighlighterVisitor::VisitRawText(ShadowNodeBase *node) {
 
 void TextHighlighterVisitor::VisitVirtualText(ShadowNodeBase *node) {
   const auto textNode = static_cast<VirtualTextShadowNode *>(node);
-  const auto foregroundColor = textNode->m_foregroundColor;
-  const auto backgroundColor = textNode->m_backgroundColor;
+  const auto foregroundColor = textNode->foregroundColor;
+  const auto backgroundColor = textNode->backgroundColor;
   const auto needsHighlighter = RequiresTextHighlighter(foregroundColor, backgroundColor);
   TextVisitorScope<Color> foregroundScope{m_foregroundColors, foregroundColor};
   TextVisitorScope<Color> backgroundScope{m_backgroundColors, backgroundColor};
@@ -41,7 +41,7 @@ void TextHighlighterVisitor::VisitVirtualText(ShadowNodeBase *node) {
     highlighter.Ranges().Append({startIndex, m_startIndex - startIndex});
     highlighters.push_back(highlighter);
   } else if (highlighters.size() == initialHighlighterCount) {
-    textNode->m_hasDescendantBackgroundColor = false;
+    textNode->hasDescendantTextHighlighter = false;
   }
 }
 

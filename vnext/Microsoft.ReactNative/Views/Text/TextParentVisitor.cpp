@@ -18,7 +18,7 @@ void TextParentVisitor::VisitVirtualText(ShadowNodeBase *node) {
 }
 
 void TextParentVisitor::VisitParent(ShadowNodeBase *node) {
-  Visit(m_uiManager->getHost()->FindShadowNodeForTag(node->m_parent));
+  Visit(GetShadowNode(node->m_parent));
 }
 
 } // namespace Microsoft::ReactNative
