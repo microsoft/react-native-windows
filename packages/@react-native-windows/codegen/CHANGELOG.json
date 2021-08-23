@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Mon, 23 Aug 2021 15:09:39 GMT",
+      "tag": "@react-native-windows/codegen_v0.65.0",
+      "version": "0.65.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Promote 0.65 to latest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6b2df206699d51f2be4595391735344a2f53af01",
+            "package": "@react-native-windows/codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 May 2021 15:23:18 GMT",
       "tag": "@react-native-windows/codegen_v0.65.0-preview.1",
       "version": "0.65.0-preview.1",
