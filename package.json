@@ -40,7 +40,6 @@
     "postinstall-postinstall": "^2.1.0"
   },
   "resolutions": {
-    "eslint-plugin-react-hooks": "4.0.7",
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",
     "node-fetch": "2.6.1",
