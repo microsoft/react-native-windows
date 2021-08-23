@@ -327,7 +327,6 @@
     <ClInclude Include="Views\Image\ReactImageBrush.h" />
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h" />
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
-    <ClInclude Include="Views\Impl\TextVisitor.h" />
     <ClInclude Include="Views\IXamlRootView.h" />
     <ClInclude Include="Views\KeyboardEventHandler.h" />
     <ClInclude Include="Views\PaperShadowNode.h" />
@@ -345,6 +344,11 @@
     <ClInclude Include="Views\SwitchViewManager.h" />
     <ClInclude Include="Views\TextInputViewManager.h" />
     <ClInclude Include="Views\TextViewManager.h" />
+    <ClInclude Include="Views\Text\TextHighlighterVisitor.h" />
+    <ClInclude Include="Views\Text\TextRootTraversal.h" />
+    <ClInclude Include="Views\Text\TextTransformVisitor.h" />
+    <ClInclude Include="Views\Text\TextVisitor.h" />
+    <ClInclude Include="Views\Text\TextVisitors.h" />
     <ClInclude Include="Views\TouchEventHandler.h" />
     <ClInclude Include="Views\ViewControl.h" />
     <ClInclude Include="Views\ViewManager.h" />
@@ -631,7 +635,6 @@
     <ClCompile Include="Views\Image\ReactImageBrush.cpp" />
     <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp" />
     <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
-    <ClCompile Include="Views\Impl\TextVisitor.cpp" />
     <ClCompile Include="Views\KeyboardEventHandler.cpp" />
     <ClCompile Include="Views\PaperShadowNode.cpp" />
     <ClCompile Include="Views\PopupViewManager.cpp" />
@@ -648,6 +651,10 @@
     <ClCompile Include="Views\SwitchViewManager.cpp" />
     <ClCompile Include="Views\TextInputViewManager.cpp" />
     <ClCompile Include="Views\TextViewManager.cpp" />
+    <ClCompile Include="Views\Text\TextHighlighterVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextRootTraversal.cpp" />
+    <ClCompile Include="Views\Text\TextTransformVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextVisitor.cpp" />
     <ClCompile Include="Views\TouchEventHandler.cpp" />
     <ClCompile Include="Views\ViewControl.cpp" />
     <ClCompile Include="Views\ViewManagerBase.cpp" />

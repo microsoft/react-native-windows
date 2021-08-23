@@ -7,10 +7,7 @@
 #include "Utils/ShadowNodeTypeUtils.h"
 #include "Utils/XamlIslandUtils.h"
 
-#include <Modules/NativeUIManager.h>
-#include <Modules/PaperUIManagerModule.h>
-#include <Views/Impl/TextVisitor.h>
-#include <Views/RawTextViewManager.h>
+#include <Views/Text/TextVisitors.h>
 #include <Views/ShadowNodeBase.h>
 #include <Views/VirtualTextViewManager.h>
 
@@ -53,8 +50,7 @@ class TextShadowNode final : public ShadowNodeBase {
   void AddView(ShadowNode &child, int64_t index) override {
     auto &childNode = static_cast<ShadowNodeBase &>(child);
 
-    TextTransformVisitor visitor{textTransform};
-    visitor.Visit(&child);
+    ApplyTextTransformsToChild(&child, textTransform);
 
     if (IsVirtualTextShadowNode(&childNode)) {
       auto &textChildNode = static_cast<VirtualTextShadowNode &>(childNode);
@@ -102,14 +98,17 @@ class TextShadowNode final : public ShadowNodeBase {
   void RecalculateTextHighlighters() {
     const auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
     textBlock.TextHighlighters().Clear();
+
+    // Since TextShadowNode is not public, we lift some of the recursive
+    // algorithm into the shadow node implementation to detect when no
+    // descendants have background colors and we can skip recursion.
     if (m_hasDescendantBackgroundColor) {
-      TextHighlighterVisitor visitor{m_foregroundColor, m_backgroundColor};
-      visitor.Visit(this);
-      if (visitor.highlighters.size() == 0) {
+      const auto highlighters = GetNestedTextHighlighters(this, m_foregroundColor, m_backgroundColor);
+      if (highlighters.size() == 0) {
         m_hasDescendantBackgroundColor = false;
       } else {
-        auto iter = visitor.highlighters.rbegin();
-        while (iter != visitor.highlighters.rend()) {
+        auto iter = highlighters.rbegin();
+        while (iter != highlighters.rend()) {
           textBlock.TextHighlighters().Append(*iter);
           ++iter;
         }
@@ -165,8 +164,7 @@ bool TextViewManager::UpdateProperty(
   } else if (propertyName == "textTransform") {
     auto textNode = static_cast<TextShadowNode *>(nodeToUpdate);
     textNode->textTransform = TransformableText::GetTextTransform(propertyValue);
-    TextTransformVisitor visitor;
-    visitor.Visit(nodeToUpdate);
+    UpdateTextTransformsForAllChildren(nodeToUpdate);
   } else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {

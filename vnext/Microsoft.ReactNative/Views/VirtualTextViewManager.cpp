@@ -15,7 +15,7 @@
 #include <Utils/ShadowNodeTypeUtils.h>
 #include <Utils/TransformableText.h>
 #include <Utils/ValueUtils.h>
-#include <Views/Impl/TextVisitor.h>
+#include <Views/Text/TextVisitors.h>
 
 namespace winrt {
 using namespace Windows::UI;
@@ -30,8 +30,9 @@ void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
   auto &childNode = static_cast<ShadowNodeBase &>(child);
   auto propertyChangeType = PropertyChangeType::Text;
 
-  TextTransformVisitor visitor{textTransform};
-  visitor.Visit(&child);
+  // TODO: what if current is undefined, and already attached to root
+  // We must search for the first inherited text transform...
+  ApplyTextTransformsToChild(&child, textTransform);
 
   if (IsVirtualTextShadowNode(&childNode)) {
     const auto &childTextNode = static_cast<VirtualTextShadowNode &>(childNode);
@@ -107,8 +108,7 @@ bool VirtualTextViewManager::UpdateProperty(
   } else if (propertyName == "textTransform") {
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     node->textTransform = TransformableText::GetTextTransform(propertyValue);
-    TextTransformVisitor visitor;
-    visitor.Visit(nodeToUpdate);
+    UpdateTextTransformsForAllChildren(nodeToUpdate);
   } else if (propertyName == "backgroundColor") {
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {

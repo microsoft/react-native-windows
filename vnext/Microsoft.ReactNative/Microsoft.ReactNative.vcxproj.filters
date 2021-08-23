@@ -173,9 +173,6 @@
     <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp">
       <Filter>Views\Impl</Filter>
     </ClCompile>
-    <ClCompile Include="Views\Impl\TextVisitor.cpp">
-      <Filter>Views\Impl</Filter>
-    </ClCompile>
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -311,6 +308,18 @@
     </ClCompile>
     <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp">
       <Filter>ReactHost</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Text\TextHighlighterVisitor.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Text\TextRootTraversal.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Text\TextTransformVisitor.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Text\TextVisitor.cpp">
+      <Filter>Views\Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -511,9 +520,6 @@
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h">
       <Filter>Views\Impl</Filter>
     </ClInclude>
-    <ClInclude Include="Views\Impl\TextVisitor.h">
-      <Filter>Views\Impl</Filter>
-    </ClInclude>
     <ClInclude Include="Views\ActivityIndicatorViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -678,6 +684,21 @@
     <ClInclude Include="Utils\ShadowNodeTypeUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Views\Text\TextHighlighterVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextRootTraversal.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextTransformVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextVisitors.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -760,6 +781,9 @@
     </Filter>
     <Filter Include="JSI">
       <UniqueIdentifier>{24290499-e864-407e-89c0-473f2b8dbb6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\Text">
+      <UniqueIdentifier>{8b871c42-6131-44c2-a73f-f1061780e97f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
