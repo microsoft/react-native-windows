@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Mon, 15 Mar 2021 17:23:19 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Aug 2021 15:10:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.1
+
+Mon, 23 Aug 2021 15:10:07 GMT
+
+### Patches
+
+- Promote 0.64 to legacy (ngerlem@microsoft.com)
 
 ## 0.64.0
 
