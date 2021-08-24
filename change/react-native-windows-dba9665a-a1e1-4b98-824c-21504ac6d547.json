@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Lib project will use the app's ExperimentalFeatures.props",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
