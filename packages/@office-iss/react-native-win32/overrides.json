@@ -6,13 +6,13 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-ff9c8cdac",
+  "baseVersion": "0.0.0-f592ad050",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "6b1110a5df0c1d53eb45706690c876a41e7e1ce7"
+      "baseHash": "66fa79a21dc9b1eb380869311df826df55235ace"
     },
     {
       "type": "derived",
@@ -130,13 +130,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "86ac63035e384e3adfcbad3b8bddaf9a5a9c4cef"
+      "baseHash": "88931b189b9a91bbdbbcff7c7728ed4763b77041"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "9b941d27fadc82ac74153cd52c08080b0b1c7c8f"
+      "baseHash": "c2797c00e77fa75b029851de14ce94c00bef7683"
     },
     {
       "type": "copy",
@@ -309,10 +309,10 @@
       "baseHash": "f23a66cfc475ee1e2eda1065e56e05e547b7030e"
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "fd25fc611f8da21b93e7f8750d8f2fc8273a4a52"
+      "baseHash": "ee8c3fce6e137ad7d7dbcb7435cd3396bfe48440"
     },
     {
       "type": "copy",

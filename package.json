@@ -40,6 +40,7 @@
     "postinstall-postinstall": "^2.1.0"
   },
   "resolutions": {
+    "@react-native/polyfills": "2.0.0",
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",
     "node-fetch": "2.6.1",
