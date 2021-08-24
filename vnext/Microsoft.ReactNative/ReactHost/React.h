@@ -104,6 +104,7 @@ struct IReactSettingsSnapshot : IUnknown {
   virtual uint16_t SourceBundlePort() const noexcept = 0;
   virtual std::string JavaScriptBundleFile() const noexcept = 0;
   virtual bool UseDeveloperSupport() const noexcept = 0;
+  virtual JSIEngine JsiEngine() const noexcept = 0;
 };
 
 MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
@@ -237,7 +238,6 @@ struct ReactOptions {
 
   std::string ByteCodeFileUri;
   bool EnableByteCodeCaching{true};
-  JSIEngine JsiEngine{JSIEngine::Chakra};
 
   //! Enable function nativePerformanceNow.
   //! Method nativePerformanceNow() returns high resolution time info.
@@ -264,6 +264,13 @@ struct ReactOptions {
       winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
       bool value) noexcept;
   static bool UseFastRefresh(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
+
+  JSIEngine JsiEngine() const noexcept;
+  void SetJsiEngine(JSIEngine value) noexcept;
+  static JSIEngine JsiEngine(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
+  static void SetJsiEngine(
+      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+      JSIEngine value) noexcept;
 
   //! Enable live reload to load the source bundle from the React Native packager.
   //! When the file is saved, the packager will trigger reloading.

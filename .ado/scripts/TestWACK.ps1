@@ -19,8 +19,7 @@ if ($Configuration -eq 'Release') {
     $errors = $supportedApiTest.MESSAGES.MESSAGE.TEXT | Where-Object { $_ -notin $exceptions }
 
     if ($errors.Length -ne 0) {
-        # Throw in order to break the AzureDevOps pipeline 
+        # Throw in order to break the AzureDevOps pipeline
         throw $errors
     }
 }
-

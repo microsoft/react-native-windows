@@ -11,11 +11,16 @@
 #include <memory>
 #include <thread>
 
+#include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
+#include <winrt/Microsoft.UI.Xaml.Controls.h>
+#include <winrt/Microsoft.UI.Xaml.XamlTypeInfo.h>
+
 #pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
 
 #include <DesktopWindowBridge.h>
-#include <winrt/Microsoft.ReactNative.h>
+
+#include "AutolinkedNativeModules.g.h"
 
 #include <CppWinRTIncludes.h>
 #include <UI.Xaml.Controls.h>
@@ -96,6 +101,8 @@ struct WindowData {
           GetCurrentDirectory(MAX_PATH, workingDir);
 
           auto host = Host();
+          RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any autolinked modules
+
           host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
 
           host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
@@ -358,6 +365,14 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 #endif
 
   winrt::init_apartment(winrt::apartment_type::single_threaded);
+
+  auto winuiIXMP = winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider();
+
+  auto xapp = winrt::Microsoft::Toolkit::Win32::UI::XamlHost::XamlApplication({winuiIXMP});
+
+  winrt::Windows::UI::Xaml::Hosting::WindowsXamlManager::InitializeForCurrentThread();
+
+  xapp.Resources().MergedDictionaries().Append(winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources());
 
   hosting::DesktopWindowXamlSource desktopXamlSource;
   auto windowData = std::make_unique<WindowData>(desktopXamlSource);

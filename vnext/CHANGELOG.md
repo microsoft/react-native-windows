@@ -1,8 +1,165 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 21 Jul 2021 05:06:26 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Aug 2021 05:10:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.364
+
+Mon, 23 Aug 2021 05:10:28 GMT
+
+### Changes
+
+- Integrate 7/7 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.363
+
+Sat, 21 Aug 2021 05:09:03 GMT
+
+### Changes
+
+- Fix crash in NativeUIManager when handling "extra layout" nodes (aschultz@microsoft.com)
+- Fix crash in KeyboardHelper when provided undefined keyDownEvents prop. (aschultz@microsoft.com)
+- Enable use of 'focusable' prop on ControlViewManager-derived controls (aschultz@microsoft.com)
+
+## 0.0.0-canary.362
+
+Fri, 20 Aug 2021 05:05:48 GMT
+
+### Changes
+
+- Integrate 6/30 Nightly RN Build (ngerlem@microsoft.com)
+- Exclude WinMD AttributeNameAttribute (ngerlem@microsoft.com)
+- Integrate 6/23 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 7/7 Nightly RN Build (ngerlem@microsoft.com)
+- Fixes issues with Text backgroundColor (erozell@outlook.com)
+
+## 0.0.0-canary.361
+
+Wed, 18 Aug 2021 05:06:18 GMT
+
+### Changes
+
+- Enable inlineRequires for all projects (ngerlem@microsoft.com)
+
+## 0.0.0-canary.360
+
+Tue, 17 Aug 2021 05:09:46 GMT
+
+### Changes
+
+- Add experimentalFeatures to projectConfig result (jthysell@microsoft.com)
+
+## 0.0.0-canary.359
+
+Sat, 14 Aug 2021 05:08:23 GMT
+
+### Changes
+
+- Prevent crash in AnimationDriver when RN instance destroyed (erozell@outlook.com)
+
+## 0.0.0-canary.358
+
+Wed, 11 Aug 2021 05:09:13 GMT
+
+### Changes
+
+- Skip user agent HTTP header validation. (erozell@outlook.com)
+
+## 0.0.0-canary.357
+
+Tue, 10 Aug 2021 05:11:09 GMT
+
+### Changes
+
+- Fixes various issues related to clang compile (erozell@outlook.com)
+- Bump to Hermes 0.8.1, Debug performance, HBC bundle, CPU Sampling profiler (email not defined)
+- Rename API for changing BackHandler behavior (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.356
+
+Sun, 08 Aug 2021 05:06:42 GMT
+
+### Changes
+
+- Clear tintColor when prop set to null (erozell@outlook.com)
+
+## 0.0.0-canary.355
+
+Sat, 07 Aug 2021 05:06:10 GMT
+
+### Changes
+
+- Sets the default button for the ContentDialog (erozell@outlook.com)
+
+## 0.0.0-canary.354
+
+Fri, 06 Aug 2021 05:09:11 GMT
+
+### Changes
+
+- Add QuirkSettings::SetEnableBackHandler to opt out of the backhandler behaviors (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.353
+
+Thu, 05 Aug 2021 05:07:20 GMT
+
+### Changes
+
+- Do not write codegen files if the contents have not changed, as this breaks incremental builds (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.352
+
+Wed, 04 Aug 2021 05:05:41 GMT
+
+### Changes
+
+- add binskim analysis to CI (agnel@microsoft.com)
+- Add some jsvalue reader helpers for more xaml types (asklar@microsoft.com)
+- Add root tag to CreateView in ViewManagerBase (erozell@outlook.com)
+- Add cxx unit test for xaml types (asklar@microsoft.com)
+
+## 0.0.0-canary.351
+
+Tue, 03 Aug 2021 05:10:45 GMT
+
+### Changes
+
+- Work around XAML Islands issue with TextCommandBarFlyout (erozell@outlook.com)
+
+## 0.0.0-canary.350
+
+Sun, 01 Aug 2021 05:08:39 GMT
+
+### Changes
+
+- Fix issue using react-native-debugger with react-native-windows (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.349
+
+Sun, 25 Jul 2021 05:09:20 GMT
+
+### Changes
+
+- Remove DatePicker and PickerWindows (ngerlem@microsoft.com)
+
+## 0.0.0-canary.348
+
+Fri, 23 Jul 2021 05:08:40 GMT
+
+### Changes
+
+- Fix warning of double-importing ExperimentalFeatures.props (dannyvv@microsoft.com)
+- Suppress warnings of unused variables in FaceBook code (dannyvv@microsoft.com)
+- Coalesce RN View onLayout events (erozell@outlook.com)
+
+## 0.0.0-canary.347
+
+Thu, 22 Jul 2021 05:05:25 GMT
+
+### Changes
+
+- Remove AppTheme Shim (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.346
 

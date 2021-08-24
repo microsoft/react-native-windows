@@ -23,8 +23,6 @@ import typeof InputAccessoryView from './Libraries/Components/TextInput/InputAcc
 import typeof KeyboardAvoidingView from './Libraries/Components/Keyboard/KeyboardAvoidingView';
 import typeof MaskedViewIOS from './Libraries/Components/MaskedView/MaskedViewIOS';
 import typeof Modal from './Libraries/Modal/Modal';
-import typeof Picker from './Libraries/Components/Picker/Picker';
-import typeof PickerIOS from './Libraries/Components/Picker/PickerIOS';
 import typeof Pressable from './Libraries/Components/Pressable/Pressable';
 import typeof ProgressBarAndroid from './Libraries/Components/ProgressBarAndroid/ProgressBarAndroid';
 import typeof ProgressViewIOS from './Libraries/Components/ProgressViewIOS/ProgressViewIOS';
@@ -167,25 +165,6 @@ module.exports = {
   },
   get Modal(): Modal {
     return require('./Libraries/Modal/Modal');
-  },
-  get Picker(): Picker {
-    warnOnce(
-      'picker-moved',
-      'Picker has been extracted from react-native core and will be removed in a future release. ' +
-        "It can now be installed and imported from '@react-native-picker/picker' instead of 'react-native'. " +
-        'See https://github.com/react-native-picker/picker',
-    );
-    return require('./Libraries/Components/Picker/Picker');
-  },
-  // $FlowFixMe[value-as-type]
-  get PickerIOS(): PickerIOS {
-    warnOnce(
-      'pickerios-moved',
-      'PickerIOS has been extracted from react-native core and will be removed in a future release. ' +
-        "It can now be installed and imported from '@react-native-picker/picker' instead of 'react-native'. " +
-        'See https://github.com/react-native-picker/picker',
-    );
-    return require('./Libraries/Components/Picker/PickerIOS');
   },
   get Pressable(): Pressable {
     return require('./Libraries/Components/Pressable/Pressable').default;
@@ -512,14 +491,12 @@ module.exports = {
 
   // Additional windows exports (Typescript components exported as flow any)
   get DatePicker(): any {
-    warnOnce(
-      'datepicker-moved',
-      'DatePicker has been extracted from react-native-windows and will be removed in a future release. ' +
+    invariant(
+      false,
+      'DatePicker has been extracted and removed from react-native-windows. ' +
         "It can now be installed and imported as DateTimePicker from '@react-native-community/datetimepicker'. " +
         'See https://github.com/react-native-datetimepicker/datetimepicker',
     );
-    return (require('./Libraries/Components/DatePicker/DatePicker'): any)
-      .DatePicker;
   },
   get Flyout(): any {
     return require('./Libraries/Components/Flyout/Flyout').Flyout;
@@ -528,13 +505,12 @@ module.exports = {
     return require('./Libraries/Components/Glyph/Glyph').Glyph;
   },
   get PickerWindows(): any {
-    warnOnce(
-      'picker-windows-moved',
-      'PickerWindows has been extracted from react-native-windows and will be removed in a future release. ' +
+    invariant(
+      false,
+      'PickerWindows has been extracted and removed from react-native-windows. ' +
         "It can now be installed and imported as Picker from '@react-native-picker/picker'. " +
         'See https://github.com/react-native-picker/picker',
     );
-    return require('./Libraries/Components/Picker/PickerWindows').Picker;
   },
   get Popup(): any {
     return require('./Libraries/Components/Popup/Popup').Popup;
@@ -544,8 +520,12 @@ module.exports = {
       .supportKeyboard;
   },
   get DayOfWeek(): any {
-    return require('./Libraries/Components/DatePicker/DatePickerProps')
-      .DayOfWeek;
+    invariant(
+      false,
+      'DatePicker has been extracted and removed from react-native-windows. ' +
+        "It can now be installed and imported as DateTimePicker from '@react-native-community/datetimepicker'. " +
+        'See https://github.com/react-native-datetimepicker/datetimepicker',
+    );
   },
   get EventPhase(): any {
     return require('./Libraries/Components/Keyboard/KeyboardExtProps')
@@ -753,6 +733,38 @@ if (__DEV__) {
         'CheckBox has been removed from React Native. ' +
           "It can now be installed and imported from '@react-native-community/checkbox' instead of 'react-native'. " +
           'See https://github.com/react-native-checkbox/react-native-checkbox',
+      );
+    },
+  });
+
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access Picker. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access Picker. */
+  Object.defineProperty(module.exports, 'Picker', {
+    configurable: true,
+    get() {
+      invariant(
+        false,
+        'Picker has been removed from React Native. ' +
+          "It can now be installed and imported from '@react-native-picker/picker' instead of 'react-native'. " +
+          'See https://github.com/react-native-picker/picker',
+      );
+    },
+  });
+
+  /* $FlowFixMe[prop-missing] This is intentional: Flow will error when
+   * attempting to access PickerIOS. */
+  /* $FlowFixMe[invalid-export] This is intentional: Flow will error when
+   * attempting to access PickerIOS. */
+  Object.defineProperty(module.exports, 'PickerIOS', {
+    configurable: true,
+    get() {
+      invariant(
+        false,
+        'PickerIOS has been removed from React Native. ' +
+          "It can now be installed and imported from '@react-native-picker/picker' instead of 'react-native'. " +
+          'See https://github.com/react-native-picker/picker',
       );
     },
   });

@@ -7,9 +7,9 @@
 
 'use strict';
 
-import type {RNTesterExample} from '../types/RNTesterTypes';
+import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
 
-const ComponentExamples: Array<RNTesterExample> = [
+const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ActivityIndicatorExample',
     category: 'UI',
@@ -19,11 +19,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'ButtonExample',
     category: 'UI',
     module: require('../examples/Button/ButtonExample'),
-  },
-  {
-    key: 'DatePickerExample',
-    category: 'UI',
-    module: require('../examples-win/DatePicker/DatePickerExample'),
   },
   {
     key: 'FlatListExample',
@@ -86,11 +81,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
   },
   {
-    key: 'PickerWindowsExample',
-    category: 'UI',
-    module: require('../examples-win/Picker/PickerWindowsExample'),
-  },
-  {
     key: 'PressableExample',
     category: 'UI',
     module: require('../examples/Pressable/PressableExample'),
@@ -121,34 +111,9 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/ScrollView/ScrollViewAnimatedExample'),
   },
   {
-    key: 'SectionList-onEndReached',
-    module: require('../examples/SectionList/SectionList-onEndReached'),
-    category: 'ListView',
-  },
-  {
-    key: 'SectionList-inverted',
-    module: require('../examples/SectionList/SectionList-inverted'),
-    category: 'ListView',
-  },
-  {
-    key: 'SectionList-onViewableItemsChanged',
-    module: require('../examples/SectionList/SectionList-onViewableItemsChanged'),
-    category: 'ListView',
-  },
-  {
-    key: 'SectionList-stickyHeadersEnabled',
-    module: require('../examples/SectionList/SectionList-stickyHeadersEnabled'),
-    category: 'ListView',
-  },
-  {
-    key: 'SectionList-withSeparators',
-    module: require('../examples/SectionList/SectionList-withSeparators'),
-    category: 'ListView',
-  },
-  {
     key: 'SectionListExample',
     category: 'ListView',
-    module: require('../examples/SectionList/SectionListExample'),
+    module: require('../examples/SectionList/SectionListIndex'),
   },
   {
     key: 'SwipeableCardExample',
@@ -207,7 +172,7 @@ const ComponentExamples: Array<RNTesterExample> = [
   },
 ];
 
-const APIExamples: Array<RNTesterExample> = [
+const APIs: Array<RNTesterModuleInfo> = [
   {
     key: 'KeyboardFocusExample',
     category: 'Basic',
@@ -239,9 +204,9 @@ const APIExamples: Array<RNTesterExample> = [
     module: require('../examples/Alert/AlertExample'),
   },
   {
-    key: 'AnimatedExample',
+    key: 'AnimatedIndex',
     category: 'UI',
-    module: require('../examples/Animated/AnimatedExample').default,
+    module: require('../examples/Animated/AnimatedIndex').default,
   },
   {
     key: 'Animation - GratuitousAnimation',
@@ -361,7 +326,7 @@ const APIExamples: Array<RNTesterExample> = [
 ];
 
 if (global.__turboModuleProxy) {
-  APIExamples.push({
+  APIs.push({
     key: 'TurboModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboModuleExample'),
@@ -370,13 +335,13 @@ if (global.__turboModuleProxy) {
 
 const Modules: any = {};
 
-APIExamples.concat(ComponentExamples).forEach(Example => {
+APIs.concat(Components).forEach(Example => {
   Modules[Example.key] = Example.module;
 });
 
 const RNTesterList = {
-  APIExamples,
-  ComponentExamples,
+  APIs,
+  Components,
   Modules,
 };
 

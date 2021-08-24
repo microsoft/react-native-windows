@@ -2,6 +2,51 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 17 Aug 2021 05:09:46 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.83",
+      "version": "0.0.0-canary.83",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add experimentalFeatures to projectConfig result",
+            "author": "jthysell@microsoft.com",
+            "commit": "ee2d00806005714827795846179d1026754f48a8",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 24 Jul 2021 05:05:52 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.82",
+      "version": "0.0.0-canary.82",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.2.0",
+            "author": "4123478+tido64@users.noreply.github.com",
+            "commit": "a311022ebc0c1d8070d7e54312197f486c470d33",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Jul 2021 05:05:25 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.82",
+      "version": "0.0.0-canary.82",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Do not start packager for run-windows release builds",
+            "author": "ngerlem@microsoft.com",
+            "commit": "1dc68b4b9c9fa0c8730ce49c43f6a96d71c27f3f",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jul 2021 05:06:16 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.81",
       "version": "0.0.0-canary.81",

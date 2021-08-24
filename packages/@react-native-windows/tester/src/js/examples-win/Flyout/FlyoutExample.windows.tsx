@@ -6,7 +6,8 @@
 
 import React from 'react';
 import {Button, Switch, Text, TextInput, View} from 'react-native';
-import {Flyout, Picker, Popup, Placement} from 'react-native-windows';
+import {Flyout, Popup, Placement} from 'react-native-windows';
+import {Picker} from '@react-native-picker/picker';
 
 interface IFlyoutExampleState {
   isFlyoutVisible: boolean;

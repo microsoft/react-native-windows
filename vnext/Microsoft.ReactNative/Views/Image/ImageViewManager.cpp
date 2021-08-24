@@ -135,9 +135,13 @@ bool ImageViewManager::UpdateProperty(
        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)) {
     auto reactImage{grid.as<ReactImage>()};
     reactImage->BlurRadius(propertyValue.AsSingle());
-  } else if (propertyName == "tintColor" && IsValidColorValue(propertyValue)) {
-    auto reactImage{grid.as<ReactImage>()};
-    reactImage->TintColor(ColorFrom(propertyValue));
+  } else if (propertyName == "tintColor") {
+    const auto isValidColorValue = IsValidColorValue(propertyValue);
+    if (isValidColorValue || propertyValue.IsNull()) {
+      auto reactImage{grid.as<ReactImage>()};
+      const auto color = isValidColorValue ? ColorFrom(propertyValue) : winrt::Colors::Transparent();
+      reactImage->TintColor(color);
+    }
   } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
     finalizeBorderRadius = true;
   } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {

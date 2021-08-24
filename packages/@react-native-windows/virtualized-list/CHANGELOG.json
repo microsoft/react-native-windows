@@ -2,6 +2,63 @@
   "name": "@react-native-windows/virtualized-list",
   "entries": [
     {
+      "date": "Mon, 23 Aug 2021 05:10:28 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.4",
+      "version": "0.0.0-canary.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 7/7 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d9a687407c1e29f9b0447ed33047ea7a558ccff4",
+            "package": "@react-native-windows/virtualized-list"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 20 Aug 2021 05:05:48 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.3",
+      "version": "0.0.0-canary.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 7/7 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d9a687407c1e29f9b0447ed33047ea7a558ccff4",
+            "package": "@react-native-windows/virtualized-list"
+          },
+          {
+            "comment": "Integrate 6/23 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d994cc5b209bca9f21dcbf5cc20f0c62facb72f4",
+            "package": "@react-native-windows/virtualized-list"
+          },
+          {
+            "comment": "Integrate 6/30 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "9790b70efe66d3ad245aed869c15bfd78c0109dd",
+            "package": "@react-native-windows/virtualized-list"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 24 Jul 2021 05:05:52 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.2",
+      "version": "0.0.0-canary.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-platform-override to v1.4.17",
+            "author": "4123478+tido64@users.noreply.github.com",
+            "commit": "a311022ebc0c1d8070d7e54312197f486c470d33",
+            "package": "@react-native-windows/virtualized-list"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 16 Jul 2021 05:07:06 GMT",
       "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.2",
       "version": "0.0.0-canary.2",

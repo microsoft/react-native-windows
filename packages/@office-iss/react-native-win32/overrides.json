@@ -6,19 +6,19 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-386dbd943",
+  "baseVersion": "0.0.0-f592ad050",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a5b0a0d2669d5d35a548c3990577a2e9c5d861b4"
+      "baseHash": "66fa79a21dc9b1eb380869311df826df55235ace"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "c7e80678448dd6d518b6ed47594775207b285610"
+      "baseHash": "1bef57931e96344fa3b9b2e67ea70f6d6647cd31"
     },
     {
       "type": "patch",
@@ -81,24 +81,6 @@
       "issue": 4378
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Components/Picker/Picker.win32.tsx"
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Components/Picker/PickerAndroid.js",
-      "baseFile": "Libraries/Components/Picker/PickerAndroid.ios.js",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a",
-      "issue": 4378
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Components/Picker/PickerIOS.js",
-      "baseFile": "Libraries/Components/Picker/PickerIOS.android.js",
-      "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6",
-      "issue": 4378
-    },
-    {
       "type": "copy",
       "file": "src/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
       "baseFile": "Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.ios.js",
@@ -148,13 +130,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "5eb78ac95aeaa6ea8c5128050a2e908759af6aff"
+      "baseHash": "88931b189b9a91bbdbbcff7c7728ed4763b77041"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "9b941d27fadc82ac74153cd52c08080b0b1c7c8f"
+      "baseHash": "c2797c00e77fa75b029851de14ce94c00bef7683"
     },
     {
       "type": "copy",
@@ -225,10 +207,16 @@
       "issue": 5170
     },
     {
+      "type": "copy",
+      "file": "src/Libraries/DeprecatedPropTypes/DeprecatedImagePropType.win32.js",
+      "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedImagePropType.ios.js",
+      "baseHash": "ae3ac9add2e9ac83b7b538f82b57fb3f8fdd9526"
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "c20b0134e74a8e8d69d0b2694b4296fe2bf69d3f",
+      "baseHash": "e259481373eaf9acad79087e1fdd3c0e27e25ee5",
       "issue": 4320
     },
     {
@@ -292,6 +280,12 @@
     },
     {
       "type": "copy",
+      "file": "src/Libraries/Lists/__tests__/CellRenderMask-test.js",
+      "baseFile": "Libraries/Lists/__tests__/CellRenderMask-test.js",
+      "baseHash": "9b194f61db28366f5fb490b033d940636a9c7bb2"
+    },
+    {
+      "type": "copy",
       "file": "src/Libraries/Lists/__tests__/FillRateHelper-test.js",
       "baseFile": "Libraries/Lists/__tests__/FillRateHelper-test.js",
       "baseHash": "3bb080ba811b837f69c82bc609fb6b328c20bd6d"
@@ -315,10 +309,10 @@
       "baseHash": "f23a66cfc475ee1e2eda1065e56e05e547b7030e"
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "fd25fc611f8da21b93e7f8750d8f2fc8273a4a52"
+      "baseHash": "ee8c3fce6e137ad7d7dbcb7435cd3396bfe48440"
     },
     {
       "type": "copy",
@@ -420,7 +414,7 @@
       "type": "patch",
       "file": "src/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "Libraries/StyleSheet/StyleSheet.js",
-      "baseHash": "95ed8a2da162e168c7d740640a9d6c0fdb282c84"
+      "baseHash": "afe4fc1e9aa91d08a7a1098e3bbd3b17a73b4a65"
     },
     {
       "type": "derived",

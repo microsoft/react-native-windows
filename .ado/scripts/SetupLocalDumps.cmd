@@ -6,7 +6,7 @@ set CRASHDUMPS_FOLDER=%BUILD_ARTIFACTSTAGINGDIRECTORY%\CrashDumps
 reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps" /s
 reg add  "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\%1.exe" /v DumpFolder /t REG_SZ /d %CRASHDUMPS_FOLDER%
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\%1.exe" /v DumpType /t REG_DWORD /d 2
-if not exist %CRASHDUMPS_FOLDER% ( 
+if not exist %CRASHDUMPS_FOLDER% (
     md %CRASHDUMPS_FOLDER%
 )
 

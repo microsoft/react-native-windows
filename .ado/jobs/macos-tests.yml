@@ -16,7 +16,7 @@ jobs:
       - checkout: self
         clean: true
         submodules: false
-            
+
       - template: ../templates/yarn-install.yml
 
       - script: yarn build
@@ -27,4 +27,3 @@ jobs:
 
       - script: yarn validate-overrides
         displayName: yarn validate-overrides
-

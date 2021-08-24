@@ -168,6 +168,23 @@
                     <ComboBoxItem Content="V8" x:Name="x_engineV8" />
                 </ComboBox.Items>
             </ComboBox>
+            <TextBlock
+                Margin="4"
+                VerticalAlignment="Center"
+                Text="Theme:"/>
+            <ComboBox
+                x:Name="x_Theme"
+                Margin="4"
+                MinWidth="150"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                SelectionChanged="x_Theme_SelectionChanged">
+                <ComboBox.Items>
+                    <ComboBoxItem Content="Default" x:Name="x_themeDefault" />
+                    <ComboBoxItem Content="Light" x:Name="x_themeLight" />
+                    <ComboBoxItem Content="Dark" x:Name="x_themeDark" />
+                </ComboBox.Items>
+            </ComboBox>
             <CheckBox x:Name="x_UseFabric"
                 Margin="4"
                 VerticalAlignment="Center"

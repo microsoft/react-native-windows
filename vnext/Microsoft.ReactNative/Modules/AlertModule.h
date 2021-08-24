@@ -26,6 +26,9 @@ struct ShowAlertArgs {
 
   REACT_FIELD(buttonNeutral)
   std::string buttonNeutral;
+
+  REACT_FIELD(defaultButton)
+  int defaultButton;
 };
 
 REACT_MODULE(Alert)

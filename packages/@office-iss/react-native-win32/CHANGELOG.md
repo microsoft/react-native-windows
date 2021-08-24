@@ -1,8 +1,42 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 16 Jul 2021 05:07:06 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Aug 2021 05:10:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.105
+
+Mon, 23 Aug 2021 05:10:28 GMT
+
+### Changes
+
+- Integrate 7/7 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.104
+
+Fri, 20 Aug 2021 05:05:48 GMT
+
+### Changes
+
+- Integrate 6/30 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/23 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 7/7 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.103
+
+Wed, 18 Aug 2021 05:06:18 GMT
+
+### Changes
+
+- Enable inlineRequires for all projects (ngerlem@microsoft.com)
+
+## 0.0.0-canary.102
+
+Sat, 24 Jul 2021 05:05:52 GMT
+
+### Changes
+
+- Remove use strict from PlatformColorValueTypesWin32.d.ts (ppatboyd@outlook.com)
 
 ## 0.0.0-canary.101
 

@@ -182,9 +182,6 @@
     <ClCompile Include="Views\ControlViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Views\DatePickerViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\DevMenu.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -207,9 +204,6 @@
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\KeyboardEventHandler.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\PickerViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\PopupViewManager.cpp">
@@ -291,6 +285,9 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Utils\ValueUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\XamlIslandUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="JsiApi.cpp" />
@@ -517,9 +514,6 @@
     <ClInclude Include="Views\ControlViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Views\DatePickerViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
     <ClInclude Include="Views\DevMenu.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -542,9 +536,6 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\KeyboardEventHandler.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\PickerViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\PopupViewManager.h">
@@ -637,6 +628,9 @@
     <ClInclude Include="Utils\ValueUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\XamlIslandUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
     <ClInclude Include="XamlLoadState.h" />
     <ClInclude Include="XamlView.h" />
     <ClInclude Include="ReactHost\IReactInstance.h">
@@ -673,6 +667,9 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Utils\TextTransform.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\ShadowNodeTypeUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,7 +10,9 @@
 import React from 'react';
 import {
   /*Image,*/ StyleSheet,
+  Switch,
   Text,
+  TextInput,
   View,
   TextStyle,
   TouchableWithoutFeedback,
@@ -162,6 +164,66 @@ export class BackgroundColorDemo extends React.Component<{}> {
           </Text>{' '}
           attributes.
         </Text>
+      </View>
+    );
+  }
+}
+
+export class TextHighlightDemo extends React.Component<
+  {},
+  {search: string; toggled: boolean}
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = {search: '', toggled: false};
+  }
+
+  private getTextParts(text: string) {
+    if (this.state.search === '') {
+      return [text];
+    }
+
+    let parts = text.split(this.state.search);
+    for (let i = parts.length - 2; i >= 0; --i) {
+      parts = [
+        ...parts.slice(0, i + 1),
+        this.state.search,
+        ...parts.slice(i + 1),
+      ];
+    }
+
+    const highlight = {
+      backgroundColor: 'yellow',
+    };
+
+    return parts.map((part, i) => (
+      <Text key={i} style={i % 2 === 0 ? undefined : highlight}>
+        {part}
+      </Text>
+    ));
+  }
+
+  public render() {
+    const exampleText = 'The quick brown fox jumped over the lazy dog.';
+    const parts = this.getTextParts(exampleText);
+    const rootHighlight = {
+      backgroundColor: this.state.toggled ? 'cyan' : undefined,
+    };
+    return (
+      <View testID={'highlights'}>
+        <TextInput
+          placeholder="Enter search text"
+          value={this.state.search}
+          onChangeText={text => this.setState({search: text})}
+        />
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={{paddingRight: 5}}>Toggle highlight on all text:</Text>
+          <Switch
+            onValueChange={isOn => this.setState({toggled: isOn})}
+            value={this.state.toggled}
+          />
+        </View>
+        <Text style={rootHighlight}>{parts}</Text>
       </View>
     );
   }
@@ -791,6 +853,9 @@ export class TextExample extends React.Component<
               normal text.
             </Text>
           </View>
+        </RNTesterBlock>
+        <RNTesterBlock title="Dynamic backgroundColor">
+          <TextHighlightDemo />
         </RNTesterBlock>
       </RNTesterPage>
     );

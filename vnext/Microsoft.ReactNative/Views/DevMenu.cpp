@@ -15,6 +15,11 @@
 #include "winrt/Windows.UI.Core.h"
 #include "winrt/Windows.UI.Xaml.Interop.h"
 
+#include <winrt/Windows.ApplicationModel.DataTransfer.h>
+#include "HermesSamplingProfiler.h"
+
+using namespace winrt::Windows::ApplicationModel;
+
 namespace Microsoft::ReactNative {
 
 React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<DevMenuManager>>> DevMenuManagerProperty() noexcept {
@@ -106,6 +111,31 @@ void DevMenuManager::CreateAndShowUI() noexcept {
       Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ? L"Disable Fast Refresh"
                                                                         : L"Enable Fast Refresh");
 
+  if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
+    devMenu.SamplingProfilerText().Text(
+        !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"Start Hermes sampling profiler"
+                                                                     : L"Stop and copy trace path to clipboard");
+    devMenu.SamplingProfilerIcon().Glyph(
+        !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"\ue1e5" : L"\ue15b");
+
+    std::ostringstream os;
+    if (Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
+      os << "Hermes Sampling profiler is running.. !";
+    } else {
+      os << "Click to start.";
+    }
+
+    auto lastTraceFilePath = Microsoft::ReactNative::HermesSamplingProfiler::GetLastTraceFilePath();
+    if (!lastTraceFilePath.empty()) {
+      os << std::endl
+         << "Samples from last invocation are stored at " << lastTraceFilePath.c_str()
+         << "  (path copied to clipboard).";
+      os << std::endl << "Navigate to \"edge:\\tracing\" and load the trace file.";
+    }
+
+    devMenu.SamplingProfilerDescText().Text(winrt::to_hstring(os.str()));
+  }
+
   devMenu.DirectDebugText().Text(
       Mso::React::ReactOptions::UseDirectDebugger(m_context->Properties()) ? L"Disable Direct Debugging"
                                                                            : L"Enable Direct Debugging");
@@ -172,6 +202,31 @@ void DevMenuManager::CreateAndShowUI() noexcept {
           DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
         }
       });
+
+  if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
+    m_samplingProfilerRevoker = devMenu.SamplingProfiler().Click(
+        winrt::auto_revoke,
+        [wkThis = weak_from_this()](
+            auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept -> winrt::fire_and_forget {
+          if (auto strongThis = wkThis.lock()) {
+            strongThis->Hide();
+            if (!Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
+              Microsoft::ReactNative::HermesSamplingProfiler::Start();
+            } else {
+              auto traceFilePath = co_await Microsoft::ReactNative::HermesSamplingProfiler::Stop();
+              auto uiDispatcher =
+                  React::implementation::ReactDispatcher::GetUIDispatcher(strongThis->m_context->Properties());
+              uiDispatcher.Post([traceFilePath]() {
+                DataTransfer::DataPackage data;
+                data.SetText(winrt::to_hstring(traceFilePath));
+                DataTransfer::Clipboard::SetContentWithOptions(data, nullptr);
+              });
+            }
+          }
+        });
+  } else {
+    devMenu.SamplingProfiler().Visibility(xaml::Visibility::Collapsed);
+  }
 
   m_toggleInspectorRevoker = devMenu.Inspector().Click(
       winrt::auto_revoke,

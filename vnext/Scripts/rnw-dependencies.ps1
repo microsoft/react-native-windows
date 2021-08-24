@@ -331,6 +331,7 @@ $requirements = @(
         Tags = @('buildLab');
         Valid = (Test-Path "${env:ProgramFiles(x86)}\Windows Kits\10\Windows Performance Toolkit\wpr.exe");
         Install = { choco install -y windows-adk };
+        Optional = $true
     },
     @{
         Id=[CheckId]::RNWClone;

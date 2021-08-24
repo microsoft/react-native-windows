@@ -24,7 +24,7 @@ const {useState} = React;
 
 const TextInputSharedExamples = require('./TextInputSharedExamples');
 
-import type {RNTesterExampleModuleItem} from '../../types/RNTesterTypes';
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 
 class ToggleDefaultPaddingExample extends React.Component<
   $FlowFixMeProps,
@@ -270,6 +270,38 @@ exports.examples = ([
             selectionColor={'red'}
             style={styles.singleLine}
           />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Font Weight',
+    render: function(): React.Node {
+      return (
+        <View>
+          <TextInput
+            defaultValue="Font Weight (default)"
+            style={[styles.singleLine]}
+          />
+          {[
+            'normal',
+            'bold',
+            '900',
+            '800',
+            '700',
+            '600',
+            '500',
+            '400',
+            '300',
+            '200',
+            '100',
+          ].map(fontWeight => (
+            <TextInput
+              defaultValue={`Font Weight (${fontWeight})`}
+              key={fontWeight}
+              style={[styles.singleLine, {fontWeight}]}
+            />
+          ))}
         </View>
       );
     },
@@ -543,4 +575,4 @@ exports.examples = ([
     },
   },
   // Windows]
-]: Array<RNTesterExampleModuleItem>);
+]: Array<RNTesterModuleExample>);

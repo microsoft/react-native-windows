@@ -13,6 +13,7 @@ parameters:
   buildConfiguration: Debug
   msbuildArguments: ''
   multicoreBuild: false
+  warnAsError: true
 
   # Visual Studio Installer
   vsComponents: ''
@@ -22,7 +23,14 @@ parameters:
 steps:
   - powershell: |
       Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.buildPlatform }}\${{ parameters.buildConfiguration }}\BuildLogs"
-    displayName: Set Log directory
+      Write-Host "##vso[task.setvariable variable=MsBuildWarnAsErrorArgument]/warnaserror"
+    displayName: Set Log directory and warn as error
+
+  - powershell: |
+      Write-Host "##vso[task.setvariable variable=MsBuildWarnAsErrorArgument]"
+    condition: not(eq('${{parameters.warnAsError}}', 'true'))
+    displayName: Disable WarnAsError
+
 
   - template: prepare-env.yml
     parameters:
@@ -68,6 +76,7 @@ steps:
         /flp1:errorsonly;logfile=$(BuildLogDirectory)\MsBuild.err
         /flp2:warningsonly;logfile=$(BuildLogDirectory)\MsBuild.wrn
         /flp3:verbosity=diagnostic;logfile=$(BuildLogDirectory)\MsBuild.log
+        $(MsBuildWarnAsErrorArgument)
         ${{parameters.msbuildArguments}}
 
   - template: upload-build-logs.yml
@@ -75,9 +84,9 @@ steps:
       buildLogDirectory: $(BuildLogDirectory)
 
   - powershell: |
-        $winmd2md_url = "https://github.com/asklar/winmd2md/releases/download/v0.1.13/winmd2md.exe"
-        Invoke-WebRequest -UseBasicParsing $winmd2md_url -OutFile $env:TEMP\winmd2md.exe
-        & $env:TEMP\winmd2md.exe /experimental /outputDirectory vnext\target\winmd2md vnext\target\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.winmd
+      $winmd2md_url = "https://github.com/asklar/winmd2md/releases/download/v0.1.13/winmd2md.exe"
+      Invoke-WebRequest -UseBasicParsing $winmd2md_url -OutFile $env:TEMP\winmd2md.exe
+      & $env:TEMP\winmd2md.exe /experimental /outputDirectory vnext\target\winmd2md vnext\target\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.winmd
     displayName: "Generate WinRT API docs"
     condition: and ( eq('${{parameters.buildConfiguration}}', 'Debug'), eq('${{parameters.buildPlatform}}', 'x86') )
 

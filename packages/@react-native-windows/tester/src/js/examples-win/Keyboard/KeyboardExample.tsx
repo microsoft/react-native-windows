@@ -6,7 +6,7 @@
 
 import React from 'react';
 import {Text, TouchableHighlight, View, ViewStyle} from 'react-native';
-import {Picker} from 'react-native-windows';
+import {Picker} from '@react-native-picker/picker';
 
 class TabStopExample extends React.Component {
   public render() {

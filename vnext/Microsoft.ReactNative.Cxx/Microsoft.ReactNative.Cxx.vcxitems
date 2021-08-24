@@ -101,15 +101,19 @@
     -->
     <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

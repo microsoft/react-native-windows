@@ -54,16 +54,20 @@ void AnimationDriver::StartAnimation() {
   }
   scopedBatch.End();
 
-  m_scopedBatchCompletedToken = scopedBatch.Completed([&](auto sender, auto) {
-    DoCallback(true);
-    if (auto manager = m_manager.lock()) {
-      if (auto const animatedValue = manager->GetValueAnimatedNode(m_animatedValueTag)) {
-        animatedValue->RemoveActiveAnimation(m_id);
-        animatedValue->FlattenOffset();
-      }
-      manager->RemoveActiveAnimation(m_id);
-    }
-  });
+  m_scopedBatchCompletedToken = scopedBatch.Completed(
+      [weakSelf = weak_from_this(), weakManager = m_manager, id = m_id, tag = m_animatedValueTag](auto sender, auto) {
+        if (const auto strongSelf = weakSelf.lock()) {
+          strongSelf->DoCallback(true);
+        }
+
+        if (auto manager = weakManager.lock()) {
+          if (auto const animatedValue = manager->GetValueAnimatedNode(tag)) {
+            animatedValue->RemoveActiveAnimation(id);
+            animatedValue->FlattenOffset();
+          }
+          manager->RemoveActiveAnimation(id);
+        }
+      });
 
   m_animation = animation;
   m_scopedBatch = scopedBatch;

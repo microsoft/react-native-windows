@@ -1,8 +1,162 @@
 # Change Log - node-rnw-rpc
 
-This log was last generated on Wed, 21 Jul 2021 05:06:26 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Aug 2021 05:10:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.13
+
+Mon, 23 Aug 2021 05:10:28 GMT
+
+### Patches
+
+- Integrate 7/7 Nightly RN Build (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.364 (ngerlem@microsoft.com)
+
+## 1.0.13-0
+
+Sat, 21 Aug 2021 05:09:03 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.363 (aschultz@microsoft.com)
+
+## 1.0.12
+
+Fri, 20 Aug 2021 05:05:48 GMT
+
+### Patches
+
+- Integrate 7/7 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/30 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 6/23 Nightly RN Build (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.362 (ngerlem@microsoft.com)
+
+## 1.0.12-17
+
+Wed, 18 Aug 2021 05:06:18 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.361 (ngerlem@microsoft.com)
+
+## 1.0.12-16
+
+Tue, 17 Aug 2021 05:09:46 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.360 (jthysell@microsoft.com)
+
+## 1.0.12-15
+
+Sat, 14 Aug 2021 05:08:23 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.359 (erozell@outlook.com)
+
+## 1.0.12-14
+
+Wed, 11 Aug 2021 05:09:13 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.358 (erozell@outlook.com)
+
+## 1.0.12-13
+
+Tue, 10 Aug 2021 05:11:09 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.357 (erozell@outlook.com)
+
+## 1.0.12-12
+
+Sun, 08 Aug 2021 05:06:42 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.356 (erozell@outlook.com)
+
+## 1.0.12-11
+
+Sat, 07 Aug 2021 05:06:10 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.355 (erozell@outlook.com)
+
+## 1.0.12-10
+
+Fri, 06 Aug 2021 05:09:11 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.354 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.12-9
+
+Thu, 05 Aug 2021 05:07:20 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.353 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.12-8
+
+Wed, 04 Aug 2021 05:05:41 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.352 (agnel@microsoft.com)
+
+## 1.0.12-7
+
+Tue, 03 Aug 2021 05:10:45 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.351 (erozell@outlook.com)
+
+## 1.0.12-6
+
+Sun, 01 Aug 2021 05:08:39 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.350 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.12-5
+
+Sun, 25 Jul 2021 05:09:20 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.349 (ngerlem@microsoft.com)
+
+## 1.0.12-4
+
+Fri, 23 Jul 2021 05:08:40 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.348 (dannyvv@microsoft.com)
+
+## 1.0.12-3
+
+Thu, 22 Jul 2021 05:05:25 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.347 (ngerlem@microsoft.com)
 
 ## 1.0.12-2
 

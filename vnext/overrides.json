@@ -8,13 +8,13 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-386dbd943",
+  "baseVersion": "0.0.0-f592ad050",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a5b0a0d2669d5d35a548c3990577a2e9c5d861b4"
+      "baseHash": "66fa79a21dc9b1eb380869311df826df55235ace"
     },
     {
       "type": "patch",
@@ -39,13 +39,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManagerBinding.h",
-      "baseFile": "ReactCommon/react/renderer/uimanager/UIManagerBinding.h",
-      "baseHash": "db707f2820a60006ef33c93fa8655baa5f99e975",
-      "issue": 1
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseHash": "7fb642367afa73af956c2d8f918826c4a859fa89",
@@ -55,7 +48,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "73733ea2ee0afadd1d153c05030374f2bc492624",
+      "baseHash": "cd5c3d228bdcb63a750ba83fb3406ec18245760d",
       "issue": 4054
     },
     {
@@ -83,7 +76,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "c7e80678448dd6d518b6ed47594775207b285610"
+      "baseHash": "1bef57931e96344fa3b9b2e67ea70f6d6647cd31"
     },
     {
       "type": "platform",
@@ -143,21 +136,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
-      "baseHash": "48a11d8a7d56c3c33d8e72d735e6f1bf92c6ff3e"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/Components/DatePicker/DatePicker.tsx"
+      "baseHash": "36af83fdc0ec38699dc14f0e6695d6844bdb5860"
     },
     {
       "type": "copy",
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.windows.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
       "baseHash": "a9a4a6c92de922a11f8b81642b1bf1270d0b7b96"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/Components/DatePicker/DatePickerProps.ts"
     },
     {
       "type": "derived",
@@ -200,36 +185,6 @@
       "file": "src/Libraries/Components/MaskedView/MaskedViewIOS.windows.js",
       "baseFile": "Libraries/Components/MaskedView/MaskedViewIOS.android.js",
       "baseHash": "0b409391c852a1001cee74a84414a13c4fe88f8b"
-    },
-    {
-      "type": "patch",
-      "file": "src/Libraries/Components/Picker/Picker.windows.js",
-      "baseFile": "Libraries/Components/Picker/Picker.js",
-      "baseHash": "900e5f4d60baba03691b5c8601e4d960f9cb34d9",
-      "issue": 4611
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/Picker/PickerAndroid.windows.js",
-      "baseFile": "Libraries/Components/Picker/PickerAndroid.ios.js",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/Picker/PickerIOS.windows.js",
-      "baseFile": "Libraries/Components/Picker/PickerIOS.android.js",
-      "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/Components/Picker/PickerProps.ts"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/Picker/PickerWindows.tsx",
-      "baseFile": "Libraries/Components/Picker/PickerIOS.ios.js",
-      "baseHash": "b4d55736a8e395c5418c2de2dcded7bb77799997",
-      "issue": 4611
     },
     {
       "type": "platform",
@@ -279,13 +234,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "5eb78ac95aeaa6ea8c5128050a2e908759af6aff"
+      "baseHash": "88931b189b9a91bbdbbcff7c7728ed4763b77041"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "9b941d27fadc82ac74153cd52c08080b0b1c7c8f"
+      "baseHash": "c2797c00e77fa75b029851de14ce94c00bef7683"
     },
     {
       "type": "platform",
@@ -307,7 +262,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "f46b26885fc37d6f8c5aa9d298ffd6828efc0921"
+      "baseHash": "229951b3db97dff217d0ad3ff7066b23ae0354e3"
     },
     {
       "type": "patch",
@@ -331,7 +286,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "094dff18be0d1ae4af56cb826c193cf113c2902e"
+      "baseHash": "2f0914e8109babafd4694f3f13fb29d1eeb227fe"
     },
     {
       "type": "patch",
@@ -348,17 +303,29 @@
       "file": "src/Libraries/Components/View/ViewWindowsProps.ts"
     },
     {
+      "type": "copy",
+      "file": "src/Libraries/DeprecatedPropTypes/DeprecatedImagePropType.windows.js",
+      "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedImagePropType.ios.js",
+      "baseHash": "ae3ac9add2e9ac83b7b538f82b57fb3f8fdd9526"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.windows.js",
       "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js",
-      "baseHash": "4feb9470b41bf6bc9b492c5f6f3ff75f872e4668"
+      "baseHash": "ee2ba1c2a5bbf814c174e041c95d47c77b1fbde1"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "c20b0134e74a8e8d69d0b2694b4296fe2bf69d3f",
+      "baseHash": "e259481373eaf9acad79087e1fdd3c0e27e25ee5",
       "issue": 4590
+    },
+    {
+      "type": "copy",
+      "file": "src/Libraries/Lists/__tests__/CellRenderMask-test.js",
+      "baseFile": "Libraries/Lists/__tests__/CellRenderMask-test.js",
+      "baseHash": "9b194f61db28366f5fb490b033d940636a9c7bb2"
     },
     {
       "type": "copy",
@@ -385,10 +352,10 @@
       "baseHash": "f23a66cfc475ee1e2eda1065e56e05e547b7030e"
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "fd25fc611f8da21b93e7f8750d8f2fc8273a4a52"
+      "baseHash": "ee8c3fce6e137ad7d7dbcb7435cd3396bfe48440"
     },
     {
       "type": "copy",

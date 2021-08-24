@@ -1,6 +1,6 @@
 module.exports = {
+  preset: '@rnx-kit/jest-preset',
   verbose: true,
-  resolver: './jest-resolver.js',
   snapshotResolver: './jest-snapshot-resolver.js',
   transform: {
     '^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$':
@@ -15,10 +15,6 @@ module.exports = {
     // Only run the version of the tests that are part of the merged source output
     'src',
   ],
-  haste: {
-    defaultPlatform: 'win32',
-    platforms: ['win32']
-  },
   unmockedModulePathPatterns: [
     'react',
     'Libraries/Renderer',
