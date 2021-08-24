@@ -9534,10 +9534,10 @@ react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-native-tscodegen@0.68.1:
-  version "0.68.1"
-  resolved "https://registry.yarnpkg.com/react-native-tscodegen/-/react-native-tscodegen-0.68.1.tgz#e3a1fcc0d4578aa9dc7393bcbc002ade793ae657"
-  integrity sha512-v9vTI9rbhbIT+QEWWEWS5InDtcK6blF7uADRYIAmP6O9m/9u8WrAmm4uIeA48VRspCijkjuKzAvXxHkax7ginw==
+react-native-tscodegen@0.68.2:
+  version "0.68.2"
+  resolved "https://registry.yarnpkg.com/react-native-tscodegen/-/react-native-tscodegen-0.68.2.tgz#e6f5d1aa117f469b2a66382a1b47e26b08de4fe5"
+  integrity sha512-tijlvD+yLltzPXKuaf2BwVfhsK3AXAvLsDH2xFkR79Yylc55aOsf6jXyCvisCnBVZD0Fme8Ejr2j76YV7jvPBQ==
   dependencies:
     jscodeshift "0.6.4"
     nullthrows "1.1.1"
