@@ -163,26 +163,10 @@ const Text: React.AbstractComponent<
 
   const hasTextAncestor = useContext(TextAncestor);
 
-<<<<<<< Upstream
-  return hasTextAncestor ? (
-    <NativeVirtualText
-      {...restProps}
-      {...eventHandlersForText}
-      isHighlighted={isHighlighted}
-      numberOfLines={numberOfLines}
-      selectionColor={selectionColor}
-      style={style}
-      ref={forwardedRef}
-    />
-  ) : (
-    <TextAncestor.Provider value={true}>
-      <NativeText
-=======
   //let styleProps: ViewStyleProp = (props.style: any);
   if (hasTextAncestor) {
     return (
       <NativeVirtualText
->>>>>>> Override
         {...restProps}
         {...eventHandlersForText}
         isHighlighted={isHighlighted}
