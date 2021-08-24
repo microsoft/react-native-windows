@@ -6,6 +6,7 @@
 #include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
+#include <Utils/ShadowNodeTypeUtils.h>
 #include <Views/TextViewManager.h>
 #include <Views/VirtualTextViewManager.h>
 
@@ -16,10 +17,10 @@ using namespace xaml::Documents;
 } // namespace winrt
 
 namespace Microsoft::ReactNative {
-void TextPropertyChangedParentVisitor::VisitExtensionText(ShadowNodeBase *node) {
-  // Update nested flag for fast text updates
-  m_isNested = true;
-  Super::VisitExtensionText(node);
+void TextPropertyChangedParentVisitor::VisitCore(ShadowNodeBase *node) {
+  // Update nested flag fast text updates
+  m_isNested = !IsRawTextShadowNode(node);
+  Super::VisitCore(node);
 }
 
 void TextPropertyChangedParentVisitor::VisitText(ShadowNodeBase *node) {
@@ -54,14 +55,9 @@ void TextPropertyChangedParentVisitor::VisitText(ShadowNodeBase *node) {
   if (isTextUpdate || isHighlightAdded || isHighlightRemoved) {
     TextViewManager::UpdateTextHighlighters(node, isHighlightAdded);
   }
-
-  Super::VisitText(node);
 }
 
 void TextPropertyChangedParentVisitor::VisitVirtualText(ShadowNodeBase *node) {
-  // Update nested flag for fast text updates
-  m_isNested = true;
-
   // Update descendant text highlight flag
   if (HasPropertyChangeType(PropertyChangeType::AddHighlight)) {
     static_cast<VirtualTextShadowNode *>(node)->hasDescendantTextHighlighter = true;

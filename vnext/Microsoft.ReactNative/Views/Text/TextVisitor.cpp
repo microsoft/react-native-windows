@@ -18,30 +18,30 @@ void TextVisitor::Visit(ShadowNode *node) {
   } else if (IsRawTextShadowNode(baseNode)) {
     VisitRawText(baseNode);
   } else {
-    VisitExtensionText(baseNode);
+    VisitCore(baseNode);
   }
 }
 
-void TextVisitor::VisitExtensionText(ShadowNodeBase *node) {
-  VisitChildren(node);
+void TextVisitor::VisitCore(ShadowNodeBase *node) {
+  for (auto childTag : node->m_children) {
+    Visit(GetShadowNode(childTag));
+  }
+}
+
+void TextVisitor::VisitRawText(ShadowNodeBase *node) {
+  VisitCore(node);
 }
 
 void TextVisitor::VisitText(ShadowNodeBase *node) {
-  VisitChildren(node);
+  VisitCore(node);
 }
 
 void TextVisitor::VisitVirtualText(ShadowNodeBase *node) {
-  VisitChildren(node);
+  VisitCore(node);
 }
 
 ShadowNode *TextVisitor::GetShadowNode(int64_t tag) {
   return m_uiManager->getHost()->FindShadowNodeForTag(tag);
-}
-
-void TextVisitor::VisitChildren(ShadowNodeBase *node) {
-  for (auto childTag : node->m_children) {
-    Visit(GetShadowNode(childTag));
-  }
 }
 
 std::shared_ptr<NativeUIManager> TextVisitor::EnsureNativeUIManager(ShadowNode *node) {

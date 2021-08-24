@@ -24,7 +24,7 @@ class TextPropertyChangedParentVisitor : public TextParentVisitor {
   TextPropertyChangedParentVisitor(PropertyChangeType type) : m_propertyChangeType{type} {}
 
  protected:
-  void VisitExtensionText(ShadowNodeBase *node) override;
+  void VisitCore(ShadowNodeBase *node) override;
 
   void VisitText(ShadowNodeBase *node) override;
 
