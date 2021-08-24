@@ -110,7 +110,7 @@ shared_ptr<Runtime> NapiJsiV8RuntimeHolder::getRuntime() noexcept /*override*/
 
   // V8 NapiJsiRuntime is not known to be thread safe.
   if (m_ownThreadId != std::this_thread::get_id())
-    std::terminate();
+    __fastfail(FAST_FAIL_INVALID_THREAD);
 
   return m_runtime;
 }

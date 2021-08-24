@@ -31,9 +31,9 @@ enum class JSIEngineOverride : int32_t {
   Hermes = 3, // Use the JSIExecutorFactory with Hermes
   V8 = 4, // Use the JSIExecutorFactory with V8
   V8Lite = 5, // Use the JSIExecutorFactory with V8Lite
-  V8NodeAapi = 6, // Use the JSIExecutorFactory with V8 via ABI-safe NAPI
+  V8NodeApi = 6, // Use the JSIExecutorFactory with V8 via ABI-safe NAPI
 
-  Last = V8NodeAapi
+  Last = V8NodeApi
 };
 
 struct DevSettings {

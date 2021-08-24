@@ -47,10 +47,12 @@
 
 #if defined(INCLUDE_HERMES)
 #include <hermes/BytecodeVersion.h>
+
 #include "HermesRuntimeHolder.h"
 #endif
 #if defined(USE_V8)
 #include <JSI/NapiJsiV8RuntimeHolder.h>
+
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
 #endif
@@ -389,21 +391,30 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder =
               std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
           break;
-        case JSIEngineOverride::V8NodeAapi: {
+        case JSIEngineOverride::V8NodeApi: {
 #if defined(USE_V8)
-          std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
+          std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
 
           char tempPath[MAX_PATH];
           if (GetTempPathA(MAX_PATH, tempPath)) {
             preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
           }
 
+          if (!preparedScriptStore) {
+            if (m_devSettings->errorCallback)
+              m_devSettings->errorCallback(
+                  std::string{"Could not initialize prepared script store with path ["} + tempPath + "]");
+
+            break;
+          }
+
           m_devSettings->jsiRuntimeHolder = make_shared<NapiJsiV8RuntimeHolder>(
               m_devSettings, m_jsThread, nullptr /*scriptStore*/, std::move(preparedScriptStore));
-
           break;
 #else
-          assert(false); // V8 is not available in this build, fallthrough
+          if (m_devSettings->errorCallback)
+            m_devSettings->errorCallback("JSI/V8/NAPI engine is not available in this build");
+          assert(false);
           [[fallthrough]];
 #endif
         }
