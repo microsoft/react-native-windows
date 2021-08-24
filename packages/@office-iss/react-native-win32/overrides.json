@@ -6,13 +6,13 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-4ad4426da",
+  "baseVersion": "0.0.0-ff9c8cdac",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "651f88c4a4df44b566cc68859b2923ccb4a59070"
+      "baseHash": "6b1110a5df0c1d53eb45706690c876a41e7e1ce7"
     },
     {
       "type": "derived",

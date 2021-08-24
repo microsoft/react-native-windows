@@ -12,14 +12,14 @@
   },
   "dependencies": {
     "react": "17.0.2",
-    "react-native": "0.0.0-4ad4426da",
-    "react-native-windows": "0.0.0-canary.363"
+    "react-native": "0.0.0-ff9c8cdac",
+    "react-native-windows": "0.0.0-canary.364"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
     "@babel/runtime": "^7.8.4",
     "@react-native-windows/codegen": "0.0.0-canary.10",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.3",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.4",
     "@rnw-scripts/eslint-config": "1.1.7",
     "@rnw-scripts/just-task": "2.2.0",
     "@types/node": "^14.14.22",

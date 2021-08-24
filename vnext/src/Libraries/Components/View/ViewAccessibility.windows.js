@@ -77,8 +77,8 @@ export type AccessibilityRole =
   | 'tab'
   | 'tablist'
   | 'timer'
+  | 'list'
   | 'toolbar'
-  | 'list' // RNW-only
   | 'listitem'; // RNW-only
 
 // the info associated with an accessibility action

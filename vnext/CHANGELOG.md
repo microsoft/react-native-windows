@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 21 Aug 2021 05:09:03 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Aug 2021 05:10:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.364
+
+Mon, 23 Aug 2021 05:10:28 GMT
+
+### Changes
+
+- Integrate 7/7 Nightly RN Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.363
 
