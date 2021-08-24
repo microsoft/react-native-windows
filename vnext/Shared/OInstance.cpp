@@ -395,15 +395,15 @@ InstanceImpl::InstanceImpl(
 #if defined(USE_V8)
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
 
-          char tempPath[MAX_PATH];
-          if (GetTempPathA(MAX_PATH, tempPath)) {
-            preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
+          wchar_t tempPath[MAX_PATH];
+          if (GetTempPathW(MAX_PATH, tempPath)) {
+            preparedScriptStore =
+                std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
           }
 
           if (!preparedScriptStore) {
             if (m_devSettings->errorCallback)
-              m_devSettings->errorCallback(
-                  std::string{"Could not initialize prepared script store with path ["} + tempPath + "]");
+              m_devSettings->errorCallback("Could not initialize prepared script store");
 
             break;
           }
