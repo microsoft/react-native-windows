@@ -9534,14 +9534,14 @@ react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-native-tscodegen@0.66.1:
-  version "0.66.1"
-  resolved "https://registry.yarnpkg.com/react-native-tscodegen/-/react-native-tscodegen-0.66.1.tgz#4686d197e2207c88577c2b1f452f513bd690483d"
-  integrity sha512-4MBeKWq6xN576n47sCT5ZDfJx7hloJ24oesRCIGoFvlPYQnMa4MImdVrBRL4e+qhARDgoUDh/ko0HKJ0VwZNZQ==
+react-native-tscodegen@0.68.1:
+  version "0.68.1"
+  resolved "https://registry.yarnpkg.com/react-native-tscodegen/-/react-native-tscodegen-0.68.1.tgz#e3a1fcc0d4578aa9dc7393bcbc002ade793ae657"
+  integrity sha512-v9vTI9rbhbIT+QEWWEWS5InDtcK6blF7uADRYIAmP6O9m/9u8WrAmm4uIeA48VRspCijkjuKzAvXxHkax7ginw==
   dependencies:
     jscodeshift "0.6.4"
     nullthrows "1.1.1"
-    typescript "^3.5.3"
+    typescript "^4.1.5"
 
 react-native@0.0.0-386dbd943:
   version "0.0.0-386dbd943"
@@ -11204,10 +11204,15 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@^3.5.3, typescript@^3.8.3:
+typescript@^3.8.3:
   version "3.9.10"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.10.tgz#70f3910ac7a51ed6bef79da7800690b19bf778b8"
   integrity sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==
+
+typescript@^4.1.5:
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
+  integrity sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==
 
 typical@^4.0.0:
   version "4.0.0"
