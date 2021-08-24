@@ -396,7 +396,7 @@ InstanceImpl::InstanceImpl(
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
 
           wchar_t tempPath[MAX_PATH];
-          if (GetTempPathW(MAX_PATH, tempPath)) {
+          if (GetTempPath2W(std::size(tempPath), tempPath)) {
             preparedScriptStore =
                 std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
           }
