@@ -40,7 +40,7 @@ class NapiJsiV8RuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
   std::once_flag m_onceFlag;
   std::thread::id m_ownThreadId;
 
-  std::uint16_t m_debuggerPort;
+  uint16_t m_debuggerPort;
   bool m_useDirectDebugger{false};
   bool m_debuggerBreakOnNextLine{false};
   std::string m_debuggerRuntimeName;
