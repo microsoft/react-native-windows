@@ -45,10 +45,6 @@
 #include <safeint.h>
 #include "PackagerConnection.h"
 
-//TODO: review!
-// Windows API
-#include <Windows.h>
-
 #if defined(INCLUDE_HERMES)
 #include <hermes/BytecodeVersion.h>
 
@@ -400,7 +396,7 @@ InstanceImpl::InstanceImpl(
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
 
           wchar_t tempPath[MAX_PATH];
-          if (GetTempPath2W(std::size(tempPath), tempPath)) {
+          if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
             preparedScriptStore =
                 std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
           }
