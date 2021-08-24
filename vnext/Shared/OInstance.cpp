@@ -45,6 +45,10 @@
 #include <safeint.h>
 #include "PackagerConnection.h"
 
+//TODO: review!
+// Windows API
+#include <Windows.h>
+
 #if defined(INCLUDE_HERMES)
 #include <hermes/BytecodeVersion.h>
 

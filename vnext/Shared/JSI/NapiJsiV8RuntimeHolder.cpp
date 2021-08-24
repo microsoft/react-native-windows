@@ -86,14 +86,11 @@ void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
 
   settings.flags.enable_inspector = m_useDirectDebugger;
   settings.flags.wait_for_debugger = m_debuggerBreakOnNextLine;
-  // TODO: debuggerRuntimeName?
-
   settings.foreground_scheduler = &NapiJsiV8RuntimeHolder::ScheduleTaskCallback;
-  // TODO: scriptStore?
 
   napi_ext_create_env(&settings, &env);
   // Associate environment to holder.
-  napi_set_instance_data(env, this, nullptr, nullptr); // TODO: Finalize
+  napi_set_instance_data(env, this, nullptr /*finalize_cb*/, nullptr /*finalize_hint*/);
 
   m_runtime = MakeNapiJsiRuntime(env);
   m_ownThreadId = std::this_thread::get_id();
