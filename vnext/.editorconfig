@@ -16,8 +16,8 @@ end_of_line = crlf
 # Visual C++ Code Style settings
 cpp_generate_documentation_comments = doxygen_double_slash_exclamation
 
-# Xml project files
-[*.{config,csproj,njsproj,props,targets,vcxitems,vcxproj,vcxproj.filters}]
+# Visual Studio project files
+[*.{config,csproj,njsproj,props,targets,vcxitems,vcxitems.filters,vcxproj,vcxproj.filters}]
 end_of_line = crlf
 insert_final_newline = false
 

@@ -101,7 +101,6 @@
         WindowsApp_downlevel.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
-      <AdditionalDependencies>WindowsApp_downlevel.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>ChakraCore.Debugger.DLL;ChakraCore.dll;Chakra.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
