@@ -422,13 +422,21 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder =
               std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
           break;
-        case JSIEngineOverride::V8Napi: {
+        case JSIEngineOverride::V8NodeApi: {
 #if defined(USE_V8)
-          std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
+          std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
 
-          char tempPath[MAX_PATH];
-          if (GetTempPathA(MAX_PATH, tempPath)) {
-            preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
+          wchar_t tempPath[MAX_PATH];
+          if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
+            preparedScriptStore =
+                std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+          }
+
+          if (!preparedScriptStore) {
+            if (m_devSettings->errorCallback)
+              m_devSettings->errorCallback("Could not initialize prepared script store");
+
+            break;
           }
 
           m_devSettings->jsiRuntimeHolder = make_shared<NapiJsiV8RuntimeHolder>(
@@ -436,7 +444,9 @@ InstanceImpl::InstanceImpl(
 
           break;
 #else
-          assert(false); // V8 is not available in this build, fallthrough
+          if (m_devSettings->errorCallback)
+            m_devSettings->errorCallback("JSI/V8/NAPI engine is not available in this build");
+          assert(false);
           [[fallthrough]];
 #endif
         }

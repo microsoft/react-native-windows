@@ -67,33 +67,30 @@ NapiJsiV8RuntimeHolder::NapiJsiV8RuntimeHolder(
     shared_ptr<DevSettings> devSettings,
     shared_ptr<MessageQueueThread> jsQueue,
     unique_ptr<ScriptStore> &&scriptStore,
-    unique_ptr<PreparedScriptStore> &&preparedScritpStore) noexcept
+    unique_ptr<PreparedScriptStore> &&preparedScriptStore) noexcept
     : m_useDirectDebugger{devSettings->useDirectDebugger},
       m_debuggerBreakOnNextLine{devSettings->debuggerBreakOnNextLine},
       m_debuggerPort{devSettings->debuggerPort},
       m_debuggerRuntimeName{devSettings->debuggerRuntimeName},
-      m_jsQueue{std::move(jsQueue)},
+      m_jsQueue{jsQueue},
       m_scriptStore{std::move(scriptStore)},
-      m_preparedScriptStore{std::move(preparedScritpStore)} {}
+      m_preparedScriptStore{std::move(preparedScriptStore)} {}
 
 void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
   napi_env env{};
   napi_ext_env_settings settings{};
-  settings.this_size = sizeof(napi_ext_env_settings);
+  settings.this_size = sizeof(settings);
   settings.flags.enable_gc_api = true;
   if (m_debuggerPort > 0)
     settings.inspector_port = m_debuggerPort;
 
   settings.flags.enable_inspector = m_useDirectDebugger;
   settings.flags.wait_for_debugger = m_debuggerBreakOnNextLine;
-  // TODO: debuggerRuntimeName?
-
   settings.foreground_scheduler = &NapiJsiV8RuntimeHolder::ScheduleTaskCallback;
-  // TODO: scriptStore?
 
   napi_ext_create_env(&settings, &env);
   // Associate environment to holder.
-  napi_set_instance_data(env, this, nullptr, nullptr); // TODO: Finalize
+  napi_set_instance_data(env, this, nullptr /*finalize_cb*/, nullptr /*finalize_hint*/);
 
   m_runtime = MakeNapiJsiRuntime(env);
   m_ownThreadId = std::this_thread::get_id();
@@ -110,7 +107,7 @@ shared_ptr<Runtime> NapiJsiV8RuntimeHolder::getRuntime() noexcept /*override*/
 
   // V8 NapiJsiRuntime is not known to be thread safe.
   if (m_ownThreadId != std::this_thread::get_id())
-    std::terminate();
+    __fastfail(FAST_FAIL_INVALID_THREAD);
 
   return m_runtime;
 }
