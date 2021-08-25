@@ -17,6 +17,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_edgemode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NapiJsiV8RuntimeHolder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ByteArrayBuffer.h" />
@@ -25,6 +26,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NapiJsiV8RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ScriptStore.h" />
   </ItemGroup>
