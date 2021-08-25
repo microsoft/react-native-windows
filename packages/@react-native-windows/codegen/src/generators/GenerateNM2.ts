@@ -95,9 +95,7 @@ function translateParam(
       // (#6597)
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (name !== 'RootTag')
-        throw new Error(
-          `Unknown reserved function: ${name} in translateSpecFunctionParam`,
-        );
+        throw new Error(`Unknown reserved function: ${name} in translateParam`);
       return 'double';
     }
     case 'TypeAliasTypeAnnotation':
@@ -111,10 +109,12 @@ function translateParam(
 function translateSpecFunctionParam(param: NativeModuleParamShape): string {
   switch (param.typeAnnotation.type) {
     case 'NullableTypeAnnotation':
-      return `std::optional<${translateParam(
-        param.typeAnnotation.typeAnnotation,
-        true,
-      )}>`;
+      // TODO: should be
+      // return `std::optional<${translateParam(
+      //   param.typeAnnotation.typeAnnotation,
+      //   true,
+      // )}>`;
+      return translateParam(param.typeAnnotation.typeAnnotation, true);
     default:
       return translateParam(param.typeAnnotation, true);
   }
@@ -123,10 +123,12 @@ function translateSpecFunctionParam(param: NativeModuleParamShape): string {
 function translateFunctionParam(param: NativeModuleParamShape): string {
   switch (param.typeAnnotation.type) {
     case 'NullableTypeAnnotation':
-      return `std::optional<${translateParam(
-        param.typeAnnotation.typeAnnotation,
-        false,
-      )}>`;
+      // TODO: should be
+      // return `std::optional<${translateParam(
+      //   param.typeAnnotation.typeAnnotation,
+      //   false,
+      // )}>`;
+      return translateParam(param.typeAnnotation.typeAnnotation, false);
     default:
       return translateParam(param.typeAnnotation, false);
   }
@@ -166,7 +168,7 @@ function translateReturnType(
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (name !== 'RootTag')
         throw new Error(
-          `Unknown reserved function: ${name} in translateSpecReturnType`,
+          `Unknown reserved function: ${name} in translateReturnType`,
         );
       return 'double';
     }
@@ -174,11 +176,10 @@ function translateReturnType(
       // TODO: print the real name after processing NativeModuleSchema::aliases
       return 'React::JSValueObject';
     case 'NullableTypeAnnotation':
-      return `std::optional<${translateReturnType(type.typeAnnotation)}>`;
+      // TODO: should be `std::optional<${translateReturnType(type.typeAnnotation)}>`;
+      return translateReturnType(type.typeAnnotation);
     default:
-      throw new Error(
-        `Unhandled type in translateSpecReturnType: ${returnType}`,
-      );
+      throw new Error(`Unhandled type in translateReturnType: ${returnType}`);
   }
 }
 
@@ -306,22 +307,29 @@ export function createNM2Generator({namespace}: {namespace: string}) {
 
     for (const moduleName of Object.keys(schema.modules)) {
       const nativeModule = schema.modules[moduleName];
+      // from 0.65 facebook's react-native-codegen
+      // the module name has the Native prefix comparing to 0.63
+      // when reading files we provided
+      const preferredModuleName = moduleName.startsWith('Native')
+        ? moduleName.substr(6)
+        : moduleName;
+
       if (nativeModule.type === 'NativeModule') {
-        console.log(`Generating Native${moduleName}Spec.g.h`);
+        console.log(`Generating Native${preferredModuleName}Spec.g.h`);
         // TODO: Generate REACT_STRUCT(X) for nativeModule.aliases
         const properties = nativeModule.spec.properties;
         const traversedProperties = renderProperties(properties, false);
         const traversedPropertyTuples = renderProperties(properties, true);
 
         files.set(
-          `Native${moduleName}Spec.g.h`,
+          `Native${preferredModuleName}Spec.g.h`,
           moduleTemplate
             .replace(/::_MODULE_PROPERTIES_TUPLE_::/g, traversedPropertyTuples)
             .replace(
               /::_MODULE_PROPERTIES_SPEC_ERRORS_::/g,
               traversedProperties,
             )
-            .replace(/::_MODULE_NAME_::/g, moduleName)
+            .replace(/::_MODULE_NAME_::/g, preferredModuleName)
             .replace(/::_NAMESPACE_::/g, namespace),
         );
       }
