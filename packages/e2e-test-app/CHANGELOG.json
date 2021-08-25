@@ -2,6 +2,47 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Wed, 25 Aug 2021 05:07:15 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.5",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c10ab11a85107ed5b237af0cbce8703aa47d991f",
+            "package": "e2e-test-app"
+          },
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.365",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c10ab11a85107ed5b237af0cbce8703aa47d991f",
+            "package": "e2e-test-app"
+          },
+          {
+            "comment": "Bump jest-environment-winappdriver to v2.0.3",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c10ab11a85107ed5b237af0cbce8703aa47d991f",
+            "package": "e2e-test-app"
+          },
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c10ab11a85107ed5b237af0cbce8703aa47d991f",
+            "package": "e2e-test-app"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump node-rnw-rpc to v1.0.14",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c10ab11a85107ed5b237af0cbce8703aa47d991f",
+            "package": "e2e-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Aug 2021 05:10:28 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",

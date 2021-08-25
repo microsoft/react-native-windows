@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 25 Aug 2021 05:07:15 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.365",
+      "version": "0.0.0-canary.365",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 7/28 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c10ab11a85107ed5b237af0cbce8703aa47d991f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Set Shared WindowsTargetPlatformVersion in External Property Sheets",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3688c2ef922957f8a7453108f643b08ef2815b01",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Consume NAPI V8 JSI Runtime",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "cded0558d8bb66d249d47fc46b91c8515625b91f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Aug 2021 05:10:28 GMT",
       "tag": "react-native-windows_v0.0.0-canary.364",
       "version": "0.0.0-canary.364",
