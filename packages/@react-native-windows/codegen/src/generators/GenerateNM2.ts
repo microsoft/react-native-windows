@@ -52,8 +52,17 @@ struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 } // namespace ::_NAMESPACE_::
 `;
 
-function translateSpecFunctionParam(param: NativeModuleParamShape): string {
-  switch (param.typeAnnotation.type) {
+function decorateType(type: string, forSpec: boolean): string {
+  return forSpec ? type : `${type} &&`;
+}
+
+function translateParam(
+  param: NativeModuleParamTypeAnnotation,
+  forSpec: boolean,
+): string {
+  // avoid: Property 'type' does not exist on type 'never'
+  const paramType = param.type;
+  switch (param.type) {
     case 'StringTypeAnnotation':
       return 'std::string';
     case 'NumberTypeAnnotation':
@@ -66,19 +75,23 @@ function translateSpecFunctionParam(param: NativeModuleParamShape): string {
       return 'bool';
     case 'FunctionTypeAnnotation': {
       // TODO: type.params && type.returnTypeAnnotation
-      return 'Callback<React::JSValue>';
+      if (forSpec) {
+        return 'Callback<React::JSValue>';
+      } else {
+        return 'std::function<void(React::JSValue const &)> const &';
+      }
     }
     case 'ArrayTypeAnnotation':
       // TODO: type.elementType
-      return 'React::JSValueArray';
+      return decorateType('React::JSValueArray', forSpec);
     case 'GenericObjectTypeAnnotation':
-      return 'React::JSValueObject';
+      return decorateType('React::JSValueObject', forSpec);
     case 'ObjectTypeAnnotation':
-      // TODO we have more information here, and could create a more specific type
-      return 'React::JSValueObject';
+      // TODO: we have more information here, and could create a more specific type
+      return decorateType('React::JSValueObject', forSpec);
     case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
-      const name = param.typeAnnotation.name;
+      const name = param.name;
       // (#6597)
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (name !== 'RootTag')
@@ -87,17 +100,47 @@ function translateSpecFunctionParam(param: NativeModuleParamShape): string {
         );
       return 'double';
     }
-    // TODO: case 'TypeAliasTypeAnnotation':
-    // TODO: case 'NullableTypeAnnotation':
+    case 'TypeAliasTypeAnnotation':
+      // TODO: print the real name after processing NativeModuleSchema::aliases
+      return 'React::JSValueObject';
     default:
-      throw new Error(
-        `Unhandled type in translateSpecFunctionParam: ${param.typeAnnotation.type}`,
-      );
+      throw new Error(`Unhandled type in translateParam: ${paramType}`);
+  }
+}
+
+function translateSpecFunctionParam(param: NativeModuleParamShape): string {
+  switch (param.typeAnnotation.type) {
+    case 'NullableTypeAnnotation':
+      return `std::optional<${translateParam(
+        param.typeAnnotation.typeAnnotation,
+        true,
+      )}>`;
+    default:
+      return translateParam(param.typeAnnotation, true);
   }
 }
 
 function translateFunctionParam(param: NativeModuleParamShape): string {
   switch (param.typeAnnotation.type) {
+    case 'NullableTypeAnnotation':
+      return `std::optional<${translateParam(
+        param.typeAnnotation.typeAnnotation,
+        false,
+      )}>`;
+    default:
+      return translateParam(param.typeAnnotation, false);
+  }
+}
+
+function translateReturnType(
+  type: Nullable<NativeModuleReturnTypeAnnotation>,
+): string {
+  // avoid: Property 'type' does not exist on type 'never'
+  const returnType = type.type;
+  switch (type.type) {
+    case 'VoidTypeAnnotation':
+    case 'PromiseTypeAnnotation':
+      return 'void';
     case 'StringTypeAnnotation':
       return 'std::string';
     case 'NumberTypeAnnotation':
@@ -108,34 +151,33 @@ function translateFunctionParam(param: NativeModuleParamShape): string {
       return 'int';
     case 'BooleanTypeAnnotation':
       return 'bool';
-    case 'FunctionTypeAnnotation': {
-      // TODO: type.params && type.returnTypeAnnotation
-      return 'std::function<void(React::JSValue const &)> const &';
-    }
     case 'ArrayTypeAnnotation':
       // TODO: type.elementType
-      return 'React::JSValueArray &&';
+      return 'React::JSValueArray';
     case 'GenericObjectTypeAnnotation':
-      return 'React::JSValueObject &&';
+      return 'React::JSValueObject';
     case 'ObjectTypeAnnotation':
-      // TODO we have more information here, and could create a more specific type
-      return 'React::JSValueObject &&';
+      // TODO: we have more information here, and could create a more specific type
+      return 'React::JSValueObject';
     case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
-      const name = param.typeAnnotation.name;
+      const name = type.name;
       // (#6597)
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (name !== 'RootTag')
         throw new Error(
-          `Unknown reserved function: ${name} in translateFunctionParam`,
+          `Unknown reserved function: ${name} in translateSpecReturnType`,
         );
       return 'double';
     }
-    // TODO: case 'TypeAliasTypeAnnotation':
-    // TODO: case 'NullableTypeAnnotation':
+    case 'TypeAliasTypeAnnotation':
+      // TODO: print the real name after processing NativeModuleSchema::aliases
+      return 'React::JSValueObject';
+    case 'NullableTypeAnnotation':
+      return `std::optional<${translateReturnType(type.typeAnnotation)}>`;
     default:
       throw new Error(
-        `Unhandled type in translateFunctionParam: ${param.typeAnnotation.type} in translateFunctionParam`,
+        `Unhandled type in translateSpecReturnType: ${returnType}`,
       );
   }
 }
@@ -143,87 +185,13 @@ function translateFunctionParam(param: NativeModuleParamShape): string {
 function translateSpecReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,
 ) {
-  switch (type.type) {
-    case 'VoidTypeAnnotation':
-    case 'PromiseTypeAnnotation':
-      return 'void';
-    case 'StringTypeAnnotation':
-      return 'std::string';
-    case 'NumberTypeAnnotation':
-    case 'FloatTypeAnnotation':
-    case 'DoubleTypeAnnotation':
-      return 'double';
-    case 'Int32TypeAnnotation':
-      return 'int';
-    case 'BooleanTypeAnnotation':
-      return 'bool';
-    case 'ArrayTypeAnnotation':
-      // TODO: type.elementType
-      return 'React::JSValueArray';
-    case 'GenericObjectTypeAnnotation':
-      return 'React::JSValueObject';
-    case 'ReservedTypeAnnotation': {
-      // avoid: Property 'name' does not exist on type 'never'
-      const name = type.name;
-      // (#6597)
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (name !== 'RootTag')
-        throw new Error(
-          `Unknown reserved function: ${name} in translateSpecReturnType`,
-        );
-      return 'double';
-    }
-    // TODO: case 'ObjectTypeAnnotation':
-    // TODO: case 'TypeAliasTypeAnnotation':
-    // TODO: case 'NullableTypeAnnotation':
-    default:
-      throw new Error(
-        `Unhandled type in translateSpecReturnType: ${type.type}`,
-      );
-  }
+  return translateReturnType(type);
 }
 
 function translateImplReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,
 ) {
-  switch (type.type) {
-    case 'VoidTypeAnnotation':
-    case 'PromiseTypeAnnotation':
-      return 'void';
-    case 'StringTypeAnnotation':
-      return 'std::string';
-    case 'NumberTypeAnnotation':
-    case 'FloatTypeAnnotation':
-    case 'DoubleTypeAnnotation':
-      return 'double';
-    case 'Int32TypeAnnotation':
-      return 'int';
-    case 'BooleanTypeAnnotation':
-      return 'bool';
-    case 'ArrayTypeAnnotation':
-      // TODO: type.elementType
-      return 'React::JSValueArray';
-    case 'GenericObjectTypeAnnotation':
-      return 'React::JSValueObject';
-    case 'ReservedTypeAnnotation': {
-      // avoid: Property 'name' does not exist on type 'never'
-      const name = type.name;
-      // (#6597)
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (name !== 'RootTag')
-        throw new Error(
-          `Unknown reserved function: ${name} in translateSpecReturnType`,
-        );
-      return 'double';
-    }
-    // TODO: case 'ObjectTypeAnnotation':
-    // TODO: case 'TypeAliasTypeAnnotation':
-    // TODO: case 'NullableTypeAnnotation':
-    default:
-      throw new Error(
-        `Unhandled type in translateImplReturnType: ${type.type}`,
-      );
-  }
+  return translateReturnType(type);
 }
 
 function translateSpecArgs(params: ReadonlyArray<NativeModuleParamShape>) {
@@ -261,7 +229,7 @@ function getPossibleMethodSignatures(
     args.push('React::ReactPromise<React::JSValue> &&result');
   }
 
-  // TODO be much more exhastive on the possible method signatures that can be used..
+  // TODO: be much more exhastive on the possible method signatures that can be used..
   const sig = `REACT_${isMethodSync(funcType) ? 'SYNC_' : ''}METHOD(${
     prop.name
   }) ${translateImplReturnType(funcType.returnTypeAnnotation)} ${
