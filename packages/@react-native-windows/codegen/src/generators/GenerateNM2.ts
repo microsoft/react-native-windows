@@ -7,15 +7,19 @@
 'use strict';
 
 import {
+  NamedShape,
   NativeModuleFunctionTypeAnnotation,
-  NativeModuleMethodParamSchema,
-  NativeModulePropertySchema,
+  NativeModuleParamTypeAnnotation,
+  NativeModulePropertyShape,
   NativeModuleReturnTypeAnnotation,
   Nullable,
   SchemaType,
 } from 'react-native-tscodegen';
 
 type FilesOutput = Map<string, string>;
+type NativeModuleParamShape = NamedShape<
+  Nullable<NativeModuleParamTypeAnnotation>
+>;
 
 const moduleTemplate = `
 /*
@@ -48,9 +52,7 @@ struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 } // namespace ::_NAMESPACE_::
 `;
 
-function translateSpecFunctionParam(
-  param: NativeModuleMethodParamSchema,
-): string {
+function translateSpecFunctionParam(param: NativeModuleParamShape): string {
   switch (param.typeAnnotation.type) {
     case 'StringTypeAnnotation':
       return 'std::string';
@@ -74,7 +76,7 @@ function translateSpecFunctionParam(
     case 'ObjectTypeAnnotation':
       // TODO we have more information here, and could create a more specific type
       return 'React::JSValueObject';
-    case 'ReservedFunctionValueTypeAnnotation': {
+    case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
       const name = param.typeAnnotation.name;
       // (#6597)
@@ -94,7 +96,7 @@ function translateSpecFunctionParam(
   }
 }
 
-function translateFunctionParam(param: NativeModuleMethodParamSchema): string {
+function translateFunctionParam(param: NativeModuleParamShape): string {
   switch (param.typeAnnotation.type) {
     case 'StringTypeAnnotation':
       return 'std::string';
@@ -118,7 +120,7 @@ function translateFunctionParam(param: NativeModuleMethodParamSchema): string {
     case 'ObjectTypeAnnotation':
       // TODO we have more information here, and could create a more specific type
       return 'React::JSValueObject &&';
-    case 'ReservedFunctionValueTypeAnnotation': {
+    case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
       const name = param.typeAnnotation.name;
       // (#6597)
@@ -160,7 +162,7 @@ function translateSpecReturnType(
       return 'React::JSValueArray';
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValueObject';
-    case 'ReservedFunctionValueTypeAnnotation': {
+    case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
       const name = type.name;
       // (#6597)
@@ -203,7 +205,7 @@ function translateImplReturnType(
       return 'React::JSValueArray';
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValueObject';
-    case 'ReservedFunctionValueTypeAnnotation': {
+    case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
       const name = type.name;
       // (#6597)
@@ -224,16 +226,14 @@ function translateImplReturnType(
   }
 }
 
-function translateSpecArgs(
-  params: ReadonlyArray<NativeModuleMethodParamSchema>,
-) {
+function translateSpecArgs(params: ReadonlyArray<NativeModuleParamShape>) {
   return params.map(param => {
     const translatedParam = translateSpecFunctionParam(param);
     return `${translatedParam}`;
   });
 }
 
-function translateArgs(params: ReadonlyArray<NativeModuleMethodParamSchema>) {
+function translateArgs(params: ReadonlyArray<NativeModuleParamShape>) {
   return params.map(param => {
     const translatedParam = translateFunctionParam(param);
     return `${translatedParam} ${param.name}`;
@@ -252,7 +252,7 @@ function isMethodReturnPromise(funcType: NativeModuleFunctionTypeAnnotation) {
 }
 
 function getPossibleMethodSignatures(
-  prop: NativeModulePropertySchema,
+  prop: NativeModulePropertyShape,
   funcType: NativeModuleFunctionTypeAnnotation,
 ): string[] {
   const args = translateArgs(funcType.params);
@@ -278,7 +278,7 @@ function getPossibleMethodSignatures(
 }
 
 function translatePossibleMethodSignatures(
-  prop: NativeModulePropertySchema,
+  prop: NativeModulePropertyShape,
   funcType: NativeModuleFunctionTypeAnnotation,
 ): string {
   return getPossibleMethodSignatures(prop, funcType)
@@ -287,7 +287,7 @@ function translatePossibleMethodSignatures(
 }
 
 function renderProperties(
-  properties: ReadonlyArray<NativeModulePropertySchema>,
+  properties: ReadonlyArray<NativeModulePropertyShape>,
   tuple: boolean,
 ): string {
   // We skip the constants for now, since we dont have Spec file validation of them.
