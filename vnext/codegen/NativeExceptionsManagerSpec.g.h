@@ -39,8 +39,8 @@ struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "reportException",
-          "    REACT_METHOD(reportException) void reportException(React::JSValueObject && data) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(reportException) static void reportException(React::JSValueObject && data) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(reportException) void reportException(React::JSValueObject data) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(reportException) static void reportException(React::JSValueObject data) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "updateExceptionMessage",
