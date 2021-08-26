@@ -30,6 +30,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NapiJsiV8RuntimeHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraObjectRef.cpp">
@@ -39,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_edgemode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)NapiJsiV8RuntimeHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

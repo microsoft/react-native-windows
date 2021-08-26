@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "[0.63] Consume Node-Api V8 JSI Runtime",
+  "packageName": "@react-native-windows/cli",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2021-08-26T07:22:29.978Z"
+}

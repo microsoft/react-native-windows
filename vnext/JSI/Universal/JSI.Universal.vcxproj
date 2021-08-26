@@ -65,14 +65,18 @@
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <IncludePath>$(ReactNativeDir)\ReactCommon;$(JSI_SourcePath);$(JSI_Source);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Shared;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeDir)\ReactCommon;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(JSI_SourcePath);$(JSI_Source);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Shared;$(IncludePath)</IncludePath>
+    <!--
+      C4459 - declaration hides global declaration
+     -->
+    <ExtraWarningsToDisable>$(ExtraWarningsToDisable);4459</ExtraWarningsToDisable>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_EDGEMODE_JSRT;FOLLY_NO_CONFIG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!-- /Zc:strictStrings enforces the standard C++ const qualifications for
       string literals. It prevents code like
         wchar_t* str = L"hello";
@@ -94,6 +98,12 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" />
+    <Import Project="$(V8_Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets" Condition="Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets') AND '$(USE_V8)' == 'true'" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.72.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(V8_Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets') AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8_Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets'))" />
+  </Target>
   <Target Name="Deploy" />
 </Project>
