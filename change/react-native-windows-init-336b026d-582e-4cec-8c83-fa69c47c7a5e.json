@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fixes react-native-windows-init to put the version into package.json",
+  "packageName": "react-native-windows-init",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
