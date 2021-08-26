@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 26 Aug 2021 14:12:28 GMT",
+      "tag": "@react-native-windows/cli_v0.63.13",
+      "version": "0.63.13",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.63] Consume Node-Api V8 JSI Runtime",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "096eea67495b2f8957cc263af8e46f5cc53e31ff",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 May 2021 15:06:11 GMT",
       "tag": "@react-native-windows/cli_v0.63.12",
       "version": "0.63.12",

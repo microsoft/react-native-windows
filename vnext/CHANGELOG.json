@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 26 Aug 2021 14:12:28 GMT",
+      "tag": "react-native-windows_v0.63.37",
+      "version": "0.63.37",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.63] Consume Node-Api V8 JSI Runtime",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "096eea67495b2f8957cc263af8e46f5cc53e31ff",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Jun 2021 23:23:14 GMT",
       "tag": "react-native-windows_v0.63.36",
       "version": "0.63.36",
