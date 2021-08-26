@@ -3,7 +3,6 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A62D504A-16B8-41D2-9F19-E2E86019E5E4}</ProjectGuid>
     <ProjectName>JSI.Universal</ProjectName>
-    <USE_V8>true</USE_V8>
     <Keyword>StaticLibrary</Keyword>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
