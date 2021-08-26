@@ -472,6 +472,10 @@ function isProjectUsingYarn(cwd: string): boolean {
           }
         }
       }
+
+      if (rnwResolvedVersion) {
+        version = rnwResolvedVersion;
+      }
     }
 
     installReactNativeWindows(version, useDevMode);
