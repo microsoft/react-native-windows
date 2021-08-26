@@ -287,10 +287,6 @@ export async function copyProjectTemplateAndReplace(
       from: path.join(srcPath, projDir, 'MyApp.sln'),
       to: path.join(windowsDir, newProjectName + '.sln'),
     },
-    {
-      from: path.join(srcPath, projDir, 'NuGet.Config'),
-      to: path.join(windowsDir, 'NuGet.Config'),
-    },
   ];
 
   for (const mapping of commonMappings) {
