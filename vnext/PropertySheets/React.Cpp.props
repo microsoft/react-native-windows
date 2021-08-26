@@ -111,6 +111,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <ShowIncludes Condition="'$(ShowIncludes)' == 'true'">true</ShowIncludes>
     </ClCompile>
   </ItemDefinitionGroup>
 
