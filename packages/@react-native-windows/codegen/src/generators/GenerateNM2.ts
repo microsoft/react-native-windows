@@ -100,7 +100,7 @@ function translateParam(
     }
     case 'TypeAliasTypeAnnotation':
       // TODO: print the real name after processing NativeModuleSchema::aliases
-      return 'React::JSValueObject';
+      return decorateType('React::JSValueObject', forSpec);
     default:
       throw new Error(`Unhandled type in translateParam: ${paramType}`);
   }

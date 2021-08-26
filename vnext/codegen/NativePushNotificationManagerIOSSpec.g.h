@@ -72,13 +72,13 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
     REACT_SHOW_METHOD_SPEC_ERRORS(
           6,
           "presentLocalNotification",
-          "    REACT_METHOD(presentLocalNotification) void presentLocalNotification(React::JSValueObject notification) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(presentLocalNotification) static void presentLocalNotification(React::JSValueObject notification) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(presentLocalNotification) void presentLocalNotification(React::JSValueObject && notification) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(presentLocalNotification) static void presentLocalNotification(React::JSValueObject && notification) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           7,
           "scheduleLocalNotification",
-          "    REACT_METHOD(scheduleLocalNotification) void scheduleLocalNotification(React::JSValueObject notification) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(scheduleLocalNotification) static void scheduleLocalNotification(React::JSValueObject notification) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(scheduleLocalNotification) void scheduleLocalNotification(React::JSValueObject && notification) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(scheduleLocalNotification) static void scheduleLocalNotification(React::JSValueObject && notification) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           8,
           "cancelAllLocalNotifications",

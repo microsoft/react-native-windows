@@ -25,8 +25,8 @@ struct ImageEditorSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "cropImage",
-          "    REACT_METHOD(cropImage) void cropImage(std::string uri, React::JSValueObject cropData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(cropImage) static void cropImage(std::string uri, React::JSValueObject cropData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(cropImage) void cropImage(std::string uri, React::JSValueObject && cropData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(cropImage) static void cropImage(std::string uri, React::JSValueObject && cropData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n");
   }
 };
 

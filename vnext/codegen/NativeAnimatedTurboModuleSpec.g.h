@@ -136,8 +136,8 @@ struct AnimatedTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           18,
           "addAnimatedEventToView",
-          "    REACT_METHOD(addAnimatedEventToView) void addAnimatedEventToView(double viewTag, std::string eventName, React::JSValueObject eventMapping) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(addAnimatedEventToView) static void addAnimatedEventToView(double viewTag, std::string eventName, React::JSValueObject eventMapping) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(addAnimatedEventToView) void addAnimatedEventToView(double viewTag, std::string eventName, React::JSValueObject && eventMapping) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(addAnimatedEventToView) static void addAnimatedEventToView(double viewTag, std::string eventName, React::JSValueObject && eventMapping) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           19,
           "removeAnimatedEventFromView",
