@@ -34,6 +34,7 @@
 #include <SchedulerSettings.h>
 #endif
 #include <JSCallInvokerScheduler.h>
+#include "DynamicWriter.h"
 #include <QuirkSettings.h>
 #include <Shared/DevServerHelper.h>
 #include <Views/ViewManager.h>
@@ -922,7 +923,7 @@ bool ReactInstanceWin::IsLoaded() const noexcept {
 
 void ReactInstanceWin::AttachMeasuredRootView(
     facebook::react::IReactRootView *rootView,
-    folly::dynamic &&initialProps,
+    winrt::Microsoft::ReactNative::JSValueArgWriter initialProps,
     bool useFabric) noexcept {
 #ifndef CORE_ABI
   if (State() == ReactInstanceState::HasError)
@@ -937,7 +938,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
 
     auto rootTag = Microsoft::ReactNative::getNextRootViewTag();
     rootView->SetTag(rootTag);
-    uiManager->startSurface(rootView, rootTag, rootView->JSComponentName(), std::move(initialProps));
+    uiManager->startSurface(rootView, rootTag, rootView->JSComponentName(), DynamicWriter::ToDynamic(initialProps));
 
   } else
 #endif
@@ -952,7 +953,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
     std::string jsMainModuleName = rootView->JSComponentName();
     folly::dynamic params = folly::dynamic::array(
         std::move(jsMainModuleName),
-        folly::dynamic::object("initialProps", std::move(initialProps))("rootTag", rootTag)("fabric", false));
+        folly::dynamic::object("initialProps", DynamicWriter::ToDynamic(initialProps))("rootTag", rootTag)("fabric", false));
     CallJsFunction("AppRegistry", "runApplication", std::move(params));
   }
 #endif

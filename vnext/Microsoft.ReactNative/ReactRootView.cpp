@@ -67,7 +67,6 @@ ReactNative::JSValueArgWriter ReactRootView::InitialProps() noexcept {
 void ReactRootView::InitialProps(ReactNative::JSValueArgWriter const &value) noexcept {
   if (m_initialPropsWriter != value) {
     m_initialPropsWriter = value;
-    m_initialProps = DynamicWriter::ToDynamic(m_initialPropsWriter);
     ReloadView();
   }
 }
@@ -86,7 +85,7 @@ void ReactRootView::ReloadView() noexcept {
   if (m_reactNativeHost && !m_componentName.empty()) {
     Mso::React::ReactViewOptions viewOptions{};
     viewOptions.ComponentName = to_string(m_componentName);
-    viewOptions.InitialProps = m_initialProps;
+    viewOptions.InitialProps = m_initialPropsWriter;
     viewOptions.UseFabric = m_useFabric;
     if (auto reactViewHost = ReactViewHost()) {
       reactViewHost->ReloadViewInstanceWithOptions(std::move(viewOptions));
