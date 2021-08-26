@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 23 Aug 2021 15:10:07 GMT",
+      "tag": "react-native-windows_v0.64.15",
+      "version": "0.64.15",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Promote 0.64 to legacy",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4cb55d30bfde3295f24a9fd4d1ced65c40a1036c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Jul 2021 15:05:56 GMT",
       "tag": "react-native-windows_v0.64.14",
       "version": "0.64.14",
