@@ -11,7 +11,6 @@
 #include <Utils/Helpers.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include <winrt/Windows.UI.Core.h>
-#include "DynamicWriter.h"
 #include "ReactNativeHost.h"
 #include "ReactViewInstance.h"
 
