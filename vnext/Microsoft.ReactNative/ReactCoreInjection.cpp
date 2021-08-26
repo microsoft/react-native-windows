@@ -24,17 +24,17 @@ void ReactViewOptions::ComponentName(winrt::hstring value) noexcept {
 }
 
 ReactNative::JSValueArgWriter ReactViewOptions::InitialProps() noexcept {
-  return m_initalProps;
+  return m_initialProps;
 }
 
 void ReactViewOptions::InitialProps(ReactNative::JSValueArgWriter value) noexcept {
-  m_initalProps = value;
+  m_initialProps = value;
 }
 
 Mso::React::ReactViewOptions ReactViewOptions::CreateViewOptions() noexcept {
   Mso::React::ReactViewOptions viewOptions;
   viewOptions.ComponentName = winrt::to_string(m_componentName);
-  viewOptions.InitialProps = m_initalProps;
+  viewOptions.InitialProps = m_initialProps;
   return std::move(viewOptions);
 }
 
