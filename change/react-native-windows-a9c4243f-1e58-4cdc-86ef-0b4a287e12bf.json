@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Bump react-native-tscodegen to catch up react-native 0.65",
+  "packageName": "react-native-windows",
+  "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
