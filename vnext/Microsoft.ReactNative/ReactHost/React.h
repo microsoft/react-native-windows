@@ -86,7 +86,7 @@ struct IReactInstance : IUnknown {
 
   virtual void AttachMeasuredRootView(
       facebook::react::IReactRootView *rootView,
-      winrt::Microsoft::ReactNative::JSValueArgWriter initialProps,
+      const winrt::Microsoft::ReactNative::JSValueArgWriter &initialProps,
       bool useFabric) noexcept = 0;
   virtual void DetachRootView(facebook::react::IReactRootView *rootView, bool useFabric) noexcept = 0;
 };
