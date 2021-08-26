@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Pass JSValueArgWriter around instead of immediately coverting to dynamic",
+  "comment": "Pass JSValueArgWriter around instead of immediately converting to dynamic",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
