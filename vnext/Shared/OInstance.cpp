@@ -417,11 +417,6 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder =
               std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
           break;
-        case JSIEngineOverride::ChakraCore:
-        default: // TODO: Add other engines once supported
-          m_devSettings->jsiRuntimeHolder =
-              std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
-          break;
         case JSIEngineOverride::V8NodeApi: {
 #if defined(USE_V8)
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
@@ -450,6 +445,11 @@ InstanceImpl::InstanceImpl(
           [[fallthrough]];
 #endif
         }
+        case JSIEngineOverride::ChakraCore:
+        default: // TODO: Add other engines once supported
+          m_devSettings->jsiRuntimeHolder =
+              std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
+          break;
       }
       jsef = std::make_shared<OJSIExecutorFactory>(
           m_devSettings->jsiRuntimeHolder,
