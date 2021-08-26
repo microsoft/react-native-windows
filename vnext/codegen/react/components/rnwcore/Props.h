@@ -10,9 +10,9 @@
 #pragma once
 
 #include <cinttypes>
-#include <react/renderer/components/view/ViewProps.h>
-#include <react/renderer/graphics/Color.h>
-#include <react/renderer/imagemanager/primitives.h>
+#include <react/components/view/ViewProps.h>
+#include <react/graphics/Color.h>
+#include <react/imagemanager/primitives.h>
 #include <vector>
 
 namespace facebook {

@@ -236,11 +236,18 @@ function generate(
   ];
 
   componentGenerators.forEach(generator => {
-    normalizeFileMap(
-      generator(libraryName, schema, moduleSpecName),
-      componentOutputdir,
-      generatedFiles,
+    const generated: Map<string, string> = generator(
+      libraryName,
+      schema,
+      moduleSpecName,
     );
+    // TODO: need to create new "folder redirection files"
+    const fixed = new Map<string, string>();
+    for (const [fileName, contents] of generated) {
+      const updated = contents.replace(/<react\/renderer\//g, '<react/');
+      fixed.set(fileName, updated);
+    }
+    normalizeFileMap(fixed, componentOutputdir, generatedFiles);
   });
 
   if (test === true) {
