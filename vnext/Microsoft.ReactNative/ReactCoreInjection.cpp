@@ -115,7 +115,7 @@ struct ReactViewInstance : public Mso::UnknownObject<Mso::RefCountStrategy::Weak
 
       ReactNative::ReactViewOptions options;
       options.ComponentName(winrt::to_hstring(viewOptions.ComponentName));
-      // TODO add a value writer to ViewOptions, to allow the writer to pass through
+      options.InitialProps(viewOptions.InitialProps);
 
       rootControl.InitRootView(winrt::make<ReactContext>(std::move(context)), options);
     });
