@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Pass initial props through ReactViewHost for core",
+  "comment": "Pass JSValueArgWriter around instead of immediately converting to dynamic",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
