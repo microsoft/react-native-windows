@@ -4,7 +4,6 @@
 #include "ReactRootView.h"
 #include "ReactRootView.g.cpp"
 #include <UI.Xaml.Media.Media3D.h>
-#include "DynamicWriter.h"
 #include "ReactNativeHost.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -47,7 +46,6 @@ ReactNative::JSValueArgWriter ReactRootView::InitialProps() noexcept {
 void ReactRootView::InitialProps(ReactNative::JSValueArgWriter const &value) noexcept {
   if (m_initialPropsWriter != value) {
     m_initialPropsWriter = value;
-    m_initialProps = DynamicWriter::ToDynamic(m_initialPropsWriter);
     ReloadView();
   }
 }

@@ -9,7 +9,6 @@
 #include "ReactContext.h"
 #include "ReactInstanceWin.h"
 
-#include "DynamicWriter.h"
 #include "ReactNativeHost.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -35,7 +34,7 @@ void ReactViewOptions::InitialProps(ReactNative::JSValueArgWriter value) noexcep
 Mso::React::ReactViewOptions ReactViewOptions::CreateViewOptions() noexcept {
   Mso::React::ReactViewOptions viewOptions;
   viewOptions.ComponentName = winrt::to_string(m_componentName);
-  viewOptions.InitialProps = DynamicWriter::ToDynamic(m_initalProps);
+  viewOptions.InitialProps = m_initalProps;
   return std::move(viewOptions);
 }
 
@@ -116,7 +115,7 @@ struct ReactViewInstance : public Mso::UnknownObject<Mso::RefCountStrategy::Weak
 
       ReactNative::ReactViewOptions options;
       options.ComponentName(winrt::to_hstring(viewOptions.ComponentName));
-      // TODO add a value writer to ViewOptions, to allow the writer to pass through
+      options.InitialProps(viewOptions.InitialProps);
 
       rootControl.InitRootView(winrt::make<ReactContext>(std::move(context)), options);
     });
