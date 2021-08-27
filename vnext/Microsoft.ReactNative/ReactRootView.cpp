@@ -54,7 +54,7 @@ void ReactRootView::ReloadView() noexcept {
   if (m_reactNativeHost && !m_componentName.empty()) {
     Mso::React::ReactViewOptions viewOptions{};
     viewOptions.ComponentName = to_string(m_componentName);
-    viewOptions.InitialProps = m_initialProps;
+    viewOptions.InitialProps = m_initialPropsWriter;
     if (auto reactViewHost = m_rootControl->ReactViewHost()) {
       reactViewHost->ReloadViewInstanceWithOptions(std::move(viewOptions));
     } else {
