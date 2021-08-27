@@ -78,9 +78,6 @@ struct DevSettings {
 
   bool useFastRefresh{false};
 
-  // Enables ChakraCore console redirection to debugger
-  bool debuggerConsoleRedirection{false};
-
   /// Dispatcher for notifications about JS engine memory consumption.
   std::shared_ptr<MemoryTracker> memoryTracker;
 
