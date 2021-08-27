@@ -239,6 +239,14 @@ void ABIViewManager::OnPointerCanceled(const xaml::Input::PointerRoutedEventArgs
   }
 }
 
+void ABIViewManager::OnPointerCaptureLost(const xaml::Input::PointerRoutedEventArgs &args) {
+  if (m_viewManagerWithPointerEvents) {
+    m_viewManagerWithPointerEvents.OnPointerCaptureLost(args);
+  } else {
+    Super::OnPointerCaptureLost(args);
+  }
+}
+
 ::Microsoft::ReactNative::ShadowNode *ABIViewManager::createShadow() const {
   return new ABIShadowNode(
       m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout());

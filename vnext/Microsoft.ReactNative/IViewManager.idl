@@ -73,5 +73,6 @@ namespace Microsoft.ReactNative
     Boolean OnPointerMoved(XAML_NAMESPACE.Input.PointerRoutedEventArgs args);
     Boolean OnPointerReleased(XAML_NAMESPACE.Input.PointerRoutedEventArgs args);
     void OnPointerCanceled(XAML_NAMESPACE.Input.PointerRoutedEventArgs args);
+    void OnPointerCaptureLost(XAML_NAMESPACE.Input.PointerRoutedEventArgs args);
   };
 } // namespace Microsoft.ReactNative

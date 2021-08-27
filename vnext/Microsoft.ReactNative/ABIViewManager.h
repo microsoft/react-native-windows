@@ -69,6 +69,7 @@ class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewMana
   bool OnPointerMoved(const xaml::Input::PointerRoutedEventArgs &args) override;
   bool OnPointerReleased(const xaml::Input::PointerRoutedEventArgs &args) override;
   void OnPointerCanceled(const xaml::Input::PointerRoutedEventArgs &args) override;
+  void OnPointerCaptureLost(const xaml::Input::PointerRoutedEventArgs &args) override;
 
  protected:
   xaml::DependencyObject CreateViewCore(int64_t, const winrt::Microsoft::ReactNative::JSValueObject &props) override;
