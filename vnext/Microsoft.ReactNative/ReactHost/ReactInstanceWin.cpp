@@ -918,9 +918,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
   std::string jsMainModuleName = rootView->JSComponentName();
   folly::dynamic params = folly::dynamic::array(
       std::move(jsMainModuleName),
-      folly::dynamic::object(
-          "initialProps", DynamicWriter::ToDynamic(initialProps))(
-          "rootTag", rootTag));
+      folly::dynamic::object("initialProps", DynamicWriter::ToDynamic(initialProps))("rootTag", rootTag));
   CallJsFunction("AppRegistry", "runApplication", std::move(params));
 #endif
 }
