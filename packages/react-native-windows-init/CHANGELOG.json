@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 27 Aug 2021 05:06:34 GMT",
+      "tag": "react-native-windows-init_v1.1.62",
+      "version": "1.1.62",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixes react-native-windows-init to put the version into package.json",
+            "author": "jthysell@microsoft.com",
+            "commit": "efe51571375be91ba88abdc6b4e634b774f488b9",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Aug 2021 05:09:46 GMT",
       "tag": "react-native-windows-init_v1.1.61",
       "version": "1.1.61",
