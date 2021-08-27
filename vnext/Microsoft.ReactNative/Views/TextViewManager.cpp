@@ -325,6 +325,23 @@ YGMeasureFunc TextViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
 }
 
+XamlView TextViewManager::HitTest(const ShadowNodeBase *node, const winrt::Point &point) {
+  const auto textBlock = node->GetView().as<xaml::Controls::TextBlock>();
+  if (const auto uiManager = GetNativeUIManager(node->GetViewManager()->GetReactContext()).lock()) {
+    for (auto childTag : node->m_children) {
+      if (const auto childNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(childTag))) {
+        if (!IsRawTextShadowNode(childNode)) {
+          if (const auto targetView = childNode->GetViewManager()->HitTest(childNode, point)) {
+            return targetView;
+          }
+        }
+      }
+    }
+  }
+
+  return Super::HitTest(node, point);
+}
+
 void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node, PropertyChangeType propertyChangeType) {
   if (IsTextShadowNode(node)) {
     const auto textNode = static_cast<TextShadowNode *>(node);

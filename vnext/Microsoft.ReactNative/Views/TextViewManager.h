@@ -32,6 +32,8 @@ class TextViewManager : public FrameworkElementViewManager {
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
+  XamlView HitTest(const ShadowNodeBase *node, const winrt::Point &point) override;
+
   void OnDescendantTextPropertyChanged(
       ShadowNodeBase *node,
       PropertyChangeType propertyChangeType = PropertyChangeType::Text);

@@ -192,4 +192,18 @@ bool VirtualTextViewManager::RequiresYogaNode() const {
   return false;
 }
 
+XamlView VirtualTextViewManager::HitTest(const ShadowNodeBase *node, const winrt::Point &point) {
+  if (const auto uiManager = GetNativeUIManager(node->GetViewManager()->GetReactContext()).lock()) {
+    for (auto childTag : node->m_children) {
+      if (const auto childNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(childTag))) {
+        if (const auto targetView = childNode->GetViewManager()->HitTest(childNode, point)) {
+          return targetView.try_as<winrt::Run>() ? node->GetView() : targetView;
+        }
+      }
+    }
+  }
+
+  return nullptr;
+}
+
 } // namespace Microsoft::ReactNative

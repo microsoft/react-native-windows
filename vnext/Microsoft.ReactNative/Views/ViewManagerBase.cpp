@@ -364,6 +364,10 @@ bool ViewManagerBase::RequiresYogaNode() const {
   return true;
 }
 
+XamlView ViewManagerBase::HitTest(const ShadowNodeBase *node, const winrt::Point &point) {
+  return node->GetView();
+}
+
 bool ViewManagerBase::IsNativeControlWithSelfLayout() const {
   return GetYogaCustomMeasureFunc() != nullptr;
 }

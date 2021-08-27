@@ -46,6 +46,8 @@ class VirtualTextViewManager : public ViewManagerBase {
 
   bool RequiresYogaNode() const override;
 
+  XamlView HitTest(const ShadowNodeBase *node, const winrt::Point &point) override;
+
  protected:
   bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,

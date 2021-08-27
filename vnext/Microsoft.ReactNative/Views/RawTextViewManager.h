@@ -34,6 +34,8 @@ class RawTextViewManager : public ViewManagerBase {
       float height) override;
   bool RequiresYogaNode() const override;
 
+  XamlView HitTest(const ShadowNodeBase *node, const winrt::Point &point) override;
+
  protected:
   bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,

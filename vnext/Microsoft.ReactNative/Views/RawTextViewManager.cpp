@@ -114,4 +114,26 @@ bool RawTextViewManager::RequiresYogaNode() const {
   return false;
 }
 
+XamlView RawTextViewManager::HitTest(const ShadowNodeBase *node, const winrt::Point &point) {
+  const auto run = node->GetView().as<xaml::Documents::Run>();
+  const auto start = run.ContentStart();
+  const auto end = run.ContentEnd();
+
+  auto startRect = start.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
+  auto endRect = end.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
+
+  // Swap rectangles in RTL scenarios.
+  if (startRect.X > endRect.X) {
+    const auto tempRect = startRect;
+    startRect = endRect;
+    endRect = tempRect;
+  }
+
+  // Approximate the bounding rect (for now, don't account for text wrapping).
+  return (startRect.X <= point.X) && (endRect.X + endRect.Width >= point.X) && (startRect.Y <= point.Y) &&
+          (endRect.Y + endRect.Height >= point.Y)
+      ? nullptr
+      : run;
+}
+
 } // namespace Microsoft::ReactNative

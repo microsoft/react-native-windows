@@ -77,6 +77,9 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
       float height);
   virtual YGMeasureFunc GetYogaCustomMeasureFunc() const;
   virtual bool RequiresYogaNode() const;
+
+  virtual XamlView HitTest(const ShadowNodeBase *node, const winrt::Point &point);
+
   bool IsNativeControlWithSelfLayout() const;
 
   const Mso::React::IReactContext &GetReactContext() const {
