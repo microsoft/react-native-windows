@@ -104,6 +104,7 @@ class TouchEventHandler {
       const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
       const winrt::Point &pointerPos,
       bool &isHit);
+  bool NotifyParentViewManagers(int64_t tag, TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
 
   XamlView m_xamlView;
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
