@@ -1,8 +1,16 @@
 # Change Log - react-native-win32-tester
 
-This log was last generated on Mon, 12 Jul 2021 15:18:53 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Aug 2021 15:10:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Mon, 23 Aug 2021 15:10:07 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v0.4.3 (ngerlem@microsoft.com)
 
 ## 0.0.1
 

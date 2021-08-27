@@ -318,11 +318,11 @@ jobs:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
-          NoDeployOption:
+          DeployOption:
         X86Debug:
          BuildConfiguration: Debug
          BuildPlatform: x86
-         NoDeployOption:
+         DeployOption:
         #X86Release:
         #  BuildConfiguration: Release
         #  BuildPlatform: x86
@@ -332,7 +332,7 @@ jobs:
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
-          NoDeployOption: --no-deploy
+          DeployOption: --no-deploy
         #Arm64Debug:
         #  BuildConfiguration: Debug
         #  BuildPlatform: ARM64
@@ -359,19 +359,16 @@ jobs:
           verbosityRestore: Detailed # Options: quiet, normal, detailed
         condition: succeeded()
 
-      - task: CmdLine@2
-        displayName: run-windows (Debug)
-        inputs:
-          script: yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
+      - template: templates/run-windows-with-certificates.yml
+        parameters:
+          buildEnvironment: 'PullRequest'
+          encodedKey: sampleAppCPPEncodedKey
+          ${{ if eq(variables.BuildConfiguration, 'Release') }}:
+            buildConfiguration: Release
+          buildPlatform: $(BuildPlatform)
+          deployOption: $(DeployOption)
+          buildLogDirectory: $(BuildLogDirectory)
           workingDirectory: packages/microsoft-reactnative-sampleapps
-        condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'))
-
-      - task: CmdLine@2
-        displayName: run-windows (Release)
-        inputs:
-          script: yarn windows --no-packager --no-launch $(NoDeployOption) --arch $(BuildPlatform) --logging --buildLogDirectory $(BuildLogDirectory) --release --msbuildprops BaseIntDir=$(BaseIntDir)
-          workingDirectory: packages/microsoft-reactnative-sampleapps
-        condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'))
 
       - task: CmdLine@2
         displayName: Create SampleApp bundle

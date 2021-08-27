@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/find-repo-root",
-  "version": "0.64.0",
+  "version": "0.64.1",
   "license": "MIT",
   "scripts": {
     "build": "just-scripts build",
@@ -24,7 +24,7 @@
     "typescript": "^3.8.3"
   },
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.64-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",

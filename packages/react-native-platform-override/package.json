@@ -22,7 +22,7 @@
     "react-native-platform-override": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/package-utils": "0.64.0",
+    "@react-native-windows/package-utils": "0.64.1",
     "async": "^3.2.0",
     "chalk": "^4.1.0",
     "fp-ts": "^2.5.0",
