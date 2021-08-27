@@ -89,6 +89,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
     return false;
   }
   virtual void OnPointerCanceled(const xaml::Input::PointerRoutedEventArgs & /*args*/) {}
+  virtual void OnPointerCaptureLost(const xaml::Input::PointerRoutedEventArgs & /*args*/) {}
 
   const Mso::React::IReactContext &GetReactContext() const {
     return *m_context;
