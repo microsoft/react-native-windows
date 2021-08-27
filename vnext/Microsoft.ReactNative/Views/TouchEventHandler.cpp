@@ -134,7 +134,7 @@ void TouchEventHandler::OnPointerCanceled(
 void TouchEventHandler::OnPointerCaptureLost(
     const winrt::IInspectable & /*sender*/,
     const winrt::PointerRoutedEventArgs &args) {
-  OnPointerConcluded(TouchEventType::Cancel, args);
+  OnPointerConcluded(TouchEventType::CaptureLost, args);
 }
 
 void TouchEventHandler::OnPointerExited(
@@ -163,7 +163,7 @@ void TouchEventHandler::OnPointerMoved(
   auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
   if (optPointerIndex) {
     if (NotifyParentViewManagers(tag, TouchEventType::Move, args)) {
-      OnPointerConcluded(TouchEventType::Cancel, args);
+      m_xamlView.as<xaml::FrameworkElement>().ReleasePointerCapture(args.Pointer());
     } else {
       UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
       DispatchTouchEvent(TouchEventType::Move, *optPointerIndex);
@@ -476,6 +476,7 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
           emitter->onTouchEnd(te);
           break;
         case TouchEventType::Cancel:
+        case TouchEventType::CaptureLost:
           emitter->onTouchCancel(te);
           break;
       }
@@ -549,6 +550,7 @@ const wchar_t *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType
       eventName = L"topTouchMove";
       break;
     case TouchEventType::Cancel:
+    case TouchEventType::CaptureLost:
       eventName = L"topTouchCancel";
       break;
     default:
@@ -680,6 +682,9 @@ bool TouchEventHandler::NotifyParentViewManagers(
           break;
         case TouchEventType::Cancel:
           viewManager->OnPointerCanceled(args);
+          break;
+        case TouchEventType::CaptureLost:
+          viewManager->OnPointerCaptureLost(args);
           break;
       }
       shadowNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(shadowNode->m_parent));
