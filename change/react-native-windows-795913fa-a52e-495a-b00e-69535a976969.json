@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Generalizes hit testing so all view managers can participate",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
