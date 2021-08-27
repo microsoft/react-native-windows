@@ -17,7 +17,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_edgemode.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)NapiJsiV8RuntimeHolder.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NapiJsiV8RuntimeHolder.cpp">
+      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ByteArrayBuffer.h" />

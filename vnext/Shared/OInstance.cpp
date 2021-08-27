@@ -49,7 +49,7 @@
 #include "HermesRuntimeHolder.h"
 #endif
 #if defined(USE_V8)
-#include <JSI/NapiJsiV8RuntimeHolder.h>
+#include <NapiJsiV8RuntimeHolder.h>
 
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
