@@ -68,7 +68,6 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
   ReactNative::ReactNativeHost m_reactNativeHost{nullptr};
   hstring m_componentName;
   ReactNative::JSValueArgWriter m_initialPropsWriter;
-  folly::dynamic m_initialProps;
   bool m_isPerspectiveEnabled{true};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
