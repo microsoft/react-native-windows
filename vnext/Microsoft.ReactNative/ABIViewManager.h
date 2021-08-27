@@ -65,6 +65,11 @@ class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewMana
     return m_viewManagerRequiresNativeLayout != nullptr && m_viewManagerRequiresNativeLayout.RequiresNativeLayout();
   }
 
+  bool OnPointerPressed(const xaml::Input::PointerRoutedEventArgs &args) override;
+  bool OnPointerMoved(const xaml::Input::PointerRoutedEventArgs &args) override;
+  bool OnPointerReleased(const xaml::Input::PointerRoutedEventArgs &args) override;
+  void OnPointerCanceled(const xaml::Input::PointerRoutedEventArgs &args) override;
+
  protected:
   xaml::DependencyObject CreateViewCore(int64_t, const winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
@@ -77,6 +82,7 @@ class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewMana
   IViewManagerWithExportedEventTypeConstants m_viewManagerWithExportedEventTypeConstants;
   IViewManagerWithChildren m_viewManagerWithChildren;
   IViewManagerRequiresNativeLayout m_viewManagerRequiresNativeLayout;
+  IViewManagerWithPointerEvents m_viewManagerWithPointerEvents;
 
   winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, ViewManagerPropertyType> m_nativeProps;
 };

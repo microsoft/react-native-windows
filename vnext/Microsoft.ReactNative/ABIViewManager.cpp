@@ -40,7 +40,8 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithCommands{viewManager.try_as<IViewManagerWithCommands>()},
       m_viewManagerWithExportedEventTypeConstants{viewManager.try_as<IViewManagerWithExportedEventTypeConstants>()},
       m_viewManagerRequiresNativeLayout{viewManager.try_as<IViewManagerRequiresNativeLayout>()},
-      m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()} {
+      m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
+      m_viewManagerWithPointerEvents{viewManager.try_as<IViewManagerWithPointerEvents>()} {
   if (m_viewManagerWithReactContext) {
     m_viewManagerWithReactContext.ReactContext(winrt::make<implementation::ReactContext>(Mso::Copy(reactContext)));
   }
@@ -212,6 +213,29 @@ YGMeasureFunc ABIViewManager::GetYogaCustomMeasureFunc() const {
     return ::Microsoft::ReactNative::DefaultYogaSelfMeasureFunc;
   } else {
     return nullptr;
+  }
+}
+
+bool ABIViewManager::OnPointerPressed(const xaml::Input::PointerRoutedEventArgs &args) {
+  return m_viewManagerWithPointerEvents ? m_viewManagerWithPointerEvents.OnPointerPressed(args)
+                                        : Super::OnPointerPressed(args);
+}
+
+bool ABIViewManager::OnPointerMoved(const xaml::Input::PointerRoutedEventArgs &args) {
+  return m_viewManagerWithPointerEvents ? m_viewManagerWithPointerEvents.OnPointerMoved(args)
+                                        : Super::OnPointerMoved(args);
+}
+
+bool ABIViewManager::OnPointerReleased(const xaml::Input::PointerRoutedEventArgs &args) {
+  return m_viewManagerWithPointerEvents ? m_viewManagerWithPointerEvents.OnPointerReleased(args)
+                                        : Super::OnPointerReleased(args);
+}
+
+void ABIViewManager::OnPointerCanceled(const xaml::Input::PointerRoutedEventArgs &args) {
+  if (m_viewManagerWithPointerEvents) {
+    m_viewManagerWithPointerEvents.OnPointerCanceled(args);
+  } else {
+    Super::OnPointerCanceled(args);
   }
 }
 

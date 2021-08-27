@@ -79,6 +79,17 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
   virtual bool RequiresYogaNode() const;
   bool IsNativeControlWithSelfLayout() const;
 
+  virtual bool OnPointerPressed(const xaml::Input::PointerRoutedEventArgs & /*args*/) {
+    return false;
+  }
+  virtual bool OnPointerMoved(const xaml::Input::PointerRoutedEventArgs & /*args*/) {
+    return false;
+  }
+  virtual bool OnPointerReleased(const xaml::Input::PointerRoutedEventArgs & /*args*/) {
+    return false;
+  }
+  virtual void OnPointerCanceled(const xaml::Input::PointerRoutedEventArgs & /*args*/) {}
+
   const Mso::React::IReactContext &GetReactContext() const {
     return *m_context;
   }

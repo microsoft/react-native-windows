@@ -104,7 +104,8 @@ void TouchEventHandler::OnPointerPressed(
     return;
   }
 
-  if (m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
+  const auto shouldReleaseCapture = NotifyParentViewManagers(tag, TouchEventType::Start, args);
+  if (!shouldReleaseCapture && m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
     // Pointer pressing updates the enter/leave state
     UpdatePointersInViews(args, tag, sourceElement);
 
@@ -161,8 +162,12 @@ void TouchEventHandler::OnPointerMoved(
 
   auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
   if (optPointerIndex) {
-    UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
-    DispatchTouchEvent(TouchEventType::Move, *optPointerIndex);
+    if (NotifyParentViewManagers(tag, TouchEventType::Move, args)) {
+      OnPointerConcluded(TouchEventType::Cancel, args);
+    } else {
+      UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
+      DispatchTouchEvent(TouchEventType::Move, *optPointerIndex);
+    }
   } else {
     // Move with no buttons pressed
     UpdatePointersInViews(args, tag, sourceElement);
@@ -186,7 +191,11 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
 
   if (m_pointers[*optPointerIndex].isLeftButton) {
-    DispatchTouchEvent(eventType, *optPointerIndex);
+    if (NotifyParentViewManagers(tag, eventType, args)) {
+      DispatchTouchEvent(TouchEventType::Cancel, *optPointerIndex);
+    } else {
+      DispatchTouchEvent(eventType, *optPointerIndex);
+    }
   }
 
   m_pointers.erase(cbegin(m_pointers) + *optPointerIndex);
@@ -642,6 +651,42 @@ winrt::IPropertyValue TouchEventHandler::TestHit(
   }
 
   return tag;
+}
+
+bool TouchEventHandler::NotifyParentViewManagers(
+    int64_t tag,
+    TouchEventType eventType,
+    const winrt::PointerRoutedEventArgs &args) {
+  // TODO: merge parent traversals so we only traverse once
+  if (const auto uiManager = GetNativeUIManager(*m_context).lock()) {
+    auto shadowNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(tag));
+    while (shadowNode) {
+      const auto viewManager = shadowNode->GetViewManager();
+      switch (eventType) {
+        case TouchEventType::Start:
+          if (viewManager->OnPointerPressed(args)) {
+            return true;
+          }
+          break;
+        case TouchEventType::Move:
+          if (viewManager->OnPointerMoved(args)) {
+            return true;
+          }
+          break;
+        case TouchEventType::End:
+          if (viewManager->OnPointerReleased(args)) {
+            return true;
+          }
+          break;
+        case TouchEventType::Cancel:
+          viewManager->OnPointerCanceled(args);
+          break;
+      }
+      shadowNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(shadowNode->m_parent));
+    }
+  }
+
+  return false;
 }
 
 //
