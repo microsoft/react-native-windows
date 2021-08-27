@@ -80,7 +80,7 @@ class TouchEventHandler {
 #ifdef USE_FABRIC
   facebook::react::Touch TouchForPointer(const ReactPointer &pointer) noexcept;
 #endif
-  enum class TouchEventType { Start = 0, End, Move, Cancel, PointerEntered, PointerExited, PointerMove };
+  enum class TouchEventType { Start = 0, End, Move, Cancel, CaptureLost, PointerEntered, PointerExited, PointerMove };
   void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
   void DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex);
   bool DispatchBackEvent();
