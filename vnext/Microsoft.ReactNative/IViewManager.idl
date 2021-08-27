@@ -63,4 +63,15 @@ namespace Microsoft.ReactNative
   interface IViewManagerCreateWithProperties {
     Object CreateViewWithProperties(IJSValueReader propertyMapReader);
   };
+
+  [webhosthidden]
+  DOC_STRING(
+    "Enables a view manager to release pointer capture from the React root view and start handling pointer events itself."
+  )
+  interface IViewManagerWithPointerEvents {
+    Boolean OnPointerPressed(XAML_NAMESPACE.Input.PointerRoutedEventArgs args);
+    Boolean OnPointerMoved(XAML_NAMESPACE.Input.PointerRoutedEventArgs args);
+    Boolean OnPointerReleased(XAML_NAMESPACE.Input.PointerRoutedEventArgs args);
+    void OnPointerCanceled(XAML_NAMESPACE.Input.PointerRoutedEventArgs args);
+  };
 } // namespace Microsoft.ReactNative
