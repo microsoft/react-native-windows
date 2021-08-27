@@ -27,7 +27,7 @@ struct ReactViewOptions : ReactViewOptionsT<ReactViewOptions> {
 
  private:
   winrt::hstring m_componentName;
-  JSValueArgWriter m_initalProps;
+  JSValueArgWriter m_initialProps;
 };
 
 struct ReactCoreInjection : ReactCoreInjectionT<ReactCoreInjection> {
