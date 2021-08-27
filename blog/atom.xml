@@ -2,11 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://microsoft.github.io/react-native-windows/blog</id>
     <title>React Native for Windows + macOS Blog</title>
-    <updated>2021-06-30T06:00:00.000Z</updated>
+    <updated>2021-08-05T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://microsoft.github.io/react-native-windows/blog"/>
     <subtitle>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</subtitle>
     <logo>https://microsoft.github.io/react-native-windows/img/header_logo.svg</logo>
+    <entry>
+        <title type="html"><![CDATA[Use Win32 features from a React Native for Windows application]]></title>
+        <id>https://microsoft.github.io/react-native-windows/blog/2021/08/05/win32component.html</id>
+        <link href="https://microsoft.github.io/react-native-windows/blog/2021/08/05/win32component.html"/>
+        <updated>2021-08-05T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>If you have adopted React Native to build your Windows applications, you'll know that the final output is a <a href="https://docs.microsoft.com/windows/uwp/get-started/universal-application-platform-guide">Universal Windows Platform application</a>. This development platform gives you access to all the latest enhancements in the Windows ecosystem (modern UI platform, notifications, integration with features like inking and Windows Hello, etc.), plus greater security and reliability thanks to the sandbox the application runs in.
+However, there might be scenarios where UWP isn't enough and you need to perform one or more tasks which are supported only by the Win32 ecosystem: working with any file on the disk without user intervention, reading a key from the registry, integrating a SDK which doesn't support the Windows Runtime.</p>
+<p>In this post we're going to explore a solution that will enable you to get the best of both worlds: a React Native for Windows application which integrates a classic Win32 process. We're going to build a sample React Native application which will be able to read a registry key and display it. The goal is to display to the user values stored in the <code>\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion</code> hive, which contains many information about the currently installed version of Windows.</p>
+]]></summary>
+        <author>
+            <name>Matteo Pagani</name>
+            <uri>https://twitter.com/qmatteoq</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Add Toast notifications to your React Native for Windows application]]></title>
         <id>https://microsoft.github.io/react-native-windows/blog/2021/06/30/notifications.html</id>
