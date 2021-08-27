@@ -2,6 +2,90 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 27 Aug 2021 05:06:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.365",
+      "version": "0.0.0-canary.365",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-tscodegen to catch up react-native 0.65",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "420edbedb4cbe4b40f2541e466f98bd9e177e26a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 25 Aug 2021 05:07:15 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.365",
+      "version": "0.0.0-canary.365",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 7/28 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c10ab11a85107ed5b237af0cbce8703aa47d991f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Set Shared WindowsTargetPlatformVersion in External Property Sheets",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3688c2ef922957f8a7453108f643b08ef2815b01",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Consume NAPI V8 JSI Runtime",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "cded0558d8bb66d249d47fc46b91c8515625b91f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 23 Aug 2021 05:10:28 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.364",
+      "version": "0.0.0-canary.364",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 7/7 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d9a687407c1e29f9b0447ed33047ea7a558ccff4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 21 Aug 2021 05:09:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.363",
+      "version": "0.0.0-canary.363",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix crash in NativeUIManager when handling \"extra layout\" nodes",
+            "author": "aschultz@microsoft.com",
+            "commit": "1894696af7cad08352b633a8918842256620f995",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix crash in KeyboardHelper when provided undefined keyDownEvents prop.",
+            "author": "aschultz@microsoft.com",
+            "commit": "0748834a41d71a5e3f70dfc83d0a005a83b4e8a2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Enable use of 'focusable' prop on ControlViewManager-derived controls",
+            "author": "aschultz@microsoft.com",
+            "commit": "686a7913d1aa203b9cbe70740d4aa932dbd9e34e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Aug 2021 05:05:48 GMT",
       "tag": "react-native-windows_v0.0.0-canary.362",
       "version": "0.0.0-canary.362",

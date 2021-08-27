@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Tue, 17 Aug 2021 05:09:46 GMT and should not be manually modified.
+This log was last generated on Fri, 27 Aug 2021 05:06:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.62
+
+Fri, 27 Aug 2021 05:06:34 GMT
+
+### Patches
+
+- Fixes react-native-windows-init to put the version into package.json (jthysell@microsoft.com)
 
 ## 1.1.61
 

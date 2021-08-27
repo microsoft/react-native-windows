@@ -199,7 +199,7 @@ export function SectionList_scrollable(Props: {
     changed: Array<{
       key: string,
       isViewable: boolean,
-      item: {columns: Array<*>, ...},
+      item: {columns: Array<any>, ...},
       index: ?number,
       section?: any,
       ...
@@ -275,6 +275,7 @@ export function SectionList_scrollable(Props: {
         ItemSeparatorComponent={info => (
           <CustomSeparatorComponent {...info} text="ITEM SEPARATOR" />
         )}
+        accessibilityRole="list"
         debug={debug}
         inverted={inverted}
         disableVirtualization={!virtualized}

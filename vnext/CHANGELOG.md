@@ -1,8 +1,36 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 20 Aug 2021 05:05:48 GMT and should not be manually modified.
+This log was last generated on Wed, 25 Aug 2021 05:07:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.365
+
+Wed, 25 Aug 2021 05:07:15 GMT
+
+### Changes
+
+- Integrate 7/28 Nightly RN Build (ngerlem@microsoft.com)
+- Set Shared WindowsTargetPlatformVersion in External Property Sheets (ngerlem@microsoft.com)
+- Consume NAPI V8 JSI Runtime (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.364
+
+Mon, 23 Aug 2021 05:10:28 GMT
+
+### Changes
+
+- Integrate 7/7 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.363
+
+Sat, 21 Aug 2021 05:09:03 GMT
+
+### Changes
+
+- Fix crash in NativeUIManager when handling "extra layout" nodes (aschultz@microsoft.com)
+- Fix crash in KeyboardHelper when provided undefined keyDownEvents prop. (aschultz@microsoft.com)
+- Enable use of 'focusable' prop on ControlViewManager-derived controls (aschultz@microsoft.com)
 
 ## 0.0.0-canary.362
 
