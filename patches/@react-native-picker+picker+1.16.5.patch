@@ -3,9 +3,9 @@ index c88a28b..040bee2 100644
 --- a/node_modules/@react-native-picker/picker/README.md
 +++ b/node_modules/@react-native-picker/picker/README.md
 @@ -12,11 +12,12 @@
-
+ 
  ## Supported Versions
-
+ 
 -| @react-native-picker/picker | react-native |
 -| --- | --- |
 -| >= 1.16.0 | 0.61+ |
@@ -17,19 +17,19 @@ index c88a28b..040bee2 100644
 +| >= 1.16.0 | 0.61+ | 0.61+ |
 +| >= 1.2.0 | 0.60+ or 0.59+ with [Jetifier](https://www.npmjs.com/package/jetifier) | N/A |
 +| >= 1.0.0 | 0.57 | N/A |
-
+ 
  ## For Managed Workflow users using Expo 37
  This component is not supported in the managed workflow for expo sdk 37. Please import the `Picker` from `react-native`.
 @@ -49,7 +50,8 @@ No additional step is required.
  <summary>Windows (expand for details)</summary>
-
+ 
  #### Windows
 -Usage in Windows requires the following extra steps:
 +
 +To use without autolinking the below steps may be followed.
-
+ 
  ##### Add the `ReactNativePicker` project to your solution.
-
+ 
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
 index 28a8132..ca1cd63 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
@@ -96,7 +96,7 @@ index c5eda6c..659c446 100644
 @@ -6,21 +6,26 @@
  #include "ReactPickerView.h"
  #include "ReactPickerView.g.cpp"
-
+ 
 +#include <UI.Xaml.Input.h>
 +
  namespace winrt {
@@ -113,16 +113,16 @@ index c5eda6c..659c446 100644
 +    using namespace xaml::Input;
 +    using namespace xaml::Media;
  } // namespace winrt
-
+ 
  namespace winrt::ReactNativePicker::implementation {
-
+ 
 +#ifdef USE_WINUI3
 +    const bool ReactPickerView::s_isEditableComboboxSupported = true;
 +#else
      const bool ReactPickerView::s_isEditableComboboxSupported = winrt::ApiInformation::IsPropertyPresent(
          L"Windows.UI.Xaml.Controls.ComboBox", L"IsEditableProperty");
 +#endif
-
+ 
      ReactPickerView::ReactPickerView(winrt::IReactContext const& reactContext) : m_reactContext(reactContext) {
          this->AllowFocusOnInteraction(true);
 @@ -61,9 +66,13 @@ namespace winrt::ReactNativePicker::implementation {
@@ -142,7 +142,7 @@ index c5eda6c..659c446 100644
 @@ -188,7 +197,7 @@ namespace winrt::ReactNativePicker::implementation {
          }
      }
-
+ 
 -    void ReactPickerView::UpdateComboBoxItemForegroundResource(winrt::FrameworkElement const& item, winrt::Windows::UI::Xaml::Media::Brush const& color) {
 +    void ReactPickerView::UpdateComboBoxItemForegroundResource(winrt::FrameworkElement const& item, xaml::Media::Brush const& color) {
          if (auto comboBoxItem = item.try_as<winrt::ComboBoxItem>()) {
@@ -162,7 +162,7 @@ index 327763e..c39e9a5 100644
 +        xaml::Media::Brush m_comboBoxColor{ nullptr };
 +        xaml::Controls::ComboBox::SelectionChanged_revoker m_selectionChangedRevoker{};
 +        xaml::Controls::ComboBox::DropDownClosed_revoker m_dropDownClosedRevoker{};
-
+ 
          void RegisterEvents();
          void RepopulateItems(winrt::Microsoft::ReactNative::JSValueArray const& items);
          void SetSelectedIndex(int index);
@@ -172,7 +172,7 @@ index 327763e..c39e9a5 100644
 +        void UpdateComboBoxItemForegroundResource(xaml::FrameworkElement const& item, xaml::Media::Brush const& color);
      };
  } // namespace winrt::ReactNativePicker::implementation
-
+ 
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.idl b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.idl
 index 39f1a06..9a5063e 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.idl
@@ -181,7 +181,7 @@ index 39f1a06..9a5063e 100644
 +#include <NamespaceRedirect.h>
 +
  namespace ReactNativePicker{
-
+ 
      [default_interface]
 -    runtimeclass ReactPickerView : Windows.UI.Xaml.Controls.ComboBox {
 +    runtimeclass ReactPickerView : XAML_NAMESPACE.Controls.ComboBox {
@@ -199,29 +199,29 @@ index 173f0e8..eaefe6f 100644
 -    using namespace Windows::UI::Xaml;
 +    using namespace xaml;
  }
-
+ 
  namespace winrt::ReactNativePicker::implementation {
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.h b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.h
 index 55e1f9e..41ee279 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.h
 +++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.h
 @@ -18,7 +18,7 @@ namespace winrt::ReactNativePicker::implementation {
-
+ 
          // IViewManager
          winrt::hstring Name() noexcept;
 -        winrt::Windows::UI::Xaml::FrameworkElement CreateView() noexcept;
 +        xaml::FrameworkElement CreateView() noexcept;
-
+ 
          // IViewManagerWithReactContext
          winrt::Microsoft::ReactNative::IReactContext ReactContext() noexcept;
 @@ -30,7 +30,7 @@ namespace winrt::ReactNativePicker::implementation {
              NativeProps() noexcept;
-
+ 
          void UpdateProperties(
 -            winrt::Windows::UI::Xaml::FrameworkElement const& view,
 +            xaml::FrameworkElement const& view,
              winrt::Microsoft::ReactNative::IJSValueReader const& propertyMapReader) noexcept;
-
+ 
          // IViewManagerWithExportedEventTypeConstants
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h
 index 62c1bf9..0b262fe 100644
@@ -229,7 +229,7 @@ index 62c1bf9..0b262fe 100644
 +++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h
 @@ -3,13 +3,11 @@
  #define NOMINMAX
-
+ 
  #include <unknwn.h>
 -#include <winrt/Windows.Foundation.h>
 -#include <winrt/Windows.Foundation.Collections.h>
@@ -247,14 +247,3 @@ index 62c1bf9..0b262fe 100644
 +
 +#include <winrt/Microsoft.UI.Xaml.Controls.h>
 +#include <winrt/Microsoft.UI.Xaml.Controls.Primitives.h>
-diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config
-index 790637c..f0e2df0 100644
---- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config
-+++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config
-@@ -1,4 +1,5 @@
- ﻿<?xml version="1.0" encoding="utf-8"?>
- <packages>
-   <package id="Microsoft.Windows.CppWinRT" version="2.0.190730.2" targetFramework="native" />
-+  <package id="Microsoft.WinUI" version="3.0.0-preview4.210210.4" targetFramework="native" />
- </packages>
-\ No newline at end of file
