@@ -1,5 +1,5 @@
 diff --git a/node_modules/@react-native-picker/picker/README.md b/node_modules/@react-native-picker/picker/README.md
-index c88a28b..040bee2 100644
+index c88a28b..70b46e2 100644
 --- a/node_modules/@react-native-picker/picker/README.md
 +++ b/node_modules/@react-native-picker/picker/README.md
 @@ -12,11 +12,12 @@
@@ -31,7 +31,7 @@ index c88a28b..040bee2 100644
  ##### Add the `ReactNativePicker` project to your solution.
  
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
-index 28a8132..ca1cd63 100644
+index 28a8132..85429ac 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
 +++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
 @@ -1,5 +1,6 @@
@@ -90,7 +90,7 @@ index 28a8132..ca1cd63 100644
    </Target>
  </Project>
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.cpp b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.cpp
-index c5eda6c..659c446 100644
+index c5eda6c..1834ac8 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.cpp
 +++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.cpp
 @@ -6,21 +6,26 @@
@@ -149,7 +149,7 @@ index c5eda6c..659c446 100644
              comboBoxItem.Foreground(color);
          }
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.h b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.h
-index 327763e..c39e9a5 100644
+index 327763e..3b21138 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.h
 +++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.h
 @@ -22,15 +22,15 @@ namespace winrt::ReactNativePicker::implementation {
@@ -174,7 +174,7 @@ index 327763e..c39e9a5 100644
  } // namespace winrt::ReactNativePicker::implementation
  
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.idl b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.idl
-index 39f1a06..9a5063e 100644
+index 39f1a06..7d712d1 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.idl
 +++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.idl
 @@ -1,7 +1,9 @@
@@ -189,7 +189,7 @@ index 39f1a06..9a5063e 100644
          void UpdateProperties(Microsoft.ReactNative.IJSValueReader reader);
      };
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.cpp b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.cpp
-index 173f0e8..eaefe6f 100644
+index 173f0e8..c87d9c5 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.cpp
 +++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.cpp
 @@ -9,7 +9,7 @@
@@ -202,7 +202,7 @@ index 173f0e8..eaefe6f 100644
  
  namespace winrt::ReactNativePicker::implementation {
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.h b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.h
-index 55e1f9e..41ee279 100644
+index 55e1f9e..4b66140 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.h
 +++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.h
 @@ -18,7 +18,7 @@ namespace winrt::ReactNativePicker::implementation {
@@ -223,8 +223,19 @@ index 55e1f9e..41ee279 100644
              winrt::Microsoft::ReactNative::IJSValueReader const& propertyMapReader) noexcept;
  
          // IViewManagerWithExportedEventTypeConstants
+diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config
+index 790637c..f0e2df0 100644
+--- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config
++++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config
+@@ -1,4 +1,5 @@
+ ﻿<?xml version="1.0" encoding="utf-8"?>
+ <packages>
+   <package id="Microsoft.Windows.CppWinRT" version="2.0.190730.2" targetFramework="native" />
++  <package id="Microsoft.WinUI" version="3.0.0-preview4.210210.4" targetFramework="native" />
+ </packages>
+\ No newline at end of file
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h
-index 62c1bf9..0b262fe 100644
+index 62c1bf9..1a1aa66 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h
 +++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h
 @@ -3,13 +3,11 @@
