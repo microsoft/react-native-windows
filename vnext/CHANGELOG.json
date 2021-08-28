@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 28 Aug 2021 05:06:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.366",
+      "version": "0.0.0-canary.366",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Pass JSValueArgWriter around instead of immediately converting to dynamic",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "0622bf66ad17ad48e0bedc73822fcbbbb7b38991",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 27 Aug 2021 05:06:34 GMT",
       "tag": "react-native-windows_v0.0.0-canary.365",
       "version": "0.0.0-canary.365",
