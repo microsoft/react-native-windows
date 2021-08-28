@@ -65,14 +65,14 @@
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Shared;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir)Common;$(FollyDir);$(JSI_Source);$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Shared;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_EDGEMODE_JSRT;FOLLY_NO_CONFIG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!-- /Zc:strictStrings enforces the standard C++ const qualifications for
       string literals. It prevents code like
         wchar_t* str = L"hello";
