@@ -248,11 +248,13 @@ index 62c1bf9..0b262fe 100644
 +#include <winrt/Microsoft.UI.Xaml.Controls.h>
 +#include <winrt/Microsoft.UI.Xaml.Controls.Primitives.h>
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config
-index 790637cec..deddf6157 100644
+index 790637c..f0e2df0 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config
 +++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config
-@@ -2,3 +2,4 @@
+@@ -1,4 +1,5 @@
+ ﻿<?xml version="1.0" encoding="utf-8"?>
  <packages>
    <package id="Microsoft.Windows.CppWinRT" version="2.0.190730.2" targetFramework="native" />
 +  <package id="Microsoft.WinUI" version="3.0.0-preview4.210210.4" targetFramework="native" />
  </packages>
+\ No newline at end of file
