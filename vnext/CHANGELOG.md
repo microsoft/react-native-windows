@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 23 Aug 2021 15:09:39 GMT and should not be manually modified.
+This log was last generated on Mon, 30 Aug 2021 15:06:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.65.1
+
+Mon, 30 Aug 2021 15:06:56 GMT
+
+### Patches
+
+- [0.65] Consume Node-Api V8 JSI Runtime (julio.rocha@microsoft.com)
+- Lib project will use the app's ExperimentalFeatures.props (asklar@microsoft.com)
 
 ## 0.65.0
 
