@@ -64,11 +64,6 @@ struct ChakraInstanceArgs {
    * @brief Name to associate with runtime instance when debugging.
    */
   std::string DebuggerRuntimeName;
-
-  /**
-   * @brief Dispatcher for notifications about JS engine memory consumption.
-   */
-  std::shared_ptr<MemoryTracker> MemoryTracker;
 };
 
 } // namespace react
