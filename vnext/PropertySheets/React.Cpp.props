@@ -52,6 +52,13 @@
   </ItemDefinitionGroup>
 
   <PropertyGroup>
+    <!-- This prop is used for shared JSI code and headers -->
+    <JSI_Source Condition="'$(JSI_Source)' == ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_Source>
+
+    <!-- This prop is used for JSI code that may be overridden in external JSI implementations -->
+    <JSI_SourcePath Condition="'$(JSI_SourcePath)' == ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_SourcePath>
+    <JSI_SourcePath Condition="'$(USE_V8)' == 'true'">$(V8Package)\build\native\include</JSI_SourcePath>
+    <JSI_SourcePath Condition="'$(USE_HERMES)' == 'true'">$(HERMES_Package)\build\native\include</JSI_SourcePath>
     <!-- This disables copying the v8 DLL to outputs; it is re-enabled locally in win32 projects -->
     <V8JSI_NODLLCOPY>true</V8JSI_NODLLCOPY>
   </PropertyGroup>
