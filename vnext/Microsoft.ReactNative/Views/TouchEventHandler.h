@@ -4,6 +4,7 @@
 #pragma once
 #include <IReactInstance.h>
 #include <JSValue.h>
+#include <ReactPointerEventArgs.h>
 #include <UI.Xaml.Documents.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
@@ -104,7 +105,10 @@ class TouchEventHandler {
       const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
       const winrt::Point &pointerPos,
       bool &isHit);
-  bool NotifyParentViewManagers(int64_t tag, TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
+  bool NotifyParentViewManagers(
+      int64_t tag,
+      TouchEventType eventType,
+      const winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs &args);
 
   XamlView m_xamlView;
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
