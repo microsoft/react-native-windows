@@ -2,6 +2,201 @@
   "name": "integration-test",
   "entries": [
     {
+      "date": "Mon, 30 Aug 2021 15:07:10 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.16",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "0672713f2435800e3208d889efc31192f593db40",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 23 Aug 2021 15:10:07 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.15",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4cb55d30bfde3295f24a9fd4d1ced65c40a1036c",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Jul 2021 15:05:56 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.14",
+            "author": "asklar@microsoft.com",
+            "commit": "5a03cd6161a36366b514f1f7a28852ee70bad58b",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 12 Jul 2021 15:18:53 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.13",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "b6b1ed2819d5ab8aee623c31cc96040a8ff1909b",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 28 Jun 2021 15:08:27 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.12",
+            "author": "agnel@microsoft.com",
+            "commit": "933e1c7e01f393d92323ee0fcef021ec60404da7",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 07 Jun 2021 18:47:25 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.11",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "ad1302b429d3141344d4a2402001b59d9f3fb8a2",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 31 May 2021 15:25:41 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.10",
+            "author": "igklemen@microsoft.com",
+            "commit": "440f694353b7387812735878299c22b5f8d0ebcf",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 May 2021 15:09:06 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.9",
+            "author": "ngerlem@microsoft.com",
+            "commit": "061fc642d25fa40fb9a7e08a888a88bc10eabb40",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 May 2021 17:16:08 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.8",
+            "author": "jthysell@microsoft.com",
+            "commit": "7734d7bf647f3dc79fa70ef02c5003496b84cf29",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 10 May 2021 15:06:33 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.7",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "82f12b42b73624f69eb094592492228d3abd48fe",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 03 May 2021 14:06:32 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.6",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4b552ca018919b71fd8ae34af92f538b0a069cd8",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 26 Apr 2021 18:47:14 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.5",
+            "author": "erozell@outlook.com",
+            "commit": "a29cccfaa9bc3fcfb154a02fca718b2acb4674e9",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Apr 2021 17:00:53 GMT",
+      "tag": "integration-test_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.4",
+            "author": "asklar@microsoft.com",
+            "commit": "09ac2fd1485d17d3baac2d4e1b709306b18bfe5e",
+            "package": "integration-test"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Apr 2021 17:04:31 GMT",
       "tag": "integration-test_v0.0.1",
       "version": "0.0.1",

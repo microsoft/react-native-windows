@@ -6,7 +6,7 @@
 
 import * as React from 'react';
 import RN = require('react-native');
-import { View, findNodeHandle, NativeModules } from 'react-native';
+import { View, findNodeHandle, UIManager } from 'react-native';
 import { IViewWin32Props, UseFrom } from './ViewWin32.Props';
 const setAndForwardRef = require('../../Utilities/setAndForwardRef');
 
@@ -45,7 +45,9 @@ export const ViewWin32 = React.forwardRef(
 
     const [labeledByTarget, setLabeledByTarget] = React.useState(null);
     const [describedByTarget, setDescribedByTarget] = React.useState(null);
-    const {accessibilityLabeledBy, accessibilityDescribedBy, ...rest} = props;
+    const [controlsTarget, setControlsTarget] = React.useState(null);
+    const {accessibilityLabeledBy, accessibilityDescribedBy, accessibilityControls, ...rest} = props;
+
     React.useLayoutEffect(() => {
       if (accessibilityLabeledBy !== undefined && accessibilityLabeledBy.current !== null)
       {
@@ -55,7 +57,9 @@ export const ViewWin32 = React.forwardRef(
           | React.Component<any, any, any>
           | React.ComponentClass<any, any>));
       }
+    }, [accessibilityLabeledBy]);
 
+    React.useLayoutEffect(() => {
       if (accessibilityDescribedBy !== undefined && accessibilityDescribedBy.current !== null)
       {
         setDescribedByTarget(findNodeHandle(accessibilityDescribedBy.current as
@@ -64,7 +68,18 @@ export const ViewWin32 = React.forwardRef(
           | React.Component<any, any, any>
           | React.ComponentClass<any, any>));
       }
-    }, [accessibilityLabeledBy, accessibilityDescribedBy]);
+    }, [accessibilityDescribedBy]);
+
+    React.useLayoutEffect(() => {
+      if(accessibilityControls !== undefined && accessibilityControls.current !== null)
+      {
+        setControlsTarget(findNodeHandle(accessibilityControls.current as
+          | null
+          | number
+          | React.Component<any, any, any>
+          | React.ComponentClass<any, any>));
+      }
+    }, [accessibilityControls]);
 
     /**
      * Set up the forwarding ref to enable adding the focus method.
@@ -82,9 +97,9 @@ export const ViewWin32 = React.forwardRef(
         if (localRef)
         {
           localRef.focus = () => {
-            NativeModules.UIManager.dispatchViewManagerCommand(
+            UIManager.dispatchViewManagerCommand(
               findNodeHandle(localRef),
-              NativeModules.UIManager.getViewManagerConfig('RCTView').Commands.focus,
+              UIManager.getViewManagerConfig('RCTView').Commands.focus,
               null
               );
           };
@@ -94,6 +109,7 @@ export const ViewWin32 = React.forwardRef(
 
     return <View ref={setNativeRef}
     {...(rest as InnerViewWin32Props)}
+    {...((controlsTarget !== null) ? {accessibilityControls:controlsTarget} : {})}
     {...((labeledByTarget !== null) ? {accessibilityLabeledBy:labeledByTarget} : {})}
     {...((describedByTarget !== null) ? {accessibilityDescribedBy:describedByTarget} : {})}
     />;

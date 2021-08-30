@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.64]adding nuget.configs",
-  "packageName": "@react-native-windows/cli",
-  "email": "agnel@microsoft.com",
-  "dependentChangeType": "patch"
-}

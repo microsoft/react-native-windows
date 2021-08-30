@@ -1,8 +1,32 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 29 Mar 2021 16:07:04 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Aug 2021 15:10:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.5
+
+Mon, 23 Aug 2021 15:10:07 GMT
+
+### Patches
+
+- Promote 0.64 to legacy (ngerlem@microsoft.com)
+
+## 0.64.4
+
+Mon, 24 May 2021 15:09:06 GMT
+
+### Patches
+
+- Fix Typo in Autolinking Source (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.64.3
+
+Mon, 19 Apr 2021 17:00:53 GMT
+
+### Patches
+
+- [0.64]adding nuget.configs (agnel@microsoft.com)
 
 ## 0.64.2
 

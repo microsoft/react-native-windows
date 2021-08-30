@@ -1,8 +1,32 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Mon, 29 Mar 2021 16:07:04 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Aug 2021 15:10:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.37
+
+Mon, 23 Aug 2021 15:10:07 GMT
+
+### Patches
+
+- Bump @react-native-windows/telemetry to v0.64.1 (ngerlem@microsoft.com)
+
+## 0.1.37
+
+Mon, 24 May 2021 15:09:06 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.64.4 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.1.37
+
+Mon, 19 Apr 2021 17:00:53 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.64.3 (agnel@microsoft.com)
 
 ## 0.1.37
 

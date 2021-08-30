@@ -10,6 +10,9 @@
 #include <cxxreact/JsArgumentHelpers.h>
 #include "Unicode.h"
 
+// Standard Libriary
+#include <iomanip>
+
 using namespace facebook::xplat;
 using namespace folly;
 
@@ -161,7 +164,10 @@ shared_ptr<IWebSocketResource> WebSocketModule::GetOrCreateWebSocket(int64_t id,
     }
     catch (const winrt::hresult_error& e)
     {
-      string message =  string{"[" + e.code()} + "] " + Utf16ToUtf8(e.message());
+      std::wstringstream ss;
+      ss << L"[" << std::hex << std::showbase << std::setw(8) << static_cast<uint32_t>(e.code()) << L"] " << e.message().c_str();
+      string message{winrt::to_string(ss.str()).c_str()};
+
       SendEvent("webSocketFailed", dynamic::object("id", id)("message", std::move(message)));
 
       return nullptr;

@@ -1,8 +1,137 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 05 Apr 2021 17:04:31 GMT and should not be manually modified.
+This log was last generated on Mon, 30 Aug 2021 15:07:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.16
+
+Mon, 30 Aug 2021 15:07:10 GMT
+
+### Patches
+
+- [0.64] Consume Node-Api V8 JSI Runtime (julio.rocha@microsoft.com)
+
+## 0.64.15
+
+Mon, 23 Aug 2021 15:10:07 GMT
+
+### Patches
+
+- Promote 0.64 to legacy (ngerlem@microsoft.com)
+
+## 0.64.14
+
+Mon, 19 Jul 2021 15:05:56 GMT
+
+### Patches
+
+- DisconnectFromView can be called on an view that has no connected tag. Also fix exceptions to be thrown by value as the rest of the code expects them to be (asklar@microsoft.com)
+- Batch calls to alert() instead of crashing (asklar@microsoft.com)
+
+## 0.64.13
+
+Mon, 12 Jul 2021 15:18:53 GMT
+
+### Patches
+
+- Add hooks to allow instance to be usable with pluggable UI platform (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.64.12
+
+Mon, 28 Jun 2021 15:08:27 GMT
+
+### Patches
+
+- [0.64]Fix XAML Visibility for `display:none` (agnel@microsoft.com)
+- V8 Package Update (tudor.mihai@microsoft.com)
+- [0.64] More cases of *Undefined* are popping up in MsBuild (dannyvv@microsoft.com)
+- Have script store return nullptr on facebook::jsi::JSINativeException (#8068) (julio.rocha@microsoft.com)
+
+## 0.64.11
+
+Mon, 07 Jun 2021 18:47:25 GMT
+
+### Patches
+
+- Fix FashRefresh when not using WebDebugger (30809111+acoates-ms@users.noreply.github.com)
+- Allow propagating WinRTWebSocketResource constructor exceptions (#7892) (julio.rocha@microsoft.com)
+- Add JSI.MemoryMappedScriptStore runtime option to control usage of MemoryMappedBuffer (#7943) (julio.rocha@microsoft.com)
+- [0.64] Bump ws dependency (dannyvv@microsoft.com)
+
+## 0.64.10
+
+Mon, 31 May 2021 15:25:41 GMT
+
+### Patches
+
+- Fix Text.BackgroundColor overwriting foreground. (#7707) (igklemen@microsoft.com)
+- Add error message when an exception happens in a native module (in Debug) (asklar@microsoft.com)
+- Fix JSValue memory leak in move constructor (vmorozov@microsoft.com)
+- Update .net uwp package version (agnel@microsoft.com)
+
+## 0.64.9
+
+Mon, 24 May 2021 15:09:06 GMT
+
+### Patches
+
+- Fix MSBuild Bundling When Path Contains Spaces (ngerlem@microsoft.com)
+- [0.64] Fix transitive dependencies for C# nuget-based apps #7786 (jthysell@microsoft.com)
+
+## 0.64.8
+
+Mon, 17 May 2021 17:16:08 GMT
+
+### Patches
+
+- [0.64] Upgrade JSI.Desktop projects version of ChakraCore (jthysell@microsoft.com)
+- Use memory-mapping in BasePreparedScriptStoreImpl::tryGetPreparedScript (julio.rocha@microsoft.com)
+- Update brush cache when theme changes (asklar@microsoft.com)
+
+## 0.64.7
+
+Mon, 10 May 2021 15:06:33 GMT
+
+### Patches
+
+- If initial value is set, updated TextInput.value changes will not be reflected (30809111+acoates-ms@users.noreply.github.com)
+- [0.64] Update Microsoft.ChakraCore to 1.11.24 (#7628) (jthysell@microsoft.com)
+- Initialize ETW provider only once (asklar@microsoft.com)
+- Last year, we had plumbed the Systrace sections and events in the core react native to windows code and fired ETW events. But, it was hard for people to use because we used manifest based ETW events. This change converts the event triggering code to use Tracelogging APIs (aka self describing events) which doesn't require the manifest to be registered on the host machine to inspect traces.
+ Post this change, the systrace events can be inspected on any windows machines where the RNW based apps are running by issuing the following commands, 
+wpr.exe -start rnw.wprp
+wpr.exe -stop rnw.etl
+wpa.exe rnw.etl
+
+This works for Win32 apps too, say Office. (mganandraj@outlook.com)
+
+## 0.64.6
+
+Mon, 03 May 2021 14:06:32 GMT
+
+### Patches
+
+- Remove version from ExperimentalFeatures.props links (ngerlem@microsoft.com)
+
+## 0.64.5
+
+Mon, 26 Apr 2021 18:47:14 GMT
+
+### Patches
+
+- Suppress onLayout event when layout has not changed (#7470) (erozell@outlook.com)
+- Change TextInput cursor behavior (#7285) (erozell@outlook.com)
+
+## 0.64.4
+
+Mon, 19 Apr 2021 17:00:53 GMT
+
+### Patches
+
+- Enable any platform color to be used in PlatformColor() (asklar@microsoft.com)
+- Calling UIManager.dispatchViewManagerCommand should trigger updates (30809111+acoates-ms@users.noreply.github.com)
+- Allow swapping to System Chakra at runtime. (julio.rocha@microsoft.com)
 
 ## 0.64.3
 

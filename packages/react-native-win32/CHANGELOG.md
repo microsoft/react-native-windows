@@ -1,8 +1,42 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 29 Mar 2021 16:07:04 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Aug 2021 15:10:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.5
+
+Mon, 23 Aug 2021 15:10:07 GMT
+
+### Patches
+
+- Promote 0.64 to legacy (ngerlem@microsoft.com)
+
+## 0.64.4
+
+Mon, 12 Jul 2021 15:18:53 GMT
+
+### Patches
+
+- Support running UIManager as a TurboModule (30809111+acoates-ms@users.noreply.github.com)
+- Backporting AccessibilityControls prop to 0.64 (safreibe@microsoft.com)
+
+## 0.64.3
+
+Mon, 05 Jul 2021 15:06:52 GMT
+
+### Patches
+
+- Allow native module to set JS-side QuirkSettings (ngerlem@microsoft.com)
+- Enable List UTs in react-native-win32 (ngerlem@microsoft.com)
+
+## 0.64.2
+
+Mon, 07 Jun 2021 18:47:25 GMT
+
+### Patches
+
+- Use text instead of images for LogBox arrows (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.64.1
 

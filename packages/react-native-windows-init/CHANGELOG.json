@@ -2,6 +2,51 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Mon, 23 Aug 2021 15:10:07 GMT",
+      "tag": "react-native-windows-init_v0.1.37",
+      "version": "0.1.37",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/telemetry to v0.64.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4cb55d30bfde3295f24a9fd4d1ced65c40a1036c",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 May 2021 15:09:06 GMT",
+      "tag": "react-native-windows-init_v0.1.37",
+      "version": "0.1.37",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/cli to v0.64.4",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "e04f8cf45367e9026cdc1a6269107123f1856cb8",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Apr 2021 17:00:53 GMT",
+      "tag": "react-native-windows-init_v0.1.37",
+      "version": "0.1.37",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/cli to v0.64.3",
+            "author": "agnel@microsoft.com",
+            "commit": "f9f4c89421686d53c0aefcee32f1750100cd04ab",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 29 Mar 2021 16:07:04 GMT",
       "tag": "react-native-windows-init_v0.1.37",
       "version": "0.1.37",

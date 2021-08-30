@@ -2,6 +2,315 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 Aug 2021 15:07:10 GMT",
+      "tag": "react-native-windows_v0.64.16",
+      "version": "0.64.16",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.64] Consume Node-Api V8 JSI Runtime",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "0672713f2435800e3208d889efc31192f593db40",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 23 Aug 2021 15:10:07 GMT",
+      "tag": "react-native-windows_v0.64.15",
+      "version": "0.64.15",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Promote 0.64 to legacy",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4cb55d30bfde3295f24a9fd4d1ced65c40a1036c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Jul 2021 15:05:56 GMT",
+      "tag": "react-native-windows_v0.64.14",
+      "version": "0.64.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "DisconnectFromView can be called on an view that has no connected tag. Also fix exceptions to be thrown by value as the rest of the code expects them to be",
+            "author": "asklar@microsoft.com",
+            "commit": "5a03cd6161a36366b514f1f7a28852ee70bad58b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Batch calls to alert() instead of crashing",
+            "author": "asklar@microsoft.com",
+            "commit": "276d60867d558e873dede9d831878f67252ed395",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 12 Jul 2021 15:18:53 GMT",
+      "tag": "react-native-windows_v0.64.13",
+      "version": "0.64.13",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add hooks to allow instance to be usable with pluggable UI platform",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "b6b1ed2819d5ab8aee623c31cc96040a8ff1909b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 28 Jun 2021 15:08:27 GMT",
+      "tag": "react-native-windows_v0.64.12",
+      "version": "0.64.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.64]Fix XAML Visibility for `display:none`",
+            "author": "agnel@microsoft.com",
+            "commit": "933e1c7e01f393d92323ee0fcef021ec60404da7",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "V8 Package Update",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "df594696220c5171f7f14f32e36f37a28a649bdd",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] More cases of *Undefined* are popping up in MsBuild",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b7d1649817a162b052d57be12a47972a9ee84940",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Have script store return nullptr on facebook::jsi::JSINativeException (#8068)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a54c4e5d9c35cb42db737ee6c5d37dbb6681dd02",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 07 Jun 2021 18:47:25 GMT",
+      "tag": "react-native-windows_v0.64.11",
+      "version": "0.64.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix FashRefresh when not using WebDebugger",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "ad1302b429d3141344d4a2402001b59d9f3fb8a2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow propagating WinRTWebSocketResource constructor exceptions (#7892)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "508469a87dfcfc6e0c9536cfb054548d473ef0b6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add JSI.MemoryMappedScriptStore runtime option to control usage of MemoryMappedBuffer (#7943)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "9c4bfd7ca9533110e0444975c4890e470c37658e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Bump ws dependency",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d2047c9fe351a02771f2b564df1cc3b3e8876416",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 31 May 2021 15:25:41 GMT",
+      "tag": "react-native-windows_v0.64.10",
+      "version": "0.64.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Text.BackgroundColor overwriting foreground. (#7707)",
+            "author": "igklemen@microsoft.com",
+            "commit": "440f694353b7387812735878299c22b5f8d0ebcf",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add error message when an exception happens in a native module (in Debug)",
+            "author": "asklar@microsoft.com",
+            "commit": "fb0db424fc037358dc786f3455dc2f7a76e4aa10",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix JSValue memory leak in move constructor",
+            "author": "vmorozov@microsoft.com",
+            "commit": "3bfe8e154a17ad87c2297fca57a5256a8c572e68",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update .net uwp package version",
+            "author": "agnel@microsoft.com",
+            "commit": "8209eb5308bfcb4e8865b8c3ff365f505aa31b4b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 May 2021 15:09:06 GMT",
+      "tag": "react-native-windows_v0.64.9",
+      "version": "0.64.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix MSBuild Bundling When Path Contains Spaces",
+            "author": "ngerlem@microsoft.com",
+            "commit": "061fc642d25fa40fb9a7e08a888a88bc10eabb40",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Fix transitive dependencies for C# nuget-based apps #7786",
+            "author": "jthysell@microsoft.com",
+            "commit": "8e1ef742828122055a6e6da75613d4e4db0df1f1",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 May 2021 17:16:08 GMT",
+      "tag": "react-native-windows_v0.64.8",
+      "version": "0.64.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.64] Upgrade JSI.Desktop projects version of ChakraCore",
+            "author": "jthysell@microsoft.com",
+            "commit": "7734d7bf647f3dc79fa70ef02c5003496b84cf29",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Use memory-mapping in BasePreparedScriptStoreImpl::tryGetPreparedScript",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "d00548f578f2f871caad0d5c0e96c0ddcbac1009",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Update brush cache when theme changes",
+            "author": "asklar@microsoft.com",
+            "commit": "269861da60a56c94f71ae784fdcb04074f96c0be",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 10 May 2021 15:06:33 GMT",
+      "tag": "react-native-windows_v0.64.7",
+      "version": "0.64.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "If initial value is set, updated TextInput.value changes will not be reflected",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "82f12b42b73624f69eb094592492228d3abd48fe",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] Update Microsoft.ChakraCore to 1.11.24 (#7628)",
+            "author": "jthysell@microsoft.com",
+            "commit": "04b400432f3c6db0874de7732715eb264960eca4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Initialize ETW provider only once",
+            "author": "asklar@microsoft.com",
+            "commit": "e7efb40200b0817d5490a5b6e9a76c3df7329b76",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Last year, we had plumbed the Systrace sections and events in the core react native to windows code and fired ETW events. But, it was hard for people to use because we used manifest based ETW events. This change converts the event triggering code to use Tracelogging APIs (aka self describing events) which doesn't require the manifest to be registered on the host machine to inspect traces.\n Post this change, the systrace events can be inspected on any windows machines where the RNW based apps are running by issuing the following commands, \nwpr.exe -start rnw.wprp\nwpr.exe -stop rnw.etl\nwpa.exe rnw.etl\n\nThis works for Win32 apps too, say Office.",
+            "author": "mganandraj@outlook.com",
+            "commit": "e7efb40200b0817d5490a5b6e9a76c3df7329b76",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 03 May 2021 14:06:32 GMT",
+      "tag": "react-native-windows_v0.64.6",
+      "version": "0.64.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Remove version from ExperimentalFeatures.props links",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4b552ca018919b71fd8ae34af92f538b0a069cd8",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 26 Apr 2021 18:47:14 GMT",
+      "tag": "react-native-windows_v0.64.5",
+      "version": "0.64.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Suppress onLayout event when layout has not changed (#7470)",
+            "author": "erozell@outlook.com",
+            "commit": "a29cccfaa9bc3fcfb154a02fca718b2acb4674e9",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Change TextInput cursor behavior (#7285)",
+            "author": "erozell@outlook.com",
+            "commit": "51feac94af8a5d572b1e1c3203b2094619edc634",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Apr 2021 17:00:53 GMT",
+      "tag": "react-native-windows_v0.64.4",
+      "version": "0.64.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Enable any platform color to be used in PlatformColor()",
+            "author": "asklar@microsoft.com",
+            "commit": "09ac2fd1485d17d3baac2d4e1b709306b18bfe5e",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Calling UIManager.dispatchViewManagerCommand should trigger updates",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "ebf82d623c82652991990e0c9e627c3ad7ad422f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow swapping to System Chakra at runtime.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "d731a4f118124b89db8d5a1f3d626568556510e2",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Apr 2021 17:04:31 GMT",
       "tag": "react-native-windows_v0.64.3",
       "version": "0.64.3",
