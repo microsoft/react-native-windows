@@ -8,11 +8,8 @@
 #include <UI.Xaml.Documents.h>
 #include <Utils/TransformableText.h>
 #include <Views/FrameworkElementViewManager.h>
-<<<<<<< HEAD
-=======
 #include <Views/ShadowNodeBase.h>
 #include <Views/TextViewManager.h>
->>>>>>> e64bc2936 (Fixes issues with Text backgroundColor (#8408))
 
 namespace Microsoft::ReactNative {
 

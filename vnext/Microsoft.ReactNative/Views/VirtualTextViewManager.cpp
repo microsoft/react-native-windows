@@ -8,11 +8,8 @@
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <Utils/PropertyUtils.h>
-<<<<<<< HEAD
-=======
 #include <Utils/ShadowNodeTypeUtils.h>
 #include <Utils/TransformableText.h>
->>>>>>> e64bc2936 (Fixes issues with Text backgroundColor (#8408))
 #include <Utils/ValueUtils.h>
 
 namespace winrt {
@@ -142,10 +139,6 @@ bool VirtualTextViewManager::UpdateProperty(
   // FUTURE: In the future cppwinrt will generate code where static methods on
   // base types can be called.  For now we specify the base type explicitly
   if (TryUpdateForeground<winrt::TextElement>(span, propertyName, propertyValue)) {
-<<<<<<< HEAD
-    static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.foregroundColor =
-        react::uwp::ColorFrom(propertyValue);
-=======
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {
       node->m_foregroundColor = OptionalColorFrom(propertyValue);
@@ -154,7 +147,6 @@ bool VirtualTextViewManager::UpdateProperty(
           node->m_foregroundColor ? PropertyChangeType::AddBackgroundColor : PropertyChangeType::None;
       node->NotifyAncestorsTextPropertyChanged(propertyChangeType);
     }
->>>>>>> e64bc2936 (Fixes issues with Text backgroundColor (#8408))
   } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (TryUpdateTextDecorationLine<winrt::TextElement>(span, propertyName, propertyValue)) {
@@ -162,11 +154,6 @@ bool VirtualTextViewManager::UpdateProperty(
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     node->transformableText.textTransform = TransformableText::GetTextTransform(propertyValue);
   } else if (propertyName == "backgroundColor") {
-<<<<<<< HEAD
-    if (react::uwp::IsValidColorValue(propertyValue)) {
-      static_cast<VirtualTextShadowNode *>(nodeToUpdate)->m_highlightData.backgroundColor =
-          react::uwp::ColorFrom(propertyValue);
-=======
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {
       node->m_backgroundColor = OptionalColorFrom(propertyValue);
@@ -174,7 +161,6 @@ bool VirtualTextViewManager::UpdateProperty(
       const auto propertyChangeType =
           node->m_backgroundColor ? PropertyChangeType::AddBackgroundColor : PropertyChangeType::None;
       node->NotifyAncestorsTextPropertyChanged(propertyChangeType);
->>>>>>> e64bc2936 (Fixes issues with Text backgroundColor (#8408))
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);

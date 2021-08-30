@@ -50,8 +50,6 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   void AddView(ShadowNode &child, int64_t index) override {
-<<<<<<< HEAD
-=======
     auto &childNode = static_cast<ShadowNodeBase &>(child);
     VirtualTextShadowNode::ApplyTextTransform(
         childNode, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
@@ -62,24 +60,12 @@ class TextShadowNode final : public ShadowNodeBase {
     }
 
     auto addInline = true;
->>>>>>> e64bc2936 (Fixes issues with Text backgroundColor (#8408))
     if (index == 0) {
       auto run = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Run>();
       if (run != nullptr) {
         m_firstChildNode = &child;
         auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
-<<<<<<< HEAD
-        std::wstring text(run.Text().c_str());
-        transformableText.originalText = text;
-        text = transformableText.TransformText();
-        textBlock.Text(winrt::hstring(text));
-
-        if (m_backgroundColor) {
-          AddHighlighter(m_backgroundColor.value(), m_foregroundColor, textBlock.Text().size());
-        }
-=======
         textBlock.Text(run.Text());
->>>>>>> e64bc2936 (Fixes issues with Text backgroundColor (#8408))
         m_prevCursorEnd += textBlock.Text().size();
         addInline = false;
       }
@@ -134,17 +120,6 @@ class TextShadowNode final : public ShadowNodeBase {
       nestedIndex = textBlock.Text().size();
     }
 
-<<<<<<< HEAD
-  void AddHighlighter(
-      const winrt::Windows::UI::Color &backgroundColor,
-      const std::optional<winrt::Windows::UI::Color> &foregroundColor,
-      size_t runSize) {
-    auto newHigh = winrt::TextHighlighter{};
-    newHigh.Background(react::uwp::SolidBrushFromColor(backgroundColor));
-
-    if (foregroundColor) {
-      newHigh.Foreground(react::uwp::SolidBrushFromColor(foregroundColor.value()));
-=======
     if (m_backgroundColor) {
       winrt::TextHighlighter highlighter{};
       highlighter.Ranges().Append({0, nestedIndex});
@@ -153,7 +128,6 @@ class TextShadowNode final : public ShadowNodeBase {
         highlighter.Foreground(SolidBrushFromColor(m_foregroundColor.value()));
       }
       GetView().as<xaml::Controls::TextBlock>().TextHighlighters().InsertAt(0, highlighter);
->>>>>>> e64bc2936 (Fixes issues with Text backgroundColor (#8408))
     }
   }
 
@@ -211,12 +185,8 @@ class TextShadowNode final : public ShadowNodeBase {
     return 0;
   }
 
-<<<<<<< HEAD
-  TransformableText transformableText{};
-=======
   TextTransform textTransform{TextTransform::Undefined};
   bool m_hasDescendantBackgroundColor{false};
->>>>>>> e64bc2936 (Fixes issues with Text backgroundColor (#8408))
 };
 
 TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -244,15 +214,11 @@ bool TextViewManager::UpdateProperty(
     return true;
 
   if (TryUpdateForeground(textBlock, propertyName, propertyValue)) {
-<<<<<<< HEAD
-    static_cast<TextShadowNode *>(nodeToUpdate)->m_foregroundColor = react::uwp::ColorFrom(propertyValue);
-=======
     const auto node = static_cast<TextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {
       node->m_foregroundColor = OptionalColorFrom(propertyValue);
       node->RecalculateTextHighlighters();
     }
->>>>>>> e64bc2936 (Fixes issues with Text backgroundColor (#8408))
   } else if (TryUpdateFontProperties(textBlock, propertyName, propertyValue)) {
   } else if (propertyName == "textTransform") {
     auto textNode = static_cast<TextShadowNode *>(nodeToUpdate);
@@ -302,15 +268,10 @@ bool TextViewManager::UpdateProperty(
     } else
       textBlock.ClearValue(xaml::Controls::TextBlock::SelectionHighlightColorProperty());
   } else if (propertyName == "backgroundColor") {
-<<<<<<< HEAD
-    if (react::uwp::IsValidColorValue(propertyValue)) {
-      static_cast<TextShadowNode *>(nodeToUpdate)->m_backgroundColor = react::uwp::ColorFrom(propertyValue);
-=======
     const auto node = static_cast<TextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {
       node->m_backgroundColor = OptionalColorFrom(propertyValue);
       node->RecalculateTextHighlighters();
->>>>>>> e64bc2936 (Fixes issues with Text backgroundColor (#8408))
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
@@ -379,8 +340,6 @@ void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node, Prop
   }
 }
 
-<<<<<<< HEAD
-=======
 TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
   if (IsTextShadowNode(node)) {
     return static_cast<TextShadowNode *>(node)->textTransform;
@@ -389,5 +348,4 @@ TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
   return TextTransform::Undefined;
 }
 
->>>>>>> e64bc2936 (Fixes issues with Text backgroundColor (#8408))
 } // namespace Microsoft::ReactNative
