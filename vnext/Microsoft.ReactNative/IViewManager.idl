@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import "IViewManagerCore.idl";
+import "ReactPointerEventArgs.idl";
 
 #include "NamespaceRedirect.h"
 #include "DocString.h"
@@ -69,10 +70,10 @@ namespace Microsoft.ReactNative
     "Enables a view manager to release pointer capture from the React root view and start handling pointer events itself."
   )
   interface IViewManagerWithPointerEvents {
-    Boolean OnPointerPressed(XAML_NAMESPACE.Input.PointerRoutedEventArgs args);
-    Boolean OnPointerMoved(XAML_NAMESPACE.Input.PointerRoutedEventArgs args);
-    Boolean OnPointerReleased(XAML_NAMESPACE.Input.PointerRoutedEventArgs args);
-    void OnPointerCanceled(XAML_NAMESPACE.Input.PointerRoutedEventArgs args);
-    void OnPointerCaptureLost(XAML_NAMESPACE.Input.PointerRoutedEventArgs args);
+    void OnPointerPressed(Object view, ReactPointerEventArgs args);
+    void OnPointerMoved(Object view, ReactPointerEventArgs args);
+    void OnPointerReleased(Object view, ReactPointerEventArgs args);
+    void OnPointerCanceled(Object view, ReactPointerEventArgs args);
+    void OnPointerCaptureLost(Object view, ReactPointerEventArgs args);
   };
 } // namespace Microsoft.ReactNative

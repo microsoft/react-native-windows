@@ -309,6 +309,7 @@
     <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
+    <ClCompile Include="ReactPointerEventArgs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -672,6 +673,7 @@
     <ClInclude Include="Utils\ShadowNodeTypeUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="ReactPointerEventArgs.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -709,6 +711,7 @@
     <Midl Include="JsiApi.idl" />
     <Midl Include="DocString.idl" />
     <Midl Include="DesktopWindowMessage.idl" />
+    <Midl Include="ReactPointerEventArgs.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />
