@@ -25,14 +25,6 @@ struct ChakraInstanceArgs {
    */
   JsRuntimeAttributes RuntimeAttributes = JsRuntimeAttributeNone;
 
-  /**
-   * @brief Memory limit set on the newly created Chakra runtime.
-   *
-   * @remarks The value 0 means that no memory limit is being set on the
-   * runtime.
-   */
-  size_t RuntimeMemoryLimit{0};
-
   NativeLoggingHook LoggingCallback{};
 
   /**
