@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 Aug 2021 15:06:56 GMT",
+      "tag": "react-native-windows_v0.65.1",
+      "version": "0.65.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.65] Consume Node-Api V8 JSI Runtime",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "9f4c30331a2b01f63dd317b3a098ea302fdb93b1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Lib project will use the app's ExperimentalFeatures.props",
+            "author": "asklar@microsoft.com",
+            "commit": "c5ab0330ff060b8dbf0e62c58b87dd5a577661ba",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Aug 2021 15:09:39 GMT",
       "tag": "react-native-windows_v0.65.0",
       "version": "0.65.0",
