@@ -4,8 +4,17 @@
  * @format
  */
 
-import React from 'react';
-import {AppRegistry, StyleSheet, Text, TextInput, View} from 'react-native';
+import * as React from 'react';
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  AccessibilityInfo,
+  findNodeHandle,
+  TouchableHighlight,
+} from 'react-native';
 
 export default class Bootstrap extends React.Component<
   {},
@@ -15,6 +24,8 @@ export default class Bootstrap extends React.Component<
     super(props);
     this.state = {displayText: 'Starting text. (THIRD ITEM)'};
   }
+
+  myElement = React.createRef();
 
   render() {
     return (
@@ -50,7 +61,34 @@ export default class Bootstrap extends React.Component<
           }}>
           <Text style={styles.text}>{this.state.displayText}</Text>
         </View>
-        <TextInput />
+        <TouchableHighlight
+          style={styles.item}
+          onPress={() => {
+            AccessibilityInfo.announceForAccessibility('Testing Testing 1 2 3');
+          }}
+          {...{
+            // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
+            focusable: true,
+            accessibilityLabel: 'TEST Announce For Accessibility',
+          }}>
+          <Text style={styles.text}>TEST announceForAccessibility</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={styles.item}
+          onPress={() => {
+            const reactTag = findNodeHandle(this.myElement.current);
+            if (reactTag) {
+              AccessibilityInfo.setAccessibilityFocus(reactTag);
+            }
+          }}
+          {...{
+            // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
+            focusable: true,
+            accessibilityLabel: 'TEST Set Accessibility Focus',
+          }}>
+          <Text style={styles.text}>TEST setAccessibilityFocus</Text>
+        </TouchableHighlight>
+        <TextInput ref={this.myElement} />
       </View>
     );
   }
