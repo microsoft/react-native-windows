@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 23 Aug 2021 15:10:07 GMT and should not be manually modified.
+This log was last generated on Mon, 30 Aug 2021 15:07:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.16
+
+Mon, 30 Aug 2021 15:07:10 GMT
+
+### Patches
+
+- [0.64] Consume Node-Api V8 JSI Runtime (julio.rocha@microsoft.com)
 
 ## 0.64.15
 
