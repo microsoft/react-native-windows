@@ -20,6 +20,11 @@ steps:
       artifact: ReactWindows
       path: $(System.DefaultWorkingDirectory)/ReactWindows
 
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core 2.1 for signing tools'
+    inputs:
+      version: 2.1.x
+
   - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true)) }}:
     - powershell: |
         (Get-Content -Path $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets
