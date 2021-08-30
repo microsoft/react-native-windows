@@ -65,11 +65,15 @@ class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewMana
     return m_viewManagerRequiresNativeLayout != nullptr && m_viewManagerRequiresNativeLayout.RequiresNativeLayout();
   }
 
-  bool OnPointerPressed(const xaml::Input::PointerRoutedEventArgs &args) override;
-  bool OnPointerMoved(const xaml::Input::PointerRoutedEventArgs &args) override;
-  bool OnPointerReleased(const xaml::Input::PointerRoutedEventArgs &args) override;
-  void OnPointerCanceled(const xaml::Input::PointerRoutedEventArgs &args) override;
-  void OnPointerCaptureLost(const xaml::Input::PointerRoutedEventArgs &args) override;
+  void OnPointerPressed(const ::Microsoft::ReactNative::ShadowNodeBase *node, const ReactPointerEventArgs &args)
+      override;
+  void OnPointerMoved(const ::Microsoft::ReactNative::ShadowNodeBase *node, const ReactPointerEventArgs &args) override;
+  void OnPointerReleased(const ::Microsoft::ReactNative::ShadowNodeBase *node, const ReactPointerEventArgs &args)
+      override;
+  void OnPointerCanceled(const ::Microsoft::ReactNative::ShadowNodeBase *node, const ReactPointerEventArgs &args)
+      override;
+  void OnPointerCaptureLost(const ::Microsoft::ReactNative::ShadowNodeBase *node, const ReactPointerEventArgs &args)
+      override;
 
  protected:
   xaml::DependencyObject CreateViewCore(int64_t, const winrt::Microsoft::ReactNative::JSValueObject &props) override;

@@ -79,17 +79,21 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
   virtual bool RequiresYogaNode() const;
   bool IsNativeControlWithSelfLayout() const;
 
-  virtual bool OnPointerPressed(const xaml::Input::PointerRoutedEventArgs & /*args*/) {
-    return false;
-  }
-  virtual bool OnPointerMoved(const xaml::Input::PointerRoutedEventArgs & /*args*/) {
-    return false;
-  }
-  virtual bool OnPointerReleased(const xaml::Input::PointerRoutedEventArgs & /*args*/) {
-    return false;
-  }
-  virtual void OnPointerCanceled(const xaml::Input::PointerRoutedEventArgs & /*args*/) {}
-  virtual void OnPointerCaptureLost(const xaml::Input::PointerRoutedEventArgs & /*args*/) {}
+  virtual void OnPointerPressed(
+      const ShadowNodeBase * /*node*/,
+      const winrt::Microsoft::ReactNative::ReactPointerEventArgs & /*args*/) {}
+  virtual void OnPointerMoved(
+      const ShadowNodeBase * /*node*/,
+      const winrt::Microsoft::ReactNative::ReactPointerEventArgs & /*args*/) {}
+  virtual void OnPointerReleased(
+      const ShadowNodeBase * /*node*/,
+      const winrt::Microsoft::ReactNative::ReactPointerEventArgs & /*args*/) {}
+  virtual void OnPointerCanceled(
+      const ShadowNodeBase * /*node*/,
+      const winrt::Microsoft::ReactNative::ReactPointerEventArgs & /*args*/) {}
+  virtual void OnPointerCaptureLost(
+      const ShadowNodeBase * /*node*/,
+      const winrt::Microsoft::ReactNative::ReactPointerEventArgs & /*args*/) {}
 
   const Mso::React::IReactContext &GetReactContext() const {
     return *m_context;

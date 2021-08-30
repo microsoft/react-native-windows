@@ -216,34 +216,53 @@ YGMeasureFunc ABIViewManager::GetYogaCustomMeasureFunc() const {
   }
 }
 
-bool ABIViewManager::OnPointerPressed(const xaml::Input::PointerRoutedEventArgs &args) {
-  return m_viewManagerWithPointerEvents ? m_viewManagerWithPointerEvents.OnPointerPressed(args)
-                                        : Super::OnPointerPressed(args);
-}
-
-bool ABIViewManager::OnPointerMoved(const xaml::Input::PointerRoutedEventArgs &args) {
-  return m_viewManagerWithPointerEvents ? m_viewManagerWithPointerEvents.OnPointerMoved(args)
-                                        : Super::OnPointerMoved(args);
-}
-
-bool ABIViewManager::OnPointerReleased(const xaml::Input::PointerRoutedEventArgs &args) {
-  return m_viewManagerWithPointerEvents ? m_viewManagerWithPointerEvents.OnPointerReleased(args)
-                                        : Super::OnPointerReleased(args);
-}
-
-void ABIViewManager::OnPointerCanceled(const xaml::Input::PointerRoutedEventArgs &args) {
+void ABIViewManager::OnPointerPressed(
+    const ::Microsoft::ReactNative::ShadowNodeBase *node,
+    const ReactPointerEventArgs &args) {
   if (m_viewManagerWithPointerEvents) {
-    m_viewManagerWithPointerEvents.OnPointerCanceled(args);
+    m_viewManagerWithPointerEvents.OnPointerPressed(node->GetView(), args);
   } else {
-    Super::OnPointerCanceled(args);
+    Super::OnPointerCaptureLost(node, args);
   }
 }
 
-void ABIViewManager::OnPointerCaptureLost(const xaml::Input::PointerRoutedEventArgs &args) {
+void ABIViewManager::OnPointerMoved(
+    const ::Microsoft::ReactNative::ShadowNodeBase *node,
+    const ReactPointerEventArgs &args) {
   if (m_viewManagerWithPointerEvents) {
-    m_viewManagerWithPointerEvents.OnPointerCaptureLost(args);
+    m_viewManagerWithPointerEvents.OnPointerMoved(node->GetView(), args);
   } else {
-    Super::OnPointerCaptureLost(args);
+    Super::OnPointerCaptureLost(node, args);
+  }
+}
+
+void ABIViewManager::OnPointerReleased(
+    const ::Microsoft::ReactNative::ShadowNodeBase *node,
+    const ReactPointerEventArgs &args) {
+  if (m_viewManagerWithPointerEvents) {
+    m_viewManagerWithPointerEvents.OnPointerReleased(node->GetView(), args);
+  } else {
+    Super::OnPointerCaptureLost(node, args);
+  }
+}
+
+void ABIViewManager::OnPointerCanceled(
+    const ::Microsoft::ReactNative::ShadowNodeBase *node,
+    const ReactPointerEventArgs &args) {
+  if (m_viewManagerWithPointerEvents) {
+    m_viewManagerWithPointerEvents.OnPointerCanceled(node->GetView(), args);
+  } else {
+    Super::OnPointerCaptureLost(node, args);
+  }
+}
+
+void ABIViewManager::OnPointerCaptureLost(
+    const ::Microsoft::ReactNative::ShadowNodeBase *node,
+    const ReactPointerEventArgs &args) {
+  if (m_viewManagerWithPointerEvents) {
+    m_viewManagerWithPointerEvents.OnPointerCaptureLost(node->GetView(), args);
+  } else {
+    Super::OnPointerCaptureLost(node, args);
   }
 }
 
