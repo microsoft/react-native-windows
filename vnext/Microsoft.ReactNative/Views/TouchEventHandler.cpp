@@ -104,8 +104,12 @@ void TouchEventHandler::OnPointerPressed(
     return;
   }
 
-  const auto shouldReleaseCapture = NotifyParentViewManagers(tag, TouchEventType::Start, args);
-  if (!shouldReleaseCapture && m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
+  const auto callbackArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(args);
+  callbackArgs.Target(sourceElement);
+  const auto argsImpl =
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(callbackArgs);
+  NotifyParentViewManagers(tag, TouchEventType::Start, *argsImpl);
+  if (!argsImpl->CaptureReleased() && m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
     // Pointer pressing updates the enter/leave state
     UpdatePointersInViews(args, tag, sourceElement);
 
@@ -113,7 +117,7 @@ void TouchEventHandler::OnPointerPressed(
 
     // For now, when using the mouse we only want to send click events for the left button.
     // Finger and pen taps will also set isLeftButton.
-    if (m_pointers[pointerIndex].isLeftButton) {
+    if (m_pointers[pointerIndex].isLeftButton && !argsImpl->DefaultPrevented()) {
       DispatchTouchEvent(TouchEventType::Start, pointerIndex);
     }
   }
@@ -162,9 +166,14 @@ void TouchEventHandler::OnPointerMoved(
 
   auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
   if (optPointerIndex) {
-    if (NotifyParentViewManagers(tag, TouchEventType::Move, args)) {
+    const auto callbackArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(args);
+    callbackArgs.Target(sourceElement);
+    const auto argsImpl =
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(callbackArgs);
+    NotifyParentViewManagers(tag, TouchEventType::Move, *argsImpl);
+    if (argsImpl->CaptureReleased()) {
       m_xamlView.as<xaml::FrameworkElement>().ReleasePointerCapture(args.Pointer());
-    } else {
+    } else if (!argsImpl->DefaultPrevented()) {
       UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
       DispatchTouchEvent(TouchEventType::Move, *optPointerIndex);
     }
@@ -191,9 +200,14 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
 
   if (m_pointers[*optPointerIndex].isLeftButton) {
-    if (NotifyParentViewManagers(tag, eventType, args)) {
+    const auto callbackArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(args);
+    callbackArgs.Target(sourceElement);
+    const auto argsImpl =
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(callbackArgs);
+    NotifyParentViewManagers(tag, eventType, *argsImpl);
+    if (argsImpl->CaptureReleased()) {
       DispatchTouchEvent(TouchEventType::Cancel, *optPointerIndex);
-    } else {
+    } else if (!argsImpl->DefaultPrevented()) {
       DispatchTouchEvent(eventType, *optPointerIndex);
     }
   }
@@ -658,33 +672,27 @@ winrt::IPropertyValue TouchEventHandler::TestHit(
 bool TouchEventHandler::NotifyParentViewManagers(
     int64_t tag,
     TouchEventType eventType,
-    const winrt::PointerRoutedEventArgs &args) {
+    const winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs &args) {
   // TODO: merge parent traversals so we only traverse once
   if (const auto uiManager = GetNativeUIManager(*m_context).lock()) {
     auto shadowNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(tag));
-    while (shadowNode) {
+    while (shadowNode && !args.PropagationStopped()) {
       const auto viewManager = shadowNode->GetViewManager();
       switch (eventType) {
         case TouchEventType::Start:
-          if (viewManager->OnPointerPressed(args)) {
-            return true;
-          }
+          viewManager->OnPointerPressed(shadowNode, args);
           break;
         case TouchEventType::Move:
-          if (viewManager->OnPointerMoved(args)) {
-            return true;
-          }
+          viewManager->OnPointerMoved(shadowNode, args);
           break;
         case TouchEventType::End:
-          if (viewManager->OnPointerReleased(args)) {
-            return true;
-          }
+          viewManager->OnPointerReleased(shadowNode, args);
           break;
         case TouchEventType::Cancel:
-          viewManager->OnPointerCanceled(args);
+          viewManager->OnPointerCanceled(shadowNode, args);
           break;
         case TouchEventType::CaptureLost:
-          viewManager->OnPointerCaptureLost(args);
+          viewManager->OnPointerCaptureLost(shadowNode, args);
           break;
       }
       shadowNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(shadowNode->m_parent));
