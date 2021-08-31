@@ -309,6 +309,9 @@
     <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\TextHitTestUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -670,6 +673,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Utils\ShadowNodeTypeUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\TextHitTestUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>

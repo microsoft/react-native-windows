@@ -19,14 +19,21 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   void AddView(ShadowNode &child, int64_t index) override;
   void RemoveChildAt(int64_t indexToRemove) override;
   void removeAllChildren() override;
+  void onDropViewInstance() override;
+
+  void AddToPressableCount(int pressableCount);
+  void SetPressable(bool isPressable);
 
   void NotifyAncestorsTextPropertyChanged(PropertyChangeType propertyChangeType);
 
   static void ApplyTextTransform(ShadowNodeBase &node, TextTransform transform, bool forceUpdate, bool isRoot);
+  static xaml::DependencyObject HitTest(const ShadowNodeBase &node, const winrt::Point &point, bool hasPressableParent);
 
   std::optional<winrt::Windows::UI::Color> m_backgroundColor;
   std::optional<winrt::Windows::UI::Color> m_foregroundColor;
   bool m_hasDescendantBackgroundColor{false};
+  bool m_isPressable{false};
+  int m_pressableCount{0};
 };
 
 class VirtualTextViewManager : public ViewManagerBase {

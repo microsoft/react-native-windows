@@ -18,6 +18,7 @@
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <Utils/PropertyUtils.h>
+#include <Utils/TextHitTestUtils.h>
 #include <Utils/TransformableText.h>
 #include <Utils/ValueUtils.h>
 
@@ -57,6 +58,7 @@ class TextShadowNode final : public ShadowNodeBase {
     if (IsVirtualTextShadowNode(&childNode)) {
       auto &textChildNode = static_cast<VirtualTextShadowNode &>(childNode);
       m_hasDescendantBackgroundColor |= textChildNode.m_hasDescendantBackgroundColor;
+      pressableCount += textChildNode.m_pressableCount;
     }
 
     auto addInline = true;
@@ -185,8 +187,31 @@ class TextShadowNode final : public ShadowNodeBase {
     return 0;
   }
 
+  int64_t GetReactTagAtPoint(const winrt::Point &point) {
+    if (pressableCount > 0) {
+      const auto hitTarget = VirtualTextShadowNode::HitTest(*this, point, /* hasPressableParent = */ false);
+      if (hitTarget != nullptr) {
+        auto inlineTag = GetTag(hitTarget);
+        if (inlineTag != -1) {
+          if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+            const auto node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(inlineTag));
+            // React Native does not support events targeted to raw text nodes.
+            // Get the parent tag instead.
+            if (IsRawTextShadowNode(node)) {
+              inlineTag = node->GetParent();
+            }
+            return inlineTag;
+          }
+        }
+      }
+    }
+
+    return m_tag;
+  }
+
   TextTransform textTransform{TextTransform::Undefined};
   bool m_hasDescendantBackgroundColor{false};
+  int pressableCount{0};
 };
 
 TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -362,6 +387,22 @@ TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
   }
 
   return TextTransform::Undefined;
+}
+
+void TextViewManager::AddToPressableCount(ShadowNodeBase *node, int pressableCount) {
+  if (!std::wcscmp(node->GetViewManager()->GetName(), GetName())) {
+    const auto textNode = static_cast<TextShadowNode *>(node);
+    textNode->pressableCount += pressableCount;
+  }
+}
+
+int64_t TextViewManager::GetReactTagAtPoint(ShadowNodeBase *node, const winrt::Point &point) {
+  if (IsTextShadowNode(node)) {
+    const auto textNode = static_cast<TextShadowNode *>(node);
+    return textNode->GetReactTagAtPoint(point);
+  }
+
+  return node->m_tag;
 }
 
 } // namespace Microsoft::ReactNative
