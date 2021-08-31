@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "ReactPointerEventArgs.g.cpp"
 #include "ReactPointerEventArgs.h"
+#include "ReactPointerEventArgs.g.cpp"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -31,8 +31,7 @@ void ReactPointerEventArgs::StopPropagation() {
   m_propagationStopped = true;
 }
 
-ReactPointerEventArgs::ReactPointerEventArgs(xaml::Input::PointerRoutedEventArgs const &args) noexcept
-    : m_args{args} {}
+ReactPointerEventArgs::ReactPointerEventArgs(xaml::Input::PointerRoutedEventArgs const &args) noexcept : m_args{args} {}
 
 bool ReactPointerEventArgs::CaptureReleased() const noexcept {
   return m_captureReleased;
