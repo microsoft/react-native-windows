@@ -16,6 +16,13 @@
     },
     {
       "type": "patch",
+      "file": "src/js/examples/Border/BorderExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Border/BorderExample.js",
+      "baseHash": "043cf120a294fb653adbf149358dfcc9f0982cd0",
+      "issue": 8511
+    },
+    {
+      "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
       "baseHash": "57c01049a8acb59a8e90dbc29aad297fb1a4d887",
