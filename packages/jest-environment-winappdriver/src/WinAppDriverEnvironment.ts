@@ -165,7 +165,7 @@ function resolveAppName(appName: string): string {
       throw new Error();
     }
 
-    return packageFamilyName;
+    return `${packageFamilyName}!App`;
   } catch {
     throw new Error(`Could not locate a package with identity "${appName}"`);
   }
