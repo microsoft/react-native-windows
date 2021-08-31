@@ -63,8 +63,7 @@ function translateParam(
       return 'double';
     }
     case 'TypeAliasTypeAnnotation':
-      // TODO: print the real name after processing NativeModuleSchema::aliases
-      return decorateType('React::JSValueObject', forSpec);
+      return decorateType(param.name, forSpec);
     default:
       throw new Error(`Unhandled type in translateParam: ${paramType}`);
   }
@@ -73,10 +72,12 @@ function translateParam(
 function translateSpecFunctionParam(param: NativeModuleParamShape): string {
   switch (param.typeAnnotation.type) {
     case 'NullableTypeAnnotation':
-      return `std::optional<${translateParam(
-        param.typeAnnotation.typeAnnotation,
-        true,
-      )}>`;
+      // TODO: should be
+      // return `std::optional<${translateParam(
+      //   param.typeAnnotation.typeAnnotation,
+      //   true,
+      // )}>`;
+      return translateParam(param.typeAnnotation.typeAnnotation, true);
     default:
       return translateParam(param.typeAnnotation, true);
   }
@@ -85,10 +86,12 @@ function translateSpecFunctionParam(param: NativeModuleParamShape): string {
 function translateFunctionParam(param: NativeModuleParamShape): string {
   switch (param.typeAnnotation.type) {
     case 'NullableTypeAnnotation':
-      return `std::optional<${translateParam(
-        param.typeAnnotation.typeAnnotation,
-        false,
-      )}>`;
+      // TODO: should be
+      // return `std::optional<${translateParam(
+      //   param.typeAnnotation.typeAnnotation,
+      //   false,
+      // )}>`;
+      return translateParam(param.typeAnnotation.typeAnnotation, false);
     default:
       return translateParam(param.typeAnnotation, false);
   }

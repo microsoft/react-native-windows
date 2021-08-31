@@ -49,8 +49,7 @@ function translateField(
       return 'double';
     }
     case 'TypeAliasTypeAnnotation':
-      // TODO: print the real name after processing NativeModuleSchema::aliases
-      return 'React::JSValueObject';
+      return type.name;
     case 'NullableTypeAnnotation':
       return `std::optional<${translateField(type.typeAnnotation)}>`;
     default:

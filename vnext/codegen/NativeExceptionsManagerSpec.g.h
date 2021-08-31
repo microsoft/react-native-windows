@@ -14,10 +14,29 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  struct StackFrame {
+      std::optional<double> column;
+      std::optional<std::string> file;
+      std::optional<double> lineNumber;
+      std::string methodName;
+      std::optional<bool> collapse;
+  };
+
+  struct ExceptionData {
+      std::string message;
+      std::optional<std::string> originalMessage;
+      std::optional<std::string> name;
+      std::optional<std::string> componentStack;
+      React::JSValueArray stack;
+      double id;
+      bool isFatal;
+      std::optional<React::JSValueObject> extraData;
+  };
+
   static constexpr auto methods = std::tuple{
       Method<void(std::string, React::JSValueArray, double) noexcept>{0, L"reportFatalException"},
       Method<void(std::string, React::JSValueArray, double) noexcept>{1, L"reportSoftException"},
-      Method<void(React::JSValueObject) noexcept>{2, L"reportException"},
+      Method<void(ExceptionData) noexcept>{2, L"reportException"},
       Method<void(std::string, React::JSValueArray, double) noexcept>{3, L"updateExceptionMessage"},
       Method<void() noexcept>{4, L"dismissRedbox"},
   };
@@ -39,8 +58,8 @@ struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "reportException",
-          "    REACT_METHOD(reportException) void reportException(React::JSValueObject && data) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(reportException) static void reportException(React::JSValueObject && data) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(reportException) void reportException(ExceptionData && data) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(reportException) static void reportException(ExceptionData && data) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "updateExceptionMessage",

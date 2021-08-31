@@ -14,6 +14,24 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  struct Permissions {
+      bool alert;
+      bool badge;
+      bool sound;
+  };
+
+  struct Notification {
+      std::optional<std::string> alertTitle;
+      std::optional<double> fireDate;
+      std::optional<std::string> alertBody;
+      std::optional<std::string> alertAction;
+      std::optional<React::JSValueObject> userInfo;
+      std::optional<std::string> category;
+      std::optional<std::string> repeatInterval;
+      std::optional<double> applicationIconBadgeNumber;
+      std::optional<bool> isSilent;
+  };
+
   static constexpr auto methods = std::tuple{
       Method<void(std::string, std::string) noexcept>{0, L"onFinishRemoteNotification"},
       Method<void(double) noexcept>{1, L"setApplicationIconBadgeNumber"},
@@ -21,8 +39,8 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
       Method<void(React::JSValueObject, Promise<React::JSValue>) noexcept>{3, L"requestPermissions"},
       Method<void() noexcept>{4, L"abandonPermissions"},
       Method<void(Callback<React::JSValue>) noexcept>{5, L"checkPermissions"},
-      Method<void(React::JSValueObject) noexcept>{6, L"presentLocalNotification"},
-      Method<void(React::JSValueObject) noexcept>{7, L"scheduleLocalNotification"},
+      Method<void(Notification) noexcept>{6, L"presentLocalNotification"},
+      Method<void(Notification) noexcept>{7, L"scheduleLocalNotification"},
       Method<void() noexcept>{8, L"cancelAllLocalNotifications"},
       Method<void(React::JSValueObject) noexcept>{9, L"cancelLocalNotifications"},
       Method<void(Promise<React::JSValue>) noexcept>{10, L"getInitialNotification"},
@@ -72,13 +90,13 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
     REACT_SHOW_METHOD_SPEC_ERRORS(
           6,
           "presentLocalNotification",
-          "    REACT_METHOD(presentLocalNotification) void presentLocalNotification(React::JSValueObject && notification) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(presentLocalNotification) static void presentLocalNotification(React::JSValueObject && notification) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(presentLocalNotification) void presentLocalNotification(Notification && notification) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(presentLocalNotification) static void presentLocalNotification(Notification && notification) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           7,
           "scheduleLocalNotification",
-          "    REACT_METHOD(scheduleLocalNotification) void scheduleLocalNotification(React::JSValueObject && notification) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(scheduleLocalNotification) static void scheduleLocalNotification(React::JSValueObject && notification) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(scheduleLocalNotification) void scheduleLocalNotification(Notification && notification) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(scheduleLocalNotification) static void scheduleLocalNotification(Notification && notification) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           8,
           "cancelAllLocalNotifications",

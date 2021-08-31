@@ -11,6 +11,7 @@ import {
   NativeModulePropertyShape,
   SchemaType,
 } from 'react-native-tscodegen';
+import {translateObjectBody} from './ObjectTypes';
 import {translateArgs, translateSpecArgs} from './ParamTypes';
 import {translateImplReturnType, translateSpecReturnType} from './ReturnTypes';
 
@@ -31,7 +32,7 @@ const moduleTemplate = `
 
 namespace ::_NAMESPACE_:: {
 
-struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {::_MODULE_ALIASED_STRUCTS_::
   static constexpr auto methods = std::tuple{
 ::_MODULE_PROPERTIES_TUPLE_::
   };
@@ -154,7 +155,17 @@ export function createNM2Generator({namespace}: {namespace: string}) {
 
       if (nativeModule.type === 'NativeModule') {
         console.log(`Generating Native${preferredModuleName}Spec.g.h`);
-        // TODO: Generate REACT_STRUCT(X) for nativeModule.aliases
+
+        let traversedAliasedStructs = '';
+        for (const aliasName of Object.keys(nativeModule.aliases)) {
+          const aliasType = nativeModule.aliases[aliasName];
+          traversedAliasedStructs = `${traversedAliasedStructs}
+  struct ${aliasName} {
+${translateObjectBody(aliasType, '      ')}
+  };
+`;
+        }
+
         const properties = nativeModule.spec.properties;
         const traversedProperties = renderProperties(properties, false);
         const traversedPropertyTuples = renderProperties(properties, true);
@@ -162,6 +173,7 @@ export function createNM2Generator({namespace}: {namespace: string}) {
         files.set(
           `Native${preferredModuleName}Spec.g.h`,
           moduleTemplate
+            .replace(/::_MODULE_ALIASED_STRUCTS_::/g, traversedAliasedStructs)
             .replace(/::_MODULE_PROPERTIES_TUPLE_::/g, traversedPropertyTuples)
             .replace(
               /::_MODULE_PROPERTIES_SPEC_ERRORS_::/g,

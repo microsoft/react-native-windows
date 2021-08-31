@@ -14,6 +14,28 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct DeviceInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  struct DisplayMetrics {
+      double width;
+      double height;
+      double scale;
+      double fontScale;
+  };
+
+  struct DisplayMetricsAndroid {
+      double width;
+      double height;
+      double scale;
+      double fontScale;
+      double densityDpi;
+  };
+
+  struct DimensionsPayload {
+      std::optional<DisplayMetrics> window;
+      std::optional<DisplayMetrics> screen;
+      std::optional<DisplayMetricsAndroid> windowPhysicalPixels;
+      std::optional<DisplayMetricsAndroid> screenPhysicalPixels;
+  };
+
   static constexpr auto methods = std::tuple{
 
   };

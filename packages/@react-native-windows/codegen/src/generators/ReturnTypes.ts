@@ -50,10 +50,10 @@ function translateReturnType(
       return 'double';
     }
     case 'TypeAliasTypeAnnotation':
-      // TODO: print the real name after processing NativeModuleSchema::aliases
-      return 'React::JSValueObject';
+      return type.name;
     case 'NullableTypeAnnotation':
-      return `std::optional<${translateReturnType(type.typeAnnotation)}>`;
+      // TODO: should be `std::optional<${translateReturnType(type.typeAnnotation)}>`;
+      return translateReturnType(type.typeAnnotation);
     default:
       throw new Error(`Unhandled type in translateReturnType: ${returnType}`);
   }
