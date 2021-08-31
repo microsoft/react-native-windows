@@ -303,6 +303,7 @@ bool TextViewManager::UpdateProperty(
       }
     } else if (propertyValue.IsNull()) {
       textBlock.ClearValue(winrt::AutomationProperties::LocalizedControlTypeProperty());
+      textBlock.ClearValue(winrt::AutomationProperties::HeadingLevelProperty());
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
