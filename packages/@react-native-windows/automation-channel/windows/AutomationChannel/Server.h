@@ -10,7 +10,7 @@
 namespace winrt::AutomationChannel::implementation {
 
 struct Server : ServerT<Server> {
-  Server(const AutomationChannel::Handler &handler);
+  Server(const AutomationChannel::CommandHandler &handler);
   Windows::Foundation::IAsyncAction ProcessAllClientRequests(
       uint16_t port,
       Windows::Foundation::TimeSpan pollInterval) noexcept;

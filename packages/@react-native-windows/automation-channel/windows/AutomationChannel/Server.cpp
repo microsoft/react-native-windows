@@ -12,7 +12,7 @@ using namespace winrt::Windows::Networking::Sockets;
 using namespace winrt::Windows::Storage::Streams;
 
 namespace winrt::AutomationChannel::implementation {
-Server::Server(const winrt::AutomationChannel::Handler &handler) : m_requestProcessor(handler) {}
+Server::Server(const winrt::AutomationChannel::CommandHandler &handler) : m_requestProcessor(handler) {}
 
 IAsyncAction Server::ProcessAllClientRequests(uint16_t port, Windows::Foundation::TimeSpan pollInterval) noexcept {
   auto weakServer = get_weak();

@@ -47,7 +47,7 @@ module.exports = {
 
   testEnvironmentOptions: {
     app: 'ReactUWPTestApp_8wekyb3d8bbwe!App',
-    enableRpc: true,
+    enableAutomationChannel: true,
     webdriverOptions: {
       // Level of logging verbosity: trace | debug | info | warn | error
       logLevel: 'error',

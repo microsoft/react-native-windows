@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import "Handler.idl";
+import "CommandHandler.idl";
 
 namespace AutomationChannel {
 
@@ -10,7 +10,7 @@ namespace AutomationChannel {
     runtimeclass Server
     {
       // Construct the server. Does not start listening/polling.
-      Server(AutomationChannel.Handler handler);
+      Server(AutomationChannel.CommandHandler handler);
 
       // Poll, waiting for a client to connect to the application. Process all
       // of the single clients request, then complete the AsyncAction

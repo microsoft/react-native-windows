@@ -107,8 +107,8 @@
     <ClInclude Include="Server.h">
       <DependentUpon>Server.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="Handler.h">
-      <DependentUpon>Handler.idl</DependentUpon>
+    <ClInclude Include="CommandHandler.h">
+      <DependentUpon>CommandHandler.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="ReactPackageProvider.h">
       <DependentUpon>ReactPackageProvider.idl</DependentUpon>
@@ -123,8 +123,8 @@
     <ClCompile Include="Server.cpp">
       <DependentUpon>Server.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="Handler.cpp">
-      <DependentUpon>Handler.idl</DependentUpon>
+    <ClCompile Include="CommandHandler.cpp">
+      <DependentUpon>CommandHandler.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="ReactPackageProvider.cpp">
       <DependentUpon>ReactPackageProvider.idl</DependentUpon>
@@ -132,7 +132,7 @@
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="Handler.idl" />
+    <Midl Include="CommandHandler.idl" />
     <Midl Include="ReactPackageProvider.idl" />
     <Midl Include="Server.idl" />
   </ItemGroup>

@@ -5,7 +5,7 @@
  * @format
  */
 
-import {RpcClient} from 'jest-environment-winappdriver';
+import {AutomationClient} from 'jest-environment-winappdriver';
 
 /**
  * Schema of tree dumped node
@@ -34,7 +34,7 @@ export type UIElement = {
 };
 
 declare global {
-  const rpcClient: RpcClient | undefined;
+  const automationClient: AutomationClient | undefined;
 }
 
 /**
@@ -48,11 +48,11 @@ export async function dumpVisualTree(
     additionalProperties?: string[];
   },
 ): Promise<UIElement> {
-  if (!rpcClient) {
+  if (!automationClient) {
     throw new Error('RPC client is not enabled');
   }
 
-  const dumpResponse = await rpcClient.invoke('DumpVisualTree', {
+  const dumpResponse = await automationClient.invoke('DumpVisualTree', {
     accessibilityId,
     ...opts,
   });

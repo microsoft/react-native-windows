@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include "Handler.g.h"
+#include "CommandHandler.g.h"
 
 #include <winrt/Windows.Storage.Streams.h>
 
@@ -21,7 +21,7 @@ enum class JsonRpcErrorCode : int32_t {
 //! Translates/verifies JSON-RPC2 messages, dispatches them, then outputs the result
 class JsonRpcRequestProcessor final {
  public:
-  JsonRpcRequestProcessor(const AutomationChannel::Handler &handler) noexcept;
+  JsonRpcRequestProcessor(const AutomationChannel::CommandHandler &handler) noexcept;
 
   winrt::fire_and_forget HandleRequest(
       winrt::hstring requestBody,
@@ -46,7 +46,7 @@ class JsonRpcRequestProcessor final {
       Windows::Data::Json::JsonValue id,
       Windows::Storage::Streams::IOutputStream output) noexcept;
 
-  AutomationChannel::Handler m_handler;
+  AutomationChannel::CommandHandler m_handler;
 };
 
 } // namespace winrt::AutomationChannel

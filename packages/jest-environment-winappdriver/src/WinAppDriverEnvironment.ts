@@ -15,29 +15,29 @@ import {BrowserObject, RemoteOptions} from 'webdriverio';
 import {Config} from '@jest/types';
 import {
   waitForConnection,
-  RpcClient,
+  AutomationClient,
 } from '@react-native-windows/automation-channel';
 
 export type EnvironmentOptions = {
   app?: string;
-  enableRpc?: boolean;
-  rpcPort?: number;
+  enableAutomationChannel?: boolean;
+  automationChannelPort?: number;
   winAppDriverBin?: string;
   webdriverOptions?: RemoteOptions;
 };
 
-type RpcOptions = {
+type AutomationChannelOptions = {
   enable: boolean;
   port: number;
 };
 
 class WinAppDriverEnvironment extends NodeEnvironment {
   private readonly webDriverOptions: RemoteOptions;
-  private readonly rpcOptions: RpcOptions;
+  private readonly channelOptions: AutomationChannelOptions;
   private readonly winappdriverBin: string;
   private winAppDriverProcess: ChildProcess | undefined;
   private browser: BrowserObject | undefined;
-  private rpcClient: RpcClient | undefined;
+  private automationClient: AutomationClient | undefined;
 
   constructor(config: Config.ProjectConfig) {
     super(config);
@@ -66,9 +66,9 @@ class WinAppDriverEnvironment extends NodeEnvironment {
       passedOptions.webdriverOptions,
     );
 
-    this.rpcOptions = {
-      enable: passedOptions.enableRpc === true,
-      port: passedOptions.rpcPort || 8603,
+    this.channelOptions = {
+      enable: passedOptions.enableAutomationChannel === true,
+      port: passedOptions.automationChannelPort || 8603,
     };
   }
 
@@ -78,9 +78,11 @@ class WinAppDriverEnvironment extends NodeEnvironment {
     this.winAppDriverProcess = await spawnWinAppDriver(this.winappdriverBin);
     this.browser = await webdriverio.remote(this.webDriverOptions);
 
-    if (this.rpcOptions.enable) {
-      this.rpcClient = await waitForConnection({port: this.rpcOptions.port});
-      this.global.rpcClient = this.rpcClient;
+    if (this.channelOptions.enable) {
+      this.automationClient = await waitForConnection({
+        port: this.channelOptions.port,
+      });
+      this.global.AutomationClient = this.automationClient;
     }
 
     this.global.remote = webdriverio.remote;
@@ -94,8 +96,8 @@ class WinAppDriverEnvironment extends NodeEnvironment {
       await this.browser.deleteSession();
     }
 
-    if (this.rpcClient) {
-      this.rpcClient.close();
+    if (this.automationClient) {
+      this.automationClient.close();
     }
 
     this.winAppDriverProcess?.kill('SIGINT');
@@ -144,5 +146,5 @@ async function spawnWinAppDriver(
   });
 }
 
-export {RpcClient} from '@react-native-windows/automation-channel';
+export {AutomationClient} from '@react-native-windows/automation-channel';
 module.exports = WinAppDriverEnvironment;

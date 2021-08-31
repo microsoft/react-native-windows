@@ -6,6 +6,6 @@ module.exports = {
     browser: 'readonly',
     expect: 'readonly',
     fail: 'readonly',
-    rpcClient: 'readonly',
+    AutomationClient: 'readonly',
   },
 };

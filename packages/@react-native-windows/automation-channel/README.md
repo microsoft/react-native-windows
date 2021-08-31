@@ -16,8 +16,8 @@ _react-native-windows app_
 ```c++
 #include "winrt/AutomationChannel.Server.h"
 
-// AutomationChannel::Handler allows registering methods
-winrt::AutomationChannel::Handler handler();
+// AutomationChannel::CommandHandler allows registering methods
+winrt::AutomationChannel::CommandHandler handler();
 
 // Binding to a simple method
 handler.BindOperation("add", [](const JSonValue& params) noexcept {
