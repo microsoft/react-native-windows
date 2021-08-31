@@ -221,9 +221,9 @@ void ABIViewManager::OnPointerPressed(
     const ReactPointerEventArgs &args) {
   if (m_viewManagerWithPointerEvents) {
     m_viewManagerWithPointerEvents.OnPointerPressed(node->GetView(), args);
-  } else {
-    Super::OnPointerCaptureLost(node, args);
   }
+  // Call the base method to handle `pointerEvents` behavior
+  Super::OnPointerPressed(node, args);
 }
 
 void ABIViewManager::OnPointerMoved(
@@ -231,9 +231,9 @@ void ABIViewManager::OnPointerMoved(
     const ReactPointerEventArgs &args) {
   if (m_viewManagerWithPointerEvents) {
     m_viewManagerWithPointerEvents.OnPointerMoved(node->GetView(), args);
-  } else {
-    Super::OnPointerCaptureLost(node, args);
   }
+  // Call the base method to handle `pointerEvents` behavior
+  Super::OnPointerMoved(node, args);
 }
 
 void ABIViewManager::OnPointerReleased(
@@ -241,9 +241,9 @@ void ABIViewManager::OnPointerReleased(
     const ReactPointerEventArgs &args) {
   if (m_viewManagerWithPointerEvents) {
     m_viewManagerWithPointerEvents.OnPointerReleased(node->GetView(), args);
-  } else {
-    Super::OnPointerCaptureLost(node, args);
   }
+  // Call the base method to handle `pointerEvents` behavior
+  Super::OnPointerReleased(node, args);
 }
 
 void ABIViewManager::OnPointerCanceled(
@@ -251,9 +251,9 @@ void ABIViewManager::OnPointerCanceled(
     const ReactPointerEventArgs &args) {
   if (m_viewManagerWithPointerEvents) {
     m_viewManagerWithPointerEvents.OnPointerCanceled(node->GetView(), args);
-  } else {
-    Super::OnPointerCaptureLost(node, args);
   }
+  // Call the base method to handle `pointerEvents` behavior
+  Super::OnPointerCanceled(node, args);
 }
 
 void ABIViewManager::OnPointerCaptureLost(
@@ -261,9 +261,9 @@ void ABIViewManager::OnPointerCaptureLost(
     const ReactPointerEventArgs &args) {
   if (m_viewManagerWithPointerEvents) {
     m_viewManagerWithPointerEvents.OnPointerCaptureLost(node->GetView(), args);
-  } else {
-    Super::OnPointerCaptureLost(node, args);
   }
+  // Call the base method to handle `pointerEvents` behavior
+  Super::OnPointerCaptureLost(node, args);
 }
 
 ::Microsoft::ReactNative::ShadowNode *ABIViewManager::createShadow() const {
