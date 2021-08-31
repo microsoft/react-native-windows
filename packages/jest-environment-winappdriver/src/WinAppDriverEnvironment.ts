@@ -146,7 +146,7 @@ async function spawnWinAppDriver(
 }
 
 /**
- * Convert a package identity of path to exe to the form expected by a WinAppDriver capability
+ * Convert a package identity or path to exe to the form expected by a WinAppDriver capability
  */
 function resolveAppName(appName: string): string {
   if (appName.endsWith('.exe')) {
