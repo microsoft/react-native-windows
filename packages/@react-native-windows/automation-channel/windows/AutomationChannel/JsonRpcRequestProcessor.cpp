@@ -12,7 +12,8 @@ using namespace winrt::Windows::Storage::Streams;
 
 namespace winrt::AutomationChannel {
 
-JsonRpcRequestProcessor::JsonRpcRequestProcessor(const AutomationChannel::CommandHandler &handler) noexcept : m_handler(handler) {}
+JsonRpcRequestProcessor::JsonRpcRequestProcessor(const AutomationChannel::CommandHandler &handler) noexcept
+    : m_handler(handler) {}
 
 winrt::fire_and_forget JsonRpcRequestProcessor::HandleRequest(
     winrt::hstring requestBody,

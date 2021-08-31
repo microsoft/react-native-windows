@@ -11,7 +11,9 @@ using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Data::Json;
 
 namespace winrt::AutomationChannel::implementation {
-winrt::AutomationChannel::CommandHandler CommandHandler::BindAction(const winrt::hstring &methodName, const SyncAction &action) noexcept {
+winrt::AutomationChannel::CommandHandler CommandHandler::BindAction(
+    const winrt::hstring &methodName,
+    const SyncAction &action) noexcept {
   VerifyElseCrash(!IsMethodRegistered(methodName));
   VerifyElseCrash(!IsReservedMethodName(methodName));
 
