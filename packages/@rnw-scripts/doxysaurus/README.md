@@ -1,4 +1,4 @@
-# doxysaurus
+# @rnw-scripts/doxysaurus
 
 The new Doxysaurus tool converts Doxygen generated XML to markdown files for Docusaurus.
 
