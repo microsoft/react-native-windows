@@ -116,7 +116,7 @@ describe('FancyWidget', () => {
 
   test('FancyWidget is populated with placeholder', async () => {
     // Query for an element with accessibilityId of "foo" (see "locators" below)
-    const field = await $('~foo');
+    const field = await app.findElementByTestID('foo');
     expect(await field.getText()).toBe('placeholder');
   });
 
@@ -183,10 +183,10 @@ of testing againt the react tree, e2e-test-app compares the fully rendered XAML 
 correctness of ViewManagers.
 
 ```ts
-import {dumpVisualTree} from './framework';
+import {automationClient} from './framework';
 
 test('Example test', async () => {
-  const dump = await dumpVisualTree('test-id-here');
+  const dump = await automationClient.dumpVisualTree({testId: 'test-id-here'});
   expect(dump).toMatchSnapshot();
 });
 ```

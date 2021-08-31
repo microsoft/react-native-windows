@@ -6,4 +6,4 @@
  */
 
 export * from './Navigation';
-export * from './TreeDump';
+export * from './AutomationClient';
