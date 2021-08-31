@@ -30,7 +30,7 @@ async function goToExample(example: string) {
   const searchBox = await app.findElementByTestID('explorer_search');
   await searchBox.setValue(regexEscape(example));
 
-  const exampleButton = await app.findElementByTestID('example');
+  const exampleButton = await app.findElementByTestID(example);
   await exampleButton.click();
 
   // Make sure we've launched the example by waiting until the search box is
