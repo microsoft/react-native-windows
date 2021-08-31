@@ -7,8 +7,6 @@
 
 /* global $:false, browser:false */
 
-import {dumpVisualTree} from './TreeDump';
-
 /**
  * Projection of a WebDriver Element, with functions corresponding to supported
  * WinAppDriver APIs.
@@ -47,8 +45,6 @@ export type AutomationElement = Pick<
  * This may not be 100% complete
  */
 export const app = {
-  dumpVisualTree,
-
   /**
    * Find an element by testID property
    */

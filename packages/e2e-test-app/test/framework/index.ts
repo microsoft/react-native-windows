@@ -5,5 +5,6 @@
  * @format
  */
 
-export * from './Navigation';
 export * from './AutomationClient';
+export * from './Navigation';
+export * from './TreeDump';

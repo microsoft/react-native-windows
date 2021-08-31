@@ -5,7 +5,7 @@
  * @format
  */
 
-import {goToComponentExample, app} from './framework';
+import {app, goToComponentExample, dumpVisualTree} from './framework';
 
 beforeAll(async () => {
   await goToComponentExample('Display:none Style');
@@ -14,14 +14,14 @@ beforeAll(async () => {
 describe('DisplayNoneTest', () => {
   /* Test case #1: display:none disabled */
   test('DisplayNoneDisabledTest', async () => {
-    const dump = await app.dumpVisualTree('textbox-container');
+    const dump = await dumpVisualTree('textbox-container');
     expect(dump).toMatchSnapshot();
   });
 
   /* Test case #2: Enable display:none once, update view*/
   test('DisplayNoneEnabledTest', async () => {
     await toggleDisplayNone();
-    const dump = await app.dumpVisualTree('textbox-container');
+    const dump = await dumpVisualTree('textbox-container');
     expect(dump).toMatchSnapshot();
   });
 });

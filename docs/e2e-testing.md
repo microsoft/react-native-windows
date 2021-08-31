@@ -159,10 +159,10 @@ of testing againt the react tree, e2e-test-app compares the fully rendered XAML 
 correctness of ViewManagers.
 
 ```ts
-import {app} from './framework';
+import {dumpVisualTree} from './framework';
 
 test('Example test', async () => {
-  const dump = await automationClient.dumpVisualTree({testId: 'test-id-here'});
+  const dump = await dumpVisualTree('test-id-here');
   expect(dump).toMatchSnapshot();
 });
 ```
