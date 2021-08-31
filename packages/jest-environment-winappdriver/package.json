@@ -14,7 +14,7 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.0.1",
+    "@react-native-windows/automation-channel": "^0.0.0",
     "webdriverio": "^6.9.0"
   },
   "devDependencies": {
