@@ -100,15 +100,15 @@ class TouchEventHandler {
   std::unordered_map<uint32_t /*pointerId*/, TagSet /*tags*/> m_pointersInViews;
   int64_t m_touchId = 0;
 
-  bool TagFromOriginalSource(const winrt::PointerRoutedEventArgs &args, int64_t *pTag, xaml::UIElement *pSourceElement);
+  bool TagFromOriginalSource(
+      winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
+      TouchEventType eventType,
+      int64_t *pTag,
+      xaml::UIElement *pSourceElement);
   winrt::IPropertyValue TestHit(
       const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
       const winrt::Point &pointerPos,
       bool &isHit);
-  bool NotifyParentViewManagers(
-      int64_t tag,
-      TouchEventType eventType,
-      const winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs &args);
 
   XamlView m_xamlView;
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
