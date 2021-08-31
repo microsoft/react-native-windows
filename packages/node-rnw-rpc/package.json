@@ -10,6 +10,11 @@
     "watch": "rnw-scripts watch",
     "windows": "react-native run-windows"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/node-rnw-rpc"
+  },
   "main": "lib-commonjs/nodeRnwRpc.js",
   "dependencies": {
     "jsonrpc-lite": "^2.2.0"
