@@ -6,19 +6,19 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-f592ad050",
+  "baseVersion": "0.0.0-cbec66ef9",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "66fa79a21dc9b1eb380869311df826df55235ace"
+      "baseHash": "a592b13f7939851f6dc726745b919c0e51bbb258"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "1bef57931e96344fa3b9b2e67ea70f6d6647cd31"
+      "baseHash": "96a5214433005766d7d57ceea5a1dd0a30d4e88f"
     },
     {
       "type": "patch",
@@ -312,7 +312,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "ee8c3fce6e137ad7d7dbcb7435cd3396bfe48440"
+      "baseHash": "2d3b7dae890a42fc0b94c9700a72e6606f32625f"
     },
     {
       "type": "copy",
@@ -440,7 +440,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Dimensions.win32.js",
       "baseFile": "Libraries/Utilities/Dimensions.js",
-      "baseHash": "cc2a5b68d9207ece63b461f875ea91b7d1949cb6"
+      "baseHash": "b21270e8a971fe6fb09ef38004de3b23a3538c4a"
     },
     {
       "type": "platform",
