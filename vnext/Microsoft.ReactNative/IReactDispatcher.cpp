@@ -10,6 +10,26 @@ using namespace Windows::Foundation;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
+// Implements ISimpleDispatch on top of a custom IReactDispatcher provided by the application
+struct WrappedReactDispatcher : implements<WrappedReactDispatcher, Mso::React::ISimpleDispatch> {
+  WrappedReactDispatcher(winrt::Microsoft::ReactNative::IReactDispatcher &dispatcher) : m_dispatcher(dispatcher) {}
+
+  void Post(Mso::DispatchTask &&task) const noexcept override {
+    m_dispatcher.Post(task);
+  }
+
+  void InvokeElsePost(Mso::DispatchTask &&task) const noexcept override {
+    if (m_dispatcher.HasThreadAccess()) {
+      task();
+    } else {
+      Post(std::move(task));
+    }
+  }
+
+ private:
+  winrt::Microsoft::ReactNative::IReactDispatcher m_dispatcher;
+};
+
 ReactDispatcher::ReactDispatcher(Mso::DispatchQueue &&queue) noexcept : m_queue{std::move(queue)} {}
 
 bool ReactDispatcher::HasThreadAccess() noexcept {
@@ -20,12 +40,25 @@ void ReactDispatcher::Post(ReactDispatcherCallback const &callback) noexcept {
   return m_queue.Post([callback]() noexcept { callback(); });
 }
 
+void ReactDispatcher::Post(Mso::DispatchTask &&task) const noexcept {
+  m_queue.Post(std::move(task));
+}
+
+void ReactDispatcher::InvokeElsePost(Mso::DispatchTask &&task) const noexcept {
+  m_queue.InvokeElsePost(std::move(task));
+}
+
 /*static*/ IReactDispatcher ReactDispatcher::CreateSerialDispatcher() noexcept {
   return make<ReactDispatcher>(Mso::DispatchQueue{});
 }
 
-/*static*/ Mso::DispatchQueue ReactDispatcher::GetUIDispatchQueue(IReactPropertyBag const &properties) noexcept {
-  return GetUIDispatcher(properties).as<ReactDispatcher>()->m_queue;
+/*static*/ winrt::com_ptr<Mso::React::ISimpleDispatch> ReactDispatcher::GetUISimpleDispatch(
+    IReactPropertyBag const &properties) noexcept {
+  auto iReactDispatcher = GetUIDispatcher(properties);
+  if (auto simpleDispatcher = iReactDispatcher.try_as<ISimpleDispatch>())
+    return simpleDispatcher;
+
+  return winrt::make<WrappedReactDispatcher>(iReactDispatcher);
 }
 
 /*static*/ IReactDispatcher ReactDispatcher::UIThreadDispatcher() noexcept {

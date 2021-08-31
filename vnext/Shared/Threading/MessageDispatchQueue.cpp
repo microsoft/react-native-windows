@@ -88,4 +88,82 @@ void MessageDispatchQueue::quitSynchronous() {
   }
 }
 
+//=============================================================================================
+// MessageSimpleDispatchQueue implementation.
+//=============================================================================================
+
+MessageSimpleDispatchQueue::MessageSimpleDispatchQueue(
+    Mso::React::ISimpleDispatch &dispatchQueue,
+    Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
+    Mso::Promise<void> &&whenQuit) noexcept
+    : m_stopped{false}, m_errorHandler{std::move(errorHandler)}, m_whenQuit{std::move(whenQuit)} {
+  m_dispatchQueue.copy_from(&dispatchQueue);
+}
+
+MessageSimpleDispatchQueue::~MessageSimpleDispatchQueue() noexcept {}
+
+void MessageSimpleDispatchQueue::runOnQueue(std::function<void()> &&func) {
+  if (m_stopped) {
+    return;
+  }
+
+  m_dispatchQueue->Post([pThis = shared_from_this(), func = std::move(func)]() noexcept {
+    if (!pThis->m_stopped) {
+      pThis->tryFunc(func);
+    }
+  });
+}
+
+void MessageSimpleDispatchQueue::tryFunc(const std::function<void()> &func) noexcept {
+  try {
+    func();
+  } catch (const std::exception & /*ex*/) {
+    if (auto errorHandler = m_errorHandler.Get()) {
+      errorHandler->Invoke(Mso::ExceptionErrorProvider().MakeErrorCode(std::current_exception()));
+    }
+  }
+}
+
+void MessageSimpleDispatchQueue::runSync(const Mso::VoidFunctorRef &func) noexcept {
+  Mso::ManualResetEvent callbackFinished{};
+
+  m_dispatchQueue->InvokeElsePost(Mso::MakeDispatchTask(
+      /*callback:*/
+      [&func, &callbackFinished]() noexcept {
+        func();
+        callbackFinished.Set();
+      },
+      /*onCancel:*/ [&func, &callbackFinished]() noexcept { callbackFinished.Set(); }));
+
+  callbackFinished.Wait();
+}
+
+// runOnQueueSync and quitSynchronous are dangerous.  They should only be
+// used for initialization and cleanup.
+void MessageSimpleDispatchQueue::runOnQueueSync(std::function<void()> &&func) {
+  if (m_stopped) {
+    return;
+  }
+
+  runSync([this, &func]() noexcept {
+    if (!m_stopped) {
+      tryFunc(func);
+    }
+  });
+}
+
+// Once quitSynchronous() returns, no further work should run on the queue.
+void MessageSimpleDispatchQueue::quitSynchronous() {
+  m_stopped = true;
+  runSync([]() noexcept {});
+
+  if (m_whenQuit) {
+    m_dispatchQueue->Post([sharedThis = shared_from_this()]() noexcept {
+      if (auto thisPtr = sharedThis.get()) {
+        thisPtr->m_whenQuit.SetValue();
+      }
+    });
+  }
+}
+
 } // namespace Mso::React
