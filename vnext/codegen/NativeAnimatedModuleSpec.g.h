@@ -14,13 +14,11 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  REACT_STRUCT(EndResult)
   struct EndResult {
       REACT_FIELD(finished)
       bool finished;
   };
 
-  REACT_STRUCT(EventMapping)
   struct EventMapping {
       REACT_FIELD(nativeEventPath)
       React::JSValueArray nativeEventPath;
@@ -169,5 +167,8 @@ struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }}\n");
   }
 };
+
+  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(AnimatedModuleSpec::EndResult)
+  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(AnimatedModuleSpec::EventMapping)
 
 } // namespace Microsoft::ReactNativeSpecs

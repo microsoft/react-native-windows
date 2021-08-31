@@ -14,7 +14,6 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  REACT_STRUCT(StackFrame)
   struct StackFrame {
       REACT_FIELD(column)
       std::optional<double> column;
@@ -28,7 +27,6 @@ struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       std::optional<bool> collapse;
   };
 
-  REACT_STRUCT(ExceptionData)
   struct ExceptionData {
       REACT_FIELD(message)
       std::string message;
@@ -87,5 +85,8 @@ struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_METHOD(dismissRedbox) static void dismissRedbox() noexcept { /* implementation */ }}\n");
   }
 };
+
+  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(ExceptionsManagerSpec::StackFrame)
+  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(ExceptionsManagerSpec::ExceptionData)
 
 } // namespace Microsoft::ReactNativeSpecs

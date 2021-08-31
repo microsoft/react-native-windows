@@ -21,13 +21,17 @@
 // Please skip below to read about REACT_STRUCT and REACT_FIELD macros.
 //
 
-#define INTERNAL_REACT_STRUCT(structType)                                                  \
+#define INTERNAL_REACT_STRUCT_GETSTRUCTINFO(structType)                                    \
   struct structType;                                                                       \
   inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(structType *) noexcept {    \
     winrt::Microsoft::ReactNative::FieldMap fieldMap{};                                    \
     winrt::Microsoft::ReactNative::CollectStructFields<structType, __COUNTER__>(fieldMap); \
     return fieldMap;                                                                       \
   }
+
+#define INTERNAL_REACT_STRUCT(structType)                                                  \
+  struct structType;                                                                       \
+  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(structType)
 
 #define INTERNAL_REACT_FIELD_2_ARGS(field, fieldName)                      \
   template <class TClass>                                                  \

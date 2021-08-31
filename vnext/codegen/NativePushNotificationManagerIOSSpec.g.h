@@ -14,7 +14,6 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  REACT_STRUCT(Permissions)
   struct Permissions {
       REACT_FIELD(alert)
       bool alert;
@@ -24,7 +23,6 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
       bool sound;
   };
 
-  REACT_STRUCT(Notification)
   struct Notification {
       REACT_FIELD(alertTitle)
       std::optional<std::string> alertTitle;
@@ -163,5 +161,8 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
           "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }}\n");
   }
 };
+
+  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(PushNotificationManagerIOSSpec::Permissions)
+  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(PushNotificationManagerIOSSpec::Notification)
 
 } // namespace Microsoft::ReactNativeSpecs

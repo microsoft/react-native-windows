@@ -14,7 +14,6 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct ImageEditorSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  REACT_STRUCT(Options)
   struct Options {
       REACT_FIELD(offset)
       React::JSValueObject offset;
@@ -43,5 +42,7 @@ struct ImageEditorSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_METHOD(cropImage) static void cropImage(std::string uri, Options && cropData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n");
   }
 };
+
+  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(ImageEditorSpec::Options)
 
 } // namespace Microsoft::ReactNativeSpecs

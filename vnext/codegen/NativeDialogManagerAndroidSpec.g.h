@@ -14,7 +14,6 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct DialogManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  REACT_STRUCT(DialogOptions)
   struct DialogOptions {
       REACT_FIELD(title)
       std::optional<std::string> title;
@@ -47,5 +46,7 @@ struct DialogManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec
           "    REACT_METHOD(showAlert) static void showAlert(DialogOptions && config, std::function<void(React::JSValue const &)> const & onError, std::function<void(React::JSValue const &)> const & onAction) noexcept { /* implementation */ }}\n");
   }
 };
+
+  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(DialogManagerAndroidSpec::DialogOptions)
 
 } // namespace Microsoft::ReactNativeSpecs

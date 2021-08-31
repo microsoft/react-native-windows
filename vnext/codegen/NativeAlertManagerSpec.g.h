@@ -14,7 +14,6 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct AlertManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  REACT_STRUCT(Args)
   struct Args {
       REACT_FIELD(title)
       std::optional<std::string> title;
@@ -49,5 +48,7 @@ struct AlertManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_METHOD(alertWithArgs) static void alertWithArgs(Args && args, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
   }
 };
+
+  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(AlertManagerSpec::Args)
 
 } // namespace Microsoft::ReactNativeSpecs
