@@ -7,19 +7,18 @@
 'use strict';
 
 import {
-  NativeModuleReturnTypeAnnotation,
+  NativeModuleBaseTypeAnnotation,
+  NativeModuleObjectTypeAnnotation,
+  NamedShape,
   Nullable,
 } from 'react-native-tscodegen';
 
-function translateReturnType(
-  type: Nullable<NativeModuleReturnTypeAnnotation>,
+function translateField(
+  type: Nullable<NativeModuleBaseTypeAnnotation>,
 ): string {
   // avoid: Property 'type' does not exist on type 'never'
   const returnType = type.type;
   switch (type.type) {
-    case 'VoidTypeAnnotation':
-    case 'PromiseTypeAnnotation':
-      return 'void';
     case 'StringTypeAnnotation':
       return 'std::string';
     case 'NumberTypeAnnotation':
@@ -53,20 +52,23 @@ function translateReturnType(
       // TODO: print the real name after processing NativeModuleSchema::aliases
       return 'React::JSValueObject';
     case 'NullableTypeAnnotation':
-      return `std::optional<${translateReturnType(type.typeAnnotation)}>`;
+      return `std::optional<${translateField(type.typeAnnotation)}>`;
     default:
       throw new Error(`Unhandled type in translateReturnType: ${returnType}`);
   }
 }
 
-export function translateSpecReturnType(
-  type: Nullable<NativeModuleReturnTypeAnnotation>,
+export function translateObjectBody(
+  type: NativeModuleObjectTypeAnnotation,
+  prefix: string,
 ) {
-  return translateReturnType(type);
-}
-
-export function translateImplReturnType(
-  type: Nullable<NativeModuleReturnTypeAnnotation>,
-) {
-  return translateReturnType(type);
+  return type.properties
+    .map((prop: NamedShape<Nullable<NativeModuleBaseTypeAnnotation>>) => {
+      let propType = prop.typeAnnotation;
+      if (prop.optional && propType.type !== 'NullableTypeAnnotation') {
+        propType = {type: 'NullableTypeAnnotation', typeAnnotation: propType};
+      }
+      return `${prefix}${translateField(propType)} ${prop.name};`;
+    })
+    .join('\n');
 }

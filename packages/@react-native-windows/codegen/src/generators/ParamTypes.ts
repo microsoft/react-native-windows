@@ -73,12 +73,10 @@ function translateParam(
 function translateSpecFunctionParam(param: NativeModuleParamShape): string {
   switch (param.typeAnnotation.type) {
     case 'NullableTypeAnnotation':
-      // TODO: should be
-      // return `std::optional<${translateParam(
-      //   param.typeAnnotation.typeAnnotation,
-      //   true,
-      // )}>`;
-      return translateParam(param.typeAnnotation.typeAnnotation, true);
+      return `std::optional<${translateParam(
+        param.typeAnnotation.typeAnnotation,
+        true,
+      )}>`;
     default:
       return translateParam(param.typeAnnotation, true);
   }
@@ -87,12 +85,10 @@ function translateSpecFunctionParam(param: NativeModuleParamShape): string {
 function translateFunctionParam(param: NativeModuleParamShape): string {
   switch (param.typeAnnotation.type) {
     case 'NullableTypeAnnotation':
-      // TODO: should be
-      // return `std::optional<${translateParam(
-      //   param.typeAnnotation.typeAnnotation,
-      //   false,
-      // )}>`;
-      return translateParam(param.typeAnnotation.typeAnnotation, false);
+      return `std::optional<${translateParam(
+        param.typeAnnotation.typeAnnotation,
+        false,
+      )}>`;
     default:
       return translateParam(param.typeAnnotation, false);
   }
