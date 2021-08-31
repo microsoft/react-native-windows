@@ -6,7 +6,7 @@
 
 #include <winrt/Windows.Storage.Streams.h>
 
-namespace winrt::NodeRpc {
+namespace winrt::AutomationChannel {
 
 //! Predefined error codes for the JSON-RPC Spec
 //! See https://www.jsonrpc.org/specification
@@ -21,7 +21,7 @@ enum class JsonRpcErrorCode : int32_t {
 //! Translates/verifies JSON-RPC2 messages, dispatches them, then outputs the result
 class JsonRpcRequestProcessor final {
  public:
-  JsonRpcRequestProcessor(const NodeRpc::Handler &handler) noexcept;
+  JsonRpcRequestProcessor(const AutomationChannel::Handler &handler) noexcept;
 
   winrt::fire_and_forget HandleRequest(
       winrt::hstring requestBody,
@@ -46,7 +46,7 @@ class JsonRpcRequestProcessor final {
       Windows::Data::Json::JsonValue id,
       Windows::Storage::Streams::IOutputStream output) noexcept;
 
-  NodeRpc::Handler m_handler;
+  AutomationChannel::Handler m_handler;
 };
 
-} // namespace winrt::NodeRpc
+} // namespace winrt::AutomationChannel

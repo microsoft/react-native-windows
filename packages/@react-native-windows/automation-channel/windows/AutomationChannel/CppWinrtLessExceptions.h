@@ -5,7 +5,7 @@
 
 // Copied from "vnext\Shared\Utils\CppWinrtLessExceptions.h" until we have a good way to share between packages
 
-namespace winrt::NodeRpc {
+namespace winrt::AutomationChannel {
 
 template <typename Async>
 struct lessthrow_await_adapter {
@@ -38,4 +38,4 @@ struct lessthrow_await_adapter {
   }
 };
 
-} // namespace winrt::NodeRpc
+} // namespace winrt::AutomationChannel

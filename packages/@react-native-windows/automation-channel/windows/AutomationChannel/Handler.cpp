@@ -10,43 +10,43 @@
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Data::Json;
 
-namespace winrt::NodeRpc::implementation {
-winrt::NodeRpc::Handler Handler::BindAction(const winrt::hstring &methodName, const RpcAction &action) noexcept {
+namespace winrt::AutomationChannel::implementation {
+winrt::AutomationChannel::Handler Handler::BindAction(const winrt::hstring &methodName, const RpcAction &action) noexcept {
   VerifyElseCrash(!IsMethodRegistered(methodName));
   VerifyElseCrash(!IsReservedMethodName(methodName));
 
   m_actionHandlers[methodName] = action;
-  return NodeRpc::Handler(*this);
+  return AutomationChannel::Handler(*this);
 }
 
-winrt::NodeRpc::Handler Handler::BindAsyncAction(
+winrt::AutomationChannel::Handler Handler::BindAsyncAction(
     const winrt::hstring &methodName,
     const AsyncRpcAction &action) noexcept {
   VerifyElseCrash(!IsMethodRegistered(methodName));
   VerifyElseCrash(!IsReservedMethodName(methodName));
 
   m_asyncActionHandlers[methodName] = action;
-  return NodeRpc::Handler(*this);
+  return AutomationChannel::Handler(*this);
 }
 
-winrt::NodeRpc::Handler Handler::BindOperation(
+winrt::AutomationChannel::Handler Handler::BindOperation(
     const winrt::hstring &methodName,
     const RpcOperation &operation) noexcept {
   VerifyElseCrash(!IsMethodRegistered(methodName));
   VerifyElseCrash(!IsReservedMethodName(methodName));
 
   m_operationHandlers[methodName] = operation;
-  return NodeRpc::Handler(*this);
+  return AutomationChannel::Handler(*this);
 }
 
-winrt::NodeRpc::Handler Handler::BindAsyncOperation(
+winrt::AutomationChannel::Handler Handler::BindAsyncOperation(
     const winrt::hstring &methodName,
     const AsyncRpcOperation &operation) noexcept {
   VerifyElseCrash(!IsMethodRegistered(methodName));
   VerifyElseCrash(!IsReservedMethodName(methodName));
 
   m_asyncOperationHandlers[methodName] = operation;
-  return NodeRpc::Handler(*this);
+  return AutomationChannel::Handler(*this);
 }
 
 bool Handler::IsMethodRegistered(const winrt::hstring &methodName) noexcept {
@@ -86,4 +86,4 @@ IAsyncOperation<IJsonValue> Handler::Invoke(const winrt::hstring &methodName, co
   }
 }
 
-} // namespace winrt::NodeRpc::implementation
+} // namespace winrt::AutomationChannel::implementation

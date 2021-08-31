@@ -13,7 +13,10 @@ import NodeEnvironment = require('jest-environment-node');
 import * as webdriverio from 'webdriverio';
 import {BrowserObject, RemoteOptions} from 'webdriverio';
 import {Config} from '@jest/types';
-import {waitForConnection, RpcClient} from 'node-rnw-rpc';
+import {
+  waitForConnection,
+  RpcClient,
+} from '@react-native-windows/automation-channel';
 
 export type EnvironmentOptions = {
   app?: string;
@@ -141,5 +144,5 @@ async function spawnWinAppDriver(
   });
 }
 
-export {RpcClient} from 'node-rnw-rpc';
+export {RpcClient} from '@react-native-windows/automation-channel';
 module.exports = WinAppDriverEnvironment;

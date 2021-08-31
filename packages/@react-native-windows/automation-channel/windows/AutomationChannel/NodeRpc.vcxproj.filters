@@ -13,7 +13,7 @@
   <ItemGroup>
     <None Include="PropertySheet.props" />
     <None Include="packages.config" />
-    <None Include="NodeRpc.def" />
+    <None Include="AutomationChannel.def" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="Server.idl" />

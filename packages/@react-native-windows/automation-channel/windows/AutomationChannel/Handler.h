@@ -4,15 +4,15 @@
 #pragma once
 #include "Handler.g.h"
 
-namespace winrt::NodeRpc::implementation {
+namespace winrt::AutomationChannel::implementation {
 
 struct Handler : HandlerT<Handler> {
   Handler() = default;
 
-  NodeRpc::Handler BindAction(const winrt::hstring &methodName, const RpcAction &action) noexcept;
-  NodeRpc::Handler BindAsyncAction(const winrt::hstring &methodName, const AsyncRpcAction &action) noexcept;
-  NodeRpc::Handler BindOperation(const winrt::hstring &methodName, const RpcOperation &operation) noexcept;
-  NodeRpc::Handler BindAsyncOperation(const winrt::hstring &methodName, const AsyncRpcOperation &operation) noexcept;
+  AutomationChannel::Handler BindAction(const winrt::hstring &methodName, const RpcAction &action) noexcept;
+  AutomationChannel::Handler BindAsyncAction(const winrt::hstring &methodName, const AsyncRpcAction &action) noexcept;
+  AutomationChannel::Handler BindOperation(const winrt::hstring &methodName, const RpcOperation &operation) noexcept;
+  AutomationChannel::Handler BindAsyncOperation(const winrt::hstring &methodName, const AsyncRpcOperation &operation) noexcept;
 
   bool IsMethodRegistered(const winrt::hstring &methodName) noexcept;
   bool IsReservedMethodName(const winrt::hstring &methodName) noexcept;
@@ -27,10 +27,10 @@ struct Handler : HandlerT<Handler> {
   std::unordered_map<winrt::hstring, AsyncRpcOperation> m_asyncOperationHandlers;
 };
 
-} // namespace winrt::NodeRpc::implementation
+} // namespace winrt::AutomationChannel::implementation
 
-namespace winrt::NodeRpc::factory_implementation {
+namespace winrt::AutomationChannel::factory_implementation {
 
 struct Handler : HandlerT<Handler, implementation::Handler> {};
 
-} // namespace winrt::NodeRpc::factory_implementation
+} // namespace winrt::AutomationChannel::factory_implementation

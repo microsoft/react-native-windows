@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-namespace NodeRpc {
+namespace AutomationChannel {
 
     delegate void RpcAction(Windows.Data.Json.JsonValue args);
     delegate Windows.Data.Json.IJsonValue RpcOperation(Windows.Data.Json.JsonValue args);

@@ -11,8 +11,8 @@ using namespace winrt::Windows::Networking;
 using namespace winrt::Windows::Networking::Sockets;
 using namespace winrt::Windows::Storage::Streams;
 
-namespace winrt::NodeRpc::implementation {
-Server::Server(const winrt::NodeRpc::Handler &handler) : m_requestProcessor(handler) {}
+namespace winrt::AutomationChannel::implementation {
+Server::Server(const winrt::AutomationChannel::Handler &handler) : m_requestProcessor(handler) {}
 
 IAsyncAction Server::ProcessAllClientRequests(uint16_t port, Windows::Foundation::TimeSpan pollInterval) noexcept {
   auto weakServer = get_weak();
@@ -132,4 +132,4 @@ bool Server::IsExpectedConnectionEnd(winrt::hresult hr) noexcept {
   }
 }
 
-} // namespace winrt::NodeRpc::implementation
+} // namespace winrt::AutomationChannel::implementation

@@ -96,8 +96,8 @@ IAsyncAction TestHostHarness::StartListening() noexcept {
   }
 }
 
-winrt::NodeRpc::Handler TestHostHarness::CreateRpcHander() noexcept {
-  winrt::NodeRpc::Handler handler;
+winrt::AutomationChannel::Handler TestHostHarness::CreateRpcHander() noexcept {
+  winrt::AutomationChannel::Handler handler;
 
   handler.BindAsyncOperation(
       L"RunTestComponent", [weakThis{get_weak()}](const JsonValue &payload) noexcept -> IAsyncOperation<IJsonValue> {

@@ -7,8 +7,8 @@
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{c0a69310-6119-46dc-a6d6-0bab7826dc92}</ProjectGuid>
-    <ProjectName>NodeRpc</ProjectName>
-    <RootNamespace>NodeRpc</RootNamespace>
+    <ProjectName>AutomationChannel</ProjectName>
+    <RootNamespace>AutomationChannel</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -88,7 +88,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>NodeRpc.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>AutomationChannel.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
@@ -137,7 +137,7 @@
     <Midl Include="Server.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="NodeRpc.def" />
+    <None Include="AutomationChannel.def" />
     <None Include="packages.config" />
     <None Include="PropertySheet.props" />
   </ItemGroup>
