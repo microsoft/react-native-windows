@@ -33,6 +33,7 @@
 #include <Shared/DevServerHelper.h>
 #include <Views/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
+#include "DynamicWriter.h"
 #ifndef CORE_ABI
 #include "ConfigureBundlerDlg.h"
 #include "DevMenu.h"
@@ -899,7 +900,7 @@ bool ReactInstanceWin::IsLoaded() const noexcept {
 
 void ReactInstanceWin::AttachMeasuredRootView(
     facebook::react::IReactRootView *rootView,
-    folly::dynamic &&initialProps) noexcept {
+    const winrt::Microsoft::ReactNative::JSValueArgWriter &initialProps) noexcept {
 #ifndef CORE_ABI
   if (State() == ReactInstanceState::HasError)
     return;
@@ -916,7 +917,8 @@ void ReactInstanceWin::AttachMeasuredRootView(
 
   std::string jsMainModuleName = rootView->JSComponentName();
   folly::dynamic params = folly::dynamic::array(
-      std::move(jsMainModuleName), folly::dynamic::object("initialProps", std::move(initialProps))("rootTag", rootTag));
+      std::move(jsMainModuleName),
+      folly::dynamic::object("initialProps", DynamicWriter::ToDynamic(initialProps))("rootTag", rootTag));
   CallJsFunction("AppRegistry", "runApplication", std::move(params));
 #endif
 }
