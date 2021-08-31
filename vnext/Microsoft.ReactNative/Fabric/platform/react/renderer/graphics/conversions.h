@@ -14,7 +14,9 @@
 #include <react/renderer/core/RawProps.h>
 #include <react/renderer/graphics/Color.h>
 #include <react/renderer/graphics/Geometry.h>
-#include <react/renderer/graphics/PlatformColorParser.h>
+// [Windows Windows does not parse PlatformColor to RGB
+// #include <react/renderer/graphis/PlatformColorParser.h>
+// WIndows]
 
 namespace facebook {
 namespace react {
@@ -39,7 +41,7 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
     colorComponents.green = items.at(1);
     colorComponents.blue = items.at(2);
     colorComponents.alpha = length == 4 ? items.at(3) : 1.0f;
-    // [Windows - Add support for windowsBrush colors (PlatformColor)
+    // [Windows - Embed WindowBrush into SharedColor instead of trying to parse PlatformColor into RGB
   } else if (value.hasType<better::map<std::string, std::string>>()) {
     auto map = (better::map<std::string, std::string>)value;
     for (const auto &pair : map) {
