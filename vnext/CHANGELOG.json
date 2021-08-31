@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Aug 2021 05:07:15 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.367",
+      "version": "0.0.0-canary.367",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow override of global.nativeLoggingHook",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "6addef9dcb286f3ec6718cddd45cec706e853551",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove unused code",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "36a6cf37234e51b3518500c66d93f1254bd58035",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 28 Aug 2021 05:06:32 GMT",
       "tag": "react-native-windows_v0.0.0-canary.366",
       "version": "0.0.0-canary.366",

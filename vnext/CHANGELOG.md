@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 28 Aug 2021 05:06:32 GMT and should not be manually modified.
+This log was last generated on Tue, 31 Aug 2021 05:07:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.367
+
+Tue, 31 Aug 2021 05:07:15 GMT
+
+### Changes
+
+- Allow override of global.nativeLoggingHook (30809111+acoates-ms@users.noreply.github.com)
+- Remove unused code (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.366
 
