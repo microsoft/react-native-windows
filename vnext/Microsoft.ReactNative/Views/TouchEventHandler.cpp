@@ -95,10 +95,11 @@ void TouchEventHandler::OnPointerPressed(
   int64_t tag;
   xaml::UIElement sourceElement(nullptr);
   const auto eventType = TouchEventType::Start;
-  auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(args);
+  const auto kind = GetPointerEventKind(eventType);
+  auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
   const auto argsImpl =
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(reactArgs);
-  if (!TagFromOriginalSource(reactArgs, eventType, &tag, &sourceElement))
+  if (!TagFromOriginalSource(reactArgs, &tag, &sourceElement))
     return;
 
   // If this was caused by the user pressing the "back" hardware button, fire that event instead
@@ -161,10 +162,11 @@ void TouchEventHandler::OnPointerMoved(
   int64_t tag;
   xaml::UIElement sourceElement(nullptr);
   const auto eventType = TouchEventType::Move;
-  auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(args);
+  const auto kind = GetPointerEventKind(eventType);
+  auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
   const auto argsImpl =
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(reactArgs);
-  if (!TagFromOriginalSource(reactArgs, eventType, &tag, &sourceElement))
+  if (!TagFromOriginalSource(reactArgs, &tag, &sourceElement))
     return;
 
   auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
@@ -194,10 +196,11 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   // Regardless of that, ensure we Dispatch & cleanup the pointer
   int64_t tag;
   xaml::UIElement sourceElement(nullptr);
-  auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(args);
+  const auto kind = GetPointerEventKind(eventType);
+  auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
   const auto argsImpl =
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(reactArgs);
-  if (TagFromOriginalSource(reactArgs, eventType, &tag, &sourceElement))
+  if (TagFromOriginalSource(reactArgs, &tag, &sourceElement))
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
 
   if (m_pointers[*optPointerIndex].isLeftButton) {
@@ -551,6 +554,32 @@ const char *TouchEventHandler::GetPointerDeviceTypeName(
   return deviceTypeName;
 }
 
+winrt::Microsoft::ReactNative::PointerEventKind TouchEventHandler::GetPointerEventKind(
+    TouchEventType eventType) noexcept {
+  auto kind = winrt::Microsoft::ReactNative::PointerEventKind::None;
+  switch (eventType) {
+    case TouchEventType::Start:
+      kind = winrt::Microsoft::ReactNative::PointerEventKind::Start;
+      break;
+    case TouchEventType::End:
+      kind = winrt::Microsoft::ReactNative::PointerEventKind::End;
+      break;
+    case TouchEventType::Move:
+      kind = winrt::Microsoft::ReactNative::PointerEventKind::Move;
+      break;
+    case TouchEventType::Cancel:
+      kind = winrt::Microsoft::ReactNative::PointerEventKind::Cancel;
+      break;
+    case TouchEventType::CaptureLost:
+      kind = winrt::Microsoft::ReactNative::PointerEventKind::CaptureLost;
+      break;
+    default:
+      assert(false);
+      break;
+  }
+  return kind;
+}
+
 const wchar_t *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType) noexcept {
   const wchar_t *eventName = nullptr;
   switch (eventType) {
@@ -576,7 +605,6 @@ const wchar_t *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType
 
 bool TouchEventHandler::TagFromOriginalSource(
     winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
-    TouchEventType eventType,
     int64_t *pTag,
     xaml::UIElement *pSourceElement) {
   assert(pTag != nullptr);
@@ -605,25 +633,7 @@ bool TouchEventHandler::TagFromOriginalSource(
         args.Target(node->GetView());
       }
 
-      const auto viewManager = node->GetViewManager();
-      switch (eventType) {
-        case TouchEventType::Start:
-          viewManager->OnPointerPressed(node, args);
-          break;
-        case TouchEventType::Move:
-          viewManager->OnPointerMoved(node, args);
-          break;
-        case TouchEventType::End:
-          viewManager->OnPointerReleased(node, args);
-          break;
-        case TouchEventType::Cancel:
-          viewManager->OnPointerCanceled(node, args);
-          break;
-        case TouchEventType::CaptureLost:
-          viewManager->OnPointerCaptureLost(node, args);
-          break;
-      }
-
+      node->GetViewManager()->OnPointerEvent(node, args);
       node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(node->m_parent));
     }
 
@@ -665,8 +675,6 @@ bool TouchEventHandler::TagFromOriginalSource(
         }
       }
     }
-
-    return false;
   }
 
   // If the root view is not fully created, then the Tag property will never
