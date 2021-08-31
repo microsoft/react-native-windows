@@ -6,9 +6,24 @@
 
 namespace Microsoft.ReactNative {
   [webhosthidden]
+  DOC_STRING("Pointer event type enum.")
+  enum PointerEventKind {
+    None,
+    Start,
+    End,
+    Move,
+    Cancel,
+    CaptureLost,
+  };
+
+  [webhosthidden]
   DOC_STRING("Event arguments wrapper for IViewManagerWithPointerEvents.")
   runtimeclass ReactPointerEventArgs {
-    DOC_STRING("Prevent event from being emitted to React JS component.")
+    DOC_STRING("Gets the pointer event kind.")
+    PointerEventKind Kind {
+      get;
+    };
+    DOC_STRING("Gets the wrapped routed pointer event.")
     XAML_NAMESPACE.Input.PointerRoutedEventArgs Args {
       get;
     };

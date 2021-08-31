@@ -7,6 +7,10 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
+PointerEventKind ReactPointerEventArgs::Kind() const noexcept {
+  return m_kind;
+}
+
 xaml::Input::PointerRoutedEventArgs ReactPointerEventArgs::Args() const noexcept {
   return m_args;
 }
@@ -31,7 +35,10 @@ void ReactPointerEventArgs::StopPropagation() {
   m_propagationStopped = true;
 }
 
-ReactPointerEventArgs::ReactPointerEventArgs(xaml::Input::PointerRoutedEventArgs const &args) noexcept : m_args{args} {}
+ReactPointerEventArgs::ReactPointerEventArgs(
+    PointerEventKind kind,
+    xaml::Input::PointerRoutedEventArgs const &args) noexcept
+    : m_kind{kind}, m_args{args} {}
 
 bool ReactPointerEventArgs::CaptureReleased() const noexcept {
   return m_captureReleased;

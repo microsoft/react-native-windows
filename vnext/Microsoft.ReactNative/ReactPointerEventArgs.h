@@ -8,6 +8,7 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 struct ReactPointerEventArgs : ReactPointerEventArgsT<ReactPointerEventArgs> {
+  PointerEventKind Kind() const noexcept;
   xaml::Input::PointerRoutedEventArgs Args() const noexcept;
 
   winrt::IInspectable Target() const noexcept;
@@ -18,13 +19,14 @@ struct ReactPointerEventArgs : ReactPointerEventArgsT<ReactPointerEventArgs> {
   void StopPropagation();
 
   // Internal use
-  ReactPointerEventArgs(xaml::Input::PointerRoutedEventArgs const &args) noexcept;
+  ReactPointerEventArgs(PointerEventKind kind, xaml::Input::PointerRoutedEventArgs const &args) noexcept;
 
   bool CaptureReleased() const noexcept;
   bool DefaultPrevented() const noexcept;
   bool PropagationStopped() const noexcept;
 
  private:
+  PointerEventKind m_kind;
   xaml::Input::PointerRoutedEventArgs const &m_args;
   winrt::IInspectable m_target{nullptr};
 

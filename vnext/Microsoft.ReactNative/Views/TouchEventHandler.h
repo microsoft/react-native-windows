@@ -86,6 +86,7 @@ class TouchEventHandler {
   void DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex);
   bool DispatchBackEvent();
   const char *GetPointerDeviceTypeName(winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept;
+  winrt::Microsoft::ReactNative::PointerEventKind GetPointerEventKind(TouchEventType eventType) noexcept;
   const wchar_t *GetTouchEventTypeName(TouchEventType eventType) noexcept;
 
   std::optional<size_t> IndexOfPointerWithId(uint32_t pointerId);
@@ -102,7 +103,6 @@ class TouchEventHandler {
 
   bool TagFromOriginalSource(
       winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
-      TouchEventType eventType,
       int64_t *pTag,
       xaml::UIElement *pSourceElement);
   winrt::IPropertyValue TestHit(

@@ -216,54 +216,14 @@ YGMeasureFunc ABIViewManager::GetYogaCustomMeasureFunc() const {
   }
 }
 
-void ABIViewManager::OnPointerPressed(
+void ABIViewManager::OnPointerEvent(
     const ::Microsoft::ReactNative::ShadowNodeBase *node,
     const ReactPointerEventArgs &args) {
   if (m_viewManagerWithPointerEvents) {
-    m_viewManagerWithPointerEvents.OnPointerPressed(node->GetView(), args);
+    m_viewManagerWithPointerEvents.OnPointerEvent(node->GetView(), args);
   }
   // Call the base method to handle `pointerEvents` behavior
-  Super::OnPointerPressed(node, args);
-}
-
-void ABIViewManager::OnPointerMoved(
-    const ::Microsoft::ReactNative::ShadowNodeBase *node,
-    const ReactPointerEventArgs &args) {
-  if (m_viewManagerWithPointerEvents) {
-    m_viewManagerWithPointerEvents.OnPointerMoved(node->GetView(), args);
-  }
-  // Call the base method to handle `pointerEvents` behavior
-  Super::OnPointerMoved(node, args);
-}
-
-void ABIViewManager::OnPointerReleased(
-    const ::Microsoft::ReactNative::ShadowNodeBase *node,
-    const ReactPointerEventArgs &args) {
-  if (m_viewManagerWithPointerEvents) {
-    m_viewManagerWithPointerEvents.OnPointerReleased(node->GetView(), args);
-  }
-  // Call the base method to handle `pointerEvents` behavior
-  Super::OnPointerReleased(node, args);
-}
-
-void ABIViewManager::OnPointerCanceled(
-    const ::Microsoft::ReactNative::ShadowNodeBase *node,
-    const ReactPointerEventArgs &args) {
-  if (m_viewManagerWithPointerEvents) {
-    m_viewManagerWithPointerEvents.OnPointerCanceled(node->GetView(), args);
-  }
-  // Call the base method to handle `pointerEvents` behavior
-  Super::OnPointerCanceled(node, args);
-}
-
-void ABIViewManager::OnPointerCaptureLost(
-    const ::Microsoft::ReactNative::ShadowNodeBase *node,
-    const ReactPointerEventArgs &args) {
-  if (m_viewManagerWithPointerEvents) {
-    m_viewManagerWithPointerEvents.OnPointerCaptureLost(node->GetView(), args);
-  }
-  // Call the base method to handle `pointerEvents` behavior
-  Super::OnPointerCaptureLost(node, args);
+  Super::OnPointerEvent(node, args);
 }
 
 ::Microsoft::ReactNative::ShadowNode *ABIViewManager::createShadow() const {

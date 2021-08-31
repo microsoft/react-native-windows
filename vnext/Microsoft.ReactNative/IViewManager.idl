@@ -70,10 +70,6 @@ namespace Microsoft.ReactNative
     "Enables a view manager to release pointer capture from the React root view and start handling pointer events itself."
   )
   interface IViewManagerWithPointerEvents {
-    void OnPointerPressed(Object view, ReactPointerEventArgs args);
-    void OnPointerMoved(Object view, ReactPointerEventArgs args);
-    void OnPointerReleased(Object view, ReactPointerEventArgs args);
-    void OnPointerCanceled(Object view, ReactPointerEventArgs args);
-    void OnPointerCaptureLost(Object view, ReactPointerEventArgs args);
+    void OnPointerEvent(Object view, ReactPointerEventArgs args);
   };
 } // namespace Microsoft.ReactNative
