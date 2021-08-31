@@ -2,6 +2,84 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Aug 2021 05:07:15 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.367",
+      "version": "0.0.0-canary.367",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow override of global.nativeLoggingHook",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "6addef9dcb286f3ec6718cddd45cec706e853551",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove unused code",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "36a6cf37234e51b3518500c66d93f1254bd58035",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 28 Aug 2021 05:06:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.366",
+      "version": "0.0.0-canary.366",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Pass JSValueArgWriter around instead of immediately converting to dynamic",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "0622bf66ad17ad48e0bedc73822fcbbbb7b38991",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Aug 2021 05:06:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.365",
+      "version": "0.0.0-canary.365",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-tscodegen to catch up react-native 0.65",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "420edbedb4cbe4b40f2541e466f98bd9e177e26a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 25 Aug 2021 05:07:15 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.365",
+      "version": "0.0.0-canary.365",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 7/28 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c10ab11a85107ed5b237af0cbce8703aa47d991f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Set Shared WindowsTargetPlatformVersion in External Property Sheets",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3688c2ef922957f8a7453108f643b08ef2815b01",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Consume NAPI V8 JSI Runtime",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "cded0558d8bb66d249d47fc46b91c8515625b91f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Aug 2021 05:10:28 GMT",
       "tag": "react-native-windows_v0.0.0-canary.364",
       "version": "0.0.0-canary.364",

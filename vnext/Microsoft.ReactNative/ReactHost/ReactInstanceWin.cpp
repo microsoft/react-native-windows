@@ -39,6 +39,7 @@
 #include <Views/ViewManager.h>
 #include <base/CoreNativeModules.h>
 #include <dispatchQueue/dispatchQueue.h>
+#include "DynamicWriter.h"
 #ifndef CORE_ABI
 #include "ConfigureBundlerDlg.h"
 #include "DevMenu.h"
@@ -382,7 +383,6 @@ void ReactInstanceWin::Initialize() noexcept {
       devSettings->debuggerRuntimeName = m_options.DeveloperSettings.DebuggerRuntimeName;
       devSettings->useWebDebugger = m_useWebDebugger;
       devSettings->useFastRefresh = m_isFastReloadEnabled;
-      // devSettings->memoryTracker = GetMemoryTracker();
       devSettings->bundleRootPath = BundleRootPath();
 
       devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
@@ -922,7 +922,7 @@ bool ReactInstanceWin::IsLoaded() const noexcept {
 
 void ReactInstanceWin::AttachMeasuredRootView(
     facebook::react::IReactRootView *rootView,
-    folly::dynamic &&initialProps,
+    const winrt::Microsoft::ReactNative::JSValueArgWriter &initialProps,
     bool useFabric) noexcept {
 #ifndef CORE_ABI
   if (State() == ReactInstanceState::HasError)
@@ -937,7 +937,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
 
     auto rootTag = Microsoft::ReactNative::getNextRootViewTag();
     rootView->SetTag(rootTag);
-    uiManager->startSurface(rootView, rootTag, rootView->JSComponentName(), std::move(initialProps));
+    uiManager->startSurface(rootView, rootTag, rootView->JSComponentName(), DynamicWriter::ToDynamic(initialProps));
 
   } else
 #endif
@@ -952,7 +952,8 @@ void ReactInstanceWin::AttachMeasuredRootView(
     std::string jsMainModuleName = rootView->JSComponentName();
     folly::dynamic params = folly::dynamic::array(
         std::move(jsMainModuleName),
-        folly::dynamic::object("initialProps", std::move(initialProps))("rootTag", rootTag)("fabric", false));
+        folly::dynamic::object("initialProps", DynamicWriter::ToDynamic(initialProps))("rootTag", rootTag)(
+            "fabric", false));
     CallJsFunction("AppRegistry", "runApplication", std::move(params));
   }
 #endif

@@ -2,6 +2,80 @@
   "name": "node-rnw-rpc",
   "entries": [
     {
+      "date": "Tue, 31 Aug 2021 05:07:15 GMT",
+      "tag": "node-rnw-rpc_v1.0.15-1",
+      "version": "1.0.15-1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.367",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "6addef9dcb286f3ec6718cddd45cec706e853551",
+            "package": "node-rnw-rpc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 28 Aug 2021 05:06:32 GMT",
+      "tag": "node-rnw-rpc_v1.0.15-0",
+      "version": "1.0.15-0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.366",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "0622bf66ad17ad48e0bedc73822fcbbbb7b38991",
+            "package": "node-rnw-rpc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Aug 2021 05:06:34 GMT",
+      "tag": "node-rnw-rpc_v1.0.14",
+      "version": "1.0.14",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.365",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "420edbedb4cbe4b40f2541e466f98bd9e177e26a",
+            "package": "node-rnw-rpc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 25 Aug 2021 05:07:15 GMT",
+      "tag": "node-rnw-rpc_v1.0.14",
+      "version": "1.0.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Integrate 7/28 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c10ab11a85107ed5b237af0cbce8703aa47d991f",
+            "package": "node-rnw-rpc"
+          },
+          {
+            "comment": "Set Shared WindowsTargetPlatformVersion in External Property Sheets",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3688c2ef922957f8a7453108f643b08ef2815b01",
+            "package": "node-rnw-rpc"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.365",
+            "author": "ngerlem@microsoft.com",
+            "commit": "c10ab11a85107ed5b237af0cbce8703aa47d991f",
+            "package": "node-rnw-rpc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Aug 2021 05:10:28 GMT",
       "tag": "node-rnw-rpc_v1.0.13",
       "version": "1.0.13",

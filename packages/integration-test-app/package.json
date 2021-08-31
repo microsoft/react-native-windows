@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "chai": "^4.2.0",
-    "node-rnw-rpc": "^1.0.13",
+    "node-rnw-rpc": "^1.0.15-1",
     "react": "17.0.2",
     "react-native": "0.0.0-cbec66ef9",
-    "react-native-windows": "^0.0.0-canary.364"
+    "react-native-windows": "^0.0.0-canary.367"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
@@ -23,7 +23,7 @@
     "@babel/preset-typescript": "^7.11.5",
     "@babel/traverse": "^7.11.5",
     "@babel/types": "^7.11.5",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.4",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.5",
     "@rnw-scripts/babel-node-config": "2.0.1",
     "@rnw-scripts/eslint-config": "^1.1.7",
     "@rnw-scripts/just-task": "^2.2.0",

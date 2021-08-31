@@ -55,9 +55,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)LayoutAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryTracker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -126,6 +123,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NapiJsiV8RuntimeHolder.cpp">
+      <Filter>Source Files\JSI</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.cpp">
       <Filter>Source Files</Filter>
@@ -281,9 +281,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MemoryTracker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)NativeModuleProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -374,6 +371,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)tracing\tracing.h">
       <Filter>Header Files\tracing</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NapiJsiV8RuntimeHolder.h">
+      <Filter>Header Files\JSI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h">
       <Filter>Header Files</Filter>

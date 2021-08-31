@@ -40,10 +40,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraJsiRuntime_edgemode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NapiJsiV8RuntimeHolder.cpp">
+      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)LayoutAnimation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryTracker.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.cpp">
       <ExcludedFromBuild Condition="'$(ApplicationType)' == ''">true</ExcludedFromBuild>
@@ -83,6 +85,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NapiJsiV8RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.h" />
@@ -110,7 +113,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)LayoutAnimation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Logging.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)MemoryTracker.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\I18nModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\PlatformConstantsModule.h" />

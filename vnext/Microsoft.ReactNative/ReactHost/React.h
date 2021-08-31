@@ -86,7 +86,7 @@ struct IReactInstance : IUnknown {
 
   virtual void AttachMeasuredRootView(
       facebook::react::IReactRootView *rootView,
-      folly::dynamic &&initialProps,
+      const winrt::Microsoft::ReactNative::JSValueArgWriter &initialProps,
       bool useFabric) noexcept = 0;
   virtual void DetachRootView(facebook::react::IReactRootView *rootView, bool useFabric) noexcept = 0;
 };
@@ -125,8 +125,8 @@ struct ReactViewOptions {
   //! Name of a component registered in JavaScript via AppRegistry.registerComponent('ModuleName', () => ModuleName);
   std::string ComponentName;
 
-  //! Set of initial component properties. It is a JSON string.
-  folly::dynamic InitialProps;
+  // Initial component properties.
+  winrt::Microsoft::ReactNative::JSValueArgWriter InitialProps;
 
   //! Use Fabric for this ReactView
   bool UseFabric{false};
