@@ -96,9 +96,10 @@ MessageSimpleDispatchQueue::MessageSimpleDispatchQueue(
     Mso::React::ISimpleDispatch &dispatchQueue,
     Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
     Mso::Promise<void> &&whenQuit) noexcept
-    : m_stopped{false}, m_errorHandler{std::move(errorHandler)}, m_whenQuit{std::move(whenQuit)} {
-  m_dispatchQueue.copy_from(&dispatchQueue);
-}
+    : m_stopped{false},
+      m_errorHandler{std::move(errorHandler)},
+      m_whenQuit{std::move(whenQuit)},
+      m_dispatchQueue{&dispatchQueue} {}
 
 MessageSimpleDispatchQueue::~MessageSimpleDispatchQueue() noexcept {}
 
