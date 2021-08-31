@@ -14,14 +14,23 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct AlertManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  REACT_STRUCT(Args)
   struct Args {
+      REACT_FIELD(title)
       std::optional<std::string> title;
+      REACT_FIELD(message)
       std::optional<std::string> message;
+      REACT_FIELD(buttons)
       std::optional<React::JSValueArray> buttons;
+      REACT_FIELD(type)
       std::optional<std::string> type;
+      REACT_FIELD(defaultValue)
       std::optional<std::string> defaultValue;
+      REACT_FIELD(cancelButtonKey)
       std::optional<std::string> cancelButtonKey;
+      REACT_FIELD(destructiveButtonKey)
       std::optional<std::string> destructiveButtonKey;
+      REACT_FIELD(keyboardType)
       std::optional<std::string> keyboardType;
   };
 

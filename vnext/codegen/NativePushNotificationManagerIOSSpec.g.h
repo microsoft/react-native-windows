@@ -14,21 +14,35 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  REACT_STRUCT(Permissions)
   struct Permissions {
+      REACT_FIELD(alert)
       bool alert;
+      REACT_FIELD(badge)
       bool badge;
+      REACT_FIELD(sound)
       bool sound;
   };
 
+  REACT_STRUCT(Notification)
   struct Notification {
+      REACT_FIELD(alertTitle)
       std::optional<std::string> alertTitle;
+      REACT_FIELD(fireDate)
       std::optional<double> fireDate;
+      REACT_FIELD(alertBody)
       std::optional<std::string> alertBody;
+      REACT_FIELD(alertAction)
       std::optional<std::string> alertAction;
+      REACT_FIELD(userInfo)
       std::optional<React::JSValueObject> userInfo;
+      REACT_FIELD(category)
       std::optional<std::string> category;
+      REACT_FIELD(repeatInterval)
       std::optional<std::string> repeatInterval;
+      REACT_FIELD(applicationIconBadgeNumber)
       std::optional<double> applicationIconBadgeNumber;
+      REACT_FIELD(isSilent)
       std::optional<bool> isSilent;
   };
 

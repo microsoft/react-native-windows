@@ -14,25 +14,41 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct DeviceInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  REACT_STRUCT(DisplayMetrics)
   struct DisplayMetrics {
+      REACT_FIELD(width)
       double width;
+      REACT_FIELD(height)
       double height;
+      REACT_FIELD(scale)
       double scale;
+      REACT_FIELD(fontScale)
       double fontScale;
   };
 
+  REACT_STRUCT(DisplayMetricsAndroid)
   struct DisplayMetricsAndroid {
+      REACT_FIELD(width)
       double width;
+      REACT_FIELD(height)
       double height;
+      REACT_FIELD(scale)
       double scale;
+      REACT_FIELD(fontScale)
       double fontScale;
+      REACT_FIELD(densityDpi)
       double densityDpi;
   };
 
+  REACT_STRUCT(DimensionsPayload)
   struct DimensionsPayload {
+      REACT_FIELD(window)
       std::optional<DisplayMetrics> window;
+      REACT_FIELD(screen)
       std::optional<DisplayMetrics> screen;
+      REACT_FIELD(windowPhysicalPixels)
       std::optional<DisplayMetricsAndroid> windowPhysicalPixels;
+      REACT_FIELD(screenPhysicalPixels)
       std::optional<DisplayMetricsAndroid> screenPhysicalPixels;
   };
 

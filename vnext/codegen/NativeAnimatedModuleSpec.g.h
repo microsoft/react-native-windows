@@ -14,12 +14,17 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  REACT_STRUCT(EndResult)
   struct EndResult {
+      REACT_FIELD(finished)
       bool finished;
   };
 
+  REACT_STRUCT(EventMapping)
   struct EventMapping {
+      REACT_FIELD(nativeEventPath)
       React::JSValueArray nativeEventPath;
+      REACT_FIELD(animatedValueTag)
       std::optional<double> animatedValueTag;
   };
 

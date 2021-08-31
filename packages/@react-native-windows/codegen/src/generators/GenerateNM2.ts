@@ -160,6 +160,7 @@ export function createNM2Generator({namespace}: {namespace: string}) {
         for (const aliasName of Object.keys(nativeModule.aliases)) {
           const aliasType = nativeModule.aliases[aliasName];
           traversedAliasedStructs = `${traversedAliasedStructs}
+  REACT_STRUCT(${aliasName})
   struct ${aliasName} {
 ${translateObjectBody(aliasType, '      ')}
   };

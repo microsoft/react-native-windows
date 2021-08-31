@@ -14,11 +14,17 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct ImageEditorSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  REACT_STRUCT(Options)
   struct Options {
+      REACT_FIELD(offset)
       React::JSValueObject offset;
+      REACT_FIELD(size)
       React::JSValueObject size;
+      REACT_FIELD(displaySize)
       std::optional<React::JSValueObject> displaySize;
+      REACT_FIELD(resizeMode)
       std::optional<std::string> resizeMode;
+      REACT_FIELD(allowExternalStorage)
       std::optional<bool> allowExternalStorage;
   };
 

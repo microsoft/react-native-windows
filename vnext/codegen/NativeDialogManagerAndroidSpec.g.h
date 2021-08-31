@@ -14,13 +14,21 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct DialogManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  REACT_STRUCT(DialogOptions)
   struct DialogOptions {
+      REACT_FIELD(title)
       std::optional<std::string> title;
+      REACT_FIELD(message)
       std::optional<std::string> message;
+      REACT_FIELD(buttonPositive)
       std::optional<std::string> buttonPositive;
+      REACT_FIELD(buttonNegative)
       std::optional<std::string> buttonNegative;
+      REACT_FIELD(buttonNeutral)
       std::optional<std::string> buttonNeutral;
+      REACT_FIELD(items)
       std::optional<React::JSValueArray> items;
+      REACT_FIELD(cancelable)
       std::optional<bool> cancelable;
   };
 

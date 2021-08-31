@@ -67,7 +67,9 @@ export function translateObjectBody(
       if (prop.optional && propType.type !== 'NullableTypeAnnotation') {
         propType = {type: 'NullableTypeAnnotation', typeAnnotation: propType};
       }
-      return `${prefix}${translateField(propType)} ${prop.name};`;
+      const first = `${prefix}REACT_FIELD(${prop.name})`;
+      const second = `${prefix}${translateField(propType)} ${prop.name};`;
+      return `${first}\n${second}`;
     })
     .join('\n');
 }

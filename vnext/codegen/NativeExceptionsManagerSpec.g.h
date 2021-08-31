@@ -14,22 +14,37 @@
 namespace Microsoft::ReactNativeSpecs {
 
 struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  REACT_STRUCT(StackFrame)
   struct StackFrame {
+      REACT_FIELD(column)
       std::optional<double> column;
+      REACT_FIELD(file)
       std::optional<std::string> file;
+      REACT_FIELD(lineNumber)
       std::optional<double> lineNumber;
+      REACT_FIELD(methodName)
       std::string methodName;
+      REACT_FIELD(collapse)
       std::optional<bool> collapse;
   };
 
+  REACT_STRUCT(ExceptionData)
   struct ExceptionData {
+      REACT_FIELD(message)
       std::string message;
+      REACT_FIELD(originalMessage)
       std::optional<std::string> originalMessage;
+      REACT_FIELD(name)
       std::optional<std::string> name;
+      REACT_FIELD(componentStack)
       std::optional<std::string> componentStack;
+      REACT_FIELD(stack)
       React::JSValueArray stack;
+      REACT_FIELD(id)
       double id;
+      REACT_FIELD(isFatal)
       bool isFatal;
+      REACT_FIELD(extraData)
       std::optional<React::JSValueObject> extraData;
   };
 
