@@ -194,6 +194,8 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
     m_touchId = 0;
 
   m_xamlView.as<xaml::FrameworkElement>().ReleasePointerCapture(args.Pointer());
+
+  UpdatePointersInViews(args, tag, sourceElement);
 }
 
 size_t TouchEventHandler::AddReactPointer(
