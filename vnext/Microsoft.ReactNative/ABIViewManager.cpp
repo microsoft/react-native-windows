@@ -216,9 +216,7 @@ YGMeasureFunc ABIViewManager::GetYogaCustomMeasureFunc() const {
   }
 }
 
-void ABIViewManager::OnPointerEvent(
-    const ::Microsoft::ReactNative::ShadowNodeBase *node,
-    const ReactPointerEventArgs &args) {
+void ABIViewManager::OnPointerEvent(::Microsoft::ReactNative::ShadowNodeBase *node, const ReactPointerEventArgs &args) {
   if (m_viewManagerWithPointerEvents) {
     m_viewManagerWithPointerEvents.OnPointerEvent(node->GetView(), args);
   }

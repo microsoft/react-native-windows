@@ -80,7 +80,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
   bool IsNativeControlWithSelfLayout() const;
 
   virtual void OnPointerEvent(
-      const ShadowNodeBase * /*node*/,
+      ShadowNodeBase * /*node*/,
       const winrt::Microsoft::ReactNative::ReactPointerEventArgs & /*args*/) {}
 
   const Mso::React::IReactContext &GetReactContext() const {

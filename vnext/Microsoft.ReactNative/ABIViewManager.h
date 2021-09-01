@@ -65,7 +65,7 @@ class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewMana
     return m_viewManagerRequiresNativeLayout != nullptr && m_viewManagerRequiresNativeLayout.RequiresNativeLayout();
   }
 
-  void OnPointerEvent(const ::Microsoft::ReactNative::ShadowNodeBase *node, const ReactPointerEventArgs &args) override;
+  void OnPointerEvent(::Microsoft::ReactNative::ShadowNodeBase *node, const ReactPointerEventArgs &args) override;
 
  protected:
   xaml::DependencyObject CreateViewCore(int64_t, const winrt::Microsoft::ReactNative::JSValueObject &props) override;
