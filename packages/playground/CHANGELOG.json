@@ -2,6 +2,21 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Wed, 01 Sep 2021 05:07:18 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.6",
+            "author": "ngerlem@microsoft.com",
+            "commit": "612eaf91f96d21450032f6e6667bdca0999ae104",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Aug 2021 05:07:15 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",

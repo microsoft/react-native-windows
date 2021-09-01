@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 01 Sep 2021 05:07:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.368",
+      "version": "0.0.0-canary.368",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 8/11 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "612eaf91f96d21450032f6e6667bdca0999ae104",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add accessibility UIA headings",
+            "author": "agnel@microsoft.com",
+            "commit": "98d0bcb313ff13fc79daae007d6cdf594fc8cfe4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Aug 2021 05:07:15 GMT",
       "tag": "react-native-windows_v0.0.0-canary.367",
       "version": "0.0.0-canary.367",

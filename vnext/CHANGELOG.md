@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 31 Aug 2021 05:07:15 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Sep 2021 05:07:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.368
+
+Wed, 01 Sep 2021 05:07:18 GMT
+
+### Changes
+
+- Integrate 8/11 Nightly RN Build (ngerlem@microsoft.com)
+- add accessibility UIA headings (agnel@microsoft.com)
 
 ## 0.0.0-canary.367
 

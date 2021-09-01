@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Fri, 11 Jun 2021 05:08:55 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Sep 2021 05:07:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.7
+
+Wed, 01 Sep 2021 05:07:18 GMT
+
+### Patches
+
+- Add doxysaurus README (ngerlem@microsoft.com)
 
 ## 0.1.6
 
