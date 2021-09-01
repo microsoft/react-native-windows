@@ -76,7 +76,11 @@ class TouchEventHandler {
   CreateReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::UIElement sourceElement);
   void
   UpdateReactPointer(ReactPointer &pointer, const winrt::PointerRoutedEventArgs &args, xaml::UIElement sourceElement);
-  void UpdatePointersInViews(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::UIElement sourceElement);
+  void UpdatePointersInViews(
+      const winrt::PointerRoutedEventArgs &args,
+      int64_t tag,
+      xaml::UIElement sourceElement,
+      std::vector<int64_t> &&tagsForBranch);
 
 #ifdef USE_FABRIC
   facebook::react::Touch TouchForPointer(const ReactPointer &pointer) noexcept;
@@ -104,7 +108,8 @@ class TouchEventHandler {
   bool TagFromOriginalSource(
       winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
       int64_t *pTag,
-      xaml::UIElement *pSourceElement);
+      xaml::UIElement *pSourceElement,
+      std::vector<int64_t> &tagsForBranch);
   winrt::IPropertyValue TestHit(
       const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
       const winrt::Point &pointerPos,
