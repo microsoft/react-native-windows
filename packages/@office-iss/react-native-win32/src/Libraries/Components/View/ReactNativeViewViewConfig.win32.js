@@ -381,6 +381,7 @@ const ReactNativeViewConfig: ViewConfig = {
     accessibilityLabeledBy: true,
     accessibilityDescription: true,
     accessibilityControls: true,
+    accessibilityItemType: true,
     // Windows]
   },
 };
