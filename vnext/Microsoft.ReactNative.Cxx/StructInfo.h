@@ -29,8 +29,8 @@
     return fieldMap;                                                                       \
   }
 
-#define INTERNAL_REACT_STRUCT(structType)                                                  \
-  struct structType;                                                                       \
+#define INTERNAL_REACT_STRUCT(structType) \
+  struct structType;                      \
   INTERNAL_REACT_STRUCT_GETSTRUCTINFO(structType)
 
 #define INTERNAL_REACT_FIELD_2_ARGS(field, fieldName)                      \
