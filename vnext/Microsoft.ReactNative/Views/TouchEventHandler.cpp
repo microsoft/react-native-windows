@@ -32,7 +32,7 @@
 
 namespace Microsoft::ReactNative {
 
-std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag);
+std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag, int64_t rootTag);
 
 TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context, bool fabric)
     : m_xamlView(nullptr),
@@ -99,7 +99,8 @@ void TouchEventHandler::OnPointerPressed(
   auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
   const auto argsImpl =
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(reactArgs);
-  if (!TagFromOriginalSource(reactArgs, &tag, &sourceElement))
+  std::vector<int64_t> tagsForBranch;
+  if (!TagFromOriginalSource(reactArgs, &tag, &sourceElement, tagsForBranch))
     return;
 
   // If this was caused by the user pressing the "back" hardware button, fire that event instead
@@ -111,7 +112,7 @@ void TouchEventHandler::OnPointerPressed(
 
   if (!argsImpl->CaptureReleased() && m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
     // Pointer pressing updates the enter/leave state
-    UpdatePointersInViews(args, tag, sourceElement);
+    UpdatePointersInViews(args, tag, sourceElement, std::move(tagsForBranch));
 
     size_t pointerIndex = AddReactPointer(args, tag, sourceElement);
 
@@ -148,7 +149,8 @@ void TouchEventHandler::OnPointerExited(
   if (m_context->State() == Mso::React::ReactInstanceState::HasError)
     return;
 
-  UpdatePointersInViews(args, -1, nullptr);
+  std::vector<int64_t> tagsForBranch;
+  UpdatePointersInViews(args, -1, nullptr, std::move(tagsForBranch));
 }
 
 void TouchEventHandler::OnPointerMoved(
@@ -166,7 +168,8 @@ void TouchEventHandler::OnPointerMoved(
   auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
   const auto argsImpl =
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(reactArgs);
-  if (!TagFromOriginalSource(reactArgs, &tag, &sourceElement))
+  std::vector<int64_t> tagsForBranch;
+  if (!TagFromOriginalSource(reactArgs, &tag, &sourceElement, tagsForBranch))
     return;
 
   auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
@@ -179,7 +182,7 @@ void TouchEventHandler::OnPointerMoved(
     }
   } else if (!argsImpl->DefaultPrevented()) {
     // Move with no buttons pressed
-    UpdatePointersInViews(args, tag, sourceElement);
+    UpdatePointersInViews(args, tag, sourceElement, std::move(tagsForBranch));
   }
 }
 
@@ -200,7 +203,8 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
   const auto argsImpl =
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(reactArgs);
-  if (TagFromOriginalSource(reactArgs, &tag, &sourceElement))
+  std::vector<int64_t> tagsForBranch;
+  if (TagFromOriginalSource(reactArgs, &tag, &sourceElement, tagsForBranch))
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
 
   if (m_pointers[*optPointerIndex].isLeftButton) {
@@ -302,7 +306,8 @@ std::optional<size_t> TouchEventHandler::IndexOfPointerWithId(uint32_t pointerId
 void TouchEventHandler::UpdatePointersInViews(
     const winrt::PointerRoutedEventArgs &args,
     int64_t tag,
-    xaml::UIElement sourceElement) {
+    xaml::UIElement sourceElement,
+    std::vector<int64_t> &&tagsForBranch) {
   if (auto nativeUiManager = GetNativeUIManager(*m_context).lock()) {
     auto puiManagerHost = nativeUiManager->getHost();
     int32_t pointerId = args.Pointer().PointerId();
@@ -311,11 +316,6 @@ void TouchEventHandler::UpdatePointersInViews(
     // don't have any pointers down and should reset the touchId back to zero
     if (m_pointers.size() == 0)
       m_touchId = 0;
-
-    // Get the branch of views under the pointer in leaf to root order
-    std::vector<int64_t> newViews;
-    if (tag != -1)
-      newViews = GetTagsForBranch(puiManagerHost, tag);
 
     // Get the results of the last time we calculated the path
     auto it = m_pointersInViews.find(pointerId);
@@ -327,12 +327,12 @@ void TouchEventHandler::UpdatePointersInViews(
     }
 
     // Short-circuit if the hierarchy hasn't changed
-    if ((existingViews == nullptr && newViews.size() == 0) ||
-        (existingViews != nullptr && existingViews->orderedTags == newViews))
+    if ((existingViews == nullptr && tagsForBranch.size() == 0) ||
+        (existingViews != nullptr && existingViews->orderedTags == tagsForBranch))
       return;
 
     // Prep to fire pointer events
-    std::unordered_set<int64_t> newViewsSet(newViews.begin(), newViews.end());
+    std::unordered_set<int64_t> newViewsSet(tagsForBranch.begin(), tagsForBranch.end());
     ReactPointer pointer;
 
     auto optPointerIndex = IndexOfPointerWithId(pointerId);
@@ -360,7 +360,7 @@ void TouchEventHandler::UpdatePointersInViews(
     }
 
     // Walk through newViews from outermost to inner, firing mouseEnter events if they are not in existingViews
-    for (auto iter = newViews.rbegin(); iter != newViews.rend(); ++iter) {
+    for (auto iter = tagsForBranch.rbegin(); iter != tagsForBranch.rend(); ++iter) {
       int64_t newTag = *iter;
       if (existingViews && existingViews->tags.count(newTag)) {
         continue;
@@ -374,7 +374,7 @@ void TouchEventHandler::UpdatePointersInViews(
             winrt::Microsoft::ReactNative::MakeJSValueWriter(GetPointerJson(pointer, newTag)));
     }
 
-    m_pointersInViews[pointerId] = {std::move(newViewsSet), std::move(newViews)};
+    m_pointersInViews[pointerId] = {std::move(newViewsSet), std::move(tagsForBranch)};
   }
 }
 
@@ -606,7 +606,8 @@ const wchar_t *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType
 bool TouchEventHandler::TagFromOriginalSource(
     winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
     int64_t *pTag,
-    xaml::UIElement *pSourceElement) {
+    xaml::UIElement *pSourceElement,
+    std::vector<int64_t> &tagsForBranch) {
   assert(pTag != nullptr);
   assert(pSourceElement != nullptr);
 
@@ -628,35 +629,50 @@ bool TouchEventHandler::TagFromOriginalSource(
     // Walk to root to find refined React target view
     const auto argsImpl = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(args);
     while (node && !argsImpl->PropagationStopped()) {
+      const auto previousTarget = args.Target();
       if (args.Target() == nullptr) {
         args.Target(node->GetView());
       }
 
       node->GetViewManager()->OnPointerEvent(node, args);
+
+      if (args.Target() != previousTarget) {
+        tagsForBranch.clear();
+      }
+
+      if (const auto target = args.Target().try_as<XamlView>()) {
+        // We assume that if a ViewManager is going to change the target, it
+        // can only update the target to one of its descendants.
+        const auto tagsToCurrentTarget = GetTagsForBranch(uiManager->getHost(), GetTag(target), node->m_tag);
+        for (auto tag : tagsToCurrentTarget) {
+          tagsForBranch.push_back(tag);
+        }
+      }
+
       node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(node->m_parent));
     }
 
     if (args.Target() != nullptr) {
-      if (auto tag = GetTagAsPropertyValue(args.Target().as<XamlView>())) {
-        sourceElement = args.Target().try_as<xaml::UIElement>();
+      sourceElement = args.Target().try_as<xaml::UIElement>();
 
-        // Find the first parent UIElement of the React target for pointer positioning
-        if (!sourceElement) {
-          node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(*pTag));
-        }
+      // Find the first parent UIElement of the React target for pointer positioning
+      if (!sourceElement) {
+        node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(*pTag));
+      }
 
-        while (!sourceElement && node) {
-          node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(node->m_parent));
-          sourceElement = node->GetView().try_as<xaml::UIElement>();
-        }
+      while (!sourceElement && node) {
+        node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(node->m_parent));
+        sourceElement = node->GetView().try_as<xaml::UIElement>();
+      }
 
-        if (sourceElement) {
-          // If a TextBlock was the UIElement event source, perform a more accurate hit test,
-          // searching for the tag of the nested Run/Span XAML elements that the user actually clicked.
-          // This is to support nested <Text> elements in React.
-          // Nested React <Text> elements get translated into nested XAML <Span> elements,
-          // while the content of the <Text> becomes a list of XAML <Run> elements.
-          // However, we should report the Text element as the target, not the contexts of the text.
+      if (sourceElement) {
+        // If a TextBlock was the UIElement event source, perform a more accurate hit test,
+        // searching for the tag of the nested Run/Span XAML elements that the user actually clicked.
+        // This is to support nested <Text> elements in React.
+        // Nested React <Text> elements get translated into nested XAML <Span> elements,
+        // while the content of the <Text> becomes a list of XAML <Run> elements.
+        // However, we should report the Text element as the target, not the contexts of the text.
+        if (auto tag = GetTagAsPropertyValue(args.Target().as<XamlView>())) {
           if (const auto textBlock = sourceElement.try_as<xaml::Controls::TextBlock>()) {
             const auto pointerPos = args.Args().GetCurrentPoint(textBlock).RawPosition();
             const auto inlines = textBlock.Inlines().GetView();
@@ -729,12 +745,15 @@ winrt::IPropertyValue TouchEventHandler::TestHit(
 // Retreives the path of nodes from an element to the root.
 // The order of the returned list is from child to parent.
 //
-std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag) {
+std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag, int64_t rootTag) {
   std::vector<int64_t> tags;
 
   auto *shadowNode = host->FindShadowNodeForTag(tag);
   while (shadowNode != nullptr && tag != -1) {
     tags.push_back(tag);
+    if (tag == rootTag) {
+      break;
+    }
 
     tag = shadowNode->m_parent;
     shadowNode = host->FindShadowNodeForTag(tag);
