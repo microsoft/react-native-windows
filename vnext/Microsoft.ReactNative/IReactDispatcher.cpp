@@ -11,8 +11,9 @@ using namespace Windows::Foundation;
 namespace winrt::Microsoft::ReactNative::implementation {
 
 // Implements ISimpleDispatch on top of a custom IReactDispatcher provided by the application
-struct WrappedReactDispatcher : implements<WrappedReactDispatcher, Mso::React::ISimpleDispatch> {
-  WrappedReactDispatcher(winrt::Microsoft::ReactNative::IReactDispatcher &dispatcher) : m_dispatcher(dispatcher) {}
+struct WrappedReactDispatcher : public Mso::UnknownObject<Mso::React::ISimpleDispatch> {
+  WrappedReactDispatcher(const winrt::Microsoft::ReactNative::IReactDispatcher &dispatcher) noexcept
+      : m_dispatcher(dispatcher) {}
 
   void Post(Mso::DispatchTask &&task) const noexcept override {
     m_dispatcher.Post(task);
@@ -52,13 +53,17 @@ void ReactDispatcher::InvokeElsePost(Mso::DispatchTask &&task) const noexcept {
   return make<ReactDispatcher>(Mso::DispatchQueue{});
 }
 
-/*static*/ winrt::com_ptr<Mso::React::ISimpleDispatch> ReactDispatcher::GetUISimpleDispatch(
+/*static*/ Mso::CntPtr<Mso::React::ISimpleDispatch> ReactDispatcher::GetUISimpleDispatch(
     IReactPropertyBag const &properties) noexcept {
   auto iReactDispatcher = GetUIDispatcher(properties);
-  if (auto simpleDispatcher = iReactDispatcher.try_as<ISimpleDispatch>())
-    return simpleDispatcher;
 
-  return winrt::make<WrappedReactDispatcher>(iReactDispatcher);
+  if (!iReactDispatcher)
+    return nullptr;
+
+  if (auto simpleDispatcher = iReactDispatcher.try_as<ISimpleDispatch>())
+    return simpleDispatcher.get();
+
+  return Mso::Make<WrappedReactDispatcher>(iReactDispatcher);
 }
 
 /*static*/ IReactDispatcher ReactDispatcher::UIThreadDispatcher() noexcept {

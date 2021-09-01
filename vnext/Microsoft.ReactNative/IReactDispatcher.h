@@ -8,7 +8,8 @@
 
 namespace Mso::React {
 
-struct __declspec(uuid("a8d9db25-3d16-4476-ae65-682fcee1260c")) ISimpleDispatch : ::IUnknown {
+MSO_GUID(ISimpleDispatch, "a8d9db25-3d16-4476-ae65-682fcee1260c")
+struct ISimpleDispatch : ::IUnknown {
   //! Post the task to the end of the queue for asynchronous invocation.
   virtual void Post(Mso::DispatchTask &&task) const noexcept = 0;
 
@@ -30,7 +31,7 @@ struct ReactDispatcher : implements<ReactDispatcher, IReactDispatcher, Mso::Reac
 
   static IReactDispatcher CreateSerialDispatcher() noexcept;
 
-  static winrt::com_ptr<ISimpleDispatch> GetUISimpleDispatch(IReactPropertyBag const &properties) noexcept;
+  static Mso::CntPtr<ISimpleDispatch> GetUISimpleDispatch(IReactPropertyBag const &properties) noexcept;
   static IReactDispatcher UIThreadDispatcher() noexcept;
   static IReactPropertyName UIDispatcherProperty() noexcept;
   static IReactDispatcher GetUIDispatcher(IReactPropertyBag const &properties) noexcept;
