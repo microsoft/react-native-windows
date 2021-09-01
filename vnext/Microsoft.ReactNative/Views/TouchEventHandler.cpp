@@ -177,7 +177,7 @@ void TouchEventHandler::OnPointerMoved(
       UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
       DispatchTouchEvent(eventType, *optPointerIndex);
     }
-  } else {
+  } else if (!argsImpl->DefaultPrevented()) {
     // Move with no buttons pressed
     UpdatePointersInViews(args, tag, sourceElement);
   }
@@ -610,11 +610,10 @@ bool TouchEventHandler::TagFromOriginalSource(
   assert(pTag != nullptr);
   assert(pSourceElement != nullptr);
 
-  xaml::UIElement sourceElement = args.Args().OriginalSource().try_as<xaml::UIElement>();
-  winrt::IPropertyValue tag(nullptr);
-
-  ShadowNodeBase *node = nullptr;
   if (const auto uiManager = GetNativeUIManager(*m_context).lock()) {
+    xaml::UIElement sourceElement = args.Args().OriginalSource().try_as<xaml::UIElement>();
+    ShadowNodeBase *node = nullptr;
+
     // Find the "deepest" React element that triggered the input event
     while (sourceElement) {
       node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(GetTag(sourceElement)));
@@ -637,7 +636,6 @@ bool TouchEventHandler::TagFromOriginalSource(
       node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(node->m_parent));
     }
 
-    winrt::IPropertyValue tag;
     if (args.Target() != nullptr) {
       if (auto tag = GetTagAsPropertyValue(args.Target().as<XamlView>())) {
         sourceElement = args.Target().try_as<xaml::UIElement>();
