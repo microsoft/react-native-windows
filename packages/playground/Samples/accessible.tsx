@@ -32,49 +32,50 @@ export default class Bootstrap extends React.Component<
       <View style={styles.container}>
         <View
           style={styles.item}
+          accessibilityLabel="FIRST ITEM"
           {...{
             // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
             focusable: true,
-            accessibilityLabel: 'FIRST ITEM',
           }}>
           <Text style={styles.text}>Welcome to React Native! (FIRST ITEM)</Text>
         </View>
         <View
           style={styles.item}
+          accessibilityLabel="SECOND ITEM"
           {...{
             // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
             enableFocusRing: false,
             focusable: true,
-            accessibilityLabel: 'SECOND ITEM',
           }}>
           <Text style={styles.text}>No focus visual (SECOND ITEM)</Text>
         </View>
         <View
           style={styles.item}
+          accessibilityLabel="THIRD ITEM"
           {...{
             // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
             onFocus: () => this.setState({displayText: 'FOCUSED'}),
             onBlur: () => this.setState({displayText: 'BLURRED'}),
             enableFocusRing: false,
             focusable: true,
-            accessibilityLabel: 'THIRD ITEM',
           }}>
           <Text style={styles.text}>{this.state.displayText}</Text>
         </View>
         <TouchableHighlight
           style={styles.item}
+          accessibilityLabel="TEST Announce For Accessibility"
           onPress={() => {
             AccessibilityInfo.announceForAccessibility('Testing Testing 1 2 3');
           }}
           {...{
             // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
             focusable: true,
-            accessibilityLabel: 'TEST Announce For Accessibility',
           }}>
           <Text style={styles.text}>TEST announceForAccessibility</Text>
         </TouchableHighlight>
         <TouchableHighlight
           style={styles.item}
+          accessibilityLabel="TEST Set Accessibility Focus"
           onPress={() => {
             const reactTag = findNodeHandle(this.myElement.current);
             if (reactTag) {
@@ -84,7 +85,6 @@ export default class Bootstrap extends React.Component<
           {...{
             // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
             focusable: true,
-            accessibilityLabel: 'TEST Set Accessibility Focus',
           }}>
           <Text style={styles.text}>TEST setAccessibilityFocus</Text>
         </TouchableHighlight>
