@@ -102,7 +102,6 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--no-packager',
     description: 'Do not launch packager while building',
-    default: false,
   },
   {
     name: '--bundle',
