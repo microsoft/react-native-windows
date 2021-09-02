@@ -75,11 +75,39 @@ export const app = {
    */
   findElementByXPath: (xpath: string): Promise<AutomationElement> => $(xpath),
 
-  setWindowSize: browser.setWindowSize.bind(browser),
-  setWindowPosition: browser.setWindowPosition.bind(browser),
-  getWindowPosition: browser.getWindowPosition.bind(browser),
-  getWindowSize: browser.getWindowSize.bind(browser),
-  switchWindow: browser.switchWindow.bind(browser),
+  /**
+   * Resizes app window outer size according to provided width and height.
+   */
+  setWindowSize: (width: number, height: number) =>
+    browser.setWindowSize(width, height),
 
-  waitUntil: browser.waitUntil.bind(browser),
+  /**
+   * Change the position of the current focussed window.
+   */
+  setWindowPosition: (x: number, y: number) => browser.setWindowPosition(x, y),
+
+  /**
+   * Get the position of the current focussed window.
+   */
+  getWindowPosition: () => browser.getWindowPosition(),
+
+  /**
+   * Returns app window size.
+   */
+  getWindowSize: () => browser.getWindowSize(),
+
+  /**
+   * Switch focus to a particular window.
+   */
+  switchWindow: (titleToMatch: string | RegExp) =>
+    browser.switchWindow(titleToMatch),
+
+  /**
+   * This wait command is your universal weapon if you want to wait on something. It expects a condition
+   * and waits until that condition is fulfilled with a truthy value.
+   */
+  waitUntil: (
+    condition: () => Promise<boolean>,
+    options?: WebdriverIO.WaitUntilOptions,
+  ) => browser.waitUntil(condition, options),
 };
