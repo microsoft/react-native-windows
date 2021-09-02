@@ -110,7 +110,7 @@ void TouchEventHandler::OnPointerPressed(
     return;
   }
 
-  if (!argsImpl->CaptureReleased() && m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
+  if (!argsImpl->CaptureReleased() && !argsImpl->DefaultPrevented() && m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
     // Pointer pressing updates the enter/leave state
     UpdatePointersInViews(args, tag, sourceElement, std::move(tagsForBranch));
 
@@ -118,7 +118,7 @@ void TouchEventHandler::OnPointerPressed(
 
     // For now, when using the mouse we only want to send click events for the left button.
     // Finger and pen taps will also set isLeftButton.
-    if (m_pointers[pointerIndex].isLeftButton && !argsImpl->DefaultPrevented()) {
+    if (m_pointers[pointerIndex].isLeftButton) {
       DispatchTouchEvent(eventType, pointerIndex);
     }
   }
