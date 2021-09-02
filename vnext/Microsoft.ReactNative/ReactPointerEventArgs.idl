@@ -36,7 +36,5 @@ namespace Microsoft.ReactNative {
     void PreventDefault();
     DOC_STRING("Prevent or release pointer capture in React Native pointer event handler.")
     void ReleaseCapture();
-    DOC_STRING("Prevent parent views from receiving pointer event callbacks.")
-    void StopPropagation();
   }
 } // namespace Microsoft.ReactNative
