@@ -78,7 +78,6 @@ class TouchEventHandler {
   UpdateReactPointer(ReactPointer &pointer, const winrt::PointerRoutedEventArgs &args, xaml::UIElement sourceElement);
   void UpdatePointersInViews(
       const winrt::PointerRoutedEventArgs &args,
-      int64_t tag,
       xaml::UIElement sourceElement,
       std::vector<int64_t> &&tagsForBranch);
 
@@ -105,11 +104,10 @@ class TouchEventHandler {
   std::unordered_map<uint32_t /*pointerId*/, TagSet /*tags*/> m_pointersInViews;
   int64_t m_touchId = 0;
 
-  bool TagFromOriginalSource(
+  bool PropagatePointerEventAndFindReactTarget(
       winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
-      int64_t *pTag,
-      xaml::UIElement *pSourceElement,
-      std::vector<int64_t> &tagsForBranch);
+      std::vector<int64_t> *pTagsForBranch,
+      xaml::UIElement *pSourceElement);
   winrt::IPropertyValue TestHit(
       const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
       const winrt::Point &pointerPos,
