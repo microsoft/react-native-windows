@@ -15,7 +15,7 @@
     "watch": "rnw-scripts watch",
     "windows": "react-native run-windows"
   },
-  "main": "lib-commonjs/nodeRnwRpc.js",
+  "main": "lib-commonjs/automationChannel.js",
   "dependencies": {
     "jsonrpc-lite": "^2.2.0"
   },
