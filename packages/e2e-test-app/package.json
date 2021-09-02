@@ -15,7 +15,7 @@
     "@react-native-windows/tester": "0.0.1",
     "node-rnw-rpc": "^1.0.15",
     "react": "17.0.2",
-    "react-native": "0.0.0-cbec66ef9",
+    "react-native": "0.0.0-ad9030ca9",
     "react-native-windows": "^0.0.0-canary.368"
   },
   "devDependencies": {
