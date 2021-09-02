@@ -86,7 +86,7 @@ class WinAppDriverEnvironment extends NodeEnvironment {
       this.automationClient = await waitForConnection({
         port: this.channelOptions.port,
       });
-      this.global.AutomationClient = this.automationClient;
+      this.global.automationClient = this.automationClient;
     }
 
     this.global.remote = webdriverio.remote;
