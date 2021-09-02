@@ -43,7 +43,7 @@ class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentSta
   public render() {
     return (
       <ViewWin32>
-        <ViewWin32 ref={this._labeledBy} accessibilityLabel="separate label for test" />
+        <ViewWin32 ref={this._labeledBy} accessibilityLabel="separate label for test" accessibilityItemType="Comment" />
       <ViewWin32 style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', marginVertical: 5 }}>
         <TouchableHighlight onPress={this._onPress}>
           <ViewWin32 accessibilityLabeledBy={this._labeledBy} style={styles.blackbox} />
