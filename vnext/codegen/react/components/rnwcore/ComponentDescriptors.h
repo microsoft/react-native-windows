@@ -10,8 +10,8 @@
 
 #pragma once
 
-#include <react/components/rnwcore/ShadowNodes.h>
-#include <react/core/ConcreteComponentDescriptor.h>
+#include <react/renderer/components/rnwcore/ShadowNodes.h>
+#include <react/renderer/core/ConcreteComponentDescriptor.h>
 
 namespace facebook {
 namespace react {

@@ -5,7 +5,7 @@
  * @format
  */
 
-import {spawn, ChildProcess} from 'child_process';
+import {execSync, spawn, ChildProcess} from 'child_process';
 import fs from 'fs';
 
 import NodeEnvironment = require('jest-environment-node');
@@ -19,6 +19,10 @@ import {
 } from '@react-native-windows/automation-channel';
 
 export type EnvironmentOptions = {
+  /**
+   * The application to launch. Can be a path to an exe, or a package identity
+   * name (e.g. Microsoft.WindowsAlarms)
+   */
   app?: string;
   enableAutomationChannel?: boolean;
   automationChannelPort?: number;
@@ -54,7 +58,7 @@ class WinAppDriverEnvironment extends NodeEnvironment {
     const baseOptions: RemoteOptions = {
       port: 4723,
       capabilities: {
-        app: passedOptions.app,
+        app: resolveAppName(passedOptions.app),
         // @ts-ignore
         'ms:experimental-webdriver': true,
       },
@@ -144,6 +148,32 @@ async function spawnWinAppDriver(
       );
     });
   });
+}
+
+/**
+ * Convert a package identity or path to exe to the form expected by a WinAppDriver capability
+ */
+function resolveAppName(appName: string): string {
+  if (appName.endsWith('.exe')) {
+    return appName;
+  }
+
+  try {
+    const packageFamilyName = execSync(
+      `powershell (Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+    )
+      .toString()
+      .trim();
+
+    if (packageFamilyName.length === 0) {
+      // Rethrown below
+      throw new Error();
+    }
+
+    return `${packageFamilyName}!App`;
+  } catch {
+    throw new Error(`Could not locate a package with identity "${appName}"`);
+  }
 }
 
 export {AutomationClient} from '@react-native-windows/automation-channel';

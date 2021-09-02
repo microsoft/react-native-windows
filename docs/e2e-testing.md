@@ -116,36 +116,12 @@ describe('FancyWidget', () => {
 
   test('FancyWidget is populated with placeholder', async () => {
     // Query for an element with accessibilityId of "foo" (see "locators" below)
-    const field = await $('~foo');
+    const field = await app.findElementByTestID('foo');
     expect(await field.getText()).toBe('placeholder');
   });
 
 });
 ```
-
-### Locators to find UI Element
-
-No matter what JavaScript framework you choose for native app testing, you have to use one of the locators which is described in [mobile JSON wire protocol](https://github.com/SeleniumHQ/mobile-spec/blob/master/spec-draft.md#locator-strategies). Since locators are implemented significant different on iOS, Android and Windows, as below I only talk about the locators for Windows.
-
-[Locators WinAppDriver supports](https://github.com/microsoft/WinAppDriver/blob/master/Docs/AuthoringTestScripts.md#supported-locators-to-find-ui-elements)
-
- WinAppDriver provides rich API to help locate the UI element. If [testID](https://facebook.github.io/react-native/docs/picker-item#testid) is specified in React Native app for Windows, the locator strategy should choose `accessibility id`.
-
-| **Client API** | **Locator Strategy** | **Matched Attribute in inspect.exe** | **Example** |
-| --- | --- | --- | --- |
-| FindElementByAccessibilityId | accessibility id | AutomationId | AppNameTitle |
-| FindElementByClassName | class name | ClassName | TextBlock |
-| FindElementById | Id | RuntimeId (decimal) | 42.333896.3.1 |
-| FindElementByName | Name | Name | Calculator |
-| FindElementByTagName | tag name | LocalizedControlType (upper camel case) | Text |
-| FindElementByXPath | Xpath | Any | //Button[0] |
-
-[Selectors WebDriverIO supports](https://webdriver.io/docs/selectors.html#mobile-selectors)
-
-| **Client API by Example** | **Locator Strategy** |
-| --- | --- |
-| $(&#39;~AppNameTitle&#39;) | accessibility id |
-| $(&#39;TextBlock&#39;) | class name |
 
 ### Adding a custom RNTester page
 
