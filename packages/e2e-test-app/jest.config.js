@@ -16,7 +16,7 @@ module.exports = {
   roots: ['<rootDir>/test/'],
 
   // The test environment that will be used for testing
-  testEnvironment: 'jest-environment-winappdriver',
+  testEnvironment: '@react-native-windows/automation',
 
   // The pattern or patterns Jest uses to detect test files
   testRegex: '.*\\.test\\.ts$',
@@ -48,18 +48,5 @@ module.exports = {
   testEnvironmentOptions: {
     app: 'ReactUWPTestApp',
     enableRpc: true,
-    webdriverOptions: {
-      // Level of logging verbosity: trace | debug | info | warn | error
-      logLevel: 'error',
-
-      // Default timeout for all waitFor* commands.
-      waitforTimeout: 60000,
-
-      // Default timeout in milliseconds for request
-      connectionRetryTimeout: 90000,
-
-      // Default request retries count
-      connectionRetryCount: 10,
-    },
   },
 };

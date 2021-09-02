@@ -38,11 +38,7 @@ export type AutomationElement = Pick<
 >;
 
 /**
- * WebDriverIO exposes a whole webdriver client, with loads of functionality
- * that doesn't work or make sense on a desktop app. This facade exposes the
- * bits that consistently work, in an easier API.
- *
- * This may not be 100% complete
+ * A subset of WebDriver functionality that will work with Windows applications
  */
 export const app = {
   /**

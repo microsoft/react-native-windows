@@ -7,6 +7,7 @@
 
 import {execSync, spawn, ChildProcess} from 'child_process';
 import fs from 'fs';
+import path from 'path';
 
 import NodeEnvironment = require('jest-environment-node');
 
@@ -32,7 +33,7 @@ type RpcOptions = {
   port: number;
 };
 
-class WinAppDriverEnvironment extends NodeEnvironment {
+export default class AutomationEnvironment extends NodeEnvironment {
   private readonly webDriverOptions: RemoteOptions;
   private readonly rpcOptions: RpcOptions;
   private readonly winappdriverBin: string;
@@ -50,7 +51,16 @@ class WinAppDriverEnvironment extends NodeEnvironment {
 
     this.winappdriverBin =
       passedOptions.winAppDriverBin ||
-      'C:\\Program Files (x86)\\Windows Application Driver\\WinAppDriver.exe';
+      path.join(
+        process.env['PROGRAMFILES(X86)']!,
+        'Windows Application Driver\\WinAppDriver.exe',
+      );
+
+    if (!fs.existsSync(this.winappdriverBin)) {
+      throw new Error(
+        `Could not find WinAppDriver at searched location: "${this.winappdriverBin}"`,
+      );
+    }
 
     const baseOptions: RemoteOptions = {
       port: 4723,
@@ -59,12 +69,28 @@ class WinAppDriverEnvironment extends NodeEnvironment {
         // @ts-ignore
         'ms:experimental-webdriver': true,
       },
+      // Level of logging verbosity: trace | debug | info | warn | error
+      logLevel: 'error',
+
+      // Default timeout for all waitFor* commands.
+      waitforTimeout: 30000,
+
+      // Default timeout in milliseconds for request
+      connectionRetryTimeout: 30000,
+
+      // Default request retries count
+      connectionRetryCount: 5,
     };
 
     this.webDriverOptions = Object.assign(
       {},
       baseOptions,
       passedOptions.webdriverOptions,
+    );
+
+    this.webDriverOptions.capabilities = Object.assign(
+      this.webDriverOptions.capabilities,
+      passedOptions.webdriverOptions?.capabilities,
     );
 
     this.rpcOptions = {
@@ -76,7 +102,10 @@ class WinAppDriverEnvironment extends NodeEnvironment {
   async setup() {
     await super.setup();
 
-    this.winAppDriverProcess = await spawnWinAppDriver(this.winappdriverBin);
+    this.winAppDriverProcess = await spawnWinAppDriver(
+      this.winappdriverBin,
+      this.webDriverOptions.port!,
+    );
     this.browser = await webdriverio.remote(this.webDriverOptions);
 
     if (this.rpcOptions.enable) {
@@ -112,6 +141,7 @@ class WinAppDriverEnvironment extends NodeEnvironment {
  */
 async function spawnWinAppDriver(
   winappdriverBin: string,
+  port: number,
 ): Promise<ChildProcess> {
   if (!fs.existsSync(winappdriverBin)) {
     throw new Error(
@@ -120,7 +150,7 @@ async function spawnWinAppDriver(
   }
 
   return new Promise((resolve, reject) => {
-    const process = spawn(winappdriverBin, {stdio: 'pipe'});
+    const process = spawn(winappdriverBin, [port.toString()], {stdio: 'pipe'});
 
     process.stdout.on('data', data => {
       const s = data.toString('utf16le');
@@ -170,6 +200,3 @@ function resolveAppName(appName: string): string {
     throw new Error(`Could not locate a package with identity "${appName}"`);
   }
 }
-
-export {RpcClient} from 'node-rnw-rpc';
-module.exports = WinAppDriverEnvironment;

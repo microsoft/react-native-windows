@@ -5,6 +5,6 @@
  * @format
  */
 
-export * from './AutomationClient';
-export * from './Navigation';
-export * from './TreeDump';
+import dumpVisualTree from './dumpVisualTree';
+
+export {dumpVisualTree};

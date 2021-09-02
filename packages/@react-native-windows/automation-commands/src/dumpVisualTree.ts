@@ -5,7 +5,7 @@
  * @format
  */
 
-import {RpcClient} from 'jest-environment-winappdriver';
+import {RpcClient} from 'node-rnw-rpc';
 
 /**
  * Schema of tree dumped node
@@ -40,7 +40,7 @@ declare global {
 /**
  * Dump a section of the native visual tree.
  */
-export async function dumpVisualTree(
+export default async function dumpVisualTree(
   accessibilityId: string,
   opts?: {
     pruneCollapsed?: boolean;
@@ -58,7 +58,7 @@ export async function dumpVisualTree(
   });
 
   if (dumpResponse.type === 'error') {
-    fail(dumpResponse.message);
+    throw new Error(dumpResponse.message);
   }
 
   const element = dumpResponse.result;
