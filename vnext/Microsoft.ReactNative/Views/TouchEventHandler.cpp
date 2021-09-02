@@ -628,7 +628,7 @@ bool TouchEventHandler::TagFromOriginalSource(
 
     // Walk to root to find refined React target view
     const auto argsImpl = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(args);
-    while (node && !argsImpl->PropagationStopped()) {
+    while (node) {
       const auto previousTarget = args.Target();
       if (args.Target() == nullptr) {
         args.Target(node->GetView());
