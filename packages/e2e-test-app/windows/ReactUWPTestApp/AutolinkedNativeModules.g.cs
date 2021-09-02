@@ -5,8 +5,8 @@ using System.Collections.Generic;
 // Namespaces from @react-native-picker/picker
 using ReactNativePicker;
 
-// Namespaces from node-rnw-rpc
-using NodeRpc;
+// Namespaces from @react-native-windows/automation-channel
+using AutomationChannel;
 
 namespace Microsoft.ReactNative.Managed
 {
@@ -16,8 +16,8 @@ namespace Microsoft.ReactNative.Managed
         { 
             // IReactPackageProviders from @react-native-picker/picker
             packageProviders.Add(new ReactNativePicker.ReactPackageProvider());
-            // IReactPackageProviders from node-rnw-rpc
-            packageProviders.Add(new NodeRpc.ReactPackageProvider());
+            // IReactPackageProviders from @react-native-windows/automation-channel
+            packageProviders.Add(new AutomationChannel.ReactPackageProvider());
         }
     }
 }

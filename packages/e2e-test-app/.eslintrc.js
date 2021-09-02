@@ -4,6 +4,6 @@ module.exports = {
   globals: {
     expect: 'readonly',
     fail: 'readonly',
-    rpcClient: 'readonly',
+    AutomationClient: 'readonly',
   },
 };

@@ -4,8 +4,8 @@
 #pragma once
 
 #include <ReactContext.h>
+#include <winrt/AutomationChannel.h>
 #include <winrt/Microsoft.ReactNative.h>
-#include <winrt/NodeRpc.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Networking.Sockets.h>
 #include <functional>
@@ -54,7 +54,7 @@ class TestHostHarness : public winrt::implements<TestHostHarness, winrt::Windows
   void ShowJSError(std::string_view err) noexcept;
   void OnInstanceLoaded(const winrt::Microsoft::ReactNative::InstanceLoadedEventArgs &args) noexcept;
   winrt::Windows::Foundation::IAsyncAction StartListening() noexcept;
-  winrt::NodeRpc::Handler CreateRpcHander() noexcept;
+  winrt::AutomationChannel::CommandHandler CreateAutomationCommandHandler() noexcept;
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Data::Json::IJsonValue> OnTestCommand(
       TestCommandId command,
       winrt::Windows::Data::Json::JsonValue payload) noexcept;
@@ -68,7 +68,7 @@ class TestHostHarness : public winrt::implements<TestHostHarness, winrt::Windows
   winrt::Microsoft::ReactNative::IReactInstanceSettings::InstanceLoaded_revoker m_instanceLoadedRevoker;
   winrt::Windows::Foundation::IAsyncAction m_serverListenCoro;
 
-  winrt::NodeRpc::Server m_rpcServer;
+  winrt::AutomationChannel::Server m_rpcServer;
   winrt::com_ptr<TestTransaction> m_currentTransaction;
   winrt::Microsoft::ReactNative::IRedBoxHandler m_redboxHandler;
   std::optional<Awaitable<winrt::Windows::Data::Json::IJsonValue>> m_pendingResponse;

@@ -170,3 +170,5 @@ tsdoc-metadata.json
 # cppwinrt
 nul
 
+# Graveyard of old packages (whose build-outputs may exist on disk after pull)
+/packages/node-rnw-rpc/*
