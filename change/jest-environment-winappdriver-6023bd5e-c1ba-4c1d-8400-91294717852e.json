@@ -1,7 +1,0 @@
-{
-  "type": "major",
-  "comment": "Use Package Identity Name Instead of Package Family Name for Testing",
-  "packageName": "jest-environment-winappdriver",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

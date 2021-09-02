@@ -1,8 +1,16 @@
 # Change Log - jest-environment-winappdriver
 
-This log was last generated on Wed, 01 Sep 2021 05:07:18 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Sep 2021 05:08:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 3.0.0
+
+Thu, 02 Sep 2021 05:08:16 GMT
+
+### Major changes
+
+- Use Package Identity Name Instead of Package Family Name for Testing (ngerlem@microsoft.com)
 
 ## 2.0.4
 
