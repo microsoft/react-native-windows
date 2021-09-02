@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 #pragma once
 
+#include "../../codegen/NativeDialogManagerAndroidSpec.g.h"
 #include <NativeModules.h>
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/Windows.Foundation.h>
@@ -10,23 +11,8 @@
 
 namespace Microsoft::ReactNative {
 
-REACT_STRUCT(ShowAlertArgs)
-struct ShowAlertArgs {
-  REACT_FIELD(title)
-  std::string title;
-
-  REACT_FIELD(message)
-  std::string message;
-
-  REACT_FIELD(buttonPositive)
-  std::string buttonPositive;
-
-  REACT_FIELD(buttonNegative)
-  std::string buttonNegative;
-
-  REACT_FIELD(buttonNeutral)
-  std::string buttonNeutral;
-
+REACT_STRUCT_INHERITED(WindowsDialogOptions, ReactNativeSpecs::DialogManagerAndroidSpec_DialogOptions)
+struct WindowsDialogOptions : ReactNativeSpecs::DialogManagerAndroidSpec_DialogOptions {
   REACT_FIELD(defaultButton)
   int defaultButton;
 };
@@ -37,14 +23,17 @@ struct Alert : public std::enable_shared_from_this<Alert> {
   void Initialize(React::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(showAlert)
-  void showAlert(ShowAlertArgs const &args, std::function<void(std::string)> result) noexcept;
+  void showAlert(WindowsDialogOptions &&args, std::function<void(std::string)> result) noexcept;
 
  private:
   React::ReactContext m_context;
 
   struct AlertRequest {
-    ShowAlertArgs args;
+    WindowsDialogOptions args;
     std::function<void(std::string)> result;
+
+    AlertRequest(WindowsDialogOptions &&rargs, std::function<void(std::string)> rresult) noexcept
+        : args(std::move(rargs)), result(rresult) {}
   };
 
   std::queue<AlertRequest> pendingAlerts{};

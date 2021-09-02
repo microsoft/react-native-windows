@@ -15,7 +15,7 @@
 
 namespace Microsoft::ReactNative {
 
-void Alert::showAlert(ShowAlertArgs const &args, std::function<void(std::string)> result) noexcept {
+void Alert::showAlert(WindowsDialogOptions &&args, std::function<void(std::string)> result) noexcept {
   m_context.UIDispatcher().Post([weakThis = weak_from_this(), args, result] {
     if (auto strongThis = weakThis.lock()) {
       strongThis->pendingAlerts.push({args, result});
@@ -33,11 +33,11 @@ void Alert::ProcessPendingAlertRequests() noexcept {
   auto jsDispatcher = m_context.JSDispatcher();
 
   xaml::Controls::ContentDialog dialog{};
-  dialog.Title(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(args.title)));
-  dialog.Content(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(args.message)));
-  dialog.PrimaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonPositive));
-  dialog.SecondaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNegative));
-  dialog.CloseButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNeutral));
+  dialog.Title(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(args.title.value_or(std::string{}))));
+  dialog.Content(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(args.message.value_or(std::string{}))));
+  dialog.PrimaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonPositive.value_or(std::string{})));
+  dialog.SecondaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNegative.value_or(std::string{})));
+  dialog.CloseButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNeutral.value_or(std::string{})));
   if (args.defaultButton >= 0 && args.defaultButton <= 3) {
     dialog.DefaultButton(static_cast<xaml::Controls::ContentDialogButton>(args.defaultButton));
   }
