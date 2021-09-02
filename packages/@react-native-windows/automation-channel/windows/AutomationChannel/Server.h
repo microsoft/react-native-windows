@@ -7,10 +7,10 @@
 
 #include <winrt/Windows.Networking.Sockets.h>
 
-namespace winrt::NodeRpc::implementation {
+namespace winrt::AutomationChannel::implementation {
 
 struct Server : ServerT<Server> {
-  Server(const NodeRpc::Handler &handler);
+  Server(const AutomationChannel::CommandHandler &handler);
   Windows::Foundation::IAsyncAction ProcessAllClientRequests(
       uint16_t port,
       Windows::Foundation::TimeSpan pollInterval) noexcept;
@@ -25,10 +25,10 @@ struct Server : ServerT<Server> {
   Windows::Networking::Sockets::StreamSocket m_socket;
 };
 
-} // namespace winrt::NodeRpc::implementation
+} // namespace winrt::AutomationChannel::implementation
 
-namespace winrt::NodeRpc::factory_implementation {
+namespace winrt::AutomationChannel::factory_implementation {
 
 struct Server : ServerT<Server, implementation::Server> {};
 
-} // namespace winrt::NodeRpc::factory_implementation
+} // namespace winrt::AutomationChannel::factory_implementation

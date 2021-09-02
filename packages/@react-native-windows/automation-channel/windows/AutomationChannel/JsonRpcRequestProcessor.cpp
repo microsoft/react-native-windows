@@ -10,9 +10,10 @@ using namespace winrt::Windows::Data::Json;
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Storage::Streams;
 
-namespace winrt::NodeRpc {
+namespace winrt::AutomationChannel {
 
-JsonRpcRequestProcessor::JsonRpcRequestProcessor(const NodeRpc::Handler &handler) noexcept : m_handler(handler) {}
+JsonRpcRequestProcessor::JsonRpcRequestProcessor(const AutomationChannel::CommandHandler &handler) noexcept
+    : m_handler(handler) {}
 
 winrt::fire_and_forget JsonRpcRequestProcessor::HandleRequest(
     winrt::hstring requestBody,
@@ -93,4 +94,4 @@ JsonRpcRequestProcessor::EmitResponse(JsonObject responseBody, JsonValue id, IOu
   writer.DetachStream();
 }
 
-} // namespace winrt::NodeRpc
+} // namespace winrt::AutomationChannel

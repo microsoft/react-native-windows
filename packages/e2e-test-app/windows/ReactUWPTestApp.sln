@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.ReactNative.Manag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.ReactNative.Managed.CodeGen", "..\..\..\vnext\Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj", "{ADED4FBE-887D-4271-AF24-F0823BCE7961}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NodeRpc", "..\..\node-rnw-rpc\windows\NodeRpc\NodeRpc.vcxproj", "{C0A69310-6119-46DC-A6D6-0BAB7826DC92}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutomationChannel", "..\..\@react-native-windows\automation-channel\windows\AutomationChannel\AutomationChannel.vcxproj", "{C0A69310-6119-46DC-A6D6-0BAB7826DC92}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactNativePicker", "..\..\..\node_modules\@react-native-picker\picker\windows\ReactNativePicker\ReactNativePicker.vcxproj", "{BEDCC600-4541-41F2-AA46-9E058202B6AD}"
 EndProject

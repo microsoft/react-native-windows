@@ -13,7 +13,7 @@
   "dependencies": {
     "@react-native-picker/picker": "1.16.5",
     "@react-native-windows/tester": "0.0.1",
-    "node-rnw-rpc": "^1.0.15",
+    "@react-native-windows/automation-channel": "^0.0.0",
     "react": "17.0.2",
     "react-native": "0.0.0-ad9030ca9",
     "react-native-windows": "^0.0.0-canary.368"

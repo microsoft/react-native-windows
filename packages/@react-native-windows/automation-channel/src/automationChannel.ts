@@ -15,7 +15,7 @@ export type InvokeResult =
   | {type: 'error'; code: any; message: string}
   | {type: 'success'; result?: any};
 
-export class RpcClient {
+export class AutomationClient {
   private readonly socket: Socket;
   private readonly server: Server;
   private readonly pendingRequests: Map<
@@ -141,7 +141,9 @@ export class RpcClient {
   }
 }
 
-export function waitForConnection(opts: {port: number}): Promise<RpcClient> {
+export function waitForConnection(opts: {
+  port: number;
+}): Promise<AutomationClient> {
   return new Promise((resolve, reject) => {
     const server = new Server();
     server.listen(opts.port);
@@ -150,7 +152,7 @@ export function waitForConnection(opts: {port: number}): Promise<RpcClient> {
     server.on('error', onError);
     server.on('connection', socket => {
       server.off('error', onError);
-      resolve(new RpcClient(socket, server));
+      resolve(new AutomationClient(socket, server));
     });
   });
 }

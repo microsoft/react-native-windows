@@ -13,11 +13,11 @@
   <ItemGroup>
     <None Include="PropertySheet.props" />
     <None Include="packages.config" />
-    <None Include="NodeRpc.def" />
+    <None Include="AutomationChannel.def" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="Server.idl" />
-    <Midl Include="Handler.idl" />
+    <Midl Include="CommandHandler.idl" />
     <Midl Include="ReactPackageProvider.idl" />
   </ItemGroup>
 </Project>
