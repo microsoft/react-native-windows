@@ -16,9 +16,9 @@
 namespace Microsoft::ReactNative {
 
 void Alert::showAlert(WindowsDialogOptions &&args, std::function<void(std::string)> result) noexcept {
-  m_context.UIDispatcher().Post([weakThis = weak_from_this(), args, result] {
+  m_context.UIDispatcher().Post([weakThis = weak_from_this(), args = std::move(args), result] () mutable {
     if (auto strongThis = weakThis.lock()) {
-      strongThis->pendingAlerts.push({args, result});
+      strongThis->pendingAlerts.emplace(std::move(args), result);
       if (strongThis->pendingAlerts.size() == 1) {
         strongThis->ProcessPendingAlertRequests();
       }
