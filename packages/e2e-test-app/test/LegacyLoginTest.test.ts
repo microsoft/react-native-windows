@@ -5,7 +5,8 @@
  * @format
  */
 
-import {goToComponentExample, app} from './framework';
+import {app} from '@react-native-windows/automation';
+import {goToComponentExample} from './RNTesterNavigation';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyLoginTest');

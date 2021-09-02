@@ -5,7 +5,7 @@
  * @format
  */
 
-import {app} from './AutomationClient';
+import {app} from '@react-native-windows/automation';
 
 /**
  * Visit an example on the RNTester Components tab
