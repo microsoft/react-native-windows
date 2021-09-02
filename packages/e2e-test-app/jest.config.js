@@ -46,7 +46,7 @@ module.exports = {
   setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
 
   testEnvironmentOptions: {
-    app: 'ReactUWPTestApp',
+    app: 'RNTesterApp',
     enableRpc: true,
     webdriverOptions: {
       // Level of logging verbosity: trace | debug | info | warn | error

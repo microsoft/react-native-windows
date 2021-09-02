@@ -13,7 +13,7 @@ using Microsoft.ReactNative.Managed;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace ReactUWPTestApp
+namespace RNTesterApp
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -45,7 +45,7 @@ namespace ReactUWPTestApp
             Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(PackageProviders); // Includes any autolinked modules
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());
-            PackageProviders.Add(new ReactUWPTestApp.ReactPackageProvider());
+            PackageProviders.Add(new RNTesterApp.ReactPackageProvider());
 
             this.InitializeComponent();
         }

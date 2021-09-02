@@ -10,8 +10,8 @@
     <ProjectGuid>{ABBB0407-0E82-486F-94CE-710900FCAADC}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReactUWPTestApp</RootNamespace>
-    <AssemblyName>ReactUWPTestApp</AssemblyName>
+    <RootNamespace>RNTesterApp</RootNamespace>
+    <AssemblyName>RNTesterApp</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>

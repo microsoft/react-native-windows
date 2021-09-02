@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertySheets", "PropertyS
 		PropertySheets\x86.props = PropertySheets\x86.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactUWPTestApp", "ReactUWPTestApp\ReactUWPTestApp.csproj", "{ABBB0407-0E82-486F-94CE-710900FCAADC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RNTesterApp", "RNTesterApp\RNTesterApp.csproj", "{ABBB0407-0E82-486F-94CE-710900FCAADC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "..\..\..\vnext\Common\Common.vcxproj", "{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}"
 EndProject

@@ -13,9 +13,9 @@ steps:
     displayName: Specify Certificate
     condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'sampleAppCPPEncodedKey'))
 
-  - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(reactUWPTestAppEncodedKey)"
+  - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(RNTesterAppEncodedKey)"
     displayName: Specify Certificate
-    condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'reactUWPTestAppEncodedKey'))
+    condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'RNTesterAppEncodedKey'))
 
   - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(playgroundEncodedKey)"
     displayName: Specify Certificate

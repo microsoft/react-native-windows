@@ -12,7 +12,7 @@ module.exports = {
   testEnvironment: 'jest-environment-winappdriver',
   maxWorkers: 1,
   testEnvironmentOptions: {
-    app: 'ReactUWPTestApp',
+    app: 'RNTesterApp',
     webdriverOptions: {
       logLevel: 'error',
       ...
