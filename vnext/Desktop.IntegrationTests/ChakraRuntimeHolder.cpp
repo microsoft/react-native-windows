@@ -51,8 +51,6 @@ Microsoft::JSI::ChakraRuntimeArgs ChakraRuntimeHolder::RuntimeArgsFromDevSetting
 
   runtimeArgs.enableJITCompilation = devSettings->useJITCompilation;
 
-  runtimeArgs.memoryTracker = devSettings->memoryTracker;
-
   return runtimeArgs;
 }
 

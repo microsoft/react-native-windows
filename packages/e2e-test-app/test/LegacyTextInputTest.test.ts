@@ -5,7 +5,7 @@
  * @format
  */
 
-import {goToComponentExample} from './framework';
+import {goToComponentExample, app} from './framework';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyTextInputTest');
@@ -86,21 +86,21 @@ describe('LegacyTextInputTest', () => {
 });
 
 async function textInputField() {
-  return await $('~textinput-field');
+  return await app.findElementByTestID('textinput-field');
 }
 
 async function autoCapsTextInputField() {
-  return await $('~auto-caps-textinput-field');
+  return await app.findElementByTestID('auto-caps-textinput-field');
 }
 
 async function multiLineTextInputField() {
-  return await $('~multi-line-textinput-field');
+  return await app.findElementByTestID('multi-line-textinput-field');
 }
 
 async function assertLogContains(text: string) {
-  const textLogComponent = await $('~textinput-log');
+  const textLogComponent = await app.findElementByTestID('textinput-log');
 
-  await browser.waitUntil(
+  await app.waitUntil(
     async () => {
       const loggedText = await textLogComponent.getText();
       return loggedText.split('\n').includes(text);
@@ -112,9 +112,9 @@ async function assertLogContains(text: string) {
 }
 
 async function assertLogContainsInOrder(expectedLines: string[]) {
-  const textLogComponent = await $('~textinput-log');
+  const textLogComponent = await app.findElementByTestID('textinput-log');
 
-  await browser.waitUntil(
+  await app.waitUntil(
     async () => {
       const loggedText = await textLogComponent.getText();
       const actualLines = loggedText.split('\n');

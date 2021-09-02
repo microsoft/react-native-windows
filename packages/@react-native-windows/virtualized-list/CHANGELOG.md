@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Wed, 25 Aug 2021 05:07:15 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Sep 2021 05:07:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.6
+
+Wed, 01 Sep 2021 05:07:18 GMT
+
+### Changes
+
+- Integrate 8/11 Nightly RN Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.5
 

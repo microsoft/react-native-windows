@@ -331,9 +331,6 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
 
   virtual void setupNativePromiseContinuation() noexcept;
 
-  // Memory tracker helpers
-  void setupMemoryTracker() noexcept;
-
   // In-proc debugging helpers
   virtual void startDebuggingIfNeeded() = 0;
   virtual void stopDebuggingIfNeeded() = 0;

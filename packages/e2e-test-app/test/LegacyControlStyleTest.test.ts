@@ -5,7 +5,7 @@
  * @format
  */
 
-import {goToComponentExample, dumpVisualTree} from './framework';
+import {app, goToComponentExample, dumpVisualTree} from './framework';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyControlStyleTest');
@@ -34,6 +34,6 @@ describe('LegacyControlStyleTest', () => {
 });
 
 async function toggleControlBorder() {
-  const showBorderToggle = await $('~show-border-toggle');
+  const showBorderToggle = await app.findElementByTestID('show-border-toggle');
   await showBorderToggle.click();
 }

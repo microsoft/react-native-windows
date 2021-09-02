@@ -1,7 +1,6 @@
 #include <JSI/ChakraRuntimeArgs.h>
 #include <JSI/ChakraRuntimeFactory.h>
 #include <jsi/jsi/test/testlib.h>
-#include "MemoryTracker.h"
 #if defined(USE_V8)
 #include <V8JsiRuntime.h>
 #endif
@@ -15,7 +14,6 @@
 
 using facebook::jsi::Runtime;
 using facebook::jsi::RuntimeFactory;
-using facebook::react::CreateMemoryTracker;
 using facebook::react::MessageQueueThread;
 using Microsoft::JSI::ChakraRuntimeArgs;
 using Microsoft::JSI::makeChakraRuntime;
@@ -36,10 +34,6 @@ std::vector<RuntimeFactory> runtimeGenerators() {
     ChakraRuntimeArgs args{};
 
     args.jsQueue = MakeJSQueueThread();
-
-    std::shared_ptr<MessageQueueThread> memoryTrackerCallbackQueue = MakeJSQueueThread();
-
-    args.memoryTracker = CreateMemoryTracker(std::move(memoryTrackerCallbackQueue));
 
     return makeChakraRuntime(std::move(args));
   }};

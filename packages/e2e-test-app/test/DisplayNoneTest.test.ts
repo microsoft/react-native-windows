@@ -5,7 +5,7 @@
  * @format
  */
 
-import {goToComponentExample, dumpVisualTree} from './framework';
+import {app, goToComponentExample, dumpVisualTree} from './framework';
 
 beforeAll(async () => {
   await goToComponentExample('Display:none Style');
@@ -27,6 +27,8 @@ describe('DisplayNoneTest', () => {
 });
 
 async function toggleDisplayNone() {
-  const showDisplayNoneToggle = await $('~toggle-display:none');
+  const showDisplayNoneToggle = await app.findElementByTestID(
+    'toggle-display:none',
+  );
   await showDisplayNoneToggle.click();
 }

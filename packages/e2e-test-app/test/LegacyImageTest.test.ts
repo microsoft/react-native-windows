@@ -5,7 +5,7 @@
  * @format
  */
 
-import {goToComponentExample, dumpVisualTree} from './framework';
+import {app, goToComponentExample, dumpVisualTree} from './framework';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyImageTest');
@@ -40,11 +40,13 @@ describe('LegacyImageTest', () => {
 });
 
 async function toggleImageBorder() {
-  const imageBorderToggle = await $('~toggle-border-button');
+  const imageBorderToggle = await app.findElementByTestID(
+    'toggle-border-button',
+  );
   await imageBorderToggle.click();
 }
 
 async function toggleRTLMode() {
-  const rtlToggleButton = await $('~set-rtl-button');
+  const rtlToggleButton = await app.findElementByTestID('set-rtl-button');
   await rtlToggleButton.click();
 }

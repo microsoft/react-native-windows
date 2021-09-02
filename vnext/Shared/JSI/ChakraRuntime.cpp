@@ -4,7 +4,6 @@
 #include "ChakraRuntime.h"
 #include "ChakraRuntimeFactory.h"
 
-#include <MemoryTracker.h>
 #include <RuntimeOptions.h>
 #include "Unicode.h"
 #include "Utilities.h"
@@ -67,8 +66,6 @@ void ChakraRuntime::Init() noexcept {
   }
 
   m_runtime = CreateRuntime(runtimeAttributes, nullptr);
-
-  setupMemoryTracker();
 
   m_context = JsRefHolder{CreateContext(m_runtime)};
 
@@ -888,39 +885,6 @@ JsValueRef ChakraRuntime::GetHostObjectProxyHandler() {
 }
 
 /*virtual*/ void ChakraRuntime::setupNativePromiseContinuation() noexcept {}
-
-void ChakraRuntime::setupMemoryTracker() noexcept {
-  if (runtimeArgs().memoryTracker) {
-    size_t initialMemoryUsage = 0;
-    JsGetRuntimeMemoryUsage(m_runtime, &initialMemoryUsage);
-    runtimeArgs().memoryTracker->Initialize(initialMemoryUsage);
-
-    if (runtimeArgs().runtimeMemoryLimit > 0)
-      JsSetRuntimeMemoryLimit(m_runtime, runtimeArgs().runtimeMemoryLimit);
-
-    JsSetRuntimeMemoryAllocationCallback(
-        m_runtime,
-        runtimeArgs().memoryTracker.get(),
-        [](void *callbackState, JsMemoryEventType allocationEvent, size_t allocationSize) -> bool {
-          auto memoryTrackerPtr = static_cast<facebook::react::MemoryTracker *>(callbackState);
-          switch (allocationEvent) {
-            case JsMemoryAllocate:
-              memoryTrackerPtr->OnAllocation(allocationSize);
-              break;
-
-            case JsMemoryFree:
-              memoryTrackerPtr->OnDeallocation(allocationSize);
-              break;
-
-            case JsMemoryFailure:
-            default:
-              break;
-          }
-
-          return true;
-        });
-  }
-}
 
 //===========================================================================
 // ChakraRuntime::JsValueArgs implementation
